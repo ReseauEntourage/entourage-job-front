@@ -1,5 +1,4 @@
 import React from 'react';
-import { ProfilePartCard } from '../Card/Card';
 import { StyledToggleList } from './CardToggleList.styles';
 import { ToggleItem } from './ToggleItem/ToggleItem';
 
@@ -10,34 +9,20 @@ export type SwitchItem = {
 };
 
 export interface CardToggleListProps {
-  title: string;
   items?: SwitchItem[];
-  isEditable?: boolean;
-  iaGenerated?: boolean;
 }
 
-export const CardToggleList = ({
-  title,
-  items = [],
-  isEditable = false,
-  iaGenerated,
-}: CardToggleListProps) => {
+export const CardToggleList = ({ items = [] }: CardToggleListProps) => {
   return (
-    <ProfilePartCard
-      title={title}
-      isEditable={isEditable}
-      iaGenerated={iaGenerated}
-    >
-      <StyledToggleList>
-        {items.map((item, idx) => (
-          <ToggleItem
-            key={idx}
-            icon={item.icon}
-            name={item.name}
-            value={item.value}
-          />
-        ))}
-      </StyledToggleList>
-    </ProfilePartCard>
+    <StyledToggleList>
+      {items.map((item, idx) => (
+        <ToggleItem
+          key={idx}
+          icon={item.icon}
+          name={item.name}
+          value={item.value}
+        />
+      ))}
+    </StyledToggleList>
   );
 };

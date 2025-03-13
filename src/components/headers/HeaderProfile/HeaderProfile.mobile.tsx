@@ -51,6 +51,7 @@ export interface HeaderProfileProps {
   // Only for own profile
   phone?: string;
   email?: string;
+  driverLicenses?: string[];
 }
 
 export const HeaderProfileMobile = ({
@@ -63,6 +64,7 @@ export const HeaderProfileMobile = ({
   description,
   phone,
   email,
+  driverLicenses,
   isEditable = false,
 }: HeaderProfileProps) => {
   const {
@@ -163,7 +165,11 @@ export const HeaderProfileMobile = ({
 
           {ownProfile && isEditable && (
             <>
-              <ProfileContactInfos phone={phone} email={email} />
+              <ProfileContactInfos
+                phone={phone}
+                email={email}
+                driverLicenses={driverLicenses}
+              />
               <ProfileCompletion completionRate={0.8} />
             </>
           )}

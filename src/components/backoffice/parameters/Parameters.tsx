@@ -5,6 +5,7 @@ import {
 } from '../Backoffice.styles';
 import { useConfirmationToaster } from '../parametres-old/useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
+import { ProfileChangePassword } from 'src/components/profile/ProfilePartCards/ProfileChangePassword/ProfileChangePassword';
 import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
 import { ProfileContracts } from 'src/components/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
 import { ProfileCustomHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileCustomHelpsAndOffers/ProfileCustomHelpsAndOffers';
@@ -15,9 +16,11 @@ import { ProfileGeneratedDescription } from 'src/components/profile/ProfilePartC
 import { ProfileHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileHelpsAndOffers/ProfileHelpsAndOffers';
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
+import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
 import { ProfilePersonalInformations } from 'src/components/profile/ProfilePartCards/ProfilePersonalInformations/ProfilePersonalInformations';
 import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
+import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -49,6 +52,7 @@ export const Parameters = () => {
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
         email={user.email}
+        driverLicenses={['AM', 'A', 'B', 'C', 'D', 'E']}
         isEditable
       />
       {loading || error ? (
@@ -89,12 +93,16 @@ export const Parameters = () => {
                   hasExternalCv={user.userProfile.hasExternalCv}
                   entourageProCv="/url/" // TODO: Add CvUrl
                   isEditable
+                  smallCard
                 />
-                <ProfileLanguages languages={cv.languages} isEditable />
-                <ProfileInterests interests={cv.passions} isEditable />
-                <ProfileContracts isEditable />
-                <ProfileContactPreferences isEditable />
-                <ProfileHelpsAndOffers role={user.role} isEditable />
+                <ProfileLanguages languages={[]} isEditable smallCard />
+                <ProfileInterests interests={[]} isEditable smallCard />
+                <ProfileContracts isEditable smallCard />
+                <ProfileContactPreferences isEditable smallCard />
+                <ProfileHelpsAndOffers role={user.role} isEditable smallCard />
+                <ProfileNotificationsPreferences isEditable smallCard />
+                <ProfileStats smallCard />
+                <ProfileChangePassword smallCard />
               </StyledParametersRightColumn>
             </StyledBackofficeGrid>
           </StyledParametersSectionContent>

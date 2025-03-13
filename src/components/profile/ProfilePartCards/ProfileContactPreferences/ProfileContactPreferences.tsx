@@ -1,9 +1,11 @@
 import React from 'react';
 import { IlluCV, IlluDossierCandidat } from 'assets/icons/icons';
+import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
 export interface ProfileContactPreferencesProps {
   isEditable?: boolean;
+  smallCard?: boolean;
 }
 
 const illuProps = {
@@ -13,6 +15,7 @@ const illuProps = {
 
 export const ProfileContactPreferences = ({
   isEditable = false,
+  smallCard = false,
 }: ProfileContactPreferencesProps) => {
   const preferencesValues = [
     {
@@ -27,11 +30,16 @@ export const ProfileContactPreferences = ({
     },
   ];
 
+  const isCompleted = true;
+
   return (
-    <CardToggleList
+    <ProfilePartCard
       title="Prise de contact"
       isEditable={isEditable}
-      items={preferencesValues}
-    />
+      isCompleted={isCompleted}
+      smallCard={smallCard}
+    >
+      <CardToggleList items={preferencesValues} />
+    </ProfilePartCard>
   );
 };

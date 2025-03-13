@@ -1,16 +1,21 @@
 import React, { useCallback } from 'react';
+import { IlluCoeurMainsOuvertes } from 'assets/icons/icons';
+import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
+import { Text } from 'src/components/utils';
 
 export interface ProfileInterestsProps {
   interests?: {
     name: string;
   }[];
   isEditable?: boolean;
+  smallCard?: boolean;
 }
 
 export const ProfileInterests = ({
   interests = [],
   isEditable = false,
+  smallCard = false,
 }: ProfileInterestsProps) => {
   const isCompleted = interests.length > 0;
 
@@ -22,14 +27,23 @@ export const ProfileInterests = ({
   }, []);
 
   return (
-    <CardTagList
+    <ProfilePartCard
       title="Passions"
       isCompleted={isCompleted}
-      isEditable={isEditable}
       editCallback={editModal}
-      removeCallback={onRemove}
-      items={interests}
       iaGenerated
-    />
+      isEditable={isEditable}
+      smallCard={smallCard}
+      fallback={{
+        content: <Text>Vous n’avez pas encore renseigné vos passions</Text>,
+        icon: <IlluCoeurMainsOuvertes />,
+      }}
+    >
+      <CardTagList
+        removeCallback={onRemove}
+        items={interests}
+        isEditable={isEditable}
+      />
+    </ProfilePartCard>
   );
 };

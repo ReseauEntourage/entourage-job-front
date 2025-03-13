@@ -42,7 +42,9 @@ import IlluCoachEtCandidat from './illu-coach-et-candidat.svg';
 import IlluCoeurMainsOuvertesBleu from './illu-coeur-mains-ouvertes-bleu.svg';
 import IlluCoeurMainsOuvertes from './illu-coeur-mains-ouvertes.svg';
 import IlluCoeurSurLaMain from './illu-coeur-sur-la-main.svg';
+import IlluCoeurSurMainSeule from './illu-coeur-sur-main-seule.svg';
 import IlluConversation from './illu-conversation.svg';
+import IlluDesktop from './illu-desktop.svg';
 import IlluDossierCandidat from './illu-dossier-candidat.svg';
 import IlluLinkedIn from './illu-linked-in.svg';
 import IlluMalette from './illu-malette.svg';
@@ -125,6 +127,8 @@ Heart,
 History,
 Home,
 IlluCV,
+IlluDesktop,
+IlluCoeurSurMainSeule,
 IlluCandidatFolder,
 IlluBulleQuestion,
 IlluCalendrier,

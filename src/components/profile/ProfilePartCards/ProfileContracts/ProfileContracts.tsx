@@ -1,12 +1,15 @@
 import React from 'react';
+import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
 export interface ProfileContractsProps {
   isEditable?: boolean;
+  smallCard?: boolean;
 }
 
 export const ProfileContracts = ({
   isEditable = false,
+  smallCard = false,
 }: ProfileContractsProps) => {
   const contractsValues = [
     {
@@ -32,11 +35,16 @@ export const ProfileContracts = ({
     },
   ];
 
+  const isCompleted = true;
+
   return (
-    <CardToggleList
+    <ProfilePartCard
       title="Types de contrats"
       isEditable={isEditable}
-      items={contractsValues}
-    />
+      isCompleted={isCompleted}
+      smallCard={smallCard}
+    >
+      <CardToggleList items={contractsValues} />
+    </ProfilePartCard>
   );
 };

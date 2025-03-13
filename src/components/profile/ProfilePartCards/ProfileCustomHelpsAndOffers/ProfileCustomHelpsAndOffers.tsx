@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
+import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Button, Text } from 'src/components/utils';
 import { USER_ROLES, UserRole } from 'src/constants/users';
@@ -12,6 +13,7 @@ export interface KeySkillsProps {
   firstName: string;
   role: UserRole;
   items: string[];
+  smallCard?: boolean;
 }
 
 export const ProfileCustomHelpsAndOffers = ({
@@ -21,6 +23,7 @@ export const ProfileCustomHelpsAndOffers = ({
   items,
   ownProfile = false,
   isEditable = false,
+  smallCard = false,
 }: KeySkillsProps) => {
   const router = useRouter();
   const isCompleted = items.length > 0;
@@ -45,6 +48,16 @@ export const ProfileCustomHelpsAndOffers = ({
       title={title}
       isCompleted={isCompleted}
       isEditable={isEditable}
+      smallCard={smallCard}
+      fallback={{
+        content: (
+          <Text>
+            Détaillez précisement vos besoins pour que les coachs puissent vous
+            accompagner plus facilement
+          </Text>
+        ),
+        icon: <IlluBulleQuestionCheck />,
+      }}
     >
       {items.length > 0 &&
         items.map((item, index) => (

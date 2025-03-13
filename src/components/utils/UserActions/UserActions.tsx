@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { ButtonIcon } from '../ButtonIcon';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { ProfileReportUserModal } from 'src/components/backoffice/profile/ProfileReportUserModal/ProfileReportUserModal';
 import { openModal } from 'src/components/modals/Modal';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledUserActionsBtnContainer } from './UserActions.styles';
 import { UserActionsProps } from './UserActions.types';
 
@@ -11,20 +13,30 @@ export function UserActions({
   userId,
   openDirection = 'left',
 }: UserActionsProps) {
-  const actions = [
-    {
-      name: 'Signaler ce profil',
-      handler: () => {
-        openModal(<ProfileReportUserModal userId={userId} />);
+  const currentUserId = useSelector(selectCurrentUserId);
+  const ownProfile = useMemo(() => {
+    return userId === currentUserId;
+  }, [currentUserId, userId]);
+
+  const actions = useMemo(() => {
+    const list = [
+      {
+        name: 'Editer mes informations',
+        handler: () => {
+          openModal(<ProfileReportUserModal userId={userId} />);
+        },
       },
-    },
-    {
-      name: 'Editer mes informations',
-      handle: () => {
-        openModal(<ProfileReportUserModal userId={userId} />);
-      },
-    },
-  ];
+    ];
+    if (!ownProfile) {
+      list.push({
+        name: 'Signaler ce profil',
+        handler: () => {
+          openModal(<ProfileReportUserModal userId={userId} />);
+        },
+      });
+    }
+    return list;
+  }, [userId, ownProfile]);
 
   return (
     <>

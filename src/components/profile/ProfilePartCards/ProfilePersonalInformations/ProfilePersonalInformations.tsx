@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { ModalEditProfessionalInformation } from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
@@ -9,6 +10,8 @@ import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/Pro
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { openModal } from 'src/components/modals/Modal';
+import { Text } from 'src/components/utils';
+import { H6 } from 'src/components/utils/Headings';
 import { AmbitionsPrefixesType } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -32,12 +35,14 @@ export interface ProfilePersonalInformationsProps {
   isEditable?: boolean;
   ambitions: Ambition[];
   businessLines: BusinessLine[];
+  smallCard?: boolean;
 }
 
 export const ProfilePersonalInformations = ({
   ambitions,
   businessLines,
   isEditable = false,
+  smallCard = false,
 }: ProfilePersonalInformationsProps) => {
   const user = useAuthenticatedUser();
   const { userProfile, role } = user;
@@ -89,6 +94,20 @@ export const ProfilePersonalInformations = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       editCallback={editModal}
+      smallCard={smallCard}
+      fallback={{
+        content: (
+          <>
+            <H6 title="Renseignez ici les secteurs et métiers que vous recherchez" />
+            <Text>
+              Ces informations nous permettent de vous mettre en relation plus
+              facilement avec des personnes de la communauté qui pourraient vous
+              donner un coup de pouce{' '}
+            </Text>
+          </>
+        ),
+        icon: <IlluBulleQuestion />,
+      }}
     >
       <ProfileCareerPathSentence
         ambitions={ambitions}

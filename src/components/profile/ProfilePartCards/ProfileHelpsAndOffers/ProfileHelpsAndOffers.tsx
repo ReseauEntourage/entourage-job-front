@@ -1,4 +1,5 @@
 import React from 'react';
+import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 import { ProfileHelps } from 'src/constants/helps';
 import { UserRole } from 'src/constants/users';
@@ -6,11 +7,13 @@ import { UserRole } from 'src/constants/users';
 export interface ProfileHelpsAndOffersProps {
   role: UserRole;
   isEditable?: boolean;
+  smallCard?: boolean;
 }
 
 export const ProfileHelpsAndOffers = ({
   role,
   isEditable = false,
+  smallCard = false,
 }: ProfileHelpsAndOffersProps) => {
   const helpsValues = ProfileHelps.map((help) => ({
     name: help.shortTitle[role],
@@ -18,11 +21,16 @@ export const ProfileHelpsAndOffers = ({
     icon: help.icon,
   }));
 
+  const isCompleted = true;
+
   return (
-    <CardToggleList
+    <ProfilePartCard
       title="Demandes de coup de pouce"
       isEditable={isEditable}
-      items={helpsValues}
-    />
+      isCompleted={isCompleted}
+      smallCard={smallCard}
+    >
+      <CardToggleList items={helpsValues} />
+    </ProfilePartCard>
   );
 };

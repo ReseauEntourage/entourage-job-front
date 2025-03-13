@@ -12,6 +12,7 @@ export interface ProfileDocumentsProps {
   hasExternalCv?: boolean | null;
   entourageProCv?: string | null;
   isEditable?: boolean;
+  smallCard?: boolean;
 }
 
 export const ProfileDocuments = ({
@@ -20,6 +21,7 @@ export const ProfileDocuments = ({
   linkedinUrl,
   hasExternalCv,
   entourageProCv,
+  smallCard = false,
 }: ProfileDocumentsProps) => {
   const isCompleted = useMemo(
     () => !!linkedinUrl || !!entourageProCv || !!hasExternalCv,
@@ -33,6 +35,7 @@ export const ProfileDocuments = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       editCallback={editModal}
+      smallCard={smallCard}
     >
       <StyledDocumentList>
         {linkedinUrl && (
