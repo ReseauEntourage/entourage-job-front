@@ -7,6 +7,7 @@ import {
   postMessageAdapter,
   getUnseenConversationsCountAdapter,
   bindNewConversationAdapter,
+  postFeedbackAdapter,
 } from './messaging.adapter';
 
 export type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
@@ -93,8 +94,6 @@ export const slice = createSlice({
         const { message } = action.payload;
         const { isNewConversation } = action.payload;
 
-        // console.log('messageSucceded');
-
         if (isNewConversation) {
           // Append the new conversation to the conversation list at the top
           if (state.conversations) {
@@ -106,21 +105,14 @@ export const slice = createSlice({
             state.selectedConversationId = message.conversation.id;
           }
         } else if (state.conversations) {
-          // console.log('here');
           // Append the new message to the conversation list
           const selectedConvIdx = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
-          // console.log(selectedConvIdx);
           state.conversations[selectedConvIdx].messages.push(message);
           state.selectedConversation?.messages.push(message);
 
-          // console.log(state.conversations[selectedConvIdx].participants);
-
           // Set the conversation as seen
-
-          // console.log('YOYO');
-          // console.log(state.conversations[selectedConvIdx].participants);
           state.conversations[selectedConvIdx].participants.forEach(
             (participant) => {
               if (participant.id === message.authorId) {
@@ -159,6 +151,13 @@ export const slice = createSlice({
     setPinnedInfo(state, action) {
       state.pinnedInfo = action.payload;
     },
+    ...postFeedbackAdapter.getReducers<State>((state) => state.postMessage, {
+      postFeedbackSucceeded(state) {
+        if (state.selectedConversation) {
+          state.selectedConversation.shouldGiveFeedback = false;
+        }
+      },
+    }),
   },
 });
 

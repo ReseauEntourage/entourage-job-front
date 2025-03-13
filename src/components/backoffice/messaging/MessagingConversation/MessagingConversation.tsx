@@ -117,6 +117,21 @@ export const MessagingConversation = () => {
     adjustMessageHeight();
   };
 
+  const onRatingOrClose = (rating: number | null) => {
+    const conversationParticipantId = selectedConversation?.participants.find(
+      (participant) => participant.id === currentUserId
+    )?.conversationParticipant.id;
+
+    if (selectedConversationId && conversationParticipantId) {
+      dispatch(
+        messagingActions.postFeedbackRequested({
+          conversationParticipantId,
+          rating,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     // Set a pinned info when the conversation is one to one and the other participant is not available
     const addressees = selectedConversation?.participants.filter(
@@ -179,7 +194,9 @@ export const MessagingConversation = () => {
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
 
-          {shouldGiveFeedback && <MessagingFeedback />}
+          {shouldGiveFeedback && (
+            <MessagingFeedback onRatingOrClose={onRatingOrClose} />
+          )}
 
           {displaySuggestions ? (
             <MessagingSuggestions

@@ -23,7 +23,7 @@ export const ContainerAvatarStyled = styled.div`
   align-items: flex-start;
 `;
 
-export const RightColumn = styled.div<{ seen: boolean }>`
+export const RightColumn = styled.div<{ highlight: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ export const RightColumn = styled.div<{ seen: boolean }>`
 
   p.preview-last-message {
     color: ${(props) => {
-      return props.seen ? COLORS.mediumGray : COLORS.black;
+      return props.highlight ? COLORS.black : COLORS.mediumGray;
     }};
     font-size: 12px;
     text-overflow: ellipsis;

@@ -36,6 +36,9 @@ export const MessagingConversationListItem = ({
   const userHasSeenConversation =
     seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
 
+  const shouldHighlightConversation =
+    !userHasSeenConversation || conversation.shouldGiveFeedback;
+
   useEffect(() => {
     setIsActivated(selectedConversationId === conversation.id);
   }, [selectedConversationId, conversation.id]);
@@ -49,7 +52,7 @@ export const MessagingConversationListItem = ({
       <ContainerAvatarStyled>
         {addresee && <ImgProfile user={addresee} size={35} />}
       </ContainerAvatarStyled>
-      <RightColumn seen={userHasSeenConversation}>
+      <RightColumn highlight={shouldHighlightConversation}>
         <MainInfos>
           {addresee && (
             <ConversationAddresee>
