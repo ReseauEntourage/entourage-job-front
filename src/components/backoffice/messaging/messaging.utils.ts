@@ -4,7 +4,7 @@ import { Conversation } from 'src/api/types';
 export const conversationHasUnreadMessages = (
   conversation: Conversation
 ): boolean => {
-  const lastMessage = conversation.messages[conversation.messages.length - 1];
+  const lastMessage = conversation.messages[0];
   const { seenAt } = conversation;
   const userHasSeenConversation =
     seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);

@@ -31,7 +31,7 @@ export const MessagingConversationListItem = ({
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipant;
-  const lastMessage = conversation.messages[conversation.messages.length - 1];
+  const lastMessage = conversation.messages[0];
   const { seenAt } = conversation;
   const userHasSeenConversation =
     seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
