@@ -30,7 +30,7 @@ export const ProfileHelpsAndOffers = ({
       isCompleted={isCompleted}
       smallCard={smallCard}
     >
-      <CardToggleList items={helpsValues} />
+      <CardToggleList items={helpsValues} isEditable={isEditable} />
     </ProfilePartCard>
   );
 };

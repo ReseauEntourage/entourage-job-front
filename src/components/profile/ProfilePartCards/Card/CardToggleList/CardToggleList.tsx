@@ -10,9 +10,13 @@ export type SwitchItem = {
 
 export interface CardToggleListProps {
   items?: SwitchItem[];
+  isEditable?: boolean;
 }
 
-export const CardToggleList = ({ items = [] }: CardToggleListProps) => {
+export const CardToggleList = ({
+  items = [],
+  isEditable,
+}: CardToggleListProps) => {
   return (
     <StyledToggleList>
       {items.map((item, idx) => (
@@ -21,6 +25,7 @@ export const CardToggleList = ({ items = [] }: CardToggleListProps) => {
           icon={item.icon}
           name={item.name}
           value={item.value}
+          isEditable={isEditable}
         />
       ))}
     </StyledToggleList>

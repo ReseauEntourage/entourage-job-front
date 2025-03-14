@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { IlluConversation } from 'assets/icons/icons';
-import { useSelectSelectedProfile } from '../useSelectedProfile';
-import { Button, Card } from 'src/components/utils';
+import { ProfilePartCard } from '../Card/Card/Card';
+import { useSelectSelectedProfile } from 'src/components/backoffice/profile/useSelectedProfile';
+import { Button, Text } from 'src/components/utils';
 import {
   StyledContactMessage,
   StyledConversationInviteToContact,
@@ -12,14 +13,18 @@ import {
 export const ProfileContactCard = () => {
   const selectedProfile = useSelectSelectedProfile();
   const router = useRouter();
-  const isCoach = selectedProfile.role === 'Coach';
 
   const openConversation = () => {
     router.push(`/backoffice/messaging?userId=${selectedProfile.id}`);
   };
+  const isCoach = selectedProfile.role === 'Coach';
 
   return (
-    <Card title={`Contacter ${selectedProfile?.firstName}`}>
+    <ProfilePartCard
+      title={`Contacter ${selectedProfile?.firstName}`}
+      smallCard={false}
+    >
+      <Text color="darkGray">Temps de réponse moyen : 2 jours</Text>
       {selectedProfile.isAvailable ? (
         <StyledProfileContactForm>
           <StyledConversationInviteToContact>
@@ -46,6 +51,6 @@ export const ProfileContactCard = () => {
           </StyledContactMessage>
         </StyledProfileContactForm>
       )}
-    </Card>
+    </ProfilePartCard>
   );
 };

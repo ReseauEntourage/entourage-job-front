@@ -1,10 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
+import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
+import { ProfileContracts } from 'src/components/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
+import { ProfileCustomHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileCustomHelpsAndOffers/ProfileCustomHelpsAndOffers';
+import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
+import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
+import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
+import { ProfileHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileHelpsAndOffers/ProfileHelpsAndOffers';
+import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
+import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
+import { ProfileProfessionalInformations } from 'src/components/profile/ProfilePartCards/ProfileProfessionalInformations/ProfileProfessionalInformations';
+import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -12,20 +24,15 @@ import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
 } from './Profile.styles';
-import { ProfileContactCard } from './ProfileContactCard';
-import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
-import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
 import { useSelectSelectedProfile } from './useSelectedProfile';
 
-export interface ProfileProps {
-  isEditable?: boolean;
-}
-
-export const Profile = ({ isEditable = false }: ProfileProps) => {
+export const Profile = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
   const ownProfile = currentUserId === selectedProfile.id;
+  const description =
+    'Je m’appelle Julien Petit, j’ai 47 ans et je suis un professionnel expérimenté dans les domaines de la vente, du service client et du tourisme. Désireux de relever de nouveaux défis, je m’appuie sur une solide expérience en gestion administrative, développement commercial et relation client.Au fil de ma carrière, j’ai occupé divers postes tels qu’agent de voyages, réceptionniste et commercial sédentaire, ce qui m’a permis de développer une grande polyvalence. Je maîtrise la réservation, la gestion des dossiers ainsi que les stratégies commerciales, tout en veillant à offrir un excellent service après-vente.Bilingue en français et espagnol, je possède également une bonne connaissance de l’anglais, ce qui me permet d’évoluer dans des environnements multiculturels avec aisance.';
 
   return (
     <StyledBackofficeBackground>
@@ -36,17 +43,65 @@ export const Profile = ({ isEditable = false }: ProfileProps) => {
         lastName={selectedProfile.lastName}
         role={selectedProfile.role}
         department={selectedProfile.department}
-        isEditable={isEditable}
+        description={selectedProfile.description}
       />
 
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            <ProfileProfessionalInformationCard />
-            <ProfileHelpInformationCard />
+            <ProfileProfessionalInformations
+              ambitions={selectedProfile.searchAmbitions ?? []}
+              businessLines={selectedProfile.searchBusinessLines ?? []}
+              description={description}
+              skills={[
+                {
+                  id: '1',
+                  name: 'Gestion administrative et organisation',
+                  CVs: [],
+                  createdAt: '',
+                  updatedAt: '',
+                },
+                {
+                  id: '2',
+                  name: 'Relation client et prospection commerciale',
+                  CVs: [],
+                  createdAt: '',
+                  updatedAt: '',
+                },
+                {
+                  id: '3',
+                  name: 'Communication et coordination',
+                  CVs: [],
+                  createdAt: '',
+                  updatedAt: '',
+                },
+              ]}
+            />
+            <ProfileCustomHelpsAndOffers
+              items={['item1', 'item2']}
+              firstName={selectedProfile.firstName}
+              role={selectedProfile.role}
+              id={selectedProfile.id}
+              ownProfile
+            />
+            <ProfileExperiences experiences={[]} />
+            <ProfileFormations formations={[]} />
+            <ProfileReviews reviews={[]} />
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
             {!ownProfile && <ProfileContactCard />}
+            <ProfileContracts smallCard />
+            <ProfileInterests smallCard />
+            <ProfileLanguages languages={[]} smallCard />
+            <ProfileDocuments
+              userId={selectedProfile.id}
+              linkedinUrl={selectedProfile.linkedinUrl}
+              hasExternalCv={selectedProfile.hasExternalCv}
+              entourageProCv="/url/" // TODO: Add CvUrl
+              smallCard
+            />
+            <ProfileContactPreferences smallCard />
+            <ProfileHelpsAndOffers role={selectedProfile.role} smallCard />
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>

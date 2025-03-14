@@ -32,7 +32,7 @@ export const ProfilePartCard = ({
     content: 'Commencez par renseigner cette partie',
     icon: <IlluBulleQuestion />,
   },
-  smallCard,
+  smallCard = false,
 }: ProfilePartCardProps) => {
   return (
     <Card

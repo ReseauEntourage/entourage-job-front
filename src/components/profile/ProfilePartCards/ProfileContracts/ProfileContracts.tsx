@@ -39,12 +39,12 @@ export const ProfileContracts = ({
 
   return (
     <ProfilePartCard
-      title="Types de contrats"
+      title="Types de contrats recherchés"
       isEditable={isEditable}
       isCompleted={isCompleted}
       smallCard={smallCard}
     >
-      <CardToggleList items={contractsValues} />
+      <CardToggleList items={contractsValues} isEditable={isEditable} />
     </ProfilePartCard>
   );
 };

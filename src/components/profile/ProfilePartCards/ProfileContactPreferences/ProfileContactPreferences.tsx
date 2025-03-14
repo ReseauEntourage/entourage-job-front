@@ -39,7 +39,7 @@ export const ProfileContactPreferences = ({
       isCompleted={isCompleted}
       smallCard={smallCard}
     >
-      <CardToggleList items={preferencesValues} />
+      <CardToggleList items={preferencesValues} isEditable={isEditable} />
     </ProfilePartCard>
   );
 };

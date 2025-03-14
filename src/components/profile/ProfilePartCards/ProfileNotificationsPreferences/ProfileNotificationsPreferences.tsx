@@ -29,7 +29,7 @@ export const ProfileNotificationsPreferences = ({
       smallCard={smallCard}
       isEmpty={false}
     >
-      <CardToggleList items={notificationsValues} />
+      <CardToggleList items={notificationsValues} isEditable={isEditable} />
     </ProfilePartCard>
   );
 };
