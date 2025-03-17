@@ -10,7 +10,8 @@ export interface ProfilePartCardProps {
   children: React.ReactNode;
   isCompleted?: boolean;
   isEditable?: boolean;
-  editCallback?: () => void;
+  ctaTitle?: string;
+  ctaCallback?: () => void;
   iaGenerated?: boolean;
   isEmpty?: boolean;
   fallback?: {
@@ -23,11 +24,12 @@ export interface ProfilePartCardProps {
 export const ProfilePartCard = ({
   title,
   children,
-  editCallback,
+  ctaCallback,
   isCompleted,
+  isEmpty = !isCompleted,
+  ctaTitle = isEmpty ? 'Ajouter' : 'Modifier',
   isEditable = false,
   iaGenerated = false,
-  isEmpty = !isCompleted,
   fallback = {
     content: 'Commencez par renseigner cette partie',
     icon: <IlluBulleQuestion />,
@@ -49,7 +51,7 @@ export const ProfilePartCard = ({
     >
       <>
         <CardContent>
-          {isEmpty && isEditable ? (
+          {isEmpty ? (
             <CardEmptyContent
               content={fallback.content}
               icon={fallback.icon}
@@ -59,10 +61,10 @@ export const ProfilePartCard = ({
             children
           )}
         </CardContent>
-        {isEditable && editCallback && (
+        {ctaCallback && (
           <StyledEditButtonContainer>
-            <Button style="custom-primary-inverted" onClick={editCallback}>
-              {isEmpty ? 'Ajouter' : 'Modifier'}
+            <Button style="custom-primary-inverted" onClick={ctaCallback}>
+              {ctaTitle}
             </Button>
           </StyledEditButtonContainer>
         )}

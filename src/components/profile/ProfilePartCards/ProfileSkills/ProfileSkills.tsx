@@ -31,7 +31,7 @@ export const ProfileSkills = ({
     <ProfilePartCard
       title="Compétences clefs"
       isCompleted={isCompleted}
-      editCallback={editModal}
+      ctaCallback={editModal}
       iaGenerated
       isEditable={isEditable}
       smallCard={smallCard}

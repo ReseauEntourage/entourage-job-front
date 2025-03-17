@@ -80,9 +80,24 @@ export const Parameters = () => {
                   id={user.id}
                   ownProfile
                 />
-                <ProfileExperiences experiences={cv.experiences} isEditable />
-                <ProfileFormations formations={cv.formations} isEditable />
-                <ProfileReviews reviews={cv.reviews} isEditable />
+                <ProfileExperiences
+                  userId={user.id}
+                  userFirstName={user.firstName}
+                  experiences={cv.experiences}
+                  isEditable
+                />
+                <ProfileFormations
+                  userId={user.id}
+                  userFirstName={user.firstName}
+                  formations={cv.formations}
+                  isEditable
+                />
+                <ProfileReviews
+                  userId={user.id}
+                  userFirstName={user.firstName}
+                  reviews={cv.reviews}
+                  isEditable
+                />
               </StyledParametersLeftColumn>
               <StyledParametersRightColumn
                 className={`${isDesktop ? '' : 'mobile'}`}

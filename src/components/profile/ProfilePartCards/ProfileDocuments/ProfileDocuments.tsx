@@ -34,7 +34,7 @@ export const ProfileDocuments = ({
       title="Liens et documents"
       isCompleted={isCompleted}
       isEditable={isEditable}
-      editCallback={editModal}
+      ctaCallback={editModal}
       smallCard={smallCard}
     >
       <StyledDocumentList>

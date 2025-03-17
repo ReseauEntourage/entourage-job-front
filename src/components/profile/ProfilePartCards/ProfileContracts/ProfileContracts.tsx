@@ -37,6 +37,10 @@ export const ProfileContracts = ({
 
   const isCompleted = true;
 
+  if (!isEditable && !isCompleted) {
+    return null;
+  }
+
   return (
     <ProfilePartCard
       title="Types de contrats recherchés"

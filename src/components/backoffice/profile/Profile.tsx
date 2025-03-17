@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
@@ -19,7 +18,6 @@ import { ProfileProfessionalInformations } from 'src/components/profile/ProfileP
 import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
@@ -27,10 +25,8 @@ import {
 import { useSelectSelectedProfile } from './useSelectedProfile';
 
 export const Profile = () => {
-  const currentUserId = useSelector(selectCurrentUserId);
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
-  const ownProfile = currentUserId === selectedProfile.id;
   const description =
     'Je m’appelle Julien Petit, j’ai 47 ans et je suis un professionnel expérimenté dans les domaines de la vente, du service client et du tourisme. Désireux de relever de nouveaux défis, je m’appuie sur une solide expérience en gestion administrative, développement commercial et relation client.Au fil de ma carrière, j’ai occupé divers postes tels qu’agent de voyages, réceptionniste et commercial sédentaire, ce qui m’a permis de développer une grande polyvalence. Je maîtrise la réservation, la gestion des dossiers ainsi que les stratégies commerciales, tout en veillant à offrir un excellent service après-vente.Bilingue en français et espagnol, je possède également une bonne connaissance de l’anglais, ce qui me permet d’évoluer dans des environnements multiculturels avec aisance.';
 
@@ -50,6 +46,7 @@ export const Profile = () => {
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileProfessionalInformations
+              userFirstName={selectedProfile.firstName}
               ambitions={selectedProfile.searchAmbitions ?? []}
               businessLines={selectedProfile.searchBusinessLines ?? []}
               description={description}
@@ -84,12 +81,24 @@ export const Profile = () => {
               id={selectedProfile.id}
               ownProfile
             />
-            <ProfileExperiences experiences={[]} />
-            <ProfileFormations formations={[]} />
-            <ProfileReviews reviews={[]} />
+            <ProfileExperiences
+              userId={selectedProfile.id}
+              userFirstName={selectedProfile.firstName}
+              experiences={[]}
+            />
+            <ProfileFormations
+              userId={selectedProfile.id}
+              userFirstName={selectedProfile.firstName}
+              formations={[]}
+            />
+            <ProfileReviews
+              userId={selectedProfile.id}
+              userFirstName={selectedProfile.firstName}
+              reviews={[]}
+            />
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            {!ownProfile && <ProfileContactCard />}
+            <ProfileContactCard userId={selectedProfile.id} />
             <ProfileContracts smallCard />
             <ProfileInterests smallCard />
             <ProfileLanguages languages={[]} smallCard />

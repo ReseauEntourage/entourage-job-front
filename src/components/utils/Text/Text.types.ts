@@ -10,6 +10,7 @@ export type TextSize =
 
 export type TextVariant = 'normal' | 'italic' | 'underline';
 export type TextWeight = keyof typeof FONT_WEIGHTS;
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 
 export interface TextProps {
   children: React.ReactNode;
@@ -18,4 +19,5 @@ export interface TextProps {
   color?: keyof typeof COLORS;
   variant?: TextVariant;
   center?: boolean;
+  textAlign?: TextAlign;
 }

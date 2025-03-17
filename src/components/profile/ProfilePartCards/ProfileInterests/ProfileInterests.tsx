@@ -26,11 +26,15 @@ export const ProfileInterests = ({
     // console.log('remove skillId', skillId);
   }, []);
 
+  if (!isCompleted && !isEditable) {
+    return null;
+  }
+
   return (
     <ProfilePartCard
       title="Passions"
       isCompleted={isCompleted}
-      editCallback={editModal}
+      ctaCallback={editModal}
       iaGenerated
       isEditable={isEditable}
       smallCard={smallCard}

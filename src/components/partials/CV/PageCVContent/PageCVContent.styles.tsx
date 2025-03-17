@@ -310,6 +310,7 @@ export const StyledCVExperienceDescription = styled.div`
   color: ${COLORS.darkGray};
   border-left: 1px solid #d4d4d4;
   padding-left: 20px;
+  padding-bottom: 30px;
 
   ::before {
     content: '';

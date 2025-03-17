@@ -26,11 +26,15 @@ export const ProfileLanguages = ({
     // console.log('remove skillId', skillId);
   }, []);
 
+  if (!isCompleted && !isEditable) {
+    return null;
+  }
+
   return (
     <ProfilePartCard
       title="Langues parlées"
       isCompleted={isCompleted}
-      editCallback={editModal}
+      ctaCallback={editModal}
       iaGenerated
       isEditable={isEditable}
       smallCard={smallCard}

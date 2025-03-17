@@ -24,7 +24,7 @@ export const ProfileGeneratedDescription = ({
       title="Présentation"
       isCompleted={isCompleted}
       isEditable={isEditable}
-      editCallback={editModal}
+      ctaCallback={editModal}
       iaGenerated
       isEmpty={!description}
       fallback={{

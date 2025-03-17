@@ -193,6 +193,13 @@ export type CVStatus =
   | 'Progress'
   | 'Unknown';
 
+export interface Review {
+  id?: string;
+  name: string;
+  text: string;
+  status: string;
+}
+
 export interface CV {
   id?: string;
   version: string;
@@ -247,12 +254,7 @@ export interface CV {
     name: string;
     order: number;
   }[];
-  reviews: {
-    id?: string;
-    name: string;
-    text: string;
-    status: string;
-  }[];
+  reviews: Review[];
   formations?: CVFormation[];
   experiences?: CVExperience[];
   status: CVStatus;

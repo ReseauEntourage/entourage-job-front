@@ -1,4 +1,5 @@
 import React from 'react';
+import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { Skill } from 'src/api/types';
@@ -19,6 +20,7 @@ type BusinessLine = {
 };
 
 export interface ProfileProfessionalInformationsProps {
+  userFirstName: string;
   ambitions: Ambition[];
   businessLines: BusinessLine[];
   description: string;
@@ -27,6 +29,7 @@ export interface ProfileProfessionalInformationsProps {
 }
 
 export const ProfileProfessionalInformations = ({
+  userFirstName,
   ambitions,
   businessLines,
   description,
@@ -37,6 +40,14 @@ export const ProfileProfessionalInformations = ({
     <ProfilePartCard
       title="Informations professionnelles"
       smallCard={smallCard}
+      fallback={{
+        content: (
+          <Text>
+            {`${userFirstName} n'a pas encore renseigné ses informations professionnelles`}
+          </Text>
+        ),
+        icon: <IlluBulleQuestion />,
+      }}
     >
       <StyledContentContainer>
         <ProfileCareerPathSentence

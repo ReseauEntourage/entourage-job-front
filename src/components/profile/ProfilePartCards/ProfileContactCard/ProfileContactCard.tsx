@@ -1,16 +1,24 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { IlluConversation } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { useSelectSelectedProfile } from 'src/components/backoffice/profile/useSelectedProfile';
 import { Button, Text } from 'src/components/utils';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledContactMessage,
   StyledConversationInviteToContact,
   StyledProfileContactForm,
 } from './ProfileContactCard.styles';
 
-export const ProfileContactCard = () => {
+export interface ProfileContactCardProps {
+  userId: string;
+}
+
+export const ProfileContactCard = ({ userId }: ProfileContactCardProps) => {
+  const currentUserId = useSelector(selectCurrentUserId);
+  const isOwnProfile = userId === currentUserId;
   const selectedProfile = useSelectSelectedProfile();
   const router = useRouter();
 
@@ -18,6 +26,10 @@ export const ProfileContactCard = () => {
     router.push(`/backoffice/messaging?userId=${selectedProfile.id}`);
   };
   const isCoach = selectedProfile.role === 'Coach';
+
+  if (isOwnProfile) {
+    return null;
+  }
 
   return (
     <ProfilePartCard

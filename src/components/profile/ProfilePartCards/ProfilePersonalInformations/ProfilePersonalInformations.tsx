@@ -93,7 +93,7 @@ export const ProfilePersonalInformations = ({
       title="Informations personnelles"
       isCompleted={isCompleted}
       isEditable={isEditable}
-      editCallback={editModal}
+      ctaCallback={editModal}
       smallCard={smallCard}
       fallback={{
         content: (

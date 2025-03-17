@@ -43,6 +43,10 @@ export const ProfileCustomHelpsAndOffers = ({
       : 'Détaillez vos offres';
   }, [firstName, role, ownProfile]);
 
+  if (!isCompleted && !isEditable) {
+    return null;
+  }
+
   return (
     <ProfilePartCard
       title={title}
