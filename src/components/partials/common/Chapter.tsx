@@ -44,9 +44,9 @@ export const Chapter = ({
                 {title}
               </h2>
             )}
-            <p className="uk-margin-remove-top uk-margin-remove-bottom animate">
+            <div className="uk-margin-remove-top uk-margin-remove-bottom animate">
               {content}
-            </p>
+            </div>
             {cta && <div className="uk-flex uk-margin-medium-top">{cta}</div>}
           </div>
           {imgSrc && (

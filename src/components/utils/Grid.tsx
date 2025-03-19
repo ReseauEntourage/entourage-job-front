@@ -1,4 +1,5 @@
-import React, { useMemo, type JSX } from 'react';
+import React, { useEffect, useMemo, type JSX } from 'react';
+import UIkit from 'uikit';
 
 interface GridProps {
   match?: boolean;
@@ -11,7 +12,6 @@ interface GridProps {
   items?: JSX.Element[];
   children?: React.ReactNode;
   className?: string;
-  around?: boolean;
   top?: boolean;
   middle?: boolean;
   bottom?: boolean;
@@ -30,7 +30,6 @@ export const Grid = ({
   divider = false,
   center = false,
   between = false,
-  around = false,
   className,
   eachWidths = [],
   gap,
@@ -45,9 +44,16 @@ export const Grid = ({
   reverse = false,
   dataTestId = '',
 }: GridProps) => {
+  const gridRef = React.useRef<HTMLDivElement | null>(null);
   let classBuffer = '';
-  let gridBuffer = '';
-  if (masonry) gridBuffer += 'masonry: true';
+  const gridOptions = useMemo(() => {
+    if (masonry) {
+      return {
+        masonry: true,
+      };
+    }
+    return {};
+  }, [masonry]);
   if (childWidths) {
     classBuffer += childWidths
       .map((childWidth) => {
@@ -60,7 +66,6 @@ export const Grid = ({
   if (divider) classBuffer += ' uk-grid-divider';
   if (center) classBuffer += ' uk-flex-center';
   if (between) classBuffer += ' uk-flex-between';
-  if (around) classBuffer += ' uk-flex-around';
   if (top) classBuffer += ' uk-flex-top';
   if (middle) classBuffer += ' uk-flex-middle';
   if (bottom) classBuffer += ' uk-flex-bottom';
@@ -79,10 +84,16 @@ export const Grid = ({
     return [children];
   }, [children, items]);
 
+  useEffect(() => {
+    if (gridRef.current) {
+      UIkit.grid(gridRef.current, gridOptions);
+    }
+  }, [gridOptions]);
+
   return (
     <div
+      ref={gridRef}
       className={classBuffer}
-      data-uk-grid={gridBuffer}
       style={style}
       data-testid={dataTestId}
     >

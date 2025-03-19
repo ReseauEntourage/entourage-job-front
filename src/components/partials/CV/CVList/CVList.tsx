@@ -159,10 +159,7 @@ export const CVList = ({
               >
                 Voir plus
                 {loadingMore ? (
-                  <div
-                    style={{ color: COLORS.primaryBlue }}
-                    data-uk-spinner="ratio: .6"
-                  />
+                  <div style={{ color: COLORS.primaryBlue }} />
                 ) : (
                   <LucidIcon name="Plus" />
                 )}

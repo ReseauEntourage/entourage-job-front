@@ -212,6 +212,11 @@ const nextConfig = withLess({
       },
     ];
   },
+  compiler: {
+    styledComponents: {
+      ssr: true,
+    },
+  },
 });
 
 export default nextConfig;

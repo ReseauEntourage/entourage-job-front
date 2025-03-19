@@ -16,7 +16,6 @@ export const CloseButton = ({
     <StyledCloseButton
       className={className}
       type="button"
-      data-uk-close
       aria-label="close"
       onClick={onClick}
       data-testid={dataTestId}
