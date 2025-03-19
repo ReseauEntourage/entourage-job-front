@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useRef } from 'react';
+import {
+  Offcanvas,
+  OffcanvasRef,
+} from '@/src/components/utils/OffCanvas/Offcanvas';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { OFFCANVAS_GUEST } from 'src/constants/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { HeaderPublicContentProps } from './HeaderPublicContent.types';
@@ -14,6 +16,8 @@ import { HeaderPublicContentProps } from './HeaderPublicContent.types';
 export const HeaderPublicContentMobile = ({
   links,
 }: HeaderPublicContentProps) => {
+  const offcanvasRef = useRef<OffcanvasRef>(null);
+
   const { asPath, push } = useRouter();
 
   return (
@@ -28,11 +32,17 @@ export const HeaderPublicContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
-            <Hamburger targetId={OFFCANVAS_GUEST} />
+            <Hamburger
+              onClick={() => {
+                if (offcanvasRef.current) {
+                  offcanvasRef.current.open();
+                }
+              }}
+            />
           </div>
         }
       />
-      <Offcanvas id={OFFCANVAS_GUEST}>
+      <Offcanvas position="right" ref={offcanvasRef}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a

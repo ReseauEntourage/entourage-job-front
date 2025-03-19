@@ -63,18 +63,6 @@ const EntourageApp = (props: AppProps) => {
 
   useEffect(() => {
     const scrollToTop = (_url, { shallow }) => {
-      //* ************** */
-      /* this part should be removed if no bug is detected */
-
-      // Fix because if offcanvas is open during route change, couldn't be opened anymore
-      //  if (UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`)) {
-      //   UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
-      // }
-      // if (UIkit.offcanvas(`#${OFFCANVAS_GUEST}`)) {
-      //   UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
-      // }
-      //* ************** */
-
       if (!shallow && shouldScrollToTop) {
         setShouldScrollToTop(true);
         document?.getElementById('body')?.scrollTo(0, 0);

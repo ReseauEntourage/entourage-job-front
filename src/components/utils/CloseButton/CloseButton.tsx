@@ -10,11 +10,11 @@ interface CloseButtonProps {
 export const CloseButton = ({
   className,
   onClick,
-  dataTestId,
+  dataTestId = '',
 }: CloseButtonProps) => {
   return (
     <StyledCloseButton
-      className={className || 'uk-offcanvas-close'}
+      className={className}
       type="button"
       data-uk-close
       aria-label="close"
@@ -22,10 +22,4 @@ export const CloseButton = ({
       data-testid={dataTestId}
     />
   );
-};
-
-CloseButton.defaultProps = {
-  className: null,
-  onClick: null,
-  dataTestId: '',
 };
