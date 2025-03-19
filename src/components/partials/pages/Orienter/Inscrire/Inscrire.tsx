@@ -19,10 +19,7 @@ export const Inscrire = ({ innerRef }: { innerRef?: Ref<HTMLDivElement> }) => {
       title="Parcours tremplin de 6 mois et publication du CV"
       img="/static/img/orientation_who.jpg"
     >
-      <StyledInscrireList
-        className={isDesktop ? '' : 'mobile'}
-        data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-      >
+      <StyledInscrireList className={isDesktop ? '' : 'mobile'}>
         <li>
           <OrienterSablier />{' '}
           <div>2 heures par semaine pendant 6 mois, en présentiel</div>
@@ -34,7 +31,7 @@ export const Inscrire = ({ innerRef }: { innerRef?: Ref<HTMLDivElement> }) => {
           </div>
         </li>
       </StyledInscrireList>
-      <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
+      <div>
         <p>L’intégration du candidat au parcours Entourage Pro comprend :</p>
         <p>
           <strong>Un accompagnement personnalisé par un coach bénévole</strong>{' '}

@@ -54,16 +54,8 @@ export const ImageTitle = ({
         className={`${isDesktop ? 'desktop' : ''}`}
         textColor={textColor || 'white'}
       >
-        <H1
-          title={title}
-          color={textColor || 'white'}
-          effect="cls: uk-animation-slide-left uk-animation-fade; delay: 200;"
-        />
-        {description && (
-          <p data-uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
-            {description}
-          </p>
-        )}
+        <H1 title={title} color={textColor || 'white'} />
+        {description && <p>{description}</p>}
         {cta && !Array.isArray(cta) && (
           <Button
             style={cta.style}

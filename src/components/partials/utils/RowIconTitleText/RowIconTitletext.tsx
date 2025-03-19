@@ -31,7 +31,7 @@ export const RowIconTitleText = ({
         {subtitle && (
           <H5 title={subtitle} color="black" weight="normal" center />
         )}
-        <StyledRowIconTitleTextContainer data-uk-scrollspy="cls:uk-animation-slide-bottom; target: h6, p; delay: 200;">
+        <StyledRowIconTitleTextContainer>
           {content.map(({ title: itemTitle, paragraph, src }, index) => {
             return (
               <IconTitleTextItem

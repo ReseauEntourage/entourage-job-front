@@ -33,7 +33,7 @@ export const AiderProgrammeCoupDePouce = ({
         title="Format Coup de pouce"
         img="/static/img/aider-coup-de-pouce-tall.jpg"
       >
-        <List animated>
+        <List>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
@@ -59,7 +59,7 @@ export const AiderProgrammeCoupDePouce = ({
             <Text color="light">Disponible partout en France</Text>
           </StyledAiderProgrammesListElement>
         </List>
-        <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
+        <div>
           <p>
             En tant que coach Coup de pouce, vous tenez un rôle clé dans la
             démarche de nos candidat(e)s de retrouver un emploi ou une

@@ -26,25 +26,18 @@ export const Rejoindre = () => {
             <BulletList>
               <H6
                 title={`Habiter dans les villes / département suivants\xa0:`}
-                effect="cls:uk-animation-slide-bottom; delay: 200;"
               />
-              <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+              <p>
                 Paris (75), Hauts-de-Seine (92), Seine-Saint-Denis (93), Lille,
                 Lyon, Rennes ou Lorient
               </p>
             </BulletList>
             <BulletList>
-              <H6
-                title="Avoir entre 18 et 30 ans"
-                effect="cls:uk-animation-slide-bottom; delay: 200;"
-              />
+              <H6 title="Avoir entre 18 et 30 ans" />
             </BulletList>
             <BulletList>
-              <H6
-                title="Avoir le droit de travailler en France"
-                effect="cls:uk-animation-slide-bottom; delay: 200;"
-              />
-              <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+              <H6 title="Avoir le droit de travailler en France" />
+              <p>
                 (disposer d’une pièce d’identité ou titre de séjour avec une
                 autorisation de travail, avoir une domiciliation, un compte
                 bancaire et une attestation de Sécurité Sociale)

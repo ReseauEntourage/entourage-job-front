@@ -40,44 +40,32 @@ export const Participer = () => {
           )}
           <ul>
             <CheckList>
-              <H6
-                title="Un coach Entourage Pro qui vous accompagne pendant 6 mois"
-                data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-              />
-              <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+              <H6 title="Un coach Entourage Pro qui vous accompagne pendant 6 mois" />
+              <p>
                 Le coach vous soutient à chaque étape de votre recherche
                 d’emploi et pendant votre intégration en entreprise (1 rencontre
                 / semaine).
               </p>
             </CheckList>
             <CheckList>
-              <H6
-                title="De nouvelles opportunités professionnelles"
-                data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-              />
-              <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+              <H6 title="De nouvelles opportunités professionnelles" />
+              <p>
                 Une large proposition d’offres d’emploi, de contacts et de
                 conseils grâce à notre communauté d’entreprises et de citoyens
                 engagés.
               </p>
             </CheckList>
             <CheckList>
-              <H6
-                title="Un CV qui vous ressemble et une nouvelle visibilité "
-                data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-              />
-              <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+              <H6 title="Un CV qui vous ressemble et une nouvelle visibilité " />
+              <p>
                 Le CV Entourage Pro valorise votre parcours quel qu’il soit et
                 vos qualités et vous rend visible auprès des entreprises grâce
                 aux partages sur les réseaux sociaux professionnels.
               </p>
             </CheckList>
             <CheckList>
-              <H6
-                title="Des ateliers selon vos besoins"
-                data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-              />
-              <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+              <H6 title="Des ateliers selon vos besoins" />
+              <p>
                 Se préparer aux échanges professionnels, apprendre à activer son
                 réseau, prendre confiance en soi, adopter la bonne posture en
                 entretien etc.

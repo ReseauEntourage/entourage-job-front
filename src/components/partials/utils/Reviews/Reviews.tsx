@@ -26,7 +26,7 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
   return (
     <Section id="reviews" style="default">
       <H2 title={title} color="black" center />
-      <StyledReviewContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .review-card; delay: 200">
+      <StyledReviewContainer>
         {reviews.map(
           (
             {

@@ -43,7 +43,7 @@ export const SimpleCardsImageCTA = ({
           </Text>
         </StyledSimpleCardsImageCTASubtitle>
       )}
-      <StyledSimpleCardsImageCTAContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .decouvrir-card; delay: 200">
+      <StyledSimpleCardsImageCTAContainer>
         {cards.map((card) => {
           const uuidValue = uuid();
           return (

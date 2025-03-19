@@ -28,7 +28,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
               title="Publication du CV sans parcours d’accompagnement"
             />
           )}
-          <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
+          <ul>
             <li>
               <SablierIcon /> <div>Accompagnement à distance</div>
             </li>
@@ -39,7 +39,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
               </div>
             </li>
           </ul>
-          <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
+          <div>
             <p>
               <strong>
                 Ce format inclut donc essentiellement l’accès à la plateforme

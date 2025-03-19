@@ -64,7 +64,7 @@ export const TravaillerProgrammeCoupDePouce = ({
         title="Format Coup de pouce"
         img="/static/img/travailler-coup-de-pouce-tall.png"
       >
-        <List animated>
+        <List>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
@@ -90,7 +90,7 @@ export const TravaillerProgrammeCoupDePouce = ({
             <Text color="light">Disponible partout en France</Text>
           </StyledAiderProgrammesListElement>
         </List>
-        <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
+        <div>
           <p>
             Le format Coup de pouce vous permet de solliciter et de bénéficier
             de coups de pouce ponctuels pour vous aider dans votre recherche
@@ -100,7 +100,7 @@ export const TravaillerProgrammeCoupDePouce = ({
             Une véritable communauté d’experts bénévoles est à votre disposition
             pour vous proposer :
           </p>
-          <List animated>
+          <List>
             <StyledAiderProgrammesListElement
               className={isDesktop ? '' : 'mobile'}
             >

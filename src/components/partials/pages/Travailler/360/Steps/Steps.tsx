@@ -10,13 +10,8 @@ export const Steps = () => {
       <H2 title="Les grandes étapes du format 360" />
       <StyledSteps>
         <div className="cell">
-          <div
-            className="strong"
-            data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-          >
-            Nous nous rencontrons dans nos locaux
-          </div>
-          <div data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+          <div className="strong">Nous nous rencontrons dans nos locaux</div>
+          <div>
             Vous vous inscrivez à une réunion pour en apprendre plus sur notre
             programmme et valider votre envie d’y participer
           </div>
@@ -24,26 +19,20 @@ export const Steps = () => {
         <div className="cell empty" />
         <div className="cell empty" />
         <div className="cell">
-          <div
-            className="strong"
-            data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-          >
+          <div className="strong">
             Nous validons votre participation en échange individuel
           </div>
-          <div data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+          <div>
             Après avoir participé à la reunion d’information, nous prenons un
             RDV pour approfondir vos besoins et confirmer ensemble votre
             participation au format 360.
           </div>
         </div>
         <div className="cell">
-          <div
-            className="strong"
-            data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-          >
+          <div className="strong">
             Nous trouvons un coach bénévole pour vous accompagner
           </div>
-          <div data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+          <div>
             Nous programmons la première rencontre avec votre coach. Celle-ci se
             fait dans les locaux de votre ville, selon vos disponibilités.
           </div>
@@ -51,13 +40,8 @@ export const Steps = () => {
         <div className="cell empty" />
         <div className="cell empty" />
         <div className="cell">
-          <div
-            className="strong"
-            data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-          >
-            Le parcours commence !!
-          </div>
-          <div data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
+          <div className="strong">Le parcours commence !!</div>
+          <div>
             Nous vous accompagnons pendant 6 mois, à chaque étape de votre
             recherche d’emploi.
           </div>

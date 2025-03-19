@@ -66,7 +66,7 @@ export const TravaillerProgramme360 = ({
         img="/static/img/travailler-360-tall.png"
         reverse
       >
-        <List animated>
+        <List>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
@@ -101,7 +101,7 @@ export const TravaillerProgramme360 = ({
             </Text>
           </StyledAiderProgrammesListElement>
         </List>
-        <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
+        <div>
           <p>
             Le format 360 vous propose un accompagnement personnalisé de 6 mois
             avec un coach dédié.
@@ -117,7 +117,7 @@ export const TravaillerProgramme360 = ({
             Vous pourrez compter sur votre coach pour vous conseiller notamment
             sur les thématiques suivantes :
           </p>
-          <List animated>
+          <List>
             <StyledAiderProgrammesListElement
               className={isDesktop ? '' : 'mobile'}
             >

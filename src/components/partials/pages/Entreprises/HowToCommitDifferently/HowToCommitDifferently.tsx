@@ -22,7 +22,6 @@ export const HowToCommitDifferently = () => {
         color="black"
       />
       <MultipleCTA
-        animate
         spacing="large"
         className="uk-margin-medium-top"
         data={[

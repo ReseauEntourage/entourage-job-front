@@ -33,7 +33,7 @@ export const AiderProgramme360 = ({
         img="/static/img/aider-360-tall.jpg"
         reverse
       >
-        <List animated>
+        <List>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
@@ -62,7 +62,7 @@ export const AiderProgramme360 = ({
             </Text>
           </StyledAiderProgrammesListElement>
         </List>
-        <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
+        <div>
           <p>
             Le format 360, c’est une démarche collaborative et engageante pour
             un impact significatif dans la vie des candidat(e)s.
