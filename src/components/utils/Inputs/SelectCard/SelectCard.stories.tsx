@@ -65,7 +65,7 @@ const disabledOptionMessage = (
   <>
     <Text size="small" weight="bold">
       Pour l&apos;instant, le Format 360 est uniquement disponible pour les
-      moins de 30 ans résidant dans certaines villes et département définies
+      moins de 25 ans résidant dans certaines villes et département définies
     </Text>
     <Text size="small" variant="italic">
       (Paris, Seine-Saint-Denis, Hauts-de-Seine, Lille, Lyon et Rennes).

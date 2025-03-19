@@ -23,6 +23,7 @@ import {
   LinkedUserInformationCard,
   UserInformationCard,
 } from './UserInformationCard';
+import { DeleteAccountCard } from './UserInformationCard/DeleteAccountCard/DeleteAccountCard';
 
 export const ParametresLayout = () => {
   const isDesktop = useIsDesktop();
@@ -80,6 +81,10 @@ export const ParametresLayout = () => {
                 <LinkedUserInformationCard />
               </>
             )}
+            {isRoleIncluded(
+              [USER_ROLES.COACH, USER_ROLES.CANDIDATE, USER_ROLES.REFERER],
+              user.role
+            ) && <DeleteAccountCard />}
           </StyledParametresRightColumn>
         </StyledBackofficeGrid>
       </Section>

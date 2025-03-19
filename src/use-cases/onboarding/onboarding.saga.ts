@@ -1,119 +1,142 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
-import {
-  currentUserActions,
-  selectAuthenticatedUser,
-  selectCurrentUserId,
-  selectCurrentUserProfile,
-  selectCurrentUserProfileHelps,
-} from '../current-user';
+import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
-import { USER_ROLES } from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils';
+import { DocumentNames } from 'src/constants';
+import {
+  selectOnboardingCurrentStep,
+  selectOnboardingData,
+  selectUserRoleOnboarding,
+} from './onboarding.selectors';
 import { slice } from './onboarding.slice';
+import {
+  findNextNotSkippableStep,
+  parseOnboadingProfileFields,
+} from './onboarding.utils';
 
 const {
   setOnboardingStep,
+  sendStepDataOnboardingRequested,
+  sendStepDataOnboardingSucceeded,
+  sendStepDataOnboardingFailed,
+  setOnboardingIsLoading,
   launchOnboarding,
-  validateFirstSecondStepOnboardingRequested,
-  validateFirstSecondStepOnboardingSucceeded,
-  validateFirstSecondStepOnboardingFailed,
-  validateLastStepOnboardingRequested,
-  validateLastStepOnboardingSucceeded,
-  validateLastStepOnboardingFailed,
-  increaseOnboardingStep,
   endOnboarding,
+  setOnboardingCurrentStepData,
 } = slice.actions;
 
 export function* launchOnboardingSaga() {
   const currentUser = yield* select(selectAuthenticatedUser);
-  const userProfile = yield* select(selectCurrentUserProfile);
-  const userRole = currentUser.role;
-  const userHelps = yield* select(selectCurrentUserProfileHelps);
-  const candidateWithBusinessLine =
-    userRole === USER_ROLES.CANDIDATE &&
-    userProfile.searchBusinessLines &&
-    userProfile.searchBusinessLines.length > 0;
-  const coachWithBusinessLine =
-    userRole === USER_ROLES.COACH &&
-    userProfile.networkBusinessLines &&
-    userProfile.networkBusinessLines.length > 0;
-  const onBoardingDone =
-    (candidateWithBusinessLine || coachWithBusinessLine) &&
-    userProfile.description;
 
-  // if admin or external Coach, no Onboarding
-  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.REFERER], userRole)) {
-    yield* put(endOnboarding());
-  }
-
-  // if no helps, step 1
-  if (!userHelps || userHelps.length === 0) {
-    yield* put(setOnboardingStep(1));
-  } else if (onBoardingDone) {
-    yield* put(endOnboarding());
-  } else {
-    yield* put(setOnboardingStep(2));
-  }
+  const nextStep = findNextNotSkippableStep(0, currentUser);
+  yield* put(setOnboardingStep(nextStep));
 }
 
-export function* validateFirstSecondStepOnboardingSaga(
-  action: ReturnType<typeof validateFirstSecondStepOnboardingRequested>
-) {
-  const userId = yield* select(selectCurrentUserId);
-  const { userProfile } = action.payload;
+export function* sendStepDataOnboardingSaga() {
+  const data = yield* select(selectOnboardingData);
+  const userRole = yield* select(selectUserRoleOnboarding);
+  const currentStep = yield* select(selectOnboardingCurrentStep);
+  const user = yield* select(selectAuthenticatedUser);
+
+  const { id: userId } = user;
+
+  if (!userRole) {
+    throw new Error('User role is not defined in onboarding state');
+  }
+
+  const stepData = data[currentStep]?.[userRole];
+  const {
+    externalCv,
+    hasAcceptedEthicsCharter,
+    nationality,
+    accommodation,
+    hasSocialWorker,
+    resources,
+    studiesLevel,
+    workingExperience,
+    jobSearchDuration,
+    ...otherData
+  } = stepData;
+
+  const socialSituationFields = {
+    nationality,
+    accommodation,
+    hasSocialWorker,
+    resources,
+    studiesLevel,
+    workingExperience,
+    jobSearchDuration,
+  };
+
+  const userProfileFields = parseOnboadingProfileFields(otherData);
   try {
-    yield* call(() => Api.putUserProfile(userId, userProfile));
-    yield* put(validateFirstSecondStepOnboardingSucceeded());
-    // If user has uploaded an external CV, upload it
-    if (action.payload.externalCv) {
+    yield* call(() => Api.putUserProfile(userId, userProfileFields));
+
+    // Check if step contains externalCv and user has uploaded one, upload it
+    if (externalCv) {
       const formData = new FormData();
-      formData.append('file', action.payload.externalCv);
+      formData.append('file', externalCv);
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
     }
-    yield* put(currentUserActions.fetchUserRequested());
-    yield* put(increaseOnboardingStep());
+
+    // Check if user has accepted the ethics charter
+    if (hasAcceptedEthicsCharter === true) {
+      yield* call(() =>
+        Api.postReadDocument(
+          { documentName: DocumentNames.CharteEthique },
+          userId
+        )
+      );
+    }
+
+    if (Object.keys(stepData).includes('nationality')) {
+      yield* call(() =>
+        Api.updateUserSocialSituation(userId, {
+          hasCompletedSurvey: true,
+          ...socialSituationFields,
+        })
+      );
+    }
+
+    yield* put(sendStepDataOnboardingSucceeded());
+    const nextStep = findNextNotSkippableStep(currentStep, user);
+    yield* put(setOnboardingStep(nextStep));
+    if (currentStep === nextStep) {
+      yield* put(endOnboarding());
+    }
+
+    const isLastStep = nextStep === currentStep; // If next step is the same as the current step, it means we are on the last step
+    if (isLastStep) {
+      // Refresh the user to get the updated data
+      yield* put(currentUserActions.fetchUserRequested());
+    }
   } catch {
-    yield* put(validateFirstSecondStepOnboardingFailed());
+    yield* put(
+      sendStepDataOnboardingFailed({
+        error: 'NOT_SAVE_DATA',
+      })
+    );
   }
 }
 
-export function* validateLastStepOnboardingSaga(
-  action: ReturnType<typeof validateLastStepOnboardingRequested>
-) {
-  const user = yield* select(selectAuthenticatedUser);
-  const { userProfile, optinNewsletter } = action.payload;
+export function* setOnboardingCurrentStepDataSaga() {
+  yield* put(setOnboardingIsLoading(true));
+  yield* put(sendStepDataOnboardingRequested());
+}
 
-  try {
-    // Update user profile with new data
-    yield* call(() => Api.putUserProfile(user.id, userProfile));
-
-    // If user optin for newsletter, call api to set OK to receive newsletter
-    if (optinNewsletter) {
-      // Call api to set OK to receive newsletter
-      yield* call(() => {
-        Api.postNewsletter({
-          email: user.email,
-          zone: user.zone,
-          status: user.candidat ? 'CANDIDAT' : 'PARTICULIER',
-        });
-      });
-    }
-    yield* put(validateLastStepOnboardingSucceeded());
-    yield* put(currentUserActions.fetchUserRequested());
-    yield* put(endOnboarding());
-  } catch {
-    yield* put(validateLastStepOnboardingFailed());
-  }
+export function* setOnboardingStepSaga() {
+  // Necessary to force render of form on step change
+  yield* put(setOnboardingIsLoading(false));
 }
 
 export function* saga() {
   yield* takeLatest(launchOnboarding, launchOnboardingSaga);
   yield* takeLatest(
-    validateFirstSecondStepOnboardingRequested,
-    validateFirstSecondStepOnboardingSaga
+    sendStepDataOnboardingRequested,
+    sendStepDataOnboardingSaga
   );
   yield* takeLatest(
-    validateLastStepOnboardingRequested,
-    validateLastStepOnboardingSaga
+    setOnboardingCurrentStepData,
+    setOnboardingCurrentStepDataSaga
   );
+  yield* takeLatest(setOnboardingStep, setOnboardingStepSaga);
 }

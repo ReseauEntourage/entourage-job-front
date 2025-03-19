@@ -18,7 +18,9 @@ import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
+import { gaEvent } from 'src/lib/gtag';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledEditPictureIconContainer,
@@ -72,10 +74,12 @@ export const HeaderProfileMobile = ({
   };
 
   const openProCv = () => {
+    gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC);
     window.open(`/cv/${cvUrl}`, '_blank');
   };
 
   const openExternalCv = () => {
+    gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC);
     Api.getExternalCvByUser(id).then((response) => {
       const externalCvUrl = response.data;
       window.open(externalCvUrl.url, '_blank');
@@ -123,7 +127,6 @@ export const HeaderProfileMobile = ({
                       {firstName} {lastName}
                     </>
                   }
-                  color="black"
                 />
                 <Tag
                   content={

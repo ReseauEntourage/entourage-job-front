@@ -1,21 +1,28 @@
-import React, { useEffect } from 'react';
-import Modal from 'react-modal';
+import React, { useEffect, useMemo } from 'react';
+import ReactModal from 'react-modal';
 import { useModalContext } from 'src/components/modals/Modal/ModalContext';
+import { BREAKPOINTS } from 'src/constants/styles';
+import { ModalSize } from './Modal.types';
+import { StyledModal } from './Modals.styles';
 
-Modal.setAppElement('#__next');
+ReactModal.setAppElement('#__next');
 
 interface CustomModalProps {
+  id: string;
   children: React.ReactNode;
   closeOnNextRender?: boolean;
   className?: string;
-  fullWidth?: boolean;
+  size: ModalSize;
+  removePadding: boolean;
 }
 
 const CustomModal = ({
+  id = 'modal-screen',
   children,
   closeOnNextRender = false,
   className,
-  fullWidth = false,
+  size,
+  removePadding,
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
 
@@ -25,9 +32,19 @@ const CustomModal = ({
     }
   }, [closeOnNextRender, onClose]);
 
+  const width = useMemo(() => {
+    const sizes = {
+      small: '500px',
+      medium: '750px',
+      large: `${BREAKPOINTS.desktop}px`,
+      expand: '100%',
+    };
+    return sizes[size];
+  }, [size]);
+
   return (
-    <Modal
-      id="modal-screen"
+    <ReactModal
+      id={id}
       closeTimeoutMS={200}
       onAfterOpen={() => {
         // Fix to make modal scroll to top on open
@@ -46,6 +63,8 @@ const CustomModal = ({
           overflowY: 'auto',
         },
         content: {
+          marginTop: 'auto',
+          marginBottom: 'auto',
           top: 'auto',
           bottom: 'auto',
           left: 'auto',
@@ -57,7 +76,6 @@ const CustomModal = ({
           justifyContent: 'center',
           padding: 0,
           backgroundColor: 'transparent',
-          width: fullWidth ? '100%' : 'inherit',
         },
       }}
       shouldCloseOnOverlayClick={false}
@@ -69,15 +87,14 @@ const CustomModal = ({
         if (onClose) onClose();
       }}
     >
-      <div
-        className={`uk-background-default ${className} ${
-          fullWidth ? 'uk-width-expand' : ''
-        } uk-border-rounded`}
-        style={{ margin: 15, position: 'relative' }}
+      <StyledModal
+        className={className}
+        width={width}
+        removePadding={removePadding}
       >
         {children}
-      </div>
-    </Modal>
+      </StyledModal>
+    </ReactModal>
   );
 };
 

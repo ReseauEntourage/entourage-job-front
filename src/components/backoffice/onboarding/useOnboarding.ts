@@ -1,73 +1,105 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { RegistrableUserRole, USER_ROLES } from 'src/constants/users';
+import { selectAuthenticatedUser } from 'src/use-cases/current-user';
 import {
   onboardingActions,
-  selectCurrentOnboardingStep,
-  validateLastStepOnboardingSelectors,
+  selectIsOnboardingLoading,
+  selectOnboardingCurrentStep,
+  selectOnboardingCurrentStepContent,
+  selectOnboardingCurrentStepData,
+  selectOnboardingDataFromOtherStep,
 } from 'src/use-cases/onboarding';
-import { FlattenedOnboardingFormData } from './Onboarding.types';
-import { parseOnboadingProfileFields } from './Onboarding.utils';
+import {
+  findNextNotSkippableStep,
+  findPreviousNotSkippableStep,
+} from 'src/use-cases/onboarding/onboarding.utils';
+import {
+  onboardingAlreadyCompleted,
+  OnboardingFormData,
+} from './Onboarding.types';
 
 export const useOnboarding = () => {
   const dispatch = useDispatch();
 
-  const onboardingCurrentStep = useSelector(selectCurrentOnboardingStep);
+  const currentStep = useSelector(selectOnboardingCurrentStep);
+  const isOnboardingLoading = useSelector(selectIsOnboardingLoading);
+  const stepData = useSelector(selectOnboardingCurrentStepData);
+  const stepContent = useSelector(selectOnboardingCurrentStepContent);
+  const valuesFromOtherStep = useSelector(selectOnboardingDataFromOtherStep);
+  const authenticatedUser = useSelector(selectAuthenticatedUser);
+
+  const isFirstOnboardingStep = useMemo(() => {
+    const firstStep = findNextNotSkippableStep(0, authenticatedUser);
+    return currentStep === firstStep;
+  }, [authenticatedUser, currentStep]);
 
   useEffect(() => {
-    dispatch(onboardingActions.launchOnboarding());
-  }, [dispatch]);
-
-  const onSubmitLastStepOnboarding = useCallback(
-    (fields: Partial<FlattenedOnboardingFormData>) => {
-      const profileFieldsToSend = parseOnboadingProfileFields(fields);
+    // If user is not an admin, launch onboarding
+    const hasAllRequiredFields =
+      onboardingAlreadyCompleted[authenticatedUser.role](authenticatedUser);
+    if (
+      (authenticatedUser?.role === USER_ROLES.CANDIDATE ||
+        authenticatedUser?.role === USER_ROLES.COACH) &&
+      !hasAllRequiredFields
+    ) {
       dispatch(
-        onboardingActions.validateLastStepOnboardingRequested({
-          userProfile: profileFieldsToSend,
-          optinNewsletter: fields.optinNewsletter || false,
-        })
+        onboardingActions.launchOnboarding(
+          authenticatedUser.role as RegistrableUserRole
+        )
+      );
+    } else {
+      dispatch(onboardingActions.endOnboarding());
+    }
+  }, [dispatch, authenticatedUser]);
+
+  const onSubmitStepForm = useCallback(
+    (fields: OnboardingFormData) => {
+      const fieldsKeys = Object.keys(fields);
+      let onboardingFields = fields;
+
+      if (valuesFromOtherStep) {
+        onboardingFields = fieldsKeys.reduce((acc, curr) => {
+          if (!Object.keys(valuesFromOtherStep).includes(curr)) {
+            return {
+              ...acc,
+              [curr]: fields[curr],
+            };
+          }
+          return acc;
+        }, {} as OnboardingFormData);
+      }
+
+      dispatch(
+        onboardingActions.setOnboardingCurrentStepData(onboardingFields)
       );
     },
-    [dispatch]
-  );
-
-  const onSubmitFirstSecondStepOnboarding = useCallback(
-    (fields: Partial<FlattenedOnboardingFormData>) => {
-      const fieldsToSend = parseOnboadingProfileFields(fields);
-      dispatch(
-        onboardingActions.validateFirstSecondStepOnboardingRequested({
-          userProfile: fieldsToSend,
-          externalCv: fields.externalCv || undefined,
-        })
-      );
-    },
-    [dispatch]
+    [dispatch, valuesFromOtherStep]
   );
 
   const onBeforeStep = useCallback(() => {
-    dispatch(onboardingActions.decreaseOnboardingStep());
-  }, [dispatch]);
-
-  const validateLastStepOnboardingStatus = useSelector(
-    validateLastStepOnboardingSelectors.selectValidateLastStepOnboardingStatus
-  );
-
-  useEffect(() => {
-    if (validateLastStepOnboardingStatus === ReduxRequestEvents.SUCCEEDED) {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'success',
-          message: 'Profil complété avec succès',
-        })
-      );
+    const previousStep = findPreviousNotSkippableStep(
+      currentStep,
+      authenticatedUser
+    );
+    if (previousStep !== currentStep) {
+      dispatch(onboardingActions.setOnboardingStep(previousStep));
     }
-  }, [validateLastStepOnboardingStatus, dispatch]);
+  }, [authenticatedUser, currentStep, dispatch]);
+
+  const defaultValues = {
+    ...valuesFromOtherStep,
+    ...(stepContent?.defaultValues?.(authenticatedUser) || {}),
+  };
 
   return {
-    onboardingCurrentStep,
-    onSubmitLastStepOnboarding,
-    onSubmitFirstSecondStepOnboarding,
+    currentStep,
     onBeforeStep,
+    isOnboardingLoading,
+    stepContent,
+    stepData,
+    defaultValues,
+    isFirstOnboardingStep,
+    onSubmitStepForm,
   };
 };

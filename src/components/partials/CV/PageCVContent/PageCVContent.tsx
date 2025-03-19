@@ -247,7 +247,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Informations" color={COLORS.black} />
+                <H2 title="Informations" />
                 <LucidIcon
                   name="ChevronDown"
                   color={COLORS.primaryBlue}
@@ -357,7 +357,7 @@ export const PageCVContent = ({
                     });
                   }}
                 >
-                  <H2 title="Expériences" color={COLORS.black} />
+                  <H2 title="Expériences" />
                   {!isDesktop && (
                     <LucidIcon
                       name="ChevronDown"
@@ -410,7 +410,7 @@ export const PageCVContent = ({
                     });
                   }}
                 >
-                  <H2 title="Formation" color={COLORS.black} />
+                  <H2 title="Formation" />
                   {!isDesktop && (
                     <LucidIcon
                       name="ChevronDown"
@@ -453,7 +453,7 @@ export const PageCVContent = ({
               }`}
             >
               {isDesktop ? (
-                <H4 title="Mes passions" color={COLORS.black} />
+                <H4 title="Mes passions" />
               ) : (
                 <StyledTitleAccordion
                   onClick={() => {
@@ -463,7 +463,7 @@ export const PageCVContent = ({
                     });
                   }}
                 >
-                  <H2 title="Mes passions" color={COLORS.black} />
+                  <H2 title="Mes passions" />
                   <LucidIcon
                     name="ChevronDown"
                     color={COLORS.primaryBlue}

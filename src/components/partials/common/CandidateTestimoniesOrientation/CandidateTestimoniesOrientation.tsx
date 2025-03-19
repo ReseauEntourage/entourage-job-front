@@ -57,7 +57,6 @@ export const CandidateTestimoniesOrientation = ({
             )
           }
           center
-          color="black"
         />
       )}
       <div className="uk-flex uk-flex-center uk-margin-large-top">

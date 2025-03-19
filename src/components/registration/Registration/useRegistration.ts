@@ -105,10 +105,10 @@ export function useRegistration() {
         }
       }
 
-      const organizationFieldsKeys = ['nameOrganization'];
+      const excludedFieldsKeys = ['nameOrganization', 'acceptCGU'];
       // Compute registration fields to store but exclude organization fields
       let registrationFields = fieldsKeys.reduce((acc, curr) => {
-        if (!organizationFieldsKeys.includes(curr)) {
+        if (!excludedFieldsKeys.includes(curr)) {
           return {
             ...acc,
             [curr]: fields[curr],
@@ -120,7 +120,7 @@ export function useRegistration() {
         registrationFields = fieldsKeys.reduce((acc, curr) => {
           if (
             !Object.keys(valuesFromOtherStep).includes(curr) &&
-            !organizationFieldsKeys.includes(curr)
+            !excludedFieldsKeys.includes(curr)
           ) {
             return {
               ...acc,

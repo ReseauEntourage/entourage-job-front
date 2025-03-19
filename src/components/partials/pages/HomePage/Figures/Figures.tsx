@@ -58,7 +58,8 @@ export const Figures = () => {
   const isDesktop = useIsDesktop();
   return (
     <Section id="profiles">
-      <H2 title="Et le mieux c'est que ça marche" color="black" center />
+      <H2 title="Et le mieux c'est que ça marche" center />
+      <br />
       <StyledFiguresSubtitle>
         <Text size="large" center>
           Nos candidat(e)s et nos coachs peuvent en témoigner. Les chiffres

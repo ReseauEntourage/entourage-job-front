@@ -495,8 +495,6 @@ export const EXTERNAL_LINKS = {
   LKO_VG_CONTEST: 'https://www.linkedout-vendeeglobe.com/vendeearctique',
   LKO_BLOG: 'https://entourage.social/blog',
   ENTOURAGE: 'https://www.entourage.social',
-  LEGAL_MENTIONS:
-    'https://docs.google.com/document/d/1a1IU9Y6qVDr4pvWJRE5XMVZ2fNhg0rhXMTL_lqY_f1M/pub',
   ARTICLE_BC: 'https://blog.entourage.social/2020/06/22/benevole-coach/',
   ARTICLE_TJV:
     'https://entourage.social/blog/le-bateau-linkedout-vainqueur-de-la-transat-jacques-vabre',

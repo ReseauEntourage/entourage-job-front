@@ -62,7 +62,7 @@ export const NousSoutenir = () => {
   const isDesktop = useIsDesktop();
   return (
     <Section>
-      <H2 center color="black" title="Nous soutenir" />
+      <H2 center title="Nous soutenir" />
       <StyledNousSoutenirCardsContainer>
         {content.map((item) => {
           const uuid = uuidV4();

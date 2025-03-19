@@ -106,6 +106,23 @@ pnpm install
 pnpm run dev
 ```
 
+### Lancement en mode développement (utilisable sur le réseau local)
+
+Pratique pour tester l'application sur mobile.
+
+- Créer un fichier `.env.network` :
+
+```
+SERVER_URL=http://192.168.1.35:3001/
+API_URL=http://192.168.1.35:3002/
+```
+
+- Remplacer l'adresse IP par votre IP locale sur votre réseau
+
+- Lancer l'application avec `yarn dev:network`
+
+- Accéder à l'application sur un autre appareil en utilisant l'url `http://192.168.1.35:3001/`
+
 ### Lancement en mode production
 
 Pour le moment sans Docker

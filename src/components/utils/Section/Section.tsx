@@ -4,7 +4,6 @@ import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from 'src/components/variables';
 
 interface SectionProps {
   style?: UIKIT_STYLES;
-
   size?: UIKIT_SECTION_SIZES;
   id?: string;
   children: JSX.Element | JSX.Element[] | React.ReactNode;

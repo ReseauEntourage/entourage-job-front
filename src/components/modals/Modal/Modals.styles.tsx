@@ -1,44 +1,31 @@
 import styled from 'styled-components';
-import { COLORS, BREAKPOINTS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+
+export const StyledModal = styled.div`
+  background: ${COLORS.white};
+  border-radius: 5px;
+  margin: 15px;
+  ${({ removePadding }) => (removePadding ? `padding: 0;` : 'padding: 20px;')}
+
+  position: 'relative';
+
+  // Default is full screen
+  width: 100%;
+
+  // On desktop, we can set a custom width
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    ${({ width }) => width && `width: ${width};`}
+    padding: 80px;
+  }
+`;
 
 export const StyledHeaderModal = styled.div`
-  .title-container {
-    width: 100%;
-    border-bottom: 1px solid ${COLORS.primaryBlue};
-    h3 {
-      width: 100%;
-      text-align: center;
-      padding: 20px 24px;
-      box-sizing: border-box;
-      margin-bottom: 0;
-      font-size: 24px;
-      @media screen and (max-width: ${BREAKPOINTS.desktop - 1}px) {
-        font-size: 16px;
-        padding: 12px 24px 20px;
-      }
-    }
-  }
-  .description-container {
-    padding: 20px 0;
-    text-align: center;
-    font-family: Poppins, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: ${COLORS.darkGray};
-    > div {
-      max-width: 90%;
-      display: block;
-      margin: auto;
-      p {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  :not(.uk-padding-remove) .simple-margin {
-    margin-bottom: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid ${COLORS.gray};
+  margin-bottom: 40px;
 `;
 
 export const StyledModalContent = styled.div`

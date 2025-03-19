@@ -19,7 +19,6 @@ export const HowToCommitDifferently = () => {
           </>
         }
         center
-        color="black"
       />
       <MultipleCTA
         spacing="large"

@@ -1,79 +1,59 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import {
+  StyledOnboardingSpinnerContainer,
+  StyledStepContainer,
+} from '../Onboarding.styles';
 import { useOnboarding } from '../useOnboarding';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
-import { OnboardingHelpsForm } from './forms/OnboardingHelpsForm';
-import { OnboardingJobForm } from './forms/OnboardingJobForm';
-import { OnboardingProfileForm } from './forms/OnboardingProfileForm';
+import { Spinner } from 'src/components/utils/Spinner';
 
 export const Onboarding = () => {
   const {
-    onboardingCurrentStep,
-    onSubmitLastStepOnboarding,
-    onSubmitFirstSecondStepOnboarding,
+    isOnboardingLoading,
+    stepContent,
+    defaultValues,
+    isFirstOnboardingStep,
+    onSubmitStepForm,
     onBeforeStep,
+    currentStep,
+    stepData,
   } = useOnboarding();
 
-  const modals = useMemo(() => {
-    if (!onSubmitFirstSecondStepOnboarding || !onSubmitLastStepOnboarding) {
-      return null;
-    }
-    return [
-      {
-        // if step = 0, no modal
-        text: {},
-        content: null,
-      },
-      {
-        text: {
-          title: 'A vous de jouer',
-          description: 'Sélectionnez le ou les coups de pouce',
-        },
-        content: (
-          <OnboardingHelpsForm onSubmit={onSubmitFirstSecondStepOnboarding} />
-        ),
-      },
-      {
-        text: {
-          title: 'Complétez votre profil',
-          description:
-            "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-        },
-        content: (
-          <OnboardingJobForm
-            onSubmit={onSubmitFirstSecondStepOnboarding}
-            onBeforeStep={onBeforeStep}
-          />
-        ),
-      },
-      {
-        text: {
-          title: 'Complétez votre profil',
-          description:
-            "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-        },
-        content: (
-          <OnboardingProfileForm
-            onSubmit={onSubmitLastStepOnboarding}
-            onBeforeStep={onBeforeStep}
-          />
-        ),
-      },
-    ];
-  }, [
-    onSubmitFirstSecondStepOnboarding,
-    onSubmitLastStepOnboarding,
-    onBeforeStep,
-  ]);
-
-  if (!modals?.[onboardingCurrentStep].content) return null; // to avoid undefined
+  if (currentStep === 0) {
+    return null;
+  }
 
   return (
     <ModalGeneric
-      title={modals?.[onboardingCurrentStep].text.title}
-      description={modals?.[onboardingCurrentStep].text.description}
+      title={stepContent?.title || ''}
+      description={stepContent?.subtitle || ''}
+      size="large"
       noCloseIcon
     >
-      {modals?.[onboardingCurrentStep].content}
+      {!isOnboardingLoading && (
+        <StyledStepContainer>
+          {stepContent?.content}
+          {stepContent?.form && (
+            <FormWithValidation
+              formSchema={stepContent.form}
+              defaultValues={{
+                ...(defaultValues || {}),
+                ...(stepData || {}),
+              }}
+              onSubmit={onSubmitStepForm}
+              submitText="Suivant"
+              cancelText="Précédent"
+              {...(!isFirstOnboardingStep ? { onCancel: onBeforeStep } : {})}
+            />
+          )}
+        </StyledStepContainer>
+      )}
+      {isOnboardingLoading && (
+        <StyledOnboardingSpinnerContainer>
+          <Spinner />
+        </StyledOnboardingSpinnerContainer>
+      )}
     </ModalGeneric>
   );
 };

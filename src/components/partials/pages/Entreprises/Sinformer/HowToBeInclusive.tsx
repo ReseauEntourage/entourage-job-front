@@ -67,11 +67,7 @@ export const HowToBeInclusive = () => {
   return (
     <Section className="custom-blue-bg">
       <ContainerMarginY>
-        <H2
-          title={<>Concrètement,&nbsp;comment être inclusif ?</>}
-          center
-          color="black"
-        />
+        <H2 title={<>Concrètement,&nbsp;comment être inclusif ?</>} center />
         <ContainerWithTextCentered>
           <p>
             Il y a 1001 manières de s’engager dans l’inclusion. La plus

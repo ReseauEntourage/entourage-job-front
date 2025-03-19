@@ -13,7 +13,7 @@ export const formRegistrationCoachWebinar: FormSchema<{
     {
       id: 'infoCoSubtitle',
       name: 'infoCoSubtitle',
-      title: `Les réunions ont lieu en visio. Elles permettent à nos équipes de vous donner toutes les informations et conseils nécessaires pour débuter le format 360.`,
+      title: `Les réunions ont lieu en visio. Elles permettent à notre équipe de vous donner toutes les informations et conseils nécessaires pour débuter le format 360.`,
       component: 'text',
     },
     {
