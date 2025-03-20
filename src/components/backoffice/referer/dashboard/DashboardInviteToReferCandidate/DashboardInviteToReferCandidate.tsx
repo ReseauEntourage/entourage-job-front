@@ -16,15 +16,16 @@ export const DashboardInviteToReferCandidate = () => {
   return (
     <Card
       title="Pré-inscrivez vos candidats"
-      subtitle="Facilitez la création de compte de vos candidats en l'aidant à créer son profil"
+      subtitle="Facilitez la création de compte de vos candidats"
       centerTitle
     >
       <StyledContainer>
         <StyledDescriptionContainer>
           <IlluCandidatFolder width={136} height={136} />
           <Text>
-            Pré-inscrivez un candidat en renseignant ses informations pour
-            qu&apos;il puisse accéder à la plateforme Entourage pro.
+            Pré-inscrivez les personnes actuellement en recherche d’emploi que
+            vous accompagnez avec votre structure pour qu’ils puissent accéder à
+            la plateforme Entourage Pro.
           </Text>
         </StyledDescriptionContainer>
         <Button
