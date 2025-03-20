@@ -41,9 +41,6 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
-      cypress:
-        specifier: ^13.17.0
-        version: 13.17.0
       dd-trace:
         specifier: ^3.58.0
         version: 3.58.0
@@ -237,6 +234,9 @@ importers:
       chromatic:
         specifier: ^6.24.1
         version: 6.24.1
+      cypress:
+        specifier: ^14.2.0
+        version: 14.2.0
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -3162,9 +3162,9 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
-  cypress@13.17.0:
-    resolution: {integrity: sha512-5xWkaPurwkIljojFidhw8lFScyxhtiFHl/i/3zov+1Z5CmY4t9tjIdvSXfu82Y3w7wt0uR9KkucbhkVvJZLQSA==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+  cypress@14.2.0:
+    resolution: {integrity: sha512-u7fuc9JEpSYLOdu8mzZDZ/JWsHUzR5pc8i1TeSqMz/bafXp+6IweMAeyphsEJ6/13qbB6nwTEY1m+GUAp6GqCQ==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
   damerau-levenshtein@1.0.8:
@@ -10142,7 +10142,7 @@ snapshots:
 
   csstype@3.1.3: {}
 
-  cypress@13.17.0:
+  cypress@14.2.0:
     dependencies:
       '@cypress/request': 3.0.8
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
