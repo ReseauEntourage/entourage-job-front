@@ -113,15 +113,15 @@ Pratique pour tester l'application sur mobile.
 - Créer un fichier `.env.network` :
 
 ```
-SERVER_URL=http://192.168.1.35:3001/
-API_URL=http://192.168.1.35:3002/
+NEXT_PUBLIC_SERVER_URL=http://192.168.1.35:3000/
+NEXT_PUBLIC_API_URL=http://192.168.1.35:3002/
 ```
 
 - Remplacer l'adresse IP par votre IP locale sur votre réseau
 
 - Lancer l'application avec `yarn dev:network`
 
-- Accéder à l'application sur un autre appareil en utilisant l'url `http://192.168.1.35:3001/`
+- Accéder à l'application sur un autre appareil en utilisant l'url `http://192.168.1.35:3000/`
 
 ### Lancement en mode production
 
