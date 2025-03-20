@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest # use ubuntu-latest
     environment: 'entourage-job-front'
     container:
-      image: cypress/browsers:node18.12.0-chrome107 # use node18.12.0-chrome107 image from cypress/browsers (dockerhub)
+      image: cypress/browsers:node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1 # use node-20.x from dockerhub
       options: --user 1001 # to grant user permission
     steps:
       # Move on the ref
