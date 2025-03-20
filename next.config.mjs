@@ -11,7 +11,7 @@ const ENV = `${process.env.NODE_ENV}`;
 
 if (ENV === 'production') {
   tracer.init({
-    version: process.env.HEROKU_RELEASE_VERSION,
+    version: process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION,
   });
 }
 

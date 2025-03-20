@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  HEROKU_RELEASE_VERSION: 'v100'
+  NEXT_PUBLIC_HEROKU_RELEASE_VERSION: 'v100'
   NEXT_PUBLIC_WEBINAR_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
