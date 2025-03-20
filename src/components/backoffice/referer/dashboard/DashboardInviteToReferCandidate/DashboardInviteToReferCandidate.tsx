@@ -15,8 +15,8 @@ export const DashboardInviteToReferCandidate = () => {
   };
   return (
     <Card
-      title="Pré-inscrivez vos candidats"
-      subtitle="Facilitez la création de compte de vos candidats"
+      title="Pré-inscrivez des candidats"
+      subtitle="Facilitez la création de compte des candidats"
       centerTitle
     >
       <StyledContainer>
