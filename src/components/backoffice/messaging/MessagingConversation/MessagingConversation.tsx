@@ -195,7 +195,12 @@ export const MessagingConversation = () => {
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
 
           {shouldGiveFeedback && (
-            <MessagingFeedback onRatingOrClose={onRatingOrClose} />
+            <MessagingFeedback
+              onRatingOrClose={onRatingOrClose}
+              adressee={selectedConversation?.participants.find(
+                (participant) => participant.id !== currentUserId
+              )}
+            />
           )}
 
           {displaySuggestions ? (

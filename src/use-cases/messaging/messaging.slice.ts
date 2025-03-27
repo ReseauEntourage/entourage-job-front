@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { notificationsActions } from '../notifications';
 import { Conversation } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
@@ -156,6 +157,13 @@ export const slice = createSlice({
         if (state.selectedConversation) {
           state.selectedConversation.shouldGiveFeedback = false;
         }
+      },
+      postFeedbackFailed() {
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            "Une erreur s'est produite lors de l'envoi de votre feedback",
+        });
       },
     }),
   },

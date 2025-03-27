@@ -22,6 +22,7 @@ const {
   bindNewConversationSucceeded,
   postFeedbackRequested,
   postFeedbackSucceeded,
+  postFeedbackFailed,
 } = slice.actions;
 
 function* bindNewConversationSagaRequested(
@@ -115,7 +116,7 @@ function* postFeedbackSagaRequested(
     yield* call(() => Api.postConversationFeedback(action.payload));
     yield* put(postFeedbackSucceeded());
   } catch {
-    yield* put(getConversationsFailed());
+    yield* put(postFeedbackFailed());
   }
 }
 

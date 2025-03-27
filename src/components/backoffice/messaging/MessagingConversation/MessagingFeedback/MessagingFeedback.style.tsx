@@ -3,7 +3,6 @@ import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledAlertFeedbackContainer = styled.div`
   display: flex;
-  /* flex: 1; */
   flex-direction: column;
   align-items: start;
   color: ${COLORS.white};

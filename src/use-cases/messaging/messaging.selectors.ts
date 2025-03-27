@@ -31,10 +31,10 @@ export const selectConversationParticipantsAreDeleted = (state: RootState) => {
   });
 };
 
-export const selectShouldGiveFeedback = (state: RootState) => {
+export const selectShouldGiveFeedback = (state: RootState): boolean => {
   const selectedConversation = selectSelectedConversation(state);
   if (!selectedConversation) {
     return false;
   }
-  return selectedConversation.shouldGiveFeedback;
+  return selectedConversation.shouldGiveFeedback || false;
 };
