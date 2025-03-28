@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import {
   IlluBulleQuestion,
+  IlluCoachEtCandidat,
   IlluCoeurMainsOuvertesBleu,
-  IlluConversation,
   IlluCV,
 } from 'assets/icons/icons';
 import { Card } from 'src/components/utils/Cards/Card/Card';
@@ -14,7 +14,7 @@ import { StyledStepsContainer } from './DashboardNextSteps.styles';
 import { Step } from './Step/Step';
 
 export const DashboardNextSteps = () => {
-  const iconSizeProps = { width: 55, height: 55 };
+  const iconSizeProps = { width: 80, height: 55 };
   const currentUser = useSelector(selectCurrentUser);
 
   const webinarStep = {
@@ -43,7 +43,7 @@ export const DashboardNextSteps = () => {
       },
       {
         title: 'Découvrir le réseau d’entraide',
-        icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+        icon: <IlluCoachEtCandidat {...iconSizeProps} />,
         content: 'Retrouvez tous les coachs de la communauté',
         cta: {
           label: 'Contacter un coach',
@@ -57,7 +57,7 @@ export const DashboardNextSteps = () => {
       },
       {
         title: 'Découvrir le réseau d’entraide',
-        icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+        icon: <IlluCoachEtCandidat {...iconSizeProps} />,
         content: 'Retrouvez tous les candidats de la communauté',
         cta: {
           label: 'Contacter un candidat',
@@ -66,7 +66,7 @@ export const DashboardNextSteps = () => {
       },
       {
         title: 'Avoir la bonne posture',
-        icon: <IlluConversation {...iconSizeProps} />,
+        icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
         content: 'Lire le document sur la posture Entourage Pro',
         cta: {
           label: 'Lire',
