@@ -28,7 +28,7 @@ import {
 const staticNumbers = [
   {
     icon: <IlluCV width={140} height={110} />,
-    value: '+ 500',
+    value: '2500',
     description: 'candidat(e)s accompagnés',
   },
   {
