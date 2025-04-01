@@ -1,7 +1,6 @@
 import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
-import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Text } from 'src/components/utils';
 import { BulletListElement, List } from 'src/components/utils/Lists';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
@@ -89,17 +88,6 @@ export const content = {
           l’intégration de la personne. Entourage Pro vous guide et vous
           accompagne pour faire de ce recrutement un succès.
         </p>
-        <Button
-          onClick={() => {
-            gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
-            fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-            openModal(<PostPublicOpportunityModal />);
-          }}
-          dataTestId="button-company-second-section"
-          style="custom-secondary-inverted"
-        >
-          Créer une offre
-        </Button>
       </>
     ),
   },

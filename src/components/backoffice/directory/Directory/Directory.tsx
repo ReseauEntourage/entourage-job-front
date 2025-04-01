@@ -77,7 +77,7 @@ export function Directory() {
               search={search}
               setSearch={setSearch}
               setFilters={setFilters}
-              placeholder="Rechercher..."
+              placeholder="Rechercher par nom, prénom..."
               additionalButtons={
                 <StyledDirectoryButtonContainer isMobile={isMobile}>
                   <Button
