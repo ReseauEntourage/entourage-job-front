@@ -20,15 +20,10 @@ export const StarRating = ({ onClick }: StarRatingProps) => {
         const shouldFill = hover && ratingValue <= hover;
         return (
           <div key={i}>
-            <input
-              type="radio"
-              name="rating"
-              value={ratingValue}
-              onClick={() => onStarRatingClick(ratingValue)}
-            />
             <Star
               size={50}
               onMouseEnter={() => setHover(ratingValue)}
+              onClick={() => onStarRatingClick(ratingValue)}
               className={shouldFill ? 'activeStar' : 'star'}
             />
           </div>
