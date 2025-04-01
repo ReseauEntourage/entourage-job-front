@@ -33,7 +33,7 @@ const cardVariables: {
     content:
       "N'hésitez pas à prendre contact avec eux pour les accompagner dans leur projet professionnel",
     button: 'Découvrez les candidats',
-    buttonHref: '/backoffice/annuaire?role=Candidat&role=Candidat+externe',
+    buttonHref: '/backoffice/annuaire?role=Candidat',
   },
 };
 

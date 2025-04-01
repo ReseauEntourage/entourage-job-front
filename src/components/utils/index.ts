@@ -12,7 +12,7 @@ export * from './ImgProfile';
 export * from './Logo';
 export * from './SimpleLink';
 export * from './Containers';
-
+export * from './Alert';
 export * from './Button';
 export * from './BackgroundImage';
 export * from './BackToTop';

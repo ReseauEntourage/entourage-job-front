@@ -66,5 +66,8 @@
       "documentName": "CharteEthique",
       "createdAt": "2022-11-01T10:18:22.111Z"
     }
-  ]
+  ],
+  "userSocialSituation": {
+    "hasCompletedSurvey": true
+  }
 }

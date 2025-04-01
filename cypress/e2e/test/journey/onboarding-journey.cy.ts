@@ -42,10 +42,19 @@ describe('Onboarding', () => {
         '[data-testid="form-confirm-form-onboarding-ethics-charter"]'
       ).click();
 
-      cy.screenshot('onboarding-ethics-charter-confirmed');
+      /**
+       * Step 2: User social situation
+       */
+      cy.intercept('PUT', `/users/social-situations/${user.id}`, {
+        statusCode: 200,
+      });
+
+      cy.get(
+        '[data-testid="form-confirm-form-onboarding-candidate-social-situation"]'
+      ).click();
 
       /**
-       * Step 2: Profile (with description)
+       * Step 3: Profile (with description)
        */
 
       cy.get('[data-testid="form-onboarding-profile-description"]').type(
@@ -69,7 +78,7 @@ describe('Onboarding', () => {
       });
 
       /**
-       * Step 3: Job (linkedin and external cv)
+       * Step 4: Job (linkedin and external cv)
        */
       // confirm step
       cy.get(

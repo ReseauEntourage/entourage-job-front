@@ -35,5 +35,8 @@
       "name": "interview"
     }
   },
-  "readDocuments": []
+  "readDocuments": [],
+  "userSocialSituation": {
+    "hasCompletedSurvey": false
+  }
 }

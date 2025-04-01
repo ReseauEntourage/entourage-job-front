@@ -1,9 +1,7 @@
 // eslint-disable-next-line
-require('dotenv').config();
-
+const dotenv = require('dotenv');
 const webpack = require('webpack');
 const withLess = require('next-with-less');
-
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
@@ -14,40 +12,10 @@ const { relative } = require('path');
 const context = __dirname;
 const path = require('path');
 
-/*
-const ContentSecurityPolicy = `
-  default-src
-  'self'
-  'unsafe-inline'
-  'unsafe-eval'
-  ${process.env.API_URL.replace(/\/api\/v1/g, '')}
-  ${process.env.AWSS3_CDN_URL}
-  ${process.env.CDN_URL ? process.env.CDN_URL : ''}
-  ${process.env.AWSS3_URL}
-  *.ytimg.com ytimg.com
-  youtube.com *.youtube.com
-  *.youtube-nocookie.com youtube-nocookie.com
-  airtable.com *.airtable.com
-  *.google-analytics.com google-analytics.com
-  *.googletagmanager.com googletagmanager.com
-  *.google.com google.com
-  *.google.fr google.fr
-  *.gstatic.com gstatic.com
-  *.googleapis.com googleapis.com
-  stats.g.doubleclick.net
-  *.facebook.net facebook.net
-  *.facebook.com facebook.com
-  purecatamphetamine.github.io
-  data:
-  sentry.io *.sentry.io
-  sentry-cdn.com *.sentry-cdn.com
-  licdn.com *.licdn.com
-  linkedin.com *.linkedin.com
-  *.pusher.com pusher.com
-  adsymptotic.com *.adsymptotic.com
-  tarteaucitron.io
-`;
-*/
+const ENV = process.env.ENV || 'local';
+
+dotenv.config(); // Load .env
+dotenv.config({ path: `.env.${ENV}`, override: true }); // Load .env.${ENV}
 
 const securityHeaders = [
   {

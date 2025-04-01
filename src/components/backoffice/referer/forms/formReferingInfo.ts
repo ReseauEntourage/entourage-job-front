@@ -120,7 +120,7 @@ export const formReferingInfo: FormSchema<{
       name: 'materialInsecurity',
       component: 'radio',
       showLabel: false,
-      isRequired: false,
+      isRequired: true,
       options: CANDIDATE_YES_NO_FILTERS.map((option) => ({
         ...option,
         inputId: `material-insecurity-${option.value}`,
@@ -145,7 +145,7 @@ export const formReferingInfo: FormSchema<{
       name: 'networkInsecurity',
       component: 'radio',
       showLabel: false,
-      isRequired: false,
+      isRequired: true,
       options: CANDIDATE_YES_NO_FILTERS.map((option) => ({
         ...option,
         inputId: `network-insecurity-${option.value}`,

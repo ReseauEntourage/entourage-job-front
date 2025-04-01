@@ -16,7 +16,6 @@ import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidate
 import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandidateInfoCo';
 import { formRegistrationCandidateProfessionalInformation } from './forms/formRegistrationCandidateProfessionalInformation';
 import { formRegistrationCandidateProgram } from './forms/formRegistrationCandidateProgram';
-import { formRegistrationCandidateSocialSituation } from './forms/formRegistrationCandidateSocialSituation';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
 import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
@@ -32,7 +31,6 @@ export type CandidateRegistrationForm =
   | typeof formRegistrationCandidateInfo
   | typeof formRegistrationCandidateProgram
   | typeof formRegistrationCandidateInfoCo
-  | typeof formRegistrationCandidateSocialSituation
   | typeof formRegistrationCandidateProfessionalInformation
   | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
