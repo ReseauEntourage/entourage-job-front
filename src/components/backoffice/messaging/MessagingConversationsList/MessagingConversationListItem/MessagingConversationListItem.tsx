@@ -31,13 +31,13 @@ export const MessagingConversationListItem = ({
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipant;
-  const lastMessage = conversation.messages[conversation.messages.length - 1];
-  const userParticipantConversation = conversation.participants.find(
-    (participant) => participant.id === currentUserId
-  );
-  const seenAt = userParticipantConversation?.ConversationParticipant.seenAt;
+  const lastMessage = conversation.messages[0];
+  const { seenAt } = conversation;
   const userHasSeenConversation =
     seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
+
+  const shouldHighlightConversation =
+    !userHasSeenConversation || conversation.shouldGiveFeedback;
 
   useEffect(() => {
     setIsActivated(selectedConversationId === conversation.id);
@@ -52,7 +52,7 @@ export const MessagingConversationListItem = ({
       <ContainerAvatarStyled>
         {addresee && <ImgProfile user={addresee} size={35} />}
       </ContainerAvatarStyled>
-      <RightColumn seen={userHasSeenConversation}>
+      <RightColumn highlight={shouldHighlightConversation}>
         <MainInfos>
           {addresee && (
             <ConversationAddresee>

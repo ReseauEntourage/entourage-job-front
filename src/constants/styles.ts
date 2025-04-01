@@ -115,4 +115,8 @@ export const ALERT_COLORS = {
     background: COLORS.lightGray,
     text: COLORS.black,
   },
+  feedback: {
+    background: COLORS.darkBlue,
+    text: COLORS.white,
+  },
 };
