@@ -10802,12 +10802,6 @@ mark {
 .uk-checkbox {
   background-color: #fff;
 }
-.ent-external-offer {
-  background-color: #ecf8fb;
-}
-.uk-card-default.uk-card-hover:hover.ent-external-offer {
-  background-color: #ecf8fb !important;
-}
 .uk-list-disc > li:nth-child(n + 2),
 .uk-list-disc > li > ul {
   margin-top: 20px;

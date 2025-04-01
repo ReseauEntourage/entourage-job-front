@@ -24,7 +24,6 @@ const bootstrap = () => {
     cy.generateUserProfileReferedApiResponse(); // user-profile-refered.json
     cy.generateUsersApiResponse('candidat'); // users-candidat.json
 
-    cy.generateOpportunitiesApiResponse(); // opportunities.json
     cy.generateOpportunitiesWrappedApiResponse(); // opportunities-wrapped.json
 
     cy.generateOrganizationsApiResponse(); // organizations.json

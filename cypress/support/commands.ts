@@ -6,7 +6,6 @@ import { generateCvReadApiResponse } from '../fixtures/src/cv/generateCvReadApiR
 import { generateCvUrlApiResponse } from '../fixtures/src/cv/generateCvUrlApiResponse';
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
 import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
-import { generateOpportunitiesApiResponse } from '../fixtures/src/opportunity/generateOpportunitiesApiResponse';
 import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
 import { generateTabCountApiResponse } from '../fixtures/src/tab/generateTabCountApiResponse';
 import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse';
@@ -19,7 +18,6 @@ declare global {
   namespace Cypress {
     interface Chainable<Subject> {
       generateAdminLoginApiResponse(): Chainable<Subject>;
-      generateOpportunitiesApiResponse(): Chainable<Subject>;
       generateOpportunitiesWrappedApiResponse(): Chainable<Subject>;
       generateUsersApiResponse(roleUsers: string): Chainable<Subject>;
       generateOrganizationsApiResponse(): Chainable<Subject>;
@@ -41,28 +39,6 @@ Cypress.Commands.add('generateAdminLoginApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/admin-login.json',
     generateAdminLoginApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate opportunities
- */
-Cypress.Commands.add('generateOpportunitiesApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/opportunities.json',
-    generateOpportunitiesApiResponse(5, 2),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate opportunities wrapped for candidates
- */
-Cypress.Commands.add('generateOpportunitiesWrappedApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/opportunities-wrapped.json',
-    generateOpportunitiesApiResponse(5, 2, true),
     'utf-8'
   );
 });
