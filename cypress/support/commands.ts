@@ -7,7 +7,6 @@ import { generateCvUrlApiResponse } from '../fixtures/src/cv/generateCvUrlApiRes
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
 import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
 import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
-import { generateTabCountApiResponse } from '../fixtures/src/tab/generateTabCountApiResponse';
 import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse';
 import { generateUsersApiResponse } from '../fixtures/src/user/generateUsersApiResponse';
 
@@ -25,7 +24,6 @@ declare global {
       generateCandidateLoginApiResponse(): Chainable<Subject>;
       generateCvCandidateApiResponse(): Chainable<Subject>;
       generateCoachLoginApiResponse(): Chainable<Subject>;
-      generateTabCountApiResponse(): Chainable<Subject>;
       generateCvCardsApiResponse(): Chainable<Subject>;
       generateCvReadApiResponse(): Chainable<Subject>;
       generateCvUrlApiResponse(): Chainable<Subject>;
@@ -105,28 +103,6 @@ Cypress.Commands.add('generateCvCandidateApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/cv-candidate.json',
     generateCvCandidateApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate tab Count
- */
-Cypress.Commands.add('generateTabCountApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/tab-count.json',
-    generateTabCountApiResponse(6),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cv read
- */
-Cypress.Commands.add('generateTabCountApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/tab-count.json',
-    generateTabCountApiResponse(5),
     'utf-8'
   );
 });
