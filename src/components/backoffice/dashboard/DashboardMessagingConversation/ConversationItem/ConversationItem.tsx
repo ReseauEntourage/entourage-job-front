@@ -26,7 +26,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipant;
-  const userHasSeenConversation = conversationHasUnreadMessages(conversation);
+  const userHasSeenConversation = !conversationHasUnreadMessages(conversation);
 
   const openConversation = () => {
     router.push(`/backoffice/messaging?userId=${addresee.id}`);
