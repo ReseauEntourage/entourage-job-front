@@ -101,12 +101,12 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             },
-            style: 'custom-secondary-inverted',
+            variant: 'primary',
             label: 'Nous contacter',
           },
           {
             dataTest: 'button-offer-company-header',
-            style: 'custom-secondary',
+            variant: 'secondary',
             isExternal: false,
             newTab: false,
             onClick: () => {

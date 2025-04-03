@@ -206,10 +206,10 @@ export const MessagingConversation = () => {
             </MessagingInputContainer>
             {isMobile ? (
               <Button
-                style="custom-secondary-inverted"
+                variant="primary"
+                rounded
                 onClick={sendNewMessage}
                 disabled={conversationParticipantsAreDeleted}
-                rounded
               >
                 <LucidIcon name="Send" size={25} />
               </Button>

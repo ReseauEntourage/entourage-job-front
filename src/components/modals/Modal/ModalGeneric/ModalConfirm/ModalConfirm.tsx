@@ -25,14 +25,14 @@ export const ModalConfirm = ({
       {children && <div className="uk-margin-medium-bottom">{children}</div>}
       <div className="uk-modal-footer uk-padding-remove-bottom">
         <Button
-          style="default"
+          variant="default"
           onClick={onClose}
           dataTestId="modal-confirm-cancel"
         >
           Annuler
         </Button>
         <Button
-          style="primary"
+          variant="primary"
           dataTestId="modal-confirm-confirm"
           onClick={() => {
             // @ts-expect-error after enable TS strict mode. Please, try to fix it

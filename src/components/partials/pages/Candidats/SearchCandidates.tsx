@@ -35,8 +35,7 @@ export const SearchCandidates = () => {
           </div>
           <p>
             <Button
-              style="custom-text"
-              color="darkGray"
+              variant="default"
               dataTestId="search-candidates-post-opportunity-button"
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);

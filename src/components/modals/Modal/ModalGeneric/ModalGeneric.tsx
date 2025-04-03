@@ -64,7 +64,8 @@ export const ModalGeneric = ({
               onClick={() => {
                 onClose?.();
               }}
-              style="custom-primary"
+              variant="primary"
+              rounded
             >
               Fermer
             </Button>

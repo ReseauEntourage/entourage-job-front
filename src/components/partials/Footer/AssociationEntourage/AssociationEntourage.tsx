@@ -41,9 +41,9 @@ export const AssociationEntourage = () => {
                 <StyledAssociationEntourageButtonContainer>
                   <Button
                     href={EXTERNAL_LINKS.ENTOURAGE}
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     isExternal
-                    color="white"
                     onClick={() => {
                       gaEvent(GA_TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
                     }}

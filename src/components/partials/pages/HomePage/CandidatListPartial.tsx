@@ -57,7 +57,8 @@ export const CandidatListPartial = () => {
         <Grid middle column gap="collapse">
           <Button
             href={{ pathname: '/candidats', query: { employed: false } }}
-            style="custom-secondary-inverted"
+            variant="primary"
+            rounded
           >
             {process.env.WOMENS_DAY === 'true'
               ? 'Découvrir les candidates'

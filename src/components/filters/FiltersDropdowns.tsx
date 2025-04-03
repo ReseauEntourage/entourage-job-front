@@ -128,7 +128,7 @@ export const FiltersDropdowns = ({
                         ? { toggle: `target: #dropdown-filters-toggle-${key}` }
                         : {})}
                       disabled={disabled}
-                      style="text"
+                      variant="default"
                       className={`uk-width-expand ${
                         filters[key].length === 0 ? 'uk-text-muted' : ''
                       }`}

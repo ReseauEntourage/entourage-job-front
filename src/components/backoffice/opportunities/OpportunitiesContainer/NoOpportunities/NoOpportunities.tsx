@@ -40,8 +40,8 @@ export const NoOpportunities = ({
       </StyledDescription>
       <StyledButtonContainer>
         <Button
-          style="custom-primary-inverted"
-          color="primaryBlue"
+          variant="secondary"
+          rounded
           dataTestId="candidat-add-offer"
           onClick={() => {
             openModal(
@@ -56,7 +56,8 @@ export const NoOpportunities = ({
           Ajouter une offre externe
         </Button>
         <Button
-          style="custom-primary"
+          variant="primary"
+          rounded
           dataTestId="candidat-find-offer"
           href={`/backoffice/candidat/${candidateId}/offres/public`}
           shallow

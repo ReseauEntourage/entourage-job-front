@@ -41,8 +41,8 @@ export const HeaderPublicContentDesktop = ({
     <div>
       <Button
         href="/login"
-        style="custom-secondary"
-        color="white"
+        variant="secondary"
+        rounded
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
         }}
@@ -54,7 +54,8 @@ export const HeaderPublicContentDesktop = ({
     <div>
       <Button
         href="/inscription"
-        style="custom-secondary-inverted"
+        variant="primary"
+        rounded
         size="small"
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);

@@ -33,7 +33,7 @@ export const HowToCommitDifferently = () => {
               label: 'Faire un don',
               href: process.env.DONATION_LINK,
               external: true,
-              style: 'custom-secondary-inverted',
+              variant: 'primary',
               onClick: () => {
                 gaEvent(GA_TAGS.PAGE_ENTREPRISES_DON_CLIC);
               },
@@ -45,7 +45,7 @@ export const HowToCommitDifferently = () => {
             text: 'Défi solidaire ou atelier de sensibilisation, engagez vos collaborateurs, RH et managers grâce à des formats modulables.',
             button: {
               label: 'Sensibiliser mon équipe',
-              style: 'custom-secondary-inverted',
+              variant: 'primary',
               onClick: () => {
                 gaEvent(GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC);
                 fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);
@@ -60,7 +60,7 @@ export const HowToCommitDifferently = () => {
             text: 'Vous pouvez nous accompagner via du mécénat de compétences ou des dons en nature (équipement informatique, etc.)',
             button: {
               label: 'Proposer du mécénat',
-              style: 'custom-secondary-inverted',
+              variant: 'primary',
               onClick: () => {
                 gaEvent(GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC);
                 fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);

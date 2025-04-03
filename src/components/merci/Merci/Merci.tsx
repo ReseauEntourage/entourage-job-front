@@ -32,7 +32,7 @@ export const Merci = ({
       <Text size="large">À bientôt&nbsp;!</Text>
       <Text size="large">L&apos;équipe Entourage Pro</Text>
       <StyledMerciButtonContainer>
-        <Button href="/" style="secondary" className="uk-margin-large-top">
+        <Button href="/" variant="primary" className="uk-margin-large-top">
           Revenir à la page d&apos;accueil
         </Button>
       </StyledMerciButtonContainer>

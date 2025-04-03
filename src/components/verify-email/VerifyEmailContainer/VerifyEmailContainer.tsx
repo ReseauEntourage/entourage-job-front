@@ -53,7 +53,7 @@ export const VerifyEmailContainer = () => {
       {showSendButtonAndErrorImg ? (
         <SendVerifyEmailButton />
       ) : (
-        <Button href="/login" style="custom-secondary">
+        <Button href="/login" variant="secondary">
           Se connecter à mon espace
         </Button>
       )}

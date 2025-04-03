@@ -36,7 +36,7 @@ export function Confirmation() {
             </StyledReferingListItem>
           ))}
           <StyledReferingButtonContainer>
-            <Button style="custom-secondary-inverted" href="/login">
+            <Button variant="primary" rounded href="/login">
               Retourner à mon espace
             </Button>
           </StyledReferingButtonContainer>

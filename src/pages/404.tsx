@@ -35,7 +35,7 @@ const Custom404 = () => {
         <Grid middle column gap="collapse">
           <Button
             href={{ pathname: '/candidats', query: { employed: false } }}
-            style="secondary"
+            variant="primary"
             className="uk-margin-large-top"
           >
             Voir tous les candidats

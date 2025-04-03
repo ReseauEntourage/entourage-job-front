@@ -110,7 +110,7 @@ export const Card = ({
               {children}
               {!closedMode && !isLoading && editCallback && !isDesktop && (
                 <StyledCardFooter>
-                  <Button style="custom-secondary" onClick={editCallback}>
+                  <Button variant="secondary" rounded onClick={editCallback}>
                     {editButtonText || 'Modifier'}
                   </Button>
                 </StyledCardFooter>

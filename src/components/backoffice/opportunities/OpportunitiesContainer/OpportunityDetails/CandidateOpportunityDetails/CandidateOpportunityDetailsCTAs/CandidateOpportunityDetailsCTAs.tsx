@@ -353,14 +353,14 @@ export const CandidateOpportunityDetailsCTAs = ({
         CTAsByTab.find((CTAByTab) => {
           return CTAByTab.tab === tab;
         }).ctas.map((cta, key) => {
-          const { color, className, action, text } = allCTAs[cta];
+          const { action, text } = allCTAs[cta];
           return (
             <li key={`${key}-${uuidValue}`}>
               <Button
                 disabled={disables[action] ? disables[action]() : false}
                 size="small"
-                color={color}
-                style={className}
+                variant="secondary"
+                rounded
                 onClick={actions[action]}
               >
                 {text}

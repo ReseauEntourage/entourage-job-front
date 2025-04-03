@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import {
   colorToHoverBackgroundColor,
   colorToHoverColor,
-} from 'src/components/utils/Button/Button.styles';
+} from 'src/components/utils/Button/ButtonOld.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledContainer = styled.div`

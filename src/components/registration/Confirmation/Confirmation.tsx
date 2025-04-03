@@ -33,7 +33,7 @@ export function Confirmation() {
           </StyledRegistrationListItem>
         ))}
         <StyledRegistrationButtonContainer>
-          <Button style="custom-secondary-inverted" href="/login">
+          <Button variant="primary" rounded href="/login">
             Accéder à mon profil
           </Button>
         </StyledRegistrationButtonContainer>

@@ -57,9 +57,9 @@ export const OnboardingProfileForm = () => {
         name="profile-picture-upload-desktop"
       >
         <ButtonMock
-          style="custom-secondary"
+          variant="secondary"
+          rounded
           size="small"
-          className="button-mock-image-input"
           dataTestId="button-mock-image-input"
         >
           Modifier la photo de profil
