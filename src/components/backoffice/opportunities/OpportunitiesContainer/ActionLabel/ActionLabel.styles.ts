@@ -1,9 +1,18 @@
 import styled, { css } from 'styled-components';
-import {
-  colorToHoverBackgroundColor,
-  colorToHoverColor,
-} from 'src/components/utils/Button/ButtonOld.styles';
+
 import { COLORS } from 'src/constants/styles';
+
+const colorToHoverBackgroundColor = {
+  primaryBlue: COLORS.hoverBlue,
+  darkGray: 'transparent',
+  white: 'transparent',
+};
+
+const colorToHoverColor = {
+  primaryBlue: COLORS.primaryBlue,
+  darkGray: COLORS.primaryBlue,
+  white: COLORS.primaryBlue,
+};
 
 export const StyledContainer = styled.div`
   font-family: Poppins, sans-serif;
