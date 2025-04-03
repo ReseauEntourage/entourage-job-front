@@ -8,13 +8,13 @@ import { openModal } from 'src/components/modals/Modal';
 import { Card, Img, Text } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_SECTORS } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   findConstantFromValue,
   formatCareerPathSentence,
-  formatNetworkBusinessLines,
+  formatNetworkBusinessSectors,
   sortByOrder,
 } from 'src/utils';
 import { ModalEditProfessionalInformation } from './ModalEditProfessionalInformation';
@@ -41,18 +41,16 @@ export const ProfessionalInformationCard = () => {
     setHasData(
       checkData({
         currentJob: userProfile?.currentJob,
-        networkBusinessLines: userProfile?.networkBusinessLines,
-        searchAmbitions: userProfile?.searchAmbitions,
-        searchBusinessLines: userProfile?.searchBusinessLines,
+        occupations: userProfile?.occupations,
+        businessSectors: userProfile?.businessSectors,
         role,
       })
     );
   }, [
     role,
     userProfile.currentJob,
-    userProfile.networkBusinessLines,
-    userProfile.searchAmbitions,
-    userProfile.searchBusinessLines,
+    userProfile.occupations,
+    userProfile.businessSectors,
   ]);
 
   const openProfessionalInformationModal = useCallback(() => {
@@ -66,12 +64,12 @@ export const ProfessionalInformationCard = () => {
           defaultValues={getCoachDefaultProfessionalValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
-            const networkBusinessLines = formatNetworkBusinessLines(
-              values.networkBusinessLines
+            const networkBusinessSectors = formatNetworkBusinessSectors(
+              values.businessSectors
             );
             return {
               currentJob: values.currentJob,
-              networkBusinessLines,
+              networkBusinessSectors,
               linkedinUrl: values.linkedinUrl,
             };
           }}
@@ -112,16 +110,16 @@ export const ProfessionalInformationCard = () => {
                   Je travaille comme <strong>{userProfile.currentJob}</strong>
                 </li>
               )}
-              {userProfile?.networkBusinessLines &&
-                userProfile.networkBusinessLines.length > 0 && (
+              {userProfile?.businessSectors &&
+                userProfile.businessSectors.length > 0 && (
                   <li className="tag-container">
                     J&lsquo;ai du réseau dans :{' '}
-                    {sortByOrder(userProfile.networkBusinessLines).map(
-                      ({ name }, index) => (
+                    {sortByOrder(userProfile.businessSectors).map(
+                      ({ value }, index) => (
                         <Tag
-                          key={`${uuidValue}-${name}-${index}`}
+                          key={`${uuidValue}-${value}-${index}`}
                           content={
-                            findConstantFromValue(name, BUSINESS_LINES).label
+                            findConstantFromValue(value, BUSINESS_SECTORS).label
                           }
                         />
                       )
@@ -131,35 +129,35 @@ export const ProfessionalInformationCard = () => {
             </>
           ) : (
             <>
-              {userProfile?.searchAmbitions &&
-                userProfile.searchAmbitions.length > 0 && (
-                  <li data-testid="candidat-ambition-li">
+              {userProfile?.occupations &&
+                userProfile.occupations.length > 0 && (
+                  <li data-testid="candidat-occupation-li">
                     Je souhaite travailler comme :{' '}
-                    {sortByOrder(userProfile.searchAmbitions).map(
+                    {sortByOrder(userProfile.occupations).map(
                       ({ name }, index) => (
                         <div key={`${uuidValue}-${name}-${index}`}>
                           <strong>{name}</strong>
-                          {userProfile.searchAmbitions &&
-                            index !== userProfile.searchAmbitions?.length - 1 &&
+                          {userProfile.occupations &&
+                            index !== userProfile.occupations?.length - 1 &&
                             ', '}
                         </div>
                       )
                     )}
                   </li>
                 )}
-              {userProfile?.searchBusinessLines &&
-                userProfile.searchBusinessLines.length > 0 && (
+              {userProfile?.businessSectors &&
+                userProfile.businessSectors.length > 0 && (
                   <li
                     className="tag-container"
-                    data-testid="candidat-businessline-li"
+                    data-testid="candidat-businessSector-li"
                   >
                     Je recherche dans :{' '}
-                    {sortByOrder(userProfile.searchBusinessLines).map(
-                      ({ name }, index) => (
+                    {sortByOrder(userProfile.businessSectors).map(
+                      ({ value }, index) => (
                         <Tag
-                          key={`${uuidValue}-${name}-${index}`}
+                          key={`${uuidValue}-${value}-${index}`}
                           content={
-                            findConstantFromValue(name, BUSINESS_LINES).label
+                            findConstantFromValue(value, BUSINESS_SECTORS).label
                           }
                         />
                       )

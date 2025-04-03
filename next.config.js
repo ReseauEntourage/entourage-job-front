@@ -172,11 +172,6 @@ module.exports = withLess({
   async redirects() {
     return [
       {
-        source: '/entreprises/cvs',
-        destination: '/candidats',
-        permanent: false,
-      },
-      {
         source: '/don',
         destination: process.env.DONATION_LINK,
         permanent: false,
@@ -187,33 +182,8 @@ module.exports = withLess({
         permanent: false,
       },
       {
-        source: '/tutoriel-video-cv',
-        destination: process.env.TUTORIAL_VIDEO_CV,
-        permanent: false,
-      },
-      {
-        source: '/tutoriel-video-offres',
-        destination: process.env.TUTORIAL_VIDEO_OFFERS,
-        permanent: false,
-      },
-      {
-        source: '/tutoriel-video-offres-2',
-        destination: process.env.TUTORIAL_VIDEO_OFFERS_2,
-        permanent: false,
-      },
-      {
-        source: '/tutoriel-cv',
-        destination: process.env.TUTORIAL_CV,
-        permanent: false,
-      },
-      {
         source: '/tutoriel-projet-pro',
         destination: process.env.TUTORIAL_PP,
-        permanent: false,
-      },
-      {
-        source: '/tutoriel-entretien',
-        destination: process.env.TUTORIAL_INTERVIEW_TRAINING,
         permanent: false,
       },
       {

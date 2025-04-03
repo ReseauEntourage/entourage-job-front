@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
-import { CV, CVExperience, CVFormation } from 'src/api/types';
+import { CV, Experience, Formation } from 'src/api/types';
 import {
   StyledCVSkillTagContainer,
   StyledLeftColumn,
@@ -45,14 +45,14 @@ interface CVPDFProps {
 
 export const CVPDF = ({ cv, page }: CVPDFProps) => {
   const showCareerPathSentence =
-    (cv.ambitions && cv.ambitions.length > 0) ||
-    (cv.businessLines && cv.businessLines.length > 0);
+    (cv.occupations && cv.occupations.length > 0) ||
+    (cv.businessSectors && cv.businessSectors.length > 0);
 
   const [items, setItems] = useState<{
-    firstPageExperiences: CVExperience[];
-    secondPageExperiences: CVExperience[];
-    firstPageFormations: CVFormation[];
-    secondPageFormations: CVFormation[];
+    firstPageExperiences: Experience[];
+    secondPageExperiences: Experience[];
+    firstPageFormations: Formation[];
+    secondPageFormations: Formation[];
   }>({
     firstPageExperiences: [],
     secondPageExperiences: [],
@@ -61,7 +61,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
   });
 
   const countSmallDescriptionInCVItemList = (
-    expFormaList: CVExperience[] | CVFormation[]
+    expFormaList: Experience[] | Formation[]
   ) => {
     let smallItemCounter = 0;
 
@@ -157,8 +157,8 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               {showCareerPathSentence && (
                 <StyledCVPDFCareerPath>
                   <CVCareerPathSentenceNew
-                    ambitions={cv.ambitions}
-                    businessLines={cv.businessLines}
+                    occupations={cv.occupations}
+                    businessSectors={cv.businessSectors}
                   />
                 </StyledCVPDFCareerPath>
               )}

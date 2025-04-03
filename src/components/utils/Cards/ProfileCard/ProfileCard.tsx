@@ -4,13 +4,17 @@ import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../Button';
-import { UserCandidateWithUsers } from 'src/api/types';
+import {
+  BusinessSector,
+  Occupation,
+  UserCandidateWithUsers,
+} from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { Text } from 'src/components/utils/Text';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
+import { BUSINESS_SECTORS } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
@@ -23,10 +27,10 @@ import {
   StyledCTAContainer,
   StyledProfileCard,
   StyledProfileCardAvailability,
-  StyledProfileCardBusinessLines,
+  StyledProfileCardBusinessSectors,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
-  StyledProfileCardEmptyBusinessLinesContainer,
+  StyledProfileCardEmptyBusinessSectorsContainer,
   StyledProfileCardEmptyHelpsContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
@@ -53,14 +57,8 @@ export interface ProfileCardProps {
   helps?: {
     name: HelpValue;
   }[];
-  businessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  ambitions?: {
-    name: string;
-    order: number;
-  }[];
+  businessSectors?: BusinessSector[];
+  occupations?: Occupation[];
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
   job?: string;
@@ -71,14 +69,14 @@ export interface ProfileCardProps {
 const getLabelsDependingOnRole = (role: UserRole) => {
   if (role === USER_ROLES.CANDIDATE) {
     return {
-      businessLines: 'Je recherche un emploi dans\xa0:',
+      businessSectors: 'Je recherche un emploi dans\xa0:',
       helps: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
   if (role === USER_ROLES.COACH) {
     return {
-      businessLines: "J'ai du réseau dans\xa0:",
+      businessSectors: "J'ai du réseau dans\xa0:",
       helps: 'Je peux aider à\xa0:',
       role: 'Coach',
     };
@@ -98,8 +96,8 @@ export function ProfileCard({
   role,
   department,
   helps,
-  businessLines,
-  ambitions,
+  businessSectors,
+  occupations,
   userCandidate,
   job,
   isAvailable,
@@ -113,14 +111,14 @@ export function ProfileCard({
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
-  const uniqBusinessLines = _.uniqBy(businessLines, 'name');
-  const sortedBusinessLines =
-    businessLines && businessLines.length > 0
-      ? sortByOrder(uniqBusinessLines)
+  const uniqBusinessSectors = _.uniqBy(businessSectors, 'name');
+  const sortedBusinessSectors =
+    businessSectors && businessSectors.length > 0
+      ? sortByOrder(uniqBusinessSectors)
       : null;
 
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+  const sortedOccupations =
+    occupations && occupations.length > 0 ? sortByOrder(occupations) : null;
 
   return (
     <Link
@@ -178,14 +176,14 @@ export function ProfileCard({
             <StyledProfileCardProfessionalSituation>
               {role === USER_ROLES.CANDIDATE && (
                 <>
-                  {sortedAmbitions && sortedAmbitions.length > 0 ? (
+                  {sortedOccupations && sortedOccupations.length > 0 ? (
                     <StyledProfileCardJobContainer>
-                      {sortedAmbitions.map(({ name }, index) => (
+                      {sortedOccupations.map(({ name }, index) => (
                         <H5
                           key={name}
                           color={COLORS.black}
                           title={`${_.capitalize(name)}${
-                            index < sortedAmbitions.length - 1 ? ',\xa0' : ''
+                            index < sortedOccupations.length - 1 ? ',\xa0' : ''
                           }`}
                         />
                       ))}
@@ -211,39 +209,39 @@ export function ProfileCard({
                 </>
               )}
               <StyledProfileCardLabel>
-                <Text color="darkGray">{labels.businessLines}</Text>{' '}
+                <Text color="darkGray">{labels.businessSectors}</Text>{' '}
               </StyledProfileCardLabel>
-              <StyledProfileCardBusinessLines>
-                {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
+              <StyledProfileCardBusinessSectors>
+                {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
                   <>
-                    {sortedBusinessLines.slice(0, 2).map(({ name }) => {
-                      const businessLine = findConstantFromValue(
-                        name,
-                        BUSINESS_LINES
+                    {sortedBusinessSectors.slice(0, 2).map(({ value }) => {
+                      const businessSector = findConstantFromValue(
+                        value,
+                        BUSINESS_SECTORS
                       );
                       return (
                         <Tag
-                          key={businessLine.value}
-                          content={businessLine.label}
+                          key={businessSector.value}
+                          content={businessSector.label}
                         />
                       );
                     })}
                     {role !== USER_ROLES.CANDIDATE &&
-                      sortedBusinessLines.length > 2 && (
-                        <Tag content={`+${sortedBusinessLines.length - 2}`} />
+                      sortedBusinessSectors.length > 2 && (
+                        <Tag content={`+${sortedBusinessSectors.length - 2}`} />
                       )}
                   </>
                 ) : (
-                  <StyledProfileCardEmptyBusinessLinesContainer>
+                  <StyledProfileCardEmptyBusinessSectorsContainer>
                     <StyledProfileCardEmptyIcon>
                       <CaseIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
                     <Text color="mediumGray" size="small" variant="italic">
                       {EMPTY_INFO}
                     </Text>
-                  </StyledProfileCardEmptyBusinessLinesContainer>
+                  </StyledProfileCardEmptyBusinessSectorsContainer>
                 )}
-              </StyledProfileCardBusinessLines>
+              </StyledProfileCardBusinessSectors>
             </StyledProfileCardProfessionalSituation>
             <StyledSeparator />
             {displayHelps ? (

@@ -17,7 +17,7 @@ export const JNSPR = {
   label: 'Je ne souhaite pas répondre',
 };
 
-export type BusinessLineValue =
+export type BusinessSectorValue =
   | 'la'
   | 'aa'
   | 'bat'
@@ -37,7 +37,7 @@ export type BusinessLineValue =
   | 'fjr'
   | 'sm';
 
-const BUSINESS_LINES_UNSORTED: (FilterConstant<BusinessLineValue> & {
+const BUSINESS_SECTORS_UNSORTED: (FilterConstant<BusinessSectorValue> & {
   prefix: string | string[];
 })[] = [
   {
@@ -132,7 +132,7 @@ const BUSINESS_LINES_UNSORTED: (FilterConstant<BusinessLineValue> & {
   },
 ];
 
-export const BUSINESS_LINES = BUSINESS_LINES_UNSORTED.sort(
+export const BUSINESS_SECTORS = BUSINESS_SECTORS_UNSORTED.sort(
   ({ label: labelA }, { label: labelB }) => {
     /**
      * force type because business lines are always string
@@ -142,7 +142,7 @@ export const BUSINESS_LINES = BUSINESS_LINES_UNSORTED.sort(
     const second = labelB as string;
     return first.localeCompare(second);
   }
-) as typeof BUSINESS_LINES_UNSORTED;
+) as typeof BUSINESS_SECTORS_UNSORTED;
 
 export const CV_STATUS = {
   Published: {
@@ -177,11 +177,11 @@ export const CV_STATUS = {
   },
 } as const;
 
-export type AmbitionsPrefixesType = 'dans' | 'comme';
+export type OccupationsPrefixesType = 'dans' | 'comme';
 
-export const AMBITIONS_PREFIXES: {
-  label: AmbitionsPrefixesType;
-  value: AmbitionsPrefixesType;
+export const OCCUPATIONS_PREFIXES: {
+  label: OccupationsPrefixesType;
+  value: OccupationsPrefixesType;
 }[] = [
   {
     label: 'dans',
@@ -290,8 +290,8 @@ export const CV_FILTERS_DATA: Filter[] = [
     icon: 'location',
   },
   {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
+    key: 'businessSectors',
+    constants: BUSINESS_SECTORS,
     title: 'Métiers',
     tag: GA_TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
@@ -319,8 +319,8 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC,
   },
   {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
+    key: 'businessSectors',
+    constants: BUSINESS_SECTORS,
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
   },
@@ -378,8 +378,8 @@ export const DirectoryFilters: Filter[] = [
     tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
   },
   {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
+    key: 'businessSectors',
+    constants: BUSINESS_SECTORS,
     title: "Secteur d'activité",
     tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
   },

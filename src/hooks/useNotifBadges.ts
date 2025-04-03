@@ -1,10 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { NotifBadges } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
-import { ADMIN_ROLES, USER_ROLES } from 'src/constants/users';
 import { selectUnseenConversationCount } from 'src/use-cases/messaging';
 import { usePrevious } from './utils';
 
@@ -37,36 +35,7 @@ export function useNotifBadges(
 
   useEffect(() => {
     if (user !== prevUser) {
-      if (user.role === USER_ROLES.ADMIN) {
-        const queriesToExecute: (() => Promise<AxiosResponse>)[] = [];
-        if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-        } else {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-        }
-        Promise.all(
-          queriesToExecute.map((query) => {
-            return query;
-          })
-        )
-          .then((data) => {
-            const { pendingCVs } = reducePromisesResults(data);
-
-            setBadges((prevBadges) => {
-              return {
-                ...prevBadges,
-                members: pendingCVs || 0,
-              };
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else if (candidateId) {
+      if (candidateId) {
         Promise.all([
           Api.getCandidateCheckUpdate(candidateId),
           Api.getCheckUpdate(candidateId),

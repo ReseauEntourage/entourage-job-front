@@ -2,8 +2,8 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail, isPostalCode } from 'validator';
 import { FormSchema } from '../FormSchema';
 import {
-  BUSINESS_LINES,
-  BusinessLineValue,
+  BUSINESS_SECTORS,
+  BusinessSectorValue,
   CANDIDATE_ACCOMMODATIONS_FILTERS,
   CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
   CANDIDATE_GENDERS_FILTERS,
@@ -50,7 +50,7 @@ export const formCandidateContact: FormSchema<{
   socialSecurity: CandidateYesNoValue;
   handicapped: CandidateYesNoValue;
   bankAccount: CandidateYesNoValue;
-  businessLines: FilterConstant<BusinessLineValue>[];
+  businessSectors: FilterConstant<BusinessSectorValue>[];
   description: string;
   heardAbout: HeardAboutValue;
   diagnostic: string;
@@ -341,12 +341,12 @@ export const formCandidateContact: FormSchema<{
       showLabel: true,
     },
     {
-      id: 'businessLines',
-      name: 'businessLines',
+      id: 'businessSectors',
+      name: 'businessSectors',
       title: 'Dans quel secteur professionnel souhaite-t-elle travailler ?',
       component: 'select',
       isMulti: true,
-      options: BUSINESS_LINES,
+      options: BUSINESS_SECTORS,
       showLabel: true,
     },
     {

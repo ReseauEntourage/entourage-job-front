@@ -1,12 +1,12 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
-import { BusinessLineValue, BUSINESS_LINES } from 'src/constants';
+import { BusinessSectorValue, BUSINESS_SECTORS } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formReferingProfessionalInformation: FormSchema<{
-  searchBusinessLine0: FilterConstant<BusinessLineValue>;
-  searchAmbition0: string;
-  searchBusinessLine1: FilterConstant<BusinessLineValue>;
-  searchAmbition1: string;
+  businessSector0: FilterConstant<BusinessSectorValue>;
+  occupation0: string;
+  businessSector1: FilterConstant<BusinessSectorValue>;
+  occupation1: string;
 }> = {
   id: 'form-refering-candidate-professional-information',
   fields: [
@@ -16,19 +16,19 @@ export const formReferingProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine0',
-          name: 'searchBusinessLine0',
+          id: 'businessSector0',
+          name: 'businessSector0',
           title: 'Secteur(s) recherché(s)',
           component: 'select',
           showLabel: true,
-          options: BUSINESS_LINES,
+          options: BUSINESS_SECTORS,
           isMulti: false,
           isRequired: true,
           placeholder: 'Secteur 1 *',
         },
         {
-          id: 'searchAmbition0',
-          name: 'searchAmbition0',
+          id: 'occupation0',
+          name: 'occupation0',
           component: 'text-input',
           showLabel: true,
           title: 'Métier(s) recherché(s)',
@@ -42,24 +42,24 @@ export const formReferingProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine1',
-          name: 'searchBusinessLine1',
+          id: 'businessSector1',
+          name: 'businessSector1',
           title: 'Secteur 2',
           component: 'select',
           isMulti: false,
-          options: BUSINESS_LINES,
+          options: BUSINESS_SECTORS,
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return !!fieldValue || !fieldValues.searchAmbition1;
+                return !!fieldValue || !fieldValues.occupation1;
               },
               message: 'Obligatoire',
             },
           ],
         },
         {
-          id: 'searchAmbition1',
-          name: 'searchAmbition1',
+          id: 'occupation1',
+          name: 'occupation1',
           component: 'text-input',
           title: 'Métier 2',
         },

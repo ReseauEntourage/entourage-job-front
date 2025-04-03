@@ -6,7 +6,7 @@ import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Button, Section } from 'src/components/utils';
-import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
+import { BUSINESS_SECTORS, DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
@@ -31,7 +31,7 @@ export function Directory() {
   const isMobile = useIsMobile();
 
   const directoryFiltersParams = useDirectoryQueryParams();
-  const { role, departments, helps, businessLines, search } =
+  const { role, departments, helps, businessSectors, search } =
     directoryFiltersParams;
 
   const { setFilters, setSearch, resetFilters } = useFilters(
@@ -49,11 +49,11 @@ export function Directory() {
       helps: mutateToArray(helps).map((help) =>
         findConstantFromValue(help, ProfileHelps)
       ),
-      businessLines: mutateToArray(businessLines).map((businessLine) =>
-        findConstantFromValue(businessLine, BUSINESS_LINES)
+      businessSectors: mutateToArray(businessSectors).map((businessSector) =>
+        findConstantFromValue(businessSector, BUSINESS_SECTORS)
       ),
     };
-  }, [departments, helps, businessLines]);
+  }, [departments, helps, businessSectors]);
 
   return (
     <>

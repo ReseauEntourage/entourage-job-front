@@ -122,8 +122,8 @@ export const PageCVContent = ({
               color={COLORS.black}
             />
             <CVCareerPathSentence
-              ambitions={cv.ambitions}
-              businessLines={cv.businessLines}
+              occupations={cv.occupations}
+              businessSectors={cv.businessSectors}
             />
             {cv.catchphrase && (
               <p id="quote">

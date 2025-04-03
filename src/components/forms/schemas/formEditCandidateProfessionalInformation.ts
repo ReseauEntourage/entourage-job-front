@@ -1,12 +1,12 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
+import { BUSINESS_SECTORS, BusinessSectorValue } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formEditCandidateProfessionalInformation: FormSchema<{
-  searchBusinessLine0: FilterConstant<BusinessLineValue>;
-  searchAmbition0: string;
-  searchBusinessLine1: FilterConstant<BusinessLineValue>;
-  searchAmbition1: string;
+  businessSector0: FilterConstant<BusinessSectorValue>;
+  occupation0: string;
+  businessSector1: FilterConstant<BusinessSectorValue>;
+  occupation1: string;
   linkedinUrl: string;
 }> = {
   id: 'form-career-path',
@@ -36,17 +36,17 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine0',
-          name: 'searchBusinessLine0',
+          id: 'businessSector0',
+          name: 'businessSector0',
           title: 'Famille de métier 1*',
           component: 'select',
-          options: BUSINESS_LINES,
+          options: BUSINESS_SECTORS,
           isMulti: false,
           isRequired: true,
         },
         {
-          id: 'searchAmbition0',
-          name: 'searchAmbition0',
+          id: 'occupation0',
+          name: 'occupation0',
           component: 'text-input',
           title: 'Métier 1',
         },
@@ -58,24 +58,24 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine1',
-          name: 'searchBusinessLine1',
+          id: 'occupation1',
+          name: 'occupation1',
           title: 'Famille de métier 2',
           component: 'select',
           isMulti: false,
-          options: BUSINESS_LINES,
+          options: BUSINESS_SECTORS,
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return !!fieldValue || !fieldValues.searchAmbition1;
+                return !!fieldValue || !fieldValues.occupation1;
               },
               message: 'Obligatoire',
             },
           ],
         },
         {
-          id: 'searchAmbition1',
-          name: 'searchAmbition1',
+          id: 'occupation1',
+          name: 'occupation1',
           component: 'text-input',
           title: 'Métier 2',
         },

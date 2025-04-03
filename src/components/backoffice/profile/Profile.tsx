@@ -47,30 +47,24 @@ export const Profile = () => {
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileProfessionalInformations
               userFirstName={selectedProfile.firstName}
-              ambitions={selectedProfile.searchAmbitions ?? []}
-              businessLines={selectedProfile.searchBusinessLines ?? []}
+              occupations={selectedProfile.occupations ?? []}
+              businessSectors={selectedProfile.businessSectors ?? []}
               description={description}
               skills={[
                 {
                   id: '1',
                   name: 'Gestion administrative et organisation',
-                  CVs: [],
-                  createdAt: '',
-                  updatedAt: '',
+                  order: 0,
                 },
                 {
                   id: '2',
                   name: 'Relation client et prospection commerciale',
-                  CVs: [],
-                  createdAt: '',
-                  updatedAt: '',
+                  order: 1,
                 },
                 {
                   id: '3',
                   name: 'Communication et coordination',
-                  CVs: [],
-                  createdAt: '',
-                  updatedAt: '',
+                  order: 2,
                 },
               ]}
             />

@@ -1,52 +1,43 @@
 import React from 'react';
+import { BusinessSector, Occupation } from 'src/api/types';
 import { Text } from 'src/components/utils';
+import { OCCUPATIONS_PREFIXES, BUSINESS_SECTORS } from 'src/constants';
 import {
-  AMBITIONS_PREFIXES,
-  BUSINESS_LINES,
-  AmbitionsPrefixesType,
-} from 'src/constants';
-import {
-  buildBusinessLineForSentence,
+  buildBusinessSectorForSentence,
   findConstantFromValue,
-  getAmbitionsLinkingSentence,
+  getOccupationsLinkingSentence,
   sortByOrder,
 } from 'src/utils';
 import {
-  StyledCareerPathHightlightBusinessLine,
-  StyledCareerPathHightlightAmbition,
+  StyledCareerPathHightlightBusinessSector,
+  StyledCareerPathHightlightOccupation,
 } from './CVCareerPathSentence.styles';
 
 interface CVCareerPathSentenceProps {
-  ambitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  businessLines: {
-    name: string;
-    order: number;
-  }[];
+  occupations: Occupation[];
+  businessSectors: BusinessSector[];
 }
 
 export const CVCareerPathSentence = ({
-  businessLines,
-  ambitions,
+  businessSectors,
+  occupations,
 }: CVCareerPathSentenceProps) => {
-  const sortedAmbitions = ambitions?.length > 0 ? sortByOrder(ambitions) : null;
+  const sortedOccupations =
+    occupations?.length > 0 ? sortByOrder(occupations) : null;
 
-  const sortedBusinessLines =
-    businessLines?.length > 0 ? sortByOrder(businessLines) : null;
+  const sortedBusinessSectors =
+    businessSectors?.length > 0 ? sortByOrder(businessSectors) : null;
 
-  const isNewCareerPath = sortedBusinessLines?.every(({ order }) => {
+  const isNewCareerPath = sortedBusinessSectors?.every(({ order }) => {
     return order > -1;
   });
 
   if (!isNewCareerPath) {
-    if (sortedAmbitions) {
+    if (sortedOccupations) {
       return (
         <>
           J&apos;aimerais travailler{' '}
-          {sortedAmbitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
+          {sortedOccupations[0].prefix || OCCUPATIONS_PREFIXES[0].label}{' '}
           <span
             className="uk-label uk-text-lowercase"
             style={{
@@ -55,14 +46,14 @@ export const CVCareerPathSentence = ({
               fontSize: 'inherit',
             }}
           >
-            {sortedAmbitions[0].name}
+            {sortedOccupations[0].name}
           </span>
-          {sortedAmbitions.length > 1 && (
+          {sortedOccupations.length > 1 && (
             <>
-              {getAmbitionsLinkingSentence(sortedAmbitions)}
-              <StyledCareerPathHightlightAmbition>
-                {sortedAmbitions[1].name}
-              </StyledCareerPathHightlightAmbition>
+              {getOccupationsLinkingSentence(sortedOccupations)}
+              <StyledCareerPathHightlightOccupation>
+                {sortedOccupations[1].name}
+              </StyledCareerPathHightlightOccupation>
             </>
           )}
         </>
@@ -71,22 +62,22 @@ export const CVCareerPathSentence = ({
     return null;
   }
 
-  if (sortedBusinessLines) {
-    const careerPaths = sortedBusinessLines.reduce(
+  if (sortedBusinessSectors) {
+    const careerPaths = sortedBusinessSectors.reduce(
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       (acc, curr) => {
-        const correspondingAmbition = sortedAmbitions?.find(({ order }) => {
+        const correspondingOccupation = sortedOccupations?.find(({ order }) => {
           return order === curr.order;
         });
         return [
           ...acc,
           {
             order: curr.order,
-            ambition: correspondingAmbition?.name,
-            businessLine: {
-              ...findConstantFromValue(curr.name, BUSINESS_LINES),
-              label: buildBusinessLineForSentence(
-                findConstantFromValue(curr.name, BUSINESS_LINES)
+            occupation: correspondingOccupation?.name,
+            businessSector: {
+              ...findConstantFromValue(curr.value, BUSINESS_SECTORS),
+              label: buildBusinessSectorForSentence(
+                findConstantFromValue(curr.value, BUSINESS_SECTORS)
               ),
             },
           },
@@ -95,47 +86,48 @@ export const CVCareerPathSentence = ({
       []
     );
 
-    const getAmbitionIfExists = (index) => {
-      if (careerPaths[index].ambition) {
+    const getOccupationIfExists = (index) => {
+      if (careerPaths[index].occupation) {
         return (
           <>
             {' '}
-            {AMBITIONS_PREFIXES[1].label}{' '}
-            <StyledCareerPathHightlightAmbition>
-              {careerPaths[index].ambition}
-            </StyledCareerPathHightlightAmbition>
+            {OCCUPATIONS_PREFIXES[1].label}{' '}
+            <StyledCareerPathHightlightOccupation>
+              {careerPaths[index].occupation}
+            </StyledCareerPathHightlightOccupation>
           </>
         );
       }
       return null;
     };
 
-    const hasSecondPart = careerPaths[1] && careerPaths[1].businessLine;
+    const hasSecondPart = careerPaths[1] && careerPaths[1].businessSector;
 
-    const hasSameBusinessLine =
+    const hasSameBusinessSector =
       hasSecondPart &&
-      careerPaths[1].businessLine.value === careerPaths[0].businessLine.value &&
-      careerPaths[1].ambition;
+      careerPaths[1].businessSector.value ===
+        careerPaths[0].businessSector.value &&
+      careerPaths[1].occupation;
 
     return (
       <Text>
-        J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-        <StyledCareerPathHightlightBusinessLine>
-          {careerPaths[0].businessLine.label}
-        </StyledCareerPathHightlightBusinessLine>
-        {getAmbitionIfExists(0)}
+        J&apos;aimerais travailler {OCCUPATIONS_PREFIXES[0].label}{' '}
+        <StyledCareerPathHightlightBusinessSector>
+          {careerPaths[0].businessSector.label}
+        </StyledCareerPathHightlightBusinessSector>
+        {getOccupationIfExists(0)}
         {hasSecondPart && (
           <>
-            {hasSameBusinessLine ? (
-              <> ou {getAmbitionIfExists(1)}</>
+            {hasSameBusinessSector ? (
+              <> ou {getOccupationIfExists(1)}</>
             ) : (
               <>
                 {' '}
-                ou {AMBITIONS_PREFIXES[0].label}{' '}
-                <StyledCareerPathHightlightBusinessLine>
-                  {careerPaths[1].businessLine.label}
-                </StyledCareerPathHightlightBusinessLine>
-                {getAmbitionIfExists(1)}
+                ou {OCCUPATIONS_PREFIXES[0].label}{' '}
+                <StyledCareerPathHightlightBusinessSector>
+                  {careerPaths[1].businessSector.label}
+                </StyledCareerPathHightlightBusinessSector>
+                {getOccupationIfExists(1)}
               </>
             )}
           </>

@@ -31,11 +31,11 @@ const cards: ProfileCardProps[] = new Array(4)
       lastName: 'Doe',
       role: USER_ROLES.CANDIDATE,
       helps: [{ name: 'network' }, { name: 'cv' }],
-      businessLines: [
+      businessSectors: [
         { name: 'id', order: 0 },
         { name: 'bat', order: 1 },
       ],
-      ambitions: [
+      occupations: [
         { name: 'développeur', order: 0 },
         { name: 'ouvrier', order: 1 },
       ],
@@ -52,8 +52,8 @@ const list = cards.map(
     lastName,
     role,
     helps,
-    businessLines,
-    ambitions,
+    businessSectors,
+    occupations,
     department,
     isAvailable,
   }) => (
@@ -65,9 +65,9 @@ const list = cards.map(
           lastName={lastName}
           role={role}
           department={department}
-          businessLines={businessLines}
+          businessSectors={businessSectors}
           helps={helps}
-          ambitions={ambitions}
+          occupations={occupations}
           isAvailable={isAvailable}
         />
       </CardListItem>

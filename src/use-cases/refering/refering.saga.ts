@@ -25,10 +25,10 @@ export function* referCandidateSagaRequested() {
   const selectedProgram = yield* select(selectDefinedReferingSelectedProgram);
 
   const {
-    searchBusinessLine0,
-    searchBusinessLine1,
-    searchAmbition0,
-    searchAmbition1,
+    businessSector0,
+    businessSector1,
+    occupation0,
+    occupation1,
     confirmReferingRules,
     ...flattenedData
   } = flattenReferingData(data);
@@ -38,15 +38,14 @@ export function* referCandidateSagaRequested() {
       Api.postUserRefering({
         ...flattenedData,
         program: selectedProgram,
-        searchAmbitions: searchBusinessLine0
-          ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
-              .searchAmbitions
+        occupations: businessSector0
+          ? formatCareerPathSentence({ occupation0, occupation1 }).occupations
           : undefined,
-        searchBusinessLines: searchBusinessLine0
+        businessSectors: businessSector0
           ? formatCareerPathSentence({
-              searchBusinessLine0,
-              searchBusinessLine1,
-            }).searchBusinessLines
+              businessSector0,
+              businessSector1,
+            }).businessSectors
           : undefined,
         department: flattenedData.department.value,
         helpNeeds: flattenedData.helpNeeds

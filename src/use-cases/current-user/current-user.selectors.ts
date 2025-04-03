@@ -1,8 +1,6 @@
-import { createSelector } from '@reduxjs/toolkit';
 import {
   User,
   UserCandidateWithUsers,
-  UserProfile,
   UserWithUserCandidate,
 } from 'src/api/types';
 import { USER_ROLES } from 'src/constants/users';
@@ -10,7 +8,6 @@ import {
   getCandidateIdFromCoachOrCandidate,
   getRelatedUser,
   getUserCandidateFromCoachOrCandidate,
-  mutateToArray,
 } from 'src/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
@@ -89,14 +86,14 @@ export function selectCurrentUserProfileHelps(state: RootState) {
   }
 }
 
-export function selectCurrentUserProfileBusinessLines(state: RootState) {
+export function selectCurrentUserProfileBusinessSectors(state: RootState) {
   const currentUser = selectAuthenticatedUser(state);
 
   if (currentUser.role === USER_ROLES.CANDIDATE) {
-    return currentUser.userProfile.searchBusinessLines;
+    return currentUser.userProfile.businessSectors;
   }
   if (currentUser.role === USER_ROLES.COACH) {
-    return currentUser.userProfile.networkBusinessLines;
+    return currentUser.userProfile.businessSectors;
   }
 }
 
@@ -139,27 +136,6 @@ export function selectCandidateId(state: RootState): string | null {
   }
   return candidateId;
 }
-
-// select department and businesslines from the profile of the current user's candidate => doesn't work for external coach
-export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
-  createSelector(
-    (state: RootState) => selectAuthenticatedUser(state),
-    (user) => {
-      let userCandidateProfile: UserProfile;
-      const candidate = getUserCandidateFromCoachOrCandidate(user);
-      if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
-        userCandidateProfile = candidate[0]?.candidat?.userProfile;
-      } else {
-        userCandidateProfile = user?.userProfile;
-      }
-      return {
-        department: mutateToArray(userCandidateProfile.department),
-        businessLines: userCandidateProfile.searchBusinessLines?.map(
-          (businessLine) => businessLine.name
-        ),
-      };
-    }
-  );
 
 // selects linked user if only one user is linked, otherwise sends first user of the list; if whole list needed, create new selector
 export const selectLinkedUser = (

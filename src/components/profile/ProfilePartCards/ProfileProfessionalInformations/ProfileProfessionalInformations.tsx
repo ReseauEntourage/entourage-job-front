@@ -2,27 +2,15 @@ import React from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
-import { Skill } from 'src/api/types';
+import { BusinessSector, Occupation, Skill } from 'src/api/types';
 import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { Text } from 'src/components/utils';
-import { AmbitionsPrefixesType } from 'src/constants';
 import { StyledContentContainer } from './ProfileProfessionalInformations.styles';
-
-type Ambition = {
-  name: string;
-  order: number;
-  prefix: AmbitionsPrefixesType;
-};
-
-type BusinessLine = {
-  name: string;
-  order: number;
-};
 
 export interface ProfileProfessionalInformationsProps {
   userFirstName: string;
-  ambitions: Ambition[];
-  businessLines: BusinessLine[];
+  occupations: Occupation[];
+  businessSectors: BusinessSector[];
   description: string;
   skills: Skill[];
   smallCard?: boolean;
@@ -30,8 +18,8 @@ export interface ProfileProfessionalInformationsProps {
 
 export const ProfileProfessionalInformations = ({
   userFirstName,
-  ambitions,
-  businessLines,
+  occupations,
+  businessSectors,
   description,
   skills,
   smallCard = false,
@@ -51,8 +39,8 @@ export const ProfileProfessionalInformations = ({
     >
       <StyledContentContainer>
         <ProfileCareerPathSentence
-          ambitions={ambitions}
-          businessLines={businessLines}
+          occupations={occupations}
+          businessSectors={businessSectors}
         />
         <Text>{description}</Text>
         <CardTagList items={skills} />

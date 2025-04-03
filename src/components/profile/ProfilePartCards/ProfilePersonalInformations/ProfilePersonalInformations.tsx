@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
+import { BusinessSector, Occupation } from 'src/api/types';
 import { ModalEditProfessionalInformation } from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
   getCandidateDefaultProfessionalValues,
@@ -12,42 +13,30 @@ import { formEditCoachProfessionalInformation } from 'src/components/forms/schem
 import { openModal } from 'src/components/modals/Modal';
 import { Text } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { AmbitionsPrefixesType } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   formatCareerPathSentence,
-  formatNetworkBusinessLines,
+  formatNetworkBusinessSectors,
 } from 'src/utils';
-
-type Ambition = {
-  name: string;
-  order: number;
-  prefix: AmbitionsPrefixesType;
-};
-
-type BusinessLine = {
-  name: string;
-  order: number;
-};
 
 export interface ProfilePersonalInformationsProps {
   isEditable?: boolean;
-  ambitions: Ambition[];
-  businessLines: BusinessLine[];
+  occupations: Occupation[];
+  businessSectors: BusinessSector[];
   smallCard?: boolean;
 }
 
 export const ProfilePersonalInformations = ({
-  ambitions,
-  businessLines,
+  occupations,
+  businessSectors,
   isEditable = false,
   smallCard = false,
 }: ProfilePersonalInformationsProps) => {
   const user = useAuthenticatedUser();
   const { userProfile, role } = user;
 
-  const isCompleted = businessLines.length > 0;
+  const isCompleted = businessSectors.length > 0;
 
   const editModal = useCallback(() => {
     if (!userProfile) return;
@@ -60,12 +49,12 @@ export const ProfilePersonalInformations = ({
           defaultValues={getCoachDefaultProfessionalValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
-            const networkBusinessLines = formatNetworkBusinessLines(
-              values.networkBusinessLines
+            const networkBusinessSectors = formatNetworkBusinessSectors(
+              values.businessSectors
             );
             return {
               currentJob: values.currentJob,
-              networkBusinessLines,
+              networkBusinessSectors,
               linkedinUrl: values.linkedinUrl,
             };
           }}
@@ -110,8 +99,8 @@ export const ProfilePersonalInformations = ({
       }}
     >
       <ProfileCareerPathSentence
-        ambitions={ambitions}
-        businessLines={businessLines}
+        occupations={occupations}
+        businessSectors={businessSectors}
       />
     </ProfilePartCard>
   );

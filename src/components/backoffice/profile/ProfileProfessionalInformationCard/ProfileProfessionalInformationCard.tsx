@@ -8,7 +8,7 @@ import { checkData } from 'src/components/backoffice/parametres-old/ParametresLa
 import { Button, Card } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_SECTORS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { gaEvent } from 'src/lib/gtag';
@@ -27,9 +27,8 @@ export const ProfileProfessionalInformationCard = () => {
         checkData({
           role: selectedProfile.role,
           currentJob: selectedProfile.currentJob,
-          networkBusinessLines: selectedProfile.networkBusinessLines,
-          searchAmbitions: selectedProfile.searchAmbitions,
-          searchBusinessLines: selectedProfile.searchBusinessLines,
+          occupations: selectedProfile.occupations,
+          businessSectors: selectedProfile.businessSectors,
         })
       );
     }
@@ -52,16 +51,16 @@ export const ProfileProfessionalInformationCard = () => {
                   <strong>{selectedProfile.currentJob}</strong>
                 </li>
               )}
-              {selectedProfile.networkBusinessLines &&
-                selectedProfile.networkBusinessLines.length > 0 && (
+              {selectedProfile.businessSectors &&
+                selectedProfile.businessSectors.length > 0 && (
                   <li className="tag-container">
                     J&lsquo;ai du réseau dans :{' '}
-                    {sortByOrder(selectedProfile.networkBusinessLines).map(
-                      ({ name }) => (
+                    {sortByOrder(selectedProfile.businessSectors).map(
+                      ({ value }) => (
                         <Tag
                           key={uuidValue}
                           content={
-                            findConstantFromValue(name, BUSINESS_LINES).label
+                            findConstantFromValue(value, BUSINESS_SECTORS).label
                           }
                         />
                       )
@@ -72,8 +71,8 @@ export const ProfileProfessionalInformationCard = () => {
           ) : (
             <>
               <ProfileCareerPathSentence
-                ambitions={selectedProfile.searchAmbitions}
-                businessLines={selectedProfile.searchBusinessLines}
+                occupations={selectedProfile.occupations}
+                businessSectors={selectedProfile.businessSectors}
               />
             </>
           )}

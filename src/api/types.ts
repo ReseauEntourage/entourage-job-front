@@ -1,6 +1,6 @@
 import {
-  AmbitionsPrefixesType,
-  BusinessLineValue,
+  OccupationsPrefixesType,
+  BusinessSectorValue,
   CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
@@ -78,6 +78,64 @@ export type OrganizationDto = {
   zone: AdminZone;
 };
 
+export interface BusinessSector {
+  id?: string;
+  name?: string;
+  order: number;
+  value: BusinessSectorValue;
+}
+
+export type Occupation = {
+  id?: string;
+  name: string;
+  order: number;
+  prefix: OccupationsPrefixesType;
+};
+
+export interface Review {
+  id?: string;
+  name: string;
+  text: string;
+  status: string;
+}
+
+export interface Experience {
+  id?: string;
+  description?: string;
+  title: string;
+  dateStart?: Date;
+  dateEnd?: Date;
+  company?: string;
+  location?: string;
+  order?: number;
+  skills: {
+    id?: string;
+    name: string;
+    order: number;
+  }[];
+}
+
+export interface Formation {
+  id?: string;
+  description?: string;
+  title: string;
+  dateStart?: Date;
+  dateEnd?: Date;
+  institution?: string;
+  location?: string;
+  skills: {
+    id?: string;
+    name: string;
+    order: number;
+  }[];
+}
+
+export type Skill = {
+  id: string;
+  name: string;
+  order: number;
+};
+
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
@@ -86,26 +144,17 @@ export type UserProfile = {
   unavailabilityReason: string | null;
   helpNeeds: { name: HelpValue }[] | null;
   helpOffers: { name: HelpValue }[] | null;
-  networkBusinessLines:
-    | {
-        name: BusinessLineValue;
-        order: number;
-      }[]
-    | null;
-  searchBusinessLines:
-    | {
-        name: BusinessLineValue;
-        order: number;
-      }[]
-    | null;
-  searchAmbitions:
-    | { name: string; order: number; prefix: AmbitionsPrefixesType }[]
-    | null;
+  businessSectors: BusinessSector[] | null;
+  occupations: Occupation[] | null;
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
   hasAcceptedEthicsCharter: boolean;
+  reviews: Review[] | null;
+  experiences: Experience[] | null;
+  formations: Formation[] | null;
+  skills: Skill[] | null;
 };
 
 export type UserReportDto = {
@@ -151,37 +200,6 @@ export type User = {
   isEmailVerified: boolean;
 };
 
-export interface CVExperience {
-  id?: string;
-  description?: string;
-  title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
-  company?: string;
-  location?: string;
-  order?: number;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
-}
-
-export interface CVFormation {
-  id?: string;
-  description?: string;
-  title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
-  institution?: string;
-  location?: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
-}
-
 export type CVStatus =
   | 'Draft'
   | 'Published'
@@ -189,13 +207,6 @@ export type CVStatus =
   | 'Pending'
   | 'Progress'
   | 'Unknown';
-
-export interface Review {
-  id?: string;
-  name: string;
-  text: string;
-  status: string;
-}
 
 export interface CV {
   id?: string;
@@ -228,32 +239,21 @@ export interface CV {
   contracts: {
     name: ContractValue;
   }[];
-  ambitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  businessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
+  occupations: Occupation[];
+  businessSectors: BusinessSector[];
   languages: {
     name: string;
   }[];
   transport: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
+  skills: Skill[];
   passions: {
     id?: string;
     name: string;
     order: number;
   }[];
   reviews: Review[];
-  formations?: CVFormation[];
-  experiences?: CVExperience[];
+  formations?: Formation[];
+  experiences?: Experience[];
   status: CVStatus;
   UserId: string;
 }
@@ -313,15 +313,8 @@ export type UserRegistrationDto = {
   program?: Program;
   organizationId?: string;
   birthDate: string;
-  searchAmbitions?: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  searchBusinessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
+  occupations?: Occupation[];
+  businessSectors?: BusinessSector[];
   materialInsecurity?: string;
   networkInsecurity?: string;
 };
@@ -337,23 +330,8 @@ export type UserReferingDto = {
   workingRight?: string;
   program?: Program;
   birthDate: string;
-  searchAmbitions?: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  searchBusinessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-};
-
-export type Skill = {
-  id: string;
-  name: string;
-  CVs: CV[];
-  createdAt: string;
-  updatedAt: string;
+  occupations?: Occupation[];
+  businessSectors?: BusinessSector[];
 };
 
 export type Contract = {
@@ -413,7 +391,7 @@ export type ContactCandidate = {
   socialSecurity: string;
   handicapped?: string;
   bankAccount: string;
-  businessLines?: BusinessLineValue[];
+  businessSectors?: BusinessSectorValue[];
   description: string;
   heardAbout: string;
   diagnostic?: string;
@@ -520,19 +498,8 @@ export type PublicProfile = {
   isAvailable: boolean;
   helpNeeds: { name: HelpValue }[];
   helpOffers: { name: HelpValue }[];
-  networkBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchAmbitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
+  businessSectors: BusinessSector[];
+  occupations: Occupation[];
   lastSentMessage: string;
   lastReceivedMessage: string;
   cvUrl?: string;
@@ -551,7 +518,7 @@ export type ProfilesFilters = {
   search?: string;
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
-  businessLines: BusinessLineValue | BusinessLineValue[];
+  businessSectors: BusinessSectorValue | BusinessSectorValue[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

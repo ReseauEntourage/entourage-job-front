@@ -1,1 +1,0 @@
-export { ButtonDownload } from './ButtonDownload';

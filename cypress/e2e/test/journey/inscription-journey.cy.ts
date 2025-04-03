@@ -33,7 +33,7 @@ describe('Inscription', () => {
       cy.contains('Suivant').click();
 
       cy.get(
-        "[data-testid='form-registration-candidate-professional-information-searchBusinessLine0']"
+        "[data-testid='form-registration-candidate-professional-information-businessSector0']"
       )
         .click()
         .find('.Select__option')

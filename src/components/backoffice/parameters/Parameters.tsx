@@ -22,9 +22,7 @@ import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileR
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
-import { Spinner } from 'src/components/utils/Spinner';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useFetchCV } from 'src/hooks/useFetchCV';
 import { useIsDesktop } from 'src/hooks/utils';
 import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
 import {
@@ -36,7 +34,6 @@ import {
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
-  const { cv, error, loading } = useFetchCV(user.id);
 
   useConfirmationToaster();
 
@@ -55,74 +52,73 @@ export const Parameters = () => {
         driverLicenses={['AM', 'A', 'B', 'C', 'D', 'E']}
         isEditable
       />
-      {loading || error ? (
-        <Spinner />
-      ) : (
-        <Section className="custom-page">
-          <StyledParametersSectionContent>
-            <InviteToUploadCv />
-            <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
-              <StyledParametersLeftColumn
-                className={`${isDesktop ? '' : 'mobile'}`}
-              >
-                <ProfilePersonalInformations
-                  ambitions={user.userProfile.searchAmbitions ?? []}
-                  businessLines={user.userProfile.searchBusinessLines ?? []}
-                  isEditable
-                />
-                <ProfileGeneratedDescription isEditable />
-                <ProfileSkills skills={cv?.skills || []} isEditable />
-                <ProfileCustomHelpsAndOffers
-                  isEditable
-                  items={['item1', 'item2']}
-                  firstName={user.firstName}
-                  role={user.role}
-                  id={user.id}
-                  ownProfile
-                />
-                <ProfileExperiences
-                  userId={user.id}
-                  userFirstName={user.firstName}
-                  experiences={cv.experiences}
-                  isEditable
-                />
-                <ProfileFormations
-                  userId={user.id}
-                  userFirstName={user.firstName}
-                  formations={cv.formations}
-                  isEditable
-                />
-                <ProfileReviews
-                  userId={user.id}
-                  userFirstName={user.firstName}
-                  reviews={cv.reviews}
-                  isEditable
-                />
-              </StyledParametersLeftColumn>
-              <StyledParametersRightColumn
-                className={`${isDesktop ? '' : 'mobile'}`}
-              >
-                <ProfileDocuments
-                  userId={user.id}
-                  linkedinUrl={user.userProfile.linkedinUrl}
-                  hasExternalCv={user.userProfile.hasExternalCv}
-                  entourageProCv="/url/" // TODO: Add CvUrl
-                  isEditable
-                  smallCard
-                />
-                <ProfileLanguages languages={[]} isEditable smallCard />
-                <ProfileInterests interests={[]} isEditable smallCard />
-                <ProfileContracts isEditable smallCard />
-                <ProfileContactPreferences isEditable smallCard />
-                <ProfileHelpsAndOffers role={user.role} isEditable smallCard />
-                <ProfileNotificationsPreferences isEditable smallCard />
-                <ProfileStats smallCard />
-                <ProfileChangePassword smallCard />
-              </StyledParametersRightColumn>
-            </StyledBackofficeGrid>
-          </StyledParametersSectionContent>
-        </Section>
-      )}
+      <Section className="custom-page">
+        <StyledParametersSectionContent>
+          <InviteToUploadCv />
+          <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
+            <StyledParametersLeftColumn
+              className={`${isDesktop ? '' : 'mobile'}`}
+            >
+              <ProfilePersonalInformations
+                occupations={user.userProfile.occupations ?? []}
+                businessSectors={user.userProfile.businessSectors ?? []}
+                isEditable
+              />
+              <ProfileGeneratedDescription isEditable />
+              <ProfileSkills
+                skills={user.userProfile.skills || []}
+                isEditable
+              />
+              <ProfileCustomHelpsAndOffers
+                isEditable
+                items={['item1', 'item2']}
+                firstName={user.firstName}
+                role={user.role}
+                id={user.id}
+                ownProfile
+              />
+              <ProfileExperiences
+                userId={user.id}
+                userFirstName={user.firstName}
+                experiences={user.userProfile.experiences || []}
+                isEditable
+              />
+              <ProfileFormations
+                userId={user.id}
+                userFirstName={user.firstName}
+                formations={user.userProfile.formations || []}
+                isEditable
+              />
+              <ProfileReviews
+                userId={user.id}
+                userFirstName={user.firstName}
+                reviews={user.userProfile.reviews || []}
+                isEditable
+              />
+            </StyledParametersLeftColumn>
+            <StyledParametersRightColumn
+              className={`${isDesktop ? '' : 'mobile'}`}
+            >
+              <ProfileDocuments
+                userId={user.id}
+                linkedinUrl={user.userProfile.linkedinUrl}
+                hasExternalCv={user.userProfile.hasExternalCv}
+                entourageProCv="/url/" // TODO: Add CvUrl
+                isEditable
+                smallCard
+              />
+              <ProfileLanguages languages={[]} isEditable smallCard />
+              <ProfileInterests interests={[]} isEditable smallCard />
+              <ProfileContracts isEditable smallCard />
+              <ProfileContactPreferences isEditable smallCard />
+              <ProfileHelpsAndOffers role={user.role} isEditable smallCard />
+              <ProfileNotificationsPreferences isEditable smallCard />
+              <ProfileStats smallCard />
+              <ProfileChangePassword smallCard />
+            </StyledParametersRightColumn>
+          </StyledBackofficeGrid>
+        </StyledParametersSectionContent>
+      </Section>
     </StyledBackofficeBackground>
   );
 };

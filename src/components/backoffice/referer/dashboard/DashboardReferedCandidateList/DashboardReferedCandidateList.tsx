@@ -41,11 +41,6 @@ export const DashboardReferedCandidateList = () => {
           ? profile.helpNeeds
           : profile.helpOffers;
 
-      const businessLines =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.searchBusinessLines
-          : profile.networkBusinessLines;
-
       return (
         <DirectoryItem
           key={profile.id}
@@ -55,8 +50,8 @@ export const DashboardReferedCandidateList = () => {
           role={profile.role}
           department={profile.department}
           helps={helps}
-          businessLines={businessLines}
-          ambitions={profile.searchAmbitions}
+          businessSectors={profile.businessSectors}
+          occupations={profile.occupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps={false}

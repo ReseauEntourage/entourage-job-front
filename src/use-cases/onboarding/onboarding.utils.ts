@@ -9,7 +9,7 @@ import {
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
 import { RegistrableUserRole } from 'src/constants/users';
-import { formatNetworkBusinessLines } from 'src/utils';
+import { formatNetworkBusinessSectors } from 'src/utils';
 
 export const flattenOnboardingDataByRole = (
   data: OnboardingStepData,
@@ -56,8 +56,8 @@ export const parseOnboadingProfileFields = (
     description: fields.description ?? undefined,
     linkedinUrl: fields.linkedinUrl ?? undefined,
     currentJob: fields.currentJob ? fields.currentJob : undefined,
-    networkBusinessLines: fields.networkBusinessLines
-      ? formatNetworkBusinessLines(fields.networkBusinessLines)
+    businessSectors: fields.businessSectors
+      ? formatNetworkBusinessSectors(fields.businessSectors)
       : undefined,
   };
 };

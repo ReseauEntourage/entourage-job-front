@@ -34,15 +34,14 @@ export const generateUserLoginApiResponse = (roleUser) => {
     userProfile: {
       description: null,
       currentJob: null,
-      networkBusinessLines: [],
-      searchBusinessLines: [
+      businessSectors: [
         {
           id: faker.string.uuid(),
           name: 'aev',
           order: faker.number.int(2),
         },
       ],
-      searchAmbitions: [],
+      occupations: [],
       helpOffers: [],
       helpNeeds: [
         {
@@ -88,9 +87,8 @@ export const generateUserLoginApiResponse = (roleUser) => {
             currentJob: null,
             department: null,
             isAvailable: true,
-            searchBusinessLines: [],
-            networkBusinessLines: [],
-            searchAmbitions: [],
+            businessSectors: [],
+            occupations: [],
             helpNeeds: [],
             helpOffers: [],
           },
@@ -106,9 +104,8 @@ export const generateUserLoginApiResponse = (roleUser) => {
     userProfile: {
       description: null,
       currentJob: null,
-      networkBusinessLines: [],
-      searchBusinessLines: [],
-      searchAmbitions: [
+      businessSectors: [],
+      occupations: [
         {
           id: faker.string.uuid(),
           name: 'aev',

@@ -15,11 +15,6 @@ export function DirectoryList() {
           ? profile.helpNeeds
           : profile.helpOffers;
 
-      const businessLines =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.searchBusinessLines
-          : profile.networkBusinessLines;
-
       return (
         <DirectoryItem
           key={profile.id}
@@ -29,8 +24,8 @@ export function DirectoryList() {
           role={profile.role}
           department={profile.department}
           helps={helps}
-          businessLines={businessLines}
-          ambitions={profile.searchAmbitions}
+          businessSectors={profile.businessSectors}
+          occupations={profile.occupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps

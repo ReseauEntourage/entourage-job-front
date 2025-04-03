@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { generateCampaignsApiResponse } from '../fixtures/src/campaign/generateCampaignsApiResponse';
-import { generateCvCandidateApiResponse } from '../fixtures/src/cv/generateCvCandidateApiResponse';
-import { generateCvCardsApiResponse } from '../fixtures/src/cv/generateCvCardsApiResponse';
-import { generateCvReadApiResponse } from '../fixtures/src/cv/generateCvReadApiResponse';
-import { generateCvUrlApiResponse } from '../fixtures/src/cv/generateCvUrlApiResponse';
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
 import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
 import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
@@ -17,16 +13,11 @@ declare global {
   namespace Cypress {
     interface Chainable<Subject> {
       generateAdminLoginApiResponse(): Chainable<Subject>;
-      generateOpportunitiesWrappedApiResponse(): Chainable<Subject>;
       generateUsersApiResponse(roleUsers: string): Chainable<Subject>;
       generateOrganizationsApiResponse(): Chainable<Subject>;
       generateSearchUsersApiResponse(): Chainable<Subject>;
       generateCandidateLoginApiResponse(): Chainable<Subject>;
-      generateCvCandidateApiResponse(): Chainable<Subject>;
       generateCoachLoginApiResponse(): Chainable<Subject>;
-      generateCvCardsApiResponse(): Chainable<Subject>;
-      generateCvReadApiResponse(): Chainable<Subject>;
-      generateCvUrlApiResponse(): Chainable<Subject>;
       generateCampaignsApiResponse(): Chainable<Subject>;
       generateUserProfileReferedApiResponse(): Chainable<Subject>;
     }
@@ -92,50 +83,6 @@ Cypress.Commands.add('generateCoachLoginApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/coach-login.json',
     generateUserLoginApiResponse('Coach'),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate candidate cv
- */
-Cypress.Commands.add('generateCvCandidateApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-candidate.json',
-    generateCvCandidateApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cvs card
- */
-Cypress.Commands.add('generateCvCardsApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-cards.json',
-    generateCvCardsApiResponse(2),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cvs card
- */
-Cypress.Commands.add('generateCvReadApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-read.json',
-    generateCvReadApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cv card
- */
-Cypress.Commands.add('generateCvUrlApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-url.json',
-    generateCvUrlApiResponse(),
     'utf-8'
   );
 });

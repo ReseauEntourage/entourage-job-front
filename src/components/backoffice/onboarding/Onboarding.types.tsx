@@ -67,14 +67,14 @@ export const onboardingAlreadyCompleted = {
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
     );
-    const hasNetworkBusinessLines =
-      !!user.userProfile.networkBusinessLines?.length;
+    const hasNetworkBusinessSectors =
+      !!user.userProfile.businessSectors?.length;
     const readDocumentCompleted = isReadDocument(
       user.readDocuments,
       DocumentNames.CharteEthique
     );
     return (
-      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessLines
+      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessSectors
     );
   },
 };
@@ -156,7 +156,7 @@ export const OnboardingStepContents: {
         return getCoachDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) =>
-        !!userProfile?.networkBusinessLines?.length,
+        !!userProfile?.businessSectors?.length,
     },
   },
   3: {

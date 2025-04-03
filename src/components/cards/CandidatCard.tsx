@@ -8,11 +8,11 @@ import {
   CandidatCardPictureContainerStyled,
   CandidatCardPictureOverlay,
   CandidatCardStyled,
-  CandidateCardBusinessLinesStyled,
+  CandidateCardBusinessSectorsStyled,
 } from 'src/components/cards/CandidatCard.styles';
 
 import { Img, Tag } from 'src/components/utils';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { OCCUPATIONS_PREFIXES, BUSINESS_SECTORS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
@@ -21,8 +21,8 @@ export const CandidatCard = ({
   url,
   imgSrc,
   firstName,
-  ambitions,
-  businessLines,
+  occupations,
+  businessSectors,
   locations,
 }) => {
   const { asPath, push } = useRouter();
@@ -42,18 +42,18 @@ export const CandidatCard = ({
     push(linkToCV);
   };
 
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+  const sortedOccupations =
+    occupations && occupations.length > 0 ? sortByOrder(occupations) : null;
 
   const sortedLocations =
     locations && locations.length > 0 ? sortByOrder(locations) : null;
 
-  const sortedBusinessLines =
-    businessLines && businessLines.length > 0
-      ? sortByOrder(businessLines)
+  const sortedBusinessSectors =
+    businessSectors && businessSectors.length > 0
+      ? sortByOrder(businessSectors)
       : null;
 
-  const isNewCareerPath = sortedBusinessLines?.every(({ order }) => {
+  const isNewCareerPath = sortedBusinessSectors?.every(({ order }) => {
     return order > -1;
   });
 
@@ -68,18 +68,18 @@ export const CandidatCard = ({
       </CandidatCardPictureContainerStyled>
       <CandidatCardContentStyled onClick={onCardClicked}>
         <h1>
-          {sortedAmbitions?.length > 0
-            ? sortedAmbitions[0].name
+          {sortedOccupations?.length > 0
+            ? sortedOccupations[0].name
             : "A l'écoute de toutes les opportunités"}
         </h1>
-        {sortedBusinessLines?.length > 0 && (
+        {sortedBusinessSectors?.length > 0 && (
           <>
             <p>Je recherche un emploi dans :</p>
-            <CandidateCardBusinessLinesStyled>
+            <CandidateCardBusinessSectorsStyled>
               {isNewCareerPath
-                ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
+                ? _.uniqWith(sortedBusinessSectors.slice(0, 2), (a, b) => {
                     // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                    return a.name === b.name;
+                    return a.value === b.value;
                     // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   }).map(({ name }, index) => {
                     return (
@@ -88,12 +88,12 @@ export const CandidatCard = ({
                         size="small"
                         style="hoverBlue"
                         content={
-                          findConstantFromValue(name, BUSINESS_LINES).label
+                          findConstantFromValue(name, BUSINESS_SECTORS).label
                         }
                       />
                     );
                   })
-                : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
+                : sortedOccupations?.slice(0, 2).map(({ name }, index) => {
                     return (
                       <Tag
                         key={index}
@@ -103,7 +103,7 @@ export const CandidatCard = ({
                       />
                     );
                   })}
-            </CandidateCardBusinessLinesStyled>
+            </CandidateCardBusinessSectorsStyled>
           </>
         )}
       </CandidatCardContentStyled>
@@ -113,18 +113,18 @@ export const CandidatCard = ({
 CandidatCard.propTypes = {
   url: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
-  ambitions: PropTypes.arrayOf(
+  occupations: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       order: PropTypes.number.isRequired,
       prefix: PropTypes.oneOf(
-        AMBITIONS_PREFIXES.map(({ value }) => {
+        OCCUPATIONS_PREFIXES.map(({ value }) => {
           return value;
         })
       ),
     })
   ).isRequired,
-  businessLines: PropTypes.arrayOf(
+  businessSectors: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       order: PropTypes.number.isRequired,

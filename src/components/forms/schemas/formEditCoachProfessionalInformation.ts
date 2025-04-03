@@ -1,10 +1,10 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
+import { BUSINESS_SECTORS, BusinessSectorValue } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formEditCoachProfessionalInformation: FormSchema<{
   currentJob: string;
-  networkBusinessLines: FilterConstant<BusinessLineValue>[];
+  businessSectors: FilterConstant<BusinessSectorValue>[];
   linkedinUrl: string;
 }> = {
   id: 'form-coach-professional-information',
@@ -16,11 +16,11 @@ export const formEditCoachProfessionalInformation: FormSchema<{
       title: 'Mon métier',
     },
     {
-      id: 'networkBusinessLines',
-      name: 'networkBusinessLines',
+      id: 'businessSectors',
+      name: 'businessSectors',
       component: 'select',
       title: "Les secteurs dans lesquels j'ai du réseau *",
-      options: BUSINESS_LINES,
+      options: BUSINESS_SECTORS,
       isMulti: true,
       isRequired: true,
     },

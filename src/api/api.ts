@@ -187,10 +187,6 @@ export class APIHandler {
     return this.get('/user/members', params);
   }
 
-  getUsersMembersCount(): Promise<AxiosResponse> {
-    return this.get('/user/members/count');
-  }
-
   getUsersSearchCandidates(params: object): Promise<AxiosResponse> {
     return this.get('/user/search/candidates', params);
   }

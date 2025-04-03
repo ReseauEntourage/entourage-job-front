@@ -1,12 +1,13 @@
 import moment from 'moment/moment';
 import React from 'react';
+import { BusinessSector } from 'src/api/types';
 import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
 import {
-  AmbitionsPrefixesType,
-  AMBITIONS_PREFIXES,
-  BusinessLineValue,
+  OccupationsPrefixesType,
+  OCCUPATIONS_PREFIXES,
+  BusinessSectorValue,
   CONTRACTS,
 } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
@@ -30,13 +31,13 @@ export function formatParagraph(text: string, condense?: boolean) {
   return text;
 }
 
-export function getAmbitionsLinkingSentence(ambitions) {
+export function getOccupationsLinkingSentence(occupations) {
   return (
     <>
       {' '}
-      {ambitions[0].prefix === ambitions[1].prefix
+      {occupations[0].prefix === occupations[1].prefix
         ? 'ou'
-        : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
+        : `${occupations[1].prefix || occupations[1].prefix}`}{' '}
     </>
   );
 }
@@ -46,7 +47,7 @@ export function addSpaceToPrefixIfNeeded(prefix) {
   return prefix.includes("'") ? prefix : `${prefix} `;
 }
 
-export function buildBusinessLineForSentence({ label, prefix }) {
+export function buildBusinessSectorForSentence({ label, prefix }) {
   const separator = 'et ';
   if (Array.isArray(prefix)) {
     let mutatedLabel = '';
@@ -95,11 +96,11 @@ export const limitChar = (string: string, limit: number) => {
   return string;
 };
 
-export const formatNetworkBusinessLines = (
-  networkBusinessLines: FilterConstant<BusinessLineValue>[]
-): { name: BusinessLineValue; order: number }[] => {
-  return networkBusinessLines.map(({ value }, i) => {
-    return { name: value, order: i };
+export const formatNetworkBusinessSectors = (
+  businessSectors: FilterConstant<BusinessSectorValue>[]
+): { value: BusinessSectorValue; order: number }[] => {
+  return businessSectors.map(({ value }, i) => {
+    return { value, order: i };
   });
 };
 
@@ -111,56 +112,53 @@ export const formatCareerPathSentence = (
     >
   >
 ): {
-  searchAmbitions: {
-    prefix: AmbitionsPrefixesType;
+  occupations: {
+    prefix: OccupationsPrefixesType;
     name: string;
     order: number;
   }[];
-  searchBusinessLines: {
-    name: BusinessLineValue;
+  businessSectors: {
+    value: BusinessSectorValue;
     order: number;
   }[];
 } => {
-  let newAmbitions = [] as {
-    prefix: AmbitionsPrefixesType;
+  let newOccupations = [] as {
+    prefix: OccupationsPrefixesType;
     name: string;
     order: number;
   }[];
-  if (values.searchAmbition0) {
-    newAmbitions = [
+  if (values.occupation0) {
+    newOccupations = [
       {
-        prefix: AMBITIONS_PREFIXES[1].label,
-        name: values.searchAmbition0,
+        prefix: OCCUPATIONS_PREFIXES[1].label,
+        name: values.occupation0,
         order: 0,
       },
     ];
   }
-  if (values.searchAmbition1) {
-    newAmbitions = [
-      ...newAmbitions,
+  if (values.occupation1) {
+    newOccupations = [
+      ...newOccupations,
       {
-        prefix: AMBITIONS_PREFIXES[1].label,
-        name: values.searchAmbition1,
+        prefix: OCCUPATIONS_PREFIXES[1].label,
+        name: values.occupation1,
         order: 1,
       },
     ];
   }
-  let newBusinessLines = [] as {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  if (values.searchBusinessLine0) {
-    newBusinessLines = [{ name: values.searchBusinessLine0.value, order: 0 }];
+  let newBusinessSectors = [] as BusinessSector[];
+  if (values.businessSector0) {
+    newBusinessSectors = [{ value: values.businessSector0.value, order: 0 }];
   }
-  if (values.searchBusinessLine1) {
-    newBusinessLines = [
-      ...newBusinessLines,
-      { name: values.searchBusinessLine1.value, order: 1 },
+  if (values.businessSector1) {
+    newBusinessSectors = [
+      ...newBusinessSectors,
+      { value: values.businessSector1.value, order: 1 },
     ];
   }
   return {
-    searchAmbitions: newAmbitions,
-    searchBusinessLines: newBusinessLines,
+    occupations: newOccupations,
+    businessSectors: newBusinessSectors,
   };
 };
 

@@ -1,17 +1,16 @@
 import { DefaultValues } from 'react-hook-form';
-import { UserProfile } from 'src/api/types';
+import { BusinessSector, UserProfile } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_SECTORS } from 'src/constants';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface userProfileParamsToCheck {
   currentJob: string | null;
-  networkBusinessLines: { name: string }[] | null;
-  searchAmbitions: { name: string; order: number }[] | null;
-  searchBusinessLines: { name: string; order: number }[] | null;
+  occupations: { name: string; order: number }[] | null;
+  businessSectors: BusinessSector[] | null;
   role: UserRole;
 }
 
@@ -19,13 +18,12 @@ export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
   return (
     (userProfile.role === USER_ROLES.COACH &&
       (!!userProfile?.currentJob ||
-        (!!userProfile?.networkBusinessLines &&
-          userProfile.networkBusinessLines?.length > 0))) ||
+        (!!userProfile?.businessSectors &&
+          userProfile.businessSectors?.length > 0))) ||
     (userProfile.role === USER_ROLES.CANDIDATE &&
-      ((!!userProfile?.searchAmbitions &&
-        userProfile.searchAmbitions?.length > 0) ||
-        (!!userProfile?.searchBusinessLines &&
-          userProfile?.searchBusinessLines?.length > 0)))
+      ((!!userProfile?.occupations && userProfile.occupations?.length > 0) ||
+        (!!userProfile?.businessSectors &&
+          userProfile?.businessSectors?.length > 0)))
   );
 };
 
@@ -34,11 +32,11 @@ export const getCoachDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
-  const { networkBusinessLines, currentJob, linkedinUrl } = userProfileParam;
+  const { businessSectors, currentJob, linkedinUrl } = userProfileParam;
   return {
     currentJob: currentJob || undefined,
-    networkBusinessLines: networkBusinessLines?.map(({ name }) => {
-      return findConstantFromValue(name, BUSINESS_LINES);
+    businessSectors: businessSectors?.map(({ value }) => {
+      return findConstantFromValue(value, BUSINESS_SECTORS);
     }),
     linkedinUrl: linkedinUrl || undefined,
   };
@@ -49,29 +47,26 @@ export const getCandidateDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>
 > => {
-  const { searchAmbitions, searchBusinessLines, linkedinUrl } =
-    userProfileParam;
-  const sortedAmbitions =
-    searchAmbitions && searchAmbitions.length > 0
-      ? sortByOrder(searchAmbitions)
-      : null;
-  const sortedBusinessLines =
-    searchBusinessLines && searchBusinessLines.length > 0
-      ? sortByOrder(searchBusinessLines)
+  const { occupations, businessSectors, linkedinUrl } = userProfileParam;
+  const sortedOccupations =
+    occupations && occupations.length > 0 ? sortByOrder(occupations) : null;
+  const sortedBusinessSectors =
+    businessSectors && businessSectors.length > 0
+      ? sortByOrder(businessSectors)
       : null;
   return {
-    ...sortedAmbitions?.reduce((acc, curr) => {
+    ...sortedOccupations?.reduce((acc, curr) => {
       return {
         ...acc,
-        [`searchAmbition${curr.order}`]: curr.name,
+        [`occupation${curr.order}`]: curr.name,
       };
     }, {}),
-    ...sortedBusinessLines?.reduce((acc, curr) => {
+    ...sortedBusinessSectors?.reduce((acc, curr) => {
       return {
         ...acc,
-        [`searchBusinessLine${curr.order}`]: findConstantFromValue(
-          curr.name,
-          BUSINESS_LINES
+        [`BusinessSector${curr.order}`]: findConstantFromValue(
+          curr.value,
+          BUSINESS_SECTORS
         ),
       };
     }, {}),

@@ -16,9 +16,8 @@
     "description": "hello",
     "department": "Ain (01)",
     "currentJob": null,
-    "networkBusinessLines": [],
-    "searchBusinessLines": [],
-    "searchAmbitions": [],
+    "businessSectors": [],
+    "occupations": [],
     "helpOffers": [],
     "helpNeeds": []
   },

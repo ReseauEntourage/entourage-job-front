@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { IlluMalette } from 'assets/icons/icons';
 import { CVExperienceOrFormation } from '../../CVExperienceOrFormation';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { CVFormation } from 'src/api/types';
+import { Formation } from 'src/api/types';
 import { Text } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledProfileFormationsList } from './ProfileFormations.styles';
@@ -11,7 +11,7 @@ import { StyledProfileFormationsList } from './ProfileFormations.styles';
 export interface ProfileExperiencesProps {
   userId: string;
   userFirstName: string;
-  formations?: CVFormation[];
+  formations?: Formation[];
   isEditable?: boolean;
   smallCard?: boolean;
 }
@@ -65,7 +65,7 @@ export const ProfileFormations = ({
       }
     >
       <StyledProfileFormationsList>
-        {formations.map((formation: CVFormation) => {
+        {formations.map((formation: Formation) => {
           return (
             <CVExperienceOrFormation
               key={formation.id}

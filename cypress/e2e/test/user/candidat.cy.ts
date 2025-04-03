@@ -319,8 +319,8 @@ describe('Candidat', () => {
     cy.wait('@uploadImage');
 
     // change professional information
-    const businessLine = 'Agriculture';
-    const ambition = 'test';
+    const businessSector = 'Agriculture';
+    const occupation = 'test';
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
       cy.intercept('PUT', `/user/profile/${user.id}`, {
@@ -329,32 +329,24 @@ describe('Candidat', () => {
           ...user.userProfile,
           description,
           helpNeeds: newHelpList,
-          searchBusinessLines: [
+          businessSectors: [
             {
               id: '8c08d1d2-9cb4-4a93-afd3-4bdaaf039093',
               name: 'aev',
               order: 0,
-              UserProfileSearchBusinessLine: {
+              UserProfileBusinessSector: {
                 id: '54c6389c-ab98-4d02-84cc-e651164db9f7',
-                UserProfileId: '8e2308b6-fe8e-4e68-b21f-4af8d946a503',
-                BusinessLineI: '8c08d1d2-9cb4-4a93-afd3-4bdaaf039093',
-                createdAt: '2023-12-28T10:22:06.388Z',
-                updatedAt: '2023-12-28T10:22:06.388Z',
               },
             },
           ],
-          searchAmbitions: [
+          occupations: [
             {
               id: 'd4d31f0d-3036-47f1-b3a3-cde0c1d0ec8b',
-              name: ambition,
+              name: occupation,
               prefix: 'comme',
               order: 0,
-              UserProfileSearchAmbition: {
+              UserProfileOccupation: {
                 id: '77f613bc-a2af-405a-ab5c-c9bc470b8f77',
-                UserProfileId: '8e2308b6-fe8e-4e68-b21f-4af8d946a503',
-                AmbitionId: 'd4d31f0d-3036-47f1-b3a3-cde0c1d0ec8b',
-                createdAt: '2023-12-28T10:22:06.415Z',
-                updatedAt: '2023-12-28T10:22:06.415Z',
               },
             },
           ],
@@ -366,20 +358,23 @@ describe('Candidat', () => {
     )
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`)
+    cy.get(`[data-testid="form-career-path-businessSector0"]`)
       .scrollIntoView()
       .click();
-    cy.get(`.Select__option`).contains(businessLine).click();
-    cy.get(`[data-testid="form-career-path-searchAmbition0"]`)
+    cy.get(`.Select__option`).contains(businessSector).click();
+    cy.get(`[data-testid="form-career-path-occupation0"]`)
       .scrollIntoView()
-      .type(ambition);
+      .type(occupation);
     cy.get(`[data-testid="form-confirm-form-career-path"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="candidat-businessline-li"]`).should(
+    cy.get(`[data-testid="candidat-businesssector-li"]`).should(
       'contain',
-      businessLine
+      businessSector
     );
-    cy.get(`[data-testid="candidat-ambition-li"]`).should('contain', ambition);
+    cy.get(`[data-testid="candidat-occupation-li"]`).should(
+      'contain',
+      occupation
+    );
   });
 });

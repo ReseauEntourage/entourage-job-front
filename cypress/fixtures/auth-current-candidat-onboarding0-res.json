@@ -26,9 +26,8 @@
     "description": null,
     "department": "Ain (01)",
     "currentJob": null,
-    "networkBusinessLines": [],
-    "searchBusinessLines": [],
-    "searchAmbitions": [],
+    "businessSectors": [],
+    "occupations": [],
     "helpOffers": [],
     "helpNeeds": {
       "id": "352a7dde-c4ad-410f-86cf-506cdc9eb624",
