@@ -15,10 +15,7 @@ import { Text } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import {
-  formatCareerPathSentence,
-  formatNetworkBusinessSectors,
-} from 'src/utils';
+import { formatCareerPathSentence } from 'src/utils';
 
 export interface ProfilePersonalInformationsProps {
   isEditable?: boolean;
@@ -49,12 +46,9 @@ export const ProfilePersonalInformations = ({
           defaultValues={getCoachDefaultProfessionalValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
-            const networkBusinessSectors = formatNetworkBusinessSectors(
-              values.businessSectors
-            );
             return {
               currentJob: values.currentJob,
-              networkBusinessSectors,
+              networkBusinessSectors: values.businessSectorIds,
               linkedinUrl: values.linkedinUrl,
             };
           }}

@@ -31,8 +31,8 @@ export function* createUserRequestedSaga() {
 
   const {
     confirmPassword,
-    businessSector0,
-    businessSector1,
+    businessSectorId0,
+    businessSectorId1,
     occupation0,
     occupation1,
     organizationId,
@@ -45,14 +45,14 @@ export function* createUserRequestedSaga() {
         ...flattenedData,
         role: selectedRole,
         program: selectedProgram,
-        occupations: businessSector0
+        occupations: businessSectorId0
           ? formatCareerPathSentence({ occupation0, occupation1 }).occupations
           : undefined,
-        businessSectors: businessSector0
+        businessSectorIds: businessSectorId0
           ? formatCareerPathSentence({
-              businessSector0,
-              businessSector1,
-            }).businessSectors
+              businessSectorId0,
+              businessSectorId1,
+            }).businessSectorIds
           : undefined,
         department: flattenedData.department.value,
         organizationId: organizationId ? organizationId.value : undefined,

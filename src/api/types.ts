@@ -1,6 +1,5 @@
 import {
   OccupationsPrefixesType,
-  BusinessSectorValue,
   CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
@@ -80,9 +79,8 @@ export type OrganizationDto = {
 
 export interface BusinessSector {
   id?: string;
-  name?: string;
+  name: string;
   order: number;
-  value: BusinessSectorValue;
 }
 
 export type Occupation = {
@@ -314,7 +312,7 @@ export type UserRegistrationDto = {
   organizationId?: string;
   birthDate: string;
   occupations?: Occupation[];
-  businessSectors?: BusinessSector[];
+  businessSectorIds?: string[];
   materialInsecurity?: string;
   networkInsecurity?: string;
 };
@@ -331,7 +329,7 @@ export type UserReferingDto = {
   program?: Program;
   birthDate: string;
   occupations?: Occupation[];
-  businessSectors?: BusinessSector[];
+  businessSectorIds?: string[];
 };
 
 export type Contract = {
@@ -391,7 +389,7 @@ export type ContactCandidate = {
   socialSecurity: string;
   handicapped?: string;
   bankAccount: string;
-  businessSectors?: BusinessSectorValue[];
+  businessSectors?: string[];
   description: string;
   heardAbout: string;
   diagnostic?: string;
@@ -518,7 +516,7 @@ export type ProfilesFilters = {
   search?: string;
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
-  businessSectors: BusinessSectorValue | BusinessSectorValue[];
+  businessSectorIds: string | string[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

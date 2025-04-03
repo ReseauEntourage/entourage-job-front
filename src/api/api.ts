@@ -327,6 +327,18 @@ export class APIHandler {
     return this.delete(`/user/${userId}`);
   }
 
+  /// ///////////////// ///
+  /// businessSectors  ///
+  /// /////////////// ///
+
+  getAllBusinessSectors(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/business-sectors', { params });
+  }
+
   /// ///////////// ///
   /// organization  ///
   /// //////////// ///

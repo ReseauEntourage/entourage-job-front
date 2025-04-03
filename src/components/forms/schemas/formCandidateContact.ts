@@ -1,9 +1,8 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail, isPostalCode } from 'validator';
 import { FormSchema } from '../FormSchema';
+import { Api } from 'src/api';
 import {
-  BUSINESS_SECTORS,
-  BusinessSectorValue,
   CANDIDATE_ACCOMMODATIONS_FILTERS,
   CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
   CANDIDATE_GENDERS_FILTERS,
@@ -22,6 +21,27 @@ import {
 } from 'src/constants';
 import { Gender } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
+
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
 
 export const formCandidateContact: FormSchema<{
   workerFirstName: string;
@@ -50,7 +70,7 @@ export const formCandidateContact: FormSchema<{
   socialSecurity: CandidateYesNoValue;
   handicapped: CandidateYesNoValue;
   bankAccount: CandidateYesNoValue;
-  businessSectors: FilterConstant<BusinessSectorValue>[];
+  businessSectorIds: FilterConstant<string>[];
   description: string;
   heardAbout: HeardAboutValue;
   diagnostic: string;
@@ -341,12 +361,12 @@ export const formCandidateContact: FormSchema<{
       showLabel: true,
     },
     {
-      id: 'businessSectors',
-      name: 'businessSectors',
-      title: 'Dans quel secteur professionnel souhaite-t-elle travailler ?',
-      component: 'select',
+      id: 'businessSectorIds',
+      name: 'businessSectorIds',
+      component: 'select-async',
+      loadOptions: loadBusinessSectorsOptions,
+      placeholder: "Les secteurs dans lesquels j'ai du réseau*",
       isMulti: true,
-      options: BUSINESS_SECTORS,
       showLabel: true,
     },
     {

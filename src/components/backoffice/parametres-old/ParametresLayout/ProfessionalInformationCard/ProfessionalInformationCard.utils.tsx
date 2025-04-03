@@ -3,9 +3,8 @@ import { BusinessSector, UserProfile } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
-import { BUSINESS_SECTORS } from 'src/constants';
 import { USER_ROLES, UserRole } from 'src/constants/users';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { sortByOrder } from 'src/utils';
 
 interface userProfileParamsToCheck {
   currentJob: string | null;
@@ -35,8 +34,11 @@ export const getCoachDefaultProfessionalValues = (
   const { businessSectors, currentJob, linkedinUrl } = userProfileParam;
   return {
     currentJob: currentJob || undefined,
-    businessSectors: businessSectors?.map(({ value }) => {
-      return findConstantFromValue(value, BUSINESS_SECTORS);
+    businessSectorIds: businessSectors?.map(({ id, name }) => {
+      return {
+        label: name,
+        value: id,
+      };
     }),
     linkedinUrl: linkedinUrl || undefined,
   };
@@ -64,10 +66,7 @@ export const getCandidateDefaultProfessionalValues = (
     ...sortedBusinessSectors?.reduce((acc, curr) => {
       return {
         ...acc,
-        [`BusinessSector${curr.order}`]: findConstantFromValue(
-          curr.value,
-          BUSINESS_SECTORS
-        ),
+        [`BusinessSector${curr.order}`]: curr.name,
       };
     }, {}),
     linkedinUrl: linkedinUrl || '',

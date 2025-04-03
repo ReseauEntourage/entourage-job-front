@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { ProfilesFilters } from 'src/api/types';
-import { BusinessSectorValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
 import { useDirectoryRole } from './useDirectoryRole';
@@ -8,17 +7,14 @@ import { useDirectoryRole } from './useDirectoryRole';
 // Get the current query params for the directory filters
 export function useDirectoryQueryParams() {
   const role = useDirectoryRole();
-
   const {
-    query: { search, helps, businessSectors, departments },
+    query: { search, helps, businessSectorIds, departments },
   } = useRouter();
 
   const filters: ProfilesFilters = {
     role,
     helps: (helps || []) as HelpValue | HelpValue[],
-    businessSectors: (businessSectors || []) as
-      | BusinessSectorValue
-      | BusinessSectorValue[],
+    businessSectorIds: (businessSectorIds || []) as string[],
     departments: (departments || []) as Department | Department[],
   };
 

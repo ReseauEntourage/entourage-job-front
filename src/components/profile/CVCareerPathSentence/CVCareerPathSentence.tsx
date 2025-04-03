@@ -1,17 +1,8 @@
 import React from 'react';
 import { BusinessSector, Occupation } from 'src/api/types';
-import { Text } from 'src/components/utils';
-import { OCCUPATIONS_PREFIXES, BUSINESS_SECTORS } from 'src/constants';
-import {
-  buildBusinessSectorForSentence,
-  findConstantFromValue,
-  getOccupationsLinkingSentence,
-  sortByOrder,
-} from 'src/utils';
-import {
-  StyledCareerPathHightlightBusinessSector,
-  StyledCareerPathHightlightOccupation,
-} from './CVCareerPathSentence.styles';
+import { OCCUPATIONS_PREFIXES } from 'src/constants';
+import { getOccupationsLinkingSentence, sortByOrder } from 'src/utils';
+import { StyledCareerPathSentenceContainer } from './CVCareerPathSentence.styles';
 
 interface CVCareerPathSentenceProps {
   occupations: Occupation[];
@@ -37,23 +28,13 @@ export const CVCareerPathSentence = ({
       return (
         <>
           J&apos;aimerais travailler{' '}
-          {sortedOccupations[0].prefix || OCCUPATIONS_PREFIXES[0].label}{' '}
-          <span
-            className="uk-label uk-text-lowercase"
-            style={{
-              lineHeight: 'unset',
-              verticalAlign: 'bottom',
-              fontSize: 'inherit',
-            }}
-          >
-            {sortedOccupations[0].name}
-          </span>
+          {sortedOccupations[0].prefix ||
+            OCCUPATIONS_PREFIXES[0].label.toLowerCase()}{' '}
+          <span className="orange">{sortedOccupations[0].name}</span>
           {sortedOccupations.length > 1 && (
             <>
               {getOccupationsLinkingSentence(sortedOccupations)}
-              <StyledCareerPathHightlightOccupation>
-                {sortedOccupations[1].name}
-              </StyledCareerPathHightlightOccupation>
+              <span className="orange">{sortedOccupations[1].name}</span>
             </>
           )}
         </>
@@ -74,12 +55,7 @@ export const CVCareerPathSentence = ({
           {
             order: curr.order,
             occupation: correspondingOccupation?.name,
-            businessSector: {
-              ...findConstantFromValue(curr.value, BUSINESS_SECTORS),
-              label: buildBusinessSectorForSentence(
-                findConstantFromValue(curr.value, BUSINESS_SECTORS)
-              ),
-            },
+            businessSector: curr.name,
           },
         ];
       },
@@ -91,10 +67,8 @@ export const CVCareerPathSentence = ({
         return (
           <>
             {' '}
-            {OCCUPATIONS_PREFIXES[1].label}{' '}
-            <StyledCareerPathHightlightOccupation>
-              {careerPaths[index].occupation}
-            </StyledCareerPathHightlightOccupation>
+            {OCCUPATIONS_PREFIXES[1].label.toLowerCase()}{' '}
+            <span className="orange">{careerPaths[index].occupation}</span>
           </>
         );
       }
@@ -105,16 +79,14 @@ export const CVCareerPathSentence = ({
 
     const hasSameBusinessSector =
       hasSecondPart &&
-      careerPaths[1].businessSector.value ===
-        careerPaths[0].businessSector.value &&
+      careerPaths[1].businessSector.name ===
+        careerPaths[0].businessSector.name &&
       careerPaths[1].occupation;
 
     return (
-      <Text>
-        J&apos;aimerais travailler {OCCUPATIONS_PREFIXES[0].label}{' '}
-        <StyledCareerPathHightlightBusinessSector>
-          {careerPaths[0].businessSector.label}
-        </StyledCareerPathHightlightBusinessSector>
+      <StyledCareerPathSentenceContainer>
+        J&apos;aimerais travailler {OCCUPATIONS_PREFIXES[0].label.toLowerCase()}{' '}
+        <span>{careerPaths[0].businessSector.label.toLowerCase()}</span>
         {getOccupationIfExists(0)}
         {hasSecondPart && (
           <>
@@ -123,16 +95,14 @@ export const CVCareerPathSentence = ({
             ) : (
               <>
                 {' '}
-                ou {OCCUPATIONS_PREFIXES[0].label}{' '}
-                <StyledCareerPathHightlightBusinessSector>
-                  {careerPaths[1].businessSector.label}
-                </StyledCareerPathHightlightBusinessSector>
+                ou {OCCUPATIONS_PREFIXES[0].label.toLowerCase()}{' '}
+                <span>{careerPaths[1].businessSector.label.toLowerCase()}</span>
                 {getOccupationIfExists(1)}
               </>
             )}
           </>
         )}
-      </Text>
+      </StyledCareerPathSentenceContainer>
     );
   }
   return null;

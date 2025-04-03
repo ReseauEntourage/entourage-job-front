@@ -17,133 +17,6 @@ export const JNSPR = {
   label: 'Je ne souhaite pas répondre',
 };
 
-export type BusinessSectorValue =
-  | 'la'
-  | 'aa'
-  | 'bat'
-  | 'rh'
-  | 'cd'
-  | 'asp'
-  | 'pr'
-  | 'mi'
-  | 'art'
-  | 'tra'
-  | 'id'
-  | 'sec'
-  | 'cm'
-  | 'ca'
-  | 'aev'
-  | 'sa'
-  | 'fjr'
-  | 'sm';
-
-const BUSINESS_SECTORS_UNSORTED: (FilterConstant<BusinessSectorValue> & {
-  prefix: string | string[];
-})[] = [
-  {
-    label: 'Logistique et approvisionnement',
-    value: 'la',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Assistanat et administratif',
-    value: 'aa',
-    prefix: ["l'", "l'"],
-  },
-  {
-    label: 'Bâtiment',
-    value: 'bat',
-    prefix: 'le',
-  },
-  {
-    label: 'Restauration et hôtellerie',
-    value: 'rh',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Commerce et distribution',
-    value: 'cd',
-    prefix: ['le', 'la'],
-  },
-  {
-    label: 'Aide et service à la personne',
-    value: 'asp',
-    prefix: ["l'", 'le'],
-  },
-  {
-    label: 'Propreté',
-    value: 'pr',
-    prefix: 'la',
-  },
-  {
-    label: 'Maintenance et industrie',
-    value: 'mi',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Artisanat',
-    value: 'art',
-    prefix: "l'",
-  },
-  {
-    label: 'Transport',
-    value: 'tra',
-    prefix: 'le',
-  },
-  {
-    label: 'Informatique et digital',
-    value: 'id',
-    prefix: ["l'", 'le'],
-  },
-  {
-    label: 'Sécurité',
-    value: 'sec',
-    prefix: 'la',
-  },
-  {
-    label: 'Communication et marketing',
-    value: 'cm',
-    prefix: ['la', 'le'],
-  },
-  {
-    label: 'Culture et art',
-    value: 'ca',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Agriculture et espaces verts',
-    value: 'aev',
-    prefix: ["l'", 'les'],
-  },
-  {
-    label: 'Social et associatif',
-    value: 'sa',
-    prefix: ['le', "l'"],
-  },
-  {
-    label: 'Direction financière, juridique et ressources humaines',
-    value: 'fjr',
-    prefix: ['la', 'les'],
-  },
-  {
-    label: 'Santé et médical',
-    value: 'sm',
-    prefix: ['la', 'le'],
-  },
-];
-
-export const BUSINESS_SECTORS = BUSINESS_SECTORS_UNSORTED.sort(
-  ({ label: labelA }, { label: labelB }) => {
-    /**
-     * force type because business lines are always string
-     * to fix: fix FilterConstant type
-     */
-    const first = labelA as string;
-    const second = labelB as string;
-    return first.localeCompare(second);
-  }
-) as typeof BUSINESS_SECTORS_UNSORTED;
-
 export const CV_STATUS = {
   Published: {
     label: 'Publié',
@@ -291,7 +164,7 @@ export const CV_FILTERS_DATA: Filter[] = [
   },
   {
     key: 'businessSectors',
-    constants: BUSINESS_SECTORS,
+    constants: [],
     title: 'Métiers',
     tag: GA_TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
@@ -320,7 +193,7 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
   },
   {
     key: 'businessSectors',
-    constants: BUSINESS_SECTORS,
+    constants: [],
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
   },
@@ -379,7 +252,7 @@ export const DirectoryFilters: Filter[] = [
   },
   {
     key: 'businessSectors',
-    constants: BUSINESS_SECTORS,
+    constants: [],
     title: "Secteur d'activité",
     tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
   },

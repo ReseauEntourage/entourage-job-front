@@ -12,10 +12,10 @@ import {
 } from 'src/components/cards/CandidatCard.styles';
 
 import { Img, Tag } from 'src/components/utils';
-import { OCCUPATIONS_PREFIXES, BUSINESS_SECTORS } from 'src/constants';
+import { OCCUPATIONS_PREFIXES } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { sortByOrder } from 'src/utils';
 
 export const CandidatCard = ({
   url,
@@ -87,9 +87,7 @@ export const CandidatCard = ({
                         key={index}
                         size="small"
                         style="hoverBlue"
-                        content={
-                          findConstantFromValue(name, BUSINESS_SECTORS).label
-                        }
+                        content={name}
                       />
                     );
                   })

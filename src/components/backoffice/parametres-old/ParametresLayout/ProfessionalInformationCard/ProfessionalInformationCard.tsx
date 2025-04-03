@@ -8,15 +8,9 @@ import { openModal } from 'src/components/modals/Modal';
 import { Card, Img, Text } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
-import { BUSINESS_SECTORS } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import {
-  findConstantFromValue,
-  formatCareerPathSentence,
-  formatNetworkBusinessSectors,
-  sortByOrder,
-} from 'src/utils';
+import { formatCareerPathSentence, sortByOrder } from 'src/utils';
 import { ModalEditProfessionalInformation } from './ModalEditProfessionalInformation';
 import {
   StyledProfessionalInformationImgContainer,
@@ -64,12 +58,9 @@ export const ProfessionalInformationCard = () => {
           defaultValues={getCoachDefaultProfessionalValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
-            const networkBusinessSectors = formatNetworkBusinessSectors(
-              values.businessSectors
-            );
             return {
               currentJob: values.currentJob,
-              networkBusinessSectors,
+              businessSectorIds: values.businessSectorIds,
               linkedinUrl: values.linkedinUrl,
             };
           }}
@@ -115,12 +106,10 @@ export const ProfessionalInformationCard = () => {
                   <li className="tag-container">
                     J&lsquo;ai du réseau dans :{' '}
                     {sortByOrder(userProfile.businessSectors).map(
-                      ({ value }, index) => (
+                      ({ name }, index) => (
                         <Tag
-                          key={`${uuidValue}-${value}-${index}`}
-                          content={
-                            findConstantFromValue(value, BUSINESS_SECTORS).label
-                          }
+                          key={`${uuidValue}-${name}-${index}`}
+                          content={name}
                         />
                       )
                     )}
@@ -153,12 +142,10 @@ export const ProfessionalInformationCard = () => {
                   >
                     Je recherche dans :{' '}
                     {sortByOrder(userProfile.businessSectors).map(
-                      ({ value }, index) => (
+                      ({ name }, index) => (
                         <Tag
-                          key={`${uuidValue}-${value}-${index}`}
-                          content={
-                            findConstantFromValue(value, BUSINESS_SECTORS).label
-                          }
+                          key={`${uuidValue}-${name}-${index}`}
+                          content={name}
                         />
                       )
                     )}

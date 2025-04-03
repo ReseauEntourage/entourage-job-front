@@ -52,13 +52,13 @@ function* fetchProfilesRequestedSaga(
     const offset = yield* select(selectProfilesOffset);
     const limit = PROFILES_LIMIT;
 
-    const { departments, role, search, helps, businessSectors } =
+    const { departments, role, search, helps, businessSectorIds } =
       action.payload;
 
     const response = yield* call(() =>
       Api.getAllUsersProfiles({
         departments: mutateToArray(departments),
-        businessSectors: mutateToArray(businessSectors),
+        businessSectorIds: mutateToArray(businessSectorIds),
         helps: mutateToArray(helps),
         role,
         search,

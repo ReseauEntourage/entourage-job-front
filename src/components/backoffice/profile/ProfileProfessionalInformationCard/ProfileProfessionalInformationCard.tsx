@@ -8,11 +8,10 @@ import { checkData } from 'src/components/backoffice/parametres-old/ParametresLa
 import { Button, Card } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
-import { BUSINESS_SECTORS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { sortByOrder } from 'src/utils';
 import { ProfileCareerPathSentence } from './ProfileCareerPathSentence';
 
 const uuidValue = uuid();
@@ -56,13 +55,8 @@ export const ProfileProfessionalInformationCard = () => {
                   <li className="tag-container">
                     J&lsquo;ai du réseau dans :{' '}
                     {sortByOrder(selectedProfile.businessSectors).map(
-                      ({ value }) => (
-                        <Tag
-                          key={uuidValue}
-                          content={
-                            findConstantFromValue(value, BUSINESS_SECTORS).label
-                          }
-                        />
+                      ({ name }) => (
+                        <Tag key={uuidValue} content={name} />
                       )
                     )}
                   </li>

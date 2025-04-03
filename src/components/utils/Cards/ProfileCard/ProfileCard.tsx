@@ -14,7 +14,6 @@ import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { Text } from 'src/components/utils/Text';
-import { BUSINESS_SECTORS } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
@@ -214,17 +213,8 @@ export function ProfileCard({
               <StyledProfileCardBusinessSectors>
                 {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
                   <>
-                    {sortedBusinessSectors.slice(0, 2).map(({ value }) => {
-                      const businessSector = findConstantFromValue(
-                        value,
-                        BUSINESS_SECTORS
-                      );
-                      return (
-                        <Tag
-                          key={businessSector.value}
-                          content={businessSector.label}
-                        />
-                      );
+                    {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
+                      return <Tag key={id} content={name} />;
                     })}
                     {role !== USER_ROLES.CANDIDATE &&
                       sortedBusinessSectors.length > 2 && (

@@ -31,8 +31,8 @@ export const Candidate = {
     helps: [{ name: 'network' }, { name: 'cv' }],
     isAvailable: true,
     businessSectors: [
-      { value: 'id', order: 0 },
-      { value: 'bat', order: 1 },
+      { name: 'id', order: 0 },
+      { name: 'bat', order: 1 },
     ],
     occupations: [
       { name: 'développeur', order: 0, prefix: 'comme' },
@@ -57,9 +57,9 @@ export const Coach = {
       { name: 'event' },
     ],
     businessSectors: [
-      { value: 'id', order: 0 },
-      { value: 'bat', order: 1 },
-      { value: 'aa', order: 2 },
+      { name: 'id', order: 0 },
+      { name: 'bat', order: 1 },
+      { name: 'aa', order: 2 },
     ],
     job: 'Développeur',
     department: 'Paris (75)',

@@ -34,7 +34,7 @@ import {
   StyledSkillTag,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
-import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/profile';
+import { CVCareerPathSentence } from 'src/components/profile';
 import { CVExperienceOrFormation } from 'src/components/profile/CVExperienceOrFormation';
 import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';

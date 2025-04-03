@@ -54,14 +54,14 @@ export const CandidateContactModal = () => {
       }
       formSchema={formCandidateContact}
       onSubmit={async (
-        { helpWith, businessSectors, ...fields },
+        { helpWith, businessSectorIds, ...fields },
         closeModal
       ) => {
         try {
           await Api.postContactCandidate({
             ...fields,
             helpWith: helpWith.map(({ value }) => value),
-            businessSectors: businessSectors.map(({ value }) => value),
+            businessSectors: businessSectorIds.map(({ value }) => value),
           });
           gaEvent(GA_TAGS.PAGE_ORIENTER_ENVOYER_INSCRIPTION_CLIC);
           fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_SEND);

@@ -1,11 +1,32 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_SECTORS, BusinessSectorValue } from 'src/constants';
+import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants/utils';
 
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
 export const formEditCandidateProfessionalInformation: FormSchema<{
-  businessSector0: FilterConstant<BusinessSectorValue>;
+  businessSectorId0: FilterConstant<string>;
   occupation0: string;
-  businessSector1: FilterConstant<BusinessSectorValue>;
+  businessSectorId1: FilterConstant<string>;
   occupation1: string;
   linkedinUrl: string;
 }> = {
@@ -36,13 +57,14 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'businessSector0',
-          name: 'businessSector0',
-          title: 'Famille de métier 1*',
-          component: 'select',
-          options: BUSINESS_SECTORS,
-          isMulti: false,
+          id: 'businessSectorId0',
+          name: 'businessSectorId0',
+          component: 'select-async',
           isRequired: true,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 1 *',
+          isMulti: false,
+          showLabel: true,
         },
         {
           id: 'occupation0',
@@ -58,12 +80,14 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'occupation1',
-          name: 'occupation1',
-          title: 'Famille de métier 2',
-          component: 'select',
+          id: 'businessSectorId1',
+          name: 'businessSectorId1',
+          component: 'select-async',
+          isRequired: false,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 2',
           isMulti: false,
-          options: BUSINESS_SECTORS,
+          showLabel: true,
           rules: [
             {
               method: (fieldValue, fieldValues) => {

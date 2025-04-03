@@ -8,7 +8,7 @@ import {
   StyledLeftColumn,
   StyledRightColumn,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
-import { CVCareerPathSentenceNew } from 'src/components/profile/CVCareerPathSentence';
+import { CVCareerPathSentence } from 'src/components/profile/CVCareerPathSentence';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
@@ -156,7 +156,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               </StyledCVPDFH1>
               {showCareerPathSentence && (
                 <StyledCVPDFCareerPath>
-                  <CVCareerPathSentenceNew
+                  <CVCareerPathSentence
                     occupations={cv.occupations}
                     businessSectors={cv.businessSectors}
                   />

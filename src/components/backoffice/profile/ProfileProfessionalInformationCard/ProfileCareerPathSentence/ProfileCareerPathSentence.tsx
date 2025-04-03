@@ -2,16 +2,12 @@ import React from 'react';
 import { BusinessSector, Occupation } from 'src/api/types';
 import { Text } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
-import { OCCUPATIONS_PREFIXES, BUSINESS_SECTORS } from 'src/constants';
-import {
-  buildBusinessSectorForSentence,
-  findConstantFromValue,
-  sortByOrder,
-} from 'src/utils';
+import { OCCUPATIONS_PREFIXES } from 'src/constants';
+import { sortByOrder } from 'src/utils';
 
 interface CareerPath {
   order: number;
-  occupation: string | undefined;
+  occupation: Occupation;
   businessSector: BusinessSector;
 }
 
@@ -42,12 +38,7 @@ export const ProfileCareerPathSentence = ({
           {
             order: curr.order,
             occupation: correspondingOccupation?.name,
-            businessSector: {
-              ...findConstantFromValue(curr.value, BUSINESS_SECTORS),
-              label: buildBusinessSectorForSentence(
-                findConstantFromValue(curr.value, BUSINESS_SECTORS)
-              ),
-            },
+            businessSector: curr.name,
           },
         ];
       },
@@ -79,7 +70,7 @@ export const ProfileCareerPathSentence = ({
       <>
         <Text>
           J&apos;aimerais travailler {OCCUPATIONS_PREFIXES[0].label}{' '}
-          <Tag content={careerPaths[0].businessSector.label} />
+          <Tag content={careerPaths[0].businessSector} />
           {getOccupationIfExists(0)}
           {hasSecondPart && hasSameBusinessSector && (
             <> et {getOccupationIfExists(1)}</>
@@ -89,7 +80,7 @@ export const ProfileCareerPathSentence = ({
           <Text>
             {' '}
             J&lsquo;aimerais travailler {OCCUPATIONS_PREFIXES[0].label}{' '}
-            <Tag content={careerPaths[1].businessSector.label} />
+            <Tag content={careerPaths[1].businessSector.name} />
             {getOccupationIfExists(1)}
           </Text>
         )}

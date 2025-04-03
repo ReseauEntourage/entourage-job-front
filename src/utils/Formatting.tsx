@@ -1,16 +1,13 @@
 import moment from 'moment/moment';
 import React from 'react';
-import { BusinessSector } from 'src/api/types';
 import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
 import {
   OccupationsPrefixesType,
   OCCUPATIONS_PREFIXES,
-  BusinessSectorValue,
   CONTRACTS,
 } from 'src/constants';
-import { FilterConstant } from 'src/constants/utils';
 import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {
@@ -47,22 +44,6 @@ export function addSpaceToPrefixIfNeeded(prefix) {
   return prefix.includes("'") ? prefix : `${prefix} `;
 }
 
-export function buildBusinessSectorForSentence({ label, prefix }) {
-  const separator = 'et ';
-  if (Array.isArray(prefix)) {
-    let mutatedLabel = '';
-    const splittedLabel = label.split(separator);
-    for (let i = 1; i < splittedLabel.length; i += 1) {
-      mutatedLabel +=
-        separator + addSpaceToPrefixIfNeeded(prefix[i]) + splittedLabel[i];
-    }
-    return (
-      addSpaceToPrefixIfNeeded(prefix[0]) + splittedLabel[0] + mutatedLabel
-    );
-  }
-  return addSpaceToPrefixIfNeeded(prefix) + label;
-}
-
 export function buildContractLabel(
   contract: string,
   endOfContract?: string | null,
@@ -96,14 +77,6 @@ export const limitChar = (string: string, limit: number) => {
   return string;
 };
 
-export const formatNetworkBusinessSectors = (
-  businessSectors: FilterConstant<BusinessSectorValue>[]
-): { value: BusinessSectorValue; order: number }[] => {
-  return businessSectors.map(({ value }, i) => {
-    return { value, order: i };
-  });
-};
-
 export const formatCareerPathSentence = (
   values: Partial<
     ExtractFormSchemaValidation<
@@ -117,10 +90,7 @@ export const formatCareerPathSentence = (
     name: string;
     order: number;
   }[];
-  businessSectors: {
-    value: BusinessSectorValue;
-    order: number;
-  }[];
+  businessSectorIds: string[];
 } => {
   let newOccupations = [] as {
     prefix: OccupationsPrefixesType;
@@ -146,19 +116,19 @@ export const formatCareerPathSentence = (
       },
     ];
   }
-  let newBusinessSectors = [] as BusinessSector[];
-  if (values.businessSector0) {
-    newBusinessSectors = [{ value: values.businessSector0.value, order: 0 }];
+  let newBusinessSectorIds = [] as string[];
+  if (values.businessSectorId0) {
+    newBusinessSectorIds = [values.businessSectorId0.value];
   }
-  if (values.businessSector1) {
-    newBusinessSectors = [
-      ...newBusinessSectors,
-      { value: values.businessSector1.value, order: 1 },
+  if (values.businessSectorId1) {
+    newBusinessSectorIds = [
+      ...newBusinessSectorIds,
+      values.businessSectorId1.value,
     ];
   }
   return {
     occupations: newOccupations,
-    businessSectors: newBusinessSectors,
+    businessSectorIds: newBusinessSectorIds,
   };
 };
 

@@ -1,10 +1,31 @@
+import { Api } from 'src/api';
 import { FormComponents, FormSchema } from 'src/components/forms/FormSchema';
-import { BUSINESS_SECTORS, BusinessSectorValue } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
+
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
 
 export const formOnboardingCoachJob: FormSchema<{
   currentJob: string;
-  businessSectors: FilterConstant<BusinessSectorValue>[];
+  businessSectorIds: FilterConstant<string>[];
   linkedinUrl: string;
 }> = {
   id: 'form-onboarding-coach-job',
@@ -17,11 +38,11 @@ export const formOnboardingCoachJob: FormSchema<{
       showLabel: true,
     },
     {
-      id: 'businessSectors',
-      name: 'businessSectors',
-      component: 'select',
-      title: "Les secteurs dans lesquels j'ai du réseau*",
-      options: BUSINESS_SECTORS,
+      id: 'businessSectorIds',
+      name: 'businessSectorIds',
+      component: 'select-async',
+      loadOptions: loadBusinessSectorsOptions,
+      placeholder: "Les secteurs dans lesquels j'ai du réseau*",
       isMulti: true,
       showLabel: true,
     },
