@@ -107,7 +107,11 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
-              <ProfileLanguages languages={[]} isEditable smallCard />
+              <ProfileLanguages
+                languages={user.userProfile.languages}
+                isEditable
+                smallCard
+              />
               <ProfileInterests interests={[]} isEditable smallCard />
               <ProfileContracts isEditable smallCard />
               <ProfileContactPreferences isEditable smallCard />

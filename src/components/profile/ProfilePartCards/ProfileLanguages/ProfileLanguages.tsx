@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
+import { Language } from 'src/api/types';
 import { Text } from 'src/components/utils';
+import { LANGUAGES_LEVELS } from 'src/constants';
 
 export interface ProfileLanguagesProps {
-  languages?: {
-    name: string;
-  }[];
+  languages?: Language[];
   isEditable?: boolean;
   smallCard?: boolean;
 }
@@ -47,7 +47,16 @@ export const ProfileLanguages = ({
     >
       <CardTagList
         removeCallback={onRemove}
-        items={languages}
+        items={languages.map((language) => {
+          const languageLevel = language.userProfileLanguages.level;
+          const completeLevel = LANGUAGES_LEVELS.find(
+            (level) => level.value === languageLevel
+          );
+          return {
+            id: language.id,
+            name: `${language.value} (${completeLevel?.text})`,
+          };
+        })}
         isEditable={isEditable}
       />
     </ProfilePartCard>

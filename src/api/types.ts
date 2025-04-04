@@ -134,6 +134,14 @@ export type Skill = {
   order: number;
 };
 
+export type Language = {
+  id: string;
+  value: string;
+  userProfileLanguages: {
+    level: string;
+  };
+};
+
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
@@ -153,6 +161,7 @@ export type UserProfile = {
   experiences: Experience[] | null;
   formations: Formation[] | null;
   skills: Skill[] | null;
+  languages: Language[];
 };
 
 export type UserReportDto = {

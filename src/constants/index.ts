@@ -1178,3 +1178,10 @@ export const INTERNAL_MESSAGES_PLACEHOLDERS = {
 };
 
 export const DELAY_REFRESH_CONVERSATIONS = 30000;
+
+export const LANGUAGES_LEVELS = [
+  {
+    value: 'NOTIONS',
+    text: 'Notions',
+  },
+];
