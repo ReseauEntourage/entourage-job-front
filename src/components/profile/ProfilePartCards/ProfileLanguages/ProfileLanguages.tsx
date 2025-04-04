@@ -54,7 +54,7 @@ export const ProfileLanguages = ({
           );
           return {
             id: language.id,
-            name: `${language.value} (${completeLevel?.text})`,
+            name: `${language.name} (${completeLevel?.text})`,
           };
         })}
         isEditable={isEditable}

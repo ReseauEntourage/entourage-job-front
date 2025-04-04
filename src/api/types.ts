@@ -136,6 +136,7 @@ export type Skill = {
 
 export type Language = {
   id: string;
+  name: string;
   value: string;
   userProfileLanguages: {
     level: string;
