@@ -2367,6 +2367,9 @@ select.uk-form-width-xsmall {
 .uk-section-primary {
   background: #47a8b9;
 }
+.uk-section-hover-blue {
+  background: #ecf8fb;
+}
 /*
  * Secondary
  */
@@ -13386,6 +13389,12 @@ iframe.uk-cover {
   font-family: 'Poppins';
   font-weight: 300;
   src: url('/static/fonts/Poppins-Light.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 500;
+  src: url('/static/fonts/Poppins-SemiBold.ttf') format('truetype');
   font-display: swap;
 }
 * {

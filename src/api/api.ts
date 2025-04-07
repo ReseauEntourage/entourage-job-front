@@ -315,8 +315,23 @@ export class APIHandler {
     return this.post(`/user/profile/${userId}/report`, userReportDto);
   }
 
-  // delete
+  // Social Situation
+  updateUserSocialSituation(
+    userId: string,
+    socialSituationDto: {
+      nationality?: string;
+      accommodation?: string;
+      resources?: string;
+      studiesLevel?: string;
+      workingExperience?: string;
+      jobSearchDuration?: string;
+      hasCompletedSurvey?: boolean;
+    }
+  ): Promise<AxiosResponse> {
+    return this.put(`/users/social-situations/${userId}`, socialSituationDto);
+  }
 
+  // delete
   deleteUser(userId: string): Promise<AxiosResponse> {
     return this.delete(`/user/${userId}`);
   }
@@ -391,13 +406,6 @@ export class APIHandler {
   ): Promise<AxiosResponse> {
     return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
   }
-
-  // getOpportunitiesTabCountForAdmin(
-  //   params: object
-  // ): Promise<AxiosResponse> {
-  //   console.log(params);
-  //   return this.get(`/opportunity/admin/tabCount`, params);
-  // }
 
   // post
 
@@ -611,13 +619,20 @@ export class APIHandler {
     );
   }
 
+  postConversationFeedback(params: {
+    conversationParticipantId: string;
+    rating: number | null;
+  }): Promise<AxiosResponse> {
+    return this.post('/messaging/conversations/feedback', params);
+  }
+
   /// /////////////////
   // read documents //
   /// /////////////////
 
   postReadDocument(
     params: { documentName: DocumentNameType },
-    userId
+    userId: string
   ): Promise<AxiosResponse> {
     return this.post(`/readDocuments/read/${userId}`, params);
   }

@@ -36,12 +36,6 @@ const pages: PageType = [
           },
         },
       },
-      /*
-        {
-          title: 'Notre histoire',
-          path: '/histoire',
-        },
-      */
       {
         title: 'Devenir partenaire',
         props: {
@@ -52,12 +46,6 @@ const pages: PageType = [
           },
         },
       },
-      /*
-        {
-          title: 'Nos résultats',
-          path: '/resultats',
-        },
-      */
     ],
   },
   {
@@ -103,7 +91,7 @@ const pages: PageType = [
       },
 
       {
-        title: 'Travailleurs sociaux',
+        title: 'Associations',
         path: '/orienter',
         props: {
           onClick: () => {
@@ -122,23 +110,6 @@ const pages: PageType = [
       },
     ],
   },
-  /* {
-    title: 'Territoires',
-    children: [
-      {
-        title: 'Paris',
-        path: '/paris',
-      },
-      {
-        title: 'Lyon',
-        path: '/lyon',
-      },
-      {
-        title: 'Lille',
-        path: '/lille',
-      },
-    ],
-  }, */
   {
     children: [
       {
@@ -332,18 +303,27 @@ export const Footer = () => {
           <SiteMap isMobile={false} />
           <Grid row center middle gap="medium">
             <SimpleLink
-              isExternal
-              target="_blank"
               className="uk-text-small uk-text-muted"
-              href={EXTERNAL_LINKS.LEGAL_MENTIONS}
+              href="/legal-notice"
             >
               Mentions légales
             </SimpleLink>
+
+            <SimpleLink className="uk-text-small uk-text-muted" href="/cgu">
+              Conditions Générales d&apos;Utilisation
+            </SimpleLink>
+
             <SimpleLink
-              isExternal
               className="uk-text-small uk-text-muted"
-              href="#cookies"
+              href="/data-privacy"
             >
+              Politique de confidentialité
+            </SimpleLink>
+
+            <SimpleLink className="uk-text-small uk-text-muted" href="/cookies">
+              Politique de cookies
+            </SimpleLink>
+            <SimpleLink className="uk-text-small uk-text-muted" href="#cookies">
               Gestion des cookies
             </SimpleLink>
           </Grid>

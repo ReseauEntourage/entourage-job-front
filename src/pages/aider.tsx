@@ -1,48 +1,56 @@
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import { Layout } from 'src/components/Layout';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { ContactUsSection } from 'src/components/partials/common/ContactUsSection/ContactUsSection';
+import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
+import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
-import { AiderDecouvrir } from 'src/components/partials/pages/Aider/AiderDecouvrir';
-import { AiderOpportunites } from 'src/components/partials/pages/Aider/AiderOpportunites';
-import { AiderRejoindre } from 'src/components/partials/pages/Aider/AiderRejoindre';
-import {
-  AiderProgramme360,
-  AiderProgrammeCoupDePouce,
-} from 'src/components/partials/pages/Aider/Programmes';
+import { UnderstandFormat } from 'src/components/partials/common/UnderstandFormat/UnderstandFormat';
+import { WhyUseEp } from 'src/components/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
 const reviewContent = [
   {
     review: (
       <>
-        “ Entourage Pro m’apporte une ouverture d’esprit encore plus grande,{' '}
-        l’envie d’aider les autres se concrétise vraiment avec ce projet ! ”
+        &quot;Je suis ravie d&apos;avoir rencontré Lucie, on a une relation
+        vraiment humaine. C&apos;était quelqu&apos;un de timide et il fallait la
+        mettre en confiance. La première rencontre, ça fait un peu peur mais
+        j’ai découvert une personne très douce, et c&apos;est devenu fluide. Je
+        suis sûr que nous resterons en lien&quot;
       </>
     ),
-    author: 'Chloé',
-    industry: 'coach de Soraya',
+    author: 'Jean-Baptiste',
+    industry: 'coach de Lucie',
     image: '',
   },
   {
     review: (
       <>
-        “ Je me suis retrouvé confronté à un tout autre univers, ça m’a fait
-        évoluer... Zabiullah m’appelle « mon ami » maintenant ! ”
+        &quot;Maria est la troisième candidate que j’accompagne. Je sais que si
+        j’ai une question, j’aurai toujours une personne d’Entourage pro pour
+        répondre à mes questions. L&apos;association est très mature : le
+        contact est facile et informel mais en même temps très professionnel.
+        C&apos;est vraiment positif !&quot;
       </>
     ),
-    author: 'Damien',
-    industry: 'coach de Zabiullah',
+    author: 'Remy',
+    industry: 'coach de Maria',
     image: '',
   },
   {
     review: (
       <>
-        “ C’est hyper enrichissant humainement. Chaque minute que tu passes est
-        utile au candidat, à sa progression,à la manière dont il voit les
-        choses. ”
+        &quot;C’est hyper enrichissant humainement. Chaque minute que tu passes
+        est utile au candidat, à sa progression, à la manière dont il voit les
+        choses.&quot;
       </>
     ),
     author: 'Marie',
@@ -52,44 +60,32 @@ const reviewContent = [
 ];
 
 const Aider = () => {
-  const refCoupDePouce = useRef(null);
-  const refProgramme360 = useRef(null);
-  const handleClick = useCallback((element) => {
-    if (element.current) {
-      element.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
-  }, []);
   return (
     <Layout title="Aider - Entourage Pro">
       <ImageTitle
-        title="Vous souhaitez aider&nbsp;?"
-        description={
-          <>
-            Ça tombe bien, nos candidates et candidats
-            <br />
-            ont besoin de vous&nbsp;!
-          </>
-        }
+        title="Avec Entourage Pro, s’engager se fait en toute flexibilité"
+        description="Devenir coach bénévole ? Une façon de concilier agenda chargé et envie de s’engager."
         img="/static/img/aider-banner-desktop.jpg"
         imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
       />
-      <AiderDecouvrir
-        handleClick={handleClick}
-        refCoupDePouce={refCoupDePouce}
-        refProgramme360={refProgramme360}
+
+      <UnderstandFormat as="Coach" />
+
+      <FormatBenefits as="Coach" title="Les avantages de devenir coach" />
+
+      <WhyUseEp as="Coach" />
+
+      <ContactUsSection
+        onClick={() => {
+          gaEvent(GA_TAGS.PAGE_AIDER_CONTACT_OPEN);
+          openModal(<ModalInterestLinkedOut />);
+        }}
       />
-      <AiderProgrammeCoupDePouce innerRef={refCoupDePouce} />
-      <AiderProgramme360 innerRef={refProgramme360} />
-      <AiderOpportunites />
-      <Reviews
-        title="Paroles de coachs ! Quelques témoignages"
-        reviews={reviewContent}
-      />
-      <AiderRejoindre />
+
+      <Reviews title="Nos coachs témoignent" reviews={reviewContent} />
+      <Impact as="Coach" />
+      <PartnersWorkingWithUs tag={GA_TAGS.HOME_PARTNERS_CLICK} />
       <NewsletterPartial tag={GA_TAGS.PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC} />
       <Section style="muted">
         <SharePartial />

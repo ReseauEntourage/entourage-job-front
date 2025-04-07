@@ -126,7 +126,12 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
 
       <EntreprisesCVLIst nbPublishedCVs={nbPublishedCVs} />
 
-      <Impact tag={GA_TAGS.PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK} />
+      <Impact
+        as="Company"
+        gaEventTag={GA_TAGS.PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK}
+        inviteToShowMore
+        invertBgColor
+      />
 
       <Reviews reviews={reviews} title="Ce que Entourage Pro leur a apporté" />
 

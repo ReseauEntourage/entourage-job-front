@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { IlluCV } from 'assets/icons/icons';
+import { Text } from 'src/components/utils';
 import { FilePreviewCV } from 'src/components/utils/Inputs/FileInput/FilePreview';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserExternalCv } from 'src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from 'src/use-cases/current-user';
-import { StyledCvUploadInfosText } from './ExternalCVCard.styles';
 
 interface ContentProps {
   dataTestId: string;
@@ -45,10 +45,10 @@ export const Content = ({ dataTestId }: ContentProps) => {
   return (
     <>
       <IlluCV width={70} height={70} />
-      <StyledCvUploadInfosText>
-        Vous n&apos;avez pas encore de CV Entourage Pro. Téléchargez votre
-        propre propre CV.
-      </StyledCvUploadInfosText>
+      <div>
+        <Text>Vous n&apos;avez pas encore importé votre CV.</Text>
+        <Text>Importez-le au format PDF.</Text>
+      </div>
     </>
   );
 };

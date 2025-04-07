@@ -158,6 +158,9 @@ export const GA_TAGS = {
   PAGE_AIDER_DON_CLIC: {
     action: 'Page_Aider_Don_Clic',
   },
+  PAGE_AIDER_CONTACT_OPEN: {
+    action: 'Page_Aider_Contact_Open',
+  },
   HOME_SUIVRE_SUR_FACEBOOK_CLIC: {
     action: 'Home_Suivre_sur_Facebook_Clic',
   },
@@ -269,6 +272,9 @@ export const GA_TAGS = {
   PAGE_TRAVAILLER_CARROUSEL_CLIC: {
     action: 'Page_Travailler_Carrousel_Clic',
   },
+  PAGE_TRAVAILLER_CONTACT_OPEN: {
+    action: 'Page_Travailler_Contact_Open',
+  },
   PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC: {
     action: 'Page_Travailler_Deposer_Candidature_Clic',
   },
@@ -301,6 +307,9 @@ export const GA_TAGS = {
   },
   BACKOFFICE_OPEN: {
     action: 'Backoffice_Open',
+  },
+  BACKOFFICE_MESSAGING_MESSAGE_SEND: {
+    action: 'Backoffice_Messaging_Message_Send',
   },
   BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC: {
     action: 'Backoffice_Admin_Archiver_Masse_Clic',
@@ -367,6 +376,15 @@ export const GA_TAGS = {
   },
   BACKOFFICE_CANDIDAT_HEADER_CV_CLIC: {
     action: 'Backoffice_Candidat_Header_Cv_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_LINKDIN_CLIC: {
+    action: 'Backoffice_MemberProfile_LinkedIn_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC: {
+    action: 'Backoffice_MemberProfile_ViewCVPro_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC: {
+    action: 'Backoffice_MemberProfile_ViewCVPerso_Clic',
   },
   BACKOFFICE_CANDIDAT_CONTACTER_RECRUTEUR_CLIC: {
     action: 'Backoffice_Candidat_Contacter_Recruteur_Clic',
@@ -500,6 +518,9 @@ export const GA_TAGS = {
   PAGE_TRAVAILLER_PROGRAMME_360_INSCRIPTION_CLICK: {
     action: 'Page_Travailler_Inscription_Click',
   },
+  PAGE_TRAVAILLER_INSCRIPTION_CLICK: {
+    action: 'Page_Travailler_Inscription_Click',
+  },
   PAGE_TRAVAILLER_PROGRAMME_360_EN_SAVOIR_PLUS_CLICK: {
     action: 'Page_Travailler_En_Savoir_Plus_Click',
   },
@@ -600,6 +621,10 @@ export const FB_TAGS = {
   DONATION: {
     type: 'track',
     action: 'Donate',
+  },
+  CONTACT_OPEN: {
+    action: 'Pré-Prospect 2.1',
+    options: { content_category: '2.1' },
   },
 } as const;
 

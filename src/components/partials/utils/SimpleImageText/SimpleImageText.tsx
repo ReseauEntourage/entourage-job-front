@@ -31,7 +31,8 @@ export const SimpleImageText = ({
   return (
     <StyledSimpleImageTextBackground backgroundColor={backgroundColor}>
       <Section>
-        {!isDesktop && <H3 title={title} color="primaryBlue" />}
+        {!isDesktop && <H3 title={title} />}
+        <br />
         <StyledSimpleImageTextContainer
           className={isDesktop ? '' : 'mobile'}
           reverse={reverse}
@@ -42,10 +43,8 @@ export const SimpleImageText = ({
           >
             <Img src={img} alt="" cover />
           </StyledSimpleImageTextImageContainer>
-          <StyledSimpleImageTextTextContainer
-            className={isDesktop ? '' : 'mobile'}
-          >
-            {isDesktop && <H3 title={title} color="primaryBlue" />}
+          <StyledSimpleImageTextTextContainer>
+            {isDesktop && <H3 title={title} />}
             {children}
           </StyledSimpleImageTextTextContainer>
         </StyledSimpleImageTextContainer>

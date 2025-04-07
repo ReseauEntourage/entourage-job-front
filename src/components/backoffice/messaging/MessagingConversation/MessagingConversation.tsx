@@ -10,8 +10,10 @@ import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
+import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -22,7 +24,10 @@ import {
   selectSelectedConversationId,
   selectPinnedInfo,
 } from 'src/use-cases/messaging';
-import { selectConversationParticipantsAreDeleted } from 'src/use-cases/messaging/messaging.selectors';
+import {
+  selectConversationParticipantsAreDeleted,
+  selectShouldGiveFeedback,
+} from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
   MessagingInput,
@@ -31,6 +36,7 @@ import {
   MessagingMessagesContainer,
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
+import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
@@ -46,6 +52,7 @@ export const MessagingConversation = () => {
     selectConversationParticipantsAreDeleted
   );
   const pinnedInfo = useSelector(selectPinnedInfo);
+  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [newMessage, setNewMessage] = useState<string>('');
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
@@ -105,8 +112,24 @@ export const MessagingConversation = () => {
         selectedConversationId === 'new' ? undefined : selectedConversation.id,
     };
     dispatch(messagingActions.postMessageRequested(body));
+    gaEvent(GA_TAGS.BACKOFFICE_MESSAGING_MESSAGE_SEND);
     setNewMessage('');
     adjustMessageHeight();
+  };
+
+  const onRatingOrClose = (rating: number | null) => {
+    const conversationParticipantId = selectedConversation?.participants.find(
+      (participant) => participant.id === currentUserId
+    )?.conversationParticipant.id;
+
+    if (selectedConversationId && conversationParticipantId) {
+      dispatch(
+        messagingActions.postFeedbackRequested({
+          conversationParticipantId,
+          rating,
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -171,13 +194,25 @@ export const MessagingConversation = () => {
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
 
+          {shouldGiveFeedback && (
+            <MessagingFeedback
+              onRatingOrClose={onRatingOrClose}
+              adressee={selectedConversation?.participants.find(
+                (participant) => participant.id !== currentUserId
+              )}
+            />
+          )}
+
           {displaySuggestions ? (
             <MessagingSuggestions
               onSuggestionClick={onSuggestionClick}
               newMessage={newMessage}
             />
           ) : (
-            <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
+            <MessagingMessagesContainer
+              blur={shouldGiveFeedback}
+              className={isMobile ? 'mobile' : ''}
+            >
               {selectedConversation &&
                 selectedConversation.messages &&
                 selectedConversation.messages.map((message) => (
@@ -188,7 +223,10 @@ export const MessagingConversation = () => {
           )}
 
           {/* Bloc de rédaction d'un message */}
-          <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
+          <MessagingMessageForm
+            blur={shouldGiveFeedback}
+            className={isMobile ? 'mobile' : ''}
+          >
             <MessagingInputContainer>
               <MessagingInput
                 rows={1}
@@ -213,7 +251,7 @@ export const MessagingConversation = () => {
             ) : (
               <Button
                 onClick={sendNewMessage}
-                disabled={conversationParticipantsAreDeleted}
+                disabled={conversationParticipantsAreDeleted || !newMessage}
               >
                 Envoyer
               </Button>

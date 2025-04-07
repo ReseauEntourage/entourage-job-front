@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export interface StyledSimpleImageTextBackgroundProps {
   backgroundColor: 'blue';
@@ -26,32 +26,34 @@ export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextCo
   flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
   align-items: stretch;
   flex-wrap: wrap;
-  gap: 10%;
+  gap: 5%;
   min-height: 400px;
 `;
 
 export const StyledSimpleImageTextImageContainer = styled.div`
-  width: 40%;
+  width: 45%;
   position: relative;
 
-  img {
-    border-radius: 40px;
-  }
-  &.mobile {
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
     margin-bottom: 20px;
     height: 340px;
   }
+
+  img {
+    border-radius: 40px;
+  }
 `;
 
 export const StyledSimpleImageTextTextContainer = styled.div`
-  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  &.mobile {
-    width: 100%;
+  gap: 30px;
+  width: 100%;
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    width: 50%;
   }
 `;
 
@@ -85,5 +87,18 @@ export const StyledSimpleVideoTextVideoContainer = styled(
         opacity: 0;
       }
     }
+  }
+`;
+
+export const StyledCTAsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: ${(props) => (props.marginTop ? '60px' : '0')};
+  button:first-child {
+    margin-right: 20px;
+  }
+  button {
+    margin-top: 4px;
   }
 `;

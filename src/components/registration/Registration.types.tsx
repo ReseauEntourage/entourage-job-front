@@ -5,8 +5,6 @@ import {
   IlluCV,
   IlluPoigneeDeMain,
 } from 'assets/icons/icons';
-import { Text } from '../utils';
-import { Alert } from '../utils/Alert';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
 import { COLORS } from 'src/constants/styles';
@@ -18,7 +16,6 @@ import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidate
 import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandidateInfoCo';
 import { formRegistrationCandidateProfessionalInformation } from './forms/formRegistrationCandidateProfessionalInformation';
 import { formRegistrationCandidateProgram } from './forms/formRegistrationCandidateProgram';
-import { formRegistrationCandidateSocialSituation } from './forms/formRegistrationCandidateSocialSituation';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
 import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
@@ -34,7 +31,6 @@ export type CandidateRegistrationForm =
   | typeof formRegistrationCandidateInfo
   | typeof formRegistrationCandidateProgram
   | typeof formRegistrationCandidateInfoCo
-  | typeof formRegistrationCandidateSocialSituation
   | typeof formRegistrationCandidateProfessionalInformation
   | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
@@ -145,14 +141,18 @@ export const RegistrationStepContents: {
     },
     [USER_ROLES.COACH]: {
       form: formRegistrationCoachProgram,
-      dependsOn: ['department'],
+      dependsOn: ['department', 'birthDate'],
+      // Pour un coach qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
+      skippedBy: {
+        notEligibleFor360: true,
+      },
     },
   },
   'step-4': {
     [USER_ROLES.CANDIDATE]: {
       form: formRegistrationCandidateProgram,
       dependsOn: ['department', 'birthDate'],
-      // Pour un candidat qui n'a pas le choix, on skip cette etape
+      // Pour un candidat qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
       skippedBy: {
         notEligibleFor360: true,
       },
@@ -189,23 +189,6 @@ export const RegistrationStepContents: {
     },
   },
   'step-7': {
-    [USER_ROLES.CANDIDATE]: {
-      form: formRegistrationCandidateSocialSituation,
-      subtitle: (
-        <>
-          Nous aimerions en savoir un peu plus sur votre situation. <br />
-          <br />
-          <Alert>
-            <Text weight="bold">
-              Ces informations sont confidentielles, optionnelles et ne seront
-              pas communiquées.
-            </Text>
-          </Alert>
-        </>
-      ),
-    },
-  },
-  'step-8': {
     [USER_ROLES.CANDIDATE]: {
       form: formRegistrationAccount,
     },

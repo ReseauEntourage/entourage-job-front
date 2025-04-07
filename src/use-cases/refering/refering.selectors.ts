@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-  FlattenedReferingFormData,
   LastStepContent,
   REFERING_FIRST_STEP,
   ReferingErrorMessages,
@@ -16,7 +15,6 @@ import {
   flattenReferingData,
   incrementReferingStep,
 } from 'src/components/backoffice/referer/Refering/Refering.utils';
-import { ANTENNE_INFO } from 'src/constants';
 import { assertIsDefined } from 'src/utils/asserts';
 import { referCandidateAdapter } from './refering.adapters';
 import { RootState } from './refering.slice';
@@ -152,19 +150,7 @@ export function selectReferingShouldSkipStep(state: RootState) {
 
       // Keys with custom logic
       if (key === 'notEligibleFor360') {
-        const { birthDate } = valuesFromOtherStep as FlattenedReferingFormData;
-        const { department } = valuesFromOtherStep as FlattenedReferingFormData;
-
-        const isDepartmentEligible = !!ANTENNE_INFO.find((antenne) => {
-          return department.value.includes(antenne.dpt);
-        });
-
-        const maxBirthdate = new Date();
-        maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 31);
-        const realBirthdate = new Date(birthDate);
-        const isAgeEligible = maxBirthdate <= realBirthdate;
-
-        thisKeyShouldSkip = !isDepartmentEligible || !isAgeEligible;
+        thisKeyShouldSkip = true;
       }
 
       // Keys with simple logic

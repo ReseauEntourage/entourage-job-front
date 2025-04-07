@@ -28,7 +28,7 @@ import {
 const staticNumbers = [
   {
     icon: <IlluCV width={140} height={110} />,
-    value: '+ 500',
+    value: '2500',
     description: 'candidat(e)s accompagnés',
   },
   {
@@ -58,9 +58,10 @@ export const Figures = () => {
   const isDesktop = useIsDesktop();
   return (
     <Section id="profiles">
-      <H2 title="Et le mieux c'est que ça marche" color="black" center />
+      <H2 title="Et le mieux c'est que ça marche" center />
+      <br />
       <StyledFiguresSubtitle>
-        <Text size="large">
+        <Text size="large" center>
           Nos candidat(e)s et nos coachs peuvent en témoigner. Les chiffres
           aussi !
         </Text>

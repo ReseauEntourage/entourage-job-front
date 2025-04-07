@@ -33,7 +33,7 @@ const cardVariables: {
     content:
       "N'hésitez pas à prendre contact avec eux pour les accompagner dans leur projet professionnel",
     button: 'Découvrez les candidats',
-    buttonHref: '/backoffice/annuaire?role=Candidat&role=Candidat+externe',
+    buttonHref: '/backoffice/annuaire?role=Candidat',
   },
 };
 
@@ -42,7 +42,7 @@ export const DashboardNetworkDiscoveryCard = () => {
   const isDesktop = useIsDesktop();
 
   return (
-    <Card title={cardVariables[user.role].title}>
+    <Card title={cardVariables[user.role].title} centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardNetworkDiscoverContent>
           {isDesktop && (
