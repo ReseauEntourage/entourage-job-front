@@ -92,9 +92,9 @@ export type Occupation = {
 
 export interface Review {
   id?: string;
-  name: string;
-  text: string;
-  status: string;
+  content: string;
+  authorLabel: string;
+  authorName: string;
 }
 
 export interface Experience {
@@ -146,6 +146,7 @@ export type Language = {
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
+  story: string | null;
   department: Department;
   isAvailable: boolean;
   unavailabilityReason: string | null;
@@ -503,10 +504,16 @@ export type PublicProfile = {
   department: Department;
   currentJob: string;
   description: string;
+  story: string;
   isAvailable: boolean;
   helpNeeds: { name: HelpValue }[];
   helpOffers: { name: HelpValue }[];
   businessSectors: BusinessSector[];
+  experiences: Experience[];
+  formations: Formation[];
+  skills: Skill[];
+  languages: Language[];
+  reviews: Review[];
   occupations: Occupation[];
   lastSentMessage: string;
   lastReceivedMessage: string;

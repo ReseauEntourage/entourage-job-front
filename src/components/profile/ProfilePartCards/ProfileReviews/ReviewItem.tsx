@@ -13,13 +13,13 @@ export interface ReviewItemProps {
 export const ReviewItem = ({ review }: ReviewItemProps) => {
   return (
     <StyledReviewItem>
-      <Text textAlign="justify">&quot;{review.text}&quot;</Text>
+      <Text textAlign="justify">&quot;{review.content}&quot;</Text>
       <StyledReviewAuthorContainer>
         <Text color="mediumGray" size="small">
-          {review.name}
+          {review.authorName}
         </Text>
         <Text color="mediumGray" size="small">
-          {review.status}
+          {review.authorLabel}
         </Text>
       </StyledReviewAuthorContainer>
     </StyledReviewItem>

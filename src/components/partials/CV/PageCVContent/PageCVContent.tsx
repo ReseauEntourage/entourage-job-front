@@ -475,17 +475,17 @@ export const PageCVContent = ({
           <H3 title="Ils me recommandent" color={COLORS.black} center />
           <CarouselSwiper
             slides={[
-              ...cv.reviews.map(({ text, id, name, status }) => {
+              ...cv.reviews.map(({ content, id, authorLabel, authorName }) => {
                 return (
                   <StyledCVPageContentSlide key={id}>
                     <StyledLeftQuoteContainer>
                       <QuoteLeftIcon />
                     </StyledLeftQuoteContainer>
                     <div>
-                      <span>{text}</span>
+                      <span>{content}</span>
                       <br />
                       <span className="name">
-                        {name}, {status}
+                        {authorName}, {authorLabel}
                       </span>
                     </div>
                     <StyledRightQuoteContainer>

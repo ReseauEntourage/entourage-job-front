@@ -86,14 +86,14 @@ export const Profile = () => {
             <ProfileReviews
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              reviews={[]}
+              reviews={selectedProfile.reviews ?? []}
             />
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileContactCard userId={selectedProfile.id} />
             <ProfileContracts smallCard />
             <ProfileInterests smallCard />
-            <ProfileLanguages languages={[]} smallCard />
+            <ProfileLanguages languages={selectedProfile.languages} smallCard />
             <ProfileDocuments
               userId={selectedProfile.id}
               linkedinUrl={selectedProfile.linkedinUrl}
