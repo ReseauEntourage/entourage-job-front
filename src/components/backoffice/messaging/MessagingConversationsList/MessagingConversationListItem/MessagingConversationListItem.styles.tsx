@@ -40,7 +40,7 @@ export const RightColumn = styled.div<{ highlight: boolean }>`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     font-weight: ${(props) => {
-      return props.highlight ? '400' : '700';
+      return props.highlight ? '700' : '400';
     }};
   }
 `;
