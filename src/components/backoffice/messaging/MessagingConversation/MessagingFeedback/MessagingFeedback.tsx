@@ -48,7 +48,7 @@ export const MessagingFeedback = ({
       case USER_ROLES.CANDIDATE:
         return `A quel point pensez vous avoir aidé ${adressee.firstName} dans sa recherche d'emploi ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;
       case USER_ROLES.COACH:
-        return `A quel point ${adressee.firstName} vous a aidé dans sa recherche d'emploi ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;
+        return `Les conseils de ${adressee.firstName} vous ont-ils aidé dans votre recherche ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;
       default:
         return `Comment évaluez-vous votre conversation ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;
     }
