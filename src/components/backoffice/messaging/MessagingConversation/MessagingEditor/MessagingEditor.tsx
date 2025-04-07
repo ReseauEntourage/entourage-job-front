@@ -36,7 +36,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   const newMessage = useSelector(selectNewMessage);
 
   // States
-  const [attachments, setAttachements] = useState<File[]>([]);
+  const [attachments, setAttachments] = useState<File[]>([]);
 
   // Refs
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -49,11 +49,11 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
     if (!Array.isArray(files)) {
       files = [files];
     }
-    setAttachements([...attachments, ...files]);
+    setAttachments([...attachments, ...files]);
   };
 
   const removeAttachment = (attachment: File) => {
-    setAttachements(attachments.filter((file) => file !== attachment));
+    setAttachments(attachments.filter((file) => file !== attachment));
   };
 
   const onRequestAttachFileClick = () => {
@@ -99,7 +99,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
     dispatch(messagingActions.postMessageRequested(formData));
     gaEvent(GA_TAGS.BACKOFFICE_MESSAGING_MESSAGE_SEND);
     dispatch(messagingActions.setNewMessage(''));
-    setAttachements([]);
+    setAttachments([]);
     adjustMessageHeight();
   };
 
