@@ -15,7 +15,6 @@ export const StyledStepImage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 103px;
 `;
 
 export const StyledStepBtnContainer = styled.div`
