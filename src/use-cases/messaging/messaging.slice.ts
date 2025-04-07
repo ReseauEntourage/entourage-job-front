@@ -110,8 +110,8 @@ export const slice = createSlice({
           const selectedConvIdx = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
-          state.conversations[selectedConvIdx].messages.push(message);
-          state.selectedConversation?.messages.push(message);
+          state.conversations[selectedConvIdx].messages.unshift(message);
+          state.selectedConversation?.messages.unshift(message);
 
           // Set the conversation as seen
           state.conversations[selectedConvIdx].participants.forEach(

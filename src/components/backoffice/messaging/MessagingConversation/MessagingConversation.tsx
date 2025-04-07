@@ -65,6 +65,13 @@ export const MessagingConversation = () => {
     );
   }, [currentUser, selectedConversationId]);
 
+  const reversedMessages = useMemo(() => {
+    if (!selectedConversation || !selectedConversation.messages) {
+      return [];
+    }
+    return [...selectedConversation.messages].reverse();
+  }, [selectedConversation]);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -213,9 +220,8 @@ export const MessagingConversation = () => {
               blur={shouldGiveFeedback}
               className={isMobile ? 'mobile' : ''}
             >
-              {selectedConversation &&
-                selectedConversation.messages &&
-                selectedConversation.messages.map((message) => (
+              {reversedMessages &&
+                reversedMessages.map((message) => (
                   <MessagingMessage key={message.id} message={message} />
                 ))}
               <div ref={messagesEndRef} />
