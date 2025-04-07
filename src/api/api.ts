@@ -126,14 +126,6 @@ export class APIHandler {
     return this.get('/cv/published');
   }
 
-  getCheckUpdate(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/cv/checkUpdate/${candidateId}`);
-  }
-
-  getCVByUrl(url: string): Promise<AxiosResponse> {
-    return this.get(`/cv/url/${url}`);
-  }
-
   // post
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });

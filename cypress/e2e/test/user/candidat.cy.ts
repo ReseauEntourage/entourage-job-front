@@ -64,10 +64,6 @@ describe('Candidat', () => {
         noteHasBeenModified: true,
       }).as('candidatCheckUpdate');
 
-      cy.intercept('GET', `/cv/checkUpdate/${user.id}`, {
-        cvHasBeenModified: true,
-      }).as('cvCheckUpdate');
-
       cy.intercept(
         'POST',
         `/user/profile/uploadImage/${user.id}`,

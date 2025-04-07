@@ -4,18 +4,17 @@ import { ProfilePartCard } from '../Card/Card/Card';
 import { Text } from 'src/components/utils';
 
 export interface ProfileGeneratedDescriptionProps {
+  description: string | null;
   isEditable?: boolean;
   smallCard?: boolean;
 }
 
 export const ProfileGeneratedDescription = ({
+  description,
   isEditable = false,
   smallCard = false,
 }: ProfileGeneratedDescriptionProps) => {
-  const isCompleted = false; // TODO : Bind on the real value
-  const description =
-    // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia. Nullam nec nisl nec nisl ultricies lacinia.';
-    null;
+  const isCompleted = !!description;
 
   const editModal = useCallback(() => {}, []);
 
@@ -26,14 +25,13 @@ export const ProfileGeneratedDescription = ({
       isEditable={isEditable}
       ctaCallback={editModal}
       iaGenerated
-      isEmpty={!description}
       fallback={{
         content: <Text>Vous n’avez pas encore rédigé de présentation</Text>,
         icon: <IlluCV />,
       }}
       smallCard={smallCard}
     >
-      {description}
+      {description && <Text>{description}</Text>}
     </ProfilePartCard>
   );
 };

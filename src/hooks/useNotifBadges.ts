@@ -25,7 +25,6 @@ export function useNotifBadges(
 ) {
   const [badges, setBadges] = useState<NotifBadges>({
     note: 0,
-    cv: 0,
     members: 0,
     messaging: 0,
   });
@@ -36,19 +35,14 @@ export function useNotifBadges(
   useEffect(() => {
     if (user !== prevUser) {
       if (candidateId) {
-        Promise.all([
-          Api.getCandidateCheckUpdate(candidateId),
-          Api.getCheckUpdate(candidateId),
-        ])
+        Promise.all([Api.getCandidateCheckUpdate(candidateId)])
           .then((data) => {
-            const { noteHasBeenModified, cvHasBeenModified } =
-              reducePromisesResults(data);
+            const { noteHasBeenModified } = reducePromisesResults(data);
 
             setBadges((prevBadges) => {
               return {
                 ...prevBadges,
                 note: noteHasBeenModified ? 1 : 0,
-                cv: cvHasBeenModified ? 1 : 0,
               };
             });
           })

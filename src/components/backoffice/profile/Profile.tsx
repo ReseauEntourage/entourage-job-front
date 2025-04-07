@@ -27,8 +27,6 @@ import { useSelectSelectedProfile } from './useSelectedProfile';
 export const Profile = () => {
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
-  const description =
-    'Je m’appelle Julien Petit, j’ai 47 ans et je suis un professionnel expérimenté dans les domaines de la vente, du service client et du tourisme. Désireux de relever de nouveaux défis, je m’appuie sur une solide expérience en gestion administrative, développement commercial et relation client.Au fil de ma carrière, j’ai occupé divers postes tels qu’agent de voyages, réceptionniste et commercial sédentaire, ce qui m’a permis de développer une grande polyvalence. Je maîtrise la réservation, la gestion des dossiers ainsi que les stratégies commerciales, tout en veillant à offrir un excellent service après-vente.Bilingue en français et espagnol, je possède également une bonne connaissance de l’anglais, ce qui me permet d’évoluer dans des environnements multiculturels avec aisance.';
 
   return (
     <StyledBackofficeBackground>
@@ -49,7 +47,7 @@ export const Profile = () => {
               userFirstName={selectedProfile.firstName}
               occupations={selectedProfile.occupations ?? []}
               businessSectors={selectedProfile.businessSectors ?? []}
-              description={description}
+              description={selectedProfile.description}
               skills={[
                 {
                   id: '1',

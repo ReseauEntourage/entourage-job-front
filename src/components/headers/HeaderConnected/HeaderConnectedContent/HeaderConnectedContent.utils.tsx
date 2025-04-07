@@ -34,12 +34,6 @@ export const renderLinks = (
       tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
     },
     {
-      href: `/backoffice/candidat/${candidateId}/cv`,
-      name: 'Mon CV',
-      badge: 'cv',
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
-    },
-    {
       href: '/backoffice/annuaire',
       name: "Réseau d'entraide",
     },
@@ -117,13 +111,6 @@ export const renderLinks = (
           href: '/backoffice/dashboard',
           name: 'Mon espace',
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/cv`,
-          name: 'CV',
-          badge: 'cv',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
         },
         {
           href: '/backoffice/annuaire',

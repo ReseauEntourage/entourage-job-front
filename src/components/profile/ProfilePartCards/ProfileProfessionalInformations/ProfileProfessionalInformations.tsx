@@ -36,6 +36,7 @@ export const ProfileProfessionalInformations = ({
         ),
         icon: <IlluBulleQuestion />,
       }}
+      isEmpty={!occupations.length && !businessSectors.length && !description}
     >
       <StyledContentContainer>
         <ProfileCareerPathSentence

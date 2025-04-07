@@ -64,7 +64,10 @@ export const Parameters = () => {
                 businessSectors={user.userProfile.businessSectors ?? []}
                 isEditable
               />
-              <ProfileGeneratedDescription isEditable />
+              <ProfileGeneratedDescription
+                isEditable
+                description={user.userProfile.description}
+              />
               <ProfileSkills
                 skills={user.userProfile.skills || []}
                 isEditable

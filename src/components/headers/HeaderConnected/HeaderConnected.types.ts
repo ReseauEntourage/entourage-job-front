@@ -1,5 +1,4 @@
 export interface NotifBadges {
-  cv: number;
   note: number;
   members: number;
   messaging: number;

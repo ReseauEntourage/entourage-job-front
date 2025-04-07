@@ -1,6 +1,5 @@
 import { NextRouter, withRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
 import { CVDiscover } from 'src/components/partials/CV/CVDiscover';
@@ -14,11 +13,12 @@ import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_FILTERS_DATA, CV_STATUS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
-interface CVPageProps {
+export interface CVPageProps {
   cv: CV;
   router: NextRouter;
   exists?: boolean;
 }
+
 const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
   const hostname = process.env.SERVER_URL;
   const link = `${hostname}${router.asPath}`;
@@ -124,20 +124,6 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       </StyledCVPage>
     </Layout>
   );
-};
-
-CVPage.getInitialProps = async ({ query }) => {
-  return Api.getCVByUrl(query.url)
-    .then(({ data: { cv, exists } }) => {
-      return {
-        cv,
-        exists,
-      };
-    })
-    .catch((err) => {
-      console.error(err);
-      return { cv: null, exists: false };
-    });
 };
 
 export default withRouter<CVPageProps>(CVPage);
