@@ -1,13 +1,11 @@
 import React, { FormEvent, useState } from 'react';
 import { Button } from 'src/components/utils';
-import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { StyledButtonPostContainer } from './ButtonPost.styles';
 
 interface ButtonPostProps {
   text: string;
-  color?: string;
   action?: (event?: FormEvent) => Promise<void>;
-  style?: '' | UIKIT_BUTTON_STYLES_SPEC;
+  variant?: 'default' | 'primary' | 'secondary';
   icon?: JSX.Element;
   disabled?: boolean;
   isLoadingOverride?: boolean;
@@ -18,8 +16,7 @@ export const ButtonPost = ({
   text,
   icon,
   action,
-  style,
-  color,
+  variant,
   disabled,
   isLoadingOverride,
   dataTestId,
@@ -29,9 +26,8 @@ export const ButtonPost = ({
   return (
     <Button
       disabled={disabled || loading}
-      style={style}
+      variant={variant}
       dataTestId={dataTestId}
-      color={color}
       onClick={async () => {
         if (!loading) {
           setLoading(true);

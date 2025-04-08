@@ -124,7 +124,7 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
       })}
       <StyledMultipleFieldAddButtonContainer>
         <Button
-          style="custom-text"
+          variant="default"
           onClick={() => {
             append(
               formFields.reduce((acc, curr) => {

@@ -44,11 +44,11 @@ export const CVModalConfirmation = ({
       }
     >
       <Grid className="uk-grid-small uk-flex-center uk-margin-large-top">
-        <Button style="default" onClick={onClose}>
+        <Button variant="default" onClick={onClose}>
           Annuler
         </Button>
         <Button
-          style="primary"
+          variant="primary"
           dataTestId={`test-confirm-${id}`}
           onClick={() => {
             dispatchOnSubmit({ hidden: true });

@@ -101,7 +101,8 @@ export const DashboardRecommendationsCard = () => {
           />
         </StyledDashboardRecommendationsList>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           href={{ pathname: '/backoffice/annuaire', query }}
         >
           {recommendationsLabels[user.role].button}

@@ -185,7 +185,8 @@ export const Impact = ({
       {inviteToShowMore && (
         <StyledCenteredButtonContainer>
           <Button
-            style="custom-secondary-inverted"
+            variant="primary"
+            rounded
             href={process.env.URL_MESURE_D_IMPACT}
             isExternal
             newTab

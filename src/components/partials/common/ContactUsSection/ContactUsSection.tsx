@@ -13,7 +13,8 @@ export const ContactUsSection = ({ onClick }: { onClick: () => void }) => {
           Notre équipe est à votre disposition !
         </Text>
         <Button
-          style="custom-secondary"
+          variant="secondary"
+          rounded
           size="large"
           onClick={onClick}
           dataTestId="button-contact"

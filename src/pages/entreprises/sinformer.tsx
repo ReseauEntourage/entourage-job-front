@@ -31,7 +31,7 @@ const Sinformer = () => {
           </>
         }
         cta={{
-          style: 'custom-secondary-inverted',
+          variant: 'primary',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
             openModal(<CompanyContactModal />);

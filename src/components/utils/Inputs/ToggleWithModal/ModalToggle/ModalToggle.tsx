@@ -24,11 +24,11 @@ export const ModalToggle = ({
   return (
     <ModalGeneric title={modalTitle} description={modalDescription}>
       <Grid className="uk-grid-small uk-flex-center uk-margin-large-top">
-        <Button style="default" onClick={onClose}>
+        <Button variant="default" onClick={onClose}>
           Annuler
         </Button>
         <Button
-          style="primary"
+          variant="primary"
           dataTestId={`test-confirm-${id}`}
           onClick={() => {
             onToggle();

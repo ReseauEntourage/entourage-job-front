@@ -28,7 +28,7 @@ export const ParametresPlaceholder = ({
         </div>
       </div>
       {isDesktop && (
-        <Button style="custom-secondary" onClick={onClick}>
+        <Button variant="secondary" rounded onClick={onClick}>
           Renseigner
         </Button>
       )}

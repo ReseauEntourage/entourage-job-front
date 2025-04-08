@@ -365,13 +365,13 @@ export const AdminOpportunityDetailsCTAs = ({
         CTAsByTag.find((CTAByTag) => {
           return CTAByTag.tag === tag;
         }).ctas.map((cta, key) => {
-          const { color, className, action, text } = allCTAs[cta];
+          const { action, text } = allCTAs[cta];
           return (
             <li key={`${key}-${uuidValue}`}>
               <Button
                 size="small"
-                color={color}
-                style={className}
+                variant="secondary"
+                rounded
                 onClick={actions[action]}
               >
                 {text}

@@ -21,6 +21,7 @@ export const COLORS = {
   // B&W colors
   transparent: 'transparent',
   white: '#FFFFFF',
+  hoverWhite: '#f2f2f2',
   lightGray: '#F5F5F5',
   gray: '#D9D9D9',
   mediumGray: '#A0A0A0',

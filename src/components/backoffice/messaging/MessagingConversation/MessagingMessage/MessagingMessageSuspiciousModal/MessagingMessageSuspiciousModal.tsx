@@ -18,7 +18,7 @@ export const MessagingMessageSuspiciousModal = ({
       pouvons garantir la sécurité ou la fiabilité de ce lien.
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-small-top">
         <Button
-          style="default"
+          variant="default"
           onClick={async () => {
             if (onClose) {
               onClose();
@@ -28,7 +28,7 @@ export const MessagingMessageSuspiciousModal = ({
           Rester sur Entourage Pro
         </Button>
         <Button
-          style="primary"
+          variant="primary"
           onClick={async () => {
             if (onClose) {
               onClose();

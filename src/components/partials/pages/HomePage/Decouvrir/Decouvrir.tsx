@@ -30,7 +30,8 @@ export const Decouvrir = () => {
         rencontre.
       </Text>
       <Button
-        style="custom-secondary-inverted"
+        variant="primary"
+        rounded
         href="/travailler"
         onClick={() => {
           gaEvent(GA_TAGS.HOME_DECOUVRIR_CTA_CLICK);

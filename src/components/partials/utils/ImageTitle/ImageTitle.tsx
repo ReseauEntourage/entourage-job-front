@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, BackgroundImage, Text } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
-import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -13,7 +12,7 @@ interface CTAProps {
   onClick?: () => void;
   label: string;
   href?: string;
-  style?: UIKIT_BUTTON_STYLES_SPEC;
+  variant?: 'default' | 'primary' | 'secondary';
   isExternal?: boolean;
   newTab?: boolean;
   dataTest?: string;
@@ -61,13 +60,12 @@ export const ImageTitle = ({
         )}
         {cta && !Array.isArray(cta) && (
           <Button
-            style={cta.style}
+            variant={cta.variant}
             onClick={cta.onClick}
             dataTestId={cta.dataTest}
             href={cta.href}
             isExternal={cta.isExternal}
             newTab={cta.newTab}
-            color={cta.color}
           >
             {cta.label}
           </Button>
@@ -76,24 +74,14 @@ export const ImageTitle = ({
           <StyledImageTitleCTAsContainer marginTop={!description}>
             {cta.map(
               (
-                {
-                  label,
-                  style,
-                  dataTest,
-                  onClick,
-                  color,
-                  href,
-                  isExternal,
-                  newTab,
-                },
+                { label, variant, dataTest, onClick, href, isExternal, newTab },
                 index
               ) => {
                 return (
                   <Button
                     key={index.toString()}
-                    style={style}
+                    variant={variant}
                     onClick={onClick}
-                    color={color}
                     href={href}
                     isExternal={isExternal}
                     dataTestId={dataTest}

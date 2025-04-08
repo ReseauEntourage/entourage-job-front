@@ -52,7 +52,8 @@ export const CVDiscover = () => {
       )}
       <StyledCVDiscoverButtonContainer>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           href={{ pathname: '/candidats', query: { employed: false } }}
         >
           Voir tous les candidats

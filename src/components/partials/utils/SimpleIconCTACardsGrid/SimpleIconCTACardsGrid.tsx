@@ -60,7 +60,8 @@ export const SimpleIconCTACardsGrid = ({
                 <Button
                   onClick={card.onClick}
                   href={card.href}
-                  style="custom-secondary-inverted"
+                  variant="primary"
+                  rounded
                 >
                   {card.CTAText}
                 </Button>

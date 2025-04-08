@@ -61,10 +61,7 @@ export function FileInput({
       )}
       <StyledFileInputWrapper>
         {!value && (
-          <Button
-            style="custom-primary-inverted"
-            onClick={onButtonDownloadClick}
-          >
+          <Button variant="secondary" rounded onClick={onButtonDownloadClick}>
             Télécharger
           </Button>
         )}

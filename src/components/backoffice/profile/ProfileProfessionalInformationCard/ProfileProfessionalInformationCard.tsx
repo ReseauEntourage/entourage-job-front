@@ -87,7 +87,8 @@ export const ProfileProfessionalInformationCard = () => {
                 }}
                 isExternal
                 newTab
-                style="custom-primary-inverted"
+                variant="secondary"
+                rounded
               >
                 Voir mon profil Linkedin
               </Button>

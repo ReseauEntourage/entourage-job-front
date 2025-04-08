@@ -23,7 +23,7 @@ export const SuccessModalContent = ({
       </div>
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
         <Button
-          style="default"
+          variant="default"
           onClick={closeModal}
           dataTestId="success-close-modal"
         >

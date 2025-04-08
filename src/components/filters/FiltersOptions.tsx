@@ -12,8 +12,8 @@ export const FiltersOptions = ({
         <div className="uk-flex uk-flex-right uk-flex-wrap uk-flex-1">
           <div className="uk-flex">
             <Button
-              style="custom-secondary"
-              color="primaryBlue"
+              variant="secondary"
+              rounded
               size="small"
               dataTestId="reset-filters"
               onClick={resetFilters}

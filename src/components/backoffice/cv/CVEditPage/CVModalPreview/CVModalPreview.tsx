@@ -23,7 +23,7 @@ export const CVModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
     <ModalGeneric title="Prévisualisation du CV" size="expand">
       <PageCVContent cv={cvPreview} actionDisabled isPreview />
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
-        <Button onClick={onClose} style="default">
+        <Button onClick={onClose} variant="default">
           Fermer
         </Button>
       </div>

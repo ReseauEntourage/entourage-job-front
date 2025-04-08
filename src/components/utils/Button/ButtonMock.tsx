@@ -1,36 +1,16 @@
 import React from 'react';
 
-import { ButtonProps, getButtonClassBuffer } from './Button';
-import { StyledButtonMock } from './Button.styles';
+import { StyledButton } from './Button.styles';
+import { ButtonProps } from './ButtonProps';
 
 export const ButtonMock = ({
-  visible,
   children,
-  className,
-  disabled = false,
-  style = 'custom-primary',
-  size = 'large',
-  widths = [],
   dataTestId = '',
-  color = 'primaryBlue',
+  rounded = false,
 }: ButtonProps) => {
-  const classBuffer = getButtonClassBuffer({
-    visible,
-    className,
-    disabled,
-    style,
-    size,
-    widths,
-  });
-
   return (
-    <StyledButtonMock
-      className={classBuffer}
-      type="button"
-      data-testid={dataTestId}
-      color={color}
-    >
+    <StyledButton type="button" data-testid={dataTestId} rounded={rounded}>
       {children}
-    </StyledButtonMock>
+    </StyledButton>
   );
 };

@@ -50,7 +50,8 @@ export const CVCallToActions = ({
             {cv?.user?.candidat?.firstName}, envoyez-lui.
           </p>
           <Button
-            style="custom-secondary"
+            variant="secondary"
+            rounded
             disabled={actionDisabled}
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);

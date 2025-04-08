@@ -29,7 +29,8 @@ export const EntreprisesEnSavoirPlus = () => {
             linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
             openModal(<CompanyContactModal />);
           }}
-          style="custom-secondary"
+          variant="secondary"
+          rounded
           className="uk-margin-small-top"
         >
           Nous contacter

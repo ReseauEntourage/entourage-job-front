@@ -176,7 +176,7 @@ export const CandidateOpportunities = ({
             noSeparator
           >
             <Button
-              style="primary"
+              variant="primary"
               dataTestId="candidat-add-offer-main"
               onClick={() => {
                 openModal(

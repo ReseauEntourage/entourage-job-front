@@ -68,7 +68,8 @@ export const DashboardNetworkDiscoveryCard = () => {
         </StyledDashboardNetworkDiscoverContent>
 
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           href={cardVariables[user.role].buttonHref}
         >
           {cardVariables[user.role].button}

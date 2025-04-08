@@ -38,7 +38,6 @@ export const FiltersMobile = ({
   return (
     <div className="uk-flex uk-flex-middle uk-flex-center uk-hidden@m">
       <Button
-        style=""
         className="ent-filter-button-search"
         toggle="target: #toggle-filter-menu;"
       >

@@ -111,9 +111,10 @@ export const HeaderProfileDesktop = ({
                 name="profile-picture-upload-desktop"
               >
                 <ButtonMock
-                  style="custom-secondary"
-                  size="small"
+                  variant="secondary"
+                  rounded
                   className="button-mock-image-input"
+                  size="small"
                   dataTestId="button-mock-image-input"
                 >
                   Modifier
@@ -126,7 +127,8 @@ export const HeaderProfileDesktop = ({
                   <Button
                     id="nav-cv-button"
                     size="small"
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     onClick={openCv}
                   >
                     Voir le CV
@@ -137,7 +139,8 @@ export const HeaderProfileDesktop = ({
                       <Button
                         id="nav-cv-button"
                         size="small"
-                        style="custom-secondary"
+                        variant="secondary"
+                        rounded
                       >
                         Voir le CV{' '}
                         {hasTwoCv && <LucidIcon name="ChevronDown" />}
@@ -199,10 +202,7 @@ export const HeaderProfileDesktop = ({
             )}
             {displayMessageButton && (
               <div>
-                <Button
-                  onClick={openConversation}
-                  style="custom-primary-inverted"
-                >
+                <Button onClick={openConversation} variant="secondary" rounded>
                   Envoyer un message
                 </Button>
               </div>

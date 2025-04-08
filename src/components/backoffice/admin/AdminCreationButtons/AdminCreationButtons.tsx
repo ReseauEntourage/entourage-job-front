@@ -75,7 +75,7 @@ export function AdminCreationButtons({
       id="admin-create"
       align={isDesktop ? 'right' : 'left'}
       dataTestId="button-admin-create"
-      style="custom-primary"
+      variant="primary"
       buttons={[
         {
           onClick: () => {

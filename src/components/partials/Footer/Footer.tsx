@@ -177,7 +177,7 @@ const pages: PageType = [
         component: (
           <Button
             href="/login"
-            style="primary"
+            variant="primary"
             className="uk-margin-medium-top"
           >
             Espace coach & candidat

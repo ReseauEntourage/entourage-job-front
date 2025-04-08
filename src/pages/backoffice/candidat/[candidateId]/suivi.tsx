@@ -157,7 +157,7 @@ const Suivi = () => {
         </div>
         <Grid match className="uk-flex-right">
           <Button
-            style="default"
+            variant="default"
             onClick={() => {
               updateValue(
                 // @ts-expect-error after enable TS strict mode. Please, try to fix it
@@ -173,7 +173,7 @@ const Suivi = () => {
             <LucidIcon name="History" />
           </Button>
           <Button
-            style="default"
+            variant="default"
             onClick={() => updateSuivi(value)}
             disabled={
               value ===

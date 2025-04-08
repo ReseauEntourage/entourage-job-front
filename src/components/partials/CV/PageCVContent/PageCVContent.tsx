@@ -166,7 +166,8 @@ export const PageCVContent = ({
               opportunité&nbsp;...
             </p>
             <Button
-              style="custom-secondary-inverted"
+              variant="primary"
+              rounded
               disabled={actionDisabled}
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);

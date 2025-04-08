@@ -105,7 +105,8 @@ export const DashboardCVCreationStepCard = () => {
           </StyledDashboardCVCreationStepContentText>
         </StyledDashboardCVCreationStepContent>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           href={`/backoffice/candidat/${candidate.id}/cv`}
         >
           {textContent.CTA[contextualRole][cvStatus]}

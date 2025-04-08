@@ -70,7 +70,7 @@ export const SignDocument = ({ documentName, label }: SignDocumentProps) => {
         />
       </WarningStrip>
       <StyledSignDocumentButtonContainer>
-        <Button style="custom-secondary-inverted" onClick={handleSignDocument}>
+        <Button variant="primary" rounded onClick={handleSignDocument}>
           Valider
         </Button>
       </StyledSignDocumentButtonContainer>

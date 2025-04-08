@@ -91,7 +91,7 @@ export const DashboardProfileCard = () => {
         </StyledDashboardProfileCardHelps>
       )}
       <StyledDashboardCTAContainer>
-        <Button style="custom-secondary" href="/backoffice/parametres">
+        <Button variant="secondary" rounded href="/backoffice/parametres">
           Modifier
         </Button>
       </StyledDashboardCTAContainer>

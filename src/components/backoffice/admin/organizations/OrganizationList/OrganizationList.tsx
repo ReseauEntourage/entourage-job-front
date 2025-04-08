@@ -147,8 +147,8 @@ export function OrganizationList({
           {!loading && !allLoaded && (
             <StyledOrganizationsListButtonContainer>
               <Button
-                style="custom-secondary"
-                color="primaryBlue"
+                variant="secondary"
+                rounded
                 onClick={() => fetchData(search, filters, offset, false)}
               >
                 Voir toutes les structures

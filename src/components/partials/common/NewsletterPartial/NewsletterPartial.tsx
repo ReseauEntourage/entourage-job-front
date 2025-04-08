@@ -176,7 +176,8 @@ export const NewsletterPartial = ({
         )}
         <div className="uk-flex uk-flex-center uk-margin-small-top">
           <Button
-            style="custom-secondary-inverted"
+            variant="primary"
+            rounded
             onClick={onSubmit}
             dataTestId="nl-submit-btn"
           >

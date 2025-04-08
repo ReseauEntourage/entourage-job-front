@@ -217,7 +217,8 @@ export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
       <StyledCTAsContainer>
         {contentAs[as].cta.map((cta) => (
           <Button
-            style="custom-secondary-inverted"
+            variant="primary"
+            rounded
             size="large"
             onClick={() => gaEvent(cta.gaTag)}
             href={cta.href}

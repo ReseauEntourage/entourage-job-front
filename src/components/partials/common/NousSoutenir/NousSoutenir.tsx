@@ -88,7 +88,8 @@ export const NousSoutenir = () => {
       </StyledNousSoutenirCardsContainer>
       <StyledNousSoutenirButton>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           onClick={() => {
             gaEvent(GA_TAGS.HOME_NOUS_SOUTENIR_FAIRE_UN_DON_CLICK);
           }}

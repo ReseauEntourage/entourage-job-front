@@ -45,7 +45,8 @@ export const Partners = ({
         </div>
         {displayCta && (
           <Button
-            style="custom-secondary-inverted"
+            variant="primary"
+            rounded
             href="https://www.entourage.social/qui-sommes-nous/partenaires"
             onClick={() => {
               if (tag) gaEvent(tag);
