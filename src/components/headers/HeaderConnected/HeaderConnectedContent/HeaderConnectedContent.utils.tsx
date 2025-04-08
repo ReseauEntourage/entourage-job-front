@@ -63,12 +63,12 @@ export const renderLinks = (
         },
       ],
     },
-    {
-      href: `/backoffice/candidat/${candidateId}/suivi`,
-      name: 'Mon suivi',
-      badge: 'note',
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-    },
+    // {
+    //   href: `/backoffice/candidat/${candidateId}/suivi`,
+    //   name: 'Mon suivi',
+    //   badge: 'note',
+    //   tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
+    // },
     {
       href: `${
         process.env.TOOLBOX_CANDIDATE_URL
@@ -175,13 +175,13 @@ export const renderLinks = (
             },
           ],
         },
-        {
-          href: `/backoffice/candidat/${candidateId}/suivi`,
-          name: 'Suivi',
-          badge: 'note',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-        },
+        // {
+        //   href: `/backoffice/candidat/${candidateId}/suivi`,
+        //   name: 'Suivi',
+        //   badge: 'note',
+        //   disabled: !candidateId,
+        //   tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
+        // },
         {
           href: `${
             process.env.TOOLBOX_COACH_URL
