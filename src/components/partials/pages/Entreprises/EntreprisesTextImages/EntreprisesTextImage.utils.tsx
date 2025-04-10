@@ -16,7 +16,7 @@ export const content = {
     reverse: true,
     content: (
       <>
-        <List animated>
+        <List>
           <BulletListElement>
             <Text weight="bold">Répondre à vos besoins en recrutement</Text>
             <Text>

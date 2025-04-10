@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { UIKIT_BLENDS, UIKIT_STYLES } from 'src/components/variables';
 import { addPrefix } from 'src/utils';
 

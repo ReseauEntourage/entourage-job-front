@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { isSSR } from 'src/utils/isSSR';
 
 export function useCloseOnClickOutsideComponent(id: string) {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +18,7 @@ export function useCloseOnClickOutsideComponent(id: string) {
   );
 
   useEffect(() => {
-    if (!isSSR && id) {
+    if (id) {
       document.addEventListener('click', closeSelect);
       return () => {
         document.removeEventListener('click', closeSelect);

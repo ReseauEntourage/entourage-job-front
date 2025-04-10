@@ -8,7 +8,7 @@ import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
-import { EntreprisesCVLIst } from 'src/components/partials/pages/Entreprises/EntreprisesCVList';
+import { EntreprisesCVList } from 'src/components/partials/pages/Entreprises/EntreprisesCVList';
 import { EntreprisesEnSavoirPlus } from 'src/components/partials/pages/Entreprises/EntreprisesEnSavoirPlus';
 import { EntreprisesTextImage } from 'src/components/partials/pages/Entreprises/EntreprisesTextImages';
 import { HowToCommitDifferently } from 'src/components/partials/pages/Entreprises/HowToCommitDifferently';
@@ -71,7 +71,7 @@ const reviews = [
 const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
   useMount(() => {
     const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
-    if (process.env.SHOW_POPUP === 'true' && !taxModalClosed) {
+    if (process.env.NEXT_PUBLIC_SHOW_POPUP === 'true' && !taxModalClosed) {
       setTimeout(() => {
         openModal(<TaxModal />);
       }, 1500);
@@ -124,7 +124,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
       <EntreprisesTextImage element="quoi" />
       <EntreprisesTextImage element="qui" />
 
-      <EntreprisesCVLIst nbPublishedCVs={nbPublishedCVs} />
+      <EntreprisesCVList nbPublishedCVs={nbPublishedCVs} />
 
       <Impact
         as="Company"
