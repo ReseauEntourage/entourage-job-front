@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button } from 'src/components/utils/Button/Button';
-import { H5 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text/Text';
-import { COLORS } from 'src/constants/styles';
 import {
   StyledStepBtnContainer,
   StyledStepContainer,
@@ -27,12 +25,9 @@ export const Step = ({ step }: StepProps) => {
   return (
     <StyledStepContainer>
       <StyledStepImage>{step.icon}</StyledStepImage>
-      <H5
-        title={step.title}
-        center
-        color={COLORS.primaryBlue}
-        weight="semibold"
-      />
+      <Text color="primaryBlue" center>
+        {step.title}
+      </Text>
       <Text center>{step.content}</Text>
       <StyledStepBtnContainer>
         <Button

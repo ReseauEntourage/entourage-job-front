@@ -45,7 +45,7 @@ interface CVEditPageProps {
 export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const [cvVersion, setCvVersion] = useState<string>();
   const [imageUrl, setImageUrl] = useState<string>();
-  const [previewGenerating, setPreviewGenerating] = useState(false);
+  // const [previewGenerating, setPreviewGenerating] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
 
   const [userData, setUserData] = useState({
@@ -73,7 +73,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
 
   useEffect(() => {
     return () => {
-      pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
+      // pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
       pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
     };
   }, []);
@@ -120,7 +120,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   }, [cv]);
 
   useEffect(() => {
-    if (!previewGenerating && cv) {
+    if (cv) {
       // Use hash to reload image if an update is done
       const previewHash = Date.now();
       setImageUrl(
@@ -133,7 +133,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
         }.jpg?${previewHash}`
       );
     }
-  }, [cv, previewGenerating]);
+  }, [cv]);
 
   const checkIfLastVersion = useCallback(
     async (callback, isAutoSave = false) => {
@@ -209,20 +209,20 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
       await checkIfLastVersion(async () => {
         await saveUserData(userData);
 
-        const channelPreview = pusher.subscribe(
-          SOCKETS.CHANNEL_NAMES.CV_PREVIEW
-        );
+        // const channelPreview = pusher.subscribe(
+        //   SOCKETS.CHANNEL_NAMES.CV_PREVIEW
+        // );
         const channelPDF = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
 
-        setPreviewGenerating(true);
+        // setPreviewGenerating(true);
         setPdfGenerating(true);
 
-        channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
-          if (data.candidateId === candidateId) {
-            setPreviewGenerating(false);
-            pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
-          }
-        });
+        // channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
+        //   if (data.candidateId === candidateId) {
+        //     setPreviewGenerating(false);
+        //     pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
+        //   }
+        // });
 
         channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
           if (data.candidateId === candidateId) {
@@ -423,7 +423,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
         phone={userData.phone}
         address={userData.address}
         cv={cv}
-        previewGenerating={previewGenerating}
+        previewGenerating={false}
         onChange={async (updatedCV, updatedUserData = {}) => {
           await autoSaveCV(
             { ...cv, ...updatedCV },

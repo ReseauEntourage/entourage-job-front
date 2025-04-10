@@ -407,13 +407,6 @@ export class APIHandler {
     return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
   }
 
-  // getOpportunitiesTabCountForAdmin(
-  //   params: object
-  // ): Promise<AxiosResponse> {
-  //   console.log(params);
-  //   return this.get(`/opportunity/admin/tabCount`, params);
-  // }
-
   // post
 
   postOpportunity(params: OpportunityDto): Promise<AxiosResponse> {
@@ -626,13 +619,20 @@ export class APIHandler {
     );
   }
 
+  postConversationFeedback(params: {
+    conversationParticipantId: string;
+    rating: number | null;
+  }): Promise<AxiosResponse> {
+    return this.post('/messaging/conversations/feedback', params);
+  }
+
   /// /////////////////
   // read documents //
   /// /////////////////
 
   postReadDocument(
     params: { documentName: DocumentNameType },
-    userId
+    userId: string
   ): Promise<AxiosResponse> {
     return this.post(`/readDocuments/read/${userId}`, params);
   }

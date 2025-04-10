@@ -1,6 +1,6 @@
 {
   "name": "entourage-pro-front",
-  "version": "2.19.9",
+  "version": "2.19.10",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -40,8 +40,13 @@
     "@react-hook/change": "^1.0.0",
     "@react-hook/window-size": "^3.1.1",
     "@reduxjs/toolkit": "^1.9.7",
+    "@sentry/node": "^5.27.3",
+    "@sentry/react": "^5.29.0",
+    "@sentry/tracing": "^5.27.3",
+    "@sentry/webpack-plugin": "^1.15.0",
     "@svgr/webpack": "^6.5.1",
-    "axios": "^0.28.1",
+    "array-move": "^2.2.2",
+    "axios": "^0.30.0",
     "check-password-strength": "^2.0.10",
     "circular-dependency-plugin": "^5.2.2",
     "cookies-next": "^2.1.2",
