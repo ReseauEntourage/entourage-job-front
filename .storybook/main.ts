@@ -1,5 +1,6 @@
 import path from 'path';
 import { StorybookConfig } from '@storybook/nextjs';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { AnyCantFix } from '../src/utils/Types';
 
 const config: StorybookConfig = {
@@ -27,6 +28,14 @@ const config: StorybookConfig = {
       webpackConfig.resolve.roots = [
         path.resolve(__dirname, '../public'),
         'node_modules',
+      ];
+
+      webpackConfig.resolve.plugins = [
+        ...(webpackConfig.resolve.plugins || []),
+        new TsconfigPathsPlugin({
+          configFile: path.resolve(__dirname, '../src/tsconfig.json'),
+          extensions: webpackConfig.resolve.extensions,
+        }),
       ];
     }
 
