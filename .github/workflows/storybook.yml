@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        name: Checkout code
+        with:
+          fetch-depth: '0'
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
