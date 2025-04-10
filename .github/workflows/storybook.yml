@@ -16,6 +16,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 18
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
       - name: Install dependencies
         run: pnpm
       - name: Publish to Chromatic
