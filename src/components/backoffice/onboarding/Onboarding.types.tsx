@@ -68,7 +68,8 @@ export const onboardingAlreadyCompleted = {
       Boolean(user.userProfile[field])
     );
     const hasNetworkBusinessSectors =
-      !!user.userProfile.businessSectors?.length;
+      !!user.userProfile.sectorOccupations?.filter((so) => !!so.businessSector)
+        ?.length;
     const readDocumentCompleted = isReadDocument(
       user.readDocuments,
       DocumentNames.CharteEthique
@@ -156,7 +157,8 @@ export const OnboardingStepContents: {
         return getCoachDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) =>
-        !!userProfile?.businessSectors?.length,
+        !!userProfile?.sectorOccupations?.map((so) => so.businessSector)
+          ?.length,
     },
   },
   3: {

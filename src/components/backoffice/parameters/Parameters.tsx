@@ -60,8 +60,7 @@ export const Parameters = () => {
               className={`${isDesktop ? '' : 'mobile'}`}
             >
               <ProfilePersonalInformations
-                occupations={user.userProfile.occupations ?? []}
-                businessSectors={user.userProfile.businessSectors ?? []}
+                sectorOccupations={user.userProfile.sectorOccupations ?? []}
                 isEditable
               />
               <ProfileGeneratedDescription

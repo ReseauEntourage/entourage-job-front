@@ -1,13 +1,10 @@
 import moment from 'moment/moment';
 import React from 'react';
+import { UserProfileSectorOccupation } from 'src/api/types';
 import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
-import {
-  OccupationsPrefixesType,
-  OCCUPATIONS_PREFIXES,
-  CONTRACTS,
-} from 'src/constants';
+import { OCCUPATIONS_PREFIXES, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {
@@ -84,52 +81,30 @@ export const formatCareerPathSentence = (
       | typeof formReferingProfessionalInformation
     >
   >
-): {
-  occupations: {
-    prefix: OccupationsPrefixesType;
-    name: string;
-    order: number;
-  }[];
-  businessSectorIds: string[];
-} => {
-  let newOccupations = [] as {
-    prefix: OccupationsPrefixesType;
-    name: string;
-    order: number;
-  }[];
-  if (values.occupation0) {
-    newOccupations = [
-      {
-        prefix: OCCUPATIONS_PREFIXES[1].label,
-        name: values.occupation0,
-        order: 0,
-      },
-    ];
-  }
-  if (values.occupation1) {
-    newOccupations = [
-      ...newOccupations,
-      {
-        prefix: OCCUPATIONS_PREFIXES[1].label,
-        name: values.occupation1,
-        order: 1,
-      },
-    ];
-  }
-  let newBusinessSectorIds = [] as string[];
-  if (values.businessSectorId0) {
-    newBusinessSectorIds = [values.businessSectorId0.value];
-  }
-  if (values.businessSectorId1) {
-    newBusinessSectorIds = [
-      ...newBusinessSectorIds,
-      values.businessSectorId1.value,
-    ];
-  }
-  return {
-    occupations: newOccupations,
-    businessSectorIds: newBusinessSectorIds,
-  };
+): UserProfileSectorOccupation[] => {
+  const sectorOccupation0 = {
+    businessSectorId: values.businessSectorId0?.value,
+    occupation: {
+      prefix: OCCUPATIONS_PREFIXES[1].label,
+      name: values.occupation0,
+    },
+    order: 0,
+  } as UserProfileSectorOccupation;
+
+  const sectorOccupation1 = {
+    businessSectorId: values.businessSectorId1?.value,
+    occupation: {
+      prefix: OCCUPATIONS_PREFIXES[1].label,
+      name: values.occupation1,
+    },
+    order: 1,
+  } as UserProfileSectorOccupation;
+
+  return [sectorOccupation0, sectorOccupation1].filter((sectorOccupation) => {
+    return (
+      !!sectorOccupation.businessSectorId || !!sectorOccupation.occupation?.name
+    );
+  });
 };
 
 export const escapeHtml = (unsafe: string): string => {

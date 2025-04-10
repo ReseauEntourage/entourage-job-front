@@ -2,15 +2,14 @@ import React from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
-import { BusinessSector, Occupation, Skill } from 'src/api/types';
+import { Skill, UserProfileSectorOccupation } from 'src/api/types';
 import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { Text } from 'src/components/utils';
 import { StyledContentContainer } from './ProfileProfessionalInformations.styles';
 
 export interface ProfileProfessionalInformationsProps {
   userFirstName: string;
-  occupations: Occupation[];
-  businessSectors: BusinessSector[];
+  sectorOccupations: UserProfileSectorOccupation[];
   description: string;
   skills: Skill[];
   smallCard?: boolean;
@@ -18,12 +17,12 @@ export interface ProfileProfessionalInformationsProps {
 
 export const ProfileProfessionalInformations = ({
   userFirstName,
-  occupations,
-  businessSectors,
+  sectorOccupations,
   description,
   skills,
   smallCard = false,
 }: ProfileProfessionalInformationsProps) => {
+  const isEmpty = !sectorOccupations.length && !description && !skills.length;
   return (
     <ProfilePartCard
       title="Informations professionnelles"
@@ -36,13 +35,10 @@ export const ProfileProfessionalInformations = ({
         ),
         icon: <IlluBulleQuestion />,
       }}
-      isEmpty={!occupations.length && !businessSectors.length && !description}
+      isEmpty={isEmpty}
     >
       <StyledContentContainer>
-        <ProfileCareerPathSentence
-          occupations={occupations}
-          businessSectors={businessSectors}
-        />
+        <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
         <Text>{description}</Text>
         <CardTagList items={skills} />
       </StyledContentContainer>

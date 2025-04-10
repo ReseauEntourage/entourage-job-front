@@ -30,41 +30,18 @@
     }
   ],
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  "businessSectors": [
+  "sectorOccupations": [
     {
-      "id": "17a4b630-2354-41b2-8746-7cf856f7fbc8",
-      "name": "aev",
-      "order": 0,
-      "UserProfileBusinessSector": {
-        "id": "57495e48-95f7-4f50-bb25-2ec994674957"
-      }
-    },
-    {
-      "id": "d9a58442-cbe8-4a7f-af70-932602121e67",
-      "name": "asp",
+      "id": "4ee6b448-8a4b-4250-b501-941ee5084788",
       "order": 1,
-      "UserProfileBusinessSector": {
-        "id": "b41fe3e4-efa4-4a10-843c-00d40e35a11c"
-      }
-    }
-  ],
-  "occupations": [
-    {
-      "id": "45d0ddd3-0789-4113-a01a-0eaf681b0be9",
-      "name": "jardinier",
-      "prefix": "comme",
-      "order": 0,
-      "UserProfileOccupation": {
-        "id": "18cfbb7c-c0cb-456f-a84e-73ad1ddca686"
-      }
-    },
-    {
-      "id": "7c940665-bb54-4420-9a28-376fe8ca263c",
-      "name": "Aide",
-      "prefix": "comme",
-      "order": 1,
-      "UserProfileOccupation": {
-        "id": "9158715e-d615-48ce-b0bc-d94db6bef7a0"
+      "businessSector": {
+        "id": "0052f76a-e000-4386-8263-77d84909a2ab",
+        "name": "Communication et marketing"
+      },
+      "occupation": {
+        "id": "45066dd3-2ae8-489a-8c14-2fdd5034efd6",
+        "name": "Responsable SEO",
+        "prefix": "comme"
       }
     }
   ],

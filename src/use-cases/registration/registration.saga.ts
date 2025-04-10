@@ -45,15 +45,12 @@ export function* createUserRequestedSaga() {
         ...flattenedData,
         role: selectedRole,
         program: selectedProgram,
-        occupations: businessSectorId0
-          ? formatCareerPathSentence({ occupation0, occupation1 }).occupations
-          : undefined,
-        businessSectorIds: businessSectorId0
-          ? formatCareerPathSentence({
-              businessSectorId0,
-              businessSectorId1,
-            }).businessSectorIds
-          : undefined,
+        sectorOccupations: formatCareerPathSentence({
+          occupation0,
+          occupation1,
+          businessSectorId0,
+          businessSectorId1,
+        }),
         department: flattenedData.department.value,
         organizationId: organizationId ? organizationId.value : undefined,
         helpNeeds: flattenedData.helpNeeds

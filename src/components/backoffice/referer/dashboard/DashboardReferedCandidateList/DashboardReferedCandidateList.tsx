@@ -50,8 +50,7 @@ export const DashboardReferedCandidateList = () => {
           role={profile.role}
           department={profile.department}
           helps={helps}
-          businessSectors={profile.businessSectors}
-          occupations={profile.occupations}
+          sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps={false}

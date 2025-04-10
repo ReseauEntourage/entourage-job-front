@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { BusinessSector, Occupation } from 'src/api/types';
+import { UserProfileSectorOccupation } from 'src/api/types';
 import { ModalEditProfessionalInformation } from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
   getCandidateDefaultProfessionalValues,
@@ -19,21 +19,19 @@ import { formatCareerPathSentence } from 'src/utils';
 
 export interface ProfilePersonalInformationsProps {
   isEditable?: boolean;
-  occupations: Occupation[];
-  businessSectors: BusinessSector[];
+  sectorOccupations: UserProfileSectorOccupation[];
   smallCard?: boolean;
 }
 
 export const ProfilePersonalInformations = ({
-  occupations,
-  businessSectors,
+  sectorOccupations,
   isEditable = false,
   smallCard = false,
 }: ProfilePersonalInformationsProps) => {
   const user = useAuthenticatedUser();
   const { userProfile, role } = user;
 
-  const isCompleted = businessSectors.length > 0;
+  const isCompleted = sectorOccupations?.length > 0;
 
   const editModal = useCallback(() => {
     if (!userProfile) return;
@@ -92,10 +90,7 @@ export const ProfilePersonalInformations = ({
         icon: <IlluBulleQuestion />,
       }}
     >
-      <ProfileCareerPathSentence
-        occupations={occupations}
-        businessSectors={businessSectors}
-      />
+      <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
     </ProfilePartCard>
   );
 };

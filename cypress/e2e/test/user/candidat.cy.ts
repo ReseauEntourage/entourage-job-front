@@ -325,24 +325,17 @@ describe('Candidat', () => {
           ...user.userProfile,
           description,
           helpNeeds: newHelpList,
-          businessSectors: [
+          sectorOccupations: [
             {
-              id: '8c08d1d2-9cb4-4a93-afd3-4bdaaf039093',
-              name: 'aev',
-              order: 0,
-              UserProfileBusinessSector: {
-                id: '54c6389c-ab98-4d02-84cc-e651164db9f7',
+              id: '4ee6b448-8a4b-4250-b501-941ee5084788',
+              order: 1,
+              businessSector: {
+                id: '0052f76a-e000-4386-8263-77d84909a2ab',
+                name: 'Communication et marketing',
               },
-            },
-          ],
-          occupations: [
-            {
-              id: 'd4d31f0d-3036-47f1-b3a3-cde0c1d0ec8b',
-              name: occupation,
-              prefix: 'comme',
-              order: 0,
-              UserProfileOccupation: {
-                id: '77f613bc-a2af-405a-ab5c-c9bc470b8f77',
+              occupation: {
+                name: occupation,
+                prefix: 'comme',
               },
             },
           ],

@@ -1,29 +1,29 @@
 import { DefaultValues } from 'react-hook-form';
-import { BusinessSector, UserProfile } from 'src/api/types';
+import {
+  BusinessSector,
+  Occupation,
+  UserProfile,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
-import { USER_ROLES, UserRole } from 'src/constants/users';
-import { sortByOrder } from 'src/utils';
+import { UserRole } from 'src/constants/users';
 
 interface userProfileParamsToCheck {
   currentJob: string | null;
-  occupations: { name: string; order: number }[] | null;
-  businessSectors: BusinessSector[] | null;
+  sectorOccupations: UserProfileSectorOccupation[] | null;
   role: UserRole;
 }
 
 export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
-  return (
-    (userProfile.role === USER_ROLES.COACH &&
-      (!!userProfile?.currentJob ||
-        (!!userProfile?.businessSectors &&
-          userProfile.businessSectors?.length > 0))) ||
-    (userProfile.role === USER_ROLES.CANDIDATE &&
-      ((!!userProfile?.occupations && userProfile.occupations?.length > 0) ||
-        (!!userProfile?.businessSectors &&
-          userProfile?.businessSectors?.length > 0)))
+  const gotOccupation = !!userProfile.sectorOccupations?.some(
+    (so) => !!so.occupation
   );
+  const gotBusinessSector = !!userProfile.sectorOccupations?.some(
+    (so) => !!so.businessSector
+  );
+  return gotBusinessSector || gotOccupation;
 };
 
 export const getCoachDefaultProfessionalValues = (
@@ -31,10 +31,20 @@ export const getCoachDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
-  const { businessSectors, currentJob, linkedinUrl } = userProfileParam;
+  const { sectorOccupations, currentJob, linkedinUrl } = userProfileParam;
+
+  const sortedSectorOccupations = sectorOccupations?.sort(
+    (so1, so2) => so1.order - so2.order
+  );
+  const sortedSectorOccupationsWithSector = sortedSectorOccupations?.filter(
+    (so) => !!so.businessSector
+  );
+  const businessSectors = sortedSectorOccupationsWithSector?.map(
+    ({ businessSector }) => businessSector
+  ) as BusinessSector[];
   return {
     currentJob: currentJob || undefined,
-    businessSectorIds: businessSectors?.map(({ id, name }) => {
+    businessSectorIds: businessSectors?.map(({ name, id }) => {
       return {
         label: name,
         value: id,
@@ -49,24 +59,34 @@ export const getCandidateDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>
 > => {
-  const { occupations, businessSectors, linkedinUrl } = userProfileParam;
-  const sortedOccupations =
-    occupations && occupations.length > 0 ? sortByOrder(occupations) : null;
-  const sortedBusinessSectors =
-    businessSectors && businessSectors.length > 0
-      ? sortByOrder(businessSectors)
-      : null;
+  const { linkedinUrl, sectorOccupations } = userProfileParam;
+
+  const sortedSectorOccupations = sectorOccupations?.sort(
+    (so1, so2) => so1.order - so2.order
+  );
+  const sortedSectorOccupationsWithSector = sortedSectorOccupations?.filter(
+    (so) => !!so.businessSector
+  );
+  const sortedSectorOccupationsWithOccupation = sortedSectorOccupations?.filter(
+    (so) => !!so.occupation
+  );
+  const businessSectors = sortedSectorOccupationsWithSector?.map(
+    ({ businessSector }) => businessSector
+  ) as BusinessSector[];
+
+  const occupations = sortedSectorOccupationsWithOccupation?.map(
+    ({ occupation }) => occupation
+  ) as Occupation[];
+
   return {
-    ...sortedOccupations?.reduce((acc, curr) => {
+    ...occupations?.map((occupation, idx) => {
       return {
-        ...acc,
-        [`occupation${curr.order}`]: curr.name,
+        [`occupation${idx}`]: occupation.name,
       };
     }, {}),
-    ...sortedBusinessSectors?.reduce((acc, curr) => {
+    ...businessSectors?.map((businessSector, idx) => {
       return {
-        ...acc,
-        [`BusinessSector${curr.order}`]: curr.name,
+        [`BusinessSector${idx}`]: businessSector.name,
       };
     }, {}),
     linkedinUrl: linkedinUrl || '',

@@ -37,8 +37,7 @@
     "description": null,
     "currentJob": null,
     "department": "Ain (01)",
-    "businessSectors": [],
-    "occupations": [],
+    "sectorOccupations": [],
     "helpOffers": [],
     "helpNeeds": [
       {

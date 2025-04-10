@@ -30,13 +30,17 @@ export const Candidate = {
     role: USER_ROLES.CANDIDATE,
     helps: [{ name: 'network' }, { name: 'cv' }],
     isAvailable: true,
-    businessSectors: [
-      { name: 'id', order: 0 },
-      { name: 'bat', order: 1 },
-    ],
-    occupations: [
-      { name: 'développeur', order: 0, prefix: 'comme' },
-      { name: 'ouvrier', order: 1, prefix: 'comme' },
+    sectorOccupations: [
+      {
+        businessSector: { name: 'Informatique et digital' },
+        occupation: { name: 'développeur', prefix: 'comme' },
+        order: 0,
+      },
+      {
+        businessSector: { name: 'Bâtiment' },
+        occupation: { name: 'ouvrier', prefix: 'comme' },
+        order: 0,
+      },
     ],
     department: 'Paris (75)',
   },
@@ -56,12 +60,18 @@ export const Coach = {
       { name: 'interview' },
       { name: 'event' },
     ],
-    businessSectors: [
-      { name: 'id', order: 0 },
-      { name: 'bat', order: 1 },
-      { name: 'aa', order: 2 },
+    sectorOccupations: [
+      {
+        businessSector: { name: 'Informatique et digital' },
+        occupation: { name: 'développeur', prefix: 'comme' },
+        order: 0,
+      },
+      {
+        businessSector: { name: 'Bâtiment' },
+        occupation: { name: 'ouvrier', prefix: 'comme' },
+        order: 0,
+      },
     ],
-    job: 'Développeur',
     department: 'Paris (75)',
   },
 } satisfies Story;

@@ -1,8 +1,4 @@
-import {
-  User,
-  UserCandidateWithUsers,
-  UserWithUserCandidate,
-} from 'src/api/types';
+import { User, UserWithUserCandidate } from 'src/api/types';
 import { USER_ROLES } from 'src/constants/users';
 import {
   getCandidateIdFromCoachOrCandidate,
@@ -73,41 +69,6 @@ export function selectCurrentUserId(state: RootState) {
   const currentUser = selectAuthenticatedUser(state);
 
   return currentUser.id;
-}
-
-export function selectCurrentUserProfileHelps(state: RootState) {
-  const currentUser = selectAuthenticatedUser(state);
-
-  if (currentUser.role === USER_ROLES.CANDIDATE) {
-    return currentUser.userProfile.helpNeeds;
-  }
-  if (currentUser.role === USER_ROLES.COACH) {
-    return currentUser.userProfile.helpOffers;
-  }
-}
-
-export function selectCurrentUserProfileBusinessSectors(state: RootState) {
-  const currentUser = selectAuthenticatedUser(state);
-
-  if (currentUser.role === USER_ROLES.CANDIDATE) {
-    return currentUser.userProfile.businessSectors;
-  }
-  if (currentUser.role === USER_ROLES.COACH) {
-    return currentUser.userProfile.businessSectors;
-  }
-}
-
-// select candidate for the current user => doesn't work for external coach
-export function selectUserCandidateWithUsers(
-  state: RootState
-): UserCandidateWithUsers | null {
-  const currentUser = selectAuthenticatedUser(state);
-
-  let candidate = getUserCandidateFromCoachOrCandidate(currentUser);
-  if (Array.isArray(candidate)) {
-    [candidate] = candidate;
-  }
-  return candidate;
 }
 
 // select candidate User for the current user => doesn't work for external coach

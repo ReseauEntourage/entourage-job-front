@@ -31,13 +31,17 @@ const cards: ProfileCardProps[] = new Array(4)
       lastName: 'Doe',
       role: USER_ROLES.CANDIDATE,
       helps: [{ name: 'network' }, { name: 'cv' }],
-      businessSectors: [
-        { name: 'id', order: 0 },
-        { name: 'bat', order: 1 },
-      ],
-      occupations: [
-        { name: 'développeur', order: 0 },
-        { name: 'ouvrier', order: 1 },
+      sectorOccupations: [
+        {
+          businessSector: { name: 'Informatique et digital' },
+          occupation: { name: 'développeur', prefix: 'comme' },
+          order: 0,
+        },
+        {
+          businessSector: { name: 'Bâtiment' },
+          occupation: { name: 'ouvrier', prefix: 'comme' },
+          order: 0,
+        },
       ],
       department: 'Paris (75)',
       isAvailable: false,
@@ -52,8 +56,7 @@ const list = cards.map(
     lastName,
     role,
     helps,
-    businessSectors,
-    occupations,
+    sectorOccupations,
     department,
     isAvailable,
   }) => (
@@ -65,9 +68,8 @@ const list = cards.map(
           lastName={lastName}
           role={role}
           department={department}
-          businessSectors={businessSectors}
+          sectorOccupations={sectorOccupations}
           helps={helps}
-          occupations={occupations}
           isAvailable={isAvailable}
         />
       </CardListItem>

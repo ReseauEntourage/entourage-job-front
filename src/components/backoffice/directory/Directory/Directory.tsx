@@ -1,16 +1,18 @@
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
+import { Api } from 'src/api';
+import { BusinessSector } from 'src/api/types';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Button, Section } from 'src/components/utils';
-import { DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
+import { Filter, FilterConstant } from 'src/constants/utils';
 import { useFilters } from 'src/hooks';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -29,6 +31,51 @@ const route = '/backoffice/annuaire';
 export function Directory() {
   const { push } = useRouter();
   const isMobile = useIsMobile();
+  const [businessSectorsFilters, setBusinessSectorsFilters] = useState<
+    FilterConstant<string>[]
+  >([]);
+
+  const fetchBusinessSectors = async () => {
+    try {
+      const { data } = await Api.getAllBusinessSectors({
+        limit: 50,
+        offset: 0,
+      });
+      setBusinessSectorsFilters(
+        data.map((businessSector: BusinessSector) => ({
+          label: businessSector.name,
+          value: businessSector.id,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching business sectors:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBusinessSectors();
+  }, []);
+
+  const DirectoryFilters: Filter[] = [
+    {
+      key: 'departments',
+      constants: DEPARTMENTS_FILTERS,
+      title: 'Département',
+      tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
+    },
+    {
+      key: 'helps',
+      constants: ProfileHelps,
+      title: "Type d'aide",
+      tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
+    },
+    {
+      key: 'businessSectorIds',
+      constants: businessSectorsFilters,
+      title: "Secteur d'activité",
+      tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
+    },
+  ];
 
   const directoryFiltersParams = useDirectoryQueryParams();
   const { role, departments, helps, businessSectorIds, search } =
@@ -49,11 +96,12 @@ export function Directory() {
       helps: mutateToArray(helps).map((help) =>
         findConstantFromValue(help, ProfileHelps)
       ),
-      businessSectors: mutateToArray(businessSectorIds).map((businessSector) =>
-        findConstantFromValue(businessSector, [])
+      businessSectorIds: mutateToArray(businessSectorIds).map(
+        (businessSectorId) =>
+          findConstantFromValue(businessSectorId, businessSectorsFilters)
       ),
     };
-  }, [departments, helps, businessSectorIds]);
+  }, [departments, helps, businessSectorIds, businessSectorsFilters]);
 
   return (
     <>

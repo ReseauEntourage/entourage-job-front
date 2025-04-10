@@ -2,11 +2,9 @@ import _ from 'lodash';
 import {
   ADMIN_ZONES,
   ADMIN_ZONES_FILTERS,
-  DEPARTMENTS_FILTERS,
   REGIONS_FILTERS,
 } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-import { ProfileHelps } from './helps';
 import { GENDERS_FILTERS } from './users';
 import { Filter, FilterConstant } from './utils';
 
@@ -234,27 +232,6 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     ],
     title: 'Statut du CV',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
-  },
-];
-
-export const DirectoryFilters: Filter[] = [
-  {
-    key: 'departments',
-    constants: DEPARTMENTS_FILTERS,
-    title: 'Département',
-    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
-  },
-  {
-    key: 'helps',
-    constants: ProfileHelps,
-    title: "Type d'aide",
-    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
-  },
-  {
-    key: 'businessSectors',
-    constants: [],
-    title: "Secteur d'activité",
-    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
   },
 ];
 

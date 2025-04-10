@@ -4,7 +4,7 @@ export const generateUserProfileCandidateApiResponse = () => {
   const response = {
     description: 'We love dev',
     currentJob: faker.person.jobTitle(),
-    businessSectors: [],
+    sectorOccupations: [],
     occupations: [],
     helpOffers: [],
     helpNeeds: [],

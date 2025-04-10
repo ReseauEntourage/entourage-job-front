@@ -1,5 +1,5 @@
 import React from 'react';
-import { BusinessSector, Occupation } from 'src/api/types';
+import { UserProfileSectorOccupation } from 'src/api/types';
 import { CardListItem } from 'src/components/utils/CardList';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { Department } from 'src/constants/departements';
@@ -14,8 +14,7 @@ interface DirectoryItemProps {
   helps?: {
     name: HelpValue;
   }[];
-  businessSectors?: BusinessSector[];
-  occupations?: Occupation[];
+  sectorOccupations?: UserProfileSectorOccupation[];
   department: Department;
   job?: string;
   isAvailable: boolean;
@@ -29,8 +28,7 @@ export function DirectoryItem({
   role,
   department,
   helps,
-  businessSectors,
-  occupations,
+  sectorOccupations,
   job,
   isAvailable,
   displayHelps,
@@ -43,9 +41,8 @@ export function DirectoryItem({
         lastName={lastName}
         role={role}
         department={department}
-        businessSectors={businessSectors}
         helps={helps}
-        occupations={occupations}
+        sectorOccupations={sectorOccupations}
         job={job}
         isAvailable={isAvailable}
         displayHelps={displayHelps}

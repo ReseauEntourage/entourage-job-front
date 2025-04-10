@@ -45,8 +45,7 @@ export const Profile = () => {
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileProfessionalInformations
               userFirstName={selectedProfile.firstName}
-              occupations={selectedProfile.occupations ?? []}
-              businessSectors={selectedProfile.businessSectors ?? []}
+              sectorOccupations={selectedProfile.sectorOccupations}
               description={selectedProfile.description}
               skills={[
                 {

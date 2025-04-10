@@ -8,6 +8,7 @@ import {
   BusinessSector,
   Occupation,
   UserCandidateWithUsers,
+  UserProfileSectorOccupation,
 } from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H5 } from 'src/components/utils/Headings';
@@ -21,7 +22,7 @@ import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 import {
   StyledCTAContainer,
   StyledProfileCard,
@@ -56,8 +57,7 @@ export interface ProfileCardProps {
   helps?: {
     name: HelpValue;
   }[];
-  businessSectors?: BusinessSector[];
-  occupations?: Occupation[];
+  sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
   job?: string;
@@ -95,10 +95,8 @@ export function ProfileCard({
   role,
   department,
   helps,
-  businessSectors,
-  occupations,
+  sectorOccupations,
   userCandidate,
-  job,
   isAvailable,
   displayHelps,
 }: ProfileCardProps) {
@@ -110,14 +108,25 @@ export function ProfileCard({
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
-  const uniqBusinessSectors = _.uniqBy(businessSectors, 'name');
-  const sortedBusinessSectors =
-    businessSectors && businessSectors.length > 0
-      ? sortByOrder(uniqBusinessSectors)
-      : null;
+  const sortedSectorOccupations = useMemo(() => {
+    return (
+      sectorOccupations?.sort((so1, so2) => {
+        return so1.order - so2.order;
+      }) ?? []
+    );
+  }, [sectorOccupations]);
 
-  const sortedOccupations =
-    occupations && occupations.length > 0 ? sortByOrder(occupations) : null;
+  const sortedBusinessSectors = useMemo(() => {
+    return sortedSectorOccupations
+      ?.filter((so) => !!so.businessSector)
+      ?.map((so) => so.businessSector) as BusinessSector[];
+  }, [sortedSectorOccupations]);
+
+  const sortedOccupations = useMemo(() => {
+    return sortedSectorOccupations
+      ?.filter((so) => !!so.occupation)
+      ?.map((so) => so.occupation) as Occupation[];
+  }, [sortedSectorOccupations]);
 
   return (
     <Link
@@ -173,7 +182,7 @@ export function ProfileCard({
           </StyledProfileCardPictureContainer>
           <StyledProfileCardContent>
             <StyledProfileCardProfessionalSituation>
-              {role === USER_ROLES.CANDIDATE && (
+              {(USER_ROLES.CANDIDATE === role || USER_ROLES.COACH === role) && (
                 <>
                   {sortedOccupations && sortedOccupations.length > 0 ? (
                     <StyledProfileCardJobContainer>
@@ -186,19 +195,6 @@ export function ProfileCard({
                           }`}
                         />
                       ))}
-                    </StyledProfileCardJobContainer>
-                  ) : (
-                    <StyledProfileCardEmptyJobContainer>
-                      <H5 color={COLORS.black} title={EMPTY_JOB} />
-                    </StyledProfileCardEmptyJobContainer>
-                  )}
-                </>
-              )}
-              {role === USER_ROLES.COACH && (
-                <>
-                  {job ? (
-                    <StyledProfileCardJobContainer>
-                      <H5 color={COLORS.black} title={_.capitalize(job)} />
                     </StyledProfileCardJobContainer>
                   ) : (
                     <StyledProfileCardEmptyJobContainer>

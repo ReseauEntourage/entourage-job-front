@@ -38,15 +38,12 @@ export function* referCandidateSagaRequested() {
       Api.postUserRefering({
         ...flattenedData,
         program: selectedProgram,
-        occupations: businessSectorId0
-          ? formatCareerPathSentence({ occupation0, occupation1 }).occupations
-          : undefined,
-        businessSectorIds: businessSectorId0
-          ? formatCareerPathSentence({
-              businessSectorId0,
-              businessSectorId1,
-            }).businessSectorIds
-          : undefined,
+        sectorOccupations: formatCareerPathSentence({
+          businessSectorId0,
+          businessSectorId1,
+          occupation0,
+          occupation1,
+        }),
         department: flattenedData.department.value,
         helpNeeds: flattenedData.helpNeeds
           ? flattenedData.helpNeeds.map((expectation) => ({

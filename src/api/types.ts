@@ -80,13 +80,11 @@ export type OrganizationDto = {
 export interface BusinessSector {
   id?: string;
   name: string;
-  order: number;
 }
 
 export type Occupation = {
   id?: string;
   name: string;
-  order: number;
   prefix: OccupationsPrefixesType;
 };
 
@@ -143,6 +141,13 @@ export type Language = {
   };
 };
 
+export type UserProfileSectorOccupation = {
+  businessSectorId?: string;
+  businessSector?: BusinessSector;
+  occupation?: Occupation;
+  order: number;
+};
+
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
@@ -152,8 +157,7 @@ export type UserProfile = {
   unavailabilityReason: string | null;
   helpNeeds: { name: HelpValue }[] | null;
   helpOffers: { name: HelpValue }[] | null;
-  businessSectors: BusinessSector[] | null;
-  occupations: Occupation[] | null;
+  sectorOccupations?: UserProfileSectorOccupation[];
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
@@ -323,7 +327,7 @@ export type UserRegistrationDto = {
   organizationId?: string;
   birthDate: string;
   occupations?: Occupation[];
-  businessSectorIds?: string[];
+  sectorOccupations?: UserProfileSectorOccupation[];
   materialInsecurity?: string;
   networkInsecurity?: string;
 };
@@ -339,8 +343,7 @@ export type UserReferingDto = {
   workingRight?: string;
   program?: Program;
   birthDate: string;
-  occupations?: Occupation[];
-  businessSectorIds?: string[];
+  sectorOccupations?: UserProfileSectorOccupation[];
 };
 
 export type Contract = {
@@ -508,12 +511,13 @@ export type PublicProfile = {
   isAvailable: boolean;
   helpNeeds: { name: HelpValue }[];
   helpOffers: { name: HelpValue }[];
-  businessSectors: BusinessSector[];
+  sectorOccupations: UserProfileSectorOccupation[];
   experiences: Experience[];
   formations: Formation[];
   skills: Skill[];
   languages: Language[];
   reviews: Review[];
+  contracts: Contract[];
   occupations: Occupation[];
   lastSentMessage: string;
   lastReceivedMessage: string;

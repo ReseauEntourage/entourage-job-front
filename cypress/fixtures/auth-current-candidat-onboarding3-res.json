@@ -25,17 +25,17 @@
     "description": "hello",
     "department": "Ain (01)",
     "currentJob": null,
-    "businessSectors": [
+    "sectorOccupations": [
       {
-        "id": "8c08d1d2-9cb4-4a93-afd3-4bdaaf039093",
-        "name": "aev",
-        "order": 0,
-        "UserProfileBusinessSector": {
-          "id": "54c6389c-ab98-4d02-84cc-e651164db9f7"
-        }
+        "id": "4ee6b448-8a4b-4250-b501-941ee5084788",
+        "order": 1,
+        "businessSector": {
+          "id": "0052f76a-e000-4386-8263-77d84909a2ab",
+          "name": "Communication et marketing"
+        },
+        "occupation": null
       }
     ],
-    "occupations": [],
     "helpOffers": [],
     "helpNeeds": [
       {

@@ -34,14 +34,17 @@ export const generateUserLoginApiResponse = (roleUser) => {
     userProfile: {
       description: null,
       currentJob: null,
-      businessSectors: [
+      sectorOccupations: [
         {
           id: faker.string.uuid(),
-          name: 'aev',
-          order: faker.number.int(2),
+          businessSector: {
+            id: faker.string.uuid(),
+            name: 'aev',
+          },
+          occupation: null,
+          order: 0,
         },
       ],
-      occupations: [],
       helpOffers: [],
       helpNeeds: [
         {
@@ -87,8 +90,7 @@ export const generateUserLoginApiResponse = (roleUser) => {
             currentJob: null,
             department: null,
             isAvailable: true,
-            businessSectors: [],
-            occupations: [],
+            sectorOccupations: [],
             helpNeeds: [],
             helpOffers: [],
           },
@@ -104,12 +106,15 @@ export const generateUserLoginApiResponse = (roleUser) => {
     userProfile: {
       description: null,
       currentJob: null,
-      businessSectors: [],
-      occupations: [
+      sectorOccupations: [
         {
           id: faker.string.uuid(),
-          name: 'aev',
-          order: faker.number.int(2),
+          businessSector: null,
+          occupation: {
+            id: faker.string.uuid(),
+            name: faker.person.jobTitle(),
+          },
+          order: 0,
         },
       ],
       helpOffers: [
@@ -131,6 +136,8 @@ export const generateUserLoginApiResponse = (roleUser) => {
     case 'Coach':
       userLogin = userCoach;
       break;
+    default:
+      userLogin = userBase;
   }
 
   return JSON.stringify(userLogin, null, 2);
