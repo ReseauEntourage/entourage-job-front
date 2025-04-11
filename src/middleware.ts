@@ -16,11 +16,6 @@ export function middleware(req: NextRequest): NextResponse {
     process.env.NEXT_PUBLIC_CDN_URL,
   ];
 
-  // eslint-disable-next-line no-console
-  console.log('allowedOrigins', allowedOrigins);
-  // eslint-disable-next-line no-console
-  console.log('origin', origin);
-
   if (allowedOrigins.includes(origin)) {
     res.headers.append('Access-Control-Allow-Origin', origin);
   }
