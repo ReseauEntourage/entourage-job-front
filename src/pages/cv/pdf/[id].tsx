@@ -16,7 +16,7 @@ interface CVPDFPageProps {
 const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
   const candidatExists = cv && cv.user && cv.user.candidat;
   const urlImg = candidatExists
-    ? `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
     : '';
 
   if (!cv) {
@@ -37,7 +37,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
     <Layout
       title={`${cv.user.candidat.firstName} - Entourage Pro`}
       metaTitle={`Aidez ${cv.user.candidat.firstName} en partageant son CV.`}
-      metaUrl={`${process.env.SERVER_URL}${router.asPath}`}
+      metaUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}${router.asPath}`}
       metaDescription={cv.story}
       metaImage={urlImg}
       metaType="profile"

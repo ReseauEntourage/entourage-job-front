@@ -24,9 +24,9 @@ const NoCVInThisArea = () => {
         isExternal
         target="_blank"
         className="uk-link-text uk-text-primary"
-        href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
+        href={`mailto:${process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}`}
       >
-        {process.env.MAILJET_CONTACT_EMAIL}
+        {process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}
       </SimpleLink>
     </p>
   );
@@ -132,7 +132,7 @@ export const CVList = ({
                   url={cv.user.url}
                   imgSrc={
                     (cv.urlImg &&
-                      `${process.env.AWSS3_CDN_URL}/${cv.urlImg}`) ||
+                      `${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${cv.urlImg}`) ||
                     undefined
                   }
                   firstName={cv.user.candidat.firstName}
@@ -154,10 +154,7 @@ export const CVList = ({
               >
                 Voir plus
                 {loadingMore ? (
-                  <div
-                    style={{ color: COLORS.primaryBlue }}
-                    data-uk-spinner="ratio: .6"
-                  />
+                  <div style={{ color: COLORS.primaryBlue }} />
                 ) : (
                   <LucidIcon name="Plus" />
                 )}

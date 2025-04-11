@@ -10,7 +10,6 @@ interface HeadingBasicProps {
 
 export interface HeadingComponentProps extends HeadingBasicProps {
   title: React.ReactNode;
-  effect?: string;
   variant?: 'big' | '';
 }
 

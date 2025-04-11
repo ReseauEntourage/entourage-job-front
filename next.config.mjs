@@ -1,21 +1,24 @@
-// eslint-disable-next-line
-const dotenv = require('dotenv');
-const webpack = require('webpack');
-const withLess = require('next-with-less');
-const CircularDependencyPlugin = require('circular-dependency-plugin');
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+import dotenv from 'dotenv';
+import withLess from 'next-with-less';
+import CircularDependencyPlugin from 'circular-dependency-plugin';
+import hash from 'string-hash';
+import { relative } from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import tracer from 'dd-trace';
 
-const dev = process.env.NODE_ENV !== 'production';
+const ENV = `${process.env.NODE_ENV}`;
 
-const hash = require('string-hash');
-const { relative } = require('path');
-const context = __dirname;
-const path = require('path');
+if (ENV === 'production') {
+  tracer.init({
+    version: process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION,
+  });
+}
 
-const ENV = process.env.ENV || 'local';
+dotenv.config();
 
-dotenv.config(); // Load .env
-dotenv.config({ path: `.env.${ENV}`, override: true }); // Load .env.${ENV}
+const dev = ENV !== 'production';
+const context = dirname(fileURLToPath(import.meta.url));
 
 const securityHeaders = [
   {
@@ -50,48 +53,42 @@ const securityHeaders = [
 
 let remotePatterns = [];
 
-if (process.env.CDN_URL) {
+if (process.env.NEXT_PUBLIC_CDN_URL) {
   remotePatterns = [
     ...remotePatterns,
     {
       protocol: 'https',
-      hostname: process.env.CDN_URL.replace('https://', ''),
+      hostname: process.env.NEXT_PUBLIC_CDN_URL.replace('https://', ''),
       pathname: '/**',
     },
   ];
 }
 
-if (process.env.AWSS3_CDN_URL) {
+if (process.env.NEXT_PUBLIC_AWSS3_CDN_URL) {
   remotePatterns = [
     ...remotePatterns,
     {
       protocol: 'https',
-      hostname: process.env.AWSS3_CDN_URL.replace('https://', ''),
+      hostname: process.env.NEXT_PUBLIC_AWSS3_CDN_URL.replace('https://', ''),
       pathname: '/images/**',
     },
   ];
 }
 
-if (process.env.AWSS3_URL) {
+if (process.env.NEXT_PUBLIC_AWSS3_URL) {
   remotePatterns = [
     ...remotePatterns,
     {
       protocol: 'https',
-      hostname: process.env.AWSS3_URL.replace('https://', ''),
+      hostname: process.env.NEXT_PUBLIC_AWSS3_URL.replace('https://', ''),
       pathname: '/images/**',
     },
   ];
 }
 
-module.exports = withLess({
-  webpack: (config, options) => {
-    const { dir } = options;
-    config.resolve.modules.push(__dirname);
-
-    // @doc https://webpack.js.org/plugins/environment-plugin/
-    delete process.env.__NEXT_OPTIMIZE_FONTS;
-    config.plugins.push(new webpack.EnvironmentPlugin(process.env));
-
+/** @type {import('next').NextConfig} */
+const nextConfig = withLess({
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
       use: ({ resource }) => [
@@ -138,33 +135,12 @@ module.exports = withLess({
       })
     );
 
-    if (!dev && process.env.HEROKU_APP_ID) {
-      config.plugins.push(
-        new SentryWebpackPlugin({
-          authToken: process.env.SENTRY_AUTH_TOKEN,
-          org: `${process.env.HEROKU_APP_NAME}-sentry`,
-          project: process.env.HEROKU_APP_NAME,
-          include: '.',
-          ignore: ['node_modules', 'next.config.js', 'assets', 'public'],
-        })
-      );
-    }
-
-    if (!options.isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/react';
-    }
-    config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      // Add your TypeScript config file location here
-      '@tsconfig': path.resolve(dir, 'src/tsconfig.json'),
-    };
-
     return config;
   },
   typescript: {
     tsconfigPath: 'src/tsconfig.json',
   },
-  assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
+  assetPrefix: !dev ? process.env.NEXT_PUBLIC_CDN_URL || undefined : undefined,
   images: {
     remotePatterns,
     unoptimized: true,
@@ -173,22 +149,22 @@ module.exports = withLess({
     return [
       {
         source: '/don',
-        destination: process.env.DONATION_LINK,
+        destination: process.env.NEXT_PUBLIC_DONATION_LINK,
         permanent: false,
       },
       {
         source: '/tutoriel-video-premiers-pas',
-        destination: process.env.TUTORIAL_VIDEO_FIRST_STEPS,
+        destination: process.env.NEXT_PUBLIC_TUTORIAL_VIDEO_FIRST_STEPS,
         permanent: false,
       },
       {
         source: '/tutoriel-projet-pro',
-        destination: process.env.TUTORIAL_PP,
+        destination: process.env.NEXT_PUBLIC_TUTORIAL_PP,
         permanent: false,
       },
       {
         source: '/boite-a-outils',
-        destination: process.env.TOOLBOX_CANDIDATE_URL,
+        destination: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL,
         permanent: false,
       },
       {
@@ -206,4 +182,11 @@ module.exports = withLess({
       },
     ];
   },
+  compiler: {
+    styledComponents: {
+      ssr: true,
+    },
+  },
 });
+
+export default nextConfig;

@@ -13,6 +13,7 @@ const DefaultAlertIcon = ({ variant }: AlertIconProps) => {
   if (variant === 'info') {
     return <IlluBulleQuestion width={35} height={30} />;
   }
+
   return null;
 };
 
@@ -30,7 +31,17 @@ export const Alert = ({
       {icon}
       <StyledAlertContainer>{children}</StyledAlertContainer>
       {closable && (
-        <ButtonIcon icon={<LucidIcon name="X" />} onClick={onClose} />
+        <ButtonIcon
+          icon={
+            <LucidIcon
+              name="X"
+              {...(variant === 'darkBlue'
+                ? { color: 'white', stroke: 'bold' }
+                : {})}
+            />
+          }
+          onClick={onClose}
+        />
       )}
     </StyledAlert>
   );

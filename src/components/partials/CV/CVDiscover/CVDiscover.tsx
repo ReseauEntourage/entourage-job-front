@@ -29,14 +29,15 @@ export const CVDiscover = () => {
   //         items={cvs.map((cv) => {
   //           return (
   //             <CandidatCard
-  //               businessSectors={cv.businessSectors}
+  //               businessLines={cv.businessLines}
   //               url={cv.user && cv.user.url}
   //               imgSrc={
-  //                 (cv.urlImg && `${process.env.AWSS3_CDN_URL}/${cv.urlImg}`) ||
-  //                 undefined
+  //                 (cv.urlImg &&
+  //                   `${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${cv.urlImg}`) ||
+  //                 ''
   //               }
   //               firstName={cv.user && cv.user.candidat.firstName}
-  //               occupations={cv.occupations}
+  //               ambitions={cv.ambitions}
   //               locations={cv.locations}
   //             />
   //           );

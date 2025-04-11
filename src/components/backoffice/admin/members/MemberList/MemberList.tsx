@@ -184,7 +184,7 @@ export function MemberList({
       {hasError ? (
         <Section>
           <ContainerWithTextCentered>
-            <H4 title={"Les membres n'ont pas pu etre chargés correctement."} />
+            <H4 title="Les membres n'ont pas pu etre chargés correctement." />
             <Text size="large">
               Contacte l&apos;équipe Entourage Pro pour en savoir plus.
             </Text>

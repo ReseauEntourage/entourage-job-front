@@ -14,7 +14,7 @@ import { addPrefix, formatParagraph } from 'src/utils';
 const viewportHeightWithoutHeader = 'calc(100vh - 80px)';
 const viewportHeightWithoutHeaderAndPadding = 'calc(100vh - 220px)';
 
-const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
+const CarouselSection = ({ children, partners, img }) => {
   return (
     <div
       className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"
@@ -25,9 +25,6 @@ const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
         style={{
           backgroundImage: `url(${addPrefix(img)})`,
         }}
-        data-uk-scrollspy={`cls: uk-animation-kenburns ${
-          forwardAnimation ? '' : 'uk-animation-reverse'
-        }; delay: 200;`}
       />
       <div
         className="uk-overlay-primary uk-position-cover"
@@ -36,7 +33,7 @@ const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
         }}
       />
       <div className="uk-overlay uk-position-center">
-        <div data-uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+        <div>
           <h2 className="uk-text-bold uk-align-center uk-text-center">
             <mark>{children}</mark>
           </h2>
@@ -65,14 +62,15 @@ CarouselSection.propTypes = {
   children: PropTypes.element.isRequired,
   partners: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   img: PropTypes.string.isRequired,
-  forwardAnimation: PropTypes.bool,
 };
 
-CarouselSection.defaultProps = {
-  forwardAnimation: false,
-};
+interface TitleProps {
+  children: React.ReactNode;
+  overlay: string | null;
+  img: string;
+}
 
-const Title = ({ children, overlay = false, img }) => {
+const Title = ({ children, overlay = null, img }: TitleProps) => {
   return (
     <div
       className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"
@@ -83,11 +81,10 @@ const Title = ({ children, overlay = false, img }) => {
         style={{
           backgroundImage: `url("${addPrefix(img)}")`,
         }}
-        data-uk-scrollspy="cls: uk-animation-kenburns uk-animation-reverse; delay: 200;"
       />
       <div className={`uk-overlay-${overlay} uk-position-cover`} />
       <div className="uk-overlay uk-position-center">
-        <div data-uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+        <div>
           <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove">
             <mark>{children}</mark>
           </h1>
@@ -121,7 +118,6 @@ const PartnerItem = ({
     <Section style={index % 2 === 0 ? 'muted' : 'default'} key={index}>
       <div
         className="uk-flex uk-flex-center uk-flex-middle uk-overflow-hidden"
-        data-uk-scrollspy="target: .animate; cls: uk-animation-fade; delay: 200;"
         style={{ minHeight: viewportHeightWithoutHeaderAndPadding }}
       >
         <SimpleLink
@@ -160,10 +156,7 @@ const PartnerItem = ({
               </div>
             </div>
             <div className="uk-flex uk-flex-column uk-flex-middle">
-              <div
-                className="animate uk-flex uk-flex-column"
-                data-uk-scrollspy-class={`uk-animation-slide-${secondDirection}`}
-              >
+              <div className="animate uk-flex uk-flex-column">
                 <h4
                   className={`${
                     answer ? 'uk-margin-medium-bottom' : ''
@@ -176,7 +169,6 @@ const PartnerItem = ({
               {answer && (
                 <div
                   className={`uk-text-secondary animate uk-flex uk-flex-column uk-flex-stretch uk-margin-large-${secondDirection} uk-margin-medium-top`}
-                  data-uk-scrollspy-class={`uk-animation-slide-${firstDirection}`}
                 >
                   {question && (
                     <p
@@ -284,7 +276,6 @@ const Partenaires = () => {
       <CarouselSection
         img="/static/img/business.jpg"
         partners={PARTNERS.ALL_FINANCE}
-        forwardAnimation
       >
         <>
           Nos partenaires <span className="uk-text-primary">financiers</span>
@@ -320,7 +311,6 @@ const Partenaires = () => {
       <CarouselSection
         img="/static/img/partners.jpg"
         partners={PARTNERS.ORIENTATION}
-        forwardAnimation
       >
         <>
           Nos partenaires <span className="uk-text-primary">opérationnels</span>

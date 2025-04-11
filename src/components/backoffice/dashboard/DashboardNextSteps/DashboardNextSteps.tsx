@@ -23,7 +23,7 @@ export const DashboardNextSteps = () => {
     content: 'Besoin d’en savoir plus sur la plateforme Entourage Pro ?',
     cta: {
       label: "S'inscrire",
-      href: process.env.WEBINAR_URL,
+      href: process.env.NEXT_PUBLIC_WEBINAR_URL,
     },
   };
 

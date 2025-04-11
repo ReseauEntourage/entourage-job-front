@@ -138,136 +138,135 @@ export function ProfileCard({
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
       }}
+      target="_blank"
     >
-      <a target="_blank">
-        <StyledProfileCard className="profile-card">
-          <StyledProfileCardPictureContainer>
-            <StyledProfileCardPicture>
-              {urlImg ? (
-                <Img
-                  src={urlImg}
-                  alt={`photo de ${firstName}`}
-                  cover
-                  onError={fallbackToCVImage}
-                />
-              ) : (
-                <Img
-                  src="/static/img/profile-placeholder.png"
-                  alt={`photo de ${firstName}`}
-                  cover
-                  onError={fallbackToCVImage}
-                />
-              )}
-              <Img src="/static/img/gradient.png" alt="" cover />
-            </StyledProfileCardPicture>
-            <StyledProfileCardAvailability>
-              <AvailabilityTag isAvailable={isAvailable} />
-            </StyledProfileCardAvailability>
-            <StyledProfileCardInfoContainer>
-              <StyledProfileCardName>
-                <H3
-                  color={COLORS.white}
-                  title={`${firstName} ${lastName.charAt(0)}.`}
-                />
-              </StyledProfileCardName>
-              {department && (
-                <StyledProfileCardDepartment>
-                  <Text>{department}</Text>
-                </StyledProfileCardDepartment>
-              )}
-            </StyledProfileCardInfoContainer>
-            <StyledProfileCardRole>
-              <Tag content={labels.role} style="secondary" />
-            </StyledProfileCardRole>
-          </StyledProfileCardPictureContainer>
-          <StyledProfileCardContent>
-            <StyledProfileCardProfessionalSituation>
-              {(USER_ROLES.CANDIDATE === role || USER_ROLES.COACH === role) && (
-                <>
-                  {sortedOccupations && sortedOccupations.length > 0 ? (
-                    <StyledProfileCardJobContainer>
-                      {sortedOccupations.map(({ name }, index) => (
-                        <H5
-                          key={name}
-                          color={COLORS.black}
-                          title={`${_.capitalize(name)}${
-                            index < sortedOccupations.length - 1 ? ',\xa0' : ''
-                          }`}
-                        />
-                      ))}
-                    </StyledProfileCardJobContainer>
-                  ) : (
-                    <StyledProfileCardEmptyJobContainer>
-                      <H5 color={COLORS.black} title={EMPTY_JOB} />
-                    </StyledProfileCardEmptyJobContainer>
-                  )}
-                </>
-              )}
-              <StyledProfileCardLabel>
-                <Text color="darkGray">{labels.businessSectors}</Text>{' '}
-              </StyledProfileCardLabel>
-              <StyledProfileCardBusinessSectors>
-                {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
-                  <>
-                    {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
-                      return <Tag key={id} content={name} />;
-                    })}
-                    {role !== USER_ROLES.CANDIDATE &&
-                      sortedBusinessSectors.length > 2 && (
-                        <Tag content={`+${sortedBusinessSectors.length - 2}`} />
-                      )}
-                  </>
+      <StyledProfileCard className="profile-card">
+        <StyledProfileCardPictureContainer>
+          <StyledProfileCardPicture>
+            {urlImg ? (
+              <Img
+                src={urlImg}
+                alt={`photo de ${firstName}`}
+                cover
+                onError={fallbackToCVImage}
+              />
+            ) : (
+              <Img
+                src="/static/img/profile-placeholder.png"
+                alt={`photo de ${firstName}`}
+                cover
+                onError={fallbackToCVImage}
+              />
+            )}
+            <Img src="/static/img/gradient.png" alt="" cover />
+          </StyledProfileCardPicture>
+          <StyledProfileCardAvailability>
+            <AvailabilityTag isAvailable={isAvailable} />
+          </StyledProfileCardAvailability>
+          <StyledProfileCardInfoContainer>
+            <StyledProfileCardName>
+              <H3
+                color={COLORS.white}
+                title={`${firstName} ${lastName.charAt(0)}.`}
+              />
+            </StyledProfileCardName>
+            {department && (
+              <StyledProfileCardDepartment>
+                <Text>{department}</Text>
+              </StyledProfileCardDepartment>
+            )}
+          </StyledProfileCardInfoContainer>
+          <StyledProfileCardRole>
+            <Tag content={labels.role} style="secondary" />
+          </StyledProfileCardRole>
+        </StyledProfileCardPictureContainer>
+        <StyledProfileCardContent>
+          <StyledProfileCardProfessionalSituation>
+            {(USER_ROLES.CANDIDATE === role || USER_ROLES.COACH === role) && (
+              <>
+                {sortedOccupations && sortedOccupations.length > 0 ? (
+                  <StyledProfileCardJobContainer>
+                    {sortedOccupations.map(({ name }, index) => (
+                      <H5
+                        key={name}
+                        color={COLORS.black}
+                        title={`${_.capitalize(name)}${
+                          index < sortedOccupations.length - 1 ? ',\xa0' : ''
+                        }`}
+                      />
+                    ))}
+                  </StyledProfileCardJobContainer>
                 ) : (
-                  <StyledProfileCardEmptyBusinessSectorsContainer>
+                  <StyledProfileCardEmptyJobContainer>
+                    <H5 color={COLORS.black} title={EMPTY_JOB} />
+                  </StyledProfileCardEmptyJobContainer>
+                )}
+              </>
+            )}
+            <StyledProfileCardLabel>
+              <Text color="darkGray">{labels.businessSectors}</Text>{' '}
+            </StyledProfileCardLabel>
+            <StyledProfileCardBusinessSectors>
+              {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
+                <>
+                  {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
+                    return <Tag key={id} content={name} />;
+                  })}
+                  {role !== USER_ROLES.CANDIDATE &&
+                    sortedBusinessSectors.length > 2 && (
+                      <Tag content={`+${sortedBusinessSectors.length - 2}`} />
+                    )}
+                </>
+              ) : (
+                <StyledProfileCardEmptyBusinessSectorsContainer>
+                  <StyledProfileCardEmptyIcon>
+                    <CaseIcon {...iconSizeProps} />
+                  </StyledProfileCardEmptyIcon>
+                  <Text color="mediumGray" size="small" variant="italic">
+                    {EMPTY_INFO}
+                  </Text>
+                </StyledProfileCardEmptyBusinessSectorsContainer>
+              )}
+            </StyledProfileCardBusinessSectors>
+          </StyledProfileCardProfessionalSituation>
+          <StyledSeparator />
+          {displayHelps ? (
+            <StyledProfileCardHelpContainer>
+              <StyledProfileCardLabel>
+                <Text color="darkGray">{labels.helps}</Text>
+              </StyledProfileCardLabel>
+              <StyledProfileCardHelps>
+                {helps && helps.length > 0 ? (
+                  helps.map(({ name }) => {
+                    const help = findConstantFromValue(name, ProfileHelps);
+                    return (
+                      <StyledProfileCardHelp key={help.value}>
+                        {help.icon}
+                        <StyledProfileCardHelpLabel>
+                          {help.label}
+                        </StyledProfileCardHelpLabel>
+                      </StyledProfileCardHelp>
+                    );
+                  })
+                ) : (
+                  <StyledProfileCardEmptyHelpsContainer>
                     <StyledProfileCardEmptyIcon>
-                      <CaseIcon {...iconSizeProps} />
+                      <HandsIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
                     <Text color="mediumGray" size="small" variant="italic">
                       {EMPTY_INFO}
                     </Text>
-                  </StyledProfileCardEmptyBusinessSectorsContainer>
+                  </StyledProfileCardEmptyHelpsContainer>
                 )}
-              </StyledProfileCardBusinessSectors>
-            </StyledProfileCardProfessionalSituation>
-            <StyledSeparator />
-            {displayHelps ? (
-              <StyledProfileCardHelpContainer>
-                <StyledProfileCardLabel>
-                  <Text color="darkGray">{labels.helps}</Text>
-                </StyledProfileCardLabel>
-                <StyledProfileCardHelps>
-                  {helps && helps.length > 0 ? (
-                    helps.map(({ name }) => {
-                      const help = findConstantFromValue(name, ProfileHelps);
-                      return (
-                        <StyledProfileCardHelp key={help.value}>
-                          {help.icon}
-                          <StyledProfileCardHelpLabel>
-                            {help.label}
-                          </StyledProfileCardHelpLabel>
-                        </StyledProfileCardHelp>
-                      );
-                    })
-                  ) : (
-                    <StyledProfileCardEmptyHelpsContainer>
-                      <StyledProfileCardEmptyIcon>
-                        <HandsIcon {...iconSizeProps} />
-                      </StyledProfileCardEmptyIcon>
-                      <Text color="mediumGray" size="small" variant="italic">
-                        {EMPTY_INFO}
-                      </Text>
-                    </StyledProfileCardEmptyHelpsContainer>
-                  )}
-                </StyledProfileCardHelps>
-              </StyledProfileCardHelpContainer>
-            ) : (
-              <StyledCTAContainer>
-                <Button style="custom-primary-inverted">Voir le profil</Button>
-              </StyledCTAContainer>
-            )}
-          </StyledProfileCardContent>
-        </StyledProfileCard>
-      </a>
+              </StyledProfileCardHelps>
+            </StyledProfileCardHelpContainer>
+          ) : (
+            <StyledCTAContainer>
+              <Button style="custom-primary-inverted">Voir le profil</Button>
+            </StyledCTAContainer>
+          )}
+        </StyledProfileCardContent>
+      </StyledProfileCard>
     </Link>
   );
 }

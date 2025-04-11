@@ -110,9 +110,7 @@ export function Directory() {
           <StyledHeaderDirectory>
             <HeaderBackoffice
               title="Bienvenue sur votre réseau"
-              description={
-                "Découvrez les membres de la communauté et développez votre carnet d'adresse."
-              }
+              description="Découvrez les membres de la communauté et développez votre carnet d'adresse."
               noSeparator
             />
             <SearchBar
@@ -125,7 +123,7 @@ export function Directory() {
               search={search}
               setSearch={setSearch}
               setFilters={setFilters}
-              placeholder="Rechercher par nom, prénom..."
+              placeholder="Rechercher par prénom ou nom"
               additionalButtons={
                 <StyledDirectoryButtonContainer isMobile={isMobile}>
                   <Button
