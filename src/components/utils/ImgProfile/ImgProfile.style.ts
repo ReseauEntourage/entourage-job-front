@@ -13,6 +13,7 @@ export const StyledImgProfileContainer = styled.div<{
   height: ${({ size }) => size}px;
 
   ${({ highlight }) => highlight && `border: 2px solid ${COLORS.primaryBlue};`}
+  background-color: ${COLORS.primaryBlue};
 
   box-sizing: border-box;
   border-radius: 50%;
