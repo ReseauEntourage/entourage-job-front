@@ -7,7 +7,7 @@ import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDet
 import { Grid, Section } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useTab } from 'src/hooks/queryParams/useTab';
@@ -31,7 +31,7 @@ const User = () => {
   useEffect(() => {
     if (user && user !== prevUser) {
       if (
-        (user.role === USER_ROLES.COACH || user.role === USER_ROLES.REFERER) &&
+        (user.role === UserRoles.COACH || user.role === UserRoles.REFERER) &&
         (!tab || tab !== MEMBER_TABS.PARAMETERS)
       ) {
         replace(
@@ -41,7 +41,7 @@ const User = () => {
             shallow: true,
           }
         );
-      } else if (user.role === USER_ROLES.CANDIDATE) {
+      } else if (user.role === UserRoles.CANDIDATE) {
         if (!tab) {
           replace(`/backoffice/admin/membres/${user.id}/cv`, undefined, {
             shallow: true,

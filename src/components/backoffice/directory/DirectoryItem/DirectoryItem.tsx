@@ -4,13 +4,13 @@ import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
-import { UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 interface DirectoryItemProps {
   id: string;
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: UserRoles;
   helps?: {
     name: HelpValue;
   }[];

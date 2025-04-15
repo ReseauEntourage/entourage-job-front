@@ -6,8 +6,8 @@ import {
   REGIONS_FILTERS,
 } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
+import { GENDERS_FILTERS } from './genders';
 import { ProfileHelps } from './helps';
-import { GENDERS_FILTERS } from './users';
 import { Filter, FilterConstant } from './utils';
 
 export const PROFILES_LIMIT = 25;

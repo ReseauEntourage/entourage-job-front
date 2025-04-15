@@ -20,7 +20,7 @@ import { StyledContainerWithTextCentered } from 'src/components/utils/Containers
 import { H4 } from 'src/components/utils/Headings';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
@@ -55,7 +55,7 @@ export function MemberList({
 }: MemberListProps) {
   const router = useRouter();
   const role = useMemo(() => {
-    return router.query.role as UserRole;
+    return router.query.role as UserRoles;
   }, [router]);
 
   const prevRole = usePrevious(role);
@@ -144,9 +144,9 @@ export function MemberList({
   );
 
   let roleToDisplay;
-  if (isRoleIncluded([USER_ROLES.COACH], role)) {
+  if (isRoleIncluded([UserRoles.COACH], role)) {
     roleToDisplay = 'coachs';
-  } else if (isRoleIncluded([USER_ROLES.REFERER], role)) {
+  } else if (isRoleIncluded([UserRoles.REFERER], role)) {
     roleToDisplay = 'prescripteurs';
   } else {
     roleToDisplay = 'candidats';
@@ -177,7 +177,7 @@ export function MemberList({
         title={`Gestion des ${roleToDisplay}`}
         description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
         shouldDisplayAdminNotifications={isRoleIncluded(
-          [USER_ROLES.CANDIDATE],
+          [UserRoles.CANDIDATE],
           role
         )}
       >
@@ -207,7 +207,7 @@ export function MemberList({
               placeholder="Rechercher..."
               smallSelectors
               additionalButtons={
-                isRoleIncluded([USER_ROLES.CANDIDATE], role) && (
+                isRoleIncluded([UserRoles.CANDIDATE], role) && (
                   <Button
                     style="custom-secondary-inverted"
                     size="small"

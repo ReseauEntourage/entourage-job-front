@@ -8,7 +8,7 @@ import {
   IlluCV,
 } from 'assets/icons/icons';
 import { Card } from 'src/components/utils/Cards/Card/Card';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { StyledStepsContainer } from './DashboardNextSteps.styles';
 import { Step } from './Step/Step';
@@ -28,7 +28,7 @@ export const DashboardNextSteps = () => {
   };
 
   const stepsByRole = {
-    [USER_ROLES.CANDIDATE]: [
+    [UserRoles.CANDIDATE]: [
       {
         ...webinarStep,
       },
@@ -51,7 +51,7 @@ export const DashboardNextSteps = () => {
         },
       },
     ],
-    [USER_ROLES.COACH]: [
+    [UserRoles.COACH]: [
       {
         ...webinarStep,
       },

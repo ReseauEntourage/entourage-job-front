@@ -1,7 +1,7 @@
 import React, { type JSX } from 'react';
 
 import { Img } from 'src/components/utils/Img';
-import { NormalUserRole, USER_ROLES } from './users';
+import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
 
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
@@ -11,7 +11,7 @@ const iconSizeProps = { width: 40, height: 40 };
 export const ProfileHelps: (FilterConstant<HelpValue> & {
   icon: JSX.Element;
   shortTitle: {
-    [K in NormalUserRole]: string;
+    [K in NormalUserRoles]: string;
   };
 })[] = [
   {
@@ -25,8 +25,8 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     value: 'tips',
     label: 'Soutien',
     shortTitle: {
-      [USER_ROLES.CANDIDATE]: 'Demander un conseil',
-      [USER_ROLES.COACH]: 'Conseiller un(e) candidat(e)',
+      [UserRoles.CANDIDATE]: 'Demander un conseil',
+      [UserRoles.COACH]: 'Conseiller un(e) candidat(e)',
     },
   },
   {
@@ -40,8 +40,8 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     value: 'interview',
     label: 'Entretien',
     shortTitle: {
-      [USER_ROLES.CANDIDATE]: 'Préparer un entretien',
-      [USER_ROLES.COACH]: 'Aider à préparer un entretien',
+      [UserRoles.CANDIDATE]: 'Préparer un entretien',
+      [UserRoles.COACH]: 'Aider à préparer un entretien',
     },
   },
   {
@@ -55,8 +55,8 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     value: 'cv',
     label: 'CV',
     shortTitle: {
-      [USER_ROLES.CANDIDATE]: 'Créer mon CV',
-      [USER_ROLES.COACH]: 'Aider à réaliser un CV',
+      [UserRoles.CANDIDATE]: 'Créer mon CV',
+      [UserRoles.COACH]: 'Aider à réaliser un CV',
     },
   },
   {
@@ -70,8 +70,8 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     value: 'event',
     label: 'Événement',
     shortTitle: {
-      [USER_ROLES.CANDIDATE]: 'Rencontrer la communauté',
-      [USER_ROLES.COACH]: 'Rencontrer la communauté',
+      [UserRoles.CANDIDATE]: 'Rencontrer la communauté',
+      [UserRoles.COACH]: 'Rencontrer la communauté',
     },
   },
   {
@@ -85,25 +85,25 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     value: 'network',
     label: 'Partage',
     shortTitle: {
-      [USER_ROLES.CANDIDATE]: 'Développer mon réseau',
-      [USER_ROLES.COACH]: 'Partager mon réseau',
+      [UserRoles.CANDIDATE]: 'Développer mon réseau',
+      [UserRoles.COACH]: 'Partager mon réseau',
     },
   },
 ];
 
 export const ParametresHelpCardTitles: {
   [K in 'card' | 'modal']: {
-    [R in NormalUserRole]: string;
+    [R in NormalUserRoles]: string;
   };
 } = {
   card: {
-    [USER_ROLES.COACH]: 'Vos propositions de coup de pouce',
-    [USER_ROLES.CANDIDATE]: "Vos demandes d'aide",
+    [UserRoles.COACH]: 'Vos propositions de coup de pouce',
+    [UserRoles.CANDIDATE]: "Vos demandes d'aide",
   },
   modal: {
-    [USER_ROLES.COACH]:
+    [UserRoles.COACH]:
       'Sélectionnez les coups de pouce que vous souhaitez apporter aux candidats',
-    [USER_ROLES.CANDIDATE]:
+    [UserRoles.CANDIDATE]:
       'Sélectionnez les coups de pouce que vous souhaitez avoir auprès des coachs',
   },
 } as const;
@@ -180,12 +180,12 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
 ];
 
 export const ParametresHelpCardContents: {
-  [K in NormalUserRole]: (FilterConstant<HelpValue> & {
+  [K in NormalUserRoles]: (FilterConstant<HelpValue> & {
     icon: React.ReactNode;
     description: string;
   })[];
 } = {
-  [USER_ROLES.CANDIDATE]: [
+  [UserRoles.CANDIDATE]: [
     {
       icon: (
         <Img
@@ -253,7 +253,7 @@ export const ParametresHelpCardContents: {
     },
   ],
 
-  [USER_ROLES.COACH]: [
+  [UserRoles.COACH]: [
     {
       icon: (
         <Img

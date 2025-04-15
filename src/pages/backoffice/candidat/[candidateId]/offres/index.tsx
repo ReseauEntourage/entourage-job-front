@@ -12,7 +12,7 @@ import { Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
@@ -118,7 +118,7 @@ const Opportunities = () => {
       if (opportunityType !== prevOpportunityType) {
         setHasLoadedDefaultFilters(false);
       }
-      if (user.role === USER_ROLES.ADMIN) {
+      if (user.role === UserRoles.ADMIN) {
         // Redirection si on est connecté en tant qu'admin
         replace(
           `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
@@ -152,7 +152,7 @@ const Opportunities = () => {
         // Cas pour les offres publiques
         const { status, ...restQueryParams } = queryParamsOpportunities;
         const candidate =
-          user.role === USER_ROLES.CANDIDATE
+          user.role === UserRoles.CANDIDATE
             ? user
             : getCandidateFromCoach(user, candidateId);
 
@@ -240,7 +240,7 @@ const Opportunities = () => {
   return (
     <LayoutBackOffice
       title={
-        user.role === USER_ROLES.CANDIDATE
+        user.role === UserRoles.CANDIDATE
           ? 'Mes opportunités'
           : 'Opportunités du candidat'
       }

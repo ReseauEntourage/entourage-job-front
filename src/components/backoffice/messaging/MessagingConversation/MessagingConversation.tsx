@@ -11,7 +11,7 @@ import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -61,7 +61,7 @@ export const MessagingConversation = () => {
     return (
       selectedConversationId === 'new' &&
       currentUser &&
-      currentUser.role === USER_ROLES.CANDIDATE
+      currentUser.role === UserRoles.CANDIDATE
     );
   }, [currentUser, selectedConversationId]);
 

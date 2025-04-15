@@ -1,7 +1,7 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
+import { Gender, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema } from 'src/components/forms/FormSchema';
-import { Gender, GENDERS_FILTERS } from 'src/constants/users';
 
 export const formReferingAccountReferedCandidate: FormSchema<{
   firstName: string;

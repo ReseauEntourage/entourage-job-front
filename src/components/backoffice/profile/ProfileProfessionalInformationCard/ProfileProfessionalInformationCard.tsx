@@ -10,7 +10,7 @@ import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import { ProfileCareerPathSentence } from './ProfileCareerPathSentence';
@@ -44,7 +44,7 @@ export const ProfileProfessionalInformationCard = () => {
         />
       ) : (
         <StyledProfessionalInformationList>
-          {selectedProfile.role === USER_ROLES.COACH ? (
+          {selectedProfile.role === UserRoles.COACH ? (
             <>
               {selectedProfile.currentJob && (
                 <li>

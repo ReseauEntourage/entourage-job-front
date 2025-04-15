@@ -13,7 +13,7 @@ import {
   OfferStatus,
 } from 'src/constants';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { findConstantFromValue } from 'src/utils';
 
@@ -180,7 +180,7 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
             Api.getUsersSearch({
               params: {
                 query: inputValue,
-                role: [USER_ROLES.CANDIDATE],
+                role: [UserRoles.CANDIDATE],
               },
             })
               .then(({ data }) => {

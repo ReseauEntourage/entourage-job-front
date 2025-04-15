@@ -1,7 +1,7 @@
 import React from 'react';
+import { NormalUserRoles, UserRoles } from '@/src/constants/users';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
-import { NormalUserRole, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -11,7 +11,7 @@ import {
 } from './DashboardNetworkDiscoverCard.styles';
 
 const cardVariables: {
-  [K in NormalUserRole]: {
+  [K in NormalUserRoles]: {
     title: string;
     imageUrl: string;
     content: string;
@@ -19,7 +19,7 @@ const cardVariables: {
     buttonHref: string;
   };
 } = {
-  [USER_ROLES.CANDIDATE]: {
+  [UserRoles.CANDIDATE]: {
     title: 'Découvrez les coachs qui pourraient vous accompagner',
     imageUrl: '/static/img/illustrations/network-card-coach.png',
     content:
@@ -27,7 +27,7 @@ const cardVariables: {
     button: 'Découvrez les coachs',
     buttonHref: '/backoffice/annuaire?role=Coach',
   },
-  [USER_ROLES.COACH]: {
+  [UserRoles.COACH]: {
     title: 'Découvrez les candidats que vous pourriez accompagner',
     imageUrl: '/static/img/illustrations/network-card-candidate.png',
     content:

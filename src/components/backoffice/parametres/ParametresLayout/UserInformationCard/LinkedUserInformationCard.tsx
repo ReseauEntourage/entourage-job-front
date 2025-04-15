@@ -4,7 +4,7 @@ import { CVPreferences } from '../CVPreferences';
 import { Card, SimpleLink } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { selectLinkedUser } from 'src/use-cases/current-user';
 import { getUserCandidateFromCoach } from 'src/utils/Finding';
@@ -22,7 +22,7 @@ export const LinkedUserInformationCard = ({
     return (
       <Card
         title={`Informations du${
-          user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
+          user.role === UserRoles.COACH ? ' candidat' : ' coach'
         }`}
       >
         Aucun membre lié
@@ -67,7 +67,7 @@ export const LinkedUserInformationCard = ({
                 </span>
               </li>
             )}
-            {user.role === USER_ROLES.COACH &&
+            {user.role === UserRoles.COACH &&
               (linkedUser.address ? (
                 <li>
                   <LucidIcon name="House" /> <span>{linkedUser.address}</span>
@@ -80,7 +80,7 @@ export const LinkedUserInformationCard = ({
                   </span>
                 </li>
               ))}
-            {user.role === USER_ROLES.COACH && userCandidat && (
+            {user.role === UserRoles.COACH && userCandidat && (
               <SimpleLink
                 className="uk-link-muted"
                 target="_blank"
@@ -96,7 +96,7 @@ export const LinkedUserInformationCard = ({
         )}
       </StyledInformationsPersonnellesList>
       {!isAdmin &&
-        user.role === USER_ROLES.COACH &&
+        user.role === UserRoles.COACH &&
         userCandidat &&
         !linkedUser.deletedAt && (
           <StyledInformationsPersonnellesList>
@@ -116,7 +116,7 @@ export const LinkedUserInformationCard = ({
   return (
     <Card
       title={`Informations du${
-        user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
+        user.role === UserRoles.COACH ? ' candidat' : ' coach'
       }`}
       key={linkedUser.id}
       isMobileClosable

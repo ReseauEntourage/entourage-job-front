@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 import {
   currentUserActions,
@@ -16,15 +16,15 @@ export const helpFields = {
   HELP_OFFERS: 'helpOffers',
 } as const;
 
-export const useHelpField = (userRole: UserRole | undefined) => {
+export const useHelpField = (userRole: UserRoles | undefined) => {
   const [helpField, setHelpField] =
     useState<(typeof helpFields)[keyof typeof helpFields]>();
 
   useEffect(() => {
     if (!helpField && userRole) {
-      if (userRole === USER_ROLES.CANDIDATE) {
+      if (userRole === UserRoles.CANDIDATE) {
         setHelpField('helpNeeds');
-      } else if (userRole === USER_ROLES.COACH) {
+      } else if (userRole === UserRoles.COACH) {
         setHelpField('helpOffers');
       }
     }

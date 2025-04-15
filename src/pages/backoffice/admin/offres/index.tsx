@@ -10,7 +10,7 @@ import {
 } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
@@ -36,7 +36,7 @@ const AdminOpportunitiesPage = () => {
 
   // redirect with default tag and departments
   useEffect(() => {
-    if (user.role !== USER_ROLES.ADMIN) {
+    if (user.role !== UserRoles.ADMIN) {
       if (candidateId) {
         replace(
           `/backoffice/candidat/${candidateId}/offres${

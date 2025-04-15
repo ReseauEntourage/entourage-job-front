@@ -1,20 +1,16 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
+import { Gender, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import {
-  ADMIN_ROLES,
-  USER_ROLES,
-  USER_ROLES_FILTERS,
+  AdminRoles,
+  getRolesWithOrganization,
   RELATED_ROLES,
-  UserRole,
-  Gender,
-  AdminRole,
-  GENDERS_FILTERS,
-  ROLES_WITH_ORGANIZATION,
+  UserRoles,
 } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
@@ -31,16 +27,23 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   ),
 };
 
+const USER_ROLES_FILTERS: FilterConstant<UserRoles>[] = [
+  { value: UserRoles.CANDIDATE, label: UserRoles.CANDIDATE },
+  { value: UserRoles.COACH, label: UserRoles.COACH },
+  { value: UserRoles.REFERER, label: UserRoles.REFERER },
+  { value: UserRoles.ADMIN, label: UserRoles.ADMIN },
+];
+
 interface FormAddUserSchema extends FormSchemaValidation {
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: UserRoles;
   gender: Gender;
   zone: AdminZone;
   phone: string;
   email: string;
   userToLinkId: FilterConstant<string>;
-  adminRole: AdminRole;
+  adminRole: AdminRoles;
   organizationId: FilterConstant<string>;
   nameOrganization: string;
   addressOrganization: string;
@@ -55,7 +58,7 @@ const hideMethod = (getValue: GetValueType<FormAddUserSchema>) => {
   const role = getValue('role');
   const organizationId = getValue('organizationId')?.value;
   return !(
-    isRoleIncluded(ROLES_WITH_ORGANIZATION, role) &&
+    isRoleIncluded(getRolesWithOrganization(), role) &&
     organizationId === CREATE_NEW_ORGANIZATION_VALUE
   );
 };
@@ -162,7 +165,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
       component: 'fieldgroup',
       hide: (getValue) => {
         const role = getValue('role');
-        return !role || role === USER_ROLES.ADMIN;
+        return !role || role === UserRoles.ADMIN;
       },
       fields: [
         {
@@ -171,7 +174,10 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           component: 'select-async',
           isMulti: false,
           hide: (getValue) => {
-            return !isRoleIncluded(ROLES_WITH_ORGANIZATION, getValue('role'));
+            return !isRoleIncluded(
+              getRolesWithOrganization(),
+              getValue('role')
+            );
           },
           loadOptions: async (callback, inputValue) => {
             const { data: organizations } = await Api.getAllOrganizations({
@@ -213,8 +219,8 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
             const role = getValue('role');
             const organizationId = getValue('organizationId')?.value;
             return (
-              role === USER_ROLES.ADMIN ||
-              (isRoleIncluded(ROLES_WITH_ORGANIZATION, role) &&
+              role === UserRoles.ADMIN ||
+              (isRoleIncluded(getRolesWithOrganization(), role) &&
                 !organizationId) ||
               organizationId === CREATE_NEW_ORGANIZATION_VALUE
             );
@@ -253,7 +259,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
       component: 'fieldgroup',
       hide: (getValue) => {
         const role = getValue('role');
-        return role !== USER_ROLES.ADMIN;
+        return role !== UserRoles.ADMIN;
       },
       fields: [
         {
@@ -262,8 +268,8 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           component: 'select-simple',
           title: 'Responsabilité *',
           options: [
-            { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
-            { value: ADMIN_ROLES.COMPANIES, label: ADMIN_ROLES.COMPANIES },
+            { value: AdminRoles.CANDIDATES, label: AdminRoles.CANDIDATES },
+            { value: AdminRoles.COMPANIES, label: AdminRoles.COMPANIES },
           ],
           isRequired: true,
         },

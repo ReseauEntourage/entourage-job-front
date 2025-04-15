@@ -5,7 +5,7 @@ import {
   OnboardingStep,
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
-import { RegistrableUserRole } from 'src/constants/users';
+import { RegistrableUserRoles } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
@@ -17,7 +17,7 @@ export interface State {
   sendStepData: RequestState<typeof sendStepDataOnboardingAdapter>;
   sendStepDataError: SendStepDataOnboardingError | null;
   currentStep: OnboardingStep;
-  userRole: RegistrableUserRole | null;
+  userRole: RegistrableUserRoles | null;
   shouldLaunchOnboarding: boolean;
   data: OnboardingStepData;
   isLoading: boolean;
@@ -50,7 +50,10 @@ export const slice = createSlice({
         },
       }
     ),
-    launchOnboarding(state: State, action: PayloadAction<RegistrableUserRole>) {
+    launchOnboarding(
+      state: State,
+      action: PayloadAction<RegistrableUserRoles>
+    ) {
       state.userRole = action.payload;
     },
     setOnboardingCurrentStepData(

@@ -4,7 +4,7 @@ import {
   AdminOpportunityWithOpportunityUsers,
   OpportunityWithOpportunityUsers,
 } from 'src/api/types';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { usePrevious } from 'src/hooks/utils';
 
@@ -26,7 +26,7 @@ export function useFetchCandidateOpportunity(
       const { data: fetchedOpportunity } = await Api.getOpportunityById(
         opportunityId
       );
-      if (user.role === USER_ROLES.REFERER) {
+      if (user.role === UserRoles.REFERER) {
         const [fetchedOppUser] = fetchedOpportunity.opportunityUsers.filter(
           (oppUser) => {
             return oppUser.UserId === candidateId;
@@ -35,7 +35,7 @@ export function useFetchCandidateOpportunity(
         fetchedOpportunity.opportunityUsers = fetchedOppUser;
       }
       if (
-        user.role !== USER_ROLES.ADMIN &&
+        user.role !== UserRoles.ADMIN &&
         candidateId &&
         (!fetchedOpportunity.opportunityUsers ||
           !fetchedOpportunity.opportunityUsers.seen)

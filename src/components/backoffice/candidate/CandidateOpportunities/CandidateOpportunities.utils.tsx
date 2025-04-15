@@ -1,20 +1,20 @@
 import React from 'react';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export const TextVariables = {
   title: {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       all: 'Consulter toutes les offres',
       mine: 'Consulter mes offres',
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       all: 'Consulter toutes les offres',
       mine: 'Consulter les offres du candidat',
     },
   },
   description: {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       all: (
         <>
           Retrouvez toutes les offres Entourage Pro.
@@ -30,7 +30,7 @@ export const TextVariables = {
         </>
       ),
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       all: (
         <>
           Retrouvez toutes les offres Entourage Pro.

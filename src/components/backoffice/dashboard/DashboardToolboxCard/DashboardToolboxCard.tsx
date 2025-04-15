@@ -9,7 +9,7 @@ import {
 } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
 const coachArticles = [
@@ -48,7 +48,7 @@ const candidateArticles = [
 ];
 
 const toolboxContents: {
-  [K in UserRole]?: {
+  [K in UserRoles]?: {
     subtitle: string;
     url: string;
     articles: {
@@ -58,19 +58,19 @@ const toolboxContents: {
     }[];
   };
 } = {
-  [USER_ROLES.CANDIDATE]: {
+  [UserRoles.CANDIDATE]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour booster vos opportunités professionnelles',
     url: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL as string,
     articles: candidateArticles,
   },
-  [USER_ROLES.COACH]: {
+  [UserRoles.COACH]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour vous orienter dans votre rôle de coach',
     url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,
     articles: coachArticles,
   },
-  [USER_ROLES.REFERER]: {
+  [UserRoles.REFERER]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour accompagner les candidats dans leur recherche d’emploi',
     url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,

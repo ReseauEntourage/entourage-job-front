@@ -13,7 +13,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Heading } from 'src/components/utils/Inputs/Heading';
-import { RELATED_ROLES, ROLES_WITH_ORGANIZATION } from 'src/constants/users';
+import { RELATED_ROLES, UserRoles } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useIsMobile } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
@@ -93,7 +93,7 @@ export function ParametersMemberTab({
       'cvHidden',
     ];
 
-    if (user && isRoleIncluded(ROLES_WITH_ORGANIZATION, user.role)) {
+    if (user && isRoleIncluded([UserRoles.REFERER], user.role)) {
       return [...columnsToShow, 'organization'];
     }
 

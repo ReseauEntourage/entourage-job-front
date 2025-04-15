@@ -1,6 +1,6 @@
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formRecommendCandidate: FormSchema<{
@@ -18,7 +18,7 @@ export const formRecommendCandidate: FormSchema<{
         Api.getUsersSearch({
           params: {
             query: inputValue,
-            role: USER_ROLES.CANDIDATE,
+            role: UserRoles.CANDIDATE,
           },
         })
           .then(({ data }) => {

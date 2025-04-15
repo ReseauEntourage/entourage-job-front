@@ -1,8 +1,8 @@
 import { FormSchema } from '../FormSchema';
 import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
-import { NormalUserRole } from 'src/constants/users';
+import { NormalUserRoles } from 'src/constants/users';
 
-export function getFormEditHelps(role: NormalUserRole): FormSchema<{
+export function getFormEditHelps(role: NormalUserRoles): FormSchema<{
   helps: HelpValue[];
 }> {
   return {

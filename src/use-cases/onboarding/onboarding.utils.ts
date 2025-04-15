@@ -8,12 +8,12 @@ import {
   OnboardingStepContents,
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
-import { RegistrableUserRole } from 'src/constants/users';
+import { RegistrableUserRoles } from 'src/constants/users';
 import { formatNetworkBusinessLines } from 'src/utils';
 
 export const flattenOnboardingDataByRole = (
   data: OnboardingStepData,
-  selectedRole: RegistrableUserRole
+  selectedRole: RegistrableUserRoles
 ): FlattenedOnboardingFormData => {
   const allSteps: OnboardingStep[] = Object.keys(data).map(
     (key) => Number(key) as OnboardingStep

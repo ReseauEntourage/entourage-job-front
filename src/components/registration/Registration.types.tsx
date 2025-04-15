@@ -8,7 +8,7 @@ import {
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
 import { COLORS } from 'src/constants/styles';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
@@ -77,8 +77,8 @@ export type FirstStepRegistrationFormData =
   ExtractFormSchemaValidation<FirstStepRegistrationForm>;
 
 export type RegistrationStepDataByRole = Partial<{
-  [USER_ROLES.CANDIDATE]: ExtractFormSchemaValidation<CandidateRegistrationForm>;
-  [USER_ROLES.COACH]: ExtractFormSchemaValidation<CoachRegistrationForm>;
+  [UserRoles.CANDIDATE]: ExtractFormSchemaValidation<CandidateRegistrationForm>;
+  [UserRoles.COACH]: ExtractFormSchemaValidation<CoachRegistrationForm>;
 }>;
 
 export type RegistrationStepData = Partial<{
@@ -107,9 +107,9 @@ export interface RegistrationStepContent<
 }
 
 export type RegistrationStepContentByRole = Partial<{
-  [USER_ROLES.CANDIDATE]: RegistrationStepContent<CandidateRegistrationForm>;
-  [USER_ROLES.COACH]: RegistrationStepContent<CoachRegistrationForm>;
-  [USER_ROLES.REFERER]: RegistrationStepContent<RefererRegistrationForm>;
+  [UserRoles.CANDIDATE]: RegistrationStepContent<CandidateRegistrationForm>;
+  [UserRoles.COACH]: RegistrationStepContent<CoachRegistrationForm>;
+  [UserRoles.REFERER]: RegistrationStepContent<RefererRegistrationForm>;
 }>;
 
 export const FirstStepContent: RegistrationStepContent<FirstStepRegistrationForm> =
@@ -123,23 +123,23 @@ export const RegistrationStepContents: {
   [K in RegistrationStep]: RegistrationStepContentByRole;
 } = {
   'step-2': {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       subtitle: 'Quelles sont vos attentes en rejoignant Entourage Pro ?*',
       form: formRegistrationCandidateExpectations,
       annotation: RegistrationLabels.MULTIPLE_CHOICE,
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       form: formRegistrationCoachInfo,
     },
-    [USER_ROLES.REFERER]: {
+    [UserRoles.REFERER]: {
       form: formRegistrationRefererAccount,
     },
   },
   'step-3': {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       form: formRegistrationCandidateInfo,
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       form: formRegistrationCoachProgram,
       dependsOn: ['department', 'birthDate'],
       // Pour un coach qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
@@ -149,7 +149,7 @@ export const RegistrationStepContents: {
     },
   },
   'step-4': {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       form: formRegistrationCandidateProgram,
       dependsOn: ['department', 'birthDate'],
       // Pour un candidat qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
@@ -157,7 +157,7 @@ export const RegistrationStepContents: {
         notEligibleFor360: true,
       },
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       subtitle:
         'Et si on se rencontrait ? Choisissez une date pour le webinaire d’information',
       form: formRegistrationCoachWebinar,
@@ -168,7 +168,7 @@ export const RegistrationStepContents: {
     },
   },
   'step-5': {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       subtitle:
         "Et si on se rencontrait ? Choisissez une date d'information collective",
       form: formRegistrationCandidateInfoCo,
@@ -177,19 +177,19 @@ export const RegistrationStepContents: {
         program: [Programs.BOOST],
       },
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       form: formRegistrationAccount,
     },
   },
   'step-6': {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       form: formRegistrationCandidateProfessionalInformation,
       subtitle:
         'Nous aimerions en savoir un peu plus sur vos informations professionnelles.',
     },
   },
   'step-7': {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       form: formRegistrationAccount,
     },
   },
@@ -214,15 +214,15 @@ export interface LastStepContent {
 }
 
 type RegistrationLastStepContent = {
-  [USER_ROLES.CANDIDATE]: {
+  [UserRoles.CANDIDATE]: {
     [Programs.THREE_SIXTY]: LastStepContent;
     [Programs.BOOST]: LastStepContent;
   };
-  [USER_ROLES.COACH]: {
+  [UserRoles.COACH]: {
     [Programs.THREE_SIXTY]: LastStepContent;
     [Programs.BOOST]: LastStepContent;
   };
-  [USER_ROLES.REFERER]: LastStepContent;
+  [UserRoles.REFERER]: LastStepContent;
 };
 
 const iconSizeProps = { width: 60, height: 60 };
@@ -294,7 +294,7 @@ const RefererLastStepContent: Pick<LastStepContent, 'bullets'> = {
 };
 
 export const LastStepContent: RegistrationLastStepContent = {
-  [USER_ROLES.CANDIDATE]: {
+  [UserRoles.CANDIDATE]: {
     [Programs.THREE_SIXTY]: {
       ...CandidateLastStepContent,
       title:
@@ -310,7 +310,7 @@ export const LastStepContent: RegistrationLastStepContent = {
         "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
     },
   },
-  [USER_ROLES.COACH]: {
+  [UserRoles.COACH]: {
     [Programs.THREE_SIXTY]: {
       ...CoachLastStepContent,
       title:
@@ -326,7 +326,7 @@ export const LastStepContent: RegistrationLastStepContent = {
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
     },
   },
-  [USER_ROLES.REFERER]: {
+  [UserRoles.REFERER]: {
     ...RefererLastStepContent,
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
