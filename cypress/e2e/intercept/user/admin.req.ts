@@ -26,11 +26,6 @@ export const adminRequests = {
       alias: 'authCheck',
     },
     {
-      path: '/opportunity/admin**',
-      data: { fixture: 'api/generated/opportunities' },
-      alias: 'opportunities',
-    },
-    {
       path: '/user/members*',
       data: { fixture: 'api/generated/users-candidat' },
       alias: 'candidates',
@@ -58,13 +53,6 @@ export const adminRequests = {
   ],
   // To create
   POST: [
-    {
-      path: '/opportunity',
-      data: {
-        statusCode: 201,
-      },
-      alias: 'postOpportunity',
-    },
     {
       path: '/user',
       data: {

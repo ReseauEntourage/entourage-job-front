@@ -26,10 +26,6 @@ describe('Candidat', () => {
 
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.intercept('GET', `/opportunity/candidate/count/${user.id}`, {
-        unseenOpportunities: 0,
-      }).as('userCount');
-
       cy.intercept('GET', `/cv/${user.id}`, {
         fixture: 'api/generated/cv-candidate',
       }).as('cvCandidat');
@@ -37,14 +33,6 @@ describe('Candidat', () => {
       cy.intercept('POST', `/cv/${user.id}`, {
         fixture: 'api/generated/cv-candidate',
       }).as('postCvCandidat');
-
-      cy.intercept('GET', `/opportunity/candidate/all/${user.id}*`, {
-        fixture: 'api/generated/opportunities-wrapped',
-      }).as('allOpportunities');
-
-      cy.intercept('GET', `opportunity/candidate/tabCount/${user.id}`, {
-        fixture: 'api/generated/tab-count',
-      }).as('tabCount');
 
       // to be done: use automatic generation and not static data
       cy.intercept('GET', `/user/${user.id}`, {
@@ -80,18 +68,6 @@ describe('Candidat', () => {
         cvHasBeenModified: true,
       }).as('cvCheckUpdate');
 
-      cy.fixture('api/generated/opportunities-wrapped').then((offersRes) => {
-        cy.intercept(
-          `opportunity/${offersRes.offers[0].id}`,
-          offersRes.offers[0]
-        ).as('getOneOffer');
-        const opportunityToModify = offersRes.offers[0];
-        opportunityToModify.bookmarked = false;
-        cy.intercept('PUT', `opportunity/join/**`, opportunityToModify).as(
-          'putOffer'
-        );
-      });
-
       cy.intercept(
         'POST',
         `/user/profile/uploadImage/${user.id}`,
@@ -101,8 +77,6 @@ describe('Candidat', () => {
 
     cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
 
-    cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
-
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
 
     cy.intercept('GET', '/user/profile/*', {
@@ -110,102 +84,6 @@ describe('Candidat', () => {
     }).as('getUserProfile');
 
     cy.intercept('/message/internal', {}).as('postInternalMessage');
-  });
-
-  it('should open backoffice public offers', () => {
-    // to be done: use automatic generation and not static data
-    cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/offres/public`);
-      cy.url().should('include', user.id);
-    });
-
-    // check if list is complete
-    cy.get('[data-testid="candidat-offer-list-container"]', { timeout: 20000 })
-      .find('> div')
-      .should('have.length', 5);
-
-    // check if the right opportunity is open
-    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
-      cy.url().should('include', offers[0].id);
-      cy.get('[data-testid="candidat-offer-details-title"]').contains(
-        offers[0].title
-      );
-    });
-
-    // bookmark/unbookmark an offer from the list
-    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
-      const { bookmarked } = offers[0].opportunityUsers;
-      const cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
-      const cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
-      cy.get(`[data-testid="${cta1}"]`)
-        .first()
-        .should(bookmarked ? 'contain' : 'not.contain', 'Favoris');
-      cy.get(`[data-testid="${cta1}"]`).first().click();
-      cy.wait('@putOffer');
-      cy.get(`[data-testid="${cta2}"]`)
-        .first()
-        .should(!bookmarked ? 'contain' : 'not.contain', 'Favoris');
-    });
-  });
-
-  it('should open backoffice private offers and add new opportunity', () => {
-    // to be done: use automatic generation and not static data
-    cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/offres/private`);
-      cy.url().should('include', user.id);
-    });
-    // check if the right opportunity is open
-    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
-      cy.url().should('include', offers[0].id);
-      cy.wait(1000);
-      cy.get('[data-testid="candidat-offer-details-title"]').contains(
-        offers[0].title
-      );
-    });
-    cy.get('[data-testid="candidat-add-offer-main"]').click();
-    cy.get('#form-add-offer-external-title').scrollIntoView().type('test');
-    cy.get('#form-add-offer-external-company').scrollIntoView().type('test');
-
-    cy.get('#form-add-offer-external-department')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('Par');
-
-    cy.get('#form-add-offer-external-department')
-      .find('.Select__menu')
-      .should('be.visible')
-      .scrollIntoView()
-      .find('.Select__option')
-      .contains('Paris (75)')
-      .click();
-
-    cy.get('#form-add-offer-external-contract-container button')
-      .should('be.visible')
-      .scrollIntoView()
-      .click();
-    cy.get('#form-add-offer-external-contract-container')
-      .find('.option')
-      .contains('CDI')
-      .click();
-
-    cy.get('#form-add-offer-external-recruiterFirstName')
-      .scrollIntoView()
-      .type('test');
-    cy.get('#form-add-offer-external-recruiterName')
-      .scrollIntoView()
-      .type('test');
-    cy.get('#form-add-offer-external-recruiterMail')
-      .scrollIntoView()
-      .type('test@gmail.com');
-    cy.get('#form-add-offer-external-description')
-      .scrollIntoView()
-      .type('test');
-    cy.get('#form-add-offer-external-link').scrollIntoView().type('test');
-    cy.get('button').contains('Envoyer').click();
-    cy.wait('@postExternal');
-
-    // modal should be closed
-    cy.get('.uk-modal-body').should('not.exist');
   });
 
   it('should open backoffice cv candidat', () => {

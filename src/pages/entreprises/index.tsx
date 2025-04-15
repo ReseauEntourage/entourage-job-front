@@ -3,7 +3,6 @@ import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
-import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
@@ -103,19 +102,6 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
             },
             style: 'custom-secondary-inverted',
             label: 'Nous contacter',
-          },
-          {
-            dataTest: 'button-offer-company-header',
-            style: 'custom-secondary',
-            isExternal: false,
-            newTab: false,
-            onClick: () => {
-              gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
-              fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-              // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
-              openModal(<PostPublicOpportunityModal />);
-            },
-            label: 'Créer une offre',
           },
         ]}
       />

@@ -17,9 +17,6 @@ export const GA_TAGS = {
   PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC: {
     action: 'Page_Entreprises_Contacter_Referent_Clic',
   },
-  PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC: {
-    action: 'Page_Entreprises_Proposer_Offre_Clic',
-  },
   PAGE_ENTREPRISES_DECOUVRIR_CANDIDATS_CLICK: {
     action: 'Page_Entreprises_Découvrir_Candidats_Click',
   },
@@ -52,9 +49,6 @@ export const GA_TAGS = {
   },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
-  },
-  PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC: {
-    action: 'Page_Galerie_CV_Proposer_Offre_Clic',
   },
   PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC: {
     action: 'Page_Galerie_Partage_CV_LinkedIn_Clic',
@@ -103,30 +97,6 @@ export const GA_TAGS = {
   },
   PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC: {
     action: 'Page_CV_Envoyer_Contactez_Moi_Clic',
-  },
-  PAGE_CV_PROPOSER_OFFRE_CLIC: {
-    action: 'Page_CV_Proposer_Offre_Clic',
-  },
-  POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC: {
-    action: 'Popup_Offre_Envoyer_Offre_Unique_Clic',
-  },
-  POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC: {
-    action: 'Popup_Offre_Envoyer_Offre_Multiple_Clic',
-  },
-  POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC: {
-    action: 'Popup_Offre_Envoyer_Offre_Generale_Clic',
-  },
-  POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE: {
-    action: 'Popup_Offre_Envoyer_Offre_Unique_Invalide',
-  },
-  POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE: {
-    action: 'Popup_Offre_Envoyer_Offre_Multiple_Invalide',
-  },
-  POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE: {
-    action: 'Popup_Offre_Envoyer_Offre_Generale_Invalide',
-  },
-  PAGE_GALERIE_RECHERCHE: {
-    action: 'Page_Galerie_Recherche',
   },
   PAGE_GALERIE_AFFICHER_FILTRES_CLIC: {
     action: 'Page_Galerie_Afficher_Filtres_Clic',
@@ -266,9 +236,6 @@ export const GA_TAGS = {
   PAGE_RECRUTER_CARROUSEL_CLIC: {
     action: 'Page_Recruter_Carrousel_Clic',
   },
-  PAGE_RECRUTER_DEPOSER_OFFRE_CLIC: {
-    action: 'Page_Recruter_Deposer_Offre_Clic',
-  },
   PAGE_TRAVAILLER_CARROUSEL_CLIC: {
     action: 'Page_Travailler_Carrousel_Clic',
   },
@@ -314,9 +281,6 @@ export const GA_TAGS = {
   BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC: {
     action: 'Backoffice_Admin_Archiver_Masse_Clic',
   },
-  BACKOFFICE_ADMIN_OFFRES_INTERESSER_CLIC: {
-    action: 'Backoffice_Admin_Offres_Interesser_Clic',
-  },
   BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC: {
     action: 'Backoffice_Admin_Supprimer_Filtres_Clic',
   },
@@ -325,21 +289,6 @@ export const GA_TAGS = {
   },
   BACKOFFICE_ORGANIZATIONS_FILTRE_ZONE_CLIC: {
     action: 'Backoffice_Organizations_Filtre_Zone_Clic',
-  },
-  BACKOFFICE_OFFRES_FILTRE_PUBLIQUE_CLIC: {
-    action: 'Backoffice_Offres_Filtre_Publique_Clic',
-  },
-  BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC: {
-    action: 'Backoffice_Offres_Filtre_Statut_Clic',
-  },
-  BACKOFFICE_OFFRES_FILTRE_GEOGRAPHIQUE_CLIC: {
-    action: 'Backoffice_Offres_Filtre_Geographique_Clic',
-  },
-  BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC: {
-    action: 'Backoffice_Offres_Filtre_Secteur_Clic',
-  },
-  BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC: {
-    action: 'Backoffice_Offres_Filtre_Contrat_Clic',
   },
   BACKOFFICE_MEMBERS_FILTRE_TYPE_CLIC: {
     action: 'Backoffice_Members_Filtre_Type_Clic',
@@ -361,15 +310,6 @@ export const GA_TAGS = {
   },
   BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC: {
     action: 'Backoffice_Members_Filtre_Statut_Cv_Clic',
-  },
-  BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC: {
-    action: 'Backoffice_Candidat_Header_Offres_Clic',
-  },
-  BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC: {
-    action: 'Backoffice_Candidat_Header_Offres_Generales_Clic',
-  },
-  BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC: {
-    action: 'Backoffice_Candidat_Header_Mes_Offres_Clic',
   },
   BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC: {
     action: 'Backoffice_Candidat_Header_Suivi_Clic',
@@ -569,22 +509,6 @@ export const FB_TAGS = {
   COMPANY_CONTACT_SEND: {
     action: 'Prospect 2.1',
     options: { content_category: '2.1' },
-  },
-  COMPANY_GENERAL_OFFER_OPEN: {
-    action: 'Pré-Prospect 2.2',
-    options: { content_category: '2.2' },
-  },
-  COMPANY_GENERAL_OFFER_SEND: {
-    action: 'Prospect 2.2',
-    options: { content_category: '2.2' },
-  },
-  COMPANY_CV_OFFER_OPEN: {
-    action: 'Pré-Prospect 2.3',
-    options: { content_category: '2.3' },
-  },
-  COMPANY_CV_OFFER_SEND: {
-    action: 'Prospect 2.3',
-    options: { content_category: '2.3' },
   },
   COACH_REGISTRATION_OPEN: {
     action: 'Pré-Prospect 3',
