@@ -36,6 +36,7 @@ interface formRegistrationRefererAccountSchema extends FormSchemaValidation {
   organizationId: FilterConstant<string>;
   password: string;
   confirmPassword: string;
+  optInNewsletter: boolean;
   acceptCGU: boolean;
 }
 
@@ -192,6 +193,15 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
             message: 'Les deux mots de passe ne correspondent pas',
           },
         ],
+      },
+      {
+        id: 'optInNewsletter',
+        name: 'optInNewsletter',
+        component: 'checkbox',
+        title:
+          'J’accepte de recevoir des informations et des actualités sur le programme Entourage Pro',
+        showLabel: true,
+        isRequired: false,
       },
       {
         id: 'acceptCGU',
