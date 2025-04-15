@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
+import { ProfileHelps } from '@/src/constants/nudges';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../Button';
@@ -8,6 +9,7 @@ import {
   BusinessSector,
   Occupation,
   UserCandidateWithUsers,
+  UserProfileNudge,
   UserProfileSectorOccupation,
 } from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
@@ -16,13 +18,11 @@ import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { Text } from 'src/components/utils/Text';
 import { Department } from 'src/constants/departements';
-import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue } from 'src/utils';
 import {
   StyledCTAContainer,
   StyledProfileCard,
@@ -54,9 +54,7 @@ export interface ProfileCardProps {
   firstName: string;
   lastName: string;
   role: UserRole;
-  helps?: {
-    name: HelpValue;
-  }[];
+  userProfileNudges?: UserProfileNudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
@@ -94,7 +92,7 @@ export function ProfileCard({
   lastName,
   role,
   department,
-  helps,
+  userProfileNudges,
   sectorOccupations,
   userCandidate,
   isAvailable,
@@ -236,14 +234,16 @@ export function ProfileCard({
                 <Text color="darkGray">{labels.helps}</Text>
               </StyledProfileCardLabel>
               <StyledProfileCardHelps>
-                {helps && helps.length > 0 ? (
-                  helps.map(({ name }) => {
-                    const help = findConstantFromValue(name, ProfileHelps);
+                {userProfileNudges && userProfileNudges?.length > 0 ? (
+                  userProfileNudges.map(({ nudge }) => {
+                    const nudgeDetails = ProfileHelps.find(
+                      (n) => nudge?.value === n.value
+                    );
                     return (
-                      <StyledProfileCardHelp key={help.value}>
-                        {help.icon}
+                      <StyledProfileCardHelp key={nudgeDetails?.value}>
+                        {nudgeDetails?.icon}
                         <StyledProfileCardHelpLabel>
-                          {help.label}
+                          {nudgeDetails?.label}
                         </StyledProfileCardHelpLabel>
                       </StyledProfileCardHelp>
                     );

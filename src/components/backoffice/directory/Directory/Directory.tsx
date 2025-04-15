@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
+import { ProfileHelps } from '@/src/constants/nudges';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
 import { Api } from 'src/api';
@@ -9,7 +10,6 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Button, Section } from 'src/components/utils';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { Filter, FilterConstant } from 'src/constants/utils';

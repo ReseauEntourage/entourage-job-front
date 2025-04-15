@@ -6,8 +6,7 @@ export const generateUserProfileCandidateApiResponse = () => {
     currentJob: faker.person.jobTitle(),
     sectorOccupations: [],
     occupations: [],
-    helpOffers: [],
-    helpNeeds: [],
+    userProfileNudges: [],
   };
 
   return JSON.stringify(response, null, 2);

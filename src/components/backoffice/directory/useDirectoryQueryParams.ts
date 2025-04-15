@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
+import { HelpValue } from '@/src/constants/nudges';
 import { ProfilesFilters } from 'src/api/types';
 import { Department } from 'src/constants/departements';
-import { HelpValue } from 'src/constants/helps';
 import { useDirectoryRole } from './useDirectoryRole';
 
 // Get the current query params for the directory filters

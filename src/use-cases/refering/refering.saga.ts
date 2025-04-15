@@ -45,11 +45,7 @@ export function* referCandidateSagaRequested() {
           occupation1,
         }),
         department: flattenedData.department.value,
-        helpNeeds: flattenedData.helpNeeds
-          ? flattenedData.helpNeeds.map((expectation) => ({
-              name: expectation,
-            }))
-          : undefined,
+        nudgeIds: flattenedData.nudgeIds ? flattenedData.nudgeIds : undefined,
       })
     );
     yield* put(referCandidateSucceeded());

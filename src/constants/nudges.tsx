@@ -1,7 +1,8 @@
 import React, { type JSX } from 'react';
 
+import { SelectListType } from '../components/utils/Inputs/SelectList';
 import { Img } from 'src/components/utils/Img';
-import { NormalUserRole, USER_ROLES } from './users';
+import { NormalUserRole, USER_ROLES, UserRole } from './users';
 import { FilterConstant } from './utils';
 
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
@@ -321,4 +322,19 @@ export const ParametresHelpCardContents: {
         'Mettez en relation les candidats avec des contacts pertinents et intégrez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
     },
   ],
+};
+
+export const createNudgeOption = (role: UserRole, nudge) => {
+  const nudgeDetails = ParametresHelpCardContents[role].find(
+    (nudgeConstant) => nudgeConstant.value === nudge.value
+  );
+  if (nudgeDetails) {
+    return {
+      value: nudge.id,
+      label: nudgeDetails.label,
+      icon: nudgeDetails.icon,
+      description: nudgeDetails.description,
+    } as SelectListType;
+  }
+  return null;
 };

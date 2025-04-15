@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
+import { UserProfileNudge } from '@/src/api/types';
 import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Button, Text } from 'src/components/utils';
 import { USER_ROLES, UserRole } from 'src/constants/users';
-import { StyledItem } from './ProfileCustomHelpsAndOffers.styles';
+import { StyledItem } from './ProfileCustomNudges.styles';
 
 export interface KeySkillsProps {
   id: string;
@@ -12,21 +13,24 @@ export interface KeySkillsProps {
   isEditable?: boolean;
   firstName: string;
   role: UserRole;
-  items: string[];
+  userProfileNudges: UserProfileNudge[];
   smallCard?: boolean;
 }
 
-export const ProfileCustomHelpsAndOffers = ({
+export const ProfileCustomNudges = ({
   id,
   firstName,
   role,
-  items,
+  userProfileNudges,
   ownProfile = false,
   isEditable = false,
   smallCard = false,
 }: KeySkillsProps) => {
   const router = useRouter();
-  const isCompleted = items.length > 0;
+  const customUserProfileNudges = userProfileNudges.filter(
+    (userProfileNudge) => !!userProfileNudge.content
+  );
+  const isCompleted = customUserProfileNudges.length > 0;
 
   const editModal = useCallback(() => {}, []);
 
@@ -63,25 +67,21 @@ export const ProfileCustomHelpsAndOffers = ({
         icon: <IlluBulleQuestionCheck />,
       }}
     >
-      {items.length > 0 &&
-        items.map((item, index) => (
-          <StyledItem key={index}>
-            <Text>{item}</Text>
+      {customUserProfileNudges?.map((userProfileNudge, index) => (
+        <StyledItem key={index}>
+          <Text>{userProfileNudge.content}</Text>
 
-            {isEditable ? (
-              <Button style="custom-primary-inverted" onClick={editModal}>
-                Modifier
-              </Button>
-            ) : (
-              <Button
-                style="custom-primary-inverted"
-                onClick={openConversation}
-              >
-                Répondre
-              </Button>
-            )}
-          </StyledItem>
-        ))}
+          {isEditable ? (
+            <Button style="custom-primary-inverted" onClick={editModal}>
+              Modifier
+            </Button>
+          ) : (
+            <Button style="custom-primary-inverted" onClick={openConversation}>
+              Répondre
+            </Button>
+          )}
+        </StyledItem>
+      ))}
     </ProfilePartCard>
   );
 };

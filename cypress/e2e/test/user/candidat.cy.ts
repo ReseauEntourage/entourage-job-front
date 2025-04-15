@@ -227,15 +227,9 @@ describe('Candidat', () => {
     cy.wait('@changePwd');
 
     // to be done with automatic generation
-    const newHelpList = [
-      {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'cv',
-      },
-      {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'tips',
-      },
+    const newNudgeIds = [
+      'be74e4ef-9235-4dee-91a9-442108b8dda4',
+      '333f4859-5819-4853-b305-772fb8e7cc23',
     ];
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
@@ -244,7 +238,7 @@ describe('Candidat', () => {
         ...user,
         userProfile: {
           ...user.userProfile,
-          helpNeeds: newHelpList,
+          nudgeIds: newNudgeIds,
         },
         // fixture: 'user-profile-candidate-help-modified',
       }).as('putUserProfile');
@@ -254,7 +248,7 @@ describe('Candidat', () => {
       cy.get(`[data-testid="parametres-help-list"]`)
         .scrollIntoView()
         .find('li')
-        .should('have.length', user.userProfile?.helpNeeds?.length);
+        .should('have.length', user.userProfile?.nudges?.length);
     });
     cy.get(`[data-testid="parametres-help-card-button-edit"]`)
       .scrollIntoView()
@@ -277,7 +271,7 @@ describe('Candidat', () => {
     cy.get(`[data-testid="parametres-help-list"]`)
       .scrollIntoView()
       .find('li')
-      .should('have.length', newHelpList.length);
+      .should('have.length', newNudgeIds.length);
     // });
 
     // modify profile description
@@ -289,7 +283,7 @@ describe('Candidat', () => {
         userProfile: {
           ...user.userProfile,
           description,
-          helpNeeds: newHelpList,
+          nudgeIds: newNudgeIds,
         },
       }).as('putUserProfile');
     });
@@ -324,7 +318,7 @@ describe('Candidat', () => {
         userProfile: {
           ...user.userProfile,
           description,
-          helpNeeds: newHelpList,
+          nudgeIds: newNudgeIds,
           sectorOccupations: [
             {
               id: '4ee6b448-8a4b-4250-b501-941ee5084788',

@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { DirectoryItem } from '../DirectoryItem';
 import { useDirectory } from '../useDirectory';
 import { CardList } from 'src/components/utils/CardList';
-import { USER_ROLES } from 'src/constants/users';
 import { StyledDirectoryListContainer } from './DirectoryList.styles';
 
 export function DirectoryList() {
@@ -10,11 +9,6 @@ export function DirectoryList() {
 
   const profileList = useMemo(() => {
     return profiles.map((profile) => {
-      const helps =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.helpNeeds
-          : profile.helpOffers;
-
       return (
         <DirectoryItem
           key={profile.id}
@@ -23,7 +17,7 @@ export function DirectoryList() {
           lastName={profile.lastName}
           role={profile.role}
           department={profile.department}
-          helps={helps}
+          userProfileNudges={profile.userProfileNudges}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}

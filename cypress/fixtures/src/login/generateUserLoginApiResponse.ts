@@ -45,11 +45,18 @@ export const generateUserLoginApiResponse = (roleUser) => {
           order: 0,
         },
       ],
-      helpOffers: [],
-      helpNeeds: [
+      userProfileNudges: [
         {
           id: faker.string.uuid(),
-          name: 'interview',
+          content: null,
+          createdAt: faker.date.past(),
+          nudge: {
+            id: faker.string.uuid(),
+            value: 'interview',
+            nameRequest: 'Se préparer aux entretiens d’embauche',
+            nameOffer: 'Aider à préparer les entretiens d’embauche',
+            order: 1,
+          },
         },
       ],
     },
@@ -91,8 +98,7 @@ export const generateUserLoginApiResponse = (roleUser) => {
             department: null,
             isAvailable: true,
             sectorOccupations: [],
-            helpNeeds: [],
-            helpOffers: [],
+            userProfileNudges: [],
           },
         },
       },
@@ -117,13 +123,20 @@ export const generateUserLoginApiResponse = (roleUser) => {
           order: 0,
         },
       ],
-      helpOffers: [
+      userProfileNudges: [
         {
           id: faker.string.uuid(),
-          name: 'interview',
+          content: null,
+          createdAt: faker.date.past(),
+          nudge: {
+            id: faker.string.uuid(),
+            value: 'interview',
+            nameRequest: 'Se préparer aux entretiens d’embauche',
+            nameOffer: 'Aider à préparer les entretiens d’embauche',
+            order: 1,
+          },
         },
       ],
-      helpNeeds: [],
     },
   };
 

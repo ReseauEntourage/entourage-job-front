@@ -1,7 +1,7 @@
 import React from 'react';
+import { ProfileHelps } from '@/src/constants/nudges';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
-import { useHelpField } from 'src/components/backoffice/parametres-old/useUpdateProfile';
 import {
   Button,
   Card,
@@ -10,7 +10,6 @@ import {
   Tag,
   Text,
 } from 'src/components/utils';
-import { ProfileHelps } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -25,11 +24,7 @@ import {
 
 export const DashboardProfileCard = () => {
   const user = useAuthenticatedUser();
-  const helpField = useHelpField(user.role);
   const { contextualRole } = useContextualRole(user.role);
-
-  // Had to do it it two steps for the linter to be happy
-  const userHelpField = helpField ? user.userProfile[helpField] : null;
 
   return (
     <Card dataTestId="dashboard-profile-card">
@@ -60,26 +55,31 @@ export const DashboardProfileCard = () => {
         </StyledDashboardProfileCardDescription>
       )}
 
-      {userHelpField && (
+      {user.userProfile.userProfileNudges && (
         <StyledDashboardProfileCardHelps>
           <StyledDashboardProfileCardhelpsTitle>
             Mes {contextualRole === USER_ROLES.CANDIDATE && 'besoins de '} coups
             de pouce
           </StyledDashboardProfileCardhelpsTitle>
-          {userHelpField.length > 0 ? (
+          {user.userProfile.userProfileNudges.length > 0 ? (
             <StyledDashboardProfileCardHelpList>
-              {userHelpField.slice(0, 3).map((help, index) => {
-                const helpDetails = ProfileHelps.find(
-                  (helpConstant) => helpConstant.value === help.name
-                );
-                if (helpDetails) {
-                  const tagContent = helpDetails.shortTitle[contextualRole];
-                  return <Tag key={index} content={tagContent} />;
-                }
-                return null;
-              })}
-              {userHelpField.length > 3 && (
-                <Tag content={`+${userHelpField.length - 3}`} />
+              {user.userProfile.userProfileNudges
+                .slice(0, 3)
+                .map((userProfileNudge, index) => {
+                  const nudgeDetails = ProfileHelps.find(
+                    (nudgeConstant) =>
+                      nudgeConstant.value === userProfileNudge?.nudge?.value
+                  );
+                  if (nudgeDetails) {
+                    const tagContent = nudgeDetails.shortTitle[contextualRole];
+                    return <Tag key={index} content={tagContent} />;
+                  }
+                  return null;
+                })}
+              {user.userProfile.userProfileNudges.length > 3 && (
+                <Tag
+                  content={`+${user.userProfile.userProfileNudges.length - 3}`}
+                />
               )}
             </StyledDashboardProfileCardHelpList>
           ) : (

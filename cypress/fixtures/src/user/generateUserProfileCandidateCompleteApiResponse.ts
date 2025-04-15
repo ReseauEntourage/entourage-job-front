@@ -1,4 +1,3 @@
-import { fakerFR as faker } from '@faker-js/faker';
 /**
  * Profile > account user complet
  */
@@ -21,19 +20,26 @@ export const userProfile = () => {
         },
       },
     ],
-    helpOffers: [],
-    helpNeeds: [
+    userProfileNudges: [
       {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'interview',
+        id: 'de999805-1381-42fd-b5c1-3dbe7fc3392a',
+        content: "J'ai besoin d'aide pour review mon code",
+        createdAt: '2025-04-14T00:00:00.000Z',
+        nudge: null,
       },
       {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'cv',
-      },
-      {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'tips',
+        id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
+        content: null,
+        createdAt: '2025-04-14T00:00:00.000Z',
+        nudge: {
+          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+          value: 'event',
+          nameRequest:
+            'Se rencontrer et échanger avec les membres de la communauté',
+          nameOffer:
+            'Se rencontrer lors d’événements avec les membres de la communauté',
+          order: 4,
+        },
       },
     ],
   };

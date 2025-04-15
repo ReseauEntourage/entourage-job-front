@@ -1,4 +1,6 @@
 import React from 'react';
+import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
+import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -8,12 +10,10 @@ import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfil
 import { ProfileChangePassword } from 'src/components/profile/ProfilePartCards/ProfileChangePassword/ProfileChangePassword';
 import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
 import { ProfileContracts } from 'src/components/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
-import { ProfileCustomHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileCustomHelpsAndOffers/ProfileCustomHelpsAndOffers';
 import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
 import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
 import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
 import { ProfileGeneratedDescription } from 'src/components/profile/ProfilePartCards/ProfileGeneratedDescription/ProfileGeneratedDescription';
-import { ProfileHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileHelpsAndOffers/ProfileHelpsAndOffers';
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
@@ -71,9 +71,9 @@ export const Parameters = () => {
                 skills={user.userProfile.skills || []}
                 isEditable
               />
-              <ProfileCustomHelpsAndOffers
+              <ProfileCustomNudges
                 isEditable
-                items={['item1', 'item2']}
+                userProfileNudges={user.userProfile.userProfileNudges || []}
                 firstName={user.firstName}
                 role={user.role}
                 id={user.id}
@@ -117,7 +117,12 @@ export const Parameters = () => {
               <ProfileInterests interests={[]} isEditable smallCard />
               <ProfileContracts isEditable smallCard />
               <ProfileContactPreferences isEditable smallCard />
-              <ProfileHelpsAndOffers role={user.role} isEditable smallCard />
+              <ProfileNudges
+                userRole={user.role}
+                userProfileNudges={user.userProfile.userProfileNudges || []}
+                isEditable
+                smallCard
+              />
               <ProfileNotificationsPreferences isEditable smallCard />
               <ProfileStats smallCard />
               <ProfileChangePassword smallCard />

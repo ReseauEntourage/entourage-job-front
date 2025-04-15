@@ -1,3 +1,4 @@
+import { HelpValue } from '@/src/constants/nudges';
 import {
   OccupationsPrefixesType,
   CandidateHelpWithValue,
@@ -8,7 +9,6 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { HelpValue } from 'src/constants/helps';
 import { Program } from 'src/constants/programs';
 import {
   AdminRole,
@@ -148,6 +148,21 @@ export type UserProfileSectorOccupation = {
   order: number;
 };
 
+export type Nudge = {
+  id: string;
+  value: HelpValue;
+  nameRequest: string;
+  nameOffer: string;
+  order: number;
+};
+
+export type UserProfileNudge = {
+  id: string;
+  createdAt: string;
+  content: string | null;
+  nudge?: Nudge;
+};
+
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
@@ -155,8 +170,7 @@ export type UserProfile = {
   department: Department;
   isAvailable: boolean;
   unavailabilityReason: string | null;
-  helpNeeds: { name: HelpValue }[] | null;
-  helpOffers: { name: HelpValue }[] | null;
+  userProfileNudges: UserProfileNudge[] | null;
   sectorOccupations?: UserProfileSectorOccupation[];
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
@@ -321,7 +335,7 @@ export type UserRegistrationDto = {
   role: RegistrableUserRole;
   campaign?: string;
   department: Department;
-  helpNeeds?: { name: HelpValue }[];
+  nudgeIds?: string[];
   workingRight?: string;
   program?: Program;
   organizationId?: string;
@@ -339,7 +353,7 @@ export type UserReferingDto = {
   phone: string;
   campaign?: string;
   department: Department;
-  helpNeeds?: { name: HelpValue }[];
+  nudgeIds?: string[];
   workingRight?: string;
   program?: Program;
   birthDate: string;
@@ -512,8 +526,7 @@ export type PublicProfile = {
   description: string;
   story: string;
   isAvailable: boolean;
-  helpNeeds: { name: HelpValue }[];
-  helpOffers: { name: HelpValue }[];
+  userProfileNudges: UserProfileNudge[];
   sectorOccupations: UserProfileSectorOccupation[];
   experiences: Experience[];
   formations: Formation[];

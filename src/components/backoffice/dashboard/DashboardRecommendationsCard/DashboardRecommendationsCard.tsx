@@ -49,11 +49,6 @@ export const DashboardRecommendationsCard = () => {
 
   const recommendationsList = useMemo(() => {
     return recommendations.map((profile) => {
-      const helps =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.helpNeeds
-          : profile.helpOffers;
-
       return (
         <DirectoryItem
           key={profile.id}
@@ -62,7 +57,7 @@ export const DashboardRecommendationsCard = () => {
           lastName={profile.lastName}
           role={profile.role}
           department={profile.department}
-          helps={helps}
+          userProfileNudges={profile.userProfileNudges}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}

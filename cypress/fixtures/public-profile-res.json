@@ -6,27 +6,18 @@
   "zone": "LILLE",
   "currentJob": null,
   "isAvailable": true,
-  "helpOffers": [],
-  "helpNeeds": [
+  "userProfileNudges": [
     {
-      "id": "ad37f34c-5761-45f7-90a4-22e12e0ec0bf",
-      "name": "tips"
-    },
-    {
-      "id": "92c6b301-ae60-4de8-aee6-b305dce20923",
-      "name": "interview"
-    },
-    {
-      "id": "6edf899b-83bb-41b0-9dee-9a1981572e0a",
-      "name": "cv"
-    },
-    {
-      "id": "d6921395-05f8-4dfe-ac7a-a88871284f2f",
-      "name": "event"
-    },
-    {
-      "id": "2bfdf267-66c6-4f3d-82cd-c11e21e60291",
-      "name": "network"
+      "id": "181a0e77-8e5f-4d02-ab1d-900f70d8e2ff",
+      "content": null,
+      "createdAt": "2025-04-14T00:00:00.000Z",
+      "nudge": {
+        "id": "f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15",
+        "value": "event",
+        "nameRequest": "Se rencontrer et échanger avec les membres de la communauté",
+        "nameOffer": "Se rencontrer lors d’événements avec les membres de la communauté",
+        "order": 4
+      }
     }
   ],
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",

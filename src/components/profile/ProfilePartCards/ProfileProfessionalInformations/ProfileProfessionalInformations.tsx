@@ -38,7 +38,9 @@ export const ProfileProfessionalInformations = ({
       isEmpty={isEmpty}
     >
       <StyledContentContainer>
-        <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
+        {sectorOccupations.length > 0 && (
+          <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
+        )}
         <Text>{description}</Text>
         <CardTagList items={skills} />
       </StyledContentContainer>

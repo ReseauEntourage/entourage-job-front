@@ -331,6 +331,18 @@ export class APIHandler {
     return this.get('/business-sectors', { params });
   }
 
+  /// ///////// ///
+  ///  nudges  ///
+  /// //////// ///
+
+  getAllNudges(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/nudges', { params });
+  }
+
   /// ///////////// ///
   /// organization  ///
   /// //////////// ///

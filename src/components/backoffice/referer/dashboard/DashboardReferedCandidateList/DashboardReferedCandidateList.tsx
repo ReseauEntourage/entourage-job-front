@@ -5,7 +5,6 @@ import { StyledDashboardCardContentContainer } from 'src/components/backoffice/d
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { CardList } from 'src/components/utils/CardList';
 import { Card } from 'src/components/utils/Cards/Card';
-import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledDashboardReferedCandidateList } from './DashboardReferedCandidateList.styles';
 
@@ -36,11 +35,6 @@ export const DashboardReferedCandidateList = () => {
 
   const referedList = useMemo(() => {
     return referedCandidates.map((profile) => {
-      const helps =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.helpNeeds
-          : profile.helpOffers;
-
       return (
         <DirectoryItem
           key={profile.id}
@@ -49,7 +43,7 @@ export const DashboardReferedCandidateList = () => {
           lastName={profile.lastName}
           role={profile.role}
           department={profile.department}
-          helps={helps}
+          userProfileNudges={profile.userProfileNudges}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}

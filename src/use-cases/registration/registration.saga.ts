@@ -53,11 +53,7 @@ export function* createUserRequestedSaga() {
         }),
         department: flattenedData.department.value,
         organizationId: organizationId ? organizationId.value : undefined,
-        helpNeeds: flattenedData.helpNeeds
-          ? flattenedData.helpNeeds.map((expectation) => ({
-              name: expectation,
-            }))
-          : undefined,
+        nudgeIds: flattenedData.nudges ? flattenedData.nudgeIds : undefined,
       })
     );
     yield* put(

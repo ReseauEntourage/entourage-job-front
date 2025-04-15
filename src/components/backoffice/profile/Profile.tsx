@@ -1,4 +1,6 @@
 import React from 'react';
+import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
+import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
@@ -7,11 +9,9 @@ import {
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
 import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
 import { ProfileContracts } from 'src/components/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
-import { ProfileCustomHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileCustomHelpsAndOffers/ProfileCustomHelpsAndOffers';
 import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
 import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
 import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
-import { ProfileHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileHelpsAndOffers/ProfileHelpsAndOffers';
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileProfessionalInformations } from 'src/components/profile/ProfilePartCards/ProfileProfessionalInformations/ProfileProfessionalInformations';
@@ -47,26 +47,10 @@ export const Profile = () => {
               userFirstName={selectedProfile.firstName}
               sectorOccupations={selectedProfile.sectorOccupations}
               description={selectedProfile.description}
-              skills={[
-                {
-                  id: '1',
-                  name: 'Gestion administrative et organisation',
-                  order: 0,
-                },
-                {
-                  id: '2',
-                  name: 'Relation client et prospection commerciale',
-                  order: 1,
-                },
-                {
-                  id: '3',
-                  name: 'Communication et coordination',
-                  order: 2,
-                },
-              ]}
+              skills={selectedProfile.skills}
             />
-            <ProfileCustomHelpsAndOffers
-              items={['item1', 'item2']}
+            <ProfileCustomNudges
+              userProfileNudges={selectedProfile.userProfileNudges}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
               id={selectedProfile.id}
@@ -101,7 +85,11 @@ export const Profile = () => {
               smallCard
             />
             <ProfileContactPreferences smallCard />
-            <ProfileHelpsAndOffers role={selectedProfile.role} smallCard />
+            <ProfileNudges
+              userRole={selectedProfile.role}
+              userProfileNudges={selectedProfile.userProfileNudges}
+              smallCard
+            />
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>
