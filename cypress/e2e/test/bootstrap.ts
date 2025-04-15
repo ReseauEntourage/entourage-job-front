@@ -17,19 +17,11 @@ const bootstrap = () => {
     cy.generateCandidateLoginApiResponse(); // candidate-login.json
     cy.generateCoachLoginApiResponse(); // coach-login.json
 
-    cy.generateCvCandidateApiResponse(); // cv-candidate.json
-    cy.generateCvCardsApiResponse(); // cv-cards.json
-
     cy.generateSearchUsersApiResponse(); // search-user.json
     cy.generateUserProfileReferedApiResponse(); // user-profile-refered.json
     cy.generateUsersApiResponse('candidat'); // users-candidat.json
 
-    cy.generateOpportunitiesApiResponse(); // opportunities.json
-    cy.generateOpportunitiesWrappedApiResponse(); // opportunities-wrapped.json
-
     cy.generateOrganizationsApiResponse(); // organizations.json
-
-    cy.generateTabCountApiResponse(); // tab-count.json
 
     cy.generateCampaignsApiResponse(); // campaigns.json;
   });

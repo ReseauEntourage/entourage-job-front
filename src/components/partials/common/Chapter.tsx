@@ -8,7 +8,6 @@ interface ChapterProps {
   imgSrc?: string;
   style: 'muted' | 'default';
   direction: 'left' | 'right' | 'column';
-  animate: boolean;
   cta?: React.ReactNode;
   smallTitle?: boolean;
 }
@@ -18,7 +17,6 @@ export const Chapter = ({
   content,
   imgSrc,
   style,
-  animate,
   direction,
   cta,
   smallTitle,
@@ -40,30 +38,19 @@ export const Chapter = ({
             direction === 'left' ? 'uk-flex-row-reverse' : 'uk-flex-row'
           }`}
         >
-          <div
-            data-uk-scrollspy={
-              animate
-                ? `cls:uk-animation-slide-${
-                    direction === 'left' ? 'right' : 'left'
-                  }; delay: 200; target: > .animate;`
-                : ''
-            }
-          >
+          <div>
             {smallTitle && (
               <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top animate">
                 {title}
               </h2>
             )}
-            <p className="uk-margin-remove-top uk-margin-remove-bottom animate">
+            <div className="uk-margin-remove-top uk-margin-remove-bottom animate">
               {content}
-            </p>
+            </div>
             {cta && <div className="uk-flex uk-margin-medium-top">{cta}</div>}
           </div>
           {imgSrc && (
-            <div
-              className="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-box-shadow-medium uk-border-rounded uk-cover-container"
-              data-uk-scrollspy="cls:uk-animation-fade; delay: 200;"
-            >
+            <div className="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-box-shadow-medium uk-border-rounded uk-cover-container">
               <Img src={imgSrc} cover alt="" />
             </div>
           )}

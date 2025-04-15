@@ -38,6 +38,7 @@ export const Dashboard = () => {
       <Section className="custom-page">
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre espace personnel" color="black" />
+          <br />
           {user.role === USER_ROLES.COACH && <DashboardAlertWhatsappCoach />}
         </StyledDashboardTitleContainer>
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>

@@ -176,10 +176,6 @@ export function MemberList({
       <HeaderBackoffice
         title={`Gestion des ${roleToDisplay}`}
         description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
-        shouldDisplayAdminNotifications={isRoleIncluded(
-          [USER_ROLES.CANDIDATE],
-          role
-        )}
       >
         <AdminCreationButtons
           refreshList={() => fetchData(search, filters, role, offset, true)}
@@ -188,7 +184,7 @@ export function MemberList({
       {hasError ? (
         <Section>
           <ContainerWithTextCentered>
-            <H4 title={"Les membres n'ont pas pu etre chargés correctement."} />
+            <H4 title="Les membres n'ont pas pu etre chargés correctement." />
             <Text size="large">
               Contacte l&apos;équipe Entourage Pro pour en savoir plus.
             </Text>

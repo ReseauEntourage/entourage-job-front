@@ -1,15 +1,10 @@
 import moment from 'moment/moment';
 import React from 'react';
+import { UserProfileSectorOccupation } from 'src/api/types';
 import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
-import {
-  AmbitionsPrefixesType,
-  AMBITIONS_PREFIXES,
-  BusinessLineValue,
-  CONTRACTS,
-} from 'src/constants';
-import { FilterConstant } from 'src/constants/utils';
+import { OCCUPATIONS_PREFIXES, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {
@@ -30,13 +25,13 @@ export function formatParagraph(text: string, condense?: boolean) {
   return text;
 }
 
-export function getAmbitionsLinkingSentence(ambitions) {
+export function getOccupationsLinkingSentence(occupations) {
   return (
     <>
       {' '}
-      {ambitions[0].prefix === ambitions[1].prefix
+      {occupations[0].prefix === occupations[1].prefix
         ? 'ou'
-        : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
+        : `${occupations[1].prefix || occupations[1].prefix}`}{' '}
     </>
   );
 }
@@ -44,22 +39,6 @@ export function getAmbitionsLinkingSentence(ambitions) {
 export function addSpaceToPrefixIfNeeded(prefix) {
   if (!prefix) return '';
   return prefix.includes("'") ? prefix : `${prefix} `;
-}
-
-export function buildBusinessLineForSentence({ label, prefix }) {
-  const separator = 'et ';
-  if (Array.isArray(prefix)) {
-    let mutatedLabel = '';
-    const splittedLabel = label.split(separator);
-    for (let i = 1; i < splittedLabel.length; i += 1) {
-      mutatedLabel +=
-        separator + addSpaceToPrefixIfNeeded(prefix[i]) + splittedLabel[i];
-    }
-    return (
-      addSpaceToPrefixIfNeeded(prefix[0]) + splittedLabel[0] + mutatedLabel
-    );
-  }
-  return addSpaceToPrefixIfNeeded(prefix) + label;
 }
 
 export function buildContractLabel(
@@ -95,14 +74,6 @@ export const limitChar = (string: string, limit: number) => {
   return string;
 };
 
-export const formatNetworkBusinessLines = (
-  networkBusinessLines: FilterConstant<BusinessLineValue>[]
-): { name: BusinessLineValue; order: number }[] => {
-  return networkBusinessLines.map(({ value }, i) => {
-    return { name: value, order: i };
-  });
-};
-
 export const formatCareerPathSentence = (
   values: Partial<
     ExtractFormSchemaValidation<
@@ -110,58 +81,30 @@ export const formatCareerPathSentence = (
       | typeof formReferingProfessionalInformation
     >
   >
-): {
-  searchAmbitions: {
-    prefix: AmbitionsPrefixesType;
-    name: string;
-    order: number;
-  }[];
-  searchBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-} => {
-  let newAmbitions = [] as {
-    prefix: AmbitionsPrefixesType;
-    name: string;
-    order: number;
-  }[];
-  if (values.searchAmbition0) {
-    newAmbitions = [
-      {
-        prefix: AMBITIONS_PREFIXES[1].label,
-        name: values.searchAmbition0,
-        order: 0,
-      },
-    ];
-  }
-  if (values.searchAmbition1) {
-    newAmbitions = [
-      ...newAmbitions,
-      {
-        prefix: AMBITIONS_PREFIXES[1].label,
-        name: values.searchAmbition1,
-        order: 1,
-      },
-    ];
-  }
-  let newBusinessLines = [] as {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  if (values.searchBusinessLine0) {
-    newBusinessLines = [{ name: values.searchBusinessLine0.value, order: 0 }];
-  }
-  if (values.searchBusinessLine1) {
-    newBusinessLines = [
-      ...newBusinessLines,
-      { name: values.searchBusinessLine1.value, order: 1 },
-    ];
-  }
-  return {
-    searchAmbitions: newAmbitions,
-    searchBusinessLines: newBusinessLines,
-  };
+): UserProfileSectorOccupation[] => {
+  const sectorOccupation0 = {
+    businessSectorId: values.businessSectorId0?.value,
+    occupation: {
+      prefix: OCCUPATIONS_PREFIXES[1].label,
+      name: values.occupation0,
+    },
+    order: 0,
+  } as UserProfileSectorOccupation;
+
+  const sectorOccupation1 = {
+    businessSectorId: values.businessSectorId1?.value,
+    occupation: {
+      prefix: OCCUPATIONS_PREFIXES[1].label,
+      name: values.occupation1,
+    },
+    order: 1,
+  } as UserProfileSectorOccupation;
+
+  return [sectorOccupation0, sectorOccupation1].filter((sectorOccupation) => {
+    return (
+      !!sectorOccupation.businessSectorId || !!sectorOccupation.occupation?.name
+    );
+  });
 };
 
 export const escapeHtml = (unsafe: string): string => {

@@ -1,26 +1,26 @@
 import { NextRouter, withRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
-import { updateSharesCount } from 'src/components/cv/updateSharesCount';
 import { CVDiscover } from 'src/components/partials/CV/CVDiscover';
 import { CVList } from 'src/components/partials/CV/CVList';
 import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { updateSharesCount } from 'src/components/profile/updateSharesCount';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_FILTERS_DATA, CV_STATUS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
-interface CVPageProps {
+export interface CVPageProps {
   cv: CV;
   router: NextRouter;
   exists?: boolean;
 }
+
 const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
-  const hostname = process.env.SERVER_URL;
+  const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
   const link = `${hostname}${router.asPath}`;
   const candidateExists = cv && cv.user && cv.user.candidat;
   const sharedDescription = candidateExists
@@ -30,7 +30,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
     ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
     : '';
   const urlImg = candidateExists
-    ? `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
     : '';
 
   useEffect(() => {
@@ -124,20 +124,6 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       </StyledCVPage>
     </Layout>
   );
-};
-
-CVPage.getInitialProps = async ({ query }) => {
-  return Api.getCVByUrl(query.url)
-    .then(({ data: { cv, exists } }) => {
-      return {
-        cv,
-        exists,
-      };
-    })
-    .catch((err) => {
-      console.error(err);
-      return { cv: null, exists: false };
-    });
 };
 
 export default withRouter<CVPageProps>(CVPage);

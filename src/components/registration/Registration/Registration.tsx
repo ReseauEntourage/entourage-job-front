@@ -9,7 +9,6 @@ import {
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { Card, Text } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
-import { isSSR } from 'src/utils/isSSR';
 import { useRegistration } from './useRegistration';
 
 export function Registration() {
@@ -24,7 +23,7 @@ export function Registration() {
   } = useRegistration();
 
   useEffect(() => {
-    if (!isSSR && !isRegistrationLoading) {
+    if (!isRegistrationLoading) {
       window.scrollTo(0, 0);
     }
   }, [isRegistrationLoading]);

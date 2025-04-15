@@ -58,11 +58,11 @@ const Contact = () => {
           <br />
           <SimpleLink
             className="uk-link uk-margin-small-top uk-margin-small-bottom"
-            href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
+            href={`mailto:${process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}`}
             target="_blank"
             isExternal
           >
-            {process.env.MAILJET_CONTACT_EMAIL}
+            {process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}
           </SimpleLink>
           <br />
           <div className="uk-margin-small-top uk-margin-small-bottom uk-text-italic uk-text-muted">

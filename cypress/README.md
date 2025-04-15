@@ -49,7 +49,7 @@ Les variables spécifiques aux tests cypress sont définies dans le fichier `cyp
 Elles dépendent des variables fixées à la racine:
 
 - `CYPRESS_IO_PROJECT_ID`: pour envoyer les résultats du test sur la plateforme cypress.io
-- `ADRESSE_LOCAUX_PARIS`
+- `NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS`
 - `SERVER_URL`: mandatory, pour mocker les requêtes en backend sur la bonne URL
 
 Pour le bon fonctionnement des tests et de l'appli, la liste des variables d'environnement supplémentaires qui doivent être présentes dans le fichier d'environnement à la racine se trouvent dans le fichier `.github/workflows/main.yml`.

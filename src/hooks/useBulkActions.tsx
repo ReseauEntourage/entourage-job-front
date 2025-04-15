@@ -39,9 +39,6 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
     async (attributesToUpdate = {}, method = 'put') => {
       const apiMethods = {
         put: {
-          opportunity: (params) => {
-            return Api.putBulkOpportunities(params);
-          },
           candidate: (params) => {
             return Api.putBulkCandidates(params);
           },

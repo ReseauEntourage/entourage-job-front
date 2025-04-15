@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useUpdateProfile } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { useUpdateProfile } from 'src/components/backoffice/parametres-old/useUpdateProfile';
 import { FeedbackModal } from 'src/components/modals/FeedbackModal/FeedbackModal';
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';

@@ -1,12 +1,33 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
+import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants/utils';
 
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
 export const formEditCareerPath: FormSchema<{
-  businessLine0: FilterConstant<BusinessLineValue>;
-  ambition0: string;
-  businessLine1: FilterConstant<BusinessLineValue>;
-  ambition1: string;
+  businessSectorId0: FilterConstant<string>;
+  occupation0: string;
+  businessSectorId1: FilterConstant<string>;
+  occupation1: string;
 }> = {
   id: 'form-career-path',
   fields: [
@@ -35,17 +56,18 @@ export const formEditCareerPath: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'businessLine0',
-          name: 'businessLine0',
-          title: 'Famille de métier 1*',
-          component: 'select',
-          options: BUSINESS_LINES,
-          isMulti: false,
+          id: 'businessSectorId0',
+          name: 'businessSectorId0',
+          component: 'select-async',
           isRequired: true,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 1 *',
+          isMulti: false,
+          showLabel: true,
         },
         {
-          id: 'ambition0',
-          name: 'ambition0',
+          id: 'occupation0',
+          name: 'occupation0',
           component: 'text-input',
           title: 'Métier 1',
         },
@@ -76,24 +98,26 @@ export const formEditCareerPath: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'businessLine1',
-          name: 'businessLine1',
-          title: 'Famille de métier 2',
-          component: 'select',
+          id: 'businessSectorId1',
+          name: 'businessSectorId1',
+          component: 'select-async',
+          isRequired: false,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 2',
           isMulti: false,
-          options: BUSINESS_LINES,
+          showLabel: true,
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return !!fieldValue || !fieldValues.ambition1;
+                return !!fieldValue || !fieldValues.occupation1;
               },
               message: 'Obligatoire',
             },
           ],
         },
         {
-          id: 'ambition1',
-          name: 'ambition1',
+          id: 'occupation1',
+          name: 'occupation1',
           component: 'text-input',
           title: 'Métier 2',
         },

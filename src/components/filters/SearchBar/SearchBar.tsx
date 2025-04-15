@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
-import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
-import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -127,9 +125,6 @@ export const SearchBar = ({
           </StyledSearchBarInputContainer>
         </form>
         {filtersConstants.length > 0 && (
-          <FiltersMobile numberOfFilters={numberOfFilters} />
-        )}
-        {filtersConstants.length > 0 && (
           <FiltersDropdowns
             hideOnMobile
             filterData={filtersConstants}
@@ -143,11 +138,6 @@ export const SearchBar = ({
         </StyledSearchBarSubmitButton>
       </StyledSearchBar>
 
-      <FiltersSideBar
-        filterData={filtersConstants}
-        filters={filters}
-        setFilters={setFilters}
-      />
       {filtersConstants.length > 0 && (
         <div className="uk-width-expand uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
           <FiltersCheckboxes

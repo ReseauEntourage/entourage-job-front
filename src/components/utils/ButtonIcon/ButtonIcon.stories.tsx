@@ -5,16 +5,11 @@ import { ButtonIcon, ButtonIconProps } from './ButtonIcon';
 
 const meta = {
   title: 'ButtonIcon',
-  render: ({ tooltip, href, newTab }: ButtonIconProps) => {
+  render: ({ href, newTab }: ButtonIconProps) => {
     return (
       <>
         Bouton vers : {href}
-        <ButtonIcon
-          icon={<IlluConversation />}
-          tooltip={tooltip}
-          href={href}
-          newTab={newTab}
-        />
+        <ButtonIcon icon={<IlluConversation />} href={href} newTab={newTab} />
       </>
     );
   },
@@ -25,7 +20,6 @@ type Story = StoryObj<typeof ButtonIcon>;
 
 export const Default: Story = {
   args: {
-    tooltip: "Contenu de l'infobulle",
     href: 'https://www.entourage.social/',
     newTab: true,
   },

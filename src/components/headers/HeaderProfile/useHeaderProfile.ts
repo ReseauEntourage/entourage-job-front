@@ -1,4 +1,4 @@
-import { useOpenCorrespondingModal } from 'src/components/backoffice/parametres/ParametresLayout/UserInformationCard/useOpenModal';
+import { useOpenCorrespondingModal } from 'src/components/backoffice/parametres-old/ParametresLayout/UserInformationCard/useOpenModal';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';

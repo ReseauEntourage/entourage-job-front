@@ -28,7 +28,7 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
     <Section id="reviews" style="default">
       <H3 title={title} center />
       <br />
-      <StyledReviewContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .review-card; delay: 200">
+      <StyledReviewContainer>
         {reviews.map(
           (
             {

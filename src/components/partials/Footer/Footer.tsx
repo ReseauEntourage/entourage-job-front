@@ -123,7 +123,7 @@ const pages: PageType = [
       },
       {
         title: 'Nous soutenir',
-        path: process.env.DONATION_LINK,
+        path: process.env.NEXT_PUBLIC_DONATION_LINK,
         props: {
           isExternal: true,
           newTab: true,

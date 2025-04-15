@@ -8,9 +8,6 @@ const Card = ({ text, number }) => {
   return (
     <div
       key={number}
-      data-uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
-        100 * number
-      };`}
       className="uk-flex uk-card uk-card-small uk-card-primary uk-card-body uk-box-shadow-medium"
     >
       <div
@@ -104,7 +101,6 @@ const EntouragePro = () => {
           </>
         }
         imgSrc="/static/img/why_1.jpg"
-        animate
         direction="column"
       />
       <Chapter
@@ -149,7 +145,6 @@ const EntouragePro = () => {
           </>
         }
         imgSrc="/static/img/why_2.jpg"
-        animate={false}
         direction="column"
       />
       <Chapter
@@ -177,7 +172,6 @@ const EntouragePro = () => {
           </>
         }
         imgSrc="/static/img/why_3.jpg"
-        animate={false}
         direction="left"
       />
       <Chapter
@@ -205,7 +199,6 @@ const EntouragePro = () => {
           </>
         }
         imgSrc="/static/img/why_4.jpg"
-        animate
         direction="right"
       />
       <Section container="small" style="default">

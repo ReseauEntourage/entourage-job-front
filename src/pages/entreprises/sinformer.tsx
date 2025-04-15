@@ -93,68 +93,6 @@ const Sinformer = () => {
       <CandidateTestimonies />
       <HowToBeInclusive />
       <CompanyTestimonies />
-      {/* to be fixed */}
-      {/* <Section
-        style="muted"
-        container="small"
-        className="uk-padding-remove-top"
-      >
-        <h2 className="uk-text-bold uk-text-center uk-margin-large-bottom">
-          <span className="uk-text-primary">Des ressources</span>&nbsp;pour vous
-          lancer
-        </h2>
-        <MultipleCTA
-          spacing="medium"
-          data={[
-            {
-              title: 'Se former à l’inclusion',
-              text: 'Le Campus de l’inclusion propose des formations aux dirigeants d’organisations et vous aide à construire un plan d’action adapté à votre organisation.',
-              button: {
-                label: "Plus d'infos ici",
-                href: EXTERNAL_LINKS.CAMPUS_INCLUSION,
-                external: true,
-                size: 'small',
-              },
-            },
-            {
-              title: <div>Sensibiliser ses collaborateurs</div>,
-              text: 'Nous proposons des ateliers pour ouvrir le dialogue autour de ce sujet dans votre entreprise et initier une démarche parmi vos collaborateurs.',
-              button: {
-                label: 'Nous contacter',
-                href: `mailto:${CONTACT_INFO.CORPORATE_CONTACT}`,
-                external: true,
-                size: 'small',
-              },
-            },
-            {
-              title: 'Agir dans son territoire',
-              text: 'Les clubs La France Une Chance rassemblent dans chaque territoire les entreprises inclusives. Rejoignez votre club et découvrez les formes d’engagement locales.',
-              button: {
-                label: 'Retrouvez les clubs ici',
-                href: EXTERNAL_LINKS.FRANCE_UNE_CHANCE,
-                external: true,
-                size: 'small',
-              },
-            },
-            {
-              title: (
-                <div>
-                  Prêt à<br />
-                  recruter&nbsp;?
-                </div>
-              ),
-              text: 'Découvrez si un candidat Entourage Pro correspond à votre besoin ; ou contactez nos partenaires qui cherchent aussi des emplois pour leurs candidats.',
-              button: {
-                label: 'Recruter',
-                href: '/candidats?employed=false',
-                size: 'small',
-              },
-            },
-          ]}
-          showHorizontalDividers
-          className="uk-margin-large-bottom"
-        />
-      </Section>  */}
       <NewsletterPartial
         tag={GA_TAGS.PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC}
       />

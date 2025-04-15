@@ -27,6 +27,13 @@ export const postMessageAdapter = createRequestAdapter(
   }
 >();
 
+export const postFeedbackAdapter = createRequestAdapter(
+  'postFeedback'
+).withPayloads<{
+  conversationParticipantId: string;
+  rating: number | null;
+}>();
+
 export const getSelectedConversationAdapter = createRequestAdapter(
   'getSelectedConversation'
 ).withPayloads<void, Conversation>();

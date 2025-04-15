@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useMemo, type JSX } from 'react';
+import UIkit from 'uikit';
 
 interface GridProps {
-  parallax?: number;
   match?: boolean;
   center?: boolean;
   between?: boolean;
@@ -12,7 +12,6 @@ interface GridProps {
   items?: JSX.Element[];
   children?: React.ReactNode;
   className?: string;
-  around?: boolean;
   top?: boolean;
   middle?: boolean;
   bottom?: boolean;
@@ -26,31 +25,35 @@ interface GridProps {
 
 export const Grid = ({
   items,
-  childWidths,
-  match,
-  divider,
-  center,
-  between,
-  around,
-  parallax,
+  childWidths = [],
+  match = false,
+  divider = false,
+  center = false,
+  between = false,
   className,
-  eachWidths,
+  eachWidths = [],
   gap,
   children,
-  top,
-  middle,
-  bottom,
-  column,
-  row,
-  masonry,
+  top = false,
+  middle = false,
+  bottom = false,
+  column = false,
+  row = false,
+  masonry = false,
   style,
-  reverse,
-  dataTestId,
+  reverse = false,
+  dataTestId = '',
 }: GridProps) => {
+  const gridRef = React.useRef<HTMLDivElement | null>(null);
   let classBuffer = '';
-  let gridBuffer = '';
-  if (parallax) gridBuffer += `parallax: ${parallax};`;
-  if (masonry) gridBuffer += 'masonry: true';
+  const gridOptions = useMemo(() => {
+    if (masonry) {
+      return {
+        masonry: true,
+      };
+    }
+    return {};
+  }, [masonry]);
   if (childWidths) {
     classBuffer += childWidths
       .map((childWidth) => {
@@ -63,7 +66,6 @@ export const Grid = ({
   if (divider) classBuffer += ' uk-grid-divider';
   if (center) classBuffer += ' uk-flex-center';
   if (between) classBuffer += ' uk-flex-between';
-  if (around) classBuffer += ' uk-flex-around';
   if (top) classBuffer += ' uk-flex-top';
   if (middle) classBuffer += ' uk-flex-middle';
   if (bottom) classBuffer += ' uk-flex-bottom';
@@ -72,73 +74,47 @@ export const Grid = ({
   if (reverse) classBuffer += ' uk-flex-row-reverse';
 
   if (className) classBuffer += ` ${className}`;
-  const content = (() => {
-    if (items !== null) {
+  const content = useMemo(() => {
+    if (items !== undefined) {
       return items;
     }
     if (Array.isArray(children)) {
       return children;
     }
     return [children];
-  })();
-  // on filtre les elemnt vide
+  }, [children, items]);
+
+  useEffect(() => {
+    if (gridRef.current) {
+      UIkit.grid(gridRef.current, gridOptions);
+    }
+  }, [gridOptions]);
+
   return (
     <div
+      ref={gridRef}
       className={classBuffer}
-      data-uk-grid={gridBuffer}
       style={style}
       data-testid={dataTestId}
     >
-      {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        content
-          .filter((_) => {
-            return _;
-          })
-          .map((item, index) => {
-            return (
-              <div
-                // todo optimize
-                className={
-                  index <
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  eachWidths.length
-                    ? `uk-width-${
-                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                        eachWidths[index]
-                      }`
-                    : undefined
-                }
-                key={index}
-              >
-                {item}
-              </div>
-            );
-          })
-      }
+      {content
+        .filter((_) => {
+          return _;
+        })
+        .map((item, index) => {
+          return (
+            <div
+              className={
+                index < eachWidths.length
+                  ? `uk-width-${eachWidths[index]}`
+                  : undefined
+              }
+              key={index}
+            >
+              {item}
+            </div>
+          );
+        })}
     </div>
   );
-};
-Grid.defaultProps = {
-  match: false,
-  center: false,
-  between: false,
-  divider: false,
-  parallax: null,
-  childWidths: [],
-  eachWidths: [],
-  gap: null,
-  items: null,
-  className: null,
-  around: false,
-  top: false,
-  middle: false,
-  bottom: false,
-  column: false,
-  row: false,
-  masonry: false,
-  style: null,
-  reverse: false,
-  children: null,
-  dataTestId: '',
 };

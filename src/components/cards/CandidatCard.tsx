@@ -1,30 +1,41 @@
 import _ from 'lodash';
-// import moment from 'moment';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
+import { BusinessSector, Occupation } from '@/src/api/types';
+import DefaultProfilePic from 'public/static/img/arthur.jpg';
 import {
   CandidatCardContentStyled,
   CandidatCardPictureContainerStyled,
   CandidatCardPictureOverlay,
   CandidatCardStyled,
-  CandidateCardBusinessLinesStyled,
+  CandidateCardBusinessSectorsStyled,
 } from 'src/components/cards/CandidatCard.styles';
 
 import { Img, Tag } from 'src/components/utils';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { sortByOrder } from 'src/utils';
+
+interface CandidatCardProps {
+  url: string;
+  imgSrc: string;
+  firstName: string;
+  businessSectors: BusinessSector[];
+  occupations: Occupation[];
+  locations: {
+    name: string;
+    order: number;
+  }[];
+}
 
 export const CandidatCard = ({
   url,
-  imgSrc,
+  imgSrc = '/static/img/arthur.jpg',
   firstName,
-  ambitions,
-  businessLines,
+  occupations,
+  businessSectors,
   locations,
-}) => {
+}: CandidatCardProps) => {
   const { asPath, push } = useRouter();
 
   const isCandidatsPage = asPath.includes('/candidats');
@@ -42,58 +53,51 @@ export const CandidatCard = ({
     push(linkToCV);
   };
 
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+  const sortedOccupations = occupations;
 
   const sortedLocations =
     locations && locations.length > 0 ? sortByOrder(locations) : null;
 
-  const sortedBusinessLines =
-    businessLines && businessLines.length > 0
-      ? sortByOrder(businessLines)
-      : null;
+  const sortedBusinessSectors = businessSectors;
 
-  const isNewCareerPath = sortedBusinessLines?.every(({ order }) => {
-    return order > -1;
-  });
+  const isNewCareerPath = true;
 
   return (
     <CandidatCardStyled>
       <CandidatCardPictureContainerStyled onClick={onCardClicked}>
-        <Img src={imgSrc} alt={firstName} cover />
+        <Img src={imgSrc || DefaultProfilePic} alt={firstName} cover />
         <CandidatCardPictureOverlay>
           <p className="name">{firstName}</p>
-          {sortedLocations?.length > 0 && <p>{sortedLocations[0].name}</p>}
+          {sortedLocations && sortedLocations.length > 0 && (
+            <p>{sortedLocations[0].name}</p>
+          )}
         </CandidatCardPictureOverlay>
       </CandidatCardPictureContainerStyled>
       <CandidatCardContentStyled onClick={onCardClicked}>
         <h1>
-          {sortedAmbitions?.length > 0
-            ? sortedAmbitions[0].name
+          {sortedOccupations?.length > 0
+            ? sortedOccupations[0].name
             : "A l'écoute de toutes les opportunités"}
         </h1>
-        {sortedBusinessLines?.length > 0 && (
+        {sortedBusinessSectors?.length > 0 && (
           <>
             <p>Je recherche un emploi dans :</p>
-            <CandidateCardBusinessLinesStyled>
+            <CandidateCardBusinessSectorsStyled>
               {isNewCareerPath
-                ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
+                ? _.uniqWith(sortedBusinessSectors.slice(0, 2), (a, b) => {
                     // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                    return a.name === b.name;
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    return a.value === b.value;
                   }).map(({ name }, index) => {
                     return (
                       <Tag
                         key={index}
                         size="small"
                         style="hoverBlue"
-                        content={
-                          findConstantFromValue(name, BUSINESS_LINES).label
-                        }
+                        content={name}
                       />
                     );
                   })
-                : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
+                : sortedOccupations?.slice(0, 2).map(({ name }, index) => {
                     return (
                       <Tag
                         key={index}
@@ -103,52 +107,10 @@ export const CandidatCard = ({
                       />
                     );
                   })}
-            </CandidateCardBusinessLinesStyled>
+            </CandidateCardBusinessSectorsStyled>
           </>
         )}
       </CandidatCardContentStyled>
     </CandidatCardStyled>
   );
-};
-CandidatCard.propTypes = {
-  url: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  ambitions: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-      prefix: PropTypes.oneOf(
-        AMBITIONS_PREFIXES.map(({ value }) => {
-          return value;
-        })
-      ),
-    })
-  ).isRequired,
-  businessLines: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  locations: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  imgSrc: PropTypes.string,
-  // skills: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     name: PropTypes.string.isRequired,
-  //   })
-  // ).isRequired,
-  // catchphrase: PropTypes.string,
-  // employed: PropTypes.bool,
-  // endOfContract: PropTypes.string,
-};
-
-CandidatCard.defaultProps = {
-  imgSrc: '/static/img/arthur.jpg',
-  // employed: false,
-  // endOfContract: undefined,
-  // catchphrase: "cherche un job pour s'en sortir",
 };

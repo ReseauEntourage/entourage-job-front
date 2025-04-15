@@ -28,13 +28,6 @@ export const companyJourneyRequests = {
       },
       alias: 'postContactCompany',
     },
-    {
-      path: '/opportunity',
-      data: {
-        statusCode: 201,
-      },
-      alias: 'postOpportunity',
-    },
   ],
   PUT: [],
 };

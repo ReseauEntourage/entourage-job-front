@@ -46,6 +46,7 @@ import {
 import {
   SelectList,
   SelectListType,
+  SelectListAsync,
 } from 'src/components/utils/Inputs/SelectList';
 import { AnyCantFix } from 'src/utils/Types';
 
@@ -125,7 +126,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     },
   });
 
-  watch();
+  const allWatch = watch();
 
   const onChangeCustom = useCallback(
     (updatedValue) => {
@@ -165,6 +166,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       showLabel: field.showLabel,
       showOptional: field.showOptional,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     field,
     error,
@@ -175,6 +177,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     onChangeCustom,
     ref,
     value,
+    allWatch,
   ]);
 
   if (field.component === 'datepicker') {
@@ -305,6 +308,19 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
               ? field.options(getValue)
               : field.options) as SelectListType[]
           }
+        />
+      );
+    }
+    if (field.component === 'select-list-async') {
+      return (
+        <SelectListAsync
+          {...commonProps}
+          isMulti={field.isMulti}
+          loadOptions={async (callback) => {
+            if (field.loadOptions) {
+              await field.loadOptions(callback);
+            }
+          }}
         />
       );
     }

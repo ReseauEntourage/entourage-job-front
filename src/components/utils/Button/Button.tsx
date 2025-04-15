@@ -1,6 +1,8 @@
+'use client';
+
 /* eslint-disable react/jsx-no-target-blank */
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   UIKIT_BUTTON_SIZES,
   UIKIT_BUTTON_STYLES_SPEC,
@@ -87,6 +89,14 @@ export function Button({
   color = 'primaryBlue',
   rounded = false,
 }: ButtonProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   const classBuffer = getButtonClassBuffer({
     visible,
     className,

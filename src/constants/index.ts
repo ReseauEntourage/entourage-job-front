@@ -2,11 +2,9 @@ import _ from 'lodash';
 import {
   ADMIN_ZONES,
   ADMIN_ZONES_FILTERS,
-  DEPARTMENTS_FILTERS,
   REGIONS_FILTERS,
 } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-import { ProfileHelps } from './helps';
 import { GENDERS_FILTERS } from './users';
 import { Filter, FilterConstant } from './utils';
 
@@ -16,175 +14,6 @@ export const JNSPR = {
   value: 'jnspr',
   label: 'Je ne souhaite pas répondre',
 };
-
-export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
-
-export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
-  color: string;
-  public?: string;
-  recommended?: string;
-})[] = [
-  {
-    value: -1,
-    label: 'Offre à traiter',
-    public: 'Offre consultée',
-    recommended: 'Offre recommandée',
-    color: 'muted',
-  },
-  { value: 0, label: 'Contacté', color: 'muted' },
-  { value: 1, label: "Phase d'entretien", color: 'warning' },
-  { value: 2, label: 'Embauche', color: 'success' },
-  { value: 3, label: 'Refus avant entretien', color: 'danger' },
-  { value: 4, label: 'Refus après entretien', color: 'danger' },
-];
-
-export type AdminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
-
-export const ADMIN_OFFERS_TAGS: FilterConstant<AdminOffersTags>[] = [
-  {
-    value: 'pending',
-    label: 'offres à valider',
-  },
-  {
-    value: 'validated',
-    label: 'offres publiées',
-  },
-  {
-    value: 'external',
-    label: 'offres externes',
-  },
-  {
-    value: 'archived',
-    label: 'offres archivées',
-  },
-];
-
-export type BusinessLineValue =
-  | 'la'
-  | 'aa'
-  | 'bat'
-  | 'rh'
-  | 'cd'
-  | 'asp'
-  | 'pr'
-  | 'mi'
-  | 'art'
-  | 'tra'
-  | 'id'
-  | 'sec'
-  | 'cm'
-  | 'ca'
-  | 'aev'
-  | 'sa'
-  | 'fjr'
-  | 'sm';
-
-const BUSINESS_LINES_UNSORTED: (FilterConstant<BusinessLineValue> & {
-  prefix: string | string[];
-})[] = [
-  {
-    label: 'Logistique et approvisionnement',
-    value: 'la',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Assistanat et administratif',
-    value: 'aa',
-    prefix: ["l'", "l'"],
-  },
-  {
-    label: 'Bâtiment',
-    value: 'bat',
-    prefix: 'le',
-  },
-  {
-    label: 'Restauration et hôtellerie',
-    value: 'rh',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Commerce et distribution',
-    value: 'cd',
-    prefix: ['le', 'la'],
-  },
-  {
-    label: 'Aide et service à la personne',
-    value: 'asp',
-    prefix: ["l'", 'le'],
-  },
-  {
-    label: 'Propreté',
-    value: 'pr',
-    prefix: 'la',
-  },
-  {
-    label: 'Maintenance et industrie',
-    value: 'mi',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Artisanat',
-    value: 'art',
-    prefix: "l'",
-  },
-  {
-    label: 'Transport',
-    value: 'tra',
-    prefix: 'le',
-  },
-  {
-    label: 'Informatique et digital',
-    value: 'id',
-    prefix: ["l'", 'le'],
-  },
-  {
-    label: 'Sécurité',
-    value: 'sec',
-    prefix: 'la',
-  },
-  {
-    label: 'Communication et marketing',
-    value: 'cm',
-    prefix: ['la', 'le'],
-  },
-  {
-    label: 'Culture et art',
-    value: 'ca',
-    prefix: ['la', "l'"],
-  },
-  {
-    label: 'Agriculture et espaces verts',
-    value: 'aev',
-    prefix: ["l'", 'les'],
-  },
-  {
-    label: 'Social et associatif',
-    value: 'sa',
-    prefix: ['le', "l'"],
-  },
-  {
-    label: 'Direction financière, juridique et ressources humaines',
-    value: 'fjr',
-    prefix: ['la', 'les'],
-  },
-  {
-    label: 'Santé et médical',
-    value: 'sm',
-    prefix: ['la', 'le'],
-  },
-];
-
-export const BUSINESS_LINES = BUSINESS_LINES_UNSORTED.sort(
-  ({ label: labelA }, { label: labelB }) => {
-    /**
-     * force type because business lines are always string
-     * to fix: fix FilterConstant type
-     */
-    const first = labelA as string;
-    const second = labelB as string;
-    return first.localeCompare(second);
-  }
-) as typeof BUSINESS_LINES_UNSORTED;
 
 export const CV_STATUS = {
   Published: {
@@ -219,11 +48,11 @@ export const CV_STATUS = {
   },
 } as const;
 
-export type AmbitionsPrefixesType = 'dans' | 'comme';
+export type OccupationsPrefixesType = 'dans' | 'comme';
 
-export const AMBITIONS_PREFIXES: {
-  label: AmbitionsPrefixesType;
-  value: AmbitionsPrefixesType;
+export const OCCUPATIONS_PREFIXES: {
+  label: OccupationsPrefixesType;
+  value: OccupationsPrefixesType;
 }[] = [
   {
     label: 'dans',
@@ -303,13 +132,6 @@ export const CONTRACTS: (FilterConstant<Contract> & {
   },
 ];
 
-export const OFFER_ADMIN_FILTERS_DATA = [
-  { tag: 'pending', title: 'Offres à valider' },
-  { tag: 'validated', title: 'Offres publiées', active: true },
-  { tag: 'external', title: 'Offres externes' },
-  { tag: 'archived', title: 'Offres archivées' },
-];
-
 export const CV_FILTERS_DATA: Filter[] = [
   {
     key: 'employed',
@@ -339,8 +161,8 @@ export const CV_FILTERS_DATA: Filter[] = [
     icon: 'location',
   },
   {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
+    key: 'businessSectors',
+    constants: [],
     title: 'Métiers',
     tag: GA_TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
@@ -348,45 +170,6 @@ export const CV_FILTERS_DATA: Filter[] = [
     key: 'gender',
     constants: GENDERS_FILTERS,
     title: 'Genre',
-  },
-];
-
-export const OPPORTUNITY_FILTERS_DATA: Filter[] = [
-  {
-    key: 'isPublic',
-    constants: [
-      { label: 'Offres privées', value: false },
-      { label: 'Offres générales', value: true },
-    ],
-    title: 'Privée/générale',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_PUBLIQUE_CLIC,
-  },
-  {
-    key: 'status',
-    constants: OFFER_STATUS,
-    title: 'Statut',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC,
-  },
-  {
-    key: 'department',
-    constants: DEPARTMENTS_FILTERS,
-    priority: DEPARTMENTS_FILTERS.filter((dept) => {
-      return dept.zone !== ADMIN_ZONES.HZ;
-    }),
-    title: 'Département',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_GEOGRAPHIQUE_CLIC,
-  },
-  {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
-    title: 'Métiers',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC,
-  },
-  {
-    key: 'contracts',
-    constants: CONTRACTS,
-    title: 'Type de contrat',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC,
   },
 ];
 
@@ -407,8 +190,8 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC,
   },
   {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
+    key: 'businessSectors',
+    constants: [],
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
   },
@@ -449,44 +232,6 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     ],
     title: 'Statut du CV',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
-  },
-];
-
-export const DirectoryFilters: Filter[] = [
-  {
-    key: 'departments',
-    constants: DEPARTMENTS_FILTERS,
-    title: 'Département',
-    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
-  },
-  {
-    key: 'helps',
-    constants: ProfileHelps,
-    title: "Type d'aide",
-    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
-  },
-  {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
-    title: "Secteur d'activité",
-    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
-  },
-];
-
-export type ExternalOfferOrigin = 'network' | 'internet' | 'counselor';
-
-export const EXTERNAL_OFFERS_ORIGINS: FilterConstant<ExternalOfferOrigin>[] = [
-  {
-    label: 'Mon réseau',
-    value: 'network',
-  },
-  {
-    label: 'Recherches Internet',
-    value: 'internet',
-  },
-  {
-    label: 'Mon conseiller emploi (Pôle Emploi, mission locale...)',
-    value: 'counselor',
   },
 ];
 
@@ -1016,12 +761,6 @@ export const EVENT_TYPES = {
   END: 'end',
 };
 
-export const EVENT_TYPE_MAPPING = {
-  [OFFER_STATUS[1].value]: EVENT_TYPES.CONTACT,
-  [OFFER_STATUS[2].value]: EVENT_TYPES.INTERVIEW,
-  [OFFER_STATUS[3].value]: EVENT_TYPES.HIRING,
-};
-
 export const EVENT_TYPES_FILTERS = [
   {
     label: 'Contacté le',
@@ -1054,53 +793,53 @@ export const EVENT_TYPES_FILTERS = [
 ];
 
 const ADDRESSES = {
-  PARIS: process.env.ADRESSE_LOCAUX_PARIS,
-  LYON: process.env.ADRESSE_LOCAUX_LYON,
-  LILLE: process.env.ADRESSE_LOCAUX_LILLE,
-  RENNES: process.env.ADRESSE_LOCAUX_RENNES,
-  LORIENT: process.env.ADRESSE_LOCAUX_LORIENT,
+  PARIS: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS,
+  LYON: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LYON,
+  LILLE: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LILLE,
+  RENNES: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_RENNES,
+  LORIENT: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LORIENT,
 };
 
 export const ANTENNE_INFO = [
   {
     dpt: '93',
-    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
     address: ADDRESSES.PARIS,
   },
   {
     dpt: '75',
-    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
     address: ADDRESSES.PARIS,
   },
   {
     dpt: '92',
-    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
     address: ADDRESSES.PARIS,
   },
   {
     dpt: '35',
-    mailCoordo: process.env.ADMIN_CANDIDATES_RENNES,
-    mailEntreprise: process.env.ADMIN_COMPANIES_RENNES,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_RENNES,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_RENNES,
     city: 'Rennes',
     address: ADDRESSES.RENNES,
   },
   {
     dpt: '59',
-    mailCoordo: process.env.ADMIN_CANDIDATES_LILLE,
-    mailEntreprise: process.env.ADMIN_COMPANIES_LILLE,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LILLE,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_LILLE,
     city: 'Lille',
     address: ADDRESSES.LILLE,
   },
   {
     dpt: '69',
-    mailCoordo: process.env.ADMIN_CANDIDATES_LYON,
-    mailEntreprise: process.env.ADMIN_COMPANIES_LYON,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LYON,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_LYON,
     city: 'Lyon',
     address: ADDRESSES.LYON,
   },
@@ -1109,7 +848,6 @@ export const ANTENNE_INFO = [
 export const MEMBER_TABS = {
   CV: 'cv',
   PARAMETERS: 'parametres',
-  OFFERS: 'offres',
 };
 
 export const ExternalMessageContactTypes = {
@@ -1417,3 +1155,10 @@ export const INTERNAL_MESSAGES_PLACEHOLDERS = {
 };
 
 export const DELAY_REFRESH_CONVERSATIONS = 30000;
+
+export const LANGUAGES_LEVELS = [
+  {
+    value: 'NOTIONS',
+    text: 'Notions',
+  },
+];

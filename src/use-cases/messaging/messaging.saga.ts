@@ -20,6 +20,9 @@ const {
   getUnseenConversationsCountFailed,
   bindNewConversationRequested,
   bindNewConversationSucceeded,
+  postFeedbackRequested,
+  postFeedbackSucceeded,
+  postFeedbackFailed,
 } = slice.actions;
 
 function* bindNewConversationSagaRequested(
@@ -106,6 +109,17 @@ function* postMessageSagaRequested(
   }
 }
 
+function* postFeedbackSagaRequested(
+  action: ReturnType<typeof postFeedbackRequested>
+) {
+  try {
+    yield* call(() => Api.postConversationFeedback(action.payload));
+    yield* put(postFeedbackSucceeded());
+  } catch {
+    yield* put(postFeedbackFailed());
+  }
+}
+
 export function* saga() {
   yield* takeLatest(getConversationsRequested, getConversationsSagaRequested);
   yield* takeLatest(postMessageRequested, postMessageSagaRequested);
@@ -121,4 +135,5 @@ export function* saga() {
     bindNewConversationRequested,
     bindNewConversationSagaRequested
   );
+  yield* takeLatest(postFeedbackRequested, postFeedbackSagaRequested);
 }

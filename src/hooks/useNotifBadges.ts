@@ -1,10 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { NotifBadges } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
-import { ADMIN_ROLES, USER_ROLES } from 'src/constants/users';
 import { selectUnseenConversationCount } from 'src/use-cases/messaging';
 import { usePrevious } from './utils';
 
@@ -26,9 +24,7 @@ export function useNotifBadges(
   candidateId: string
 ) {
   const [badges, setBadges] = useState<NotifBadges>({
-    offers: 0,
     note: 0,
-    cv: 0,
     members: 0,
     messaging: 0,
   });
@@ -38,63 +34,15 @@ export function useNotifBadges(
 
   useEffect(() => {
     if (user !== prevUser) {
-      if (user.role === USER_ROLES.ADMIN) {
-        const queriesToExecute: (() => Promise<AxiosResponse>)[] = [];
-        if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-        } else if (user.adminRole === ADMIN_ROLES.COMPANIES) {
-          queriesToExecute.push(() => {
-            return Api.getOpportunitiesAdminCount();
-          });
-        } else {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-          queriesToExecute.push(() => {
-            return Api.getOpportunitiesAdminCount();
-          });
-        }
-        Promise.all(
-          queriesToExecute.map((query) => {
-            return query;
-          })
-        )
+      if (candidateId) {
+        Promise.all([Api.getCandidateCheckUpdate(candidateId)])
           .then((data) => {
-            const { pendingCVs, pendingOpportunities } =
-              reducePromisesResults(data);
+            const { noteHasBeenModified } = reducePromisesResults(data);
 
             setBadges((prevBadges) => {
               return {
                 ...prevBadges,
-                members: pendingCVs || 0,
-                offers: pendingOpportunities || 0,
-              };
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else if (candidateId) {
-        Promise.all([
-          Api.getOpportunitiesUserCount(candidateId),
-          Api.getCandidateCheckUpdate(candidateId),
-          Api.getCheckUpdate(candidateId),
-        ])
-          .then((data) => {
-            const {
-              unseenOpportunities,
-              noteHasBeenModified,
-              cvHasBeenModified,
-            } = reducePromisesResults(data);
-
-            setBadges((prevBadges) => {
-              return {
-                ...prevBadges,
-                offers: unseenOpportunities || 0,
                 note: noteHasBeenModified ? 1 : 0,
-                cv: cvHasBeenModified ? 1 : 0,
               };
             });
           })

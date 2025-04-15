@@ -75,7 +75,7 @@ export const CandidatHeader = ({
                   href={`/cv/${candidateCVUrl}`}
                 >
                   <span>
-                    {process.env.SERVER_URL}/cv/{candidateCVUrl}
+                    {process.env.NEXT_PUBLIC_SERVER_URL}/cv/{candidateCVUrl}
                   </span>
                 </SimpleLink>
               </Grid>

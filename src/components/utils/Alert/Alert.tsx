@@ -9,10 +9,11 @@ interface AlertIconProps {
   variant: AlertVariant;
 }
 
-const AlertIcon = ({ variant }: AlertIconProps) => {
+const DefaultAlertIcon = ({ variant }: AlertIconProps) => {
   if (variant === 'info') {
     return <IlluBulleQuestion width={35} height={30} />;
   }
+
   return null;
 };
 
@@ -23,14 +24,24 @@ export const Alert = ({
   closable = false,
   visible = true,
   onClose = () => {},
-  icon = <AlertIcon variant={variant} />,
+  icon = <DefaultAlertIcon variant={variant} />,
 }: AlertProps) => {
   return (
     <StyledAlert variant={variant} visible={visible} rounded={rounded}>
       {icon}
       <StyledAlertContainer>{children}</StyledAlertContainer>
       {closable && (
-        <ButtonIcon icon={<LucidIcon name="X" />} onClick={onClose} />
+        <ButtonIcon
+          icon={
+            <LucidIcon
+              name="X"
+              {...(variant === 'darkBlue'
+                ? { color: 'white', stroke: 'bold' }
+                : {})}
+            />
+          }
+          onClick={onClose}
+        />
       )}
     </StyledAlert>
   );

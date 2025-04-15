@@ -13,7 +13,7 @@ export function plateform<T extends React.ComponentType<AnyCantFix>>(
   const { Mobile, Desktop } = data;
 
   // @ts-expect-error ignore type error because return statement is already typed
-  return (props: React.ComponentProps<typeof T>) => {
+  return (props: React.ComponentProps<T>) => {
     const isDesktop = useIsDesktop();
 
     if (isDesktop) {

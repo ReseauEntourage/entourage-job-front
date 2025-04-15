@@ -27,7 +27,7 @@ export const Merci = ({
           <Text>{ThankYouMessages[currentType]}</Text>
         </>
       ) : (
-        <H3 title={"Merci beaucoup d'avoir répondu au formulaire !"} />
+        <H3 title="Merci beaucoup d'avoir répondu au formulaire !" />
       )}
       <Text size="large">À bientôt&nbsp;!</Text>
       <Text size="large">L&apos;équipe Entourage Pro</Text>

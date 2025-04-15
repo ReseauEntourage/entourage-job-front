@@ -132,7 +132,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
     ),
     insights: [
       {
-        value: '440',
+        value: '2500',
         description: 'candidat(e)s accompagné(e)s depuis le lancement',
       },
       {

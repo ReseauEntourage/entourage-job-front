@@ -12,31 +12,31 @@ export const Referents: {
   [ADMIN_ZONES.PARIS]: {
     name: 'Julie P.',
     img: `julie.jpg`,
-    mail: process.env.ADMIN_CANDIDATES_PARIS as string,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS as string,
   },
   [ADMIN_ZONES.LYON]: {
     name: 'Céline D.',
     img: `celine.jpg`,
-    mail: process.env.ADMIN_CANDIDATES_LYON as string,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LYON as string,
   },
   [ADMIN_ZONES.LILLE]: {
     name: 'Julien D.',
     img: `julien.png`,
-    mail: process.env.ADMIN_CANDIDATES_LILLE as string,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LILLE as string,
   },
   [ADMIN_ZONES.RENNES]: {
     name: 'Mathilde G.',
     img: `mathilde.jpg`,
-    mail: process.env.ADMIN_CANDIDATES_RENNES as string,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_RENNES as string,
   },
   [ADMIN_ZONES.LORIENT]: {
     name: 'Mathilde G.',
     img: `mathilde.jpg`,
-    mail: process.env.ADMIN_CANDIDATES_LORIENT as string,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LORIENT as string,
   },
   [ADMIN_ZONES.HZ]: {
     name: 'Julie P.',
     img: `julie.jpg`,
-    mail: process.env.ADMIN_CANDIDATES_HZ as string,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_HZ as string,
   },
 } as const;

@@ -43,110 +43,6 @@ describe('En tant que - Administrateur', () => {
   });
 
   /**
-   * Je parcours les opportunités
-   */
-  describe('Je parcours les opportunités', () => {
-    beforeEach(() => {
-      cy.visit('/backoffice/admin/offres');
-    });
-
-    /**
-     * Première partie de test - J'affiche les opport.
-     */
-    it("J'affiche les opportunités", () => {
-      cy.wait('@opportunities');
-      // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/generated/opportunities').then((opportunities) => {
-        // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
-        cy.get('[data-testid="admin-offer-list-element"]')
-          .its('length')
-          .should('eq', opportunities.length);
-        // Ensuite je récupère la première opportunité (depuis la fixture)
-        const firstOpportunity = opportunities[0];
-        // J'intercepte la requête API qui contient l'ID de la première opportunité
-        cy.intercept(
-          'GET',
-          `opportunity/${firstOpportunity.id}`,
-          firstOpportunity
-        ).as('opportunity');
-        // Nous patientons la reponse (traitement fixture)
-        cy.wait('@opportunity');
-        // Nous vérifions aussi que l'URL est constitué de l'ID de la première opportunités
-        cy.url().should('include', firstOpportunity.id);
-        // Nous changeons d'onglets
-        cy.get('[data-testid="admin-offer-tab-validated"]').click();
-        cy.url().should('include', 'validated');
-        cy.get('[data-testid="admin-offer-tab-external"]').click();
-        cy.url().should('include', 'external');
-        cy.get('[data-testid="admin-offer-tab-archived"]').click();
-        cy.url().should('include', 'archived');
-      });
-    });
-
-    /**
-     * Deuxième partie de test - Je créer une opportunité
-     */
-    it("J'ajoute une nouvelle opportunité", () => {
-      // Interceptons l'appel au détails d'opportunité et ignorons la réponse
-      cy.intercept('GET', `opportunity/**`, {}).as('opportunity');
-
-      // Remplissage du formulaire d'une opportunité
-      cy.get('[data-testid="button-admin-create"]').click();
-      cy.get('[data-testid="admin-add-offer-main"]').click();
-      cy.get('#form-add-offer-admin-title').type('test');
-      cy.get('#form-add-offer-admin-company').type('test');
-
-      cy.get('#form-add-offer-admin-department')
-        .should('be.visible')
-        .type('Par');
-
-      cy.get('#form-add-offer-admin-department')
-        .find('.Select__menu')
-        .should('be.visible')
-        .find('.Select__option')
-        .contains('Paris (75)')
-        .click();
-
-      cy.get('#form-add-offer-admin-address')
-        .should('be.visible')
-        .type('description');
-
-      cy.get('#form-add-offer-admin-companyDescription')
-        .should('be.visible')
-        .type('description');
-
-      cy.get('#form-add-offer-admin-contract-container button')
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
-      cy.get('#form-add-offer-admin-contract-container')
-        .find('.option')
-        .contains('CDI')
-        .click();
-
-      cy.get('#form-add-offer-admin-recruiterFirstName').type('test');
-      cy.get('#form-add-offer-admin-recruiterName').type('test');
-      cy.get('#form-add-offer-admin-recruiterPosition').type('test');
-      cy.get('#form-add-offer-admin-recruiterMail').type('test@gmail.com');
-      cy.get('#form-add-offer-admin-businessLines')
-        .should('be.visible')
-        .type('Agr');
-
-      cy.get('#form-add-offer-admin-businessLines')
-        .find('.Select__menu')
-        .should('be.visible')
-        .find('.Select__option')
-        .contains('Agriculture et espaces verts')
-        .click();
-
-      cy.get('#form-add-offer-admin-description').scrollIntoView().type('test');
-      cy.get('button').contains('Valider').click();
-
-      cy.wait('@postOpportunity');
-    });
-  });
-
-  /**
    * Je parcours les membres
    */
   describe('Je parcours les membres', () => {
@@ -328,7 +224,7 @@ describe('En tant que - Administrateur', () => {
     it("J'affiche les organisations", () => {
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/generated/organizations').then((organizations) => {
-        // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
+        // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'organisations
         cy.get('[data-testid="organization-list"]')
           .find('tr')
           .its('length')

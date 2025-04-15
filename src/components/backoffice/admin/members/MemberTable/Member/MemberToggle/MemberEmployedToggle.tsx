@@ -5,7 +5,6 @@ import { Tooltip } from 'react-tooltip';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { CONTRACTS } from 'src/constants';
 import { notificationsActions } from 'src/use-cases/notifications';
 import { findConstantFromValue } from 'src/utils';
@@ -45,11 +44,6 @@ export function MemberEmployedToggle({
             data-tooltip-content={contractLabel}
             data-tooltip-place="bottom"
           >
-            <ContractLabel
-              textWrap
-              contract={member.candidat.contract}
-              endOfContract={member.candidat.endOfContract}
-            />
             <Tooltip id={tooltipId} />
           </StyledMemberToggleLabel>
         )

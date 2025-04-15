@@ -5,7 +5,6 @@ import { HeadingComponentProps } from './Headings.types';
 
 export const H6 = ({
   title,
-  effect,
   center = false,
   color,
   weight = 'bold',
@@ -14,7 +13,6 @@ export const H6 = ({
   return (
     <StyledH6
       color={color}
-      data-uk-scrollspy={effect}
       center={center}
       weight={weight}
       // mobile={!isDesktop}

@@ -1,11 +1,14 @@
 import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { ParametresLayout } from 'src/components/backoffice/parametres/ParametresLayout';
+import { Parameters } from 'src/components/backoffice/parameters/Parameters';
+import { useSelectedProfile } from 'src/components/backoffice/profile/useSelectedProfile';
 
 const Parametres = () => {
+  const { selectedProfile } = useSelectedProfile();
+
   return (
-    <LayoutBackOffice title="Mes Paramètres">
-      <ParametresLayout />
+    <LayoutBackOffice title={selectedProfile ? `Paramètres` : 'Paramètres'}>
+      <Parameters />
     </LayoutBackOffice>
   );
 };

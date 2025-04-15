@@ -32,6 +32,7 @@ const sizeVariants = {
 
 export const StyledTag = styled.div`
   display: inline-flex;
+  gap: 5px;
   padding: 3px 10px;
   border-radius: 30px;
   border: 1px solid;

@@ -1,32 +1,36 @@
 import _ from 'lodash';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
+import { ProfileHelps } from '@/src/constants/nudges';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../Button';
-import { UserCandidateWithUsers } from 'src/api/types';
+import {
+  BusinessSector,
+  Occupation,
+  UserCandidateWithUsers,
+  UserProfileNudge,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { Text } from 'src/components/utils/Text';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
-import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
   StyledCTAContainer,
   StyledProfileCard,
   StyledProfileCardAvailability,
-  StyledProfileCardBusinessLines,
+  StyledProfileCardBusinessSectors,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
-  StyledProfileCardEmptyBusinessLinesContainer,
+  StyledProfileCardEmptyBusinessSectorsContainer,
   StyledProfileCardEmptyHelpsContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
@@ -50,17 +54,8 @@ export interface ProfileCardProps {
   firstName: string;
   lastName: string;
   role: UserRole;
-  helps?: {
-    name: HelpValue;
-  }[];
-  businessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  ambitions?: {
-    name: string;
-    order: number;
-  }[];
+  userProfileNudges?: UserProfileNudge[];
+  sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
   job?: string;
@@ -71,14 +66,14 @@ export interface ProfileCardProps {
 const getLabelsDependingOnRole = (role: UserRole) => {
   if (role === USER_ROLES.CANDIDATE) {
     return {
-      businessLines: 'Je recherche un emploi dans\xa0:',
+      businessSectors: 'Je recherche un emploi dans\xa0:',
       helps: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
   if (role === USER_ROLES.COACH) {
     return {
-      businessLines: "J'ai du réseau dans\xa0:",
+      businessSectors: "J'ai du réseau dans\xa0:",
       helps: 'Je peux aider à\xa0:',
       role: 'Coach',
     };
@@ -97,11 +92,9 @@ export function ProfileCard({
   lastName,
   role,
   department,
-  helps,
-  businessLines,
-  ambitions,
+  userProfileNudges,
+  sectorOccupations,
   userCandidate,
-  job,
   isAvailable,
   displayHelps,
 }: ProfileCardProps) {
@@ -113,14 +106,25 @@ export function ProfileCard({
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
-  const uniqBusinessLines = _.uniqBy(businessLines, 'name');
-  const sortedBusinessLines =
-    businessLines && businessLines.length > 0
-      ? sortByOrder(uniqBusinessLines)
-      : null;
+  const sortedSectorOccupations = useMemo(() => {
+    return (
+      sectorOccupations?.sort((so1, so2) => {
+        return so1.order - so2.order;
+      }) ?? []
+    );
+  }, [sectorOccupations]);
 
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+  const sortedBusinessSectors = useMemo(() => {
+    return sortedSectorOccupations
+      ?.filter((so) => !!so.businessSector)
+      ?.map((so) => so.businessSector) as BusinessSector[];
+  }, [sortedSectorOccupations]);
+
+  const sortedOccupations = useMemo(() => {
+    return sortedSectorOccupations
+      ?.filter((so) => !!so.occupation)
+      ?.map((so) => so.occupation) as Occupation[];
+  }, [sortedSectorOccupations]);
 
   return (
     <Link
@@ -132,158 +136,137 @@ export function ProfileCard({
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
       }}
+      target="_blank"
     >
-      <a target="_blank">
-        <StyledProfileCard className="profile-card">
-          <StyledProfileCardPictureContainer>
-            <StyledProfileCardPicture>
-              {urlImg ? (
-                <Img
-                  src={urlImg}
-                  alt={`photo de ${firstName}`}
-                  cover
-                  onError={fallbackToCVImage}
-                />
-              ) : (
-                <Img
-                  src="/static/img/profile-placeholder.png"
-                  alt={`photo de ${firstName}`}
-                  cover
-                  onError={fallbackToCVImage}
-                />
-              )}
-              <Img src="/static/img/gradient.png" alt="" cover />
-            </StyledProfileCardPicture>
-            <StyledProfileCardAvailability>
-              <AvailabilityTag isAvailable={isAvailable} />
-            </StyledProfileCardAvailability>
-            <StyledProfileCardInfoContainer>
-              <StyledProfileCardName>
-                <H3
-                  color={COLORS.white}
-                  title={`${firstName} ${lastName.charAt(0)}.`}
-                />
-              </StyledProfileCardName>
-              {department && (
-                <StyledProfileCardDepartment>
-                  <Text>{department}</Text>
-                </StyledProfileCardDepartment>
-              )}
-            </StyledProfileCardInfoContainer>
-            <StyledProfileCardRole>
-              <Tag content={labels.role} style="secondary" />
-            </StyledProfileCardRole>
-          </StyledProfileCardPictureContainer>
-          <StyledProfileCardContent>
-            <StyledProfileCardProfessionalSituation>
-              {role === USER_ROLES.CANDIDATE && (
-                <>
-                  {sortedAmbitions && sortedAmbitions.length > 0 ? (
-                    <StyledProfileCardJobContainer>
-                      {sortedAmbitions.map(({ name }, index) => (
-                        <H5
-                          key={name}
-                          color={COLORS.black}
-                          title={`${_.capitalize(name)}${
-                            index < sortedAmbitions.length - 1 ? ',\xa0' : ''
-                          }`}
-                        />
-                      ))}
-                    </StyledProfileCardJobContainer>
-                  ) : (
-                    <StyledProfileCardEmptyJobContainer>
-                      <H5 color={COLORS.black} title={EMPTY_JOB} />
-                    </StyledProfileCardEmptyJobContainer>
-                  )}
-                </>
-              )}
-              {role === USER_ROLES.COACH && (
-                <>
-                  {job ? (
-                    <StyledProfileCardJobContainer>
-                      <H5 color={COLORS.black} title={_.capitalize(job)} />
-                    </StyledProfileCardJobContainer>
-                  ) : (
-                    <StyledProfileCardEmptyJobContainer>
-                      <H5 color={COLORS.black} title={EMPTY_JOB} />
-                    </StyledProfileCardEmptyJobContainer>
-                  )}
-                </>
-              )}
-              <StyledProfileCardLabel>
-                <Text color="darkGray">{labels.businessLines}</Text>{' '}
-              </StyledProfileCardLabel>
-              <StyledProfileCardBusinessLines>
-                {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
-                  <>
-                    {sortedBusinessLines.slice(0, 2).map(({ name }) => {
-                      const businessLine = findConstantFromValue(
-                        name,
-                        BUSINESS_LINES
-                      );
-                      return (
-                        <Tag
-                          key={businessLine.value}
-                          content={businessLine.label}
-                        />
-                      );
-                    })}
-                    {role !== USER_ROLES.CANDIDATE &&
-                      sortedBusinessLines.length > 2 && (
-                        <Tag content={`+${sortedBusinessLines.length - 2}`} />
-                      )}
-                  </>
+      <StyledProfileCard className="profile-card">
+        <StyledProfileCardPictureContainer>
+          <StyledProfileCardPicture>
+            {urlImg ? (
+              <Img
+                src={urlImg}
+                alt={`photo de ${firstName}`}
+                cover
+                onError={fallbackToCVImage}
+              />
+            ) : (
+              <Img
+                src="/static/img/profile-placeholder.png"
+                alt={`photo de ${firstName}`}
+                cover
+                onError={fallbackToCVImage}
+              />
+            )}
+            <Img src="/static/img/gradient.png" alt="" cover />
+          </StyledProfileCardPicture>
+          <StyledProfileCardAvailability>
+            <AvailabilityTag isAvailable={isAvailable} />
+          </StyledProfileCardAvailability>
+          <StyledProfileCardInfoContainer>
+            <StyledProfileCardName>
+              <H3
+                color={COLORS.white}
+                title={`${firstName} ${lastName.charAt(0)}.`}
+              />
+            </StyledProfileCardName>
+            {department && (
+              <StyledProfileCardDepartment>
+                <Text>{department}</Text>
+              </StyledProfileCardDepartment>
+            )}
+          </StyledProfileCardInfoContainer>
+          <StyledProfileCardRole>
+            <Tag content={labels.role} style="secondary" />
+          </StyledProfileCardRole>
+        </StyledProfileCardPictureContainer>
+        <StyledProfileCardContent>
+          <StyledProfileCardProfessionalSituation>
+            {(USER_ROLES.CANDIDATE === role || USER_ROLES.COACH === role) && (
+              <>
+                {sortedOccupations && sortedOccupations.length > 0 ? (
+                  <StyledProfileCardJobContainer>
+                    {sortedOccupations.map(({ name }, index) => (
+                      <H5
+                        key={name}
+                        color={COLORS.black}
+                        title={`${_.capitalize(name)}${
+                          index < sortedOccupations.length - 1 ? ',\xa0' : ''
+                        }`}
+                      />
+                    ))}
+                  </StyledProfileCardJobContainer>
                 ) : (
-                  <StyledProfileCardEmptyBusinessLinesContainer>
+                  <StyledProfileCardEmptyJobContainer>
+                    <H5 color={COLORS.black} title={EMPTY_JOB} />
+                  </StyledProfileCardEmptyJobContainer>
+                )}
+              </>
+            )}
+            <StyledProfileCardLabel>
+              <Text color="darkGray">{labels.businessSectors}</Text>{' '}
+            </StyledProfileCardLabel>
+            <StyledProfileCardBusinessSectors>
+              {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
+                <>
+                  {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
+                    return <Tag key={id} content={name} />;
+                  })}
+                  {role !== USER_ROLES.CANDIDATE &&
+                    sortedBusinessSectors.length > 2 && (
+                      <Tag content={`+${sortedBusinessSectors.length - 2}`} />
+                    )}
+                </>
+              ) : (
+                <StyledProfileCardEmptyBusinessSectorsContainer>
+                  <StyledProfileCardEmptyIcon>
+                    <CaseIcon {...iconSizeProps} />
+                  </StyledProfileCardEmptyIcon>
+                  <Text color="mediumGray" size="small" variant="italic">
+                    {EMPTY_INFO}
+                  </Text>
+                </StyledProfileCardEmptyBusinessSectorsContainer>
+              )}
+            </StyledProfileCardBusinessSectors>
+          </StyledProfileCardProfessionalSituation>
+          <StyledSeparator />
+          {displayHelps ? (
+            <StyledProfileCardHelpContainer>
+              <StyledProfileCardLabel>
+                <Text color="darkGray">{labels.helps}</Text>
+              </StyledProfileCardLabel>
+              <StyledProfileCardHelps>
+                {userProfileNudges && userProfileNudges?.length > 0 ? (
+                  userProfileNudges.map(({ nudge }) => {
+                    const nudgeDetails = ProfileHelps.find(
+                      (n) => nudge?.value === n.value
+                    );
+                    return (
+                      <StyledProfileCardHelp key={nudgeDetails?.value}>
+                        {nudgeDetails?.icon}
+                        <StyledProfileCardHelpLabel>
+                          {nudgeDetails?.label}
+                        </StyledProfileCardHelpLabel>
+                      </StyledProfileCardHelp>
+                    );
+                  })
+                ) : (
+                  <StyledProfileCardEmptyHelpsContainer>
                     <StyledProfileCardEmptyIcon>
-                      <CaseIcon {...iconSizeProps} />
+                      <HandsIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
                     <Text color="mediumGray" size="small" variant="italic">
                       {EMPTY_INFO}
                     </Text>
-                  </StyledProfileCardEmptyBusinessLinesContainer>
+                  </StyledProfileCardEmptyHelpsContainer>
                 )}
-              </StyledProfileCardBusinessLines>
-            </StyledProfileCardProfessionalSituation>
-            <StyledSeparator />
-            {displayHelps ? (
-              <StyledProfileCardHelpContainer>
-                <StyledProfileCardLabel>
-                  <Text color="darkGray">{labels.helps}</Text>
-                </StyledProfileCardLabel>
-                <StyledProfileCardHelps>
-                  {helps && helps.length > 0 ? (
-                    helps.map(({ name }) => {
-                      const help = findConstantFromValue(name, ProfileHelps);
-                      return (
-                        <StyledProfileCardHelp key={help.value}>
-                          {help.icon}
-                          <StyledProfileCardHelpLabel>
-                            {help.label}
-                          </StyledProfileCardHelpLabel>
-                        </StyledProfileCardHelp>
-                      );
-                    })
-                  ) : (
-                    <StyledProfileCardEmptyHelpsContainer>
-                      <StyledProfileCardEmptyIcon>
-                        <HandsIcon {...iconSizeProps} />
-                      </StyledProfileCardEmptyIcon>
-                      <Text color="mediumGray" size="small" variant="italic">
-                        {EMPTY_INFO}
-                      </Text>
-                    </StyledProfileCardEmptyHelpsContainer>
-                  )}
-                </StyledProfileCardHelps>
-              </StyledProfileCardHelpContainer>
-            ) : (
-              <StyledCTAContainer>
-                <Button style="custom-primary-inverted">Voir le profil</Button>
-              </StyledCTAContainer>
-            )}
-          </StyledProfileCardContent>
-        </StyledProfileCard>
-      </a>
+              </StyledProfileCardHelps>
+            </StyledProfileCardHelpContainer>
+          ) : (
+            <StyledCTAContainer>
+              <Button style="custom-primary-inverted">Voir le profil</Button>
+            </StyledCTAContainer>
+          )}
+        </StyledProfileCardContent>
+      </StyledProfileCard>
     </Link>
   );
 }

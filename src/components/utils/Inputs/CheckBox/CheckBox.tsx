@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, type JSX } from 'react';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';

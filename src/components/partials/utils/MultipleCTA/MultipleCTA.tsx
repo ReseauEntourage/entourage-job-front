@@ -26,7 +26,6 @@ interface MultipleCTAProps {
       dataTestId?: string;
     };
   }[];
-  animate?: boolean;
 }
 
 export const MultipleCTA = ({
@@ -36,7 +35,6 @@ export const MultipleCTA = ({
   data,
   spacing,
   className,
-  animate,
 }: MultipleCTAProps) => {
   return (
     <div data-uk-height-match="target : h4, .text" className={className}>
@@ -48,13 +46,6 @@ export const MultipleCTA = ({
         items={data.map((item, index) => {
           return (
             <div
-              data-uk-scrollspy={
-                animate
-                  ? `cls: uk-animation-slide-${
-                      index % 2 === 0 ? 'bottom' : 'top'
-                    }-small; delay: ${100 * (index + 1)};`
-                  : ''
-              }
               key={index.toString()}
               className="uk-flex uk-flex-column uk-flex-middle"
             >
@@ -142,5 +133,4 @@ MultipleCTA.defaultProps = {
   showVerticalDividers: false,
   spacing: 'large',
   className: '',
-  animate: false,
 };

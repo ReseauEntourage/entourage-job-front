@@ -1,22 +1,21 @@
 import path from 'path';
 import { StorybookConfig } from '@storybook/nextjs';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { AnyCantFix } from '../src/utils/Types';
 
 const config: StorybookConfig = {
-  framework: {
-    name: '@storybook/nextjs',
-    options: {},
-  },
+  framework: '@storybook/nextjs',
+
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@chromatic-com/storybook',
   ],
 
   core: {},
-
   staticDirs: ['../public'],
 
   webpackFinal: async (webpackConfig) => {
@@ -29,6 +28,14 @@ const config: StorybookConfig = {
       webpackConfig.resolve.roots = [
         path.resolve(__dirname, '../public'),
         'node_modules',
+      ];
+
+      webpackConfig.resolve.plugins = [
+        ...(webpackConfig.resolve.plugins || []),
+        new TsconfigPathsPlugin({
+          configFile: path.resolve(__dirname, '../src/tsconfig.json'),
+          extensions: webpackConfig.resolve.extensions,
+        }),
       ];
     }
 
@@ -56,9 +63,7 @@ const config: StorybookConfig = {
     return webpackConfig;
   },
 
-  docs: {
-    autodocs: false,
-  },
+  docs: {},
 };
 
 export default config;
