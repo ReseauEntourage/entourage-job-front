@@ -21,7 +21,6 @@ export const HowToCommitDifferently = () => {
         center
       />
       <MultipleCTA
-        animate
         spacing="large"
         className="uk-margin-medium-top"
         data={[
@@ -31,7 +30,7 @@ export const HowToCommitDifferently = () => {
             text: "Aidez-nous à développer le programme Entourage Pro et à accompagner les candidat(e)s via un don déductible de vos impôts ou un dispositif d'arrondi solidaire.",
             button: {
               label: 'Faire un don',
-              href: process.env.DONATION_LINK,
+              href: process.env.NEXT_PUBLIC_DONATION_LINK,
               external: true,
               style: 'custom-secondary-inverted',
               onClick: () => {

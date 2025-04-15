@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
+    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,7 +15,15 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "types": ["cypress", "jest", "node"],
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -23,6 +31,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
+    ".next/types/**/*.ts",
     "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts",
     "./cypress.config.ts",
     ".storybook/**/*"

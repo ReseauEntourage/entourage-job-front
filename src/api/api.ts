@@ -42,7 +42,7 @@ export class APIHandler {
   constructor() {
     this.name = 'APIHandler';
     this.api = axios.create({
-      baseURL: `${process.env.API_URL}`,
+      baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -494,13 +494,20 @@ export class APIHandler {
     );
   }
 
+  postConversationFeedback(params: {
+    conversationParticipantId: string;
+    rating: number | null;
+  }): Promise<AxiosResponse> {
+    return this.post('/messaging/conversations/feedback', params);
+  }
+
   /// /////////////////
   // read documents //
   /// /////////////////
 
   postReadDocument(
     params: { documentName: DocumentNameType },
-    userId
+    userId: string
   ): Promise<AxiosResponse> {
     return this.post(`/readDocuments/read/${userId}`, params);
   }

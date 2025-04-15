@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { conversationHasUnreadMessages } from '../../messaging.utils';
 import { Conversation, ConversationParticipant } from 'src/api/types';
 import { ImgProfile } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -26,18 +27,17 @@ export const MessagingConversationListItem = ({
   const dispatch = useDispatch();
   const currentUserId = useSelector(selectCurrentUserId);
   const selectedConversationId = useSelector(selectSelectedConversationId);
-
   const [isActivated, setIsActivated] = React.useState(false);
+
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipant;
-  const lastMessage = conversation.messages[conversation.messages.length - 1];
-  const userParticipantConversation = conversation.participants.find(
-    (participant) => participant.id === currentUserId
-  );
-  const seenAt = userParticipantConversation?.ConversationParticipant.seenAt;
-  const userHasSeenConversation =
-    seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
+
+  const lastMessage = conversation.messages[0];
+
+  const hasUnreadMessages = conversationHasUnreadMessages(conversation);
+  const shouldHighlightConversation =
+    hasUnreadMessages || conversation.shouldGiveFeedback;
 
   useEffect(() => {
     setIsActivated(selectedConversationId === conversation.id);
@@ -52,7 +52,7 @@ export const MessagingConversationListItem = ({
       <ContainerAvatarStyled>
         {addresee && <ImgProfile user={addresee} size={35} />}
       </ContainerAvatarStyled>
-      <RightColumn seen={userHasSeenConversation}>
+      <RightColumn highlight={shouldHighlightConversation}>
         <MainInfos>
           {addresee && (
             <ConversationAddresee>

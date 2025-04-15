@@ -51,7 +51,7 @@ export const renderLinks = (
     },
     {
       href: `${
-        process.env.TOOLBOX_CANDIDATE_URL
+        process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL
       }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
       name: 'Boîte à outils',
       external: true,
@@ -138,7 +138,7 @@ export const renderLinks = (
         },
         {
           href: `${
-            process.env.TOOLBOX_COACH_URL
+            process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL
           }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
           name: 'Boîte à outils',
           external: true,
@@ -156,7 +156,7 @@ export const renderLinks = (
           name: "Réseau d'entraide",
         },
         {
-          href: `${process.env.TOOLBOX_CANDIDATE_URL}${
+          href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}${
             candidateId ? `?id=${candidateId}` : ''
           }}`,
           name: 'Boîte à outils',
