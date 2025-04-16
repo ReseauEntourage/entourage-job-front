@@ -1,7 +1,7 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import { Gender, GENDERS_FILTERS } from '@/src/constants/genders';
+import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
@@ -38,7 +38,7 @@ interface FormAddUserSchema extends FormSchemaValidation {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  gender: Gender;
+  gender: Genders;
   zone: AdminZone;
   phone: string;
   email: string;

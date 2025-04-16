@@ -1,5 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { Gender, GENDERS_FILTERS } from '@/src/constants/genders';
+import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema } from '../FormSchema';
 import {
   ADMIN_ZONES_FILTERS,
@@ -234,7 +234,7 @@ export const formPersonalDataAsCoach: FormSchema<{
 export const formPersonalDataAsAdmin: FormSchema<{
   firstName: string;
   lastName: string;
-  gender: Gender;
+  gender: Genders;
   phone: string;
   zone: AdminZone;
   adminRole: AdminRoles;

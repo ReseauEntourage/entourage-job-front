@@ -1,7 +1,6 @@
 import { FilterConstant } from './utils';
 
 // USER ROLES ENUM
-// eslint-disable-next-line no-shadow
 export enum UserRoles {
   COACH = 'Coach',
   CANDIDATE = 'Candidat',
@@ -61,7 +60,6 @@ export const RELATED_ROLES = {
 // type AdminRole = (typeof ADMIN_ROLES)[keyof typeof ADMIN_ROLES];
 
 // What to do with that ?
-// eslint-disable-next-line no-shadow
 export enum AdminRoles {
   CANDIDATES = 'Candidats',
   COMPANIES = 'Entreprises',

@@ -1,6 +1,6 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail, isPostalCode } from 'validator';
-import { Gender } from '@/src/constants/genders';
+import { Genders } from '@/src/constants/genders';
 import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
@@ -33,7 +33,7 @@ export const formCandidateContact: FormSchema<{
   firstName: string;
   lastName: string;
   helpWith: FilterConstant<CandidateHelpWithValue>[];
-  gender: Gender;
+  gender: Genders;
   birthDate: string;
   address: string;
   postalCode: string;

@@ -1,4 +1,4 @@
-import { Gender } from '../constants/genders';
+import { Genders } from '../constants/genders';
 import {
   AmbitionsPrefixesType,
   BusinessLineValue,
@@ -135,7 +135,7 @@ export type User = {
   adminRole: AdminRoles;
   password: string;
   salt: string;
-  gender: Gender;
+  gender: Genders;
   phone: string;
   address: string;
   lastConnection: Date;
@@ -206,7 +206,7 @@ export interface CV {
       phone: string;
       address: string;
       zone: AdminZone;
-      gender: Gender;
+      gender: Genders;
       id: string;
     };
     employed: boolean;
@@ -280,7 +280,7 @@ export type UserDto = {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  gender: Gender;
+  gender: Genders;
   zone: AdminZone;
   phone: string;
   userToLinkId?: string;
@@ -561,7 +561,7 @@ export type ContactCandidate = {
   firstName: string;
   lastName: string;
   helpWith: CandidateHelpWithValue[];
-  gender: Gender;
+  gender: Genders;
   birthDate?: string;
   address?: string;
   postalCode: string;
