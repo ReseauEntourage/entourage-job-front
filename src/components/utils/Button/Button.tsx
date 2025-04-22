@@ -1,6 +1,8 @@
+'use client';
+
 /* eslint-disable react/jsx-no-target-blank */
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   UIKIT_BUTTON_SIZES,
   UIKIT_BUTTON_STYLES_SPEC,
@@ -28,6 +30,7 @@ export interface ButtonProps {
   dataTestId?: string;
   color?: string;
   rounded?: boolean;
+  submit?: boolean;
 }
 
 export function getButtonClassBuffer({
@@ -86,7 +89,16 @@ export function Button({
   dataTestId = '',
   color = 'primaryBlue',
   rounded = false,
+  submit = false,
 }: ButtonProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   const classBuffer = getButtonClassBuffer({
     visible,
     className,
@@ -99,10 +111,10 @@ export function Button({
 
   const buttonComponent = (
     <StyledButton
+      type={submit ? 'submit' : 'button'}
       id={id || undefined}
       className={classBuffer}
       disabled={disabled}
-      type="button"
       onClick={onClick}
       data-uk-toggle={toggle}
       data-testid={dataTestId}

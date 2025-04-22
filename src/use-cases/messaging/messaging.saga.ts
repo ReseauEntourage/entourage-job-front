@@ -93,7 +93,7 @@ function* postMessageSagaRequested(
     yield* put(
       postMessageSucceeded({
         message: response.data,
-        isNewConversation: !action.payload.conversationId,
+        isNewConversation: !action.payload.get('conversationId'),
       })
     );
   } catch (error: unknown) {
