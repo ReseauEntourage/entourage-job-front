@@ -1,52 +1,81 @@
-// import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
 
-export type UTM_PARAMETER =
-  | 'utm_source'
-  | 'utm_medium'
-  | 'utm_campaign'
-  | 'utm_term'
-  | 'utm_content'
-  | 'utm_id';
+// eslint-disable-next-line no-shadow
+export enum UtmParameters {
+  UTM_SOURCE = 'utm_source',
+  UTM_MEDIUM = 'utm_medium',
+  UTM_CAMPAIGN = 'utm_campaign',
+  UTM_TERM = 'utm_term',
+  UTM_CONTENT = 'utm_content',
+  UTM_ID = 'utm_id',
+}
 
-export type UTMParameters = {
-  [key in UTM_PARAMETER]?: string | null;
-};
-
-const getParameterName = (key: string): UTM_PARAMETER | null => {
+const getParameterName = (key: string): UtmParameters | null => {
   // Si pas de clé ou la clé n'est pas du type UTM_PARAMETER on retourne null
-  if (!key || !(key in ({} as UTMParameters))) {
+  if (!key || !(Object.values(UtmParameters) as string[]).includes(key)) {
     return null;
   }
-  return key as UTM_PARAMETER;
+  return key as UtmParameters;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useUTMParameters = (url = ''): UTMParameters => {
-  const urlParsed = url.toString().trim().replace('?', '&'); // Remove first ? if exists
+export const useUtm = () => {
+  const searchParams = useSearchParams();
 
-  if (!url || !urlParsed.includes('utm_')) {
-    return {};
-  }
+  const extractUtmFromUrl = useCallback((): UtmParameters[] => {
+    const urlParsed = searchParams.toString().trim().replace('?', '&'); // Remove first ? if exists
 
-  const parts = urlParsed.split('&');
-  const utmParameters: UTMParameters = {};
-
-  parts.forEach((part: string) => {
-    const [key, value] = part.split('=');
-    const validParameter = getParameterName(key);
-
-    if (!validParameter) {
-      return;
+    if (!searchParams || !searchParams.toString().includes('utm_')) {
+      return [];
     }
 
-    utmParameters[validParameter] = value;
-  });
+    const parts = urlParsed.split('&');
+    const utmParameters: UtmParameters[] = [];
 
-  return utmParameters;
-};
+    parts.forEach((part: string) => {
+      const [key, value] = part.split('=');
+      const validParameter = getParameterName(key);
 
-export const useStoreUTMParameters = () => {
-  // const searchParams = useSearchParams();
-  // console.log('searchParams', searchParams);
-  // return userId as string;
+      if (!validParameter) {
+        return;
+      }
+
+      utmParameters[validParameter] = value;
+    });
+
+    return utmParameters;
+  }, [searchParams]);
+
+  const saveUtmToLocalStorage = useCallback(() => {
+    const utmParams = extractUtmFromUrl();
+
+    Object.entries(utmParams).forEach(([key, value]) => {
+      if (value) {
+        localStorage.setItem(key, value);
+      }
+    });
+  }, [extractUtmFromUrl]);
+
+  // Automatically execute saveUTMToLocalStorage when the hook is used
+  useEffect(() => {
+    saveUtmToLocalStorage();
+  }, [saveUtmToLocalStorage, searchParams]);
+
+  const getUtmFromLocalStorage = (): UtmParameters[] => {
+    if (typeof window !== 'undefined') {
+      const utmParameters: UtmParameters[] = [];
+
+      Object.values(UtmParameters).forEach((key) => {
+        const value = localStorage.getItem(key);
+        if (value) {
+          utmParameters[key] = value;
+        }
+      });
+
+      return utmParameters;
+    }
+    return [];
+  };
+
+  return { getUtmFromLocalStorage };
 };

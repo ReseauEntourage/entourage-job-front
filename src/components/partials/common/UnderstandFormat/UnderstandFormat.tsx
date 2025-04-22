@@ -202,8 +202,8 @@ export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
     >
       {contentAs[as].criterias && (
         <StyledCriteriasContainer>
-          {contentAs[as].criterias?.map((criteria) => (
-            <StyledCriteria>
+          {contentAs[as].criterias?.map((criteria, index) => (
+            <StyledCriteria key={index}>
               {criteria.illu}
               <Text size="large" color="darkGray">
                 {criteria.text}
@@ -215,8 +215,9 @@ export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
       <Text size="large">{contentAs[as].content}</Text>
 
       <StyledCTAsContainer>
-        {contentAs[as].cta.map((cta) => (
+        {contentAs[as].cta.map((cta, index) => (
           <Button
+            key={index}
             style="custom-secondary-inverted"
             size="large"
             onClick={() => gaEvent(cta.gaTag)}
