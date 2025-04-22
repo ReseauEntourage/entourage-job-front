@@ -43,26 +43,6 @@ export const renderLinks = (
       href: '/backoffice/annuaire',
       name: "Réseau d'entraide",
     },
-    {
-      href: `/backoffice/candidat/${candidateId}/offres/private`,
-      name: 'Les offres',
-      queryParams: `?status=-1`,
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-      subMenu: [
-        {
-          href: `/backoffice/candidat/${candidateId}/offres/private`,
-          name: 'Mes offres',
-          queryParams: `?status=-1`,
-          badge: 'offers',
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/offres/public`,
-          name: 'Toutes les offres',
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
-        },
-      ],
-    },
     // {
     //   href: `/backoffice/candidat/${candidateId}/suivi`,
     //   name: 'Mon suivi',
@@ -148,27 +128,6 @@ export const renderLinks = (
         {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/offres/private`,
-          name: 'Les offres',
-          queryParams: `?status=-1`,
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-          subMenu: [
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/private`,
-              name: 'Offres du candidat',
-              queryParams: `?status=-1`,
-              badge: 'offers',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
-            },
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/public`,
-              name: 'Toutes les offres',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
-            },
-          ],
         },
         // {
         //   href: `/backoffice/candidat/${candidateId}/suivi`,
