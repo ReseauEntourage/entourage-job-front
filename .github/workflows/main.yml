@@ -53,12 +53,6 @@ jobs:
         with:
           cache: 'pnpm'
 
-      - name: Set up Cypress binary cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('pnpm-lock.yaml') }}
-
       # Get node module from cache
       # - name: Cache Node Modules
       #   id: pnpm-cache-deps
@@ -74,6 +68,9 @@ jobs:
         run: pnpm install
         # if: steps.pnpm-cache-deps.outputs.cache-hit != 'true'
 
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+
       # Run ts-check test then eslint test
       - name: Run ts-check & eslint - Code Quality Test
         run: |
@@ -86,7 +83,7 @@ jobs:
 
       # Run cypress test
       - name: Run Cypress - End to End Test
-        uses: cypress-io/github-action@v6 # action to exec cypress-io
+        uses: cypress-io/github-action@v4 # action to exec cypress-io
         with:
           start: pnpm run dev # run dev script to enable cypress execution
           config: e2e.baseUrl=http://localhost:3000
