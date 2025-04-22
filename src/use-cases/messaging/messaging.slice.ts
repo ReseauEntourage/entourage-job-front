@@ -27,6 +27,7 @@ export interface State {
   pinnedInfo: MessagingPinnedInfo;
   query: string;
   unseenConversationCount: number;
+  newMessage: string;
 }
 
 const initialState: State = {
@@ -42,6 +43,7 @@ const initialState: State = {
   pinnedInfo: null,
   query: '',
   unseenConversationCount: 0,
+  newMessage: '',
 };
 
 export const slice = createSlice({
@@ -110,8 +112,8 @@ export const slice = createSlice({
           const selectedConvIdx = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
-          state.conversations[selectedConvIdx].messages.push(message);
-          state.selectedConversation?.messages.push(message);
+          state.conversations[selectedConvIdx].messages.unshift(message);
+          state.selectedConversation?.messages.unshift(message);
 
           // Set the conversation as seen
           state.conversations[selectedConvIdx].participants.forEach(
@@ -151,6 +153,9 @@ export const slice = createSlice({
     },
     setPinnedInfo(state, action) {
       state.pinnedInfo = action.payload;
+    },
+    setNewMessage(state, action) {
+      state.newMessage = action.payload;
     },
     ...postFeedbackAdapter.getReducers<State>((state) => state.postMessage, {
       postFeedbackSucceeded(state) {

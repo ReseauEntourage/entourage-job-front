@@ -1,5 +1,9 @@
-import React from 'react';
-import ReactSelect from 'react-select';
+import React, { useRef } from 'react';
+import ReactSelect, {
+  MultiValue,
+  SelectInstance,
+  SingleValue,
+} from 'react-select';
 import { StyledInputLabel } from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
 import {
@@ -34,8 +38,9 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
   hidden = false,
   openMenuOnClick = true,
   showLabel = false,
-  inputRef,
 }: SelectProps<T>) {
+  const selectRef = useRef<SelectInstance<FilterConstant, boolean>>(null);
+
   if (hidden) {
     return null;
   }
@@ -64,10 +69,19 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
             'Sélectionnez dans la liste...'
           }
           isDisabled={disabled}
-          onChange={onChange}
+          onChange={(newValue) => {
+            if (isMulti) {
+              const multiValues = newValue as MultiValue<FilterConstant> | null;
+              onChange(multiValues as unknown as T);
+            } else {
+              const singleValue =
+                newValue as SingleValue<FilterConstant> | null;
+              onChange(singleValue as unknown as T);
+            }
+          }}
           onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
-          ref={inputRef}
+          ref={selectRef}
         />
       </StyledSelect>
       <FieldErrorMessage error={error} />

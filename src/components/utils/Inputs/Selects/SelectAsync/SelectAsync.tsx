@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { MultiValue, SelectInstance, SingleValue } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { StyledInputLabel } from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
@@ -38,10 +39,10 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   hidden = false,
   openMenuOnClick = true,
   showLabel = false,
-  inputRef,
 }: SelectAsyncProps<T>) {
   const [defaultOptions, setDefaultOptions] = useState<FilterConstant[]>();
   const [isLoading, setIsLoading] = useState(false);
+  const selectRef = useRef<SelectInstance<FilterConstant, boolean>>(null);
 
   const debouncedLoadOptions = useCallback(
     (inputValue, callback) => {
@@ -101,10 +102,19 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
           }}
           loadOptions={debouncedLoadOptions}
           isDisabled={disabled}
-          onChange={onChange}
+          onChange={(newValue) => {
+            if (isMulti) {
+              const multiValues = newValue as MultiValue<FilterConstant> | null;
+              onChange(multiValues as unknown as T);
+            } else {
+              const singleValue =
+                newValue as SingleValue<FilterConstant> | null;
+              onChange(singleValue as unknown as T);
+            }
+          }}
           onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
-          ref={inputRef}
+          ref={selectRef}
         />
       </StyledSelect>
       <FieldErrorMessage error={error} />

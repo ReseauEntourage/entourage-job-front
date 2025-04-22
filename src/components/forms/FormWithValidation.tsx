@@ -72,7 +72,6 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   const { handleSubmit, control, reset, getValues, resetField, watch } =
     useForm<ExtractFormSchemaValidation<S>>({
       defaultValues,
-      shouldUnregister: true,
     });
 
   useImperativeHandle(innerRef, () => {

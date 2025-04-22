@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { plateform } from 'src/utils/Device';
 import { HeaderConnectedContentDesktop } from './HeaderConnectedContent.desktop';
 import { HeaderConnectedContentMobile } from './HeaderConnectedContent.mobile';

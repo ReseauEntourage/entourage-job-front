@@ -46,12 +46,6 @@ export const cvJourneyRequests = {
   ],
   POST: [
     {
-      path: '/opportunity',
-      data: { fixture: 'api/generated/opportunity' },
-      alias: 'postOpportunity',
-    },
-
-    {
       path: '/cv/count',
       data: {},
       alias: 'postCvCount',

@@ -9,14 +9,12 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';
 
-// import * as Sentry from '@sentry/react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 
 import { ModalsListener } from 'src/components/modals/Modal';
-// import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';
@@ -25,12 +23,6 @@ import { gaEventWithUser } from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { store } from 'src/store/store';
 import { selectCurrentUser } from 'src/use-cases/current-user';
-
-// sentry is only commented untill we're sure we won't use it again
-// Sentry.init({
-//   enabled: process.env.NODE_ENV === 'production',
-//   dsn: process.env.SENTRY_DSN,
-// });
 
 /** ************
  * This component is detached because it needs Redux content to work properly
@@ -71,18 +63,6 @@ const EntourageApp = (props: AppProps) => {
 
   useEffect(() => {
     const scrollToTop = (_url, { shallow }) => {
-      //* ************** */
-      /* this part should be removed if no bug is detected */
-
-      // Fix because if offcanvas is open during route change, couldn't be opened anymore
-      //  if (UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`)) {
-      //   UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
-      // }
-      // if (UIkit.offcanvas(`#${OFFCANVAS_GUEST}`)) {
-      //   UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
-      // }
-      //* ************** */
-
       if (!shallow && shouldScrollToTop) {
         setShouldScrollToTop(true);
         document?.getElementById('body')?.scrollTo(0, 0);
@@ -95,7 +75,6 @@ const EntourageApp = (props: AppProps) => {
   }, [events, shouldScrollToTop]);
 
   return (
-    // <Sentry.ErrorBoundary fallback="An error has occurred">
     <Provider store={store}>
       <DataProvider>
         <>
@@ -104,7 +83,6 @@ const EntourageApp = (props: AppProps) => {
         </>
       </DataProvider>
     </Provider>
-    // </Sentry.ErrorBoundary>
   );
 };
 
