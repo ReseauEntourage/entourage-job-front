@@ -30,6 +30,7 @@ export interface ButtonProps {
   dataTestId?: string;
   color?: string;
   rounded?: boolean;
+  submit?: boolean;
 }
 
 export function getButtonClassBuffer({
@@ -88,6 +89,7 @@ export function Button({
   dataTestId = '',
   color = 'primaryBlue',
   rounded = false,
+  submit = false,
 }: ButtonProps) {
   const [mounted, setMounted] = useState(false);
 
@@ -109,10 +111,10 @@ export function Button({
 
   const buttonComponent = (
     <StyledButton
+      type={submit ? 'submit' : 'button'}
       id={id || undefined}
       className={classBuffer}
       disabled={disabled}
-      type="button"
       onClick={onClick}
       data-uk-toggle={toggle}
       data-testid={dataTestId}
