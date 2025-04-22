@@ -13,7 +13,7 @@ export function useLineLimit(
   const [numberOfLines, setNumberOfLines] = useState(0);
   const [textAreaWidth, setTextAreaWidth] = useState(0);
 
-  const ref = useRef<HTMLTextAreaElement>();
+  const ref = useRef<HTMLTextAreaElement>(undefined);
 
   const prevValue = usePrevious(value);
 

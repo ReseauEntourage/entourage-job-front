@@ -56,7 +56,7 @@ export const SimpleLink = ({
       {children}
     </a>
   ) : (
-    <Link scroll={scroll} href={href} shallow={shallow}>
+    <Link scroll={scroll} href={href} shallow={shallow} legacyBehavior>
       <a
         onClick={onClick}
         target={target}

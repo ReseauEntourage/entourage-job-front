@@ -9,7 +9,7 @@ export const addPrefix = (path: string) => {
     path.includes('/static')
   ) {
     const index = path.indexOf('/static');
-    return `${process.env.CDN_URL || ''}${path.substring(index)}`;
+    return `${process.env.NEXT_PUBLIC_CDN_URL || ''}${path.substring(index)}`;
   }
   return path;
 };

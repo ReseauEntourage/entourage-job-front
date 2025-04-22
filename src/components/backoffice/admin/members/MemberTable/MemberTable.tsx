@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import { Table, Th } from 'src/components/utils/Table';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { MemberColumn } from './Member/Member.types';

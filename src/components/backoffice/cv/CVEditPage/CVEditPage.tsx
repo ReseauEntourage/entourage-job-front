@@ -29,7 +29,7 @@ import { NoCV } from './NoCV';
 
 const pusher = new Pusher(
   // @ts-expect-error after enable TS strict mode. Please, try to fix it
-  process.env.PUSHER_API_KEY,
+  process.env.NEXT_PUBLIC_PUSHER_API_KEY,
   {
     cluster: 'eu',
     forceTLS: true,
@@ -81,7 +81,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   useEffect(() => {
     if (cv && cv !== prevCV) {
       if (!cvVersion) setCvVersion(cv.version);
-      setImageUrl(`${process.env.AWSS3_URL}/${cv.urlImg}`);
+      setImageUrl(`${process.env.NEXT_PUBLIC_AWSS3_URL}/${cv.urlImg}`);
       setCVHasBeenRead();
     }
   }, [candidateId, cv, cvVersion, prevCV, setCVHasBeenRead]);
@@ -124,9 +124,9 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
       // Use hash to reload image if an update is done
       const previewHash = Date.now();
       setImageUrl(
-        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${
-          cv.UserId
-        }.${
+        `${process.env.NEXT_PUBLIC_AWSS3_URL}${
+          process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY
+        }${cv.UserId}.${
           cv.status === CV_STATUS.Draft.value
             ? CV_STATUS.Progress.value
             : cv.status
@@ -409,7 +409,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           {user.role !== USER_ROLES.ADMIN && (
             <ButtonIcon
               icon={<LucidIcon name="CircleHelp" />}
-              href={process.env.TUTORIAL_CV}
+              href={process.env.NEXT_PUBLIC_TUTORIAL_CV}
               newTab
               onClick={() => {
                 gaEvent(GA_TAGS.BACKOFFICE_CV_AIDE);

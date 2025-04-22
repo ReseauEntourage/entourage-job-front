@@ -99,14 +99,8 @@ export function useRefering() {
         shallow: true,
       });
     }
-  }, [
-    nextStep,
-    replace,
-    shouldSkipStep,
-    dispatch,
-    stepContent,
-    valuesFromOtherStep,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextStep, replace, shouldSkipStep, dispatch, stepContent]);
 
   useEffect(() => {
     if (referCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
