@@ -33,7 +33,7 @@ export const HeaderPublicContentDesktop = ({
         );
       }
       return (
-        <Link href={link.href} key={i}>
+        <Link href={link.href} key={i} legacyBehavior>
           <StyledPublicItem color="white">{link.name}</StyledPublicItem>
         </Link>
       );

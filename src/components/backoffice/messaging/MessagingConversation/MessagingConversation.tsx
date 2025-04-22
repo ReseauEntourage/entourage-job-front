@@ -17,6 +17,7 @@ import {
 import {
   selectConversationParticipantsAreDeleted,
   selectNewMessage,
+  selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
@@ -24,6 +25,7 @@ import {
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
+import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
@@ -41,6 +43,7 @@ export const MessagingConversation = () => {
   );
   const pinnedInfo = useSelector(selectPinnedInfo);
 
+  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
   );
@@ -51,6 +54,14 @@ export const MessagingConversation = () => {
       currentUser.role === USER_ROLES.CANDIDATE
     );
   }, [currentUser, selectedConversationId]);
+
+  const reversedMessages = useMemo(() => {
+    if (!selectedConversation || !selectedConversation.messages) {
+      return [];
+    }
+    return [...selectedConversation.messages].reverse();
+  }, [selectedConversation]);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,6 +78,21 @@ export const MessagingConversation = () => {
 
   const onSuggestionClick = (suggestion) => {
     dispatch(messagingActions.setNewMessage(suggestion.message));
+  };
+
+  const onRatingOrClose = (rating: number | null) => {
+    const conversationParticipantId = selectedConversation?.participants.find(
+      (participant) => participant.id === currentUserId
+    )?.conversationParticipant.id;
+
+    if (selectedConversationId && conversationParticipantId) {
+      dispatch(
+        messagingActions.postFeedbackRequested({
+          conversationParticipantId,
+          rating,
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -127,22 +153,32 @@ export const MessagingConversation = () => {
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
 
+          {shouldGiveFeedback && (
+            <MessagingFeedback
+              onRatingOrClose={onRatingOrClose}
+              adressee={selectedConversation?.participants.find(
+                (participant) => participant.id !== currentUserId
+              )}
+            />
+          )}
+
           {displaySuggestions ? (
             <MessagingSuggestions
               onSuggestionClick={onSuggestionClick}
               newMessage={newMessage}
             />
           ) : (
-            <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
-              {selectedConversation &&
-                selectedConversation.messages &&
-                selectedConversation.messages.map((message) => (
+            <MessagingMessagesContainer
+              blur={shouldGiveFeedback}
+              className={isMobile ? 'mobile' : ''}
+            >
+              {reversedMessages &&
+                reversedMessages.map((message) => (
                   <MessagingMessage key={message.id} message={message} />
                 ))}
               <div ref={messagesEndRef} />
             </MessagingMessagesContainer>
           )}
-
           <MessagingEditor readonly={conversationParticipantsAreDeleted} />
         </>
       )}

@@ -11,6 +11,7 @@ import {
   selectNewMessage,
   selectSelectedConversation,
   selectSelectedConversationId,
+  selectShouldGiveFeedback,
 } from 'src/use-cases/messaging';
 import { Attachment } from './Attachment/Attachment';
 import {
@@ -34,6 +35,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const newMessage = useSelector(selectNewMessage);
+  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
 
   // States
   const [attachments, setAttachments] = useState<File[]>([]);
@@ -123,7 +125,10 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
           ))}
         </StyledAttachementInfoContainer>
       )}
-      <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
+      <MessagingMessageForm
+        blur={shouldGiveFeedback}
+        className={isMobile ? 'mobile' : ''}
+      >
         <FileInput
           id="file-input"
           name="file-input"

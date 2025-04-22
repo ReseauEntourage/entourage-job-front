@@ -13,7 +13,9 @@ export const MessagingConversationContainer = styled.div`
   height: 100%;
 `;
 
-export const MessagingMessagesContainer = styled.div`
+export const MessagingMessagesContainer = styled.div<{
+  blur?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -23,4 +25,6 @@ export const MessagingMessagesContainer = styled.div`
   box-sizing: border-box;
   align-items: flex-start;
   flex: auto;
+  filter: ${(props) => (props.blur ? 'blur(2px)' : 'none')};
+  pointer-events: ${(props) => (props.blur ? 'none' : 'auto')};
 `;

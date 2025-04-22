@@ -20,10 +20,20 @@ export const StyledAttachementInfoContainer = styled.div`
   align-items: center;
 `;
 
-export const MessagingMessageForm = styled.form`
+export const MessagingMessageForm = styled.form<{
+  blur?: boolean;
+}>`
   display: flex;
-  gap: 25px;
   align-items: flex-end;
+  background: ${COLORS.lightGray};
+  box-sizing: border-box;
+  gap: 25px;
+  &.mobile {
+    position: sticky;
+    bottom: 0;
+  }
+  filter: ${(props) => (props.blur ? 'blur(2px)' : 'none')};
+  pointer-events: ${(props) => (props.blur ? 'none' : 'auto')};
 `;
 
 export const MessagingInputContainer = styled.div`

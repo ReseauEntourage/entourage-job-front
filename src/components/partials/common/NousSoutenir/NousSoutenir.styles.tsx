@@ -2,13 +2,11 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledNousSoutenirCardsContainer = styled.div`
-  padding: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 35px;
   flex-wrap: wrap;
+  padding: 50px;
 `;
 
 export const StyledNousSoutenirCard = styled.div`

@@ -17,48 +17,6 @@ export const JNSPR = {
   label: 'Je ne souhaite pas répondre',
 };
 
-export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
-
-export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
-  color: string;
-  public?: string;
-  recommended?: string;
-})[] = [
-  {
-    value: -1,
-    label: 'Offre à traiter',
-    public: 'Offre consultée',
-    recommended: 'Offre recommandée',
-    color: 'muted',
-  },
-  { value: 0, label: 'Contacté', color: 'muted' },
-  { value: 1, label: "Phase d'entretien", color: 'warning' },
-  { value: 2, label: 'Embauche', color: 'success' },
-  { value: 3, label: 'Refus avant entretien', color: 'danger' },
-  { value: 4, label: 'Refus après entretien', color: 'danger' },
-];
-
-export type AdminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
-
-export const ADMIN_OFFERS_TAGS: FilterConstant<AdminOffersTags>[] = [
-  {
-    value: 'pending',
-    label: 'offres à valider',
-  },
-  {
-    value: 'validated',
-    label: 'offres publiées',
-  },
-  {
-    value: 'external',
-    label: 'offres externes',
-  },
-  {
-    value: 'archived',
-    label: 'offres archivées',
-  },
-];
-
 export type BusinessLineValue =
   | 'la'
   | 'aa'
@@ -303,13 +261,6 @@ export const CONTRACTS: (FilterConstant<Contract> & {
   },
 ];
 
-export const OFFER_ADMIN_FILTERS_DATA = [
-  { tag: 'pending', title: 'Offres à valider' },
-  { tag: 'validated', title: 'Offres publiées', active: true },
-  { tag: 'external', title: 'Offres externes' },
-  { tag: 'archived', title: 'Offres archivées' },
-];
-
 export const CV_FILTERS_DATA: Filter[] = [
   {
     key: 'employed',
@@ -348,45 +299,6 @@ export const CV_FILTERS_DATA: Filter[] = [
     key: 'gender',
     constants: GENDERS_FILTERS,
     title: 'Genre',
-  },
-];
-
-export const OPPORTUNITY_FILTERS_DATA: Filter[] = [
-  {
-    key: 'isPublic',
-    constants: [
-      { label: 'Offres privées', value: false },
-      { label: 'Offres générales', value: true },
-    ],
-    title: 'Privée/générale',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_PUBLIQUE_CLIC,
-  },
-  {
-    key: 'status',
-    constants: OFFER_STATUS,
-    title: 'Statut',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC,
-  },
-  {
-    key: 'department',
-    constants: DEPARTMENTS_FILTERS,
-    priority: DEPARTMENTS_FILTERS.filter((dept) => {
-      return dept.zone !== ADMIN_ZONES.HZ;
-    }),
-    title: 'Département',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_GEOGRAPHIQUE_CLIC,
-  },
-  {
-    key: 'businessLines',
-    constants: BUSINESS_LINES,
-    title: 'Métiers',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC,
-  },
-  {
-    key: 'contracts',
-    constants: CONTRACTS,
-    title: 'Type de contrat',
-    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC,
   },
 ];
 
@@ -470,23 +382,6 @@ export const DirectoryFilters: Filter[] = [
     constants: BUSINESS_LINES,
     title: "Secteur d'activité",
     tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
-  },
-];
-
-export type ExternalOfferOrigin = 'network' | 'internet' | 'counselor';
-
-export const EXTERNAL_OFFERS_ORIGINS: FilterConstant<ExternalOfferOrigin>[] = [
-  {
-    label: 'Mon réseau',
-    value: 'network',
-  },
-  {
-    label: 'Recherches Internet',
-    value: 'internet',
-  },
-  {
-    label: 'Mon conseiller emploi (Pôle Emploi, mission locale...)',
-    value: 'counselor',
   },
 ];
 
@@ -1016,12 +911,6 @@ export const EVENT_TYPES = {
   END: 'end',
 };
 
-export const EVENT_TYPE_MAPPING = {
-  [OFFER_STATUS[1].value]: EVENT_TYPES.CONTACT,
-  [OFFER_STATUS[2].value]: EVENT_TYPES.INTERVIEW,
-  [OFFER_STATUS[3].value]: EVENT_TYPES.HIRING,
-};
-
 export const EVENT_TYPES_FILTERS = [
   {
     label: 'Contacté le',
@@ -1054,53 +943,53 @@ export const EVENT_TYPES_FILTERS = [
 ];
 
 const ADDRESSES = {
-  PARIS: process.env.ADRESSE_LOCAUX_PARIS,
-  LYON: process.env.ADRESSE_LOCAUX_LYON,
-  LILLE: process.env.ADRESSE_LOCAUX_LILLE,
-  RENNES: process.env.ADRESSE_LOCAUX_RENNES,
-  LORIENT: process.env.ADRESSE_LOCAUX_LORIENT,
+  PARIS: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS,
+  LYON: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LYON,
+  LILLE: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LILLE,
+  RENNES: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_RENNES,
+  LORIENT: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LORIENT,
 };
 
 export const ANTENNE_INFO = [
   {
     dpt: '93',
-    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
     address: ADDRESSES.PARIS,
   },
   {
     dpt: '75',
-    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
     address: ADDRESSES.PARIS,
   },
   {
     dpt: '92',
-    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
     address: ADDRESSES.PARIS,
   },
   {
     dpt: '35',
-    mailCoordo: process.env.ADMIN_CANDIDATES_RENNES,
-    mailEntreprise: process.env.ADMIN_COMPANIES_RENNES,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_RENNES,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_RENNES,
     city: 'Rennes',
     address: ADDRESSES.RENNES,
   },
   {
     dpt: '59',
-    mailCoordo: process.env.ADMIN_CANDIDATES_LILLE,
-    mailEntreprise: process.env.ADMIN_COMPANIES_LILLE,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LILLE,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_LILLE,
     city: 'Lille',
     address: ADDRESSES.LILLE,
   },
   {
     dpt: '69',
-    mailCoordo: process.env.ADMIN_CANDIDATES_LYON,
-    mailEntreprise: process.env.ADMIN_COMPANIES_LYON,
+    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LYON,
+    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_LYON,
     city: 'Lyon',
     address: ADDRESSES.LYON,
   },
@@ -1109,7 +998,6 @@ export const ANTENNE_INFO = [
 export const MEMBER_TABS = {
   CV: 'cv',
   PARAMETERS: 'parametres',
-  OFFERS: 'offres',
 };
 
 export const ExternalMessageContactTypes = {
