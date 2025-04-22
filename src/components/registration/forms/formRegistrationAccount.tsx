@@ -72,7 +72,11 @@ export const formRegistrationAccount: FormSchema<{
       showLabel: true,
       rules: [
         {
-          method: (fieldValue) => isEmail(fieldValue),
+          method: (fieldValue) =>
+            isEmail(fieldValue, {
+              blacklisted_chars: '"\'`$&*()=[]{};:<>?,\\^',
+              allow_utf8_local_part: false,
+            }),
           message: 'Adresse e-mail invalide',
         },
       ],
