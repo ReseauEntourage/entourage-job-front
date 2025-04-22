@@ -1,5 +1,8 @@
 import { RootState } from './messaging.slice';
 
+export const selectNewMessage = (state: RootState) =>
+  state.messaging.newMessage;
+
 export const selectConversations = (state: RootState) =>
   state.messaging.conversations;
 
