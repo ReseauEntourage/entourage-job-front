@@ -9,7 +9,6 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
-  ContactCandidate,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
@@ -446,10 +445,6 @@ export class APIHandler {
 
   postContactCompany(params: ContactCompany): Promise<AxiosResponse> {
     return this.post('/contact/company', params);
-  }
-
-  postContactCandidate(params: ContactCandidate): Promise<AxiosResponse> {
-    return this.post('/contact/candidate', params);
   }
 
   postNewsletter(params: ContactNewsletter): Promise<AxiosResponse> {
