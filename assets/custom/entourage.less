@@ -307,87 +307,6 @@ mark, .mark-animated > * > * > * > * {
   }
 }
 
-.ent-color-amber {
-  color: #ffc107;
-
-  polygon {
-    fill: #ffc107;
-  }
-}
-
-
-.ent-offer {
-  overflow: hidden;
-  border: 1px solid #e5e5e5;
-  &-selected {
-    border: 1px solid #47A8B9;
-    box-shadow: 0 5px 15px rgb(245, 95, 36 / 8%) !important;
-    &:hover {
-      box-shadow: 0 14px 25px rgb(245, 95, 36 / 16%) !important;
-    }
-  }
-
-}
-
-.hook-ent-offer-badge() {
-  position: absolute;
-  top: 15px;
-  right: -35px;
-
-  width: 110px;
-  height: 13px;
-
-  background-color: #47A8B9;
-  transform: rotate(45deg);
-  text-align: center;
-  text-transform: uppercase;
-  color: white;
-  font-weight: bold;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ent-offer-badge{
-  .hook-ent-offer-badge();
-}
-
-.ent-offer-badge-recommandation {
-  .hook-ent-offer-badge();
-  background-color: rgba(72, 72, 72, 0.7)
-}
-
-.ent-employed-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.ent-employed-badge {
-  width: 500px;
-  height: 100px;
-  background-color: #47A8B9;
-  transform: rotate(-45deg);
-  position: absolute;
-  top: 92px;
-  left: -108px;
-}
-
-.ent-employed-badge-small {
-  width: 500px;
-  height: 50px;
-  background-color: #47A8B9;
-  transform: rotate(-45deg);
-  position: absolute;
-  top: 78px;
-  left: -146px;
-}
-
-.ent-temp-employed-color {
-  background-color: #363636 !important;
-}
-
 .ent-divier-backoffice {
   // max-width: 1200px;
   // margin-left: auto;
@@ -550,14 +469,6 @@ mark, .mark-animated > * > * > * > * {
 
 .uk-checkbox {
   background-color: white;
-}
-
-.ent-external-offer {
-  background-color: @global-muted-background;
-}
-
-.uk-card-default.uk-card-hover:hover.ent-external-offer {
-  background-color: @global-muted-background !important;
 }
 
 .uk-list-disc>li:nth-child(n+2), .uk-list-disc>li>ul {

@@ -6,9 +6,7 @@ import {
   Contract as ContractValue,
   DocumentNameType,
   ExternalMessageContactType,
-  ExternalOfferOrigin,
   HeardAboutValue,
-  OfferStatus,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
@@ -30,7 +28,6 @@ export type SocialMedia =
 export const APIRoutes = {
   USERS: 'user',
   AUTH: 'auth',
-  OPPORTUNITIES: 'opportunity',
   CONTACTS: 'contact',
   CVS: 'cv',
   ORGANIZATIONS: 'organization',
@@ -350,90 +347,6 @@ export type UserReferingDto = {
   }[];
 };
 
-export type Opportunity = {
-  id?: string;
-  title: string;
-  isPublic: boolean;
-  isValidated: boolean;
-  isArchived: boolean;
-  isExternal: boolean;
-  link: string;
-  externalOrigin: ExternalOfferOrigin;
-  company: string;
-  recruiterName: string;
-  recruiterFirstName: string;
-  recruiterMail: string;
-  contactMail: string;
-  recruiterPosition: string;
-  recruiterPhone: string;
-  date: string;
-  address: string;
-  description: string;
-  companyDescription: string;
-  skills: string;
-  prerequisites: string;
-  department: Department;
-  contract: ContractValue;
-  startOfContract: string;
-  endOfContract: string;
-  isPartTime: boolean;
-  numberOfPositions: number;
-  message: string;
-  driversLicense: boolean;
-  workingHours: string;
-  salary: string;
-  otherInfo: string;
-  businessLines: { name: BusinessLineValue; order: number }[];
-  candidatesIds: string[];
-  isAdmin: boolean;
-  shouldSendNotifications: boolean;
-  isCopy: boolean;
-  createdAt: string;
-  updatedAt?: string;
-  createdBy?: string;
-};
-
-export type OpportunityType = 'public' | 'private';
-
-export type OpportunityTabCount = {
-  status: -1 | 0 | 1 | 2 | 3 | 4 | 'archived';
-  count: number;
-};
-
-export type OpportunityDto = {
-  title: string;
-  isPublic: boolean;
-  isValidated?: boolean;
-  isArchived?: boolean;
-  company: string;
-  recruiterName: string;
-  recruiterFirstName: string;
-  recruiterMail: string;
-  contactMail?: string;
-  recruiterPosition: string;
-  recruiterPhone: string;
-  date: string;
-  description: string;
-  companyDescription: string;
-  department?: Department;
-  address?: string;
-  contract: ContractValue;
-  startOfContract?: string;
-  endOfContract?: string;
-  isPartTime: boolean;
-  message: string;
-  driversLicense: boolean;
-  workingHours: string;
-  salary: string;
-  otherInfo: string;
-  businessLines?: { name: BusinessLineValue; order: number }[];
-  candidatesIds: string[];
-  isAdmin?: boolean;
-  shouldSendNotifications?: boolean;
-  isCopy?: boolean;
-  locations?: { department: Department; address: string }[];
-};
-
 export type Skill = {
   id: string;
   name: string;
@@ -447,85 +360,6 @@ export type Contract = {
   name: ContractValue;
   createdAt: string;
   updatedAt: string;
-};
-
-export type Event = {
-  id: string;
-  OpportunityUserId: string;
-  ContractId: string;
-  type: string;
-  startDate: string;
-  endDate: string;
-  createdAt: string;
-  updatedAt: string;
-  contract: Contract;
-};
-
-export interface OpportunityUser {
-  OpportunityId: string;
-  UserId: string;
-  archived: boolean;
-  bookmarked: boolean;
-  createdAt: string;
-  events: Event[];
-  id: string;
-  note: string;
-  recommended: boolean;
-  seen: boolean;
-  status: OfferStatus;
-  updatedAt: string;
-  user: UserCandidateWithUsers;
-  otherInfo: string;
-  prerequisites: string;
-  recruiterFirstName: string;
-  recruiterMail: string;
-  recruiterName: string;
-  recruiterPosition: string;
-  salary: string;
-  skills: Skill[];
-}
-
-export interface OpportunityWithOpportunityUsers extends Opportunity {
-  opportunityUsers: OpportunityUser;
-}
-
-export interface AdminOpportunityWithOpportunityUsers extends Opportunity {
-  opportunityUsers: OpportunityUser[];
-}
-
-export type ExternalOpportunityDto = {
-  title: string;
-  company: string;
-  contract: ContractValue;
-  startOfContract?: string;
-  endOfContract?: string;
-  isPartTime?: boolean;
-  businessLines?: { name: BusinessLineValue; order: number }[];
-  department: Department;
-  link: string;
-  description: string;
-  externalOrigin?: ExternalOfferOrigin;
-  date: string;
-  candidateId: string;
-  status?: number;
-};
-
-export type OpportunityUserEvent = {
-  startDate: string;
-  endDate?: string;
-  type: string;
-  contract: { name: ContractValue };
-};
-
-export type OpportunityJoin = {
-  status: number;
-  seen: boolean;
-  bookmarked: boolean;
-  archived: boolean;
-  recommended: boolean;
-  note: string;
-  OpportunityId: string;
-  UserId: string;
 };
 
 export type ContactContactUs = {
@@ -604,6 +438,16 @@ export type CandidateInscription = {
   tsPrescripteur?: string;
 };
 
+export type Media = {
+  id: string;
+  name: string;
+  s3Key: string;
+  mimeType: string;
+  size: number;
+  userId: string;
+  signedUrl: string;
+};
+
 export type ExternalMessage = {
   UserId: string;
 
@@ -640,6 +484,7 @@ export type Message = {
   updatedAt: string;
   conversationId: string;
   author: User;
+  medias: Media[];
 };
 
 export type ConversationParticipant = Pick<
@@ -712,14 +557,6 @@ export type ProfilesFilters = {
   search?: string;
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
-  businessLines: BusinessLineValue | BusinessLineValue[];
-};
-
-export type OpportunitiesFiltersForCandidate = {
-  search?: string;
-  status?: OfferStatus;
-  type?: OpportunityType;
-  department: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
 };
 
