@@ -156,9 +156,7 @@ export const renderLinks = (
           name: "Réseau d'entraide",
         },
         {
-          href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}${
-            candidateId ? `?id=${candidateId}` : ''
-          }}`,
+          href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
           name: 'Boîte à outils',
           external: true,
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_BAO_CLIC,
