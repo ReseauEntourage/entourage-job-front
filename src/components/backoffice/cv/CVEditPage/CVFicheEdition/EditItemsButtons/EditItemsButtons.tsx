@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonIcon } from 'src/components/utils';
+import { ButtonIcon } from 'src/components/utils/Button/ButtonIcon';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { StyledEditItemsButtons } from './EditItemsButtons.styles';
 

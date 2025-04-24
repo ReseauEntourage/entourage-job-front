@@ -1,33 +1,29 @@
 import React from 'react';
-import { StyledButtonIcon } from './ButtonIcon.styles';
+import { Button } from './Button';
 
 export interface ButtonIconProps {
   icon: React.ReactNode;
   onClick?: () => void;
   href?: string;
   dataTestId?: string;
-  newTab?: boolean;
-  color?: string;
+  variant?: 'default' | 'primary' | 'secondary';
 }
 
 export const ButtonIcon = ({
   icon,
   onClick = () => {},
-  color = 'primaryBlue',
   href,
   dataTestId,
-  newTab,
+  variant = 'secondary',
 }: ButtonIconProps) => {
   return (
-    <StyledButtonIcon
+    <Button
       href={href}
       onClick={onClick}
       data-testid={dataTestId}
-      target={newTab ? '_blank' : ''}
-      rel="noreferrer"
-      color={color}
+      variant={variant}
     >
       {icon}
-    </StyledButtonIcon>
+    </Button>
   );
 };

@@ -5,11 +5,11 @@ import { ButtonIcon, ButtonIconProps } from './ButtonIcon';
 
 const meta = {
   title: 'ButtonIcon',
-  render: ({ href, newTab }: ButtonIconProps) => {
+  render: ({ href }: ButtonIconProps) => {
     return (
       <>
         Bouton vers : {href}
-        <ButtonIcon icon={<IlluConversation />} href={href} newTab={newTab} />
+        <ButtonIcon icon={<IlluConversation />} href={href} />
       </>
     );
   },
@@ -21,6 +21,5 @@ type Story = StoryObj<typeof ButtonIcon>;
 export const Default: Story = {
   args: {
     href: 'https://www.entourage.social/',
-    newTab: true,
   },
 };
