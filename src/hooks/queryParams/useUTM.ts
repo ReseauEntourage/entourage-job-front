@@ -60,22 +60,4 @@ export const useUtm = () => {
   useEffect(() => {
     saveUtmToLocalStorage();
   }, [saveUtmToLocalStorage, searchParams]);
-
-  const getUtmFromLocalStorage = (): UtmParameters[] => {
-    if (typeof window !== 'undefined') {
-      const utmParameters: UtmParameters[] = [];
-
-      Object.values(UtmParameters).forEach((key) => {
-        const value = localStorage.getItem(key);
-        if (value) {
-          utmParameters[key] = value;
-        }
-      });
-
-      return utmParameters;
-    }
-    return [];
-  };
-
-  return { getUtmFromLocalStorage };
 };
