@@ -12,11 +12,11 @@ import {
 } from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
+  Hamburger,
   Navbar,
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
-import { Hamburger } from 'src/components/utils/Hamburger';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
@@ -60,7 +60,11 @@ export const HeaderConnectedContentMobile = ({
           <div className="uk-padding-small uk-flex uk-flex-middle">
             {/* Messages */}
             <StyledMessagingIconContainer>
-              <ButtonIcon icon={messaging.icon} href={messaging.href} />
+              <ButtonIcon
+                icon={messaging.icon}
+                href={messaging.href}
+                color="white"
+              />
               {messaging.badge && badges[messaging.badge] > 0 && (
                 <div className="pin-notification" />
               )}

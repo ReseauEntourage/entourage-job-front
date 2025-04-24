@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonIcon } from '../Button';
+import { ButtonIcon } from '../ButtonIcon';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { ProfileReportUserModal } from 'src/components/backoffice/profile/ProfileReportUserModal/ProfileReportUserModal';

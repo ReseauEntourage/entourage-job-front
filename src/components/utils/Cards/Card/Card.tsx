@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Text } from '../../Text';
-import { Button, ButtonIcon } from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
+import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import { useIsDesktop } from 'src/hooks/utils';

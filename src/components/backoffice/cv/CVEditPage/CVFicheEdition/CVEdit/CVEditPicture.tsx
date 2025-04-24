@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonIcon } from 'src/components/utils/Button/ButtonIcon';
+import { ButtonIcon } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';

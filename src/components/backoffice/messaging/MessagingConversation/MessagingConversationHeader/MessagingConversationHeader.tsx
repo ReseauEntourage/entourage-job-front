@@ -7,8 +7,7 @@ import {
   ConversationParticipants,
 } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
-import { ImgProfile } from 'src/components/utils';
-import { ButtonIcon } from 'src/components/utils/Button/ButtonIcon';
+import { ButtonIcon, ImgProfile } from 'src/components/utils';
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
 import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';

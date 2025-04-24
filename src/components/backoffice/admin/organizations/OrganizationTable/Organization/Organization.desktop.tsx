@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { openModal } from 'src/components/modals/Modal';
-import { ButtonIcon } from 'src/components/utils/Button/ButtonIcon';
+import { ButtonIcon } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { EditOrganizationModal } from './EditOrganizationModal';
