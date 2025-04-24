@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
+import UIkit from 'uikit';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -20,6 +21,7 @@ export const Carousel = ({
   padding,
 }: CarouselProps) => {
   const { asPath } = useRouter();
+  const carouselRef = React.useRef<HTMLDivElement | null>(null);
 
   let tag;
 
@@ -36,10 +38,19 @@ export const Carousel = ({
     tag = GA_TAGS.PAGE_ENTREPRISES_CARROUSEL_CLIC;
   }
 
+  useEffect(() => {
+    UIkit.slider(carouselRef.current, {
+      autoplay: true,
+      'autoplay-interval': 2000,
+      'pause-on-hover': true,
+      center: true,
+    });
+  }, []);
+
   return (
     <div
+      ref={carouselRef}
       className="uk-position-relative uk-margin-medium-left uk-margin-medium-right"
-      data-uk-slider="autoplay: true; autoplay-interval: 2000; pause-on-hover: true; center: true;"
       style={{ maxWidth: '100%' }}
     >
       <div

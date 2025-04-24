@@ -20,7 +20,7 @@ interface CVPageProps {
   exists?: boolean;
 }
 const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
-  const hostname = process.env.SERVER_URL;
+  const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
   const link = `${hostname}${router.asPath}`;
   const candidateExists = cv && cv.user && cv.user.candidat;
   const sharedDescription = candidateExists
@@ -30,7 +30,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
     ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
     : '';
   const urlImg = candidateExists
-    ? `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
     : '';
 
   useEffect(() => {

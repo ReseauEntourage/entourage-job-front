@@ -82,7 +82,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
               href={`/cv/${user?.candidat?.url}`}
             >
               <span>
-                {process.env.SERVER_URL}/cv/{user?.candidat?.url}
+                {process.env.NEXT_PUBLIC_SERVER_URL}/cv/{user?.candidat?.url}
               </span>
             </SimpleLink>
           </StyledRoleContainer>

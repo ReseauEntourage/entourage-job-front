@@ -199,15 +199,8 @@ export function useRegistration() {
         }
       );
     }
-  }, [
-    nextStep,
-    replace,
-    shouldSkipStep,
-    dispatch,
-    stepContent,
-    valuesFromOtherStep,
-    selectedRole,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextStep, replace, shouldSkipStep, dispatch, stepContent, selectedRole]);
 
   useEffect(() => {
     if (createUserStatus === ReduxRequestEvents.SUCCEEDED && selectedRole) {

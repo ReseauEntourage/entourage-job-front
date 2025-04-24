@@ -3,7 +3,6 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from 'axios';
-import _ from 'lodash';
 import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
@@ -18,11 +17,7 @@ import {
   CV,
   ExternalCv,
   ExternalMessage,
-  ExternalOpportunityDto,
   InternalMessage,
-  OpportunityDto,
-  OpportunityJoin,
-  OpportunityUserEvent,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -47,7 +42,7 @@ export class APIHandler {
   constructor() {
     this.name = 'APIHandler';
     this.api = axios.create({
-      baseURL: `${process.env.API_URL}`,
+      baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -366,133 +361,6 @@ export class APIHandler {
   }
 
   /// //////
-  /// opp //
-  /// //////
-
-  // get
-
-  getOpportunityAdmin(params: object): Promise<AxiosResponse> {
-    return this.get('/opportunity/admin', params);
-  }
-
-  getUserPrivateOpportunities(
-    candidateId: string,
-    params: object
-  ): Promise<AxiosResponse> {
-    return this.get(`/opportunity/candidate/private/${candidateId}`, params);
-  }
-
-  getAllCandidateOpportunities(
-    candidateId: string,
-    params: object
-  ): Promise<AxiosResponse> {
-    return this.get(`/opportunity/candidate/all/${candidateId}`, params);
-  }
-
-  getOpportunitiesAdminCount(): Promise<AxiosResponse> {
-    return this.get('/opportunity/admin/count');
-  }
-
-  getOpportunitiesUserCount(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/opportunity/candidate/count/${candidateId}`);
-  }
-
-  getOpportunityById(opportunityId: string): Promise<AxiosResponse> {
-    return this.get(`/opportunity/${opportunityId}`);
-  }
-
-  getOpportunitiesTabCountByCandidate(
-    candidateId: string
-  ): Promise<AxiosResponse> {
-    return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
-  }
-
-  // getOpportunitiesTabCountForAdmin(
-  //   params: object
-  // ): Promise<AxiosResponse> {
-  //   console.log(params);
-  //   return this.get(`/opportunity/admin/tabCount`, params);
-  // }
-
-  // post
-
-  postOpportunity(params: OpportunityDto): Promise<AxiosResponse> {
-    return this.post('/opportunity', params);
-  }
-
-  postExternalOpportunity(
-    params: ExternalOpportunityDto
-  ): Promise<AxiosResponse> {
-    return this.post('/opportunity/external', params);
-  }
-
-  postJoinOpportunity(params: object): Promise<AxiosResponse> {
-    return this.post('/opportunity/join', params);
-  }
-
-  postOpportunityUserEvent(
-    opportunityId,
-    candidateId,
-    event: OpportunityUserEvent
-  ) {
-    return this.post('/opportunity/event', {
-      opportunityId,
-      candidateId,
-      ...event,
-    });
-  }
-
-  postOpportunityContactEmployer(params: object): Promise<AxiosResponse> {
-    return this.post('/opportunity/contactEmployer', params);
-  }
-
-  // put
-
-  putOpportunity(
-    opportunityId: string,
-    params: Partial<OpportunityDto>
-  ): Promise<AxiosResponse> {
-    return this.put(`/opportunity/${opportunityId}`, params);
-  }
-
-  putExternalOpportunity(
-    opportunityId: string,
-    candidateId: string,
-    params: Partial<ExternalOpportunityDto>
-  ): Promise<AxiosResponse> {
-    return this.put(
-      `/opportunity/external/${opportunityId}/${candidateId}`,
-      params
-    );
-  }
-
-  putJoinOpportunity(params: Partial<OpportunityJoin>): Promise<AxiosResponse> {
-    const filteredParams = _.pick(params, [
-      'status',
-      'seen',
-      'bookmarked',
-      'archived',
-      'recommended',
-      'note',
-    ]);
-    return this.put(
-      `/opportunity/join/${params.OpportunityId}/${params.UserId}`,
-      filteredParams
-    );
-  }
-
-  putBulkOpportunities(params: object): Promise<AxiosResponse> {
-    return this.put('/opportunity/bulk', params);
-  }
-
-  putOpportunityUserEvent(
-    eventId: string,
-    event: Partial<OpportunityUserEvent>
-  ) {
-    return this.put(`/opportunity/event/${eventId}`, event);
-  }
-
-  /// //////
   // auth //
   /// //////
 
@@ -626,13 +494,20 @@ export class APIHandler {
     );
   }
 
+  postConversationFeedback(params: {
+    conversationParticipantId: string;
+    rating: number | null;
+  }): Promise<AxiosResponse> {
+    return this.post('/messaging/conversations/feedback', params);
+  }
+
   /// /////////////////
   // read documents //
   /// /////////////////
 
   postReadDocument(
     params: { documentName: DocumentNameType },
-    userId
+    userId: string
   ): Promise<AxiosResponse> {
     return this.post(`/readDocuments/read/${userId}`, params);
   }

@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, type JSX } from 'react';
 import { Button } from 'src/components/utils';
 import { StyledButtonPostContainer } from './ButtonPost.styles';
 

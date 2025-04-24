@@ -61,19 +61,19 @@ const toolboxContents: {
   [USER_ROLES.CANDIDATE]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour booster vos opportunités professionnelles',
-    url: process.env.TOOLBOX_CANDIDATE_URL as string,
+    url: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL as string,
     articles: candidateArticles,
   },
   [USER_ROLES.COACH]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour vous orienter dans votre rôle de coach',
-    url: process.env.TOOLBOX_COACH_URL as string,
+    url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,
     articles: coachArticles,
   },
   [USER_ROLES.REFERER]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour accompagner les candidats dans leur recherche d’emploi',
-    url: process.env.TOOLBOX_COACH_URL as string,
+    url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,
     articles: coachArticles,
   },
 };
@@ -93,7 +93,7 @@ export const DashboardToolboxCard = () => {
             return (
               <a
                 key={uuidValue}
-                href={process.env.TOOLBOX_URL + article.link}
+                href={process.env.NEXT_PUBLIC_TOOLBOX_URL + article.link}
                 target="_blank"
                 rel="noreferrer"
               >

@@ -10,7 +10,7 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-export const EntreprisesCVLIst = ({
+export const EntreprisesCVList = ({
   nbPublishedCVs,
 }: {
   nbPublishedCVs: number;

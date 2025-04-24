@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { notificationsActions } from '../notifications';
 import { Conversation } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
@@ -7,6 +8,7 @@ import {
   postMessageAdapter,
   getUnseenConversationsCountAdapter,
   bindNewConversationAdapter,
+  postFeedbackAdapter,
 } from './messaging.adapter';
 
 export type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
@@ -108,14 +110,14 @@ export const slice = createSlice({
           const selectedConvIdx = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
-          state.conversations[selectedConvIdx].messages.push(message);
-          state.selectedConversation?.messages.push(message);
+          state.conversations[selectedConvIdx].messages.unshift(message);
+          state.selectedConversation?.messages.unshift(message);
 
           // Set the conversation as seen
           state.conversations[selectedConvIdx].participants.forEach(
             (participant) => {
               if (participant.id === message.authorId) {
-                participant.ConversationParticipant.seenAt = message.createdAt;
+                participant.conversationParticipant.seenAt = message.createdAt;
               }
             }
           );
@@ -150,6 +152,20 @@ export const slice = createSlice({
     setPinnedInfo(state, action) {
       state.pinnedInfo = action.payload;
     },
+    ...postFeedbackAdapter.getReducers<State>((state) => state.postMessage, {
+      postFeedbackSucceeded(state) {
+        if (state.selectedConversation) {
+          state.selectedConversation.shouldGiveFeedback = false;
+        }
+      },
+      postFeedbackFailed() {
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            "Une erreur s'est produite lors de l'envoi de votre feedback",
+        });
+      },
+    }),
   },
 });
 
