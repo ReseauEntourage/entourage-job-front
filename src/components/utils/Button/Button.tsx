@@ -19,19 +19,14 @@ export function Button({
   scroll = true,
   className = '',
   dataTestId = '',
-  color = 'primaryBlue',
-  rounded = false,
-  submit = false,
 }: ButtonProps) {
-  const classBuffer = `button button-${size} ${className}`;
-
   const buttonComponent = (
     <StyledButton
-      type={submit ? 'submit' : 'button'}
       id={id || undefined}
-      className={classBuffer}
+      className={`button ${className}`}
       rounded={rounded}
       disabled={disabled}
+      type="button"
       onClick={onClick}
       data-uk-toggle={toggle} // ??
       data-testid={dataTestId}

@@ -45,7 +45,7 @@ export function FileInput({
   };
 
   const defaultActivator = () => (
-    <Button style="custom-primary-inverted" onClick={onButtonDownloadClick}>
+    <Button variant="secondary" rounded onClick={onButtonDownloadClick}>
       Télécharger
     </Button>
   );
@@ -70,12 +70,8 @@ export function FileInput({
         </StyledInputLabel>
       )}
       <StyledFileInputWrapper>
-        {!value && (
-          <Button variant="secondary" rounded onClick={onButtonDownloadClick}>
-            Télécharger
-          </Button>
-        )}
-        {value && (
+        {activator || defaultActivator}
+        {!noPreview && value && (
           <>
             {fileType === FileTypes.CV && (
               <FilePreviewCV

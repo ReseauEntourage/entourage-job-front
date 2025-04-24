@@ -7,7 +7,7 @@ export interface ButtonProps {
   variant?: 'default' | 'primary' | 'secondary';
   disabled?: boolean;
   size?: 'small' | 'large';
-  rounded?: boolean;
+  rounded?: boolean | 'circle';
   // link
   href?: string | { pathname: string; query: AnyToFix };
   isExternal?: boolean;

@@ -64,18 +64,22 @@ export const StyledButton = styled.button<ButtonProps>`
     }} !important;
 
     border-radius: ${(props: ButtonProps) => {
+      if (props.rounded === 'circle') {
+        return `50%`;
+      }
       return props.rounded ? `20px` : `5px`;
     }}!important;
 
-    // SIZES
-    &.button-small {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-    &.button-large {
-      padding: 11px 20px;
-      font-size: 14px;
-    }
+    padding: ${(props: ButtonProps) => {
+      if (props.rounded === 'circle') {
+        return `6px`;
+      }
+      return props.size === 'large' ? `11px 20px` : `6px 10px`;
+    }}!important;
+
+    font-size: ${(props: ButtonProps) => {
+      return props.size === 'large' ? `14px` : `12px`;
+    }}!important;
 
     &:hover {
       transition: 0.2s ease-in-out;
