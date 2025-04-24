@@ -12,6 +12,7 @@ import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { selectSelectedConversationId } from 'src/use-cases/messaging';
 import { escapeHtml, linkify } from 'src/utils';
 import { isSuspiciousMessage } from 'src/utils/SuspiciousContent';
+import { MessageMedias } from './MessageMedias/MessageMedias';
 import {
   MessageContainer,
   StyledMessage,
@@ -69,6 +70,7 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
   return (
     <MessageContainer className={isOwnMessage ? 'own-message' : ''}>
       <StyledMessage className={isOwnMessage ? 'own-message' : ''}>
+        {message.medias.length > 0 && <MessageMedias medias={message.medias} />}
         <p
           dangerouslySetInnerHTML={{
             __html: linkify(escapeHtml(message.content)),

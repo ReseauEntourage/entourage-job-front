@@ -27,6 +27,7 @@ export interface State {
   pinnedInfo: MessagingPinnedInfo;
   query: string;
   unseenConversationCount: number;
+  newMessage: string;
 }
 
 const initialState: State = {
@@ -42,6 +43,7 @@ const initialState: State = {
   pinnedInfo: null,
   query: '',
   unseenConversationCount: 0,
+  newMessage: '',
 };
 
 export const slice = createSlice({
@@ -151,6 +153,9 @@ export const slice = createSlice({
     },
     setPinnedInfo(state, action) {
       state.pinnedInfo = action.payload;
+    },
+    setNewMessage(state, action) {
+      state.newMessage = action.payload;
     },
     ...postFeedbackAdapter.getReducers<State>((state) => state.postMessage, {
       postFeedbackSucceeded(state) {
