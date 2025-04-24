@@ -60,7 +60,11 @@ export const HeaderConnectedContentMobile = ({
           <div className="uk-padding-small uk-flex uk-flex-middle">
             {/* Messages */}
             <StyledMessagingIconContainer>
-              <ButtonIcon icon={messaging.icon} href={messaging.href} />
+              <ButtonIcon
+                icon={messaging.icon}
+                href={messaging.href}
+                color="white"
+              />
               {messaging.badge && badges[messaging.badge] > 0 && (
                 <div className="pin-notification" />
               )}
