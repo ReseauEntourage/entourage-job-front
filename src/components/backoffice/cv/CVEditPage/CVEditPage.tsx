@@ -410,7 +410,6 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             <ButtonIcon
               icon={<LucidIcon name="CircleHelp" />}
               href={process.env.NEXT_PUBLIC_TUTORIAL_CV}
-              newTab
               onClick={() => {
                 gaEvent(GA_TAGS.BACKOFFICE_CV_AIDE);
               }}

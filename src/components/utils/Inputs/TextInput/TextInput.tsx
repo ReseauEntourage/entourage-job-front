@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { ButtonIcon } from '../../ButtonIcon';
+import { ButtonIcon } from '../../Button';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import {
   StyledAnnotations,
