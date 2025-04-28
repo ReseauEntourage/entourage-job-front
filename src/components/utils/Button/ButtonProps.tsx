@@ -13,7 +13,6 @@ export interface ButtonProps {
   isExternal?: boolean;
   newTab?: boolean;
   onClick?: () => Promise<void> | void;
-  toggle?: string;
   shallow?: boolean;
   scroll?: boolean;
   className?: string;

@@ -24,7 +24,6 @@ interface ButtonMultipleProps {
     href?: string | { pathname: string; query: AnyToFix };
     newTab?: boolean;
     onClick?: () => void;
-    toggle?: string;
     label?: string;
     dataTestId?: string;
     shallow?: boolean;
@@ -73,7 +72,6 @@ export function ButtonMultiple({
               href,
               newTab,
               onClick,
-              toggle,
               shallow,
               scroll,
               isExternal,
@@ -94,7 +92,6 @@ export function ButtonMultiple({
                   // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   onClick();
                 }}
-                toggle={toggle}
                 shallow={shallow}
                 scroll={scroll}
                 isExternal={isExternal}

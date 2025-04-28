@@ -4,7 +4,6 @@ import { v4 as uuid } from 'uuid';
 import { LucidIcon } from '../utils/Icons/LucidIcon';
 import { Button, Tag } from 'src/components/utils';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
-import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue1 = uuid();
@@ -29,8 +28,6 @@ export const FiltersDropdowns = ({
   showSeparator,
   smallSelectors,
 }: FiltersDropdownProps) => {
-  const isDesktop = useIsDesktop();
-
   const renderFilters = useCallback(
     (
       filterConstants: FilterConstant[],
@@ -124,9 +121,6 @@ export const FiltersDropdowns = ({
                     style={{ opacity: disabled ? 0.6 : 1 }}
                   >
                     <Button
-                      {...(isDesktop
-                        ? { toggle: `target: #dropdown-filters-toggle-${key}` }
-                        : {})}
                       disabled={disabled}
                       variant="default"
                       className={`uk-width-expand ${

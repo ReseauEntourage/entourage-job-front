@@ -56,7 +56,6 @@ export const SimpleSection = ({
             variant="primary"
             isExternal={button.external}
             newTab={button.external}
-            toggle={button.modal}
             onClick={button.onClick}
           >
             {button.label}

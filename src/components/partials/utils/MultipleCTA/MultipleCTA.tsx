@@ -104,7 +104,6 @@ export const MultipleCTA = ({
                         variant={item.button.variant || 'secondary'}
                         isExternal={item.button.external}
                         newTab={item.button.external}
-                        toggle={item.button.modal}
                         onClick={item.button.onClick}
                         size={item.button.size}
                         dataTestId={item.button.dataTestId}
