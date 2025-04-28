@@ -14,7 +14,6 @@ export function Button({
   isExternal = false,
   newTab = false,
   onClick = () => {},
-  toggle,
   shallow = false,
   scroll = true,
   className = '',
@@ -28,7 +27,6 @@ export function Button({
       disabled={disabled}
       type="button"
       onClick={onClick}
-      data-uk-toggle={toggle} // ??
       data-testid={dataTestId}
       variant={variant}
       size={size}
