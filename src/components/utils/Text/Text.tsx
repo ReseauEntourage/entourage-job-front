@@ -5,6 +5,7 @@ import { TextProps } from './Text.types';
 
 export const sizesPx = {
   desktop: {
+    xsmall: 10,
     small: 12,
     normal: 14,
     large: 16,
@@ -12,6 +13,7 @@ export const sizesPx = {
     xxlarge: 20,
   },
   mobile: {
+    xsmall: 10,
     small: 12,
     normal: 13,
     large: 14,

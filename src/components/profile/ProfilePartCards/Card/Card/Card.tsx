@@ -63,7 +63,7 @@ export const ProfilePartCard = ({
         </CardContent>
         {ctaCallback && (
           <StyledEditButtonContainer>
-            <Button style="custom-primary-inverted" onClick={ctaCallback}>
+            <Button variant="primary" onClick={ctaCallback} rounded>
               {ctaTitle}
             </Button>
           </StyledEditButtonContainer>

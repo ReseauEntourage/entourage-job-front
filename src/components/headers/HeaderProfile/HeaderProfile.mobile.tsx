@@ -142,7 +142,8 @@ export const HeaderProfileMobile = ({
                   <div>
                     <Button
                       onClick={openConversation}
-                      style="custom-primary-inverted"
+                      variant="secondary"
+                      rounded
                     >
                       Envoyer un message
                     </Button>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon/ButtonIcon';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
+import { ButtonIcon } from 'src/components/utils';
 import { LucidIcon } from './Icons/LucidIcon';
 
 export interface HamburgerProps {

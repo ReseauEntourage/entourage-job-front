@@ -24,7 +24,7 @@ export const InviteToUploadCv = () => {
             quelques secondes
           </Text>
         </StyledInviteToUploadCvContentLeft>
-        <Button style="custom-primary-inverted" color="white">
+        <Button variant="primary" rounded>
           {isDesktop ? 'Importer mon CV' : 'Importer'}
         </Button>
       </StyledInviteToUploadCvContentContainer>

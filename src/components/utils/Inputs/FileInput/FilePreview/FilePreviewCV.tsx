@@ -1,6 +1,6 @@
 import React from 'react';
 import { IlluCV } from 'assets/icons/icons';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon';
+import { ButtonIcon } from '../../../Button';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import {
   StyledDeleteIconContainer,

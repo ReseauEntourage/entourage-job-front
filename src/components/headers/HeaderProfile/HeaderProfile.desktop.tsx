@@ -107,9 +107,10 @@ export const HeaderProfileDesktop = ({
                 name="profile-picture-upload-desktop"
               >
                 <ButtonMock
-                  style="custom-secondary"
-                  size="small"
+                  variant="secondary"
+                  rounded
                   className="button-mock-image-input"
+                  size="small"
                   dataTestId="button-mock-image-input"
                 >
                   Modifier
@@ -157,7 +158,8 @@ export const HeaderProfileDesktop = ({
                 <div>
                   <Button
                     onClick={openConversation}
-                    style="custom-primary-inverted"
+                    variant="secondary"
+                    rounded
                   >
                     Envoyer un message
                   </Button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -54,6 +55,7 @@ const reviews = [
 
 const Travailler = () => {
   const isDesktop = useIsDesktop();
+  useUtm();
 
   return (
     <Layout title="Travailler - Entourage Pro">

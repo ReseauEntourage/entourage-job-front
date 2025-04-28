@@ -97,7 +97,8 @@ export const Figures = () => {
       )}
       <StyledCenteredButtonContainer>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           onClick={() => {
             gaEvent(GA_TAGS.HOME_CHIFFRES_MESURE_D_IMPACT_CLICK);
           }}

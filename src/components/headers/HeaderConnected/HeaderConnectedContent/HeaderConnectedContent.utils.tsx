@@ -20,8 +20,7 @@ const refererRolesParams = rolesToParams([USER_ROLES.REFERER]);
 
 export const renderLinks = (
   user: UserWithUserCandidate,
-  logout: () => void,
-  candidateId: string
+  logout: () => void
 ): {
   links: { [K in UserRole]: HeaderConnectedMainItem[] };
   messaging: HeaderConnectedMainItem;
@@ -37,12 +36,12 @@ export const renderLinks = (
       href: '/backoffice/annuaire',
       name: "Réseau d'entraide",
     },
-    {
-      href: `/backoffice/candidat/${candidateId}/suivi`,
-      name: 'Mon suivi',
-      badge: 'note',
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-    },
+    // {
+    //   href: `/backoffice/candidat/${candidateId}/suivi`,
+    //   name: 'Mon suivi',
+    //   badge: 'note',
+    //   tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
+    // },
     {
       href: `${
         process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL
@@ -116,13 +115,13 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
-        {
-          href: `/backoffice/candidat/${candidateId}/suivi`,
-          name: 'Suivi',
-          badge: 'note',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-        },
+        // {
+        //   href: `/backoffice/candidat/${candidateId}/suivi`,
+        //   name: 'Suivi',
+        //   badge: 'note',
+        //   disabled: !candidateId,
+        //   tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
+        // },
         {
           href: `${
             process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL
@@ -143,9 +142,7 @@ export const renderLinks = (
           name: "Réseau d'entraide",
         },
         {
-          href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}${
-            candidateId ? `?id=${candidateId}` : ''
-          }}`,
+          href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
           name: 'Boîte à outils',
           external: true,
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_BAO_CLIC,

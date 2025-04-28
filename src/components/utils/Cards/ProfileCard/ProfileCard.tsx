@@ -262,7 +262,9 @@ export function ProfileCard({
             </StyledProfileCardHelpContainer>
           ) : (
             <StyledCTAContainer>
-              <Button style="custom-primary-inverted">Voir le profil</Button>
+              <Button variant="secondary" rounded>
+                Voir le profil
+              </Button>
             </StyledCTAContainer>
           )}
         </StyledProfileCardContent>

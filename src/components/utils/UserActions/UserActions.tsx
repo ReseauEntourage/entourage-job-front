@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { ButtonIcon } from '../ButtonIcon';
+import { ButtonIcon } from '../Button';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { ProfileReportUserModal } from 'src/components/backoffice/profile/ProfileReportUserModal/ProfileReportUserModal';

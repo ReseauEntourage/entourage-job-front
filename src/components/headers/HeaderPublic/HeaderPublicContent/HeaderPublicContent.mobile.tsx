@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
+import { Hamburger } from '@/src/components/utils/Hamburger';
 import {
   Offcanvas,
   OffcanvasRef,
 } from '@/src/components/utils/OffCanvas/Offcanvas';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
-import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
+import { Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -107,7 +108,8 @@ export const HeaderPublicContentMobile = ({
           <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
               href="/login"
-              style="custom-secondary"
+              variant="secondary"
+              rounded
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
               }}
@@ -119,7 +121,8 @@ export const HeaderPublicContentMobile = ({
           <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
               href="/inscription"
-              style="custom-secondary-inverted"
+              variant="primary"
+              rounded
               size="small"
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
@@ -137,7 +140,7 @@ export const HeaderPublicContentMobile = ({
                 gaEvent(GA_TAGS.HEADER_DON_CLIC);
                 fbEvent(FB_TAGS.DONATION);
               }}
-              style="default"
+              variant="default"
             >
               Faire un don
               <LucidIcon name="ChevronRight" />

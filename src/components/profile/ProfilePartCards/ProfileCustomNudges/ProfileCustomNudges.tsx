@@ -72,11 +72,11 @@ export const ProfileCustomNudges = ({
           <Text>{userProfileNudge.content}</Text>
 
           {isEditable ? (
-            <Button style="custom-primary-inverted" onClick={editModal}>
+            <Button variant="primary" onClick={editModal} rounded>
               Modifier
             </Button>
           ) : (
-            <Button style="custom-primary-inverted" onClick={openConversation}>
+            <Button variant="primary" onClick={openConversation} rounded>
               Répondre
             </Button>
           )}

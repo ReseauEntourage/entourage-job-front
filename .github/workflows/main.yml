@@ -65,6 +65,9 @@ jobs:
         run: pnpm install
         # if: steps.pnpm-cache-deps.outputs.cache-hit != 'true'
 
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+
       # Run ts-check test then eslint test
       - name: Run ts-check & eslint - Code Quality Test
         run: |
