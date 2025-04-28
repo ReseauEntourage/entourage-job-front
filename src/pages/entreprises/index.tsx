@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
@@ -68,6 +69,7 @@ const reviews = [
 ];
 
 const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
+  useUtm();
   useMount(() => {
     const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
     if (process.env.NEXT_PUBLIC_SHOW_POPUP === 'true' && !taxModalClosed) {

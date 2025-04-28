@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '../hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
@@ -15,6 +16,7 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
 const Index = () => {
+  useUtm();
   return (
     <Layout>
       <ImageTitle
