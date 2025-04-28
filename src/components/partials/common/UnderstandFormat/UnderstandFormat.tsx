@@ -218,7 +218,7 @@ export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
         {contentAs[as].cta.map((cta, index) => (
           <Button
             variant="primary"
-            rounded`
+            rounded
             key={index}
             size="large"
             onClick={() => gaEvent(cta.gaTag)}
