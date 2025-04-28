@@ -102,7 +102,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             },
-            style: 'custom-secondary-inverted',
+            variant: 'primary',
             label: 'Nous contacter',
           },
         ]}

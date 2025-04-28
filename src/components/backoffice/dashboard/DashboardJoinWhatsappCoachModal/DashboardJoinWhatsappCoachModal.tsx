@@ -26,7 +26,7 @@ export const DashboardJoinWhatsappCoachModal = () => {
         <p>{user.whatsappZoneCoachName}</p>
       </StyledImageContainer>
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
-        <Button onClick={onClose} style="default">
+        <Button onClick={onClose} variant="default">
           Fermer
         </Button>
       </div>

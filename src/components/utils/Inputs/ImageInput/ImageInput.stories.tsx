@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { ButtonIcon } from '../../Button';
 import { LucidIcon } from '../../Icons/LucidIcon';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { ImageInput } from './ImageInput';
 
 const meta = {

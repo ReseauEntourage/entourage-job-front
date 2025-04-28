@@ -45,11 +45,7 @@ const InternalMessageReSend = () => {
                   déclaré comme suspicieux. Êtes-vous sûr de vouloir continuer ?
                   Le message a-t-il déjà été renvoyé par un administrateur ?
                 </p>
-                <Button
-                  style="custom-secondary"
-                  color="primaryBlue"
-                  onClick={onConfirmButtonClick}
-                >
+                <Button variant="secondary" onClick={onConfirmButtonClick}>
                   Renvoyer le message
                 </Button>
               </>

@@ -145,7 +145,7 @@ export const CVList = ({
           {!nb && (
             <div className="uk-flex uk-flex-center uk-margin-top">
               <Button
-                style="custom-primary"
+                variant="primary"
                 onClick={() => {
                   setNbOfCVToDisplay((prevNbOfCV) => {
                     return prevNbOfCV + INITIAL_NB_OF_CV_TO_DISPLAY;

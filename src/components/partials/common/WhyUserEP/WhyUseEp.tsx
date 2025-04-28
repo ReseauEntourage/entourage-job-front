@@ -185,8 +185,9 @@ export const WhyUseEp = ({
         <StyledCTAsContainer>
           {contentAs[as].ctas?.map((cta, index) => (
             <Button
+              variant="primary"
+              rounded
               key={index}
-              style="custom-secondary-inverted"
               size="large"
               onClick={() => gaEvent(cta.gaTag)}
               href={cta.href}

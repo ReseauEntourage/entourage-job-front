@@ -170,7 +170,8 @@ export function ParametersMemberTab({
     <>
       <StyledMemberActionsContainer isMobile={isMobile}>
         <Button
-          style="custom-secondary"
+          variant="secondary"
+          rounded
           size="small"
           onClick={() => {
             openModal(
@@ -188,7 +189,8 @@ export function ParametersMemberTab({
           Supprimer l&apos;utilisateur
         </Button>
         <Button
-          style="custom-secondary"
+          variant="secondary"
+          rounded
           size="small"
           onClick={() =>
             openModal(<EditMemberModal user={user} setUser={setUser} />)

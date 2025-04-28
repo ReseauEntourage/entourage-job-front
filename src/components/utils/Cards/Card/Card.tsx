@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Text } from '../../Text';
-import { Button } from 'src/components/utils/Button';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon';
+import { Button, ButtonIcon } from 'src/components/utils/Button';
 import { H5 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -110,7 +109,7 @@ export const Card = ({
               {children}
               {!closedMode && !isLoading && editCallback && !isDesktop && (
                 <StyledCardFooter>
-                  <Button style="custom-secondary" onClick={editCallback}>
+                  <Button variant="secondary" rounded onClick={editCallback}>
                     {editButtonText || 'Modifier'}
                   </Button>
                 </StyledCardFooter>

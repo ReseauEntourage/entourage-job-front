@@ -1,7 +1,8 @@
 import React from 'react';
-import { ButtonIcon, Text } from 'src/components/utils';
+import { COLORS } from '@/src/constants/styles';
+import { Text } from 'src/components/utils';
+import { ButtonIcon } from 'src/components/utils/Button/ButtonIcon';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { COLORS } from 'src/constants/styles';
 import { StyledButtonContent, StyledChip } from './Attachment.styles';
 
 export interface AttachmentProps {

@@ -84,7 +84,8 @@ export const SimpleCardsImageCTA = ({
                 </div>
                 <div>
                   <Button
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     href={card.href}
                     onClick={() => {
                       if (card.onClick) card.onClick();

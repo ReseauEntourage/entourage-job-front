@@ -38,7 +38,8 @@ export const EntreprisesCVList = ({
       <StyledCenteredButtonContainer>
         <Button
           href={{ pathname: '/candidats', query: { employed: false } }}
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_ALL_CV_CLICK);
           }}

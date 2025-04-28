@@ -33,7 +33,7 @@ const Index = () => {
           {
             label: 'Devenir candidat(e)',
             href: '/travailler',
-            style: 'custom-secondary-inverted',
+            variant: 'primary',
             dataTest: 'banner-cta',
             onClick: () => {
               gaEvent(GA_TAGS.HOME_BANNER_CANDIDAT_CLICK);
@@ -42,7 +42,7 @@ const Index = () => {
           {
             label: 'Devenir coach',
             href: '/aider',
-            style: 'custom-secondary',
+            variant: 'secondary',
             dataTest: 'banner-cta',
             onClick: () => {
               gaEvent(GA_TAGS.HOME_BANNER_COACH_CLICK);
