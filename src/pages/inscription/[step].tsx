@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { Registration } from 'src/components/registration/Registration';
@@ -7,6 +8,7 @@ import { Section } from 'src/components/utils';
 
 const Inscription = () => {
   const { isLoading } = useRegistrationRedirection();
+  useUtm();
 
   return (
     <Layout title="Inscription - Entourage Pro" noFooter>

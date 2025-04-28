@@ -170,8 +170,8 @@ export const WhyUseEp = ({
     >
       {contentAs[as].criterias && (
         <StyledCriteriasContainer>
-          {contentAs[as].criterias?.map((criteria) => (
-            <StyledCriteria>
+          {contentAs[as].criterias?.map((criteria, index) => (
+            <StyledCriteria key={index}>
               {criteria.illu}
               <Text size="large" color="darkGray">
                 {criteria.text}
@@ -183,8 +183,9 @@ export const WhyUseEp = ({
       <Text size="large">{contentAs[as].content}</Text>
       {contentAs[as].ctas && (
         <StyledCTAsContainer>
-          {contentAs[as].ctas?.map((cta) => (
+          {contentAs[as].ctas?.map((cta, index) => (
             <Button
+              key={index}
               style="custom-secondary-inverted"
               size="large"
               onClick={() => gaEvent(cta.gaTag)}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '../hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -60,6 +61,7 @@ const reviewContent = [
 ];
 
 const Aider = () => {
+  useUtm();
   return (
     <Layout title="Aider - Entourage Pro">
       <ImageTitle

@@ -1,8 +1,11 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
-import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
-import { authenticationActions } from 'src/use-cases/authentication';
+import {
+  flattenRegistrationDataByRole,
+  getUtmFromLocalStorage,
+} from 'src/components/registration/Registration.utils';
 import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
@@ -39,8 +42,10 @@ export function* createUserRequestedSaga() {
     ...flattenedData
   } = flattenRegistrationDataByRole(data, selectedRole);
 
+  const utmParameters = getUtmFromLocalStorage();
+
   try {
-    const response = yield* call(() =>
+    yield* call(() =>
       Api.postUserRegistration({
         ...flattenedData,
         role: selectedRole,
@@ -62,14 +67,15 @@ export function* createUserRequestedSaga() {
               name: expectation,
             }))
           : undefined,
+        utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
+        utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
+        utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,
+        utmTerm: utmParameters[UtmParameters.UTM_TERM] ?? undefined,
+        utmContent: utmParameters[UtmParameters.UTM_CONTENT] ?? undefined,
+        utmId: utmParameters[UtmParameters.UTM_ID] ?? undefined,
       })
     );
-    yield* put(
-      authenticationActions.loginSucceeded({
-        accessToken: response.data.token,
-        user: response.data.user,
-      })
-    );
+
     yield* put(createUserSucceeded());
   } catch (err) {
     if (isConflictError(err)) {
