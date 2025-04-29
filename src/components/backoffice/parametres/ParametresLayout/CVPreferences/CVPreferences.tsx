@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { UserCandidateWithUsers } from 'src/api/types';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 import { Contract } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
@@ -67,14 +66,6 @@ export const CVPreferences = ({
               endOfContract: null,
             });
           }}
-          subtitle={
-            candidat.contract && (
-              <ContractLabel
-                contract={candidat.contract}
-                endOfContract={candidat.endOfContract}
-              />
-            )
-          }
         />
       </StyledCVPreferenceLine>
       <StyledCVPreferenceLine>

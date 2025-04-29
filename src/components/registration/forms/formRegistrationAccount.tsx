@@ -15,6 +15,7 @@ export const formRegistrationAccount: FormSchema<{
   email: string;
   password: string;
   confirmPassword: string;
+  optInNewsletter: boolean;
   acceptCGU: boolean;
 }> = {
   id: 'form-registration-account',
@@ -71,7 +72,11 @@ export const formRegistrationAccount: FormSchema<{
       showLabel: true,
       rules: [
         {
-          method: (fieldValue) => isEmail(fieldValue),
+          method: (fieldValue) =>
+            isEmail(fieldValue, {
+              blacklisted_chars: '"\'`$&*()=[]{};:<>?,\\^',
+              allow_utf8_local_part: false,
+            }),
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -118,6 +123,15 @@ export const formRegistrationAccount: FormSchema<{
           message: 'Les deux mots de passe ne correspondent pas',
         },
       ],
+    },
+    {
+      id: 'optInNewsletter',
+      name: 'optInNewsletter',
+      component: 'checkbox',
+      title:
+        'J’accepte de recevoir des informations et des actualités sur le programme Entourage Pro',
+      showLabel: true,
+      isRequired: false,
     },
     {
       id: 'acceptCGU',

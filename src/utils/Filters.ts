@@ -18,22 +18,6 @@ export const mutateTypeFilterDependingOnRole = (
   return MEMBER_FILTERS_DATA;
 };
 
-export const getOpportunityUserFromOffer = (offer, candidateId) => {
-  let opportunityUser;
-  if (
-    offer.opportunityUsers &&
-    Array.isArray(offer.opportunityUsers) &&
-    offer.opportunityUsers.length > 0
-  ) {
-    opportunityUser = offer.opportunityUsers.find((oppUser) => {
-      return oppUser.UserId === candidateId;
-    });
-  } else {
-    opportunityUser = offer.opportunityUsers;
-  }
-  return opportunityUser;
-};
-
 export const filtersToQueryParams = (filters) => {
   const params = {};
   _.forEach(Object.keys(filters), (filter) => {

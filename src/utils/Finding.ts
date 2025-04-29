@@ -5,39 +5,7 @@ import {
   UserCandidateWithUsers,
   UserWithUserCandidate,
 } from 'src/api/types';
-import { OFFER_STATUS } from 'src/constants';
-
 import { FilterConstant } from 'src/constants/utils';
-
-export function findOfferStatus(status, isPublic, isRecommended) {
-  const currentStatus = OFFER_STATUS.find((oStatus) => {
-    return oStatus.value === status;
-  });
-  if (currentStatus) {
-    if (isPublic) {
-      if (isRecommended && currentStatus.recommended) {
-        return {
-          label: currentStatus.recommended,
-          value: currentStatus.value,
-          color: currentStatus.color,
-        };
-      }
-      if (currentStatus.public) {
-        return {
-          label: currentStatus.public,
-          value: currentStatus.value,
-          color: currentStatus.color,
-        };
-      }
-    }
-    return {
-      label: currentStatus.label,
-      value: currentStatus.value,
-      color: currentStatus.color,
-    };
-  }
-  return { label: 'Non défini', color: 'muted' };
-}
 
 export function findConstantFromValue<T extends FilterConstant>(
   valToFind: string | boolean | number,

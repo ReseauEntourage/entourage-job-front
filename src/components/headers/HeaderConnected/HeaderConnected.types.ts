@@ -3,7 +3,6 @@ import type { JSX } from 'react';
 export interface NotifBadges {
   cv: number;
   note: number;
-  offers: number;
   members: number;
   messaging: number;
 }

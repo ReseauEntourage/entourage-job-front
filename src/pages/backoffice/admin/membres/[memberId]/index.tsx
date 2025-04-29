@@ -9,7 +9,6 @@ import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
-import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useTab } from 'src/hooks/queryParams/useTab';
 import { usePrevious } from 'src/hooks/utils';
 
@@ -26,7 +25,6 @@ const User = () => {
   const prevMemberId = usePrevious(memberId);
 
   const tab = useTab();
-  const opportunityId = useOpportunityId();
 
   useEffect(() => {
     if (user && user !== prevUser) {
@@ -46,14 +44,10 @@ const User = () => {
           replace(`/backoffice/admin/membres/${user.id}/cv`, undefined, {
             shallow: true,
           });
-        } else if (opportunityId && tab !== MEMBER_TABS.OFFERS) {
-          replace(`/backoffice/admin/membres/${user.id}/${tab}`, undefined, {
-            shallow: true,
-          });
         }
       }
     }
-  }, [opportunityId, replace, tab, prevMemberId, user, prevUser, memberId]);
+  }, [replace, tab, prevMemberId, user, prevUser, memberId]);
 
   const getUser = useCallback(() => {
     Api.getUserById(memberId)

@@ -26,7 +26,6 @@ export function useNotifBadges(
   candidateId: string
 ) {
   const [badges, setBadges] = useState<NotifBadges>({
-    offers: 0,
     note: 0,
     cv: 0,
     members: 0,
@@ -44,16 +43,9 @@ export function useNotifBadges(
           queriesToExecute.push(() => {
             return Api.getUsersMembersCount();
           });
-        } else if (user.adminRole === AdminRoles.COMPANIES) {
-          queriesToExecute.push(() => {
-            return Api.getOpportunitiesAdminCount();
-          });
         } else {
           queriesToExecute.push(() => {
             return Api.getUsersMembersCount();
-          });
-          queriesToExecute.push(() => {
-            return Api.getOpportunitiesAdminCount();
           });
         }
         Promise.all(
@@ -62,14 +54,12 @@ export function useNotifBadges(
           })
         )
           .then((data) => {
-            const { pendingCVs, pendingOpportunities } =
-              reducePromisesResults(data);
+            const { pendingCVs } = reducePromisesResults(data);
 
             setBadges((prevBadges) => {
               return {
                 ...prevBadges,
                 members: pendingCVs || 0,
-                offers: pendingOpportunities || 0,
               };
             });
           })
@@ -78,21 +68,16 @@ export function useNotifBadges(
           });
       } else if (candidateId) {
         Promise.all([
-          Api.getOpportunitiesUserCount(candidateId),
           Api.getCandidateCheckUpdate(candidateId),
           Api.getCheckUpdate(candidateId),
         ])
           .then((data) => {
-            const {
-              unseenOpportunities,
-              noteHasBeenModified,
-              cvHasBeenModified,
-            } = reducePromisesResults(data);
+            const { noteHasBeenModified, cvHasBeenModified } =
+              reducePromisesResults(data);
 
             setBadges((prevBadges) => {
               return {
                 ...prevBadges,
-                offers: unseenOpportunities || 0,
                 note: noteHasBeenModified ? 1 : 0,
                 cv: cvHasBeenModified ? 1 : 0,
               };
