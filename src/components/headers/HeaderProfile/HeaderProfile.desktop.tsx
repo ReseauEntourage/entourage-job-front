@@ -1,14 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Button,
-  ButtonMock,
-  ImgProfile,
-  Section,
-  Tag,
-  Text,
-} from 'src/components/utils';
+import { Button, ImgProfile, Section, Tag, Text } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -106,7 +99,7 @@ export const HeaderProfileDesktop = ({
                 id="profile-picture-upload-desktop"
                 name="profile-picture-upload-desktop"
               >
-                <ButtonMock
+                <Button
                   variant="secondary"
                   rounded
                   className="button-mock-image-input"
@@ -114,7 +107,7 @@ export const HeaderProfileDesktop = ({
                   dataTestId="button-mock-image-input"
                 >
                   Modifier
-                </ButtonMock>
+                </Button>
               </ImageInput>
             )}
           </StyledHeaderProfilePictureContainer>

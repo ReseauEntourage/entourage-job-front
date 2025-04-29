@@ -58,7 +58,7 @@ export function* createUserRequestedSaga() {
         }),
         department: flattenedData.department.value,
         organizationId: organizationId ? organizationId.value : undefined,
-        nudgeIds: flattenedData.nudges ? flattenedData.nudgeIds : undefined,
+        nudgeIds: flattenedData.nudgeIds ? flattenedData.nudgeIds : undefined,
         utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
         utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
         utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,
