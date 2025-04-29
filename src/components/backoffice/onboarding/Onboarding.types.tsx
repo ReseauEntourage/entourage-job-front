@@ -3,7 +3,7 @@ import { User } from '../../../api/types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
-} from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+} from '../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
@@ -67,14 +67,15 @@ export const onboardingAlreadyCompleted = {
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
     );
-    const hasNetworkBusinessLines =
-      !!user.userProfile.networkBusinessLines?.length;
+    const hasNetworkBusinessSectors =
+      !!user.userProfile.sectorOccupations?.filter((so) => !!so.businessSector)
+        ?.length;
     const readDocumentCompleted = isReadDocument(
       user.readDocuments,
       DocumentNames.CharteEthique
     );
     return (
-      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessLines
+      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessSectors
     );
   },
 };
@@ -156,7 +157,8 @@ export const OnboardingStepContents: {
         return getCoachDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) =>
-        !!userProfile?.networkBusinessLines?.length,
+        !!userProfile?.sectorOccupations?.map((so) => so.businessSector)
+          ?.length,
     },
   },
   3: {

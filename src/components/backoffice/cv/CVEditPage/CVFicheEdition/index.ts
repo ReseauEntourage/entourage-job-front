@@ -1,1 +1,0 @@
-export { CVFicheEdition } from './CVFicheEdition';

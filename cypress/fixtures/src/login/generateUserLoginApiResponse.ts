@@ -34,20 +34,29 @@ export const generateUserLoginApiResponse = (roleUser) => {
     userProfile: {
       description: null,
       currentJob: null,
-      networkBusinessLines: [],
-      searchBusinessLines: [
+      sectorOccupations: [
         {
           id: faker.string.uuid(),
-          name: 'aev',
-          order: faker.number.int(2),
+          businessSector: {
+            id: faker.string.uuid(),
+            name: 'aev',
+          },
+          occupation: null,
+          order: 0,
         },
       ],
-      searchAmbitions: [],
-      helpOffers: [],
-      helpNeeds: [
+      userProfileNudges: [
         {
           id: faker.string.uuid(),
-          name: 'interview',
+          content: null,
+          createdAt: faker.date.past(),
+          nudge: {
+            id: faker.string.uuid(),
+            value: 'interview',
+            nameRequest: 'Se préparer aux entretiens d’embauche',
+            nameOffer: 'Aider à préparer les entretiens d’embauche',
+            order: 1,
+          },
         },
       ],
     },
@@ -88,11 +97,8 @@ export const generateUserLoginApiResponse = (roleUser) => {
             currentJob: null,
             department: null,
             isAvailable: true,
-            searchBusinessLines: [],
-            networkBusinessLines: [],
-            searchAmbitions: [],
-            helpNeeds: [],
-            helpOffers: [],
+            sectorOccupations: [],
+            userProfileNudges: [],
           },
         },
       },
@@ -106,22 +112,31 @@ export const generateUserLoginApiResponse = (roleUser) => {
     userProfile: {
       description: null,
       currentJob: null,
-      networkBusinessLines: [],
-      searchBusinessLines: [],
-      searchAmbitions: [
+      sectorOccupations: [
         {
           id: faker.string.uuid(),
-          name: 'aev',
-          order: faker.number.int(2),
+          businessSector: null,
+          occupation: {
+            id: faker.string.uuid(),
+            name: faker.person.jobTitle(),
+          },
+          order: 0,
         },
       ],
-      helpOffers: [
+      userProfileNudges: [
         {
           id: faker.string.uuid(),
-          name: 'interview',
+          content: null,
+          createdAt: faker.date.past(),
+          nudge: {
+            id: faker.string.uuid(),
+            value: 'interview',
+            nameRequest: 'Se préparer aux entretiens d’embauche',
+            nameOffer: 'Aider à préparer les entretiens d’embauche',
+            order: 1,
+          },
         },
       ],
-      helpNeeds: [],
     },
   };
 
@@ -134,6 +149,8 @@ export const generateUserLoginApiResponse = (roleUser) => {
     case 'Coach':
       userLogin = userCoach;
       break;
+    default:
+      userLogin = userBase;
   }
 
   return JSON.stringify(userLogin, null, 2);

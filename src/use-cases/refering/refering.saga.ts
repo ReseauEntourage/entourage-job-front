@@ -25,10 +25,10 @@ export function* referCandidateSagaRequested() {
   const selectedProgram = yield* select(selectDefinedReferingSelectedProgram);
 
   const {
-    searchBusinessLine0,
-    searchBusinessLine1,
-    searchAmbition0,
-    searchAmbition1,
+    businessSectorId0,
+    businessSectorId1,
+    occupation0,
+    occupation1,
     confirmReferingRules,
     ...flattenedData
   } = flattenReferingData(data);
@@ -38,22 +38,14 @@ export function* referCandidateSagaRequested() {
       Api.postUserRefering({
         ...flattenedData,
         program: selectedProgram,
-        searchAmbitions: searchBusinessLine0
-          ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
-              .searchAmbitions
-          : undefined,
-        searchBusinessLines: searchBusinessLine0
-          ? formatCareerPathSentence({
-              searchBusinessLine0,
-              searchBusinessLine1,
-            }).searchBusinessLines
-          : undefined,
+        sectorOccupations: formatCareerPathSentence({
+          businessSectorId0,
+          businessSectorId1,
+          occupation0,
+          occupation1,
+        }),
         department: flattenedData.department.value,
-        helpNeeds: flattenedData.helpNeeds
-          ? flattenedData.helpNeeds.map((expectation) => ({
-              name: expectation,
-            }))
-          : undefined,
+        nudgeIds: flattenedData.nudgeIds ? flattenedData.nudgeIds : undefined,
       })
     );
     yield* put(referCandidateSucceeded());

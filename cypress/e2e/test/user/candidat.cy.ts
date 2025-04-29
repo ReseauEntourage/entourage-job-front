@@ -64,10 +64,6 @@ describe('Candidat', () => {
         noteHasBeenModified: true,
       }).as('candidatCheckUpdate');
 
-      cy.intercept('GET', `/cv/checkUpdate/${user.id}`, {
-        cvHasBeenModified: true,
-      }).as('cvCheckUpdate');
-
       cy.intercept(
         'POST',
         `/user/profile/uploadImage/${user.id}`,
@@ -231,15 +227,9 @@ describe('Candidat', () => {
     cy.wait('@changePwd');
 
     // to be done with automatic generation
-    const newHelpList = [
-      {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'cv',
-      },
-      {
-        id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
-        name: 'tips',
-      },
+    const newNudgeIds = [
+      'be74e4ef-9235-4dee-91a9-442108b8dda4',
+      '333f4859-5819-4853-b305-772fb8e7cc23',
     ];
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
@@ -248,7 +238,7 @@ describe('Candidat', () => {
         ...user,
         userProfile: {
           ...user.userProfile,
-          helpNeeds: newHelpList,
+          nudgeIds: newNudgeIds,
         },
         // fixture: 'user-profile-candidate-help-modified',
       }).as('putUserProfile');
@@ -258,7 +248,7 @@ describe('Candidat', () => {
       cy.get(`[data-testid="parametres-help-list"]`)
         .scrollIntoView()
         .find('li')
-        .should('have.length', user.userProfile?.helpNeeds?.length);
+        .should('have.length', user.userProfile?.nudges?.length);
     });
     cy.get(`[data-testid="parametres-help-card-button-edit"]`)
       .scrollIntoView()
@@ -281,7 +271,7 @@ describe('Candidat', () => {
     cy.get(`[data-testid="parametres-help-list"]`)
       .scrollIntoView()
       .find('li')
-      .should('have.length', newHelpList.length);
+      .should('have.length', newNudgeIds.length);
     // });
 
     // modify profile description
@@ -293,7 +283,7 @@ describe('Candidat', () => {
         userProfile: {
           ...user.userProfile,
           description,
-          helpNeeds: newHelpList,
+          nudgeIds: newNudgeIds,
         },
       }).as('putUserProfile');
     });
@@ -319,8 +309,8 @@ describe('Candidat', () => {
     cy.wait('@uploadImage');
 
     // change professional information
-    const businessLine = 'Agriculture';
-    const ambition = 'test';
+    const businessSector = 'Agriculture';
+    const occupation = 'test';
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
       cy.intercept('PUT', `/user/profile/${user.id}`, {
@@ -328,33 +318,18 @@ describe('Candidat', () => {
         userProfile: {
           ...user.userProfile,
           description,
-          helpNeeds: newHelpList,
-          searchBusinessLines: [
+          nudgeIds: newNudgeIds,
+          sectorOccupations: [
             {
-              id: '8c08d1d2-9cb4-4a93-afd3-4bdaaf039093',
-              name: 'aev',
-              order: 0,
-              UserProfileSearchBusinessLine: {
-                id: '54c6389c-ab98-4d02-84cc-e651164db9f7',
-                UserProfileId: '8e2308b6-fe8e-4e68-b21f-4af8d946a503',
-                BusinessLineI: '8c08d1d2-9cb4-4a93-afd3-4bdaaf039093',
-                createdAt: '2023-12-28T10:22:06.388Z',
-                updatedAt: '2023-12-28T10:22:06.388Z',
+              id: '4ee6b448-8a4b-4250-b501-941ee5084788',
+              order: 1,
+              businessSector: {
+                id: '0052f76a-e000-4386-8263-77d84909a2ab',
+                name: 'Communication et marketing',
               },
-            },
-          ],
-          searchAmbitions: [
-            {
-              id: 'd4d31f0d-3036-47f1-b3a3-cde0c1d0ec8b',
-              name: ambition,
-              prefix: 'comme',
-              order: 0,
-              UserProfileSearchAmbition: {
-                id: '77f613bc-a2af-405a-ab5c-c9bc470b8f77',
-                UserProfileId: '8e2308b6-fe8e-4e68-b21f-4af8d946a503',
-                AmbitionId: 'd4d31f0d-3036-47f1-b3a3-cde0c1d0ec8b',
-                createdAt: '2023-12-28T10:22:06.415Z',
-                updatedAt: '2023-12-28T10:22:06.415Z',
+              occupation: {
+                name: occupation,
+                prefix: 'comme',
               },
             },
           ],
@@ -366,20 +341,23 @@ describe('Candidat', () => {
     )
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`)
+    cy.get(`[data-testid="form-career-path-businessSector0"]`)
       .scrollIntoView()
       .click();
-    cy.get(`.Select__option`).contains(businessLine).click();
-    cy.get(`[data-testid="form-career-path-searchAmbition0"]`)
+    cy.get(`.Select__option`).contains(businessSector).click();
+    cy.get(`[data-testid="form-career-path-occupation0"]`)
       .scrollIntoView()
-      .type(ambition);
+      .type(occupation);
     cy.get(`[data-testid="form-confirm-form-career-path"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="candidat-businessline-li"]`).should(
+    cy.get(`[data-testid="candidat-businesssector-li"]`).should(
       'contain',
-      businessLine
+      businessSector
     );
-    cy.get(`[data-testid="candidat-ambition-li"]`).should('contain', ambition);
+    cy.get(`[data-testid="candidat-occupation-li"]`).should(
+      'contain',
+      occupation
+    );
   });
 });

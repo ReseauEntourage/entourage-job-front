@@ -142,7 +142,7 @@ export const StyledSeparator = styled.div`
   border-bottom: 1px solid ${COLORS.lightGray};
 `;
 
-export const StyledProfileCardBusinessLines = styled.div`
+export const StyledProfileCardBusinessSectors = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -169,7 +169,7 @@ export const StyledProfileCardHelpLabel = styled.div`
   color: ${COLORS.mediumGray};
 `;
 
-export const StyledProfileCardEmptyBusinessLinesContainer = styled.div`
+export const StyledProfileCardEmptyBusinessSectorsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;

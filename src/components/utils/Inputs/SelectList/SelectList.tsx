@@ -12,7 +12,7 @@ import {
 } from './SelectList.styles';
 import { SelectListType } from './SelectList.types';
 
-interface SelectListProps<T extends string>
+export interface SelectListProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;

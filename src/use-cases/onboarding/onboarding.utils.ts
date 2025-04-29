@@ -9,7 +9,6 @@ import {
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
 import { RegistrableUserRole } from 'src/constants/users';
-import { formatNetworkBusinessLines } from 'src/utils';
 
 export const flattenOnboardingDataByRole = (
   data: OnboardingStepData,
@@ -51,14 +50,17 @@ export const shouldSkipStepOnboardingStep = (
 
 export const parseOnboadingProfileFields = (
   fields: Partial<FlattenedOnboardingFormData>
-): Partial<UserProfile> => {
+): Partial<UserProfile> & {
+  businessSectorIds?: string[];
+} => {
   return {
     description: fields.description ?? undefined,
     linkedinUrl: fields.linkedinUrl ?? undefined,
     currentJob: fields.currentJob ? fields.currentJob : undefined,
-    networkBusinessLines: fields.networkBusinessLines
-      ? formatNetworkBusinessLines(fields.networkBusinessLines)
-      : undefined,
+    businessSectorIds:
+      fields.businessSectorIds?.map(
+        (businessSectorIds) => businessSectorIds.value
+      ) ?? undefined,
   };
 };
 

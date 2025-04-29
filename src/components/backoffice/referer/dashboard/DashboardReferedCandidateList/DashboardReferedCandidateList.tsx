@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Api } from 'src/api';
-import { PublicProfile } from 'src/api/types';
+import { Profile } from 'src/api/types';
 import { StyledDashboardCardContentContainer } from 'src/components/backoffice/dashboard/Dashboard.styles';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { CardList } from 'src/components/utils/CardList';
 import { Card } from 'src/components/utils/Cards/Card';
-import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledDashboardReferedCandidateList } from './DashboardReferedCandidateList.styles';
 
@@ -13,9 +12,7 @@ export const DashboardReferedCandidateList = () => {
   const user = useAuthenticatedUser();
 
   const [loading, setLoading] = useState(true);
-  const [referedCandidates, setReferedCandidates] = useState<PublicProfile[]>(
-    []
-  );
+  const [referedCandidates, setReferedCandidates] = useState<Profile[]>([]);
   const [offset] = useState(0);
   const [limit] = useState(20);
 
@@ -38,16 +35,6 @@ export const DashboardReferedCandidateList = () => {
 
   const referedList = useMemo(() => {
     return referedCandidates.map((profile) => {
-      const helps =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.helpNeeds
-          : profile.helpOffers;
-
-      const businessLines =
-        profile.role === USER_ROLES.CANDIDATE
-          ? profile.searchBusinessLines
-          : profile.networkBusinessLines;
-
       return (
         <DirectoryItem
           key={profile.id}
@@ -56,9 +43,8 @@ export const DashboardReferedCandidateList = () => {
           lastName={profile.lastName}
           role={profile.role}
           department={profile.department}
-          helps={helps}
-          businessLines={businessLines}
-          ambitions={profile.searchAmbitions}
+          userProfileNudges={profile.userProfileNudges}
+          sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps={false}

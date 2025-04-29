@@ -1,50 +1,95 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
+import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
-import { HeaderProfile } from 'src/components/headers/HeaderProfile';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
+import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
+import { ProfileContracts } from 'src/components/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
+import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
+import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
+import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
+import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
+import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
+import { ProfileProfessionalInformations } from 'src/components/profile/ProfilePartCards/ProfileProfessionalInformations/ProfileProfessionalInformations';
+import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
 } from './Profile.styles';
-import { ProfileContactCard } from './ProfileContactCard';
-import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
-import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
 import { useSelectSelectedProfile } from './useSelectedProfile';
 
 export const Profile = () => {
-  const currentUserId = useSelector(selectCurrentUserId);
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
-  const ownProfile = currentUserId === selectedProfile.id;
 
   return (
     <StyledBackofficeBackground>
       <HeaderProfile
         id={selectedProfile.id}
+        isAvailable={selectedProfile.isAvailable}
         firstName={selectedProfile.firstName}
         lastName={selectedProfile.lastName}
-        description={selectedProfile.description}
         role={selectedProfile.role}
         department={selectedProfile.department}
-        isAvailable={selectedProfile.isAvailable}
-        isEditable={false}
-        cvUrl={selectedProfile.cvUrl}
-        hasExternalCv={selectedProfile.hasExternalCv}
+        description={selectedProfile.description}
       />
+
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            <ProfileProfessionalInformationCard />
-            <ProfileHelpInformationCard />
+            <ProfileProfessionalInformations
+              userFirstName={selectedProfile.firstName}
+              sectorOccupations={selectedProfile.sectorOccupations}
+              description={selectedProfile.description}
+              skills={selectedProfile.skills}
+            />
+            <ProfileCustomNudges
+              userProfileNudges={selectedProfile.userProfileNudges}
+              firstName={selectedProfile.firstName}
+              role={selectedProfile.role}
+              id={selectedProfile.id}
+              ownProfile
+            />
+            <ProfileExperiences
+              userId={selectedProfile.id}
+              userFirstName={selectedProfile.firstName}
+              experiences={[]}
+            />
+            <ProfileFormations
+              userId={selectedProfile.id}
+              userFirstName={selectedProfile.firstName}
+              formations={[]}
+            />
+            <ProfileReviews
+              userId={selectedProfile.id}
+              userFirstName={selectedProfile.firstName}
+              reviews={selectedProfile.reviews ?? []}
+            />
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            {!ownProfile && <ProfileContactCard />}
+            <ProfileContactCard userId={selectedProfile.id} />
+            <ProfileContracts smallCard />
+            <ProfileInterests smallCard />
+            <ProfileLanguages languages={selectedProfile.languages} smallCard />
+            <ProfileDocuments
+              userId={selectedProfile.id}
+              linkedinUrl={selectedProfile.linkedinUrl}
+              hasExternalCv={selectedProfile.hasExternalCv}
+              entourageProCv="/url/" // TODO: Add CvUrl
+              smallCard
+            />
+            <ProfileContactPreferences smallCard />
+            <ProfileNudges
+              userRole={selectedProfile.role}
+              userProfileNudges={selectedProfile.userProfileNudges}
+              smallCard
+            />
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>

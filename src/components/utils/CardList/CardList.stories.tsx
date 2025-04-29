@@ -30,14 +30,39 @@ const cards: ProfileCardProps[] = new Array(4)
       firstName: 'John',
       lastName: 'Doe',
       role: USER_ROLES.CANDIDATE,
-      helps: [{ name: 'network' }, { name: 'cv' }],
-      businessLines: [
-        { name: 'id', order: 0 },
-        { name: 'bat', order: 1 },
+      userProfileNudges: [
+        {
+          id: 'de999805-1381-42fd-b5c1-3dbe7fc3392a',
+          content: "J'ai besoin d'aide pour review mon code",
+          createdAt: '2025-04-14T00:00:00.000Z',
+          nudge: null,
+        },
+        {
+          id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
+          content: null,
+          createdAt: '2025-04-14T00:00:00.000Z',
+          nudge: {
+            id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+            value: 'event',
+            nameRequest:
+              'Se rencontrer et échanger avec les membres de la communauté',
+            nameOffer:
+              'Se rencontrer lors d’événements avec les membres de la communauté',
+            order: 4,
+          },
+        },
       ],
-      ambitions: [
-        { name: 'développeur', order: 0 },
-        { name: 'ouvrier', order: 1 },
+      sectorOccupations: [
+        {
+          businessSector: { name: 'Informatique et digital' },
+          occupation: { name: 'développeur', prefix: 'comme' },
+          order: 0,
+        },
+        {
+          businessSector: { name: 'Bâtiment' },
+          occupation: { name: 'ouvrier', prefix: 'comme' },
+          order: 0,
+        },
       ],
       department: 'Paris (75)',
       isAvailable: false,
@@ -51,9 +76,8 @@ const list = cards.map(
     firstName,
     lastName,
     role,
-    helps,
-    businessLines,
-    ambitions,
+    userProfileNudges,
+    sectorOccupations,
     department,
     isAvailable,
   }) => (
@@ -65,9 +89,8 @@ const list = cards.map(
           lastName={lastName}
           role={role}
           department={department}
-          businessLines={businessLines}
-          helps={helps}
-          ambitions={ambitions}
+          sectorOccupations={sectorOccupations}
+          userProfileNudges={userProfileNudges}
           isAvailable={isAvailable}
         />
       </CardListItem>

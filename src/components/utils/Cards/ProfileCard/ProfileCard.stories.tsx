@@ -28,15 +28,34 @@ export const Candidate = {
     firstName: 'John',
     lastName: 'Doe',
     role: USER_ROLES.CANDIDATE,
-    helps: [{ name: 'network' }, { name: 'cv' }],
-    isAvailable: true,
-    businessLines: [
-      { name: 'id', order: 0 },
-      { name: 'bat', order: 1 },
+    userProfileNudges: [
+      {
+        id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
+        content: null,
+        createdAt: '2025-04-14T00:00:00.000Z',
+        nudge: {
+          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+          value: 'event',
+          nameRequest:
+            'Se rencontrer et échanger avec les membres de la communauté',
+          nameOffer:
+            'Se rencontrer lors d’événements avec les membres de la communauté',
+          order: 4,
+        },
+      },
     ],
-    ambitions: [
-      { name: 'développeur', order: 0 },
-      { name: 'ouvrier', order: 1 },
+    isAvailable: true,
+    sectorOccupations: [
+      {
+        businessSector: { name: 'Informatique et digital' },
+        occupation: { name: 'développeur', prefix: 'comme' },
+        order: 0,
+      },
+      {
+        businessSector: { name: 'Bâtiment' },
+        occupation: { name: 'ouvrier', prefix: 'comme' },
+        order: 0,
+      },
     ],
     department: 'Paris (75)',
   },
@@ -49,19 +68,34 @@ export const Coach = {
     lastName: 'Doe',
     role: USER_ROLES.COACH,
     isAvailable: true,
-    helps: [
-      { name: 'network' },
-      { name: 'cv' },
-      { name: 'tips' },
-      { name: 'interview' },
-      { name: 'event' },
+    userProfileNudges: [
+      {
+        id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
+        content: null,
+        createdAt: '2025-04-14T00:00:00.000Z',
+        nudge: {
+          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+          value: 'event',
+          nameRequest:
+            'Se rencontrer et échanger avec les membres de la communauté',
+          nameOffer:
+            'Se rencontrer lors d’événements avec les membres de la communauté',
+          order: 4,
+        },
+      },
     ],
-    businessLines: [
-      { name: 'id', order: 0 },
-      { name: 'bat', order: 1 },
-      { name: 'aa', order: 2 },
+    sectorOccupations: [
+      {
+        businessSector: { name: 'Informatique et digital' },
+        occupation: { name: 'développeur', prefix: 'comme' },
+        order: 0,
+      },
+      {
+        businessSector: { name: 'Bâtiment' },
+        occupation: { name: 'ouvrier', prefix: 'comme' },
+        order: 0,
+      },
     ],
-    job: 'Développeur',
     department: 'Paris (75)',
   },
 } satisfies Story;

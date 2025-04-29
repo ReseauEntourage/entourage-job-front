@@ -1,1 +1,0 @@
-export { CVModalPreview } from './CVModalPreview';

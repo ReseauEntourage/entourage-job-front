@@ -1,7 +1,6 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { PROFILES_LIMIT } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { mutateToArray } from 'src/utils';
 import {
@@ -52,12 +51,13 @@ function* fetchProfilesRequestedSaga(
     const offset = yield* select(selectProfilesOffset);
     const limit = PROFILES_LIMIT;
 
-    const { departments, role, search, helps, businessLines } = action.payload;
+    const { departments, role, search, helps, businessSectorIds } =
+      action.payload;
 
     const response = yield* call(() =>
       Api.getAllUsersProfiles({
         departments: mutateToArray(departments),
-        businessLines: mutateToArray(businessLines),
+        businessSectorIds: mutateToArray(businessSectorIds),
         helps: mutateToArray(helps),
         role,
         search,
@@ -90,22 +90,7 @@ function* fetchSelectedProfileSaga(
       Api.getPublicUserProfile(userId)
     );
 
-    if (profile.role === USER_ROLES.CANDIDATE && profile.cvUrl) {
-      try {
-        const {
-          data: { cv },
-        } = yield* call(() => Api.getCVByUrl(profile.cvUrl));
-
-        if (cv) {
-          yield* put(fetchSelectedProfileSucceeded(profile));
-          return;
-        }
-      } catch (err) {
-        console.error("Couldn't fetch CV from candidate", err);
-      }
-    }
-
-    yield* put(fetchSelectedProfileSucceeded({ ...profile, cvUrl: null }));
+    yield* put(fetchSelectedProfileSucceeded({ ...profile }));
   } catch {
     yield* put(fetchSelectedProfileFailed());
   }

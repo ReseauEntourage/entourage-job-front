@@ -15,7 +15,7 @@ describe('Inscription', () => {
       cy.contains('Suivant').click();
       cy.url().should('include', 'step-2');
       cy.get(
-        '[data-testid="form-registration-candidate-expectations-helpNeeds-tips"]'
+        '[data-testid="form-registration-candidate-expectations-nudge-0"]'
       ).click();
       cy.contains('Suivant').click();
 
@@ -33,7 +33,7 @@ describe('Inscription', () => {
       cy.contains('Suivant').click();
 
       cy.get(
-        "[data-testid='form-registration-candidate-professional-information-searchBusinessLine0']"
+        "[data-testid='form-registration-candidate-professional-information-businessSector0']"
       )
         .click()
         .find('.Select__option')
