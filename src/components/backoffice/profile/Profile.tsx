@@ -73,7 +73,13 @@ export const Profile = () => {
             />
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            <ProfileContactCard userId={selectedProfile.id} />
+            <ProfileContactCard
+              userId={selectedProfile.id}
+              averageDelayResponse={selectedProfile.averageDelayResponse}
+              firstName={selectedProfile.firstName}
+              role={selectedProfile.role}
+              isAvailable={selectedProfile.isAvailable}
+            />
             <ProfileContracts smallCard />
             <ProfileInterests smallCard />
             <ProfileLanguages languages={selectedProfile.languages} smallCard />

@@ -556,6 +556,7 @@ export type PublicProfile = {
   lastReceivedMessage: string;
   cvUrl?: string;
   hasExternalCv: boolean;
+  averageDelayResponse: number | null;
 };
 
 export type PrivateProfile = PublicProfile & {

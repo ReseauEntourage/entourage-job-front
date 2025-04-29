@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { UserRole } from '@/src/constants/users';
 import { IlluConversation } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { useSelectSelectedProfile } from 'src/components/backoffice/profile/useSelectedProfile';
 import { Button, Text } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -14,18 +14,27 @@ import {
 
 export interface ProfileContactCardProps {
   userId: string;
+  averageDelayResponse?: number | null;
+  isAvailable: boolean;
+  role: UserRole;
+  firstName: string;
 }
 
-export const ProfileContactCard = ({ userId }: ProfileContactCardProps) => {
+export const ProfileContactCard = ({
+  userId,
+  averageDelayResponse,
+  isAvailable,
+  role,
+  firstName,
+}: ProfileContactCardProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
   const isOwnProfile = userId === currentUserId;
-  const selectedProfile = useSelectSelectedProfile();
   const router = useRouter();
 
   const openConversation = () => {
-    router.push(`/backoffice/messaging?userId=${selectedProfile.id}`);
+    router.push(`/backoffice/messaging?userId=${userId}`);
   };
-  const isCoach = selectedProfile.role === 'Coach';
+  const isCoach = role === 'Coach';
 
   if (isOwnProfile) {
     return null;
@@ -33,33 +42,41 @@ export const ProfileContactCard = ({ userId }: ProfileContactCardProps) => {
 
   return (
     <ProfilePartCard
-      title={`Contacter ${selectedProfile?.firstName}`}
+      title={`Contacter ${firstName}`}
       smallCard={false}
+      isEmpty={false}
     >
-      <Text color="darkGray">Temps de réponse moyen : 2 jours</Text>
-      {selectedProfile.isAvailable ? (
-        <StyledProfileContactForm>
-          <StyledConversationInviteToContact>
-            <IlluConversation width="75" height="75" />
-            {isCoach ? (
-              <p>
-                Vous souhaitez prendre contact avec {selectedProfile.firstName}{' '}
-                pour qu’il vous aide dans votre recherche d’emploi
-              </p>
-            ) : (
-              <p>
-                Vous souhaitez prendre contact avec {selectedProfile.firstName}{' '}
-                pour l&apos;aider dans sa recherche d&apos;emploi
-              </p>
-            )}
-          </StyledConversationInviteToContact>
-          <Button onClick={openConversation}>Envoyer un message</Button>
-        </StyledProfileContactForm>
+      {isAvailable ? (
+        <>
+          {averageDelayResponse && (
+            <Text color="darkGray">
+              Temps de réponse moyen : {averageDelayResponse} jour
+              {averageDelayResponse > 1 && 's'}
+            </Text>
+          )}
+          <StyledProfileContactForm>
+            <StyledConversationInviteToContact>
+              <IlluConversation width="75" height="75" />
+              {isCoach ? (
+                <p>
+                  Vous souhaitez prendre contact avec {firstName} pour qu’il
+                  vous aide dans votre recherche d’emploi
+                </p>
+              ) : (
+                <p>
+                  Vous souhaitez prendre contact avec {firstName} pour
+                  l&apos;aider dans sa recherche d&apos;emploi
+                </p>
+              )}
+            </StyledConversationInviteToContact>
+            <Button onClick={openConversation}>Envoyer un message</Button>
+          </StyledProfileContactForm>
+        </>
       ) : (
         <StyledProfileContactForm>
           <StyledContactMessage>
-            {selectedProfile.firstName} n&apos;est pas disponible pour le moment
-            pour recevoir des demandes de contact
+            {firstName} n&apos;est pas disponible pour le moment pour recevoir
+            des demandes de contact
           </StyledContactMessage>
         </StyledProfileContactForm>
       )}
