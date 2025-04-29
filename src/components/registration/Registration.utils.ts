@@ -1,6 +1,5 @@
-import { RegistrableUserRoles } from 'src/constants/users';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
-import { RegistrableUserRole } from 'src/constants/users';
+import { RegistrableUserRoles } from 'src/constants/users';
 import {
   FlattenedRegistrationFormData,
   RegistrationStep,
