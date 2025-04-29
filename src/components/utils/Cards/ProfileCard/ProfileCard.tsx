@@ -15,7 +15,7 @@ import { Department } from 'src/constants/departements';
 import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
@@ -49,7 +49,7 @@ export interface ProfileCardProps {
   userId: string;
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: UserRoles;
   helps?: {
     name: HelpValue;
   }[];
@@ -68,15 +68,15 @@ export interface ProfileCardProps {
   displayHelps?: boolean;
 }
 
-const getLabelsDependingOnRole = (role: UserRole) => {
-  if (role === USER_ROLES.CANDIDATE) {
+const getLabelsDependingOnRole = (role: UserRoles) => {
+  if (role === UserRoles.CANDIDATE) {
     return {
       businessLines: 'Je recherche un emploi dans\xa0:',
       helps: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
-  if (role === USER_ROLES.COACH) {
+  if (role === UserRoles.COACH) {
     return {
       businessLines: "J'ai du réseau dans\xa0:",
       helps: 'Je peux aider à\xa0:',
@@ -176,7 +176,7 @@ export function ProfileCard({
         </StyledProfileCardPictureContainer>
         <StyledProfileCardContent>
           <StyledProfileCardProfessionalSituation>
-            {role === USER_ROLES.CANDIDATE && (
+            {role === UserRoles.CANDIDATE && (
               <>
                 {sortedAmbitions && sortedAmbitions.length > 0 ? (
                   <StyledProfileCardJobContainer>
@@ -197,7 +197,7 @@ export function ProfileCard({
                 )}
               </>
             )}
-            {role === USER_ROLES.COACH && (
+            {role === UserRoles.COACH && (
               <>
                 {job ? (
                   <StyledProfileCardJobContainer>
@@ -228,7 +228,7 @@ export function ProfileCard({
                       />
                     );
                   })}
-                  {role !== USER_ROLES.CANDIDATE &&
+                  {role !== UserRoles.CANDIDATE &&
                     sortedBusinessLines.length > 2 && (
                       <Tag content={`+${sortedBusinessLines.length - 2}`} />
                     )}

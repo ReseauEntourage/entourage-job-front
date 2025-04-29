@@ -3,7 +3,7 @@ import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formOnboardingCandidateHelps } from './schemas/formOnboardingCandidateHelps';
 import { formOnboardingCoachHelps } from './schemas/formOnboardingCoachHelps';
@@ -21,7 +21,7 @@ export const OnboardingHelpsForm = ({ onSubmit }: OnboardingHelpsFormProps) => {
   return (
     <FormWithValidation
       formSchema={
-        contextualRole === USER_ROLES.CANDIDATE
+        contextualRole === UserRoles.CANDIDATE
           ? formOnboardingCandidateHelps
           : formOnboardingCoachHelps
       }

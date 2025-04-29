@@ -1,6 +1,6 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export const formRegistrationCandidateExpectations: FormSchema<{
   helpNeeds: HelpValue[];
@@ -11,7 +11,7 @@ export const formRegistrationCandidateExpectations: FormSchema<{
       id: 'helpNeeds',
       name: 'helpNeeds',
       component: 'select-list',
-      options: ParametresHelpCardContents[USER_ROLES.CANDIDATE],
+      options: ParametresHelpCardContents[UserRoles.CANDIDATE],
       showLabel: false,
       isRequired: true,
       isMulti: true,

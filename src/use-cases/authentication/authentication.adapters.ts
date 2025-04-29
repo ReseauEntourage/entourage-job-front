@@ -6,7 +6,6 @@ export type LoginError =
   | 'INVALID_CREDENTIALS'
   | 'UNVERIFIED_EMAIL';
 
-// eslint-disable-next-line no-shadow
 export enum VerifyEmailTokenErrorType {
   TOKEN_EXPIRED,
   TOKEN_INVALID,

@@ -10,7 +10,7 @@ import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -81,7 +81,7 @@ export function Directory() {
                   <Button
                     size={isMobile ? 'small' : 'large'}
                     variant={
-                      isRoleIncluded([USER_ROLES.CANDIDATE], role)
+                      isRoleIncluded([UserRoles.CANDIDATE], role)
                         ? 'primary'
                         : 'secondary'
                     }
@@ -91,7 +91,7 @@ export function Directory() {
                         pathname: route,
                         query: {
                           ...directoryFiltersParams,
-                          role: [USER_ROLES.CANDIDATE],
+                          role: [UserRoles.CANDIDATE],
                         },
                       });
                     }}
@@ -101,7 +101,7 @@ export function Directory() {
                   <Button
                     size={isMobile ? 'small' : 'large'}
                     variant={
-                      isRoleIncluded([USER_ROLES.COACH], role)
+                      isRoleIncluded([UserRoles.COACH], role)
                         ? 'primary'
                         : 'secondary'
                     }
@@ -110,7 +110,7 @@ export function Directory() {
                         pathname: route,
                         query: {
                           ...directoryFiltersParams,
-                          role: USER_ROLES.COACH,
+                          role: UserRoles.COACH,
                         },
                       });
                     }}

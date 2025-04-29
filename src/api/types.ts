@@ -1,3 +1,4 @@
+import { Genders } from '../constants/genders';
 import {
   AmbitionsPrefixesType,
   BusinessLineValue,
@@ -12,10 +13,9 @@ import { AdminZone, Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
 import { Program } from 'src/constants/programs';
 import {
-  AdminRole,
-  Gender,
-  RegistrableUserRole,
-  UserRole,
+  AdminRoles,
+  RegistrableUserRoles,
+  UserRoles,
 } from 'src/constants/users';
 
 export type SocialMedia =
@@ -128,11 +128,11 @@ export type User = {
   firstName: string;
   lastName: string;
   email: string;
-  role: UserRole;
-  adminRole: AdminRole;
+  role: UserRoles;
+  adminRole: AdminRoles;
   password: string;
   salt: string;
-  gender: Gender;
+  gender: Genders;
   phone: string;
   address: string;
   lastConnection: Date;
@@ -203,7 +203,7 @@ export interface CV {
       phone: string;
       address: string;
       zone: AdminZone;
-      gender: Gender;
+      gender: Genders;
       id: string;
     };
     employed: boolean;
@@ -276,13 +276,13 @@ export interface UserWithUserCandidate extends User {
 export type UserDto = {
   firstName: string;
   lastName: string;
-  role: UserRole;
-  gender: Gender;
+  role: UserRoles;
+  gender: Genders;
   zone: AdminZone;
   phone: string;
   userToLinkId?: string;
   email: string;
-  adminRole?: AdminRole;
+  adminRole?: AdminRoles;
   OrganizationId?: string;
   id?: string;
   userProfile?: UserProfile;
@@ -304,7 +304,7 @@ export type UserRegistrationDto = {
   email: string;
   phone: string;
   password: string;
-  role: RegistrableUserRole;
+  role: RegistrableUserRoles;
   campaign?: string;
   department: Department;
   helpNeeds?: { name: HelpValue }[];
@@ -401,7 +401,7 @@ export type ContactCandidate = {
   firstName: string;
   lastName: string;
   helpWith: CandidateHelpWithValue[];
-  gender: Gender;
+  gender: Genders;
   birthDate?: string;
   address?: string;
   postalCode: string;
@@ -532,7 +532,7 @@ export type PublicProfile = {
   firstName: string;
   lastName: string;
   linkedinUrl?: string;
-  role: UserRole;
+  role: UserRoles;
   department: Department;
   currentJob: string;
   description: string;
@@ -559,7 +559,7 @@ export type PublicProfile = {
 };
 
 export type ProfilesFilters = {
-  role: UserRole[];
+  role: UserRoles[];
   search?: string;
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];

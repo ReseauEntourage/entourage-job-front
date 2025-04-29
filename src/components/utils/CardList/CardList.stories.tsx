@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { store } from 'src/store/store';
 import { CardList } from './CardList';
 import { CardListItem } from './CardListItem';
@@ -29,7 +29,7 @@ const cards: ProfileCardProps[] = new Array(4)
       userId: uuid(),
       firstName: 'John',
       lastName: 'Doe',
-      role: USER_ROLES.CANDIDATE,
+      role: UserRoles.CANDIDATE,
       helps: [{ name: 'network' }, { name: 'cv' }],
       businessLines: [
         { name: 'id', order: 0 },

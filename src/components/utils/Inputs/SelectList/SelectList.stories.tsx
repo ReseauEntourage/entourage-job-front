@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ParametresHelpCardContents } from 'src/constants/helps';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { SelectList } from './SelectList';
 
 const meta = {
@@ -19,7 +19,7 @@ const meta = {
   },
   args: {
     id: 'select-list-stories',
-    options: ParametresHelpCardContents[USER_ROLES.CANDIDATE],
+    options: ParametresHelpCardContents[UserRoles.CANDIDATE],
   },
   decorators: [
     (Story) => {

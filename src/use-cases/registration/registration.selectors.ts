@@ -16,7 +16,7 @@ import {
   flattenRegistrationDataByRole,
   incrementRegistrationStep,
 } from 'src/components/registration/Registration.utils';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
@@ -152,11 +152,13 @@ export function selectRegistrationCurrentStepContent(
 export function selectRegistrationConfirmationStepContent(
   state: RootState
 ): LastStepContent {
-  const selectedRole = selectDefinedRegistrationSelectedRole(state) as UserRole;
+  const selectedRole = selectDefinedRegistrationSelectedRole(
+    state
+  ) as UserRoles;
 
   const selectedProgram = selectDefinedRegistrationSelectedProgram(state);
 
-  if (selectedRole === USER_ROLES.REFERER) {
+  if (selectedRole === UserRoles.REFERER) {
     return LastStepContent[selectedRole];
   }
   return LastStepContent[selectedRole][selectedProgram];

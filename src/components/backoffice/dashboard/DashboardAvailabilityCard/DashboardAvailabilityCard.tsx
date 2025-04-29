@@ -7,7 +7,7 @@ import { Card } from 'src/components/utils';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 import { ReduxRequestEvents } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -64,7 +64,7 @@ export const DashboardAvailabilityCard = () => {
   return (
     <Card
       title={
-        user.role === USER_ROLES.CANDIDATE
+        user.role === UserRoles.CANDIDATE
           ? 'Disponibilité pour recevoir des coups de pouces'
           : 'Disponibilité pour accompagner un candidat'
       }

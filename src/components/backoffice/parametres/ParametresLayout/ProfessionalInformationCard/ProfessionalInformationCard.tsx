@@ -9,7 +9,7 @@ import { Card, Img, Text } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   findConstantFromValue,
@@ -58,7 +58,7 @@ export const ProfessionalInformationCard = () => {
   const openProfessionalInformationModal = useCallback(() => {
     if (!userProfile) return;
     openModal(
-      role === USER_ROLES.COACH ? (
+      role === UserRoles.COACH ? (
         <ModalEditProfessionalInformation
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""
@@ -105,7 +105,7 @@ export const ProfessionalInformationCard = () => {
     >
       {hasData ? (
         <StyledProfessionalInformationList>
-          {role === USER_ROLES.COACH ? (
+          {role === UserRoles.COACH ? (
             <>
               {userProfile?.currentJob && (
                 <li>
@@ -193,12 +193,12 @@ export const ProfessionalInformationCard = () => {
         <ParametresPlaceholder
           image={<PlaceholderIllu />}
           title={
-            user.role === USER_ROLES.COACH
+            user.role === UserRoles.COACH
               ? 'Renseignez les secteurs dans lesquels vous avez du réseau professionnel'
               : 'Renseignez ici les secteurs et métiers que vous recherchez'
           }
           description={
-            user.role === USER_ROLES.COACH
+            user.role === UserRoles.COACH
               ? 'Ces  informations nous permettent de vous mettre en relation plus facilement avec des personnes de la communauté que vous pourriez aider.'
               : 'Ces  informations nous permettent de vous mettre en relation plus facilement avec des personnes de la communauté qui pourraient vous donner un coup de pouce '
           }

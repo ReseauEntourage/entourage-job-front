@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserWithUserCandidate } from 'src/api/types';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
@@ -67,7 +67,7 @@ export const slice = createSlice({
         updateCandidateSucceeded(state, action) {
           assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
 
-          if (state.user.role === USER_ROLES.CANDIDATE && state.user.candidat) {
+          if (state.user.role === UserRoles.CANDIDATE && state.user.candidat) {
             state.user.candidat = {
               ...state.user.candidat,
               ...action.payload.userCandidate,

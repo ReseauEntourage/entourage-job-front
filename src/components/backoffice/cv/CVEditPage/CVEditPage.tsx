@@ -2,6 +2,7 @@ import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { getRegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
@@ -11,7 +12,6 @@ import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { ALL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -62,7 +62,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const prevCV = usePrevious(cv);
 
   const setCVHasBeenRead = useCallback(async () => {
-    if (user.role !== USER_ROLES.ADMIN && candidateId) {
+    if (user.role !== UserRoles.ADMIN && candidateId) {
       try {
         await Api.putCVRead(candidateId);
       } catch (err) {
@@ -256,7 +256,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             notificationsActions.addNotification({
               type: 'success',
               message:
-                user.role === USER_ROLES.CANDIDATE
+                user.role === UserRoles.CANDIDATE
                   ? 'Votre CV a bien été sauvegardé'
                   : 'Le profil a été mis à jour',
             })
@@ -352,7 +352,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
               {cvStatus.label}
             </span>
           </div>
-          {user.role === USER_ROLES.ADMIN && (
+          {user.role === UserRoles.ADMIN && (
             <div>
               Version&nbsp;:&nbsp;
               {cvVersion}
@@ -388,7 +388,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             }}
             text="Sauvegarder"
           />
-          {isRoleIncluded(ALL_USER_ROLES, user.role) && (
+          {isRoleIncluded(getRegistrableUserRoles(), user.role) && (
             <ButtonPost
               variant="primary"
               action={async () => {
@@ -397,7 +397,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
               text="Soumettre"
             />
           )}
-          {user.role === USER_ROLES.ADMIN && (
+          {user.role === UserRoles.ADMIN && (
             <ButtonPost
               variant="primary"
               action={async () => {
@@ -406,7 +406,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
               text="Publier"
             />
           )}
-          {user.role !== USER_ROLES.ADMIN && (
+          {user.role !== UserRoles.ADMIN && (
             <ButtonIcon
               icon={<LucidIcon name="CircleHelp" />}
               href={process.env.NEXT_PUBLIC_TUTORIAL_CV}

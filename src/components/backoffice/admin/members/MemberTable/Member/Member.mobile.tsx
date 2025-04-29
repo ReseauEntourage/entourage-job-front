@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
+import { GENDERS_FILTERS } from '@/src/constants/genders';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import {
   StyledCVStatusCellContent,
@@ -16,11 +17,7 @@ import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TdMobile } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
-import {
-  USER_ROLES,
-  GENDERS_FILTERS,
-  ROLES_WITH_ORGANIZATION,
-} from 'src/constants/users';
+import { UserRoles, getRolesWithOrganization } from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
@@ -69,7 +66,7 @@ export function MemberMobile({
             email={member.email}
             // @ts-expect-error after enable TS strict mode. Please, try to fix it
             organizationName={
-              isRoleIncluded(ROLES_WITH_ORGANIZATION, member.role)
+              isRoleIncluded(getRolesWithOrganization(), member.role)
                 ? member.organization?.name
                 : null
             }
@@ -78,7 +75,7 @@ export function MemberMobile({
           {columns.includes('selection') &&
             selectionCallback &&
             !Array.isArray(userCandidate) &&
-            role !== USER_ROLES.COACH && (
+            role !== UserRoles.COACH && (
               <CheckBox
                 id={`member-${member.id}-check`}
                 name={`member-${member.id}-check`}
@@ -94,9 +91,7 @@ export function MemberMobile({
         <div className="line">
           <TdMobile
             title={
-              role === USER_ROLES.COACH
-                ? USER_ROLES.CANDIDATE
-                : USER_ROLES.COACH
+              role === UserRoles.COACH ? UserRoles.CANDIDATE : UserRoles.COACH
             }
           >
             <RelatedMemberInfo relatedUser={relatedUser} />
@@ -160,7 +155,7 @@ export function MemberMobile({
           </TdMobile>
         )}
       </div>
-      {role !== USER_ROLES.COACH && !Array.isArray(userCandidate) && (
+      {role !== UserRoles.COACH && !Array.isArray(userCandidate) && (
         <div className="line">
           {columns.includes('cvUrl') && (
             <TdMobile title="Lien CV">
