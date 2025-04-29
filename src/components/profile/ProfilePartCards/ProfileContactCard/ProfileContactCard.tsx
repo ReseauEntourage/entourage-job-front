@@ -44,7 +44,7 @@ export const ProfileContactCard = ({
     <ProfilePartCard
       title={`Contacter ${firstName}`}
       smallCard={false}
-      isEmpty={false}
+      isCompleted
     >
       {isAvailable ? (
         <>

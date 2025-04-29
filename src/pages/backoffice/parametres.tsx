@@ -1,14 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { LoadingScreen } from '@/src/components/backoffice/LoadingScreen';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { Parameters } from 'src/components/backoffice/parameters/Parameters';
-import { useSelectedProfile } from 'src/components/backoffice/profile/useSelectedProfile';
+import { fetchUserCompleteSelectors } from 'src/use-cases/current-user';
 
 const Parametres = () => {
-  const { selectedProfile } = useSelectedProfile();
+  const isFetchProfileRequested = useSelector(
+    fetchUserCompleteSelectors.selectIsFetchUserRequested
+  );
 
   return (
-    <LayoutBackOffice title={selectedProfile ? `Paramètres` : 'Paramètres'}>
-      <Parameters />
+    <LayoutBackOffice title="Paramètres">
+      {!isFetchProfileRequested ? <Parameters /> : <LoadingScreen />}
     </LayoutBackOffice>
   );
 };

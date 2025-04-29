@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { useCompleteAuthenticatedUser } from '@/src/hooks/authentication/useCompleteAuthenticatedUser';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -22,7 +23,6 @@ import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileR
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
 import {
@@ -33,9 +33,13 @@ import {
 
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
-  const user = useAuthenticatedUser();
+  const user = useCompleteAuthenticatedUser();
 
   useConfirmationToaster();
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <StyledBackofficeBackground>

@@ -107,7 +107,7 @@ export function* sendStepDataOnboardingSaga() {
     const isLastStep = nextStep === currentStep; // If next step is the same as the current step, it means we are on the last step
     if (isLastStep) {
       // Refresh the user to get the updated data
-      yield* put(currentUserActions.fetchUserRequested());
+      yield* put(currentUserActions.fetchCompleteUserRequested());
     }
   } catch {
     yield* put(
