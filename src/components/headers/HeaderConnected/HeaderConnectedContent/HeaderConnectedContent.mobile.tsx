@@ -12,11 +12,11 @@ import {
 } from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
-  Hamburger,
   Navbar,
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { Hamburger } from 'src/components/utils/Hamburger';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';

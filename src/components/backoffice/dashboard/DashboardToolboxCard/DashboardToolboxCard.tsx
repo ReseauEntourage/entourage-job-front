@@ -109,12 +109,7 @@ export const DashboardToolboxCard = () => {
             );
           })}
         </StyledDashboardArticlesContainer>
-        <Button
-          style="custom-secondary-inverted"
-          isExternal
-          href={toolbox.url}
-          newTab
-        >
+        <Button variant="primary" rounded isExternal href={toolbox.url} newTab>
           Voir tous les conseils
         </Button>
       </StyledDashboardCardContentContainer>

@@ -65,7 +65,8 @@ export const content = {
             openModal(<CompanyContactModal />);
           }}
           dataTestId="button-company-first-section"
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
         >
           Nous contacter&nbsp;
         </Button>
@@ -126,7 +127,8 @@ export const content = {
         </List>
         <Button
           href={{ pathname: '/candidats', query: { employed: false } }}
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_DECOUVRIR_CANDIDATS_CLICK);
           }}

@@ -27,17 +27,17 @@ export const SendVerifyEmailButton = ({ email }: SendVerifyEmailProps) => {
   return (
     <StyledSendEmailButtonContainer>
       {isSendEmailSuccess && (
-        <Button disabled style="custom-secondary">
+        <Button disabled variant="secondary" rounded>
           Email envoyé !
         </Button>
       )}
       {isSendEmailFailed && (
-        <Button disabled style="custom-secondary">
+        <Button disabled variant="secondary" rounded>
           Erreur lors de l&apos;envoi de l&apos;email
         </Button>
       )}
       {!isEmailSent && (
-        <Button onClick={sendVerifyEmail} style="custom-secondary">
+        <Button onClick={sendVerifyEmail} variant="secondary" rounded>
           Me renvoyer un email de vérification
         </Button>
       )}

@@ -323,6 +323,12 @@ export type UserRegistrationDto = {
   }[];
   materialInsecurity?: string;
   networkInsecurity?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  utmId?: string;
 };
 
 export type UserReferingDto = {

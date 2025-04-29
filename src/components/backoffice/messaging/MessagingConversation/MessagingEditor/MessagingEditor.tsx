@@ -137,9 +137,9 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
           onChange={onAttachmentAdded}
           activator={
             <Button
-              style="custom-secondary"
+              variant="secondary"
               onClick={onRequestAttachFileClick}
-              rounded
+              rounded="circle"
             >
               <LucidIcon name="Plus" size={25} />
             </Button>
@@ -160,7 +160,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
         </MessagingInputContainer>
         {isMobile ? (
           <Button
-            style="custom-secondary-inverted"
+            variant="primary"
             onClick={sendNewMessage}
             disabled={readonly}
             rounded

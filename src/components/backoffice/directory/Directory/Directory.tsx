@@ -80,11 +80,12 @@ export function Directory() {
                 <StyledDirectoryButtonContainer isMobile={isMobile}>
                   <Button
                     size={isMobile ? 'small' : 'large'}
-                    style={`custom-secondary${
+                    variant={
                       isRoleIncluded([UserRoles.CANDIDATE], role)
-                        ? '-inverted'
-                        : ''
-                    }`}
+                        ? 'primary'
+                        : 'secondary'
+                    }
+                    rounded
                     onClick={() => {
                       push({
                         pathname: route,
@@ -99,9 +100,11 @@ export function Directory() {
                   </Button>
                   <Button
                     size={isMobile ? 'small' : 'large'}
-                    style={`custom-secondary${
-                      isRoleIncluded([UserRoles.COACH], role) ? '-inverted' : ''
-                    }`}
+                    variant={
+                      isRoleIncluded([UserRoles.COACH], role)
+                        ? 'primary'
+                        : 'secondary'
+                    }
                     onClick={() => {
                       push({
                         pathname: route,

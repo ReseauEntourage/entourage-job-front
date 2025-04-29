@@ -34,10 +34,7 @@ export const DeleteAccountCard = () => {
           </StyledInfos>
         </StyledIntroduction>
         <StyledButtonContainer>
-          <Button
-            style="custom-primary-inverted"
-            onClick={requestDeleteAccount}
-          >
+          <Button variant="secondary" rounded onClick={requestDeleteAccount}>
             Supprimer
           </Button>
         </StyledButtonContainer>

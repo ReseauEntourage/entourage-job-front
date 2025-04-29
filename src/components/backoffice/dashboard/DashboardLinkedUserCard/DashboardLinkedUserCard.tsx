@@ -48,14 +48,16 @@ export const DashboardLinkedUserCard = () => {
         </StyledDashboardLinkedUserCardContactInfo>
         <StyledDashboardLinkedUserCardCTAContainer>
           <Button
-            style="custom-secondary"
+            variant="secondary"
+            rounded
             href={`/backoffice/profile/${linkedUser.id}`}
           >
             Voir le profil
           </Button>
           {user.role === UserRoles.COACH && (
             <Button
-              style="custom-secondary-inverted"
+              variant="primary"
+              rounded
               href={`/backoffice/candidat/${linkedUser.id}/cv`}
             >
               Voir le CV

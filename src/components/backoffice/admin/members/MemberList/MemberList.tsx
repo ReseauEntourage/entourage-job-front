@@ -209,10 +209,10 @@ export function MemberList({
               additionalButtons={
                 isRoleIncluded([UserRoles.CANDIDATE], role) && (
                   <Button
-                    style="custom-secondary-inverted"
+                    variant="primary"
+                    rounded
                     size="small"
                     disabled={!hasSelection}
-                    color="primaryBlue"
                     onClick={() => {
                       return executeAction({ hidden: true }, 'put');
                     }}
@@ -238,8 +238,8 @@ export function MemberList({
             <StyledContainerWithTextCentered>
               <StyledMemberListButtonContainer>
                 <Button
-                  style="custom-secondary"
-                  color="primaryBlue"
+                  variant="secondary"
+                  rounded
                   onClick={() =>
                     fetchData(search, filters, role, offset, false)
                   }

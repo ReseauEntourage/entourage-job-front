@@ -376,13 +376,13 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
                 />
               );
             }}
-            color="darkGray"
-            style="custom-primary-inverted"
+            variant="secondary"
+            rounded
           >
             Prévisualiser
           </Button>
           <ButtonPost
-            style="custom-primary"
+            variant="primary"
             action={async () => {
               await postCV(CV_STATUS.Progress.value);
             }}
@@ -390,7 +390,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           />
           {isRoleIncluded(getRegistrableUserRoles(), user.role) && (
             <ButtonPost
-              style="custom-primary"
+              variant="primary"
               action={async () => {
                 await postCV(CV_STATUS.Pending.value);
               }}
@@ -399,7 +399,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           )}
           {user.role === UserRoles.ADMIN && (
             <ButtonPost
-              style="custom-primary"
+              variant="primary"
               action={async () => {
                 await postCV(CV_STATUS.Published.value);
               }}

@@ -49,7 +49,7 @@ export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
           </h2>
           <div className="uk-flex uk-flex-center">
             <Button
-              style="primary"
+              variant="primary"
               onClick={() => {
                 return Api.postCV(
                   candidateId,

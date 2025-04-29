@@ -53,10 +53,9 @@ export const SimpleSection = ({
         {button && (
           <Button
             href={button.href}
-            style="secondary"
+            variant="primary"
             isExternal={button.external}
             newTab={button.external}
-            toggle={button.modal}
             onClick={button.onClick}
           >
             {button.label}

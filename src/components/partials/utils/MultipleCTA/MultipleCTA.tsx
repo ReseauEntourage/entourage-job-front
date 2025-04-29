@@ -1,9 +1,5 @@
 import React from 'react';
 import { Button, Img, Grid } from 'src/components/utils';
-import {
-  UIKIT_BUTTON_SIZES,
-  UIKIT_BUTTON_STYLES_SPEC,
-} from 'src/components/variables';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -21,8 +17,8 @@ interface MultipleCTAProps {
       external?: boolean;
       modal?: string;
       onClick?: () => void;
-      size?: UIKIT_BUTTON_SIZES;
-      style?: UIKIT_BUTTON_STYLES_SPEC;
+      size?: 'small' | 'large';
+      variant?: 'default' | 'primary' | 'secondary';
       dataTestId?: string;
     };
   }[];
@@ -105,10 +101,9 @@ export const MultipleCTA = ({
                     >
                       <Button
                         href={item.button.href}
-                        style={item.button.style || 'secondary'}
+                        variant={item.button.variant || 'secondary'}
                         isExternal={item.button.external}
                         newTab={item.button.external}
-                        toggle={item.button.modal}
                         onClick={item.button.onClick}
                         size={item.button.size}
                         dataTestId={item.button.dataTestId}

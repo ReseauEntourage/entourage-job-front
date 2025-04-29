@@ -164,7 +164,8 @@ export const HeaderProfileMobile = ({
                   <Button
                     id="nav-cv-button"
                     size="small"
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     onClick={openCv}
                   >
                     Voir le CV
@@ -175,7 +176,8 @@ export const HeaderProfileMobile = ({
                       <Button
                         id="nav-cv-button"
                         size="small"
-                        style="custom-secondary"
+                        variant="secondary"
+                        rounded
                       >
                         Voir le CV{' '}
                         {hasTwoCv && <LucidIcon name="ChevronDown" />}
@@ -197,7 +199,7 @@ export const HeaderProfileMobile = ({
         )}
         {displayMessageButton && (
           <div>
-            <Button onClick={openConversation} style="custom-primary-inverted">
+            <Button onClick={openConversation} variant="secondary" rounded>
               Envoyer un message
             </Button>
           </div>
