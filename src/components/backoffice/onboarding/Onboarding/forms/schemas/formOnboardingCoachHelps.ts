@@ -10,7 +10,7 @@ const loadNudgesOptions = async (callback) => {
       offset: 0,
     });
     callback([
-      ...nudges.map((n) => createNudgeOption('Candidat', n)).filter((n) => n),
+      ...nudges.map((n) => createNudgeOption('Coach', n)).filter((n) => n),
     ]);
   } catch (error) {
     console.error(error);
