@@ -23,6 +23,7 @@ export const ProfileChangePassword = ({
       title="Votre mot de passe"
       smallCard={smallCard}
       isCompleted
+      isDefaultOpen={false}
     >
       <PasswordCriterias />
       <FormWithValidation
