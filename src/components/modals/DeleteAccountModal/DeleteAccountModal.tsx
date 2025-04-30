@@ -17,13 +17,15 @@ export function DeleteAccountModal() {
     <ModalConfirm
       title="Supprimer mon compte"
       onConfirm={confirmDeletion}
-      buttonText="Supprimer mon compte"
+      buttonText="Supprimer"
     >
       <StyledContainer>
-        <Text weight="bold">
+        <Text weight="bold" size="large">
           Êtes-vous sur de vouloir supprimer votre compte Entourage Pro ?
         </Text>
-        <Text>Toutes vos données et vos message seront supprimés</Text>
+        <Text size="large">
+          Toutes vos données et vos message seront supprimés
+        </Text>
       </StyledContainer>
     </ModalConfirm>
   );

@@ -19,11 +19,16 @@ export const ProfileChangePassword = ({
 
   const dispatch = useDispatch();
   return (
-    <ProfilePartCard title="Votre mot de passe" smallCard={smallCard}>
+    <ProfilePartCard
+      title="Votre mot de passe"
+      smallCard={smallCard}
+      isCompleted
+    >
       <PasswordCriterias />
       <FormWithValidation
         innerRef={form}
         submitText="Modifier"
+        submitBtnVariant="secondary"
         formSchema={formChangePassword}
         onSubmit={async ({ newPassword, oldPassword }, setError) => {
           try {

@@ -7,6 +7,7 @@ import {
   currentUserActions,
   selectIsComplete,
 } from '@/src/use-cases/current-user';
+import { ProfileDeleteAccount } from '../../profile/ProfilePartCards/ProfileDeleteAccount/ProfileDeleteAccount';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -148,6 +149,7 @@ export const Parameters = () => {
                 lastConnection={user.lastConnection}
               />
               <ProfileChangePassword smallCard />
+              <ProfileDeleteAccount smallCard />
             </StyledParametersRightColumn>
           </StyledBackofficeGrid>
         </StyledParametersSectionContent>
