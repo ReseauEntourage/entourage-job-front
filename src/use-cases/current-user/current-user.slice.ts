@@ -57,12 +57,15 @@ export const slice = createSlice({
         state.complete = false;
       },
     }),
-    ...fetchCompleteUserAdapter.getReducers<State>((state) => state.fetchUser, {
-      fetchCompleteUserSucceeded(state, action) {
-        state.user = action.payload;
-        state.complete = true;
-      },
-    }),
+    ...fetchCompleteUserAdapter.getReducers<State>(
+      (state) => state.fetchCompleteUser,
+      {
+        fetchCompleteUserSucceeded(state, action) {
+          state.user = action.payload;
+          state.complete = true;
+        },
+      }
+    ),
     ...updateUserAdapter.getReducers<State>((state) => state.updateUser, {
       updateUserSucceeded(state, action) {
         assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
