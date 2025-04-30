@@ -48,6 +48,7 @@ import IlluDesktop from './illu-desktop.svg';
 import IlluDossierCandidat from './illu-dossier-candidat.svg';
 import IlluLinkedIn from './illu-linked-in.svg';
 import IlluMalette from './illu-malette.svg';
+import IlluOrdiCV from './illu-ordi-cv.svg';
 import IlluPoigneeDeMain from './illu-poignee-de-main.svg';
 import IlluQuestionReponseOrange from './illu-question-reponse-orange.svg';
 import IlluReseauxSociaux from './illu-reseaux-sociaux.svg';
@@ -127,6 +128,7 @@ Heart,
 History,
 Home,
 IlluCV,
+IlluOrdiCV,
 IlluDesktop,
 IlluCoeurSurMainSeule,
 IlluCandidatFolder,

@@ -128,7 +128,12 @@ export const Parameters = () => {
                 smallCard
               />
               <ProfileNotificationsPreferences isEditable smallCard />
-              <ProfileStats smallCard />
+              <ProfileStats
+                smallCard
+                averageDelayResponse={user.averageDelayResponse}
+                responseRate={user.responseRate}
+                lastConnection={user.lastConnection}
+              />
               <ProfileChangePassword smallCard />
             </StyledParametersRightColumn>
           </StyledBackofficeGrid>
