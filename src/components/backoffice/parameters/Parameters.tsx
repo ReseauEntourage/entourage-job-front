@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
-import { useCompleteAuthenticatedUser } from '@/src/hooks/authentication/useCompleteAuthenticatedUser';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import {
+  currentUserActions,
+  selectIsComplete,
+} from '@/src/use-cases/current-user';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
+import { LoadingScreen } from '../LoadingScreen';
 import { useConfirmationToaster } from '../parametres-old/useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
 import { ProfileChangePassword } from 'src/components/profile/ProfilePartCards/ProfileChangePassword/ProfileChangePassword';
@@ -33,13 +39,20 @@ import {
 
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
-  const user = useCompleteAuthenticatedUser();
+  const user = useAuthenticatedUser();
+  const dispatch = useDispatch();
+  const userIsComplete = useSelector(selectIsComplete);
 
   useConfirmationToaster();
 
-  if (!user) {
-    return null;
-  }
+  // Fetch the complete user if not already done
+  useEffect(() => {
+    if (!userIsComplete) {
+      dispatch(currentUserActions.fetchCompleteUserRequested());
+    }
+  }, [userIsComplete, dispatch]);
+
+  if (!user || !userIsComplete) return <LoadingScreen />;
 
   return (
     <StyledBackofficeBackground>
@@ -130,8 +143,8 @@ export const Parameters = () => {
               <ProfileNotificationsPreferences isEditable smallCard />
               <ProfileStats
                 smallCard
-                averageDelayResponse={user.averageDelayResponse}
-                responseRate={user.responseRate}
+                averageDelayResponse={user.averageDelayResponse || null}
+                responseRate={user.responseRate || null}
                 lastConnection={user.lastConnection}
               />
               <ProfileChangePassword smallCard />

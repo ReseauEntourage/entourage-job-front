@@ -22,9 +22,9 @@ const iconProps = {
 
 export interface ProfileStatsProps {
   smallCard?: boolean;
-  averageDelayResponse?: number | null;
+  averageDelayResponse: number | null;
   lastConnection: string;
-  responseRate?: number | null;
+  responseRate: number | null;
 }
 
 interface StatItem {
@@ -39,31 +39,38 @@ export const ProfileStats = ({
   lastConnection,
   responseRate,
 }: ProfileStatsProps) => {
-  const lastConnectionDate = new Date(lastConnection);
-  const relativeConnectionDateInDays = Math.floor(
-    (Date.now() - lastConnectionDate.getTime()) / (1000 * 60 * 60 * 24)
-  );
+  const relativeConnectionDateInDays = useMemo(() => {
+    if (!lastConnection) {
+      return null;
+    }
+    const lastConnectionDate = new Date(lastConnection);
+    return Math.floor(
+      (Date.now() - lastConnectionDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }, [lastConnection]);
 
   const stats = useMemo(() => {
     const list = [] as StatItem[];
-    if (responseRate) {
+    if (responseRate !== null) {
       list.push({
         title: 'Taux de réponse',
         value: `${responseRate}%`,
         icon: <IlluDossierCandidat {...iconProps} />,
       });
     }
-    list.push({
-      title: 'Dernière connexion',
-      value:
-        relativeConnectionDateInDays === 0
-          ? "Aujourd'hui"
-          : `Il y'a ${relativeConnectionDateInDays} jour${
-              relativeConnectionDateInDays > 1 ? 's' : ''
-            }`,
-      icon: <IlluOrdiCV {...iconProps} />,
-    });
-    if (averageDelayResponse) {
+    if (relativeConnectionDateInDays !== null) {
+      list.push({
+        title: 'Dernière connexion',
+        value:
+          relativeConnectionDateInDays === 0
+            ? "Aujourd'hui"
+            : `Il y'a ${relativeConnectionDateInDays} jour${
+                relativeConnectionDateInDays > 1 ? 's' : ''
+              }`,
+        icon: <IlluOrdiCV {...iconProps} />,
+      });
+    }
+    if (averageDelayResponse !== null) {
       list.push({
         title: 'Temps de réponse',
         value: `Moins d${

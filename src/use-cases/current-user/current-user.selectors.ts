@@ -7,6 +7,7 @@ import {
 } from 'src/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
+  fetchCompleteUserAdapter,
   fetchUserAdapter,
   readDocumentAdapter,
   updateCandidateAdapter,
@@ -21,7 +22,7 @@ export const fetchUserSelectors = fetchUserAdapter.getSelectors<RootState>(
 );
 
 export const fetchUserCompleteSelectors =
-  fetchUserAdapter.getSelectors<RootState>(
+  fetchCompleteUserAdapter.getSelectors<RootState>(
     (state) => state.currentUser.fetchCompleteUser
   );
 export const updateProfileSelectors =
