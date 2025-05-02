@@ -81,7 +81,7 @@ export const Profile = () => {
               isAvailable={selectedProfile.isAvailable}
             />
             <ProfileContracts smallCard />
-            <ProfileInterests smallCard />
+            <ProfileInterests interests={selectedProfile.interests} smallCard />
             <ProfileLanguages languages={selectedProfile.languages} smallCard />
             <ProfileDocuments
               userId={selectedProfile.id}

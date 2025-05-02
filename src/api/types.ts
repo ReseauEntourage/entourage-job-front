@@ -156,6 +156,12 @@ export type Nudge = {
   order: number;
 };
 
+export type Interest = {
+  id?: string;
+  name: string;
+  order: number;
+};
+
 export type UserProfileNudge = {
   id: string;
   createdAt: string;
@@ -182,6 +188,7 @@ export type UserProfile = {
   formations: Formation[] | null;
   skills: Skill[] | null;
   languages: Language[];
+  interests: Interest[];
 };
 
 export type UserReportDto = {
@@ -552,6 +559,7 @@ export type PublicProfile = {
   formations: Formation[];
   skills: Skill[];
   languages: Language[];
+  interests: Interest[];
   reviews: Review[];
   contracts: Contract[];
   occupations: Occupation[];

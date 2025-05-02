@@ -32,7 +32,7 @@ export const ProfileSkills = ({
       title="Compétences clefs"
       isCompleted={isCompleted}
       ctaCallback={editModal}
-      iaGenerated
+      // iaGenerated
       isEditable={isEditable}
       smallCard={smallCard}
       fallback={{
