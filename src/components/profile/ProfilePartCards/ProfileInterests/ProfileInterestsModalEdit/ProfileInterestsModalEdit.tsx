@@ -30,7 +30,7 @@ export const ProfileInterestsModalEdit = ({
           value: i.name,
           label: i.name,
         };
-      }, {}) ?? [],
+      }) ?? [],
   };
 
   return (
