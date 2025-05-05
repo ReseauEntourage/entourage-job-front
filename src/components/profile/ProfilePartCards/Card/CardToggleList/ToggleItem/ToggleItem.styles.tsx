@@ -14,10 +14,3 @@ export const StyledToggleItem = styled.label`
   gap: 4px;
   cursor: pointer;
 `;
-
-export const SwitchContainer = styled.div`
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
