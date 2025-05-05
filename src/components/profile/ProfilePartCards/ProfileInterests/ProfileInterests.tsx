@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { Interest } from '@/src/api/types';
-import { useUpdateProfile } from '@/src/components/backoffice/parametres-old/useUpdateProfile';
 import { openModal } from '@/src/components/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { IlluCoeurMainsOuvertes } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';

@@ -330,6 +330,17 @@ export class APIHandler {
     return this.get('/business-sectors', { params });
   }
 
+  /// ///////////// ///
+  ///  contracts  ///
+  /// //////////// ///
+  getAllContracts(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/contracts', { params });
+  }
+
   /// ///////// ///
   ///  nudges  ///
   /// //////// ///
