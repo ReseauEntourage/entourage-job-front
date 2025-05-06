@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CV, UserCandidateWithUsers } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { updateUserProfilePictureSelectors } from 'src/use-cases/current-user';
 
 export function useImageFallback({
@@ -11,14 +11,14 @@ export function useImageFallback({
   userCandidate,
 }: {
   userId: string;
-  role: UserRole;
+  role: UserRoles;
   userCandidate?: UserCandidateWithUsers;
 }) {
   const [urlImg, setUrlImg] = useState<string | null>(null);
 
   useEffect(() => {
     setUrlImg(
-      `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
+      `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
     );
   }, [userId]);
 
@@ -29,7 +29,7 @@ export function useImageFallback({
   useEffect(() => {
     if (updateUserProfilePictureStatus === ReduxRequestEvents.SUCCEEDED) {
       setUrlImg(
-        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
+        `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
       );
     }
   }, [updateUserProfilePictureStatus, userId]);
@@ -37,7 +37,7 @@ export function useImageFallback({
   const fallbackToCVImage = useCallback(() => {
     setUrlImg(null);
     if (
-      role === USER_ROLES.CANDIDATE &&
+      role === UserRoles.CANDIDATE &&
       userCandidate?.cvs &&
       userCandidate?.cvs?.length > 0
     ) {
@@ -47,7 +47,7 @@ export function useImageFallback({
       }, cvs[0]);
 
       if (latestCV.urlImg) {
-        setUrlImg(`${process.env.AWSS3_URL}/${latestCV.urlImg}`);
+        setUrlImg(`${process.env.NEXT_PUBLIC_AWSS3_URL}/${latestCV.urlImg}`);
       }
     }
   }, [role, userCandidate]);

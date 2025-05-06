@@ -5,7 +5,7 @@ import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
-import { NormalUserRole, USER_ROLES } from 'src/constants/users';
+import { NormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { selectLinkedUser } from 'src/use-cases/current-user';
 import { mutateToArray } from 'src/utils';
@@ -13,19 +13,19 @@ import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCa
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const recommendationsLabels: {
-  [K in NormalUserRole]: {
+  [K in NormalUserRoles]: {
     title: string;
     subtitle: string;
     button: string;
   };
 } = {
-  [USER_ROLES.CANDIDATE]: {
+  [UserRoles.CANDIDATE]: {
     title: 'Les coachs qui pourraient vous aider',
     subtitle:
       "N'hésitez pas à prendre connaissance de leurs propositions d’aide et les contacter directement",
     button: 'Voir tous les coachs',
   },
-  [USER_ROLES.COACH]: {
+  [UserRoles.COACH]: {
     title: 'Les candidats que vous pourriez aider',
     subtitle:
       "N'hésitez pas à prendre connaissance de leurs besoins et les contacter directement",
@@ -39,7 +39,7 @@ export const DashboardRecommendationsCard = () => {
   const linkedUser = useSelector(selectLinkedUser);
 
   const isAlreadyLinkedCandidate =
-    user.role === USER_ROLES.CANDIDATE && linkedUser;
+    user.role === UserRoles.CANDIDATE && linkedUser;
 
   const { recommendations, isLoading, isError } = useDashboardRecommendations();
 
@@ -50,12 +50,12 @@ export const DashboardRecommendationsCard = () => {
   const recommendationsList = useMemo(() => {
     return recommendations.map((profile) => {
       const helps =
-        profile.role === USER_ROLES.CANDIDATE
+        profile.role === UserRoles.CANDIDATE
           ? profile.helpNeeds
           : profile.helpOffers;
 
       const businessLines =
-        profile.role === USER_ROLES.CANDIDATE
+        profile.role === UserRoles.CANDIDATE
           ? profile.searchBusinessLines
           : profile.networkBusinessLines;
 
@@ -101,7 +101,8 @@ export const DashboardRecommendationsCard = () => {
           />
         </StyledDashboardRecommendationsList>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           href={{ pathname: '/backoffice/annuaire', query }}
         >
           {recommendationsLabels[user.role].button}

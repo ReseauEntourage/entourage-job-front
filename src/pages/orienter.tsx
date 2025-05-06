@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '../hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -58,6 +59,7 @@ const reviews = [
 
 const Orienter = () => {
   const isDesktop = useIsDesktop();
+  useUtm();
 
   return (
     <Layout title="Orienter - Entourage Pro">

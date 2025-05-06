@@ -4,7 +4,7 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { getRelatedUser } from 'src/utils/Finding';
 import {
@@ -42,8 +42,8 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
         <span className="uk-label">
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
         </span>
-        {(user.role === USER_ROLES.COACH ||
-          user.role === USER_ROLES.CANDIDATE) && (
+        {(user.role === UserRoles.COACH ||
+          user.role === UserRoles.CANDIDATE) && (
           <StyledRoleContainer>
             <LucidIcon name="User" />
             &nbsp;
@@ -53,7 +53,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
             </div>
           </StyledRoleContainer>
         )}
-        {user.role === USER_ROLES.REFERER && (
+        {user.role === UserRoles.REFERER && (
           <StyledRoleContainer>
             <LucidIcon name="User" />
             &nbsp;
@@ -72,7 +72,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
             )}
           </StyledRoleContainer>
         )}
-        {user.role === USER_ROLES.CANDIDATE && (
+        {user.role === UserRoles.CANDIDATE && (
           <StyledRoleContainer>
             <LucidIcon name="Link" />
             &nbsp;
@@ -82,7 +82,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
               href={`/cv/${user?.candidat?.url}`}
             >
               <span>
-                {process.env.SERVER_URL}/cv/{user?.candidat?.url}
+                {process.env.NEXT_PUBLIC_SERVER_URL}/cv/{user?.candidat?.url}
               </span>
             </SimpleLink>
           </StyledRoleContainer>

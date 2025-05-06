@@ -31,7 +31,8 @@ export const Step = ({ step }: StepProps) => {
       <Text center>{step.content}</Text>
       <StyledStepBtnContainer>
         <Button
-          style="custom-primary-inverted"
+          variant="secondary"
+          rounded
           href={step.cta.href}
           isExternal
           newTab

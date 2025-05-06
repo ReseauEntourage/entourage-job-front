@@ -2,6 +2,7 @@ import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { getRegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
@@ -11,7 +12,6 @@ import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { ALL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -29,7 +29,7 @@ import { NoCV } from './NoCV';
 
 const pusher = new Pusher(
   // @ts-expect-error after enable TS strict mode. Please, try to fix it
-  process.env.PUSHER_API_KEY,
+  process.env.NEXT_PUBLIC_PUSHER_API_KEY,
   {
     cluster: 'eu',
     forceTLS: true,
@@ -62,7 +62,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const prevCV = usePrevious(cv);
 
   const setCVHasBeenRead = useCallback(async () => {
-    if (user.role !== USER_ROLES.ADMIN && candidateId) {
+    if (user.role !== UserRoles.ADMIN && candidateId) {
       try {
         await Api.putCVRead(candidateId);
       } catch (err) {
@@ -81,7 +81,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   useEffect(() => {
     if (cv && cv !== prevCV) {
       if (!cvVersion) setCvVersion(cv.version);
-      setImageUrl(`${process.env.AWSS3_URL}/${cv.urlImg}`);
+      setImageUrl(`${process.env.NEXT_PUBLIC_AWSS3_URL}/${cv.urlImg}`);
       setCVHasBeenRead();
     }
   }, [candidateId, cv, cvVersion, prevCV, setCVHasBeenRead]);
@@ -124,9 +124,9 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
       // Use hash to reload image if an update is done
       const previewHash = Date.now();
       setImageUrl(
-        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${
-          cv.UserId
-        }.${
+        `${process.env.NEXT_PUBLIC_AWSS3_URL}${
+          process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY
+        }${cv.UserId}.${
           cv.status === CV_STATUS.Draft.value
             ? CV_STATUS.Progress.value
             : cv.status
@@ -256,7 +256,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             notificationsActions.addNotification({
               type: 'success',
               message:
-                user.role === USER_ROLES.CANDIDATE
+                user.role === UserRoles.CANDIDATE
                   ? 'Votre CV a bien été sauvegardé'
                   : 'Le profil a été mis à jour',
             })
@@ -352,7 +352,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
               {cvStatus.label}
             </span>
           </div>
-          {user.role === USER_ROLES.ADMIN && (
+          {user.role === UserRoles.ADMIN && (
             <div>
               Version&nbsp;:&nbsp;
               {cvVersion}
@@ -376,40 +376,40 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
                 />
               );
             }}
-            color="darkGray"
-            style="custom-primary-inverted"
+            variant="secondary"
+            rounded
           >
             Prévisualiser
           </Button>
           <ButtonPost
-            style="custom-primary"
+            variant="primary"
             action={async () => {
               await postCV(CV_STATUS.Progress.value);
             }}
             text="Sauvegarder"
           />
-          {isRoleIncluded(ALL_USER_ROLES, user.role) && (
+          {isRoleIncluded(getRegistrableUserRoles(), user.role) && (
             <ButtonPost
-              style="custom-primary"
+              variant="primary"
               action={async () => {
                 await postCV(CV_STATUS.Pending.value);
               }}
               text="Soumettre"
             />
           )}
-          {user.role === USER_ROLES.ADMIN && (
+          {user.role === UserRoles.ADMIN && (
             <ButtonPost
-              style="custom-primary"
+              variant="primary"
               action={async () => {
                 await postCV(CV_STATUS.Published.value);
               }}
               text="Publier"
             />
           )}
-          {user.role !== USER_ROLES.ADMIN && (
+          {user.role !== UserRoles.ADMIN && (
             <ButtonIcon
               icon={<LucidIcon name="CircleHelp" />}
-              href={process.env.TUTORIAL_CV}
+              href={process.env.NEXT_PUBLIC_TUTORIAL_CV}
               newTab
               onClick={() => {
                 gaEvent(GA_TAGS.BACKOFFICE_CV_AIDE);

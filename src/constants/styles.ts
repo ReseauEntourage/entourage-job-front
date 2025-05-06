@@ -8,9 +8,6 @@ export const HEIGHTS = {
   TABS_HEIGHT_WITHOUT_NUMBERS: 55,
   TABS_HEIGHT: 79.5,
   SEARCH_BAR_HEIGHT: 52,
-  OFFER_ADMIN_INFO_HEIGHT: 176,
-  OFFER_INFO_HEIGHT: 156,
-  OFFER_CTA_HEIGHT: 55,
   DEFAULT_SECTION_PADDING: 50,
   SECTION_PADDING: 24,
   SECTION_PADDING_MOBILE: 12,
@@ -21,6 +18,7 @@ export const COLORS = {
   // B&W colors
   transparent: 'transparent',
   white: '#FFFFFF',
+  hoverWhite: '#f2f2f2',
   lightGray: '#F5F5F5',
   gray: '#D9D9D9',
   mediumGray: '#A0A0A0',

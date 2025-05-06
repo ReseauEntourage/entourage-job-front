@@ -39,8 +39,9 @@ export const CVDiscover = () => {
                 businessLines={cv.businessLines}
                 url={cv.user && cv.user.url}
                 imgSrc={
-                  (cv.urlImg && `${process.env.AWSS3_CDN_URL}/${cv.urlImg}`) ||
-                  undefined
+                  (cv.urlImg &&
+                    `${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${cv.urlImg}`) ||
+                  ''
                 }
                 firstName={cv.user && cv.user.candidat.firstName}
                 ambitions={cv.ambitions}
@@ -52,7 +53,8 @@ export const CVDiscover = () => {
       )}
       <StyledCVDiscoverButtonContainer>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           href={{ pathname: '/candidats', query: { employed: false } }}
         >
           Voir tous les candidats

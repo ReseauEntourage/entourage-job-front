@@ -1,9 +1,5 @@
 import React from 'react';
 import { Button, Img, Grid } from 'src/components/utils';
-import {
-  UIKIT_BUTTON_SIZES,
-  UIKIT_BUTTON_STYLES_SPEC,
-} from 'src/components/variables';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -21,12 +17,11 @@ interface MultipleCTAProps {
       external?: boolean;
       modal?: string;
       onClick?: () => void;
-      size?: UIKIT_BUTTON_SIZES;
-      style?: UIKIT_BUTTON_STYLES_SPEC;
+      size?: 'small' | 'large';
+      variant?: 'default' | 'primary' | 'secondary';
       dataTestId?: string;
     };
   }[];
-  animate?: boolean;
 }
 
 export const MultipleCTA = ({
@@ -36,7 +31,6 @@ export const MultipleCTA = ({
   data,
   spacing,
   className,
-  animate,
 }: MultipleCTAProps) => {
   return (
     <div data-uk-height-match="target : h4, .text" className={className}>
@@ -48,13 +42,6 @@ export const MultipleCTA = ({
         items={data.map((item, index) => {
           return (
             <div
-              data-uk-scrollspy={
-                animate
-                  ? `cls: uk-animation-slide-${
-                      index % 2 === 0 ? 'bottom' : 'top'
-                    }-small; delay: ${100 * (index + 1)};`
-                  : ''
-              }
               key={index.toString()}
               className="uk-flex uk-flex-column uk-flex-middle"
             >
@@ -114,10 +101,9 @@ export const MultipleCTA = ({
                     >
                       <Button
                         href={item.button.href}
-                        style={item.button.style || 'secondary'}
+                        variant={item.button.variant || 'secondary'}
                         isExternal={item.button.external}
                         newTab={item.button.external}
-                        toggle={item.button.modal}
                         onClick={item.button.onClick}
                         size={item.button.size}
                         dataTestId={item.button.dataTestId}
@@ -142,5 +128,4 @@ MultipleCTA.defaultProps = {
   showVerticalDividers: false,
   spacing: 'large',
   className: '',
-  animate: false,
 };

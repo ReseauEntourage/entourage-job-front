@@ -25,8 +25,8 @@ export const DashboardAlertWhatsappCoach = () => {
         Pour recevoir des actualités et échanger avec les coachs de votre
         région, rejoignez le groupe Whatsapp
         <Button
-          color="primaryBlue"
-          style="custom-secondary"
+          variant="secondary"
+          rounded
           size="small"
           onClick={openJoinWhatsappModal}
         >

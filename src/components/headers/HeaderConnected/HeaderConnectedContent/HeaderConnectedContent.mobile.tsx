@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
+import {
+  Offcanvas,
+  OffcanvasRef,
+} from '@/src/components/utils/OffCanvas/Offcanvas';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import {
   StyledHeaderMobile,
@@ -8,16 +12,14 @@ import {
 } from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
-  Hamburger,
   Navbar,
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { Hamburger } from 'src/components/utils/Hamburger';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { Tag } from 'src/components/utils/Tag';
-import { USER_ROLES } from 'src/constants/users';
-import { OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
@@ -30,13 +32,14 @@ export const HeaderConnectedContentMobile = ({
   badges,
   messaging,
   links = {
-    [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.COACH]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.REFERER]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.ADMIN]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.COACH]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.REFERER]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
 }: HeaderConnectedContentProps) => {
+  const offcanvasRef = useRef<OffcanvasRef>(null);
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
@@ -66,11 +69,17 @@ export const HeaderConnectedContentMobile = ({
                 <div className="pin-notification" />
               )}
             </StyledMessagingIconContainer>
-            <Hamburger targetId={OFFCANVAS_LOGGED} />
+            <Hamburger
+              onClick={() => {
+                if (offcanvasRef.current) {
+                  offcanvasRef.current.open();
+                }
+              }}
+            />
           </div>
         }
       />
-      <Offcanvas id={OFFCANVAS_LOGGED}>
+      <Offcanvas ref={offcanvasRef} position="right">
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">

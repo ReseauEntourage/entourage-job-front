@@ -33,7 +33,7 @@ export const HeaderPublicContentDesktop = ({
         );
       }
       return (
-        <Link href={link.href} key={i}>
+        <Link href={link.href} key={i} legacyBehavior>
           <StyledPublicItem color="white">{link.name}</StyledPublicItem>
         </Link>
       );
@@ -41,12 +41,11 @@ export const HeaderPublicContentDesktop = ({
     <div>
       <Button
         href="/login"
-        style="custom-secondary"
-        color="white"
+        variant="secondary"
+        rounded
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
         }}
-        size="small"
       >
         Connexion
       </Button>
@@ -54,8 +53,8 @@ export const HeaderPublicContentDesktop = ({
     <div>
       <Button
         href="/inscription"
-        style="custom-secondary-inverted"
-        size="small"
+        variant="primary"
+        rounded
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
         }}

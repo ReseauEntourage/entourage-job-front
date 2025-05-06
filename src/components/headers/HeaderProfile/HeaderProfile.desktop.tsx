@@ -19,7 +19,7 @@ import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { gaEvent } from 'src/lib/gtag';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -111,9 +111,10 @@ export const HeaderProfileDesktop = ({
                 name="profile-picture-upload-desktop"
               >
                 <ButtonMock
-                  style="custom-secondary"
-                  size="small"
+                  variant="secondary"
+                  rounded
                   className="button-mock-image-input"
+                  size="small"
                   dataTestId="button-mock-image-input"
                 >
                   Modifier
@@ -126,7 +127,8 @@ export const HeaderProfileDesktop = ({
                   <Button
                     id="nav-cv-button"
                     size="small"
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     onClick={openCv}
                   >
                     Voir le CV
@@ -137,7 +139,8 @@ export const HeaderProfileDesktop = ({
                       <Button
                         id="nav-cv-button"
                         size="small"
-                        style="custom-secondary"
+                        variant="secondary"
+                        rounded
                       >
                         Voir le CV{' '}
                         {hasTwoCv && <LucidIcon name="ChevronDown" />}
@@ -169,9 +172,7 @@ export const HeaderProfileDesktop = ({
                 />
                 <Tag
                   content={
-                    role === USER_ROLES.ADMIN
-                      ? USER_ROLES.ADMIN
-                      : contextualRole
+                    role === UserRoles.ADMIN ? UserRoles.ADMIN : contextualRole
                   }
                   style="secondary"
                 />
@@ -199,10 +200,7 @@ export const HeaderProfileDesktop = ({
             )}
             {displayMessageButton && (
               <div>
-                <Button
-                  onClick={openConversation}
-                  style="custom-primary-inverted"
-                >
+                <Button onClick={openConversation} variant="secondary" rounded>
                   Envoyer un message
                 </Button>
               </div>

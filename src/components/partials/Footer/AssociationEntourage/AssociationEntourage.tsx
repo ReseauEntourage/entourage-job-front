@@ -31,7 +31,7 @@ export const AssociationEntourage = () => {
           >
             <div>
               <EntourageLogo width={50} height={50} />
-              <H2 center color="white" title={"A propos d'Entourage"} />
+              <H2 center color="white" title="A propos d'Entourage" />
               <div className="uk-light">
                 <Text center color="white">
                   Depuis 2014, l&apos;association Entourage lutte contre la
@@ -41,9 +41,9 @@ export const AssociationEntourage = () => {
                 <StyledAssociationEntourageButtonContainer>
                   <Button
                     href={EXTERNAL_LINKS.ENTOURAGE}
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     isExternal
-                    color="white"
                     onClick={() => {
                       gaEvent(GA_TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
                     }}

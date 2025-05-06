@@ -4,7 +4,7 @@ import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ConversationParticipant } from 'src/api/types';
 import { Alert } from 'src/components/utils/Alert/Alert';
 import { StarRating } from 'src/components/utils/StarRating/StarRating';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useIsDesktop } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
@@ -45,9 +45,9 @@ export const MessagingFeedback = ({
 
   const getFeedbackDescriptionText = (): string => {
     switch (adressee?.role) {
-      case USER_ROLES.CANDIDATE:
+      case UserRoles.CANDIDATE:
         return `A quel point pensez vous avoir aidé ${adressee.firstName} dans sa recherche d'emploi ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;
-      case USER_ROLES.COACH:
+      case UserRoles.COACH:
         return `Les conseils de ${adressee.firstName} vous ont-ils aidé dans votre recherche ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;
       default:
         return `Comment évaluez-vous votre conversation ? (1 étoile = Pas du tout, 5 étoiles = Beaucoup)`;

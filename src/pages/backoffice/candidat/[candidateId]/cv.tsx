@@ -9,7 +9,7 @@ import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
 import { CVEditWelcome } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/CVEdit/CVEditWelcome';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
 import { Section } from 'src/components/utils';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useFetchCV } from 'src/hooks/useFetchCV';
@@ -48,7 +48,7 @@ const Edit = () => {
   } else if (error) {
     return <ErrorMessage error={error} />;
   } else if (
-    user.role === USER_ROLES.COACH &&
+    user.role === UserRoles.COACH &&
     !getRelatedUser(userCompleteData)
   ) {
     content = (

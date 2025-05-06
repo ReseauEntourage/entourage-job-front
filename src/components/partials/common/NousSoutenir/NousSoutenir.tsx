@@ -68,9 +68,9 @@ export const NousSoutenir = () => {
           const uuid = uuidV4();
           return (
             <Link
-              href={`${process.env.DONATION_LINK || ''}&frequency=once&amount=${
-                item.value * 100
-              }`}
+              href={`${
+                process.env.NEXT_PUBLIC_DONATION_LINK || ''
+              }&frequency=once&amount=${item.value * 100}`}
               target="_blank"
               key={uuid}
             >
@@ -88,7 +88,8 @@ export const NousSoutenir = () => {
       </StyledNousSoutenirCardsContainer>
       <StyledNousSoutenirButton>
         <Button
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           onClick={() => {
             gaEvent(GA_TAGS.HOME_NOUS_SOUTENIR_FAIRE_UN_DON_CLICK);
           }}

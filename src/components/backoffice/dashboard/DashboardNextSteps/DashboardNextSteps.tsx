@@ -8,7 +8,7 @@ import {
   IlluCV,
 } from 'assets/icons/icons';
 import { Card } from 'src/components/utils/Cards/Card/Card';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { StyledStepsContainer } from './DashboardNextSteps.styles';
 import { Step } from './Step/Step';
@@ -23,12 +23,12 @@ export const DashboardNextSteps = () => {
     content: 'Besoin d’en savoir plus sur la plateforme Entourage Pro ?',
     cta: {
       label: "S'inscrire",
-      href: process.env.WEBINAR_URL,
+      href: process.env.NEXT_PUBLIC_WEBINAR_URL,
     },
   };
 
   const stepsByRole = {
-    [USER_ROLES.CANDIDATE]: [
+    [UserRoles.CANDIDATE]: [
       {
         ...webinarStep,
       },
@@ -51,7 +51,7 @@ export const DashboardNextSteps = () => {
         },
       },
     ],
-    [USER_ROLES.COACH]: [
+    [UserRoles.COACH]: [
       {
         ...webinarStep,
       },

@@ -1,12 +1,15 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useRef } from 'react';
+import { Hamburger } from '@/src/components/utils/Hamburger';
+import {
+  Offcanvas,
+  OffcanvasRef,
+} from '@/src/components/utils/OffCanvas/Offcanvas';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
-import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
+import { Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { OFFCANVAS_GUEST } from 'src/constants/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { HeaderPublicContentProps } from './HeaderPublicContent.types';
@@ -14,6 +17,8 @@ import { HeaderPublicContentProps } from './HeaderPublicContent.types';
 export const HeaderPublicContentMobile = ({
   links,
 }: HeaderPublicContentProps) => {
+  const offcanvasRef = useRef<OffcanvasRef>(null);
+
   const { asPath, push } = useRouter();
 
   return (
@@ -28,11 +33,17 @@ export const HeaderPublicContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
-            <Hamburger targetId={OFFCANVAS_GUEST} />
+            <Hamburger
+              onClick={() => {
+                if (offcanvasRef.current) {
+                  offcanvasRef.current.open();
+                }
+              }}
+            />
           </div>
         }
       />
-      <Offcanvas id={OFFCANVAS_GUEST}>
+      <Offcanvas position="right" ref={offcanvasRef}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
@@ -97,7 +108,8 @@ export const HeaderPublicContentMobile = ({
           <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
               href="/login"
-              style="custom-secondary"
+              variant="secondary"
+              rounded
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
               }}
@@ -109,7 +121,8 @@ export const HeaderPublicContentMobile = ({
           <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
               href="/inscription"
-              style="custom-secondary-inverted"
+              variant="primary"
+              rounded
               size="small"
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
@@ -120,14 +133,14 @@ export const HeaderPublicContentMobile = ({
           </li>
           <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
             <Button
-              href={process.env.DONATION_LINK}
+              href={process.env.NEXT_PUBLIC_DONATION_LINK}
               isExternal
               newTab
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_DON_CLIC);
                 fbEvent(FB_TAGS.DONATION);
               }}
-              style="default"
+              variant="default"
             >
               Faire un don
               <LucidIcon name="ChevronRight" />

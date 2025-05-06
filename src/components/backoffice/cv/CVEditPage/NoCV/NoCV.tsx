@@ -3,7 +3,7 @@ import { Api } from 'src/api';
 import { CV, User, UserCandidateWithUsers } from 'src/api/types';
 import { Button, Grid } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { getUserCandidateFromCoachOrCandidate } from 'src/utils';
 
 interface NoCVProps {
@@ -29,7 +29,7 @@ export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
 
   return (
     <Grid column middle>
-      {user.role === USER_ROLES.COACH &&
+      {user.role === UserRoles.COACH &&
       (!candidate || (candidate && candidate.deletedAt)) ? (
         <div className="uk-flex uk-flex-column uk-flex-middle">
           <h2 className="uk-text-bold uk-text-center">
@@ -49,7 +49,7 @@ export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
           </h2>
           <div className="uk-flex uk-flex-center">
             <Button
-              style="primary"
+              variant="primary"
               onClick={() => {
                 return Api.postCV(
                   candidateId,

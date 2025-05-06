@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { useMemo } from 'react';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledMemberInfoContainer,
@@ -56,7 +56,7 @@ export function MemberInfo({
       shallow
       passHref
       href={
-        user.role === USER_ROLES.ADMIN
+        user.role === UserRoles.ADMIN
           ? `/backoffice/admin/membres/${id}`
           : `/backoffice/candidat/${id}/cv`
       }

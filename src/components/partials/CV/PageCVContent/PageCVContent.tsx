@@ -97,7 +97,7 @@ export const PageCVContent = ({
         <StyledCVProfilePictureContainer className={!isDesktop ? 'mobile' : ''}>
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
-            imgSrc={`${process.env.AWSS3_CDN_URL}/${cv.urlImg}`}
+            imgSrc={`${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${cv.urlImg}`}
           />
           {isDesktop && (
             <>
@@ -166,7 +166,8 @@ export const PageCVContent = ({
               opportunité&nbsp;...
             </p>
             <Button
-              style="custom-secondary-inverted"
+              variant="primary"
+              rounded
               disabled={actionDisabled}
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);

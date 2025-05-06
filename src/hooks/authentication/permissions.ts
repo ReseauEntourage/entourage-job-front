@@ -1,4 +1,4 @@
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export const authenticatedPermissions = [
   {
@@ -14,12 +14,10 @@ export const authenticatedPermissions = [
     paths: [
       '/backoffice/dashboard',
       '/backoffice/candidat/[candidateId]',
-      '/backoffice/candidat/[candidateId]/offres',
       '/backoffice/candidat/[candidateId]/suivi',
       '/backoffice/candidat/[candidateId]/cv',
-      '/backoffice/admin/offres',
     ],
-    roles: [USER_ROLES.CANDIDATE, USER_ROLES.COACH, USER_ROLES.REFERER],
+    roles: [UserRoles.CANDIDATE, UserRoles.COACH, UserRoles.REFERER],
   },
   {
     paths: [
@@ -27,10 +25,10 @@ export const authenticatedPermissions = [
       '/backoffice/referer/orienter/[step]',
       '/backoffice/referer/orienter/confirmation',
     ],
-    roles: [USER_ROLES.REFERER],
+    roles: [UserRoles.REFERER],
   },
   {
-    paths: ['/backoffice/admin', '/backoffice/candidat/[candidateId]/offres'],
-    roles: [USER_ROLES.ADMIN],
+    paths: ['/backoffice/admin'],
+    roles: [UserRoles.ADMIN],
   },
 ];

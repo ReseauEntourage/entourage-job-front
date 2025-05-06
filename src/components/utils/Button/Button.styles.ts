@@ -1,245 +1,114 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
+import { ButtonProps } from './ButtonProps';
 
-export const colorToHoverBackgroundColor = {
-  primaryBlue: COLORS.hoverBlue,
-  darkGray: 'transparent',
-  white: 'transparent',
+// Color config
+const buttonStyles = {
+  border: {
+    default: COLORS.gray,
+    primary: COLORS.primaryBlue,
+    secondary: COLORS.primaryBlue,
+  },
+  backgroundColor: {
+    default: COLORS.white,
+    primary: COLORS.primaryBlue,
+    secondary: COLORS.white,
+  },
+  color: {
+    default: COLORS.black,
+    primary: COLORS.white,
+    secondary: COLORS.primaryBlue,
+  },
+  hoverBackgroundColor: {
+    default: COLORS.hoverWhite,
+    primary: COLORS.darkBlue,
+    secondary: COLORS.hoverBlue,
+  },
+  hoverColor: {
+    default: COLORS.primaryBlue,
+    primary: COLORS.white,
+    secondary: COLORS.primaryBlue,
+  },
+  hoverBorder: {
+    default: COLORS.primaryBlue,
+    primary: COLORS.darkBlue,
+    secondary: COLORS.primaryBlue,
+  },
 };
 
-export const colorToHoverColor = {
-  primaryBlue: COLORS.primaryBlue,
-  darkGray: COLORS.primaryBlue,
-  white: COLORS.primaryBlue,
-};
+export const StyledButton = styled.button<ButtonProps>`
+  &.button {
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    line-height: 17px;
 
-export const colorToBackgroundColor = {
-  primaryBlue: COLORS.white,
-  darkGray: COLORS.white,
-  white: 'transparent',
-};
+    border: ${(props: ButtonProps) => {
+        return buttonStyles.border[props.variant || 'default'] || COLORS.white;
+      }}
+      solid 1px !important;
 
-export const ButtonStyle = css`
-  font-size: 14px;
-  line-height: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  :not(.rounded) {
-    padding: 11px 22px !important;
-  }
-  scroll-behavior: smooth;
+    background-color: ${(props: ButtonProps) => {
+      return (
+        buttonStyles.backgroundColor[props.variant || 'default'] || COLORS.white
+      );
+    }} !important;
 
-  :not(.rounded) {
-    > svg:first-child {
-      margin-right: 8px;
-    }
+    color: ${(props: ButtonProps) => {
+      return buttonStyles.color[props.variant || 'default'] || COLORS.white;
+    }} !important;
 
-    > svg:last-child {
-      margin-left: 8px;
-    }
-  }
+    border-radius: ${(props: ButtonProps) => {
+      if (props.rounded === 'circle') {
+        return `50%`;
+      }
+      return props.rounded ? `20px` : `5px`;
+    }}!important;
 
-  &:hover {
-    transition: 0.2s ease-in-out;
-  }
+    padding: ${(props: ButtonProps) => {
+      if (props.rounded === 'circle') {
+        return `6px`;
+      }
+      return props.size === 'large' ? `11px 20px` : `6px 10px`;
+    }}!important;
 
-  &.uk-button-primary,
-  &.uk-button-secondary {
-    border: 0.5px solid ${COLORS.primaryBlue};
+    font-size: ${(props: ButtonProps) => {
+      return props.size === 'large' ? `14px` : `12px`;
+    }}!important;
 
     &:hover {
-      background: none;
-      color: ${COLORS.primaryBlue};
-    }
+      transition: 0.2s ease-in-out;
 
-    &.banner-btn {
-      &:hover {
-        background-color: rgba(250, 250, 250, 0.8);
-        border-color: ${COLORS.primaryBlue};
-      }
-    }
-  }
+      background-color: ${(props: ButtonProps) => {
+        return (
+          buttonStyles.hoverBackgroundColor[props.variant || 'default'] ||
+          COLORS.white
+        );
+      }} !important;
 
-  &.uk-button-default {
-    &:hover {
-      /* background-color: ${COLORS.primaryBlue}; */
-      border-color: ${COLORS.primaryBlue};
-      /* color: white; */
-      color: ${COLORS.primaryBlue};
-    }
-  }
+      border: ${(props: ButtonProps) => {
+          return (
+            buttonStyles.hoverBorder[props.variant || 'default'] || COLORS.white
+          );
+        }}
+        solid 1px !important;
 
-  &.custom-primary {
-    font-family: Poppins, sans-serif;
-    padding: 8px 20px;
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }};
-    color: white;
-    background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryBlue;
-    }} !important;
-
-    border-radius: 40px;
-
-    @media (hover: hover) {
-      &:hover {
-        cursor: pointer;
-        background-color: white !important;
-        color: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryBlue;
-        }} !important;
-      }
+      color: ${(props: ButtonProps) => {
+        return (
+          buttonStyles.hoverColor[props.variant || 'default'] || COLORS.white
+        );
+      }} !important;
     }
   }
-
-  &.custom-primary-inverted {
-    font-family: Poppins, sans-serif;
-    padding: 8px 20px;
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }};
-    color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryBlue;
-    }} !important;
-
-    border-radius: 40px;
-    background-color: transparent;
-
-    @media (hover: hover) {
-      &:hover {
-        cursor: pointer;
-        background-color: ${(props) => {
-          return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
-        }};
-        color: ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryBlue;
-        }} !important;
-        border: 0.5px solid
-          ${(props) => {
-            return colorToHoverColor[props.color] || COLORS.primaryBlue;
-          }};
-      }
-    }
-  }
-
-  &.custom-text {
-    font-family: Poppins, sans-serif;
-    padding: 8px 20px;
-    border: none;
-    color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryBlue;
-    }} !important;
-
-    background-color: transparent;
-
-    @media (hover: hover) {
-      &:hover {
-        cursor: pointer;
-        opacity: 0.6 !important;
-      }
-    }
-  }
-
-  &.custom-secondary {
-    font-family: Poppins, sans-serif;
-    padding: 6px 15px;
-    background-color: ${(props) => {
-      return colorToBackgroundColor[props.color] || COLORS.white;
-    }} !important;
-
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }};
-    color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryBlue;
-    }} !important;
-
-    border-radius: 40px;
-
-    @media (hover: hover) {
-      &:hover {
-        cursor: pointer;
-        background-color: ${(props) => {
-          return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
-        }} !important;
-
-        color: ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryBlue;
-        }} !important;
-
-        border: 0.5px solid
-          ${(props) => {
-            return colorToHoverColor[props.color] || COLORS.primaryBlue;
-          }};
-      }
-    }
-  }
-
-  &.custom-secondary-inverted {
-    font-family: Poppins, sans-serif;
-    padding: 6px 15px;
-    color: white;
-
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }};
-    background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryBlue;
-    }} !important;
-
-    border-radius: 40px;
-
-    @media (hover: hover) {
-      &:hover {
-        cursor: pointer;
-        background-color: white !important;
-        color: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryBlue;
-        }} !important;
-      }
-    }
-  }
-
-  &.disabled {
-    border-color: ${COLORS.gray} !important;
-    color: ${COLORS.mediumGray} !important;
-    background-color: ${COLORS.lightGray} !important;
-
-    @media (hover: hover) {
-      &:hover {
-        color: ${COLORS.mediumGray} !important;
-        background-color: ${COLORS.lightGray} !important;
-        cursor: default !important;
-      }
-    }
-  }
-
-  &.small {
-    :not(.rounded) {
-      padding: 10px 10px !important;
-    }
-    font-size: 13px;
-    line-height: 16px;
-  }
-
-  &.rounded {
-    border-radius: 50%;
-    padding: 11px !important;
-  }
-`;
-
-export const StyledButton = styled.button`
-  ${ButtonStyle}
 `;
 
 export const StyledButtonMock = styled.div`
-  ${ButtonStyle}
+  ${StyledButton}
 `;
 
 export const StyledCenteredButtonContainer = styled.div`

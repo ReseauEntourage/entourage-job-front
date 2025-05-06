@@ -1,19 +1,16 @@
 import React from 'react';
-import UIkit from 'uikit';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon/ButtonIcon';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
+import { ButtonIcon } from 'src/components/utils';
 import { LucidIcon } from './Icons/LucidIcon';
 
-interface HamburgerProps {
-  targetId: string;
+export interface HamburgerProps {
+  onClick: () => void;
 }
 
-export const Hamburger = ({ targetId }: HamburgerProps) => {
+export const Hamburger = ({ onClick }: HamburgerProps) => {
   return (
     <ButtonIcon
-      onClick={() => {
-        UIkit.offcanvas(`#${targetId}`).show();
-      }}
+      onClick={onClick}
       icon={<LucidIcon name="Menu" size={30} color={COLORS.white} />}
     />
   );

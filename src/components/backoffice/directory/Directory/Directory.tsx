@@ -10,7 +10,7 @@ import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -62,9 +62,7 @@ export function Directory() {
           <StyledHeaderDirectory>
             <HeaderBackoffice
               title="Bienvenue sur votre réseau"
-              description={
-                "Découvrez les membres de la communauté et développez votre carnet d'adresse."
-              }
+              description="Découvrez les membres de la communauté et développez votre carnet d'adresse."
               noSeparator
             />
             <SearchBar
@@ -82,17 +80,18 @@ export function Directory() {
                 <StyledDirectoryButtonContainer isMobile={isMobile}>
                   <Button
                     size={isMobile ? 'small' : 'large'}
-                    style={`custom-secondary${
-                      isRoleIncluded([USER_ROLES.CANDIDATE], role)
-                        ? '-inverted'
-                        : ''
-                    }`}
+                    variant={
+                      isRoleIncluded([UserRoles.CANDIDATE], role)
+                        ? 'primary'
+                        : 'secondary'
+                    }
+                    rounded
                     onClick={() => {
                       push({
                         pathname: route,
                         query: {
                           ...directoryFiltersParams,
-                          role: [USER_ROLES.CANDIDATE],
+                          role: [UserRoles.CANDIDATE],
                         },
                       });
                     }}
@@ -101,17 +100,17 @@ export function Directory() {
                   </Button>
                   <Button
                     size={isMobile ? 'small' : 'large'}
-                    style={`custom-secondary${
-                      isRoleIncluded([USER_ROLES.COACH], role)
-                        ? '-inverted'
-                        : ''
-                    }`}
+                    variant={
+                      isRoleIncluded([UserRoles.COACH], role)
+                        ? 'primary'
+                        : 'secondary'
+                    }
                     onClick={() => {
                       push({
                         pathname: route,
                         query: {
                           ...directoryFiltersParams,
-                          role: USER_ROLES.COACH,
+                          role: UserRoles.COACH,
                         },
                       });
                     }}

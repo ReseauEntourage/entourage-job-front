@@ -8,7 +8,7 @@ import {
   CREATE_NEW_ORGANIZATION_VALUE,
   formAddUser,
 } from 'src/components/forms/schemas/formAddUser';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { Action, ActionsLabels } from 'src/constants/utils';
 import { usePrevious } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
@@ -85,7 +85,7 @@ export function useOnMemberFormSubmit(
                 userToLinkId: fields.userToLinkId.value,
               }
             : {}),
-          ...(fields.role === USER_ROLES.ADMIN
+          ...(fields.role === UserRoles.ADMIN
             ? { adminRole: fields.adminRole }
             : {}),
           ...(organizationId ? { OrganizationId: organizationId } : {}),

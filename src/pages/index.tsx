@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUtm } from '../hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
@@ -15,6 +16,7 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
 const Index = () => {
+  useUtm();
   return (
     <Layout>
       <ImageTitle
@@ -31,7 +33,7 @@ const Index = () => {
           {
             label: 'Devenir candidat(e)',
             href: '/travailler',
-            style: 'custom-secondary-inverted',
+            variant: 'primary',
             dataTest: 'banner-cta',
             onClick: () => {
               gaEvent(GA_TAGS.HOME_BANNER_CANDIDAT_CLICK);
@@ -40,7 +42,7 @@ const Index = () => {
           {
             label: 'Devenir coach',
             href: '/aider',
-            style: 'custom-secondary',
+            variant: 'secondary',
             dataTest: 'banner-cta',
             onClick: () => {
               gaEvent(GA_TAGS.HOME_BANNER_COACH_CLICK);

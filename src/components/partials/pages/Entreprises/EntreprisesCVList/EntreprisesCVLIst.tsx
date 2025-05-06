@@ -10,7 +10,7 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-export const EntreprisesCVLIst = ({
+export const EntreprisesCVList = ({
   nbPublishedCVs,
 }: {
   nbPublishedCVs: number;
@@ -38,7 +38,8 @@ export const EntreprisesCVLIst = ({
       <StyledCenteredButtonContainer>
         <Button
           href={{ pathname: '/candidats', query: { employed: false } }}
-          style="custom-secondary-inverted"
+          variant="primary"
+          rounded
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_ALL_CV_CLICK);
           }}

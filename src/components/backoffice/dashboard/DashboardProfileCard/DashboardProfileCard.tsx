@@ -11,7 +11,7 @@ import {
   Text,
 } from 'src/components/utils';
 import { ProfileHelps } from 'src/constants/helps';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledDashboardCTAContainer,
@@ -63,7 +63,7 @@ export const DashboardProfileCard = () => {
       {userHelpField && (
         <StyledDashboardProfileCardHelps>
           <StyledDashboardProfileCardhelpsTitle>
-            Mes {contextualRole === USER_ROLES.CANDIDATE && 'besoins de '} coups
+            Mes {contextualRole === UserRoles.CANDIDATE && 'besoins de '} coups
             de pouce
           </StyledDashboardProfileCardhelpsTitle>
           {userHelpField.length > 0 ? (
@@ -91,7 +91,7 @@ export const DashboardProfileCard = () => {
         </StyledDashboardProfileCardHelps>
       )}
       <StyledDashboardCTAContainer>
-        <Button style="custom-secondary" href="/backoffice/parametres">
+        <Button variant="secondary" rounded href="/backoffice/parametres">
           Modifier
         </Button>
       </StyledDashboardCTAContainer>

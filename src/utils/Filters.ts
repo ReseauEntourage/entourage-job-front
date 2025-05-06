@@ -1,37 +1,21 @@
 import _ from 'lodash';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export const mutateTypeFilterDependingOnRole = (
-  role: UserRole | UserRole[]
+  role: UserRoles | UserRoles[]
 ) => {
-  if (role === USER_ROLES.COACH) {
+  if (role === UserRoles.COACH) {
     return [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]];
   }
-  if (role === USER_ROLES.CANDIDATE) {
+  if (role === UserRoles.CANDIDATE) {
     return [...MEMBER_FILTERS_DATA];
   }
-  if (role === USER_ROLES.REFERER) {
+  if (role === UserRoles.REFERER) {
     return [MEMBER_FILTERS_DATA[0]];
   }
 
   return MEMBER_FILTERS_DATA;
-};
-
-export const getOpportunityUserFromOffer = (offer, candidateId) => {
-  let opportunityUser;
-  if (
-    offer.opportunityUsers &&
-    Array.isArray(offer.opportunityUsers) &&
-    offer.opportunityUsers.length > 0
-  ) {
-    opportunityUser = offer.opportunityUsers.find((oppUser) => {
-      return oppUser.UserId === candidateId;
-    });
-  } else {
-    opportunityUser = offer.opportunityUsers;
-  }
-  return opportunityUser;
 };
 
 export const filtersToQueryParams = (filters) => {

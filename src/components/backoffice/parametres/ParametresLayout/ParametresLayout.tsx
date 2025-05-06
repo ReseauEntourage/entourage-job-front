@@ -6,7 +6,7 @@ import {
 import { useConfirmationToaster } from '../useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile';
 import { Card, Section } from 'src/components/utils';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
@@ -52,11 +52,11 @@ export const ParametresLayout = () => {
             {/* Informations Personnelles */}
             <UserInformationCard title="Informations personnelles" />
             {/* Télécharger mon CV */}
-            {user.role === USER_ROLES.CANDIDATE && user.candidat && (
+            {user.role === UserRoles.CANDIDATE && user.candidat && (
               <ExternalCVCard dataTestId="external-cv-card-params" />
             )}
             {/* Préférences du CV */}
-            {user.role === USER_ROLES.CANDIDATE && user.candidat && (
+            {user.role === UserRoles.CANDIDATE && user.candidat && (
               <Card title="Préférences du CV" isMobileClosable>
                 <CVPreferences
                   userRole={user.role}
@@ -72,7 +72,7 @@ export const ParametresLayout = () => {
             className={`${isDesktop ? '' : 'mobile'}`}
           >
             {isRoleIncluded(
-              [USER_ROLES.COACH, USER_ROLES.CANDIDATE],
+              [UserRoles.COACH, UserRoles.CANDIDATE],
               user.role
             ) && (
               <>
@@ -82,7 +82,7 @@ export const ParametresLayout = () => {
               </>
             )}
             {isRoleIncluded(
-              [USER_ROLES.COACH, USER_ROLES.CANDIDATE, USER_ROLES.REFERER],
+              [UserRoles.COACH, UserRoles.CANDIDATE, UserRoles.REFERER],
               user.role
             ) && <DeleteAccountCard />}
           </StyledParametresRightColumn>

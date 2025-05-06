@@ -6,17 +6,12 @@ import { CV } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
-import { openModal } from 'src/components/modals/Modal';
-import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { FilterObject } from 'src/constants/utils';
 import { usePrevious } from 'src/hooks/utils';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
 import { filtersToQueryParams } from 'src/utils/Filters';
 
 const NoCVInThisArea = () => {
@@ -29,9 +24,9 @@ const NoCVInThisArea = () => {
         isExternal
         target="_blank"
         className="uk-link-text uk-text-primary"
-        href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
+        href={`mailto:${process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}`}
       >
-        {process.env.MAILJET_CONTACT_EMAIL}
+        {process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}
       </SimpleLink>
     </p>
   );
@@ -137,7 +132,7 @@ export const CVList = ({
                   url={cv.user.url}
                   imgSrc={
                     (cv.urlImg &&
-                      `${process.env.AWSS3_CDN_URL}/${cv.urlImg}`) ||
+                      `${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${cv.urlImg}`) ||
                     undefined
                   }
                   firstName={cv.user.candidat.firstName}
@@ -150,7 +145,7 @@ export const CVList = ({
           {!nb && (
             <div className="uk-flex uk-flex-center uk-margin-top">
               <Button
-                style="custom-primary"
+                variant="primary"
                 onClick={() => {
                   setNbOfCVToDisplay((prevNbOfCV) => {
                     return prevNbOfCV + INITIAL_NB_OF_CV_TO_DISPLAY;
@@ -159,10 +154,7 @@ export const CVList = ({
               >
                 Voir plus
                 {loadingMore ? (
-                  <div
-                    style={{ color: COLORS.primaryBlue }}
-                    data-uk-spinner="ratio: .6"
-                  />
+                  <div style={{ color: COLORS.primaryBlue }} />
                 ) : (
                   <LucidIcon name="Plus" />
                 )}
@@ -192,24 +184,6 @@ export const CVList = ({
               Nous n’avons aucun résultat pour votre recherche. Voici d’autres
               candidats dans la zone géographique sélectionnée qui pourraient
               correspondre.
-            </p>
-            <p className="uk-text-center uk-text-italic uk-margin-medium-bottom">
-              Vous êtes recruteur&nbsp;?{' '}
-              <a
-                style={{
-                  textDecoration: 'underline',
-                }}
-                className="uk-link-text"
-                onClick={() => {
-                  gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
-                  fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                  openModal(<PostPublicOpportunityModal />);
-                }}
-              >
-                Publier une offre d’emploi
-              </a>{' '}
-              qui sera visible par tous les candidats Entourage Pro, certains
-              pourraient être intéressés&nbsp;!{' '}
             </p>
             {renderCvList(cvs)}
           </div>

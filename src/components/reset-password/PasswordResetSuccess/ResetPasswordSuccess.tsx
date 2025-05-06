@@ -29,7 +29,8 @@ export const ResetPasswordSuccess = () => {
           </Text>
           <StyledResetPasswordButtonContainer>
             <Button
-              style="custom-primary"
+              variant="primary"
+              rounded
               onClick={async () => {
                 await push('/login');
               }}

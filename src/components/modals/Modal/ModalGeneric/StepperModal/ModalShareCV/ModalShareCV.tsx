@@ -79,7 +79,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                     close();
                   }}
                   href={EXTERNAL_LINKS.ENTOURAGE}
-                  style="primary"
+                  variant="primary"
                 >
                   En savoir plus
                   <LucidIcon name="ChevronRight" />
@@ -88,7 +88,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
 
               <div className="uk-margin-medium-top uk-flex uk-flex-right">
                 <Button
-                  style="default"
+                  variant="default"
                   onClick={() => {
                     return close();
                   }}

@@ -1,9 +1,9 @@
 import { HeaderConnectedMainItem, NotifBadges } from '../HeaderConnected.types';
-import { UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export interface HeaderConnectedContentProps {
   links?: {
-    [K in UserRole]: HeaderConnectedMainItem[];
+    [K in UserRoles]: HeaderConnectedMainItem[];
   };
   dropdown: HeaderConnectedMainItem[];
   messaging: HeaderConnectedMainItem;

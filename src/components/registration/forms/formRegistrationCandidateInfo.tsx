@@ -134,13 +134,6 @@ export const formRegistrationCandidateInfo: FormSchema<{
       component: 'heading',
     },
     {
-      id: 'networkInsecuritySubLabel',
-      name: 'networkInsecurityLabel',
-      component: 'text',
-      title:
-        'Est-ce que des amis ou des personnes que vous connaissez peuvent vous aider à trouver un travail ?',
-    },
-    {
       id: 'networkInsecurity',
       name: 'networkInsecurity',
       component: 'radio',

@@ -4,7 +4,7 @@ import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { BUSINESS_LINES } from 'src/constants';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface userProfileParamsToCheck {
@@ -12,16 +12,16 @@ interface userProfileParamsToCheck {
   networkBusinessLines: { name: string }[] | null;
   searchAmbitions: { name: string; order: number }[] | null;
   searchBusinessLines: { name: string; order: number }[] | null;
-  role: UserRole;
+  role: UserRoles;
 }
 
 export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
   return (
-    (userProfile.role === USER_ROLES.COACH &&
+    (userProfile.role === UserRoles.COACH &&
       (!!userProfile?.currentJob ||
         (!!userProfile?.networkBusinessLines &&
           userProfile.networkBusinessLines?.length > 0))) ||
-    (userProfile.role === USER_ROLES.CANDIDATE &&
+    (userProfile.role === UserRoles.CANDIDATE &&
       ((!!userProfile?.searchAmbitions &&
         userProfile.searchAmbitions?.length > 0) ||
         (!!userProfile?.searchBusinessLines &&

@@ -4,7 +4,7 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -21,7 +21,7 @@ export const CandidatHeader = ({
   const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (user.role === USER_ROLES.COACH) {
+    if (user.role === UserRoles.COACH) {
       const cand = user.coaches?.find(
         ({ candidat }) => candidat.id === candidateId
       );
@@ -30,7 +30,7 @@ export const CandidatHeader = ({
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         cand?.url
       );
-    } else if (isRoleIncluded([USER_ROLES.REFERER], user.role)) {
+    } else if (isRoleIncluded([UserRoles.REFERER], user.role)) {
       const cand = user.referredCandidates?.find(
         ({ candidat }) => candidat.id === candidateId
       );
@@ -75,7 +75,7 @@ export const CandidatHeader = ({
                   href={`/cv/${candidateCVUrl}`}
                 >
                   <span>
-                    {process.env.SERVER_URL}/cv/{candidateCVUrl}
+                    {process.env.NEXT_PUBLIC_SERVER_URL}/cv/{candidateCVUrl}
                   </span>
                 </SimpleLink>
               </Grid>

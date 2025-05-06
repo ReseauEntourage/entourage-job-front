@@ -19,7 +19,7 @@ import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { gaEvent } from 'src/lib/gtag';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -130,9 +130,7 @@ export const HeaderProfileMobile = ({
                 />
                 <Tag
                   content={
-                    role === USER_ROLES.ADMIN
-                      ? USER_ROLES.ADMIN
-                      : contextualRole
+                    role === UserRoles.ADMIN ? UserRoles.ADMIN : contextualRole
                   }
                   style="secondary"
                 />
@@ -166,7 +164,8 @@ export const HeaderProfileMobile = ({
                   <Button
                     id="nav-cv-button"
                     size="small"
-                    style="custom-secondary"
+                    variant="secondary"
+                    rounded
                     onClick={openCv}
                   >
                     Voir le CV
@@ -177,7 +176,8 @@ export const HeaderProfileMobile = ({
                       <Button
                         id="nav-cv-button"
                         size="small"
-                        style="custom-secondary"
+                        variant="secondary"
+                        rounded
                       >
                         Voir le CV{' '}
                         {hasTwoCv && <LucidIcon name="ChevronDown" />}
@@ -199,7 +199,7 @@ export const HeaderProfileMobile = ({
         )}
         {displayMessageButton && (
           <div>
-            <Button onClick={openConversation} style="custom-primary-inverted">
+            <Button onClick={openConversation} variant="secondary" rounded>
               Envoyer un message
             </Button>
           </div>

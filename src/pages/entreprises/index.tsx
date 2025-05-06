@@ -1,14 +1,14 @@
 import React from 'react';
+import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
-import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
-import { EntreprisesCVLIst } from 'src/components/partials/pages/Entreprises/EntreprisesCVList';
+import { EntreprisesCVList } from 'src/components/partials/pages/Entreprises/EntreprisesCVList';
 import { EntreprisesEnSavoirPlus } from 'src/components/partials/pages/Entreprises/EntreprisesEnSavoirPlus';
 import { EntreprisesTextImage } from 'src/components/partials/pages/Entreprises/EntreprisesTextImages';
 import { HowToCommitDifferently } from 'src/components/partials/pages/Entreprises/HowToCommitDifferently';
@@ -69,9 +69,10 @@ const reviews = [
 ];
 
 const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
+  useUtm();
   useMount(() => {
     const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
-    if (process.env.SHOW_POPUP === 'true' && !taxModalClosed) {
+    if (process.env.NEXT_PUBLIC_SHOW_POPUP === 'true' && !taxModalClosed) {
       setTimeout(() => {
         openModal(<TaxModal />);
       }, 1500);
@@ -101,21 +102,8 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             },
-            style: 'custom-secondary-inverted',
+            variant: 'primary',
             label: 'Nous contacter',
-          },
-          {
-            dataTest: 'button-offer-company-header',
-            style: 'custom-secondary',
-            isExternal: false,
-            newTab: false,
-            onClick: () => {
-              gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
-              fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-              // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
-              openModal(<PostPublicOpportunityModal />);
-            },
-            label: 'Créer une offre',
           },
         ]}
       />
@@ -124,7 +112,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
       <EntreprisesTextImage element="quoi" />
       <EntreprisesTextImage element="qui" />
 
-      <EntreprisesCVLIst nbPublishedCVs={nbPublishedCVs} />
+      <EntreprisesCVList nbPublishedCVs={nbPublishedCVs} />
 
       <Impact
         as="Company"

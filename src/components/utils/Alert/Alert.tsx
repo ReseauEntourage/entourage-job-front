@@ -1,6 +1,6 @@
 import React from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
-import { ButtonIcon } from '../ButtonIcon';
+import { ButtonIcon } from '../Button';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledAlert, StyledAlertContainer } from './Alert.styles';
 import { AlertProps, AlertVariant } from './Alert.types';
