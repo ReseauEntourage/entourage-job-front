@@ -33,6 +33,6 @@ export const Primary = {
 
 export const Secondary = {
   args: {
-    variant: 'primary',
+    variant: 'secondary',
   },
 };
