@@ -35,7 +35,10 @@ export const MessagingConversationListItem = ({
 
   const lastMessage = conversation.messages[0];
 
-  const hasUnreadMessages = conversationHasUnreadMessages(conversation);
+  const hasUnreadMessages = conversationHasUnreadMessages(
+    conversation,
+    currentUserId
+  );
   const shouldHighlightConversation =
     hasUnreadMessages || conversation.shouldGiveFeedback;
 
@@ -64,7 +67,16 @@ export const MessagingConversationListItem = ({
           )}
           <p>{moment(lastMessage.createdAt).format('DD/MM/YYYY')}</p>
         </MainInfos>
-        <p className="preview-last-message">{lastMessage.content}</p>
+        {lastMessage.content && (
+          <p className="preview-last-message">{lastMessage.content}</p>
+        )}
+        {!lastMessage.content && lastMessage.medias && (
+          <p className="preview-last-message">
+            {lastMessage.author.firstName} {lastMessage.author.lastName} a
+            envoyé {lastMessage.medias.length} fichier
+            {lastMessage.medias.length > 1 ? 's' : ''}
+          </p>
+        )}
       </RightColumn>
     </ContainerStyled>
   );
