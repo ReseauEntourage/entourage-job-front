@@ -72,8 +72,8 @@ export const MessagingConversationListItem = ({
         )}
         {!lastMessage.content && lastMessage.medias && (
           <p className="preview-last-message">
-            {lastMessage.author.firstName} {lastMessage.author.lastName} a
-            envoyé {lastMessage.medias.length} fichier
+            {lastMessage.author.firstName} a envoyé {lastMessage.medias.length}{' '}
+            fichier
             {lastMessage.medias.length > 1 ? 's' : ''}
           </p>
         )}
