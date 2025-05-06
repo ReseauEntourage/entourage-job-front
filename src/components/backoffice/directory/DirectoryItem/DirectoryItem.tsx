@@ -3,13 +3,13 @@ import { UserProfileNudge, UserProfileSectorOccupation } from 'src/api/types';
 import { CardListItem } from 'src/components/utils/CardList';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { Department } from 'src/constants/departements';
-import { UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 interface DirectoryItemProps {
   id: string;
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: UserRoles;
   userProfileNudges?: UserProfileNudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   department: Department;

@@ -6,7 +6,7 @@ import {
   UnavailabilityReason,
   UnavailabilityReasons,
 } from 'src/constants/unavailabilityReasons';
-import { NormalUserRole, USER_ROLES, UserRole } from 'src/constants/users';
+import { NormalUserRoles, UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 interface FormFeedbackSchema extends FormSchemaValidation {
@@ -15,11 +15,11 @@ interface FormFeedbackSchema extends FormSchemaValidation {
 }
 
 export const FeedbackOptions: {
-  [K in NormalUserRole]: (FilterConstant<UnavailabilityReason> & {
+  [K in NormalUserRoles]: (FilterConstant<UnavailabilityReason> & {
     inputId: string;
   })[];
 } = {
-  [USER_ROLES.COACH]: [
+  [UserRoles.COACH]: [
     {
       value: UnavailabilityReasons.ALREADY_FULL,
       label: 'Je suis en lien avec suffisamment de candidat.e.s',
@@ -41,7 +41,7 @@ export const FeedbackOptions: {
       inputId: `radio-input-${UnavailabilityReasons.NO_MORE_HELP}`,
     },
   ],
-  [USER_ROLES.CANDIDATE]: [
+  [UserRoles.CANDIDATE]: [
     {
       value: UnavailabilityReasons.ALREADY_FULL,
       label: 'J’ai assez d’échanges avec des coachs pour le moment',
@@ -67,7 +67,7 @@ export const FeedbackOptions: {
 };
 
 export const formFeedback = (
-  role: UserRole
+  role: UserRoles
 ): FormSchema<FormFeedbackSchema> => {
   const options = FeedbackOptions[role];
   return {

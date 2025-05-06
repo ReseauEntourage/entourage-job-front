@@ -4,7 +4,7 @@ import { UserProfileNudge } from '@/src/api/types';
 import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Button, Text } from 'src/components/utils';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { StyledItem } from './ProfileCustomNudges.styles';
 
 export interface KeySkillsProps {
@@ -12,7 +12,7 @@ export interface KeySkillsProps {
   ownProfile?: boolean;
   isEditable?: boolean;
   firstName: string;
-  role: UserRole;
+  role: UserRoles;
   userProfileNudges: UserProfileNudge[];
   smallCard?: boolean;
 }
@@ -39,10 +39,10 @@ export const ProfileCustomNudges = ({
   };
 
   const title = useMemo(() => {
-    if (ownProfile && role === USER_ROLES.CANDIDATE) {
+    if (ownProfile && role === UserRoles.CANDIDATE) {
       return 'Détaillez vos besoins';
     }
-    return role === USER_ROLES.CANDIDATE
+    return role === UserRoles.CANDIDATE
       ? `Demandes de ${firstName}`
       : 'Détaillez vos offres';
   }, [firstName, role, ownProfile]);

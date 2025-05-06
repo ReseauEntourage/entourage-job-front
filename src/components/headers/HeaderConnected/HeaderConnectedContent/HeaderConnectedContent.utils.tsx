@@ -3,7 +3,7 @@ import { HeaderConnectedMainItem } from '../HeaderConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
 
 const rolesToParams = (roles) => {
@@ -14,15 +14,15 @@ const rolesToParams = (roles) => {
     .join('')}`;
 };
 
-const candidateRolesParams = rolesToParams([USER_ROLES.CANDIDATE]);
-const coachRolesParams = rolesToParams([USER_ROLES.COACH]);
-const refererRolesParams = rolesToParams([USER_ROLES.REFERER]);
+const candidateRolesParams = rolesToParams([UserRoles.CANDIDATE]);
+const coachRolesParams = rolesToParams([UserRoles.COACH]);
+const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
 export const renderLinks = (
   user: UserWithUserCandidate,
   logout: () => void
 ): {
-  links: { [K in UserRole]: HeaderConnectedMainItem[] };
+  links: { [K in UserRoles]: HeaderConnectedMainItem[] };
   messaging: HeaderConnectedMainItem;
   dropdown: HeaderConnectedMainItem[];
 } => {
@@ -54,7 +54,7 @@ export const renderLinks = (
 
   return {
     links: {
-      [USER_ROLES.ADMIN]: [
+      [UserRoles.ADMIN]: [
         {
           href: '/backoffice/admin/membres',
           queryParams: `?${candidateRolesParams}${
@@ -104,8 +104,8 @@ export const renderLinks = (
           name: "Réseau d'entraide",
         },
       ],
-      [USER_ROLES.CANDIDATE]: candidateHeaderItems,
-      [USER_ROLES.COACH]: [
+      [UserRoles.CANDIDATE]: candidateHeaderItems,
+      [UserRoles.COACH]: [
         {
           href: '/backoffice/dashboard',
           name: 'Mon espace',
@@ -131,7 +131,7 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
-      [USER_ROLES.REFERER]: [
+      [UserRoles.REFERER]: [
         {
           href: '/backoffice/dashboard',
           name: 'Mon espace',

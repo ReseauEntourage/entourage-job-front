@@ -1,5 +1,5 @@
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
-import { RegistrableUserRole } from 'src/constants/users';
+import { RegistrableUserRoles } from 'src/constants/users';
 import {
   FlattenedRegistrationFormData,
   RegistrationStep,
@@ -8,7 +8,7 @@ import {
 
 export const flattenRegistrationDataByRole = (
   data: RegistrationStepData,
-  selectedRole: RegistrableUserRole
+  selectedRole: RegistrableUserRoles
 ): FlattenedRegistrationFormData => {
   const allSteps: RegistrationStep[] = Object.keys(data) as RegistrationStep[];
 

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { UserRoles } from '@/src/constants/users';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { UserProfileSectorOccupation } from 'src/api/types';
@@ -13,7 +14,6 @@ import { formEditCoachProfessionalInformation } from 'src/components/forms/schem
 import { openModal } from 'src/components/modals/Modal';
 import { Text } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formatCareerPathSentence } from 'src/utils';
 
@@ -36,7 +36,7 @@ export const ProfilePersonalInformations = ({
   const editModal = useCallback(() => {
     if (!userProfile) return;
     openModal(
-      role === USER_ROLES.COACH ? (
+      role === UserRoles.COACH ? (
         <ModalEditProfessionalInformation
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""

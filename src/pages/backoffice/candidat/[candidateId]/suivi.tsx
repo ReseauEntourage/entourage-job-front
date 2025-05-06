@@ -9,7 +9,7 @@ import { Button, Grid, Section } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 
 import { TextArea } from 'src/components/utils/Inputs';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { usePrevious } from 'src/hooks/utils';
@@ -26,7 +26,7 @@ const Suivi = () => {
   const dispatch = useDispatch();
 
   const title =
-    user.role === USER_ROLES.CANDIDATE
+    user.role === UserRoles.CANDIDATE
       ? 'Suivez votre progression'
       : `Suivi du candidat - ${`${
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
@@ -36,7 +36,7 @@ const Suivi = () => {
           userCandidat?.candidat?.lastName
         }`}`;
   const description =
-    user.role === USER_ROLES.CANDIDATE
+    user.role === UserRoles.CANDIDATE
       ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
       : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
 
@@ -80,7 +80,7 @@ const Suivi = () => {
 
   const sendNoteHasBeenRead = useCallback(async () => {
     if (
-      user.role !== USER_ROLES.ADMIN &&
+      user.role !== UserRoles.ADMIN &&
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       userCandidat?.candidat?.id
     ) {
@@ -126,7 +126,7 @@ const Suivi = () => {
       <div className="uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold">
           <span className="uk-text-primary">
-            {user.role === USER_ROLES.COACH
+            {user.role === UserRoles.COACH
               ? 'Aucun candidat'
               : 'Aucun bénévole coach'}
           </span>{' '}
