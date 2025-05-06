@@ -12,7 +12,7 @@ const buttonStyles = {
   backgroundColor: {
     default: COLORS.white,
     primary: COLORS.primaryBlue,
-    secondary: COLORS.transparent,
+    secondary: COLORS.white,
   },
   color: {
     default: COLORS.black,
@@ -21,18 +21,18 @@ const buttonStyles = {
   },
   hoverBackgroundColor: {
     default: COLORS.hoverWhite,
-    primary: COLORS.white,
-    secondary: COLORS.primaryBlue,
+    primary: COLORS.darkBlue,
+    secondary: COLORS.hoverBlue,
   },
   hoverColor: {
     default: COLORS.primaryBlue,
-    primary: COLORS.primaryBlue,
-    secondary: COLORS.white,
+    primary: COLORS.white,
+    secondary: COLORS.primaryBlue,
   },
   hoverBorder: {
     default: COLORS.primaryBlue,
-    primary: COLORS.primaryBlue,
-    secondary: COLORS.white,
+    primary: COLORS.darkBlue,
+    secondary: COLORS.primaryBlue,
   },
 };
 
