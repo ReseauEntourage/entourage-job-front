@@ -33,7 +33,7 @@ import {
 } from './HeaderProfile.styles';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
-import { ProfileDescription } from './ProfileDescription';
+import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 64;
@@ -46,7 +46,7 @@ export interface HeaderProfileProps {
   lastName: string;
   role: UserRole;
   department: Department;
-  description?: string;
+  introduction?: string;
 
   // Only for own profile
   phone?: string;
@@ -61,7 +61,7 @@ export const HeaderProfileMobile = ({
   lastName,
   role,
   department,
-  description,
+  introduction,
   phone,
   email,
   driverLicenses,
@@ -160,8 +160,8 @@ export const HeaderProfileMobile = ({
             <UserActions userId={id} openDirection="right" />
           </StyledHeaderAvailibilityAndUserActions>
 
-          {shouldShowAllProfile && description && (
-            <ProfileDescription description={description} />
+          {shouldShowAllProfile && introduction && (
+            <ProfileIntroduction introduction={introduction} />
           )}
 
           {ownProfile && isEditable && (

@@ -37,7 +37,7 @@ export const Profile = () => {
         lastName={selectedProfile.lastName}
         role={selectedProfile.role}
         department={selectedProfile.department}
-        description={selectedProfile.description}
+        introduction={selectedProfile.introduction}
       />
 
       <Section className="custom-page">

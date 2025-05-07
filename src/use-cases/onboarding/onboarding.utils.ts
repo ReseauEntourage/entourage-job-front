@@ -54,7 +54,7 @@ export const parseOnboadingProfileFields = (
   businessSectorIds?: string[];
 } => {
   return {
-    description: fields.description ?? undefined,
+    introduction: fields.introduction ?? undefined,
     linkedinUrl: fields.linkedinUrl ?? undefined,
     currentJob: fields.currentJob ? fields.currentJob : undefined,
     businessSectorIds:
