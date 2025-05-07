@@ -1,4 +1,5 @@
 import React from 'react';
+import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledCloseButton } from './CloseButton.styles';
 
 interface CloseButtonProps {
@@ -19,6 +20,8 @@ export const CloseButton = ({
       aria-label="close"
       onClick={onClick}
       data-testid={dataTestId}
-    />
+    >
+      <LucidIcon name="X" size={25} />
+    </StyledCloseButton>
   );
 };
