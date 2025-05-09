@@ -5,6 +5,7 @@ import { COLORS } from 'src/constants/styles';
 export const StyledCheckbox = styled.div`
   ${() => commonInputContainerStyles}
   justify-content: center;
+  margin-bottom: 15px;
   .checkbox-label {
     display: flex;
     align-items: center;

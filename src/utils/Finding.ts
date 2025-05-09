@@ -1,10 +1,10 @@
 import _ from 'lodash';
+import { UserRoles } from '../constants/users';
 import {
   User,
   UserCandidateWithUsers,
   UserWithUserCandidate,
 } from 'src/api/types';
-import { USER_ROLES, UserRole } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export function findConstantFromValue<T extends FilterConstant>(
@@ -42,8 +42,8 @@ export function getValueFromFormField<T extends string | number | boolean>(
 }
 
 export function isRoleIncluded(
-  superset: readonly UserRole[],
-  subset: UserRole | UserRole[]
+  superset: UserRoles | UserRoles[],
+  subset: UserRoles | UserRoles[]
 ): boolean {
   if (!Array.isArray(subset)) {
     return _.difference([subset], superset).length === 0;
@@ -55,11 +55,11 @@ export function getUserCandidateFromCoachOrCandidate(
   member: UserWithUserCandidate
 ): UserCandidateWithUsers | UserCandidateWithUsers[] | null {
   if (member) {
-    if (member.role === USER_ROLES.CANDIDATE && !!member.candidat) {
+    if (member.role === UserRoles.CANDIDATE && !!member.candidat) {
       return member.candidat;
     }
 
-    if (member.role === USER_ROLES.COACH && !!member.coaches) {
+    if (member.role === UserRoles.COACH && !!member.coaches) {
       return member.coaches;
     }
   }
@@ -85,7 +85,7 @@ export function getRelatedUser(
 export function getCoachFromCandidate(
   candidate: UserWithUserCandidate
 ): UserWithUserCandidate | null {
-  if (candidate && candidate.role === USER_ROLES.CANDIDATE) {
+  if (candidate && candidate.role === UserRoles.CANDIDATE) {
     if (candidate.candidat && candidate.candidat.coach) {
       return candidate.candidat.coach;
     }
@@ -97,7 +97,7 @@ export function getUserCandidateFromCoach(
   coach: UserWithUserCandidate,
   candidateId: string
 ): UserCandidateWithUsers | null {
-  if (coach && coach.role === USER_ROLES.COACH) {
+  if (coach && coach.role === UserRoles.COACH) {
     if (coach.coaches && coach.coaches.length > 0) {
       const candidate = coach.coaches.find(({ candidat }) => {
         return candidat?.id === candidateId;
@@ -121,12 +121,12 @@ export function getCandidateIdFromCoachOrCandidate(
   member: UserWithUserCandidate
 ): string | string[] | null {
   if (member) {
-    if (member.role === USER_ROLES.CANDIDATE) {
+    if (member.role === UserRoles.CANDIDATE) {
       return member.id;
     }
 
     if (
-      member.role === USER_ROLES.COACH &&
+      member.role === UserRoles.COACH &&
       member.coaches &&
       member.coaches.length > 0
     ) {
