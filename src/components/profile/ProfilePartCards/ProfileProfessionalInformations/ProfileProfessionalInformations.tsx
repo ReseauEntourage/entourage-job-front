@@ -41,7 +41,7 @@ export const ProfileProfessionalInformations = ({
         {sectorOccupations.length > 0 && (
           <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
         )}
-        <Text>{description}</Text>
+        {description && <Text>{description}</Text>}
         <CardTagList items={skills} />
       </StyledContentContainer>
     </ProfilePartCard>
