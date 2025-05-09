@@ -27,7 +27,7 @@ const User = () => {
   const tab = useTab();
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user && (!prevUser || user.id !== prevUser.id)) {
       if (
         (user.role === UserRoles.COACH || user.role === UserRoles.REFERER) &&
         (!tab || tab !== MEMBER_TABS.PARAMETERS)
