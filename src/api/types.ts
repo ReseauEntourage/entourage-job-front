@@ -211,7 +211,7 @@ export type User = {
   gender: Genders;
   phone: string;
   address: string;
-  lastConnection: Date;
+  lastConnection: string;
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
@@ -299,6 +299,8 @@ export interface UserWithUserCandidate extends User {
   candidat?: UserCandidateWithUsers;
   coaches?: UserCandidateWithUsers[];
   referredCandidates?: UserCandidateWithUsers[];
+  averageDelayResponse?: number | null;
+  responseRate?: number | null;
 }
 
 export type UserDto = {
@@ -314,6 +316,7 @@ export type UserDto = {
   OrganizationId?: string;
   id?: string;
   userProfile?: UserProfile;
+  lastConnection?: string;
 };
 
 export type PutCandidate = {
@@ -556,6 +559,7 @@ export type PublicProfile = {
   lastReceivedMessage: string;
   cvUrl?: string;
   hasExternalCv: boolean;
+  averageDelayResponse: number | null;
 };
 
 export type PrivateProfile = PublicProfile & {

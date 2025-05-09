@@ -7,6 +7,7 @@ import {
 } from 'src/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
+  fetchCompleteUserAdapter,
   fetchUserAdapter,
   readDocumentAdapter,
   updateCandidateAdapter,
@@ -20,6 +21,10 @@ export const fetchUserSelectors = fetchUserAdapter.getSelectors<RootState>(
   (state) => state.currentUser.fetchUser
 );
 
+export const fetchUserCompleteSelectors =
+  fetchCompleteUserAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.fetchCompleteUser
+  );
 export const updateProfileSelectors =
   updateProfileAdapter.getSelectors<RootState>(
     (state) => state.currentUser.updateProfile
@@ -96,6 +101,10 @@ export function selectCandidateId(state: RootState): string | null {
     [candidateId] = candidateId;
   }
   return candidateId;
+}
+
+export function selectIsComplete(state: RootState): boolean {
+  return state.currentUser.complete;
 }
 
 // selects linked user if only one user is linked, otherwise sends first user of the list; if whole list needed, create new selector

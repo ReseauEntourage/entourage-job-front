@@ -57,7 +57,7 @@ export const ProfileFormations = ({
       fallback={fallback}
       ctaTitle={
         !isOwnProfile && !isCompleted
-          ? `Accompagner ${userFirstName} dans la valorisation de ses expériences`
+          ? `Accompagner ${userFirstName} dans la valorisation de ses formations`
           : undefined
       }
       ctaCallback={

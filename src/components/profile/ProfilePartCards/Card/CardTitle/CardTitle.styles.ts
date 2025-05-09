@@ -15,4 +15,5 @@ export const StyledIconContainer = styled.div<{ isCompleted: boolean }>`
 export const StyledCardTitle = styled.div`
   display: flex;
   gap: 10px;
+  cursor: pointer;
 `;

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
-  IlluCalendrier,
-  IlluDesktop,
   IlluDossierCandidat,
+  IlluOrdiCV,
   OrienterSablier,
 } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
@@ -20,36 +19,75 @@ const iconProps = {
   height: 50,
   color: COLORS.orangeSocial,
 };
-const stats = [
-  {
-    title: 'Taux de réponse',
-    value: '100%',
-    icon: <IlluDossierCandidat {...iconProps} />,
-  },
-  {
-    title: 'Dernière connexion',
-    value: 'il y a 2 jours',
-    icon: <IlluDesktop {...iconProps} />,
-  },
-  {
-    title: 'Temps de réponse',
-    value: 'Moins de 24h',
-    icon: <OrienterSablier {...iconProps} width={30} height={30} />,
-  },
-  {
-    title: 'Evénements',
-    value: '3 participations',
-    icon: <IlluCalendrier {...iconProps} />,
-  },
-];
 
 export interface ProfileStatsProps {
   smallCard?: boolean;
+  averageDelayResponse: number | null;
+  lastConnection: string;
+  responseRate: number | null;
 }
 
-export const ProfileStats = ({ smallCard }: ProfileStatsProps) => {
+interface StatItem {
+  title: string;
+  value: string;
+  icon: React.ReactNode;
+}
+
+export const ProfileStats = ({
+  smallCard,
+  averageDelayResponse,
+  lastConnection,
+  responseRate,
+}: ProfileStatsProps) => {
+  const relativeConnectionDateInDays = useMemo(() => {
+    if (!lastConnection) {
+      return null;
+    }
+    const lastConnectionDate = new Date(lastConnection);
+    return Math.floor(
+      (Date.now() - lastConnectionDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }, [lastConnection]);
+
+  const stats = useMemo(() => {
+    const list = [] as StatItem[];
+    if (responseRate !== null) {
+      list.push({
+        title: 'Taux de réponse',
+        value: `${responseRate}%`,
+        icon: <IlluDossierCandidat {...iconProps} />,
+      });
+    }
+    if (relativeConnectionDateInDays !== null) {
+      list.push({
+        title: 'Dernière connexion',
+        value:
+          relativeConnectionDateInDays === 0
+            ? "Aujourd'hui"
+            : `Il y'a ${relativeConnectionDateInDays} jour${
+                relativeConnectionDateInDays > 1 ? 's' : ''
+              }`,
+        icon: <IlluOrdiCV {...iconProps} />,
+      });
+    }
+    if (averageDelayResponse !== null) {
+      list.push({
+        title: 'Temps de réponse',
+        value: `Moins d${
+          averageDelayResponse > 1 ? 'e ' : "'"
+        }${averageDelayResponse} jour${averageDelayResponse > 1 ? 's' : ''}`,
+        icon: <OrienterSablier {...iconProps} width={25} height={25} />,
+      });
+    }
+    return list;
+  }, [averageDelayResponse, relativeConnectionDateInDays, responseRate]);
+
   return (
-    <ProfilePartCard title="Informations de connexion" smallCard={smallCard}>
+    <ProfilePartCard
+      title="Informations de connexion"
+      smallCard={smallCard}
+      isCompleted
+    >
       <StyledStatList>
         {stats.map((stat) => (
           <StyledStatItem key={stat.title}>

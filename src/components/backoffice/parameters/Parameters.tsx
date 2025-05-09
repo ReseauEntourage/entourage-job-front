@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import {
+  currentUserActions,
+  selectIsComplete,
+} from '@/src/use-cases/current-user';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
+import { LoadingScreen } from '../LoadingScreen';
 import { useConfirmationToaster } from '../parametres-old/useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
 import { ProfileChangePassword } from 'src/components/profile/ProfilePartCards/ProfileChangePassword/ProfileChangePassword';
@@ -22,7 +29,6 @@ import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileR
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
 import {
@@ -34,8 +40,19 @@ import {
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
+  const dispatch = useDispatch();
+  const userIsComplete = useSelector(selectIsComplete);
 
   useConfirmationToaster();
+
+  // Fetch the complete user if not already done
+  useEffect(() => {
+    if (!userIsComplete) {
+      dispatch(currentUserActions.fetchCompleteUserRequested());
+    }
+  }, [userIsComplete, dispatch]);
+
+  if (!user || !userIsComplete) return <LoadingScreen />;
 
   return (
     <StyledBackofficeBackground>
@@ -124,7 +141,12 @@ export const Parameters = () => {
                 smallCard
               />
               <ProfileNotificationsPreferences isEditable smallCard />
-              <ProfileStats smallCard />
+              <ProfileStats
+                smallCard
+                averageDelayResponse={user.averageDelayResponse || null}
+                responseRate={user.responseRate || null}
+                lastConnection={user.lastConnection}
+              />
               <ProfileChangePassword smallCard />
             </StyledParametersRightColumn>
           </StyledBackofficeGrid>

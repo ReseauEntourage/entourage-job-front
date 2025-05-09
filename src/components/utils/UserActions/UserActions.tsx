@@ -22,9 +22,7 @@ export function UserActions({
     const list = [
       {
         name: 'Editer mes informations',
-        handler: () => {
-          openModal(<ProfileReportUserModal userId={userId} />);
-        },
+        handler: () => {},
       },
     ];
     if (!ownProfile) {

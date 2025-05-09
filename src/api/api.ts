@@ -377,8 +377,8 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(): Promise<AxiosResponse> {
-    return this.get('/auth/current');
+  getAuthCurrent(complete = false): Promise<AxiosResponse> {
+    return this.get(`/auth/current${complete ? '?complete=true' : ''}`);
   }
 
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {
