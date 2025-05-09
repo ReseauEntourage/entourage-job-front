@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Api } from 'src/api';
 import { User as UserType } from 'src/api/types';
@@ -16,23 +15,10 @@ const User = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const { replace } = useRouter();
-
   const memberId = useMemberId();
   const prevMemberId = usePrevious(memberId);
 
   const tab = useTab();
-
-  useEffect(() => {
-    if (user && !tab) {
-      replace(
-        `/backoffice/admin/membres/${user.id}/${MEMBER_TABS.PARAMETERS}`,
-        undefined,
-        { shallow: true }
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const getUser = useCallback(() => {
     Api.getUserById(memberId)
