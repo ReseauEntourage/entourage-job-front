@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Api } from 'src/api';
 import { User as UserType } from 'src/api/types';
@@ -7,7 +6,6 @@ import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDet
 import { Grid, Section } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
-import { UserRoles } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useTab } from 'src/hooks/queryParams/useTab';
 import { usePrevious } from 'src/hooks/utils';
@@ -15,39 +13,12 @@ import { usePrevious } from 'src/hooks/utils';
 const User = () => {
   const [user, setUser] = useState<UserType>();
 
-  const prevUser = usePrevious(user);
-
   const [loading, setLoading] = useState(true);
-
-  const { replace } = useRouter();
 
   const memberId = useMemberId();
   const prevMemberId = usePrevious(memberId);
 
   const tab = useTab();
-
-  useEffect(() => {
-    if (user && user !== prevUser) {
-      if (
-        (user.role === UserRoles.COACH || user.role === UserRoles.REFERER) &&
-        (!tab || tab !== MEMBER_TABS.PARAMETERS)
-      ) {
-        replace(
-          `/backoffice/admin/membres/${user.id}/${MEMBER_TABS.PARAMETERS}`,
-          undefined,
-          {
-            shallow: true,
-          }
-        );
-      } else if (user.role === UserRoles.CANDIDATE) {
-        if (!tab) {
-          replace(`/backoffice/admin/membres/${user.id}/cv`, undefined, {
-            shallow: true,
-          });
-        }
-      }
-    }
-  }, [replace, tab, prevMemberId, user, prevUser, memberId]);
 
   const getUser = useCallback(() => {
     Api.getUserById(memberId)
