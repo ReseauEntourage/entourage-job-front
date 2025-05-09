@@ -126,7 +126,7 @@ export interface Formation {
 }
 
 export type Skill = {
-  id: string;
+  id?: string;
   name: string;
   order: number;
 };
