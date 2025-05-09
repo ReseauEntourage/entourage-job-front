@@ -1,5 +1,5 @@
 import { UserWithUserCandidate } from 'src/api/types';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export type MemberColumn =
   | 'associatedUser'
@@ -18,7 +18,7 @@ export type MemberColumn =
   | 'selection';
 
 export const MemberTableByRole = {
-  [USER_ROLES.CANDIDATE]: [
+  [UserRoles.CANDIDATE]: [
     'zone',
     'associatedUser',
     'lastConnection',
@@ -27,7 +27,7 @@ export const MemberTableByRole = {
     'cvHidden',
     'selection',
   ],
-  [USER_ROLES.COACH]: [
+  [UserRoles.COACH]: [
     'zone',
     'associatedUser',
     'lastConnection',
@@ -36,7 +36,7 @@ export const MemberTableByRole = {
     'cvHidden',
     'selection',
   ],
-  [USER_ROLES.REFERER]: [
+  [UserRoles.REFERER]: [
     'organization',
     'zone',
     'countRefered',
@@ -47,7 +47,7 @@ export const MemberTableByRole = {
 export interface MemberProps {
   columns: MemberColumn[];
   member: UserWithUserCandidate;
-  role: UserRole | UserRole[];
+  role: UserRoles | UserRoles[];
   selectionCallback?: (memberId: string) => void;
   isEditable?: boolean;
   setMember?: (user: UserWithUserCandidate) => void;

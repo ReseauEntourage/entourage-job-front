@@ -3,7 +3,7 @@ import { Text } from 'src/components/utils';
 import { Program, ProgramBullet, Programs } from 'src/constants/programs';
 import { SelectCard, SelectCardProps } from './SelectCard';
 
-// Cannot use ProgramOptions[USER_ROLES.CANDIDATE] because we switched to usinghg radio component
+// Cannot use ProgramOptions[UserRoles.CANDIDATE] because we switched to usinghg radio component
 // Keeping the story if we need it later
 const candidateProgramOptions = [
   {

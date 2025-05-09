@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { store } from 'src/store/store';
 import { ProfileCard, ProfileCardProps } from '.';
 
@@ -27,7 +27,7 @@ export const Candidate = {
     userId: uuid(),
     firstName: 'John',
     lastName: 'Doe',
-    role: USER_ROLES.CANDIDATE,
+    role: UserRoles.CANDIDATE,
     userProfileNudges: [
       {
         id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
@@ -66,7 +66,7 @@ export const Coach = {
     userId: uuid(),
     firstName: 'John',
     lastName: 'Doe',
-    role: USER_ROLES.COACH,
+    role: UserRoles.COACH,
     isAvailable: true,
     userProfileNudges: [
       {

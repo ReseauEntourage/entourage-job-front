@@ -8,7 +8,7 @@ import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { Department } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledHeaderAvailibilityAndUserActions,
@@ -34,7 +34,7 @@ export interface HeaderProfileProps {
   isAvailable: boolean;
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: UserRoles;
   department: Department;
   introduction?: string;
 
@@ -120,8 +120,8 @@ export const HeaderProfileDesktop = ({
                   </Text>
                   <Tag
                     content={
-                      role === USER_ROLES.ADMIN
-                        ? USER_ROLES.ADMIN
+                      role === UserRoles.ADMIN
+                        ? UserRoles.ADMIN
                         : contextualRole
                     }
                     size="small"

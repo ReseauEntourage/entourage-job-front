@@ -1,4 +1,5 @@
 import { HelpValue } from '@/src/constants/nudges';
+import { Genders } from '../constants/genders';
 import {
   OccupationsPrefixesType,
   CompanyApproach,
@@ -10,10 +11,9 @@ import {
 import { AdminZone, Department } from 'src/constants/departements';
 import { Program } from 'src/constants/programs';
 import {
-  AdminRole,
-  Gender,
-  RegistrableUserRole,
-  UserRole,
+  AdminRoles,
+  RegistrableUserRoles,
+  UserRoles,
 } from 'src/constants/users';
 
 export type SocialMedia =
@@ -216,11 +216,11 @@ export type User = {
   firstName: string;
   lastName: string;
   email: string;
-  role: UserRole;
-  adminRole: AdminRole;
+  role: UserRoles;
+  adminRole: AdminRoles;
   password: string;
   salt: string;
-  gender: Gender;
+  gender: Genders;
   phone: string;
   address: string;
   lastConnection: string;
@@ -259,7 +259,7 @@ export interface CV {
       phone: string;
       address: string;
       zone: AdminZone;
-      gender: Gender;
+      gender: Genders;
       id: string;
     };
     employed: boolean;
@@ -318,13 +318,13 @@ export interface UserWithUserCandidate extends User {
 export type UserDto = {
   firstName: string;
   lastName: string;
-  role: UserRole;
-  gender: Gender;
+  role: UserRoles;
+  gender: Genders;
   zone: AdminZone;
   phone: string;
   userToLinkId?: string;
   email: string;
-  adminRole?: AdminRole;
+  adminRole?: AdminRoles;
   OrganizationId?: string;
   id?: string;
   userProfile?: UserProfile;
@@ -347,7 +347,7 @@ export type UserRegistrationDto = {
   email: string;
   phone: string;
   password: string;
-  role: RegistrableUserRole;
+  role: RegistrableUserRoles;
   campaign?: string;
   department: Department;
   nudgeIds?: string[];
@@ -511,7 +511,7 @@ export type PublicProfile = {
   firstName: string;
   lastName: string;
   linkedinUrl?: string;
-  role: UserRole;
+  role: UserRoles;
   department: Department;
   currentJob: string;
   description: string;
@@ -542,7 +542,7 @@ export type PrivateProfile = PublicProfile & {
 export type Profile = PublicProfile | PrivateProfile;
 
 export type ProfilesFilters = {
-  role: UserRole[];
+  role: UserRoles[];
   search?: string;
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];

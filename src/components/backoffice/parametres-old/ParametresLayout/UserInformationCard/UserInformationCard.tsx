@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import React from 'react';
+import { GENDERS_FILTERS } from '@/src/constants/genders';
 import { Card } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
-import { GENDERS_FILTERS, USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { findConstantFromValue } from 'src/utils';
 import {
@@ -48,7 +49,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
             <>Numéro de téléphone non renseigné</>
           )}
         </li>
-        {user.role !== USER_ROLES.ADMIN && (
+        {user.role !== UserRoles.ADMIN && (
           <>
             <li>
               <LucidIcon name="MapPin" />
@@ -58,7 +59,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
                 <>Département non renseigné</>
               )}
             </li>
-            {user.role === USER_ROLES.CANDIDATE && (
+            {user.role === UserRoles.CANDIDATE && (
               <li>
                 <LucidIcon name="House" />
                 {user.address ? (
@@ -70,7 +71,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
             )}
           </>
         )}
-        {user.role === USER_ROLES.ADMIN && (
+        {user.role === UserRoles.ADMIN && (
           <StyledUserInformationCardTags>
             <Tag
               content={user.zone ? _.capitalize(user.zone) : 'Non renseignée'}

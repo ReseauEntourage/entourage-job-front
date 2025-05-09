@@ -11,7 +11,7 @@ import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/Heade
 import { Button, Section } from 'src/components/utils';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { Filter, FilterConstant } from 'src/constants/utils';
 import { useFilters } from 'src/hooks';
 import { useIsMobile } from 'src/hooks/utils';
@@ -129,7 +129,7 @@ export function Directory() {
                   <Button
                     size={isMobile ? 'small' : 'large'}
                     variant={
-                      isRoleIncluded([USER_ROLES.CANDIDATE], role)
+                      isRoleIncluded([UserRoles.CANDIDATE], role)
                         ? 'primary'
                         : 'secondary'
                     }
@@ -139,7 +139,7 @@ export function Directory() {
                         pathname: route,
                         query: {
                           ...directoryFiltersParams,
-                          role: [USER_ROLES.CANDIDATE],
+                          role: [UserRoles.CANDIDATE],
                         },
                       });
                     }}
@@ -149,7 +149,7 @@ export function Directory() {
                   <Button
                     size={isMobile ? 'small' : 'large'}
                     variant={
-                      isRoleIncluded([USER_ROLES.COACH], role)
+                      isRoleIncluded([UserRoles.COACH], role)
                         ? 'primary'
                         : 'secondary'
                     }
@@ -158,7 +158,7 @@ export function Directory() {
                         pathname: route,
                         query: {
                           ...directoryFiltersParams,
-                          role: USER_ROLES.COACH,
+                          role: UserRoles.COACH,
                         },
                       });
                     }}
