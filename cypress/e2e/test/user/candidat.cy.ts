@@ -101,11 +101,16 @@ describe('Candidat', () => {
     );
 
     // presentation
-    cy.get(`[data-testid="cv-story-button-edit"]`).scrollIntoView().click();
-    const story = 'Here I present';
-    cy.get('#form-story').clear().type(story);
-    cy.get(`[data-testid="form-confirm-form-story"]`).click();
-    cy.get(`[data-testid="cv-edit-story-content"]`).should('contain', story);
+    cy.get(`[data-testid="cv-introduction-button-edit"]`)
+      .scrollIntoView()
+      .click();
+    const introduction = 'Here I present';
+    cy.get('#form-introduction').clear().type(introduction);
+    cy.get(`[data-testid="form-confirm-form-introduction"]`).click();
+    cy.get(`[data-testid="cv-edit-introduction-content"]`).should(
+      'contain',
+      introduction
+    );
 
     // atouts/skills
     cy.get(`[data-testid="cv-skills-button-edit"]`).scrollIntoView().click();
@@ -274,31 +279,31 @@ describe('Candidat', () => {
       .should('have.length', newNudgeIds.length);
     // });
 
-    // modify profile description
-    const description = 'hello sir';
+    // modify profile introduction
+    const introduction = 'hello sir';
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
       cy.intercept('PUT', `/user/profile/${user.id}`, {
         ...user,
         userProfile: {
           ...user.userProfile,
-          description,
+          introduction,
           nudgeIds: newNudgeIds,
         },
       }).as('putUserProfile');
     });
-    cy.get(`[data-testid="profile-description-modify-button"]`)
+    cy.get(`[data-testid="profile-introduction-modify-button"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="form-profile-description-description"]`)
+    cy.get(`[data-testid="form-profile-introduction-introduction"]`)
       .scrollIntoView()
-      .type(description);
-    cy.get(`[data-testid="form-confirm-form-profile-description"]`)
+      .type(introduction);
+    cy.get(`[data-testid="form-confirm-form-profile-introduction"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="profile-description"]`).should(
+    cy.get(`[data-testid="profile-introduction"]`).should(
       'contain',
-      description
+      introduction
     );
 
     // change profile picture
@@ -317,7 +322,7 @@ describe('Candidat', () => {
         ...user,
         userProfile: {
           ...user.userProfile,
-          description,
+          introduction,
           nudgeIds: newNudgeIds,
           sectorOccupations: [
             {

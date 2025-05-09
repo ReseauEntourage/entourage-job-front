@@ -32,6 +32,7 @@ export const generateUserLoginApiResponse = (roleUser) => {
       coach: null,
     },
     userProfile: {
+      introduction: null,
       description: null,
       currentJob: null,
       sectorOccupations: [
@@ -93,6 +94,7 @@ export const generateUserLoginApiResponse = (roleUser) => {
           gender: 1,
           lastConnection: null,
           userProfile: {
+            introduction: null,
             description: null,
             currentJob: null,
             department: null,
@@ -110,6 +112,7 @@ export const generateUserLoginApiResponse = (roleUser) => {
       zone: 'PARIS',
     },
     userProfile: {
+      introduction: null,
       description: null,
       currentJob: null,
       sectorOccupations: [

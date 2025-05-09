@@ -23,7 +23,7 @@ import {
 } from './HeaderProfile.styles';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
-import { ProfileDescription } from './ProfileDescription';
+import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 146;
@@ -36,7 +36,7 @@ export interface HeaderProfileProps {
   lastName: string;
   role: UserRoles;
   department: Department;
-  description?: string;
+  introduction?: string;
 
   // Only for own profile
   phone?: string;
@@ -51,7 +51,7 @@ export const HeaderProfileDesktop = ({
   lastName,
   role,
   department,
-  description,
+  introduction,
   phone,
   email,
   driverLicenses,
@@ -142,8 +142,8 @@ export const HeaderProfileDesktop = ({
                       {department}
                     </Text>
                   )}
-                  {description && (
-                    <ProfileDescription description={description} />
+                  {introduction && (
+                    <ProfileIntroduction introduction={introduction} />
                   )}
                 </>
               )}

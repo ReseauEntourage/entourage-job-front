@@ -3,7 +3,9 @@
  */
 export const userProfile = () => {
   const profile = {
-    description: 'We love dev',
+    introduction: 'Je cherche un emploi dans le secteur de la technologie.',
+    description:
+      "Je suis un développeur passionné par la technologie et l'innovation.",
     currentJob: null,
     sectorOccupations: [
       {

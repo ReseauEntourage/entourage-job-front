@@ -23,6 +23,7 @@
   },
   "coach": null,
   "userProfile": {
+    "introduction": null,
     "description": null,
     "department": "Ain (01)",
     "currentJob": null,
