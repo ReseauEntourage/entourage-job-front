@@ -45,14 +45,6 @@ describe('Parcours CV', () => {
     //     cy.intercept('PUT', request.path, request.data).as(request.alias);
     //   else cy.intercept('PUT', request.path, request.data);
     // });
-
-    cy.fixture('cv-url-res').then((cv) => {
-      cy.intercept(
-        'GET',
-        `/cv/url/${cv.cv.user.candidat.firstName.toLowerCase()}*`,
-        cv
-      ).as('getCV');
-    });
   });
 
   /**

@@ -1,5 +1,6 @@
 import React, { type JSX } from 'react';
 import { ArrayPath, Path, UseFormGetValues } from 'react-hook-form';
+import { SelectListType } from '../../utils/Inputs/SelectList';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import { FilterConstant } from 'src/constants/utils';
 import { AnyCantFix, StrictUnion } from 'src/utils/Types';
@@ -16,6 +17,7 @@ export const FormComponents = {
   SELECT_CREATABLE: 'select-creatable',
   SELECT_ASYNC: 'select-async',
   SELECT_LIST: 'select-list',
+  SELECT_LIST_ASYNC: 'select-list-async',
   SELECT_CARD: 'select-card',
   RADIO: 'radio',
   RADIO_ASYNC: 'radio-async',
@@ -60,6 +62,7 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.SELECT_CREATABLE]: MultiFilterConstant<M>;
   [FormComponents.SELECT_ASYNC]: MultiFilterConstant<M>;
   [FormComponents.SELECT_LIST]: string[];
+  [FormComponents.SELECT_LIST_ASYNC]: string[];
   [FormComponents.SELECT_CARD]: string[];
   [FormComponents.RADIO]: string | number;
   [FormComponents.RADIO_ASYNC]: string | number;
@@ -114,6 +117,7 @@ export type SelectComponent = (typeof SelectComponents)[number];
 export const SelectGraphicComponents = [
   FormComponents.SELECT_LIST,
   FormComponents.SELECT_CARD,
+  FormComponents.SELECT_LIST_ASYNC,
 ] as const;
 
 export type SelectGraphicComponent = (typeof SelectGraphicComponents)[number];
@@ -231,7 +235,12 @@ export interface FormFieldSelectGraphic<V extends FormSchemaValidation>
   extends FormFieldInputCommonProperties<V, SelectGraphicComponent> {
   component: SelectGraphicComponent;
   isMulti: boolean;
-  options: FilterConstant[] | ((getValue: GetValueType<V>) => FilterConstant[]);
+  options?:
+    | FilterConstant[]
+    | ((getValue: GetValueType<V>) => FilterConstant[]);
+  loadOptions?: (
+    callback: (options: SelectListType[]) => void
+  ) => Promise<void> | void;
   optionsToDisable?: (getValue: GetValueType<V>) => {
     option: string;
     message: React.ReactNode;

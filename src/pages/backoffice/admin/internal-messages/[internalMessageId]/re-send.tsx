@@ -28,7 +28,6 @@ const InternalMessageReSend = () => {
         <HeaderBackoffice
           title="Gestion des messages internes"
           description="Vous êtes sur le point de renvoyer un message qui a été déclaré comme suspicieux."
-          shouldDisplayAdminNotifications={false}
         />
         {loading ? (
           <p>Envoi en cours...</p>

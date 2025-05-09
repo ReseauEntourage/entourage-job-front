@@ -3,7 +3,7 @@ import React from 'react';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
-import { CVPDF } from 'src/components/cv';
+import { CVPDF } from 'src/components/profile';
 import { Section } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
 

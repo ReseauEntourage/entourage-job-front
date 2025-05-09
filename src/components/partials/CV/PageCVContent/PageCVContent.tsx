@@ -7,8 +7,6 @@ import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
-import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
-import { CVExperienceOrFormation } from 'src/components/cv/CVExperienceOrFormation';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -36,6 +34,8 @@ import {
   StyledSkillTag,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { CVCareerPathSentence } from 'src/components/profile';
+import { CVExperienceOrFormation } from 'src/components/profile/CVExperienceOrFormation';
 import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -122,8 +122,8 @@ export const PageCVContent = ({
               color={COLORS.black}
             />
             <CVCareerPathSentence
-              ambitions={cv.ambitions}
-              businessLines={cv.businessLines}
+              occupations={cv.occupations}
+              businessSectors={cv.businessSectors}
             />
             {cv.catchphrase && (
               <p id="quote">
@@ -375,15 +375,10 @@ export const PageCVContent = ({
                         <CVExperienceOrFormation
                           key={experience.id}
                           title={experience.title}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           description={experience.description}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateStart={experience.dateStart}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateEnd={experience.dateEnd}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           location={experience.location}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           structure={experience.company}
                           skills={experience.skills}
                         />
@@ -428,15 +423,10 @@ export const PageCVContent = ({
                         <CVExperienceOrFormation
                           key={formation.id}
                           title={formation.title}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           description={formation.description}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateStart={formation.dateStart}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateEnd={formation.dateEnd}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           location={formation.location}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           structure={formation.institution}
                           skills={formation.skills}
                         />
@@ -486,17 +476,17 @@ export const PageCVContent = ({
           <H3 title="Ils me recommandent" color={COLORS.black} center />
           <CarouselSwiper
             slides={[
-              ...cv.reviews.map(({ text, id, name, status }) => {
+              ...cv.reviews.map(({ content, id, authorLabel, authorName }) => {
                 return (
                   <StyledCVPageContentSlide key={id}>
                     <StyledLeftQuoteContainer>
                       <QuoteLeftIcon />
                     </StyledLeftQuoteContainer>
                     <div>
-                      <span>{text}</span>
+                      <span>{content}</span>
                       <br />
                       <span className="name">
-                        {name}, {status}
+                        {authorName}, {authorLabel}
                       </span>
                     </div>
                     <StyledRightQuoteContainer>

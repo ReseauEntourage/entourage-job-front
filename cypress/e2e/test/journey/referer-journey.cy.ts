@@ -150,7 +150,7 @@ describe('En tant que - Prescripteur', () => {
 
         // Select the help needs
         cy.get(
-          '[data-testid="form-refering-candidate-expectations-helpNeeds-tips"]'
+          '[data-testid="form-refering-candidate-expectations-nudge-0"]'
         ).click();
         cy.contains('Suivant').click();
 
@@ -176,7 +176,7 @@ describe('En tant que - Prescripteur', () => {
         cy.url().should('include', 'step-6');
 
         cy.get(
-          "[data-testid='form-refering-candidate-professional-information-searchBusinessLine0']"
+          "[data-testid='form-refering-candidate-professional-information-businessSector0']"
         )
           .click()
           .find('.Select__option')

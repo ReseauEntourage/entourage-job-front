@@ -8,7 +8,7 @@ import {
   isTokenExpiredError,
 } from 'src/api/axiosErrors';
 import { PostAuthFinalizeReferedUserParams } from 'src/api/types';
-import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
+import { PasswordCriterias } from 'src/components/backoffice/parametres-old/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formFinalizeReferedUser } from 'src/components/forms/schemas/formFinalizeReferedUser';
 import { Spinner } from 'src/components/utils/Spinner';
