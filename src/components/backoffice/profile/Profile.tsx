@@ -80,7 +80,7 @@ export const Profile = () => {
               role={selectedProfile.role}
               isAvailable={selectedProfile.isAvailable}
             />
-            <ProfileContracts smallCard />
+            <ProfileContracts contracts={selectedProfile.contracts} smallCard />
             <ProfileInterests interests={selectedProfile.interests} smallCard />
             <ProfileLanguages languages={selectedProfile.languages} smallCard />
             <ProfileDocuments

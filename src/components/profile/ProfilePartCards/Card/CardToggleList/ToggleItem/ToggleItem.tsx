@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToggleSwitch } from '@/src/components/utils/Inputs/ToggleSwitch/ToggleSwitch';
 import {
   StyledToggleItem,
   StyledToggleItemContainer,
@@ -7,14 +8,16 @@ import {
 export interface ToggleItemProps {
   icon?: React.ReactNode;
   name: string;
-  value: boolean;
+  checked: boolean;
+  onChange?: (checked: boolean) => void;
   isEditable?: boolean;
 }
 
 export const ToggleItem = ({
   icon,
   name,
-  value,
+  checked,
+  onChange,
   isEditable = false,
 }: ToggleItemProps) => {
   return (
@@ -22,7 +25,7 @@ export const ToggleItem = ({
       {icon}
       <StyledToggleItem>
         {name}
-        {isEditable && <input type="checkbox" checked={value} />}
+        {isEditable && <ToggleSwitch checked={checked} onChange={onChange} />}
       </StyledToggleItem>
     </StyledToggleItemContainer>
   );

@@ -169,6 +169,11 @@ export type UserProfileNudge = {
   nudge?: Nudge;
 };
 
+export type Contract = {
+  id: string;
+  name: string;
+};
+
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
@@ -189,6 +194,7 @@ export type UserProfile = {
   skills: Skill[] | null;
   languages: Language[];
   interests: Interest[];
+  contracts: Contract[];
 };
 
 export type UserReportDto = {
@@ -374,13 +380,6 @@ export type UserReferingDto = {
   program?: Program;
   birthDate: string;
   sectorOccupations?: UserProfileSectorOccupation[];
-};
-
-export type Contract = {
-  id: string;
-  name: ContractValue;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type ContactContactUs = {

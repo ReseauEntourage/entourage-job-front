@@ -1,6 +1,6 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { useUpdateProfile } from '../../../useUpdateProfile';
+import { useUpdateProfile } from '../../../../../../hooks/useUpdateProfile';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import {
   ExtractFormSchemaValidation,
