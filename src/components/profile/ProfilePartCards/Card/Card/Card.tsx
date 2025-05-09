@@ -19,6 +19,7 @@ export interface ProfilePartCardProps {
     icon: React.ReactNode;
   };
   smallCard;
+  isDefaultOpen?: boolean;
 }
 
 export const ProfilePartCard = ({
@@ -35,6 +36,7 @@ export const ProfilePartCard = ({
     icon: <IlluBulleQuestion />,
   },
   smallCard = false,
+  isDefaultOpen = true,
 }: ProfilePartCardProps) => {
   return (
     <Card
@@ -48,6 +50,7 @@ export const ProfilePartCard = ({
       }
       isMobileClosable
       isDesktopClosable
+      isDefaultOpen={isDefaultOpen}
     >
       <>
         <CardContent>

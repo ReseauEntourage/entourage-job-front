@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ModalFooter } from '../ModalFooter/ModalFooter';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
@@ -23,7 +24,7 @@ export const ModalConfirm = ({
   return (
     <ModalGeneric description={text} title={title}>
       {children && <div className="uk-margin-medium-bottom">{children}</div>}
-      <div className="uk-modal-footer uk-padding-remove-bottom">
+      <ModalFooter>
         <Button
           variant="default"
           onClick={onClose}
@@ -42,7 +43,7 @@ export const ModalConfirm = ({
         >
           {buttonText}
         </Button>
-      </div>
+      </ModalFooter>
     </ModalGeneric>
   );
 };
