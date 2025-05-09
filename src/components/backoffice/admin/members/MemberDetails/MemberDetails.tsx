@@ -50,7 +50,7 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
             </li>
           </ul>
 
-          {tab === MEMBER_TABS.PARAMETERS && (
+          {(tab === MEMBER_TABS.PARAMETERS || !tab) && (
             <ParametersMemberTab user={user} setUser={setUser} />
           )}
           {tab === MEMBER_TABS.CV && <CVMemberTab candidateId={user.id} />}
