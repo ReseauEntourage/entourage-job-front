@@ -52,7 +52,7 @@ export const ProfileFormations = ({
       title="Formations"
       isCompleted={isCompleted}
       isEditable={isEditable}
-      iaGenerated
+      // iaGenerated
       smallCard={smallCard}
       fallback={fallback}
       ctaTitle={

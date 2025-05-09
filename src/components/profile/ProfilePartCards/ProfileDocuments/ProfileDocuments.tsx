@@ -27,14 +27,14 @@ export const ProfileDocuments = ({
     () => !!linkedinUrl || !!entourageProCv || !!hasExternalCv,
     [entourageProCv, hasExternalCv, linkedinUrl]
   );
-  const editModal = useCallback(() => {}, []);
+  const openEditModal = useCallback(() => {}, []);
 
   return (
     <ProfilePartCard
       title="Liens et documents"
       isCompleted={isCompleted}
       isEditable={isEditable}
-      ctaCallback={editModal}
+      ctaCallback={isEditable ? openEditModal : undefined}
       smallCard={smallCard}
     >
       <StyledDocumentList>

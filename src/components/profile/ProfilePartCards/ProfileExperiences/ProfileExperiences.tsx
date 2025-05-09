@@ -52,7 +52,7 @@ export const ProfileExperiences = ({
       title="Expériences et compétences"
       isCompleted={isCompleted}
       isEditable={isEditable}
-      iaGenerated
+      // iaGenerated
       smallCard={smallCard}
       fallback={fallback}
       ctaTitle={

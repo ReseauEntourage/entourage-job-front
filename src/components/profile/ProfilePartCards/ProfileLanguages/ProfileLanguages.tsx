@@ -35,7 +35,7 @@ export const ProfileLanguages = ({
       title="Langues parlées"
       isCompleted={isCompleted}
       ctaCallback={editModal}
-      iaGenerated
+      //      iaGenerated
       isEditable={isEditable}
       smallCard={smallCard}
       fallback={{
