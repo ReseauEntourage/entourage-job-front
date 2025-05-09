@@ -46,7 +46,6 @@ export const HeaderPublicContentDesktop = ({
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
         }}
-        size="small"
       >
         Connexion
       </Button>
@@ -56,7 +55,6 @@ export const HeaderPublicContentDesktop = ({
         href="/inscription"
         variant="primary"
         rounded
-        size="small"
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
         }}

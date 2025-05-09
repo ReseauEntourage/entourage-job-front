@@ -9,7 +9,7 @@ import { formAddUser } from 'src/components/forms/schemas/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { ROLES_WITH_ORGANIZATION } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { Actions } from 'src/constants/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
@@ -32,8 +32,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
   }, [user]);
 
   const organization = useMemo(() => {
-    return isRoleIncluded(ROLES_WITH_ORGANIZATION, user.role) &&
-      user.organization
+    return isRoleIncluded(UserRoles.REFERER, user.role) && user.organization
       ? {
           value: user.organization.id,
           label: user.organization.name,

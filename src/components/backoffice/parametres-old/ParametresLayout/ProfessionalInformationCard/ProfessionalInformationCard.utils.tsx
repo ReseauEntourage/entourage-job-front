@@ -8,12 +8,12 @@ import {
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
-import { UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 interface userProfileParamsToCheck {
   currentJob: string | null;
   sectorOccupations: UserProfileSectorOccupation[] | null;
-  role: UserRole;
+  role: UserRoles;
 }
 
 export const checkData = (userProfile: userProfileParamsToCheck): boolean => {

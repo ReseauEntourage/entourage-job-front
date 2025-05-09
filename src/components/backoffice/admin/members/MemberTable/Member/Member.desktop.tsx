@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
+import { GENDERS_FILTERS } from '@/src/constants/genders';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
 import { SimpleLink } from 'src/components/utils';
@@ -10,11 +11,7 @@ import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
-import {
-  ROLES_WITH_ORGANIZATION,
-  GENDERS_FILTERS,
-  USER_ROLES,
-} from 'src/constants/users';
+import { getRolesWithOrganization, UserRoles } from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
@@ -70,7 +67,7 @@ export function MemberDesktop({
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           organizationName={
             !columns.includes('organization') &&
-            isRoleIncluded(ROLES_WITH_ORGANIZATION, member.role)
+            isRoleIncluded(getRolesWithOrganization(), member.role)
               ? member.organization?.name
               : null
           }
@@ -138,7 +135,7 @@ export function MemberDesktop({
           )}
         </TdDesktop>
       )}
-      {role === USER_ROLES.CANDIDATE && !Array.isArray(userCandidate) && (
+      {role === UserRoles.CANDIDATE && !Array.isArray(userCandidate) && (
         <>
           {columns.includes('cvUrl') && (
             <TdDesktop>

@@ -10,7 +10,7 @@ import {
   Tag,
   Text,
 } from 'src/components/utils';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledDashboardCTAContainer,
@@ -58,7 +58,7 @@ export const DashboardProfileCard = () => {
       {user.userProfile.userProfileNudges && (
         <StyledDashboardProfileCardHelps>
           <StyledDashboardProfileCardhelpsTitle>
-            Mes {contextualRole === USER_ROLES.CANDIDATE && 'besoins de '} coups
+            Mes {contextualRole === UserRoles.CANDIDATE && 'besoins de '} coups
             de pouce
           </StyledDashboardProfileCardhelpsTitle>
           {user.userProfile.userProfileNudges.length > 0 ? (

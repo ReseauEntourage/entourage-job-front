@@ -19,7 +19,7 @@ import {
 import { Hamburger } from 'src/components/utils/Hamburger';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
@@ -32,10 +32,10 @@ export const HeaderConnectedContentMobile = ({
   badges,
   messaging,
   links = {
-    [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.COACH]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.REFERER]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.ADMIN]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.COACH]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.REFERER]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
 }: HeaderConnectedContentProps) => {

@@ -89,7 +89,6 @@ function* fetchSelectedProfileSaga(
     const { data: profile } = yield* call(() =>
       Api.getPublicUserProfile(userId)
     );
-
     yield* put(fetchSelectedProfileSucceeded({ ...profile }));
   } catch {
     yield* put(fetchSelectedProfileFailed());

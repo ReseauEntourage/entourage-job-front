@@ -7,7 +7,7 @@ import { DashboardInviteToReferCandidate } from '../referer/dashboard/DashboardI
 import { DashboardReferedCandidateList } from '../referer/dashboard/DashboardReferedCandidateList/DashboardReferedCandidateList';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import { NORMAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { getNormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
@@ -30,34 +30,63 @@ export const Dashboard = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
 
-  const isNormalUser = isRoleIncluded(NORMAL_USER_ROLES, user.role);
-  const isReferer = user.role === USER_ROLES.REFERER;
+  const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
+  const isReferer = user.role === UserRoles.REFERER;
 
+  if (isDesktop) {
+    return (
+      <StyledBackofficeBackground>
+        <Section className="custom-page">
+          <StyledDashboardTitleContainer>
+            <H1 title="Bienvenue sur votre espace personnel" color="black" />
+            <br />
+            {user.role === UserRoles.COACH && <DashboardAlertWhatsappCoach />}
+          </StyledDashboardTitleContainer>
+          <StyledBackofficeGrid>
+            <StyledDashboardLeftColumn>
+              <DashboardProfileCard />
+              {isNormalUser && <DashboardAvailabilityCard />}
+              <DashboardLinkedUserCard />
+              <DashboardReferentCard />
+            </StyledDashboardLeftColumn>
+            <StyledDashboardRightColumn>
+              {isNormalUser && <DashboardNextSteps />}
+              <DashboardMessagingConversation />
+              {isNormalUser && <DashboardRecommendationsCard />}
+              {isReferer && <DashboardInviteToReferCandidate />}
+              {isReferer && <DashboardReferedCandidateList />}
+              <DashboardToolboxCard />
+            </StyledDashboardRightColumn>
+          </StyledBackofficeGrid>
+        </Section>
+      </StyledBackofficeBackground>
+    );
+  }
+
+  // mobile
   return (
     <StyledBackofficeBackground>
       <Section className="custom-page">
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre espace personnel" color="black" />
           <br />
-          {user.role === USER_ROLES.COACH && <DashboardAlertWhatsappCoach />}
+          {user.role === UserRoles.COACH && <DashboardAlertWhatsappCoach />}
         </StyledDashboardTitleContainer>
-        <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
-          <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
+        <StyledBackofficeGrid className="mobile">
+          <StyledDashboardRightColumn className="mobile">
+            {isNormalUser && <DashboardNextSteps />}
+            {isNormalUser && <DashboardRecommendationsCard />}
+            <DashboardMessagingConversation />
+            {isReferer && <DashboardInviteToReferCandidate />}
+            {isReferer && <DashboardReferedCandidateList />}
+            <DashboardToolboxCard />
+          </StyledDashboardRightColumn>
+          <StyledDashboardLeftColumn className="mobile">
             <DashboardProfileCard />
             {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardLinkedUserCard />
             <DashboardReferentCard />
           </StyledDashboardLeftColumn>
-          <StyledDashboardRightColumn
-            className={`${isDesktop ? '' : 'mobile'}`}
-          >
-            {isNormalUser && <DashboardNextSteps />}
-            <DashboardMessagingConversation />
-            {isNormalUser && <DashboardRecommendationsCard />}
-            {isReferer && <DashboardInviteToReferCandidate />}
-            {isReferer && <DashboardReferedCandidateList />}
-            <DashboardToolboxCard />
-          </StyledDashboardRightColumn>
         </StyledBackofficeGrid>
       </Section>
     </StyledBackofficeBackground>
