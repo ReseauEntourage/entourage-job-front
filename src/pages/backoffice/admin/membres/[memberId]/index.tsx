@@ -15,11 +15,9 @@ import { usePrevious } from 'src/hooks/utils';
 const User = () => {
   const [user, setUser] = useState<UserType>();
 
-  const prevUser = usePrevious(user);
-
   const [loading, setLoading] = useState(true);
 
-  const { replace } = useRouter();
+  const { replace, pathname } = useRouter();
 
   const memberId = useMemberId();
   const prevMemberId = usePrevious(memberId);
@@ -27,27 +25,17 @@ const User = () => {
   const tab = useTab();
 
   useEffect(() => {
-    if (user && (!prevUser || user.id !== prevUser.id)) {
-      if (
-        (user.role === UserRoles.COACH || user.role === UserRoles.REFERER) &&
-        (!tab || tab !== MEMBER_TABS.PARAMETERS)
-      ) {
-        replace(
-          `/backoffice/admin/membres/${user.id}/${MEMBER_TABS.PARAMETERS}`,
-          undefined,
-          {
-            shallow: true,
-          }
-        );
-      } else if (user.role === UserRoles.CANDIDATE) {
-        if (!tab) {
-          replace(`/backoffice/admin/membres/${user.id}/cv`, undefined, {
-            shallow: true,
-          });
-        }
+    if (user && !tab) {
+      let correctPath = `/backoffice/admin/membres/${user.id}/${MEMBER_TABS.PARAMETERS}`;
+      if (user.role === UserRoles.CANDIDATE && !tab) {
+        correctPath = `/backoffice/admin/membres/${user.id}/cv`;
+      }
+      if (correctPath && pathname !== correctPath) {
+        replace(correctPath, undefined, { shallow: true });
       }
     }
-  }, [replace, tab, prevMemberId, user, prevUser, memberId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const getUser = useCallback(() => {
     Api.getUserById(memberId)
