@@ -14,7 +14,7 @@ import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { ReduxRequestEvents } from 'src/constants';
 import { DEPARTMENTS } from 'src/constants/departements';
 import { Programs } from 'src/constants/programs';
-import { RegistrableUserRole } from 'src/constants/users';
+import { RegistrableUserRoles } from 'src/constants/users';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
   createUserSelectors,
@@ -136,12 +136,12 @@ export function useRegistration() {
         registrationActions.setRegistrationCurrentStepData(registrationFields)
       );
 
-      let role: RegistrableUserRole | null = null;
+      let role: RegistrableUserRoles | null = null;
 
       // Store is not updated yet, so we need to get the role from the fields
       if (Object.keys(registrationFields).includes('role')) {
         // eslint-disable-next-line dot-notation
-        [role] = registrationFields['role'] as RegistrableUserRole[];
+        [role] = registrationFields['role'] as RegistrableUserRoles[];
       } else if (selectedRole) {
         role = selectedRole;
       }

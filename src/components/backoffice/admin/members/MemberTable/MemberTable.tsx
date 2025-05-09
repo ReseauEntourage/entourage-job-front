@@ -1,38 +1,38 @@
 import React, { useMemo, type JSX } from 'react';
 import { Table, Th } from 'src/components/utils/Table';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { MemberColumn } from './Member/Member.types';
 
 interface MemberTableProps {
   columns: MemberColumn[];
   members: JSX.Element[];
-  role: UserRole | UserRole[];
+  role: UserRoles | UserRoles[];
 }
 
 export function MemberTable({ columns, members, role }: MemberTableProps) {
   const columnsHeaders = useMemo<JSX.Element[]>(() => {
     let columnsArray = [];
 
-    if (role === USER_ROLES.CANDIDATE) {
+    if (role === UserRoles.CANDIDATE) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberRole">Candidat</Th>,
       ];
     }
-    if (role === USER_ROLES.COACH) {
+    if (role === UserRoles.COACH) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberRole">Coach</Th>,
       ];
     }
-    if (role === USER_ROLES.REFERER) {
+    if (role === UserRoles.REFERER) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberRole">Prescripteur</Th>,
       ];
     }
 
-    if (columns.includes('associatedUser') && role === USER_ROLES.CANDIDATE) {
+    if (columns.includes('associatedUser') && role === UserRoles.CANDIDATE) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
@@ -41,7 +41,7 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
         <Th key="memberAssociatedRole">Coach</Th>,
       ];
     }
-    if (columns.includes('associatedUser') && role === USER_ROLES.COACH) {
+    if (columns.includes('associatedUser') && role === UserRoles.COACH) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
@@ -122,7 +122,7 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       ];
     }
 
-    if (role === USER_ROLES.CANDIDATE) {
+    if (role === UserRoles.CANDIDATE) {
       if (columns.includes('cvUrl')) {
         columnsArray = [
           // @ts-expect-error after enable TS strict mode. Please, try to fix it

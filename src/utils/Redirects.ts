@@ -1,10 +1,10 @@
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 const defaultPages = {
-  [USER_ROLES.ADMIN]: '/backoffice/admin/membres',
-  [USER_ROLES.CANDIDATE]: '/backoffice/dashboard',
-  [USER_ROLES.COACH]: '/backoffice/dashboard',
-  [USER_ROLES.REFERER]: '/backoffice/dashboard',
+  [UserRoles.ADMIN]: '/backoffice/admin/membres',
+  [UserRoles.CANDIDATE]: '/backoffice/dashboard',
+  [UserRoles.COACH]: '/backoffice/dashboard',
+  [UserRoles.REFERER]: '/backoffice/dashboard',
 } as const;
 
 // export const redirectBackOfficeToDefault: (
@@ -15,6 +15,6 @@ const defaultPages = {
 //   return defaultPages[currentRole];
 // };
 
-export const getDefaultUrl = (currentRole: UserRole): string => {
+export const getDefaultUrl = (currentRole: UserRoles): string => {
   return defaultPages[currentRole];
 };

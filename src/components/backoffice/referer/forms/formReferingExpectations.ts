@@ -1,5 +1,6 @@
 import { Api } from '@/src/api';
 import { createNudgeOption } from '@/src/constants/nudges';
+import { UserRoles } from '@/src/constants/users';
 import { FormSchema } from 'src/components/forms/FormSchema';
 
 const loadNudgesOptions = async (callback) => {
@@ -10,7 +11,9 @@ const loadNudgesOptions = async (callback) => {
       offset: 0,
     });
     callback([
-      ...nudges.map((n) => createNudgeOption('Candidat', n)).filter((n) => n),
+      ...nudges
+        .map((n) => createNudgeOption(UserRoles.CANDIDATE, n))
+        .filter((n) => n),
     ]);
   } catch (error) {
     console.error(error);

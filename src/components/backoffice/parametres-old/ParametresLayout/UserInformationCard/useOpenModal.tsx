@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { getNormalUserRoles, UserRoles } from '@/src/constants/users';
 import { UserWithUserCandidate } from 'src/api/types';
 import {
   formPersonalDataAsAdmin,
@@ -7,7 +8,6 @@ import {
 } from 'src/components/forms/schemas/formPersonalData';
 import { openModal } from 'src/components/modals/Modal';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { ALL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import { ModalEditUserInformation } from './ModalEditUserInformation';
 
@@ -68,12 +68,12 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
   }, [user]);
 
   const openCorrespondingModal = useCallback(() => {
-    if (isRoleIncluded(ALL_USER_ROLES, user.role)) {
-      if (user.role === USER_ROLES.CANDIDATE) {
+    if (isRoleIncluded(getNormalUserRoles(), user.role)) {
+      if (user.role === UserRoles.CANDIDATE) {
         openPersonalDataModalAsCandidate();
         return;
       }
-      if (user.role === USER_ROLES.COACH) {
+      if (user.role === UserRoles.COACH) {
         openPersonalDataModalAsCoach();
         return;
       }

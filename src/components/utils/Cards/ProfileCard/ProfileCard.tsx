@@ -20,7 +20,7 @@ import { Text } from 'src/components/utils/Text';
 import { Department } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
-import { USER_ROLES, UserRole } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -53,7 +53,7 @@ export interface ProfileCardProps {
   userId: string;
   firstName: string;
   lastName: string;
-  role: UserRole;
+  role: UserRoles;
   userProfileNudges?: UserProfileNudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
@@ -63,15 +63,15 @@ export interface ProfileCardProps {
   displayHelps?: boolean;
 }
 
-const getLabelsDependingOnRole = (role: UserRole) => {
-  if (role === USER_ROLES.CANDIDATE) {
+const getLabelsDependingOnRole = (role: UserRoles) => {
+  if (role === UserRoles.CANDIDATE) {
     return {
       businessSectors: 'Je recherche un emploi dans\xa0:',
       helps: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
-  if (role === USER_ROLES.COACH) {
+  if (role === UserRoles.COACH) {
     return {
       businessSectors: "J'ai du réseau dans\xa0:",
       helps: 'Je peux aider à\xa0:',
@@ -180,7 +180,7 @@ export function ProfileCard({
         </StyledProfileCardPictureContainer>
         <StyledProfileCardContent>
           <StyledProfileCardProfessionalSituation>
-            {(USER_ROLES.CANDIDATE === role || USER_ROLES.COACH === role) && (
+            {(UserRoles.CANDIDATE === role || UserRoles.COACH === role) && (
               <>
                 {sortedOccupations && sortedOccupations.length > 0 ? (
                   <StyledProfileCardJobContainer>
@@ -210,7 +210,7 @@ export function ProfileCard({
                   {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
                     return <Tag key={id} content={name} />;
                   })}
-                  {role !== USER_ROLES.CANDIDATE &&
+                  {role !== UserRoles.CANDIDATE &&
                     sortedBusinessSectors.length > 2 && (
                       <Tag content={`+${sortedBusinessSectors.length - 2}`} />
                     )}

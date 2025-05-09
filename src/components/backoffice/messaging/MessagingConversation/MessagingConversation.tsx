@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { UserRoles } from '@/src/constants/users';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   selectCurrentUser,
@@ -51,7 +51,7 @@ export const MessagingConversation = () => {
     return (
       selectedConversationId === 'new' &&
       currentUser &&
-      currentUser.role === USER_ROLES.CANDIDATE
+      currentUser.role === UserRoles.CANDIDATE
     );
   }, [currentUser, selectedConversationId]);
 

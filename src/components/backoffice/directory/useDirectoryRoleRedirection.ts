@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useRole } from 'src/hooks/queryParams/useRole';
 
@@ -15,13 +15,13 @@ export function useDirectoryRoleRedirection() {
 
   useEffect(() => {
     if (!role) {
-      if (userRole === USER_ROLES.CANDIDATE) {
+      if (userRole === UserRoles.CANDIDATE) {
         replace(
           {
             pathname: route,
             query: {
               ...query,
-              role: USER_ROLES.COACH,
+              role: UserRoles.COACH,
             },
           },
           undefined,
@@ -33,7 +33,7 @@ export function useDirectoryRoleRedirection() {
             pathname: route,
             query: {
               ...query,
-              role: [USER_ROLES.CANDIDATE],
+              role: [UserRoles.CANDIDATE],
             },
           },
           undefined,

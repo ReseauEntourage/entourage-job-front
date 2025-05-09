@@ -1,4 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema } from '../FormSchema';
 import {
   ADMIN_ZONES_FILTERS,
@@ -6,12 +7,7 @@ import {
   Department,
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
-import {
-  ADMIN_ROLES,
-  AdminRole,
-  Gender,
-  GENDERS_FILTERS,
-} from 'src/constants/users';
+import { AdminRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formPersonalDataAsCandidate: FormSchema<{
@@ -238,10 +234,10 @@ export const formPersonalDataAsCoach: FormSchema<{
 export const formPersonalDataAsAdmin: FormSchema<{
   firstName: string;
   lastName: string;
-  gender: Gender;
+  gender: Genders;
   phone: string;
   zone: AdminZone;
-  adminRole: AdminRole;
+  adminRole: AdminRoles;
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
@@ -276,8 +272,8 @@ export const formPersonalDataAsAdmin: FormSchema<{
       name: 'adminRole',
       component: 'select-simple',
       options: [
-        { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
-        { value: ADMIN_ROLES.COMPANIES, label: ADMIN_ROLES.COMPANIES },
+        { value: AdminRoles.CANDIDATES, label: AdminRoles.CANDIDATES },
+        { value: AdminRoles.COMPANIES, label: AdminRoles.COMPANIES },
       ],
     },
     {

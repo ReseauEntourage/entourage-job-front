@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ProgramCalendar, ProgramMap, ProgramTime } from 'assets/icons/icons';
-import { NormalUserRole, USER_ROLES } from './users';
+import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
 
 export const Programs = {
@@ -54,11 +54,11 @@ export const ProgramBullet: {
 };
 
 export const ProgramOptions: {
-  [K in NormalUserRole]: (FilterConstant<Program> & {
+  [K in NormalUserRoles]: (FilterConstant<Program> & {
     inputId: string;
   })[];
 } = {
-  [USER_ROLES.CANDIDATE]: [
+  [UserRoles.CANDIDATE]: [
     {
       value: Programs.THREE_SIXTY,
       label: 'Oui',
@@ -70,7 +70,7 @@ export const ProgramOptions: {
       inputId: 'radio-input-boost',
     },
   ],
-  [USER_ROLES.COACH]: [
+  [UserRoles.COACH]: [
     {
       value: Programs.THREE_SIXTY,
       label:
