@@ -40,7 +40,7 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
             </li>
           </ul>
 
-          {tab === MEMBER_TABS.PARAMETERS && (
+          {(tab === MEMBER_TABS.PARAMETERS || !tab) && (
             <ParametersMemberTab user={user} setUser={setUser} />
           )}
         </Grid>

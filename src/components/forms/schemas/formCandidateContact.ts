@@ -1,5 +1,6 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail, isPostalCode } from 'validator';
+import { Genders } from '@/src/constants/genders';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import {
@@ -19,7 +20,6 @@ import {
   HEARD_ABOUT_FILTERS,
   HeardAboutValue,
 } from 'src/constants';
-import { Gender } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 const loadBusinessSectorsOptions = async (callback, inputValue) => {
@@ -53,7 +53,7 @@ export const formCandidateContact: FormSchema<{
   firstName: string;
   lastName: string;
   helpWith: FilterConstant<CandidateHelpWithValue>[];
-  gender: Gender;
+  gender: Genders;
   birthDate: string;
   address: string;
   postalCode: string;

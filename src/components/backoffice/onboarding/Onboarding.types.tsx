@@ -8,7 +8,7 @@ import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
 import { DocumentNames } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
@@ -24,8 +24,8 @@ import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnbo
 export type OnboardingStep = 0 | 1 | 2 | 3 | 4; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 export const ONBOARDING_LAST_STEP = {
-  [USER_ROLES.CANDIDATE]: 4 as OnboardingStep,
-  [USER_ROLES.COACH]: 3 as OnboardingStep,
+  [UserRoles.CANDIDATE]: 4 as OnboardingStep,
+  [UserRoles.COACH]: 3 as OnboardingStep,
 };
 
 export type CandidateOnboardingForm =
@@ -51,7 +51,7 @@ export type FlattenedOnboardingFormData =
   UnionToIntersection<OnboardingFormData>;
 
 export const onboardingAlreadyCompleted = {
-  [USER_ROLES.CANDIDATE]: (user: User) => {
+  [UserRoles.CANDIDATE]: (user: User) => {
     const userProfileRequired = ['description'];
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
@@ -62,7 +62,7 @@ export const onboardingAlreadyCompleted = {
     );
     return userProfileCompleted && readDocumentCompleted;
   },
-  [USER_ROLES.COACH]: (user: User) => {
+  [UserRoles.COACH]: (user: User) => {
     const userProfileRequired = ['description'];
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
@@ -95,15 +95,15 @@ export interface OnboardingStepContent<
 }
 
 export type OnboardingStepContentByRole = Partial<{
-  [USER_ROLES.CANDIDATE]: OnboardingStepContent<CandidateOnboardingForm>;
-  [USER_ROLES.COACH]: OnboardingStepContent<CoachOnboardingForm>;
+  [UserRoles.CANDIDATE]: OnboardingStepContent<CandidateOnboardingForm>;
+  [UserRoles.COACH]: OnboardingStepContent<CoachOnboardingForm>;
 }>;
 
 export const OnboardingStepContents: {
   [K in OnboardingStep]?: OnboardingStepContentByRole;
 } = {
   1: {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       title: 'Charte éthique',
       skippedBy: (user: User) => {
         return isReadDocument(user.readDocuments, DocumentNames.CharteEthique);
@@ -117,7 +117,7 @@ export const OnboardingStepContents: {
         ),
       }),
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       title: 'Charte éthique',
       skippedBy: (user: User) => {
         return isReadDocument(user.readDocuments, DocumentNames.CharteEthique);
@@ -133,7 +133,7 @@ export const OnboardingStepContents: {
     },
   },
   2: {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       title: 'Nous aimerions en savoir plus sur votre situation',
       content: <OnboardingCandidateSocialSituation />,
       skippedBy: (user: User) => {
@@ -148,7 +148,7 @@ export const OnboardingStepContents: {
         ),
       }),
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
@@ -162,7 +162,7 @@ export const OnboardingStepContents: {
     },
   },
   3: {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
@@ -173,7 +173,7 @@ export const OnboardingStepContents: {
       }),
       skippedBy: ({ userProfile }: User) => !!userProfile.description,
     },
-    [USER_ROLES.COACH]: {
+    [UserRoles.COACH]: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
@@ -186,7 +186,7 @@ export const OnboardingStepContents: {
     },
   },
   4: {
-    [USER_ROLES.CANDIDATE]: {
+    [UserRoles.CANDIDATE]: {
       title: 'Dites-nous en plus sur votre activité professionnelle',
       form: formOnboardingCandidateJob,
       defaultValues: (user) => {
@@ -198,8 +198,8 @@ export const OnboardingStepContents: {
 };
 
 export type OnboardingStepDataByRole = Partial<{
-  [USER_ROLES.CANDIDATE]: ExtractFormSchemaValidation<CandidateOnboardingForm>;
-  [USER_ROLES.COACH]: ExtractFormSchemaValidation<CoachOnboardingForm>;
+  [UserRoles.CANDIDATE]: ExtractFormSchemaValidation<CandidateOnboardingForm>;
+  [UserRoles.COACH]: ExtractFormSchemaValidation<CoachOnboardingForm>;
 }>;
 
 export type OnboardingStepData = Partial<{

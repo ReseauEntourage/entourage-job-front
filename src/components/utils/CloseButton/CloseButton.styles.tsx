@@ -6,4 +6,8 @@ export const StyledCloseButton = styled.button`
   right: 30px;
   cursor: pointer;
   z-index: 9999;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 `;

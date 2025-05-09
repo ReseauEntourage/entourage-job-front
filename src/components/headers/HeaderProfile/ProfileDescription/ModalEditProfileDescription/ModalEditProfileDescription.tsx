@@ -4,7 +4,7 @@ import { useUpdateProfile } from 'src/components/backoffice/parametres-old/useUp
 import { formEditProfileDescriptionCandidate } from 'src/components/forms/schemas/formEditProfileDescriptionCandidate';
 import { formEditProfileDescriptionCoach } from 'src/components/forms/schemas/formEditProfileDescriptionCoach';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 
 export const ModalEditProfileDescription = ({
   user,
@@ -21,7 +21,7 @@ export const ModalEditProfileDescription = ({
         description: userProfile?.description ?? undefined,
       }}
       formSchema={
-        user.role === USER_ROLES.CANDIDATE
+        user.role === UserRoles.CANDIDATE
           ? formEditProfileDescriptionCandidate
           : formEditProfileDescriptionCoach
       }

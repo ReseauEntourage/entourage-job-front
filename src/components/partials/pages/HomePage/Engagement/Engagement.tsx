@@ -23,7 +23,7 @@ export const Engagement = () => {
           onClick: () => {
             gaEvent(GA_TAGS.HOME_ENGAGEMENT_ENTREPRISE_COLLABORATEURS);
           },
-          href: process.env.URL_PDF_ENGAGEMENT_ENTREPRISE,
+          href: process.env.NEXT_PUBLIC_URL_PDF_ENGAGEMENT_ENTREPRISE,
           CTAText: 'Découvrir les formats d’engagement',
         },
         {
@@ -44,7 +44,7 @@ export const Engagement = () => {
           onClick: () => {
             gaEvent(GA_TAGS.HOME_ENGAGEMENT_ENTREPRISE_MECENAT_COMPETENCES);
           },
-          href: process.env.URL_PDF_MECENAT_COMPETENCES,
+          href: process.env.NEXT_PUBLIC_URL_PDF_MECENAT_COMPETENCES,
           CTAText: 'Découvrir les formats d’engagement',
         },
         {
@@ -55,7 +55,7 @@ export const Engagement = () => {
           onClick: () => {
             gaEvent(GA_TAGS.HOME_ENGAGEMENT_ENTREPRISE_MECENAT_NATURE);
           },
-          href: process.env.URL_PDF_MECENAT_NATURE,
+          href: process.env.NEXT_PUBLIC_URL_PDF_MECENAT_NATURE,
           CTAText: 'Découvrir les formats d’engagement',
         },
       ]}

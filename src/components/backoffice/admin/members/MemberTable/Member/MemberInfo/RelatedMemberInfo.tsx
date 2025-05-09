@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { UserWithUserCandidate } from 'src/api/types';
-import { ROLES_WITH_ORGANIZATION } from 'src/constants/users';
+import { getRolesWithOrganization } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberInfo } from './MemberInfo';
 import { StyledRelatedMemberListItem } from './RelatedMemberInfo.styles';
@@ -37,7 +37,7 @@ export function RelatedMemberInfo({ relatedUser }: RelatedMemberInfoProps) {
                 email={email}
                 // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 organizationName={
-                  isRoleIncluded(ROLES_WITH_ORGANIZATION, relatedUserRole)
+                  isRoleIncluded(getRolesWithOrganization(), relatedUserRole)
                     ? organization?.name
                     : null
                 }

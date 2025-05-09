@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
 import { Api } from '@/src/api';
 import { Nudge, UserProfileNudge } from '@/src/api/types';
-import { USER_ROLES, UserRole } from '@/src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
 export interface ProfileNudgesProps {
-  userRole: UserRole;
+  userRole: UserRoles;
   userProfileNudges: UserProfileNudge[];
   isEditable?: boolean;
   smallCard?: boolean;
@@ -25,17 +25,17 @@ export const ProfileNudges = ({
   );
   const isCompleted = predefinedNudges.length > 0;
   const titleKey = useMemo(() => {
-    return userRole === USER_ROLES.CANDIDATE ? 'nameRequest' : 'nameOffer';
+    return userRole === UserRoles.CANDIDATE ? 'nameRequest' : 'nameOffer';
   }, [userRole]);
 
   const cardTitle = useMemo(() => {
-    return userRole === USER_ROLES.CANDIDATE
+    return userRole === UserRoles.CANDIDATE
       ? 'Demandes de coup de pouce'
       : 'Offres de coup de pouce';
   }, [userRole]);
 
   // const values = predefinedNudges.map(({ nudge }) => ({
-  //   name: (userRole === USER_ROLES.CANDIDATE
+  //   name: (userRole === UserRoles.CANDIDATE
   //     ? nudge?.nameRequest
   //     : nudge?.nameOffer) as string,
   //   value: true,

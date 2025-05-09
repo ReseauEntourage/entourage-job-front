@@ -6,7 +6,7 @@ import {
 } from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { USER_ROLES } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formOnboardingCandidateJob } from './schemas/formOnboardingCandidateJob';
 import { formOnboardingCoachJob } from './schemas/formOnboardingCoachJob';
@@ -27,7 +27,7 @@ export const OnboardingJobForm = ({
   return (
     <FormWithValidation
       formSchema={
-        contextualRole === USER_ROLES.CANDIDATE
+        contextualRole === UserRoles.CANDIDATE
           ? formOnboardingCandidateJob
           : formOnboardingCoachJob
       }
@@ -36,7 +36,7 @@ export const OnboardingJobForm = ({
       cancelText="Précédent"
       onCancel={onBeforeStep}
       defaultValues={
-        contextualRole === USER_ROLES.CANDIDATE
+        contextualRole === UserRoles.CANDIDATE
           ? getCandidateDefaultProfessionalValues(userProfile)
           : getCoachDefaultProfessionalValues(userProfile)
       }
