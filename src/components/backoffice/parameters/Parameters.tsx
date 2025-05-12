@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import {
   currentUserActions,
@@ -137,11 +138,13 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
-              <ProfileContracts
-                contracts={user.userProfile.contracts}
-                isEditable
-                smallCard
-              />
+              {user.role === UserRoles.CANDIDATE && (
+                <ProfileContracts
+                  contracts={user.userProfile.contracts}
+                  isEditable
+                  smallCard
+                />
+              )}
               <ProfileContactPreferences isEditable smallCard />
               <ProfileNudges
                 userRole={user.role}
