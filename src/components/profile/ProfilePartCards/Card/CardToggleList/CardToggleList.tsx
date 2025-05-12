@@ -30,16 +30,19 @@ export const CardToggleList = ({
   };
   return (
     <StyledToggleList>
-      {items.map((item, idx) => (
-        <ToggleItem
-          key={idx}
-          icon={item.icon}
-          name={item.name}
-          checked={item.value}
-          isEditable={isEditable}
-          onChange={() => handleChange(idx)}
-        />
-      ))}
+      {items.map((item, idx) => {
+        if (!isEditable && !item.value) return null;
+        return (
+          <ToggleItem
+            key={idx}
+            icon={item.icon}
+            name={item.name}
+            checked={item.value}
+            isEditable={isEditable}
+            onChange={() => handleChange(idx)}
+          />
+        );
+      })}
     </StyledToggleList>
   );
 };
