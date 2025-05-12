@@ -1,6 +1,6 @@
 import React from 'react';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { useModalContext } from '../Modal';
-import { useUpdateProfile } from 'src/components/backoffice/parametres-old/useUpdateProfile';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
