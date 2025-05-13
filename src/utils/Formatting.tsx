@@ -84,6 +84,10 @@ export const formatCareerPathSentence = (
 ): UserProfileSectorOccupation[] => {
   const sectorOccupation0 = {
     businessSectorId: values.businessSectorId0?.value,
+    businessSector: {
+      id: values.businessSectorId0?.value,
+      name: values.businessSectorId0?.label,
+    },
     occupation: {
       prefix: OCCUPATIONS_PREFIXES[1].label,
       name: values.occupation0,
@@ -93,6 +97,10 @@ export const formatCareerPathSentence = (
 
   const sectorOccupation1 = {
     businessSectorId: values.businessSectorId1?.value,
+    businessSector: {
+      id: values.businessSectorId1?.value,
+      name: values.businessSectorId1?.label,
+    },
     occupation: {
       prefix: OCCUPATIONS_PREFIXES[1].label,
       name: values.occupation1,

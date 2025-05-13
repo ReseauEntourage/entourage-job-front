@@ -1,7 +1,6 @@
 import { DefaultValues } from 'react-hook-form';
 import {
   BusinessSector,
-  Occupation,
   UserProfile,
   UserProfileSectorOccupation,
 } from 'src/api/types';
@@ -44,12 +43,11 @@ export const getCoachDefaultProfessionalValues = (
   ) as BusinessSector[];
   return {
     currentJob: currentJob || undefined,
-    businessSectorIds: businessSectors?.map(({ name, id }) => {
+    ...businessSectors?.map((businessSector, idx) => {
       return {
-        label: name,
-        value: id,
+        [`businessSectorId${idx}`]: businessSector.id,
       };
-    }),
+    }, {}),
     linkedinUrl: linkedinUrl || undefined,
   };
 };
@@ -61,34 +59,30 @@ export const getCandidateDefaultProfessionalValues = (
 > => {
   const { linkedinUrl, sectorOccupations } = userProfileParam;
 
-  const sortedSectorOccupations = sectorOccupations?.sort(
-    (so1, so2) => so1.order - so2.order
-  );
-  const sortedSectorOccupationsWithSector = sortedSectorOccupations?.filter(
-    (so) => !!so.businessSector
-  );
-  const sortedSectorOccupationsWithOccupation = sortedSectorOccupations?.filter(
-    (so) => !!so.occupation
-  );
-  const businessSectors = sortedSectorOccupationsWithSector?.map(
-    ({ businessSector }) => businessSector
-  ) as BusinessSector[];
+  const businessSectors = sectorOccupations
+    ? sectorOccupations
+        .filter((so) => so.businessSector)
+        .map(({ businessSector }) => businessSector)
+    : [];
+  const occupations = sectorOccupations
+    ? sectorOccupations
+        ?.filter((so) => so.occupation)
+        .map(({ occupation }) => occupation)
+    : [];
 
-  const occupations = sortedSectorOccupationsWithOccupation?.map(
-    ({ occupation }) => occupation
-  ) as Occupation[];
-
-  return {
-    ...occupations?.map((occupation, idx) => {
-      return {
-        [`occupation${idx}`]: occupation.name,
+  const data = {
+    ...businessSectors?.reduce((acc, businessSector, idx) => {
+      acc[`businessSectorId${idx}`] = {
+        value: businessSector?.id,
+        label: businessSector?.name,
       };
+      return acc;
     }, {}),
-    ...businessSectors?.map((businessSector, idx) => {
-      return {
-        [`BusinessSector${idx}`]: businessSector.name,
-      };
+    ...occupations?.reduce((acc, occupation, idx) => {
+      acc[`occupation${idx}`] = occupation?.name;
+      return acc;
     }, {}),
-    linkedinUrl: linkedinUrl || '',
+    linkedinUrl: linkedinUrl || undefined,
   };
+  return data;
 };
