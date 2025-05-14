@@ -106,25 +106,17 @@ export function ProfileCard({
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
-  const sortedSectorOccupations = useMemo(() => {
-    return (
-      sectorOccupations?.sort((so1, so2) => {
-        return so1.order - so2.order;
-      }) ?? []
-    );
-  }, [sectorOccupations]);
-
   const sortedBusinessSectors = useMemo(() => {
-    return sortedSectorOccupations
+    return sectorOccupations
       ?.filter((so) => !!so.businessSector)
       ?.map((so) => so.businessSector) as BusinessSector[];
-  }, [sortedSectorOccupations]);
+  }, [sectorOccupations]);
 
   const sortedOccupations = useMemo(() => {
-    return sortedSectorOccupations
+    return sectorOccupations
       ?.filter((so) => !!so.occupation)
       ?.map((so) => so.occupation) as Occupation[];
-  }, [sortedSectorOccupations]);
+  }, [sectorOccupations]);
 
   return (
     <Link

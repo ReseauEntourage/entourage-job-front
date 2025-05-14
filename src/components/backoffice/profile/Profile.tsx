@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { UserRoles } from '@/src/constants/users';
 import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
@@ -80,7 +81,12 @@ export const Profile = () => {
               role={selectedProfile.role}
               isAvailable={selectedProfile.isAvailable}
             />
-            <ProfileContracts contracts={selectedProfile.contracts} smallCard />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileContracts
+                contracts={selectedProfile.contracts}
+                smallCard
+              />
+            )}
             <ProfileInterests interests={selectedProfile.interests} smallCard />
             <ProfileLanguages languages={selectedProfile.languages} smallCard />
             <ProfileDocuments

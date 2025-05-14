@@ -17,17 +17,17 @@ import { H6 } from 'src/components/utils/Headings';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formatCareerPathSentence } from 'src/utils';
 
-export interface ProfilePersonalInformationsProps {
+export interface ParamProfessionalInformationsProps {
   isEditable?: boolean;
   sectorOccupations: UserProfileSectorOccupation[];
   smallCard?: boolean;
 }
 
-export const ProfilePersonalInformations = ({
+export const ParamProfessionalInformations = ({
   sectorOccupations,
   isEditable = false,
   smallCard = false,
-}: ProfilePersonalInformationsProps) => {
+}: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
   const { userProfile, role } = user;
 
@@ -46,7 +46,6 @@ export const ProfilePersonalInformations = ({
           getValuesToSend={(values) => {
             return {
               currentJob: values.currentJob,
-              networkBusinessSectors: values.businessSectorIds,
               linkedinUrl: values.linkedinUrl,
             };
           }}
@@ -58,12 +57,10 @@ export const ProfilePersonalInformations = ({
           defaultValues={getCandidateDefaultProfessionalValues(userProfile)}
           formSchema={formEditCandidateProfessionalInformation}
           user={user}
-          getValuesToSend={(values) => {
-            return {
-              ...formatCareerPathSentence(values),
-              linkedinUrl: values.linkedinUrl,
-            };
-          }}
+          getValuesToSend={(values) => ({
+            sectorOccupations: formatCareerPathSentence(values),
+            linkedinUrl: values.linkedinUrl,
+          })}
         />
       )
     );
@@ -71,7 +68,7 @@ export const ProfilePersonalInformations = ({
 
   return (
     <ProfilePartCard
-      title="Informations personnelles"
+      title="Informations professionnelles"
       isCompleted={isCompleted}
       isEditable={isEditable}
       ctaCallback={editModal}

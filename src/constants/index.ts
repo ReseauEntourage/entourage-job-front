@@ -48,22 +48,6 @@ export const CV_STATUS = {
   },
 } as const;
 
-export type OccupationsPrefixesType = 'dans' | 'comme';
-
-export const OCCUPATIONS_PREFIXES: {
-  label: OccupationsPrefixesType;
-  value: OccupationsPrefixesType;
-}[] = [
-  {
-    label: 'dans',
-    value: 'dans',
-  },
-  {
-    label: 'comme',
-    value: 'comme',
-  },
-];
-
 export type Contract =
   | 'cdi'
   | 'cdd'

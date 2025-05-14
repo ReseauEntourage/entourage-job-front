@@ -4,7 +4,7 @@ import { UserProfileSectorOccupation } from 'src/api/types';
 import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
-import { OCCUPATIONS_PREFIXES, CONTRACTS } from 'src/constants';
+import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {
@@ -23,17 +23,6 @@ export function formatParagraph(text: string, condense?: boolean) {
     );
   }
   return text;
-}
-
-export function getOccupationsLinkingSentence(occupations) {
-  return (
-    <>
-      {' '}
-      {occupations[0].prefix === occupations[1].prefix
-        ? 'ou'
-        : `${occupations[1].prefix || occupations[1].prefix}`}{' '}
-    </>
-  );
 }
 
 export function addSpaceToPrefixIfNeeded(prefix) {
@@ -84,8 +73,11 @@ export const formatCareerPathSentence = (
 ): UserProfileSectorOccupation[] => {
   const sectorOccupation0 = {
     businessSectorId: values.businessSectorId0?.value,
+    businessSector: {
+      id: values.businessSectorId0?.value,
+      name: values.businessSectorId0?.label,
+    },
     occupation: {
-      prefix: OCCUPATIONS_PREFIXES[1].label,
       name: values.occupation0,
     },
     order: 0,
@@ -93,8 +85,11 @@ export const formatCareerPathSentence = (
 
   const sectorOccupation1 = {
     businessSectorId: values.businessSectorId1?.value,
+    businessSector: {
+      id: values.businessSectorId1?.value,
+      name: values.businessSectorId1?.label,
+    },
     occupation: {
-      prefix: OCCUPATIONS_PREFIXES[1].label,
       name: values.occupation1,
     },
     order: 1,

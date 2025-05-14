@@ -2,7 +2,6 @@ import React from 'react';
 import { UserProfileSectorOccupation } from 'src/api/types';
 import { Text } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
-import { OCCUPATIONS_PREFIXES } from 'src/constants';
 
 interface ProfileCareerPathSentenceProps {
   sectorOccupations: UserProfileSectorOccupation[];
@@ -17,8 +16,7 @@ export const ProfileCareerPathSentence = ({
     if (sectorOccupations[index].occupation) {
       return (
         <>
-          {' '}
-          {OCCUPATIONS_PREFIXES[1].label}{' '}
+          {' comme '}
           <strong>{sectorOccupations[index].occupation?.name}</strong>
         </>
       );
@@ -35,17 +33,20 @@ export const ProfileCareerPathSentence = ({
   return (
     <>
       <Text>
-        J&apos;aimerais travailler {OCCUPATIONS_PREFIXES[0].label}{' '}
+        J&apos;aimerais travailler dans{' '}
         <Tag content={sectorOccupations[0].businessSector?.name} />
         {getOccupationIfExists(0)}
         {hasSecondPart && hasSameBusinessSector && (
-          <> et {sectorOccupations[1].occupation?.name}</>
+          <>
+            {' '}
+            et <strong>{sectorOccupations[1].occupation?.name}</strong>
+          </>
         )}
       </Text>
       {hasSecondPart && !hasSameBusinessSector && (
         <Text>
           {' '}
-          J&lsquo;aimerais travailler {OCCUPATIONS_PREFIXES[0].label}{' '}
+          J&lsquo;aimerais travailler dans{' '}
           <Tag content={sectorOccupations[1].businessSector?.name} />
           {getOccupationIfExists(1)}
         </Text>
