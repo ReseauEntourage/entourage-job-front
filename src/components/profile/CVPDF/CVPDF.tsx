@@ -162,9 +162,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                   />
                 </StyledCVPDFCareerPath>
               )}
-              {cv.story && (
+              {cv.introduction && (
                 <StyledCVPDFStory>
-                  <p>{cv.story}</p>
+                  <p>{cv.introduction}</p>
                 </StyledCVPDFStory>
               )}
               <StyledCVSkillTagContainer>

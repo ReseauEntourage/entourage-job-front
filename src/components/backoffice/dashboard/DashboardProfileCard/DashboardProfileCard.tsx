@@ -14,7 +14,7 @@ import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledDashboardCTAContainer,
-  StyledDashboardProfileCardDescription,
+  StyledDashboardProfileCardIntroduction,
   StyledDashboardProfileCardHelpList,
   StyledDashboardProfileCardHelpListEmptyState,
   StyledDashboardProfileCardHelps,
@@ -49,10 +49,10 @@ export const DashboardProfileCard = () => {
           )}
         </div>
       </StyledDashboardProfileCardPictureName>
-      {user.userProfile.description && (
-        <StyledDashboardProfileCardDescription>
-          {user.userProfile.description}
-        </StyledDashboardProfileCardDescription>
+      {user.userProfile.introduction && (
+        <StyledDashboardProfileCardIntroduction>
+          {user.userProfile.introduction}
+        </StyledDashboardProfileCardIntroduction>
       )}
 
       {user.userProfile.userProfileNudges && (

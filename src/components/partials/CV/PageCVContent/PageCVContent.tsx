@@ -132,11 +132,11 @@ export const PageCVContent = ({
                 <QuoteRightIcon />
               </p>
             )}
-            {cv.story && (
+            {cv.introduction && (
               <StyledCVPageContentStory
                 className={!isDesktop && isStoryHidden ? 'mobile-hidden' : ''}
               >
-                <p className="">{cv.story}</p>
+                <p className="">{cv.introduction}</p>
                 {!isDesktop && isStoryHidden && (
                   <div className="seeMore">
                     <div onClick={() => setIsStoryHidden(!isStoryHidden)}>

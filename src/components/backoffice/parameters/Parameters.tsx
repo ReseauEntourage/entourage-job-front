@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ParamProfessionalInformations } from '@/src/components/profile/ProfilePartCards/ParamProfessionalInformations/ParamProfessionalInformations';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
+import { ProfileDescription } from '@/src/components/profile/ProfilePartCards/ProfileDescription/ProfileDescription';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -23,7 +24,6 @@ import { ProfileContracts } from 'src/components/profile/ProfilePartCards/Profil
 import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
 import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
 import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
-import { ProfileGeneratedDescription } from 'src/components/profile/ProfilePartCards/ProfileGeneratedDescription/ProfileGeneratedDescription';
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
@@ -62,7 +62,7 @@ export const Parameters = () => {
         id={user.id}
         firstName={user.firstName}
         lastName={user.lastName}
-        description={user.userProfile.description ?? ''}
+        introduction={user.userProfile.introduction ?? ''}
         role={user.role}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
@@ -82,7 +82,7 @@ export const Parameters = () => {
                 sectorOccupations={user.userProfile.sectorOccupations ?? []}
                 isEditable
               />
-              <ProfileGeneratedDescription
+              <ProfileDescription
                 isEditable
                 description={user.userProfile.description}
               />

@@ -1,7 +1,6 @@
 import { HelpValue } from '@/src/constants/nudges';
 import { Genders } from '../constants/genders';
 import {
-  CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
@@ -125,7 +124,7 @@ export interface Formation {
 }
 
 export type Skill = {
-  id: string;
+  id?: string;
   name: string;
   order: number;
 };
@@ -175,7 +174,7 @@ export type Contract = {
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
-  story: string | null;
+  introduction: string | null;
   department: Department;
   isAvailable: boolean;
   unavailabilityReason: string | null;
@@ -267,7 +266,7 @@ export interface CV {
     endOfContract?: string;
   };
   catchphrase: string;
-  story: string;
+  introduction: string;
   locations: {
     name: Department;
     order: number;
@@ -403,40 +402,6 @@ export type ContactCompany = {
   heardAbout?: HeardAboutValue;
 };
 
-export type ContactCandidate = {
-  workerFirstName: string;
-  workerLastName: string;
-  structure: string;
-  workerPosition?: string;
-  workerEmail: string;
-  workerPhone: string;
-  firstName: string;
-  lastName: string;
-  helpWith: CandidateHelpWithValue[];
-  gender: Genders;
-  birthDate?: string;
-  address?: string;
-  postalCode: string;
-  city: string;
-  phone: string;
-  email?: string;
-  registeredUnemploymentOffice: string;
-  administrativeSituation?: string;
-  workingRight: string;
-  accommodation: string;
-  professionalSituation: string;
-  resources?: string;
-  domiciliation: string;
-  socialSecurity: string;
-  handicapped?: string;
-  bankAccount: string;
-  businessSectors?: string[];
-  description: string;
-  heardAbout: string;
-  diagnostic?: string;
-  contactWithCoach?: boolean;
-};
-
 export type ContactNewsletter = {
   email: string;
   zone?: string;
@@ -548,7 +513,7 @@ export type PublicProfile = {
   department: Department;
   currentJob: string;
   description: string;
-  story: string;
+  introduction: string;
   isAvailable: boolean;
   userProfileNudges: UserProfileNudge[];
   sectorOccupations: UserProfileSectorOccupation[];
