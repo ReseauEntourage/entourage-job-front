@@ -1,7 +1,6 @@
 import { HelpValue } from '@/src/constants/nudges';
 import { Genders } from '../constants/genders';
 import {
-  OccupationsPrefixesType,
   CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
@@ -85,7 +84,6 @@ export interface BusinessSector {
 export type Occupation = {
   id?: string;
   name: string;
-  prefix: OccupationsPrefixesType;
 };
 
 export interface Review {
