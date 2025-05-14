@@ -32,10 +32,7 @@ export const getCoachDefaultProfessionalValues = (
 > => {
   const { sectorOccupations, currentJob, linkedinUrl } = userProfileParam;
 
-  const sortedSectorOccupations = sectorOccupations?.sort(
-    (so1, so2) => so1.order - so2.order
-  );
-  const sortedSectorOccupationsWithSector = sortedSectorOccupations?.filter(
+  const sortedSectorOccupationsWithSector = sectorOccupations?.filter(
     (so) => !!so.businessSector
   );
   const businessSectors = sortedSectorOccupationsWithSector?.map(
