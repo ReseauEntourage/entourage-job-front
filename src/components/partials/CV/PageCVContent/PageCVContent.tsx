@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { CVExperienceOrFormation } from '@/src/components/profile/CVExperienceOrFormation/CVExperienceOrFormation';
+import {
+  StyledCVSkillTagContainer,
+  StyledSkillTag,
+} from '@/src/components/profile/CVExperienceOrFormation/CVExperienceOrFormation.styles';
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
@@ -24,18 +29,15 @@ import {
   StyledCVPageContentStory,
   StyledCVProfilePicture,
   StyledCVProfilePictureContainer,
-  StyledCVSkillTagContainer,
   StyledHeaderDetails,
   StyledLeftColumn,
   StyledLeftQuoteContainer,
   StyledRightColumn,
   StyledRightQuoteContainer,
   StyledShareContainer,
-  StyledSkillTag,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { CVCareerPathSentence } from 'src/components/profile';
-import { CVExperienceOrFormation } from 'src/components/profile/CVExperienceOrFormation';
 import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -376,8 +378,8 @@ export const PageCVContent = ({
                           key={experience.id}
                           title={experience.title}
                           description={experience.description}
-                          dateStart={experience.dateStart}
-                          dateEnd={experience.dateEnd}
+                          startDate={experience.startDate}
+                          endDate={experience.endDate}
                           location={experience.location}
                           structure={experience.company}
                           skills={experience.skills}
@@ -424,8 +426,8 @@ export const PageCVContent = ({
                           key={formation.id}
                           title={formation.title}
                           description={formation.description}
-                          dateStart={formation.dateStart}
-                          dateEnd={formation.dateEnd}
+                          startDate={formation.startDate}
+                          endDate={formation.endDate}
                           location={formation.location}
                           structure={formation.institution}
                           skills={formation.skills}

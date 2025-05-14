@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { IlluMalette } from 'assets/icons/icons';
-import { CVExperienceOrFormation } from '../../CVExperienceOrFormation';
+import { CVExperienceOrFormation } from '../../CVExperienceOrFormation/CVExperienceOrFormation';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Formation } from 'src/api/types';
 import { Text } from 'src/components/utils';
@@ -71,8 +71,8 @@ export const ProfileFormations = ({
               key={formation.id}
               title={formation.title}
               description={formation.description}
-              dateStart={formation.dateStart}
-              dateEnd={formation.dateEnd}
+              startDate={formation.startDate}
+              endDate={formation.endDate}
               location={formation.location}
               structure={formation.institution}
               skills={formation.skills}

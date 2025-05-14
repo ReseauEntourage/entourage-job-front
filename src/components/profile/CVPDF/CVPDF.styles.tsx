@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import {
+  StyledCVExperience,
   StyledCVExperienceDate,
   StyledCVExperienceDescription,
-  StyledCVExperience,
+  StyledSkillTag,
+} from '../CVExperienceOrFormation/CVExperienceOrFormation.styles';
+import {
   StyledCVPageContentDetailsContainer,
   StyledCVPageContentExperience,
   StyledCVPageContentHeader,
@@ -11,7 +14,6 @@ import {
   StyledCVPageContentStory,
   StyledCVProfilePicture,
   StyledCVProfilePictureContainer,
-  StyledSkillTag,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { COLORS } from 'src/constants/styles';
 
