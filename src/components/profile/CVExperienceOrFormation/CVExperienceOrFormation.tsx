@@ -1,24 +1,25 @@
 import React from 'react';
-import {
-  StyledCVExperienceDate,
-  StyledCVExperienceDateMobile,
-  StyledCVExperienceDescription,
-  StyledCVExperience,
-  StyledCVSkillTagContainer,
-  StyledSkillTag,
-} from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { ButtonIcon } from '../../utils';
+import { LucidIcon } from '../../utils/Icons/LucidIcon';
+import { CVDate } from '../CVDate';
 import { H5 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
-import { CVDate } from './CVDate';
+import {
+  StyledCVExperience,
+  StyledCVExperienceDate,
+  StyledCVExperienceDateMobile,
+  StyledCVExperienceDescription,
+  StyledCVSkillTagContainer,
+  StyledEditToolsContainer,
+  StyledSkillTag,
+} from './CVExperienceOrFormation.styles';
 
 interface ExperienceOrFormationProps {
   title: string;
   description?: string;
-
-  dateStart?: Date;
-  dateEnd?: Date;
-
+  startDate?: string;
+  endDate?: string;
   location?: string;
   structure?: string;
   skills: {
@@ -26,16 +27,22 @@ interface ExperienceOrFormationProps {
     name: string;
     order: number;
   }[];
+  isEditable?: boolean;
+  editItem?: () => void;
+  deleteItem?: () => void;
 }
 
 export function CVExperienceOrFormation({
-  dateStart,
-  dateEnd,
+  startDate,
+  endDate,
   title,
   structure,
   location,
   description,
   skills,
+  isEditable = false,
+  editItem,
+  deleteItem,
 }: ExperienceOrFormationProps) {
   const isDesktop = useIsDesktop();
 
@@ -43,8 +50,8 @@ export function CVExperienceOrFormation({
     <StyledCVExperience>
       {isDesktop && (
         <StyledCVExperienceDate>
-          {dateStart && (
-            <CVDate experienceOrFormation={{ dateStart, dateEnd }} />
+          {startDate && (
+            <CVDate experienceOrFormation={{ startDate, endDate }} />
           )}
         </StyledCVExperienceDate>
       )}
@@ -52,8 +59,8 @@ export function CVExperienceOrFormation({
         {title && <H5 title={title} color={COLORS.black} />}
         {!isDesktop && (
           <StyledCVExperienceDateMobile>
-            {dateStart && (
-              <CVDate experienceOrFormation={{ dateStart, dateEnd }} isMobile />
+            {startDate && (
+              <CVDate experienceOrFormation={{ startDate, endDate }} isMobile />
             )}
           </StyledCVExperienceDateMobile>
         )}
@@ -71,6 +78,22 @@ export function CVExperienceOrFormation({
           })}
         </StyledCVSkillTagContainer>
       </StyledCVExperienceDescription>
+      {isEditable && (
+        <StyledEditToolsContainer>
+          <ButtonIcon
+            icon={<LucidIcon name="Pencil" />}
+            onClick={() => {
+              if (editItem) editItem();
+            }}
+          />
+          <ButtonIcon
+            icon={<LucidIcon name="Trash" />}
+            onClick={() => {
+              if (deleteItem) deleteItem();
+            }}
+          />
+        </StyledEditToolsContainer>
+      )}
     </StyledCVExperience>
   );
 }

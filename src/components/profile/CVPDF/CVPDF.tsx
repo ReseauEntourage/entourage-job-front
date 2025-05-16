@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
+import { StyledCVSkillTagContainer } from '../CVExperienceOrFormation/CVExperienceOrFormation.styles';
 import { CV, Experience, Formation } from 'src/api/types';
 import {
-  StyledCVSkillTagContainer,
   StyledLeftColumn,
   StyledRightColumn,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';

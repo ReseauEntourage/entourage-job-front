@@ -154,10 +154,11 @@ function* updateProfileRequestedSaga(
 ) {
   const { userId, userProfile } = action.payload;
   try {
-    yield* call(() => Api.putUserProfile(userId, userProfile));
+    const { data } = yield* call(() => Api.putUserProfile(userId, userProfile));
+
     yield* put(
       updateProfileSucceeded({
-        userProfile,
+        userProfile: data,
       })
     );
   } catch (error) {

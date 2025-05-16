@@ -96,8 +96,8 @@ export interface Experience {
   id?: string;
   description?: string;
   title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
+  startDate?: string;
+  endDate?: string;
   company?: string;
   location?: string;
   order?: number;
@@ -112,8 +112,8 @@ export interface Formation {
   id?: string;
   description?: string;
   title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
+  startDate?: string;
+  endDate?: string;
   institution?: string;
   location?: string;
   skills: {
