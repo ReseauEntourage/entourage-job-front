@@ -114,6 +114,16 @@ export const ProfileExperiences = ({
     return undefined;
   }, [editExperience, isEditable, isOwnProfile, suggestHelpToComplete]);
 
+  const ctaTitle = useMemo(() => {
+    if (!isOwnProfile && !isCompleted) {
+      return `Accompagner ${userFirstName} dans la valorisation de ses expériences`;
+    }
+    if (isOwnProfile && isEditable) {
+      return 'Ajouter';
+    }
+    return null;
+  }, [isOwnProfile, isCompleted, isEditable, userFirstName]);
+
   return (
     <ProfilePartCard
       title="Expériences et compétences"
@@ -122,11 +132,7 @@ export const ProfileExperiences = ({
       // iaGenerated
       smallCard={smallCard}
       fallback={fallback}
-      ctaTitle={
-        !isOwnProfile && !isCompleted
-          ? `Accompagner ${userFirstName} dans la valorisation de ses expériences`
-          : 'Ajouter'
-      }
+      ctaTitle={ctaTitle}
       ctaCallback={() => ctaCallback()}
     >
       <StyledProfileExperiencesList>

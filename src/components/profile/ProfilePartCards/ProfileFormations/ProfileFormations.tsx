@@ -114,6 +114,16 @@ export const ProfileFormations = ({
     return undefined;
   }, [editFormation, isEditable, isOwnProfile, suggestHelpToComplete]);
 
+  const ctaTitle = useMemo(() => {
+    if (!isOwnProfile && !isCompleted) {
+      return `Accompagner ${userFirstName} dans la valorisation de ses formations`;
+    }
+    if (isOwnProfile && isEditable) {
+      return 'Ajouter';
+    }
+    return null;
+  }, [isOwnProfile, isCompleted, isEditable, userFirstName]);
+
   return (
     <ProfilePartCard
       title="Formations"
@@ -122,12 +132,8 @@ export const ProfileFormations = ({
       // iaGenerated
       smallCard={smallCard}
       fallback={fallback}
-      ctaTitle={
-        !isOwnProfile && !isCompleted
-          ? `Accompagner ${userFirstName} dans la valorisation de ses expériences`
-          : 'Ajouter'
-      }
-      ctaCallback={() => ctaCallback()}
+      ctaTitle={ctaTitle}
+      ctaCallback={ctaCallback}
     >
       <StyledProfileFormationsList>
         {formations.map((formation: Formation) => {
