@@ -60,7 +60,7 @@ export const formEditExperience: FormSchema<{
       component: 'select-creatable',
       isMulti: true,
       maxChar: 30,
-      maxItems: 3,
+      maxItems: 5,
     },
   ],
 };

@@ -78,7 +78,6 @@ export const ProfileExperiences = ({
                   description: values.description || undefined,
                   skills:
                     values.skills?.map((skill) => ({
-                      id: skill.value,
                       name: skill.label,
                     })) || [],
                 } as Experience,
@@ -107,11 +106,13 @@ export const ProfileExperiences = ({
 
   const ctaCallback = useCallback(() => {
     if (isEditable) {
-      editExperience();
-    } else if (!isOwnProfile) {
-      suggestHelpToComplete();
+      return editExperience();
     }
-  }, [isEditable, isOwnProfile, editExperience, suggestHelpToComplete]);
+    if (!isOwnProfile) {
+      return suggestHelpToComplete();
+    }
+    return undefined;
+  }, [editExperience, isEditable, isOwnProfile, suggestHelpToComplete]);
 
   return (
     <ProfilePartCard
@@ -126,7 +127,7 @@ export const ProfileExperiences = ({
           ? `Accompagner ${userFirstName} dans la valorisation de ses expériences`
           : 'Ajouter'
       }
-      ctaCallback={ctaCallback}
+      ctaCallback={() => ctaCallback()}
     >
       <StyledProfileExperiencesList>
         {experiences.map((experience: Experience) => {

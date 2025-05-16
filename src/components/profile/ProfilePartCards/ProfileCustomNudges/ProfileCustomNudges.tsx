@@ -39,17 +39,13 @@ export const ProfileCustomNudges = ({
   };
 
   const title = useMemo(() => {
-    if (ownProfile && role === UserRoles.CANDIDATE) {
+    if (isEditable && ownProfile && role === UserRoles.CANDIDATE) {
       return 'Détaillez vos besoins';
     }
     return role === UserRoles.CANDIDATE
       ? `Demandes de ${firstName}`
       : 'Détaillez vos offres';
-  }, [firstName, role, ownProfile]);
-
-  if (!isCompleted && !isEditable) {
-    return null;
-  }
+  }, [isEditable, ownProfile, role, firstName]);
 
   return (
     <ProfilePartCard

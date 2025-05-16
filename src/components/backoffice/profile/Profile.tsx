@@ -60,12 +60,12 @@ export const Profile = () => {
             <ProfileExperiences
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              experiences={[]}
+              experiences={selectedProfile.experiences}
             />
             <ProfileFormations
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              formations={[]}
+              formations={selectedProfile.formations}
             />
             <ProfileReviews
               userId={selectedProfile.id}
