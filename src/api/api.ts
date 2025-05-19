@@ -125,6 +125,10 @@ export class APIHandler {
     return this.get('/cv/published');
   }
 
+  getGenerateProfileFromCV(): Promise<AxiosResponse> {
+    return this.get('/external-cv/generate-profile-from-cv');
+  }
+
   // post
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });

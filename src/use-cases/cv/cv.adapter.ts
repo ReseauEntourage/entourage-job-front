@@ -5,3 +5,7 @@ export const fetchCVAdapter = createRequestAdapter('fetchCV').withPayloads<
   void,
   CV
 >();
+
+export const generateProfileFromCVAdapter = createRequestAdapter(
+  'generateProfileFromCV'
+).withPayloads<void>();

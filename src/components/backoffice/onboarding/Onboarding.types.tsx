@@ -10,6 +10,7 @@ import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter'
 import { DocumentNames } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
+import { OnboardingAI } from './Onboarding/forms/OnboardingAI';
 import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
 import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
@@ -200,8 +201,10 @@ export const OnboardingStepContents: {
   5: {
     [UserRoles.CANDIDATE]: {
       title: 'Félicitations ! Vous venez de finaliser votre inscription',
+      content: <OnboardingAI />,
       form: formOnboardingCandidateAI,
-      skippedBy: ({ userProfile }: User) => !userProfile.hasExternalCv,
+
+      // skippedBy: ({ userProfile }: User) => !userProfile.hasExternalCv,
     },
   },
 };
