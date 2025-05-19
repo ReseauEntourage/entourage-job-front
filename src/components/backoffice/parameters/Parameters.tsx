@@ -92,10 +92,10 @@ export const Parameters = () => {
               />
               <ProfileCustomNudges
                 isEditable
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                customNudges={user.userProfile.customNudges || []}
                 firstName={user.firstName}
                 role={user.role}
-                id={user.id}
+                userId={user.id}
                 ownProfile
               />
               <ProfileExperiences
@@ -148,7 +148,7 @@ export const Parameters = () => {
               <ProfileContactPreferences isEditable smallCard />
               <ProfileNudges
                 userRole={user.role}
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                nudges={user.userProfile.nudges || []}
                 isEditable
                 smallCard
               />

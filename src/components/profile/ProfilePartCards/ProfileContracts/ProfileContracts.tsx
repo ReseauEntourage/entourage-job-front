@@ -28,6 +28,8 @@ export const ProfileContracts = ({
   const [allContracts, setAllContracts] = useState<Contract[]>([]);
   const [items, setItems] = useState<ContractItem[]>([]);
 
+  const isCompleted = contracts?.length > 0;
+
   const fetchAllContracts = async () => {
     try {
       const { data } = await Api.getAllContracts({
@@ -62,8 +64,6 @@ export const ProfileContracts = ({
       setItems(generateItems(allContracts));
     }
   }, [allContracts, generateItems]);
-
-  const isCompleted = contracts?.length > 0;
 
   if (!isEditable && !isCompleted) {
     return null;

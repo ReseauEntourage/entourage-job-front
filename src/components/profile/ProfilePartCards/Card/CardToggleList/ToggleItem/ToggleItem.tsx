@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from '@/src/components/utils';
 import { ToggleSwitch } from '@/src/components/utils/Inputs/ToggleSwitch/ToggleSwitch';
 import {
   StyledToggleItem,
@@ -24,7 +25,7 @@ export const ToggleItem = ({
     <StyledToggleItemContainer>
       {icon}
       <StyledToggleItem>
-        {name}
+        <Text>{name}</Text>
         {isEditable && <ToggleSwitch checked={checked} onChange={onChange} />}
       </StyledToggleItem>
     </StyledToggleItemContainer>

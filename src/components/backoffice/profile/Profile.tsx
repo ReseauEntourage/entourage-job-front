@@ -51,10 +51,10 @@ export const Profile = () => {
               skills={selectedProfile.skills}
             />
             <ProfileCustomNudges
-              userProfileNudges={selectedProfile.userProfileNudges}
+              customNudges={selectedProfile.customNudges}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
-              id={selectedProfile.id}
+              userId={selectedProfile.id}
               ownProfile
             />
             <ProfileExperiences
@@ -99,7 +99,7 @@ export const Profile = () => {
             <ProfileContactPreferences smallCard />
             <ProfileNudges
               userRole={selectedProfile.role}
-              userProfileNudges={selectedProfile.userProfileNudges}
+              nudges={selectedProfile.nudges}
               smallCard
             />
           </StyledProfileRightColumn>

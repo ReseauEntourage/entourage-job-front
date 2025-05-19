@@ -28,32 +28,27 @@ export const Candidate = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.CANDIDATE,
-    userProfileNudges: [
+    nudges: [
       {
-        id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
-        content: null,
-        createdAt: '2025-04-14T00:00:00.000Z',
-        nudge: {
-          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-          value: 'event',
-          nameRequest:
-            'Se rencontrer et échanger avec les membres de la communauté',
-          nameOffer:
-            'Se rencontrer lors d’événements avec les membres de la communauté',
-          order: 4,
-        },
+        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+        value: 'event',
+        nameRequest:
+          'Se rencontrer et échanger avec les membres de la communauté',
+        nameOffer:
+          'Se rencontrer lors d’événements avec les membres de la communauté',
+        order: 4,
       },
     ],
     isAvailable: true,
     sectorOccupations: [
       {
         businessSector: { name: 'Informatique et digital' },
-        occupation: { name: 'développeur', prefix: 'comme' },
+        occupation: { name: 'développeur' },
         order: 0,
       },
       {
         businessSector: { name: 'Bâtiment' },
-        occupation: { name: 'ouvrier', prefix: 'comme' },
+        occupation: { name: 'ouvrier' },
         order: 0,
       },
     ],
@@ -68,31 +63,26 @@ export const Coach = {
     lastName: 'Doe',
     role: UserRoles.COACH,
     isAvailable: true,
-    userProfileNudges: [
+    nudges: [
       {
-        id: '181a0e77-8e5f-4d02-ab1d-900f70d8e2ff',
-        content: null,
-        createdAt: '2025-04-14T00:00:00.000Z',
-        nudge: {
-          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-          value: 'event',
-          nameRequest:
-            'Se rencontrer et échanger avec les membres de la communauté',
-          nameOffer:
-            'Se rencontrer lors d’événements avec les membres de la communauté',
-          order: 4,
-        },
+        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+        value: 'event',
+        nameRequest:
+          'Se rencontrer et échanger avec les membres de la communauté',
+        nameOffer:
+          'Se rencontrer lors d’événements avec les membres de la communauté',
+        order: 4,
       },
     ],
     sectorOccupations: [
       {
         businessSector: { name: 'Informatique et digital' },
-        occupation: { name: 'développeur', prefix: 'comme' },
+        occupation: { name: 'développeur' },
         order: 0,
       },
       {
         businessSector: { name: 'Bâtiment' },
-        occupation: { name: 'ouvrier', prefix: 'comme' },
+        occupation: { name: 'ouvrier' },
         order: 0,
       },
     ],
