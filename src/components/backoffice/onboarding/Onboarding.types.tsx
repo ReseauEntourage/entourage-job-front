@@ -203,7 +203,8 @@ export const OnboardingStepContents: {
       title: 'Félicitations ! Vous venez de finaliser votre inscription',
       content: <OnboardingAI />,
       form: formOnboardingCandidateAI,
-      skippedBy: ({ userProfile }: User) => !userProfile.hasExternalCv,
+
+      // skippedBy: ({ userProfile }: User) => !userProfile.hasExternalCv,
     },
   },
 };
