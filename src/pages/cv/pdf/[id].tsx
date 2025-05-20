@@ -38,7 +38,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
       title={`${cv.user.candidat.firstName} - Entourage Pro`}
       metaTitle={`Aidez ${cv.user.candidat.firstName} en partageant son CV.`}
       metaUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}${router.asPath}`}
-      metaDescription={cv.story}
+      metaDescription={cv.introduction}
       metaImage={urlImg}
       metaType="profile"
     >

@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProfileNudge, UserProfileSectorOccupation } from 'src/api/types';
+import { Nudge, UserProfileSectorOccupation } from 'src/api/types';
 import { CardListItem } from 'src/components/utils/CardList';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { Department } from 'src/constants/departements';
@@ -10,7 +10,7 @@ interface DirectoryItemProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  userProfileNudges?: UserProfileNudge[];
+  nudges?: Nudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   department: Department;
   job?: string;
@@ -24,7 +24,7 @@ export function DirectoryItem({
   lastName,
   role,
   department,
-  userProfileNudges,
+  nudges,
   sectorOccupations,
   job,
   isAvailable,
@@ -38,7 +38,7 @@ export function DirectoryItem({
         lastName={lastName}
         role={role}
         department={department}
-        userProfileNudges={userProfileNudges}
+        nudges={nudges}
         sectorOccupations={sectorOccupations}
         job={job}
         isAvailable={isAvailable}
