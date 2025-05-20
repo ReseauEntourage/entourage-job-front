@@ -19,15 +19,10 @@ export const formPersonalDataAsCandidate: FormSchema<{
   newEmail0: string;
   newEmail1: string;
   department: FilterConstant<Department>;
+  introduction: string;
 }> = {
   id: 'form-personal-data',
   fields: [
-    {
-      id: 'nameLabel',
-      name: 'nameLabel',
-      title: 'Modifier mon identité',
-      component: 'heading',
-    },
     {
       id: 'firstName',
       name: 'firstName',
@@ -41,12 +36,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
       component: 'text-input',
       title: 'Nom*',
       isRequired: true,
-    },
-    {
-      id: 'mailLabel',
-      name: 'mailLabel',
-      title: "Modifier l'adresse mail",
-      component: 'heading',
     },
     {
       id: 'oldEmail',
@@ -80,12 +69,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
       },
     },
     {
-      id: 'phoneLabel',
-      name: 'phoneLabel',
-      title: 'Modifier le numéro de téléphone',
-      component: 'heading',
-    },
-    {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
@@ -99,12 +82,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
           message: 'Numéro de téléphone invalide',
         },
       ],
-    },
-    {
-      id: 'addressLabel',
-      name: 'addressLabel',
-      title: "Modifier l'adresse postale",
-      component: 'heading',
     },
     {
       id: 'department',
@@ -121,6 +98,12 @@ export const formPersonalDataAsCandidate: FormSchema<{
       component: 'text-input',
       title: 'Tapez votre adresse postale',
     },
+    {
+      id: 'introduction',
+      name: 'introduction',
+      component: 'text-input',
+      title: 'Tapez votre courte présentation',
+    },
   ],
 };
 
@@ -132,15 +115,10 @@ export const formPersonalDataAsCoach: FormSchema<{
   newEmail0: string;
   newEmail1: string;
   department: FilterConstant<Department>;
+  introduction: string;
 }> = {
   id: 'form-personal-data',
   fields: [
-    {
-      id: 'nameLabel',
-      name: 'nameLabel',
-      title: 'Modifier mon identité',
-      component: 'heading',
-    },
     {
       id: 'firstName',
       name: 'firstName',
@@ -227,6 +205,12 @@ export const formPersonalDataAsCoach: FormSchema<{
       options: DEPARTMENTS_FILTERS,
       isRequired: true,
       isMulti: false,
+    },
+    {
+      id: 'introduction',
+      name: 'introduction',
+      component: 'text-input',
+      title: 'Tapez votre courte présentation',
     },
   ],
 };

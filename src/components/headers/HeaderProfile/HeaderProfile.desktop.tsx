@@ -132,7 +132,7 @@ export const HeaderProfileDesktop = ({
                   {shouldShowAllProfile && (
                     <AvailabilityTag isAvailable={isAvailable} />
                   )}
-                  <UserActions userId={id} />
+                  <UserActions userId={id} userRole={role} />
                 </StyledHeaderAvailibilityAndUserActions>
               </StyledHeaderProfileNameContainer>
               {shouldShowAllProfile && (
