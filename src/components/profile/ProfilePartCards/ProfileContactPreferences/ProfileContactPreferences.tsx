@@ -14,8 +14,8 @@ export interface ProfileContactPreferencesProps {
 }
 
 const illuProps = {
-  width: 50,
-  height: 50,
+  width: 40,
+  height: 40,
 };
 
 const allContactWays = [

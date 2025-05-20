@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { UserRoles } from '@/src/constants/users';
 import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
@@ -50,21 +51,21 @@ export const Profile = () => {
               skills={selectedProfile.skills}
             />
             <ProfileCustomNudges
-              userProfileNudges={selectedProfile.userProfileNudges}
+              customNudges={selectedProfile.customNudges}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
-              id={selectedProfile.id}
+              userId={selectedProfile.id}
               ownProfile
             />
             <ProfileExperiences
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              experiences={[]}
+              experiences={selectedProfile.experiences}
             />
             <ProfileFormations
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              formations={[]}
+              formations={selectedProfile.formations}
             />
             <ProfileReviews
               userId={selectedProfile.id}
@@ -80,7 +81,12 @@ export const Profile = () => {
               role={selectedProfile.role}
               isAvailable={selectedProfile.isAvailable}
             />
-            <ProfileContracts contracts={selectedProfile.contracts} smallCard />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileContracts
+                contracts={selectedProfile.contracts}
+                smallCard
+              />
+            )}
             <ProfileInterests interests={selectedProfile.interests} smallCard />
             <ProfileLanguages languages={selectedProfile.languages} smallCard />
             <ProfileDocuments
@@ -93,7 +99,7 @@ export const Profile = () => {
             <ProfileContactPreferences smallCard />
             <ProfileNudges
               userRole={selectedProfile.role}
-              userProfileNudges={selectedProfile.userProfileNudges}
+              nudges={selectedProfile.nudges}
               smallCard
             />
           </StyledProfileRightColumn>

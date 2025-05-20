@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ParamProfessionalInformations } from '@/src/components/profile/ProfilePartCards/ParamProfessionalInformations/ParamProfessionalInformations';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
 import { ProfileDescription } from '@/src/components/profile/ProfilePartCards/ProfileDescription/ProfileDescription';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import {
   currentUserActions,
@@ -25,13 +27,12 @@ import { ProfileFormations } from 'src/components/profile/ProfilePartCards/Profi
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
-import { ProfilePersonalInformations } from 'src/components/profile/ProfilePartCards/ProfilePersonalInformations/ProfilePersonalInformations';
 import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
+// import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
 import {
   StyledParametersLeftColumn,
   StyledParametersRightColumn,
@@ -72,12 +73,12 @@ export const Parameters = () => {
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
-          <InviteToUploadCv />
+          {/* <InviteToUploadCv /> */}
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledParametersLeftColumn
               className={`${isDesktop ? '' : 'mobile'}`}
             >
-              <ProfilePersonalInformations
+              <ParamProfessionalInformations
                 sectorOccupations={user.userProfile.sectorOccupations ?? []}
                 isEditable
               />
@@ -91,10 +92,10 @@ export const Parameters = () => {
               />
               <ProfileCustomNudges
                 isEditable
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                customNudges={user.userProfile.customNudges || []}
                 firstName={user.firstName}
                 role={user.role}
-                id={user.id}
+                userId={user.id}
                 ownProfile
               />
               <ProfileExperiences
@@ -137,15 +138,17 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
-              <ProfileContracts
-                contracts={user.userProfile.contracts}
-                isEditable
-                smallCard
-              />
+              {user.role === UserRoles.CANDIDATE && (
+                <ProfileContracts
+                  contracts={user.userProfile.contracts}
+                  isEditable
+                  smallCard
+                />
+              )}
               <ProfileContactPreferences isEditable smallCard />
               <ProfileNudges
                 userRole={user.role}
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                nudges={user.userProfile.nudges || []}
                 isEditable
                 smallCard
               />

@@ -7,9 +7,9 @@ import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../Button';
 import {
   BusinessSector,
+  Nudge,
   Occupation,
   UserCandidateWithUsers,
-  UserProfileNudge,
   UserProfileSectorOccupation,
 } from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
@@ -54,7 +54,7 @@ export interface ProfileCardProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  userProfileNudges?: UserProfileNudge[];
+  nudges?: Nudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
@@ -92,7 +92,7 @@ export function ProfileCard({
   lastName,
   role,
   department,
-  userProfileNudges,
+  nudges,
   sectorOccupations,
   userCandidate,
   isAvailable,
@@ -106,25 +106,17 @@ export function ProfileCard({
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
-  const sortedSectorOccupations = useMemo(() => {
-    return (
-      sectorOccupations?.sort((so1, so2) => {
-        return so1.order - so2.order;
-      }) ?? []
-    );
-  }, [sectorOccupations]);
-
   const sortedBusinessSectors = useMemo(() => {
-    return sortedSectorOccupations
+    return sectorOccupations
       ?.filter((so) => !!so.businessSector)
       ?.map((so) => so.businessSector) as BusinessSector[];
-  }, [sortedSectorOccupations]);
+  }, [sectorOccupations]);
 
   const sortedOccupations = useMemo(() => {
-    return sortedSectorOccupations
+    return sectorOccupations
       ?.filter((so) => !!so.occupation)
       ?.map((so) => so.occupation) as Occupation[];
-  }, [sortedSectorOccupations]);
+  }, [sectorOccupations]);
 
   return (
     <Link
@@ -234,8 +226,8 @@ export function ProfileCard({
                 <Text color="darkGray">{labels.helps}</Text>
               </StyledProfileCardLabel>
               <StyledProfileCardHelps>
-                {userProfileNudges && userProfileNudges?.length > 0 ? (
-                  userProfileNudges.map(({ nudge }) => {
+                {nudges && nudges?.length > 0 ? (
+                  nudges.map((nudge) => {
                     const nudgeDetails = ProfileHelps.find(
                       (n) => nudge?.value === n.value
                     );
