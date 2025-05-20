@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Nudge } from '@/src/api/types';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
@@ -39,6 +40,7 @@ export function* createUserRequestedSaga() {
     occupation0,
     occupation1,
     organizationId,
+    nudgeIds,
     ...flattenedData
   } = flattenRegistrationDataByRole(data, selectedRole);
 
@@ -58,7 +60,11 @@ export function* createUserRequestedSaga() {
         }),
         department: flattenedData.department.value,
         organizationId: organizationId ? organizationId.value : undefined,
-        nudgeIds: flattenedData.nudgeIds ? flattenedData.nudgeIds : undefined,
+        nudges: nudgeIds.map((id) => {
+          return {
+            id,
+          } as Nudge;
+        }),
         utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
         utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
         utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,

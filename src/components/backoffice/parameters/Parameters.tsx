@@ -32,7 +32,7 @@ import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSk
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
+// import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
 import {
   StyledParametersLeftColumn,
   StyledParametersRightColumn,
@@ -73,7 +73,7 @@ export const Parameters = () => {
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
-          <InviteToUploadCv />
+          {/* <InviteToUploadCv /> */}
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledParametersLeftColumn
               className={`${isDesktop ? '' : 'mobile'}`}
@@ -92,10 +92,10 @@ export const Parameters = () => {
               />
               <ProfileCustomNudges
                 isEditable
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                customNudges={user.userProfile.customNudges || []}
                 firstName={user.firstName}
                 role={user.role}
-                id={user.id}
+                userId={user.id}
                 ownProfile
               />
               <ProfileExperiences
@@ -148,7 +148,7 @@ export const Parameters = () => {
               <ProfileContactPreferences isEditable smallCard />
               <ProfileNudges
                 userRole={user.role}
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                nudges={user.userProfile.nudges || []}
                 isEditable
                 smallCard
               />

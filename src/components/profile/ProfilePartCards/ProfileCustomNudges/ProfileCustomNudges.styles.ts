@@ -9,3 +9,10 @@ export const StyledItem = styled.div`
   border-radius: 20px;
   padding: 20px 10px;
 `;
+
+export const StyledButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+`;
