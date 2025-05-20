@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { UserRole } from '@/src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import { IlluConversation } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Button, Text } from 'src/components/utils';
@@ -16,7 +16,7 @@ export interface ProfileContactCardProps {
   userId: string;
   averageDelayResponse?: number | null;
   isAvailable: boolean;
-  role: UserRole;
+  role: UserRoles;
   firstName: string;
 }
 
