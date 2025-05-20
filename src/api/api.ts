@@ -330,6 +330,17 @@ export class APIHandler {
     return this.get('/business-sectors', { params });
   }
 
+  /// ///////////// ///
+  ///  contracts  ///
+  /// //////////// ///
+  getAllContracts(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/contracts', { params });
+  }
+
   /// ///////// ///
   ///  nudges  ///
   /// //////// ///
@@ -377,8 +388,8 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(): Promise<AxiosResponse> {
-    return this.get('/auth/current');
+  getAuthCurrent(complete = false): Promise<AxiosResponse> {
+    return this.get(`/auth/current${complete ? '?complete=true' : ''}`);
   }
 
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {

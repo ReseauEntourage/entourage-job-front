@@ -19,6 +19,9 @@ const {
   fetchUserSucceeded,
   fetchUserFailed,
   updateUserRequested,
+  fetchCompleteUserRequested,
+  fetchCompleteUserSucceeded,
+  fetchCompleteUserFailed,
   updateUserSucceeded,
   updateUserFailed,
   updateProfileRequested,
@@ -71,12 +74,33 @@ function* fetchUserRequestedSaga() {
 
     assertIsDefined(accessToken, 'Access token is not set');
 
-    const response = yield* call(() => Api.getAuthCurrent());
+    const response = yield* call(() => Api.getAuthCurrent(false));
 
     yield* put(fetchUserSucceeded(response.data));
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function* fetchCompleteUserRequestedSaga() {
+  try {
+    const isReleaseVersionAllowed = getIsReleaseVersionAllowed();
+    if (!isReleaseVersionAllowed) {
+      setReleaseVersion();
+    }
+    assertCondition(isReleaseVersionAllowed, 'Release version is not allowed');
+
+    const accessToken = yield* select(selectAccessToken);
+
+    assertIsDefined(accessToken, 'Access token is not set');
+
+    const response = yield* call(() => Api.getAuthCurrent(true));
+
+    yield* put(fetchCompleteUserSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCompleteUserFailed());
   }
 }
 
@@ -130,10 +154,11 @@ function* updateProfileRequestedSaga(
 ) {
   const { userId, userProfile } = action.payload;
   try {
-    yield* call(() => Api.putUserProfile(userId, userProfile));
+    const { data } = yield* call(() => Api.putUserProfile(userId, userProfile));
+
     yield* put(
       updateProfileSucceeded({
-        userProfile,
+        userProfile: data,
       })
     );
   } catch (error) {
@@ -238,6 +263,7 @@ export function* saga() {
   yield* takeLatest(authenticationActions.loginSucceeded, loginSucceededSaga);
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
+  yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);

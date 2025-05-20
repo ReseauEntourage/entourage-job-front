@@ -5,8 +5,8 @@ export const formEditExperience: FormSchema<{
   title: string;
   location: string;
   company: string;
-  dateStart: string;
-  dateEnd: string;
+  startDate: string;
+  endDate: string;
   description: string;
   skills: FilterConstant<string>[];
 }> = {
@@ -18,38 +18,38 @@ export const formEditExperience: FormSchema<{
       component: 'text-input',
       title: 'Intitulé du poste*',
       isRequired: true,
-      maxLength: 35,
+      maxLength: 60,
     },
     {
       id: 'description',
       name: 'description',
       component: 'textarea',
       title: 'Description',
-      maxLines: { lines: 9, width: 655 },
+      maxLength: 300,
     },
     {
       id: 'location',
       name: 'location',
       component: 'text-input',
       title: 'Lieu de travail',
-      maxLength: 20,
+      maxLength: 60,
     },
     {
       id: 'company',
       name: 'company',
       component: 'text-input',
       title: 'Entreprise',
-      maxLength: 20,
+      maxLength: 60,
     },
     {
-      id: 'dateStart',
-      name: 'dateStart',
+      id: 'startDate',
+      name: 'startDate',
       component: 'datepicker',
       title: 'Date de début',
     },
     {
-      id: 'dateEnd',
-      name: 'dateEnd',
+      id: 'endDate',
+      name: 'endDate',
       component: 'datepicker',
       title: 'Date de fin',
     },
@@ -59,8 +59,8 @@ export const formEditExperience: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 20,
-      maxItems: 3,
+      maxChar: 30,
+      maxItems: 5,
     },
   ],
 };

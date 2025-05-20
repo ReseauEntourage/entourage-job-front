@@ -10,7 +10,7 @@ export interface ProfilePartCardProps {
   children: React.ReactNode;
   isCompleted?: boolean;
   isEditable?: boolean;
-  ctaTitle?: string;
+  ctaTitle?: string | null;
   ctaCallback?: () => void;
   iaGenerated?: boolean;
   isEmpty?: boolean;
@@ -19,6 +19,7 @@ export interface ProfilePartCardProps {
     icon: React.ReactNode;
   };
   smallCard;
+  isDefaultOpen?: boolean;
 }
 
 export const ProfilePartCard = ({
@@ -35,6 +36,7 @@ export const ProfilePartCard = ({
     icon: <IlluBulleQuestion />,
   },
   smallCard = false,
+  isDefaultOpen = true,
 }: ProfilePartCardProps) => {
   return (
     <Card
@@ -48,6 +50,7 @@ export const ProfilePartCard = ({
       }
       isMobileClosable
       isDesktopClosable
+      isDefaultOpen={isDefaultOpen}
     >
       <>
         <CardContent>
@@ -61,9 +64,9 @@ export const ProfilePartCard = ({
             children
           )}
         </CardContent>
-        {ctaCallback && (
+        {ctaCallback && ctaTitle && (
           <StyledEditButtonContainer>
-            <Button variant="primary" onClick={ctaCallback} rounded>
+            <Button variant="secondary" onClick={ctaCallback} rounded>
               {ctaTitle}
             </Button>
           </StyledEditButtonContainer>

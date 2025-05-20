@@ -12,6 +12,7 @@ interface FooterFormProps {
   onCancel?: () => void;
   onSubmit: (event?: FormEvent) => Promise<void>;
   submitText?: string;
+  submitBtnVariant?: 'primary' | 'secondary';
   cancelText?: string;
   formId: string;
   isLoadingOverride?: boolean;
@@ -27,6 +28,7 @@ export const FormFooter = ({
   formId,
   isLoadingOverride = false,
   noCompulsory = false,
+  submitBtnVariant = 'primary',
 }: FooterFormProps) => {
   return (
     <StyledFooterForm>
@@ -56,7 +58,7 @@ export const FormFooter = ({
             )}
             <ButtonPost
               text={submitText || 'Envoyer'}
-              variant="primary"
+              variant={submitBtnVariant}
               action={onSubmit}
               isLoadingOverride={isLoadingOverride}
               dataTestId={`form-confirm-${formId}`}
