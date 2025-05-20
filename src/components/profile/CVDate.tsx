@@ -4,38 +4,33 @@ import React from 'react';
 import 'moment/locale/fr';
 
 interface CVDateProps {
-  experienceOrFormation: { dateStart?: Date; dateEnd?: Date };
+  experienceOrFormation: { startDate?: string; endDate?: string };
   isMobile?: boolean;
 }
+
+export const formatDate = (date?: string) => {
+  return _.capitalize(moment(date).format('MMMM YYYY').replace(' ', '\xa0'));
+};
 
 export function CVDate({
   experienceOrFormation,
   isMobile = false,
 }: CVDateProps) {
-  const { dateStart, dateEnd } = experienceOrFormation;
+  const { startDate, endDate } = experienceOrFormation;
   if (isMobile) {
     return (
       <>
-        {_.capitalize(
-          moment(dateStart).format('MMMM YYYY').replace(' ', '\xa0')
-        )}
-        &nbsp;-
-        {dateEnd
-          ? _.capitalize(
-              moment(dateEnd).format('MMMM YYYY').replace(' ', '\xa0')
-            )
-          : "Aujourd'hui"}
+        {formatDate(startDate)}
+        <br />
+        {endDate ? formatDate(endDate) : "Aujourd'hui"}
       </>
     );
   }
   return (
     <>
-      {dateEnd
-        ? _.capitalize(moment(dateEnd).format('MMMM YYYY')).replace(' ', '\xa0')
-        : "Aujourd'hui"}
-      &nbsp;-
+      {endDate ? formatDate(endDate) : "Aujourd'hui"}
       <br />
-      {_.capitalize(moment(dateStart).format('MMMM YYYY')).replace(' ', '\xa0')}
+      {formatDate(startDate)}
     </>
   );
 }

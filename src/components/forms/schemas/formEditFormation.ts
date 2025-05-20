@@ -6,8 +6,8 @@ export const formEditFormation: FormSchema<{
   title: string;
   location: string;
   institution: string;
-  dateStart: string;
-  dateEnd: string;
+  startDate: string;
+  endDate: string;
   skills: FilterConstant<string>[];
 }> = {
   id: 'form-formation',
@@ -19,14 +19,14 @@ export const formEditFormation: FormSchema<{
       type: 'text',
       title: 'Intitulé de la formation*',
       isRequired: true,
-      maxLength: 35,
+      maxLength: 60,
     },
     {
       id: 'description',
       name: 'description',
       component: 'textarea',
       title: 'Description',
-      maxLines: { lines: 9, width: 655 },
+      maxLength: 300,
     },
     {
       id: 'location',
@@ -34,7 +34,7 @@ export const formEditFormation: FormSchema<{
       component: 'text-input',
       type: 'text',
       title: 'Lieu de formation',
-      maxLength: 20,
+      maxLength: 60,
     },
     {
       id: 'institution',
@@ -42,17 +42,17 @@ export const formEditFormation: FormSchema<{
       component: 'text-input',
       type: 'text',
       title: 'Etablissement / Institution',
-      maxLength: 20,
+      maxLength: 60,
     },
     {
-      id: 'dateStart',
-      name: 'dateStart',
+      id: 'startDate',
+      name: 'startDate',
       component: 'datepicker',
       title: 'Date de début',
     },
     {
-      id: 'dateEnd',
-      name: 'dateEnd',
+      id: 'endDate',
+      name: 'endDate',
       component: 'datepicker',
       title: 'Date de fin',
     },
@@ -62,8 +62,8 @@ export const formEditFormation: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 20,
-      maxItems: 3,
+      maxChar: 30,
+      maxItems: 5,
     },
   ],
 };
