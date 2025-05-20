@@ -1,7 +1,6 @@
 import { HelpValue } from '@/src/constants/nudges';
 import { Genders } from '../constants/genders';
 import {
-  OccupationsPrefixesType,
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
@@ -84,7 +83,6 @@ export interface BusinessSector {
 export type Occupation = {
   id?: string;
   name: string;
-  prefix: OccupationsPrefixesType;
 };
 
 export interface Review {
@@ -98,8 +96,8 @@ export interface Experience {
   id?: string;
   description?: string;
   title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
+  startDate?: string;
+  endDate?: string;
   company?: string;
   location?: string;
   order?: number;
@@ -114,8 +112,8 @@ export interface Formation {
   id?: string;
   description?: string;
   title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
+  startDate?: string;
+  endDate?: string;
   institution?: string;
   location?: string;
   skills: {
@@ -126,7 +124,7 @@ export interface Formation {
 }
 
 export type Skill = {
-  id: string;
+  id?: string;
   name: string;
   order: number;
 };
@@ -180,16 +178,17 @@ export type UserProfile = {
   department: Department;
   isAvailable: boolean;
   unavailabilityReason: string | null;
-  userProfileNudges: UserProfileNudge[] | null;
+  nudges: Nudge[] | null;
+  customNudges: UserProfileNudge[] | null;
   sectorOccupations?: UserProfileSectorOccupation[];
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
   hasAcceptedEthicsCharter: boolean;
-  reviews: Review[] | null;
-  experiences: Experience[] | null;
-  formations: Formation[] | null;
+  reviews: Review[];
+  experiences: Experience[];
+  formations: Formation[];
   skills: Skill[] | null;
   languages: Language[];
   interests: Interest[];
@@ -350,7 +349,7 @@ export type UserRegistrationDto = {
   role: RegistrableUserRoles;
   campaign?: string;
   department: Department;
-  nudgeIds?: string[];
+  nudges?: Nudge[];
   workingRight?: string;
   program?: Program;
   organizationId?: string;
@@ -517,7 +516,8 @@ export type PublicProfile = {
   description: string;
   introduction: string;
   isAvailable: boolean;
-  userProfileNudges: UserProfileNudge[];
+  customNudges: UserProfileNudge[];
+  nudges: Nudge[];
   sectorOccupations: UserProfileSectorOccupation[];
   experiences: Experience[];
   formations: Formation[];

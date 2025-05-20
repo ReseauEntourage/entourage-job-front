@@ -1,6 +1,6 @@
 import React from 'react';
 import { CVDate } from '../CVDate';
-import { StyledCVSkillTagContainer } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { StyledCVSkillTagContainer } from '../CVExperienceOrFormation/CVExperienceOrFormation.styles';
 import {
   StyledCVPDFExperienceDate,
   StyledCVPDFExperienceDescription,
@@ -13,8 +13,8 @@ interface ExperienceOrFormationPDFProps {
   title: string;
   description: string;
 
-  dateStart: Date;
-  dateEnd: Date;
+  startDate: string;
+  endDate: string;
 
   location: string;
   structure: string;
@@ -26,8 +26,8 @@ interface ExperienceOrFormationPDFProps {
 }
 
 export function CVExperienceOrFormationPDF({
-  dateStart,
-  dateEnd,
+  startDate,
+  endDate,
   title,
   structure,
   location,
@@ -37,7 +37,7 @@ export function CVExperienceOrFormationPDF({
   return (
     <StyledCVPDFExperienceLi>
       <StyledCVPDFExperienceDate>
-        {dateStart && <CVDate experienceOrFormation={{ dateStart, dateEnd }} />}
+        {startDate && <CVDate experienceOrFormation={{ startDate, endDate }} />}
       </StyledCVPDFExperienceDate>
       <StyledCVPDFExperienceDescription>
         {title && <StyledCVPDFXpFormaTitle>{title}</StyledCVPDFXpFormaTitle>}

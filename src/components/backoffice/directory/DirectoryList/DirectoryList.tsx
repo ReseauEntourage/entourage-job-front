@@ -17,7 +17,7 @@ export function DirectoryList() {
           lastName={profile.lastName}
           role={profile.role}
           department={profile.department}
-          userProfileNudges={profile.userProfileNudges}
+          nudges={profile.nudges}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}

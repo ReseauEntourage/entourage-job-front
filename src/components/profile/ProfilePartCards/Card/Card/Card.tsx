@@ -10,7 +10,7 @@ export interface ProfilePartCardProps {
   children: React.ReactNode;
   isCompleted?: boolean;
   isEditable?: boolean;
-  ctaTitle?: string;
+  ctaTitle?: string | null;
   ctaCallback?: () => void;
   iaGenerated?: boolean;
   isEmpty?: boolean;
@@ -64,9 +64,9 @@ export const ProfilePartCard = ({
             children
           )}
         </CardContent>
-        {ctaCallback && (
+        {ctaCallback && ctaTitle && (
           <StyledEditButtonContainer>
-            <Button variant="primary" onClick={ctaCallback} rounded>
+            <Button variant="secondary" onClick={ctaCallback} rounded>
               {ctaTitle}
             </Button>
           </StyledEditButtonContainer>
