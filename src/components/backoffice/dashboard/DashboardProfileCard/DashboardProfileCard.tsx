@@ -55,31 +55,26 @@ export const DashboardProfileCard = () => {
         </StyledDashboardProfileCardIntroduction>
       )}
 
-      {user.userProfile.userProfileNudges && (
+      {user.userProfile.nudges && (
         <StyledDashboardProfileCardHelps>
           <StyledDashboardProfileCardhelpsTitle>
             Mes {contextualRole === UserRoles.CANDIDATE && 'besoins de '} coups
             de pouce
           </StyledDashboardProfileCardhelpsTitle>
-          {user.userProfile.userProfileNudges.length > 0 ? (
+          {user.userProfile.nudges.length > 0 ? (
             <StyledDashboardProfileCardHelpList>
-              {user.userProfile.userProfileNudges
-                .slice(0, 3)
-                .map((userProfileNudge, index) => {
-                  const nudgeDetails = ProfileHelps.find(
-                    (nudgeConstant) =>
-                      nudgeConstant.value === userProfileNudge?.nudge?.value
-                  );
-                  if (nudgeDetails) {
-                    const tagContent = nudgeDetails.shortTitle[contextualRole];
-                    return <Tag key={index} content={tagContent} />;
-                  }
-                  return null;
-                })}
-              {user.userProfile.userProfileNudges.length > 3 && (
-                <Tag
-                  content={`+${user.userProfile.userProfileNudges.length - 3}`}
-                />
+              {user.userProfile.nudges.slice(0, 3).map((nudge, index) => {
+                const nudgeDetails = ProfileHelps.find(
+                  (nudgeConstant) => nudgeConstant.value === nudge?.value
+                );
+                if (nudgeDetails) {
+                  const tagContent = nudgeDetails.shortTitle[contextualRole];
+                  return <Tag key={index} content={tagContent} />;
+                }
+                return null;
+              })}
+              {user.userProfile.nudges.length > 3 && (
+                <Tag content={`+${user.userProfile.nudges.length - 3}`} />
               )}
             </StyledDashboardProfileCardHelpList>
           ) : (
