@@ -1,5 +1,12 @@
 import React, { type JSX } from 'react';
 
+import {
+  IlluConversation,
+  IlluCV,
+  IlluMalette,
+  IlluPoigneeDeMain,
+  IlluReseauxSociaux,
+} from '@/assets/icons/icons';
 import { SelectListType } from '../components/utils/Inputs/SelectList';
 import { Img } from 'src/components/utils/Img';
 import { NormalUserRoles, UserRoles } from './users';
@@ -8,6 +15,14 @@ import { FilterConstant } from './utils';
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
 const iconSizeProps = { width: 40, height: 40 };
+
+export const nudgesIcons = {
+  tips: <IlluPoigneeDeMain {...iconSizeProps} />,
+  interview: <IlluMalette {...iconSizeProps} />,
+  cv: <IlluCV {...iconSizeProps} />,
+  network: <IlluConversation {...iconSizeProps} />,
+  event: <IlluReseauxSociaux {...iconSizeProps} />,
+};
 
 export const ProfileHelps: (FilterConstant<HelpValue> & {
   icon: JSX.Element;

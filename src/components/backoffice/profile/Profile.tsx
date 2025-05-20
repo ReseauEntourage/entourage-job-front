@@ -38,7 +38,7 @@ export const Profile = () => {
         lastName={selectedProfile.lastName}
         role={selectedProfile.role}
         department={selectedProfile.department}
-        description={selectedProfile.description}
+        introduction={selectedProfile.introduction}
       />
 
       <Section className="custom-page">
@@ -51,21 +51,21 @@ export const Profile = () => {
               skills={selectedProfile.skills}
             />
             <ProfileCustomNudges
-              userProfileNudges={selectedProfile.userProfileNudges}
+              customNudges={selectedProfile.customNudges}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
-              id={selectedProfile.id}
+              userId={selectedProfile.id}
               ownProfile
             />
             <ProfileExperiences
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              experiences={[]}
+              experiences={selectedProfile.experiences}
             />
             <ProfileFormations
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
-              formations={[]}
+              formations={selectedProfile.formations}
             />
             <ProfileReviews
               userId={selectedProfile.id}
@@ -99,7 +99,7 @@ export const Profile = () => {
             <ProfileContactPreferences smallCard />
             <ProfileNudges
               userRole={selectedProfile.role}
-              userProfileNudges={selectedProfile.userProfileNudges}
+              nudges={selectedProfile.nudges}
               smallCard
             />
           </StyledProfileRightColumn>

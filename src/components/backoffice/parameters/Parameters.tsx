@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ParamProfessionalInformations } from '@/src/components/profile/ProfilePartCards/ParamProfessionalInformations/ParamProfessionalInformations';
 import { ProfileCustomNudges } from '@/src/components/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
+import { ProfileDescription } from '@/src/components/profile/ProfilePartCards/ProfileDescription/ProfileDescription';
 import { ProfileNudges } from '@/src/components/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -22,17 +24,15 @@ import { ProfileContracts } from 'src/components/profile/ProfilePartCards/Profil
 import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
 import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
 import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
-import { ProfileGeneratedDescription } from 'src/components/profile/ProfilePartCards/ProfileGeneratedDescription/ProfileGeneratedDescription';
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
-import { ProfilePersonalInformations } from 'src/components/profile/ProfilePartCards/ProfilePersonalInformations/ProfilePersonalInformations';
 import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
+// import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
 import {
   StyledParametersLeftColumn,
   StyledParametersRightColumn,
@@ -62,7 +62,7 @@ export const Parameters = () => {
         id={user.id}
         firstName={user.firstName}
         lastName={user.lastName}
-        description={user.userProfile.description ?? ''}
+        introduction={user.userProfile.introduction ?? ''}
         role={user.role}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
@@ -73,16 +73,16 @@ export const Parameters = () => {
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
-          <InviteToUploadCv />
+          {/* <InviteToUploadCv /> */}
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledParametersLeftColumn
               className={`${isDesktop ? '' : 'mobile'}`}
             >
-              <ProfilePersonalInformations
+              <ParamProfessionalInformations
                 sectorOccupations={user.userProfile.sectorOccupations ?? []}
                 isEditable
               />
-              <ProfileGeneratedDescription
+              <ProfileDescription
                 isEditable
                 description={user.userProfile.description}
               />
@@ -92,10 +92,10 @@ export const Parameters = () => {
               />
               <ProfileCustomNudges
                 isEditable
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                customNudges={user.userProfile.customNudges || []}
                 firstName={user.firstName}
                 role={user.role}
-                id={user.id}
+                userId={user.id}
                 ownProfile
               />
               <ProfileExperiences
@@ -148,7 +148,7 @@ export const Parameters = () => {
               <ProfileContactPreferences isEditable smallCard />
               <ProfileNudges
                 userRole={user.role}
-                userProfileNudges={user.userProfile.userProfileNudges || []}
+                nudges={user.userProfile.nudges || []}
                 isEditable
                 smallCard
               />
