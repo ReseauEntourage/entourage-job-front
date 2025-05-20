@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
-import { FONT_WEIGHTS, StyledHeadingProps } from './Headings.types';
+import { COLORS, FONT_WEIGHTS } from 'src/constants/styles';
+import { StyledHeadingProps } from './Headings.types';
 
 export const StyledH1 = styled.h1<StyledHeadingProps>`
   font-size: ${(props) => (props.mobile ? '24px' : '32px')};

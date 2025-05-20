@@ -1,22 +1,39 @@
+import { Api } from '@/src/api';
+import { createNudgeOption } from '@/src/constants/nudges';
+import { UserRoles } from '@/src/constants/users';
 import { FormSchema } from 'src/components/forms/FormSchema';
-import {
-  HelpValue,
-  ReferedCandidateHelpCardContents,
-} from 'src/constants/helps';
+
+const loadNudgesOptions = async (callback) => {
+  try {
+    const { data: nudges } = await Api.getAllNudges({
+      search: '',
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...nudges
+        .map((n) => createNudgeOption(UserRoles.CANDIDATE, n))
+        .filter((n) => n),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
 
 export const formReferingExpectations: FormSchema<{
-  helpNeeds: HelpValue[];
+  nudgeIds: string[];
 }> = {
   id: 'form-refering-candidate-expectations',
   fields: [
     {
-      id: 'helpNeeds',
-      name: 'helpNeeds',
-      component: 'select-list',
-      options: ReferedCandidateHelpCardContents,
+      id: 'nudgeIds',
+      name: 'nudgeIds',
+      component: 'select-list-async',
+      loadOptions: loadNudgesOptions,
+      isMulti: true,
       showLabel: false,
       isRequired: true,
-      isMulti: true,
     },
   ],
 };

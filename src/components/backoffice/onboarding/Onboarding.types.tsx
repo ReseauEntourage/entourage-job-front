@@ -3,7 +3,7 @@ import { User } from '../../../api/types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
-} from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+} from '../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
@@ -52,7 +52,7 @@ export type FlattenedOnboardingFormData =
 
 export const onboardingAlreadyCompleted = {
   [UserRoles.CANDIDATE]: (user: User) => {
-    const userProfileRequired = ['description'];
+    const userProfileRequired = ['introduction'];
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
     );
@@ -63,18 +63,19 @@ export const onboardingAlreadyCompleted = {
     return userProfileCompleted && readDocumentCompleted;
   },
   [UserRoles.COACH]: (user: User) => {
-    const userProfileRequired = ['description'];
+    const userProfileRequired = ['introduction'];
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
     );
-    const hasNetworkBusinessLines =
-      !!user.userProfile.networkBusinessLines?.length;
+    const hasNetworkBusinessSectors =
+      !!user.userProfile.sectorOccupations?.filter((so) => !!so.businessSector)
+        ?.length;
     const readDocumentCompleted = isReadDocument(
       user.readDocuments,
       DocumentNames.CharteEthique
     );
     return (
-      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessLines
+      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessSectors
     );
   },
 };
@@ -156,7 +157,8 @@ export const OnboardingStepContents: {
         return getCoachDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) =>
-        !!userProfile?.networkBusinessLines?.length,
+        !!userProfile?.sectorOccupations?.map((so) => so.businessSector)
+          ?.length,
     },
   },
   3: {
@@ -167,9 +169,9 @@ export const OnboardingStepContents: {
       form: formOnboardingCandidateProfile,
       content: <OnboardingProfileForm />,
       defaultValues: (user) => ({
-        description: user.userProfile.description ?? undefined,
+        introduction: user.userProfile.introduction ?? undefined,
       }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.description,
+      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
     },
     [UserRoles.COACH]: {
       title: 'Complétez votre profil',
@@ -178,9 +180,9 @@ export const OnboardingStepContents: {
       form: formOnboardingCoachProfile,
       content: <OnboardingProfileForm />,
       defaultValues: (user) => ({
-        description: user.userProfile.description ?? undefined,
+        introduction: user.userProfile.introduction ?? undefined,
       }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.description,
+      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
     },
   },
   4: {

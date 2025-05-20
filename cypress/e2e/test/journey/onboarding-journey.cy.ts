@@ -54,11 +54,11 @@ describe('Onboarding', () => {
       ).click();
 
       /**
-       * Step 3: Profile (with description)
+       * Step 3: Profile (with introduction)
        */
 
-      cy.get('[data-testid="form-onboarding-profile-description"]').type(
-        user.userProfile.description
+      cy.get('[data-testid="form-onboarding-profile-introduction"]').type(
+        user.userProfile.introduction
       );
 
       // intercept requests
@@ -87,7 +87,7 @@ describe('Onboarding', () => {
 
       // dashboard should be updated
       cy.contains('Préparer un entretien').should('be.visible'); // to do: get the label from the constants with "findConstantFromValue" utils
-      cy.contains(user.userProfile.description).should('be.visible');
+      cy.contains(user.userProfile.introduction).should('be.visible');
     });
   });
 });

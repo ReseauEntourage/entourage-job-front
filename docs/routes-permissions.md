@@ -33,7 +33,7 @@ Règles:
 ```ts
 {
   paths: ['/backoffice/parametres'],
-  roles: [USER_ROLES.ADMIN, USER_ROLES.CANDIDAT],
+  roles: [UserRoles.ADMIN, UserRoles.CANDIDAT],
 },
 ```
 
@@ -44,11 +44,11 @@ Règles:
 ```ts
 {
   paths: ['/backoffice'],
-  roles: [USER_ROLES.ADMIN],
+  roles: [UserRoles.ADMIN],
 },
 {
   paths: ['/backoffice/parametres', '/backoffice/candidat'],
-  roles: [USER_ROLES.CANDIDATE],
+  roles: [UserRoles.CANDIDATE],
 },
 ```
 

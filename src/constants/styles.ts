@@ -113,8 +113,16 @@ export const ALERT_COLORS = {
     background: COLORS.lightGray,
     text: COLORS.black,
   },
-  feedback: {
+  darkBlue: {
     background: COLORS.darkBlue,
     text: COLORS.white,
   },
+};
+
+export const FONT_WEIGHTS = {
+  lighter: 'lighter',
+  normal: 'normal',
+  medium: '500',
+  semibold: '600',
+  bold: 'bold',
 };

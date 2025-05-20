@@ -9,7 +9,6 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
-  ContactCandidate,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
@@ -126,14 +125,6 @@ export class APIHandler {
     return this.get('/cv/published');
   }
 
-  getCheckUpdate(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/cv/checkUpdate/${candidateId}`);
-  }
-
-  getCVByUrl(url: string): Promise<AxiosResponse> {
-    return this.get(`/cv/url/${url}`);
-  }
-
   // post
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });
@@ -185,10 +176,6 @@ export class APIHandler {
     params: object
   ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
     return this.get('/user/members', params);
-  }
-
-  getUsersMembersCount(): Promise<AxiosResponse> {
-    return this.get('/user/members/count');
   }
 
   getUsersSearchCandidates(params: object): Promise<AxiosResponse> {
@@ -331,6 +318,41 @@ export class APIHandler {
     return this.delete(`/user/${userId}`);
   }
 
+  /// ///////////////// ///
+  /// businessSectors  ///
+  /// /////////////// ///
+
+  getAllBusinessSectors(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/business-sectors', { params });
+  }
+
+  /// ///////////// ///
+  ///  contracts  ///
+  /// //////////// ///
+  getAllContracts(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/contracts', { params });
+  }
+
+  /// ///////// ///
+  ///  nudges  ///
+  /// //////// ///
+
+  getAllNudges(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/nudges', { params });
+  }
+
   /// ///////////// ///
   /// organization  ///
   /// //////////// ///
@@ -366,8 +388,8 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(): Promise<AxiosResponse> {
-    return this.get('/auth/current');
+  getAuthCurrent(complete = false): Promise<AxiosResponse> {
+    return this.get(`/auth/current${complete ? '?complete=true' : ''}`);
   }
 
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {
@@ -434,10 +456,6 @@ export class APIHandler {
 
   postContactCompany(params: ContactCompany): Promise<AxiosResponse> {
     return this.post('/contact/company', params);
-  }
-
-  postContactCandidate(params: ContactCandidate): Promise<AxiosResponse> {
-    return this.post('/contact/candidate', params);
   }
 
   postNewsletter(params: ContactNewsletter): Promise<AxiosResponse> {
