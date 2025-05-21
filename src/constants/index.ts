@@ -1145,4 +1145,16 @@ export const LANGUAGES_LEVELS = [
     value: 'NOTIONS',
     text: 'Notions',
   },
+  {
+    value: 'INTERMEDIATE',
+    text: 'Niveau intermédiaire',
+  },
+  {
+    value: 'FLUENT',
+    text: 'Niveau courant',
+  },
+  {
+    value: 'NATIVE',
+    text: 'Langue maternelle',
+  },
 ];

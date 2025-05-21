@@ -133,9 +133,13 @@ export type Language = {
   id: string;
   name: string;
   value: string;
-  userProfileLanguages: {
-    level: string;
-  };
+};
+
+export type UserProfileLanguage = {
+  id?: string;
+  level?: string;
+  languageId: string;
+  language?: Language;
 };
 
 export type UserProfileSectorOccupation = {
@@ -190,7 +194,7 @@ export type UserProfile = {
   experiences: Experience[];
   formations: Formation[];
   skills: Skill[] | null;
-  languages: Language[];
+  userProfileLanguages: UserProfileLanguage[];
   interests: Interest[];
   contracts: Contract[];
 };
@@ -522,7 +526,7 @@ export type PublicProfile = {
   experiences: Experience[];
   formations: Formation[];
   skills: Skill[];
-  languages: Language[];
+  userProfileLanguages: UserProfileLanguage[];
   interests: Interest[];
   reviews: Review[];
   contracts: Contract[];
