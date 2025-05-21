@@ -1,30 +1,44 @@
 import React, { useCallback } from 'react';
+import { openModal } from '@/src/components/modals/Modal';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
-import { Language } from 'src/api/types';
+import { UserProfileLanguage } from 'src/api/types';
 import { Text } from 'src/components/utils';
 import { LANGUAGES_LEVELS } from 'src/constants';
+import { ProfileLanguagesModalEdit } from './ProfileLanguagesModalEdit';
 
 export interface ProfileLanguagesProps {
-  languages?: Language[];
+  userProfileLanguages?: UserProfileLanguage[];
   isEditable?: boolean;
   smallCard?: boolean;
 }
 
 export const ProfileLanguages = ({
-  languages = [],
+  userProfileLanguages = [],
   isEditable = false,
   smallCard = false,
 }: ProfileLanguagesProps) => {
-  const isCompleted = languages.length > 0;
+  const user = useAuthenticatedUser();
+  const { updateUserProfile } = useUpdateProfile(user);
+  const isCompleted = userProfileLanguages.length > 0;
 
-  const editModal = useCallback(() => {}, []);
-
-  const onRemove = useCallback(() => {
-    // Get the idx of the language to remove in params
-    // console.log('remove skillId', skillId);
-  }, []);
+  const openEditModal = useCallback(() => {
+    openModal(
+      <ProfileLanguagesModalEdit
+        dispatchOnSubmit={(fields) => {
+          updateUserProfile({
+            userProfileLanguages: fields.languages.map((language) => ({
+              languageId: language.value,
+            })) as UserProfileLanguage[],
+          });
+        }}
+        userProfileLanguages={userProfileLanguages}
+      />
+    );
+  }, [updateUserProfile, userProfileLanguages]);
 
   if (!isCompleted && !isEditable) {
     return null;
@@ -34,7 +48,7 @@ export const ProfileLanguages = ({
     <ProfilePartCard
       title="Langues parlées"
       isCompleted={isCompleted}
-      ctaCallback={editModal}
+      ctaCallback={isEditable ? openEditModal : undefined}
       //      iaGenerated
       isEditable={isEditable}
       smallCard={smallCard}
@@ -46,18 +60,20 @@ export const ProfileLanguages = ({
       }}
     >
       <CardTagList
-        removeCallback={onRemove}
-        items={languages.map((language) => {
-          const languageLevel = language.userProfileLanguages.level;
+        items={userProfileLanguages.map((upLanguage) => {
+          const languageLevel = upLanguage.level;
           const completeLevel = LANGUAGES_LEVELS.find(
             (level) => level.value === languageLevel
           );
+          let label = upLanguage.language?.name || '';
+          if (completeLevel) {
+            label += ` (${completeLevel.text})`;
+          }
           return {
-            id: language.id,
-            name: `${language.name} (${completeLevel?.text})`,
+            id: upLanguage.id,
+            name: label,
           };
         })}
-        isEditable={isEditable}
       />
     </ProfilePartCard>
   );
