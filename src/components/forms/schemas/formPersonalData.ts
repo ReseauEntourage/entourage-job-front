@@ -93,12 +93,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
       isMulti: false,
     },
     {
-      id: 'address',
-      name: 'address',
-      component: 'text-input',
-      title: 'Tapez votre adresse postale',
-    },
-    {
       id: 'introduction',
       name: 'introduction',
       component: 'text-input',
