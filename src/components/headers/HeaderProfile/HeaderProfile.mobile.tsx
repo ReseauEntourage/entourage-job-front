@@ -157,7 +157,7 @@ export const HeaderProfileMobile = ({
             {shouldShowAllProfile && (
               <AvailabilityTag isAvailable={isAvailable} />
             )}
-            <UserActions userId={id} openDirection="right" />
+            <UserActions userId={id} userRole={role} openDirection="right" />
           </StyledHeaderAvailibilityAndUserActions>
 
           {shouldShowAllProfile && introduction && (

@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { UserRoles } from '@/src/constants/users';
+import { useHeaderProfile } from '../../headers/HeaderProfile/useHeaderProfile';
 import { ButtonIcon } from '../Button';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { LucidIcon } from '../Icons/LucidIcon';
@@ -7,12 +9,19 @@ import { ProfileReportUserModal } from 'src/components/backoffice/profile/Profil
 import { openModal } from 'src/components/modals/Modal';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledUserActionsBtnContainer } from './UserActions.styles';
-import { UserActionsProps } from './UserActions.types';
+
+export interface UserActionsProps {
+  userId: string;
+  userRole: UserRoles;
+  openDirection?: 'left' | 'right';
+}
 
 export function UserActions({
   userId,
+  userRole,
   openDirection = 'left',
 }: UserActionsProps) {
+  const { openCorrespondingModal } = useHeaderProfile(userRole);
   const currentUserId = useSelector(selectCurrentUserId);
   const ownProfile = useMemo(() => {
     return userId === currentUserId;
@@ -22,7 +31,9 @@ export function UserActions({
     const list = [
       {
         name: 'Editer mes informations',
-        handler: () => {},
+        handler: () => {
+          openCorrespondingModal();
+        },
       },
     ];
     if (!ownProfile) {
@@ -34,7 +45,7 @@ export function UserActions({
       });
     }
     return list;
-  }, [userId, ownProfile]);
+  }, [ownProfile, openCorrespondingModal, userId]);
 
   return (
     <>

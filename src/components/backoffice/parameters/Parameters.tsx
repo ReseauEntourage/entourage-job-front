@@ -68,12 +68,12 @@ export const Parameters = () => {
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
         email={user.email}
-        driverLicenses={['AM', 'A', 'B', 'C', 'D', 'E']}
+        driverLicenses={['B']}
         isEditable
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
-          {/* <InviteToUploadCv /> */}
+          {/* <InviteToUploadCv lol /> */}
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledParametersLeftColumn
               className={`${isDesktop ? '' : 'mobile'}`}
