@@ -40,11 +40,6 @@ export const ProfileInterests = ({
     );
   }, [interests, updateUserProfile]);
 
-  const onRemove = useCallback(() => {
-    // Get the idx of the language to remove in params
-    // console.log('remove skillId', skillId);
-  }, []);
-
   if (!isCompleted && !isEditable) {
     return null;
   }
@@ -67,12 +62,10 @@ export const ProfileInterests = ({
       }}
     >
       <CardTagList
-        removeCallback={onRemove}
         items={interests.map((interest) => ({
           id: interest.id,
           name: interest.name,
         }))}
-        isEditable={false}
       />
     </ProfilePartCard>
   );
