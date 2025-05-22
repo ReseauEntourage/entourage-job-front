@@ -31,7 +31,7 @@ function* generateProfileFromCVSagaRequested() {
     yield* put(
       notificationsActions.addNotification({
         type: 'success',
-        message: `Le profil a été généré avec succes`,
+        message: `Le profil a été généré avec succès`,
       })
     );
   } catch {
