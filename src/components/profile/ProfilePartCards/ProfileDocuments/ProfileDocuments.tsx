@@ -116,7 +116,13 @@ export const ProfileDocuments = ({
         {hasExternalCv && isEditable && (
           <DocumentItem
             type="CVPerso"
-            onRemove={isEditable ? removeExternalCv : undefined}
+            onRemove={
+              isEditable
+                ? () => {
+                    dispatch(currentUserActions.deleteExternalCvRequested());
+                  }
+                : undefined
+            }
             onClick={() => {
               gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC);
               Api.getExternalCvByUser(userId).then((response) => {
