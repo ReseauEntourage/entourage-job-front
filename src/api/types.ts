@@ -197,6 +197,8 @@ export type UserProfile = {
   userProfileLanguages: UserProfileLanguage[];
   interests: Interest[];
   contracts: Contract[];
+  optinNewsletter: boolean;
+  optInRecommendations: boolean;
 };
 
 export type UserReportDto = {
