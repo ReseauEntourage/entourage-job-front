@@ -10,8 +10,10 @@ import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter'
 import { DocumentNames } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
+import { OnboardingAI } from './Onboarding/forms/OnboardingAI';
 import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
+import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
 import { formOnboardingCandidateHelps } from './Onboarding/forms/schemas/formOnboardingCandidateHelps';
 import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
 import { formOnboardingCandidateProfile } from './Onboarding/forms/schemas/formOnboardingCandidateProfile';
@@ -21,10 +23,10 @@ import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardin
 import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';
 
-export type OnboardingStep = 0 | 1 | 2 | 3 | 4; // 0 means no onboarding
+export type OnboardingStep = 0 | 1 | 2 | 3 | 4 | 5; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 export const ONBOARDING_LAST_STEP = {
-  [UserRoles.CANDIDATE]: 4 as OnboardingStep,
+  [UserRoles.CANDIDATE]: 5 as OnboardingStep,
   [UserRoles.COACH]: 3 as OnboardingStep,
 };
 
@@ -33,7 +35,8 @@ export type CandidateOnboardingForm =
   | typeof formOnboardingCandidateHelps
   | typeof formOnboardingCandidateJob
   | typeof formOnboardingCandidateProfile
-  | typeof formOnboardingCandidateSocialSituation;
+  | typeof formOnboardingCandidateSocialSituation
+  | typeof formOnboardingCandidateAI;
 
 export type CoachOnboardingForm =
   | typeof formOnboardingEthicsCharter
@@ -193,6 +196,14 @@ export const OnboardingStepContents: {
         return getCandidateDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
+    },
+  },
+  5: {
+    [UserRoles.CANDIDATE]: {
+      title: 'Félicitations ! Vous venez de finaliser votre inscription',
+      content: <OnboardingAI />,
+      form: formOnboardingCandidateAI,
+      skippedBy: ({ userProfile }: User) => !userProfile.hasExternalCv,
     },
   },
 };
