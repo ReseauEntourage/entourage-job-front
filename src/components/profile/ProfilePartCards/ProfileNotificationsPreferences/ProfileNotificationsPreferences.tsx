@@ -1,35 +1,53 @@
 import React from 'react';
+import { UserProfile } from '@/src/api/types';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
 export interface ProfileNotificationsPreferencesProps {
-  isEditable?: boolean;
+  userProfile: UserProfile;
   smallCard?: boolean;
 }
 
 export const ProfileNotificationsPreferences = ({
-  isEditable = false,
+  userProfile,
   smallCard = false,
 }: ProfileNotificationsPreferencesProps) => {
-  const notificationsValues = [
+  const user = useAuthenticatedUser();
+  const { updateUserProfile } = useUpdateProfile(user);
+  const [items, setItems] = React.useState([
     {
       name: 'Recevoir des recommandations de coachs qui pourraient m’accompagner',
-      value: false,
+      key: 'optInRecommendations',
+      value: userProfile.optInRecommendations,
     },
-    {
-      name: 'Recevoir des invitations pour les prochains événements',
-      value: false,
-    },
-  ];
+  ]);
+
+  const onChange = (changedItems) => {
+    setItems(changedItems);
+    const userProfileData = changedItems.reduce((acc, item) => {
+      const key = items.find((type) => type.key === item.key)?.key;
+      if (key) {
+        acc[key] = item.value;
+      }
+      return acc;
+    }, {});
+    updateUserProfile(userProfileData);
+  };
 
   return (
     <ProfilePartCard
       title="Notifications email"
-      isEditable={isEditable}
       smallCard={smallCard}
       isEmpty={false}
+      isEditable
     >
-      <CardToggleList items={notificationsValues} isEditable={isEditable} />
+      <CardToggleList
+        items={items}
+        onChange={(changedItems) => onChange(changedItems)}
+        isEditable
+      />
     </ProfilePartCard>
   );
 };
