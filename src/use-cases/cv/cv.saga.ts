@@ -1,4 +1,5 @@
 import { call, put, takeLatest, select } from 'typed-redux-saga';
+import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import { selectCandidateId } from 'src/use-cases/current-user';
 import { slice } from './cv.slice';
@@ -25,11 +26,22 @@ function* fetchCVSagaRequested() {
 
 function* generateProfileFromCVSagaRequested() {
   try {
-    // Remplacez cette ligne par l'appel API réel à votre API de génération de profil
     const response = yield* call(() => Api.getGenerateProfileFromCV());
     yield* put(generateProfileFromCVSucceeded(response.data));
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: `Le profil a été généré avec succes`,
+      })
+    );
   } catch {
     yield* put(generateProfileFromCVFailed());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message: `Une erreur est survenue lors de la génération du profil. Veuillez réessayer.`,
+      })
+    );
   }
 }
 

@@ -1,4 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Api } from 'src/api';
 import { GA_TAGS } from 'src/constants/tags';
@@ -23,6 +25,8 @@ export const ProfileDocuments = ({
   entourageProCv,
   smallCard = false,
 }: ProfileDocumentsProps) => {
+  const dispatch = useDispatch();
+
   const isCompleted = useMemo(
     () => !!linkedinUrl || !!entourageProCv || !!hasExternalCv,
     [entourageProCv, hasExternalCv, linkedinUrl]
@@ -60,7 +64,13 @@ export const ProfileDocuments = ({
         {hasExternalCv && (
           <DocumentItem
             type="CVPerso"
-            onRemove={isEditable ? () => {} : undefined}
+            onRemove={
+              isEditable
+                ? () => {
+                    dispatch(currentUserActions.deleteExternalCvRequested());
+                  }
+                : undefined
+            }
             onClick={() => {
               gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC);
               Api.getExternalCvByUser(userId).then((response) => {

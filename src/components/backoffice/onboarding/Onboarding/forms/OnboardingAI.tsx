@@ -11,13 +11,14 @@ import { ContainerWithTextCentered } from 'src/components/utils/Containers/Conta
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Spinner } from 'src/components/utils/Spinner';
 import { Text } from 'src/components/utils/Text';
-import { COLORS } from 'src/constants/styles';
 import { generateProfileFromCVSelectors, cvActions } from 'src/use-cases/cv';
 
 const StyledImageContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 30px 0;
+  height: 200px;
 `;
 
 export const OnboardingAI = () => {
@@ -57,7 +58,7 @@ export const OnboardingAI = () => {
         </Text>
 
         <StyledImageContainer>
-          <IlluCV width={226} height={226} />
+          {isLoading ? <Spinner /> : <IlluCV width={226} height={226} />}
         </StyledImageContainer>
 
         <StyledCenteredButtonContainer>
@@ -68,16 +69,8 @@ export const OnboardingAI = () => {
             onClick={handleGenerateProfile}
             disabled={isLoading}
           >
-            {isLoading ? (
-              <>
-                Génération en cours <Spinner color={COLORS.white} />
-              </>
-            ) : (
-              <>
-                Générer mon profil avec l&apos;IA&nbsp;
-                <LucidIcon name="WandSparkles" size={20} />
-              </>
-            )}
+            Générer mon profil avec l&apos;IA&nbsp;
+            <LucidIcon name="WandSparkles" size={20} />
           </Button>
         </StyledCenteredButtonContainer>
       </ContainerWithTextCentered>
