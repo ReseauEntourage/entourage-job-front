@@ -44,7 +44,7 @@ export function FileInput({
     }
   };
 
-  const defaultActivator = () => (
+  const defaultActivator = (
     <Button variant="secondary" rounded onClick={onButtonDownloadClick}>
       Télécharger
     </Button>
