@@ -72,7 +72,7 @@ export function* sendStepDataOnboardingSaga() {
     yield* call(() => Api.putUserProfile(userId, userProfileFields));
 
     // Check if step contains externalCv and user has uploaded one, upload it
-    // externalC is an array of File
+    // externalCv is an array of File
     if (externalCv && externalCv[0]) {
       const formData = new FormData();
       formData.append('file', externalCv[0]);
