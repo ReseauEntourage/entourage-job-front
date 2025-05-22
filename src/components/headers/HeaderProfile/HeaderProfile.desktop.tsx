@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, ImgProfile, Section, Tag, Text } from 'src/components/utils';
-import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
