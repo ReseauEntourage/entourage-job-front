@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import { HelpValue } from '@/src/constants/nudges';
 import { ProfilesFilters } from 'src/api/types';
 import { Department } from 'src/constants/departements';
@@ -8,7 +9,7 @@ import { useDirectoryRole } from './useDirectoryRole';
 export function useDirectoryQueryParams() {
   const role = useDirectoryRole();
   const {
-    query: { search, helps, businessSectorIds, departments },
+    query: { search, helps, businessSectorIds, departments, contactTypes },
   } = useRouter();
 
   const filters: ProfilesFilters = {
@@ -16,6 +17,7 @@ export function useDirectoryQueryParams() {
     helps: (helps || []) as HelpValue | HelpValue[],
     businessSectorIds: (businessSectorIds || []) as string[],
     departments: (departments || []) as Department | Department[],
+    contactTypes: (contactTypes || []) as ContactTypeEnum[],
   };
 
   if (search) {
