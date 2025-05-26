@@ -9,7 +9,6 @@ import { Button } from 'src/components/utils/Button/Button';
 import { StyledCenteredButtonContainer } from 'src/components/utils/Button/Button.styles';
 import { ContainerWithTextCentered } from 'src/components/utils/Containers/ContainerWithTextCentered';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Spinner } from 'src/components/utils/Spinner';
 import { Text } from 'src/components/utils/Text';
 import { generateProfileFromCVSelectors, cvActions } from 'src/use-cases/cv';
 
@@ -58,7 +57,16 @@ export const OnboardingAI = () => {
         </Text>
 
         <StyledImageContainer>
-          {isLoading ? <Spinner /> : <IlluCV width={226} height={226} />}
+          {isLoading ? (
+            <Img
+              src="/static/img/illustrations/cv-ia.gif"
+              width={150}
+              height={150}
+              alt="Chargement en cours"
+            />
+          ) : (
+            <IlluCV width={226} height={226} />
+          )}
         </StyledImageContainer>
 
         <StyledCenteredButtonContainer>
