@@ -73,7 +73,7 @@ export const Parameters = () => {
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
-          {/* <InviteToUploadCv lol /> */}
+          {/* <InviteToUploadCv /> */}
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledParametersLeftColumn
               className={`${isDesktop ? '' : 'mobile'}`}

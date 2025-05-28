@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { DefaultValues } from 'react-hook-form';
+import { UserRoles } from '@/src/constants/users';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { useUpdateUser } from 'src/components/backoffice/parametres-old/useUpdateUser';
@@ -16,30 +17,6 @@ type PersonalDataFormSchema =
   | typeof formPersonalDataAsCandidate
   | typeof formPersonalDataAsCoach
   | typeof formPersonalDataAsAdmin;
-
-function isCoachForm(
-  schema: ExtractFormSchemaValidation<PersonalDataFormSchema>
-): schema is ExtractFormSchemaValidation<typeof formPersonalDataAsCoach> {
-  return 'department' in schema && !('address' in schema);
-}
-
-function isCandidateForm(
-  schema: ExtractFormSchemaValidation<PersonalDataFormSchema>
-): schema is ExtractFormSchemaValidation<typeof formPersonalDataAsCandidate> {
-  return 'department' in schema && 'address' in schema;
-}
-
-function isAdminForm(
-  schema: ExtractFormSchemaValidation<PersonalDataFormSchema>
-): schema is ExtractFormSchemaValidation<typeof formPersonalDataAsAdmin> {
-  return (
-    !isCandidateForm(schema) &&
-    !isCoachForm(schema) &&
-    'firstName' in schema &&
-    'lastName' in schema &&
-    'gender' in schema
-  );
-}
 
 interface ModalEditUserInformationProps {
   defaultValues?: DefaultValues<
@@ -115,8 +92,15 @@ export const ModalEditUserInformation = ({
           };
         }
 
-        if (isCandidateForm(values) || isCoachForm(values)) {
-          const { department, introduction } = values;
+        if (
+          user.role === UserRoles.CANDIDATE ||
+          user.role === UserRoles.COACH
+        ) {
+          const { department, introduction } =
+            values as ExtractFormSchemaValidation<
+              | typeof formPersonalDataAsCandidate
+              | typeof formPersonalDataAsCoach
+            >;
 
           if (department.value !== user.userProfile.department) {
             newUserProfileData = {
@@ -131,21 +115,12 @@ export const ModalEditUserInformation = ({
               introduction,
             };
           }
-
-          if (isCandidateForm(values)) {
-            const { address } = values;
-
-            if (address !== user.address) {
-              newUserData = {
-                ...newUserData,
-                address,
-              };
-            }
-          }
         }
 
-        if (isAdminForm(values)) {
-          const { gender } = values;
+        if (user.role === UserRoles.ADMIN) {
+          const { gender } = values as ExtractFormSchemaValidation<
+            typeof formPersonalDataAsAdmin
+          >;
 
           newUserData = {
             ...newUserData,
