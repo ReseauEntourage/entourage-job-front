@@ -28,35 +28,18 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
     );
   }, [user]);
 
-  const openPersonalDataModalAsCoach = useCallback(() => {
+  const openPersonalDataModalAsNormalUser = useCallback(() => {
+    const formSchemasByRole = {
+      [UserRoles.CANDIDATE]: formPersonalDataAsCandidate,
+      [UserRoles.COACH]: formPersonalDataAsCoach,
+    };
     openModal(
       <ModalEditUserInformation
-        formSchema={formPersonalDataAsCoach}
+        formSchema={formSchemasByRole[user.role]}
         defaultValues={{
           firstName: user.firstName,
           lastName: user.lastName,
           phone: user.phone,
-          department: user.userProfile.department
-            ? findConstantFromValue(
-                user.userProfile.department,
-                DEPARTMENTS_FILTERS
-              )
-            : undefined,
-          introduction: user.userProfile.introduction || undefined,
-        }}
-      />
-    );
-  }, [user]);
-
-  const openPersonalDataModalAsCandidate = useCallback(() => {
-    openModal(
-      <ModalEditUserInformation
-        formSchema={formPersonalDataAsCandidate}
-        defaultValues={{
-          firstName: user.firstName,
-          lastName: user.lastName,
-          phone: user.phone,
-          address: user.address,
           department: user.userProfile.department
             ? findConstantFromValue(
                 user.userProfile.department,
@@ -71,22 +54,12 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
 
   const openCorrespondingModal = useCallback(() => {
     if (isRoleIncluded(getNormalUserRoles(), user.role)) {
-      if (user.role === UserRoles.CANDIDATE) {
-        openPersonalDataModalAsCandidate();
-        return;
-      }
-      if (user.role === UserRoles.COACH) {
-        openPersonalDataModalAsCoach();
-        return;
-      }
+      openPersonalDataModalAsNormalUser();
     }
-    openPersonalDataModalAsAdmin();
-  }, [
-    openPersonalDataModalAsAdmin,
-    openPersonalDataModalAsCandidate,
-    openPersonalDataModalAsCoach,
-    user,
-  ]);
+    if (user.role === UserRoles.ADMIN) {
+      openPersonalDataModalAsAdmin();
+    }
+  }, [openPersonalDataModalAsAdmin, openPersonalDataModalAsNormalUser, user]);
 
   return {
     openCorrespondingModal,
