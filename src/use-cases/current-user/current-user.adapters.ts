@@ -79,3 +79,13 @@ export const updateUserProfilePictureAdapter = createRequestAdapter(
   },
   void
 >();
+
+export const uploadExternalCvAdapter = createRequestAdapter(
+  'uploadExternalCv'
+).withPayloads<
+  FormData,
+  void,
+  {
+    error: string;
+  }
+>();
