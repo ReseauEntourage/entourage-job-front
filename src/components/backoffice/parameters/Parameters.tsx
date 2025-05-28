@@ -124,7 +124,7 @@ export const Parameters = () => {
                 userId={user.id}
                 linkedinUrl={user.userProfile.linkedinUrl}
                 hasExternalCv={user.userProfile.hasExternalCv}
-                entourageProCv="/url/" // TODO: Add CvUrl
+                // entourageProCv="/url/"
                 isEditable
                 smallCard
               />
@@ -152,7 +152,10 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
-              <ProfileNotificationsPreferences isEditable smallCard />
+              <ProfileNotificationsPreferences
+                userProfile={user.userProfile}
+                smallCard
+              />
               <ProfileStats
                 smallCard
                 averageDelayResponse={user.averageDelayResponse || null}
