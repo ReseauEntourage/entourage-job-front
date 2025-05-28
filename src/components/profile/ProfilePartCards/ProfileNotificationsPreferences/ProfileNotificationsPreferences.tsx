@@ -27,10 +27,7 @@ export const ProfileNotificationsPreferences = ({
   const onChange = (changedItems) => {
     setItems(changedItems);
     const userProfileData = changedItems.reduce((acc, item) => {
-      const key = items.find((type) => type.key === item.key)?.key;
-      if (key) {
-        acc[key] = item.value;
-      }
+      acc[item.key] = item.value;
       return acc;
     }, {});
     updateUserProfile(userProfileData);
