@@ -32,7 +32,7 @@ export const formEditLanguages: FormSchema<{
       id: 'languages',
       name: 'languages',
       component: 'select-async',
-      isRequired: true,
+      isRequired: false,
       loadOptions: loadLanguagesOptions,
       placeholder: 'Langues',
       isMulti: true,

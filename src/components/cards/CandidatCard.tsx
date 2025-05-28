@@ -85,7 +85,6 @@ export const CandidatCard = ({
             <CandidateCardBusinessSectorsStyled>
               {isNewCareerPath
                 ? _.uniqWith(sortedBusinessSectors.slice(0, 2), (a, b) => {
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     return a.value === b.value;
                   }).map(({ name }, index) => {
                     return (
