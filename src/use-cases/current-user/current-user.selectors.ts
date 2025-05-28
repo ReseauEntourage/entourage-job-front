@@ -14,6 +14,7 @@ import {
   updateProfileAdapter,
   updateUserAdapter,
   updateUserProfilePictureAdapter,
+  uploadExternalCvAdapter,
 } from './current-user.adapters';
 import { RootState } from './current-user.slice';
 
@@ -47,6 +48,11 @@ export const updateCandidateSelectors =
 export const updateUserProfilePictureSelectors =
   updateUserProfilePictureAdapter.getSelectors<RootState>(
     (state) => state.currentUser.updateUserProfilePicture
+  );
+
+export const uploadExternalCvSelectors =
+  uploadExternalCvAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.uploadExternalCv
   );
 
 export function selectCurrentUser(state: RootState) {

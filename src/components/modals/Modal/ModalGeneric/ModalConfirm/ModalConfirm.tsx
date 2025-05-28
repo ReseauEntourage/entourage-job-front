@@ -11,6 +11,8 @@ interface ModalConfirmProps {
   title?: string;
   buttonText: string;
   children?: React.ReactNode;
+  isLoading?: boolean;
+  keepOpenOnConfirm?: boolean;
 }
 
 export const ModalConfirm = ({
@@ -19,6 +21,8 @@ export const ModalConfirm = ({
   title,
   buttonText,
   children,
+  isLoading = false,
+  keepOpenOnConfirm = false,
 }: ModalConfirmProps) => {
   const { onClose } = useModalContext();
   return (
@@ -28,6 +32,7 @@ export const ModalConfirm = ({
         <Button
           variant="default"
           onClick={onClose}
+          disabled={isLoading}
           dataTestId="modal-confirm-cancel"
         >
           Annuler
@@ -35,10 +40,11 @@ export const ModalConfirm = ({
         <Button
           variant="primary"
           dataTestId="modal-confirm-confirm"
+          disabled={isLoading}
           onClick={() => {
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            onClose();
+            if (isLoading) return;
             onConfirm();
+            if (onClose && !keepOpenOnConfirm) onClose();
           }}
         >
           {buttonText}

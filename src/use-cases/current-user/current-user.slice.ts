@@ -13,6 +13,7 @@ import {
   updateProfileAdapter,
   updateUserAdapter,
   updateUserProfilePictureAdapter,
+  uploadExternalCvAdapter,
 } from './current-user.adapters';
 
 export interface State {
@@ -25,6 +26,7 @@ export interface State {
   updateUserProfilePicture: RequestState<
     typeof updateUserProfilePictureAdapter
   >;
+  uploadExternalCv: RequestState<typeof uploadExternalCvAdapter>;
   user: UserWithUserCandidate | null;
   complete: boolean;
   userUpdateError: UpdateError | null; // TODO: Add error types
@@ -40,6 +42,7 @@ const initialState: State = {
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
+  uploadExternalCv: uploadExternalCvAdapter.getInitialState(),
   user: null,
   complete: false,
   userUpdateError: null,
@@ -129,6 +132,16 @@ export const slice = createSlice({
         updateUserProfilePictureSucceeded() {},
       }
     ),
+    ...uploadExternalCvAdapter.getReducers<State>(
+      (state) => state.uploadExternalCv,
+      {
+        uploadExternalCvSucceeded(state) {
+          if (state.user && state.user.userProfile) {
+            state.user.userProfile.hasExternalCv = true;
+          }
+        },
+      }
+    ),
     setUser(state, action: PayloadAction<UserWithUserCandidate | null>) {
       state.user = action.payload;
     },
@@ -139,13 +152,6 @@ export const slice = createSlice({
       }
     },
     deleteExternalCvFailed() {},
-    uploadExternalCvRequested: (_state, _action: PayloadAction<FormData>) => {},
-    uploadExternalCvSucceeded(state) {
-      if (state.user && state.user.userProfile) {
-        state.user.userProfile.hasExternalCv = true;
-      }
-    },
-    uploadExternalCvFailed() {},
     getExternalCvRequested() {},
     getExternalCvSucceeded(state, action: PayloadAction<string>) {
       state.externalCv = action.payload;

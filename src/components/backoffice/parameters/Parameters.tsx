@@ -31,7 +31,7 @@ import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSk
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-
+import { AlertIA } from './AlertIA/AlertIA';
 import {
   StyledParametersLeftColumn,
   StyledParametersRightColumn,
@@ -72,7 +72,7 @@ export const Parameters = () => {
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
-          {/* <InviteToUploadCv /> */}
+          <AlertIA />
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledParametersLeftColumn
               className={`${isDesktop ? '' : 'mobile'}`}
