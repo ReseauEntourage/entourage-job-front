@@ -88,7 +88,10 @@ export const Profile = () => {
               />
             )}
             <ProfileInterests interests={selectedProfile.interests} smallCard />
-            <ProfileLanguages languages={selectedProfile.languages} smallCard />
+            <ProfileLanguages
+              userProfileLanguages={selectedProfile.userProfileLanguages}
+              smallCard
+            />
             <ProfileDocuments
               userId={selectedProfile.id}
               linkedinUrl={selectedProfile.linkedinUrl}

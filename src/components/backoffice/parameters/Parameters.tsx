@@ -129,7 +129,7 @@ export const Parameters = () => {
                 smallCard
               />
               <ProfileLanguages
-                languages={user.userProfile.languages}
+                userProfileLanguages={user.userProfile.userProfileLanguages}
                 isEditable
                 smallCard
               />
