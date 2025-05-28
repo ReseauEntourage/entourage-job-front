@@ -42,7 +42,7 @@ export const ProfileNotificationsPreferences = ({
     >
       <CardToggleList
         items={items}
-        onChange={(changedItems) => onChange(changedItems)}
+        onChange={onChange}
         isEditable
       />
     </ProfilePartCard>
