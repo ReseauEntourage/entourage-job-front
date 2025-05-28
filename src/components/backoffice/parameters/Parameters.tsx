@@ -27,7 +27,6 @@ import { ProfileFormations } from 'src/components/profile/ProfilePartCards/Profi
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
-import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
@@ -110,12 +109,12 @@ export const Parameters = () => {
                 formations={user.userProfile.formations || []}
                 isEditable
               />
-              <ProfileReviews
+              {/* <ProfileReviews
                 userId={user.id}
                 userFirstName={user.firstName}
                 reviews={user.userProfile.reviews || []}
                 isEditable
-              />
+              /> */}
             </StyledParametersLeftColumn>
             <StyledParametersRightColumn
               className={`${isDesktop ? '' : 'mobile'}`}
