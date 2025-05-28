@@ -68,7 +68,7 @@ export const Parameters = () => {
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
         email={user.email}
-        driverLicenses={['AM', 'A', 'B', 'C', 'D', 'E']}
+        driverLicenses={['B']}
         isEditable
       />
       <Section className="custom-page">
@@ -124,12 +124,12 @@ export const Parameters = () => {
                 userId={user.id}
                 linkedinUrl={user.userProfile.linkedinUrl}
                 hasExternalCv={user.userProfile.hasExternalCv}
-                entourageProCv="/url/" // TODO: Add CvUrl
+                // entourageProCv="/url/"
                 isEditable
                 smallCard
               />
               <ProfileLanguages
-                languages={user.userProfile.languages}
+                userProfileLanguages={user.userProfile.userProfileLanguages}
                 isEditable
                 smallCard
               />
@@ -152,7 +152,10 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
-              <ProfileNotificationsPreferences isEditable smallCard />
+              <ProfileNotificationsPreferences
+                userProfile={user.userProfile}
+                smallCard
+              />
               <ProfileStats
                 smallCard
                 averageDelayResponse={user.averageDelayResponse || null}

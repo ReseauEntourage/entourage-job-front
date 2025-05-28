@@ -1,5 +1,9 @@
 import React, { useCallback } from 'react';
-import { getNormalUserRoles, UserRoles } from '@/src/constants/users';
+import {
+  getNormalUserRoles,
+  NormalUserRoles,
+  UserRoles,
+} from '@/src/constants/users';
 import { UserWithUserCandidate } from 'src/api/types';
 import {
   formPersonalDataAsAdmin,
@@ -28,61 +32,43 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
     );
   }, [user]);
 
-  const openPersonalDataModalAsCoach = useCallback(() => {
-    openModal(
-      <ModalEditUserInformation
-        formSchema={formPersonalDataAsCoach}
-        defaultValues={{
-          firstName: user.firstName,
-          lastName: user.lastName,
-          phone: user.phone,
-          department: user.userProfile.department
-            ? findConstantFromValue(
-                user.userProfile.department,
-                DEPARTMENTS_FILTERS
-              )
-            : undefined,
-        }}
-      />
-    );
-  }, [user]);
-
-  const openPersonalDataModalAsCandidate = useCallback(() => {
-    openModal(
-      <ModalEditUserInformation
-        formSchema={formPersonalDataAsCandidate}
-        defaultValues={{
-          firstName: user.firstName,
-          lastName: user.lastName,
-          phone: user.phone,
-          address: user.address,
-          department: user.userProfile.department
-            ? findConstantFromValue(
-                user.userProfile.department,
-                DEPARTMENTS_FILTERS
-              )
-            : undefined,
-        }}
-      />
-    );
-  }, [user]);
+  const openPersonalDataModalAsNormalUserRole = useCallback(
+    (role: NormalUserRoles) => {
+      const formSchemasByRole = {
+        [UserRoles.CANDIDATE]: formPersonalDataAsCandidate,
+        [UserRoles.COACH]: formPersonalDataAsCoach,
+      };
+      openModal(
+        <ModalEditUserInformation
+          formSchema={formSchemasByRole[role]}
+          defaultValues={{
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phone: user.phone,
+            department: user.userProfile.department
+              ? findConstantFromValue(
+                  user.userProfile.department,
+                  DEPARTMENTS_FILTERS
+                )
+              : undefined,
+          }}
+        />
+      );
+    },
+    [user]
+  );
 
   const openCorrespondingModal = useCallback(() => {
     if (isRoleIncluded(getNormalUserRoles(), user.role)) {
-      if (user.role === UserRoles.CANDIDATE) {
-        openPersonalDataModalAsCandidate();
-        return;
-      }
-      if (user.role === UserRoles.COACH) {
-        openPersonalDataModalAsCoach();
+      if (user.role === UserRoles.CANDIDATE || user.role === UserRoles.COACH) {
+        openPersonalDataModalAsNormalUserRole(user.role as NormalUserRoles);
         return;
       }
     }
     openPersonalDataModalAsAdmin();
   }, [
     openPersonalDataModalAsAdmin,
-    openPersonalDataModalAsCandidate,
-    openPersonalDataModalAsCoach,
+    openPersonalDataModalAsNormalUserRole,
     user,
   ]);
 

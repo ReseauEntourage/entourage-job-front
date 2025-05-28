@@ -88,12 +88,15 @@ export const Profile = () => {
               />
             )}
             <ProfileInterests interests={selectedProfile.interests} smallCard />
-            <ProfileLanguages languages={selectedProfile.languages} smallCard />
+            <ProfileLanguages
+              userProfileLanguages={selectedProfile.userProfileLanguages}
+              smallCard
+            />
             <ProfileDocuments
               userId={selectedProfile.id}
               linkedinUrl={selectedProfile.linkedinUrl}
               hasExternalCv={selectedProfile.hasExternalCv}
-              entourageProCv="/url/" // TODO: Add CvUrl
+              // entourageProCv="/url/"
               smallCard
             />
             <ProfileContactPreferences smallCard />
