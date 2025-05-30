@@ -4,7 +4,7 @@ import {
   StyledProfileFormImageInputsContainer,
   StyledProfileFormImageContainer,
 } from '../../Onboarding.styles';
-import { ButtonMock, ImgProfile } from 'src/components/utils';
+import { Button, ImgProfile } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { ReduxRequestEvents } from 'src/constants';
@@ -56,14 +56,14 @@ export const OnboardingProfileForm = () => {
         id="profile-picture-upload-desktop-onboarding"
         name="profile-picture-upload-desktop"
       >
-        <ButtonMock
+        <Button
           variant="secondary"
           rounded
           size="small"
           dataTestId="button-mock-image-input"
         >
           Modifier la photo de profil
-        </ButtonMock>
+        </Button>
       </ImageInput>
     </StyledProfileFormImageInputsContainer>
   );

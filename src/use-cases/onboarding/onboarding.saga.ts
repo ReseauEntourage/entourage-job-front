@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { call, put, select, take, takeLatest } from 'typed-redux-saga';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
 import { DocumentNames } from 'src/constants';
@@ -71,11 +71,17 @@ export function* sendStepDataOnboardingSaga() {
   try {
     yield* call(() => Api.putUserProfile(userId, userProfileFields));
 
-    // Check if step contains externalCv and user has uploaded one, upload it
-    if (externalCv) {
+    // Check if step contains externalCv and user has uploaded one, upload it and wait for it to complete
+    // externalCv is an array of File
+    if (externalCv && externalCv[0]) {
       const formData = new FormData();
-      formData.append('file', externalCv);
+      formData.append('file', externalCv[0]);
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
+      // Attendre la fin de l'upload avant de passer a la prochaine étape
+      yield* take([
+        currentUserActions.uploadExternalCvSucceeded.type,
+        currentUserActions.uploadExternalCvFailed.type,
+      ]);
     }
 
     // Check if user has accepted the ethics charter

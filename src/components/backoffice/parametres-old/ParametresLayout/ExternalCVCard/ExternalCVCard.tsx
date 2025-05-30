@@ -32,7 +32,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
     const input = document.getElementById(
       'external-cv-upload-input'
     ) as HTMLInputElement;
-    if (input.files) {
+    if (input.files && input.files[0]) {
       const file = input.files[0];
       const formData = new FormData();
       formData.append('file', file);

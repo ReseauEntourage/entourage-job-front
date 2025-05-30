@@ -620,6 +620,14 @@ export const CGU = () => {
           générales d’utilisation.
         </Text>
         <br />
+        <Text {...textAttr}>
+          En utilisant ce service, vous acceptez également les Conditions
+          Générales d&apos;Utilisation d&apos;OpenAI. Vos données sont traitées
+          par OpenAI uniquement pour permettre le pré-remplissage de votre
+          profil. Elles ne sont conservées par Entourage Pro qu&apos;en accord
+          avec notre Politique de Confidentialité.
+        </Text>
+        <br />
         <H2 title="11. Responsabilité" />
         <br />
         <Text {...textAttr}>
