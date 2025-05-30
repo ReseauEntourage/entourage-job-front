@@ -1,4 +1,5 @@
 import { HelpValue } from '@/src/constants/nudges';
+import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
@@ -133,9 +134,13 @@ export type Language = {
   id: string;
   name: string;
   value: string;
-  userProfileLanguages: {
-    level: string;
-  };
+};
+
+export type UserProfileLanguage = {
+  id?: string;
+  level?: string;
+  languageId: string;
+  language?: Language;
 };
 
 export type UserProfileSectorOccupation = {
@@ -190,9 +195,13 @@ export type UserProfile = {
   experiences: Experience[];
   formations: Formation[];
   skills: Skill[] | null;
-  languages: Language[];
+  userProfileLanguages: UserProfileLanguage[];
   interests: Interest[];
   contracts: Contract[];
+  optinNewsletter: boolean;
+  optInRecommendations: boolean;
+  allowPhysicalEvents: boolean;
+  allowRemoteEvents: boolean;
 };
 
 export type UserReportDto = {
@@ -522,7 +531,7 @@ export type PublicProfile = {
   experiences: Experience[];
   formations: Formation[];
   skills: Skill[];
-  languages: Language[];
+  userProfileLanguages: UserProfileLanguage[];
   interests: Interest[];
   reviews: Review[];
   contracts: Contract[];
@@ -547,6 +556,7 @@ export type ProfilesFilters = {
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
   businessSectorIds: string | string[];
+  contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

@@ -27,12 +27,11 @@ import { ProfileFormations } from 'src/components/profile/ProfilePartCards/Profi
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNotificationsPreferences } from 'src/components/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
-import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-// import { InviteToUploadCv } from './InviteToUploadCv/InviteToUploadCv';
+
 import {
   StyledParametersLeftColumn,
   StyledParametersRightColumn,
@@ -68,7 +67,7 @@ export const Parameters = () => {
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
         email={user.email}
-        driverLicenses={['AM', 'A', 'B', 'C', 'D', 'E']}
+        driverLicenses={['B']}
         isEditable
       />
       <Section className="custom-page">
@@ -110,12 +109,12 @@ export const Parameters = () => {
                 formations={user.userProfile.formations || []}
                 isEditable
               />
-              <ProfileReviews
+              {/* <ProfileReviews
                 userId={user.id}
                 userFirstName={user.firstName}
                 reviews={user.userProfile.reviews || []}
                 isEditable
-              />
+              /> */}
             </StyledParametersLeftColumn>
             <StyledParametersRightColumn
               className={`${isDesktop ? '' : 'mobile'}`}
@@ -124,12 +123,12 @@ export const Parameters = () => {
                 userId={user.id}
                 linkedinUrl={user.userProfile.linkedinUrl}
                 hasExternalCv={user.userProfile.hasExternalCv}
-                entourageProCv="/url/" // TODO: Add CvUrl
+                // entourageProCv="/url/"
                 isEditable
                 smallCard
               />
               <ProfileLanguages
-                languages={user.userProfile.languages}
+                userProfileLanguages={user.userProfile.userProfileLanguages}
                 isEditable
                 smallCard
               />
@@ -152,7 +151,10 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
-              <ProfileNotificationsPreferences isEditable smallCard />
+              <ProfileNotificationsPreferences
+                userProfile={user.userProfile}
+                smallCard
+              />
               <ProfileStats
                 smallCard
                 averageDelayResponse={user.averageDelayResponse || null}

@@ -133,7 +133,7 @@ export const ProfileExperiences = ({
       smallCard={smallCard}
       fallback={fallback}
       ctaTitle={ctaTitle}
-      ctaCallback={() => ctaCallback()}
+      ctaCallback={ctaCallback}
     >
       <StyledProfileExperiencesList>
         {experiences.map((experience: Experience) => {

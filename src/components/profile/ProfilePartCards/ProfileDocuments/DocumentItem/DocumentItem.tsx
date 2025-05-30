@@ -20,7 +20,7 @@ const ICON_MAP = {
 const NAME_MAP = {
   LinkedIn: 'Mon profil LinkedIn',
   CVPerso: 'Mon CV perso',
-  CVPro: 'Mon CV Entourage Pro',
+  CVPro: 'Mon CV publique',
 };
 
 export const DocumentItem = ({
@@ -29,10 +29,12 @@ export const DocumentItem = ({
   onClick,
 }: DocumentItemProps) => {
   return (
-    <StyledDocumentItem onClick={onClick}>
-      {ICON_MAP[type]}
+    <StyledDocumentItem>
+      <div onClick={onClick}>{ICON_MAP[type]}</div>
       <TitleAndIcon>
-        <Text variant="underline">{NAME_MAP[type]}</Text>
+        <div onClick={onClick}>
+          <Text variant="underline">{NAME_MAP[type]}</Text>
+        </div>
         {onRemove && (
           <ButtonIcon
             icon={<LucidIcon size={15} name="X" color={COLORS.black} />}

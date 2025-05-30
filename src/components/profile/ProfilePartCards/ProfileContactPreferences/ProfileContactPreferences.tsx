@@ -58,7 +58,7 @@ export const ProfileContactPreferences = ({
     const data = changedItems.reduce((acc, item) => {
       const key = allContactWays.find((c) => c.name === item.name)?.key;
       if (!key) {
-        return null;
+        return acc;
       }
       acc[key] = item.value;
       return acc;

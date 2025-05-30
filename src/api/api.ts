@@ -334,6 +334,18 @@ export class APIHandler {
     return this.get('/business-sectors', { params });
   }
 
+  /// /////////// ///
+  /// languages  ///
+  /// ///////// ///
+
+  getAllLanguages(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/languages', { params });
+  }
+
   /// ///////////// ///
   ///  contracts  ///
   /// //////////// ///
