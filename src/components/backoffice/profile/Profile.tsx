@@ -16,7 +16,6 @@ import { ProfileFormations } from 'src/components/profile/ProfilePartCards/Profi
 import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
 import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileProfessionalInformations } from 'src/components/profile/ProfilePartCards/ProfileProfessionalInformations/ProfileProfessionalInformations';
-import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -67,11 +66,11 @@ export const Profile = () => {
               userFirstName={selectedProfile.firstName}
               formations={selectedProfile.formations}
             />
-            <ProfileReviews
+            {/* <ProfileReviews
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
               reviews={selectedProfile.reviews ?? []}
-            />
+            /> */}
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileContactCard

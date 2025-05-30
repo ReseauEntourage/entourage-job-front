@@ -1,4 +1,5 @@
 import { HelpValue } from '@/src/constants/nudges';
+import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
@@ -199,6 +200,8 @@ export type UserProfile = {
   contracts: Contract[];
   optinNewsletter: boolean;
   optInRecommendations: boolean;
+  allowPhysicalEvents: boolean;
+  allowRemoteEvents: boolean;
 };
 
 export type UserReportDto = {
@@ -553,6 +556,7 @@ export type ProfilesFilters = {
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
   businessSectorIds: string | string[];
+  contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

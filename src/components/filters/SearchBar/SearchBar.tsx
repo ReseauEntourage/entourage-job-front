@@ -48,6 +48,7 @@ export const SearchBar = ({
   instantSearch = false,
 }: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
+  const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
   const [debouncedSearchBuffer, setDebouncedSearchBuffer] = useState(
     search || ''
   );
@@ -82,8 +83,6 @@ export const SearchBar = ({
       setSearch();
     }
   }, [searchBuffer, setSearch, startSearchEvent]);
-
-  const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
 
   useEffect(() => {
     setNumberOfFilters(

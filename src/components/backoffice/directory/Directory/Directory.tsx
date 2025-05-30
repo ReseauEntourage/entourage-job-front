@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
+import { allContactTypes } from '@/src/constants/contactTypes';
 import { ProfileHelps } from '@/src/constants/nudges';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
@@ -34,27 +35,9 @@ export function Directory() {
   const [businessSectorsFilters, setBusinessSectorsFilters] = useState<
     FilterConstant<string>[]
   >([]);
-
-  const fetchBusinessSectors = async () => {
-    try {
-      const { data } = await Api.getAllBusinessSectors({
-        limit: 50,
-        offset: 0,
-      });
-      setBusinessSectorsFilters(
-        data.map((businessSector: BusinessSector) => ({
-          label: businessSector.name,
-          value: businessSector.id,
-        }))
-      );
-    } catch (error) {
-      console.error('Error fetching business sectors:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchBusinessSectors();
-  }, []);
+  const directoryFiltersParams = useDirectoryQueryParams();
+  const { role, departments, helps, businessSectorIds, search, contactTypes } =
+    directoryFiltersParams;
 
   const DirectoryFilters: Filter[] = [
     {
@@ -75,11 +58,13 @@ export function Directory() {
       title: "Secteur d'activité",
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
     },
+    {
+      key: 'contactTypes',
+      constants: allContactTypes,
+      title: 'Type de contact',
+      tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
+    },
   ];
-
-  const directoryFiltersParams = useDirectoryQueryParams();
-  const { role, departments, helps, businessSectorIds, search } =
-    directoryFiltersParams;
 
   const { setFilters, setSearch, resetFilters } = useFilters(
     DirectoryFilters,
@@ -100,8 +85,45 @@ export function Directory() {
         (businessSectorId) =>
           findConstantFromValue(businessSectorId, businessSectorsFilters)
       ),
+      contactTypes: mutateToArray(contactTypes).map((contactType) =>
+        findConstantFromValue(contactType, allContactTypes)
+      ),
     };
-  }, [departments, helps, businessSectorIds, businessSectorsFilters]);
+  }, [
+    departments,
+    helps,
+    businessSectorIds,
+    contactTypes,
+    businessSectorsFilters,
+  ]);
+
+  /**
+   * Methods
+   */
+  const fetchBusinessSectors = async () => {
+    try {
+      const { data } = await Api.getAllBusinessSectors({
+        limit: 50,
+        offset: 0,
+      });
+      setBusinessSectorsFilters(
+        data.map((businessSector: BusinessSector) => ({
+          label: businessSector.name,
+          value: businessSector.id,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching business sectors:', error);
+    }
+  };
+
+  /**
+   * Hooks
+   */
+
+  useEffect(() => {
+    fetchBusinessSectors();
+  }, []);
 
   return (
     <>
