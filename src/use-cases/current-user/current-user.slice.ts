@@ -4,6 +4,7 @@ import { UserRoles } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
+  fetchCompleteUserAdapter,
   fetchUserAdapter,
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
@@ -16,6 +17,7 @@ import {
 
 export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
+  fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   updateUser: RequestState<typeof updateUserAdapter>;
   updateCandidate: RequestState<typeof updateCandidateAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
@@ -24,6 +26,7 @@ export interface State {
     typeof updateUserProfilePictureAdapter
   >;
   user: UserWithUserCandidate | null;
+  complete: boolean;
   userUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
   externalCv: string | null;
@@ -31,12 +34,14 @@ export interface State {
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
+  fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
   updateCandidate: updateCandidateAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
   user: null,
+  complete: false,
   userUpdateError: null,
   profileUpdateError: null,
   externalCv: null,
@@ -49,8 +54,18 @@ export const slice = createSlice({
     ...fetchUserAdapter.getReducers<State>((state) => state.fetchUser, {
       fetchUserSucceeded(state, action) {
         state.user = action.payload;
+        state.complete = false;
       },
     }),
+    ...fetchCompleteUserAdapter.getReducers<State>(
+      (state) => state.fetchCompleteUser,
+      {
+        fetchCompleteUserSucceeded(state, action) {
+          state.user = action.payload;
+          state.complete = true;
+        },
+      }
+    ),
     ...updateUserAdapter.getReducers<State>((state) => state.updateUser, {
       updateUserSucceeded(state, action) {
         assertIsDefined(state.user, NOT_AUTHENTICATED_USER);

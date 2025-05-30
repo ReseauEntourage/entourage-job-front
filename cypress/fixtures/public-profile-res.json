@@ -1,90 +1,42 @@
 {
-    "id": "c67bcb92-fbd6-471a-8c96-0ecdbf37006d",
-    "firstName": "Aurélien",
-    "lastName": "Leprêtre",
-    "role": "Candidat",
-    "zone": "LILLE",
-    "currentJob": null,
-    "isAvailable": true,
-    "helpOffers": [],
-    "helpNeeds": [
-        {
-            "id": "ad37f34c-5761-45f7-90a4-22e12e0ec0bf",
-            "name": "tips"
-        },
-        {
-            "id": "92c6b301-ae60-4de8-aee6-b305dce20923",
-            "name": "interview"
-        },
-        {
-            "id": "6edf899b-83bb-41b0-9dee-9a1981572e0a",
-            "name": "cv"
-        },
-        {
-            "id": "d6921395-05f8-4dfe-ac7a-a88871284f2f",
-            "name": "event"
-        },
-        {
-            "id": "2bfdf267-66c6-4f3d-82cd-c11e21e60291",
-            "name": "network"
-        }
-    ],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "searchBusinessLines": [
-        {
-            "id": "17a4b630-2354-41b2-8746-7cf856f7fbc8",
-            "name": "aev",
-            "order": 0,
-            "UserProfileSearchBusinessLine": {
-                "id": "57495e48-95f7-4f50-bb25-2ec994674957",
-                "UserProfileId": "8e2308b6-fe8e-4e68-b21f-4af8d946a503",
-                "BusinessLineI": "17a4b630-2354-41b2-8746-7cf856f7fbc8",
-                "createdAt": "2024-01-17T11:29:19.060Z",
-                "updatedAt": "2024-01-17T11:29:19.060Z"
-            }
-        },
-        {
-            "id": "d9a58442-cbe8-4a7f-af70-932602121e67",
-            "name": "asp",
-            "order": 1,
-            "UserProfileSearchBusinessLine": {
-                "id": "b41fe3e4-efa4-4a10-843c-00d40e35a11c",
-                "UserProfileId": "8e2308b6-fe8e-4e68-b21f-4af8d946a503",
-                "BusinessLineI": "d9a58442-cbe8-4a7f-af70-932602121e67",
-                "createdAt": "2024-01-17T11:29:19.060Z",
-                "updatedAt": "2024-01-17T11:29:19.060Z"
-            }
-        }
-    ],
-    "networkBusinessLines": [],
-    "searchAmbitions": [
-        {
-            "id": "45d0ddd3-0789-4113-a01a-0eaf681b0be9",
-            "name": "jardinier",
-            "prefix": "comme",
-            "order": 0,
-            "UserProfileSearchAmbition": {
-                "id": "18cfbb7c-c0cb-456f-a84e-73ad1ddca686",
-                "UserProfileId": "8e2308b6-fe8e-4e68-b21f-4af8d946a503",
-                "AmbitionId": "45d0ddd3-0789-4113-a01a-0eaf681b0be9",
-                "createdAt": "2024-01-17T11:29:19.071Z",
-                "updatedAt": "2024-01-17T11:29:19.071Z"
-            }
-        },
-        {
-            "id": "7c940665-bb54-4420-9a28-376fe8ca263c",
-            "name": "Aide",
-            "prefix": "comme",
-            "order": 1,
-            "UserProfileSearchAmbition": {
-                "id": "9158715e-d615-48ce-b0bc-d94db6bef7a0",
-                "UserProfileId": "8e2308b6-fe8e-4e68-b21f-4af8d946a503",
-                "AmbitionId": "7c940665-bb54-4420-9a28-376fe8ca263c",
-                "createdAt": "2024-01-17T11:29:19.071Z",
-                "updatedAt": "2024-01-17T11:29:19.071Z"
-            }
-        }
-    ],
-    "lastSentMessage": "2024-01-24T13:16:50.332Z",
-    "lastReceivedMessage": "2024-01-24T13:16:50.332Z"
+  "id": "c67bcb92-fbd6-471a-8c96-0ecdbf37006d",
+  "firstName": "Aurélien",
+  "lastName": "Leprêtre",
+  "role": "Candidat",
+  "zone": "LILLE",
+  "currentJob": null,
+  "isAvailable": true,
+  "userProfileNudges": [
+    {
+      "id": "181a0e77-8e5f-4d02-ab1d-900f70d8e2ff",
+      "content": null,
+      "createdAt": "2025-04-14T00:00:00.000Z",
+      "nudge": {
+        "id": "f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15",
+        "value": "event",
+        "nameRequest": "Se rencontrer et échanger avec les membres de la communauté",
+        "nameOffer": "Se rencontrer lors d’événements avec les membres de la communauté",
+        "order": 4
+      }
+    }
+  ],
+  "introduction": "LoremIntro ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  "description": "LoremDesc ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  "sectorOccupations": [
+    {
+      "id": "4ee6b448-8a4b-4250-b501-941ee5084788",
+      "order": 1,
+      "businessSector": {
+        "id": "0052f76a-e000-4386-8263-77d84909a2ab",
+        "name": "Communication et marketing"
+      },
+      "occupation": {
+        "id": "45066dd3-2ae8-489a-8c14-2fdd5034efd6",
+        "name": "Responsable SEO",
+        "prefix": "comme"
+      }
+    }
+  ],
+  "lastSentMessage": "2024-01-24T13:16:50.332Z",
+  "lastReceivedMessage": "2024-01-24T13:16:50.332Z"
 }

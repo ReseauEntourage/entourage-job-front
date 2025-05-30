@@ -16,11 +16,6 @@ export const adminRequests = {
   GET: [
     // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
     {
-      path: '/user/members/count',
-      data: { pendingCVs: 0 },
-      alias: 'membersCount',
-    },
-    {
       path: '/auth/current',
       data: { fixture: 'api/generated/admin-login' },
       alias: 'authCheck',
