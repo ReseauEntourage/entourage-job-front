@@ -32,7 +32,7 @@ export const OnboardingAI = () => {
   };
 
   return (
-    <div>
+    <>
       <Alert
         variant="info"
         icon={
@@ -82,6 +82,6 @@ export const OnboardingAI = () => {
           </Button>
         </StyledCenteredButtonContainer>
       </ContainerWithTextCentered>
-    </div>
+    </>
   );
 };
