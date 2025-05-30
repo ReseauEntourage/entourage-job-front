@@ -59,7 +59,7 @@ export const AlertIA = () => {
   };
 
   if (user.userProfile.hasExternalCv) {
-    if (user.hasExtractedCvData) {
+    if (user.userProfile.hasExtractedCvData) {
       return null;
     }
     return (
