@@ -42,6 +42,9 @@ const {
   getExternalCvRequested,
   getExternalCvSucceeded,
   getExternalCvFailed,
+  uploadExternalCvRequested,
+  uploadExternalCvSucceeded,
+  uploadExternalCvFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -214,11 +217,11 @@ function* deleteExternalCvRequestedSaga() {
 }
 
 function* uploadExternalCvRequestedSaga(
-  action: ReturnType<typeof slice.actions.uploadExternalCvRequested>
+  action: ReturnType<typeof uploadExternalCvRequested>
 ) {
   try {
     yield* call(() => Api.postExternalCv(action.payload));
-    yield* put(slice.actions.uploadExternalCvSucceeded());
+    yield* put(uploadExternalCvSucceeded());
     yield* put(
       notificationsActions.addNotification({
         type: 'success',
@@ -227,7 +230,7 @@ function* uploadExternalCvRequestedSaga(
     );
   } catch (error) {
     yield* put(
-      slice.actions.uploadExternalCvFailed({
+      uploadExternalCvFailed({
         error: 'UPLOAD_FAILED',
       })
     );
@@ -274,9 +277,6 @@ export function* saga() {
     updateUserProfilePictureRequestedSaga
   );
   yield* takeLatest(deleteExternalCvRequested, deleteExternalCvRequestedSaga);
-  yield* takeLatest(
-    slice.actions.uploadExternalCvRequested,
-    uploadExternalCvRequestedSaga
-  );
+  yield* takeLatest(uploadExternalCvRequested, uploadExternalCvRequestedSaga);
   yield* takeLatest(getExternalCvRequested, getExternalCvRequestedSaga);
 }

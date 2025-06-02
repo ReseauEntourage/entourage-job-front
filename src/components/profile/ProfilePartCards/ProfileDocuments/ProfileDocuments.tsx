@@ -66,10 +66,6 @@ export const ProfileDocuments = ({
     });
   }, [updateUserProfile]);
 
-  const removeExternalCv = useCallback(() => {
-    dispatch(currentUserActions.deleteExternalCvRequested());
-  }, [dispatch]);
-
   // Do not show the card if:
   // - the user is not editable and the card is not completed
   // - the External CV is not displayed in all cases, so we don't show the card if only that is present

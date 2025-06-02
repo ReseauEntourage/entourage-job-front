@@ -70,7 +70,7 @@ export function FileInput({
         </StyledInputLabel>
       )}
       <StyledFileInputWrapper>
-        {activator || defaultActivator()}
+        {activator || defaultActivator}
         {!noPreview && value && (
           <>
             {fileType === FileTypes.CV && (
