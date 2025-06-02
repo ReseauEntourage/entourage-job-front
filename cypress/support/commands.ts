@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-namespace */
+import { generateBusinessSectorsApiResponse } from '../fixtures/src/business-sectors/generateBusinessSectorsApiResponse';
 import { generateCampaignsApiResponse } from '../fixtures/src/campaign/generateCampaignsApiResponse';
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
 import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
+import { generateNudgesApiResponse } from '../fixtures/src/nudges/generateNudgesApiResponse';
 import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
 import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse';
 import { generateUsersApiResponse } from '../fixtures/src/user/generateUsersApiResponse';
@@ -20,6 +22,8 @@ declare global {
       generateCoachLoginApiResponse(): Chainable<Subject>;
       generateCampaignsApiResponse(): Chainable<Subject>;
       generateUserProfileReferedApiResponse(): Chainable<Subject>;
+      generateNudgesApiResponse(): Chainable<Subject>;
+      generateBusinessSectorsApiResponse(): Chainable<Subject>;
     }
   }
 }
@@ -105,6 +109,22 @@ Cypress.Commands.add('generateUserProfileReferedApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/user-profile-refered.json',
     generateCampaignsApiResponse(2),
+    'utf-8'
+  );
+});
+
+Cypress.Commands.add('generateNudgesApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/generated/nudges.json',
+    generateNudgesApiResponse(5),
+    'utf-8'
+  );
+});
+
+Cypress.Commands.add('generateBusinessSectorsApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/generated/business-sectors.json',
+    generateBusinessSectorsApiResponse(10),
     'utf-8'
   );
 });

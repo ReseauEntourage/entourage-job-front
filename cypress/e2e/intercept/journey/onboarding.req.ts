@@ -13,21 +13,17 @@ import { RequestConfig } from './request.types';
  *    alias?: string,       // Alias pour référencer cette requête dans Cypress
  * }
  */
-export const worksJourneyRequests = {
+export const onboardingJourneyRequests = {
   GET: [
-    // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
     {
-      path: '/contact/campaigns/candidate',
-      data: { fixture: 'api/generated/campaigns' },
-      alias: 'getCampaigns',
+      path: '/business-sectors*',
+      data: { fixture: 'api/generated/business-sectors' },
+      alias: 'businessSectors',
+    },
+    {
+      path: '/nudges*',
+      data: { fixture: 'api/generated/nudges' },
+      alias: 'nudges',
     },
   ] as RequestConfig[],
-  POST: [
-    {
-      path: '/contact/candidateInscription',
-      data: { statusCode: 201 },
-      alias: 'postInscription',
-    },
-  ] as RequestConfig[],
-  PUT: [] as RequestConfig[],
 };
