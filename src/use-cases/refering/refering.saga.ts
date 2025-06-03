@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Nudge } from '@/src/api/types';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
 import { flattenReferingData } from 'src/components/backoffice/referer/Refering/Refering.utils';
@@ -30,6 +31,7 @@ export function* referCandidateSagaRequested() {
     occupation0,
     occupation1,
     confirmReferingRules,
+    nudgeIds,
     ...flattenedData
   } = flattenReferingData(data);
 
@@ -45,7 +47,13 @@ export function* referCandidateSagaRequested() {
           occupation1,
         }),
         department: flattenedData.department.value,
-        nudgeIds: flattenedData.nudgeIds ? flattenedData.nudgeIds : undefined,
+        nudges: nudgeIds?.length
+          ? nudgeIds.map((id) => {
+              return {
+                id,
+              } as Nudge;
+            })
+          : undefined,
       })
     );
     yield* put(referCandidateSucceeded());

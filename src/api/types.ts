@@ -382,7 +382,7 @@ export type UserReferingDto = {
   phone: string;
   campaign?: string;
   department: Department;
-  nudgeIds?: string[];
+  nudges?: Nudge[];
   workingRight?: string;
   program?: Program;
   birthDate: string;
