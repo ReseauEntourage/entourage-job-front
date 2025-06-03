@@ -1,7 +1,10 @@
 import { call, put, takeLatest, select } from 'typed-redux-saga';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
-import { selectCandidateId } from 'src/use-cases/current-user';
+import {
+  currentUserActions,
+  selectCandidateId,
+} from 'src/use-cases/current-user';
 import { slice } from './cv.slice';
 
 const {
@@ -28,6 +31,7 @@ function* generateProfileFromCVSagaRequested() {
   try {
     const response = yield* call(() => Api.getGenerateProfileFromCV());
     yield* put(generateProfileFromCVSucceeded(response.data));
+    yield* put(currentUserActions.fetchCompleteUserRequested());
     yield* put(
       notificationsActions.addNotification({
         type: 'success',

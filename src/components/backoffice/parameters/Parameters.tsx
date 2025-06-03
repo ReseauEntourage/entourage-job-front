@@ -31,7 +31,7 @@ import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSk
 import { ProfileStats } from 'src/components/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { AlertIA } from './AlertIA/AlertIA';
+import { AlertIA } from './AlertAI/AlertAI';
 import {
   StyledParametersLeftColumn,
   StyledParametersRightColumn,

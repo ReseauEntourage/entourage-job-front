@@ -12,7 +12,7 @@ import {
 import {
   StyledAlertIAContentContainer,
   StyledAlertIAContentLeft,
-} from './AlertIA.styles';
+} from './AlertAI.styles';
 import { GenerateProfileConfirmModal } from './GenerateProfileConfirmModal';
 
 // Si le user n'a pas encore téléchargé son CV, on lui propose de le faire

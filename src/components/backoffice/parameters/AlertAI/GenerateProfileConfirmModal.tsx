@@ -6,7 +6,7 @@ import { generateProfileFromCVSelectors } from '@/src/use-cases/cv';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm/ModalConfirm';
 import { slice as cvSlice } from 'src/use-cases/cv/cv.slice';
-import { StyledLoadingContainer } from './AlertIA.styles';
+import { StyledLoadingContainer } from './AlertAI.styles';
 
 export const GenerateProfileConfirmModal = () => {
   const dispatch = useDispatch();

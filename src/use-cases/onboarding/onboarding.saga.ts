@@ -1,4 +1,4 @@
-import { call, put, select, take, takeLatest } from 'typed-redux-saga';
+import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
 import { DocumentNames } from 'src/constants';
@@ -26,7 +26,6 @@ const {
 
 export function* launchOnboardingSaga() {
   const currentUser = yield* select(selectAuthenticatedUser);
-
   const nextStep = findNextNotSkippableStep(0, currentUser);
   yield* put(setOnboardingStep(nextStep));
 }
@@ -77,11 +76,19 @@ export function* sendStepDataOnboardingSaga() {
       const formData = new FormData();
       formData.append('file', externalCv[0]);
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
-      // Attendre la fin de l'upload avant de passer a la prochaine étape
-      yield* take([
+
+      // wait for the query to complete
+      const action = yield* take([
         currentUserActions.uploadExternalCvSucceeded.type,
         currentUserActions.uploadExternalCvFailed.type,
       ]);
+
+      while (
+        action.type !== currentUserActions.uploadExternalCvSucceeded.type &&
+        action.type !== currentUserActions.uploadExternalCvFailed.type
+      ) {
+        yield* delay(1000);
+      }
     }
 
     // Check if user has accepted the ethics charter
@@ -102,9 +109,13 @@ export function* sendStepDataOnboardingSaga() {
         })
       );
     }
-
     yield* put(sendStepDataOnboardingSucceeded());
-    const nextStep = findNextNotSkippableStep(currentStep, user);
+
+    // calculate with updated user data
+    const nextStep = findNextNotSkippableStep(
+      currentStep,
+      yield* select(selectAuthenticatedUser)
+    );
     yield* put(setOnboardingStep(nextStep));
     if (currentStep === nextStep) {
       yield* put(endOnboarding());
