@@ -129,7 +129,6 @@ describe('Onboarding', () => {
 
     it('should not display the onboarding modal', () => {
       // The onboarding should not be displayed
-      cy.wait(5000);
       cy.get('#form-onboarding-ethics-charter').should('not.exist');
     });
   });
