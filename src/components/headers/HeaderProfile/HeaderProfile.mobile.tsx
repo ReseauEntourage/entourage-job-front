@@ -62,6 +62,12 @@ export const HeaderProfileMobile = ({
   } = useHeaderProfile(role);
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const setFileInputRef = (ref: HTMLInputElement | null) => {
+    if (ref) {
+      fileInputRef.current = ref;
+    }
+  };
 
   const hasCv = !!cvUrl || hasExternalCv;
   const hasTwoCv = !!cvUrl && hasExternalCv;
@@ -94,6 +100,12 @@ export const HeaderProfileMobile = ({
     }
   };
 
+  const requestPictureUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <StyledHeaderProfile>
       <Section>
@@ -112,8 +124,12 @@ export const HeaderProfileMobile = ({
                   onChange={uploadProfileImage}
                   id="profile-picture-upload-mobile"
                   name="profile-picture-upload-mobile"
+                  inputRef={setFileInputRef}
                 >
-                  <ButtonIcon icon={<LucidIcon name="Pencil" size={14} />} />
+                  <ButtonIcon
+                    icon={<LucidIcon name="Pencil" size={14} />}
+                    onClick={requestPictureUpload}
+                  />
                 </ImageInput>
               </StyledEditPictureIconContainer>
             )}

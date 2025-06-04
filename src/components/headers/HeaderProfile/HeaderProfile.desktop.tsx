@@ -2,13 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
-import {
-  Button,
-  ButtonMock,
-  ImgProfile,
-  Section,
-  Tag,
-} from 'src/components/utils';
+import { Button, ImgProfile, Section, Tag } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
 import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
@@ -67,6 +61,13 @@ export const HeaderProfileDesktop = ({
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
 
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const setFileInputRef = (ref: HTMLInputElement | null) => {
+    if (ref) {
+      fileInputRef.current = ref;
+    }
+  };
+
   const openProCv = () => {
     gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC);
     window.open(`/cv/${cvUrl}`, '_blank');
@@ -92,6 +93,10 @@ export const HeaderProfileDesktop = ({
     }
   };
 
+  const onRequestUploadProfilePictureClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <StyledHeaderProfile>
       <Section>
@@ -105,21 +110,25 @@ export const HeaderProfileDesktop = ({
               )}
             </StyledHeaderProfilePicture>
             {isEditable && (
-              <ImageInput
-                onChange={uploadProfileImage}
-                id="profile-picture-upload-desktop"
-                name="profile-picture-upload-desktop"
-              >
-                <ButtonMock
-                  variant="secondary"
-                  rounded
-                  className="button-mock-image-input"
-                  size="small"
-                  dataTestId="button-mock-image-input"
+              <>
+                <ImageInput
+                  onChange={uploadProfileImage}
+                  id="profile-picture-upload-desktop"
+                  name="profile-picture-upload-desktop"
+                  inputRef={setFileInputRef}
                 >
-                  Modifier
-                </ButtonMock>
-              </ImageInput>
+                  <Button
+                    variant="secondary"
+                    rounded
+                    className="button-mock-image-input"
+                    size="small"
+                    dataTestId="button-mock-image-input"
+                    onClick={onRequestUploadProfilePictureClick}
+                  >
+                    Modifier
+                  </Button>
+                </ImageInput>
+              </>
             )}
             {hasCv && (
               <StyledHeaderProfileCVButton>

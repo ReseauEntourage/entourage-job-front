@@ -107,10 +107,6 @@ export const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-export const StyledButtonMock = styled.div`
-  ${StyledButton}
-`;
-
 export const StyledCenteredButtonContainer = styled.div`
   display: flex;
   justify-content: center;

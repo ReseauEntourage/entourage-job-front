@@ -4,7 +4,7 @@ import {
   StyledProfileFormImageInputsContainer,
   StyledProfileFormImageContainer,
 } from '../../Onboarding.styles';
-import { ButtonMock, ImgProfile } from 'src/components/utils';
+import { Button, ImgProfile } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { ReduxRequestEvents } from 'src/constants';
@@ -22,6 +22,12 @@ export const OnboardingProfileForm = () => {
   const dispatch = useDispatch();
   const { id, role, firstName } = user;
   const [imageUploading, setImageUploading] = useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const setFileInputRef = (ref: HTMLInputElement | null) => {
+    if (ref) {
+      fileInputRef.current = ref;
+    }
+  };
   const uploadProfileImage = useCallback(
     async ({ profileImage }: { profileImage: Blob }) => {
       setImageUploading(true);
@@ -42,6 +48,12 @@ export const OnboardingProfileForm = () => {
     }
   }, [updateUserProfilePictureStatus]);
 
+  const requestPhotoUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <StyledProfileFormImageInputsContainer>
       <StyledProfileFormImageContainer>
@@ -55,15 +67,17 @@ export const OnboardingProfileForm = () => {
         onChange={uploadProfileImage}
         id="profile-picture-upload-desktop-onboarding"
         name="profile-picture-upload-desktop"
+        inputRef={setFileInputRef}
       >
-        <ButtonMock
+        <Button
           variant="secondary"
           rounded
           size="small"
           dataTestId="button-mock-image-input"
+          onClick={requestPhotoUploadClick}
         >
           Modifier la photo de profil
-        </ButtonMock>
+        </Button>
       </ImageInput>
     </StyledProfileFormImageInputsContainer>
   );
