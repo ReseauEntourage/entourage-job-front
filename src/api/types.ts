@@ -190,6 +190,7 @@ export type UserProfile = {
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
+  hasExtractedCvData: boolean;
   hasAcceptedEthicsCharter: boolean;
   reviews: Review[];
   experiences: Experience[];
@@ -321,6 +322,7 @@ export interface UserWithUserCandidate extends User {
   referredCandidates?: UserCandidateWithUsers[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
+  hasExtractedCvData?: boolean;
 }
 
 export type UserDto = {

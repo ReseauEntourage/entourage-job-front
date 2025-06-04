@@ -39,12 +39,12 @@ const {
   deleteExternalCvRequested,
   deleteExternalCvSucceeded,
   deleteExternalCvFailed,
-  uploadExternalCvRequested,
-  uploadExternalCvSucceeded,
-  uploadExternalCvFailed,
   getExternalCvRequested,
   getExternalCvSucceeded,
   getExternalCvFailed,
+  uploadExternalCvRequested,
+  uploadExternalCvSucceeded,
+  uploadExternalCvFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -229,7 +229,11 @@ function* uploadExternalCvRequestedSaga(
       })
     );
   } catch (error) {
-    yield* put(uploadExternalCvFailed());
+    yield* put(
+      uploadExternalCvFailed({
+        error: 'UPLOAD_FAILED',
+      })
+    );
     yield* put(
       notificationsActions.addNotification({
         type: 'danger',

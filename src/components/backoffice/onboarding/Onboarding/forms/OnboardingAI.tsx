@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Img } from '@/src/components/utils';
-import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
 import { IlluCV } from 'assets/icons/icons';
 import { Alert } from 'src/components/utils/Alert/Alert';
 import { Button } from 'src/components/utils/Button/Button';
@@ -47,7 +46,6 @@ export const OnboardingAI = () => {
         L&apos;IA est une fonctionnalité qui vous permet de remplir votre profil
         en reprenant des informations de votre CV.
       </Alert>
-      <StyledContainerMarginY />
       <ContainerWithTextCentered>
         <Text weight="bold" size="large" center>
           Enrichissez votre profil grâce à votre CV

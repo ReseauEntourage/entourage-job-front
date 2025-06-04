@@ -120,5 +120,5 @@ export const StyledCenteredButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 0px;
 `;
