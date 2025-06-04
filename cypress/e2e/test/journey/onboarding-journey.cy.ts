@@ -1,93 +1,135 @@
-// to be updated in other tests format
+import { onboardingJourneyRequests } from '../../intercept/journey/onboarding.req';
+import bootstrap from '../bootstrap';
 
 describe('Onboarding', () => {
+  /**
+   * Bootstrap
+   */
+  bootstrap();
+
+  /**
+   * Interceptions
+   */
   beforeEach(() => {
+    /**
+     * Remove modals
+     */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     window.localStorage.setItem('access-token', '1234');
     window.localStorage.setItem('release-version', 'v100');
-    cy.visit(`/backoffice/dashboard`);
+
+    onboardingJourneyRequests.GET.forEach((request) => {
+      if (request.alias) {
+        cy.intercept('GET', request.path, request.data).as(request.alias);
+      } else cy.intercept('GET', request.path, request.data);
+    });
   });
 
-  it('should complete onboarding', () => {
-    // first interception: without onboarding infos
-    cy.intercept('GET', '/auth/current', {
-      fixture: 'auth-current-candidat-onboarding0-res',
+  describe("Etant donné que je n'ai complété mon onboarding", () => {
+    describe('Et que je suis un candidat', () => {
+      beforeEach(() => {
+        cy.intercept('GET', '/auth/current', {
+          fixture: 'auth-current-candidat-onboarding0-res',
+        });
+        cy.visit(`/backoffice/dashboard`);
+      });
+
+      it('should display the onboarding modal', () => {
+        // The onboarding should be displayed
+        cy.get('#form-onboarding-ethics-charter').should('be.visible');
+      });
+
+      it('should complete the onboarding', () => {
+        // need of fixture content to fill the forms
+        cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
+          /**
+           * Step 1: Ethics charter
+           */
+          // The onboarding should be displayed
+          cy.get('#form-onboarding-ethics-charter').should('be.visible');
+
+          // Accept the ethics charter
+          cy.get(
+            'label[for="form-onboarding-ethics-charter-hasAcceptedEthicsCharter"]'
+          ).click();
+
+          // intercept the PUT request to update the user profile
+          cy.intercept('PUT', `/user/profile/${user.id}`, {
+            fixture: 'auth-current-candidat-onboarding2-res',
+          });
+
+          // intercept the PUT request to update the user profile
+          cy.intercept('POST', `/readDocuments/read/${user.id}`, {
+            fixture: 'user-read-document-ethics-charter',
+          });
+
+          // Click on the button to confirm the form
+          cy.get(
+            '[data-testid="form-confirm-form-onboarding-ethics-charter"]'
+          ).click();
+
+          /**
+           * Step 2: User social situation
+           */
+          cy.intercept('PUT', `/users/social-situations/${user.id}`, {
+            statusCode: 200,
+          });
+
+          cy.get(
+            '[data-testid="form-confirm-form-onboarding-candidate-social-situation"]'
+          ).click();
+
+          /**
+           * Step 3: Profile (with introduction)
+           */
+          cy.get('[data-testid="form-onboarding-profile-introduction"]').type(
+            user.userProfile.introduction
+          );
+
+          // intercept requests
+          cy.intercept('PUT', `/user/profile/${user.id}`, {
+            fixture: 'auth-current-candidat-onboarding3-res',
+          });
+
+          // confirm step
+          cy.get(
+            '[data-testid="form-confirm-form-onboarding-profile"]'
+          ).click();
+
+          // intercept requests
+          cy.intercept('PUT', `/user/profile/${user.id}`, {
+            fixture: 'auth-current-candidat-onboarding3-res',
+          });
+          cy.intercept('GET', '/auth/current', {
+            fixture: 'auth-current-candidat-onboarding3-res',
+          });
+
+          /**
+           * Step 4: Job (linkedin and external cv)
+           */
+          cy.get(
+            '[data-testid="form-onboarding-candidate-job-linkedinUrl"]'
+          ).type(user.userProfile.linkedinUrl);
+          // confirm step
+          cy.get(
+            '[data-testid="form-confirm-form-onboarding-candidate-job"]'
+          ).click();
+        });
+      });
     });
+  });
 
-    // need of fixture content to fill the forms
-    cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      /**
-       * Step 1: Ethics charter
-       */
-      // The onboarding should be displayed
-      cy.get('#form-onboarding-ethics-charter').should('be.visible');
-
-      // Accept the ethics charter
-      cy.get(
-        'label[for="form-onboarding-ethics-charter-hasAcceptedEthicsCharter"]'
-      ).click();
-
-      // intercept the PUT request to update the user profile
-      cy.intercept('PUT', `/user/profile/${user.id}`, {
-        fixture: 'auth-current-candidat-onboarding2-res',
-      });
-
-      // intercept the PUT request to update the user profile
-      cy.intercept('POST', `/readDocuments/read/${user.id}`, {
-        fixture: 'user-read-document-ethics-charter',
-      });
-
-      // Click on the button to confirm the form
-      cy.get(
-        '[data-testid="form-confirm-form-onboarding-ethics-charter"]'
-      ).click();
-
-      /**
-       * Step 2: User social situation
-       */
-      cy.intercept('PUT', `/users/social-situations/${user.id}`, {
-        statusCode: 200,
-      });
-
-      cy.get(
-        '[data-testid="form-confirm-form-onboarding-candidate-social-situation"]'
-      ).click();
-
-      /**
-       * Step 3: Profile (with introduction)
-       */
-
-      cy.get('[data-testid="form-onboarding-profile-introduction"]').type(
-        user.userProfile.introduction
-      );
-
-      // intercept requests
-      cy.intercept('PUT', `/user/profile/${user.id}`, {
-        fixture: 'auth-current-candidat-onboarding3-res',
-      });
-
-      // confirm step
-      cy.get('[data-testid="form-confirm-form-onboarding-profile"]').click();
-
-      // intercept requests
-      cy.intercept('PUT', `/user/profile/${user.id}`, {
-        fixture: 'auth-current-candidat-onboarding3-res',
-      });
+  describe('Etant donné que j’ai complété mon onboarding', () => {
+    beforeEach(() => {
       cy.intercept('GET', '/auth/current', {
         fixture: 'auth-current-candidat-onboarding3-res',
       });
+      cy.visit(`/backoffice/dashboard`);
+    });
 
-      /**
-       * Step 4: Job (linkedin and external cv)
-       */
-      // confirm step
-      cy.get(
-        '[data-testid="form-confirm-form-onboarding-candidate-job"]'
-      ).click();
-
-      // dashboard should be updated
-      cy.contains('Préparer un entretien').should('be.visible'); // to do: get the label from the constants with "findConstantFromValue" utils
-      cy.contains(user.userProfile.introduction).should('be.visible');
+    it('should not display the onboarding modal', () => {
+      // The onboarding should not be displayed
+      cy.get('#form-onboarding-ethics-charter').should('not.exist');
     });
   });
 });

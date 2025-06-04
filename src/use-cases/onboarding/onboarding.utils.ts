@@ -50,17 +50,18 @@ export const shouldSkipStepOnboardingStep = (
 
 export const parseOnboadingProfileFields = (
   fields: Partial<FlattenedOnboardingFormData>
-): Partial<UserProfile> & {
-  businessSectorIds?: string[];
-} => {
+): Partial<UserProfile> => {
   return {
     introduction: fields.introduction ?? undefined,
     linkedinUrl: fields.linkedinUrl ?? undefined,
     currentJob: fields.currentJob ? fields.currentJob : undefined,
-    businessSectorIds:
-      fields.businessSectorIds?.map(
-        (businessSectorIds) => businessSectorIds.value
-      ) ?? undefined,
+    sectorOccupations:
+      fields.businessSectorIds?.map((businessSectorId, idx) => {
+        return {
+          businessSectorId: businessSectorId.value,
+          order: idx + 1,
+        };
+      }) ?? [],
   };
 };
 

@@ -24,6 +24,8 @@ const bootstrap = () => {
     cy.generateOrganizationsApiResponse(); // organizations.json
 
     cy.generateCampaignsApiResponse(); // campaigns.json;
+    cy.generateNudgesApiResponse(); // nudges.json
+    cy.generateBusinessSectorsApiResponse(); // business-sectors.json
   });
 };
 
