@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { Api } from 'src/api';
 import { Button, ImgProfile, Section, Tag } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
@@ -60,13 +61,7 @@ export const HeaderProfileDesktop = ({
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
-
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
-  const setFileInputRef = (ref: HTMLInputElement | null) => {
-    if (ref) {
-      fileInputRef.current = ref;
-    }
-  };
+  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
 
   const openProCv = () => {
     gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC);
@@ -91,10 +86,6 @@ export const HeaderProfileDesktop = ({
     } else {
       openProCv();
     }
-  };
-
-  const onRequestUploadProfilePictureClick = () => {
-    fileInputRef.current?.click();
   };
 
   return (
@@ -123,7 +114,7 @@ export const HeaderProfileDesktop = ({
                     className="button-mock-image-input"
                     size="small"
                     dataTestId="button-mock-image-input"
-                    onClick={onRequestUploadProfilePictureClick}
+                    onClick={requestFileUploadClick}
                   >
                     Modifier
                   </Button>

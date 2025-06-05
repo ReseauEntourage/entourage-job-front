@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { Api } from 'src/api';
 import {
   Button,
@@ -62,12 +63,7 @@ export const HeaderProfileMobile = ({
   } = useHeaderProfile(role);
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const setFileInputRef = (ref: HTMLInputElement | null) => {
-    if (ref) {
-      fileInputRef.current = ref;
-    }
-  };
+  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
 
   const hasCv = !!cvUrl || hasExternalCv;
   const hasTwoCv = !!cvUrl && hasExternalCv;
@@ -100,12 +96,6 @@ export const HeaderProfileMobile = ({
     }
   };
 
-  const requestPictureUpload = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <StyledHeaderProfile>
       <Section>
@@ -128,7 +118,7 @@ export const HeaderProfileMobile = ({
                 >
                   <ButtonIcon
                     icon={<LucidIcon name="Pencil" size={14} />}
-                    onClick={requestPictureUpload}
+                    onClick={requestFileUploadClick}
                   />
                 </ImageInput>
               </StyledEditPictureIconContainer>

@@ -45,7 +45,7 @@ export function ImageInput({
     <StyledImageInputContainer>
       <FileInput
         id={id}
-        data-testid="profile-picture-upload"
+        data-testid={id}
         name={name}
         inputRef={inputRef}
         accept="image/*"
