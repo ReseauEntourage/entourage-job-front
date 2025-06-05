@@ -24,7 +24,6 @@ export const commonInputContainerStyles = css`
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 30px;
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `;
 export const commonInputStyles = css`

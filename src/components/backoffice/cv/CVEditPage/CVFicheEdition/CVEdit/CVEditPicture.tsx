@@ -26,10 +26,22 @@ export const CVEditPicture = ({
 }: CVEditPictureProps) => {
   const [url, setUrl] = useState<string>(urlImg);
   const isDesktop = useIsDesktop();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const setInputRef = (ref: HTMLInputElement | null) => {
+    if (ref) {
+      inputRef.current = ref;
+    }
+  };
 
   useEffect(() => {
     setUrl(urlImg);
   }, [urlImg]);
+
+  const onRequestPictureUploadClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
 
   return (
     <StyledEditPictureContainer className={!isDesktop ? 'mobile' : ''}>
@@ -45,6 +57,7 @@ export const CVEditPicture = ({
             <Spinner />
           ) : (
             <ImageInput
+              inputRef={setInputRef}
               onChange={({ profileImage, profileImageObjectUrl }) => {
                 onChange({
                   profileImage,
@@ -54,7 +67,10 @@ export const CVEditPicture = ({
               id="cv-picture-upload"
               name="cv-picture-upload"
             >
-              <ButtonIcon icon={<LucidIcon name="Pencil" />} />
+              <ButtonIcon
+                icon={<LucidIcon name="Pencil" />}
+                onClick={onRequestPictureUploadClick}
+              />
             </ImageInput>
           )}
         </StyledEditPictureButton>
