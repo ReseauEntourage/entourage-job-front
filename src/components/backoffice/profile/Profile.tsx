@@ -39,7 +39,6 @@ export const Profile = () => {
         department={selectedProfile.department}
         introduction={selectedProfile.introduction}
       />
-
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>

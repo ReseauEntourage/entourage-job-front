@@ -17,7 +17,8 @@ export const StyledNotificationsContainer = styled.div`
   top: 143px;
   position: fixed;
   right: 0;
-  z-index: 100;
+  // Just over the onboarding modal
+  z-index: 1051;
   @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
   }

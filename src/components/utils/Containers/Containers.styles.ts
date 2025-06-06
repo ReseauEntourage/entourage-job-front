@@ -8,6 +8,6 @@ export const StyledContainerWithTextCentered = styled.div`
   text-align: center;
 `;
 
-export const StyledContainerMarginY = styled.div`
-  margin: 40px 0;
+export const StyledContainerMarginY = styled.div<{ marginTop?: string }>`
+  margin-top: ${({ margin }) => margin || '40px'};
 `;

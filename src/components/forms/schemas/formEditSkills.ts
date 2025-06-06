@@ -12,7 +12,7 @@ export const formEditSkills: FormSchema<{
       component: 'select-creatable',
       title: 'Compétences',
       maxChar: 50,
-      maxItems: 6,
+      maxItems: 50,
       isMulti: true,
     },
   ],

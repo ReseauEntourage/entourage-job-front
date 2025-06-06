@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { BackLink } from '../../utils/BackLink';
 import {
   Button,
   ButtonIcon,
@@ -86,6 +87,10 @@ export const HeaderProfileMobile = ({
   return (
     <StyledHeaderProfile>
       <Section>
+        <BackLink
+          url="/backoffice/dashboard"
+          label="Retour à mon espace personnel"
+        />
         <StyledHeaderProfileSectionMobile>
           <StyledHeaderProfileContent>
             <StyledHeaderProfilePictureContainer>

@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import { call, put, takeLatest, select } from 'typed-redux-saga';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
@@ -38,6 +39,11 @@ function* generateProfileFromCVSagaRequested() {
         message: `Le profil a été généré avec succès`,
       })
     );
+    try {
+      Router.push('/backoffice/parametres');
+    } catch (error) {
+      console.error('Erreur lors de la redirection:', error);
+    }
   } catch {
     yield* put(generateProfileFromCVFailed());
     yield* put(
