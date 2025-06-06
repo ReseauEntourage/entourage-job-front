@@ -4,7 +4,7 @@ import { COLORS } from 'src/constants/styles';
 export const StyledStepContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 20px;
 `;
 
 export const StyledProfileFormImageContainer = styled.div`
