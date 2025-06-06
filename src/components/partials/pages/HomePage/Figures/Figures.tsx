@@ -102,7 +102,7 @@ export const Figures = () => {
           onClick={() => {
             gaEvent(GA_TAGS.HOME_CHIFFRES_MESURE_D_IMPACT_CLICK);
           }}
-          href={process.env.URL_MESURE_D_IMPACT}
+          href={process.env.NEXT_PUBLIC_URL_MESURE_D_IMPACT}
           isExternal
           newTab
         >
