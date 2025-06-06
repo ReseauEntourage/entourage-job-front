@@ -17,9 +17,6 @@ const bootstrap = () => {
     cy.generateCandidateLoginApiResponse(); // candidate-login.json
     cy.generateCoachLoginApiResponse(); // coach-login.json
 
-    cy.generateCvCandidateApiResponse(); // cv-candidate.json
-    cy.generateCvCardsApiResponse(); // cv-cards.json
-
     cy.generateSearchUsersApiResponse(); // search-user.json
     cy.generateUserProfileReferedApiResponse(); // user-profile-refered.json
     cy.generateUsersApiResponse('candidat'); // users-candidat.json
@@ -27,6 +24,8 @@ const bootstrap = () => {
     cy.generateOrganizationsApiResponse(); // organizations.json
 
     cy.generateCampaignsApiResponse(); // campaigns.json;
+    cy.generateNudgesApiResponse(); // nudges.json
+    cy.generateBusinessSectorsApiResponse(); // business-sectors.json
   });
 };
 

@@ -27,7 +27,7 @@ export const HeaderConnected = () => {
   }, [dispatch]);
 
   const [linksConnected, setLinksConnected] = useState(
-    renderLinks(user, logout, candidateId)
+    renderLinks(user, logout)
   );
 
   const badges = useNotifBadges(user, asPath, candidateId);
@@ -35,7 +35,7 @@ export const HeaderConnected = () => {
 
   useEffect(() => {
     if (user !== prevUser) {
-      setLinksConnected(renderLinks(user, logout, candidateId));
+      setLinksConnected(renderLinks(user, logout));
     }
   }, [user, logout, prevUser, candidateId]);
 

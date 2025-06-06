@@ -1,3 +1,5 @@
+import { RequestConfig } from './request.types';
+
 /**
  * Objets représentant des requêtes API pour les tests Cypress.
  *
@@ -12,7 +14,6 @@
  * }
  */
 export const guideJourneyRequests = {
-  // GET: [{ path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' }],
   POST: [
     {
       path: '/contact/candidate',
@@ -28,7 +29,7 @@ export const guideJourneyRequests = {
       },
       alias: 'postContact',
     },
-  ],
-  PUT: [],
-  GET: [],
+  ] as RequestConfig[],
+  PUT: [] as RequestConfig[],
+  GET: [] as RequestConfig[],
 };

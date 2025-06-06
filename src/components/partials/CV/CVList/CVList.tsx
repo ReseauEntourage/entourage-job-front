@@ -128,7 +128,7 @@ export const CVList = ({
             items={items.slice(0, nbOfCVToDisplay).map((cv) => {
               return (
                 <CandidatCard
-                  businessLines={cv.businessLines}
+                  businessSectors={cv.businessSectors}
                   url={cv.user.url}
                   imgSrc={
                     (cv.urlImg &&
@@ -136,7 +136,7 @@ export const CVList = ({
                     undefined
                   }
                   firstName={cv.user.candidat.firstName}
-                  ambitions={cv.ambitions}
+                  occupations={cv.occupations}
                   locations={cv.locations}
                 />
               );

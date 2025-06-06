@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-namespace */
+import { generateBusinessSectorsApiResponse } from '../fixtures/src/business-sectors/generateBusinessSectorsApiResponse';
 import { generateCampaignsApiResponse } from '../fixtures/src/campaign/generateCampaignsApiResponse';
-import { generateCvCandidateApiResponse } from '../fixtures/src/cv/generateCvCandidateApiResponse';
-import { generateCvCardsApiResponse } from '../fixtures/src/cv/generateCvCardsApiResponse';
-import { generateCvReadApiResponse } from '../fixtures/src/cv/generateCvReadApiResponse';
-import { generateCvUrlApiResponse } from '../fixtures/src/cv/generateCvUrlApiResponse';
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
 import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
+import { generateNudgesApiResponse } from '../fixtures/src/nudges/generateNudgesApiResponse';
 import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
 import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse';
 import { generateUsersApiResponse } from '../fixtures/src/user/generateUsersApiResponse';
@@ -17,18 +15,15 @@ declare global {
   namespace Cypress {
     interface Chainable<Subject> {
       generateAdminLoginApiResponse(): Chainable<Subject>;
-      generateOpportunitiesWrappedApiResponse(): Chainable<Subject>;
       generateUsersApiResponse(roleUsers: string): Chainable<Subject>;
       generateOrganizationsApiResponse(): Chainable<Subject>;
       generateSearchUsersApiResponse(): Chainable<Subject>;
       generateCandidateLoginApiResponse(): Chainable<Subject>;
-      generateCvCandidateApiResponse(): Chainable<Subject>;
       generateCoachLoginApiResponse(): Chainable<Subject>;
-      generateCvCardsApiResponse(): Chainable<Subject>;
-      generateCvReadApiResponse(): Chainable<Subject>;
-      generateCvUrlApiResponse(): Chainable<Subject>;
       generateCampaignsApiResponse(): Chainable<Subject>;
       generateUserProfileReferedApiResponse(): Chainable<Subject>;
+      generateNudgesApiResponse(): Chainable<Subject>;
+      generateBusinessSectorsApiResponse(): Chainable<Subject>;
     }
   }
 }
@@ -97,50 +92,6 @@ Cypress.Commands.add('generateCoachLoginApiResponse', () => {
 });
 
 /**
- * Command to generate candidate cv
- */
-Cypress.Commands.add('generateCvCandidateApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-candidate.json',
-    generateCvCandidateApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cvs card
- */
-Cypress.Commands.add('generateCvCardsApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-cards.json',
-    generateCvCardsApiResponse(2),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cvs card
- */
-Cypress.Commands.add('generateCvReadApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-read.json',
-    generateCvReadApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
- * Command to generate cv card
- */
-Cypress.Commands.add('generateCvUrlApiResponse', () => {
-  cy.writeFile(
-    'cypress/fixtures/api/generated/cv-url.json',
-    generateCvUrlApiResponse(),
-    'utf-8'
-  );
-});
-
-/**
  * Command to generate campaigns
  */
 Cypress.Commands.add('generateCampaignsApiResponse', () => {
@@ -158,6 +109,22 @@ Cypress.Commands.add('generateUserProfileReferedApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/user-profile-refered.json',
     generateCampaignsApiResponse(2),
+    'utf-8'
+  );
+});
+
+Cypress.Commands.add('generateNudgesApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/generated/nudges.json',
+    generateNudgesApiResponse(5),
+    'utf-8'
+  );
+});
+
+Cypress.Commands.add('generateBusinessSectorsApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/generated/business-sectors.json',
+    generateBusinessSectorsApiResponse(10),
     'utf-8'
   );
 });

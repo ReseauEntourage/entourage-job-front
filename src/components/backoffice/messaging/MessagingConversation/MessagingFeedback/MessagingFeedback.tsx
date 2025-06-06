@@ -57,7 +57,7 @@ export const MessagingFeedback = ({
   return (
     <Alert
       visible={visible}
-      variant="feedback"
+      variant="darkBlue"
       rounded={false}
       icon={
         isDesktop ? (

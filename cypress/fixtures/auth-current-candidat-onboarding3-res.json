@@ -22,30 +22,34 @@
   },
   "coach": null,
   "userProfile": {
-    "description": "hello",
+    "introduction": "hello",
+    "description": null,
     "department": "Ain (01)",
     "currentJob": null,
-    "networkBusinessLines": [],
-    "searchBusinessLines": [
+    "linkedinUrl": "https://www.linkedin.com/in/john-doe-123456789/",
+    "sectorOccupations": [
       {
-        "id": "8c08d1d2-9cb4-4a93-afd3-4bdaaf039093",
-        "name": "aev",
-        "order": 0,
-        "UserProfileSearchBusinessLine": {
-          "id": "54c6389c-ab98-4d02-84cc-e651164db9f7",
-          "UserProfileId": "8e2308b6-fe8e-4e68-b21f-4af8d946a503",
-          "BusinessLineI": "8c08d1d2-9cb4-4a93-afd3-4bdaaf039093",
-          "createdAt": "2023-12-28T10:22:06.388Z",
-          "updatedAt": "2023-12-28T10:22:06.388Z"
-        }
+        "id": "4ee6b448-8a4b-4250-b501-941ee5084788",
+        "order": 1,
+        "businessSector": {
+          "id": "0052f76a-e000-4386-8263-77d84909a2ab",
+          "name": "Communication et marketing"
+        },
+        "occupation": null
       }
     ],
-    "searchAmbitions": [],
-    "helpOffers": [],
-    "helpNeeds": [
+    "userProfileNudges": [
       {
-        "id": "352a7dde-c4ad-410f-86cf-506cdc9eb624",
-        "name": "interview"
+        "id": "181a0e77-8e5f-4d02-ab1d-900f70d8e2ff",
+        "content": null,
+        "createdAt": "2025-04-14T00:00:00.000Z",
+        "nudge": {
+          "id": "f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15",
+          "value": "event",
+          "nameRequest": "Se rencontrer et échanger avec les membres de la communauté",
+          "nameOffer": "Se rencontrer lors d’événements avec les membres de la communauté",
+          "order": 4
+        }
       }
     ]
   },

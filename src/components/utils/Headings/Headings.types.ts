@@ -1,9 +1,4 @@
-export const FONT_WEIGHTS = {
-  lighter: 'lighter',
-  normal: 'normal',
-  semibold: '600',
-  bold: 'bold',
-};
+import { FONT_WEIGHTS } from 'src/constants/styles';
 
 export type WeightProps = (typeof FONT_WEIGHTS)[keyof typeof FONT_WEIGHTS];
 

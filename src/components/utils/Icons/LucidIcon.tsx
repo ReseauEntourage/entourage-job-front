@@ -2,8 +2,10 @@ import { icons } from 'lucide-react';
 
 import React from 'react';
 
+export type IconName = keyof typeof icons;
+
 export interface IconProps {
-  name: keyof typeof icons;
+  name: IconName;
   color?: string;
   size?: number;
   stroke?: 'thin' | 'regular' | 'bold';

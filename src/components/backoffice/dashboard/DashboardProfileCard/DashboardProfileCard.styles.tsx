@@ -15,7 +15,7 @@ export const StyledDashboardProfileCardPictureName = styled.div`
   }
 `;
 
-export const StyledDashboardProfileCardDescription = styled.div`
+export const StyledDashboardProfileCardIntroduction = styled.div`
   margin: 20px;
   font-weight: 300;
   font-size: 14px;

@@ -1,4 +1,5 @@
 import { data } from 'cypress/types/jquery';
+import { RequestConfig } from './request.types';
 
 /**
  * Objets représentant des requêtes API pour les tests Cypress.
@@ -25,7 +26,17 @@ export const refererJourneyRequests = {
       data: { fixture: 'api/generated/campaigns' },
       alias: 'campaigns',
     },
-  ],
-  POST: [],
-  PUT: [],
+    {
+      path: '/business-sectors*',
+      data: { fixture: 'api/generated/business-sectors' },
+      alias: 'businessSectors',
+    },
+    {
+      path: '/nudges*',
+      data: { fixture: 'api/generated/nudges' },
+      alias: 'nudges',
+    },
+  ] as RequestConfig[],
+  POST: [] as RequestConfig[],
+  PUT: [] as RequestConfig[],
 };

@@ -1,10 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { NotifBadges } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
-import { AdminRoles, UserRoles } from 'src/constants/users';
 import { selectUnseenConversationCount } from 'src/use-cases/messaging';
 import { usePrevious } from './utils';
 
@@ -27,7 +25,6 @@ export function useNotifBadges(
 ) {
   const [badges, setBadges] = useState<NotifBadges>({
     note: 0,
-    cv: 0,
     members: 0,
     messaging: 0,
   });
@@ -37,49 +34,15 @@ export function useNotifBadges(
 
   useEffect(() => {
     if (user !== prevUser) {
-      if (user.role === UserRoles.ADMIN) {
-        const queriesToExecute: (() => Promise<AxiosResponse>)[] = [];
-        if (user.adminRole === AdminRoles.CANDIDATES) {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-        } else {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-        }
-        Promise.all(
-          queriesToExecute.map((query) => {
-            return query;
-          })
-        )
+      if (candidateId) {
+        Promise.all([Api.getCandidateCheckUpdate(candidateId)])
           .then((data) => {
-            const { pendingCVs } = reducePromisesResults(data);
-
-            setBadges((prevBadges) => {
-              return {
-                ...prevBadges,
-                members: pendingCVs || 0,
-              };
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else if (candidateId) {
-        Promise.all([
-          Api.getCandidateCheckUpdate(candidateId),
-          Api.getCheckUpdate(candidateId),
-        ])
-          .then((data) => {
-            const { noteHasBeenModified, cvHasBeenModified } =
-              reducePromisesResults(data);
+            const { noteHasBeenModified } = reducePromisesResults(data);
 
             setBadges((prevBadges) => {
               return {
                 ...prevBadges,
                 note: noteHasBeenModified ? 1 : 0,
-                cv: cvHasBeenModified ? 1 : 0,
               };
             });
           })

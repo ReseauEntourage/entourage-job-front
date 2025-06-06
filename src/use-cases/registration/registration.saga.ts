@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Nudge } from '@/src/api/types';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
@@ -34,11 +35,12 @@ export function* createUserRequestedSaga() {
 
   const {
     confirmPassword,
-    searchBusinessLine0,
-    searchBusinessLine1,
-    searchAmbition0,
-    searchAmbition1,
+    businessSectorId0,
+    businessSectorId1,
+    occupation0,
+    occupation1,
     organizationId,
+    nudgeIds,
     ...flattenedData
   } = flattenRegistrationDataByRole(data, selectedRole);
 
@@ -50,22 +52,20 @@ export function* createUserRequestedSaga() {
         ...flattenedData,
         role: selectedRole,
         program: selectedProgram,
-        searchAmbitions: searchBusinessLine0
-          ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
-              .searchAmbitions
-          : undefined,
-        searchBusinessLines: searchBusinessLine0
-          ? formatCareerPathSentence({
-              searchBusinessLine0,
-              searchBusinessLine1,
-            }).searchBusinessLines
-          : undefined,
+        sectorOccupations: formatCareerPathSentence({
+          occupation0,
+          occupation1,
+          businessSectorId0,
+          businessSectorId1,
+        }),
         department: flattenedData.department.value,
         organizationId: organizationId ? organizationId.value : undefined,
-        helpNeeds: flattenedData.helpNeeds
-          ? flattenedData.helpNeeds.map((expectation) => ({
-              name: expectation,
-            }))
+        nudges: nudgeIds?.length
+          ? nudgeIds.map((id) => {
+              return {
+                id,
+              } as Nudge;
+            })
           : undefined,
         utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
         utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,

@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Nudge } from '@/src/api/types';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
 import { flattenReferingData } from 'src/components/backoffice/referer/Refering/Refering.utils';
@@ -25,11 +26,12 @@ export function* referCandidateSagaRequested() {
   const selectedProgram = yield* select(selectDefinedReferingSelectedProgram);
 
   const {
-    searchBusinessLine0,
-    searchBusinessLine1,
-    searchAmbition0,
-    searchAmbition1,
+    businessSectorId0,
+    businessSectorId1,
+    occupation0,
+    occupation1,
     confirmReferingRules,
+    nudgeIds,
     ...flattenedData
   } = flattenReferingData(data);
 
@@ -38,21 +40,19 @@ export function* referCandidateSagaRequested() {
       Api.postUserRefering({
         ...flattenedData,
         program: selectedProgram,
-        searchAmbitions: searchBusinessLine0
-          ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
-              .searchAmbitions
-          : undefined,
-        searchBusinessLines: searchBusinessLine0
-          ? formatCareerPathSentence({
-              searchBusinessLine0,
-              searchBusinessLine1,
-            }).searchBusinessLines
-          : undefined,
+        sectorOccupations: formatCareerPathSentence({
+          businessSectorId0,
+          businessSectorId1,
+          occupation0,
+          occupation1,
+        }),
         department: flattenedData.department.value,
-        helpNeeds: flattenedData.helpNeeds
-          ? flattenedData.helpNeeds.map((expectation) => ({
-              name: expectation,
-            }))
+        nudges: nudgeIds?.length
+          ? nudgeIds.map((id) => {
+              return {
+                id,
+              } as Nudge;
+            })
           : undefined,
       })
     );
