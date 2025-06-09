@@ -1,4 +1,5 @@
 import React from 'react';
+import { FileInput } from '../FileInput';
 import { CommonInputProps } from '../Inputs.types';
 import { useUploadImage } from 'src/hooks/useUploadImage';
 import { StyledImageInputContainer } from './ImageInput.styles';
@@ -42,29 +43,33 @@ export function ImageInput({
 
   return (
     <StyledImageInputContainer>
-      <label id={`${id}-label`} htmlFor={id}>
-        <input
-          id={id}
-          data-testid={id}
-          ref={inputRef}
-          name={name}
-          disabled={disabled}
-          type="file"
-          accept="image/*"
-          onBlur={onBlur}
-          onChange={async ({ target }) => {
-            const image = await uploadImage(target);
-            if (image) {
-              const { profileImage, profileImageObjectUrl } = image;
-              onChange({
-                profileImage,
-                profileImageObjectUrl,
-              });
-            }
-          }}
-        />
-        {children}
-      </label>
+      <FileInput
+        id={id}
+        data-testid={id}
+        name={name}
+        inputRef={inputRef}
+        accept="image/*"
+        value={[]}
+        onChange={async (files: File | File[] | null) => {
+          if (!files) {
+            return;
+          }
+          if (!Array.isArray(files)) {
+            files = [files];
+          }
+          const image = await uploadImage(files[0]);
+          if (image) {
+            const { profileImage, profileImageObjectUrl } = image;
+            onChange({
+              profileImage,
+              profileImageObjectUrl,
+            });
+          }
+        }}
+        onBlur={onBlur}
+        disabled={disabled}
+        activator={children}
+      />
     </StyledImageInputContainer>
   );
 }
