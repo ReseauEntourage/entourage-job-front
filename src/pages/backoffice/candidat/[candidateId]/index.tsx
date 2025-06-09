@@ -6,6 +6,9 @@ const Redirection = () => {
   const { replace, pathname, query } = useRouter();
 
   useEffect(() => {
+    if (pathname.endsWith('/cv')) {
+      return;
+    }
     replace(
       {
         pathname: `${pathname}/cv`,
