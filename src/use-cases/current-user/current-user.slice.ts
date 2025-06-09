@@ -138,6 +138,7 @@ export const slice = createSlice({
         uploadExternalCvSucceeded(state) {
           if (state.user && state.user.userProfile) {
             state.user.userProfile.hasExternalCv = true;
+            state.user.hasExtractedCvData = false;
           }
         },
       }
@@ -157,6 +158,13 @@ export const slice = createSlice({
       state.externalCv = action.payload;
     },
     getExternalCvFailed() {},
+    generateProfileFromCVSucceeded(state, _action) {
+      assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
+      if (state.user.userProfile) {
+        state.user.hasExtractedCvData = true;
+      }
+    },
   },
 });
 

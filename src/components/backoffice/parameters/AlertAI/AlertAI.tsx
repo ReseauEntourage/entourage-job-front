@@ -10,6 +10,7 @@ import {
   uploadExternalCvSelectors,
 } from 'src/use-cases/current-user';
 import {
+  StyledAlertIAColumn,
   StyledAlertIAContentContainer,
   StyledAlertIAContentLeft,
 } from './AlertAI.styles';
@@ -65,14 +66,19 @@ export const AlertIA = () => {
     return (
       <Alert
         variant="darkBlue"
-        icon={<LucidIcon name="WandSparkles" size={20} color="white" />}
+        icon={<LucidIcon name="WandSparkles" color="white" />}
       >
         <StyledAlertIAContentContainer>
           <StyledAlertIAContentLeft>
-            <Text color="white">
-              Votre CV a été téléchargé, mais vous n&apos;avez pas généré votre
-              profil.
-            </Text>
+            <StyledAlertIAColumn>
+              <Text color="white" weight="bold">
+                Nouvelle fonctionnalité IA
+              </Text>
+              <Text color="white">
+                Votre CV a été téléchargé, mais vous n&apos;avez pas généré
+                votre profil.
+              </Text>
+            </StyledAlertIAColumn>
           </StyledAlertIAContentLeft>
           <Button
             variant="secondary"
@@ -90,13 +96,18 @@ export const AlertIA = () => {
   return (
     <Alert
       variant="darkBlue"
-      icon={<LucidIcon name="WandSparkles" size={20} color="white" />}
+      icon={<LucidIcon name="WandSparkles" size={32} color="white" />}
     >
       <StyledAlertIAContentContainer>
         <StyledAlertIAContentLeft>
-          <Text color="white">
-            Pour activer la fonctionnalité IA, vous devez télécharger votre CV
-          </Text>
+          <StyledAlertIAColumn>
+            <Text color="white" weight="bold">
+              Nouvelle fonctionnalité IA
+            </Text>
+            <Text color="white">
+              Pour activer la fonctionnalité IA, vous devez télécharger votre CV
+            </Text>
+          </StyledAlertIAColumn>
         </StyledAlertIAContentLeft>
         <Button
           variant="secondary"
