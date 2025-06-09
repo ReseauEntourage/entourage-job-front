@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFileActivator } from '@/src/hooks/useFileActivator';
 import {
   StyledProfileFormImageInputsContainer,
   StyledProfileFormImageContainer,
@@ -22,6 +23,8 @@ export const OnboardingProfileForm = () => {
   const dispatch = useDispatch();
   const { id, role, firstName } = user;
   const [imageUploading, setImageUploading] = useState(false);
+  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
+
   const uploadProfileImage = useCallback(
     async ({ profileImage }: { profileImage: Blob }) => {
       setImageUploading(true);
@@ -55,12 +58,14 @@ export const OnboardingProfileForm = () => {
         onChange={uploadProfileImage}
         id="profile-picture-upload-desktop-onboarding"
         name="profile-picture-upload-desktop"
+        inputRef={setFileInputRef}
       >
         <Button
           variant="secondary"
           rounded
           size="small"
-          dataTestId="button-mock-image-input"
+          dataTestId="button-image-input"
+          onClick={requestFileUploadClick}
         >
           Modifier la photo de profil
         </Button>
