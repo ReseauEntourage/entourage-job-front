@@ -1,3 +1,5 @@
+import { RequestConfig } from './request.types';
+
 /**
  * Objets représentant des requêtes API pour les tests Cypress.
  *
@@ -19,13 +21,13 @@ export const worksJourneyRequests = {
       data: { fixture: 'api/generated/campaigns' },
       alias: 'getCampaigns',
     },
-  ],
+  ] as RequestConfig[],
   POST: [
     {
       path: '/contact/candidateInscription',
       data: { statusCode: 201 },
       alias: 'postInscription',
     },
-  ],
-  PUT: [],
+  ] as RequestConfig[],
+  PUT: [] as RequestConfig[],
 };

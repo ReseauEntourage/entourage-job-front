@@ -51,7 +51,8 @@ export const useOnboarding = () => {
     } else {
       dispatch(onboardingActions.endOnboarding());
     }
-  }, [dispatch, authenticatedUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmitStepForm = useCallback(
     (fields: OnboardingFormData) => {

@@ -104,6 +104,14 @@ export const StyledButton = styled.button<ButtonProps>`
         );
       }} !important;
     }
+
+    &:disabled {
+      background-color: ${COLORS.gray} !important;
+      color: ${COLORS.white} !important;
+      border: ${COLORS.gray} solid 1px !important;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   }
 `;
 
@@ -112,5 +120,5 @@ export const StyledCenteredButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 0px;
 `;

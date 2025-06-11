@@ -1,7 +1,7 @@
 import React from 'react';
+import { ProfileHelps } from '@/src/constants/nudges';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
-import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
 import {
   Button,
   Card,
@@ -10,12 +10,11 @@ import {
   Tag,
   Text,
 } from 'src/components/utils';
-import { ProfileHelps } from 'src/constants/helps';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledDashboardCTAContainer,
-  StyledDashboardProfileCardDescription,
+  StyledDashboardProfileCardIntroduction,
   StyledDashboardProfileCardHelpList,
   StyledDashboardProfileCardHelpListEmptyState,
   StyledDashboardProfileCardHelps,
@@ -25,11 +24,7 @@ import {
 
 export const DashboardProfileCard = () => {
   const user = useAuthenticatedUser();
-  const helpField = useHelpField(user.role);
   const { contextualRole } = useContextualRole(user.role);
-
-  // Had to do it it two steps for the linter to be happy
-  const userHelpField = helpField ? user.userProfile[helpField] : null;
 
   return (
     <Card dataTestId="dashboard-profile-card">
@@ -54,32 +49,32 @@ export const DashboardProfileCard = () => {
           )}
         </div>
       </StyledDashboardProfileCardPictureName>
-      {user.userProfile.description && (
-        <StyledDashboardProfileCardDescription>
-          {user.userProfile.description}
-        </StyledDashboardProfileCardDescription>
+      {user.userProfile.introduction && (
+        <StyledDashboardProfileCardIntroduction>
+          {user.userProfile.introduction}
+        </StyledDashboardProfileCardIntroduction>
       )}
 
-      {userHelpField && (
+      {user.userProfile.nudges && (
         <StyledDashboardProfileCardHelps>
           <StyledDashboardProfileCardhelpsTitle>
             Mes {contextualRole === UserRoles.CANDIDATE && 'besoins de '} coups
             de pouce
           </StyledDashboardProfileCardhelpsTitle>
-          {userHelpField.length > 0 ? (
+          {user.userProfile.nudges.length > 0 ? (
             <StyledDashboardProfileCardHelpList>
-              {userHelpField.slice(0, 3).map((help, index) => {
-                const helpDetails = ProfileHelps.find(
-                  (helpConstant) => helpConstant.value === help.name
+              {user.userProfile.nudges.slice(0, 3).map((nudge, index) => {
+                const nudgeDetails = ProfileHelps.find(
+                  (nudgeConstant) => nudgeConstant.value === nudge?.value
                 );
-                if (helpDetails) {
-                  const tagContent = helpDetails.shortTitle[contextualRole];
+                if (nudgeDetails) {
+                  const tagContent = nudgeDetails.shortTitle[contextualRole];
                   return <Tag key={index} content={tagContent} />;
                 }
                 return null;
               })}
-              {userHelpField.length > 3 && (
-                <Tag content={`+${userHelpField.length - 3}`} />
+              {user.userProfile.nudges.length > 3 && (
+                <Tag content={`+${user.userProfile.nudges.length - 3}`} />
               )}
             </StyledDashboardProfileCardHelpList>
           ) : (

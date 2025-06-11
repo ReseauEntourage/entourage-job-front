@@ -35,6 +35,7 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   ) => void;
   onError?: (values: ExtractFormSchemaValidation<S>) => void;
   submitText?: string;
+  submitBtnVariant?: 'primary' | 'secondary';
   cancelText?: string;
   enterToSubmit?: boolean;
   innerRef?: Ref<{ resetForm: () => void }>;
@@ -46,6 +47,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   formSchema,
   defaultValues,
   submitText,
+  submitBtnVariant,
   cancelText,
   onSubmit,
   onCancel,
@@ -262,6 +264,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
       <FormFooter
         error={error ?? externalError}
         submitText={submitText}
+        submitBtnVariant={submitBtnVariant}
         cancelText={cancelText}
         isLoadingOverride={isLoading}
         noCompulsory={noCompulsory}

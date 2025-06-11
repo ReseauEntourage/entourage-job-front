@@ -2,15 +2,12 @@ import React from 'react';
 import { StyledHeaderBackOffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Grid } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import { Tag } from 'src/components/utils/Tag';
-import { usePendingMembers } from './usePendingMembers';
 
 interface HeaderBackofficeProps {
   title: React.ReactNode;
   description: React.ReactNode;
   children?: React.ReactNode;
   childrenBottom?: boolean;
-  shouldDisplayAdminNotifications?: boolean;
   noSeparator?: boolean;
 }
 
@@ -19,10 +16,8 @@ export const HeaderBackoffice = ({
   description,
   children,
   childrenBottom = false,
-  shouldDisplayAdminNotifications = false,
   noSeparator = false,
 }: HeaderBackofficeProps) => {
-  const { pendingMembersCount } = usePendingMembers();
   return (
     <StyledHeaderBackOffice>
       <Grid
@@ -36,16 +31,7 @@ export const HeaderBackoffice = ({
         </div>
         <div>{children}</div>
       </Grid>
-      {shouldDisplayAdminNotifications ? (
-        <div className="notif-container">
-          <p>
-            <Tag size="small" style="secondary" content={pendingMembersCount} />
-            &nbsp; CV en attente de validation
-          </p>
-        </div>
-      ) : (
-        !noSeparator && <div className="simple-separator" />
-      )}
+      {!noSeparator && <div className="simple-separator" />}
     </StyledHeaderBackOffice>
   );
 };

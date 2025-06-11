@@ -4,6 +4,7 @@ import { UserRoles } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
+  fetchCompleteUserAdapter,
   fetchUserAdapter,
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
@@ -12,10 +13,12 @@ import {
   updateProfileAdapter,
   updateUserAdapter,
   updateUserProfilePictureAdapter,
+  uploadExternalCvAdapter,
 } from './current-user.adapters';
 
 export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
+  fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   updateUser: RequestState<typeof updateUserAdapter>;
   updateCandidate: RequestState<typeof updateCandidateAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
@@ -23,7 +26,9 @@ export interface State {
   updateUserProfilePicture: RequestState<
     typeof updateUserProfilePictureAdapter
   >;
+  uploadExternalCv: RequestState<typeof uploadExternalCvAdapter>;
   user: UserWithUserCandidate | null;
+  complete: boolean;
   userUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
   externalCv: string | null;
@@ -31,12 +36,15 @@ export interface State {
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
+  fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
   updateCandidate: updateCandidateAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
+  uploadExternalCv: uploadExternalCvAdapter.getInitialState(),
   user: null,
+  complete: false,
   userUpdateError: null,
   profileUpdateError: null,
   externalCv: null,
@@ -49,8 +57,18 @@ export const slice = createSlice({
     ...fetchUserAdapter.getReducers<State>((state) => state.fetchUser, {
       fetchUserSucceeded(state, action) {
         state.user = action.payload;
+        state.complete = false;
       },
     }),
+    ...fetchCompleteUserAdapter.getReducers<State>(
+      (state) => state.fetchCompleteUser,
+      {
+        fetchCompleteUserSucceeded(state, action) {
+          state.user = action.payload;
+          state.complete = true;
+        },
+      }
+    ),
     ...updateUserAdapter.getReducers<State>((state) => state.updateUser, {
       updateUserSucceeded(state, action) {
         assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
@@ -114,6 +132,17 @@ export const slice = createSlice({
         updateUserProfilePictureSucceeded() {},
       }
     ),
+    ...uploadExternalCvAdapter.getReducers<State>(
+      (state) => state.uploadExternalCv,
+      {
+        uploadExternalCvSucceeded(state) {
+          if (state.user && state.user.userProfile) {
+            state.user.userProfile.hasExternalCv = true;
+            state.user.hasExtractedCvData = false;
+          }
+        },
+      }
+    ),
     setUser(state, action: PayloadAction<UserWithUserCandidate | null>) {
       state.user = action.payload;
     },
@@ -124,18 +153,18 @@ export const slice = createSlice({
       }
     },
     deleteExternalCvFailed() {},
-    uploadExternalCvRequested: (_state, _action: PayloadAction<FormData>) => {},
-    uploadExternalCvSucceeded(state) {
-      if (state.user && state.user.userProfile) {
-        state.user.userProfile.hasExternalCv = true;
-      }
-    },
-    uploadExternalCvFailed() {},
     getExternalCvRequested() {},
     getExternalCvSucceeded(state, action: PayloadAction<string>) {
       state.externalCv = action.payload;
     },
     getExternalCvFailed() {},
+    generateProfileFromCVSucceeded(state, _action) {
+      assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
+      if (state.user.userProfile) {
+        state.user.hasExtractedCvData = true;
+      }
+    },
   },
 });
 

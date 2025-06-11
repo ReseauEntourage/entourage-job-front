@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 env:
+  PORT: 3000
   NEXT_PUBLIC_HEROKU_RELEASE_VERSION: 'v100'
   NEXT_PUBLIC_WEBINAR_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
@@ -14,10 +15,6 @@ env:
   NEXT_PUBLIC_TUTORIAL_CV: 'https://google.com'
   NEXT_PUBLIC_TUTORIAL_PP: 'https://google.com'
   NEXT_PUBLIC_TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'
-  NEXT_PUBLIC_TUTORIAL_VIDEO_CV: 'https://google.com'
-  NEXT_PUBLIC_TUTORIAL_VIDEO_OFFERS: 'https://google.com'
-  NEXT_PUBLIC_TUTORIAL_VIDEO_OFFERS_2: 'https://google.com'
-  NEXT_PUBLIC_TUTORIAL_INTERVIEW_TRAINING: 'https://google.com'
   NEXT_PUBLIC_DONATION_LINK: 'https://google.com'
   NEXT_PUBLIC_SERVER_URL: 'http://localhost:3000'
   NEXT_PUBLIC_API_URL: 'http://localhost:3002'

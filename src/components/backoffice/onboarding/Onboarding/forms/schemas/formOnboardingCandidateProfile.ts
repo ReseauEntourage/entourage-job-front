@@ -1,13 +1,13 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
 
 export const formOnboardingCandidateProfile: FormSchema<{
-  description: string;
+  introduction: string;
 }> = {
   id: 'form-onboarding-profile',
   fields: [
     {
-      id: 'description',
-      name: 'description',
+      id: 'introduction',
+      name: 'introduction',
       component: 'textarea',
       title: 'Présentez-vous en quelques mots*',
       showLabel: true,

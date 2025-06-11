@@ -3,7 +3,7 @@ import React from 'react';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
-import { CVPDF } from 'src/components/cv';
+import { CVPDF } from 'src/components/profile';
 import { Section } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
 
@@ -38,7 +38,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
       title={`${cv.user.candidat.firstName} - Entourage Pro`}
       metaTitle={`Aidez ${cv.user.candidat.firstName} en partageant son CV.`}
       metaUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}${router.asPath}`}
-      metaDescription={cv.story}
+      metaDescription={cv.introduction}
       metaImage={urlImg}
       metaType="profile"
     >

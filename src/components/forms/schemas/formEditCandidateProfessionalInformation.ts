@@ -1,12 +1,33 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
+import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants/utils';
 
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
 export const formEditCandidateProfessionalInformation: FormSchema<{
-  searchBusinessLine0: FilterConstant<BusinessLineValue>;
-  searchAmbition0: string;
-  searchBusinessLine1: FilterConstant<BusinessLineValue>;
-  searchAmbition1: string;
+  businessSectorId0: FilterConstant<string>;
+  occupation0: string;
+  businessSectorId1: FilterConstant<string>;
+  occupation1: string;
   linkedinUrl: string;
 }> = {
   id: 'form-career-path',
@@ -36,17 +57,18 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine0',
-          name: 'searchBusinessLine0',
-          title: 'Famille de métier 1*',
-          component: 'select',
-          options: BUSINESS_LINES,
-          isMulti: false,
+          id: 'businessSectorId0',
+          name: 'businessSectorId0',
+          component: 'select-async',
           isRequired: true,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 1 *',
+          isMulti: false,
+          showLabel: true,
         },
         {
-          id: 'searchAmbition0',
-          name: 'searchAmbition0',
+          id: 'occupation0',
+          name: 'occupation0',
           component: 'text-input',
           title: 'Métier 1',
         },
@@ -58,24 +80,26 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine1',
-          name: 'searchBusinessLine1',
-          title: 'Famille de métier 2',
-          component: 'select',
+          id: 'businessSectorId1',
+          name: 'businessSectorId1',
+          component: 'select-async',
+          isRequired: false,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 2',
           isMulti: false,
-          options: BUSINESS_LINES,
+          showLabel: true,
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return !!fieldValue || !fieldValues.searchAmbition1;
+                return !!fieldValue || !fieldValues.occupation1;
               },
               message: 'Obligatoire',
             },
           ],
         },
         {
-          id: 'searchAmbition1',
-          name: 'searchAmbition1',
+          id: 'occupation1',
+          name: 'occupation1',
           component: 'text-input',
           title: 'Métier 2',
         },

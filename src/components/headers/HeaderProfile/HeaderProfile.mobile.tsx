@@ -1,61 +1,74 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useFileActivator } from '@/src/hooks/useFileActivator';
-import { Api } from 'src/api';
+import { BackLink } from '../../utils/BackLink';
 import {
   Button,
   ButtonIcon,
   ImgProfile,
   Section,
   Tag,
+  Text,
 } from 'src/components/utils';
-import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
-import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
-import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
-import { H2, H6 } from 'src/components/utils/Headings';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
+import { Department } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
-import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
-import { gaEvent } from 'src/lib/gtag';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledEditPictureIconContainer,
   StyledHeaderAvailibilityAndUserActions,
-  StyledHeaderNameAndRoleMobile,
+  StyledHeaderNameAndRole,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
-  StyledHeaderProfileCVButton,
-  StyledHeaderProfileDescription,
   StyledHeaderProfileInfoContainer,
   StyledHeaderProfileNameContainer,
   StyledHeaderProfilePicture,
-  StyledHeaderProfilePictureContainerMobile,
-  StyledProfilePlaceholder,
+  StyledHeaderProfilePictureContainer,
+  StyledHeaderProfilePublicInfoContainer,
+  StyledHeaderProfileSectionMobile,
 } from './HeaderProfile.styles';
-import { HeaderProfileProps } from './HeaderProfile.types';
-import { ProfileDescription } from './ProfileDescription';
+import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
+import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
+import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
-const SIZE = 64;
+const PROFILE_PICTURE_SIZE = 64;
+
+export interface HeaderProfileProps {
+  isEditable?: boolean;
+  id: string;
+  isAvailable: boolean;
+  firstName: string;
+  lastName: string;
+  role: UserRoles;
+  department: Department;
+  introduction?: string;
+
+  // Only for own profile
+  phone?: string;
+  email?: string;
+  driverLicenses?: string[];
+}
+
 export const HeaderProfileMobile = ({
   id,
+  isAvailable,
   firstName,
   lastName,
   role,
   department,
-  description,
-  isAvailable,
-  isEditable,
-  cvUrl,
-  hasExternalCv,
+  introduction,
+  phone,
+  email,
+  driverLicenses,
+  isEditable = false,
 }: HeaderProfileProps) => {
   const {
-    openCorrespondingModal,
     imageUploading,
     uploadProfileImage,
     shouldShowAllProfile,
@@ -63,10 +76,6 @@ export const HeaderProfileMobile = ({
   } = useHeaderProfile(role);
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
-  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
-
-  const hasCv = !!cvUrl || hasExternalCv;
-  const hasTwoCv = !!cvUrl && hasExternalCv;
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
@@ -75,141 +84,102 @@ export const HeaderProfileMobile = ({
     router.push(`/backoffice/messaging?userId=${id}`);
   };
 
-  const openProCv = () => {
-    gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC);
-    window.open(`/cv/${cvUrl}`, '_blank');
-  };
-
-  const openExternalCv = () => {
-    gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC);
-    Api.getExternalCvByUser(id).then((response) => {
-      const externalCvUrl = response.data;
-      window.open(externalCvUrl.url, '_blank');
-    });
-  };
-
-  const openCv = () => {
-    if (hasExternalCv) {
-      openExternalCv();
-    } else {
-      openProCv();
-    }
-  };
-
   return (
     <StyledHeaderProfile>
       <Section>
-        <StyledHeaderProfileContent>
-          <StyledHeaderProfilePictureContainerMobile>
-            <StyledHeaderProfilePicture size={SIZE}>
-              {imageUploading ? (
-                <Spinner color={COLORS.white} />
-              ) : (
-                <ImgProfile user={{ id, role, firstName }} size={SIZE} />
-              )}
-            </StyledHeaderProfilePicture>
-            {isEditable && (
-              <StyledEditPictureIconContainer>
-                <ImageInput
-                  onChange={uploadProfileImage}
-                  id="profile-picture-upload-mobile"
-                  name="profile-picture-upload-mobile"
-                  inputRef={setFileInputRef}
-                >
-                  <ButtonIcon
-                    icon={<LucidIcon name="Pencil" size={14} />}
-                    onClick={requestFileUploadClick}
-                  />
-                </ImageInput>
-              </StyledEditPictureIconContainer>
-            )}
-          </StyledHeaderProfilePictureContainerMobile>
-          <StyledHeaderProfileInfoContainer>
-            <StyledHeaderProfileNameContainer>
-              <StyledHeaderNameAndRoleMobile>
-                <H2
-                  title={
-                    <>
-                      {firstName} {lastName}
-                    </>
-                  }
-                />
-                <Tag
-                  content={
-                    role === UserRoles.ADMIN ? UserRoles.ADMIN : contextualRole
-                  }
-                  style="secondary"
-                />
-              </StyledHeaderNameAndRoleMobile>
-            </StyledHeaderProfileNameContainer>
-            {shouldShowAllProfile && (
-              <>
-                {department && <H6 title={department} color="black" />}
-                {!department && isEditable && (
-                  <StyledProfilePlaceholder onClick={openCorrespondingModal}>
-                    Ajouter votre département
-                  </StyledProfilePlaceholder>
-                )}
-              </>
-            )}
-          </StyledHeaderProfileInfoContainer>
-        </StyledHeaderProfileContent>
-        {shouldShowAllProfile && (
-          <StyledHeaderProfileDescription>
-            <StyledHeaderAvailibilityAndUserActions>
-              <AvailabilityTag isAvailable={isAvailable} />
-              <UserActions userId={id} openDirection="right" />
-            </StyledHeaderAvailibilityAndUserActions>
-            <ProfileDescription
-              description={description}
-              isEditable={isEditable}
-            />
-            {hasCv && (
-              <StyledHeaderProfileCVButton>
-                {!hasTwoCv ? (
-                  <Button
-                    id="nav-cv-button"
-                    size="small"
-                    variant="secondary"
-                    rounded
-                    onClick={openCv}
-                  >
-                    Voir le CV
-                  </Button>
+        <BackLink
+          url="/backoffice/dashboard"
+          label="Retour à mon espace personnel"
+        />
+        <StyledHeaderProfileSectionMobile>
+          <StyledHeaderProfileContent>
+            <StyledHeaderProfilePictureContainer>
+              <StyledHeaderProfilePicture size={PROFILE_PICTURE_SIZE}>
+                {imageUploading ? (
+                  <Spinner color={COLORS.white} />
                 ) : (
-                  <Dropdown>
-                    <DropdownToggle>
-                      <Button
-                        id="nav-cv-button"
-                        size="small"
-                        variant="secondary"
-                        rounded
-                      >
-                        Voir le CV{' '}
-                        {hasTwoCv && <LucidIcon name="ChevronDown" />}
-                      </Button>
-                    </DropdownToggle>
-                    <Dropdown.Menu openDirection="right">
-                      <Dropdown.Item onClick={openExternalCv}>
-                        Voir le CV personnel
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={openProCv}>
-                        Voir le CV Entourage Pro
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <ImgProfile
+                    user={{ id, role, firstName }}
+                    size={PROFILE_PICTURE_SIZE}
+                  />
                 )}
-              </StyledHeaderProfileCVButton>
+              </StyledHeaderProfilePicture>
+              {isEditable && (
+                <StyledEditPictureIconContainer>
+                  <ImageInput
+                    onChange={uploadProfileImage}
+                    id="profile-picture-upload-mobile"
+                    name="profile-picture-upload-mobile"
+                  >
+                    <ButtonIcon icon={<LucidIcon name="Pencil" size={14} />} />
+                  </ImageInput>
+                </StyledEditPictureIconContainer>
+              )}
+            </StyledHeaderProfilePictureContainer>
+            <StyledHeaderProfileInfoContainer>
+              <StyledHeaderProfilePublicInfoContainer>
+                <StyledHeaderProfileNameContainer>
+                  <StyledHeaderNameAndRole>
+                    <Text size={20} weight="semibold">
+                      {firstName} {lastName}
+                    </Text>
+                    <Tag
+                      content={
+                        role === UserRoles.ADMIN
+                          ? UserRoles.ADMIN
+                          : contextualRole
+                      }
+                      size="small"
+                      style="secondary"
+                    />
+                  </StyledHeaderNameAndRole>
+                </StyledHeaderProfileNameContainer>
+                {shouldShowAllProfile && (
+                  <>
+                    {department && (
+                      <Text color="black" weight="medium" size="large">
+                        {department}
+                      </Text>
+                    )}
+                  </>
+                )}
+                {displayMessageButton && (
+                  <div>
+                    <Button
+                      onClick={openConversation}
+                      variant="secondary"
+                      rounded
+                    >
+                      Envoyer un message
+                    </Button>
+                  </div>
+                )}
+              </StyledHeaderProfilePublicInfoContainer>
+            </StyledHeaderProfileInfoContainer>
+          </StyledHeaderProfileContent>
+
+          <StyledHeaderAvailibilityAndUserActions>
+            {shouldShowAllProfile && (
+              <AvailabilityTag isAvailable={isAvailable} />
             )}
-          </StyledHeaderProfileDescription>
-        )}
-        {displayMessageButton && (
-          <div>
-            <Button onClick={openConversation} variant="secondary" rounded>
-              Envoyer un message
-            </Button>
-          </div>
-        )}
+            <UserActions userId={id} userRole={role} openDirection="right" />
+          </StyledHeaderAvailibilityAndUserActions>
+
+          {shouldShowAllProfile && introduction && (
+            <ProfileIntroduction introduction={introduction} />
+          )}
+
+          {ownProfile && isEditable && (
+            <>
+              <ProfileContactInfos
+                phone={phone}
+                email={email}
+                driverLicenses={driverLicenses}
+              />
+              <ProfileCompletion completionRate={0.8} />
+            </>
+          )}
+        </StyledHeaderProfileSectionMobile>
       </Section>
     </StyledHeaderProfile>
   );

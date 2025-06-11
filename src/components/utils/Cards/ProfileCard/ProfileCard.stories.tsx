@@ -28,15 +28,29 @@ export const Candidate = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.CANDIDATE,
-    helps: [{ name: 'network' }, { name: 'cv' }],
-    isAvailable: true,
-    businessLines: [
-      { name: 'id', order: 0 },
-      { name: 'bat', order: 1 },
+    nudges: [
+      {
+        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+        value: 'event',
+        nameRequest:
+          'Se rencontrer et échanger avec les membres de la communauté',
+        nameOffer:
+          'Se rencontrer lors d’événements avec les membres de la communauté',
+        order: 4,
+      },
     ],
-    ambitions: [
-      { name: 'développeur', order: 0 },
-      { name: 'ouvrier', order: 1 },
+    isAvailable: true,
+    sectorOccupations: [
+      {
+        businessSector: { name: 'Informatique et digital' },
+        occupation: { name: 'développeur' },
+        order: 0,
+      },
+      {
+        businessSector: { name: 'Bâtiment' },
+        occupation: { name: 'ouvrier' },
+        order: 0,
+      },
     ],
     department: 'Paris (75)',
   },
@@ -49,19 +63,29 @@ export const Coach = {
     lastName: 'Doe',
     role: UserRoles.COACH,
     isAvailable: true,
-    helps: [
-      { name: 'network' },
-      { name: 'cv' },
-      { name: 'tips' },
-      { name: 'interview' },
-      { name: 'event' },
+    nudges: [
+      {
+        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+        value: 'event',
+        nameRequest:
+          'Se rencontrer et échanger avec les membres de la communauté',
+        nameOffer:
+          'Se rencontrer lors d’événements avec les membres de la communauté',
+        order: 4,
+      },
     ],
-    businessLines: [
-      { name: 'id', order: 0 },
-      { name: 'bat', order: 1 },
-      { name: 'aa', order: 2 },
+    sectorOccupations: [
+      {
+        businessSector: { name: 'Informatique et digital' },
+        occupation: { name: 'développeur' },
+        order: 0,
+      },
+      {
+        businessSector: { name: 'Bâtiment' },
+        occupation: { name: 'ouvrier' },
+        order: 0,
+      },
     ],
-    job: 'Développeur',
     department: 'Paris (75)',
   },
 } satisfies Story;

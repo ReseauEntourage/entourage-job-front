@@ -3,15 +3,17 @@ import { User } from '../../../api/types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
-} from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+} from '../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
 import { DocumentNames } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
+import { OnboardingAI } from './Onboarding/forms/OnboardingAI';
 import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
+import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
 import { formOnboardingCandidateHelps } from './Onboarding/forms/schemas/formOnboardingCandidateHelps';
 import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
 import { formOnboardingCandidateProfile } from './Onboarding/forms/schemas/formOnboardingCandidateProfile';
@@ -21,10 +23,10 @@ import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardin
 import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';
 
-export type OnboardingStep = 0 | 1 | 2 | 3 | 4; // 0 means no onboarding
+export type OnboardingStep = 0 | 1 | 2 | 3 | 4 | 5; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 export const ONBOARDING_LAST_STEP = {
-  [UserRoles.CANDIDATE]: 4 as OnboardingStep,
+  [UserRoles.CANDIDATE]: 5 as OnboardingStep,
   [UserRoles.COACH]: 3 as OnboardingStep,
 };
 
@@ -33,7 +35,8 @@ export type CandidateOnboardingForm =
   | typeof formOnboardingCandidateHelps
   | typeof formOnboardingCandidateJob
   | typeof formOnboardingCandidateProfile
-  | typeof formOnboardingCandidateSocialSituation;
+  | typeof formOnboardingCandidateSocialSituation
+  | typeof formOnboardingCandidateAI;
 
 export type CoachOnboardingForm =
   | typeof formOnboardingEthicsCharter
@@ -52,8 +55,8 @@ export type FlattenedOnboardingFormData =
 
 export const onboardingAlreadyCompleted = {
   [UserRoles.CANDIDATE]: (user: User) => {
-    const userProfileRequired = ['description'];
-    const userProfileCompleted = userProfileRequired.every((field) =>
+    const userProfileRequired = ['introduction', 'description'];
+    const userProfileCompleted = userProfileRequired.some((field) =>
       Boolean(user.userProfile[field])
     );
     const readDocumentCompleted = isReadDocument(
@@ -63,18 +66,19 @@ export const onboardingAlreadyCompleted = {
     return userProfileCompleted && readDocumentCompleted;
   },
   [UserRoles.COACH]: (user: User) => {
-    const userProfileRequired = ['description'];
+    const userProfileRequired = ['introduction'];
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
     );
-    const hasNetworkBusinessLines =
-      !!user.userProfile.networkBusinessLines?.length;
+    const hasNetworkBusinessSectors =
+      !!user.userProfile.sectorOccupations?.filter((so) => !!so.businessSector)
+        ?.length;
     const readDocumentCompleted = isReadDocument(
       user.readDocuments,
       DocumentNames.CharteEthique
     );
     return (
-      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessLines
+      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessSectors
     );
   },
 };
@@ -156,7 +160,8 @@ export const OnboardingStepContents: {
         return getCoachDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) =>
-        !!userProfile?.networkBusinessLines?.length,
+        !!userProfile?.sectorOccupations?.map((so) => so.businessSector)
+          ?.length,
     },
   },
   3: {
@@ -167,9 +172,9 @@ export const OnboardingStepContents: {
       form: formOnboardingCandidateProfile,
       content: <OnboardingProfileForm />,
       defaultValues: (user) => ({
-        description: user.userProfile.description ?? undefined,
+        introduction: user.userProfile.introduction ?? undefined,
       }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.description,
+      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
     },
     [UserRoles.COACH]: {
       title: 'Complétez votre profil',
@@ -178,9 +183,9 @@ export const OnboardingStepContents: {
       form: formOnboardingCoachProfile,
       content: <OnboardingProfileForm />,
       defaultValues: (user) => ({
-        description: user.userProfile.description ?? undefined,
+        introduction: user.userProfile.introduction ?? undefined,
       }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.description,
+      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
     },
   },
   4: {
@@ -191,6 +196,14 @@ export const OnboardingStepContents: {
         return getCandidateDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
+    },
+  },
+  5: {
+    [UserRoles.CANDIDATE]: {
+      title: 'Enrichissez votre profil grâce à votre CV',
+      content: <OnboardingAI />,
+      form: formOnboardingCandidateAI,
+      skippedBy: (user: User) => !!user.hasExtractedCvData,
     },
   },
 };
