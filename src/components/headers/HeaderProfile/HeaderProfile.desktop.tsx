@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { BackLink } from '../../utils/BackLink';
 import { Button, ImgProfile, Section, Tag, Text } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { ImageInput } from 'src/components/utils/Inputs';
@@ -76,6 +77,10 @@ export const HeaderProfileDesktop = ({
   return (
     <StyledHeaderProfile>
       <Section>
+        <BackLink
+          url="/backoffice/dashboard"
+          label="Retour à mon espace personnel"
+        />
         <StyledHeaderProfileContent>
           <StyledHeaderProfilePictureContainer>
             <StyledHeaderProfilePicture size={PROFILE_PICTURE_SIZE}>

@@ -55,8 +55,8 @@ export type FlattenedOnboardingFormData =
 
 export const onboardingAlreadyCompleted = {
   [UserRoles.CANDIDATE]: (user: User) => {
-    const userProfileRequired = ['introduction'];
-    const userProfileCompleted = userProfileRequired.every((field) =>
+    const userProfileRequired = ['introduction', 'description'];
+    const userProfileCompleted = userProfileRequired.some((field) =>
       Boolean(user.userProfile[field])
     );
     const readDocumentCompleted = isReadDocument(
@@ -200,10 +200,10 @@ export const OnboardingStepContents: {
   },
   5: {
     [UserRoles.CANDIDATE]: {
-      title: 'Félicitations ! Vous venez de finaliser votre inscription',
+      title: 'Enrichissez votre profil grâce à votre CV',
       content: <OnboardingAI />,
       form: formOnboardingCandidateAI,
-      skippedBy: ({ userProfile }: User) => !userProfile.hasExternalCv,
+      skippedBy: (user: User) => !!user.hasExtractedCvData,
     },
   },
 };

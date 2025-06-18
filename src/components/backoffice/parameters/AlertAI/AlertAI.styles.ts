@@ -29,3 +29,8 @@ export const StyledLoadingContainer = styled.div`
   height: 200px;
   margin: 20px 0;
 `;
+
+export const StyledAlertIAColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

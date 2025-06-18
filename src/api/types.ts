@@ -246,6 +246,7 @@ export type User = {
   OrganizationId?: string;
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
+  hasExtractedCvData?: boolean;
 };
 
 export type CVStatus =
@@ -322,7 +323,6 @@ export interface UserWithUserCandidate extends User {
   referredCandidates?: UserCandidateWithUsers[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
-  hasExtractedCvData?: boolean;
 }
 
 export type UserDto = {
