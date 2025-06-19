@@ -79,6 +79,7 @@ export type OrganizationDto = {
 export interface BusinessSector {
   id?: string;
   name: string;
+  prefixes: string;
 }
 
 export type Occupation = {
@@ -192,6 +193,7 @@ export type UserProfile = {
   hasExternalCv: boolean;
   hasExtractedCvData: boolean;
   hasAcceptedEthicsCharter: boolean;
+  hasPicture: boolean;
   reviews: Review[];
   experiences: Experience[];
   formations: Formation[];
@@ -543,6 +545,33 @@ export type PublicProfile = {
   cvUrl?: string;
   hasExternalCv: boolean;
   averageDelayResponse: number | null;
+};
+
+export type PublicUser = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+> & {
+  userProfile: Pick<
+    UserProfile,
+    // Attributes
+    | 'department'
+    | 'description'
+    | 'introduction'
+    | 'linkedinUrl'
+    | 'hasPicture'
+
+    // Relations
+    | 'sectorOccupations'
+    | 'skills'
+    | 'contracts'
+    | 'userProfileLanguages'
+    | 'nudges'
+    | 'customNudges'
+    | 'reviews'
+    | 'experiences'
+    | 'formations'
+    | 'interests'
+  >;
 };
 
 export type PrivateProfile = PublicProfile & {

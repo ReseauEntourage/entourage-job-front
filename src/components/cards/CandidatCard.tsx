@@ -18,7 +18,7 @@ import { sortByOrder } from 'src/utils';
 
 interface CandidatCardProps {
   url: string;
-  imgSrc: string;
+  imgSrc?: string;
   firstName: string;
   businessSectors: BusinessSector[];
   occupations: Occupation[];

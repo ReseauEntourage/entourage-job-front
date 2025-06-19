@@ -13,7 +13,6 @@ import {
   ContactContactUs,
   ContactNewsletter,
   ConversationReportDto,
-  CV,
   ExternalCv,
   ExternalMessage,
   InternalMessage,
@@ -99,30 +98,14 @@ export class APIHandler {
 
   // get
 
-  getCVShares(): Promise<AxiosResponse> {
-    return this.get('/cv/shares');
+  getPublicProfileList(params): Promise<AxiosResponse> {
+    return this.get('/users/public-profiles', {
+      params,
+    });
   }
 
-  getCVByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
-    return this.get(`/cv/${candidateId}`, {}, headers);
-  }
-
-  getCVRandom(
-    params
-  ): Promise<AxiosResponse<{ suggestions: boolean; cvs: CV[] }>> {
-    return this.get('/cv/cards/random', params);
-  }
-
-  getCVLastVersion(candidateId): Promise<AxiosResponse> {
-    return this.get(`/cv/lastVersion/${candidateId}`);
-  }
-
-  getCVPdf(candidateId, params): Promise<AxiosResponse> {
-    return this.get(`/cv/pdf/${candidateId}`, params);
-  }
-
-  getNbCVPublished(): Promise<AxiosResponse> {
-    return this.get('/cv/published');
+  getPublicProfileByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
+    return this.get(`/users/public-profiles/${candidateId}`, {}, headers);
   }
 
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
@@ -404,8 +387,15 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(complete = false): Promise<AxiosResponse> {
-    return this.get(`/auth/current${complete ? '?complete=true' : ''}`);
+  getAuthCurrent(
+    complete = false,
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(
+      `/auth/current${complete ? '?complete=true' : ''}`,
+      {},
+      headers
+    );
   }
 
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {

@@ -2,17 +2,14 @@ import React from 'react';
 import { StyledCVPDFProfilePicture } from './CVPDF.styles';
 
 export function CVProfilePicturePDF({
-  urlImg,
+  imgSrc,
   verticalMargin = false,
 }: {
-  urlImg: string;
+  imgSrc: string;
   verticalMargin?: boolean;
 }) {
   return (
-    <StyledCVPDFProfilePicture
-      imgSrc={`${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${urlImg}`}
-      verticalMargin={verticalMargin}
-    >
+    <StyledCVPDFProfilePicture imgSrc={imgSrc} verticalMargin={verticalMargin}>
       <div className="picture" />
       <div className="pseudo" />
     </StyledCVPDFProfilePicture>

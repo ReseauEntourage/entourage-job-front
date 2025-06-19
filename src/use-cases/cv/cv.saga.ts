@@ -21,7 +21,9 @@ function* fetchCVSagaRequested() {
   const candidateId = yield* select(selectCandidateId);
 
   try {
-    const response = yield* call(() => Api.getCVByCandidateId(candidateId));
+    const response = yield* call(() =>
+      Api.getPublicProfileByCandidateId(candidateId)
+    );
     yield* put(fetchCVSucceeded(response.data));
   } catch {
     yield* put(fetchCVFailed());

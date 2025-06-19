@@ -94,14 +94,11 @@ export function ProfileCard({
   department,
   nudges,
   sectorOccupations,
-  userCandidate,
   isAvailable,
   displayHelps,
 }: ProfileCardProps) {
-  const { urlImg, fallbackToCVImage } = useImageFallback({
+  const { urlImg } = useImageFallback({
     userId,
-    role,
-    userCandidate,
   });
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
@@ -134,18 +131,12 @@ export function ProfileCard({
         <StyledProfileCardPictureContainer>
           <StyledProfileCardPicture>
             {urlImg ? (
-              <Img
-                src={urlImg}
-                alt={`photo de ${firstName}`}
-                cover
-                onError={fallbackToCVImage}
-              />
+              <Img src={urlImg} alt={`photo de ${firstName}`} cover />
             ) : (
               <Img
                 src="/static/img/profile-placeholder.png"
                 alt={`photo de ${firstName}`}
                 cover
-                onError={fallbackToCVImage}
               />
             )}
             <Img src="/static/img/gradient.png" alt="" cover />

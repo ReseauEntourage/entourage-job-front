@@ -26,10 +26,8 @@ export const ImgProfile = ({
 }: ImgProfileProps) => {
   const [hash, setHash] = useState<number>(Date.now());
 
-  const { urlImg, fallbackToCVImage } = useImageFallback({
+  const { urlImg } = useImageFallback({
     userId: user.id,
-    role: user.role,
-    userCandidate: user.candidat,
   });
   const updateUserProfilePictureStatus = useSelector(
     updateUserProfilePictureSelectors.selectUpdateUserProfilePictureStatus
@@ -50,7 +48,6 @@ export const ImgProfile = ({
       {urlImg ? (
         <Img
           cover
-          onError={fallbackToCVImage}
           src={`${urlImg}?${hash}`}
           alt={`photo de ${user.firstName}`}
         />

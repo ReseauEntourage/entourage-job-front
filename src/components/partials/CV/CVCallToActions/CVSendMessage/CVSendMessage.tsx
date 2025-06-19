@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { StyledCVCTACard } from '../CVCallToActions.styles';
 import { Api } from 'src/api';
-import { CV } from 'src/api/types';
+import { PublicUser } from 'src/api/types';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -16,12 +16,12 @@ import { gaEvent } from 'src/lib/gtag';
 import { notificationsActions } from 'src/use-cases/notifications';
 
 interface CVCallToActionsProps {
-  cv: CV;
+  publicUser: PublicUser;
   actionDisabled?: boolean;
 }
 
 export const CVSendMessage = ({
-  cv,
+  publicUser,
   actionDisabled = false,
 }: CVCallToActionsProps) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export const CVSendMessage = ({
   return (
     <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={1}>
       <H5
-        title={`Echangez avec ${cv.user.candidat.firstName}`}
+        title={`Echangez avec ${publicUser.firstName}`}
         center
         color="darkGray"
       />
@@ -46,8 +46,8 @@ export const CVSendMessage = ({
           fbEvent(FB_TAGS.MESSAGE_OPEN);
           openModal(
             <ModalEdit
-              title={`Envoyer un message à ${cv.user.candidat.firstName}`}
-              description={`Vous pouvez envoyer un message à ${cv.user.candidat.firstName} pour l'aider et le/la conseiller dans sa recherche d'emploi`}
+              title={`Envoyer un message à ${publicUser.firstName}`}
+              description={`Vous pouvez envoyer un message à ${publicUser.firstName} pour l'aider et le/la conseiller dans sa recherche d'emploi`}
               submitText="Envoyer"
               formSchema={formSendExternalMessage}
               onSubmit={async (fields, closeModal) => {
@@ -55,7 +55,7 @@ export const CVSendMessage = ({
                 fbEvent(FB_TAGS.MESSAGE_SEND);
                 try {
                   await Api.postExternalMessage({
-                    UserId: cv.UserId,
+                    UserId: publicUser.id,
                     ...fields,
                   });
                   dispatch(
