@@ -26,7 +26,6 @@ const loadBusinessSectorsOptions = async (callback, inputValue) => {
 export const formEditCoachProfessionalInformation: FormSchema<{
   currentJob: string;
   businessSectorIds: FilterConstant<string>[];
-  linkedinUrl: string;
 }> = {
   id: 'form-coach-professional-information',
   fields: [
@@ -51,23 +50,6 @@ export const formEditCoachProfessionalInformation: FormSchema<{
       name: 'linkedinLabel',
       title: 'Partagez votre profil LinkedIn',
       component: 'heading',
-    },
-    {
-      id: 'linkedinUrl',
-      name: 'linkedinUrl',
-      component: 'text-input',
-      title: 'Ajouter le lien LinkedIn',
-      rules: [
-        {
-          method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              (!!fieldValue && fieldValue.includes('linkedin.com'))
-            );
-          },
-          message: 'Doit être un lien Linkedin valide',
-        },
-      ],
     },
   ],
 };

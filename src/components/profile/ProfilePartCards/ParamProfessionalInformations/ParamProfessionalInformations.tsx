@@ -46,7 +46,6 @@ export const ParamProfessionalInformations = ({
           getValuesToSend={(values) => {
             return {
               currentJob: values.currentJob,
-              linkedinUrl: values.linkedinUrl,
             };
           }}
         />
