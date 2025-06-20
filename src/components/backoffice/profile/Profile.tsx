@@ -48,15 +48,16 @@ export const Profile = () => {
               description={selectedProfile.description}
               skills={selectedProfile.skills}
             />
-            {selectedProfile.role === UserRoles.CANDIDATE && (
-              <ProfileCustomNudges
-                customNudges={selectedProfile.customNudges}
-                firstName={selectedProfile.firstName}
-                role={selectedProfile.role}
-                userId={selectedProfile.id}
-                ownProfile
-              />
-            )}
+            {selectedProfile.customNudges.length > 0 &&
+              selectedProfile.role === UserRoles.CANDIDATE && (
+                <ProfileCustomNudges
+                  customNudges={selectedProfile.customNudges}
+                  firstName={selectedProfile.firstName}
+                  role={selectedProfile.role}
+                  userId={selectedProfile.id}
+                  ownProfile
+                />
+              )}
             <ProfileExperiences
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
