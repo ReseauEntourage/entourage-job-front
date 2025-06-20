@@ -21,4 +21,6 @@ export interface TextProps {
   variant?: TextVariant;
   center?: boolean;
   textAlign?: TextAlign;
+  underline?: boolean;
+  onClick?: () => void;
 }
