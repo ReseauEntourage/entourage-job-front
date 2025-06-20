@@ -45,11 +45,5 @@ export const formEditCoachProfessionalInformation: FormSchema<{
       isMulti: true,
       showLabel: true,
     },
-    {
-      id: 'linkedinLabel',
-      name: 'linkedinLabel',
-      title: 'Partagez votre profil LinkedIn',
-      component: 'heading',
-    },
   ],
 };
