@@ -94,7 +94,6 @@ export const Profile = () => {
               userId={selectedProfile.id}
               linkedinUrl={selectedProfile.linkedinUrl}
               hasExternalCv={selectedProfile.hasExternalCv}
-              // entourageProCv="/url/"
               smallCard
             />
             <ProfileContactPreferences smallCard />

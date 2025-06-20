@@ -123,7 +123,6 @@ export const Parameters = () => {
                 userId={user.id}
                 linkedinUrl={user.userProfile.linkedinUrl}
                 hasExternalCv={user.userProfile.hasExternalCv}
-                // entourageProCv="/url/"
                 isEditable
                 smallCard
               />
