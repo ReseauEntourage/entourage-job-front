@@ -11,6 +11,7 @@ import { Button, Text } from 'src/components/utils';
 import { UserRoles } from 'src/constants/users';
 import {
   StyledButtonContainer,
+  StyledContentContainer,
   StyledItem,
 } from './ProfileCustomNudges.styles';
 import { ProfileCustomNudgesModalEdit } from './ProfileCustomNudgesModalEdit';
@@ -110,7 +111,9 @@ export const ProfileCustomNudges = ({
     >
       {customNudges?.map((customNudge, index) => (
         <StyledItem key={index}>
-          <Text>{customNudge.content}</Text>
+          <StyledContentContainer>
+            <Text>{customNudge.content}</Text>
+          </StyledContentContainer>
 
           {isEditable && (
             <StyledButtonContainer>
