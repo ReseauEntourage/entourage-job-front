@@ -48,13 +48,15 @@ export const Profile = () => {
               description={selectedProfile.description}
               skills={selectedProfile.skills}
             />
-            <ProfileCustomNudges
-              customNudges={selectedProfile.customNudges}
-              firstName={selectedProfile.firstName}
-              role={selectedProfile.role}
-              userId={selectedProfile.id}
-              ownProfile
-            />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileCustomNudges
+                customNudges={selectedProfile.customNudges}
+                firstName={selectedProfile.firstName}
+                role={selectedProfile.role}
+                userId={selectedProfile.id}
+                ownProfile
+              />
+            )}
             <ProfileExperiences
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
@@ -97,11 +99,13 @@ export const Profile = () => {
               smallCard
             />
             <ProfileContactPreferences smallCard />
-            <ProfileNudges
-              userRole={selectedProfile.role}
-              nudges={selectedProfile.nudges}
-              smallCard
-            />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileNudges
+                userRole={selectedProfile.role}
+                nudges={selectedProfile.nudges}
+                smallCard
+              />
+            )}
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>
