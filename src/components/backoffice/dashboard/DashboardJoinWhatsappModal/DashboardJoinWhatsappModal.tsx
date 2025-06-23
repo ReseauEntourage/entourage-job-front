@@ -11,7 +11,7 @@ export const DashboardJoinWhatsappModal = () => {
   const user = useAuthenticatedUser();
 
   return (
-    <ModalGeneric title="Rejoindre note groupe Whatsapp">
+    <ModalGeneric title="Rejoindre notre groupe Whatsapp">
       Pour recevoir des actualités et échanger avec les{' '}
       {user.role === UserRoles.COACH ? 'coachs' : 'candidats'} de votre région,
       scannez le QR code
