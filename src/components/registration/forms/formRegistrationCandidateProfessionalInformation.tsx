@@ -42,6 +42,7 @@ export const formRegistrationCandidateProfessionalInformation: FormSchema<{
           component: 'select-async',
           isRequired: true,
           loadOptions: loadBusinessSectorsOptions,
+          title: 'Secteur(s) recherché(s)',
           placeholder: 'Secteur 1*',
           isMulti: false,
           showLabel: true,
