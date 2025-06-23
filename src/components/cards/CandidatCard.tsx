@@ -44,9 +44,7 @@ export const CandidatCard = ({
     ? GA_TAGS.PAGE_GALERIE_CV_CLIC
     : GA_TAGS.HOME_CV_CLIC;
 
-  const showShareOptions = !asPath.includes('/entreprises');
-
-  const linkToCV = `/cv/${url}?hideShareOptions=${!showShareOptions}`;
+  const linkToCV = `/cv/${url}`;
 
   const onCardClicked = () => {
     gaEvent(onCvClickEvent);
