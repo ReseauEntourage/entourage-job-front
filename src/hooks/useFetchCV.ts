@@ -17,7 +17,7 @@ export function useFetchCV(candidateId) {
   const fetchCV = useCallback(async () => {
     if (candidateId) {
       try {
-        const { data } = await Api.getCVByCandidateId(candidateId);
+        const { data } = await Api.getPublicProfileByCandidateId(candidateId);
         if (data && !_.isEmpty(data)) {
           setCV(data);
         } else {

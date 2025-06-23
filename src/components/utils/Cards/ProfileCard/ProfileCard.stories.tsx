@@ -42,12 +42,12 @@ export const Candidate = {
     isAvailable: true,
     sectorOccupations: [
       {
-        businessSector: { name: 'Informatique et digital' },
+        businessSector: { name: 'Informatique et digital', prefixes: '' },
         occupation: { name: 'développeur' },
         order: 0,
       },
       {
-        businessSector: { name: 'Bâtiment' },
+        businessSector: { name: 'Bâtiment', prefixes: '' },
         occupation: { name: 'ouvrier' },
         order: 0,
       },
@@ -76,12 +76,12 @@ export const Coach = {
     ],
     sectorOccupations: [
       {
-        businessSector: { name: 'Informatique et digital' },
+        businessSector: { name: 'Informatique et digital', prefixes: '' },
         occupation: { name: 'développeur' },
         order: 0,
       },
       {
-        businessSector: { name: 'Bâtiment' },
+        businessSector: { name: 'Bâtiment', prefixes: '' },
         occupation: { name: 'ouvrier' },
         order: 0,
       },

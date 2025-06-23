@@ -1,8 +1,6 @@
-import _ from 'lodash';
-import React, { useCallback, useMemo, useState } from 'react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Api } from 'src/api';
-import { CV } from 'src/api/types';
+import { BusinessSector, Occupation, User } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
@@ -11,7 +9,6 @@ import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
 import { FilterObject } from 'src/constants/utils';
-import { usePrevious } from 'src/hooks/utils';
 import { filtersToQueryParams } from 'src/utils/Filters';
 
 const NoCVInThisArea = () => {
@@ -51,18 +48,16 @@ export const CVList = ({
   setSearch = () => {},
   resetFilters = () => {},
 }: CVListProps) => {
-  const [cvs, setCVs] = useState<CV[]>();
+  const defaultLimit = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
+  const [items, setItems] = useState<User[]>([]);
+  const [offset, setOffset] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [hasSuggestions, setHasSuggestions] = useState(false);
-
   const [error, setError] = useState<string>();
-  const defaultNbOfCVs = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
-  const [nbOfCVToDisplay, setNbOfCVToDisplay] = useState(defaultNbOfCVs);
-  const prevNbOfCVToDisplay = usePrevious(nbOfCVToDisplay);
+  const [endOfList, setEndOfList] = useState(false);
 
   const fetchData = useCallback(
-    (searchValue, filtersValue, nbOfCVToDisplayValue, isPagination = false) => {
+    (searchValue, filtersValue, isPagination = false) => {
       setError(undefined);
 
       if (isPagination) {
@@ -70,28 +65,25 @@ export const CVList = ({
       } else {
         setLoading(true);
       }
-      Api.getCVRandom({
-        params: {
-          search: searchValue,
-          nb: nbOfCVToDisplayValue,
-          ...filtersToQueryParams(filtersValue),
-        },
+      Api.getPublicProfileList({
+        search: searchValue,
+        limit: defaultLimit,
+        offset,
+        ...filtersToQueryParams(filtersValue),
       })
         .then(({ data }) => {
-          setHasSuggestions(data.suggestions);
-          if (isPagination) {
-            setCVs((prevCVs = []) => {
-              return [
-                ...prevCVs,
-                ..._.differenceWith(data.cvs, prevCVs, (cv1: CV, cv2: CV) => {
-                  return cv1.id === cv2.id;
-                }),
-              ];
-            });
-          } else {
-            setNbOfCVToDisplay(defaultNbOfCVs);
-            setCVs(data.cvs);
+          let countNewItems = 0;
+          setItems((prevItems) => {
+            const newItems = data.filter(
+              (newItem) => !prevItems.some((item) => item.id === newItem.id)
+            );
+            countNewItems += newItems.length;
+            return [...prevItems, ...newItems];
+          });
+          if (countNewItems === 0) {
+            setEndOfList(true);
           }
+          setOffset((prevOffset) => prevOffset + countNewItems);
         })
         .catch((err) => {
           console.error(err);
@@ -102,70 +94,65 @@ export const CVList = ({
           setLoadingMore(false);
         });
     },
-    [defaultNbOfCVs]
+    [defaultLimit, offset]
   );
 
-  useDeepCompareEffect(() => {
-    if (
-      nbOfCVToDisplay !== prevNbOfCVToDisplay &&
-      nbOfCVToDisplay > defaultNbOfCVs
-    ) {
-      fetchData(search, filters, nbOfCVToDisplay, true);
-    } else {
-      fetchData(search, filters, nbOfCVToDisplay);
-    }
-  }, [fetchData, search, filters, nbOfCVToDisplay]);
+  useEffect(() => {
+    fetchData(search, filters);
+  }, [search, filters, fetchData]);
 
-  const renderCvList = useCallback(
-    (items) => {
-      return (
-        <div className="cv-list uk-margin-small-top">
-          <Grid
-            childWidths={['1-1', '1-2@s', '1-3@m']}
-            gap="small"
-            row
-            center
-            items={items.slice(0, nbOfCVToDisplay).map((cv) => {
-              return (
-                <CandidatCard
-                  businessSectors={cv.businessSectors}
-                  url={cv.user.url}
-                  imgSrc={
-                    (cv.urlImg &&
-                      `${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${cv.urlImg}`) ||
-                    undefined
-                  }
-                  firstName={cv.user.candidat.firstName}
-                  occupations={cv.occupations}
-                  locations={cv.locations}
-                />
-              );
-            })}
-          />
-          {!nb && (
-            <div className="uk-flex uk-flex-center uk-margin-top">
-              <Button
-                variant="primary"
-                onClick={() => {
-                  setNbOfCVToDisplay((prevNbOfCV) => {
-                    return prevNbOfCV + INITIAL_NB_OF_CV_TO_DISPLAY;
-                  });
-                }}
-              >
-                Voir plus
-                {loadingMore ? (
-                  <div style={{ color: COLORS.primaryBlue }} />
-                ) : (
-                  <LucidIcon name="Plus" />
-                )}
-              </Button>
-            </div>
-          )}
-        </div>
-      );
-    },
-    [loadingMore, nb, nbOfCVToDisplay]
-  );
+  const renderCvList = useCallback(() => {
+    return (
+      <div className="cv-list uk-margin-small-top">
+        <Grid
+          childWidths={['1-1', '1-2@s', '1-3@m']}
+          gap="small"
+          row
+          center
+          items={items.map((user) => {
+            const imgSrc = user.userProfile?.hasPicture
+              ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${user.id}.profile.jpg`
+              : undefined;
+            return (
+              <CandidatCard
+                businessSectors={
+                  (user.userProfile.sectorOccupations
+                    ?.filter((so) => !!so.businessSector)
+                    ?.map((so) => so.businessSector) as BusinessSector[]) || []
+                }
+                url={`${user.id}`}
+                imgSrc={imgSrc}
+                firstName={user.firstName}
+                occupations={
+                  (user.userProfile.sectorOccupations
+                    ?.filter((so) => !!so.occupation)
+                    ?.map((so) => so.occupation) as Occupation[]) || []
+                }
+                locations={[]}
+              />
+            );
+          })}
+        />
+        {!nb && !endOfList && (
+          <div className="uk-flex uk-flex-center uk-margin-top">
+            <Button
+              variant="primary"
+              onClick={() => {
+                fetchData(search, filters, true);
+              }}
+            >
+              Voir plus
+              {loadingMore ? (
+                <div style={{ color: COLORS.primaryBlue }} />
+              ) : (
+                <LucidIcon name="Plus" />
+              )}
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }, [endOfList, fetchData, filters, items, loadingMore, nb, search]);
 
   const content = useMemo(() => {
     if (loading) {
@@ -176,21 +163,8 @@ export const CVList = ({
       return <p className="uk-text-center uk-text-italic">{error}</p>;
     }
 
-    if (cvs && filters) {
-      if (hasSuggestions) {
-        return (
-          <div>
-            <p className="uk-text-center uk-text-italic">
-              Nous n’avons aucun résultat pour votre recherche. Voici d’autres
-              candidats dans la zone géographique sélectionnée qui pourraient
-              correspondre.
-            </p>
-            {renderCvList(cvs)}
-          </div>
-        );
-      }
-
-      if (cvs.length <= 0) {
+    if (items && filters) {
+      if (items.length <= 0) {
         if (
           filters &&
           filters[CV_FILTERS_DATA[1].key] &&
@@ -198,14 +172,18 @@ export const CVList = ({
         ) {
           return <NoCVInThisArea />;
         }
-        return <p className="uk-text-center uk-text-italic">Aucun CV trouvé</p>;
+        return (
+          <p className="uk-text-center uk-text-italic">
+            Aucun profil correspondat trouvé
+          </p>
+        );
       }
-      return renderCvList(cvs);
+      return renderCvList();
     }
-  }, [cvs, error, filters, hasSuggestions, loading, renderCvList]);
+  }, [items, error, filters, loading, renderCvList]);
 
   return (
-    <div data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200">
+    <div>
       {!hideSearchBar && (
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}

@@ -10,24 +10,10 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-export const EntreprisesCVList = ({
-  nbPublishedCVs,
-}: {
-  nbPublishedCVs: number;
-}) => {
+export const EntreprisesCVList = () => {
   return (
     <Section container="large" style="muted">
-      <H2
-        center
-        title={
-          <>
-            <span className="uk-text-primary">
-              {nbPublishedCVs || 'De nombreux'} candidats
-            </span>{' '}
-            cherchent actuellement un emploi
-          </>
-        }
-      />
+      <H2 center title="Ces candidats cherchent actuellement un emploi" />
       <CVList
         hideSearchBar
         nb={3}
