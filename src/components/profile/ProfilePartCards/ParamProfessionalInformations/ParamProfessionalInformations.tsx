@@ -86,7 +86,11 @@ export const ParamProfessionalInformations = ({
         icon: <IlluBulleQuestion />,
       }}
     >
-      <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
+      <ProfileCareerPathSentence
+        sectorOccupations={sectorOccupations}
+        role={role}
+        currentJob={userProfile?.currentJob || undefined}
+      />
     </ProfilePartCard>
   );
 };
