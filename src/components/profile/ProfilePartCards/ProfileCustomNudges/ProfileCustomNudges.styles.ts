@@ -10,8 +10,13 @@ export const StyledItem = styled.div`
   padding: 20px 10px;
 `;
 
+export const StyledContentContainer = styled.div`
+  flex: 1;
+`;
+
 export const StyledButtonContainer = styled.div`
   display: flex;
+  flex-shrink: 0;
   gap: 10px;
   align-items: center;
   justify-content: center;

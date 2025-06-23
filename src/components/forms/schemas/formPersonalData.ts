@@ -95,7 +95,7 @@ export const formPersonalDataAsCandidate: FormSchema<{
     {
       id: 'introduction',
       name: 'introduction',
-      component: 'text-input',
+      component: 'textarea',
       title: 'Tapez votre courte présentation',
     },
   ],
@@ -203,7 +203,7 @@ export const formPersonalDataAsCoach: FormSchema<{
     {
       id: 'introduction',
       name: 'introduction',
-      component: 'text-input',
+      component: 'textarea',
       title: 'Tapez votre courte présentation',
     },
   ],

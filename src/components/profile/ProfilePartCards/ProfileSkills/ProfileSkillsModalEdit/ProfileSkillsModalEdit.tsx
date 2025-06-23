@@ -34,7 +34,7 @@ export const ProfileSkillsModalEdit = ({
 
   return (
     <ModalEdit
-      title="Compétences clées"
+      title="Compétences clés"
       formSchema={formEditSkills}
       defaultValues={defaultValues}
       closeOnNextRender={closeModal}
