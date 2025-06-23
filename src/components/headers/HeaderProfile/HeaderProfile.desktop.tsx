@@ -25,7 +25,6 @@ import {
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfilePublicInfoContainer,
 } from './HeaderProfile.styles';
-// import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
 import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
