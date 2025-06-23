@@ -9,7 +9,6 @@ import {
   StyledCVCTAContainer,
   StyledCVCTACard,
 } from './CVCallToActions.styles';
-import { CVSendMessage } from './CVSendMessage';
 import { CVShareButtons } from './CVShareButtons';
 
 interface CVCallToActionsProps {
@@ -39,10 +38,6 @@ export const CVCallToActions = ({
             actionDisabled={actionDisabled}
           />
         </StyledCVCTACard>
-        <CVSendMessage
-          publicUser={publicUser}
-          actionDisabled={actionDisabled}
-        />
       </StyledCVCTAContainer>
     </StyledCVCTA>
   );

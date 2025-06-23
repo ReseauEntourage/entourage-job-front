@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { ProfileCareerPathSentence } from '@/src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { CVExperienceOrFormation } from '@/src/components/profile/CVExperienceOrFormation/CVExperienceOrFormation';
@@ -12,14 +11,9 @@ import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
-import { Api } from 'src/api';
 import { PublicUser } from 'src/api/types';
-import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
-import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 import {
-  StyledCVMessageContainer,
   StyledCVPageContent,
   StyledCVPageContentCarousel,
   StyledCVPageContentDetailsContainer,
@@ -39,17 +33,13 @@ import {
   StyledShareContainer,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
-import { Button, Text } from 'src/components/utils';
+import { Text } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { H1, H2, H3, H5 } from 'src/components/utils/Headings';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CONTRACTS } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
-import { notificationsActions } from 'src/use-cases/notifications';
 import { findConstantFromValue } from 'src/utils';
 
 interface openedPanelType {
@@ -70,8 +60,6 @@ export const PageCVContent = ({
   actionDisabled = false,
   isPreview = false,
 }: PageCVContentProps) => {
-  const dispatch = useDispatch();
-
   const isDesktop = useIsDesktop();
 
   const [isStoryHidden, setIsStoryHidden] = useState<boolean>(true);
@@ -155,62 +143,6 @@ export const PageCVContent = ({
                 })}
             </StyledCVSkillTagContainer>
           </div>
-          <StyledCVMessageContainer className={!isDesktop ? 'mobile' : ''}>
-            <H5
-              title={`Donnez un coup de pouce à ${publicUser.firstName} !`}
-              color={COLORS.black}
-            />
-            <p>
-              Apporter des conseils, informations sur le secteur
-              d&lsquo;activité, retour d&lsquo;expérience, mise en contact, une
-              opportunité ...
-            </p>
-            <Button
-              variant="primary"
-              rounded
-              disabled={actionDisabled}
-              onClick={() => {
-                gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
-                fbEvent(FB_TAGS.MESSAGE_OPEN);
-                openModal(
-                  <ModalEdit
-                    title={`Envoyer un message à ${publicUser.firstName}`}
-                    description={`Vous pouvez envoyer un message à ${publicUser.firstName} pour l'aider et le/la conseiller dans sa recherche d'emploi`}
-                    submitText="Envoyer"
-                    formSchema={formSendExternalMessage}
-                    onSubmit={async (fields, closeModal) => {
-                      gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
-                      fbEvent(FB_TAGS.MESSAGE_SEND);
-                      try {
-                        await Api.postExternalMessage({
-                          UserId: publicUser.id,
-                          ...fields,
-                        });
-                        dispatch(
-                          notificationsActions.addNotification({
-                            type: 'success',
-                            message: 'Le message a bien été envoyé',
-                          })
-                        );
-
-                        closeModal();
-                      } catch (err) {
-                        dispatch(
-                          notificationsActions.addNotification({
-                            type: 'danger',
-                            message: "Une erreur s'est produite",
-                          })
-                        );
-                        console.error(err);
-                      }
-                    }}
-                  />
-                );
-              }}
-            >
-              Envoyer un message
-            </Button>
-          </StyledCVMessageContainer>
           {!isDesktop && (
             <>
               <StyledShareContainer>

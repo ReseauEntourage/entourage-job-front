@@ -14,8 +14,6 @@ import {
   ContactNewsletter,
   ConversationReportDto,
   ExternalCv,
-  ExternalMessage,
-  InternalMessage,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -472,24 +470,6 @@ export class APIHandler {
     params: CandidateInscription
   ): Promise<AxiosResponse> {
     return this.post('/contact/candidateInscription', params);
-  }
-
-  /// //////////
-  // message //
-  /// //////////
-
-  postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
-    return this.post('/message/external', params);
-  }
-
-  postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
-    return this.post('/message/internal', params);
-  }
-
-  resendInternalMessageAdmin(
-    internalMessageId: string
-  ): Promise<AxiosResponse> {
-    return this.post(`/message/internal/${internalMessageId}/send`, {});
   }
 
   // ////////////

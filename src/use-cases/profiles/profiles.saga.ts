@@ -22,9 +22,6 @@ const {
   fetchProfilesRecommendationsRequested,
   fetchProfilesRecommendationsSucceeded,
   fetchProfilesRecommendationsFailed,
-  postInternalMessageRequested,
-  postInternalMessageSucceeded,
-  postInternalMessageFailed,
 } = slice.actions;
 
 function* fetchProfilesNextPageSaga(
@@ -102,23 +99,6 @@ function* fetchSelectedProfileSaga(
   }
 }
 
-function* postInternalMessageSaga(
-  action: ReturnType<typeof postInternalMessageRequested>
-) {
-  try {
-    const postInternalMessageResponse = yield* call(() =>
-      Api.postInternalMessage(action.payload)
-    );
-    yield* put(postInternalMessageSucceeded(postInternalMessageResponse.data));
-    const putProfileResponse = yield* call(() =>
-      Api.getPublicUserProfile(action.payload.addresseeUserId)
-    );
-    yield* put(fetchSelectedProfileSucceeded(putProfileResponse.data));
-  } catch {
-    yield* put(postInternalMessageFailed());
-  }
-}
-
 export function* saga() {
   yield* takeLatest(fetchProfilesWithFilters, fetchProfilesWithFiltersSaga);
   yield* takeLeading(fetchProfilesNextPage, fetchProfilesNextPageSaga);
@@ -128,5 +108,4 @@ export function* saga() {
     fetchProfilesRecommendationsRequestedSaga
   );
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
-  yield* takeLatest(postInternalMessageRequested, postInternalMessageSaga);
 }
