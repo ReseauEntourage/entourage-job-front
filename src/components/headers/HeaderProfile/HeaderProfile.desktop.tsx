@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { BackLink } from '../../utils/BackLink';
 import { Button, ImgProfile, Section, Tag, Text } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
@@ -66,6 +67,8 @@ export const HeaderProfileDesktop = ({
     shouldShowAllProfile,
     contextualRole,
   } = useHeaderProfile(role);
+  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
+
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectAuthenticatedUser);
@@ -83,7 +86,7 @@ export const HeaderProfileDesktop = ({
       <Section className="custom-page">
         <BackLink
           url="/backoffice/dashboard"
-          label="Retour à mon espace personnel"
+          label="Retour à mon tableau de bord"
         />
         <StyledHeaderProfileContent>
           <StyledHeaderProfilePictureContainer>
@@ -107,6 +110,7 @@ export const HeaderProfileDesktop = ({
                 onChange={uploadProfileImage}
                 id="profile-picture-upload-desktop"
                 name="profile-picture-upload-desktop"
+                inputRef={setFileInputRef}
               >
                 <Button
                   variant="secondary"
@@ -114,6 +118,7 @@ export const HeaderProfileDesktop = ({
                   className="button-mock-image-input"
                   size="small"
                   dataTestId="button-mock-image-input"
+                  onClick={requestFileUploadClick}
                 >
                   Modifier
                 </Button>
