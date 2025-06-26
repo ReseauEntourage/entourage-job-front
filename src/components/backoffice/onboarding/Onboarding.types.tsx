@@ -161,8 +161,8 @@ export const OnboardingStepContents: {
       },
       skippedBy: (user: User) =>
         !!(
-          user.userProfile.sectorOccupations &&
-          user.userProfile.sectorOccupations.length > 0
+          user.userProfile?.sectorOccupations &&
+          user.userProfile?.sectorOccupations.length > 0
         ),
     },
   },
