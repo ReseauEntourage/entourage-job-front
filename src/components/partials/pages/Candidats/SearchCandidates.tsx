@@ -31,6 +31,7 @@ export const SearchCandidates = () => {
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}
+        hideSearchBar
       />
     </Section>
   );
