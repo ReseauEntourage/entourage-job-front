@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { IlluBulleQuestionCheck } from 'assets/icons/icons';
-import { DashboardJoinWhatsappCoachModal } from '../DashboardJoinWhatsappCoachModal/DashboardJoinWhatsappCoachModal';
+import { DashboardJoinWhatsappModal } from '../DashboardJoinWhatsappModal/DashboardJoinWhatsappModal';
 import { openModal } from 'src/components/modals/Modal';
 import { Button } from 'src/components/utils';
 import { Alert } from 'src/components/utils/Alert';
-import { StyledAlertContent } from './DashboardAlertWhatsappCoach.styles';
+import { StyledAlertContent } from './DashboardAlertWhatsapp.styles';
 
-export const DashboardAlertWhatsappCoach = () => {
+export const DashboardAlertWhatsapp = () => {
   const [alertVisible, setAlertVisible] = useState(true);
+  const { role } = useAuthenticatedUser();
   const openJoinWhatsappModal = () => {
-    openModal(<DashboardJoinWhatsappCoachModal />);
+    openModal(<DashboardJoinWhatsappModal />);
   };
 
   return (
@@ -22,8 +25,9 @@ export const DashboardAlertWhatsappCoach = () => {
       }}
     >
       <StyledAlertContent>
-        Pour recevoir des actualités et échanger avec les coachs de votre
-        région, rejoignez le groupe Whatsapp
+        Pour recevoir des actualités et échanger avec les{' '}
+        {role === UserRoles.COACH ? 'coachs' : 'candidats'} de votre région,
+        rejoignez le groupe Whatsapp
         <Button
           variant="secondary"
           rounded
