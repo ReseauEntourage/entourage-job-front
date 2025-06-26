@@ -49,8 +49,8 @@ describe('En tant que - Prescripteur', () => {
         cy.get('.menu-link').contains('Tableau de bord').click();
         // Check that the URL is now /backoffice/dashboard
         cy.url().should('include', '/backoffice/dashboard');
-        // Check that the page contains the text "Bienvenue sur votre espace personnel"
-        cy.contains('Bienvenue sur votre espace personnel');
+        // Check that the page contains the text "Bienvenue sur votre tableau de bord"
+        cy.contains('Bienvenue sur votre tableau de bord');
       });
     });
     describe("Je peux accéder au réseau d'entraide", () => {
