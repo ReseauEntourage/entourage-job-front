@@ -52,11 +52,13 @@ export const StyledDashboardArticlesContainer = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(223px, 250px));
+
   gap: 20px;
   justify-content: center;
 `;
 
 export const StyledDashboardArticle = styled.div`
+  height: 100%;
   border: ${COLORS.gray} 1px solid;
   border-radius: 20px;
   box-shadow: 0px 4px 4px 0px #00000008;
