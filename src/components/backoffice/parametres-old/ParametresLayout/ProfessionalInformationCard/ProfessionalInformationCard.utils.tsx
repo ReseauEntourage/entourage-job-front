@@ -1,4 +1,5 @@
 import { DefaultValues } from 'react-hook-form';
+import { formOnboardingCoachJob } from '../../../onboarding/Onboarding/forms/schemas/formOnboardingCoachJob';
 import {
   BusinessSector,
   UserProfile,
@@ -30,7 +31,7 @@ export const getCoachDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
-  const { sectorOccupations, currentJob, linkedinUrl } = userProfileParam;
+  const { sectorOccupations, currentJob } = userProfileParam;
 
   const sortedSectorOccupationsWithSector = sectorOccupations?.filter(
     (so) => !!so.businessSector
@@ -45,6 +46,21 @@ export const getCoachDefaultProfessionalValues = (
         [`businessSectorId${idx}`]: businessSector.id,
       };
     }, {}),
+  };
+};
+
+export const getCoachDefaultProfessionalValuesWithLinkedIn = (
+  userProfileParam: UserProfile
+): DefaultValues<
+  ExtractFormSchemaValidation<typeof formOnboardingCoachJob>
+> => {
+  const { linkedinUrl } = userProfileParam;
+
+  const professionalInfoDefaultValues =
+    getCoachDefaultProfessionalValues(userProfileParam);
+
+  return {
+    ...professionalInfoDefaultValues,
     linkedinUrl: linkedinUrl || undefined,
   };
 };
@@ -54,7 +70,7 @@ export const getCandidateDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>
 > => {
-  const { linkedinUrl, sectorOccupations } = userProfileParam;
+  const { sectorOccupations } = userProfileParam;
 
   const businessSectors = sectorOccupations
     ? sectorOccupations
@@ -79,7 +95,6 @@ export const getCandidateDefaultProfessionalValues = (
       acc[`occupation${idx}`] = occupation?.name;
       return acc;
     }, {}),
-    linkedinUrl: linkedinUrl || undefined,
   };
   return data;
 };

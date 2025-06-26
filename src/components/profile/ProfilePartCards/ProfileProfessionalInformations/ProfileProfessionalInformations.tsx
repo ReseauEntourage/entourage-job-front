@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserRoles } from '@/src/constants/users';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
@@ -12,6 +13,8 @@ export interface ProfileProfessionalInformationsProps {
   sectorOccupations: UserProfileSectorOccupation[];
   description: string;
   skills: Skill[];
+  role: UserRoles;
+  currentJob?: string;
   smallCard?: boolean;
 }
 
@@ -20,6 +23,8 @@ export const ProfileProfessionalInformations = ({
   sectorOccupations,
   description,
   skills,
+  role,
+  currentJob,
   smallCard = false,
 }: ProfileProfessionalInformationsProps) => {
   const isEmpty = !sectorOccupations.length && !description && !skills.length;
@@ -39,7 +44,11 @@ export const ProfileProfessionalInformations = ({
     >
       <StyledContentContainer>
         {sectorOccupations.length > 0 && (
-          <ProfileCareerPathSentence sectorOccupations={sectorOccupations} />
+          <ProfileCareerPathSentence
+            sectorOccupations={sectorOccupations}
+            role={role}
+            currentJob={currentJob}
+          />
         )}
         {description && <Text>{description}</Text>}
         <CardTagList items={skills} />

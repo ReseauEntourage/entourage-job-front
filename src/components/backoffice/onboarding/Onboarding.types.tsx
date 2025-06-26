@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '../../../api/types';
 import {
   getCandidateDefaultProfessionalValues,
-  getCoachDefaultProfessionalValues,
+  getCoachDefaultProfessionalValuesWithLinkedIn,
 } from '../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
@@ -157,7 +157,7 @@ export const OnboardingStepContents: {
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
       form: formOnboardingCoachJob,
       defaultValues: (user) => {
-        return getCoachDefaultProfessionalValues(user.userProfile);
+        return getCoachDefaultProfessionalValuesWithLinkedIn(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) =>
         !!userProfile?.sectorOccupations?.map((so) => so.businessSector)

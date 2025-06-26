@@ -65,6 +65,9 @@ export const ProfileContactPreferences = ({
     }, {});
     updateUserProfile(data);
   };
+  if (!isEditable && !isCompleted) {
+    return null;
+  }
 
   return (
     <ProfilePartCard
