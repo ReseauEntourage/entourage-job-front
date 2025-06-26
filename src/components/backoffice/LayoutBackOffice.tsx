@@ -16,13 +16,19 @@ export const LayoutBackOffice = ({
   const user = useSelector(selectAuthenticatedUser);
   const userRole = user?.role;
   const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
-
+  const hasAcceptedEthicsCharter = !!user?.readDocuments.find(
+    (doc) => doc.documentName === 'CharteEthique'
+  );
   const userRoleHasOnboarding =
     userRole === UserRoles.CANDIDATE || userRole === UserRoles.COACH;
+  const displayOnboarding =
+    !hasAcceptedEthicsCharter &&
+    shouldLaunchOnboarding &&
+    userRoleHasOnboarding;
 
   return (
     <Layout title={`${title} - Entourage Pro`} noIndex isBackoffice>
-      {shouldLaunchOnboarding && userRoleHasOnboarding && <Onboarding />}
+      {displayOnboarding && <Onboarding />}
       {children}
     </Layout>
   );
