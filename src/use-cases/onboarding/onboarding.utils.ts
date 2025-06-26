@@ -1,4 +1,4 @@
-import { User, UserProfile } from 'src/api/types';
+import { User, UserProfile, UserProfileSectorOccupation } from 'src/api/types';
 import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
@@ -59,9 +59,9 @@ export const parseOnboadingProfileFields = (
       fields.businessSectorIds?.map((businessSectorId, idx) => {
         return {
           businessSectorId: businessSectorId.value,
-          order: idx + 1,
-        };
-      }) ?? [],
+          order: idx,
+        } as UserProfileSectorOccupation;
+      }) ?? undefined,
   };
 };
 
