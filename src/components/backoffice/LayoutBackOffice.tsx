@@ -16,7 +16,7 @@ export const LayoutBackOffice = ({
   const user = useSelector(selectAuthenticatedUser);
   const userRole = user?.role;
   const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
-  const hasAcceptedEthicsCharter = user?.readDocuments.some(
+  const hasAcceptedEthicsCharter = user?.readDocuments?.some(
     (doc) => doc.documentName === 'CharteEthique'
   );
   const userRoleHasOnboarding =
