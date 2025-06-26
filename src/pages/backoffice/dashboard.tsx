@@ -4,7 +4,7 @@ import { Dashboard } from 'src/components/backoffice/dashboard';
 
 const DashboardPage = () => {
   return (
-    <LayoutBackOffice title="Mon espace personnel">
+    <LayoutBackOffice title="Mon tableau de bord">
       <Dashboard />
     </LayoutBackOffice>
   );

@@ -89,7 +89,7 @@ export const HeaderProfileMobile = ({
       <Section>
         <BackLink
           url="/backoffice/dashboard"
-          label="Retour à mon espace personnel"
+          label="Retour à mon tableau de bord"
         />
         <StyledHeaderProfileSectionMobile>
           <StyledHeaderProfileContent>
