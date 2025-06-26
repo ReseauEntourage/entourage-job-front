@@ -162,6 +162,7 @@ export const CVPDF = ({ user, page }: CVPDFProps) => {
                     sectorOccupations={user.userProfile.sectorOccupations || []}
                     size="small"
                     weight="bold"
+                    role={user.role}
                     asSimpleSentence
                   />
                 </StyledCVPDFCareerPath>

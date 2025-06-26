@@ -237,9 +237,9 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
-  whatsappZoneCoachQR: string;
-  whatsappZoneCoachName: string;
-  whatsappZoneCoachUrl: string;
+  whatsappZoneQR: string;
+  whatsappZoneName: string;
+  whatsappZoneUrl: string;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;

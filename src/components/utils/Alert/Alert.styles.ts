@@ -6,6 +6,7 @@ export const StyledAlert = styled.div<{
   variant: AlertVariant;
   visible: boolean;
   rounded: boolean;
+  clickable?: boolean;
 }>`
   display: ${(props) => {
     return props.visible ? 'flex' : 'none';
@@ -34,6 +35,17 @@ export const StyledAlert = styled.div<{
   }
   p {
     margin: 0;
+  }
+
+  cursor: ${(props) => (props.clickable ? 'pointer' : 'default')};
+  transition: ${(props) => (props.clickable ? 'filter 0.2s' : 'none')};
+
+  &:hover {
+    filter: ${(props) => (props.clickable ? 'brightness(0.95)' : 'none')};
+  }
+
+  &:active {
+    filter: ${(props) => (props.clickable ? 'brightness(0.9)' : 'none')};
   }
 `;
 

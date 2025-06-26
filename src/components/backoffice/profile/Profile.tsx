@@ -47,14 +47,19 @@ export const Profile = () => {
               sectorOccupations={selectedProfile.sectorOccupations}
               description={selectedProfile.description}
               skills={selectedProfile.skills}
-            />
-            <ProfileCustomNudges
-              customNudges={selectedProfile.customNudges}
-              firstName={selectedProfile.firstName}
               role={selectedProfile.role}
-              userId={selectedProfile.id}
-              ownProfile
+              currentJob={selectedProfile.currentJob}
             />
+            {selectedProfile.customNudges.length > 0 &&
+              selectedProfile.role === UserRoles.CANDIDATE && (
+                <ProfileCustomNudges
+                  customNudges={selectedProfile.customNudges}
+                  firstName={selectedProfile.firstName}
+                  role={selectedProfile.role}
+                  userId={selectedProfile.id}
+                  ownProfile
+                />
+              )}
             <ProfileExperiences
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
@@ -94,15 +99,16 @@ export const Profile = () => {
               userId={selectedProfile.id}
               linkedinUrl={selectedProfile.linkedinUrl}
               hasExternalCv={selectedProfile.hasExternalCv}
-              // entourageProCv="/url/"
               smallCard
             />
             <ProfileContactPreferences smallCard />
-            <ProfileNudges
-              userRole={selectedProfile.role}
-              nudges={selectedProfile.nudges}
-              smallCard
-            />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileNudges
+                userRole={selectedProfile.role}
+                nudges={selectedProfile.nudges}
+                smallCard
+              />
+            )}
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>

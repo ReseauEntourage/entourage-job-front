@@ -8,4 +8,6 @@ export interface AlertProps {
   onClose?: () => void;
   icon?: React.ReactNode;
   rounded?: boolean;
+  clickable?: boolean;
+  onClick?: () => void;
 }

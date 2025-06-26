@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserRoles } from '@/src/constants/users';
 import { UserProfileSectorOccupation } from 'src/api/types';
 import { Text, TextSize, TextWeight } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
@@ -9,6 +10,8 @@ interface ProfileCareerPathSentenceProps {
   asSimpleSentence?: boolean;
   size?: TextSize;
   weight?: TextWeight;
+  currentJob?: string;
+  role: UserRoles;
 }
 
 export const ProfileCareerPathSentence = ({
@@ -16,6 +19,8 @@ export const ProfileCareerPathSentence = ({
   asSimpleSentence = false,
   size = 'normal',
   weight = 'normal',
+  currentJob,
+  role,
 }: ProfileCareerPathSentenceProps) => {
   if (!sectorOccupations || sectorOccupations.length === 0) {
     return <>Je suis ouvert à toutes les opportunités</>;
@@ -46,6 +51,30 @@ export const ProfileCareerPathSentence = ({
       sectorOccupations[0].businessSector?.name &&
     sectorOccupations[1].occupation;
 
+  if (role === UserRoles.COACH) {
+    return (
+      <>
+        <Text>
+          Je travaille comme <strong>{currentJob}</strong>
+        </Text>
+        <Text>
+          J&apos;ai du réseau dans :{' '}
+          {sectorOccupations.map((sectorOccupation, index) => (
+            <>
+              {asSimpleSentence ? (
+                <span>{sectorOccupation.businessSector?.name}</span>
+              ) : (
+                <Tag
+                  content={sectorOccupation.businessSector?.name}
+                  key={index}
+                />
+              )}
+            </>
+          ))}
+        </Text>
+      </>
+    );
+  }
   return (
     <>
       <Text size={size} weight={weight}>

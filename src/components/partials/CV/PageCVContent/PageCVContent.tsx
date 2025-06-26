@@ -116,6 +116,7 @@ export const PageCVContent = ({
             />
             {publicUser.userProfile.sectorOccupations && (
               <ProfileCareerPathSentence
+                role={publicUser.role}
                 sectorOccupations={publicUser.userProfile.sectorOccupations}
               />
             )}

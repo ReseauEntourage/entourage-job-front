@@ -40,7 +40,7 @@ export const ProfileLanguages = ({
     );
   }, [updateUserProfile, userProfileLanguages]);
 
-  if (!isCompleted && !isEditable) {
+  if (!isEditable && !isCompleted) {
     return null;
   }
 

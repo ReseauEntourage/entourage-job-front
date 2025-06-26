@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Img } from '@/src/components/utils';
+import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { generateProfileFromCVSelectors } from '@/src/use-cases/cv';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm/ModalConfirm';
+import { Text } from 'src/components/utils/Text';
 import { slice as cvSlice } from 'src/use-cases/cv/cv.slice';
 import { StyledLoadingContainer } from './AlertAI.styles';
 
@@ -49,6 +51,10 @@ export const GenerateProfileConfirmModal = () => {
             height={150}
             alt="Chargement en cours"
           />
+          <StyledContainerMarginY margin="20px" />
+          <Text weight="bold" size="normal" center>
+            Patientez quelques secondes ...
+          </Text>
         </StyledLoadingContainer>
       )}
     </ModalConfirm>
