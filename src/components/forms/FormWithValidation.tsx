@@ -41,6 +41,7 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   innerRef?: Ref<{ resetForm: () => void }>;
   error?: ReactNode;
   noCompulsory?: boolean;
+  disabled?: boolean;
 }
 
 export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
@@ -56,6 +57,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   innerRef,
   error: externalError,
   noCompulsory = false,
+  disabled = false,
 }: FormWithValidationProps<S>) {
   const { id: formId, fields } = formSchema;
 
@@ -266,7 +268,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         submitText={submitText}
         submitBtnVariant={submitBtnVariant}
         cancelText={cancelText}
-        isLoadingOverride={isLoading}
+        isLoadingOverride={isLoading || disabled}
         noCompulsory={noCompulsory}
         onSubmit={handleSubmit(onValidForm, onErrorForm)}
         formId={formId}
@@ -277,6 +279,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
             onCancel();
           })
         }
+        disabled={disabled}
       />
     </>
   );
