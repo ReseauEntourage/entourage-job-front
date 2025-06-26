@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { BackLink } from '../../utils/BackLink';
 import {
   Button,
@@ -74,6 +75,8 @@ export const HeaderProfileMobile = ({
     shouldShowAllProfile,
     contextualRole,
   } = useHeaderProfile(role);
+  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
+
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
   const ownProfile = currentUserId === id;
@@ -110,8 +113,12 @@ export const HeaderProfileMobile = ({
                     onChange={uploadProfileImage}
                     id="profile-picture-upload-mobile"
                     name="profile-picture-upload-mobile"
+                    inputRef={setFileInputRef}
                   >
-                    <ButtonIcon icon={<LucidIcon name="Pencil" size={14} />} />
+                    <ButtonIcon
+                      icon={<LucidIcon name="Pencil" size={14} />}
+                      onClick={requestFileUploadClick}
+                    />
                   </ImageInput>
                 </StyledEditPictureIconContainer>
               )}
