@@ -42,7 +42,7 @@ export const ProfileSkills = ({
 
   return (
     <ProfilePartCard
-      title="Compétences clées"
+      title="Compétences clés"
       isCompleted={isCompleted}
       ctaCallback={openEditModal}
       // iaGenerated

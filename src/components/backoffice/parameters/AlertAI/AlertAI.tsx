@@ -67,6 +67,8 @@ export const AlertIA = () => {
       <Alert
         variant="darkBlue"
         icon={<LucidIcon name="WandSparkles" color="white" />}
+        clickable
+        onClick={handleGenerateProfile}
       >
         <StyledAlertIAContentContainer>
           <StyledAlertIAContentLeft>
@@ -75,8 +77,8 @@ export const AlertIA = () => {
                 Nouvelle fonctionnalité IA
               </Text>
               <Text color="white">
-                Votre CV a été téléchargé, mais vous n&apos;avez pas généré
-                votre profil.
+                Cliquez sur le bouton “Générer mon profil” pour remplir
+                automatiquement votre profil
               </Text>
             </StyledAlertIAColumn>
           </StyledAlertIAContentLeft>
@@ -97,6 +99,8 @@ export const AlertIA = () => {
     <Alert
       variant="darkBlue"
       icon={<LucidIcon name="WandSparkles" size={32} color="white" />}
+      clickable
+      onClick={handleUploadCv}
     >
       <StyledAlertIAContentContainer>
         <StyledAlertIAContentLeft>
@@ -105,7 +109,7 @@ export const AlertIA = () => {
               Nouvelle fonctionnalité IA
             </Text>
             <Text color="white">
-              Pour activer la fonctionnalité IA, vous devez télécharger votre CV
+              Téléchargez votre CV pour remplir votre profil automatiquement
             </Text>
           </StyledAlertIAColumn>
         </StyledAlertIAContentLeft>

@@ -25,23 +25,44 @@ export const Alert = ({
   visible = true,
   onClose = () => {},
   icon = <DefaultAlertIcon variant={variant} />,
+  clickable = false,
+  onClick,
 }: AlertProps) => {
+  const handleClick = () => {
+    if (clickable && onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <StyledAlert variant={variant} visible={visible} rounded={rounded}>
+    <StyledAlert
+      variant={variant}
+      visible={visible}
+      rounded={rounded}
+      clickable={clickable && !!onClick}
+      onClick={handleClick}
+    >
       {icon}
       <StyledAlertContainer>{children}</StyledAlertContainer>
       {closable && (
-        <ButtonIcon
-          icon={
-            <LucidIcon
-              name="X"
-              {...(variant === 'darkBlue'
-                ? { color: 'white', stroke: 'bold' }
-                : {})}
-            />
-          }
-          onClick={onClose}
-        />
+        <div
+          onClick={(e) => {
+            // Empêche le clic du bouton de déclencher aussi le onClick de l'Alert
+            e.stopPropagation();
+          }}
+        >
+          <ButtonIcon
+            icon={
+              <LucidIcon
+                name="X"
+                {...(variant === 'darkBlue'
+                  ? { color: 'white', stroke: 'bold' }
+                  : {})}
+              />
+            }
+            onClick={onClose}
+          />
+        </div>
       )}
     </StyledAlert>
   );

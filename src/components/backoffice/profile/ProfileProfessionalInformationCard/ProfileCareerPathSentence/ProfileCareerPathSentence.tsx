@@ -1,14 +1,19 @@
 import React from 'react';
+import { UserRoles } from '@/src/constants/users';
 import { UserProfileSectorOccupation } from 'src/api/types';
 import { Text } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 
 interface ProfileCareerPathSentenceProps {
   sectorOccupations: UserProfileSectorOccupation[];
+  currentJob?: string;
+  role: UserRoles;
 }
 
 export const ProfileCareerPathSentence = ({
   sectorOccupations,
+  currentJob,
+  role,
 }: ProfileCareerPathSentenceProps) => {
   const hasSecondPart = sectorOccupations?.length > 1;
 
@@ -30,6 +35,21 @@ export const ProfileCareerPathSentence = ({
       sectorOccupations[0].businessSector?.name &&
     sectorOccupations[1].occupation;
 
+  if (role === UserRoles.COACH) {
+    return (
+      <>
+        <Text>
+          Je travaille comme <strong>{currentJob}</strong>
+        </Text>
+        <Text>
+          J&apos;ai du réseau dans :{' '}
+          {sectorOccupations.map((sectorOccupation, index) => (
+            <Tag content={sectorOccupation.businessSector?.name} key={index} />
+          ))}
+        </Text>
+      </>
+    );
+  }
   return (
     <>
       <Text>
@@ -53,5 +73,4 @@ export const ProfileCareerPathSentence = ({
       )}
     </>
   );
-  return null;
 };

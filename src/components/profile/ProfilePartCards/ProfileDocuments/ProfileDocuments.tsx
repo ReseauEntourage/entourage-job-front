@@ -18,7 +18,6 @@ export interface ProfileDocumentsProps {
   userId: string;
   linkedinUrl?: string | null;
   hasExternalCv?: boolean | null;
-  entourageProCv?: string | null;
   isEditable?: boolean;
   smallCard?: boolean;
 }
@@ -28,7 +27,6 @@ export const ProfileDocuments = ({
   userId,
   linkedinUrl,
   hasExternalCv,
-  entourageProCv,
   smallCard = false,
 }: ProfileDocumentsProps) => {
   const dispatch = useDispatch();
@@ -36,8 +34,8 @@ export const ProfileDocuments = ({
   const { updateUserProfile } = useUpdateProfile(user);
 
   const isCompleted = useMemo(
-    () => !!linkedinUrl || !!entourageProCv || !!hasExternalCv,
-    [entourageProCv, hasExternalCv, linkedinUrl]
+    () => !!linkedinUrl || !!hasExternalCv,
+    [hasExternalCv, linkedinUrl]
   );
 
   const openEditModal = useCallback(() => {
@@ -66,10 +64,7 @@ export const ProfileDocuments = ({
     });
   }, [updateUserProfile]);
 
-  // Do not show the card if:
-  // - the user is not editable and the card is not completed
-  // - the External CV is not displayed in all cases, so we don't show the card if only that is present
-  if ((!isEditable && !isCompleted) || (!isEditable && hasExternalCv)) {
+  if (!isEditable && !isCompleted) {
     return null;
   }
 
@@ -91,15 +86,6 @@ export const ProfileDocuments = ({
       }}
     >
       <StyledDocumentList>
-        {entourageProCv && (
-          <DocumentItem
-            type="CVPro"
-            onClick={() => {
-              gaEvent(GA_TAGS.BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC);
-              window.open(`/cv/${entourageProCv}`, '_blank');
-            }}
-          />
-        )}
         {linkedinUrl && (
           <DocumentItem
             type="LinkedIn"

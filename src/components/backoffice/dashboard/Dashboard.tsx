@@ -16,7 +16,7 @@ import {
   StyledDashboardRightColumn,
   StyledDashboardTitleContainer,
 } from './Dashboard.styles';
-import { DashboardAlertWhatsappCoach } from './DashboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
+import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
@@ -40,7 +40,7 @@ export const Dashboard = () => {
           <StyledDashboardTitleContainer>
             <H1 title="Bienvenue sur votre espace personnel" color="black" />
             <br />
-            {user.role === UserRoles.COACH && <DashboardAlertWhatsappCoach />}
+            {isNormalUser && <DashboardAlertWhatsapp />}
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
@@ -70,7 +70,7 @@ export const Dashboard = () => {
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre espace personnel" color="black" />
           <br />
-          {user.role === UserRoles.COACH && <DashboardAlertWhatsappCoach />}
+          {isNormalUser && <DashboardAlertWhatsapp />}
         </StyledDashboardTitleContainer>
         <StyledBackofficeGrid className="mobile">
           <StyledDashboardRightColumn className="mobile">

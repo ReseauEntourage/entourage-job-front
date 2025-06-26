@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Img } from '@/src/components/utils';
 import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
 import { IlluCV } from 'assets/icons/icons';
-import { Alert } from 'src/components/utils/Alert/Alert';
 import { Button } from 'src/components/utils/Button/Button';
 import { StyledCenteredButtonContainer } from 'src/components/utils/Button/Button.styles';
 import { ContainerWithTextCentered } from 'src/components/utils/Containers/ContainerWithTextCentered';
@@ -34,20 +33,6 @@ export const OnboardingAI = () => {
 
   return (
     <>
-      <Alert
-        variant="info"
-        icon={
-          <Img
-            src="/static/img/illustrations/baguette-magique.png"
-            width={46}
-            height={46}
-            alt="Baguette magique"
-          />
-        }
-      >
-        L&apos;IA est une fonctionnalité qui vous permet de remplir votre profil
-        en reprenant des informations de votre CV.
-      </Alert>
       <ContainerWithTextCentered>
         <Text weight="bold" size="xlarge" center>
           Souhaitez vous completer automatiquement votre profil avec les

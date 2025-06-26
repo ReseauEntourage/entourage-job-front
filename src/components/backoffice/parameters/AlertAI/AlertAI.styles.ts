@@ -24,6 +24,7 @@ export const StyledButtonContainer = styled.div`
 export const StyledLoadingContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   height: 200px;
