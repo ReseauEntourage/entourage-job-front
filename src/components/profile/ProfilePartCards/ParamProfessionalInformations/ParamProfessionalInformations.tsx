@@ -46,6 +46,13 @@ export const ParamProfessionalInformations = ({
           getValuesToSend={(values) => {
             return {
               currentJob: values.currentJob,
+              sectorOccupations: values.businessSectorIds.map(
+                (businessSector, idx) =>
+                  ({
+                    businessSectorId: businessSector.value,
+                    order: idx,
+                  } as UserProfileSectorOccupation)
+              ),
             };
           }}
         />

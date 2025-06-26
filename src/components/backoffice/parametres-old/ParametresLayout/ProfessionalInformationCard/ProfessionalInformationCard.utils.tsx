@@ -1,10 +1,6 @@
 import { DefaultValues } from 'react-hook-form';
 import { formOnboardingCoachJob } from '../../../onboarding/Onboarding/forms/schemas/formOnboardingCoachJob';
-import {
-  BusinessSector,
-  UserProfile,
-  UserProfileSectorOccupation,
-} from 'src/api/types';
+import { UserProfile, UserProfileSectorOccupation } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
@@ -33,19 +29,17 @@ export const getCoachDefaultProfessionalValues = (
 > => {
   const { sectorOccupations, currentJob } = userProfileParam;
 
-  const sortedSectorOccupationsWithSector = sectorOccupations?.filter(
-    (so) => !!so.businessSector
-  );
-  const businessSectors = sortedSectorOccupationsWithSector?.map(
-    ({ businessSector }) => businessSector
-  ) as BusinessSector[];
+  const businessSectors = sectorOccupations
+    ? sectorOccupations
+        .filter((so) => so.businessSector)
+        .map(({ businessSector }) => businessSector)
+    : [];
   return {
     currentJob: currentJob || undefined,
-    ...businessSectors?.map((businessSector, idx) => {
-      return {
-        [`businessSectorId${idx}`]: businessSector.id,
-      };
-    }, {}),
+    businessSectorIds: businessSectors?.map((businessSector) => ({
+      value: businessSector?.id,
+      label: businessSector?.name,
+    })),
   };
 };
 
