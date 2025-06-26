@@ -53,36 +53,6 @@ export type OnboardingFormDataKeys = UnionKeys<OnboardingFormData>;
 export type FlattenedOnboardingFormData =
   UnionToIntersection<OnboardingFormData>;
 
-export const onboardingAlreadyCompleted = {
-  [UserRoles.CANDIDATE]: (user: User) => {
-    const userProfileRequired = ['introduction', 'description'];
-    const userProfileCompleted = userProfileRequired.some((field) =>
-      Boolean(user.userProfile[field])
-    );
-    const readDocumentCompleted = isReadDocument(
-      user.readDocuments,
-      DocumentNames.CharteEthique
-    );
-    return userProfileCompleted && readDocumentCompleted;
-  },
-  [UserRoles.COACH]: (user: User) => {
-    const userProfileRequired = ['introduction'];
-    const userProfileCompleted = userProfileRequired.every((field) =>
-      Boolean(user.userProfile[field])
-    );
-    const hasNetworkBusinessSectors =
-      !!user.userProfile.sectorOccupations?.filter((so) => !!so.businessSector)
-        ?.length;
-    const readDocumentCompleted = isReadDocument(
-      user.readDocuments,
-      DocumentNames.CharteEthique
-    );
-    return (
-      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessSectors
-    );
-  },
-};
-
 export interface OnboardingStepContent<
   T extends OnboardingForms = OnboardingForms
 > {
