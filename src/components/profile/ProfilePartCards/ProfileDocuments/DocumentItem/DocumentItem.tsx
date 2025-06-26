@@ -32,9 +32,9 @@ export const DocumentItem = ({
     <StyledDocumentItem>
       <div onClick={onClick}>{ICON_MAP[type]}</div>
       <TitleAndIcon>
-        <div onClick={onClick}>
-          <Text variant="underline">{NAME_MAP[type]}</Text>
-        </div>
+        <Text variant="underline" onClick={onClick}>
+          {NAME_MAP[type]}
+        </Text>
         {onRemove && (
           <ButtonIcon
             icon={<LucidIcon size={15} name="X" color={COLORS.black} />}

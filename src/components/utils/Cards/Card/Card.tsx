@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Text } from '../../Text';
 import { Button, ButtonIcon } from 'src/components/utils/Button';
@@ -53,11 +53,6 @@ export const Card = ({
   const isClosable =
     (isDesktop && isDesktopClosable) || (!isDesktop && isMobileClosable);
 
-  const [closedMode, setClosedMode] = useState<boolean>(false);
-  useEffect(() => {
-    setClosedMode(isClosable && !isOpen);
-  }, [isClosable, isOpen]);
-
   return (
     <StyledCard
       className={isDesktop ? '' : 'mobile'}
@@ -66,21 +61,30 @@ export const Card = ({
     >
       {title ? (
         <>
-          <StyledCardTopContainer>
+          <StyledCardTopContainer isOpen={isOpen}>
             {isLoading && (
               <StyledSpinnerContainer>
                 <Spinner />
               </StyledSpinnerContainer>
             )}
-            {!isLoading && editCallback && isDesktop && (
-              <StyledEditIconContainer>
-                <ButtonIcon
-                  icon={editIcon || <LucidIcon name="Pencil" size={15} />}
-                  onClick={editCallback}
-                  dataTestId={`${dataTestId}-button-edit`}
-                />
-              </StyledEditIconContainer>
-            )}
+            <StyledCardTitleContainer
+              onClick={() => {
+                if (isClosable) setIsOpen(!isOpen);
+              }}
+              centerTitle={centerTitle}
+            >
+              <H5 title={title} center={centerTitle} />
+              {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
+              {!isLoading && editCallback && isDesktop && (
+                <StyledEditIconContainer>
+                  <ButtonIcon
+                    icon={editIcon || <LucidIcon name="Pencil" size={15} />}
+                    onClick={editCallback}
+                    dataTestId={`${dataTestId}-button-edit`}
+                  />
+                </StyledEditIconContainer>
+              )}
+            </StyledCardTitleContainer>
             {isClosable && (
               <StyledChevronContainer>
                 <ButtonIcon
@@ -97,21 +101,11 @@ export const Card = ({
                 />
               </StyledChevronContainer>
             )}
-            <StyledCardTitleContainer
-              className={!closedMode ? '' : 'no-border'}
-              onClick={() => {
-                if (isClosable) setIsOpen(!isOpen);
-              }}
-              centerTitle={centerTitle}
-            >
-              <H5 title={title} center={centerTitle} />
-              {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
-            </StyledCardTitleContainer>
           </StyledCardTopContainer>
-          {!closedMode && (
+          {isOpen && (
             <StyledCardContent>
               {children}
-              {!closedMode && !isLoading && editCallback && !isDesktop && (
+              {!isLoading && editCallback && !isDesktop && (
                 <StyledCardFooter>
                   <Button variant="secondary" rounded onClick={editCallback}>
                     {editButtonText || 'Modifier'}

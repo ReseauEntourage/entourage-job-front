@@ -12,22 +12,31 @@ export const StyledCard = styled(StyledCardCommon)`
   }
 `;
 
-export const StyledCardTopContainer = styled.div`
-  padding-top: 25px;
+export const StyledCardTopContainer = styled.div<{
+  isOpen: boolean;
+  isCentered?: boolean;
+}>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22.5px;
+  ${({ isOpen }) =>
+    isOpen
+      ? `
+      border-bottom: ${COLORS.gray} solid 1px;
+      `
+      : ``}
 `;
 
 export const StyledCardContent = styled.div`
-  padding: 25px;
+  padding: 30px 22.5px 20px 22.5px;
 `;
 
 export const StyledCardTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  border-bottom: ${COLORS.gray} solid 1px;
-  margin-right: 25px;
-  margin-left: 25px;
-  padding-bottom: 15px;
+  flex: auto;
   margin-bottom: 0;
 
   h5 {
@@ -67,13 +76,6 @@ export const StyledSpinnerContainer = styled.div`
 `;
 
 export const StyledChevronContainer = styled.div`
-  position: absolute;
-  right: 25px;
-  top: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   svg {
     color: ${COLORS.primaryBlue};
     height: 19px;

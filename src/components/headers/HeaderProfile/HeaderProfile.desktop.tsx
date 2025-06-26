@@ -10,7 +10,10 @@ import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { Department } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import {
+  selectAuthenticatedUser,
+  selectCurrentUserId,
+} from 'src/use-cases/current-user';
 import {
   StyledHeaderAvailibilityAndUserActions,
   StyledHeaderNameAndRole,
@@ -22,7 +25,6 @@ import {
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfilePublicInfoContainer,
 } from './HeaderProfile.styles';
-import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
 import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
@@ -66,9 +68,11 @@ export const HeaderProfileDesktop = ({
   } = useHeaderProfile(role);
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
+  const currentUser = useSelector(selectAuthenticatedUser);
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
+  const { openCorrespondingModal } = useHeaderProfile(currentUser.role);
 
   const openConversation = () => {
     router.push(`/backoffice/messaging?userId=${id}`);
@@ -76,7 +80,7 @@ export const HeaderProfileDesktop = ({
 
   return (
     <StyledHeaderProfile>
-      <Section>
+      <Section className="custom-page">
         <BackLink
           url="/backoffice/dashboard"
           label="Retour à mon espace personnel"
@@ -148,7 +152,19 @@ export const HeaderProfileDesktop = ({
                     </Text>
                   )}
                   {introduction && (
-                    <ProfileIntroduction introduction={introduction} />
+                    <>
+                      <ProfileIntroduction introduction={introduction} />
+                      {isEditable && (
+                        <Text
+                          color="mediumGray"
+                          size="small"
+                          underline
+                          onClick={() => openCorrespondingModal()}
+                        >
+                          Modifier l&apos;introduction
+                        </Text>
+                      )}
+                    </>
                   )}
                 </>
               )}
@@ -171,7 +187,7 @@ export const HeaderProfileDesktop = ({
                   email={email}
                   driverLicenses={driverLicenses}
                 />
-                <ProfileCompletion completionRate={0.8} />
+                {/* <ProfileCompletion completionRate={0.8} /> */}
               </>
             )}
           </StyledHeaderProfileInfoContainer>
