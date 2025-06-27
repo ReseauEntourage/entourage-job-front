@@ -135,6 +135,7 @@ export const StyledCVProfilePicture = styled.div`
 `;
 
 export const StyledCVPageContentStory = styled.div`
+  margin-top: 20px;
   margin-bottom: 20px;
   position: relative;
   white-space: pre-line;

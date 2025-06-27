@@ -1,6 +1,5 @@
 import React from 'react';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
-import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
@@ -68,7 +67,7 @@ const reviews = [
   },
 ];
 
-const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
+const Entreprises = () => {
   useUtm();
   useMount(() => {
     const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
@@ -112,7 +111,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
       <EntreprisesTextImage element="quoi" />
       <EntreprisesTextImage element="qui" />
 
-      <EntreprisesCVList nbPublishedCVs={nbPublishedCVs} />
+      <EntreprisesCVList />
 
       <Impact
         as="Company"
@@ -137,16 +136,4 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
   );
 };
 
-Entreprises.getInitialProps = async () => {
-  return Api.getNbCVPublished()
-    .then(({ data: { nbPublishedCVs } }) => {
-      return {
-        nbPublishedCVs,
-      };
-    })
-    .catch((err) => {
-      console.error(err);
-      return { nbPublishedCVs: null };
-    });
-};
 export default Entreprises;

@@ -39,35 +39,6 @@ export const StyledCVPDFContentDetailsContainer = styled(
   padding: 0 !important;
 `;
 
-export const StyledCVPDFQuote = styled.div`
-  width: 105px;
-  margin-top: 12px;
-  text-align: center;
-  font-size: 8px;
-  line-height: 10px;
-  position: relative;
-  align-self: center;
-
-  svg {
-    color: ${COLORS.primaryBlue};
-    height: 10px;
-    width: 15px;
-    position: absolute;
-
-    :first-of-type {
-      left: -15px;
-      top: -5px;
-      margin-right: 8px;
-    }
-
-    :last-of-type {
-      margin-left: 8px;
-      right: -15px;
-      bottom: -5px;
-    }
-  }
-`;
-
 export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
   padding: 10px;
   border-radius: 20px;
@@ -177,6 +148,15 @@ export const StyledCVPDFContentInformations = styled(
     font-size: 10px;
     padding-left: 13px;
     margin-top: 0;
+  }
+
+  ul {
+    margin-top: 10px;
+    margin-bottom: 0;
+
+    li {
+      margin-bottom: 10px;
+    }
   }
 `;
 

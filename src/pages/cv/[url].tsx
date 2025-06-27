@@ -1,45 +1,38 @@
 import { NextRouter, withRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { CV } from 'src/api/types';
+import React from 'react';
+import { Api } from '@/src/api';
+import { PublicUser } from '@/src/api/types';
+import { PageCVContent } from '@/src/components/partials/CV/PageCVContent';
 import { Layout } from 'src/components/Layout';
 import { CVDiscover } from 'src/components/partials/CV/CVDiscover';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
-import { updateSharesCount } from 'src/components/profile/updateSharesCount';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { CV_FILTERS_DATA, CV_STATUS } from 'src/constants';
+import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
 export interface CVPageProps {
-  cv: CV;
+  publicUser: PublicUser;
   router: NextRouter;
   exists?: boolean;
 }
 
-const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
+const CVPage = ({ publicUser, exists = false, router }: CVPageProps) => {
   const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
   const link = `${hostname}${router.asPath}`;
-  const candidateExists = cv && cv.user && cv.user.candidat;
-  const sharedDescription = candidateExists
-    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${cv.user.candidat.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
+  const sharedDescription = publicUser
+    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicUser.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
     : '';
-  const title = candidateExists
-    ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
+  const title = publicUser
+    ? `Entourage Pro\xa0: Aidez ${publicUser.firstName} à retrouver un emploi`
     : '';
-  const urlImg = candidateExists
-    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
-    : '';
+  const imgSrc = publicUser?.userProfile.hasPicture
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${publicUser.id}.profile.jpg`
+    : undefined;
 
-  useEffect(() => {
-    if (cv) {
-      updateSharesCount(cv.UserId, 'other');
-    }
-  }, [cv]);
-
-  if (!cv) {
+  if (!publicUser) {
     if (exists) {
       return (
         <Layout title="Bonne nouvelle ! - Entourage Pro" noIndex>
@@ -116,14 +109,28 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       metaTitle={title}
       metaUrl={link}
       metaDescription={sharedDescription}
-      metaImage={urlImg}
+      metaImage={imgSrc}
       metaType="profile"
     >
       <StyledCVPage>
-        <PageCVContent cv={cv} />
+        <PageCVContent publicUser={publicUser} />
       </StyledCVPage>
     </Layout>
   );
+};
+
+CVPage.getInitialProps = async ({ query }) => {
+  return Api.getPublicProfileByCandidateId(query.url)
+    .then(({ data }) => {
+      return {
+        publicUser: data,
+        exists: true,
+      };
+    })
+    .catch((err) => {
+      console.error(err);
+      return { publicUser: null, exists: false };
+    });
 };
 
 export default withRouter<CVPageProps>(CVPage);
