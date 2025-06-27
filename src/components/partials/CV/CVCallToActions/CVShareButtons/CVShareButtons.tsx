@@ -59,7 +59,6 @@ export const CVShareButtons = ({
         onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          // await updateSharesCount(publicProfile.id, 'linkedin');
           openNewsletterModal();
         }}
         url={link}
@@ -78,7 +77,6 @@ export const CVShareButtons = ({
         onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          // await updateSharesCount(publicProfile.id, 'facebook');
           openNewsletterModal();
         }}
         url={link}
@@ -97,7 +95,6 @@ export const CVShareButtons = ({
         onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          // await updateSharesCount(publicProfile.id, 'twitter');
           openNewsletterModal();
         }}
         url={link}
@@ -117,7 +114,6 @@ export const CVShareButtons = ({
         onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          // await updateSharesCount(publicProfile.id, 'whatsapp');
           openNewsletterModal();
         }}
         url={link}
