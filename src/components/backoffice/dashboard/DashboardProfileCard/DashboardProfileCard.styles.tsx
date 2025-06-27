@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
+export const StyledDashbardProfileCardSectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+`;
+
 export const StyledDashboardProfileCardPictureName = styled.div`
   display: flex;
   flex-direction: row;
@@ -15,10 +23,26 @@ export const StyledDashboardProfileCardPictureName = styled.div`
   }
 `;
 
+export const StyledDashboardProfileCardCompletionContainer = styled.div`
+  margin: 0 20px;
+`;
+
+export const StyledDashboardProfileCardSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+export const StyledDashboardProfileCardSectionTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  border-bottom: 1px solid ${COLORS.gray};
+  padding: 5px 0;
+`;
+
 export const StyledDashboardProfileCardIntroduction = styled.div`
-  margin: 20px;
-  font-weight: 300;
-  font-size: 14px;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box !important;
@@ -53,13 +77,8 @@ export const StyledDashboardCTAContainer = styled.div`
   justify-content: center;
 `;
 
-export const StyledDashboardProfileCardHelpListEmptyState = styled.div`
-  font-style: italic;
-  font-size: 14px;
+export const StyledDashboardProfileCardEmptyState = styled.div`
   display: flex;
   align-items: center;
-  svg {
-    width: 50px;
-    margin-right: 15px;
-  }
+  gap: 15px;
 `;
