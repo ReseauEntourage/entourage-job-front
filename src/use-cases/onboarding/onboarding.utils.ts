@@ -1,4 +1,9 @@
-import { User, UserProfile, UserProfileSectorOccupation } from 'src/api/types';
+import {
+  Nudge,
+  User,
+  UserProfile,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
@@ -61,6 +66,12 @@ export const parseOnboadingProfileFields = (
           businessSectorId: businessSectorId.value,
           order: idx,
         } as UserProfileSectorOccupation;
+      }) ?? undefined,
+    nudges:
+      fields.nudgeIds?.map((nudgeId) => {
+        return {
+          id: nudgeId,
+        } as Nudge;
       }) ?? undefined,
   };
 };
