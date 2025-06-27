@@ -120,8 +120,8 @@ export const DashboardProfileCard = () => {
 
               <Text size="small">
                 {user.role === UserRoles.CANDIDATE
-                  ? 'Vous n’avez pas encore séléctionné les coups de pouces dont vous auriez besoin'
-                  : 'Vous n’avez pas encore séléctionné de coups de pouces que vous souhaitez donner'}
+                  ? 'Vous n’avez pas encore sélectionné les coups de pouces dont vous auriez besoin'
+                  : 'Vous n’avez pas encore sélectionné de coups de pouces que vous souhaitez donner'}
               </Text>
             </StyledDashboardProfileCardEmptyState>
           )}
