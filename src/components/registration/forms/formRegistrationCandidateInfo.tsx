@@ -3,7 +3,6 @@ import {
   CANDIDATE_YES_NO_FILTERS,
   CandidateYesNoNSPP,
   CandidateYesNoNSPPValue,
-  CandidateYesNoValue,
 } from 'src/constants';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
@@ -12,8 +11,6 @@ export const formRegistrationCandidateInfo: FormSchema<{
   birthDate: string;
   department: FilterConstant<Department>;
   workingRight: CandidateYesNoNSPPValue;
-  materialInsecurity: CandidateYesNoValue;
-  networkInsecurity: CandidateYesNoValue;
 }> = {
   id: 'form-registration-candidate-info',
   fields: [
@@ -101,48 +98,6 @@ export const formRegistrationCandidateInfo: FormSchema<{
             'Vous devez avoir le droit de travailler en France pour participer au programme Entourage Pro',
         },
       ],
-    },
-    {
-      id: 'materialInsecurityLabel',
-      name: 'materialInsecurityLabel',
-      title: 'Estimez-vous être en situation de précarité matérielle ?*',
-      component: 'heading',
-    },
-    {
-      id: 'materialInsecuritySubLabel',
-      name: 'materialInsecurityLabel',
-      component: 'text',
-      title:
-        'Rencontrez-vous des difficultés pour subvenir à vos besoins de base (se loger, se nourrir, ...) ?',
-    },
-    {
-      id: 'materialInsecurity',
-      name: 'materialInsecurity',
-      component: 'radio',
-      showLabel: false,
-      isRequired: true,
-      options: CANDIDATE_YES_NO_FILTERS.map((option) => ({
-        ...option,
-        inputId: `material-insecurity-${option.value}`,
-      })),
-    },
-
-    {
-      id: 'networkInsecurityLabel',
-      name: 'networkInsecurityLabel',
-      title: "Estimez vous être isolé dans votre recherche d'emploi ?*",
-      component: 'heading',
-    },
-    {
-      id: 'networkInsecurity',
-      name: 'networkInsecurity',
-      component: 'radio',
-      showLabel: false,
-      isRequired: true,
-      options: CANDIDATE_YES_NO_FILTERS.map((option) => ({
-        ...option,
-        inputId: `network-insecurity-${option.value}`,
-      })),
     },
   ],
 };

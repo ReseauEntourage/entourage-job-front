@@ -1,0 +1,83 @@
+import { FormSchema } from 'src/components/forms/FormSchema';
+import {
+  CANDIDATE_YES_NO_FILTERS,
+  CandidateYesNo,
+  CandidateYesNoValue,
+} from 'src/constants';
+
+export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
+  materialInsecurity: CandidateYesNoValue;
+  networkInsecurity: CandidateYesNoValue;
+}> = {
+  id: 'form-registration-candidate-economic-social-information',
+  fields: [
+    {
+      id: 'materialInsecurityLabel',
+      name: 'materialInsecurityLabel',
+      title: 'Estimez-vous être en situation de précarité matérielle ?*',
+      component: 'heading',
+    },
+    {
+      id: 'materialInsecuritySubLabel',
+      name: 'materialInsecurityLabel',
+      component: 'text',
+      title:
+        'Rencontrez-vous des difficultés pour subvenir à vos besoins de base (se loger, se nourrir, ...) ?',
+    },
+    {
+      id: 'materialInsecurity',
+      name: 'materialInsecurity',
+      component: 'radio',
+      showLabel: false,
+      isRequired: true,
+      options: CANDIDATE_YES_NO_FILTERS.map((option) => ({
+        ...option,
+        inputId: `material-insecurity-${option.value}`,
+      })),
+      rules: [
+        {
+          method: (materialInsecurityValue, formValues) => {
+            const { networkInsecurity } = formValues;
+            return (
+              materialInsecurityValue === CandidateYesNo.YES ||
+              networkInsecurity === CandidateYesNo.YES
+            );
+          },
+          message:
+            "Vous devez etre en situation d'isolement ou de précarité pour acceder au programme",
+        },
+      ],
+    },
+
+    {
+      id: 'networkInsecurityLabel',
+      name: 'networkInsecurityLabel',
+      title: "Estimez vous être isolé dans votre recherche d'emploi ?*",
+      component: 'heading',
+    },
+    {
+      id: 'networkInsecurity',
+      name: 'networkInsecurity',
+      component: 'radio',
+      showLabel: false,
+      isRequired: true,
+      options: CANDIDATE_YES_NO_FILTERS.map((option) => ({
+        ...option,
+        inputId: `network-insecurity-${option.value}`,
+      })),
+      rules: [
+        {
+          method: (networkInsecurityValue, formValues) => {
+            const { materialInsecurity } = formValues;
+            return (
+              materialInsecurity === CandidateYesNo.YES ||
+              networkInsecurityValue === CandidateYesNo.YES
+            );
+          },
+          message:
+            'Vous devez répondre OUI à au moins une des deux questions pour continuer',
+        },
+      ],
+    },
+  ],
+};
