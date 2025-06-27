@@ -34,6 +34,11 @@ export const Referents: {
     img: `mathilde.jpg`,
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LORIENT as string,
   },
+  [ADMIN_ZONES.SUDOUEST]: {
+    name: 'Julie P.',
+    img: `julie.jpg`,
+    mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_HZ as string,
+  },
   [ADMIN_ZONES.HZ]: {
     name: 'Julie P.',
     img: `julie.jpg`,
