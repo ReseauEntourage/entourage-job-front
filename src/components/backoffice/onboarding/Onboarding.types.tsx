@@ -27,7 +27,7 @@ export type OnboardingStep = 0 | 1 | 2 | 3 | 4 | 5; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 export const ONBOARDING_LAST_STEP = {
   [UserRoles.CANDIDATE]: 5 as OnboardingStep,
-  [UserRoles.COACH]: 3 as OnboardingStep,
+  [UserRoles.COACH]: 4 as OnboardingStep,
 };
 
 export type CandidateOnboardingForm =
@@ -124,16 +124,13 @@ export const OnboardingStepContents: {
     [UserRoles.COACH]: {
       title: 'Complétez votre profil',
       subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCoachJob,
-      defaultValues: (user) => {
-        return getCoachDefaultProfessionalValuesWithLinkedIn(user.userProfile);
-      },
+        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur ce que vous souhaitez apporter aux candidats",
+      form: formOnboardingCoachHelps,
+      defaultValues: (user) => ({
+        nudgeIds: user.userProfile?.nudges?.map((nudge) => nudge.id) ?? [],
+      }),
       skippedBy: (user: User) =>
-        !!(
-          user.userProfile?.sectorOccupations &&
-          user.userProfile?.sectorOccupations.length > 0
-        ),
+        !!(user.userProfile?.nudges && user.userProfile?.nudges.length > 0),
     },
   },
   3: {
@@ -152,12 +149,15 @@ export const OnboardingStepContents: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCoachProfile,
-      content: <OnboardingProfileForm />,
-      defaultValues: (user) => ({
-        introduction: user.userProfile.introduction ?? undefined,
-      }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
+      form: formOnboardingCoachJob,
+      defaultValues: (user) => {
+        return getCoachDefaultProfessionalValuesWithLinkedIn(user.userProfile);
+      },
+      skippedBy: (user: User) =>
+        !!(
+          user.userProfile?.sectorOccupations &&
+          user.userProfile?.sectorOccupations.length > 0
+        ),
     },
   },
   4: {
@@ -168,6 +168,17 @@ export const OnboardingStepContents: {
         return getCandidateDefaultProfessionalValues(user.userProfile);
       },
       skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
+    },
+    [UserRoles.COACH]: {
+      title: 'Complétez votre profil',
+      subtitle:
+        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
+      form: formOnboardingCoachProfile,
+      content: <OnboardingProfileForm />,
+      defaultValues: (user) => ({
+        introduction: user.userProfile.introduction ?? undefined,
+      }),
+      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
     },
   },
   5: {
