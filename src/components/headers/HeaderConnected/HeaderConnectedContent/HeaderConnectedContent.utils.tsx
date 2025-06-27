@@ -29,8 +29,12 @@ export const renderLinks = (
   const candidateHeaderItems: HeaderConnectedMainItem[] = [
     {
       href: '/backoffice/dashboard',
-      name: 'Mon espace',
+      name: 'Tableau de bord',
       tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
+    },
+    {
+      href: '/backoffice/parametres',
+      name: 'Mon profil',
     },
     {
       href: '/backoffice/annuaire',
@@ -108,8 +112,12 @@ export const renderLinks = (
       [UserRoles.COACH]: [
         {
           href: '/backoffice/dashboard',
-          name: 'Mon espace',
+          name: 'Tableau de bord',
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
+        },
+        {
+          href: '/backoffice/parametres',
+          name: 'Mon profil',
         },
         {
           href: '/backoffice/annuaire',
@@ -134,8 +142,12 @@ export const renderLinks = (
       [UserRoles.REFERER]: [
         {
           href: '/backoffice/dashboard',
-          name: 'Mon espace',
+          name: 'Tableau de bord',
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
+        },
+        {
+          href: '/backoffice/parametres',
+          name: 'Mon profil',
         },
         {
           href: '/backoffice/annuaire',
@@ -156,11 +168,6 @@ export const renderLinks = (
       badge: 'messaging',
     },
     dropdown: [
-      {
-        href: '/backoffice/parametres',
-        icon: <LucidIcon name="Settings2" />,
-        name: 'Paramètres',
-      },
       {
         href: '',
         onClick: logout,

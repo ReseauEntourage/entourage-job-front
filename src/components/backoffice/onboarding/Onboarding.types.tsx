@@ -129,9 +129,11 @@ export const OnboardingStepContents: {
       defaultValues: (user) => {
         return getCoachDefaultProfessionalValuesWithLinkedIn(user.userProfile);
       },
-      skippedBy: ({ userProfile }: User) =>
-        !!userProfile?.sectorOccupations?.map((so) => so.businessSector)
-          ?.length,
+      skippedBy: (user: User) =>
+        !!(
+          user.userProfile?.sectorOccupations &&
+          user.userProfile?.sectorOccupations.length > 0
+        ),
     },
   },
   3: {

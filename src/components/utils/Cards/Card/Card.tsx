@@ -90,9 +90,9 @@ export const Card = ({
                 <ButtonIcon
                   icon={
                     isOpen ? (
-                      <LucidIcon name="ChevronUp" />
+                      <LucidIcon name="ChevronUp" color="black" />
                     ) : (
-                      <LucidIcon name="ChevronDown" />
+                      <LucidIcon name="ChevronDown" color="black" />
                     )
                   }
                   onClick={() => {
