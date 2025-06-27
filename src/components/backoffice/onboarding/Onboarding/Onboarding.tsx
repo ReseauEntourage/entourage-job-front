@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import {
   StyledOnboardingSpinnerContainer,
   StyledStepContainer,
@@ -8,7 +7,6 @@ import { useOnboarding } from '../useOnboarding';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Spinner } from 'src/components/utils/Spinner';
-import { generateProfileFromCVSelectors } from 'src/use-cases/cv';
 
 export const Onboarding = () => {
   const {
@@ -20,18 +18,8 @@ export const Onboarding = () => {
     onBeforeStep,
     currentStep,
     stepData,
+    disableNavigationButtons,
   } = useOnboarding();
-
-  // Vérifier si la génération du profil AI est en cours
-  const isGeneratingProfile = useSelector(
-    generateProfileFromCVSelectors.selectIsGenerateProfileFromCVRequested
-  );
-
-  // Désactiver les boutons si on génère le profil ou si l'onboarding est en chargement
-  const disableButtons = useMemo(
-    () => isGeneratingProfile || isOnboardingLoading,
-    [isGeneratingProfile, isOnboardingLoading]
-  );
 
   if (currentStep === 0) {
     return null;
@@ -58,7 +46,7 @@ export const Onboarding = () => {
               submitText="Suivant"
               cancelText="Précédent"
               {...(!isFirstOnboardingStep ? { onCancel: onBeforeStep } : {})}
-              disabled={disableButtons}
+              disabled={disableNavigationButtons}
             />
           )}
         </StyledStepContainer>
