@@ -1,11 +1,11 @@
 import React from 'react';
 import { IlluCV } from 'assets/icons/icons';
 import { ButtonIcon } from '../../../Button';
+import { Text, TextSize } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import {
   StyledDeleteIconContainer,
   StyledFileInfosContainer,
-  StyledFilename,
 } from './FilePreview.styles';
 
 interface FilePreviewCVProps {
@@ -13,6 +13,8 @@ interface FilePreviewCVProps {
   onRemoveFile: () => void;
   onOpenFile?: () => void;
   dataTestId: string;
+  size?: number;
+  textSize?: TextSize;
 }
 
 export function FilePreviewCV({
@@ -20,11 +22,15 @@ export function FilePreviewCV({
   onRemoveFile,
   onOpenFile,
   dataTestId,
+  size = 70,
+  textSize = 'normal',
 }: FilePreviewCVProps) {
   return (
     <StyledFileInfosContainer>
-      <IlluCV width={70} height={70} />
-      <StyledFilename onClick={onOpenFile}>{filename}</StyledFilename>
+      <IlluCV width={size} height={size} />
+      <Text size={textSize} onClick={onOpenFile}>
+        {filename}
+      </Text>
       <StyledDeleteIconContainer onClick={onRemoveFile}>
         <ButtonIcon
           icon={<LucidIcon name="X" size={15} />}
