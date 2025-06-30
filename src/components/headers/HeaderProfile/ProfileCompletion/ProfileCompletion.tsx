@@ -21,7 +21,7 @@ export const ProfileCompletion = ({
           Votre profil
         </Text>
         <Text size="small" color="mediumGray">
-          100%
+          {completionRate * 100}%
         </Text>
       </StyledHeader>
       <StyledProgressionContainer>

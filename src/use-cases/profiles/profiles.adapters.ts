@@ -1,4 +1,4 @@
-import { InternalMessage, ProfilesFilters, Profile } from 'src/api/types';
+import { ProfilesFilters, Profile } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchProfilesAdapter = createRequestAdapter(
@@ -17,7 +17,3 @@ export const fetchSelectedProfileAdapter = createRequestAdapter(
   },
   Profile
 >();
-
-export const postInternalMessageAdapter = createRequestAdapter(
-  'postInternalMessage'
-).withPayloads<InternalMessage>();

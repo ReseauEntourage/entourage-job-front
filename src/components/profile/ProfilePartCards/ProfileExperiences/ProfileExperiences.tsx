@@ -126,7 +126,7 @@ export const ProfileExperiences = ({
 
   return (
     <ProfilePartCard
-      title="Expériences et compétences"
+      title="Expériences"
       isCompleted={isCompleted}
       isEditable={isEditable}
       // iaGenerated

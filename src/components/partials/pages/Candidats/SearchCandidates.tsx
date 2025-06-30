@@ -1,6 +1,6 @@
 import React from 'react';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { ContainerWithTextCentered, Section } from 'src/components/utils';
+import { Text, ContainerWithTextCentered, Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks/useFilters';
@@ -19,10 +19,10 @@ export const SearchCandidates = () => {
       <ContainerWithTextCentered>
         <StyledCandidatsHeaderContainer>
           <H1 center title="Découvrez les candidats" />
-          <div>
+          <Text center>
             Découvrez ci-dessous les CV des candidats Entourage Pro. Vous pouvez
             leur donner un coup de pouce en partageant leur CV.
-          </div>
+          </Text>
         </StyledCandidatsHeaderContainer>
       </ContainerWithTextCentered>
       <CVList
@@ -31,6 +31,7 @@ export const SearchCandidates = () => {
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}
+        hideSearchBar
       />
     </Section>
   );

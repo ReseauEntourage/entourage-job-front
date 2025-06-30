@@ -10,8 +10,7 @@ import {
 interface ContactInformationPDFProps {
   phone: string;
   email?: string;
-  address: string;
-  locations: {
+  departments?: {
     name: Department;
     order: number;
   }[];
@@ -20,64 +19,45 @@ interface ContactInformationPDFProps {
 export function CVContactInformationPDF({
   phone,
   email,
-  address,
-  locations,
+  departments,
 }: ContactInformationPDFProps) {
-  const sortedLocations =
-    locations && locations.length > 0 ? sortByOrder(locations) : [];
+  const sortedDepartments =
+    departments && departments.length > 0 ? sortByOrder(departments) : [];
   return (
     <StyledCVPDFContentInformations>
       <StyledCVPDFTitle>Contact</StyledCVPDFTitle>
       <ul>
         {phone && (
           <li>
-            <div>
-              <p className="subtitle">
-                <LucidIcon name="Phone" /> <span>Numéro de téléphone</span>
-              </p>
-              <p className="content">{phone}</p>
-            </div>
+            <p className="subtitle">
+              <LucidIcon name="Phone" /> <span>Numéro de téléphone</span>
+            </p>
+            <p className="content">{phone}</p>
           </li>
         )}
         {email && (
           <li>
-            <div>
-              <p className="subtitle">
-                <LucidIcon name="MessageCircle" /> <span>Email</span>
-              </p>
-              <p className="content">{email}</p>
-            </div>
+            <p className="subtitle">
+              <LucidIcon name="MessageCircle" /> <span>Email</span>
+            </p>
+            <p className="content">{email}</p>
           </li>
         )}
-        <ul>
-          {address && (
-            <li>
-              <div>
-                <p className="subtitle">
-                  <LucidIcon name="House" /> <span>Adresse</span>
-                </p>
-                <p className="content">{address}</p>
-              </div>
-            </li>
-          )}
-        </ul>
-        {sortedLocations && sortedLocations.length > 0 && (
+        {/* DEPRECATED => : */}
+        {sortedDepartments && sortedDepartments.length > 0 && (
           <li>
-            <div>
-              <p className="subtitle">
-                <LucidIcon name="MapPin" /> <span>Localisation</span>
-              </p>
-              <p className="content">
-                {locations
-                  .map(({ name }) => {
-                    return findConstantFromValue(name, DEPARTMENTS_FILTERS)
-                      .label;
-                  })
-                  .join(' / ')}
-              </p>
-            </div>
+            <p className="subtitle">
+              <LucidIcon name="MapPin" /> <span>Localisation</span>
+            </p>
+            {sortedDepartments?.length &&
+              sortedDepartments
+                .map(({ name }) => {
+                  return findConstantFromValue(name, DEPARTMENTS_FILTERS).label;
+                })
+                .join(' / ')}
           </li>
         )}
+        {/* <= DEPRECATED */}
       </ul>
     </StyledCVPDFContentInformations>
   );
