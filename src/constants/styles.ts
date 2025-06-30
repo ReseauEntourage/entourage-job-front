@@ -77,33 +77,6 @@ export const STATUS_COLORS = {
   error: COLORS.lightRed,
 };
 
-export const CV_STATUS_COLORS = {
-  none: {
-    border: COLORS.lightGray,
-    background: COLORS.white,
-  },
-  new: {
-    border: COLORS.blue,
-    background: COLORS.white,
-  },
-  draft: {
-    border: COLORS.mediumGray,
-    background: COLORS.mediumGray,
-  },
-  progress: {
-    border: COLORS.blue,
-    background: COLORS.blue,
-  },
-  pending: {
-    border: COLORS.primaryBlue,
-    background: COLORS.primaryBlue,
-  },
-  published: {
-    border: COLORS.lightGreen,
-    background: COLORS.lightGreen,
-  },
-};
-
 export const ALERT_COLORS = {
   info: {
     background: COLORS.hoverBlue,

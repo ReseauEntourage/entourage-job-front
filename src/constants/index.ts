@@ -15,39 +15,6 @@ export const JNSPR = {
   label: 'Je ne souhaite pas répondre',
 };
 
-export const CV_STATUS = {
-  Published: {
-    label: 'Publié',
-    value: 'Published',
-    style: 'success',
-  },
-  Pending: {
-    label: 'En attente',
-    value: 'Pending',
-    style: 'danger',
-  },
-  Progress: {
-    label: 'En cours',
-    value: 'Progress',
-    style: 'muted',
-  },
-  New: {
-    label: 'Nouveau',
-    value: 'New',
-    style: 'muted',
-  },
-  Draft: {
-    label: 'Brouillon',
-    value: 'Draft',
-    style: 'warning',
-  },
-  Unknown: {
-    label: 'Inconnu',
-    value: 'Unknown',
-    style: '',
-  },
-} as const;
-
 export type Contract =
   | 'cdi'
   | 'cdd'
@@ -189,15 +156,6 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_BINOME_CLIC,
   },
   {
-    key: 'hidden',
-    constants: [
-      { label: 'CV masqués', value: true },
-      { label: 'CV visibles', value: false },
-    ],
-    title: 'CV masqué',
-    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_MASQUE_CLIC,
-  },
-  {
     key: 'employed',
     constants: [
       { label: 'En emploi', value: true },
@@ -205,17 +163,6 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     ],
     title: 'En emploi',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_EMPLOYE_CLIC,
-  },
-  {
-    key: 'cvStatus',
-    constants: [
-      CV_STATUS.Published,
-      CV_STATUS.Pending,
-      CV_STATUS.Progress,
-      CV_STATUS.New,
-    ],
-    title: 'Statut du CV',
-    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
   },
 ];
 
