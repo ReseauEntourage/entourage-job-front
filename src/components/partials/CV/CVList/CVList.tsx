@@ -99,7 +99,8 @@ export const CVList = ({
 
   useEffect(() => {
     fetchData(search, filters);
-  }, [search, filters, fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, filters]);
 
   const renderCvList = useCallback(() => {
     return (

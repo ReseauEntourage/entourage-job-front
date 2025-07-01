@@ -158,7 +158,7 @@ export const slice = createSlice({
       state.externalCv = action.payload;
     },
     getExternalCvFailed() {},
-    generateProfileFromCVSucceeded(state, _action) {
+    generateProfileFromCVSucceeded(state) {
       assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
 
       if (state.user.userProfile) {
