@@ -39,6 +39,10 @@ export const generateUsersApiResponse = (numbersOfUsers, roleUsers) => {
         candidat: {},
       },
     ],
+    userProfile: {
+      id: faker.string.uuid(),
+      hasPicture: false,
+    },
   }));
 
   return JSON.stringify(users, null, 2);

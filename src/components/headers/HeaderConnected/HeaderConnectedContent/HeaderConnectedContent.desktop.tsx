@@ -72,7 +72,7 @@ export const HeaderConnectedContentDesktop = ({
             <ImgProfile
               user={user}
               size={40}
-              hasPicture={user.userProfile.hasPicture}
+              hasPicture={user.userProfile?.hasPicture || false}
             />
             <span className="uk-margin-small-left uk-margin-small-right">
               Bonjour {user.firstName}
