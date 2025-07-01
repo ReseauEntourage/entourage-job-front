@@ -51,7 +51,11 @@ export const OnboardingProfileForm = () => {
         {imageUploading ? (
           <Spinner color={COLORS.white} />
         ) : (
-          <ImgProfile user={{ id, role, firstName }} size={SIZE} />
+          <ImgProfile
+            user={{ id, role, firstName }}
+            size={SIZE}
+            hasPicture={user.userProfile.hasPicture}
+          />
         )}
       </StyledProfileFormImageContainer>
       <ImageInput

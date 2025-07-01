@@ -71,7 +71,11 @@ export const MessagingConversationHeader = () => {
         )}
         {addresee && (
           <AddreseeInfosContainer onClick={onClickAddresseeInfos}>
-            <ImgProfile user={addresee} size={35} />
+            <ImgProfile
+              user={addresee}
+              size={35}
+              hasPicture={addresee.userProfile.hasPicture}
+            />
             <ConversationAddresee>
               <p className="addresee-name">
                 {addresee.firstName} {addresee.lastName}

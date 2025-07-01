@@ -48,6 +48,7 @@ export const DashboardReferedCandidateList = () => {
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps={false}
+          hasPicture={profile.hasPicture}
         />
       );
     });

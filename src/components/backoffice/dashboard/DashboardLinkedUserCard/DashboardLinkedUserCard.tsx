@@ -33,7 +33,11 @@ export const DashboardLinkedUserCard = () => {
       centerTitle
     >
       <StyledDashboardLinkedUserCard>
-        <ImgProfile user={linkedUser} size={107} />
+        <ImgProfile
+          user={linkedUser}
+          size={107}
+          hasPicture={linkedUser.userProfile.hasPicture}
+        />
         <StyledDashboardLinkedUserNameContainer>
           {linkedUser.firstName} {linkedUser.lastName.charAt(0)}.
         </StyledDashboardLinkedUserNameContainer>

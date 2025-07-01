@@ -54,6 +54,7 @@ export interface ProfileCardProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
+  hasPicture: boolean;
   nudges?: Nudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
@@ -96,9 +97,11 @@ export function ProfileCard({
   sectorOccupations,
   isAvailable,
   displayHelps,
+  hasPicture,
 }: ProfileCardProps) {
   const { urlImg } = useImageFallback({
     userId,
+    hasPicture,
   });
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);

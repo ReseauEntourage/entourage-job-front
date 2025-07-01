@@ -33,7 +33,11 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
 
   return (
     <StyledContainer>
-      <ImgProfile user={user} size={48} />
+      <ImgProfile
+        user={user}
+        size={48}
+        hasPicture={user.userProfile.hasPicture}
+      />
       <StyledInfoContainer>
         <StyledNameContainer>
           {user.firstName} {user.lastName}

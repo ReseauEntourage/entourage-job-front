@@ -54,6 +54,7 @@ export interface HeaderProfileProps {
   phone?: string;
   email?: string;
   driverLicenses?: string[];
+  hasPicture: boolean;
 }
 
 export const HeaderProfileMobile = ({
@@ -67,6 +68,7 @@ export const HeaderProfileMobile = ({
   phone,
   email,
   driverLicenses,
+  hasPicture,
   isEditable = false,
 }: HeaderProfileProps) => {
   const {
@@ -104,6 +106,7 @@ export const HeaderProfileMobile = ({
                   <ImgProfile
                     user={{ id, role, firstName }}
                     size={PROFILE_PICTURE_SIZE}
+                    hasPicture={hasPicture}
                   />
                 )}
               </StyledHeaderProfilePicture>

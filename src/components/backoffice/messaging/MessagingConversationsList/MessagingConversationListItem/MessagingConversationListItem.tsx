@@ -53,7 +53,13 @@ export const MessagingConversationListItem = ({
   return (
     <ContainerStyled onClick={selectConversation} isActive={isActivated}>
       <ContainerAvatarStyled>
-        {addresee && <ImgProfile user={addresee} size={35} />}
+        {addresee && (
+          <ImgProfile
+            user={addresee}
+            size={35}
+            hasPicture={addresee.userProfile.hasPicture}
+          />
+        )}
       </ContainerAvatarStyled>
       <RightColumn highlight={shouldHighlightConversation}>
         <MainInfos>
