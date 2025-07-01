@@ -186,7 +186,8 @@ export const OnboardingStepContents: {
       title: 'Enrichissez votre profil grâce à votre CV',
       content: <OnboardingAI />,
       form: formOnboardingCandidateAI,
-      skippedBy: (user: User) => !!user.hasExtractedCvData,
+      skippedBy: (user: User) =>
+        !user.userProfile.hasExternalCv || !!user.hasExtractedCvData,
     },
   },
 };

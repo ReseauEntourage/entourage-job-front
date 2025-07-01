@@ -12,7 +12,7 @@ export interface ButtonProps {
   href?: string | { pathname: string; query: AnyToFix };
   isExternal?: boolean;
   newTab?: boolean;
-  onClick?: () => Promise<void> | void;
+  onClick?: (e: Event) => Promise<void> | void;
   shallow?: boolean;
   scroll?: boolean;
   className?: string;
