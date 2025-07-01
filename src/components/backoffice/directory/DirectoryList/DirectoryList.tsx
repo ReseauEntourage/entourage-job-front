@@ -22,6 +22,7 @@ export function DirectoryList() {
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps
+          hasPicture={profile.hasPicture}
         />
       );
     });

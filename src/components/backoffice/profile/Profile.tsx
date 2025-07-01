@@ -38,6 +38,7 @@ export const Profile = () => {
         role={selectedProfile.role}
         department={selectedProfile.department}
         introduction={selectedProfile.introduction}
+        hasPicture={selectedProfile.hasPicture}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>

@@ -16,11 +16,13 @@ interface ImgProfileProps {
     candidat?: UserCandidateWithUsers;
   };
   size?: number;
+  hasPicture: boolean;
   highlight?: boolean;
 }
 
 export const ImgProfile = ({
   user,
+  hasPicture,
   size = 40,
   highlight = false,
 }: ImgProfileProps) => {
@@ -28,6 +30,7 @@ export const ImgProfile = ({
 
   const { urlImg } = useImageFallback({
     userId: user.id,
+    hasPicture,
   });
   const updateUserProfilePictureStatus = useSelector(
     updateUserProfilePictureSelectors.selectUpdateUserProfilePictureStatus
