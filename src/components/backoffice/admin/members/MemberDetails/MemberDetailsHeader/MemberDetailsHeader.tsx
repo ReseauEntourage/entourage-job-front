@@ -36,7 +36,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
       <ImgProfile
         user={user}
         size={48}
-        hasPicture={user.userProfile.hasPicture}
+        hasPicture={user.userProfile?.hasPicture || false}
       />
       <StyledInfoContainer>
         <StyledNameContainer>

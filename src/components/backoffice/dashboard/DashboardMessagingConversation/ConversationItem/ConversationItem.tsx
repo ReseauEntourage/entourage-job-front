@@ -42,7 +42,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
           <ImgProfile
             user={addresee}
             size={25}
-            hasPicture={addresee.userProfile.hasPicture}
+            hasPicture={addresee.userProfile?.hasPicture || false}
           />
           <Text weight="bold">
             {`${addresee.firstName} ${addresee.lastName}`}

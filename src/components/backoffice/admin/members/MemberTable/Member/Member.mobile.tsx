@@ -58,7 +58,7 @@ export function MemberMobile({
           <ImgProfile
             user={member}
             size={29}
-            hasPicture={member.userProfile.hasPicture}
+            hasPicture={member.userProfile?.hasPicture || false}
           />
           <MemberInfo
             id={member.id}

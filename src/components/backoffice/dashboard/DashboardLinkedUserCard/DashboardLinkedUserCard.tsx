@@ -36,7 +36,7 @@ export const DashboardLinkedUserCard = () => {
         <ImgProfile
           user={linkedUser}
           size={107}
-          hasPicture={linkedUser.userProfile.hasPicture}
+          hasPicture={linkedUser.userProfile?.hasPicture || false}
         />
         <StyledDashboardLinkedUserNameContainer>
           {linkedUser.firstName} {linkedUser.lastName.charAt(0)}.

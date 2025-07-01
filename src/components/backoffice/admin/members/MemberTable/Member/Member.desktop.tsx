@@ -72,7 +72,7 @@ export function MemberDesktop({
           <ImgProfile
             user={member}
             size={36}
-            hasPicture={member.userProfile.hasPicture}
+            hasPicture={member.userProfile?.hasPicture || false}
           />
         </MemberInfo>
       </StyledNameCell>

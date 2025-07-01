@@ -54,7 +54,7 @@ export const OnboardingProfileForm = () => {
           <ImgProfile
             user={{ id, role, firstName }}
             size={SIZE}
-            hasPicture={user.userProfile.hasPicture}
+            hasPicture={user.userProfile?.hasPicture || false}
           />
         )}
       </StyledProfileFormImageContainer>

@@ -74,7 +74,7 @@ export const MessagingConversationHeader = () => {
             <ImgProfile
               user={addresee}
               size={35}
-              hasPicture={addresee.userProfile.hasPicture}
+              hasPicture={addresee.userProfile?.hasPicture || false}
             />
             <ConversationAddresee>
               <p className="addresee-name">

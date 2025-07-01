@@ -46,7 +46,7 @@ export const DashboardProfileCard = () => {
         <ImgProfile
           user={user}
           size={69}
-          hasPicture={user.userProfile.hasPicture}
+          hasPicture={user.userProfile?.hasPicture || false}
         />
         <div>
           <Text size="xlarge" weight="bold">

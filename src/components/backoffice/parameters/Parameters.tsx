@@ -68,7 +68,7 @@ export const Parameters = () => {
         phone={user.phone}
         email={user.email}
         driverLicenses={['B']}
-        hasPicture={user.userProfile.hasPicture}
+        hasPicture={user.userProfile?.hasPicture || false}
         isEditable
       />
       <Section className="custom-page">
