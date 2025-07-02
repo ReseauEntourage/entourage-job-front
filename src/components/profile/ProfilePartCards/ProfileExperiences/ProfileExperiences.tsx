@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { openModal } from '@/src/components/modals/Modal';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { IlluMalette } from 'assets/icons/icons';
@@ -36,13 +37,27 @@ export const ProfileExperiences = ({
   const isOwnProfile = userId === currentUserId;
   const isCompleted = experiences.length > 0;
 
+  const editableFallback = useMemo(() => {
+    if (user.role === UserRoles.CANDIDATE) {
+      return (
+        <Text>
+          Vous n’avez pas encore renseigné d’expérience professionnelle. Si vous
+          avez de l&apos;expérience, nous vous invitons à la partager. Elle est
+          essentielle pour nos coachs et pour les recruteurs.
+        </Text>
+      );
+    }
+    return (
+      <Text>
+        Vous n’avez pas encore renseigné d’expérience professionnelle. Si vous
+        avez de l&apos;expérience, nous vous invitons à la partager.
+      </Text>
+    );
+  }, [user.role]);
+
   const fallback = useMemo(() => {
     const content = isEditable ? (
-      <Text>
-        Vous n’avez pas encore renseigner d’expérience professionnelle. Si vous
-        avez de l&apos;expérience, nous vous invitons à la partager. Elle est
-        essentielle pour nos coachs et pour les recruteurs.
-      </Text>
+      editableFallback
     ) : (
       <Text>{`${userFirstName} n’a pas encore renseigné ses expériences professionnelles`}</Text>
     );
@@ -50,7 +65,7 @@ export const ProfileExperiences = ({
       content,
       icon: <IlluMalette />,
     };
-  }, [isEditable, userFirstName]);
+  }, [editableFallback, isEditable, userFirstName]);
 
   const suggestHelpToComplete = useCallback(() => {
     router.push(`/backoffice/messaging?userId=${userId}`);
