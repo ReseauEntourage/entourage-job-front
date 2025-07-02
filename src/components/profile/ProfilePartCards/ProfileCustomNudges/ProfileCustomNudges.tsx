@@ -102,7 +102,7 @@ export const ProfileCustomNudges = ({
           <Text>
             {user.role === UserRoles.CANDIDATE
               ? 'Détaillez précisément vos besoins pour que les coachs puissent vous accompagner plus facilement'
-              : 'Détaillez les coups de pouces que vous pouvez offrir aux candidats.'}
+              : 'Détaillez les coups de pouce que vous pouvez offrir aux candidats.'}
           </Text>
         ),
         icon: <IlluBulleQuestionCheck />,
