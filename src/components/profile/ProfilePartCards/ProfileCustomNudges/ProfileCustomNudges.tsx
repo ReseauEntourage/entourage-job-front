@@ -101,7 +101,7 @@ export const ProfileCustomNudges = ({
         content: (
           <Text>
             {user.role === UserRoles.CANDIDATE
-              ? 'Détaillez précisement vos besoins pour que les coachs puissent vous accompagner plus facilement'
+              ? 'Détaillez précisément vos besoins pour que les coachs puissent vous accompagner plus facilement'
               : 'Détaillez les coups de pouces que vous pouvez offrir aux candidats.'}
           </Text>
         ),
