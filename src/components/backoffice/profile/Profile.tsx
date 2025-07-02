@@ -112,7 +112,10 @@ export const Profile = () => {
               hasExternalCv={selectedProfile.hasExternalCv}
               smallCard
             />
-            <ProfileContactPreferences smallCard />
+            <ProfileContactPreferences
+              userRole={selectedProfile.role}
+              smallCard
+            />
             <ProfileNudges
               userRole={selectedProfile.role}
               nudges={selectedProfile.nudges}

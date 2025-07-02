@@ -91,6 +91,7 @@ import User from './user.svg';
 import Warning from './warning.svg';
 import Whatsapp from './whatsapp.svg';
 import Youtube from './youtube.svg';
+import IlluDiscussionBanc from './illu-discussion-banc.svg';
 
 export {
 Archive,
@@ -148,6 +149,7 @@ IlluCoeurSurLaMain,
 IlluAmpoule,
 IlluCoachEtCandidat,
 IlluLinkedIn,
+IlluDiscussionBanc,
 Info,
 Instagram,
 Language,

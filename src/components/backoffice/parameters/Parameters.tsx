@@ -146,7 +146,11 @@ export const Parameters = () => {
                   smallCard
                 />
               )}
-              <ProfileContactPreferences isEditable smallCard />
+              <ProfileContactPreferences
+                userRole={user.role}
+                isEditable
+                smallCard
+              />
               <ProfileNudges
                 userRole={user.role}
                 nudges={user.userProfile.nudges || []}
