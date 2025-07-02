@@ -183,7 +183,7 @@ export const HeaderProfileMobile = ({
                 email={email}
                 driverLicenses={driverLicenses}
               />
-              <ProfileCompletion completionRate={0.8} />
+              <ProfileCompletion />
             </>
           )}
         </StyledHeaderProfileSectionMobile>

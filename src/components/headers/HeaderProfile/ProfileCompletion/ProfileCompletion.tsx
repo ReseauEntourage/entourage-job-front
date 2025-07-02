@@ -1,4 +1,5 @@
 import React from 'react';
+import { Api } from '@/src/api';
 import { Text } from 'src/components/utils';
 import {
   StyledHeader,
@@ -7,13 +8,9 @@ import {
   StyledProgressionContainer,
 } from './ProfileCompletion.style';
 
-export interface CompletionProgressBarProps {
-  completionRate: number;
-}
+export const ProfileCompletion = () => {
+  const completionRate = Api.getProfileCompletion() || 0;
 
-export const ProfileCompletion = ({
-  completionRate,
-}: CompletionProgressBarProps) => {
   return (
     <StyledProfileCompletion>
       <StyledHeader>
@@ -21,7 +18,7 @@ export const ProfileCompletion = ({
           Votre profil
         </Text>
         <Text size="small" color="mediumGray">
-          {completionRate * 100}%
+          {`${completionRate}%`}
         </Text>
       </StyledHeader>
       <StyledProgressionContainer>

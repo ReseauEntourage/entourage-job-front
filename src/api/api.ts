@@ -188,6 +188,10 @@ export class APIHandler {
     return this.get(`/user/profile/${userId}`);
   }
 
+  getProfileCompletion(): Promise<AxiosResponse<number>> {
+    return this.get(`/user/profile/completion`);
+  }
+
   getAllUsersProfiles(
     params: ProfilesFilters & {
       offset: number;

@@ -26,6 +26,7 @@ import {
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfilePublicInfoContainer,
 } from './HeaderProfile.styles';
+import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
 import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
@@ -192,7 +193,7 @@ export const HeaderProfileDesktop = ({
                   email={email}
                   driverLicenses={driverLicenses}
                 />
-                {/* <ProfileCompletion completionRate={0.8} /> */}
+                <ProfileCompletion />
               </>
             )}
           </StyledHeaderProfileInfoContainer>
