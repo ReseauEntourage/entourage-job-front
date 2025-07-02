@@ -172,7 +172,7 @@ export function ProfileCard({
               <>
                 {role === UserRoles.COACH && (
                   <StyledProfileCardJobContainer>
-                    <H5 color={COLORS.black} title={currentJob} />
+                    <H5 color={COLORS.black} title={currentJob || EMPTY_JOB} />
                   </StyledProfileCardJobContainer>
                 )}
                 {role === UserRoles.CANDIDATE && (
