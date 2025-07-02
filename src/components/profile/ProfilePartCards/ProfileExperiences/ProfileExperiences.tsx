@@ -41,7 +41,7 @@ export const ProfileExperiences = ({
     if (user.role === UserRoles.CANDIDATE) {
       return (
         <Text>
-          Vous n’avez pas encore renseigner d’expérience professionnelle. Si
+          Vous n’avez pas encore renseigné d’expérience professionnelle. Si
           vous avez de l&apos;expérience, nous vous invitons à la partager. Elle
           est essentielle pour nos coachs et pour les recruteurs.
         </Text>
