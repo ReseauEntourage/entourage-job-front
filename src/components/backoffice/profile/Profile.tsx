@@ -61,16 +61,26 @@ export const Profile = () => {
                   ownProfile
                 />
               )}
-            <ProfileExperiences
-              userId={selectedProfile.id}
-              userFirstName={selectedProfile.firstName}
-              experiences={selectedProfile.experiences}
-            />
-            <ProfileFormations
-              userId={selectedProfile.id}
-              userFirstName={selectedProfile.firstName}
-              formations={selectedProfile.formations}
-            />
+            {(selectedProfile.role === UserRoles.CANDIDATE ||
+              (selectedProfile.experiences &&
+                selectedProfile.experiences.length > 0)) && (
+              <ProfileExperiences
+                userId={selectedProfile.id}
+                userFirstName={selectedProfile.firstName}
+                userRole={selectedProfile.role}
+                experiences={selectedProfile.experiences}
+              />
+            )}
+            {(selectedProfile.role === UserRoles.CANDIDATE ||
+              (selectedProfile.formations &&
+                selectedProfile.formations.length > 0)) && (
+              <ProfileFormations
+                userId={selectedProfile.id}
+                userFirstName={selectedProfile.firstName}
+                userRole={selectedProfile.role}
+                formations={selectedProfile.formations}
+              />
+            )}
             {/* <ProfileReviews
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}

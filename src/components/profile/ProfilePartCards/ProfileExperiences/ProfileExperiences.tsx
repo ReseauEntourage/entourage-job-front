@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { openModal } from '@/src/components/modals/Modal';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { IlluMalette } from 'assets/icons/icons';
@@ -16,6 +17,7 @@ import { ProfileExperiencesModalEdit } from './ProfileExperiencesModalEdit/Profi
 export interface ProfileExperiencesProps {
   userId: string;
   userFirstName: string;
+  userRole: UserRoles;
   experiences?: Experience[];
   isEditable?: boolean;
   smallCard?: boolean;
@@ -24,6 +26,7 @@ export interface ProfileExperiencesProps {
 export const ProfileExperiences = ({
   userId,
   userFirstName,
+  userRole,
   experiences = [],
   isEditable = false,
   smallCard = false,
@@ -115,14 +118,14 @@ export const ProfileExperiences = ({
   }, [editExperience, isEditable, isOwnProfile, suggestHelpToComplete]);
 
   const ctaTitle = useMemo(() => {
-    if (!isOwnProfile && !isCompleted) {
+    if (!isOwnProfile && !isCompleted && userRole === UserRoles.CANDIDATE) {
       return `Accompagner ${userFirstName} dans la valorisation de ses expériences`;
     }
     if (isOwnProfile && isEditable) {
       return 'Ajouter';
     }
     return null;
-  }, [isOwnProfile, isCompleted, isEditable, userFirstName]);
+  }, [isOwnProfile, isCompleted, userRole, isEditable, userFirstName]);
 
   return (
     <ProfilePartCard

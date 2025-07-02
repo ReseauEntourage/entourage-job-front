@@ -101,12 +101,14 @@ export const Parameters = () => {
               <ProfileExperiences
                 userId={user.id}
                 userFirstName={user.firstName}
+                userRole={user.role}
                 experiences={user.userProfile.experiences || []}
                 isEditable
               />
               <ProfileFormations
                 userId={user.id}
                 userFirstName={user.firstName}
+                userRole={user.role}
                 formations={user.userProfile.formations || []}
                 isEditable
               />
