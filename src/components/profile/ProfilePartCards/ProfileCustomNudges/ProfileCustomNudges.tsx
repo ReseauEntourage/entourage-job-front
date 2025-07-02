@@ -100,8 +100,9 @@ export const ProfileCustomNudges = ({
       fallback={{
         content: (
           <Text>
-            Détaillez précisement vos besoins pour que les coachs puissent vous
-            accompagner plus facilement
+            {user.role === UserRoles.CANDIDATE
+              ? 'Détaillez précisement vos besoins pour que les coachs puissent vous accompagner plus facilement'
+              : 'Détaillez les coups de pouces que vous pouvez offrir aux candidats.'}
           </Text>
         ),
         icon: <IlluBulleQuestionCheck />,
