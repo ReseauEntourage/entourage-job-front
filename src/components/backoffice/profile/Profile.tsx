@@ -103,13 +103,11 @@ export const Profile = () => {
               smallCard
             />
             <ProfileContactPreferences smallCard />
-            {selectedProfile.role === UserRoles.CANDIDATE && (
-              <ProfileNudges
-                userRole={selectedProfile.role}
-                nudges={selectedProfile.nudges}
-                smallCard
-              />
-            )}
+            <ProfileNudges
+              userRole={selectedProfile.role}
+              nudges={selectedProfile.nudges}
+              smallCard
+            />
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>

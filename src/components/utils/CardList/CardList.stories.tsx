@@ -56,6 +56,7 @@ const cards: ProfileCardProps[] = new Array(4)
       department: 'Paris (75)',
       isAvailable: false,
       hasPicture: true,
+      currentJob: null,
     },
   ])
   .reduce((acc, val) => [...acc, ...val], []);
@@ -71,6 +72,7 @@ const list = cards.map(
     department,
     isAvailable,
     hasPicture,
+    currentJob,
   }) => (
     <Provider store={store}>
       <CardListItem>
@@ -84,6 +86,7 @@ const list = cards.map(
           nudges={nudges}
           isAvailable={isAvailable}
           hasPicture={hasPicture}
+          currentJob={currentJob}
         />
       </CardListItem>
     </Provider>
