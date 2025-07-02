@@ -27,6 +27,12 @@ import { useSelectSelectedProfile } from './useSelectedProfile';
 export const Profile = () => {
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
+  const showProfileExperiences =
+    selectedProfile.role === UserRoles.CANDIDATE ||
+    (selectedProfile.experiences && selectedProfile.experiences.length > 0);
+  const showProfileFormations =
+    selectedProfile.role === UserRoles.CANDIDATE ||
+    (selectedProfile.formations && selectedProfile.formations.length > 0);
 
   return (
     <StyledBackofficeBackground>
@@ -61,9 +67,7 @@ export const Profile = () => {
                   ownProfile
                 />
               )}
-            {(selectedProfile.role === UserRoles.CANDIDATE ||
-              (selectedProfile.experiences &&
-                selectedProfile.experiences.length > 0)) && (
+            {showProfileExperiences && (
               <ProfileExperiences
                 userId={selectedProfile.id}
                 userFirstName={selectedProfile.firstName}
@@ -71,9 +75,7 @@ export const Profile = () => {
                 experiences={selectedProfile.experiences}
               />
             )}
-            {(selectedProfile.role === UserRoles.CANDIDATE ||
-              (selectedProfile.formations &&
-                selectedProfile.formations.length > 0)) && (
+            {showProfileFormations && (
               <ProfileFormations
                 userId={selectedProfile.id}
                 userFirstName={selectedProfile.firstName}
