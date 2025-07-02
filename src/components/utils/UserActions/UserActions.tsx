@@ -16,6 +16,11 @@ export interface UserActionsProps {
   openDirection?: 'left' | 'right';
 }
 
+export interface UserAction {
+  name: string;
+  handler: () => void;
+}
+
 export function UserActions({
   userId,
   userRole,
@@ -28,10 +33,7 @@ export function UserActions({
   }, [currentUserId, userId]);
 
   const actions = useMemo(() => {
-    const list: {
-      name: string;
-      handler: () => void;
-    }[] = [];
+    const list: UserAction[] = [];
 
     if (ownProfile) {
       list.push({
