@@ -63,10 +63,11 @@ export const ProfileCustomNudges = ({
           customNudge={
             customNudges.find((nudge) => nudge.id === id) as UserProfileNudge
           }
+          role={role}
         />
       );
     },
-    [customNudges, updateUserProfile]
+    [customNudges, role, updateUserProfile]
   );
 
   const deleteCustomNudge = useCallback(
