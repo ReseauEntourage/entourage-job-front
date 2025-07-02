@@ -35,7 +35,7 @@ export function UserActions({
 
     if (ownProfile) {
       list.push({
-        name: 'Editer mes informations',
+        name: 'Éditer mes informations',
         handler: () => {
           openCorrespondingModal();
         },
