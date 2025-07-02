@@ -28,14 +28,19 @@ export function UserActions({
   }, [currentUserId, userId]);
 
   const actions = useMemo(() => {
-    const list = [
-      {
+    const list: {
+      name: string;
+      handler: () => void;
+    }[] = [];
+
+    if (ownProfile) {
+      list.push({
         name: 'Editer mes informations',
         handler: () => {
           openCorrespondingModal();
         },
-      },
-    ];
+      });
+    }
     if (!ownProfile) {
       list.push({
         name: 'Signaler ce profil',
