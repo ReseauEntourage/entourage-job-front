@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
 import { selectAuthenticatedUser } from 'src/use-cases/current-user';
+import { generateProfileFromCVSelectors } from 'src/use-cases/cv';
 import {
   onboardingActions,
   selectIsOnboardingLoading,
@@ -9,15 +10,13 @@ import {
   selectOnboardingCurrentStepContent,
   selectOnboardingCurrentStepData,
   selectOnboardingDataFromOtherStep,
+  selectShouldLaunchOnboarding,
 } from 'src/use-cases/onboarding';
 import {
   findNextNotSkippableStep,
   findPreviousNotSkippableStep,
 } from 'src/use-cases/onboarding/onboarding.utils';
-import {
-  onboardingAlreadyCompleted,
-  OnboardingFormData,
-} from './Onboarding.types';
+import { OnboardingFormData } from './Onboarding.types';
 
 export const useOnboarding = () => {
   const dispatch = useDispatch();
@@ -28,6 +27,18 @@ export const useOnboarding = () => {
   const stepContent = useSelector(selectOnboardingCurrentStepContent);
   const valuesFromOtherStep = useSelector(selectOnboardingDataFromOtherStep);
   const authenticatedUser = useSelector(selectAuthenticatedUser);
+  const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
+
+  // Vérifier si la génération du profil AI est en cours
+  const isGeneratingProfile = useSelector(
+    generateProfileFromCVSelectors.selectIsGenerateProfileFromCVRequested
+  );
+
+  // Désactiver les boutons si on génère le profil ou si l'onboarding est en chargement
+  const disableNavigationButtons = useMemo(
+    () => isGeneratingProfile || isOnboardingLoading,
+    [isGeneratingProfile, isOnboardingLoading]
+  );
 
   const isFirstOnboardingStep = useMemo(() => {
     const firstStep = findNextNotSkippableStep(0, authenticatedUser);
@@ -35,23 +46,36 @@ export const useOnboarding = () => {
   }, [authenticatedUser, currentStep]);
 
   useEffect(() => {
-    // If user is not an admin, launch onboarding
-    const hasAllRequiredFields =
-      onboardingAlreadyCompleted[authenticatedUser.role](authenticatedUser);
+    const hasAcceptedEthicsCharter =
+      authenticatedUser &&
+      authenticatedUser.readDocuments?.some(
+        (doc) => doc.documentName === 'CharteEthique'
+      );
+    const userRoleHasOnboarding =
+      authenticatedUser?.role === UserRoles.CANDIDATE ||
+      authenticatedUser?.role === UserRoles.COACH;
+
+    // Ne relance pas l'onboarding s'il est déjà en cours
     if (
-      (authenticatedUser?.role === UserRoles.CANDIDATE ||
-        authenticatedUser?.role === UserRoles.COACH) &&
-      !hasAllRequiredFields
+      !hasAcceptedEthicsCharter &&
+      userRoleHasOnboarding &&
+      currentStep === 0
     ) {
       dispatch(
         onboardingActions.launchOnboarding(
           authenticatedUser.role as RegistrableUserRoles
         )
       );
-    } else {
+    } else if (hasAcceptedEthicsCharter || !userRoleHasOnboarding) {
       dispatch(onboardingActions.endOnboarding());
     }
-  }, [dispatch, authenticatedUser]);
+  }, [
+    authenticatedUser,
+    authenticatedUser?.readDocuments,
+    authenticatedUser.role,
+    dispatch,
+    currentStep,
+  ]);
 
   const onSubmitStepForm = useCallback(
     (fields: OnboardingFormData) => {
@@ -101,5 +125,7 @@ export const useOnboarding = () => {
     defaultValues,
     isFirstOnboardingStep,
     onSubmitStepForm,
+    shouldLaunchOnboarding,
+    disableNavigationButtons,
   };
 };

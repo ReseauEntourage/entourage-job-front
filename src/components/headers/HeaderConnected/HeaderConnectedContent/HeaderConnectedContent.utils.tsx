@@ -20,8 +20,7 @@ const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
 export const renderLinks = (
   user: UserWithUserCandidate,
-  logout: () => void,
-  candidateId: string
+  logout: () => void
 ): {
   links: { [K in UserRoles]: HeaderConnectedMainItem[] };
   messaging: HeaderConnectedMainItem;
@@ -30,14 +29,12 @@ export const renderLinks = (
   const candidateHeaderItems: HeaderConnectedMainItem[] = [
     {
       href: '/backoffice/dashboard',
-      name: 'Mon espace',
+      name: 'Tableau de bord',
       tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
     },
     {
-      href: `/backoffice/candidat/${candidateId}/cv`,
-      name: 'Mon CV',
-      badge: 'cv',
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
+      href: '/backoffice/parametres',
+      name: 'Mon profil',
     },
     {
       href: '/backoffice/annuaire',
@@ -115,15 +112,12 @@ export const renderLinks = (
       [UserRoles.COACH]: [
         {
           href: '/backoffice/dashboard',
-          name: 'Mon espace',
+          name: 'Tableau de bord',
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
         },
         {
-          href: `/backoffice/candidat/${candidateId}/cv`,
-          name: 'CV',
-          badge: 'cv',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
+          href: '/backoffice/parametres',
+          name: 'Mon profil',
         },
         {
           href: '/backoffice/annuaire',
@@ -148,8 +142,12 @@ export const renderLinks = (
       [UserRoles.REFERER]: [
         {
           href: '/backoffice/dashboard',
-          name: 'Mon espace',
+          name: 'Tableau de bord',
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
+        },
+        {
+          href: '/backoffice/parametres',
+          name: 'Mon profil',
         },
         {
           href: '/backoffice/annuaire',
@@ -170,11 +168,6 @@ export const renderLinks = (
       badge: 'messaging',
     },
     dropdown: [
-      {
-        href: '/backoffice/parametres',
-        icon: <LucidIcon name="Settings2" />,
-        name: 'Paramètres',
-      },
       {
         href: '',
         onClick: logout,

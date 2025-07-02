@@ -1,116 +1,137 @@
 import React from 'react';
+import { UserRoles } from '@/src/constants/users';
+import { UserProfileSectorOccupation } from 'src/api/types';
+import { Text, TextSize, TextWeight } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import {
-  AMBITIONS_PREFIXES,
-  BUSINESS_LINES,
-  AmbitionsPrefixesType,
-  BusinessLineValue,
-} from 'src/constants';
-import {
-  buildBusinessLineForSentence,
-  findConstantFromValue,
-  sortByOrder,
-} from 'src/utils';
-import { StyledProfileCareerPathLi } from './ProfileCareerPathSentence.styles';
-
-interface CareerPath {
-  order: number;
-  ambition: string | undefined;
-  businessLine: {
-    label: string;
-    value: BusinessLineValue;
-    prefix: string | string[];
-  };
-}
-
-type Ambition = {
-  name: string;
-  order: number;
-  prefix: AmbitionsPrefixesType;
-};
-
-type BusinessLine = {
-  name: string;
-  order: number;
-};
+  StyledCareerPathSectorOccupationTagContainer,
+  StyledCareerPathSimpleSentenceTag,
+} from './ProfileCareerPathSentence.styles';
 
 interface ProfileCareerPathSentenceProps {
-  ambitions: Ambition[];
-  businessLines: BusinessLine[];
+  sectorOccupations: UserProfileSectorOccupation[];
+  asSimpleSentence?: boolean;
+  size?: TextSize;
+  weight?: TextWeight;
+  currentJob?: string;
+  role: UserRoles;
 }
 
 export const ProfileCareerPathSentence = ({
-  businessLines,
-  ambitions,
+  sectorOccupations,
+  asSimpleSentence = false,
+  size = 'normal',
+  weight = 'normal',
+  currentJob,
+  role,
 }: ProfileCareerPathSentenceProps) => {
-  const sortedAmbitions = ambitions?.length > 0 ? sortByOrder(ambitions) : null;
+  if (!sectorOccupations || sectorOccupations.length === 0) {
+    return <>Je suis ouvert à toutes les opportunités</>;
+  }
+  const hasSecondPart = sectorOccupations?.length > 1;
 
-  const sortedBusinessLines =
-    businessLines?.length > 0 ? sortByOrder(businessLines) : null;
+  const getOccupationIfExists = (index, accent = false) => {
+    if (sectorOccupations[index].occupation) {
+      return (
+        <>
+          {' comme '}
+          {accent ? (
+            <StyledCareerPathSimpleSentenceTag>
+              {sectorOccupations[index].occupation?.name}
+            </StyledCareerPathSimpleSentenceTag>
+          ) : (
+            <strong>{sectorOccupations[index].occupation?.name}</strong>
+          )}
+        </>
+      );
+    }
+    return null;
+  };
 
-  if (sortedBusinessLines) {
-    const careerPaths = sortedBusinessLines.reduce<CareerPath[]>(
-      (acc, curr) => {
-        const correspondingAmbition = sortedAmbitions?.find(({ order }) => {
-          return order === curr.order;
-        });
-        return [
-          ...acc,
-          {
-            order: curr.order,
-            ambition: correspondingAmbition?.name,
-            businessLine: {
-              ...findConstantFromValue(curr.name, BUSINESS_LINES),
-              label: buildBusinessLineForSentence(
-                findConstantFromValue(curr.name, BUSINESS_LINES)
-              ),
-            },
-          },
-        ];
-      },
-      []
-    );
+  const hasSameBusinessSector =
+    hasSecondPart &&
+    sectorOccupations[1].businessSector?.name ===
+      sectorOccupations[0].businessSector?.name &&
+    sectorOccupations[1].occupation;
 
-    const getAmbitionIfExists = (index) => {
-      if (careerPaths[index].ambition) {
-        return (
-          <>
-            {' '}
-            {AMBITIONS_PREFIXES[1].label}{' '}
-            <strong>{careerPaths[index].ambition}</strong>
-          </>
-        );
-      }
-      return null;
-    };
-
-    const hasSecondPart = careerPaths[1] && careerPaths[1].businessLine;
-
-    const hasSameBusinessLine =
-      hasSecondPart &&
-      careerPaths[1].businessLine.value === careerPaths[0].businessLine.value &&
-      careerPaths[1].ambition;
-
+  if (role === UserRoles.COACH) {
     return (
       <>
-        <StyledProfileCareerPathLi>
-          J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-          <Tag content={careerPaths[0].businessLine.label} />
-          {getAmbitionIfExists(0)}
-          {hasSecondPart && hasSameBusinessLine && (
-            <> et {getAmbitionIfExists(1)}</>
-          )}
-        </StyledProfileCareerPathLi>
-        {hasSecondPart && !hasSameBusinessLine && (
-          <StyledProfileCareerPathLi>
-            {' '}
-            J&lsquo;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-            <Tag content={careerPaths[1].businessLine.label} />
-            {getAmbitionIfExists(1)}
-          </StyledProfileCareerPathLi>
-        )}
+        <Text>
+          Je travaille comme <strong>{currentJob}</strong>
+        </Text>
+
+        <StyledCareerPathSectorOccupationTagContainer>
+          <Text>J&apos;ai du réseau dans : </Text>
+          {sectorOccupations.map((sectorOccupation, index) => (
+            <>
+              {asSimpleSentence ? (
+                <span>{sectorOccupation.businessSector?.name}</span>
+              ) : (
+                <Tag
+                  content={sectorOccupation.businessSector?.name}
+                  key={index}
+                />
+              )}
+            </>
+          ))}
+        </StyledCareerPathSectorOccupationTagContainer>
       </>
     );
   }
-  return null;
+  return (
+    <>
+      <Text size={size} weight={weight}>
+        J&apos;aimerais travailler dans{' '}
+        {asSimpleSentence && sectorOccupations[0].businessSector?.prefixes && (
+          <span>
+            {sectorOccupations[0].businessSector?.prefixes.split(',')[0]}
+          </span>
+        )}
+        {asSimpleSentence ? (
+          <span>{sectorOccupations[0].businessSector?.name}</span>
+        ) : (
+          <Tag content={sectorOccupations[0].businessSector?.name} />
+        )}
+        {getOccupationIfExists(0, asSimpleSentence)}
+        {hasSecondPart && hasSameBusinessSector && (
+          <>
+            {' '}
+            et{' '}
+            {asSimpleSentence ? (
+              <StyledCareerPathSimpleSentenceTag>
+                {sectorOccupations[1].occupation?.name}
+              </StyledCareerPathSimpleSentenceTag>
+            ) : (
+              <strong>{sectorOccupations[1].occupation?.name}</strong>
+            )}
+          </>
+        )}
+        {hasSecondPart && !hasSameBusinessSector && (
+          <>
+            {' '}
+            {!asSimpleSentence && (
+              <>
+                <br />
+                <br />
+              </>
+            )}
+            {asSimpleSentence ? 'ou dans' : "J'aimerais travailler dans"}{' '}
+            {asSimpleSentence &&
+              sectorOccupations[1].businessSector?.prefixes && (
+                <span>
+                  {sectorOccupations[1].businessSector?.prefixes.split(',')[0]}{' '}
+                </span>
+              )}
+            {asSimpleSentence ? (
+              <span>{sectorOccupations[1].businessSector?.name}</span>
+            ) : (
+              <Tag content={sectorOccupations[1].businessSector?.name} />
+            )}
+            {getOccupationIfExists(1, asSimpleSentence)}
+          </>
+        )}
+      </Text>
+    </>
+  );
 };

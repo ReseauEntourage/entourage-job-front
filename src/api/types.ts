@@ -1,8 +1,7 @@
+import { HelpValue } from '@/src/constants/nudges';
+import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
-  AmbitionsPrefixesType,
-  BusinessLineValue,
-  CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
@@ -10,7 +9,6 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { HelpValue } from 'src/constants/helps';
 import { Program } from 'src/constants/programs';
 import {
   AdminRoles,
@@ -78,34 +76,134 @@ export type OrganizationDto = {
   zone: AdminZone;
 };
 
+export interface BusinessSector {
+  id?: string;
+  name: string;
+  prefixes: string;
+}
+
+export type Occupation = {
+  id?: string;
+  name: string;
+};
+
+export interface Review {
+  id?: string;
+  content: string;
+  authorLabel: string;
+  authorName: string;
+}
+
+export interface Experience {
+  id?: string;
+  description?: string;
+  title: string;
+  startDate?: string;
+  endDate?: string;
+  company?: string;
+  location?: string;
+  order?: number;
+  skills: {
+    id?: string;
+    name: string;
+    order: number;
+  }[];
+}
+
+export interface Formation {
+  id?: string;
+  description?: string;
+  title: string;
+  startDate?: string;
+  endDate?: string;
+  institution?: string;
+  location?: string;
+  skills: {
+    id?: string;
+    name: string;
+    order: number;
+  }[];
+}
+
+export type Skill = {
+  id?: string;
+  name: string;
+  order: number;
+};
+
+export type Language = {
+  id: string;
+  name: string;
+  value: string;
+};
+
+export type UserProfileLanguage = {
+  id?: string;
+  level?: string;
+  languageId: string;
+  language?: Language;
+};
+
+export type UserProfileSectorOccupation = {
+  businessSectorId?: string;
+  businessSector?: BusinessSector;
+  occupation?: Occupation;
+  order: number;
+};
+
+export type Nudge = {
+  id: string;
+  value: HelpValue;
+  nameRequest: string;
+  nameOffer: string;
+  order: number;
+};
+
+export type Interest = {
+  id?: string;
+  name: string;
+  order: number;
+};
+
+export type UserProfileNudge = {
+  id: string;
+  createdAt: string;
+  content: string | null;
+  nudge?: Nudge;
+};
+
+export type Contract = {
+  id: string;
+  name: string;
+};
+
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
+  introduction: string | null;
   department: Department;
   isAvailable: boolean;
   unavailabilityReason: string | null;
-  helpNeeds: { name: HelpValue }[] | null;
-  helpOffers: { name: HelpValue }[] | null;
-  networkBusinessLines:
-    | {
-        name: BusinessLineValue;
-        order: number;
-      }[]
-    | null;
-  searchBusinessLines:
-    | {
-        name: BusinessLineValue;
-        order: number;
-      }[]
-    | null;
-  searchAmbitions:
-    | { name: string; order: number; prefix: AmbitionsPrefixesType }[]
-    | null;
+  nudges: Nudge[] | null;
+  customNudges: UserProfileNudge[] | null;
+  sectorOccupations?: UserProfileSectorOccupation[];
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
   hasAcceptedEthicsCharter: boolean;
+  hasPicture: boolean;
+  reviews: Review[];
+  experiences: Experience[];
+  formations: Formation[];
+  skills: Skill[] | null;
+  userProfileLanguages: UserProfileLanguage[];
+  interests: Interest[];
+  contracts: Contract[];
+  optinNewsletter: boolean;
+  optInRecommendations: boolean;
+  allowPhysicalEvents: boolean;
+  allowRemoteEvents: boolean;
 };
 
 export type UserReportDto = {
@@ -135,13 +233,13 @@ export type User = {
   gender: Genders;
   phone: string;
   address: string;
-  lastConnection: Date;
+  lastConnection: string;
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
-  whatsappZoneCoachQR: string;
-  whatsappZoneCoachName: string;
-  whatsappZoneCoachUrl: string;
+  whatsappZoneQR: string;
+  whatsappZoneName: string;
+  whatsappZoneUrl: string;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
@@ -149,39 +247,8 @@ export type User = {
   OrganizationId?: string;
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
+  hasExtractedCvData?: boolean;
 };
-
-export interface CVExperience {
-  id?: string;
-
-  description?: string;
-  title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
-  company?: string;
-  location?: string;
-  order?: number;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
-}
-
-export interface CVFormation {
-  id?: string;
-  description?: string;
-  title: string;
-  dateStart?: Date;
-  dateEnd?: Date;
-  institution?: string;
-  location?: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
-}
 
 export type CVStatus =
   | 'Draft'
@@ -212,7 +279,7 @@ export interface CV {
     endOfContract?: string;
   };
   catchphrase: string;
-  story: string;
+  introduction: string;
   locations: {
     name: Department;
     order: number;
@@ -222,37 +289,21 @@ export interface CV {
   contracts: {
     name: ContractValue;
   }[];
-  ambitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  businessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
+  occupations: Occupation[];
+  businessSectors: BusinessSector[];
   languages: {
     name: string;
   }[];
   transport: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
+  skills: Skill[];
   passions: {
     id?: string;
     name: string;
     order: number;
   }[];
-  reviews: {
-    id?: string;
-    name: string;
-    text: string;
-    status: string;
-  }[];
-  formations?: CVFormation[];
-  experiences?: CVExperience[];
+  reviews: Review[];
+  formations?: Formation[];
+  experiences?: Experience[];
   status: CVStatus;
   UserId: string;
 }
@@ -271,6 +322,8 @@ export interface UserWithUserCandidate extends User {
   candidat?: UserCandidateWithUsers;
   coaches?: UserCandidateWithUsers[];
   referredCandidates?: UserCandidateWithUsers[];
+  averageDelayResponse?: number | null;
+  responseRate?: number | null;
 }
 
 export type UserDto = {
@@ -286,6 +339,7 @@ export type UserDto = {
   OrganizationId?: string;
   id?: string;
   userProfile?: UserProfile;
+  lastConnection?: string;
 };
 
 export type PutCandidate = {
@@ -307,20 +361,13 @@ export type UserRegistrationDto = {
   role: RegistrableUserRoles;
   campaign?: string;
   department: Department;
-  helpNeeds?: { name: HelpValue }[];
+  nudges?: Nudge[];
   workingRight?: string;
   program?: Program;
   organizationId?: string;
   birthDate: string;
-  searchAmbitions?: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  searchBusinessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
+  occupations?: Occupation[];
+  sectorOccupations?: UserProfileSectorOccupation[];
   materialInsecurity?: string;
   networkInsecurity?: string;
   utmSource?: string;
@@ -338,34 +385,11 @@ export type UserReferingDto = {
   phone: string;
   campaign?: string;
   department: Department;
-  helpNeeds?: { name: HelpValue }[];
+  nudges?: Nudge[];
   workingRight?: string;
   program?: Program;
   birthDate: string;
-  searchAmbitions?: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  searchBusinessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-};
-
-export type Skill = {
-  id: string;
-  name: string;
-  CVs: CV[];
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type Contract = {
-  id: string;
-  name: ContractValue;
-  createdAt: string;
-  updatedAt: string;
+  sectorOccupations?: UserProfileSectorOccupation[];
 };
 
 export type ContactContactUs = {
@@ -389,40 +413,6 @@ export type ContactCompany = {
   zone: AdminZone;
   phone?: string;
   heardAbout?: HeardAboutValue;
-};
-
-export type ContactCandidate = {
-  workerFirstName: string;
-  workerLastName: string;
-  structure: string;
-  workerPosition?: string;
-  workerEmail: string;
-  workerPhone: string;
-  firstName: string;
-  lastName: string;
-  helpWith: CandidateHelpWithValue[];
-  gender: Genders;
-  birthDate?: string;
-  address?: string;
-  postalCode: string;
-  city: string;
-  phone: string;
-  email?: string;
-  registeredUnemploymentOffice: string;
-  administrativeSituation?: string;
-  workingRight: string;
-  accommodation: string;
-  professionalSituation: string;
-  resources?: string;
-  domiciliation: string;
-  socialSecurity: string;
-  handicapped?: string;
-  bankAccount: string;
-  businessLines?: BusinessLineValue[];
-  description: string;
-  heardAbout: string;
-  diagnostic?: string;
-  contactWithCoach?: boolean;
 };
 
 export type ContactNewsletter = {
@@ -536,34 +526,68 @@ export type PublicProfile = {
   department: Department;
   currentJob: string;
   description: string;
+  introduction: string;
   isAvailable: boolean;
-  helpNeeds: { name: HelpValue }[];
-  helpOffers: { name: HelpValue }[];
-  networkBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchAmbitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
+  customNudges: UserProfileNudge[];
+  nudges: Nudge[];
+  sectorOccupations: UserProfileSectorOccupation[];
+  experiences: Experience[];
+  formations: Formation[];
+  skills: Skill[];
+  userProfileLanguages: UserProfileLanguage[];
+  interests: Interest[];
+  reviews: Review[];
+  contracts: Contract[];
+  occupations: Occupation[];
   lastSentMessage: string;
   lastReceivedMessage: string;
   cvUrl?: string;
   hasExternalCv: boolean;
+  averageDelayResponse: number | null;
+  hasPicture: boolean;
 };
+
+export type PublicUser = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+> & {
+  userProfile: Pick<
+    UserProfile,
+    // Attributes
+    | 'department'
+    | 'description'
+    | 'introduction'
+    | 'linkedinUrl'
+    | 'hasPicture'
+
+    // Relations
+    | 'sectorOccupations'
+    | 'skills'
+    | 'contracts'
+    | 'userProfileLanguages'
+    | 'nudges'
+    | 'customNudges'
+    | 'reviews'
+    | 'experiences'
+    | 'formations'
+    | 'interests'
+  >;
+};
+
+export type PrivateProfile = PublicProfile & {
+  email: string;
+  phone: string;
+};
+
+export type Profile = PublicProfile | PrivateProfile;
 
 export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
-  businessLines: BusinessLineValue | BusinessLineValue[];
+  businessSectorIds: string | string[];
+  contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

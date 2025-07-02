@@ -1,25 +1,24 @@
 import { NextRouter, withRouter } from 'next/router';
 import React from 'react';
 import { Api } from 'src/api';
-import { CV } from 'src/api/types';
+import { User } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
-import { CVPDF } from 'src/components/cv';
+import { CVPDF } from 'src/components/profile';
 import { Section } from 'src/components/utils';
-import { CV_STATUS } from 'src/constants';
 
 interface CVPDFPageProps {
-  cv: CV;
+  user: User;
   page: number;
   router: NextRouter;
 }
 
-const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
-  const candidatExists = cv && cv.user && cv.user.candidat;
+const CVPDFPage = ({ user, page, router }: CVPDFPageProps) => {
+  const candidatExists = !!user;
   const urlImg = candidatExists
-    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${user.id}.profile.jpg`
     : '';
 
-  if (!cv) {
+  if (!user) {
     return (
       <Layout title="Page introuvable - Entourage Pro">
         <Section className="uk-text-center" size="large">
@@ -35,15 +34,15 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
 
   return (
     <Layout
-      title={`${cv.user.candidat.firstName} - Entourage Pro`}
-      metaTitle={`Aidez ${cv.user.candidat.firstName} en partageant son CV.`}
+      title={`${user.firstName} - Entourage Pro`}
+      metaTitle={`Aidez ${user.firstName} en partageant son CV.`}
       metaUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}${router.asPath}`}
-      metaDescription={cv.story}
+      metaDescription={user.userProfile.introduction || undefined}
       metaImage={urlImg}
       metaType="profile"
     >
       <div>
-        <CVPDF cv={cv} page={page} />
+        <CVPDF user={user} page={page} />
       </div>
     </Layout>
   );
@@ -51,18 +50,18 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
 
 CVPDFPage.getInitialProps = async ({ query }) => {
   if (query.token) {
-    return Api.getCVByCandidateId(query.id, {
+    return Api.getAuthCurrent(true, {
       authorization: `Bearer ${query.token}`,
     })
       .then(({ data }) => {
-        return { cv: data, page: query.page };
+        return { user: data, page: query.page };
       })
       .catch((err) => {
         console.error(err);
-        return { cv: null };
+        return { user: null };
       });
   }
-  return { cv: null };
+  return { user: null };
 };
 
 export default withRouter(CVPDFPage);

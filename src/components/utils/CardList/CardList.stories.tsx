@@ -30,17 +30,33 @@ const cards: ProfileCardProps[] = new Array(4)
       firstName: 'John',
       lastName: 'Doe',
       role: UserRoles.CANDIDATE,
-      helps: [{ name: 'network' }, { name: 'cv' }],
-      businessLines: [
-        { name: 'id', order: 0 },
-        { name: 'bat', order: 1 },
+      nudges: [
+        {
+          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
+          value: 'event',
+          nameRequest:
+            'Se rencontrer et échanger avec les membres de la communauté',
+          nameOffer:
+            'Se rencontrer lors d’événements avec les membres de la communauté',
+          order: 4,
+        },
       ],
-      ambitions: [
-        { name: 'développeur', order: 0 },
-        { name: 'ouvrier', order: 1 },
+      sectorOccupations: [
+        {
+          businessSector: { name: 'Informatique et digital' },
+          occupation: { name: 'développeur' },
+          order: 0,
+        },
+        {
+          businessSector: { name: 'Bâtiment' },
+          occupation: { name: 'ouvrier' },
+          order: 0,
+        },
       ],
       department: 'Paris (75)',
       isAvailable: false,
+      hasPicture: true,
+      currentJob: null,
     },
   ])
   .reduce((acc, val) => [...acc, ...val], []);
@@ -51,11 +67,12 @@ const list = cards.map(
     firstName,
     lastName,
     role,
-    helps,
-    businessLines,
-    ambitions,
+    nudges,
+    sectorOccupations,
     department,
     isAvailable,
+    hasPicture,
+    currentJob,
   }) => (
     <Provider store={store}>
       <CardListItem>
@@ -65,10 +82,11 @@ const list = cards.map(
           lastName={lastName}
           role={role}
           department={department}
-          businessLines={businessLines}
-          helps={helps}
-          ambitions={ambitions}
+          sectorOccupations={sectorOccupations}
+          nudges={nudges}
           isAvailable={isAvailable}
+          hasPicture={hasPicture}
+          currentJob={currentJob}
         />
       </CardListItem>
     </Provider>

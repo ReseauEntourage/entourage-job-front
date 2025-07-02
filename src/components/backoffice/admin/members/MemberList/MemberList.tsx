@@ -176,10 +176,6 @@ export function MemberList({
       <HeaderBackoffice
         title={`Gestion des ${roleToDisplay}`}
         description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
-        shouldDisplayAdminNotifications={isRoleIncluded(
-          [UserRoles.CANDIDATE],
-          role
-        )}
       >
         <AdminCreationButtons
           refreshList={() => fetchData(search, filters, role, offset, true)}

@@ -6,7 +6,6 @@ import {
   fetchProfilesAdapter,
   fetchProfilesRecommendationsAdapter,
   fetchSelectedProfileAdapter,
-  postInternalMessageAdapter,
 } from './profiles.adapters';
 
 export interface State {
@@ -15,7 +14,6 @@ export interface State {
     typeof fetchProfilesRecommendationsAdapter
   >;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
-  postInternalMessage: RequestState<typeof postInternalMessageAdapter>;
   profiles: PublicProfile[];
   profilesOffset: number;
   profilesHasFetchedAll: boolean;
@@ -28,7 +26,6 @@ const initialState: State = {
   fetchProfilesRecommendations:
     fetchProfilesRecommendationsAdapter.getInitialState(),
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
-  postInternalMessage: fetchProfilesAdapter.getInitialState(),
   profiles: [],
   profilesOffset: 0,
   profilesHasFetchedAll: false,
@@ -64,10 +61,6 @@ export const slice = createSlice({
           state.selectedProfile = action.payload;
         },
       }
-    ),
-    ...postInternalMessageAdapter.getReducers<State>(
-      (state) => state.postInternalMessage,
-      {}
     ),
     resetProfilesOffset(state) {
       state.profilesOffset = 0;

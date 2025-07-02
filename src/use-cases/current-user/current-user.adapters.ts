@@ -12,6 +12,10 @@ export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   User
 >();
 
+export const fetchCompleteUserAdapter = createRequestAdapter(
+  'fetchCompleteUser'
+).withPayloads<void, User>();
+
 export type UpdateError = 'UPDATE_FAILED';
 
 export const NOT_AUTHENTICATED_USER = 'User is not authenticated';
@@ -74,4 +78,14 @@ export const updateUserProfilePictureAdapter = createRequestAdapter(
     profileImage: Blob;
   },
   void
+>();
+
+export const uploadExternalCvAdapter = createRequestAdapter(
+  'uploadExternalCv'
+).withPayloads<
+  FormData,
+  void,
+  {
+    error: string;
+  }
 >();

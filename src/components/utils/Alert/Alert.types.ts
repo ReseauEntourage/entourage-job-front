@@ -1,4 +1,4 @@
-export type AlertVariant = 'info' | 'lightGray' | 'feedback';
+export type AlertVariant = 'info' | 'lightGray' | 'darkBlue';
 
 export interface AlertProps {
   children: React.ReactNode;
@@ -8,4 +8,6 @@ export interface AlertProps {
   onClose?: () => void;
   icon?: React.ReactNode;
   rounded?: boolean;
+  clickable?: boolean;
+  onClick?: () => void;
 }

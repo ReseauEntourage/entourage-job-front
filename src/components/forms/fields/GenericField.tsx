@@ -46,6 +46,7 @@ import {
 import {
   SelectList,
   SelectListType,
+  SelectListAsync,
 } from 'src/components/utils/Inputs/SelectList';
 import { AnyCantFix } from 'src/utils/Types';
 
@@ -307,6 +308,19 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
               ? field.options(getValue)
               : field.options) as SelectListType[]
           }
+        />
+      );
+    }
+    if (field.component === 'select-list-async') {
+      return (
+        <SelectListAsync
+          {...commonProps}
+          isMulti={field.isMulti}
+          loadOptions={async (callback) => {
+            if (field.loadOptions) {
+              await field.loadOptions(callback);
+            }
+          }}
         />
       );
     }

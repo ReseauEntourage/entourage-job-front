@@ -22,9 +22,7 @@ export function useUploadImage() {
   }, []);
 
   return useCallback(
-    async (target: EventTarget & HTMLInputElement) => {
-      const file = target?.files?.[0];
-
+    async (file: File) => {
       if (file) {
         if (!file.type.includes('image/')) {
           UIkit.notification('Le fichier doit être une image', 'danger');

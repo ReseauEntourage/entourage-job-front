@@ -29,6 +29,9 @@ export function Text({
   color = 'black',
   center = false,
   variant = 'normal',
+  textAlign = 'left',
+  underline = false,
+  onClick,
 }: TextProps) {
   const isDesktop = useIsDesktop();
   const device = isDesktop ? 'desktop' : 'mobile';
@@ -41,6 +44,9 @@ export function Text({
       center={center}
       variant={variant}
       mobile={!isDesktop}
+      textAlign={textAlign}
+      underline={underline}
+      onClick={onClick}
     >
       {children}
     </StyledText>

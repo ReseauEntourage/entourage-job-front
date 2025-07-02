@@ -69,7 +69,11 @@ export const HeaderConnectedContentDesktop = ({
               justifyContent: 'center',
             }}
           >
-            <ImgProfile user={user} size={40} />
+            <ImgProfile
+              user={user}
+              size={40}
+              hasPicture={user.userProfile?.hasPicture || false}
+            />
             <span className="uk-margin-small-left uk-margin-small-right">
               Bonjour {user.firstName}
             </span>

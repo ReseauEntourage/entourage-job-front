@@ -9,15 +9,11 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
-  ContactCandidate,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
   ConversationReportDto,
-  CV,
   ExternalCv,
-  ExternalMessage,
-  InternalMessage,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -100,38 +96,18 @@ export class APIHandler {
 
   // get
 
-  getCVShares(): Promise<AxiosResponse> {
-    return this.get('/cv/shares');
+  getPublicProfileList(params): Promise<AxiosResponse> {
+    return this.get('/users/public-profiles', {
+      params,
+    });
   }
 
-  getCVByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
-    return this.get(`/cv/${candidateId}`, {}, headers);
+  getPublicProfileByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
+    return this.get(`/users/public-profiles/${candidateId}`, {}, headers);
   }
 
-  getCVRandom(
-    params
-  ): Promise<AxiosResponse<{ suggestions: boolean; cvs: CV[] }>> {
-    return this.get('/cv/cards/random', params);
-  }
-
-  getCVLastVersion(candidateId): Promise<AxiosResponse> {
-    return this.get(`/cv/lastVersion/${candidateId}`);
-  }
-
-  getCVPdf(candidateId, params): Promise<AxiosResponse> {
-    return this.get(`/cv/pdf/${candidateId}`, params);
-  }
-
-  getNbCVPublished(): Promise<AxiosResponse> {
-    return this.get('/cv/published');
-  }
-
-  getCheckUpdate(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/cv/checkUpdate/${candidateId}`);
-  }
-
-  getCVByUrl(url: string): Promise<AxiosResponse> {
-    return this.get(`/cv/url/${url}`);
+  getGenerateProfileFromCV(): Promise<AxiosResponse> {
+    return this.get('/external-cv/generate-profile-from-cv');
   }
 
   // post
@@ -161,8 +137,8 @@ export class APIHandler {
   /// //////////////
   /// external cv //
   /// //////////////
-  postExternalCv(form: FormData): Promise<AxiosResponse<ExternalCv>> {
-    return this.post('/external-cv', form, {
+  postExternalCv(formData: FormData): Promise<AxiosResponse<ExternalCv>> {
+    return this.post('/external-cv', formData, {
       'Content-Type': 'multipart/form-data',
     });
   }
@@ -185,10 +161,6 @@ export class APIHandler {
     params: object
   ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
     return this.get('/user/members', params);
-  }
-
-  getUsersMembersCount(): Promise<AxiosResponse> {
-    return this.get('/user/members/count');
   }
 
   getUsersSearchCandidates(params: object): Promise<AxiosResponse> {
@@ -331,6 +303,53 @@ export class APIHandler {
     return this.delete(`/user/${userId}`);
   }
 
+  /// ///////////////// ///
+  /// businessSectors  ///
+  /// /////////////// ///
+
+  getAllBusinessSectors(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/business-sectors', { params });
+  }
+
+  /// /////////// ///
+  /// languages  ///
+  /// ///////// ///
+
+  getAllLanguages(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/languages', { params });
+  }
+
+  /// ///////////// ///
+  ///  contracts  ///
+  /// //////////// ///
+  getAllContracts(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/contracts', { params });
+  }
+
+  /// ///////// ///
+  ///  nudges  ///
+  /// //////// ///
+
+  getAllNudges(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/nudges', { params });
+  }
+
   /// ///////////// ///
   /// organization  ///
   /// //////////// ///
@@ -366,8 +385,15 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(): Promise<AxiosResponse> {
-    return this.get('/auth/current');
+  getAuthCurrent(
+    complete = false,
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(
+      `/auth/current${complete ? '?complete=true' : ''}`,
+      {},
+      headers
+    );
   }
 
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {
@@ -436,10 +462,6 @@ export class APIHandler {
     return this.post('/contact/company', params);
   }
 
-  postContactCandidate(params: ContactCandidate): Promise<AxiosResponse> {
-    return this.post('/contact/candidate', params);
-  }
-
   postNewsletter(params: ContactNewsletter): Promise<AxiosResponse> {
     return this.post('/contact/newsletter', params);
   }
@@ -448,24 +470,6 @@ export class APIHandler {
     params: CandidateInscription
   ): Promise<AxiosResponse> {
     return this.post('/contact/candidateInscription', params);
-  }
-
-  /// //////////
-  // message //
-  /// //////////
-
-  postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
-    return this.post('/message/external', params);
-  }
-
-  postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
-    return this.post('/message/internal', params);
-  }
-
-  resendInternalMessageAdmin(
-    internalMessageId: string
-  ): Promise<AxiosResponse> {
-    return this.post(`/message/internal/${internalMessageId}/send`, {});
   }
 
   // ////////////

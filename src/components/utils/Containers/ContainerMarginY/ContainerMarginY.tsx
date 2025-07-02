@@ -1,10 +1,16 @@
 import React from 'react';
 import { StyledContainerMarginY } from '../Containers.styles';
 
+interface ContainerMarginYProps {
+  children: React.ReactNode;
+  margin?: string;
+}
+
 export const ContainerMarginY = ({
   children,
-}: {
-  children: React.ReactNode;
-}) => {
-  return <StyledContainerMarginY>{children}</StyledContainerMarginY>;
+  margin,
+}: ContainerMarginYProps) => {
+  return (
+    <StyledContainerMarginY margin={margin}>{children}</StyledContainerMarginY>
+  );
 };

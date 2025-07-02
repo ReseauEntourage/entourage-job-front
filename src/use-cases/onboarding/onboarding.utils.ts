@@ -1,4 +1,9 @@
-import { User, UserProfile } from 'src/api/types';
+import {
+  Nudge,
+  User,
+  UserProfile,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
@@ -9,7 +14,6 @@ import {
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
 import { RegistrableUserRoles } from 'src/constants/users';
-import { formatNetworkBusinessLines } from 'src/utils';
 
 export const flattenOnboardingDataByRole = (
   data: OnboardingStepData,
@@ -53,12 +57,22 @@ export const parseOnboadingProfileFields = (
   fields: Partial<FlattenedOnboardingFormData>
 ): Partial<UserProfile> => {
   return {
-    description: fields.description ?? undefined,
+    introduction: fields.introduction ?? undefined,
     linkedinUrl: fields.linkedinUrl ?? undefined,
     currentJob: fields.currentJob ? fields.currentJob : undefined,
-    networkBusinessLines: fields.networkBusinessLines
-      ? formatNetworkBusinessLines(fields.networkBusinessLines)
-      : undefined,
+    sectorOccupations:
+      fields.businessSectorIds?.map((businessSectorId, idx) => {
+        return {
+          businessSectorId: businessSectorId.value,
+          order: idx,
+        } as UserProfileSectorOccupation;
+      }) ?? undefined,
+    nudges:
+      fields.nudgeIds?.map((nudgeId) => {
+        return {
+          id: nudgeId,
+        } as Nudge;
+      }) ?? undefined,
   };
 };
 

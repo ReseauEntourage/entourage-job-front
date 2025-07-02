@@ -2,7 +2,6 @@ import {
   fetchProfilesAdapter,
   fetchProfilesRecommendationsAdapter,
   fetchSelectedProfileAdapter,
-  postInternalMessageAdapter,
 } from './profiles.adapters';
 import { RootState } from './profiles.slice';
 
@@ -19,11 +18,6 @@ export const fetchProfilesRecommendationsSelectors =
 export const fetchSelectedProfileSelectors =
   fetchSelectedProfileAdapter.getSelectors<RootState>(
     (state) => state.profiles.fetchSelectedProfile
-  );
-
-export const postInternalMessageSelectors =
-  postInternalMessageAdapter.getSelectors<RootState>(
-    (state) => state.profiles.postInternalMessage
   );
 
 export function selectProfiles(state: RootState) {

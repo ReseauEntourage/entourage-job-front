@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ParametresHelpCardContents } from 'src/constants/helps';
+import { ParametresHelpCardContents } from '@/src/constants/nudges';
 import { UserRoles } from 'src/constants/users';
 import { SelectList } from './SelectList';
 

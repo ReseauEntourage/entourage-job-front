@@ -37,7 +37,7 @@ export function Confirmation() {
           ))}
           <StyledReferingButtonContainer>
             <Button variant="primary" rounded href="/login">
-              Retourner à mon espace
+              Retourner à mon tableau de bord
             </Button>
           </StyledReferingButtonContainer>
         </Card>

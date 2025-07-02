@@ -1,32 +1,36 @@
 import _ from 'lodash';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
+import { ProfileHelps } from '@/src/constants/nudges';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../Button';
-import { UserCandidateWithUsers } from 'src/api/types';
+import {
+  BusinessSector,
+  Nudge,
+  Occupation,
+  UserCandidateWithUsers,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { Text } from 'src/components/utils/Text';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
-import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
   StyledCTAContainer,
   StyledProfileCard,
   StyledProfileCardAvailability,
-  StyledProfileCardBusinessLines,
+  StyledProfileCardBusinessSectors,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
-  StyledProfileCardEmptyBusinessLinesContainer,
+  StyledProfileCardEmptyBusinessSectorsContainer,
   StyledProfileCardEmptyHelpsContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
@@ -50,35 +54,28 @@ export interface ProfileCardProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  helps?: {
-    name: HelpValue;
-  }[];
-  businessLines?: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  ambitions?: {
-    name: string;
-    order: number;
-  }[];
+  hasPicture: boolean;
+  nudges?: Nudge[];
+  sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
   job?: string;
   isAvailable: boolean;
   displayHelps?: boolean;
+  currentJob?: string;
 }
 
 const getLabelsDependingOnRole = (role: UserRoles) => {
   if (role === UserRoles.CANDIDATE) {
     return {
-      businessLines: 'Je recherche un emploi dans\xa0:',
+      businessSectors: 'Je recherche un emploi dans\xa0:',
       helps: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
   if (role === UserRoles.COACH) {
     return {
-      businessLines: "J'ai du réseau dans\xa0:",
+      businessSectors: "J'ai du réseau dans\xa0:",
       helps: 'Je peux aider à\xa0:',
       role: 'Coach',
     };
@@ -97,30 +94,31 @@ export function ProfileCard({
   lastName,
   role,
   department,
-  helps,
-  businessLines,
-  ambitions,
-  userCandidate,
-  job,
+  nudges,
+  sectorOccupations,
+  currentJob,
   isAvailable,
   displayHelps,
+  hasPicture,
 }: ProfileCardProps) {
-  const { urlImg, fallbackToCVImage } = useImageFallback({
+  const { urlImg } = useImageFallback({
     userId,
-    role,
-    userCandidate,
+    hasPicture,
   });
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
-  const uniqBusinessLines = _.uniqBy(businessLines, 'name');
-  const sortedBusinessLines =
-    businessLines && businessLines.length > 0
-      ? sortByOrder(uniqBusinessLines)
-      : null;
+  const sortedBusinessSectors = useMemo(() => {
+    return sectorOccupations
+      ?.filter((so) => !!so.businessSector)
+      ?.map((so) => so.businessSector) as BusinessSector[];
+  }, [sectorOccupations]);
 
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+  const sortedOccupations = useMemo(() => {
+    return sectorOccupations
+      ?.filter((so) => !!so.occupation)
+      ?.map((so) => so.occupation) as Occupation[];
+  }, [sectorOccupations]);
 
   return (
     <Link
@@ -138,18 +136,12 @@ export function ProfileCard({
         <StyledProfileCardPictureContainer>
           <StyledProfileCardPicture>
             {urlImg ? (
-              <Img
-                src={urlImg}
-                alt={`photo de ${firstName}`}
-                cover
-                onError={fallbackToCVImage}
-              />
+              <Img src={urlImg} alt={`photo de ${firstName}`} cover />
             ) : (
               <Img
                 src="/static/img/profile-placeholder.png"
                 alt={`photo de ${firstName}`}
                 cover
-                onError={fallbackToCVImage}
               />
             )}
             <Img src="/static/img/gradient.png" alt="" cover />
@@ -176,74 +168,63 @@ export function ProfileCard({
         </StyledProfileCardPictureContainer>
         <StyledProfileCardContent>
           <StyledProfileCardProfessionalSituation>
-            {role === UserRoles.CANDIDATE && (
+            {(UserRoles.CANDIDATE === role || UserRoles.COACH === role) && (
               <>
-                {sortedAmbitions && sortedAmbitions.length > 0 ? (
+                {role === UserRoles.COACH && (
                   <StyledProfileCardJobContainer>
-                    {sortedAmbitions.map(({ name }, index) => (
-                      <H5
-                        key={name}
-                        color={COLORS.black}
-                        title={`${_.capitalize(name)}${
-                          index < sortedAmbitions.length - 1 ? ',\xa0' : ''
-                        }`}
-                      />
-                    ))}
+                    <H5 color={COLORS.black} title={currentJob || EMPTY_JOB} />
                   </StyledProfileCardJobContainer>
-                ) : (
-                  <StyledProfileCardEmptyJobContainer>
-                    <H5 color={COLORS.black} title={EMPTY_JOB} />
-                  </StyledProfileCardEmptyJobContainer>
                 )}
-              </>
-            )}
-            {role === UserRoles.COACH && (
-              <>
-                {job ? (
-                  <StyledProfileCardJobContainer>
-                    <H5 color={COLORS.black} title={_.capitalize(job)} />
-                  </StyledProfileCardJobContainer>
-                ) : (
-                  <StyledProfileCardEmptyJobContainer>
-                    <H5 color={COLORS.black} title={EMPTY_JOB} />
-                  </StyledProfileCardEmptyJobContainer>
+                {role === UserRoles.CANDIDATE && (
+                  <>
+                    {sortedOccupations && sortedOccupations.length > 0 ? (
+                      <StyledProfileCardJobContainer>
+                        {sortedOccupations.map(({ name }, index) => (
+                          <H5
+                            key={name}
+                            color={COLORS.black}
+                            title={`${_.capitalize(name)}${
+                              index < sortedOccupations.length - 1
+                                ? ',\xa0'
+                                : ''
+                            }`}
+                          />
+                        ))}
+                      </StyledProfileCardJobContainer>
+                    ) : (
+                      <StyledProfileCardEmptyJobContainer>
+                        <H5 color={COLORS.black} title={EMPTY_JOB} />
+                      </StyledProfileCardEmptyJobContainer>
+                    )}
+                  </>
                 )}
               </>
             )}
             <StyledProfileCardLabel>
-              <Text color="darkGray">{labels.businessLines}</Text>{' '}
+              <Text color="darkGray">{labels.businessSectors}</Text>{' '}
             </StyledProfileCardLabel>
-            <StyledProfileCardBusinessLines>
-              {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
+            <StyledProfileCardBusinessSectors>
+              {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
                 <>
-                  {sortedBusinessLines.slice(0, 2).map(({ name }) => {
-                    const businessLine = findConstantFromValue(
-                      name,
-                      BUSINESS_LINES
-                    );
-                    return (
-                      <Tag
-                        key={businessLine.value}
-                        content={businessLine.label}
-                      />
-                    );
+                  {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
+                    return <Tag key={id} content={name} />;
                   })}
                   {role !== UserRoles.CANDIDATE &&
-                    sortedBusinessLines.length > 2 && (
-                      <Tag content={`+${sortedBusinessLines.length - 2}`} />
+                    sortedBusinessSectors.length > 2 && (
+                      <Tag content={`+${sortedBusinessSectors.length - 2}`} />
                     )}
                 </>
               ) : (
-                <StyledProfileCardEmptyBusinessLinesContainer>
+                <StyledProfileCardEmptyBusinessSectorsContainer>
                   <StyledProfileCardEmptyIcon>
                     <CaseIcon {...iconSizeProps} />
                   </StyledProfileCardEmptyIcon>
                   <Text color="mediumGray" size="small" variant="italic">
                     {EMPTY_INFO}
                   </Text>
-                </StyledProfileCardEmptyBusinessLinesContainer>
+                </StyledProfileCardEmptyBusinessSectorsContainer>
               )}
-            </StyledProfileCardBusinessLines>
+            </StyledProfileCardBusinessSectors>
           </StyledProfileCardProfessionalSituation>
           <StyledSeparator />
           {displayHelps ? (
@@ -252,14 +233,16 @@ export function ProfileCard({
                 <Text color="darkGray">{labels.helps}</Text>
               </StyledProfileCardLabel>
               <StyledProfileCardHelps>
-                {helps && helps.length > 0 ? (
-                  helps.map(({ name }) => {
-                    const help = findConstantFromValue(name, ProfileHelps);
+                {nudges && nudges?.length > 0 ? (
+                  nudges.map((nudge) => {
+                    const nudgeDetails = ProfileHelps.find(
+                      (n) => nudge?.value === n.value
+                    );
                     return (
-                      <StyledProfileCardHelp key={help.value}>
-                        {help.icon}
+                      <StyledProfileCardHelp key={nudgeDetails?.value}>
+                        {nudgeDetails?.icon}
                         <StyledProfileCardHelpLabel>
-                          {help.label}
+                          {nudgeDetails?.label}
                         </StyledProfileCardHelpLabel>
                       </StyledProfileCardHelp>
                     );

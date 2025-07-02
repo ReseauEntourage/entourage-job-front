@@ -18,6 +18,7 @@ export const Onboarding = () => {
     onBeforeStep,
     currentStep,
     stepData,
+    disableNavigationButtons,
   } = useOnboarding();
 
   if (currentStep === 0) {
@@ -45,6 +46,7 @@ export const Onboarding = () => {
               submitText="Suivant"
               cancelText="Précédent"
               {...(!isFirstOnboardingStep ? { onCancel: onBeforeStep } : {})}
+              disabled={disableNavigationButtons}
             />
           )}
         </StyledStepContainer>

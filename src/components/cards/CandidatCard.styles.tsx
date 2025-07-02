@@ -69,7 +69,7 @@ export const CandidatCardPictureOverlay = styled.div`
   }
 `;
 
-export const CandidateCardBusinessLinesStyled = styled.div`
+export const CandidateCardBusinessSectorsStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -3,9 +3,7 @@ import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
 import { GENDERS_FILTERS } from '@/src/constants/genders';
-import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import {
-  StyledCVStatusCellContent,
   StyledEmployedCellContent,
   StyledMobileMember,
   StyledNameCellMobile,
@@ -28,7 +26,6 @@ import { buildContractLabel } from 'src/utils/Formatting';
 import { MemberProps } from './Member.types';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
-import { MemberHiddenToggle } from './MemberToggle/MemberHiddenToggle';
 
 const tooltipId = 'contract-tooltip';
 
@@ -58,7 +55,11 @@ export function MemberMobile({
     <StyledMobileMember selected={checked} cvStatus={cvStatus.toLowerCase()}>
       <div className="line">
         <StyledNameCellMobile>
-          <ImgProfile user={member} size={29} />
+          <ImgProfile
+            user={member}
+            size={29}
+            hasPicture={member.userProfile?.hasPicture || false}
+          />
           <MemberInfo
             id={member.id}
             firstName={member.firstName}
@@ -194,28 +195,6 @@ export function MemberMobile({
                   </span>
                 )}
               </StyledEmployedCellContent>
-            </TdMobile>
-          )}
-          {columns.includes('cvStatus') && (
-            <TdMobile title="Statut du CV">
-              <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
-                {cvStatus === 'none' ? 'Aucun' : translateStatusCV(cvStatus)}
-              </StyledCVStatusCellContent>
-            </TdMobile>
-          )}
-          {columns.includes('cvHidden') && (
-            <TdMobile title="CV masqué">
-              {isEditable ? (
-                <MemberHiddenToggle setMember={setMember} member={member} />
-              ) : (
-                <span>
-                  {userCandidate?.hidden ? (
-                    <LucidIcon name="EyeOff" stroke="thin" />
-                  ) : (
-                    <LucidIcon name="Eye" stroke="thin" />
-                  )}
-                </span>
-              )}
             </TdMobile>
           )}
         </div>

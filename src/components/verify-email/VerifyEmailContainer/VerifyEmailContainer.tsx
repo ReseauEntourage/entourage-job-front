@@ -54,7 +54,7 @@ export const VerifyEmailContainer = () => {
         <SendVerifyEmailButton />
       ) : (
         <Button href="/login" variant="secondary">
-          Se connecter à mon espace
+          Se connecter à mon compte
         </Button>
       )}
     </StyledVerifyEmailContainer>

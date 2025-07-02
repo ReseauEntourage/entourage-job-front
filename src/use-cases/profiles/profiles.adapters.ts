@@ -1,13 +1,13 @@
-import { InternalMessage, ProfilesFilters, PublicProfile } from 'src/api/types';
+import { ProfilesFilters, Profile } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchProfilesAdapter = createRequestAdapter(
   'fetchProfiles'
-).withPayloads<ProfilesFilters, PublicProfile[]>();
+).withPayloads<ProfilesFilters, Profile[]>();
 
 export const fetchProfilesRecommendationsAdapter = createRequestAdapter(
   'fetchProfilesRecommendations'
-).withPayloads<void, PublicProfile[]>();
+).withPayloads<void, Profile[]>();
 
 export const fetchSelectedProfileAdapter = createRequestAdapter(
   'fetchSelectedProfile'
@@ -15,9 +15,5 @@ export const fetchSelectedProfileAdapter = createRequestAdapter(
   {
     userId: string;
   },
-  PublicProfile
+  Profile
 >();
-
-export const postInternalMessageAdapter = createRequestAdapter(
-  'postInternalMessage'
-).withPayloads<InternalMessage>();

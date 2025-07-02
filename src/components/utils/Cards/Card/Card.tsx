@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Text } from '../../Text';
 import { Button, ButtonIcon } from 'src/components/utils/Button';
@@ -25,6 +25,7 @@ interface CardProps {
   editCallback?: () => void;
   isLoading?: boolean;
   isMobileClosable?: boolean;
+  isDesktopClosable?: boolean;
   isDefaultOpen?: boolean;
   editButtonText?: string;
   dataTestId?: string;
@@ -39,6 +40,7 @@ export const Card = ({
   editCallback,
   isLoading = false,
   isMobileClosable = false,
+  isDesktopClosable = false,
   isDefaultOpen = true,
   editButtonText,
   dataTestId,
@@ -48,11 +50,8 @@ export const Card = ({
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
   const isDesktop = useIsDesktop();
-
-  const [closedMode, setClosedMode] = useState<boolean>(false);
-  useEffect(() => {
-    setClosedMode(!isDesktop && isMobileClosable && !isOpen);
-  }, [isDesktop, isMobileClosable, isOpen]);
+  const isClosable =
+    (isDesktop && isDesktopClosable) || (!isDesktop && isMobileClosable);
 
   return (
     <StyledCard
@@ -62,29 +61,38 @@ export const Card = ({
     >
       {title ? (
         <>
-          <StyledCardTopContainer>
+          <StyledCardTopContainer isOpen={isOpen}>
             {isLoading && (
               <StyledSpinnerContainer>
                 <Spinner />
               </StyledSpinnerContainer>
             )}
-            {!isLoading && editCallback && isDesktop && (
-              <StyledEditIconContainer>
-                <ButtonIcon
-                  icon={editIcon || <LucidIcon name="Pencil" size={15} />}
-                  onClick={editCallback}
-                  dataTestId={`${dataTestId}-button-edit`}
-                />
-              </StyledEditIconContainer>
-            )}
-            {isMobileClosable && !isDesktop && (
+            <StyledCardTitleContainer
+              onClick={() => {
+                if (isClosable) setIsOpen(!isOpen);
+              }}
+              centerTitle={centerTitle}
+            >
+              <H5 title={title} center={centerTitle} />
+              {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
+              {!isLoading && editCallback && isDesktop && (
+                <StyledEditIconContainer>
+                  <ButtonIcon
+                    icon={editIcon || <LucidIcon name="Pencil" size={15} />}
+                    onClick={editCallback}
+                    dataTestId={`${dataTestId}-button-edit`}
+                  />
+                </StyledEditIconContainer>
+              )}
+            </StyledCardTitleContainer>
+            {isClosable && (
               <StyledChevronContainer>
                 <ButtonIcon
                   icon={
                     isOpen ? (
-                      <LucidIcon name="ChevronUp" />
+                      <LucidIcon name="ChevronUp" color="black" />
                     ) : (
-                      <LucidIcon name="ChevronDown" />
+                      <LucidIcon name="ChevronDown" color="black" />
                     )
                   }
                   onClick={() => {
@@ -93,21 +101,11 @@ export const Card = ({
                 />
               </StyledChevronContainer>
             )}
-            <StyledCardTitleContainer
-              className={!closedMode ? '' : 'no-border'}
-              onClick={() => {
-                if (!isDesktop && isMobileClosable) setIsOpen(!isOpen);
-              }}
-              centerTitle={centerTitle}
-            >
-              <H5 title={title} center={centerTitle} />
-              {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
-            </StyledCardTitleContainer>
           </StyledCardTopContainer>
-          {!closedMode && (
+          {isOpen && (
             <StyledCardContent>
               {children}
-              {!closedMode && !isLoading && editCallback && !isDesktop && (
+              {!isLoading && editCallback && !isDesktop && (
                 <StyledCardFooter>
                   <Button variant="secondary" rounded onClick={editCallback}>
                     {editButtonText || 'Modifier'}

@@ -50,7 +50,11 @@ export const CandidatHeader = ({
 
   return (
     <Grid row gap="small">
-      <ImgProfile user={user} size={48} />
+      <ImgProfile
+        user={user}
+        size={48}
+        hasPicture={user.userProfile?.hasPicture || false}
+      />
       <Grid column gap="collapse">
         <h3 className="uk-text-bold">
           {user.firstName} {user.lastName}

@@ -34,23 +34,23 @@ describe('En tant que - Prescripteur', () => {
     });
   });
 
-  describe('Je souhaite une interface claire me permettant de naviguer au travers de mes possibilités', () => {
+  describe("Je souhaite pouvoir naviguer dans l'application", () => {
     beforeEach(() => {
       cy.visit(`/backoffice/dashboard`);
     });
 
-    describe('Je peux accéder à mon espace personnel', () => {
-      it('should display "Mon espace" inside the navigation', () => {
-        // Check that a link with class ".menu-link" contains the text "Mon espace"
-        cy.get('.menu-link').contains('Mon espace');
+    describe('Je peux accéder à mon tableau de bord personnel', () => {
+      it('should display "Tableau de bord" inside the navigation', () => {
+        // Check that a link with class ".menu-link" contains the text "Tableau de bord"
+        cy.get('.menu-link').contains('Tableau de bord');
       });
       it('should be able to navigate to /backoffice/dashboard', () => {
-        // Click on the link with the text "Mon espace"
-        cy.get('.menu-link').contains('Mon espace').click();
+        // Click on the link with the text "Tableau de bord"
+        cy.get('.menu-link').contains('Tableau de bord').click();
         // Check that the URL is now /backoffice/dashboard
         cy.url().should('include', '/backoffice/dashboard');
-        // Check that the page contains the text "Bienvenue sur votre espace personnel"
-        cy.contains('Bienvenue sur votre espace personnel');
+        // Check that the page contains the text "Bienvenue sur votre tableau de bord"
+        cy.contains('Bienvenue sur votre tableau de bord');
       });
     });
     describe("Je peux accéder au réseau d'entraide", () => {
@@ -125,7 +125,7 @@ describe('En tant que - Prescripteur', () => {
         statusCode: 201,
       }).as('postRefering');
     });
-    describe('Je peux orienter un candidat éligible au format CDP', () => {
+    describe('Je peux orienter un candidat', () => {
       it('should complete refering of his candidate - program is automaticaly computed', () => {
         // Check that the URL is /backoffice/referer/orienter/step-1
         cy.url().should('include', 'step-1');
@@ -149,9 +149,12 @@ describe('En tant que - Prescripteur', () => {
         cy.url().should('include', 'step-2');
 
         // Select the help needs
-        cy.get(
-          '[data-testid="form-refering-candidate-expectations-helpNeeds-tips"]'
-        ).click();
+        cy.wait('@nudges');
+        // Fill the candidate expectations
+        cy.get('[data-testid="form-refering-candidate-expectations-nudgeIds"]')
+          .should('be.visible')
+          .first() // Select the first nudge
+          .click();
         cy.contains('Suivant').click();
 
         // Check that the URL is now /backoffice/referer/orienter/step-3
@@ -175,12 +178,16 @@ describe('En tant que - Prescripteur', () => {
         // Check that the URL is now /backoffice/referer/orienter/step-6
         cy.url().should('include', 'step-6');
 
+        // Fill the professional information
         cy.get(
-          "[data-testid='form-refering-candidate-professional-information-searchBusinessLine0']"
+          '#form-refering-candidate-professional-information-businessSectorId0'
+        ).click();
+        cy.wait('@businessSectors');
+        cy.get(
+          '#form-refering-candidate-professional-information-businessSectorId0'
         )
-          .click()
           .find('.Select__option')
-          .contains('Agriculture')
+          .contains('Sector 1')
           .click();
         cy.contains('Suivant').click();
       });

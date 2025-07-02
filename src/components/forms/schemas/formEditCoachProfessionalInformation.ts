@@ -1,11 +1,31 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
+import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants/utils';
+
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
 
 export const formEditCoachProfessionalInformation: FormSchema<{
   currentJob: string;
-  networkBusinessLines: FilterConstant<BusinessLineValue>[];
-  linkedinUrl: string;
+  businessSectorIds: FilterConstant<string>[];
 }> = {
   id: 'form-coach-professional-information',
   fields: [
@@ -16,36 +36,14 @@ export const formEditCoachProfessionalInformation: FormSchema<{
       title: 'Mon métier',
     },
     {
-      id: 'networkBusinessLines',
-      name: 'networkBusinessLines',
-      component: 'select',
-      title: "Les secteurs dans lesquels j'ai du réseau *",
-      options: BUSINESS_LINES,
-      isMulti: true,
+      id: 'businessSectorIds',
+      name: 'businessSectorIds',
+      component: 'select-async',
       isRequired: true,
-    },
-    {
-      id: 'linkedinLabel',
-      name: 'linkedinLabel',
-      title: 'Partagez votre profil LinkedIn',
-      component: 'heading',
-    },
-    {
-      id: 'linkedinUrl',
-      name: 'linkedinUrl',
-      component: 'text-input',
-      title: 'Ajouter le lien LinkedIn',
-      rules: [
-        {
-          method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              (!!fieldValue && fieldValue.includes('linkedin.com'))
-            );
-          },
-          message: 'Doit être un lien Linkedin valide',
-        },
-      ],
+      loadOptions: loadBusinessSectorsOptions,
+      placeholder: "Les secteurs dans lesquels j'ai du réseau*",
+      isMulti: true,
+      showLabel: true,
     },
   ],
 };

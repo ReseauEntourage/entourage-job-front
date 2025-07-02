@@ -1,12 +1,33 @@
+import { Api } from 'src/api';
 import { FormSchema } from 'src/components/forms/FormSchema';
-import { BusinessLineValue, BUSINESS_LINES } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
+const loadBusinessSectorsOptions = async (callback, inputValue) => {
+  try {
+    const { data: businessSectors } = await Api.getAllBusinessSectors({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...businessSectors.map((u) => {
+        return {
+          value: u.id,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
 export const formRegistrationCandidateProfessionalInformation: FormSchema<{
-  searchBusinessLine0: FilterConstant<BusinessLineValue>;
-  searchAmbition0: string;
-  searchBusinessLine1: FilterConstant<BusinessLineValue>;
-  searchAmbition1: string;
+  businessSectorId0: FilterConstant<string>;
+  occupation0: string;
+  businessSectorId1: FilterConstant<string>;
+  occupation1: string;
 }> = {
   id: 'form-registration-candidate-professional-information',
   fields: [
@@ -16,19 +37,19 @@ export const formRegistrationCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine0',
-          name: 'searchBusinessLine0',
-          title: 'Secteur(s) recherché(s)',
-          component: 'select',
-          showLabel: true,
-          options: BUSINESS_LINES,
-          isMulti: false,
+          id: 'businessSectorId0',
+          name: 'businessSectorId0',
+          component: 'select-async',
           isRequired: true,
-          placeholder: 'Secteur 1 *',
+          loadOptions: loadBusinessSectorsOptions,
+          title: 'Secteur(s) recherché(s)',
+          placeholder: 'Secteur 1*',
+          isMulti: false,
+          showLabel: true,
         },
         {
-          id: 'searchAmbition0',
-          name: 'searchAmbition0',
+          id: 'occupation0',
+          name: 'occupation0',
           component: 'text-input',
           showLabel: true,
           title: 'Métier(s) recherché(s)',
@@ -42,24 +63,26 @@ export const formRegistrationCandidateProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'searchBusinessLine1',
-          name: 'searchBusinessLine1',
-          title: 'Secteur 2',
-          component: 'select',
+          id: 'businessSectorId1',
+          name: 'businessSectorId1',
+          component: 'select-async',
+          isRequired: false,
+          loadOptions: loadBusinessSectorsOptions,
+          placeholder: 'Secteur 2',
           isMulti: false,
-          options: BUSINESS_LINES,
+          showLabel: true,
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return !!fieldValue || !fieldValues.searchAmbition1;
+                return !!fieldValue || !fieldValues.occupation1;
               },
               message: 'Obligatoire',
             },
           ],
         },
         {
-          id: 'searchAmbition1',
-          name: 'searchAmbition1',
+          id: 'occupation1',
+          name: 'occupation1',
           component: 'text-input',
           title: 'Métier 2',
         },

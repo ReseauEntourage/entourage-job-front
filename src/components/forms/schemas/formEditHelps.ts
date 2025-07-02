@@ -1,5 +1,5 @@
+import { HelpValue, ParametresHelpCardContents } from '@/src/constants/nudges';
 import { FormSchema } from '../FormSchema';
-import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
 import { NormalUserRoles } from 'src/constants/users';
 
 export function getFormEditHelps(role: NormalUserRoles): FormSchema<{

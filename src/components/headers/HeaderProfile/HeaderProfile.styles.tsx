@@ -1,16 +1,5 @@
 import styled, { css } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
-
-export const StyledProfilePlaceholder = styled.a`
-  color: ${COLORS.primaryBlue};
-  text-decoration: underline;
-  font-style: italic;
-  font-size: 14px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;
@@ -26,6 +15,12 @@ export const StyledHeaderProfile = styled.div`
   background-color: ${COLORS.white};
 `;
 
+export const StyledHeaderProfileSectionMobile = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const StyledHeaderProfilePictureContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -36,6 +31,10 @@ export const StyledHeaderProfilePictureContainer = styled.div`
 
   .button-mock-image-input {
     margin-top: 20px;
+  }
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    margin-right: 20px;
   }
 `;
 
@@ -64,26 +63,24 @@ export const StyledHeaderProfileContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  margin-top: 30px;
+
+  @media (man-width: ${BREAKPOINTS.desktop}px) {
+    margin-top: 10px;
+  }
+`;
+
+export const StyledHeaderProfilePublicInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 export const StyledHeaderProfileInfoContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 5px;
-
-  h1,
-  h2,
-  h3,
-  h5,
-  h6 {
-    margin-bottom: 0;
-    margin-top: 0;
-  }
-
-  a {
-    line-height: 24px;
-  }
+  gap: 20px;
 `;
 
 export const StyledHeaderProfileNameContainer = styled.div`
@@ -98,6 +95,7 @@ export const StyledHeaderNameAndRole = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 20px;
 
   h1,
   h2 {

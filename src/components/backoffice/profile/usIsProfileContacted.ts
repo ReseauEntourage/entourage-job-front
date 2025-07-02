@@ -1,9 +1,9 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { PublicProfile } from 'src/api/types';
+import { Profile } from 'src/api/types';
 
 export const useIsProfileContacted = (
-  selectedProfile: PublicProfile,
+  selectedProfile: Profile,
   contactMessage?: string,
   contactedMessage?: string
 ) => {

@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFileActivator } from '@/src/hooks/useFileActivator';
 import {
   StyledProfileFormImageInputsContainer,
   StyledProfileFormImageContainer,
 } from '../../Onboarding.styles';
-import { ButtonMock, ImgProfile } from 'src/components/utils';
+import { Button, ImgProfile } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { ReduxRequestEvents } from 'src/constants';
@@ -22,6 +23,8 @@ export const OnboardingProfileForm = () => {
   const dispatch = useDispatch();
   const { id, role, firstName } = user;
   const [imageUploading, setImageUploading] = useState(false);
+  const { setFileInputRef, requestFileUploadClick } = useFileActivator();
+
   const uploadProfileImage = useCallback(
     async ({ profileImage }: { profileImage: Blob }) => {
       setImageUploading(true);
@@ -48,22 +51,28 @@ export const OnboardingProfileForm = () => {
         {imageUploading ? (
           <Spinner color={COLORS.white} />
         ) : (
-          <ImgProfile user={{ id, role, firstName }} size={SIZE} />
+          <ImgProfile
+            user={{ id, role, firstName }}
+            size={SIZE}
+            hasPicture={user.userProfile?.hasPicture || false}
+          />
         )}
       </StyledProfileFormImageContainer>
       <ImageInput
         onChange={uploadProfileImage}
         id="profile-picture-upload-desktop-onboarding"
         name="profile-picture-upload-desktop"
+        inputRef={setFileInputRef}
       >
-        <ButtonMock
+        <Button
           variant="secondary"
           rounded
           size="small"
-          dataTestId="button-mock-image-input"
+          dataTestId="button-image-input"
+          onClick={requestFileUploadClick}
         >
           Modifier la photo de profil
-        </ButtonMock>
+        </Button>
       </ImageInput>
     </StyledProfileFormImageInputsContainer>
   );
