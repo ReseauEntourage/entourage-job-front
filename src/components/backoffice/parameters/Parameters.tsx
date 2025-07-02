@@ -101,12 +101,14 @@ export const Parameters = () => {
               <ProfileExperiences
                 userId={user.id}
                 userFirstName={user.firstName}
+                userRole={user.role}
                 experiences={user.userProfile.experiences || []}
                 isEditable
               />
               <ProfileFormations
                 userId={user.id}
                 userFirstName={user.firstName}
+                userRole={user.role}
                 formations={user.userProfile.formations || []}
                 isEditable
               />
@@ -144,7 +146,11 @@ export const Parameters = () => {
                   smallCard
                 />
               )}
-              <ProfileContactPreferences isEditable smallCard />
+              <ProfileContactPreferences
+                userRole={user.role}
+                isEditable
+                smallCard
+              />
               <ProfileNudges
                 userRole={user.role}
                 nudges={user.userProfile.nudges || []}

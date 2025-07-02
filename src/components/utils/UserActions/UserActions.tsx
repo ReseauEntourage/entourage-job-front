@@ -16,6 +16,11 @@ export interface UserActionsProps {
   openDirection?: 'left' | 'right';
 }
 
+export interface UserAction {
+  name: string;
+  handler: () => void;
+}
+
 export function UserActions({
   userId,
   userRole,
@@ -28,14 +33,16 @@ export function UserActions({
   }, [currentUserId, userId]);
 
   const actions = useMemo(() => {
-    const list = [
-      {
-        name: 'Editer mes informations',
+    const list: UserAction[] = [];
+
+    if (ownProfile) {
+      list.push({
+        name: 'Éditer mes informations',
         handler: () => {
           openCorrespondingModal();
         },
-      },
-    ];
+      });
+    }
     if (!ownProfile) {
       list.push({
         name: 'Signaler ce profil',

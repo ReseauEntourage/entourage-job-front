@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { openModal } from '@/src/components/modals/Modal';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { IlluMalette } from 'assets/icons/icons';
@@ -16,6 +17,7 @@ import { ProfileFormationsModalEdit } from './ProfileFormationsModalEdit/Profile
 export interface ProfileFormationsProps {
   userId: string;
   userFirstName: string;
+  userRole: UserRoles;
   formations?: Formation[];
   isEditable?: boolean;
   smallCard?: boolean;
@@ -24,6 +26,7 @@ export interface ProfileFormationsProps {
 export const ProfileFormations = ({
   userId,
   userFirstName,
+  userRole,
   formations = [],
   isEditable = false,
   smallCard = false,
@@ -115,14 +118,14 @@ export const ProfileFormations = ({
   }, [editFormation, isEditable, isOwnProfile, suggestHelpToComplete]);
 
   const ctaTitle = useMemo(() => {
-    if (!isOwnProfile && !isCompleted) {
+    if (!isOwnProfile && !isCompleted && userRole === UserRoles.CANDIDATE) {
       return `Accompagner ${userFirstName} dans la valorisation de ses formations`;
     }
     if (isOwnProfile && isEditable) {
       return 'Ajouter';
     }
     return null;
-  }, [isOwnProfile, isCompleted, isEditable, userFirstName]);
+  }, [isOwnProfile, isCompleted, userRole, isEditable, userFirstName]);
 
   return (
     <ProfilePartCard
