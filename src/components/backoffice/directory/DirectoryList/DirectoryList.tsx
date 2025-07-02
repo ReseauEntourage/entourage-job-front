@@ -23,6 +23,7 @@ export function DirectoryList() {
           isAvailable={profile.isAvailable}
           displayHelps
           hasPicture={profile.hasPicture}
+          currentJob={profile.currentJob}
         />
       );
     });

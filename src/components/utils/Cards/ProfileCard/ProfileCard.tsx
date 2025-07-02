@@ -62,6 +62,7 @@ export interface ProfileCardProps {
   job?: string;
   isAvailable: boolean;
   displayHelps?: boolean;
+  currentJob?: string;
 }
 
 const getLabelsDependingOnRole = (role: UserRoles) => {
@@ -95,6 +96,7 @@ export function ProfileCard({
   department,
   nudges,
   sectorOccupations,
+  currentJob,
   isAvailable,
   displayHelps,
   hasPicture,
@@ -168,22 +170,33 @@ export function ProfileCard({
           <StyledProfileCardProfessionalSituation>
             {(UserRoles.CANDIDATE === role || UserRoles.COACH === role) && (
               <>
-                {sortedOccupations && sortedOccupations.length > 0 ? (
+                {role === UserRoles.COACH && (
                   <StyledProfileCardJobContainer>
-                    {sortedOccupations.map(({ name }, index) => (
-                      <H5
-                        key={name}
-                        color={COLORS.black}
-                        title={`${_.capitalize(name)}${
-                          index < sortedOccupations.length - 1 ? ',\xa0' : ''
-                        }`}
-                      />
-                    ))}
+                    <H5 color={COLORS.black} title={currentJob || EMPTY_JOB} />
                   </StyledProfileCardJobContainer>
-                ) : (
-                  <StyledProfileCardEmptyJobContainer>
-                    <H5 color={COLORS.black} title={EMPTY_JOB} />
-                  </StyledProfileCardEmptyJobContainer>
+                )}
+                {role === UserRoles.CANDIDATE && (
+                  <>
+                    {sortedOccupations && sortedOccupations.length > 0 ? (
+                      <StyledProfileCardJobContainer>
+                        {sortedOccupations.map(({ name }, index) => (
+                          <H5
+                            key={name}
+                            color={COLORS.black}
+                            title={`${_.capitalize(name)}${
+                              index < sortedOccupations.length - 1
+                                ? ',\xa0'
+                                : ''
+                            }`}
+                          />
+                        ))}
+                      </StyledProfileCardJobContainer>
+                    ) : (
+                      <StyledProfileCardEmptyJobContainer>
+                        <H5 color={COLORS.black} title={EMPTY_JOB} />
+                      </StyledProfileCardEmptyJobContainer>
+                    )}
+                  </>
                 )}
               </>
             )}
