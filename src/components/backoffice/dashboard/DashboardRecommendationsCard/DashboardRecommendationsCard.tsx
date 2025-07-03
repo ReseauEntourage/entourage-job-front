@@ -62,6 +62,8 @@ export const DashboardRecommendationsCard = () => {
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           displayHelps={false}
+          hasPicture={profile.hasPicture}
+          currentJob={profile.currentJob}
         />
       );
     });

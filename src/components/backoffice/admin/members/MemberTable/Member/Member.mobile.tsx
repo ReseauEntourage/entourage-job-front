@@ -55,7 +55,11 @@ export function MemberMobile({
     <StyledMobileMember selected={checked} cvStatus={cvStatus.toLowerCase()}>
       <div className="line">
         <StyledNameCellMobile>
-          <ImgProfile user={member} size={29} />
+          <ImgProfile
+            user={member}
+            size={29}
+            hasPicture={member.userProfile?.hasPicture || false}
+          />
           <MemberInfo
             id={member.id}
             firstName={member.firstName}

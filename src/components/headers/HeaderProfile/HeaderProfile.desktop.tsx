@@ -42,6 +42,7 @@ export interface HeaderProfileProps {
   role: UserRoles;
   department: Department;
   introduction?: string;
+  hasPicture: boolean;
 
   // Only for own profile
   phone?: string;
@@ -60,6 +61,7 @@ export const HeaderProfileDesktop = ({
   phone,
   email,
   driverLicenses,
+  hasPicture,
   isEditable = false,
 }: HeaderProfileProps) => {
   const {
@@ -102,6 +104,7 @@ export const HeaderProfileDesktop = ({
                     role,
                   }}
                   size={PROFILE_PICTURE_SIZE}
+                  hasPicture={hasPicture}
                   highlight
                 />
               )}

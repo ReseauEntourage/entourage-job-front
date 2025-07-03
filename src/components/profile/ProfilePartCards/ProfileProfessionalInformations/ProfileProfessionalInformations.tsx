@@ -51,7 +51,12 @@ export const ProfileProfessionalInformations = ({
           />
         )}
         {description && <Text>{description}</Text>}
-        <CardTagList items={skills} />
+        {skills.length > 0 && (
+          <>
+            <Text>J&apos;ai des compétences dans :</Text>
+            <CardTagList items={skills} />
+          </>
+        )}
       </StyledContentContainer>
     </ProfilePartCard>
   );

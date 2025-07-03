@@ -39,7 +39,11 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
     <StyledContainer onClick={openConversation}>
       <StyledConversationMainInfos>
         <StyledConversationParticipants>
-          <ImgProfile user={addresee} size={25} />
+          <ImgProfile
+            user={addresee}
+            size={25}
+            hasPicture={addresee.userProfile?.hasPicture || false}
+          />
           <Text weight="bold">
             {`${addresee.firstName} ${addresee.lastName}`}
           </Text>

@@ -69,7 +69,11 @@ export function MemberDesktop({
           }
           disableLink={disableLink}
         >
-          <ImgProfile user={member} size={36} />
+          <ImgProfile
+            user={member}
+            size={36}
+            hasPicture={member.userProfile?.hasPicture || false}
+          />
         </MemberInfo>
       </StyledNameCell>
 
