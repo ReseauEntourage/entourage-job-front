@@ -18,11 +18,56 @@ describe('Onboarding', () => {
     window.localStorage.setItem('access-token', '1234');
     window.localStorage.setItem('release-version', 'v100');
 
+    /**
+     * Configuration des interceptions spécifiques - À GARDER EN PREMIER
+     * Les interceptions sont traitées dans l'ordre où elles sont définies
+     * (principe "premier arrivé, premier servi")
+     */
     onboardingJourneyRequests.GET.forEach((request) => {
       if (request.alias) {
         cy.intercept('GET', request.path, request.data).as(request.alias);
       } else cy.intercept('GET', request.path, request.data);
     });
+
+    /**
+     * Liste des URLs spécifiques à intercepter
+     * Ajoutez vos URLs à cette liste selon vos besoins
+     */
+    const urlsToIntercept = [
+      'user/profile/recommendations/**',
+      '/user/profile/completion',
+      '/messaging/conversations',
+      '/messaging/conversations/**',
+      // Ajoutez d'autres URLs selon vos besoins
+    ];
+
+    /**
+     * Interception des requêtes pour les URLs spécifiques
+     * Chaque URL de la liste sera interceptée pour les méthodes HTTP spécifiées
+     */
+    const interceptSpecificUrls = () => {
+      urlsToIntercept.forEach((url) => {
+        ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].forEach((method) => {
+          cy.intercept(
+            {
+              method,
+              url,
+            },
+            {
+              statusCode: 200,
+              body: [],
+            }
+          ).as(
+            `${method.toLowerCase()}-${url
+              .replace(/\//g, '-')
+              .replace(/\*/g, 'all')}`
+          );
+        });
+      });
+    };
+
+    // Exécutez cette fonction pour intercepter les URLs spécifiées
+    interceptSpecificUrls();
   });
 
   describe("Etant donné que je n'ai complété mon onboarding", () => {
