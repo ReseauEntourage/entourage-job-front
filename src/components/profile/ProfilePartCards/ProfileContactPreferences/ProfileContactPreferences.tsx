@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { IlluCV, IlluDossierCandidat } from 'assets/icons/icons';
+import { IlluDiscussionBanc, IlluOrdiCV } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import {
   CardToggleList,
@@ -9,6 +10,7 @@ import {
 } from '../Card/CardToggleList/CardToggleList';
 
 export interface ProfileContactPreferencesProps {
+  userRole: UserRoles;
   isEditable?: boolean;
   smallCard?: boolean;
 }
@@ -18,20 +20,8 @@ const illuProps = {
   height: 40,
 };
 
-const allContactWays = [
-  {
-    name: 'Je préfère être accompagné en visio',
-    icon: <IlluCV {...illuProps} />,
-    key: 'allowRemoteEvents',
-  },
-  {
-    name: 'Je préfère être accompagné en présentiel',
-    icon: <IlluDossierCandidat {...illuProps} />,
-    key: 'allowPhysicalEvents',
-  },
-];
-
 export const ProfileContactPreferences = ({
+  userRole,
   isEditable = false,
   smallCard = false,
 }: ProfileContactPreferencesProps) => {
@@ -39,13 +29,42 @@ export const ProfileContactPreferences = ({
   const { updateUserProfile } = useUpdateProfile(user);
   const [items, setItems] = useState<SwitchItem[]>([]);
 
+  const allContactWays = useMemo(() => {
+    if (userRole === UserRoles.CANDIDATE) {
+      return [
+        {
+          name: 'Je préfère être accompagné en visio',
+          icon: <IlluOrdiCV {...illuProps} />,
+          key: 'allowRemoteEvents',
+        },
+        {
+          name: 'Je préfère être accompagné en présentiel',
+          icon: <IlluDiscussionBanc {...illuProps} />,
+          key: 'allowPhysicalEvents',
+        },
+      ];
+    }
+    return [
+      {
+        name: 'Je préfère accompagner en visio',
+        icon: <IlluOrdiCV {...illuProps} />,
+        key: 'allowRemoteEvents',
+      },
+      {
+        name: 'Je préfère accompagner en présentiel',
+        icon: <IlluDiscussionBanc {...illuProps} />,
+        key: 'allowPhysicalEvents',
+      },
+    ];
+  }, [userRole]);
+
   const generateItems = useCallback(() => {
     return allContactWays.map((c) => ({
       name: c.name,
       icon: c.icon,
       value: user.userProfile[c.key] ?? false,
     }));
-  }, [user.userProfile]);
+  }, [allContactWays, user.userProfile]);
 
   useEffect(() => {
     setItems(generateItems());

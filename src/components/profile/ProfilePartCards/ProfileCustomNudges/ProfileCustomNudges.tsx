@@ -63,10 +63,11 @@ export const ProfileCustomNudges = ({
           customNudge={
             customNudges.find((nudge) => nudge.id === id) as UserProfileNudge
           }
+          role={role}
         />
       );
     },
-    [customNudges, updateUserProfile]
+    [customNudges, role, updateUserProfile]
   );
 
   const deleteCustomNudge = useCallback(
@@ -100,8 +101,9 @@ export const ProfileCustomNudges = ({
       fallback={{
         content: (
           <Text>
-            Détaillez précisement vos besoins pour que les coachs puissent vous
-            accompagner plus facilement
+            {user.role === UserRoles.CANDIDATE
+              ? 'Détaillez précisément vos besoins pour que les coachs puissent vous accompagner plus facilement'
+              : 'Détaillez les coups de pouce que vous pouvez offrir aux candidats.'}
           </Text>
         ),
         icon: <IlluBulleQuestionCheck />,

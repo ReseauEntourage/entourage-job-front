@@ -3,7 +3,10 @@ import { UserRoles } from '@/src/constants/users';
 import { UserProfileSectorOccupation } from 'src/api/types';
 import { Text, TextSize, TextWeight } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
-import { StyledCareerPathSimpleSentenceTag } from './ProfileCareerPathSentence.styles';
+import {
+  StyledCareerPathSectorOccupationTagContainer,
+  StyledCareerPathSimpleSentenceTag,
+} from './ProfileCareerPathSentence.styles';
 
 interface ProfileCareerPathSentenceProps {
   sectorOccupations: UserProfileSectorOccupation[];
@@ -57,8 +60,9 @@ export const ProfileCareerPathSentence = ({
         <Text>
           Je travaille comme <strong>{currentJob}</strong>
         </Text>
-        <Text>
-          J&apos;ai du réseau dans :{' '}
+
+        <StyledCareerPathSectorOccupationTagContainer>
+          <Text>J&apos;ai du réseau dans : </Text>
           {sectorOccupations.map((sectorOccupation, index) => (
             <>
               {asSimpleSentence ? (
@@ -71,7 +75,7 @@ export const ProfileCareerPathSentence = ({
               )}
             </>
           ))}
-        </Text>
+        </StyledCareerPathSectorOccupationTagContainer>
       </>
     );
   }

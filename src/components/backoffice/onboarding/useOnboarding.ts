@@ -46,23 +46,36 @@ export const useOnboarding = () => {
   }, [authenticatedUser, currentStep]);
 
   useEffect(() => {
-    const hasAcceptedEthicsCharter = authenticatedUser?.readDocuments?.some(
-      (doc) => doc.documentName === 'CharteEthique'
-    );
+    const hasAcceptedEthicsCharter =
+      authenticatedUser &&
+      authenticatedUser.readDocuments?.some(
+        (doc) => doc.documentName === 'CharteEthique'
+      );
     const userRoleHasOnboarding =
       authenticatedUser?.role === UserRoles.CANDIDATE ||
       authenticatedUser?.role === UserRoles.COACH;
 
-    if (!hasAcceptedEthicsCharter && userRoleHasOnboarding) {
+    // Ne relance pas l'onboarding s'il est déjà en cours
+    if (
+      !hasAcceptedEthicsCharter &&
+      userRoleHasOnboarding &&
+      currentStep === 0
+    ) {
       dispatch(
         onboardingActions.launchOnboarding(
           authenticatedUser.role as RegistrableUserRoles
         )
       );
-    } else {
+    } else if (hasAcceptedEthicsCharter || !userRoleHasOnboarding) {
       dispatch(onboardingActions.endOnboarding());
     }
-  }, [authenticatedUser?.readDocuments, authenticatedUser.role, dispatch]);
+  }, [
+    authenticatedUser,
+    authenticatedUser?.readDocuments,
+    authenticatedUser.role,
+    dispatch,
+    currentStep,
+  ]);
 
   const onSubmitStepForm = useCallback(
     (fields: OnboardingFormData) => {

@@ -86,7 +86,10 @@ export const AlertIA = () => {
             variant="secondary"
             size="small"
             rounded
-            onClick={handleGenerateProfile}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleGenerateProfile();
+            }}
           >
             {isDesktop ? 'Générer mon profil' : 'Générer'}
           </Button>
@@ -117,7 +120,10 @@ export const AlertIA = () => {
           variant="secondary"
           size="small"
           rounded
-          onClick={handleUploadCv}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUploadCv();
+          }}
           disabled={isCvLoading}
         >
           {isDesktop ? 'Télécharger mon CV' : 'Télécharger'}

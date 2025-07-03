@@ -1,34 +1,15 @@
 import Router from 'next/router';
-import { call, put, takeLatest, select } from 'typed-redux-saga';
+import { call, put, takeLatest } from 'typed-redux-saga';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
-import {
-  currentUserActions,
-  selectCandidateId,
-} from 'src/use-cases/current-user';
+import { currentUserActions } from 'src/use-cases/current-user';
 import { slice } from './cv.slice';
 
 const {
-  fetchCVSucceeded,
-  fetchCVFailed,
-  fetchCVRequested,
   generateProfileFromCVRequested,
   generateProfileFromCVSucceeded,
   generateProfileFromCVFailed,
 } = slice.actions;
-
-function* fetchCVSagaRequested() {
-  const candidateId = yield* select(selectCandidateId);
-
-  try {
-    const response = yield* call(() =>
-      Api.getPublicProfileByCandidateId(candidateId)
-    );
-    yield* put(fetchCVSucceeded(response.data));
-  } catch {
-    yield* put(fetchCVFailed());
-  }
-}
 
 function* generateProfileFromCVSagaRequested() {
   try {
@@ -58,7 +39,6 @@ function* generateProfileFromCVSagaRequested() {
 }
 
 export function* saga() {
-  yield* takeLatest(fetchCVRequested, fetchCVSagaRequested);
   yield* takeLatest(
     generateProfileFromCVRequested,
     generateProfileFromCVSagaRequested

@@ -43,7 +43,11 @@ export const DashboardProfileCard = () => {
   return (
     <Card dataTestId="dashboard-profile-card">
       <StyledDashboardProfileCardPictureName>
-        <ImgProfile user={user} size={69} />
+        <ImgProfile
+          user={user}
+          size={69}
+          hasPicture={user.userProfile?.hasPicture || false}
+        />
         <div>
           <Text size="xlarge" weight="bold">
             {`${user.firstName} ${user.lastName.charAt(0).toUpperCase()}.`}

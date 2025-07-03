@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { ALERT_COLORS, COLORS, CV_STATUS_COLORS } from 'src/constants/styles';
+import { ALERT_COLORS, COLORS } from 'src/constants/styles';
 import {
   StyledColor,
   StyledColorContainer,
   StyledColorsContainer,
-  StyledStatusColor,
 } from './Colors.styles';
 
 const meta = {
@@ -44,33 +43,6 @@ const ColorsTemplate = () => {
               <StyledColor color={COLORS[colorKey]} isDarkColor={isDarkColor}>
                 {COLORS[colorKey]}
               </StyledColor>
-              <div>{colorKey}</div>
-            </StyledColorContainer>
-          );
-        })}
-      </StyledColorsContainer>
-      <h4>Status Colors (with borders)</h4>
-      <StyledColorsContainer>
-        {Object.keys(CV_STATUS_COLORS).map((colorKey) => {
-          const isDarkColor = DarkColors.includes(
-            CV_STATUS_COLORS[colorKey].background
-          );
-          return (
-            <StyledColorContainer
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  CV_STATUS_COLORS[colorKey].background
-                );
-                alert(`Copied: ${CV_STATUS_COLORS[colorKey].background}`); // eslint-disable-line no-alert
-              }}
-            >
-              <StyledStatusColor
-                color={CV_STATUS_COLORS[colorKey].background}
-                isDarkColor={isDarkColor}
-                borderColor={CV_STATUS_COLORS[colorKey].border}
-              >
-                {CV_STATUS_COLORS[colorKey].background}
-              </StyledStatusColor>
               <div>{colorKey}</div>
             </StyledColorContainer>
           );

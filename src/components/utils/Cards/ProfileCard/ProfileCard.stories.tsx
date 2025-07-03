@@ -53,6 +53,7 @@ export const Candidate = {
       },
     ],
     department: 'Paris (75)',
+    hasPicture: true,
   },
 } satisfies Story;
 
@@ -87,5 +88,6 @@ export const Coach = {
       },
     ],
     department: 'Paris (75)',
+    hasPicture: true,
   },
 } satisfies Story;

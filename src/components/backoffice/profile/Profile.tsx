@@ -27,6 +27,12 @@ import { useSelectSelectedProfile } from './useSelectedProfile';
 export const Profile = () => {
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
+  const showProfileExperiences =
+    selectedProfile.role === UserRoles.CANDIDATE ||
+    (selectedProfile.experiences && selectedProfile.experiences.length > 0);
+  const showProfileFormations =
+    selectedProfile.role === UserRoles.CANDIDATE ||
+    (selectedProfile.formations && selectedProfile.formations.length > 0);
 
   return (
     <StyledBackofficeBackground>
@@ -38,6 +44,7 @@ export const Profile = () => {
         role={selectedProfile.role}
         department={selectedProfile.department}
         introduction={selectedProfile.introduction}
+        hasPicture={selectedProfile.hasPicture}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
@@ -60,16 +67,22 @@ export const Profile = () => {
                   ownProfile
                 />
               )}
-            <ProfileExperiences
-              userId={selectedProfile.id}
-              userFirstName={selectedProfile.firstName}
-              experiences={selectedProfile.experiences}
-            />
-            <ProfileFormations
-              userId={selectedProfile.id}
-              userFirstName={selectedProfile.firstName}
-              formations={selectedProfile.formations}
-            />
+            {showProfileExperiences && (
+              <ProfileExperiences
+                userId={selectedProfile.id}
+                userFirstName={selectedProfile.firstName}
+                userRole={selectedProfile.role}
+                experiences={selectedProfile.experiences}
+              />
+            )}
+            {showProfileFormations && (
+              <ProfileFormations
+                userId={selectedProfile.id}
+                userFirstName={selectedProfile.firstName}
+                userRole={selectedProfile.role}
+                formations={selectedProfile.formations}
+              />
+            )}
             {/* <ProfileReviews
               userId={selectedProfile.id}
               userFirstName={selectedProfile.firstName}
@@ -101,14 +114,15 @@ export const Profile = () => {
               hasExternalCv={selectedProfile.hasExternalCv}
               smallCard
             />
-            <ProfileContactPreferences smallCard />
-            {selectedProfile.role === UserRoles.CANDIDATE && (
-              <ProfileNudges
-                userRole={selectedProfile.role}
-                nudges={selectedProfile.nudges}
-                smallCard
-              />
-            )}
+            <ProfileContactPreferences
+              userRole={selectedProfile.role}
+              smallCard
+            />
+            <ProfileNudges
+              userRole={selectedProfile.role}
+              nudges={selectedProfile.nudges}
+              smallCard
+            />
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>
       </Section>

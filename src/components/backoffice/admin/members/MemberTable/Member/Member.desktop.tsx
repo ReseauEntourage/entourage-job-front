@@ -3,7 +3,6 @@ import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
 import { GENDERS_FILTERS } from '@/src/constants/genders';
-import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
 import { SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
@@ -21,16 +20,13 @@ import {
 import { buildContractLabel } from 'src/utils/Formatting';
 import {
   StyledCheckBoxCellContent,
-  StyledCVStatusCellContent,
   StyledEmployedCellContent,
-  StyledHiddenCVCellContent,
   StyledNameCell,
   StyledNoWrapCellContent,
 } from './Member.styles';
 import { MemberProps } from './Member.types';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
-import { MemberHiddenToggle } from './MemberToggle/MemberHiddenToggle';
 
 const tooltipId = 'contract-tooltip';
 
@@ -73,7 +69,11 @@ export function MemberDesktop({
           }
           disableLink={disableLink}
         >
-          <ImgProfile user={member} size={36} />
+          <ImgProfile
+            user={member}
+            size={36}
+            hasPicture={member.userProfile?.hasPicture || false}
+          />
         </MemberInfo>
       </StyledNameCell>
 
@@ -174,34 +174,6 @@ export function MemberDesktop({
                   </span>
                 )}
               </StyledEmployedCellContent>
-            </TdDesktop>
-          )}
-          {columns.includes('cvStatus') && (
-            <TdDesktop>
-              <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
-                {cvStatus === 'none' ? (
-                  <span>Aucun</span>
-                ) : (
-                  <span>{translateStatusCV(cvStatus)}</span>
-                )}
-              </StyledCVStatusCellContent>
-            </TdDesktop>
-          )}
-          {columns.includes('cvHidden') && (
-            <TdDesktop>
-              <StyledHiddenCVCellContent>
-                {isEditable ? (
-                  <MemberHiddenToggle setMember={setMember} member={member} />
-                ) : (
-                  <>
-                    {userCandidate?.hidden ? (
-                      <LucidIcon name="EyeOff" stroke="thin" />
-                    ) : (
-                      <LucidIcon name="Eye" stroke="thin" />
-                    )}
-                  </>
-                )}
-              </StyledHiddenCVCellContent>
             </TdDesktop>
           )}
           {columns.includes('selection') && (
