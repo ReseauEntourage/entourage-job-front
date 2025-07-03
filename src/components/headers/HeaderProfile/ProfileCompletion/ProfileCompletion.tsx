@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Api } from '@/src/api';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Text } from 'src/components/utils';
 import {
   StyledHeader,
@@ -9,7 +10,18 @@ import {
 } from './ProfileCompletion.style';
 
 export const ProfileCompletion = () => {
-  const completionRate = Api.getProfileCompletion() || 0;
+  // Utilisation d'un state local car on utilise le taux de completion seulement dans ce composant
+  const [completionRate, setCompletionRate] = useState(0);
+  const currentUser = useAuthenticatedUser();
+
+  useEffect(() => {
+    const fetchCompletionRate = async () => {
+      const { data } = await Api.getProfileCompletion();
+      setCompletionRate(data || 0);
+    };
+
+    fetchCompletionRate();
+  }, [currentUser, currentUser?.userProfile]);
 
   return (
     <StyledProfileCompletion>
