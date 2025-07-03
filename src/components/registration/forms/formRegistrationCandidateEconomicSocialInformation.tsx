@@ -44,7 +44,7 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
             );
           },
           message:
-            "Vous devez etre en situation d'isolement ou de précarité pour acceder au programme",
+            "Vous devez être en situation d'isolement ou de précarité pour accéder au programme",
         },
       ],
     },
@@ -75,7 +75,7 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
             );
           },
           message:
-            'Vous devez répondre OUI à au moins une des deux questions pour continuer',
+            "Vous devez être en situation d'isolement ou de précarité pour accéder au programme",
         },
       ],
     },
