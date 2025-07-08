@@ -109,9 +109,10 @@ export function ProfileCard({
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
   const sortedBusinessSectors = useMemo(() => {
-    return sectorOccupations
+    const items = sectorOccupations
       ?.filter((so) => !!so.businessSector)
       ?.map((so) => so.businessSector) as BusinessSector[];
+    return _.uniqBy(items, 'id');
   }, [sectorOccupations]);
 
   const sortedOccupations = useMemo(() => {
