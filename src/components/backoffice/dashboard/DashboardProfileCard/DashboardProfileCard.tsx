@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { ProfileCompletion } from '@/src/components/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { RoundBadge } from '@/src/components/utils/Badge/RoundBadge';
 import { FilePreviewCV } from '@/src/components/utils/Inputs/FileInput/FilePreview';
 import { ProfileHelps } from '@/src/constants/nudges';
@@ -23,6 +24,7 @@ import {
   StyledDashboardProfileCardSectionTitle,
   StyledDashbardProfileCardSectionContainer,
   StyledDashboardProfileCardEmptyState,
+  StyledDashboardProfileCardCompletionContainer,
 } from './DashboardProfileCard.styles';
 
 export const DashboardProfileCard = () => {
@@ -60,9 +62,9 @@ export const DashboardProfileCard = () => {
       </StyledDashboardProfileCardPictureName>
 
       {/* Completion rate bar */}
-      {/* <StyledDashboardProfileCardCompletionContainer>
-        <ProfileCompletion completionRate={0.1} />
-      </StyledDashboardProfileCardCompletionContainer> */}
+      <StyledDashboardProfileCardCompletionContainer>
+        <ProfileCompletion />
+      </StyledDashboardProfileCardCompletionContainer>
 
       <StyledDashbardProfileCardSectionContainer>
         {/* Completion presentation */}

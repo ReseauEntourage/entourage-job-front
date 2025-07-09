@@ -107,7 +107,7 @@ export class APIHandler {
   }
 
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
-    return this.get('/external-cv/generate-profile-from-cv');
+    return this.get('/profile-generation/generate-profile-from-cv');
   }
 
   // post
@@ -186,6 +186,10 @@ export class APIHandler {
 
   getPublicUserProfile(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/profile/${userId}`);
+  }
+
+  getProfileCompletion(): Promise<AxiosResponse<number>> {
+    return this.get(`/user/profile/completion`);
   }
 
   getAllUsersProfiles(

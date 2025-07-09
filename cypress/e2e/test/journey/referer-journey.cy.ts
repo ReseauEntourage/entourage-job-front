@@ -32,6 +32,47 @@ describe('En tant que - Prescripteur', () => {
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-current-referer-res',
     });
+
+    /**
+     * Liste des URLs spécifiques à intercepter
+     * Ajoutez vos URLs à cette liste selon vos besoins
+     */
+    const urlsToIntercept = [
+      'user/profile/recommendations/**',
+      '/user/profile/completion',
+      '/messaging/conversations',
+      '/messaging/conversations/**',
+
+      // Ajoutez d'autres URLs selon vos besoins
+    ];
+
+    /**
+     * Interception des requêtes pour les URLs spécifiques
+     * Chaque URL de la liste sera interceptée pour les méthodes HTTP spécifiées
+     */
+    const interceptSpecificUrls = () => {
+      urlsToIntercept.forEach((url) => {
+        ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].forEach((method) => {
+          cy.intercept(
+            {
+              method,
+              url,
+            },
+            {
+              statusCode: 200,
+              body: [],
+            }
+          ).as(
+            `${method.toLowerCase()}-${url
+              .replace(/\//g, '-')
+              .replace(/\*/g, 'all')}`
+          );
+        });
+      });
+    };
+
+    // Exécutez cette fonction pour intercepter les URLs spécifiées
+    interceptSpecificUrls();
   });
 
   describe("Je souhaite pouvoir naviguer dans l'application", () => {

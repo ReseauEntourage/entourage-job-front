@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Api } from '@/src/api';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { selectOnboardingCurrentStep } from '@/src/use-cases/onboarding';
 import { Text } from 'src/components/utils';
 import {
   StyledHeader,
@@ -7,13 +11,23 @@ import {
   StyledProgressionContainer,
 } from './ProfileCompletion.style';
 
-export interface CompletionProgressBarProps {
-  completionRate: number;
-}
+export const ProfileCompletion = () => {
+  // Utilisation d'un state local car on utilise le taux de completion seulement dans ce composant
+  const [completionRate, setCompletionRate] = useState(0);
+  const currentUser = useAuthenticatedUser();
+  const onbordingCurrentStep = useSelector(selectOnboardingCurrentStep);
 
-export const ProfileCompletion = ({
-  completionRate,
-}: CompletionProgressBarProps) => {
+  useEffect(() => {
+    const fetchCompletionRate = async () => {
+      const { data } = await Api.getProfileCompletion();
+      setCompletionRate(data || 0);
+    };
+
+    if (onbordingCurrentStep === 0) {
+      fetchCompletionRate();
+    }
+  }, [currentUser, currentUser.userProfile, onbordingCurrentStep]);
+
   return (
     <StyledProfileCompletion>
       <StyledHeader>
@@ -21,7 +35,7 @@ export const ProfileCompletion = ({
           Votre profil
         </Text>
         <Text size="small" color="mediumGray">
-          {completionRate * 100}%
+          {`${completionRate}%`}
         </Text>
       </StyledHeader>
       <StyledProgressionContainer>
