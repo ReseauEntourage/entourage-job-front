@@ -94,6 +94,16 @@ export interface Review {
   authorName: string;
 }
 
+export type UserProfileSkill = {
+  order: number;
+};
+
+export type Skill = {
+  id?: string;
+  name: string;
+  userProfileSkill: UserProfileSkill;
+};
+
 export interface Experience {
   id?: string;
   description?: string;
@@ -103,11 +113,7 @@ export interface Experience {
   company?: string;
   location?: string;
   order?: number;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
+  skills: Skill[];
 }
 
 export interface Formation {
@@ -118,18 +124,8 @@ export interface Formation {
   endDate?: string;
   institution?: string;
   location?: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
+  skills: Skill[];
 }
-
-export type Skill = {
-  id?: string;
-  name: string;
-  order: number;
-};
 
 export type Language = {
   id: string;
@@ -196,7 +192,7 @@ export type UserProfile = {
   reviews: Review[];
   experiences: Experience[];
   formations: Formation[];
-  skills: Skill[] | null;
+  skills: Skill[];
   userProfileLanguages: UserProfileLanguage[];
   interests: Interest[];
   contracts: Contract[];

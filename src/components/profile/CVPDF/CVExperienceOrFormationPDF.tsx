@@ -1,4 +1,5 @@
 import React from 'react';
+import { Skill } from '@/src/api/types';
 import { CVDate } from '../CVDate';
 import { StyledCVSkillTagContainer } from '../CVExperienceOrFormation/CVExperienceOrFormation.styles';
 import {
@@ -18,11 +19,7 @@ interface ExperienceOrFormationPDFProps {
 
   location: string;
   structure: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
+  skills: Skill[];
 }
 
 export function CVExperienceOrFormationPDF({

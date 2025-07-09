@@ -4,7 +4,6 @@ import { Skill } from '@/src/api/types';
 import { ExtractFormSchemaValidation } from '@/src/components/forms/FormSchema';
 import { formEditSkills } from '@/src/components/forms/schemas/formEditSkills';
 import { FilterConstant } from '@/src/constants/utils';
-import { sortByOrder } from '@/src/utils';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 interface ProfileSkillsModalEditProps {
@@ -18,18 +17,13 @@ export const ProfileSkillsModalEdit = ({
 }: ProfileSkillsModalEditProps) => {
   const [closeModal, setCloseModal] = useState<boolean>(false);
 
-  const sortedSkills = skills && skills.length > 0 ? sortByOrder(skills) : null;
-
   const defaultValues: DefaultValues<
     ExtractFormSchemaValidation<typeof formEditSkills>
   > = {
-    skills:
-      sortedSkills?.map((i) => {
-        return {
-          value: i.name,
-          label: i.name,
-        };
-      }) ?? [],
+    skills: skills.map((skill) => ({
+      value: skill.name,
+      label: skill.name,
+    })),
   };
 
   return (

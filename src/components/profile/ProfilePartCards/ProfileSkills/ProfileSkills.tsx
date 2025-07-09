@@ -29,10 +29,14 @@ export const ProfileSkills = ({
       <ProfileSkillsModalEdit
         dispatchOnSubmit={(fields) => {
           updateUserProfile({
-            skills: fields.skills.map((skill, order) => ({
-              name: skill.value,
-              order,
-            })),
+            skills: fields.skills.map((skill, order) => {
+              return {
+                name: skill.value,
+                userProfileSkill: {
+                  order,
+                },
+              };
+            }),
           });
         }}
         skills={skills}
@@ -55,7 +59,14 @@ export const ProfileSkills = ({
         icon: <IlluCoeurSurMainSeule />,
       }}
     >
-      <CardTagList items={skills} />
+      <CardTagList
+        items={skills.map((upSkill) => {
+          return {
+            id: upSkill.id,
+            name: upSkill.name ?? '',
+          };
+        })}
+      />
     </ProfilePartCard>
   );
 };
