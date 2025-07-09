@@ -107,7 +107,7 @@ export class APIHandler {
   }
 
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
-    return this.get('/external-cv/generate-profile-from-cv');
+    return this.get('/profile-generation/generate-profile-from-cv');
   }
 
   // post
