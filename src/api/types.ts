@@ -101,7 +101,7 @@ export type UserProfileSkill = {
 export type Skill = {
   id?: string;
   name: string;
-  userProfileSkill: UserProfileSkill;
+  userProfileSkill?: UserProfileSkill;
 };
 
 export interface Experience {

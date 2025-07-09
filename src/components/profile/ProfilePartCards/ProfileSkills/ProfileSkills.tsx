@@ -29,12 +29,9 @@ export const ProfileSkills = ({
       <ProfileSkillsModalEdit
         dispatchOnSubmit={(fields) => {
           updateUserProfile({
-            skills: fields.skills.map((skill, order) => {
+            skills: fields.skills.map((skill) => {
               return {
                 name: skill.value,
-                userProfileSkill: {
-                  order,
-                },
               };
             }),
           });
