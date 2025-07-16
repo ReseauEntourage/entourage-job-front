@@ -1,33 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
 import {
-  FirstStepRegistrationFormData,
-  REGISTRATION_FIRST_STEP,
-  RegistrationErrorMessages,
+  RegistrationFormData,
   RegistrationStep,
   RegistrationStepData,
-  RegistrationFormData,
-} from 'src/components/registration/Registration.types';
-import { RegistrableUserRoles } from 'src/constants/users';
+} from '@/src/components/registration/registration.types';
 import { RequestState, SliceRootState } from 'src/store/utils';
-import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
 
 export interface State {
   createUser: RequestState<typeof createUserAdapter>;
   createUserError: CreateUserError | null;
-  currentStep: RegistrationStep | null;
-  selectedRole: RegistrableUserRoles | null;
+  currentStep: RegistrationStep;
+  selectedFlow: RegistrationFlow | null;
   data: RegistrationStepData;
   isLoading: boolean;
+  isEnded?: boolean;
 }
 
 const initialState: State = {
   createUser: createUserAdapter.getInitialState(),
   createUserError: null,
-  currentStep: null,
-  selectedRole: null,
+  selectedFlow: null,
+  currentStep: -1,
   data: {},
-  isLoading: true,
+  isLoading: false,
+  isEnded: false,
 };
 
 export const slice = createSlice({
@@ -35,6 +33,10 @@ export const slice = createSlice({
   initialState,
   reducers: {
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
+      createUserRequested(state) {
+        state.isLoading = true;
+        state.createUserError = null;
+      },
       createUserSucceeded(_state) {},
       createUserFailed(
         state,
@@ -44,41 +46,45 @@ export const slice = createSlice({
         state.createUserError = action.payload?.error || null;
       },
     }),
-    setRegistrationCurrentStepData(
+    moveForwardInRegistration(
       state,
-      action: PayloadAction<RegistrationFormData>
+      action: PayloadAction<{
+        flow?: RegistrationFlow | null;
+        step?: RegistrationStep;
+        data?: RegistrationFormData;
+      }>
     ) {
-      const { currentStep } = state;
+      const { selectedFlow } = state;
 
-      assertIsDefined(currentStep, RegistrationErrorMessages.CURRENT_STEP);
-
-      if (currentStep === REGISTRATION_FIRST_STEP) {
-        state.selectedRole =
-          (action.payload as FirstStepRegistrationFormData).role?.[0] || null;
-      } else {
-        const { selectedRole } = state;
-
-        assertIsDefined(selectedRole, RegistrationErrorMessages.SELECTED_ROLE);
-
-        const currentStepData = state.data[currentStep] || {};
-
-        state.data[currentStep] = {
-          ...currentStepData,
-          [selectedRole]: action.payload,
-        };
+      // Transit to the flow if it is not already set
+      if (action.payload.flow !== undefined) {
+        state.selectedFlow = action.payload.flow;
       }
-    },
-    setRegistrationStep(state, action: PayloadAction<RegistrationStep | null>) {
-      state.currentStep = action.payload;
-      state.isLoading = true;
+
+      if (selectedFlow && action.payload.data !== undefined) {
+        const newData = action.payload.data;
+
+        state.data[state.currentStep] = {
+          ...newData,
+        } as RegistrationFormData;
+      }
+
+      // Update the current step to the next step
+      if (action.payload.step !== undefined) {
+        state.currentStep = action.payload.step;
+      }
     },
     setRegistrationIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
     resetRegistrationData(state) {
-      state.selectedRole = null;
+      state.selectedFlow = null;
+      state.currentStep = -1; // Reset to no step selected
       state.data = {};
-      state.isLoading = true;
+      state.isEnded = false;
+    },
+    setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
+      state.isEnded = action.payload;
     },
   },
 });

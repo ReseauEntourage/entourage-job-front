@@ -15,9 +15,9 @@ export function Registration() {
   const {
     isRegistrationLoading,
     stepContent,
+    selectedFlow,
     stepData,
     defaultValues,
-    isFirstRegistrationStep,
     onSubmitStepForm,
     onBack,
   } = useRegistration();
@@ -52,7 +52,7 @@ export function Registration() {
               onSubmit={onSubmitStepForm}
               submitText="Suivant"
               cancelText="Précédent"
-              {...(!isFirstRegistrationStep ? { onCancel: onBack } : {})}
+              {...(selectedFlow ? { onCancel: onBack } : {})}
             />
           </>
         )}
@@ -62,7 +62,7 @@ export function Registration() {
           </StyledRegistrationSpinnerContainer>
         )}
         <StyledRegistrationFooter>
-          <Text size="small">
+          <Text color="darkGray" size="small">
             Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
           </Text>
         </StyledRegistrationFooter>

@@ -51,11 +51,7 @@ export function TextInput({
 
   return (
     <StyledTextInputGroupForm disabled={disabled}>
-      {showLabel && (
-        <StyledInputLabel htmlFor={`form-input-${name}`}>
-          {title}
-        </StyledInputLabel>
-      )}
+      {showLabel && <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>}
       <StyledTextInputWrapper>
         <input
           ref={inputRef}

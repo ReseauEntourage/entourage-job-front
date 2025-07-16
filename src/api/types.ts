@@ -9,7 +9,6 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { Program } from 'src/constants/programs';
 import {
   AdminRoles,
   RegistrableUserRoles,
@@ -359,7 +358,6 @@ export type UserRegistrationDto = {
   department: Department;
   nudges?: Nudge[];
   workingRight?: string;
-  program?: Program;
   organizationId?: string;
   birthDate: string;
   occupations?: Occupation[];
@@ -383,7 +381,6 @@ export type UserReferingDto = {
   department: Department;
   nudges?: Nudge[];
   workingRight?: string;
-  program?: Program;
   birthDate: string;
   sectorOccupations?: UserProfileSectorOccupation[];
 };
