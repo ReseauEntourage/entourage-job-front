@@ -63,8 +63,10 @@ export const slice = createSlice({
 
       if (selectedFlow && action.payload.data !== undefined) {
         const newData = action.payload.data;
+        const currentStepData = state.data[state.currentStep] || {};
 
         state.data[state.currentStep] = {
+          ...currentStepData,
           ...newData,
         } as RegistrationFormData;
       }

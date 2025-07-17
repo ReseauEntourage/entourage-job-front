@@ -60,6 +60,7 @@ export const StyledListOption = styled.div`
   > .img-container {
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     > svg {

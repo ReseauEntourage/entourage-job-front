@@ -106,19 +106,7 @@ export function selectRegistrationCurrentStepData(
 ): RegistrationFormData | null {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
 
-  const isFirstStep = selectIsFirstRegistrationStep(state);
-
-  if (isFirstStep) {
-    const selectedFlow = selectRegistrationSelectedFlow(state);
-    return selectedFlow ? { flow: selectedFlow } : null;
-  }
-
-  const selectedFlow = selectDefinedRegistrationSelectedFlow(state);
-
-  if (!selectedFlow) {
-    return null;
-  }
-  return state.registration.data[selectedFlow]?.[currentStep] || null;
+  return state.registration.data[currentStep] || null;
 }
 
 export function selectRegistrationCurrentStepContent(
