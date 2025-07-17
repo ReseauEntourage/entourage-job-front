@@ -174,9 +174,8 @@ describe('En tant que - Prescripteur', () => {
         cy.get('[data-testid="network-insecurity-no"]').click();
         cy.contains('Suivant').click();
 
-        // Should skip the step 4 and 5
-        // Check that the URL is now /backoffice/referer/orienter/step-6
-        cy.url().should('include', 'step-6');
+        // Check that the URL is now /backoffice/referer/orienter/step-4
+        cy.url().should('include', 'step-4');
 
         // Fill the professional information
         cy.get(

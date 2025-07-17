@@ -40,40 +40,54 @@ describe('Registration', () => {
         cy.contains('Inscription');
       });
 
-      it('should be able to select the role "Candidat"', () => {
-        cy.get('[data-testid="form-registration-role-role-Candidat"]')
+      it('should be able to select the flow "Candidat"', () => {
+        cy.get('[data-testid="form-registration-flow-flow-candidate"]')
           .should('be.visible')
           .click();
         cy.contains('Suivant').click();
-        cy.url().should('include', 'step-2');
+        cy.get('[data-testid="form-registration-flow-flow-candidate"]').should(
+          'not.exist'
+        );
       });
 
-      it('should be able to select the role "Coach"', () => {
-        cy.get('[data-testid="form-registration-role-role-Coach"]')
+      it('should be able to select the flow "Coach"', () => {
+        cy.get('[data-testid="form-registration-flow-flow-coach"]')
           .should('be.visible')
           .click();
         cy.contains('Suivant').click();
-        cy.url().should('include', 'step-2');
+        cy.get('[data-testid="form-registration-flow-flow-coach"]').should(
+          'not.exist'
+        );
       });
 
-      it('should be able to select the role "Prescripteur"', () => {
-        cy.get('[data-testid="form-registration-role-role-Prescripteur"]')
+      it('should be able to select the flow "Referer"', () => {
+        cy.get('[data-testid="form-registration-flow-flow-referer"]')
           .should('be.visible')
           .click();
         cy.contains('Suivant').click();
-        cy.url().should('include', 'step-2');
+        cy.get('[data-testid="form-registration-flow-flow-referer"]').should(
+          'not.exist'
+        );
+      });
+
+      it('should be able to select the flow "Company"', () => {
+        cy.get('[data-testid="form-registration-flow-flow-company"]')
+          .should('be.visible')
+          .click();
+        cy.contains('Suivant').click();
+        cy.get('[data-testid="form-registration-flow-flow-company"]').should(
+          'not.exist'
+        );
       });
 
       describe('Etant donné que je souhaite devenir un candidat', () => {
         beforeEach(() => {
-          cy.get('[data-testid="form-registration-role-role-Candidat"]')
+          cy.get('[data-testid="form-registration-flow-flow-candidate"]')
             .should('be.visible')
             .click();
           cy.contains('Suivant').click();
         });
         it('should be able to fill the candidate registration form', () => {
-          cy.url().should('include', 'step-2');
-
           cy.wait('@nudges');
           // Fill the candidate expectations
           cy.get(
@@ -84,7 +98,6 @@ describe('Registration', () => {
             .click();
           cy.contains('Suivant').click();
 
-          cy.url().should('include', 'step-3');
           // Fill the candidate info
           cy.get(
             '[data-testid="form-registration-candidate-info-birthDate"]'
@@ -97,14 +110,12 @@ describe('Registration', () => {
           cy.get('[data-testid="working-right-yes"]').click();
           cy.contains('Suivant').click();
 
-          // Fill the candidate situation questions (step-4)
-          cy.url().should('include', 'step-4');
+          // Fill the candidate situation questions
           cy.get('[data-testid="material-insecurity-yes"]').click();
           cy.get('[data-testid="network-insecurity-no"]').click();
           cy.contains('Suivant').click();
 
-          // Fill the professional information (step-7)
-          cy.url().should('include', 'step-7');
+          // Fill the professional information
           cy.get(
             '#form-registration-candidate-professional-information-businessSectorId0'
           ).click();
@@ -117,8 +128,7 @@ describe('Registration', () => {
             .click();
           cy.contains('Suivant').click();
 
-          // Fill the account information (step-8)
-          cy.url().should('include', 'step-8');
+          // Fill the account information
           cy.get('[data-testid="form-registration-account-firstName"]').type(
             'John'
           );
@@ -146,21 +156,19 @@ describe('Registration', () => {
 
           cy.contains('Suivant').click();
           cy.url().should('include', 'confirmation');
-          cy.url().should('include', 'Candidat');
+          cy.url().should('include', 'candidate');
         });
       });
 
       describe('Etant donné que je souhaite devenir un Prescripteur', () => {
         beforeEach(() => {
-          cy.get('[data-testid="form-registration-role-role-Prescripteur"]')
+          cy.get('[data-testid="form-registration-flow-flow-referer"]')
             .should('be.visible')
             .click();
           cy.contains('Suivant').click();
         });
 
         it('should be able to fill the Prescripteur registration form', () => {
-          cy.url().should('include', 'step-2');
-
           // Fill the account information
           cy.get('[data-testid="form-registration-account-firstName"]').type(
             'John'
@@ -210,7 +218,7 @@ describe('Registration', () => {
           // Go to the next step and check that the URL now includes "confirmation" and "Prescripteur"
           cy.contains('Suivant').click();
           cy.url().should('include', 'confirmation');
-          cy.url().should('include', 'Prescripteur');
+          cy.url().should('include', 'referer');
         });
       });
     });
