@@ -40,6 +40,9 @@ import {
   TextInputComponent,
   TextInputComponents,
   FormFieldFile,
+  ReactNodeComponents,
+  ReactNodeComponent,
+  FormFieldReactNode,
 } from './FormSchema.types';
 
 export function mapFieldRules<
@@ -169,6 +172,12 @@ export function isFormFieldText<S extends FormSchemaValidation>(
   field: FormField<S>
 ): field is FormFieldText<S> {
   return TextComponents.includes(field.component as TextComponent);
+}
+
+export function isFormFieldReactNode<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldReactNode<S> {
+  return ReactNodeComponents.includes(field.component as ReactNodeComponent);
 }
 
 export function isFormFieldGroup<S extends FormSchemaValidation>(

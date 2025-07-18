@@ -9,7 +9,6 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { Program } from 'src/constants/programs';
 import {
   AdminRoles,
   RegistrableUserRoles,
@@ -33,6 +32,7 @@ export const APIRoutes = {
   READ_DOCUMENTS: 'readDocuments',
   EXTERNAL_CVS: 'external-cv',
   MESSAGING: 'messaging',
+  COMPANIES: 'companies',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -74,6 +74,11 @@ export type OrganizationDto = {
   referentMail: string;
   referentPhone: string;
   zone: AdminZone;
+};
+
+export type CompanyDto = {
+  id?: string;
+  name: string;
 };
 
 export interface BusinessSector {
@@ -359,7 +364,6 @@ export type UserRegistrationDto = {
   department: Department;
   nudges?: Nudge[];
   workingRight?: string;
-  program?: Program;
   organizationId?: string;
   birthDate: string;
   occupations?: Occupation[];
@@ -383,7 +387,6 @@ export type UserReferingDto = {
   department: Department;
   nudges?: Nudge[];
   workingRight?: string;
-  program?: Program;
   birthDate: string;
   sectorOccupations?: UserProfileSectorOccupation[];
 };
