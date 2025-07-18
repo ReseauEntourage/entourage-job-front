@@ -21,3 +21,4 @@ export * from './Section';
 export * from './OffCanvas/Offcanvas';
 export * from './Text';
 export * from './Dropdown/Dropdown';
+export * from './Icons';

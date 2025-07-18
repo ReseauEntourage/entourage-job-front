@@ -39,6 +39,8 @@ export function* createUserRequestedSaga() {
     occupation0,
     occupation1,
     organizationId,
+    companyId,
+    companyRole,
     nudgeIds,
     ...flattenedData
   } = flattenRegistrationData(data);
@@ -57,6 +59,8 @@ export function* createUserRequestedSaga() {
       }),
       department: flattenedData.department.value,
       organizationId: organizationId ? organizationId.value : undefined,
+      companyId: companyId ? companyId.value : undefined,
+      companyRole: companyRole ? companyRole.value : undefined,
       nudges: nudgeIds?.length
         ? nudgeIds.map((id) => {
             return {
@@ -82,6 +86,7 @@ export function* createUserRequestedSaga() {
         })
       );
     } else {
+      console.error('Error during user registration:', err);
       yield* put(createUserFailed(null));
     }
   }

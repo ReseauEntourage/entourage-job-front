@@ -16,6 +16,7 @@ import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidate
 import { formRegistrationCandidateProfessionalInformation } from './forms/formRegistrationCandidateProfessionalInformation';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCompanyRole } from './forms/formRegistrationCompanyRole';
+import { formRegistrationCompanySelection } from './forms/formRegistrationCompanySelection';
 import { formRegistrationFlowSelection } from './forms/formRegistrationFlowSelection';
 import { formRegistrationRefererAccount } from './forms/formRegistrationRefererAccount';
 import {
@@ -48,6 +49,7 @@ export const RegistrationErrorMessages = {
 
 export const RegistrationExcludedFieldsKeys = [
   'nameOrganization',
+  'companyName',
   'acceptCGU',
   'flow',
 ];
@@ -225,6 +227,12 @@ export const RegistrationFlows: {
           };
         }
       },
+    },
+    {
+      form: formRegistrationCompanySelection,
+    },
+    {
+      form: formRegistrationCoachInfo,
     },
     {
       form: formRegistrationAccount,

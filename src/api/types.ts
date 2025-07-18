@@ -32,6 +32,7 @@ export const APIRoutes = {
   READ_DOCUMENTS: 'readDocuments',
   EXTERNAL_CVS: 'external-cv',
   MESSAGING: 'messaging',
+  COMPANIES: 'companies',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -73,6 +74,11 @@ export type OrganizationDto = {
   referentMail: string;
   referentPhone: string;
   zone: AdminZone;
+};
+
+export type CompanyDto = {
+  id?: string;
+  name: string;
 };
 
 export interface BusinessSector {

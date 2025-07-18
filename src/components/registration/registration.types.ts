@@ -10,6 +10,7 @@ import { formRegistrationCandidateProfessionalInformation } from './forms/formRe
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
 import { formRegistrationCompanyRole } from './forms/formRegistrationCompanyRole';
+import { formRegistrationCompanySelection } from './forms/formRegistrationCompanySelection';
 import { formRegistrationFlowSelection } from './forms/formRegistrationFlowSelection';
 import { formRegistrationRefererAccount } from './forms/formRegistrationRefererAccount';
 
@@ -38,6 +39,8 @@ export type RefererRegistrationFlowForm = typeof formRegistrationRefererAccount;
 
 export type CompanyRegistrationFlowForm =
   | typeof formRegistrationCompanyRole
+  | typeof formRegistrationCompanySelection
+  | typeof formRegistrationCoachInfo
   | typeof formRegistrationAccount;
 
 export type FirstStepRegistrationForm = typeof formRegistrationFlowSelection;
@@ -54,6 +57,9 @@ export type RegistrationFlowForms =
 
 export type RegistrationFlowFormWithOrganizationField =
   typeof formRegistrationRefererAccount;
+
+export type RegistrationFlowFormWithCompanyField =
+  | typeof formRegistrationCompanySelection;
 
 export type RegistrationFormData =
   ExtractFormSchemaValidation<RegistrationFlowForms>;
