@@ -1,10 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Nudge } from '@/src/api/types';
 import { UserRoleByFlow } from '@/src/components/registration/registration.config';
-import {
-  flattenRegistrationData,
-  getUtmFromLocalStorage,
-} from '@/src/components/registration/registration.utils';
+import { getUtmFromLocalStorage } from '@/src/components/registration/registration.utils';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';
@@ -32,6 +29,11 @@ export function* createUserRequestedSaga() {
   const selectedFlow = yield* select(selectDefinedRegistrationSelectedFlow);
 
   assertIsDefined(selectedFlow, 'Selected flow must be defined');
+  if (!data) {
+    console.error('Registration data is not defined');
+    yield* put(createUserFailed(null));
+    return;
+  }
   const {
     confirmPassword,
     businessSectorId0,
@@ -42,14 +44,14 @@ export function* createUserRequestedSaga() {
     companyId,
     companyRole,
     nudgeIds,
-    ...flattenedData
-  } = flattenRegistrationData(data);
+    ...restData
+  } = data;
 
   const utmParameters = getUtmFromLocalStorage();
 
   try {
     const userData = {
-      ...flattenedData,
+      ...restData,
       role: UserRoleByFlow[selectedFlow],
       sectorOccupations: formatCareerPathSentence({
         occupation0,
@@ -57,7 +59,7 @@ export function* createUserRequestedSaga() {
         businessSectorId0,
         businessSectorId1,
       }),
-      department: flattenedData.department.value,
+      department: restData.department.value,
       organizationId: organizationId ? organizationId.value : undefined,
       companyId: companyId ? companyId.value : undefined,
       companyRole: companyRole ? companyRole.value : undefined,

@@ -7,18 +7,13 @@ import {
   RegistrationStepSelectFlow,
 } from '@/src/components/registration/registration.config';
 import {
-  FlattenedRegistrationFormData,
-  RegistrationFormData,
   RegistrationFormDataKeys,
   RegistrationLastStepContent,
   RegistrationStep,
   RegistrationStepContent,
   SkippedByKeysUnion,
 } from '@/src/components/registration/registration.types';
-import {
-  flattenRegistrationData,
-  incrementRegistrationStep,
-} from '@/src/components/registration/registration.utils';
+import { incrementRegistrationStep } from '@/src/components/registration/registration.utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
@@ -101,14 +96,6 @@ export function selectIsRegistrationLoading(state: RootState) {
   return state.registration.isLoading;
 }
 
-export function selectRegistrationCurrentStepData(
-  state: RootState
-): RegistrationFormData | null {
-  const currentStep = selectDefinedRegistrationCurrentStep(state);
-
-  return state.registration.data[currentStep] || null;
-}
-
 export function selectRegistrationCurrentStepContent(
   state: RootState
 ): RegistrationStepContent {
@@ -144,42 +131,17 @@ export function selectRegistrationConfirmationStepContent(
   return content;
 }
 
-export function selectRegistrationDataFromOtherStep(
-  state: RootState
-): Partial<RegistrationFormData> | null {
-  const isFirstStep = selectIsFirstRegistrationStep(state);
-  const stepContent = selectRegistrationCurrentStepContent(state);
-
-  if (!isFirstStep && stepContent.dependsOn) {
-    const data = selectRegistrationData(state);
-
-    const selectedFlow = selectDefinedRegistrationSelectedFlow(state);
-
-    assertIsDefined(
-      selectedFlow,
-      'Registration flow is not defined for selectRegistrationDataFromOtherStep'
-    );
-    // Flatten the union of all the form values to get each key and its value
-    // That way we are able to use the name of the specific field key to get its
-    // value if another form in the registration process needs the value of a preceding form
-    const allStepsData = flattenRegistrationData(data);
-
-    return stepContent.dependsOn.reduce((acc, curr) => {
-      return { ...acc, [curr]: allStepsData[curr] };
-    }, {} as FlattenedRegistrationFormData);
-  }
-
-  return null;
-}
-
 export function selectRegistrationShouldSkipStep(state: RootState) {
-  const valuesFromOtherStep = selectRegistrationDataFromOtherStep(state);
+  const data = selectRegistrationData(state);
   const stepContent = selectRegistrationCurrentStepContent(state);
 
+  if (!data) {
+    return false;
+  }
   const skippedByArray = stepContent.skippedBy;
   let skipNextStep = false;
 
-  if (skippedByArray && valuesFromOtherStep) {
+  if (skippedByArray && data) {
     const keys = Object.keys(skippedByArray) as SkippedByKeysUnion[];
 
     // All conditions should be met to skip the step
@@ -187,19 +149,17 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
       let thisKeyShouldSkip = false;
 
       // Keys with simple logic
-      if (valuesFromOtherStep[key as RegistrationFormDataKeys]) {
+      if (data[key as RegistrationFormDataKeys]) {
         // check if skippedByArray[key] contains a value from valuesFromOtherStep[key]
-        if (
-          Array.isArray(valuesFromOtherStep[key as RegistrationFormDataKeys])
-        ) {
+        if (Array.isArray(data[key as RegistrationFormDataKeys])) {
           thisKeyShouldSkip = _.isEqual(
-            valuesFromOtherStep[key as RegistrationFormDataKeys],
+            data[key as RegistrationFormDataKeys],
             skippedByArray[key]
           );
         } else {
           thisKeyShouldSkip = _.includes(
             skippedByArray[key] as string[],
-            valuesFromOtherStep[key as RegistrationFormDataKeys]
+            data[key as RegistrationFormDataKeys]
           );
         }
       }

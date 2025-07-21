@@ -16,8 +16,7 @@ export function Registration() {
     isRegistrationLoading,
     stepContent,
     selectedFlow,
-    stepData,
-    defaultValues,
+    data,
     onSubmitStepForm,
     onBack,
   } = useRegistration();
@@ -46,8 +45,7 @@ export function Registration() {
             <FormWithValidation
               formSchema={stepContent.form}
               defaultValues={{
-                ...(stepData || {}),
-                ...(defaultValues || {}),
+                ...(data || {}),
               }}
               onSubmit={onSubmitStepForm}
               submitText="Suivant"

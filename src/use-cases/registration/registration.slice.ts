@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
+import { REGISTRATION_FIRST_STEP } from '@/src/components/registration/registration.config';
 import {
-  REGISTRATION_COMPANY_FLOW_COMPANY_SELECTION_STEP,
-  REGISTRATION_FIRST_STEP,
-} from '@/src/components/registration/registration.config';
-import {
+  RegistrationData,
   RegistrationFormData,
   RegistrationStep,
-  RegistrationStepData,
 } from '@/src/components/registration/registration.types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
@@ -17,7 +14,7 @@ export interface State {
   createUserError: CreateUserError | null;
   currentStep: RegistrationStep;
   selectedFlow: RegistrationFlow | null;
-  data: RegistrationStepData;
+  data: RegistrationData;
   isLoading: boolean;
   isEnded?: boolean;
 }
@@ -27,7 +24,7 @@ const initialState: State = {
   createUserError: null,
   selectedFlow: null,
   currentStep: -1,
-  data: {},
+  data: null,
   isLoading: false,
   isEnded: false,
 };
@@ -67,12 +64,15 @@ export const slice = createSlice({
 
       if (selectedFlow && action.payload.data !== undefined) {
         const newData = action.payload.data;
-        const currentStepData = state.data[state.currentStep] || {};
 
-        state.data[state.currentStep] = {
-          ...currentStepData,
-          ...newData,
-        } as RegistrationFormData;
+        if (!state.data) {
+          state.data = newData as RegistrationData;
+        } else {
+          state.data = {
+            ...state.data,
+            ...newData,
+          };
+        }
       }
 
       // Update the current step to the next step
@@ -86,25 +86,41 @@ export const slice = createSlice({
     resetRegistrationData(state) {
       state.selectedFlow = null;
       state.currentStep = -1; // Reset to no step selected
-      state.data = {};
+      state.data = null;
       state.isEnded = false;
     },
     setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
       state.isEnded = action.payload;
     },
-    setCompanyFlowWithId(
+    setDataFromQueryParams(
       state,
-      action: PayloadAction<{ companyId: string; companyName?: string }>
+      action: PayloadAction<{ companyId?: string; flow?: RegistrationFlow }>
     ) {
-      state.selectedFlow = RegistrationFlow.COMPANY; // Ensure the flow is set to COMPANY
-      state.currentStep = REGISTRATION_FIRST_STEP; // Reset to the first step
-      // Set the default company ID in the data for the company selection step
-      state.data[REGISTRATION_COMPANY_FLOW_COMPANY_SELECTION_STEP] = {
+      // Set the selected flow based on the action payload
+      state.selectedFlow = action.payload.flow || state.selectedFlow;
+      // Reset the current step to the first step if a flow is selected
+      state.currentStep = action.payload.flow
+        ? REGISTRATION_FIRST_STEP
+        : state.currentStep; // Reset to the first step
+
+      // Set a company ID if provided in the action payload
+      const newData = {
         companyId: {
-          label: action.payload.companyName,
+          // The label will not be displayed, but will be used for form submission
           value: action.payload.companyId,
+          label: action.payload.companyId,
         },
       };
+      if (action.payload.companyId) {
+        if (!state.data) {
+          state.data = newData as RegistrationData;
+        } else {
+          state.data = {
+            ...state.data,
+            ...(newData as RegistrationData),
+          };
+        }
+      }
     },
   },
 });

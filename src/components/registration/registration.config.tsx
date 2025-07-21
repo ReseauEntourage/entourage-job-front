@@ -214,16 +214,16 @@ export const RegistrationFlows: {
   [RegistrationFlow.COMPANY]: [
     {
       form: formRegistrationCompanyRole,
-      customDispatch: (stepData) => {
-        const { companyRole } = stepData as ExtractFormSchemaValidation<
+      customDispatch: (data) => {
+        const { companyRole } = data as ExtractFormSchemaValidation<
           typeof formRegistrationCompanyRole
         >;
 
-        if (companyRole.value === 'other') {
+        if (companyRole.value === 'employee') {
           return {
             flow: RegistrationFlow.COACH,
             nextStep: 0,
-            data: {},
+            data: null,
           };
         }
       },

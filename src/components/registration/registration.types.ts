@@ -64,27 +64,19 @@ export type RegistrationFlowFormWithCompanyField =
 export type RegistrationFormData =
   ExtractFormSchemaValidation<RegistrationFlowForms>;
 
-export type RegistrationStepData = Partial<{
-  [K in RegistrationStep]: RegistrationFormData;
-}>;
-
 export type FirstStepRegistrationFormData = ExtractFormSchemaValidation<
   typeof formRegistrationFlowSelection
 >;
 
 export type RegistrationFormDataKeys = UnionKeys<RegistrationFormData>;
 
-export type FlattenedRegistrationFormData =
-  UnionToIntersection<RegistrationFormData>;
+export type RegistrationData = UnionToIntersection<RegistrationFormData> | null;
 
 /**
  * Represents the skipped keys in the registration form data.
  * This type is used to define which keys can be skipped based on the values of other fields
  */
-export type SkippedByKeys = Partial<{
-  [K in RegistrationFormDataKeys]: FlattenedRegistrationFormData[K];
-}>;
-
+export type SkippedByKeys = Partial<RegistrationData>;
 export type SkippedByKeysUnion = UnionKeys<SkippedByKeys>;
 
 export interface RegistrationStepContent<
@@ -101,7 +93,7 @@ export interface RegistrationStepContent<
   customDispatch?: (stepData: RegistrationFormData) => Partial<{
     flow: RegistrationFlow;
     nextStep: RegistrationStep;
-    data: RegistrationStepData;
+    data: RegistrationData;
   }> | void;
 }
 

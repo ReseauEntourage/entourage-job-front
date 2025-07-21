@@ -19,7 +19,7 @@ export const COMPANY_ROLES = [
   },
   {
     name: 'Autre',
-    value: 'other',
+    value: 'employee',
   },
 ];
 

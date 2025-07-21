@@ -30,12 +30,11 @@ import {
   selectIsRegistrationLoading,
   selectRegistrationCurrentStep,
   selectRegistrationCurrentStepContent,
-  selectRegistrationCurrentStepData,
-  selectRegistrationDataFromOtherStep,
   selectRegistrationNextStep,
   selectRegistrationSelectedFlow,
   selectRegistrationShouldSkipStep,
   selectNextIsLastRegistrationStep,
+  selectRegistrationData,
 } from 'src/use-cases/registration';
 
 export function useRegistration() {
@@ -48,16 +47,13 @@ export function useRegistration() {
   const defaultCompanyId = query.companyId
     ? (query.companyId as string)
     : undefined;
-  const defaultCompanyName = query.companyName
-    ? (query.companyName as string)
-    : undefined;
+  const defaultFlow = query.flow ? (query.flow as RegistrationFlow) : undefined;
 
   const isRegistrationLoading = useSelector(selectIsRegistrationLoading);
 
   const currentStep = useSelector(selectRegistrationCurrentStep);
-  const stepData = useSelector(selectRegistrationCurrentStepData);
   const stepContent = useSelector(selectRegistrationCurrentStepContent);
-  const valuesFromOtherStep = useSelector(selectRegistrationDataFromOtherStep);
+  const data = useSelector(selectRegistrationData);
   const isFirstRegistrationStep = useSelector(selectIsFirstRegistrationStep);
   const nextIsLastRegistrationStep = useSelector(
     selectNextIsLastRegistrationStep
@@ -223,10 +219,10 @@ export function useRegistration() {
       }, {} as RegistrationFormData);
 
       // If there are values from a previous step, we merge them with the current step fields
-      if (valuesFromOtherStep) {
+      if (data) {
         registrationFields = fieldsKeys.reduce((acc, curr) => {
           if (
-            !Object.keys(valuesFromOtherStep).includes(curr) &&
+            !Object.keys(data).includes(curr) &&
             !RegistrationExcludedFieldsKeys.includes(curr)
           ) {
             return {
@@ -267,7 +263,7 @@ export function useRegistration() {
       }
     },
     [
-      valuesFromOtherStep,
+      data,
       handleRegistrationDispatcher,
       nextIsLastRegistrationStep,
       handleOrganizationFields,
@@ -336,22 +332,19 @@ export function useRegistration() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (defaultCompanyId && defaultCompanyName) {
-      dispatch(
-        registrationActions.setCompanyFlowWithId({
-          companyId: defaultCompanyId,
-          companyName: defaultCompanyName,
-        })
-      );
-    }
-  }, [defaultCompanyId, defaultCompanyName, dispatch]);
+    dispatch(
+      registrationActions.setDataFromQueryParams({
+        companyId: defaultCompanyId,
+        flow: defaultFlow,
+      })
+    );
+  }, [defaultCompanyId, defaultFlow, dispatch]);
 
   return {
     isRegistrationLoading,
     stepContent,
-    stepData,
     selectedFlow,
-    defaultValues: valuesFromOtherStep,
+    data,
     isFirstRegistrationStep,
     nextIsLastRegistrationStep,
     onSubmitStepForm,
