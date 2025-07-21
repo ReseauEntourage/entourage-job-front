@@ -239,3 +239,5 @@ export const RegistrationFlows: {
     },
   ],
 };
+
+export const REGISTRATION_COMPANY_FLOW_COMPANY_SELECTION_STEP = 1;

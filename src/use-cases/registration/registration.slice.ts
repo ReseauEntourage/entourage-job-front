@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
 import {
+  REGISTRATION_COMPANY_FLOW_COMPANY_SELECTION_STEP,
+  REGISTRATION_FIRST_STEP,
+} from '@/src/components/registration/registration.config';
+import {
   RegistrationFormData,
   RegistrationStep,
   RegistrationStepData,
@@ -87,6 +91,20 @@ export const slice = createSlice({
     },
     setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
       state.isEnded = action.payload;
+    },
+    setCompanyFlowWithId(
+      state,
+      action: PayloadAction<{ companyId: string; companyName?: string }>
+    ) {
+      state.selectedFlow = RegistrationFlow.COMPANY; // Ensure the flow is set to COMPANY
+      state.currentStep = REGISTRATION_FIRST_STEP; // Reset to the first step
+      // Set the default company ID in the data for the company selection step
+      state.data[REGISTRATION_COMPANY_FLOW_COMPANY_SELECTION_STEP] = {
+        companyId: {
+          label: action.payload.companyName,
+          value: action.payload.companyId,
+        },
+      };
     },
   },
 });

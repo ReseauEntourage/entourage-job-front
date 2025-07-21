@@ -160,11 +160,12 @@ export function selectRegistrationDataFromOtherStep(
       'Registration flow is not defined for selectRegistrationDataFromOtherStep'
     );
     // Flatten the union of all the form values to get each key and its value
-    // That way we are able to use the name of the specific field key to get its value if another form in the registration process needs the value of a preceding form
-    const allStepsDataForSelectedRole = flattenRegistrationData(data);
+    // That way we are able to use the name of the specific field key to get its
+    // value if another form in the registration process needs the value of a preceding form
+    const allStepsData = flattenRegistrationData(data);
 
     return stepContent.dependsOn.reduce((acc, curr) => {
-      return { ...acc, [curr]: allStepsDataForSelectedRole[curr] };
+      return { ...acc, [curr]: allStepsData[curr] };
     }, {} as FlattenedRegistrationFormData);
   }
 

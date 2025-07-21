@@ -42,6 +42,16 @@ export function useRegistration() {
   const { push } = useRouter();
   const dispatch = useDispatch();
 
+  // Retrieve optionnal query parameters from the URL "companyId"
+  const router = useRouter();
+  const { query } = router;
+  const defaultCompanyId = query.companyId
+    ? (query.companyId as string)
+    : undefined;
+  const defaultCompanyName = query.companyName
+    ? (query.companyName as string)
+    : undefined;
+
   const isRegistrationLoading = useSelector(selectIsRegistrationLoading);
 
   const currentStep = useSelector(selectRegistrationCurrentStep);
@@ -324,6 +334,17 @@ export function useRegistration() {
       dispatch(registrationActions.createUserReset());
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (defaultCompanyId && defaultCompanyName) {
+      dispatch(
+        registrationActions.setCompanyFlowWithId({
+          companyId: defaultCompanyId,
+          companyName: defaultCompanyName,
+        })
+      );
+    }
+  }, [defaultCompanyId, defaultCompanyName, dispatch]);
 
   return {
     isRegistrationLoading,
