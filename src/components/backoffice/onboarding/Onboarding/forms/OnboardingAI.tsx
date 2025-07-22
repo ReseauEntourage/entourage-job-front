@@ -1,15 +1,14 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Img } from '@/src/components/utils';
 import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
+import { useProfileGeneration } from '@/src/hooks';
 import { IlluCV } from 'assets/icons/icons';
 import { Button } from 'src/components/utils/Button/Button';
 import { StyledCenteredButtonContainer } from 'src/components/utils/Button/Button.styles';
 import { ContainerWithTextCentered } from 'src/components/utils/Containers/ContainerWithTextCentered';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Text } from 'src/components/utils/Text';
-import { generateProfileFromCVSelectors, cvActions } from 'src/use-cases/cv';
 
 const StyledImageContainer = styled.div`
   display: flex;
@@ -21,16 +20,7 @@ const StyledImageContainer = styled.div`
 `;
 
 export const OnboardingAI = () => {
-  const dispatch = useDispatch();
-
-  const isLoading = useSelector(
-    generateProfileFromCVSelectors.selectIsGenerateProfileFromCVRequested
-  );
-
-  const handleGenerateProfile = () => {
-    dispatch(cvActions.generateProfileFromCVRequested());
-  };
-
+  const { generateProfileFromCV, isLoading } = useProfileGeneration();
   return (
     <>
       <ContainerWithTextCentered>
@@ -67,7 +57,7 @@ export const OnboardingAI = () => {
             variant="primary"
             rounded
             size="large"
-            onClick={handleGenerateProfile}
+            onClick={generateProfileFromCV}
             disabled={isLoading}
           >
             Générer mon profil avec l&apos;IA&nbsp;

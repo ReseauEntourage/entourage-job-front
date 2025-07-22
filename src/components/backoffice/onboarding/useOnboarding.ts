@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useProfileGeneration } from '@/src/hooks';
 import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
 import { selectAuthenticatedUser } from 'src/use-cases/current-user';
-import { generateProfileFromCVSelectors } from 'src/use-cases/cv';
 import {
   onboardingActions,
   selectIsOnboardingLoading,
@@ -20,6 +20,7 @@ import { OnboardingFormData } from './Onboarding.types';
 
 export const useOnboarding = () => {
   const dispatch = useDispatch();
+  const { isLoading: isGeneratingProfile } = useProfileGeneration();
 
   const currentStep = useSelector(selectOnboardingCurrentStep);
   const isOnboardingLoading = useSelector(selectIsOnboardingLoading);
@@ -28,11 +29,6 @@ export const useOnboarding = () => {
   const valuesFromOtherStep = useSelector(selectOnboardingDataFromOtherStep);
   const authenticatedUser = useSelector(selectAuthenticatedUser);
   const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
-
-  // Vérifier si la génération du profil AI est en cours
-  const isGeneratingProfile = useSelector(
-    generateProfileFromCVSelectors.selectIsGenerateProfileFromCVRequested
-  );
 
   // Désactiver les boutons si on génère le profil ou si l'onboarding est en chargement
   const disableNavigationButtons = useMemo(

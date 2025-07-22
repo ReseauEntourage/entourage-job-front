@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Api } from '@/src/api';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { selectOnboardingCurrentStep } from '@/src/use-cases/onboarding';
 import { Text } from 'src/components/utils';
 import {
@@ -14,7 +13,6 @@ import {
 export const ProfileCompletion = () => {
   // Utilisation d'un state local car on utilise le taux de completion seulement dans ce composant
   const [completionRate, setCompletionRate] = useState(0);
-  const currentUser = useAuthenticatedUser();
   const onbordingCurrentStep = useSelector(selectOnboardingCurrentStep);
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export const ProfileCompletion = () => {
     if (onbordingCurrentStep === 0) {
       fetchCompletionRate();
     }
-  }, [currentUser, currentUser.userProfile, onbordingCurrentStep]);
+  }, [onbordingCurrentStep]);
 
   return (
     <StyledProfileCompletion>
