@@ -11,6 +11,7 @@ import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
+import { formRegistrationCandidateEconomicSocialInformation } from './forms/formRegistrationCandidateEconomicSocialInformation';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
 import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandidateInfoCo';
@@ -29,6 +30,7 @@ export const REGISTRATION_CONFIRMATION_STEP = 'confirmation' as const;
 export type CandidateRegistrationForm =
   | typeof formRegistrationCandidateExpectations
   | typeof formRegistrationCandidateInfo
+  | typeof formRegistrationCandidateEconomicSocialInformation
   | typeof formRegistrationCandidateProgram
   | typeof formRegistrationCandidateInfoCo
   | typeof formRegistrationCandidateProfessionalInformation
@@ -150,12 +152,7 @@ export const RegistrationStepContents: {
   },
   'step-4': {
     [UserRoles.CANDIDATE]: {
-      form: formRegistrationCandidateProgram,
-      dependsOn: ['department', 'birthDate'],
-      // Pour un candidat qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
-      skippedBy: {
-        notEligibleFor360: true,
-      },
+      form: formRegistrationCandidateEconomicSocialInformation,
     },
     [UserRoles.COACH]: {
       subtitle:
@@ -169,12 +166,11 @@ export const RegistrationStepContents: {
   },
   'step-5': {
     [UserRoles.CANDIDATE]: {
-      subtitle:
-        "Et si on se rencontrait ? Choisissez une date d'information collective",
-      form: formRegistrationCandidateInfoCo,
-      dependsOn: ['department', 'program'],
+      form: formRegistrationCandidateProgram,
+      dependsOn: ['department', 'birthDate'],
+      // Pour un candidat qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
       skippedBy: {
-        program: [Programs.BOOST],
+        notEligibleFor360: true,
       },
     },
     [UserRoles.COACH]: {
@@ -183,12 +179,23 @@ export const RegistrationStepContents: {
   },
   'step-6': {
     [UserRoles.CANDIDATE]: {
+      subtitle:
+        "Et si on se rencontrait ? Choisissez une date d'information collective",
+      form: formRegistrationCandidateInfoCo,
+      dependsOn: ['department', 'program'],
+      skippedBy: {
+        program: [Programs.BOOST],
+      },
+    },
+  },
+  'step-7': {
+    [UserRoles.CANDIDATE]: {
       form: formRegistrationCandidateProfessionalInformation,
       subtitle:
         'Nous aimerions en savoir un peu plus sur vos informations professionnelles.',
     },
   },
-  'step-7': {
+  'step-8': {
     [UserRoles.CANDIDATE]: {
       form: formRegistrationAccount,
     },
