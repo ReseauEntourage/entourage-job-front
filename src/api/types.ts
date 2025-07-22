@@ -1,4 +1,5 @@
 import { HelpValue } from '@/src/constants/nudges';
+import { CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
@@ -221,6 +222,20 @@ export type UserSocialSituation = {
   hasCompletedSurvey: boolean;
 };
 
+export type CompanyUser = {
+  role: CompanyUserRole;
+  isAdmin: boolean;
+};
+
+export type Company = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  description: string | null;
+  companyUser?: CompanyUser;
+};
+
 export type User = {
   coach: User;
   id: string;
@@ -249,6 +264,7 @@ export type User = {
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
+  companies?: Company[];
 };
 
 export type CVStatus =
