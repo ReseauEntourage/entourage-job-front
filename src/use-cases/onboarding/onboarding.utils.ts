@@ -1,4 +1,11 @@
 import {
+  CandidateOnboardingStepContents,
+  CoachOnboardingStepContents,
+  CompanyOnboardingStepContents,
+} from '@/src/components/backoffice/onboarding/Onboarding/stepContent';
+import { UserRoles } from '@/src/constants/users';
+import { isRoleIncluded } from '@/src/utils';
+import {
   Nudge,
   User,
   UserProfile,
@@ -8,27 +15,26 @@ import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
   ONBOARDING_LAST_STEP,
+  OnboardingFlow,
   OnboardingStep,
   OnboardingStepContent,
-  OnboardingStepContents,
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
-import { RegistrableUserRoles } from 'src/constants/users';
 
-export const flattenOnboardingDataByRole = (
+export const flattenOnboardingDataByFlow = (
   data: OnboardingStepData,
-  selectedRole: RegistrableUserRoles
+  selectedFlow: OnboardingFlow
 ): FlattenedOnboardingFormData => {
   const allSteps: OnboardingStep[] = Object.keys(data).map(
     (key) => Number(key) as OnboardingStep
   );
 
   return allSteps.reduce((acc, curr) => {
-    const stepDataForSelectedRole = data[curr]?.[selectedRole];
+    const stepDataForSelectedFlow = data[curr]?.[selectedFlow];
 
-    if (stepDataForSelectedRole) {
+    if (stepDataForSelectedFlow) {
       return {
-        ...stepDataForSelectedRole,
+        ...stepDataForSelectedFlow,
         ...acc,
       };
     }
@@ -76,15 +82,35 @@ export const parseOnboadingProfileFields = (
   };
 };
 
+export const getOnboardingStepContent = (flow: OnboardingFlow) => {
+  switch (flow) {
+    case OnboardingFlow.CANDIDATE:
+      return CandidateOnboardingStepContents;
+    case OnboardingFlow.COACH:
+      return CoachOnboardingStepContents;
+    case OnboardingFlow.COMPANY:
+      return CompanyOnboardingStepContents;
+    default:
+      throw new Error(`Unknown onboarding flow: ${flow}`);
+  }
+};
+
 export const findPreviousNotSkippableStep = (
   currentStep: OnboardingStep,
-  user: User
+  user: User,
+  flow: OnboardingFlow
 ): OnboardingStep => {
   let prevStep = currentStep;
   while (prevStep > ONBOARDING_FIRST_STEP) {
     prevStep = (prevStep - 1) as OnboardingStep;
-    const prevStepContent = OnboardingStepContents?.[prevStep]?.[user.role];
-    if (!shouldSkipStepOnboardingStep(prevStepContent, user)) {
+
+    const flowContent = getOnboardingStepContent(flow);
+    const prevStepContent = flowContent[prevStep];
+
+    if (
+      prevStepContent &&
+      !shouldSkipStepOnboardingStep(prevStepContent, user)
+    ) {
       return prevStep;
     }
   }
@@ -93,15 +119,35 @@ export const findPreviousNotSkippableStep = (
 
 export const findNextNotSkippableStep = (
   currentStep: OnboardingStep,
-  user: User
+  user: User,
+  flow: OnboardingFlow
 ): OnboardingStep => {
   let nextStep = currentStep;
-  while (nextStep < ONBOARDING_LAST_STEP[user.role]) {
+
+  const lastStep = ONBOARDING_LAST_STEP[flow];
+
+  while (nextStep < lastStep) {
     nextStep = (nextStep + 1) as OnboardingStep;
-    const nextStepContent = OnboardingStepContents?.[nextStep]?.[user.role];
-    if (!shouldSkipStepOnboardingStep(nextStepContent, user)) {
+
+    const flowContent = getOnboardingStepContent(flow);
+    const nextStepContent = flowContent[nextStep];
+
+    if (
+      nextStepContent &&
+      !shouldSkipStepOnboardingStep(nextStepContent, user)
+    ) {
       return nextStep;
     }
   }
   return currentStep; // if no next step, return current step
+};
+
+export const getOnboardingFlow = (user: User): OnboardingFlow => {
+  if (isRoleIncluded(user.role, UserRoles.CANDIDATE)) {
+    return OnboardingFlow.CANDIDATE;
+  }
+  if (user.OrganizationId) {
+    return OnboardingFlow.COMPANY;
+  }
+  return OnboardingFlow.COACH;
 };

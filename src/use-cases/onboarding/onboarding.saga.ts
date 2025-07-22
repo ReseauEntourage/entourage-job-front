@@ -5,7 +5,7 @@ import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
   selectOnboardingData,
-  selectUserRoleOnboarding,
+  selectOnboardingFlow,
 } from './onboarding.selectors';
 import { slice } from './onboarding.slice';
 import {
@@ -26,23 +26,37 @@ const {
 
 export function* launchOnboardingSaga() {
   const currentUser = yield* select(selectAuthenticatedUser);
-  const nextStep = findNextNotSkippableStep(0, currentUser);
+  const flow = yield* select(selectOnboardingFlow);
+
+  if (!flow) {
+    throw new Error('Onboarding flow is not defined');
+  }
+
+  const nextStep = findNextNotSkippableStep(0, currentUser, flow);
   yield* put(setOnboardingStep(nextStep));
 }
 
 export function* sendStepDataOnboardingSaga() {
   const data = yield* select(selectOnboardingData);
-  const userRole = yield* select(selectUserRoleOnboarding);
+  const flow = yield* select(selectOnboardingFlow);
   const currentStep = yield* select(selectOnboardingCurrentStep);
   const user = yield* select(selectAuthenticatedUser);
 
   const { id: userId } = user;
 
-  if (!userRole) {
-    throw new Error('User role is not defined in onboarding state');
+  if (!flow) {
+    throw new Error('Onboarding flow is not defined in onboarding state');
   }
 
-  const stepData = data[currentStep]?.[userRole];
+  const stepData = data[currentStep]?.[flow];
+
+  if (!stepData) {
+    throw new Error('Step data not found for the current step and flow');
+  }
+
+  // Utiliser un typage plus souple pour éviter les erreurs de TypeScript
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const stepDataAny = stepData as any;
   const {
     externalCv,
     hasAcceptedEthicsCharter,
@@ -54,7 +68,7 @@ export function* sendStepDataOnboardingSaga() {
     workingExperience,
     jobSearchDuration,
     ...otherData
-  } = stepData;
+  } = stepDataAny;
 
   const socialSituationFields = {
     nationality,
@@ -112,9 +126,15 @@ export function* sendStepDataOnboardingSaga() {
     yield* put(sendStepDataOnboardingSucceeded());
 
     // calculate with updated user data
+    // Réutilisation du flow déjà défini plus haut
+    if (!flow) {
+      throw new Error('Onboarding flow is not defined');
+    }
+
     const nextStep = findNextNotSkippableStep(
       currentStep,
-      yield* select(selectAuthenticatedUser)
+      yield* select(selectAuthenticatedUser),
+      flow
     );
     yield* put(setOnboardingStep(nextStep));
     if (currentStep === nextStep) {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { selectAuthenticatedUser } from 'src/use-cases/current-user';
 import { generateProfileFromCVSelectors } from 'src/use-cases/cv';
 import {
@@ -15,8 +15,9 @@ import {
 import {
   findNextNotSkippableStep,
   findPreviousNotSkippableStep,
+  getOnboardingFlow,
 } from 'src/use-cases/onboarding/onboarding.utils';
-import { OnboardingFormData } from './Onboarding.types';
+import { OnboardingFlow, OnboardingFormData } from './Onboarding.types';
 
 export const useOnboarding = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,10 @@ export const useOnboarding = () => {
   );
 
   const isFirstOnboardingStep = useMemo(() => {
-    const firstStep = findNextNotSkippableStep(0, authenticatedUser);
+    // On détermine le flux d'onboarding en fonction du rôle de l'utilisateur
+    const flow = getOnboardingFlow(authenticatedUser);
+
+    const firstStep = findNextNotSkippableStep(0, authenticatedUser, flow);
     return currentStep === firstStep;
   }, [authenticatedUser, currentStep]);
 
@@ -61,11 +65,15 @@ export const useOnboarding = () => {
       userRoleHasOnboarding &&
       currentStep === 0
     ) {
-      dispatch(
-        onboardingActions.launchOnboarding(
-          authenticatedUser.role as RegistrableUserRoles
-        )
-      );
+      // Déterminer le flux d'onboarding en fonction du rôle
+      let flow: OnboardingFlow;
+      if (authenticatedUser.role === UserRoles.CANDIDATE) {
+        flow = OnboardingFlow.CANDIDATE;
+      } else {
+        flow = OnboardingFlow.COACH;
+      }
+
+      dispatch(onboardingActions.launchOnboarding(flow));
     } else if (hasAcceptedEthicsCharter || !userRoleHasOnboarding) {
       dispatch(onboardingActions.endOnboarding());
     }
@@ -102,9 +110,12 @@ export const useOnboarding = () => {
   );
 
   const onBeforeStep = useCallback(() => {
+    const flow = getOnboardingFlow(authenticatedUser);
+
     const previousStep = findPreviousNotSkippableStep(
       currentStep,
-      authenticatedUser
+      authenticatedUser,
+      flow
     );
     if (previousStep !== currentStep) {
       dispatch(onboardingActions.setOnboardingStep(previousStep));

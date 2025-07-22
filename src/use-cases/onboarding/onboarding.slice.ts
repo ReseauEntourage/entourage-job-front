@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   OnboardingErrorMessages,
+  OnboardingFlow,
   OnboardingFormData,
   OnboardingStep,
   OnboardingStepData,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
-import { RegistrableUserRoles } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
@@ -17,7 +17,7 @@ export interface State {
   sendStepData: RequestState<typeof sendStepDataOnboardingAdapter>;
   sendStepDataError: SendStepDataOnboardingError | null;
   currentStep: OnboardingStep;
-  userRole: RegistrableUserRoles | null;
+  onboardingFlow: OnboardingFlow | null; // Seul champ pour déterminer le flux d'onboarding
   shouldLaunchOnboarding: boolean;
   data: OnboardingStepData;
   isLoading: boolean;
@@ -27,7 +27,7 @@ const initialState: State = {
   sendStepData: sendStepDataOnboardingAdapter.getInitialState(),
   sendStepDataError: null,
   currentStep: 0,
-  userRole: null,
+  onboardingFlow: null,
   data: {},
   shouldLaunchOnboarding: true,
   isLoading: true,
@@ -50,29 +50,27 @@ export const slice = createSlice({
         },
       }
     ),
-    launchOnboarding(
-      state: State,
-      action: PayloadAction<RegistrableUserRoles>
-    ) {
-      state.userRole = action.payload;
+    launchOnboarding(state: State, action: PayloadAction<OnboardingFlow>) {
+      state.onboardingFlow = action.payload;
     },
     setOnboardingCurrentStepData(
       state,
       action: PayloadAction<OnboardingFormData>
     ) {
       const { currentStep } = state;
-
       assertIsDefined(currentStep, OnboardingErrorMessages.CURRENT_STEP);
 
-      const { userRole } = state;
+      const { onboardingFlow } = state;
 
-      assertIsDefined(userRole, OnboardingErrorMessages.SELECTED_ROLE);
+      // Vérifier que le flux est défini
+      assertIsDefined(onboardingFlow, OnboardingErrorMessages.SELECTED_ROLE);
 
       const currentStepData = state.data[currentStep] || {};
 
+      // Stocker les données en utilisant le flux comme clé
       state.data[currentStep] = {
         ...currentStepData,
-        [userRole]: action.payload,
+        [onboardingFlow]: action.payload,
       };
     },
     setOnboardingStep(state, action: PayloadAction<OnboardingStep>) {
@@ -93,7 +91,7 @@ export const slice = createSlice({
       state.data = {};
       state.shouldLaunchOnboarding = false;
       state.isLoading = true;
-      state.userRole = null;
+      state.onboardingFlow = null;
     },
   },
 });
