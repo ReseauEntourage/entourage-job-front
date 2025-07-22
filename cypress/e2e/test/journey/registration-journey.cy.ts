@@ -84,6 +84,7 @@ describe('Registration', () => {
             .click();
           cy.contains('Suivant').click();
 
+          cy.url().should('include', 'step-3');
           // Fill the candidate info
           cy.get(
             '[data-testid="form-registration-candidate-info-birthDate"]'
@@ -94,11 +95,16 @@ describe('Registration', () => {
             .contains('Paris')
             .click();
           cy.get('[data-testid="working-right-yes"]').click();
+          cy.contains('Suivant').click();
+
+          // Fill the candidate situation questions (step-4)
+          cy.url().should('include', 'step-4');
           cy.get('[data-testid="material-insecurity-yes"]').click();
           cy.get('[data-testid="network-insecurity-no"]').click();
           cy.contains('Suivant').click();
 
-          // Fill the professional information
+          // Fill the professional information (step-7)
+          cy.url().should('include', 'step-7');
           cy.get(
             '#form-registration-candidate-professional-information-businessSectorId0'
           ).click();
@@ -111,7 +117,8 @@ describe('Registration', () => {
             .click();
           cy.contains('Suivant').click();
 
-          // Fill the account information
+          // Fill the account information (step-8)
+          cy.url().should('include', 'step-8');
           cy.get('[data-testid="form-registration-account-firstName"]').type(
             'John'
           );

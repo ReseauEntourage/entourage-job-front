@@ -67,7 +67,7 @@ export const Parameters = () => {
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
         email={user.email}
-        driverLicenses={['B']}
+        driverLicenses={[]}
         hasPicture={user.userProfile?.hasPicture || false}
         isEditable
       />
