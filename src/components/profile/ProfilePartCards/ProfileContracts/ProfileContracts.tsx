@@ -63,7 +63,8 @@ export const ProfileContracts = ({
     if (allContracts.length > 0) {
       setItems(generateItems(allContracts));
     }
-  }, [allContracts, generateItems]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allContracts]);
 
   if (!isEditable && !isCompleted) {
     return null;
