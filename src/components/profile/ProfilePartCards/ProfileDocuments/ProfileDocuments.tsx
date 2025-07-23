@@ -64,7 +64,8 @@ export const ProfileDocuments = ({
     });
   }, [updateUserProfile]);
 
-  if (!isEditable && !isCompleted) {
+  // In profile view, we don't show the card if there are no linkedInUrl (externalCv is not displayed in profile view)
+  if (!isEditable && !linkedinUrl) {
     return null;
   }
 
