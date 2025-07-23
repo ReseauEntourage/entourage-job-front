@@ -15,6 +15,7 @@ import {
   ContactNewsletter,
   ConversationReportDto,
   ExternalCv,
+  InviteCollaboratorsFromCompanyDto,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -367,6 +368,13 @@ export class APIHandler {
   // post
   postCompany(params: CompanyDto): Promise<AxiosResponse> {
     return this.post('/companies', params);
+  }
+
+  inviteCollaboratorsFromCompany(
+    companyId: string,
+    params: InviteCollaboratorsFromCompanyDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/companies/${companyId}/invite-collaborators`, params);
   }
 
   /// ///////////// ///

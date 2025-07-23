@@ -1,5 +1,7 @@
 import React from 'react';
 import { Company } from '@/src/api/types';
+import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
+import { openModal } from '@/src/components/modals/Modal';
 import { Button, Card, Text } from 'src/components/utils';
 import {
   StyledContainer,
@@ -14,6 +16,11 @@ export interface DashboardCompanyCardProps {
 export const DashboardCompanyCard = ({
   company,
 }: DashboardCompanyCardProps) => {
+  const companySettingsUrl = `/`; // TODO : replace with actual company settings URL
+
+  const openCompanySendInviteModal = () => {
+    openModal(<CompanyInviteCollaboratorsModal companyId={company.id} />);
+  };
   return (
     <Card
       dataTestId="dashboard-profile-card"
@@ -26,8 +33,17 @@ export const DashboardCompanyCard = ({
           {company.name}
         </Text>
         <StyledCTAContainer>
-          <Button variant="secondary" rounded href="/backoffice/parametres">
+          <Button variant="secondary" rounded href={companySettingsUrl}>
             Modifier
+          </Button>
+
+          {/* Before implementing the next step invite collaborators */}
+          <Button
+            variant="secondary"
+            rounded
+            onClick={openCompanySendInviteModal}
+          >
+            Inviter des collaborateurs
           </Button>
         </StyledCTAContainer>
       </StyledContainer>

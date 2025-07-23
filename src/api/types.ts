@@ -82,6 +82,10 @@ export type CompanyDto = {
   name: string;
 };
 
+export type InviteCollaboratorsFromCompanyDto = {
+  emails: string[];
+};
+
 export interface BusinessSector {
   id?: string;
   name: string;
