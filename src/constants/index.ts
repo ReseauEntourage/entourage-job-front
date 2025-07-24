@@ -147,15 +147,6 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
   },
   {
-    key: 'associatedUser',
-    constants: [
-      { label: 'Binôme en cours', value: true },
-      { label: 'Sans binôme', value: false },
-    ],
-    title: 'Membre associé',
-    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_BINOME_CLIC,
-  },
-  {
     key: 'employed',
     constants: [
       { label: 'En emploi', value: true },

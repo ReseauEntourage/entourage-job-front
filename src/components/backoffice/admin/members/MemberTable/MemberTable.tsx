@@ -32,24 +32,6 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       ];
     }
 
-    if (columns.includes('associatedUser') && role === UserRoles.CANDIDATE) {
-      columnsArray = [
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        ...columnsArray,
-
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        <Th key="memberAssociatedRole">Coach</Th>,
-      ];
-    }
-    if (columns.includes('associatedUser') && role === UserRoles.COACH) {
-      columnsArray = [
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        ...columnsArray,
-
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        <Th key="memberAssociatedRole">Candidat</Th>,
-      ];
-    }
     if (columns.includes('type')) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
