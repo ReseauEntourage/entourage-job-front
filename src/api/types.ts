@@ -320,7 +320,6 @@ export interface UserCandidateWithUsers extends UserCandidate {
 
 export interface UserWithUserCandidate extends User {
   candidat?: UserCandidateWithUsers;
-  coaches?: UserCandidateWithUsers[];
   referredCandidates?: UserCandidateWithUsers[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
@@ -333,7 +332,6 @@ export type UserDto = {
   gender: Genders;
   zone: AdminZone;
   phone: string;
-  userToLinkId?: string;
   email: string;
   adminRole?: AdminRoles;
   OrganizationId?: string;
