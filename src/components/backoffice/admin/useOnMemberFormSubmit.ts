@@ -80,11 +80,6 @@ export function useOnMemberFormSubmit(
           phone: fields.phone,
           role: fields.role,
           email: fields.email,
-          ...(fields.userToLinkId
-            ? {
-                userToLinkId: fields.userToLinkId.value,
-              }
-            : {}),
           ...(fields.role === UserRoles.ADMIN
             ? { adminRole: fields.adminRole }
             : {}),

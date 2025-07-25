@@ -13,7 +13,6 @@ import { ADMIN_ZONES } from 'src/constants/departements';
 import { getRolesWithOrganization, UserRoles } from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
-  getRelatedUser,
   isRoleIncluded,
   findConstantFromValue,
 } from 'src/utils/Finding';
@@ -25,7 +24,7 @@ import {
   StyledNoWrapCellContent,
 } from './Member.styles';
 import { MemberProps } from './Member.types';
-import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
+import { MemberInfo } from './MemberInfo';
 import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
 
 const tooltipId = 'contract-tooltip';
@@ -41,7 +40,6 @@ export function MemberDesktop({
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
-  const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
 
@@ -77,11 +75,6 @@ export function MemberDesktop({
         </MemberInfo>
       </StyledNameCell>
 
-      {columns.includes('associatedUser') && (
-        <TdDesktop>
-          <RelatedMemberInfo relatedUser={relatedUser} />
-        </TdDesktop>
-      )}
       {columns.includes('phone') && (
         <TdDesktop>
           <span>{member.phone || '-'}</span>

@@ -19,7 +19,6 @@ import {
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
-import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
@@ -55,7 +54,6 @@ export const Dashboard = () => {
                 ))}
               <DashboardProfileCard />
               {isNormalUser && <DashboardAvailabilityCard />}
-              <DashboardLinkedUserCard />
               <DashboardReferentCard />
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
@@ -93,7 +91,6 @@ export const Dashboard = () => {
           <StyledDashboardLeftColumn className="mobile">
             <DashboardProfileCard />
             {isNormalUser && <DashboardAvailabilityCard />}
-            <DashboardLinkedUserCard />
             <DashboardReferentCard />
           </StyledDashboardLeftColumn>
         </StyledBackofficeGrid>
