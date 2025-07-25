@@ -25,22 +25,9 @@ export const ProfileContracts = ({
 }: ProfileContractsProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
-  const [allContracts, setAllContracts] = useState<Contract[]>([]);
   const [items, setItems] = useState<ContractItem[]>([]);
 
   const isCompleted = contracts?.length > 0;
-
-  const fetchAllContracts = async () => {
-    try {
-      const { data } = await Api.getAllContracts({
-        limit: 50,
-        offset: 0,
-      });
-      setAllContracts(data);
-    } catch (error) {
-      console.error('Error fetching contracts:', error);
-    }
-  };
 
   const generateItems = useCallback(
     (contractsToConvert: Contract[]) => {
@@ -53,18 +40,23 @@ export const ProfileContracts = ({
     [contracts]
   );
 
+  const fetchAllContracts = useCallback(async () => {
+    try {
+      const { data } = await Api.getAllContracts({
+        limit: 50,
+        offset: 0,
+      });
+      setItems(generateItems(data));
+    } catch (error) {
+      console.error('Error fetching contracts:', error);
+    }
+  }, [generateItems]);
+
   useEffect(() => {
     if (isEditable) {
       fetchAllContracts();
     }
-  }, [isEditable]);
-
-  useEffect(() => {
-    if (allContracts.length > 0) {
-      setItems(generateItems(allContracts));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allContracts]);
+  }, [fetchAllContracts, isEditable]);
 
   if (!isEditable && !isCompleted) {
     return null;
