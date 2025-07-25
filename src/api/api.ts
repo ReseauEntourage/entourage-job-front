@@ -9,11 +9,13 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
+  CompanyDto,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
   ConversationReportDto,
   ExternalCv,
+  InviteCollaboratorsFromCompanyDto,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -348,6 +350,31 @@ export class APIHandler {
     search?: string;
   }): Promise<AxiosResponse> {
     return this.get('/nudges', { params });
+  }
+
+  /// /////////// ///
+  /// companies  ///
+  /// ///////// ///
+  getAllCompanies(params: {
+    params: {
+      limit: number;
+      offset: number;
+      search?: string;
+    };
+  }): Promise<AxiosResponse> {
+    return this.get('/companies', params);
+  }
+
+  // post
+  postCompany(params: CompanyDto): Promise<AxiosResponse> {
+    return this.post('/companies', params);
+  }
+
+  inviteCollaboratorsFromCompany(
+    companyId: string,
+    params: InviteCollaboratorsFromCompanyDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/companies/${companyId}/invite-collaborators`, params);
   }
 
   /// ///////////// ///

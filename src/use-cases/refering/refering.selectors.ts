@@ -55,22 +55,6 @@ export function selectReferingNextStep(state: RootState): ReferingStep {
   return incrementReferingStep(currentStep);
 }
 
-export function selectReferingSelectedProgram(state: RootState) {
-  const data = selectReferingData(state);
-
-  const allStepsData = flattenReferingData(data);
-
-  return Array.isArray(allStepsData.program)
-    ? allStepsData.program?.[0]
-    : allStepsData.program;
-}
-
-export function selectDefinedReferingSelectedProgram(state: RootState) {
-  const selectedProgram = selectReferingSelectedProgram(state);
-
-  return selectedProgram;
-}
-
 export function selectIsFirstReferingStep(state: RootState): boolean {
   return state.refering.currentStep === REFERING_FIRST_STEP;
 }
@@ -148,13 +132,8 @@ export function selectReferingShouldSkipStep(state: RootState) {
     keys.some((key) => {
       let thisKeyShouldSkip = false;
 
-      // Keys with custom logic
-      if (key === 'notEligibleFor360') {
-        thisKeyShouldSkip = true;
-      }
-
       // Keys with simple logic
-      else if (valuesFromOtherStep[key as ReferingFormDataKeys]) {
+      if (valuesFromOtherStep[key as ReferingFormDataKeys]) {
         // check if skippedByArray[key] contains a value from valuesFromOtherStep[key]
         if (Array.isArray(valuesFromOtherStep[key as ReferingFormDataKeys])) {
           thisKeyShouldSkip = _.isEqual(

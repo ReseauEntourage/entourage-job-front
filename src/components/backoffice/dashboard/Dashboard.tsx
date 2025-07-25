@@ -18,6 +18,7 @@ import {
 } from './Dashboard.styles';
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
+import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
@@ -31,6 +32,9 @@ export const Dashboard = () => {
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
+  const isCompanyAdmin = user.companies?.some(
+    (company) => company.companyUser?.isAdmin === true
+  );
 
   if (isDesktop) {
     return (
@@ -43,6 +47,11 @@ export const Dashboard = () => {
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
+              {isCompanyAdmin &&
+                user.companies &&
+                user.companies.map((company) => (
+                  <DashboardCompanyCard key={company.id} company={company} />
+                ))}
               <DashboardProfileCard />
               {isNormalUser && <DashboardAvailabilityCard />}
               <DashboardReferentCard />
