@@ -8,6 +8,8 @@ import { GA_TAGS } from 'src/constants/tags';
 import { GENDERS_FILTERS } from './genders';
 import { Filter, FilterConstant } from './utils';
 
+export { PUSHER_CHANNELS, PUSHER_EVENTS, getPusher } from './pusher';
+
 export const PROFILES_LIMIT = 25;
 
 export const JNSPR = {
