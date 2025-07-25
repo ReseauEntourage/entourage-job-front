@@ -1,4 +1,5 @@
 import React from 'react';
+import { Skill } from '@/src/api/types';
 import { ButtonIcon } from '../../utils';
 import { LucidIcon } from '../../utils/Icons/LucidIcon';
 import { CVDate } from '../CVDate';
@@ -22,11 +23,7 @@ interface ExperienceOrFormationProps {
   endDate?: string;
   location?: string;
   structure?: string;
-  skills: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
+  skills: Skill[];
   isEditable?: boolean;
   editItem?: () => void;
   deleteItem?: () => void;
