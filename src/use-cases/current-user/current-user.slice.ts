@@ -90,19 +90,6 @@ export const slice = createSlice({
               ...state.user.candidat,
               ...action.payload.userCandidate,
             };
-          } else if (state.user.coaches) {
-            state.user = {
-              ...state.user,
-              coaches: state.user.coaches.map((coach) => {
-                if (coach?.candidat?.id === action.payload.userId) {
-                  return {
-                    ...coach,
-                    ...action.payload.userCandidate,
-                  };
-                }
-                return coach;
-              }),
-            };
           }
         },
         updateCandidateFailed(state, action) {

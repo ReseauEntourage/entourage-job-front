@@ -128,7 +128,6 @@ describe('En tant que - Administrateur', () => {
       fillUserForm('Admin');
 
       cy.get('#form-add-user-organizationId').should('not.exist');
-      cy.get('#form-add-user-userToLinkId').should('not.exist');
       cy.get('[id$=Organization]').should('not.exist');
 
       cy.get('#form-add-user-adminRole-container button')
@@ -158,24 +157,6 @@ describe('En tant que - Administrateur', () => {
       cy.get('#form-add-user-organizationId').should('not.exist');
       cy.get('#form-add-user-adminRole-container').should('not.exist');
       cy.get('[id$=Organization]').should('not.exist');
-
-      // Chargement du fichier de fixture search-user.json - inutile de se soucier du type (non utile)
-      cy.fixture('api/generated/search-user').then((users) => {
-        const firstUser = users[0];
-
-        // Saisie du nom de l'utilisateur
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .type(firstUser.firstName);
-
-        // Puis sélection de l'utilisateur dans le menu déroulant
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .find('.Select__option')
-          .contains(`${firstUser.firstName} ${firstUser.lastName}`)
-          .click();
-      });
 
       submitUserForm();
     });

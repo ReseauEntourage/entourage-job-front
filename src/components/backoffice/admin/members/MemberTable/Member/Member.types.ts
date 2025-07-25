@@ -2,7 +2,6 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 
 export type MemberColumn =
-  | 'associatedUser'
   | 'type'
   | 'zone'
   | 'lastConnection'
@@ -20,7 +19,6 @@ export type MemberColumn =
 export const MemberTableByRole = {
   [UserRoles.CANDIDATE]: [
     'zone',
-    'associatedUser',
     'lastConnection',
     'employed',
     'cvStatus',
@@ -29,7 +27,6 @@ export const MemberTableByRole = {
   ],
   [UserRoles.COACH]: [
     'zone',
-    'associatedUser',
     'lastConnection',
     'employed',
     'cvStatus',

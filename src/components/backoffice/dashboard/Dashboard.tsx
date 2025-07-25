@@ -18,7 +18,6 @@ import {
 } from './Dashboard.styles';
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
-import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
@@ -46,7 +45,6 @@ export const Dashboard = () => {
             <StyledDashboardLeftColumn>
               <DashboardProfileCard />
               {isNormalUser && <DashboardAvailabilityCard />}
-              <DashboardLinkedUserCard />
               <DashboardReferentCard />
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
@@ -84,7 +82,6 @@ export const Dashboard = () => {
           <StyledDashboardLeftColumn className="mobile">
             <DashboardProfileCard />
             {isNormalUser && <DashboardAvailabilityCard />}
-            <DashboardLinkedUserCard />
             <DashboardReferentCard />
           </StyledDashboardLeftColumn>
         </StyledBackofficeGrid>
