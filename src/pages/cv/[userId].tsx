@@ -1,7 +1,7 @@
 import { NextRouter, withRouter } from 'next/router';
 import React from 'react';
 import { Api } from '@/src/api';
-import { PublicUser } from '@/src/api/types';
+import { PublicCV } from '@/src/api/types';
 import { PageCVContent } from '@/src/components/partials/CV/PageCVContent';
 import { Layout } from 'src/components/Layout';
 import { CVDiscover } from 'src/components/partials/CV/CVDiscover';
@@ -14,25 +14,25 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
 export interface CVPageProps {
-  publicUser: PublicUser;
+  publicCV: PublicCV;
   router: NextRouter;
   exists?: boolean;
 }
 
-const CVPage = ({ publicUser, exists = false, router }: CVPageProps) => {
+const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
   const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
   const link = `${hostname}${router.asPath}`;
-  const sharedDescription = publicUser
-    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicUser.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
+  const sharedDescription = publicCV
+    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicCV.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
     : '';
-  const title = publicUser
-    ? `Entourage Pro\xa0: Aidez ${publicUser.firstName} à retrouver un emploi`
+  const title = publicCV
+    ? `Entourage Pro\xa0: Aidez ${publicCV.firstName} à retrouver un emploi`
     : '';
-  const imgSrc = publicUser?.userProfile.hasPicture
-    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${publicUser.id}.profile.jpg`
+  const imgSrc = publicCV?.userProfile.hasPicture
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${publicCV.id}.profile.jpg`
     : undefined;
 
-  if (!publicUser) {
+  if (!publicCV) {
     if (exists) {
       return (
         <Layout title="Bonne nouvelle ! - Entourage Pro" noIndex>
@@ -113,23 +113,23 @@ const CVPage = ({ publicUser, exists = false, router }: CVPageProps) => {
       metaType="profile"
     >
       <StyledCVPage>
-        <PageCVContent publicUser={publicUser} />
+        <PageCVContent publicCV={publicCV} />
       </StyledCVPage>
     </Layout>
   );
 };
 
 CVPage.getInitialProps = async ({ query }) => {
-  return Api.getPublicProfileByCandidateId(query.url)
+  return Api.getPublicCVByUserId(query.userId)
     .then(({ data }) => {
       return {
-        publicUser: data,
+        publicCV: data,
         exists: true,
       };
     })
     .catch((err) => {
       console.error(err);
-      return { publicUser: null, exists: false };
+      return { publicCV: null, exists: false };
     });
 };
 

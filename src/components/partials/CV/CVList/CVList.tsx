@@ -65,7 +65,7 @@ export const CVList = ({
       } else {
         setLoading(true);
       }
-      Api.getPublicProfileList({
+      Api.getPublicCVsList({
         search: searchValue,
         limit: defaultLimit,
         offset,
