@@ -68,6 +68,7 @@ export const DashboardAvailabilityCard = () => {
           ? 'Disponibilité pour recevoir des coups de pouces'
           : 'Disponibilité pour accompagner un candidat'
       }
+      centerTitle
     >
       <ToggleWithModal
         id="isAvailable"

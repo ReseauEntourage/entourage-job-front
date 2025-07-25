@@ -1,25 +1,33 @@
 import { FilterConstant } from './utils';
 
+export enum CompanyUserRole {
+  EXECUTIVE = 'executive',
+  MANAGER = 'manager',
+  RSE = 'rse',
+  RH = 'rh',
+  EMPLOYEE = 'employee',
+}
+
 export const COMPANY_ROLES = [
   {
     name: 'Dirigeant.e',
-    value: 'executive',
+    value: CompanyUserRole.EXECUTIVE,
   },
   {
     name: "Responsable d'équipe",
-    value: 'manager',
+    value: CompanyUserRole.MANAGER,
   },
   {
     name: 'Responsable RSE',
-    value: 'rse',
+    value: CompanyUserRole.RSE,
   },
   {
     name: 'RH - Chargé.e de recrutement',
-    value: 'rh',
+    value: CompanyUserRole.RH,
   },
   {
     name: 'Autre',
-    value: 'employee',
+    value: CompanyUserRole.EMPLOYEE,
   },
 ];
 
