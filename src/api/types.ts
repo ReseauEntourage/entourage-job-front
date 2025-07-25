@@ -541,10 +541,7 @@ export type PublicProfile = {
   hasPicture: boolean;
 };
 
-export type PublicUser = Pick<
-  User,
-  'id' | 'firstName' | 'lastName' | 'role'
-> & {
+export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
   userProfile: Pick<
     UserProfile,
     // Attributes
