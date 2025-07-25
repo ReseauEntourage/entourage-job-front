@@ -30,5 +30,5 @@ export const StyledProgression = styled.div<{ completionRate: number }>`
   opacity: 0.6;
   border-radius: 20px;
   height: 100%;
-  width: ${({ completionRate }) => completionRate * 100}%;
+  width: ${({ completionRate }) => completionRate}%;
 `;
