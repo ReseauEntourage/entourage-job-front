@@ -15,6 +15,11 @@ import { useConfirmation } from './useConfirmation';
 export function Confirmation() {
   const { pageContent } = useConfirmation();
 
+  if (!pageContent) {
+    console.error('No page content found for the confirmation step.');
+    return null; // Handle the case where pageContent is not defined
+  }
+
   return (
     <StyledRegistrationContainer>
       <Card title={pageContent.title}>

@@ -1,3 +1,5 @@
+import { RegistrationFlow } from '../components/registration/flows/flows.types';
+
 export const GA_TAGS = {
   HOME_CV_CLIC: {
     action: 'Home_CV_Clic',
@@ -492,6 +494,13 @@ export const GA_TAGS = {
     action: 'Page_Aider_Rejoindre_Inscription_Click',
   },
 } as const;
+
+export const GA_TAGS_FACTORY = {
+  SIGN_UP_NEW_STEP: (flow: RegistrationFlow, nextStep: number) => ({
+    action: 'SignUp_New_Step',
+    value: `Flow_${flow}_Step_${nextStep}`,
+  }),
+};
 
 export const FB_TAGS = {
   CANDIDATE_REGISTRATION_OPEN: {
