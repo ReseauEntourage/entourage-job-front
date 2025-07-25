@@ -25,20 +25,6 @@ export const generateUsersApiResponse = (numbersOfUsers, roleUsers) => {
       cvs: [],
       coach: {},
     },
-    coaches: [
-      {
-        coachId: null,
-        employed: false,
-        hidden: true,
-        note: null,
-        url: '',
-        contract: null,
-        endOfContract: null,
-        lastModifiedBy: null,
-        cvs: [],
-        candidat: {},
-      },
-    ],
     userProfile: {
       id: faker.string.uuid(),
       hasPicture: false,

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
@@ -11,26 +10,13 @@ import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConf
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { UserRoles } from 'src/constants/users';
 import { Actions } from 'src/constants/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
-import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
+import { isRoleIncluded } from 'src/utils/Finding';
 
 interface EditMemberModal {
   user: User;
   setUser: (user: User) => void;
 }
 export function EditMemberModal({ user, setUser }: EditMemberModal) {
-  const dispatch = useDispatch();
-
-  const userToLink = useMemo(() => {
-    const relatedUser = getRelatedUser(user);
-    if (relatedUser) {
-      return {
-        value: relatedUser[0].id,
-        label: `${relatedUser[0].firstName} ${relatedUser[0].lastName}`,
-      };
-    }
-  }, [user]);
-
   const organization = useMemo(() => {
     return isRoleIncluded(UserRoles.REFERER, user.role) && user.organization
       ? {
@@ -55,29 +41,9 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
       closeModal
     ) => {
       const updatedUser = await onSubmit(fields, closeModal);
-      try {
-        const userToLinkId = fields.userToLinkId?.value;
-        const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
-          user.id,
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          userToLinkId || null
-        );
-
-        setUser(updatedUserWithLinkedMember);
-      } catch (err) {
-        console.error(err);
-        dispatch(
-          notificationsActions.addNotification({
-            type: 'danger',
-            message:
-              "Une erreur s'est produite lors de l'association à un autre membre",
-          })
-        );
-        setUser(updatedUser);
-      }
+      setUser(updatedUser);
     },
-    [onSubmit, setUser, dispatch, user.id]
+    [onSubmit, setUser]
   );
 
   const updateUserModalProps = useMemo(() => {
@@ -118,16 +84,9 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
         address: user.address,
         zone: user.zone,
         organizationId: organization,
-        userToLinkId: userToLink,
       },
     };
-  }, [
-    handleMemberUpdateSubmit,
-    organization,
-    setFilledUserFields,
-    user,
-    userToLink,
-  ]);
+  }, [handleMemberUpdateSubmit, organization, setFilledUserFields, user]);
 
   // TODO TEST AND FIX
   useEffect(() => {
