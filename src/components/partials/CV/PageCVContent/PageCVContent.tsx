@@ -201,15 +201,13 @@ export const PageCVContent = ({
                         <LucidIcon name="FileText" />{' '}
                         <span>Type de contrat</span>
                       </p>
-                      <p className="content">
-                        {publicUser.userProfile.contracts.map(({ name }) => {
-                          return (
-                            <Text color="darkGray" key={name}>
-                              {findConstantFromValue(name, CONTRACTS).label}
-                            </Text>
-                          );
-                        })}
-                      </p>
+                      {publicUser.userProfile.contracts.map(({ name }) => {
+                        return (
+                          <Text color="darkGray" key={name}>
+                            {findConstantFromValue(name, CONTRACTS).label}
+                          </Text>
+                        );
+                      })}
                     </div>
                   </li>
                 )}
@@ -219,17 +217,15 @@ export const PageCVContent = ({
                     <p className="subtitle">
                       <LucidIcon name="Globe" /> <span>Langues</span>
                     </p>
-                    <p className="content">
-                      {publicUser.userProfile.userProfileLanguages.map(
-                        ({ language }) => {
-                          return (
-                            <Text color="darkGray" key={language?.id}>
-                              {language?.name}
-                            </Text>
-                          );
-                        }
-                      )}
-                    </p>
+                    {publicUser.userProfile.userProfileLanguages.map(
+                      ({ language }) => {
+                        return (
+                          <Text color="darkGray" key={language?.id}>
+                            {language?.name}
+                          </Text>
+                        );
+                      }
+                    )}
                   </div>
                 </li>
               )}
@@ -240,7 +236,7 @@ export const PageCVContent = ({
               <H5 title="Mes centres d'intérêts" color={COLORS.black} />
               <ul>
                 {publicUser.userProfile.interests.map(({ name }) => {
-                  return <p>{name}</p>;
+                  return <p key={name}>{name}</p>;
                 })}
               </ul>
             </StyledCVPageContentPassions>
@@ -356,7 +352,7 @@ export const PageCVContent = ({
               )}
               <ul>
                 {publicUser.userProfile.interests?.map(({ name }) => {
-                  return <p>{name}</p>;
+                  return <p key={name}>{name}</p>;
                 })}
               </ul>
             </StyledCVPageContentPassions>
