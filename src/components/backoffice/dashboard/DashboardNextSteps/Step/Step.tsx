@@ -1,4 +1,6 @@
 import React from 'react';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { StepContent } from '../DashboardNextSteps.types';
 import { Button } from 'src/components/utils/Button/Button';
 import { Text } from 'src/components/utils/Text/Text';
 import {
@@ -7,21 +9,12 @@ import {
   StyledStepImage,
 } from './Step.style';
 
-export interface Step {
-  title: string;
-  content: string;
-  icon: React.ReactElement;
-  cta: {
-    label: string;
-    href: string;
-  };
-}
-
 export interface StepProps {
-  step: Step;
+  step: StepContent;
 }
 
 export const Step = ({ step }: StepProps) => {
+  const currentUser = useAuthenticatedUser();
   return (
     <StyledStepContainer>
       <StyledStepImage>{step.icon}</StyledStepImage>
@@ -34,6 +27,7 @@ export const Step = ({ step }: StepProps) => {
           variant="secondary"
           rounded
           href={step.cta.href}
+          onClick={() => step.cta.onClick && step.cta.onClick(currentUser)}
           isExternal
           newTab
         >
