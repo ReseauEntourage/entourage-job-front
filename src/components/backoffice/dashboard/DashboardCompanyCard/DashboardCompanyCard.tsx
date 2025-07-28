@@ -4,6 +4,7 @@ import { Button, Card, Text } from 'src/components/utils';
 import {
   StyledContainer,
   StyledCTAContainer,
+  StyledNameAndReferentContainer,
   StyledPictureContainer,
 } from './DashboardCompanyCard.styles';
 
@@ -15,6 +16,13 @@ export const DashboardCompanyCard = ({
   company,
 }: DashboardCompanyCardProps) => {
   const companySettingsUrl = `/`; // TODO : replace with actual company settings URL
+  const companyViewUrl = `/`; // TODO : replace with actual company view URL
+  const isCompanyAdmin = true; // TODO : replace with actual logic to determine if the user is a company admin
+  const companyAdmin = {
+    firstName: 'John',
+    lastName: 'Doe',
+  }; // TODO: bind with actual admin
+  const currentUserIsAdmin = false; // TODO: replace with actual logic to determine if the current user is an admin
 
   return (
     <Card
@@ -24,13 +32,30 @@ export const DashboardCompanyCard = ({
     >
       <StyledContainer>
         <StyledPictureContainer>Image</StyledPictureContainer>
-        <Text size="large" color="primaryBlue" weight="bold" center>
-          {company.name}
-        </Text>
+        <StyledNameAndReferentContainer>
+          <Text size="large" color="primaryBlue" weight="bold" center>
+            {company.name}
+          </Text>
+          <Text>
+            <i>
+              {currentUserIsAdmin
+                ? `Vous êtes le référent`
+                : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
+                    .charAt(0)
+                    .toUpperCase()}`}
+            </i>
+          </Text>
+        </StyledNameAndReferentContainer>
         <StyledCTAContainer>
-          <Button variant="secondary" rounded href={companySettingsUrl}>
-            Modifier
-          </Button>
+          {isCompanyAdmin ? (
+            <Button variant="secondary" rounded href={companySettingsUrl}>
+              Modifier ma page entreprise
+            </Button>
+          ) : (
+            <Button variant="secondary" rounded href={companyViewUrl}>
+              Voir ma page entreprise
+            </Button>
+          )}
         </StyledCTAContainer>
       </StyledContainer>
     </Card>
