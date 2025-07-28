@@ -1,6 +1,8 @@
 import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
+import { CompanyGoal, UpdateCompanyDto } from 'src/api/types';
+import { OnboardingFlow } from 'src/components/backoffice/onboarding/Onboarding.types';
 import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
@@ -54,82 +56,135 @@ export function* sendStepDataOnboardingSaga() {
     throw new Error('Step data not found for the current step and flow');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { hasAcceptedEthicsCharter } = stepData as any;
+
+  // Check if user has accepted the ethics charter
+  if (hasAcceptedEthicsCharter === true) {
+    yield* call(() =>
+      Api.postReadDocument(
+        { documentName: DocumentNames.CharteEthique },
+        userId
+      )
+    );
+  }
+
   // Utiliser un typage plus souple pour éviter les erreurs de TypeScript
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const stepDataAny = stepData as any;
-  const {
-    externalCv,
-    hasAcceptedEthicsCharter,
-    nationality,
-    accommodation,
-    hasSocialWorker,
-    resources,
-    studiesLevel,
-    workingExperience,
-    jobSearchDuration,
-    ...otherData
-  } = stepDataAny;
 
-  const socialSituationFields = {
-    nationality,
-    accommodation,
-    hasSocialWorker,
-    resources,
-    studiesLevel,
-    workingExperience,
-    jobSearchDuration,
-  };
-
-  const userProfileFields = parseOnboadingProfileFields(otherData);
   try {
-    yield* call(() => Api.putUserProfile(userId, userProfileFields));
+    // Extraire les champs en fonction du flux d'onboarding
+    if (flow === OnboardingFlow.COMPANY) {
+      const {
+        description,
+        logo,
+        businessSectorIds,
+        department,
+        url,
+        linkedinUrl,
+        hiringUrl,
+        goal,
+      } = stepDataAny;
 
-    // Check if step contains externalCv and user has uploaded one, upload it and wait for it to complete
-    // externalCv is an array of File
-    if (externalCv && externalCv[0]) {
-      const formData = new FormData();
-      formData.append('file', externalCv[0]);
-      yield* put(currentUserActions.uploadExternalCvRequested(formData));
+      // console.log(stepDataAny);
 
-      // wait for the query to complete
-      const action = yield* take([
-        currentUserActions.uploadExternalCvSucceeded.type,
-        currentUserActions.uploadExternalCvFailed.type,
-      ]);
+      let companyGoalValue: CompanyGoal | undefined;
+      if (goal) {
+        if (goal.length > 1) {
+          companyGoalValue = CompanyGoal.BOTH;
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          companyGoalValue = goal[0];
+        }
+      } else {
+        companyGoalValue = undefined;
+      }
 
-      while (
-        action.type !== currentUserActions.uploadExternalCvSucceeded.type &&
-        action.type !== currentUserActions.uploadExternalCvFailed.type
-      ) {
-        yield* delay(1000);
+      // Créer un objet pour les données du profil d'entreprise
+      const companyFields: UpdateCompanyDto = {
+        description,
+        url,
+        linkedinUrl,
+        hiringUrl,
+        goal: companyGoalValue,
+        department: department?.value,
+        businessSectorIds:
+          businessSectorIds?.map(
+            (businessSectorId) => businessSectorId.value
+          ) ?? undefined,
+      };
+
+      // console.log(companyFields);
+
+      // Mettre à jour le profil utilisateur de l'entreprise
+      yield* call(() => Api.updateCompany(companyFields));
+
+      // Upload company logo
+      if (logo && logo[0]) {
+        const formData = new FormData();
+        formData.append('file', logo[0]);
+        yield* call(() => Api.updateCompanyLogo(formData));
+      }
+    } else {
+      // Gestion des flux CANDIDATE et COACH
+      const {
+        externalCv,
+        nationality,
+        accommodation,
+        hasSocialWorker,
+        resources,
+        studiesLevel,
+        workingExperience,
+        jobSearchDuration,
+        ...otherData
+      } = stepDataAny;
+
+      const socialSituationFields = {
+        nationality,
+        accommodation,
+        hasSocialWorker,
+        resources,
+        studiesLevel,
+        workingExperience,
+        jobSearchDuration,
+      };
+
+      const userProfileFields = parseOnboadingProfileFields(otherData);
+
+      yield* call(() => Api.putUserProfile(userId, userProfileFields));
+
+      // Check if step contains externalCv and user has uploaded one, upload it and wait for it to complete
+      // externalCv is an array of File
+      if (externalCv && externalCv[0]) {
+        const formData = new FormData();
+        formData.append('file', externalCv[0]);
+        yield* put(currentUserActions.uploadExternalCvRequested(formData));
+
+        // wait for the query to complete
+        const action = yield* take([
+          currentUserActions.uploadExternalCvSucceeded.type,
+          currentUserActions.uploadExternalCvFailed.type,
+        ]);
+
+        while (
+          action.type !== currentUserActions.uploadExternalCvSucceeded.type &&
+          action.type !== currentUserActions.uploadExternalCvFailed.type
+        ) {
+          yield* delay(1000);
+        }
+      }
+
+      if (Object.keys(stepData).includes('nationality')) {
+        yield* call(() =>
+          Api.updateUserSocialSituation(userId, {
+            hasCompletedSurvey: true,
+            ...socialSituationFields,
+          })
+        );
       }
     }
-
-    // Check if user has accepted the ethics charter
-    if (hasAcceptedEthicsCharter === true) {
-      yield* call(() =>
-        Api.postReadDocument(
-          { documentName: DocumentNames.CharteEthique },
-          userId
-        )
-      );
-    }
-
-    if (Object.keys(stepData).includes('nationality')) {
-      yield* call(() =>
-        Api.updateUserSocialSituation(userId, {
-          hasCompletedSurvey: true,
-          ...socialSituationFields,
-        })
-      );
-    }
     yield* put(sendStepDataOnboardingSucceeded());
-
-    // calculate with updated user data
-    // Réutilisation du flow déjà défini plus haut
-    if (!flow) {
-      throw new Error('Onboarding flow is not defined');
-    }
 
     const nextStep = findNextNotSkippableStep(
       currentStep,

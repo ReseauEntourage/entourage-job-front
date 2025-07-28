@@ -14,7 +14,6 @@ import {
 import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
-  ONBOARDING_LAST_STEP,
   OnboardingFlow,
   OnboardingStep,
   OnboardingStepContent,
@@ -117,6 +116,13 @@ export const findPreviousNotSkippableStep = (
   return currentStep; // if no next step, return current step
 };
 
+export const getLastOnboardingStep = (flow: OnboardingFlow): OnboardingStep => {
+  const content = getOnboardingStepContent(flow);
+  return Math.max(
+    ...Object.keys(content).map((step) => parseInt(step, 10))
+  ) as OnboardingStep;
+};
+
 export const findNextNotSkippableStep = (
   currentStep: OnboardingStep,
   user: User,
@@ -124,7 +130,7 @@ export const findNextNotSkippableStep = (
 ): OnboardingStep => {
   let nextStep = currentStep;
 
-  const lastStep = ONBOARDING_LAST_STEP[flow];
+  const lastStep = getLastOnboardingStep(flow);
 
   while (nextStep < lastStep) {
     nextStep = (nextStep + 1) as OnboardingStep;
@@ -143,11 +149,15 @@ export const findNextNotSkippableStep = (
 };
 
 export const getOnboardingFlow = (user: User): OnboardingFlow => {
+  // TODO: CHANGE THIS LOGIC TO USE THE NEW COMPANY FIELD
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userAny = user as any;
+  if (userAny.companies[0]?.companyUser?.isAdmin) {
+    return OnboardingFlow.COMPANY;
+  }
   if (isRoleIncluded(user.role, UserRoles.CANDIDATE)) {
     return OnboardingFlow.CANDIDATE;
   }
-  if (user.OrganizationId) {
-    return OnboardingFlow.COMPANY;
-  }
+
   return OnboardingFlow.COACH;
 };

@@ -17,7 +17,7 @@ import {
   findPreviousNotSkippableStep,
   getOnboardingFlow,
 } from 'src/use-cases/onboarding/onboarding.utils';
-import { OnboardingFlow, OnboardingFormData } from './Onboarding.types';
+import { OnboardingFormData } from './Onboarding.types';
 
 export const useOnboarding = () => {
   const dispatch = useDispatch();
@@ -65,13 +65,7 @@ export const useOnboarding = () => {
       userRoleHasOnboarding &&
       currentStep === 0
     ) {
-      // Déterminer le flux d'onboarding en fonction du rôle
-      let flow: OnboardingFlow;
-      if (authenticatedUser.role === UserRoles.CANDIDATE) {
-        flow = OnboardingFlow.CANDIDATE;
-      } else {
-        flow = OnboardingFlow.COACH;
-      }
+      const flow = getOnboardingFlow(authenticatedUser);
 
       dispatch(onboardingActions.launchOnboarding(flow));
     } else if (hasAcceptedEthicsCharter || !userRoleHasOnboarding) {

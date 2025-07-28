@@ -3,6 +3,8 @@ import { User } from '@/src/api/types';
 import { isReadDocument } from '@/src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from '@/src/components/utils/EthicsCharter/EthicsCharter';
 import { DocumentNames } from '@/src/constants';
+import { formOnboardingCompanyGoal } from '../forms/schemas/formOnboardingCompanyGoal';
+import { formOnboardingCompanyInformation } from '../forms/schemas/formOnboardingCompanyInformation';
 import { formOnboardingEthicsCharter } from '../forms/schemas/formOnboardingEthicsCharter';
 
 export const CompanyOnboardingStepContents = {
@@ -21,16 +23,16 @@ export const CompanyOnboardingStepContents = {
     }),
   },
   2: {
-    title: "Profil de l'entreprise",
-    subtitle:
-      'Pour mieux vous connaître, merci de compléter ces informations sur votre entreprise',
-    form: formOnboardingEthicsCharter, // À remplacer par le vrai formulaire d'entreprise
-    // skippedBy: (user: User) => false, // À adapter selon les besoins
+    title: 'Quelles sont vos attentes avec Entourage Pro',
+    subtitle: 'Sélectionnez la ou les actions que vous souhaitez entreprendre',
+    form: formOnboardingCompanyGoal,
+    // skippedBy: (user: User) => false,
   },
   3: {
-    title: "Vos offres d'emploi",
-    subtitle: "Ajoutez vos premières offres d'emploi pour les candidats",
-    form: formOnboardingEthicsCharter, // À remplacer par le vrai formulaire d'offres d'emploi
-    // skippedBy: (user: User) => false, // À adapter selon les besoins
+    title: 'Renseignez les informations de votre entreprise',
+    subtitle:
+      'Ces informations seront visibles par tous les candidats de la plateforme',
+    form: formOnboardingCompanyInformation,
+    // skippedBy: (user: User) => false,
   },
 };

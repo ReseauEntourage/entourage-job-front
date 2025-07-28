@@ -17,7 +17,7 @@ export interface State {
   sendStepData: RequestState<typeof sendStepDataOnboardingAdapter>;
   sendStepDataError: SendStepDataOnboardingError | null;
   currentStep: OnboardingStep;
-  onboardingFlow: OnboardingFlow | null; // Seul champ pour déterminer le flux d'onboarding
+  onboardingFlow: OnboardingFlow | null;
   shouldLaunchOnboarding: boolean;
   data: OnboardingStepData;
   isLoading: boolean;
