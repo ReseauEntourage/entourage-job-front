@@ -89,6 +89,28 @@ export type OnboardingStepContentByFlow = Partial<{
   [OnboardingFlow.COMPANY]: OnboardingStepContent<CompanyOnboardingForm>;
 }>;
 
+export interface CompanyStepData {
+  description?: string;
+  logo?: File[];
+  businessSectorIds?: { value: string }[];
+  department?: { value: string };
+  url?: string;
+  linkedinUrl?: string;
+  hiringUrl?: string;
+  goal?: string[];
+}
+
+export interface CandidateCoachStepData {
+  externalCv?: File[];
+  nationality?: string;
+  accommodation?: string;
+  hasSocialWorker?: boolean;
+  resources?: string[];
+  studiesLevel?: string;
+  workingExperience?: string;
+  jobSearchDuration?: string;
+}
+
 // Type représentant la structure de données complète pour l'onboarding
 export type OnboardingStepData = {
   [step: number]: { [flow in OnboardingFlow]?: OnboardingFormData };

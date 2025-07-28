@@ -1,8 +1,13 @@
 import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
+import { Department } from '@/src/constants/departements';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
 import { CompanyGoal, UpdateCompanyDto } from 'src/api/types';
-import { OnboardingFlow } from 'src/components/backoffice/onboarding/Onboarding.types';
+import {
+  CandidateCoachStepData,
+  CompanyStepData,
+  OnboardingFlow,
+} from 'src/components/backoffice/onboarding/Onboarding.types';
 import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
@@ -69,10 +74,6 @@ export function* sendStepDataOnboardingSaga() {
     );
   }
 
-  // Utiliser un typage plus souple pour éviter les erreurs de TypeScript
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const stepDataAny = stepData as any;
-
   try {
     // Extraire les champs en fonction du flux d'onboarding
     if (flow === OnboardingFlow.COMPANY) {
@@ -85,9 +86,7 @@ export function* sendStepDataOnboardingSaga() {
         linkedinUrl,
         hiringUrl,
         goal,
-      } = stepDataAny;
-
-      // console.log(stepDataAny);
+      } = stepData as CompanyStepData;
 
       let companyGoalValue: CompanyGoal | undefined;
       if (goal) {
@@ -95,7 +94,7 @@ export function* sendStepDataOnboardingSaga() {
           companyGoalValue = CompanyGoal.BOTH;
         } else {
           // eslint-disable-next-line prefer-destructuring
-          companyGoalValue = goal[0];
+          companyGoalValue = goal[0] as CompanyGoal;
         }
       } else {
         companyGoalValue = undefined;
@@ -108,14 +107,12 @@ export function* sendStepDataOnboardingSaga() {
         linkedinUrl,
         hiringUrl,
         goal: companyGoalValue,
-        department: department?.value,
+        department: department?.value as Department,
         businessSectorIds:
           businessSectorIds?.map(
             (businessSectorId) => businessSectorId.value
           ) ?? undefined,
       };
-
-      // console.log(companyFields);
 
       // Mettre à jour le profil utilisateur de l'entreprise
       yield* call(() => Api.updateCompany(companyFields));
@@ -138,7 +135,7 @@ export function* sendStepDataOnboardingSaga() {
         workingExperience,
         jobSearchDuration,
         ...otherData
-      } = stepDataAny;
+      } = stepData as CandidateCoachStepData;
 
       const socialSituationFields = {
         nationality,

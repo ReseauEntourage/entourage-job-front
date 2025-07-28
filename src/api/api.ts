@@ -290,7 +290,7 @@ export class APIHandler {
     socialSituationDto: {
       nationality?: string;
       accommodation?: string;
-      resources?: string;
+      resources?: string[];
       studiesLevel?: string;
       workingExperience?: string;
       jobSearchDuration?: string;
