@@ -1,9 +1,11 @@
+import React from 'react';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import {
   CANDIDATE_YES_NO_FILTERS,
   CandidateYesNo,
   CandidateYesNoValue,
 } from 'src/constants';
+import { ProgramEligibilityAlert } from './ProgramEligibilityAlert';
 
 export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
   materialInsecurity: CandidateYesNoValue;
@@ -78,6 +80,20 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
             "Vous devez être en situation d'isolement ou de précarité pour accéder au programme",
         },
       ],
+    },
+    {
+      id: 'programEligibilityAlert',
+      name: 'programEligibilityAlert',
+      component: 'text',
+      title: <ProgramEligibilityAlert />,
+      hide: (getValue) => {
+        const materialInsecurity = getValue('materialInsecurity');
+        const networkInsecurity = getValue('networkInsecurity');
+        return !(
+          materialInsecurity === CandidateYesNo.NO &&
+          networkInsecurity === CandidateYesNo.NO
+        );
+      },
     },
   ],
 };
