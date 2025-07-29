@@ -42,7 +42,7 @@ export const useOnboarding = () => {
   );
 
   const isFirstOnboardingStep = useMemo(() => {
-    // On détermine le flux d'onboarding en fonction du rôle de l'utilisateur
+    // Determine onboarding flow based on user role
     const flow = getOnboardingFlow(authenticatedUser);
 
     const firstStep = findNextNotSkippableStep(0, authenticatedUser, flow);
