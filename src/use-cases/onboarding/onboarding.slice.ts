@@ -67,7 +67,7 @@ export const slice = createSlice({
 
       const currentStepData = state.data[currentStep] || {};
 
-      // Stocker les données en utilisant le flux comme clé
+      // Store data using the flow as the key
       state.data[currentStep] = {
         ...currentStepData,
         [onboardingFlow]: action.payload,
