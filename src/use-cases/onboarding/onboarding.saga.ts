@@ -114,7 +114,7 @@ export function* sendStepDataOnboardingSaga() {
           ) ?? undefined,
       };
 
-      // Mettre à jour le profil utilisateur de l'entreprise
+      // Update the company user profile
       yield* call(() => Api.updateCompany(companyFields));
 
       // Upload company logo
