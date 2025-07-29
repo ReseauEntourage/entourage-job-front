@@ -1,5 +1,5 @@
 import React from 'react';
-import { PublicUser } from 'src/api/types';
+import { PublicCV } from 'src/api/types';
 import { H3, H5 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -12,12 +12,12 @@ import {
 import { CVShareButtons } from './CVShareButtons';
 
 interface CVCallToActionsProps {
-  publicUser: PublicUser;
+  publicCv: PublicCV;
   actionDisabled?: boolean;
 }
 
 export const CVCallToActions = ({
-  publicUser,
+  publicCv,
   actionDisabled = false,
 }: CVCallToActionsProps) => {
   const isDesktop = useIsDesktop();
@@ -25,7 +25,7 @@ export const CVCallToActions = ({
   return (
     <StyledCVCTA>
       <H3
-        title={`Donnez un coup de pouce à ${publicUser.firstName} !`}
+        title={`Donnez un coup de pouce à ${publicCv.firstName} !`}
         center
         color={COLORS.black}
       />
@@ -33,10 +33,7 @@ export const CVCallToActions = ({
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={3}>
           <H5 title="Partagez son CV sur vos réseaux" center color="darkGray" />
           <p>Et offrez lui une visibilité qui peut tout changer.</p>
-          <CVShareButtons
-            publicProfile={publicUser}
-            actionDisabled={actionDisabled}
-          />
+          <CVShareButtons publicCV={publicCv} actionDisabled={actionDisabled} />
         </StyledCVCTACard>
       </StyledCVCTAContainer>
     </StyledCVCTA>

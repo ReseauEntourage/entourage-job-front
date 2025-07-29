@@ -11,7 +11,7 @@ import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
-import { PublicUser } from 'src/api/types';
+import { PublicCV } from 'src/api/types';
 
 import {
   StyledCVPageContent,
@@ -50,13 +50,13 @@ interface openedPanelType {
 }
 
 interface PageCVContentProps {
-  publicUser: PublicUser;
+  publicCV: PublicCV;
   actionDisabled?: boolean;
   isPreview?: boolean;
 }
 
 export const PageCVContent = ({
-  publicUser,
+  publicCV,
   actionDisabled = false,
   isPreview = false,
 }: PageCVContentProps) => {
@@ -71,8 +71,8 @@ export const PageCVContent = ({
     passions: false,
   });
 
-  const imgSrc = publicUser?.userProfile?.hasPicture
-    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${publicUser.id}.profile.jpg`
+  const imgSrc = publicCV?.userProfile?.hasPicture
+    ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${publicCV.id}.profile.jpg`
     : '/static/img/arthur.jpg';
 
   return (
@@ -102,7 +102,7 @@ export const PageCVContent = ({
                 </p>
               </StyledShareContainer>
               <CVShareButtons
-                publicProfile={publicUser}
+                publicCV={publicCV}
                 actionDisabled={actionDisabled}
               />
             </>
@@ -111,21 +111,21 @@ export const PageCVContent = ({
         <StyledHeaderDetails className={!isDesktop ? 'mobile' : ''}>
           <div>
             <H1
-              title={`${publicUser.firstName} ${publicUser.lastName}`}
+              title={`${publicCV.firstName} ${publicCV.lastName}`}
               color={COLORS.black}
             />
-            {publicUser.userProfile.sectorOccupations && (
+            {publicCV.userProfile.sectorOccupations && (
               <ProfileCareerPathSentence
-                role={publicUser.role}
-                sectorOccupations={publicUser.userProfile.sectorOccupations}
+                role={publicCV.role}
+                sectorOccupations={publicCV.userProfile.sectorOccupations}
               />
             )}
 
-            {publicUser.userProfile.introduction && (
+            {publicCV.userProfile.introduction && (
               <StyledCVPageContentStory
                 className={!isDesktop && isStoryHidden ? 'mobile-hidden' : ''}
               >
-                <p className="">{publicUser.userProfile.introduction}</p>
+                <p className="">{publicCV.userProfile.introduction}</p>
                 {!isDesktop && isStoryHidden && (
                   <div className="seeMore">
                     <div onClick={() => setIsStoryHidden(!isStoryHidden)}>
@@ -136,8 +136,8 @@ export const PageCVContent = ({
               </StyledCVPageContentStory>
             )}
             <StyledCVSkillTagContainer>
-              {publicUser.userProfile.skills &&
-                publicUser.userProfile.skills.map(({ name, id }, key) => {
+              {publicCV.userProfile.skills &&
+                publicCV.userProfile.skills.map(({ name, id }, key) => {
                   return (
                     <StyledSkillTag key={`${key}-${id}`}>{name}</StyledSkillTag>
                   );
@@ -157,7 +157,7 @@ export const PageCVContent = ({
                 </p>
               </StyledShareContainer>
               <CVShareButtons
-                publicProfile={publicUser}
+                publicCV={publicCV}
                 actionDisabled={actionDisabled}
               />
             </>
@@ -193,15 +193,15 @@ export const PageCVContent = ({
               </StyledTitleAccordion>
             )}
             <ul>
-              {publicUser.userProfile.contracts &&
-                publicUser.userProfile.contracts.length > 0 && (
+              {publicCV.userProfile.contracts &&
+                publicCV.userProfile.contracts.length > 0 && (
                   <li>
                     <div>
                       <p className="subtitle">
                         <LucidIcon name="FileText" />{' '}
                         <span>Type de contrat</span>
                       </p>
-                      {publicUser.userProfile.contracts.map(({ name }) => {
+                      {publicCV.userProfile.contracts.map(({ name }) => {
                         return (
                           <Text color="darkGray" key={name}>
                             {findConstantFromValue(name, CONTRACTS).label}
@@ -211,13 +211,13 @@ export const PageCVContent = ({
                     </div>
                   </li>
                 )}
-              {publicUser.userProfile.userProfileLanguages?.length > 0 && (
+              {publicCV.userProfile.userProfileLanguages?.length > 0 && (
                 <li>
                   <div>
                     <p className="subtitle">
                       <LucidIcon name="Globe" /> <span>Langues</span>
                     </p>
-                    {publicUser.userProfile.userProfileLanguages.map(
+                    {publicCV.userProfile.userProfileLanguages.map(
                       ({ language }) => {
                         return (
                           <Text color="darkGray" key={language?.id}>
@@ -231,11 +231,11 @@ export const PageCVContent = ({
               )}
             </ul>
           </StyledCVPageContentInformations>
-          {publicUser.userProfile.interests?.length > 0 && isDesktop && (
+          {publicCV.userProfile.interests?.length > 0 && isDesktop && (
             <StyledCVPageContentPassions>
               <H5 title="Mes centres d'intérêts" color={COLORS.black} />
               <ul>
-                {publicUser.userProfile.interests.map(({ name }) => {
+                {publicCV.userProfile.interests.map(({ name }) => {
                   return <p key={name}>{name}</p>;
                 })}
               </ul>
@@ -243,7 +243,7 @@ export const PageCVContent = ({
           )}
         </StyledLeftColumn>
         <StyledRightColumn>
-          {publicUser.userProfile.experiences?.length > 0 && (
+          {publicCV.userProfile.experiences?.length > 0 && (
             <StyledCVPageContentExperience
               className={`${openedPanel.experiences ? '' : 'close'} ${
                 !isDesktop ? 'mobile' : ''
@@ -267,7 +267,7 @@ export const PageCVContent = ({
                 )}
               </StyledTitleAccordion>
               <ul>
-                {publicUser.userProfile.experiences.map((experience) => {
+                {publicCV.userProfile.experiences.map((experience) => {
                   return (
                     <CVExperienceOrFormation
                       key={experience.id}
@@ -284,7 +284,7 @@ export const PageCVContent = ({
               </ul>
             </StyledCVPageContentExperience>
           )}
-          {publicUser.userProfile.formations?.length > 0 && (
+          {publicCV.userProfile.formations?.length > 0 && (
             <StyledCVPageContentExperience
               className={`${openedPanel.formations ? '' : 'close'} ${
                 !isDesktop ? 'mobile' : ''
@@ -308,7 +308,7 @@ export const PageCVContent = ({
                 )}
               </StyledTitleAccordion>
               <ul>
-                {publicUser.userProfile.formations.map((formation) => {
+                {publicCV.userProfile.formations.map((formation) => {
                   return (
                     <CVExperienceOrFormation
                       key={formation.id}
@@ -325,7 +325,7 @@ export const PageCVContent = ({
               </ul>
             </StyledCVPageContentExperience>
           )}
-          {publicUser.userProfile.interests?.length > 0 && !isDesktop && (
+          {publicCV.userProfile.interests?.length > 0 && !isDesktop && (
             <StyledCVPageContentPassions
               className={`${openedPanel.passions ? '' : 'close'} ${
                 !isDesktop ? 'mobile' : ''
@@ -351,7 +351,7 @@ export const PageCVContent = ({
                 </StyledTitleAccordion>
               )}
               <ul>
-                {publicUser.userProfile.interests?.map(({ name }) => {
+                {publicCV.userProfile.interests?.map(({ name }) => {
                   return <p key={name}>{name}</p>;
                 })}
               </ul>
@@ -359,12 +359,12 @@ export const PageCVContent = ({
           )}
         </StyledRightColumn>
       </StyledCVPageContentDetailsContainer>
-      {publicUser.userProfile.reviews?.length > 0 && (
+      {publicCV.userProfile.reviews?.length > 0 && (
         <StyledCVPageContentCarousel>
           <H3 title="Ils me recommandent" color={COLORS.black} center />
           <CarouselSwiper
             slides={[
-              ...publicUser.userProfile.reviews.map(
+              ...publicCV.userProfile.reviews.map(
                 ({ content, id, authorLabel, authorName }) => {
                   return (
                     <StyledCVPageContentSlide key={id}>
@@ -389,10 +389,7 @@ export const PageCVContent = ({
           />
         </StyledCVPageContentCarousel>
       )}
-      <CVCallToActions
-        actionDisabled={actionDisabled}
-        publicUser={publicUser}
-      />
+      <CVCallToActions actionDisabled={actionDisabled} publicCv={publicCV} />
     </StyledCVPageContent>
   );
 };
