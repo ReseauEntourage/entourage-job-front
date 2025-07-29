@@ -93,8 +93,8 @@ export function* sendStepDataOnboardingSaga() {
         if (goal.length > 1) {
           companyGoalValue = CompanyGoal.BOTH;
         } else {
-          // eslint-disable-next-line prefer-destructuring
-          companyGoalValue = goal[0] as CompanyGoal;
+          const [firstGoal] = goal;
+          companyGoalValue = firstGoal as CompanyGoal;
         }
       } else {
         companyGoalValue = undefined;
