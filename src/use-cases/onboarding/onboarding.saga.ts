@@ -124,7 +124,7 @@ export function* sendStepDataOnboardingSaga() {
         yield* call(() => Api.updateCompanyLogo(formData));
       }
     } else {
-      // Gestion des flux CANDIDATE et COACH
+      // Handle CANDIDATE and COACH flows
       const {
         externalCv,
         nationality,
