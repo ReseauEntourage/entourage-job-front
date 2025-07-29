@@ -75,7 +75,7 @@ export function* sendStepDataOnboardingSaga() {
   }
 
   try {
-    // Extraire les champs en fonction du flux d'onboarding
+    // Extract fields based on the onboarding flow
     if (flow === OnboardingFlow.COMPANY) {
       const {
         description,
