@@ -15,6 +15,7 @@ import {
   ContactNewsletter,
   ConversationReportDto,
   ExternalCv,
+  InviteCollaboratorsFromCompanyDto,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -109,7 +110,7 @@ export class APIHandler {
   }
 
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
-    return this.get('/external-cv/generate-profile-from-cv');
+    return this.get('/profile-generation/generate-profile-from-cv');
   }
 
   // post
@@ -190,6 +191,10 @@ export class APIHandler {
     return this.get(`/user/profile/${userId}`);
   }
 
+  getProfileCompletion(): Promise<AxiosResponse<number>> {
+    return this.get(`/user/profile/completion`);
+  }
+
   getAllUsersProfiles(
     params: ProfilesFilters & {
       offset: number;
@@ -264,10 +269,6 @@ export class APIHandler {
 
   putCandidateRead(candidateId: string): Promise<AxiosResponse> {
     return this.put(`/user/candidate/read/${candidateId}`);
-  }
-
-  putLinkUser(userId: string, userToLinkId?: string): Promise<AxiosResponse> {
-    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }
 
   putUserProfile(
@@ -378,6 +379,12 @@ export class APIHandler {
     return this.post(`/companies/logo`, formData, {
       'Content-Type': 'multipart/form-data',
     });
+
+  inviteCollaboratorsFromCompany(
+    companyId: string,
+    params: InviteCollaboratorsFromCompanyDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/companies/${companyId}/invite-collaborators`, params);
   }
 
   /// ///////////// ///

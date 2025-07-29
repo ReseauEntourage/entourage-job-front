@@ -1,4 +1,5 @@
 import { HelpValue } from '@/src/constants/nudges';
+import { CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
@@ -79,6 +80,10 @@ export type OrganizationDto = {
 export type CompanyDto = {
   id?: string;
   name: string;
+};
+
+export type InviteCollaboratorsFromCompanyDto = {
+  emails: string[];
 };
 
 export interface BusinessSector {
@@ -221,6 +226,20 @@ export type UserSocialSituation = {
   hasCompletedSurvey: boolean;
 };
 
+export type CompanyUser = {
+  role: CompanyUserRole;
+  isAdmin: boolean;
+};
+
+export type Company = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  description: string | null;
+  companyUser?: CompanyUser;
+};
+
 export type User = {
   coach: User;
   id: string;
@@ -249,6 +268,7 @@ export type User = {
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
+  companies?: Company[];
 };
 
 export type CVStatus =
@@ -321,7 +341,6 @@ export interface UserCandidateWithUsers extends UserCandidate {
 
 export interface UserWithUserCandidate extends User {
   candidat?: UserCandidateWithUsers;
-  coaches?: UserCandidateWithUsers[];
   referredCandidates?: UserCandidateWithUsers[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
@@ -334,7 +353,6 @@ export type UserDto = {
   gender: Genders;
   zone: AdminZone;
   phone: string;
-  userToLinkId?: string;
   email: string;
   adminRole?: AdminRoles;
   OrganizationId?: string;

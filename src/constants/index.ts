@@ -8,6 +8,8 @@ import { GA_TAGS } from 'src/constants/tags';
 import { GENDERS_FILTERS } from './genders';
 import { Filter, FilterConstant } from './utils';
 
+export { PUSHER_CHANNELS, PUSHER_EVENTS, getPusher } from './pusher';
+
 export const PROFILES_LIMIT = 25;
 
 export const JNSPR = {
@@ -145,15 +147,6 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     constants: [],
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
-  },
-  {
-    key: 'associatedUser',
-    constants: [
-      { label: 'Binôme en cours', value: true },
-      { label: 'Sans binôme', value: false },
-    ],
-    title: 'Membre associé',
-    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_BINOME_CLIC,
   },
   {
     key: 'employed',
