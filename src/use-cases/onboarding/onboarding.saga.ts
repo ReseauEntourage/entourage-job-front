@@ -100,7 +100,7 @@ export function* sendStepDataOnboardingSaga() {
         companyGoalValue = undefined;
       }
 
-      // Créer un objet pour les données du profil d'entreprise
+      // Create an object for company profile data
       const companyFields: UpdateCompanyDto = {
         description,
         url,
