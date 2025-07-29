@@ -149,10 +149,7 @@ export const findNextNotSkippableStep = (
 };
 
 export const getOnboardingFlow = (user: User): OnboardingFlow => {
-  // TODO: CHANGE THIS LOGIC TO USE THE NEW COMPANY FIELD
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const userAny = user as any;
-  if (userAny.companies[0]?.companyUser?.isAdmin) {
+  if (user.companies && user.companies[0]?.companyUser?.isAdmin) {
     return OnboardingFlow.COMPANY;
   }
   if (isRoleIncluded(user.role, UserRoles.CANDIDATE)) {
