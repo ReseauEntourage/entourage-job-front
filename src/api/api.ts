@@ -291,7 +291,7 @@ export class APIHandler {
     socialSituationDto: {
       nationality?: string;
       accommodation?: string;
-      resources?: string[];
+      resources?: string;
       studiesLevel?: string;
       workingExperience?: string;
       jobSearchDuration?: string;
@@ -379,6 +379,7 @@ export class APIHandler {
     return this.post(`/companies/logo`, formData, {
       'Content-Type': 'multipart/form-data',
     });
+  }
 
   inviteCollaboratorsFromCompany(
     companyId: string,

@@ -105,7 +105,7 @@ export interface CandidateCoachStepData {
   nationality?: string;
   accommodation?: string;
   hasSocialWorker?: boolean;
-  resources?: string[];
+  resources?: string;
   studiesLevel?: string;
   workingExperience?: string;
   jobSearchDuration?: string;

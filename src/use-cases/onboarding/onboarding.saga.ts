@@ -61,8 +61,10 @@ export function* sendStepDataOnboardingSaga() {
     throw new Error('Step data not found for the current step and flow');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { hasAcceptedEthicsCharter } = stepData as any;
+  const hasAcceptedEthicsCharter =
+    'hasAcceptedEthicsCharter' in stepData
+      ? (stepData.hasAcceptedEthicsCharter as boolean)
+      : undefined;
 
   // Check if user has accepted the ethics charter
   if (hasAcceptedEthicsCharter === true) {

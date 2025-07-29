@@ -26,13 +26,11 @@ export const CompanyOnboardingStepContents = {
     title: 'Quelles sont vos attentes avec Entourage Pro',
     subtitle: 'Sélectionnez la ou les actions que vous souhaitez entreprendre',
     form: formOnboardingCompanyGoal,
-    // skippedBy: (user: User) => false,
   },
   3: {
     title: 'Renseignez les informations de votre entreprise',
     subtitle:
       'Ces informations seront visibles par tous les candidats de la plateforme',
     form: formOnboardingCompanyInformation,
-    // skippedBy: (user: User) => false,
   },
 };
