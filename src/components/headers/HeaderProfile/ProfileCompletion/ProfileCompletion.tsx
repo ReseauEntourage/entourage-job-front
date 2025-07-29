@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Api } from '@/src/api';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectOnboardingCurrentStep } from '@/src/use-cases/onboarding';
 import { Text } from 'src/components/utils';
+import {
+  profileCompletionActions,
+  selectProfileCompletionRate,
+} from 'src/use-cases/profile-completion';
 import {
   StyledHeader,
   StyledProfileCompletion,
@@ -11,20 +14,15 @@ import {
 } from './ProfileCompletion.style';
 
 export const ProfileCompletion = () => {
-  // Utilisation d'un state local car on utilise le taux de completion seulement dans ce composant
-  const [completionRate, setCompletionRate] = useState(0);
+  const dispatch = useDispatch();
+  const completionRate = useSelector(selectProfileCompletionRate);
   const onbordingCurrentStep = useSelector(selectOnboardingCurrentStep);
 
   useEffect(() => {
-    const fetchCompletionRate = async () => {
-      const { data } = await Api.getProfileCompletion();
-      setCompletionRate(data || 0);
-    };
-
     if (onbordingCurrentStep === 0) {
-      fetchCompletionRate();
+      dispatch(profileCompletionActions.fetchProfileCompletionRequested());
     }
-  }, [onbordingCurrentStep]);
+  }, [dispatch, onbordingCurrentStep]);
 
   return (
     <StyledProfileCompletion>
