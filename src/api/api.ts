@@ -25,6 +25,7 @@ import {
   Route,
   SocialMedia,
   UserDto,
+  UpdateCompanyDto,
   UserProfile,
   UserReferingDto,
   UserRegistrationDto,
@@ -368,6 +369,16 @@ export class APIHandler {
   // post
   postCompany(params: CompanyDto): Promise<AxiosResponse> {
     return this.post('/companies', params);
+  }
+
+  updateCompany(companyFields: UpdateCompanyDto): Promise<AxiosResponse> {
+    return this.put(`/companies`, companyFields);
+  }
+
+  updateCompanyLogo(formData: FormData): Promise<AxiosResponse> {
+    return this.post(`/companies/logo`, formData, {
+      'Content-Type': 'multipart/form-data',
+    });
   }
 
   inviteCollaboratorsFromCompany(

@@ -1,18 +1,7 @@
 import React from 'react';
 import { User } from '../../../api/types';
-import {
-  getCandidateDefaultProfessionalValues,
-  getCoachDefaultProfessionalValuesWithLinkedIn,
-} from '../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
-import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
-import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
-import { DocumentNames } from 'src/constants';
-import { UserRoles } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
-import { OnboardingAI } from './Onboarding/forms/OnboardingAI';
-import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
-import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
 import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
 import { formOnboardingCandidateHelps } from './Onboarding/forms/schemas/formOnboardingCandidateHelps';
 import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
@@ -21,14 +10,18 @@ import { formOnboardingCandidateSocialSituation } from './Onboarding/forms/schem
 import { formOnboardingCoachHelps } from './Onboarding/forms/schemas/formOnboardingCoachHelps';
 import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardingCoachJob';
 import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
+import { formOnboardingCompanyGoal } from './Onboarding/forms/schemas/formOnboardingCompanyGoal';
+import { formOnboardingCompanyInformation } from './Onboarding/forms/schemas/formOnboardingCompanyInformation';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';
+
+export enum OnboardingFlow {
+  CANDIDATE = 'CANDIDATE',
+  COACH = 'COACH',
+  COMPANY = 'COMPANY',
+}
 
 export type OnboardingStep = 0 | 1 | 2 | 3 | 4 | 5; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
-export const ONBOARDING_LAST_STEP = {
-  [UserRoles.CANDIDATE]: 5 as OnboardingStep,
-  [UserRoles.COACH]: 4 as OnboardingStep,
-};
 
 export type CandidateOnboardingForm =
   | typeof formOnboardingEthicsCharter
@@ -44,7 +37,15 @@ export type CoachOnboardingForm =
   | typeof formOnboardingCoachJob
   | typeof formOnboardingCoachProfile;
 
-export type OnboardingForms = CandidateOnboardingForm | CoachOnboardingForm;
+export type CompanyOnboardingForm =
+  | typeof formOnboardingEthicsCharter
+  | typeof formOnboardingCompanyGoal
+  | typeof formOnboardingCompanyInformation;
+
+export type OnboardingForms =
+  | CandidateOnboardingForm
+  | CoachOnboardingForm
+  | CompanyOnboardingForm;
 
 export type OnboardingFormData = ExtractFormSchemaValidation<OnboardingForms>;
 
@@ -67,139 +68,53 @@ export interface OnboardingStepContent<
   defaultValues?: (user: User) => Partial<OnboardingFormData>;
 }
 
-export type OnboardingStepContentByRole = Partial<{
-  [UserRoles.CANDIDATE]: OnboardingStepContent<CandidateOnboardingForm>;
-  [UserRoles.COACH]: OnboardingStepContent<CoachOnboardingForm>;
-}>;
-
-export const OnboardingStepContents: {
-  [K in OnboardingStep]?: OnboardingStepContentByRole;
-} = {
-  1: {
-    [UserRoles.CANDIDATE]: {
-      title: 'Charte éthique',
-      skippedBy: (user: User) => {
-        return isReadDocument(user.readDocuments, DocumentNames.CharteEthique);
-      },
-      content: <EthicsCharter />,
-      form: formOnboardingEthicsCharter,
-      defaultValues: (user) => ({
-        hasAcceptedEthicsCharter: isReadDocument(
-          user.readDocuments,
-          DocumentNames.CharteEthique
-        ),
-      }),
-    },
-    [UserRoles.COACH]: {
-      title: 'Charte éthique',
-      skippedBy: (user: User) => {
-        return isReadDocument(user.readDocuments, DocumentNames.CharteEthique);
-      },
-      content: <EthicsCharter />,
-      form: formOnboardingEthicsCharter,
-      defaultValues: (user) => ({
-        hasAcceptedEthicsCharter: isReadDocument(
-          user.readDocuments,
-          DocumentNames.CharteEthique
-        ),
-      }),
-    },
-  },
-  2: {
-    [UserRoles.CANDIDATE]: {
-      title: 'Nous aimerions en savoir plus sur votre situation',
-      content: <OnboardingCandidateSocialSituation />,
-      skippedBy: (user: User) => {
-        // If the user as already accepted the ethics charter, we skip also the social situation form because it should be displayed only once
-        return !!user.userSocialSituation?.hasCompletedSurvey;
-      },
-      form: formOnboardingCandidateSocialSituation,
-      defaultValues: (user) => ({
-        hasAcceptedEthicsCharter: isReadDocument(
-          user.readDocuments,
-          DocumentNames.CharteEthique
-        ),
-      }),
-    },
-    [UserRoles.COACH]: {
-      title: 'Complétez votre profil',
-      subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur ce que vous souhaitez apporter aux candidats",
-      form: formOnboardingCoachHelps,
-      defaultValues: (user) => ({
-        nudgeIds: user.userProfile?.nudges?.map((nudge) => nudge.id) ?? [],
-      }),
-      skippedBy: (user: User) =>
-        !!(user.userProfile?.nudges && user.userProfile?.nudges.length > 0),
-    },
-  },
-  3: {
-    [UserRoles.CANDIDATE]: {
-      title: 'Complétez votre profil',
-      subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCandidateProfile,
-      content: <OnboardingProfileForm />,
-      defaultValues: (user) => ({
-        introduction: user.userProfile.introduction ?? undefined,
-      }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
-    },
-    [UserRoles.COACH]: {
-      title: 'Complétez votre profil',
-      subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCoachJob,
-      defaultValues: (user) => {
-        return getCoachDefaultProfessionalValuesWithLinkedIn(user.userProfile);
-      },
-      skippedBy: (user: User) =>
-        !!(
-          user.userProfile?.sectorOccupations &&
-          user.userProfile?.sectorOccupations.length > 0
-        ),
-    },
-  },
-  4: {
-    [UserRoles.CANDIDATE]: {
-      title: 'Dites-nous en plus sur votre activité professionnelle',
-      form: formOnboardingCandidateJob,
-      defaultValues: (user) => {
-        return getCandidateDefaultProfessionalValues(user.userProfile);
-      },
-      skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
-    },
-    [UserRoles.COACH]: {
-      title: 'Complétez votre profil',
-      subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCoachProfile,
-      content: <OnboardingProfileForm />,
-      defaultValues: (user) => ({
-        introduction: user.userProfile.introduction ?? undefined,
-      }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.introduction,
-    },
-  },
-  5: {
-    [UserRoles.CANDIDATE]: {
-      title: 'Enrichissez votre profil grâce à votre CV',
-      content: <OnboardingAI />,
-      form: formOnboardingCandidateAI,
-      skippedBy: (user: User) =>
-        !user.userProfile.hasExternalCv || !!user.hasExtractedCvData,
-    },
-  },
+// Type pour chaque étape de l'onboarding candidat
+export type CandidateOnboardingStepContents = {
+  [K in OnboardingStep]?: OnboardingStepContent<CandidateOnboardingForm>;
 };
 
-export type OnboardingStepDataByRole = Partial<{
-  [UserRoles.CANDIDATE]: ExtractFormSchemaValidation<CandidateOnboardingForm>;
-  [UserRoles.COACH]: ExtractFormSchemaValidation<CoachOnboardingForm>;
+// Type pour chaque étape de l'onboarding coach
+export type CoachOnboardingStepContents = {
+  [K in OnboardingStep]?: OnboardingStepContent<CoachOnboardingForm>;
+};
+
+// Type pour chaque étape de l'onboarding entreprise
+export type CompanyOnboardingStepContents = {
+  [K in OnboardingStep]?: OnboardingStepContent<CompanyOnboardingForm>;
+};
+
+export type OnboardingStepContentByFlow = Partial<{
+  [OnboardingFlow.CANDIDATE]: OnboardingStepContent<CandidateOnboardingForm>;
+  [OnboardingFlow.COACH]: OnboardingStepContent<CoachOnboardingForm>;
+  [OnboardingFlow.COMPANY]: OnboardingStepContent<CompanyOnboardingForm>;
 }>;
 
-export type OnboardingStepData = Partial<{
-  [K in OnboardingStep]: Partial<OnboardingFormData>;
-}>;
+export interface CompanyStepData {
+  description?: string;
+  logo?: File[];
+  businessSectorIds?: { value: string }[];
+  department?: { value: string };
+  url?: string;
+  linkedinUrl?: string;
+  hiringUrl?: string;
+  goal?: string[];
+}
+
+export interface CandidateCoachStepData {
+  externalCv?: File[];
+  nationality?: string;
+  accommodation?: string;
+  hasSocialWorker?: boolean;
+  resources?: string;
+  studiesLevel?: string;
+  workingExperience?: string;
+  jobSearchDuration?: string;
+}
+
+// Type représentant la structure de données complète pour l'onboarding
+export type OnboardingStepData = {
+  [step: number]: { [flow in OnboardingFlow]?: OnboardingFormData };
+};
 
 export const OnboardingErrorMessages = {
   CURRENT_STEP: 'Onboarding current step is not set',

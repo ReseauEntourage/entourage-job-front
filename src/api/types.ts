@@ -420,6 +420,33 @@ export type ContactContactUs = {
   cgu: boolean;
 };
 
+// export type Company = {};
+
+export enum CompanyGoal {
+  SENSIBILIZE = 'sensibilize',
+  RECRUIT = 'recruit',
+  BOTH = 'both',
+}
+
+export type UpdateCompanyDto = {
+  name?: string;
+  description?: string;
+  logo?: File;
+  department?: Department;
+  url?: string;
+  linkedinUrl?: string;
+  hiringUrl?: string;
+  goal?: CompanyGoal;
+  businessSectorIds?: string[];
+};
+
+export type CompanySectorOccupation = {
+  businessSectorId?: string;
+  businessSector?: BusinessSector;
+  occupation?: Occupation;
+  order: number;
+};
+
 export type ContactCompany = {
   firstName: string;
   lastName: string;

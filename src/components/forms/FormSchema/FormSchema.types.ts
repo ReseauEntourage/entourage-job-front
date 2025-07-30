@@ -31,6 +31,7 @@ export const FormComponents = {
 
 export const FileTypes = {
   CV: 'cv',
+  LOGO: 'logo',
 } as const;
 
 export type FormComponent =
