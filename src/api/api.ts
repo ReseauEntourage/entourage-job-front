@@ -25,6 +25,7 @@ import {
   Route,
   SocialMedia,
   UserDto,
+  UpdateCompanyDto,
   UserProfile,
   UserReferingDto,
   UserRegistrationDto,
@@ -98,15 +99,19 @@ export class APIHandler {
 
   // get
 
-  getPublicProfileList(params): Promise<AxiosResponse> {
-    return this.get('/users/public-profiles', {
+  getPublicCVsList(params): Promise<AxiosResponse> {
+    return this.get('/users/public-cvs', {
       params,
     });
   }
 
-  getPublicProfileByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
-    return this.get(`/users/public-profiles/${candidateId}`, {}, headers);
+  getPublicCVByUserId(userId: string, headers?): Promise<AxiosResponse> {
+    return this.get(`/users/public-cvs/${userId}`, {}, headers);
   }
+
+  // ///////////////////////
+  //  profile-generation  //
+  // ///////////////////////
 
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
     return this.get('/profile-generation/generate-profile-from-cv');
@@ -163,19 +168,6 @@ export class APIHandler {
     params: object
   ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
     return this.get('/user/members', params);
-  }
-
-  getUsersSearchCandidates(params: object): Promise<AxiosResponse> {
-    return this.get('/user/search/candidates', params);
-  }
-
-  getUsersSearch(params: object): Promise<AxiosResponse> {
-    return this.get('/user/search', params);
-  }
-
-  // can be both coach or candidate ID
-  getUserCandidate(): Promise<AxiosResponse> {
-    return this.get(`/user/candidate`);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
@@ -368,6 +360,16 @@ export class APIHandler {
   // post
   postCompany(params: CompanyDto): Promise<AxiosResponse> {
     return this.post('/companies', params);
+  }
+
+  updateCompany(companyFields: UpdateCompanyDto): Promise<AxiosResponse> {
+    return this.put(`/companies`, companyFields);
+  }
+
+  updateCompanyLogo(formData: FormData): Promise<AxiosResponse> {
+    return this.post(`/companies/logo`, formData, {
+      'Content-Type': 'multipart/form-data',
+    });
   }
 
   inviteCollaboratorsFromCompany(

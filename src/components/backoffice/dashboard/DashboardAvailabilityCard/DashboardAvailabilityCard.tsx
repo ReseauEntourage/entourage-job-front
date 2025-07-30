@@ -1,27 +1,19 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { FeedbackModal } from 'src/components/modals/FeedbackModal/FeedbackModal';
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
-import { ReduxRequestEvents } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import {
-  currentUserActions,
-  updateProfileSelectors,
-} from 'src/use-cases/current-user';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { currentUserActions } from 'src/use-cases/current-user';
 
 export const DashboardAvailabilityCard = () => {
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
-  const updateProfileStatus = useSelector(
-    updateProfileSelectors.selectUpdateProfileStatus
-  );
 
   const { updateUserProfile } = useUpdateProfile(user);
 
@@ -30,24 +22,6 @@ export const DashboardAvailabilityCard = () => {
       dispatch(currentUserActions.updateProfileReset());
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'success',
-          message: `La modification a bien été enregistrée`,
-        })
-      );
-    } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'danger',
-          message: `Une erreur est survenue`,
-        })
-      );
-    }
-  }, [updateProfileStatus, dispatch]);
 
   const onToggle = (newIsAvailable: boolean) => {
     gaEvent(GA_TAGS.PAGE_DASHBOARD_DISPONIBILITE_CLIC);

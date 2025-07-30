@@ -329,10 +329,10 @@ export const CVPDF = ({ user, page }: CVPDFProps) => {
               </StyledCVPDFContentInformations>
               {/* use Information Container to display contact information */}
               {/* <CVContactInformationPDF
-                locations={publicUser.userProfile.locations}
-                address={publicUser.userProfile.address}
-                email={publicUser.userProfile.email}
-                phone={publicUser.userProfile.phone}
+                locations={publicCV.userProfile.locations}
+                address={publicCV.userProfile.address}
+                email={publicCV.userProfile.email}
+                phone={publicCV.userProfile.phone}
               /> */}
             </StyledLeftColumn>
             <StyledRightColumn>

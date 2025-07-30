@@ -10,7 +10,7 @@ export const StyledCVShareButtonsContainer = styled.div`
   gap: 20px;
 `;
 
-export const StyledCVShareBUtton = styled.div`
+export const StyledCVShareButton = styled.div`
   border: 1px solid ${COLORS.primaryBlue};
   border-radius: 500px;
   display: block;
