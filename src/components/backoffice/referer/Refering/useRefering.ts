@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from 'src/constants';
-import { Programs } from 'src/constants/programs';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
   selectIsFirstReferingStep,
@@ -12,17 +11,12 @@ import {
   selectReferingCurrentStepContent,
   selectReferingCurrentStepData,
   selectReferingDataFromOtherStep,
-  selectReferingSelectedProgram,
   referCandidateSelectors,
   referingActions,
   selectReferingNextStep,
   selectReferingShouldSkipStep,
 } from 'src/use-cases/refering';
-import {
-  FlattenedReferingFormData,
-  REFERING_CONFIRMATION_STEP,
-  ReferingFormData,
-} from './Refering.types';
+import { REFERING_CONFIRMATION_STEP, ReferingFormData } from './Refering.types';
 
 export function useRefering() {
   const { push, back, replace } = useRouter();
@@ -37,8 +31,6 @@ export function useRefering() {
   const isLastReferingStep = useSelector(selectIsLastReferingStep);
   const nextStep = useSelector(selectReferingNextStep);
   const shouldSkipStep = useSelector(selectReferingShouldSkipStep);
-
-  const selectedProgram = useSelector(selectReferingSelectedProgram);
 
   const referCandidateStatus = useSelector(
     referCandidateSelectors.selectReferCandidateStatus
@@ -78,23 +70,6 @@ export function useRefering() {
 
   useEffect(() => {
     if (shouldSkipStep) {
-      // If the user is not eligible for 360, we assign the Boost program to him
-      if (
-        stepContent &&
-        stepContent.skippedBy &&
-        stepContent.skippedBy.notEligibleFor360
-      ) {
-        if (valuesFromOtherStep) {
-          const { department } =
-            valuesFromOtherStep as FlattenedReferingFormData;
-          dispatch(
-            referingActions.setReferingCurrentStepData({
-              program: [Programs.BOOST],
-              department,
-            })
-          );
-        }
-      }
       replace(`/backoffice/referer/orienter/${nextStep}`, undefined, {
         shallow: true,
       });
@@ -107,9 +82,6 @@ export function useRefering() {
       push(
         {
           pathname: `/backoffice/referer/orienter/${REFERING_CONFIRMATION_STEP}`,
-          query: {
-            program: selectedProgram,
-          },
         },
         undefined,
         {
@@ -127,13 +99,7 @@ export function useRefering() {
         })
       );
     }
-  }, [
-    referCandateError,
-    referCandidateStatus,
-    dispatch,
-    push,
-    selectedProgram,
-  ]);
+  }, [referCandateError, referCandidateStatus, dispatch, push]);
 
   const onBack = useCallback(back, [back]);
 

@@ -4,12 +4,14 @@ import {
   OnboardingErrorMessages,
   OnboardingFormData,
   OnboardingStepContent,
-  OnboardingStepContents,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
 import { assertIsDefined } from 'src/utils/asserts';
 import { sendStepDataOnboardingAdapter } from './onboarding.adapters';
 import { RootState } from './onboarding.slice';
-import { flattenOnboardingDataByRole } from './onboarding.utils';
+import {
+  flattenOnboardingDataByFlow,
+  getOnboardingStepContent,
+} from './onboarding.utils';
 
 export const selectShouldLaunchOnboarding = (state: RootState) =>
   state.onboarding.shouldLaunchOnboarding;
@@ -19,8 +21,10 @@ export const sendStepDataSelectors =
     (state) => state.onboarding.sendStepData
   );
 
-export const selectUserRoleOnboarding = (state: RootState) =>
-  state.onboarding.userRole;
+// Ce sélecteur est supprimé car userRole n'existe plus
+
+export const selectOnboardingFlow = (state: RootState) =>
+  state.onboarding.onboardingFlow;
 
 export function selectSendStepDataError(state: RootState) {
   return state.onboarding.sendStepDataError;
@@ -54,27 +58,25 @@ export function selectOnboardingCurrentStepData(
   state: RootState
 ): OnboardingFormData | null {
   const currentStep = selectDefinedOnboardingCurrentStep(state);
+  const onboardingFlow = selectOnboardingFlow(state);
 
-  const userRole = selectUserRoleOnboarding(state);
-
-  if (!userRole) {
+  if (!onboardingFlow) {
     return null;
   }
-  return state.onboarding.data[currentStep]?.[userRole] || null;
+  return state.onboarding.data[currentStep]?.[onboardingFlow] || null;
 }
 
 export function selectOnboardingCurrentStepContent(
   state: RootState
 ): OnboardingStepContent | null {
   const currentStep = selectDefinedOnboardingCurrentStep(state);
-  const userRole = selectUserRoleOnboarding(state);
+  const onboardingFlow = selectOnboardingFlow(state);
 
-  if (!userRole) {
+  if (!onboardingFlow) {
     return null;
   }
-  const stepContent = OnboardingStepContents[currentStep]?.[userRole];
-
-  return stepContent;
+  const flowContent = getOnboardingStepContent(onboardingFlow);
+  return flowContent[currentStep];
 }
 
 export function selectOnboardingDataFromOtherStep(
@@ -88,22 +90,21 @@ export function selectOnboardingDataFromOtherStep(
 
   if (stepContent.dependsOn) {
     const data = selectOnboardingData(state);
+    const onboardingFlow = selectOnboardingFlow(state);
 
-    const userRole = selectUserRoleOnboarding(state);
-
-    if (!userRole) {
+    if (!onboardingFlow) {
       return null;
     }
 
     // Flatten the union of all the form values to get each key and its value
     // That way we are able to use the name of the specific field key to get its value if another form in the onboarding process needs the value of a preceding form
-    const allStepsDataForSelectedRole = flattenOnboardingDataByRole(
+    const allStepsDataForSelectedFlow = flattenOnboardingDataByFlow(
       data,
-      userRole
+      onboardingFlow
     );
 
     return stepContent.dependsOn.reduce((acc, curr) => {
-      return { ...acc, [curr]: allStepsDataForSelectedRole[curr] };
+      return { ...acc, [curr]: allStepsDataForSelectedFlow[curr] };
     }, {} as FlattenedOnboardingFormData);
   }
 

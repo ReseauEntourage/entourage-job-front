@@ -20,6 +20,7 @@ import {
   isFormFieldInput,
   isFormFieldMultiple,
   isFormFieldRadio,
+  isFormFieldReactNode,
   isFormFieldText,
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
@@ -76,6 +77,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   const { handleSubmit, control, reset, getValues, resetField, watch } =
     useForm<ExtractFormSchemaValidation<S>>({
       defaultValues,
+      shouldUnregister: true,
     });
 
   useImperativeHandle(innerRef, () => {
@@ -149,6 +151,20 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
               }
             }
 
+            if (isFormFieldReactNode(field)) {
+              if (shouldHide) {
+                return null;
+              }
+
+              if (field.component === 'react-node') {
+                return (
+                  <div key={i} id={`${formId}-${field.id}`}>
+                    {field.reactNode}
+                  </div>
+                );
+              }
+            }
+
             if (isFormFieldGroup(field)) {
               if (shouldHide) {
                 return null;
@@ -201,6 +217,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
                             fieldOptions={fieldOptions}
                             updateFieldOptions={updateFieldOptions}
                             getValue={getValues}
+                            key={`${field.name}-${field.component}`}
                           />
                         );
                       })}

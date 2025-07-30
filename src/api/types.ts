@@ -1,4 +1,5 @@
 import { HelpValue } from '@/src/constants/nudges';
+import { CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
@@ -9,7 +10,6 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { Program } from 'src/constants/programs';
 import {
   AdminRoles,
   RegistrableUserRoles,
@@ -33,6 +33,7 @@ export const APIRoutes = {
   READ_DOCUMENTS: 'readDocuments',
   EXTERNAL_CVS: 'external-cv',
   MESSAGING: 'messaging',
+  COMPANIES: 'companies',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -74,6 +75,15 @@ export type OrganizationDto = {
   referentMail: string;
   referentPhone: string;
   zone: AdminZone;
+};
+
+export type CompanyDto = {
+  id?: string;
+  name: string;
+};
+
+export type InviteCollaboratorsFromCompanyDto = {
+  emails: string[];
 };
 
 export interface BusinessSector {
@@ -216,6 +226,20 @@ export type UserSocialSituation = {
   hasCompletedSurvey: boolean;
 };
 
+export type CompanyUser = {
+  role: CompanyUserRole;
+  isAdmin: boolean;
+};
+
+export type Company = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  description: string | null;
+  companyUser?: CompanyUser;
+};
+
 export type User = {
   coach: User;
   id: string;
@@ -244,6 +268,7 @@ export type User = {
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
+  companies?: Company[];
 };
 
 export type CVStatus =
@@ -357,7 +382,6 @@ export type UserRegistrationDto = {
   department: Department;
   nudges?: Nudge[];
   workingRight?: string;
-  program?: Program;
   organizationId?: string;
   birthDate: string;
   occupations?: Occupation[];
@@ -381,7 +405,6 @@ export type UserReferingDto = {
   department: Department;
   nudges?: Nudge[];
   workingRight?: string;
-  program?: Program;
   birthDate: string;
   sectorOccupations?: UserProfileSectorOccupation[];
 };
@@ -395,6 +418,33 @@ export type ContactContactUs = {
   message: string;
   heardAbout: HeardAboutValue;
   cgu: boolean;
+};
+
+// export type Company = {};
+
+export enum CompanyGoal {
+  SENSIBILIZE = 'sensibilize',
+  RECRUIT = 'recruit',
+  BOTH = 'both',
+}
+
+export type UpdateCompanyDto = {
+  name?: string;
+  description?: string;
+  logo?: File;
+  department?: Department;
+  url?: string;
+  linkedinUrl?: string;
+  hiringUrl?: string;
+  goal?: CompanyGoal;
+  businessSectorIds?: string[];
+};
+
+export type CompanySectorOccupation = {
+  businessSectorId?: string;
+  businessSector?: BusinessSector;
+  occupation?: Occupation;
+  order: number;
 };
 
 export type ContactCompany = {

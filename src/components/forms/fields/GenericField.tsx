@@ -301,6 +301,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     if (field.component === 'select-list') {
       return (
         <SelectList
+          key={field.name}
           {...commonProps}
           isMulti={field.isMulti}
           options={
@@ -314,6 +315,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     if (field.component === 'select-list-async') {
       return (
         <SelectListAsync
+          key={field.name}
           {...commonProps}
           isMulti={field.isMulti}
           loadOptions={async (callback) => {

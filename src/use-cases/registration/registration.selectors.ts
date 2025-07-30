@@ -1,22 +1,19 @@
 import _ from 'lodash';
 import {
-  FirstStepContent,
-  FlattenedRegistrationFormData,
   LastStepContent,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
+  RegistrationFlows,
+  RegistrationStepSelectFlow,
+} from '@/src/components/registration/registration.config';
+import {
+  RegistrationFormDataKeys,
+  RegistrationLastStepContent,
   RegistrationStep,
   RegistrationStepContent,
-  RegistrationStepContents,
-  RegistrationFormData,
-  RegistrationFormDataKeys,
   SkippedByKeysUnion,
-} from 'src/components/registration/Registration.types';
-import {
-  flattenRegistrationDataByRole,
-  incrementRegistrationStep,
-} from 'src/components/registration/Registration.utils';
-import { UserRoles } from 'src/constants/users';
+} from '@/src/components/registration/registration.types';
+import { incrementRegistrationStep } from '@/src/components/registration/registration.utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
@@ -49,180 +46,120 @@ export function selectDefinedRegistrationCurrentStep(state: RootState) {
   return currentStep;
 }
 
-export function selectRegistrationNextStep(state: RootState): RegistrationStep {
+export function selectRegistrationNextStep(state: RootState): number {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
   return incrementRegistrationStep(currentStep);
 }
 
-export function selectRegistrationSelectedRole(state: RootState) {
-  return state.registration.selectedRole;
+export function selectRegistrationSelectedFlow(state: RootState) {
+  return state.registration.selectedFlow;
 }
 
-export function selectDefinedRegistrationSelectedRole(state: RootState) {
-  const selectedRole = selectRegistrationSelectedRole(state);
+export function selectDefinedRegistrationSelectedFlow(state: RootState) {
+  const selectedFlow = selectRegistrationSelectedFlow(state);
 
-  assertIsDefined(selectedRole, RegistrationErrorMessages.SELECTED_ROLE);
-
-  return selectedRole;
-}
-
-export function selectRegistrationSelectedProgram(state: RootState) {
-  const data = selectRegistrationData(state);
-  const selectedRole = selectRegistrationSelectedRole(state);
-
-  if (!selectedRole) return undefined;
-
-  const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
-    data,
-    selectedRole
-  );
-
-  return Array.isArray(allStepsDataForSelectedRole.program)
-    ? allStepsDataForSelectedRole.program?.[0]
-    : allStepsDataForSelectedRole.program;
-}
-
-export function selectDefinedRegistrationSelectedProgram(state: RootState) {
-  const selectedProgram = selectRegistrationSelectedProgram(state);
-
-  return selectedProgram;
+  // assertIsDefined(selectedFlow, RegistrationErrorMessages.SELECTED_FLOW);
+  return selectedFlow;
 }
 
 export function selectIsFirstRegistrationStep(state: RootState) {
   return state.registration.currentStep === REGISTRATION_FIRST_STEP;
 }
 
-export function selectIsLastRegistrationStep(state: RootState) {
+export function selectNextIsLastRegistrationStep(state: RootState) {
   const nextStep = selectRegistrationNextStep(state);
-  const isFirstStep = selectIsFirstRegistrationStep(state);
 
-  if (isFirstStep) {
+  const selectedFlow = selectRegistrationSelectedFlow(state);
+  if (!selectedFlow) {
     return false;
   }
+  const lastStep = RegistrationFlows[selectedFlow]?.length as RegistrationStep;
+  return nextStep >= lastStep;
+}
 
-  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+export function selectIsLastRegistrationStep(state: RootState) {
+  const nextStep = selectRegistrationNextStep(state);
 
-  return (
-    !RegistrationStepContents[nextStep] ||
-    !RegistrationStepContents[nextStep][selectedRole]
-  );
+  const selectedFlow = selectRegistrationSelectedFlow(state);
+  if (!selectedFlow) {
+    return false;
+  }
+  const lastStep = RegistrationFlows[selectedFlow]?.length as RegistrationStep;
+  return nextStep >= lastStep;
+}
+
+export function selectRegistrationIsEnded(state: RootState) {
+  return state.registration.isEnded;
 }
 
 export function selectIsRegistrationLoading(state: RootState) {
   return state.registration.isLoading;
 }
 
-export function selectRegistrationCurrentStepData(
-  state: RootState
-): RegistrationFormData | null {
-  const currentStep = selectDefinedRegistrationCurrentStep(state);
-
-  const isFirstStep = selectIsFirstRegistrationStep(state);
-
-  if (isFirstStep) {
-    const selectedRole = selectRegistrationSelectedRole(state);
-    return selectedRole ? { role: [selectedRole] } : null;
-  }
-
-  const selectedRole = selectDefinedRegistrationSelectedRole(state);
-
-  return state.registration.data[currentStep]?.[selectedRole] || null;
-}
-
 export function selectRegistrationCurrentStepContent(
   state: RootState
 ): RegistrationStepContent {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
+  const currentFlow = selectDefinedRegistrationSelectedFlow(state);
 
-  const isFirstStep = selectIsFirstRegistrationStep(state);
+  const steps = currentFlow ? RegistrationFlows[currentFlow] : undefined;
 
-  if (isFirstStep) {
-    return FirstStepContent;
+  if (!steps) {
+    return RegistrationStepSelectFlow;
   }
 
-  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+  const currentStepContent = steps[currentStep];
 
-  const stepContent = RegistrationStepContents[currentStep][selectedRole];
-
-  assertIsDefined(stepContent, RegistrationErrorMessages.STEP_CONTENT);
-
-  return stepContent;
+  return currentStepContent ?? RegistrationStepSelectFlow;
 }
 
 export function selectRegistrationConfirmationStepContent(
   state: RootState
-): LastStepContent {
-  const selectedRole = selectDefinedRegistrationSelectedRole(
-    state
-  ) as UserRoles;
+): RegistrationLastStepContent {
+  const selectedFlow = selectDefinedRegistrationSelectedFlow(state);
 
-  const selectedProgram = selectDefinedRegistrationSelectedProgram(state);
-
-  if (selectedRole === UserRoles.REFERER) {
-    return LastStepContent[selectedRole];
-  }
-  return LastStepContent[selectedRole][selectedProgram];
-}
-
-export function selectRegistrationDataFromOtherStep(
-  state: RootState
-): Partial<RegistrationFormData> | null {
-  const isFirstStep = selectIsFirstRegistrationStep(state);
-  const stepContent = selectRegistrationCurrentStepContent(state);
-
-  if (!isFirstStep && stepContent.dependsOn) {
-    const data = selectRegistrationData(state);
-
-    const selectedRole = selectDefinedRegistrationSelectedRole(state);
-
-    // Flatten the union of all the form values to get each key and its value
-    // That way we are able to use the name of the specific field key to get its value if another form in the registration process needs the value of a preceding form
-    const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
-      data,
-      selectedRole
-    );
-
-    return stepContent.dependsOn.reduce((acc, curr) => {
-      return { ...acc, [curr]: allStepsDataForSelectedRole[curr] };
-    }, {} as FlattenedRegistrationFormData);
+  if (!selectedFlow) {
+    throw new Error('Registration flow is not defined');
   }
 
-  return null;
+  const content = LastStepContent[selectedFlow];
+
+  if (!content) {
+    throw new Error('Registration last step content is not defined');
+  }
+
+  return content;
 }
 
 export function selectRegistrationShouldSkipStep(state: RootState) {
-  const valuesFromOtherStep = selectRegistrationDataFromOtherStep(state);
+  const data = selectRegistrationData(state);
   const stepContent = selectRegistrationCurrentStepContent(state);
 
+  if (!data) {
+    return false;
+  }
   const skippedByArray = stepContent.skippedBy;
   let skipNextStep = false;
 
-  if (skippedByArray && valuesFromOtherStep) {
+  if (skippedByArray && data) {
     const keys = Object.keys(skippedByArray) as SkippedByKeysUnion[];
 
     // All conditions should be met to skip the step
     keys.some((key) => {
       let thisKeyShouldSkip = false;
 
-      // Keys with custom logic
-      if (key === 'notEligibleFor360') {
-        thisKeyShouldSkip = true;
-      }
-
       // Keys with simple logic
-      else if (valuesFromOtherStep[key as RegistrationFormDataKeys]) {
+      if (data[key as RegistrationFormDataKeys]) {
         // check if skippedByArray[key] contains a value from valuesFromOtherStep[key]
-        if (
-          Array.isArray(valuesFromOtherStep[key as RegistrationFormDataKeys])
-        ) {
+        if (Array.isArray(data[key as RegistrationFormDataKeys])) {
           thisKeyShouldSkip = _.isEqual(
-            valuesFromOtherStep[key as RegistrationFormDataKeys],
+            data[key as RegistrationFormDataKeys],
             skippedByArray[key]
           );
         } else {
           thisKeyShouldSkip = _.includes(
             skippedByArray[key] as string[],
-            valuesFromOtherStep[key as RegistrationFormDataKeys]
+            data[key as RegistrationFormDataKeys]
           );
         }
       }

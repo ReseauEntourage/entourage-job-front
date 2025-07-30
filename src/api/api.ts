@@ -9,11 +9,13 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
+  CompanyDto,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
   ConversationReportDto,
   ExternalCv,
+  InviteCollaboratorsFromCompanyDto,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
@@ -23,6 +25,7 @@ import {
   Route,
   SocialMedia,
   UserDto,
+  UpdateCompanyDto,
   UserProfile,
   UserReferingDto,
   UserRegistrationDto,
@@ -339,6 +342,41 @@ export class APIHandler {
     search?: string;
   }): Promise<AxiosResponse> {
     return this.get('/nudges', { params });
+  }
+
+  /// /////////// ///
+  /// companies  ///
+  /// ///////// ///
+  getAllCompanies(params: {
+    params: {
+      limit: number;
+      offset: number;
+      search?: string;
+    };
+  }): Promise<AxiosResponse> {
+    return this.get('/companies', params);
+  }
+
+  // post
+  postCompany(params: CompanyDto): Promise<AxiosResponse> {
+    return this.post('/companies', params);
+  }
+
+  updateCompany(companyFields: UpdateCompanyDto): Promise<AxiosResponse> {
+    return this.put(`/companies`, companyFields);
+  }
+
+  updateCompanyLogo(formData: FormData): Promise<AxiosResponse> {
+    return this.post(`/companies/logo`, formData, {
+      'Content-Type': 'multipart/form-data',
+    });
+  }
+
+  inviteCollaboratorsFromCompany(
+    companyId: string,
+    params: InviteCollaboratorsFromCompanyDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/companies/${companyId}/invite-collaborators`, params);
   }
 
   /// ///////////// ///
