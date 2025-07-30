@@ -4,7 +4,6 @@ import {
   CompanyOnboardingStepContents,
 } from '@/src/components/backoffice/onboarding/Onboarding/stepContent';
 import { UserRoles } from '@/src/constants/users';
-import { isRoleIncluded } from '@/src/utils';
 import {
   Nudge,
   User,
@@ -152,7 +151,7 @@ export const getOnboardingFlow = (user: User): OnboardingFlow => {
   if (user.companies && user.companies[0]?.companyUser?.isAdmin) {
     return OnboardingFlow.COMPANY;
   }
-  if (isRoleIncluded(user.role, UserRoles.CANDIDATE)) {
+  if (user.role === UserRoles.CANDIDATE) {
     return OnboardingFlow.CANDIDATE;
   }
 
