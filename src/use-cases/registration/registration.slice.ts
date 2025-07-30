@@ -17,6 +17,7 @@ export interface State {
   data: RegistrationData;
   isLoading: boolean;
   isEnded?: boolean;
+  invitationId?: string;
 }
 
 const initialState: State = {
@@ -27,6 +28,7 @@ const initialState: State = {
   data: null,
   isLoading: false,
   isEnded: false,
+  invitationId: undefined,
 };
 
 export const slice = createSlice({
@@ -92,9 +94,13 @@ export const slice = createSlice({
     setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
       state.isEnded = action.payload;
     },
-    setDataFromQueryParams(
+    setStateFromQueryParams(
       state,
-      action: PayloadAction<{ companyId?: string; flow?: RegistrationFlow }>
+      action: PayloadAction<{
+        companyId?: string;
+        flow?: RegistrationFlow;
+        invitationId?: string;
+      }>
     ) {
       // Set the selected flow based on the action payload
       state.selectedFlow = action.payload.flow || state.selectedFlow;
@@ -120,6 +126,9 @@ export const slice = createSlice({
             ...(newData as RegistrationData),
           };
         }
+      }
+      if (action.payload.invitationId) {
+        state.invitationId = action.payload.invitationId;
       }
     },
   },
