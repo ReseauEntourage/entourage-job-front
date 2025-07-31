@@ -6,7 +6,6 @@ import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { getRelatedUser } from 'src/utils/Finding';
 import {
   StyledContainer,
   StyledInfoContainer,
@@ -23,14 +22,6 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
 
   if (!user || !connectedUser) return null;
 
-  const relatedUser = getRelatedUser(user);
-
-  const relatedUserText = `${
-    relatedUser && relatedUser.length > 0
-      ? `${relatedUser[0].firstName} ${relatedUser[0].lastName}`
-      : `personne`
-  }`;
-
   return (
     <StyledContainer>
       <ImgProfile
@@ -46,17 +37,6 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
         <span className="uk-label">
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
         </span>
-        {(user.role === UserRoles.COACH ||
-          user.role === UserRoles.CANDIDATE) && (
-          <StyledRoleContainer>
-            <LucidIcon name="User" />
-            &nbsp;
-            <div>
-              <span className="bold">{`${_.capitalize(user.role)}`}</span>
-              {` de ${relatedUserText}`}
-            </div>
-          </StyledRoleContainer>
-        )}
         {user.role === UserRoles.REFERER && (
           <StyledRoleContainer>
             <LucidIcon name="User" />

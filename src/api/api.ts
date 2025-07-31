@@ -96,18 +96,22 @@ export class APIHandler {
 
   // get
 
-  getPublicProfileList(params): Promise<AxiosResponse> {
-    return this.get('/users/public-profiles', {
+  getPublicCVsList(params): Promise<AxiosResponse> {
+    return this.get('/users/public-cvs', {
       params,
     });
   }
 
-  getPublicProfileByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
-    return this.get(`/users/public-profiles/${candidateId}`, {}, headers);
+  getPublicCVByUserId(userId: string, headers?): Promise<AxiosResponse> {
+    return this.get(`/users/public-cvs/${userId}`, {}, headers);
   }
 
+  // ///////////////////////
+  //  profile-generation  //
+  // ///////////////////////
+
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
-    return this.get('/external-cv/generate-profile-from-cv');
+    return this.get('/profile-generation/generate-profile-from-cv');
   }
 
   // post
@@ -163,19 +167,6 @@ export class APIHandler {
     return this.get('/user/members', params);
   }
 
-  getUsersSearchCandidates(params: object): Promise<AxiosResponse> {
-    return this.get('/user/search/candidates', params);
-  }
-
-  getUsersSearch(params: object): Promise<AxiosResponse> {
-    return this.get('/user/search', params);
-  }
-
-  // can be both coach or candidate ID
-  getUserCandidate(): Promise<AxiosResponse> {
-    return this.get(`/user/candidate`);
-  }
-
   getUserById(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/${userId}`);
   }
@@ -186,6 +177,10 @@ export class APIHandler {
 
   getPublicUserProfile(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/profile/${userId}`);
+  }
+
+  getProfileCompletion(): Promise<AxiosResponse<number>> {
+    return this.get(`/user/profile/completion`);
   }
 
   getAllUsersProfiles(
@@ -262,10 +257,6 @@ export class APIHandler {
 
   putCandidateRead(candidateId: string): Promise<AxiosResponse> {
     return this.put(`/user/candidate/read/${candidateId}`);
-  }
-
-  putLinkUser(userId: string, userToLinkId?: string): Promise<AxiosResponse> {
-    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }
 
   putUserProfile(

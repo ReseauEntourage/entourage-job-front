@@ -9,7 +9,6 @@ import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import {
   AdminRoles,
   getRolesWithOrganization,
-  RELATED_ROLES,
   UserRoles,
 } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
@@ -42,7 +41,6 @@ interface FormAddUserSchema extends FormSchemaValidation {
   zone: AdminZone;
   phone: string;
   email: string;
-  userToLinkId: FilterConstant<string>;
   adminRole: AdminRoles;
   organizationId: FilterConstant<string>;
   nameOrganization: string;
@@ -141,7 +139,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           name: 'role',
           component: 'select-simple',
           options: USER_ROLES_FILTERS,
-          fieldsToReset: ['adminRole', 'userToLinkId', 'organizationId'],
+          fieldsToReset: ['adminRole', 'organizationId'],
           isRequired: true,
         },
       ],
@@ -199,7 +197,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           },
           title: 'Structure partenaire *',
           fieldsToReset: [
-            'userToLinkId',
             'nameOrganization',
             'addressOrganization',
             'zoneOrganization',
@@ -209,47 +206,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
             'referentMailOrganization',
           ],
           isRequired: true,
-        },
-        {
-          id: 'userToLinkId',
-          name: 'userToLinkId',
-          component: 'select-async',
-          isMulti: false,
-          hide: (getValue) => {
-            const role = getValue('role');
-            const organizationId = getValue('organizationId')?.value;
-            return (
-              role === UserRoles.ADMIN ||
-              (isRoleIncluded(getRolesWithOrganization(), role) &&
-                !organizationId) ||
-              organizationId === CREATE_NEW_ORGANIZATION_VALUE
-            );
-          },
-          loadOptions: async (callback, inputValue, getValue) => {
-            if (getValue) {
-              const role = RELATED_ROLES[getValue('role')];
-
-              const organizationId = getValue('organizationId')?.value;
-
-              const { data: users } = await Api.getUsersSearch({
-                params: {
-                  query: inputValue,
-                  role,
-                  organizationId,
-                },
-              });
-
-              callback(
-                users.map((u) => {
-                  return {
-                    value: u.id,
-                    label: `${u.firstName} ${u.lastName}`,
-                  };
-                })
-              );
-            }
-          },
-          title: 'Nom du coach ou candidat lié',
         },
       ],
     },

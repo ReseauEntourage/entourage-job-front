@@ -21,16 +21,7 @@ export const CandidatHeader = ({
   const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (user.role === UserRoles.COACH) {
-      const cand = user.coaches?.find(
-        ({ candidat }) => candidat.id === candidateId
-      );
-      setRelatedUser(cand?.candidat);
-      setCandidateCVUrl(
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        cand?.url
-      );
-    } else if (isRoleIncluded([UserRoles.REFERER], user.role)) {
+    if (isRoleIncluded([UserRoles.REFERER], user.role)) {
       const cand = user.referredCandidates?.find(
         ({ candidat }) => candidat.id === candidateId
       );

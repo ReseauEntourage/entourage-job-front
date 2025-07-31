@@ -18,13 +18,12 @@ import { ADMIN_ZONES } from 'src/constants/departements';
 import { UserRoles, getRolesWithOrganization } from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
-  getRelatedUser,
   isRoleIncluded,
   findConstantFromValue,
 } from 'src/utils/Finding';
 import { buildContractLabel } from 'src/utils/Formatting';
 import { MemberProps } from './Member.types';
-import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
+import { MemberInfo } from './MemberInfo';
 import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
 
 const tooltipId = 'contract-tooltip';
@@ -40,7 +39,6 @@ export function MemberMobile({
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
-  const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
 
@@ -88,17 +86,6 @@ export function MemberMobile({
             )}
         </StyledNameCellMobile>
       </div>
-      {columns.includes('associatedUser') && (
-        <div className="line">
-          <TdMobile
-            title={
-              role === UserRoles.COACH ? UserRoles.CANDIDATE : UserRoles.COACH
-            }
-          >
-            <RelatedMemberInfo relatedUser={relatedUser} />
-          </TdMobile>
-        </div>
-      )}
       {(columns.includes('phone') || columns.includes('gender')) && (
         <div className="line">
           {columns.includes('phone') && (

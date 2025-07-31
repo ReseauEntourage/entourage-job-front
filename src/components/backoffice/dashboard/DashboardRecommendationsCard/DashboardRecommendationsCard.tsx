@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
@@ -7,7 +6,6 @@ import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
 import { NormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { selectLinkedUser } from 'src/use-cases/current-user';
 import { mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
@@ -35,11 +33,6 @@ const recommendationsLabels: {
 
 export const DashboardRecommendationsCard = () => {
   const user = useAuthenticatedUser();
-
-  const linkedUser = useSelector(selectLinkedUser);
-
-  const isAlreadyLinkedCandidate =
-    user.role === UserRoles.CANDIDATE && linkedUser;
 
   const { recommendations, isLoading, isError } = useDashboardRecommendations();
 
@@ -71,10 +64,6 @@ export const DashboardRecommendationsCard = () => {
 
   if ((recommendations.length === 0 && !isLoading) || isError) {
     return <DashboardNetworkDiscoveryCard />;
-  }
-
-  if (isAlreadyLinkedCandidate) {
-    return null;
   }
 
   return (

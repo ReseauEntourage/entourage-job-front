@@ -90,6 +90,10 @@ export const ALERT_COLORS = {
     background: COLORS.darkBlue,
     text: COLORS.white,
   },
+  lightBlue: {
+    background: COLORS.hoverBlue,
+    text: COLORS.white,
+  },
 };
 
 export const FONT_WEIGHTS = {

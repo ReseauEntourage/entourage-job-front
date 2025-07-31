@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectOnboardingCurrentStep } from '@/src/use-cases/onboarding';
 import { Text } from 'src/components/utils';
+import {
+  profileCompletionActions,
+  selectProfileCompletionRate,
+} from 'src/use-cases/profile-completion';
 import {
   StyledHeader,
   StyledProfileCompletion,
@@ -7,13 +13,17 @@ import {
   StyledProgressionContainer,
 } from './ProfileCompletion.style';
 
-export interface CompletionProgressBarProps {
-  completionRate: number;
-}
+export const ProfileCompletion = () => {
+  const dispatch = useDispatch();
+  const completionRate = useSelector(selectProfileCompletionRate);
+  const onbordingCurrentStep = useSelector(selectOnboardingCurrentStep);
 
-export const ProfileCompletion = ({
-  completionRate,
-}: CompletionProgressBarProps) => {
+  useEffect(() => {
+    if (onbordingCurrentStep === 0) {
+      dispatch(profileCompletionActions.fetchProfileCompletionRequested());
+    }
+  }, [dispatch, onbordingCurrentStep]);
+
   return (
     <StyledProfileCompletion>
       <StyledHeader>
@@ -21,7 +31,7 @@ export const ProfileCompletion = ({
           Votre profil
         </Text>
         <Text size="small" color="mediumGray">
-          {completionRate * 100}%
+          {`${completionRate}%`}
         </Text>
       </StyledHeader>
       <StyledProgressionContainer>

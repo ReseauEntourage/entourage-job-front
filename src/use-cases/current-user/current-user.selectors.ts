@@ -1,8 +1,7 @@
-import { User, UserWithUserCandidate } from 'src/api/types';
+import { User } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import {
   getCandidateIdFromCoachOrCandidate,
-  getRelatedUser,
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
 import { assertIsDefined } from 'src/utils/asserts';
@@ -112,29 +111,3 @@ export function selectCandidateId(state: RootState): string | null {
 export function selectIsComplete(state: RootState): boolean {
   return state.currentUser.complete;
 }
-
-// selects linked user if only one user is linked, otherwise sends first user of the list; if whole list needed, create new selector
-export const selectLinkedUser = (
-  state: RootState
-): UserWithUserCandidate | null => {
-  const currentUser = selectAuthenticatedUser(state);
-
-  if (currentUser.role === UserRoles.COACH) {
-    const candidat: UserWithUserCandidate[] | null =
-      getRelatedUser(currentUser);
-    if (candidat) {
-      const [userToSend] = candidat;
-      return userToSend;
-    }
-    return null;
-  }
-  if (currentUser.role === UserRoles.CANDIDATE) {
-    const coach: UserWithUserCandidate[] | null = getRelatedUser(currentUser);
-    if (coach) {
-      const [userToSend] = coach;
-      return userToSend;
-    }
-    return null;
-  }
-  return null;
-};
