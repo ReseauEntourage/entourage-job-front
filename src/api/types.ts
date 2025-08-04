@@ -231,6 +231,15 @@ export type CompanyUser = {
   isAdmin: boolean;
 };
 
+export type Invitation = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  userId?: string;
+  companyId?: string;
+};
+
 export type Company = {
   id: string;
   createdAt: Date;
@@ -238,11 +247,13 @@ export type Company = {
   name: string;
   description: string | null;
   companyUser?: CompanyUser;
+  pendingInvitations?: Invitation[];
 };
 
 export type User = {
   coach: User;
   id: string;
+  createdAt?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -269,6 +280,7 @@ export type User = {
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
   companies?: Company[];
+  invitations?: Invitation[];
 };
 
 export type CVStatus =
@@ -643,4 +655,12 @@ export type PostAuthFinalizeReferedUserParams = {
 
 export type ExternalCv = {
   url: string;
+};
+
+export type UserWithConversations = User & {
+  conversations: Conversation[];
+};
+
+export type CompanyWithUsers = Company & {
+  users: UserWithConversations[];
 };

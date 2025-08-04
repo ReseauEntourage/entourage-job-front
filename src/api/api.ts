@@ -357,7 +357,10 @@ export class APIHandler {
     return this.get('/companies', params);
   }
 
-  // post
+  getCompanyById(companyId: string): Promise<AxiosResponse> {
+    return this.get(`/companies/${companyId}`);
+  }
+
   postCompany(params: CompanyDto): Promise<AxiosResponse> {
     return this.post('/companies', params);
   }
