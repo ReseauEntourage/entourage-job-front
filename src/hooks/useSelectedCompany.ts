@@ -2,14 +2,19 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { companyActions } from '../use-cases/company';
-import { selectSelectedCompany } from '../use-cases/company/company.selectors';
+import {
+  selectIsFetchCompanySelectors,
+  selectSelectedCompany,
+} from '../use-cases/company/company.selectors';
 
 export function useSelectedCompany() {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const companyId = query.companyId as string;
   const selectedCompany = useSelector(selectSelectedCompany);
-  const isFetchCompanyRequested = false;
+  const isFetchCompanyRequested = useSelector(
+    selectIsFetchCompanySelectors.selectIsFetchSelectedCompanyRequested
+  );
 
   useEffect(() => {
     if (companyId) {

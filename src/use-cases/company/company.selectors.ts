@@ -13,3 +13,8 @@ export function selectSelectedCompanyId(state: RootState) {
 export function selectSelectedCompany(state: RootState) {
   return state.company.selectedCompany;
 }
+
+export const selectIsFetchCompanySelectors =
+  fetchSelectedCompanyAdapter.getSelectors<RootState>(
+    (state) => state.company.fetchSelectedCompany
+  );
