@@ -16,7 +16,7 @@ function* fetchSelectedCompanySaga() {
 
     assertIsDefined(companyId, 'Company ID must be defined');
     const { data } = yield* call(() => Api.getCompanyById(companyId));
-    yield* put(fetchSelectedCompanySucceeded(data || null));
+    yield* put(fetchSelectedCompanySucceeded(data));
   } catch (error) {
     yield* put(fetchSelectedCompanyFailed(null));
   }
