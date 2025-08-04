@@ -1,11 +1,11 @@
 import React from 'react';
+import { ProgramEligibilityAlert } from '../../utils/Alert/ProgramEligibilityAlert';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import {
   CANDIDATE_YES_NO_FILTERS,
   CandidateYesNo,
   CandidateYesNoValue,
 } from 'src/constants';
-import { ProgramEligibilityAlert } from './ProgramEligibilityAlert';
 
 export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
   materialInsecurity: CandidateYesNoValue;
@@ -39,10 +39,10 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
       rules: [
         {
           method: (materialInsecurityValue, formValues) => {
-            const { networkInsecurity } = formValues;
-            return (
-              materialInsecurityValue === CandidateYesNo.YES ||
-              networkInsecurity === CandidateYesNo.YES
+            const { networkInsecurity, materialInsecurity } = formValues;
+            return !(
+              materialInsecurity === CandidateYesNo.NO &&
+              networkInsecurity === CandidateYesNo.NO
             );
           },
           message:
@@ -50,7 +50,6 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
         },
       ],
     },
-
     {
       id: 'networkInsecurityLabel',
       name: 'networkInsecurityLabel',
@@ -70,10 +69,10 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
       rules: [
         {
           method: (networkInsecurityValue, formValues) => {
-            const { materialInsecurity } = formValues;
-            return (
-              materialInsecurity === CandidateYesNo.YES ||
-              networkInsecurityValue === CandidateYesNo.YES
+            const { networkInsecurity, materialInsecurity } = formValues;
+            return !(
+              materialInsecurity === CandidateYesNo.NO &&
+              networkInsecurity === CandidateYesNo.NO
             );
           },
           message:
