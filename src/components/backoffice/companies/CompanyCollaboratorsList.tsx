@@ -58,7 +58,7 @@ export const CompanyCollaboratorsList = ({
         <Section className="custom-page">
           <StyledHeaderCompanyCollaboratorsList>
             <HeaderBackoffice
-              title="Gestions de vos collaborateurs"
+              title="Gestion de vos collaborateurs"
               description="Retrouvez la liste de tous vos collaborateurs d’entreprise"
               noSeparator
             />
