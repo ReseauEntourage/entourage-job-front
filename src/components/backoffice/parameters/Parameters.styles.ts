@@ -22,7 +22,6 @@ export const StyledParametersRightColumn = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 400px;
   gap: 40px;
   &.mobile {
     width: 100%;
