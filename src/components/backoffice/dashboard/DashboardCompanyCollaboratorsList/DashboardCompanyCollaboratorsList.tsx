@@ -89,7 +89,7 @@ export const DashboardCompanyCollaboratorsList = ({
           )}
         </StyledCollaboratorSmallCardContainer>
         <StyledCtaContainer>
-          <Button href={`/backoffice/companies/${companyId}`}>
+          <Button href={`/backoffice/companies/${companyId}/collaborators`}>
             Voir tous les collaborateurs
           </Button>
         </StyledCtaContainer>
