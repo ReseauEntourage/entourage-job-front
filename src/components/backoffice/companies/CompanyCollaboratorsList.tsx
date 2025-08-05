@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { CompanyWithUsers } from '@/src/api/types';
 import { HeaderBackoffice } from '../../headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from '../../headers/HeaderBackoffice/HeaderBackoffice.styles';
+import { CompanyInviteCollaboratorsModal } from '../../modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
+import { openModal } from '../../modals/Modal';
 import { Table, TdDesktop, Th, TrDesktop } from '../../utils/Table';
 import { Button, Section } from 'src/components/utils';
 import { StyledHeaderCompanyCollaboratorsList } from './CompanyCollaboratorsList.styles';
@@ -14,7 +16,7 @@ interface TableItem {
   id: string;
   name: string;
   email: string;
-  connectionCounter: string; // Placeholder for future implementation
+  connectionCounter: string;
   invitedAt: string;
   accountCreated: string;
 }
@@ -28,7 +30,7 @@ export const CompanyCollaboratorsList = ({
           id: invitation.id,
           name: '-',
           email: invitation.email,
-          connectionCounter: '-', // Placeholder for future implementation
+          connectionCounter: '-',
           invitedAt: new Date(invitation.createdAt).toLocaleDateString('fr'),
           accountCreated: '-', // No account created date for invitations
         }))
@@ -52,6 +54,10 @@ export const CompanyCollaboratorsList = ({
     return [...itemsFromInvitations, ...itemsFromUsers] as TableItem[];
   }, [company.pendingInvitations, company.users]);
 
+  const openInviteModal = () => {
+    openModal(<CompanyInviteCollaboratorsModal companyId={company.id} />);
+  };
+
   return (
     <>
       <StyledBackgroundedHeaderBackoffice>
@@ -62,7 +68,9 @@ export const CompanyCollaboratorsList = ({
               description="Retrouvez la liste de tous vos collaborateurs d’entreprise"
               noSeparator
             />
-            <Button variant="secondary">Inviter vos collaborateurs</Button>
+            <Button variant="secondary" onClick={openInviteModal}>
+              Inviter vos collaborateurs
+            </Button>
           </StyledHeaderCompanyCollaboratorsList>
         </Section>
       </StyledBackgroundedHeaderBackoffice>
