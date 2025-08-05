@@ -9,7 +9,7 @@ import { Button, Section } from 'src/components/utils';
 import { StyledHeaderCompanyCollaboratorsList } from './CompanyCollaboratorsList.styles';
 
 export interface CompanyCollaboratorsListProps {
-  company: CompanyWithUsers;
+  companyWithCollaborators: CompanyWithUsers;
 }
 
 interface TableItem {
@@ -22,40 +22,50 @@ interface TableItem {
 }
 
 export const CompanyCollaboratorsList = ({
-  company,
+  companyWithCollaborators,
 }: CompanyCollaboratorsListProps) => {
   const items = useMemo(() => {
-    const itemsFromInvitations: TableItem[] = company.pendingInvitations
-      ? company.pendingInvitations.map((invitation) => ({
-          id: invitation.id,
-          name: '-',
-          email: invitation.email,
-          connectionCounter: '-',
-          invitedAt: new Date(invitation.createdAt).toLocaleDateString('fr'),
-          accountCreated: '-', // No account created date for invitations
-        }))
-      : [];
+    const itemsFromInvitations: TableItem[] =
+      companyWithCollaborators.pendingInvitations
+        ? companyWithCollaborators.pendingInvitations.map((invitation) => ({
+            id: invitation.id,
+            name: '-',
+            email: invitation.email,
+            connectionCounter: '-',
+            invitedAt: new Date(invitation.createdAt).toLocaleDateString('fr'),
+            accountCreated: '-', // No account created date for invitations
+          }))
+        : [];
 
-    const itemsFromUsers: TableItem[] = company.users.map((user) => ({
-      id: user.id,
-      name: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      connectionCounter: `${user.conversations.length} candidat${
-        user.conversations.length > 1 ? 's' : ''
-      }`,
-      invitedAt: user.invitations?.[0]?.createdAt
-        ? new Date(user.invitations[0].createdAt).toLocaleDateString('fr')
-        : '-',
-      accountCreated: user.createdAt
-        ? new Date(user.createdAt).toLocaleDateString('fr')
-        : '-',
-    }));
+    const itemsFromUsers: TableItem[] = companyWithCollaborators.users.map(
+      (user) => ({
+        id: user.id,
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        connectionCounter: `${user.conversations.length} candidat${
+          user.conversations.length > 1 ? 's' : ''
+        }`,
+        invitedAt: user.invitations?.[0]?.createdAt
+          ? new Date(user.invitations[0].createdAt).toLocaleDateString('fr')
+          : '-',
+        accountCreated: user.createdAt
+          ? new Date(user.createdAt).toLocaleDateString('fr')
+          : '-',
+      })
+    );
 
     return [...itemsFromInvitations, ...itemsFromUsers] as TableItem[];
-  }, [company.pendingInvitations, company.users]);
+  }, [
+    companyWithCollaborators.pendingInvitations,
+    companyWithCollaborators.users,
+  ]);
 
   const openInviteModal = () => {
-    openModal(<CompanyInviteCollaboratorsModal companyId={company.id} />);
+    openModal(
+      <CompanyInviteCollaboratorsModal
+        companyId={companyWithCollaborators.id}
+      />
+    );
   };
 
   return (
