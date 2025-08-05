@@ -247,7 +247,6 @@ export type Company = {
   name: string;
   description: string | null;
   companyUser?: CompanyUser;
-  pendingInvitations?: Invitation[];
 };
 
 export type User = {
@@ -663,4 +662,5 @@ export type UserWithConversations = User & {
 
 export type CompanyWithUsers = Company & {
   users: UserWithConversations[];
+  pendingInvitations: Invitation[];
 };
