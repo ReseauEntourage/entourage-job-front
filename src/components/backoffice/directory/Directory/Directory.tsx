@@ -6,6 +6,10 @@ import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
 import { Api } from 'src/api';
 import { BusinessSector } from 'src/api/types';
+import {
+  MobileFilterButton,
+  MobileFilterDrawer,
+} from 'src/components/filters/MobileFilters';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
@@ -32,6 +36,7 @@ const route = '/backoffice/annuaire';
 export function Directory() {
   const { push } = useRouter();
   const isMobile = useIsMobile();
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [businessSectorsFilters, setBusinessSectorsFilters] = useState<
     FilterConstant<string>[]
   >([]);
@@ -97,6 +102,21 @@ export function Directory() {
     businessSectorsFilters,
   ]);
 
+  const totalFiltersCount = useMemo(() => {
+    return Object.values(filters).reduce(
+      (acc, curr) => acc + (curr ? curr.length : 0),
+      0
+    );
+  }, [filters]);
+
+  const handleOpenFilterDrawer = () => {
+    setIsFilterDrawerOpen(true);
+  };
+
+  const handleCloseFilterDrawer = () => {
+    setIsFilterDrawerOpen(false);
+  };
+
   /**
    * Methods
    */
@@ -148,6 +168,12 @@ export function Directory() {
               placeholder="Rechercher par prénom ou nom"
               additionalButtons={
                 <StyledDirectoryButtonContainer isMobile={isMobile}>
+                  {isMobile && (
+                    <MobileFilterButton
+                      onClick={handleOpenFilterDrawer}
+                      count={totalFiltersCount}
+                    />
+                  )}
                   <Button
                     size={isMobile ? 'small' : 'large'}
                     variant={
@@ -198,6 +224,17 @@ export function Directory() {
           <DirectoryList />
         </StyledDirectoryContainer>
       </Section>
+
+      {isMobile && (
+        <MobileFilterDrawer
+          isOpen={isFilterDrawerOpen}
+          onClose={handleCloseFilterDrawer}
+          onApplyFilters={() => undefined}
+          filters={filters}
+          setFilters={setFilters}
+          filterData={DirectoryFilters}
+        />
+      )}
     </>
   );
 }
