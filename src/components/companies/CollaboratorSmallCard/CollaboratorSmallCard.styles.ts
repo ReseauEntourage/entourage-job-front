@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
-export const StyledCollaboratorSmallCardContainer = styled.div`
+export const StyledCollaboratorSmallCardContainer = styled.div<{
+  pointer?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
+
+  cursor: ${(props) => (props.pointer ? 'pointer' : 'default')};
+  * {
+    cursor: ${(props) => (props.pointer ? 'pointer' : 'default')};
+  }
 `;
 
 export const StyledCollaboratorSmallCardPictureContainerStyled = styled.div`

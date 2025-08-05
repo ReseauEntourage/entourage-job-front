@@ -32,7 +32,10 @@ export const DashboardCompanyCollaboratorsList = ({
       companyWithCollaborators?.pendingInvitations.map((invitation) => ({
         email: invitation.email,
       }));
-    return [...(itemsFromUsers || []), ...(itemsFromInvitations || [])];
+    return [...(itemsFromUsers || []), ...(itemsFromInvitations || [])].slice(
+      0,
+      9
+    );
   }, [
     companyWithCollaborators?.users,
     companyWithCollaborators?.pendingInvitations,

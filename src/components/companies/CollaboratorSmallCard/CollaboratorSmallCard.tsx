@@ -16,8 +16,17 @@ export const CollaboratorSmallCard = ({
   user,
   email,
 }: CollaboratorSmallCardProps) => {
+  const openProfile = () => {
+    if (user) {
+      window.location.href = `/backoffice/profile/${user.id}`;
+    }
+  };
+
   return (
-    <StyledCollaboratorSmallCardContainer>
+    <StyledCollaboratorSmallCardContainer
+      pointer={user}
+      onClick={user ? openProfile : undefined}
+    >
       {user && (
         <div>
           <ImgProfile
