@@ -38,10 +38,9 @@ export const MobileFilterOptions = ({
       }
     } else if (indexInSelectedFilters > -1) {
       // Remove filter if included
-      updatedFilters[key] = [
-        ...updatedFilters[key].slice(0, indexInSelectedFilters),
-        ...updatedFilters[key].slice(indexInSelectedFilters + 1),
-      ];
+      updatedFilters[key] = updatedFilters[key].filter(
+        (_, index) => index !== indexInSelectedFilters
+      );
     }
 
     setFilters(updatedFilters);

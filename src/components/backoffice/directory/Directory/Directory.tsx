@@ -117,11 +117,6 @@ export function Directory() {
     setIsFilterDrawerOpen(false);
   };
 
-  const handleApplyFilters = () => {
-    // Aucune action supplémentaire nécessaire, les filtres sont déjà appliqués
-    // via setFilters et useFilters
-  };
-
   /**
    * Methods
    */
@@ -234,7 +229,7 @@ export function Directory() {
         <MobileFilterDrawer
           isOpen={isFilterDrawerOpen}
           onClose={handleCloseFilterDrawer}
-          onApplyFilters={handleApplyFilters}
+          onApplyFilters={() => undefined}
           filters={filters}
           setFilters={setFilters}
           filterData={DirectoryFilters}
