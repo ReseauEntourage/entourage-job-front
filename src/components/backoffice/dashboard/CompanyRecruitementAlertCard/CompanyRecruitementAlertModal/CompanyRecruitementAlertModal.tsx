@@ -1,9 +1,11 @@
 import React from 'react';
+import { RecruitementAlertDto } from '@/src/api/types';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Api } from 'src/api';
 import { FormComponents, FormSchema } from 'src/components/forms/FormSchema';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
+import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
 const loadBusinessSectorsOptions = async (callback, inputValue) => {
@@ -49,16 +51,18 @@ const loadSkillsOptions = async (callback, inputValue) => {
 };
 
 type RecruitementAlertForm = {
+  companyId: string;
   name: string;
-  job: string;
+  jobName: string;
   businessSectors: FilterConstant<string>[];
-  workingExperience: string;
-  contract: string;
+  workingExperience: FilterConstant<string>;
+  contract: FilterConstant<string>;
   skills: FilterConstant<string>[];
 };
 
 export const CompanyRecruitementAlertModal = () => {
   const { onClose } = useModalContext();
+  const user = useAuthenticatedUser();
 
   const formSchema: FormSchema<RecruitementAlertForm> = {
     id: 'form-recruitement-alert',
@@ -74,8 +78,8 @@ export const CompanyRecruitementAlertModal = () => {
         type: 'text',
       },
       {
-        id: 'job',
-        name: 'job',
+        id: 'jobName',
+        name: 'jobName',
         component: FormComponents.TEXT_INPUT,
         title: 'Métier',
         placeholder: 'Renseignez le métier recherché',
@@ -134,7 +138,21 @@ export const CompanyRecruitementAlertModal = () => {
 
   const handleSubmit = async (values: RecruitementAlertForm) => {
     try {
-      await Api.createRecruitementAlert(values);
+      if (!user?.companies || user.companies.length === 0) {
+        throw new Error('User has no associated companies');
+      }
+      const recruitementAlertDto: RecruitementAlertDto = {
+        companyId: user.companies[0].id,
+        name: values.name,
+        jobName: values.jobName,
+        businessSectorIds: values.businessSectors?.map(
+          (sector) => sector.value
+        ),
+        workingExperienceYears: values.workingExperience.value,
+        contractType: values.contract.value as Contract,
+        skills: values.skills,
+      };
+      await Api.createRecruitementAlert(recruitementAlertDto);
       if (onClose) onClose();
     } catch (error) {
       console.error(error);

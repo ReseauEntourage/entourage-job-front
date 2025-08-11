@@ -648,10 +648,11 @@ export type ExternalCv = {
 };
 
 export type RecruitementAlertDto = {
+  companyId: string;
   name: string;
-  job?: string;
-  businessSectors?: FilterConstant<string>[];
-  workingExperience?: string;
-  contract?: string;
+  jobName?: string;
+  businessSectorIds?: string[];
+  workingExperienceYears?: string;
+  contractType?: ContractValue;
   skills?: FilterConstant<string>[];
 };
