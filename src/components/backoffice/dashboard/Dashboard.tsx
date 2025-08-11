@@ -11,6 +11,7 @@ import { getNormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
+import { CompanyRecruitementAlertCard } from './CompanyRecruitementAlertCard';
 import {
   StyledDashboardLeftColumn,
   StyledDashboardRightColumn,
@@ -58,6 +59,7 @@ export const Dashboard = () => {
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
               {isNormalUser && <DashboardNextSteps />}
+              {isCompanyAdmin && <CompanyRecruitementAlertCard />}
               <DashboardMessagingConversation />
               {isNormalUser && <DashboardRecommendationsCard />}
               {isReferer && <DashboardInviteToReferCandidate />}
@@ -82,6 +84,7 @@ export const Dashboard = () => {
         <StyledBackofficeGrid className="mobile">
           <StyledDashboardRightColumn className="mobile">
             {isNormalUser && <DashboardNextSteps />}
+            {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             {isNormalUser && <DashboardRecommendationsCard />}
             <DashboardMessagingConversation />
             {isReferer && <DashboardInviteToReferCandidate />}
@@ -89,6 +92,11 @@ export const Dashboard = () => {
             <DashboardToolboxCard />
           </StyledDashboardRightColumn>
           <StyledDashboardLeftColumn className="mobile">
+            {isCompanyAdmin &&
+              user.companies &&
+              user.companies.map((company) => (
+                <DashboardCompanyCard key={company.id} company={company} />
+              ))}
             <DashboardProfileCard />
             {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardReferentCard />

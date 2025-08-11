@@ -15,6 +15,7 @@ import {
   RegistrableUserRoles,
   UserRoles,
 } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
   | 'facebook'
@@ -34,6 +35,7 @@ export const APIRoutes = {
   EXTERNAL_CVS: 'external-cv',
   MESSAGING: 'messaging',
   COMPANIES: 'companies',
+  RECRUITEMENT_ALERTS: 'recruitement-alerts',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -643,4 +645,13 @@ export type PostAuthFinalizeReferedUserParams = {
 
 export type ExternalCv = {
   url: string;
+};
+
+export type RecruitementAlertDto = {
+  name: string;
+  job?: string;
+  businessSectors?: FilterConstant<string>[];
+  workingExperience?: string;
+  contract?: string;
+  skills?: FilterConstant<string>[];
 };

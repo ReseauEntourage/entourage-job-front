@@ -22,6 +22,7 @@ import {
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
+  RecruitementAlertDto,
   Route,
   SocialMedia,
   UserDto,
@@ -344,6 +345,18 @@ export class APIHandler {
     return this.get('/nudges', { params });
   }
 
+  /// ///////// ///
+  ///  Skills  ///
+  /// //////// ///
+
+  getAllSkills(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/skills', { params });
+  }
+
   /// /////////// ///
   /// companies  ///
   /// ///////// ///
@@ -370,6 +383,16 @@ export class APIHandler {
     return this.post(`/companies/logo`, formData, {
       'Content-Type': 'multipart/form-data',
     });
+  }
+
+  /// /////////////////// ///
+  /// recruitement alert  ///
+  /// /////////////////// ///
+
+  createRecruitementAlert(
+    params: RecruitementAlertDto
+  ): Promise<AxiosResponse> {
+    return this.post('/recruitement-alerts', params);
   }
 
   inviteCollaboratorsFromCompany(
