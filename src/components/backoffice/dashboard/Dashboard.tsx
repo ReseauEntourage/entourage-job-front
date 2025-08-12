@@ -33,9 +33,7 @@ export const Dashboard = () => {
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
-  const isCompanyAdmin = user.companies?.some(
-    (company) => company.companyUser?.isAdmin === true
-  );
+  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
 
   if (isDesktop) {
     return (
@@ -48,11 +46,9 @@ export const Dashboard = () => {
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
-              {isCompanyAdmin &&
-                user.companies &&
-                user.companies.map((company) => (
-                  <DashboardCompanyCard key={company.id} company={company} />
-                ))}
+              {isCompanyAdmin && user.company && (
+                <DashboardCompanyCard company={user.company} />
+              )}
               <DashboardProfileCard />
               {isNormalUser && <DashboardAvailabilityCard />}
               <DashboardReferentCard />
@@ -92,11 +88,9 @@ export const Dashboard = () => {
             <DashboardToolboxCard />
           </StyledDashboardRightColumn>
           <StyledDashboardLeftColumn className="mobile">
-            {isCompanyAdmin &&
-              user.companies &&
-              user.companies.map((company) => (
-                <DashboardCompanyCard key={company.id} company={company} />
-              ))}
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCard company={user.company} />
+            )}
             <DashboardProfileCard />
             {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardReferentCard />

@@ -270,7 +270,7 @@ export type User = {
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
-  companies?: Company[];
+  company?: Company;
 };
 
 export type CVStatus =

@@ -138,11 +138,11 @@ export const CompanyRecruitementAlertModal = () => {
 
   const handleSubmit = async (values: RecruitementAlertForm) => {
     try {
-      if (!user?.companies || user.companies.length === 0) {
+      if (!user?.company) {
         throw new Error('User has no associated companies');
       }
       const recruitementAlertDto: RecruitementAlertDto = {
-        companyId: user.companies[0].id,
+        companyId: user.company.id,
         name: values.name,
         jobName: values.jobName,
         businessSectorIds: values.businessSectors?.map(
