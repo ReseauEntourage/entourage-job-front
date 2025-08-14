@@ -8,6 +8,7 @@ import {
   DocumentNameType,
   ExternalMessageContactType,
   HeardAboutValue,
+  WorkingExperience,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import {
@@ -647,10 +648,25 @@ export type ExternalCv = {
   url: string;
 };
 
+export type RecruitementAlert = {
+  id: string;
+  name: string;
+  jobName: string;
+  department: Department;
+  workingExperienceYears?: WorkingExperience;
+  contractType?: ContractValue;
+  companyId: string;
+  businessSectors?: BusinessSector[];
+  skills?: Skill[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type RecruitementAlertDto = {
   companyId: string;
   name: string;
   jobName?: string;
+  department?: string;
   businessSectorIds?: string[];
   workingExperienceYears?: string;
   contractType?: ContractValue;

@@ -389,10 +389,29 @@ export class APIHandler {
   /// recruitement alert  ///
   /// /////////////////// ///
 
+  getRecruitementAlerts(): Promise<AxiosResponse> {
+    return this.get(`/recruitement-alerts`);
+  }
+
+  getRecruitementAlertMatching(alertId: string): Promise<AxiosResponse> {
+    return this.get(`/recruitement-alerts/${alertId}/matching`, {});
+  }
+
   createRecruitementAlert(
     params: RecruitementAlertDto
   ): Promise<AxiosResponse> {
     return this.post('/recruitement-alerts', params);
+  }
+
+  deleteRecruitementAlert(alertId: string): Promise<AxiosResponse> {
+    return this.delete(`/recruitement-alerts/${alertId}`);
+  }
+
+  updateRecruitementAlert(
+    alertId: string,
+    params: RecruitementAlertDto
+  ): Promise<AxiosResponse> {
+    return this.put(`/recruitement-alerts/${alertId}`, params);
   }
 
   inviteCollaboratorsFromCompany(

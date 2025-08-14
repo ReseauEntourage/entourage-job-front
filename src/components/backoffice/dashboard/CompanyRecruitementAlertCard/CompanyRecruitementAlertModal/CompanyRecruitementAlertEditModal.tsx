@@ -1,15 +1,12 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { RecruitementAlertDto } from '@/src/api/types';
+import React, { useCallback, useMemo } from 'react';
+import { RecruitementAlert, RecruitementAlertDto } from '@/src/api/types';
 import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Api } from 'src/api';
 import { FormComponents, FormSchema } from 'src/components/forms/FormSchema';
-import { useModalContext } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
-import { createRecruitementAlertAction } from 'src/use-cases/recruitement-alerts';
 
 type RecruitementAlertForm = {
   companyId: string;
@@ -22,10 +19,20 @@ type RecruitementAlertForm = {
   skills: FilterConstant<string>[];
 };
 
-export const CompanyRecruitementAlertModal = () => {
-  const { onClose } = useModalContext();
+interface CompanyRecruitementAlertEditModalProps {
+  alert: RecruitementAlert;
+  onSubmit: (data: RecruitementAlertDto) => void;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const CompanyRecruitementAlertEditModal = ({
+  alert,
+  onSubmit,
+  isOpen,
+  onClose,
+}: CompanyRecruitementAlertEditModalProps) => {
   const user = useAuthenticatedUser();
-  const dispatch = useDispatch();
 
   // Mémoriser les fonctions de chargement des options pour éviter des recréations inutiles
   const loadBusinessSectorsOptions = useCallback(
@@ -73,15 +80,41 @@ export const CompanyRecruitementAlertModal = () => {
     }
   }, []);
 
+  // Convertir les valeurs de l'alerte en format compatible avec le formulaire
+  const initialValues = useMemo(
+    () => ({
+      name: alert.name || '',
+      jobName: alert.jobName || '',
+      department: alert.department
+        ? DEPARTMENTS_FILTERS.find((dep) => dep.value === alert.department)
+        : undefined,
+      businessSectors:
+        alert.businessSectors?.map((sector) => ({
+          value: sector.id || '',
+          label: sector.name,
+        })) || [],
+      workingExperience: WORKING_EXPERIENCE_FILTERS.find(
+        (exp) => exp.value === alert.workingExperienceYears
+      ),
+      contract: CONTRACTS.find((c) => c.value === alert.contractType),
+      skills:
+        alert.skills?.map((skill) => ({
+          value: skill.id || '',
+          label: skill.name,
+        })) || [],
+    }),
+    [alert]
+  );
+
   const formSchema: FormSchema<RecruitementAlertForm> = {
-    id: 'form-recruitement-alert',
+    id: 'form-recruitement-alert-edit',
     fields: [
       {
         id: 'name',
         name: 'name',
         component: FormComponents.TEXT_INPUT,
         title: "Nom de l'alerte",
-        placeholder: 'Renseignez le nom de votre alerte: Ex: Vendeur',
+        placeholder: 'Mon alerte de recrutement',
         isRequired: true,
         showLabel: true,
         type: 'text',
@@ -90,41 +123,42 @@ export const CompanyRecruitementAlertModal = () => {
         id: 'jobName',
         name: 'jobName',
         component: FormComponents.TEXT_INPUT,
-        title: 'Métier',
-        placeholder: 'Renseignez le métier recherché',
-        isRequired: false,
+        title: 'Poste recherché',
+        placeholder: 'Développeur web, assistant administratif...',
+        isRequired: true,
         showLabel: true,
         type: 'text',
       },
       {
-        id: 'businessSectors',
-        name: 'businessSectors',
-        component: FormComponents.SELECT_ASYNC,
-        loadOptions: loadBusinessSectorsOptions,
-        title: 'Secteurs',
-        placeholder: 'Sélectionnez un ou plusieurs secteurs dans la liste',
-        isMulti: true,
-        isRequired: false,
-        showLabel: true,
-      },
-      {
         id: 'department',
         name: 'department',
-        title: 'Localisation',
-        component: 'select',
+        component: FormComponents.SELECT,
+        title: 'Département',
+        placeholder: 'Choisissez un département',
         options: DEPARTMENTS_FILTERS,
         isRequired: false,
         showLabel: true,
         isMulti: false,
       },
       {
+        id: 'businessSectors',
+        name: 'businessSectors',
+        component: FormComponents.SELECT_CREATABLE,
+        title: "Secteurs d'activité",
+        placeholder: "Choisissez ou créez des secteurs d'activité",
+        loadOptions: loadBusinessSectorsOptions,
+        isRequired: false,
+        showLabel: true,
+        isMulti: true,
+      },
+      {
         id: 'workingExperience',
         name: 'workingExperience',
         component: FormComponents.SELECT,
-        title: "Nombre d'années d'expérience",
-        placeholder: 'Sélectionnez dans la liste',
+        title: "Années d'expérience",
+        placeholder: 'Choisissez une expérience',
         options: WORKING_EXPERIENCE_FILTERS,
-        isRequired: false,
+        isRequired: true,
         showLabel: true,
         isMulti: false,
       },
@@ -133,9 +167,9 @@ export const CompanyRecruitementAlertModal = () => {
         name: 'contract',
         component: FormComponents.SELECT,
         title: 'Type de contrat',
-        placeholder: 'Sélectionnez dans la liste',
+        placeholder: 'Choisissez un type de contrat',
         options: CONTRACTS,
-        isRequired: false,
+        isRequired: true,
         showLabel: true,
         isMulti: false,
       },
@@ -143,24 +177,28 @@ export const CompanyRecruitementAlertModal = () => {
         id: 'skills',
         name: 'skills',
         component: FormComponents.SELECT_CREATABLE,
-        loadOptions: loadSkillsOptions,
         title: 'Compétences',
-        placeholder: 'Sélectionnez les compétences clés pour ce poste',
-        isMulti: true,
-        maxChar: 30,
-        maxItems: 5,
+        placeholder: 'Choisissez ou créez des compétences',
+        loadOptions: loadSkillsOptions,
         isRequired: false,
         showLabel: true,
+        isMulti: true,
       },
     ],
   };
 
+  // TODO: probleme modal ne call pas le handlesubmit
   const handleSubmit = useCallback(
-    async (values: RecruitementAlertForm) => {
+    async (
+      values: RecruitementAlertForm,
+      closeModal: () => void = () => {},
+      _action: (message: string) => void = () => {}
+    ) => {
       try {
         if (!user?.company) {
           throw new Error('User has no associated companies');
         }
+
         const recruitementAlertDto: RecruitementAlertDto = {
           companyId: user.company.id,
           name: values.name,
@@ -169,26 +207,33 @@ export const CompanyRecruitementAlertModal = () => {
           businessSectorIds: values.businessSectors?.map(
             (sector) => sector.value
           ),
-          workingExperienceYears: values.workingExperience.value,
-          contractType: values.contract.value as Contract,
+          workingExperienceYears: values.workingExperience?.value,
+          contractType: values.contract?.value as Contract,
           skills: values.skills,
         };
-        dispatch(createRecruitementAlertAction(recruitementAlertDto));
-        if (onClose) onClose();
+
+        onSubmit(recruitementAlertDto);
+        closeModal();
+        onClose();
       } catch (error) {
-        console.error(error);
+        console.error('Error in handleSubmit:', error);
       }
     },
-    [user, dispatch, onClose]
+    [user, onSubmit, onClose]
   );
+
+  if (!isOpen) return null;
 
   return (
     <ModalEdit
-      title="Créer une alerte mail"
-      description="Vous recevrez un mail dès qu'un candidat correspondra à votre recherche"
+      title="Modifier une alerte mail"
+      description="Modifiez les critères de votre alerte de recrutement"
       formSchema={formSchema}
+      closeOnNextRender
       onSubmit={handleSubmit}
-      submitText="Créer l'alerte"
+      onCancel={onClose}
+      submitText="Enregistrer les modifications"
+      defaultValues={initialValues}
     />
   );
 };
