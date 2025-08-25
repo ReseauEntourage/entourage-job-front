@@ -51,10 +51,9 @@ export const CollaboratorSmallCard = ({
             <Text weight="semibold">
               {user.firstName} {user.lastName.charAt(0).toUpperCase()}.
             </Text>
-            <Text color="darkGray">
-              Juriste en droit des affaires en droit des affaires en droit des
-              affaires
-            </Text>
+            {user.userProfile.currentJob && (
+              <Text color="darkGray">{user.userProfile.currentJob} </Text>
+            )}
           </>
         ) : (
           <>
