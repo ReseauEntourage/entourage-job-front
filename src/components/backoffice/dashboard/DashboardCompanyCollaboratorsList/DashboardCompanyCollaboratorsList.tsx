@@ -74,15 +74,15 @@ export const DashboardCompanyCollaboratorsList = ({
     <Card title="Mes collaborateurs d'entreprise" centerTitle>
       <StyledContainer>
         <StyledCollaboratorSmallCardContainer>
-          {items.map((item, idx) =>
+          {items.map((item) =>
             'user' in item ? (
               <CollaboratorSmallCard
-                key={`collaborator-small-card-${idx}`}
+                key={`collaborator-small-card-${item.user.id}`}
                 user={item.user}
               />
             ) : (
               <CollaboratorSmallCard
-                key={`invitation-small-card-${idx}`}
+                key={`invitation-small-card-${item.email}`}
                 email={item.email}
               />
             )
