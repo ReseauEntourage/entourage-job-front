@@ -90,6 +90,19 @@ export class APIHandler {
     return this.api.put(route, payload, { headers });
   }
 
+  private patch(
+    route: string,
+    payload?: object,
+    headers?: AxiosRequestHeaders
+  ): Promise<AxiosResponse> {
+    if (payload && typeof payload !== 'object') {
+      throw new Error(
+        `${this.name} patch() function expects payload argument to be of type Object`
+      );
+    }
+    return this.api.patch(route, payload, { headers });
+  }
+
   private delete(route: string): Promise<AxiosResponse> {
     return this.api.delete(route);
   }
@@ -411,7 +424,7 @@ export class APIHandler {
     alertId: string,
     params: RecruitementAlertDto
   ): Promise<AxiosResponse> {
-    return this.put(`/recruitement-alerts/${alertId}`, params);
+    return this.patch(`/recruitement-alerts/${alertId}`, params);
   }
 
   inviteCollaboratorsFromCompany(

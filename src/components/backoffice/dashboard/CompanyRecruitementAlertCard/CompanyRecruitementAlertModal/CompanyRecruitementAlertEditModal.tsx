@@ -4,7 +4,8 @@ import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Api } from 'src/api';
 import { FormComponents, FormSchema } from 'src/components/forms/FormSchema';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
@@ -187,13 +188,8 @@ export const CompanyRecruitementAlertEditModal = ({
     ],
   };
 
-  // TODO: probleme modal ne call pas le handlesubmit
   const handleSubmit = useCallback(
-    async (
-      values: RecruitementAlertForm,
-      closeModal: () => void = () => {},
-      _action: (message: string) => void = () => {}
-    ) => {
+    async (values: RecruitementAlertForm) => {
       try {
         if (!user?.company) {
           throw new Error('User has no associated companies');
@@ -213,8 +209,7 @@ export const CompanyRecruitementAlertEditModal = ({
         };
 
         onSubmit(recruitementAlertDto);
-        closeModal();
-        onClose();
+        if (onClose) onClose();
       } catch (error) {
         console.error('Error in handleSubmit:', error);
       }
@@ -225,15 +220,24 @@ export const CompanyRecruitementAlertEditModal = ({
   if (!isOpen) return null;
 
   return (
-    <ModalEdit
+    // I had issues with ModalEdit here, so I replaced it with ModalGeneric + FormWithValidation directly
+    <ModalGeneric
       title="Modifier une alerte mail"
       description="Modifiez les critères de votre alerte de recrutement"
-      formSchema={formSchema}
-      closeOnNextRender
-      onSubmit={handleSubmit}
-      onCancel={onClose}
-      submitText="Enregistrer les modifications"
-      defaultValues={initialValues}
-    />
+      onClose={onClose}
+    >
+      <FormWithValidation
+        submitText="Enregistrer"
+        cancelText="Annuler"
+        formSchema={formSchema}
+        defaultValues={initialValues}
+        onCancel={() => {
+          if (onClose) onClose();
+        }}
+        onSubmit={(fields) => {
+          handleSubmit(fields);
+        }}
+      />
+    </ModalGeneric>
   );
 };
