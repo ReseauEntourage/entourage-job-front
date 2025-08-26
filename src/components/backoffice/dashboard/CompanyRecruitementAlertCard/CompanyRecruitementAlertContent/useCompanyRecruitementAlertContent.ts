@@ -41,15 +41,15 @@ export const useCompanyRecruitementAlertContent = (
       ?.label as string) || '';
   const title = contractString ? `${name} - ${contractString}` : name;
 
-  // Préparation des badges à afficher dans l'ordre demandé
+  // Preparation of badges to display in the requested order
   const badgesStringList: string[] = [];
 
-  // 1. Département
+  // 1. Department
   if (department) {
     badgesStringList.push(department);
   }
 
-  // 2. Poste recherché
+  // 2. Job position
   if (jobName) {
     badgesStringList.push(jobName);
   }
@@ -64,7 +64,7 @@ export const useCompanyRecruitementAlertContent = (
     }
   }
 
-  // 4. Contract type (déjà utilisé dans le titre, mais on l'ajoute aussi aux badges)
+  // 4. Contract type (already used in the title, but also added to badges)
   if (contractString) {
     badgesStringList.push(contractString);
   }
@@ -83,7 +83,7 @@ export const useCompanyRecruitementAlertContent = (
     });
   }
 
-  // Calcul du nombre de candidats correspondants
+  // Calculate the number of matching candidates
   const candidatesCount = matching?.length || 0;
 
   const handleDelete = useCallback(() => {
@@ -103,7 +103,7 @@ export const useCompanyRecruitementAlertContent = (
   const handleUpdateAlert = useCallback(
     (updatedData: RecruitementAlertDto) => {
       dispatch(updateRecruitementAlertAction({ id, data: updatedData }));
-      // Ne pas fermer la modale ici, elle sera fermée par le composant modal lui-même
+      // Don't close the modal here, it will be closed by the modal component itself
     },
     [dispatch, id]
   );

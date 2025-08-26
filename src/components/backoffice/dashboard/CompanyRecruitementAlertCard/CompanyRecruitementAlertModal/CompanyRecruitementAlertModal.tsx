@@ -1,165 +1,29 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { RecruitementAlertDto } from '@/src/api/types';
-import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { Api } from 'src/api';
-import { FormComponents, FormSchema } from 'src/components/forms/FormSchema';
-import { useModalContext } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
-import { FilterConstant } from 'src/constants/utils';
+import { Contract } from 'src/constants';
 import { createRecruitementAlertAction } from 'src/use-cases/recruitement-alerts';
-
-type RecruitementAlertForm = {
-  companyId: string;
-  name: string;
-  jobName: string;
-  department?: FilterConstant<string>;
-  businessSectors: FilterConstant<string>[];
-  workingExperience: FilterConstant<string>;
-  contract: FilterConstant<string>;
-  skills: FilterConstant<string>[];
-};
+import {
+  formSchema,
+  RecruitementAlertForm,
+} from './formCompanyRecruitementAlert';
 
 export const CompanyRecruitementAlertModal = () => {
-  const { onClose } = useModalContext();
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
 
-  // Mémoriser les fonctions de chargement des options pour éviter des recréations inutiles
-  const loadBusinessSectorsOptions = useCallback(
-    async (callback, inputValue) => {
-      try {
-        const { data: businessSectors } = await Api.getAllBusinessSectors({
-          limit: 100,
-          offset: 0,
-          search: inputValue || undefined,
-        });
-        callback([
-          ...businessSectors.map((u) => {
-            return {
-              value: u.id,
-              label: u.name,
-            };
-          }),
-        ]);
-      } catch (error) {
-        console.error(error);
-        callback([]);
-      }
-    },
-    []
-  );
-
-  const loadSkillsOptions = useCallback(async (callback, inputValue) => {
-    try {
-      const { data: skills } = await Api.getAllSkills({
-        search: inputValue || undefined,
-        limit: 50,
-        offset: 0,
-      });
-      callback([
-        ...skills.map((skill) => {
-          return {
-            value: skill.id,
-            label: skill.name,
-          };
-        }),
-      ]);
-    } catch (error) {
-      console.error(error);
-      callback([]);
-    }
-  }, []);
-
-  const formSchema: FormSchema<RecruitementAlertForm> = {
-    id: 'form-recruitement-alert',
-    fields: [
-      {
-        id: 'name',
-        name: 'name',
-        component: FormComponents.TEXT_INPUT,
-        title: "Nom de l'alerte",
-        placeholder: 'Renseignez le nom de votre alerte: Ex: Vendeur',
-        isRequired: true,
-        showLabel: true,
-        type: 'text',
-      },
-      {
-        id: 'jobName',
-        name: 'jobName',
-        component: FormComponents.TEXT_INPUT,
-        title: 'Métier',
-        placeholder: 'Renseignez le métier recherché',
-        isRequired: false,
-        showLabel: true,
-        type: 'text',
-      },
-      {
-        id: 'businessSectors',
-        name: 'businessSectors',
-        component: FormComponents.SELECT_ASYNC,
-        loadOptions: loadBusinessSectorsOptions,
-        title: 'Secteurs',
-        placeholder: 'Sélectionnez un ou plusieurs secteurs dans la liste',
-        isMulti: true,
-        isRequired: false,
-        showLabel: true,
-      },
-      {
-        id: 'department',
-        name: 'department',
-        title: 'Localisation',
-        component: 'select',
-        options: DEPARTMENTS_FILTERS,
-        isRequired: false,
-        showLabel: true,
-        isMulti: false,
-      },
-      {
-        id: 'workingExperience',
-        name: 'workingExperience',
-        component: FormComponents.SELECT,
-        title: "Nombre d'années d'expérience",
-        placeholder: 'Sélectionnez dans la liste',
-        options: WORKING_EXPERIENCE_FILTERS,
-        isRequired: false,
-        showLabel: true,
-        isMulti: false,
-      },
-      {
-        id: 'contract',
-        name: 'contract',
-        component: FormComponents.SELECT,
-        title: 'Type de contrat',
-        placeholder: 'Sélectionnez dans la liste',
-        options: CONTRACTS,
-        isRequired: false,
-        showLabel: true,
-        isMulti: false,
-      },
-      {
-        id: 'skills',
-        name: 'skills',
-        component: FormComponents.SELECT_CREATABLE,
-        loadOptions: loadSkillsOptions,
-        title: 'Compétences',
-        placeholder: 'Sélectionnez les compétences clés pour ce poste',
-        isMulti: true,
-        maxChar: 30,
-        maxItems: 5,
-        isRequired: false,
-        showLabel: true,
-      },
-    ],
-  };
-
   const handleSubmit = useCallback(
-    async (values: RecruitementAlertForm) => {
+    async (
+      values: RecruitementAlertForm,
+      onClose: () => void,
+      setError: (msg: string) => void
+    ) => {
       try {
         if (!user?.company) {
-          throw new Error('User has no associated companies');
+          setError("Votre compte n'est associé à aucune entreprise");
+          return;
         }
         const recruitementAlertDto: RecruitementAlertDto = {
           companyId: user.company.id,
@@ -169,17 +33,18 @@ export const CompanyRecruitementAlertModal = () => {
           businessSectorIds: values.businessSectors?.map(
             (sector) => sector.value
           ),
-          workingExperienceYears: values.workingExperience.value,
-          contractType: values.contract.value as Contract,
+          workingExperienceYears: values.workingExperience?.value,
+          contractType: values.contract?.value as Contract,
           skills: values.skills,
         };
         dispatch(createRecruitementAlertAction(recruitementAlertDto));
-        if (onClose) onClose();
+        onClose();
       } catch (error) {
         console.error(error);
+        setError("Une erreur est survenue lors de la création de l'alerte");
       }
     },
-    [user, dispatch, onClose]
+    [user, dispatch]
   );
 
   return (

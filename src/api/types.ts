@@ -665,7 +665,7 @@ export type RecruitementAlert = {
 export type RecruitementAlertDto = {
   companyId: string;
   name: string;
-  jobName?: string;
+  jobName: string;
   department?: string;
   businessSectorIds?: string[];
   workingExperienceYears?: string;

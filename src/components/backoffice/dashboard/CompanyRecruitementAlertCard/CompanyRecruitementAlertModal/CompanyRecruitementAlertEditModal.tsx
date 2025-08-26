@@ -2,23 +2,13 @@ import React, { useCallback, useMemo } from 'react';
 import { RecruitementAlert, RecruitementAlertDto } from '@/src/api/types';
 import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { Api } from 'src/api';
-import { FormComponents, FormSchema } from 'src/components/forms/FormSchema';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
-import { FilterConstant } from 'src/constants/utils';
-
-type RecruitementAlertForm = {
-  companyId: string;
-  name: string;
-  jobName: string;
-  department?: FilterConstant<string>;
-  businessSectors: FilterConstant<string>[];
-  workingExperience: FilterConstant<string>;
-  contract: FilterConstant<string>;
-  skills: FilterConstant<string>[];
-};
+import {
+  formSchema,
+  RecruitementAlertForm,
+} from './formCompanyRecruitementAlert';
 
 interface CompanyRecruitementAlertEditModalProps {
   alert: RecruitementAlert;
@@ -35,53 +25,6 @@ export const CompanyRecruitementAlertEditModal = ({
 }: CompanyRecruitementAlertEditModalProps) => {
   const user = useAuthenticatedUser();
 
-  // Mémoriser les fonctions de chargement des options pour éviter des recréations inutiles
-  const loadBusinessSectorsOptions = useCallback(
-    async (callback, inputValue) => {
-      try {
-        const { data: businessSectors } = await Api.getAllBusinessSectors({
-          limit: 100,
-          offset: 0,
-          search: inputValue || undefined,
-        });
-        callback([
-          ...businessSectors.map((u) => {
-            return {
-              value: u.id,
-              label: u.name,
-            };
-          }),
-        ]);
-      } catch (error) {
-        console.error(error);
-        callback([]);
-      }
-    },
-    []
-  );
-
-  const loadSkillsOptions = useCallback(async (callback, inputValue) => {
-    try {
-      const { data: skills } = await Api.getAllSkills({
-        search: inputValue || undefined,
-        limit: 50,
-        offset: 0,
-      });
-      callback([
-        ...skills.map((skill) => {
-          return {
-            value: skill.id,
-            label: skill.name,
-          };
-        }),
-      ]);
-    } catch (error) {
-      console.error(error);
-      callback([]);
-    }
-  }, []);
-
-  // Convertir les valeurs de l'alerte en format compatible avec le formulaire
   const initialValues = useMemo(
     () => ({
       name: alert.name || '',
@@ -106,87 +49,6 @@ export const CompanyRecruitementAlertEditModal = ({
     }),
     [alert]
   );
-
-  const formSchema: FormSchema<RecruitementAlertForm> = {
-    id: 'form-recruitement-alert-edit',
-    fields: [
-      {
-        id: 'name',
-        name: 'name',
-        component: FormComponents.TEXT_INPUT,
-        title: "Nom de l'alerte",
-        placeholder: 'Mon alerte de recrutement',
-        isRequired: true,
-        showLabel: true,
-        type: 'text',
-      },
-      {
-        id: 'jobName',
-        name: 'jobName',
-        component: FormComponents.TEXT_INPUT,
-        title: 'Poste recherché',
-        placeholder: 'Développeur web, assistant administratif...',
-        isRequired: true,
-        showLabel: true,
-        type: 'text',
-      },
-      {
-        id: 'department',
-        name: 'department',
-        component: FormComponents.SELECT,
-        title: 'Département',
-        placeholder: 'Choisissez un département',
-        options: DEPARTMENTS_FILTERS,
-        isRequired: false,
-        showLabel: true,
-        isMulti: false,
-      },
-      {
-        id: 'businessSectors',
-        name: 'businessSectors',
-        component: FormComponents.SELECT_CREATABLE,
-        title: "Secteurs d'activité",
-        placeholder: "Choisissez ou créez des secteurs d'activité",
-        loadOptions: loadBusinessSectorsOptions,
-        isRequired: false,
-        showLabel: true,
-        isMulti: true,
-      },
-      {
-        id: 'workingExperience',
-        name: 'workingExperience',
-        component: FormComponents.SELECT,
-        title: "Années d'expérience",
-        placeholder: 'Choisissez une expérience',
-        options: WORKING_EXPERIENCE_FILTERS,
-        isRequired: true,
-        showLabel: true,
-        isMulti: false,
-      },
-      {
-        id: 'contract',
-        name: 'contract',
-        component: FormComponents.SELECT,
-        title: 'Type de contrat',
-        placeholder: 'Choisissez un type de contrat',
-        options: CONTRACTS,
-        isRequired: true,
-        showLabel: true,
-        isMulti: false,
-      },
-      {
-        id: 'skills',
-        name: 'skills',
-        component: FormComponents.SELECT_CREATABLE,
-        title: 'Compétences',
-        placeholder: 'Choisissez ou créez des compétences',
-        loadOptions: loadSkillsOptions,
-        isRequired: false,
-        showLabel: true,
-        isMulti: true,
-      },
-    ],
-  };
 
   const handleSubmit = useCallback(
     async (values: RecruitementAlertForm) => {
