@@ -1,9 +1,9 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import {
-  HeaderConnectedItem,
+  NavConnectedItem,
   NotifBadges,
-} from 'src/components/headers/HeaderConnected/HeaderConnected.types';
+} from '@/src/components/navs/NavConnected/NavConnected.types';
 import { SimpleLink } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import { gaEvent } from 'src/lib/gtag';
@@ -15,7 +15,7 @@ export const SubMenu = ({
   items,
   badges,
 }: {
-  items: HeaderConnectedItem[];
+  items: NavConnectedItem[];
   badges: NotifBadges;
 }) => {
   return (

@@ -13,6 +13,7 @@ interface NavbarProps {
   right?: React.ReactNode;
   sticky?: boolean;
   backgroundColor?: string;
+  style?: React.CSSProperties;
 }
 
 export const Navbar = ({
@@ -22,9 +23,15 @@ export const Navbar = ({
   right,
   sticky,
   backgroundColor,
+  style,
 }: NavbarProps) => {
   return (
-    <StyledNavbar sticky={sticky} id={id} backgroundColor={backgroundColor}>
+    <StyledNavbar
+      sticky={sticky}
+      id={id}
+      backgroundColor={backgroundColor}
+      style={style}
+    >
       <StyledLeftContainer>{left}</StyledLeftContainer>
       <StyledCenterContainer>{center}</StyledCenterContainer>
       <StyledRightContainer>{right}</StyledRightContainer>

@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
+import { COLORS } from '@/src/constants/styles';
+import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import {
-  StyledHeaderDesktop,
   StyledMessagingIconContainer,
+  StyledNavContainerDesktop,
 } from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
@@ -22,23 +23,23 @@ import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledConnectedItem } from './HeaderConnectedContent.styles';
-import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
+import { StyledConnectedItem } from './NavConnectedContent.styles';
+import { NavConnectedContentProps } from './NavConnectedContent.types';
 import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
 
-export const HeaderConnectedContentDesktop = ({
+export const NavConnectedContentDesktop = ({
   badges,
   links = {
-    [UserRoles.ADMIN]: [HeaderConnectedMainItemDefaultProps],
-    [UserRoles.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
-    [UserRoles.COACH]: [HeaderConnectedMainItemDefaultProps],
-    [UserRoles.REFERER]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.ADMIN]: [NavConnectedMainItemDefaultProps],
+    [UserRoles.CANDIDATE]: [NavConnectedMainItemDefaultProps],
+    [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
+    [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
-  dropdown = [HeaderConnectedMainItemDefaultProps],
-  messaging = HeaderConnectedMainItemDefaultProps,
-}: HeaderConnectedContentProps) => {
+  dropdown = [NavConnectedMainItemDefaultProps],
+  messaging = NavConnectedMainItemDefaultProps,
+}: NavConnectedContentProps) => {
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
@@ -105,7 +106,7 @@ export const HeaderConnectedContentDesktop = ({
   ];
 
   return (
-    <StyledHeaderDesktop id="header">
+    <StyledNavContainerDesktop id="nav">
       <Navbar
         backgroundColor="white"
         sticky
@@ -115,10 +116,7 @@ export const HeaderConnectedContentDesktop = ({
               href={logoLink.href + (logoLink.queryParams || '')}
               type="primary"
             />
-            <StyledNav
-              className="uk-navbar-nav"
-              style={{ borderLeft: '1px solid lightGray' }}
-            >
+            <StyledNav className="uk-navbar-nav">
               {links[user.role].map(
                 (
                   {
@@ -186,7 +184,8 @@ export const HeaderConnectedContentDesktop = ({
           </>
         }
         right={<Nav items={rightItems} color="black" />}
+        style={{ borderBottom: `1px solid ${COLORS.gray}` }}
       />
-    </StyledHeaderDesktop>
+    </StyledNavContainerDesktop>
   );
 };

@@ -8,7 +8,7 @@ export interface NotifBadges {
 
 export type NotifBadge = keyof NotifBadges;
 
-export interface HeaderConnectedItem {
+export interface NavConnectedItem {
   href: string;
   badge?: NotifBadge;
   icon?: JSX.Element;
@@ -22,11 +22,11 @@ export interface HeaderConnectedItem {
   };
 }
 
-export interface HeaderConnectedMainItem extends HeaderConnectedItem {
-  subMenu?: HeaderConnectedItem[];
+export interface NavConnectedMainItem extends NavConnectedItem {
+  subMenu?: NavConnectedItem[];
 }
 
-export const HeaderConnectedMainItemDefaultProps: HeaderConnectedMainItem = {
+export const NavConnectedMainItemDefaultProps: NavConnectedMainItem = {
   badge: undefined,
   icon: undefined,
   external: false,

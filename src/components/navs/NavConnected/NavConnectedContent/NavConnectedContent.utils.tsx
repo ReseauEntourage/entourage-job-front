@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderConnectedMainItem } from '../HeaderConnected.types';
+import { NavConnectedMainItem } from '../NavConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
@@ -22,11 +22,11 @@ export const renderLinks = (
   user: UserWithUserCandidate,
   logout: () => void
 ): {
-  links: { [K in UserRoles]: HeaderConnectedMainItem[] };
-  messaging: HeaderConnectedMainItem;
-  dropdown: HeaderConnectedMainItem[];
+  links: { [K in UserRoles]: NavConnectedMainItem[] };
+  messaging: NavConnectedMainItem;
+  dropdown: NavConnectedMainItem[];
 } => {
-  const candidateHeaderItems: HeaderConnectedMainItem[] = [
+  const candidateHeaderItems: NavConnectedMainItem[] = [
     {
       href: '/backoffice/dashboard',
       name: 'Tableau de bord',

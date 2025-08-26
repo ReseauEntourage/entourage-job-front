@@ -1,6 +1,6 @@
 import React from 'react';
 import { GA_TAGS } from 'src/constants/tags';
-import { HeaderPublicContent } from './HeaderPublicContent';
+import { NavPublicContent } from './NavPublicContent';
 
 const LINKS = [
   { href: '/aider', name: 'Devenir coach', tag: GA_TAGS.HEADER_AIDER_CLIC },
@@ -21,6 +21,6 @@ const LINKS = [
   },
 ];
 
-export const HeaderPublic = () => {
-  return <HeaderPublicContent links={LINKS} />;
+export const NavPublic = () => {
+  return <NavPublicContent links={LINKS} />;
 };

@@ -1,28 +1,26 @@
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
+import { StyledNavContainerMobile } from '@/src/components/headers/Header.styles';
 import { Hamburger } from '@/src/components/utils/Hamburger';
 import {
   Offcanvas,
   OffcanvasRef,
 } from '@/src/components/utils/OffCanvas/Offcanvas';
-import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import { Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { HeaderPublicContentProps } from './HeaderPublicContent.types';
+import { NavPublicContentProps } from './NavPublicContent.types';
 
-export const HeaderPublicContentMobile = ({
-  links,
-}: HeaderPublicContentProps) => {
+export const NavPublicContentMobile = ({ links }: NavPublicContentProps) => {
   const offcanvasRef = useRef<OffcanvasRef>(null);
 
   const { asPath, push } = useRouter();
 
   return (
-    <StyledHeaderMobile id="header">
+    <StyledNavContainerMobile id="nav">
       <Navbar
         backgroundColor="darkerBlack"
         sticky
@@ -148,6 +146,6 @@ export const HeaderPublicContentMobile = ({
           </li>
         </ul>
       </Offcanvas>
-    </StyledHeaderMobile>
+    </StyledNavContainerMobile>
   );
 };
