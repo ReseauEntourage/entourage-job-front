@@ -13,7 +13,7 @@ import {
   IlluCoeurMainsOuvertesBleu,
 } from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
-import { Button, Card, ImgProfile, Tag, Text } from 'src/components/utils';
+import { Button, Card, ImgUserProfile, Tag, Text } from 'src/components/utils';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -49,7 +49,7 @@ export const DashboardProfileCard = () => {
   return (
     <Card dataTestId="dashboard-profile-card">
       <StyledDashboardProfileCardPictureName>
-        <ImgProfile
+        <ImgUserProfile
           user={user}
           size={69}
           hasPicture={user.userProfile?.hasPicture || false}

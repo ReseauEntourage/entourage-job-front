@@ -9,7 +9,7 @@ import {
   ExternalMessageContactType,
   HeardAboutValue,
 } from 'src/constants';
-import { AdminZone, Department } from 'src/constants/departements';
+import { AdminZone, DepartmentName } from 'src/constants/departements';
 import {
   AdminRoles,
   RegistrableUserRoles,
@@ -39,6 +39,12 @@ export const APIRoutes = {
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
 
 export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
+
+export type Department = {
+  id: string;
+  name: string;
+  value: string;
+};
 
 export type UserCandidate = {
   employed: boolean;
@@ -187,7 +193,7 @@ export type UserProfile = {
   currentJob: string | null;
   description: string | null;
   introduction: string | null;
-  department: Department;
+  department: DepartmentName;
   isAvailable: boolean;
   unavailabilityReason: string | null;
   nudges: Nudge[] | null;
@@ -247,7 +253,10 @@ export type Company = {
   name: string;
   description: string | null;
   companyUser?: CompanyUser;
+  logoUrl?: string;
   pendingInvitations?: Invitation[];
+  businessSectors?: BusinessSector[];
+  department: Department;
 };
 
 export type User = {
@@ -314,7 +323,7 @@ export interface CV {
   catchphrase: string;
   introduction: string;
   locations: {
-    name: Department;
+    name: DepartmentName;
     order: number;
   }[];
   availability: string;
@@ -391,7 +400,7 @@ export type UserRegistrationDto = {
   password: string;
   role: RegistrableUserRoles;
   campaign?: string;
-  department: Department;
+  department: DepartmentName;
   nudges?: Nudge[];
   workingRight?: string;
   organizationId?: string;
@@ -414,7 +423,7 @@ export type UserReferingDto = {
   email: string;
   phone: string;
   campaign?: string;
-  department: Department;
+  department: DepartmentName;
   nudges?: Nudge[];
   workingRight?: string;
   birthDate: string;
@@ -432,8 +441,6 @@ export type ContactContactUs = {
   cgu: boolean;
 };
 
-// export type Company = {};
-
 export enum CompanyGoal {
   SENSIBILIZE = 'sensibilize',
   RECRUIT = 'recruit',
@@ -444,7 +451,7 @@ export type UpdateCompanyDto = {
   name?: string;
   description?: string;
   logo?: File;
-  department?: Department;
+  department?: DepartmentName;
   url?: string;
   linkedinUrl?: string;
   hiringUrl?: string;
@@ -579,7 +586,7 @@ export type PublicProfile = {
   lastName: string;
   linkedinUrl?: string;
   role: UserRoles;
-  department: Department;
+  department: DepartmentName;
   currentJob: string;
   description: string;
   introduction: string;
@@ -638,7 +645,7 @@ export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
   helps: HelpValue | HelpValue[];
-  departments: Department | Department[];
+  departments: DepartmentName | DepartmentName[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };

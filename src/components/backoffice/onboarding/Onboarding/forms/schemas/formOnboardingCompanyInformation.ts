@@ -1,5 +1,8 @@
 import { Api } from '@/src/api';
-import { Department, DEPARTMENTS_FILTERS } from '@/src/constants/departements';
+import {
+  DepartmentName,
+  DEPARTMENTS_FILTERS,
+} from '@/src/constants/departements';
 import { FilterConstant } from '@/src/constants/utils';
 import {
   FileTypes,
@@ -32,7 +35,7 @@ export const formOnboardingCompanyInformation: FormSchema<{
   description: string;
   logo: File;
   businessSectorIds: FilterConstant<string>[];
-  department: FilterConstant<Department>;
+  department: FilterConstant<DepartmentName>;
   url: string;
   linkedinUrl: string;
   hiringUrl: string;
