@@ -43,7 +43,7 @@ export const CompanyRecruitementAlertCard = () => {
           ))}
 
           <Button variant="primary" rounded onClick={handleOpenModal}>
-            Créer une nouvelle alerte
+            Créer une alerte mail
           </Button>
         </StyledRecruitementAlertContainer>
       </Card>

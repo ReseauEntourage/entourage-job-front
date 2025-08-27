@@ -33,7 +33,7 @@ export const StyledCompanyRecruitementAlertContainer = styled.div`
   background-color: ${COLORS.hoverBlue};
   gap: 16px;
   margin: 0;
-  overflow: hidden; /* Empêche le débordement du contenu */
+  overflow: hidden;
 `;
 
 export const StyledAlertHeader = styled.div`
@@ -78,7 +78,7 @@ export const StyledSpinnerContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  /* Ajuster la taille du spinner */
+  /* spinner */
   > div {
     width: 24px !important;
     height: 24px !important;
@@ -88,21 +88,31 @@ export const StyledSpinnerContainer = styled.div`
 export const StyledCandidatesAvatars = styled.div`
   display: flex;
   align-items: center;
+  padding-right: 8px;
 `;
 
 export const StyledAvatar = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  /* background-color: ${({ theme }) => theme.colors.primaryBlue}; */
-  margin-right: -8px;
-  /* border: 2px solid ${({ theme }) => theme.colors.lightgray}; */
+  margin-right: -12px; /* Overlap effect */
+  border: 1px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 12px;
   font-weight: bold;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+
+  > div {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 export const StyledBadge = styled.div`
@@ -113,21 +123,19 @@ export const StyledBadge = styled.div`
   font-size: 14px;
   color: ${COLORS.darkGray};
   background-color: ${COLORS.white};
-  /* margin-right: 4px;
-  margin-bottom: 4px; */
 `;
 
 export const StyledCandidatesCount = styled.span`
   font-size: 14px;
-  /* color: ${({ theme }) => theme.colors.darkGray}; */
 `;
 
 export const StyledViewCandidatesLink = styled.a`
   font-size: 14px;
-  font-weight: 500;
-  /* color: ${({ theme }) => theme.colors.primaryBlue}; */
+  font-weight: 700;
   text-decoration: underline;
   margin-left: auto;
+  cursor: pointer;
+  color: ${COLORS.black};
 
   &:hover {
     text-decoration: none;

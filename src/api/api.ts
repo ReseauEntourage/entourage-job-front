@@ -424,7 +424,7 @@ export class APIHandler {
     alertId: string,
     params: RecruitementAlertDto
   ): Promise<AxiosResponse> {
-    return this.patch(`/recruitement-alerts/${alertId}`, params);
+    return this.put(`/recruitement-alerts/${alertId}`, params);
   }
 
   inviteCollaboratorsFromCompany(

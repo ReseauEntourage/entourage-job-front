@@ -30,8 +30,12 @@ export const fetchRecruitementAlertMatchingSelectors =
 export const selectRecruitementAlerts = (state: RootState) =>
   state.recruitementAlerts.recruitementAlerts;
 
-export const selectRecruitementAlertMatching = (state: RootState) =>
-  state.recruitementAlerts.recruitementAlertMatching;
+export const selectRecruitementAlertMatchings = (state: RootState) =>
+  state.recruitementAlerts.recruitementAlertMatchings;
+
+export const selectRecruitementAlertMatchingById =
+  (alertId: string) => (state: RootState) =>
+    state.recruitementAlerts.recruitementAlertMatchings[alertId] || [];
 
 export const selectFetchRecruitementAlertsLoading = createSelector(
   fetchRecruitementAlertsSelectors.selectIsFetchRecruitementAlertsRequested,

@@ -1,8 +1,9 @@
+import Link from 'next/link';
 import React from 'react';
 import { Spinner } from '@/src/components/utils/Spinner';
 import { CompanyRecruitementAlertEditModal } from '../CompanyRecruitementAlertModal/CompanyRecruitementAlertEditModal';
 import { RecruitementAlert } from 'src/api/types';
-import { Button, LucidIcon } from 'src/components/utils';
+import { Button, ImgProfile, LucidIcon } from 'src/components/utils';
 import {
   StyledAlertHeader,
   StyledBadgesContainer,
@@ -29,7 +30,7 @@ export const CompanyRecruitementAlertContent = ({
     title,
     badgesStringList,
     isLoadingMatching,
-    candidatesCount,
+    candidates,
     handleDelete,
     handleEdit,
     isEditModalOpen,
@@ -65,24 +66,32 @@ export const CompanyRecruitementAlertContent = ({
           </StyledSpinnerContainer>
         ) : (
           <>
-            <StyledCandidatesAvatars>
-              {[...Array(Math.min(candidatesCount, 3))].map((_, index) => (
-                <StyledAvatar key={index}>{index + 1}</StyledAvatar>
-              ))}
-            </StyledCandidatesAvatars>
+            {candidates.length > 0 && (
+              <StyledCandidatesAvatars>
+                {candidates.map((candidate, index) => (
+                  <StyledAvatar key={index}>
+                    <ImgProfile
+                      user={candidate}
+                      size={30}
+                      hasPicture={candidate?.hasPicture || false}
+                    />
+                  </StyledAvatar>
+                ))}
+              </StyledCandidatesAvatars>
+            )}
             <StyledCandidatesCount>
-              {candidatesCount}{' '}
-              {candidatesCount > 1
-                ? 'personnes correspondent'
-                : 'personne correspond'}{' '}
-              à votre recherche.
+              {candidates.length
+                ? `${candidates.length} personnes correspondent à votre recherche.`
+                : 'Aucune personne ne correspond à votre recherche.'}
             </StyledCandidatesCount>
           </>
         )}
-        {candidatesCount > 0 && (
-          <StyledViewCandidatesLink href="#">
-            Voir les candidats
-          </StyledViewCandidatesLink>
+        {candidates.length > 0 && (
+          <Link href={`/backoffice/alerte-candidats/${alert.id}`} passHref>
+            <StyledViewCandidatesLink>
+              Voir les candidats
+            </StyledViewCandidatesLink>
+          </Link>
         )}
       </StyledCandidatesInfo>
 

@@ -4,7 +4,7 @@ import { CONTRACTS, WORKING_EXPERIENCE_FILTERS } from '@/src/constants';
 import { RecruitementAlert, RecruitementAlertDto } from 'src/api/types';
 import {
   fetchRecruitementAlertMatchingAction,
-  selectRecruitementAlertMatching,
+  selectRecruitementAlertMatchingById,
   selectFetchRecruitementAlertMatchingLoading,
   deleteRecruitementAlertAction,
   updateRecruitementAlertAction,
@@ -14,7 +14,7 @@ export const useCompanyRecruitementAlertContent = (
   alert: RecruitementAlert
 ) => {
   const dispatch = useDispatch();
-  const matching = useSelector(selectRecruitementAlertMatching);
+  const matching = useSelector(selectRecruitementAlertMatchingById(alert.id));
   const isLoadingMatching = useSelector(
     selectFetchRecruitementAlertMatchingLoading
   );
@@ -83,8 +83,7 @@ export const useCompanyRecruitementAlertContent = (
     });
   }
 
-  // Calculate the number of matching candidates
-  const candidatesCount = matching?.length || 0;
+  const candidates = matching || [];
 
   const handleDelete = useCallback(() => {
     dispatch(deleteRecruitementAlertAction(id));
@@ -113,7 +112,7 @@ export const useCompanyRecruitementAlertContent = (
     badgesStringList,
     isLoadingMatching,
     matching,
-    candidatesCount,
+    candidates,
     handleDelete,
     handleEdit,
     isEditModalOpen,

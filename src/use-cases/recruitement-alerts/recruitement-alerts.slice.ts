@@ -22,8 +22,7 @@ export interface State {
     typeof fetchRecruitementAlertMatchingAdapter
   >;
   recruitementAlerts: RecruitementAlert[];
-  recruitementAlertMatching: PublicProfile[];
-  selectedAlertId: string | null;
+  recruitementAlertMatchings: Record<string, PublicProfile[]>;
 }
 
 const initialState: State = {
@@ -34,8 +33,7 @@ const initialState: State = {
   fetchRecruitementAlertMatching:
     fetchRecruitementAlertMatchingAdapter.getInitialState(),
   recruitementAlerts: [],
-  recruitementAlertMatching: [],
-  selectedAlertId: null,
+  recruitementAlertMatchings: {},
 };
 
 export const slice = createSlice({
@@ -63,6 +61,10 @@ export const slice = createSlice({
           state.recruitementAlerts = state.recruitementAlerts.filter(
             (alert) => alert.id !== action.payload
           );
+          // Suppression des matchings associés à cette alerte
+          if (state.recruitementAlertMatchings[action.payload]) {
+            delete state.recruitementAlertMatchings[action.payload];
+          }
         },
       }
     ),
@@ -82,8 +84,15 @@ export const slice = createSlice({
     ...fetchRecruitementAlertMatchingAdapter.getReducers<State>(
       (state) => state.fetchRecruitementAlertMatching,
       {
-        fetchRecruitementAlertMatchingSucceeded(state, action) {
-          state.recruitementAlertMatching = action.payload;
+        fetchRecruitementAlertMatchingSucceeded(
+          state,
+          action: PayloadAction<PublicProfile[]> & { meta?: { arg: string } }
+        ) {
+          // action.meta est ajouté dans la saga
+          const alertId = action.meta?.arg;
+          if (alertId) {
+            state.recruitementAlertMatchings[alertId] = action.payload;
+          }
         },
       }
     ),
@@ -97,9 +106,10 @@ export const slice = createSlice({
       _state,
       _action: PayloadAction<{ id: string; data: RecruitementAlertDto }>
     ) {},
-    fetchRecruitementAlertMatchingAction(state, action: PayloadAction<string>) {
-      state.selectedAlertId = action.payload;
-    },
+    fetchRecruitementAlertMatchingAction(
+      _state,
+      _action: PayloadAction<string>
+    ) {},
   },
 });
 

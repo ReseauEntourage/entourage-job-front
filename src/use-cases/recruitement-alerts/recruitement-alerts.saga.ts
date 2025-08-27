@@ -70,11 +70,17 @@ function* createRecruitementAlertSaga(
 
 function* fetchRecruitementAlertMatchingSaga(action: PayloadAction<string>) {
   try {
-    yield* put(fetchRecruitementAlertMatchingRequested(action.payload));
+    const alertId = action.payload;
+    yield* put(fetchRecruitementAlertMatchingRequested(alertId));
     const { data } = yield* call(() =>
-      Api.getRecruitementAlertMatching(action.payload)
+      Api.getRecruitementAlertMatching(alertId)
     );
-    yield* put(fetchRecruitementAlertMatchingSucceeded(data));
+    // On passe l'ID de l'alerte comme meta pour pouvoir y accéder dans le reducer
+    yield* put({
+      type: fetchRecruitementAlertMatchingSucceeded.type,
+      payload: data,
+      meta: { arg: alertId },
+    });
   } catch (error) {
     console.error('Error fetching recruitement alert matching:', error);
     yield* put(fetchRecruitementAlertMatchingFailed(undefined));
