@@ -451,7 +451,7 @@ export type UpdateCompanyDto = {
   name?: string;
   description?: string;
   logo?: File;
-  department?: DepartmentName;
+  departmentId?: string;
   url?: string;
   linkedinUrl?: string;
   hiringUrl?: string;

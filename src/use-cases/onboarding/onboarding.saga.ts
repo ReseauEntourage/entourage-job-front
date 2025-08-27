@@ -1,5 +1,4 @@
 import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
-import { DepartmentName } from '@/src/constants/departements';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
 import { CompanyGoal, UpdateCompanyDto } from 'src/api/types';
@@ -83,7 +82,7 @@ export function* sendStepDataOnboardingSaga() {
         description,
         logo,
         businessSectorIds,
-        department,
+        departmentId,
         url,
         linkedinUrl,
         hiringUrl,
@@ -109,7 +108,7 @@ export function* sendStepDataOnboardingSaga() {
         linkedinUrl,
         hiringUrl,
         goal: companyGoalValue,
-        department: department?.value as DepartmentName,
+        departmentId: departmentId?.value as string,
         businessSectorIds:
           businessSectorIds?.map(
             (businessSectorId) => businessSectorId.value

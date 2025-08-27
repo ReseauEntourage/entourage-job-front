@@ -1,14 +1,29 @@
 import { Api } from '@/src/api';
-import {
-  DepartmentName,
-  DEPARTMENTS_FILTERS,
-} from '@/src/constants/departements';
 import { FilterConstant } from '@/src/constants/utils';
 import {
   FileTypes,
   FormComponents,
   FormSchema,
 } from 'src/components/forms/FormSchema';
+
+const loadDepartmentsOptions = async (callback, inputValue) => {
+  try {
+    const { data: departments } = await Api.getAllDepartments({
+      search: inputValue,
+    });
+    callback([
+      ...departments.map((u) => {
+        return {
+          value: u.id,
+          label: `${u.value} - ${u.name}`,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
 
 const loadBusinessSectorsOptions = async (callback, inputValue) => {
   try {
@@ -35,7 +50,7 @@ export const formOnboardingCompanyInformation: FormSchema<{
   description: string;
   logo: File;
   businessSectorIds: FilterConstant<string>[];
-  department: FilterConstant<DepartmentName>;
+  departmentId: FilterConstant<string>;
   url: string;
   linkedinUrl: string;
   hiringUrl: string;
@@ -70,11 +85,12 @@ export const formOnboardingCompanyInformation: FormSchema<{
       showLabel: true,
     },
     {
-      id: 'department',
-      name: 'department',
-      title: 'Localisation',
-      component: 'select',
-      options: DEPARTMENTS_FILTERS,
+      id: 'departmentId',
+      name: 'departmentId',
+      title: 'Département',
+      component: 'select-async',
+      loadOptions: loadDepartmentsOptions,
+      placeholder: 'Séléctionnez un département',
       isRequired: true,
       showLabel: true,
       isMulti: false,

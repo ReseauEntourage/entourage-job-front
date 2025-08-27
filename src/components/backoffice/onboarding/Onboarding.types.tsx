@@ -93,7 +93,7 @@ export interface CompanyStepData {
   description?: string;
   logo?: File[];
   businessSectorIds?: { value: string }[];
-  department?: { value: string };
+  departmentId?: { value: string };
   url?: string;
   linkedinUrl?: string;
   hiringUrl?: string;
