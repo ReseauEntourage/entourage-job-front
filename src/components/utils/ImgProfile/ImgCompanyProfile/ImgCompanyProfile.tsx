@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
+import { COLORS } from '@/src/constants/styles';
 import { updateCompanyLogoSelectors } from '@/src/use-cases/company';
 import { ImgProfile } from '../ImgProfile';
 
@@ -38,6 +39,8 @@ export const ImgCompanyProfile = ({
       size={size}
       highlight={highlight}
       alt={`Logo de ${company.name}`}
+      cover={false}
+      bgColor={COLORS.white}
     />
   );
 };
