@@ -28,6 +28,7 @@ export const StyledFileInputGroupForm = styled.div`
 
 export const StyledFileInputWrapper = styled.div`
   position: relative;
+  margin-bottom: 5px;
 `;
 
 export const StyledHiddenInput = styled.input`

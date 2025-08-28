@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ReduxRequestEvents } from '@/src/constants';
+import { updateCompanyLogoSelectors } from '@/src/use-cases/company';
 import { ImgProfile } from '../ImgProfile';
 
 interface ImgCompanyProfileProps {
@@ -16,9 +19,21 @@ export const ImgCompanyProfile = ({
   size = 40,
   highlight = false,
 }: ImgCompanyProfileProps) => {
+  const [hash, setHash] = useState<number>(Date.now());
+
+  const updateCompanyLogoStatus = useSelector(
+    updateCompanyLogoSelectors.selectUpdateCompanyLogoStatus
+  );
+
+  useEffect(() => {
+    if (updateCompanyLogoStatus === ReduxRequestEvents.SUCCEEDED) {
+      setHash(Date.now());
+    }
+  }, [updateCompanyLogoStatus]);
+
   return (
     <ImgProfile
-      pictureUrl={company.logoUrl || null}
+      pictureUrl={`${company.logoUrl}?${hash}` || null}
       placeholder={company.name}
       size={size}
       highlight={highlight}

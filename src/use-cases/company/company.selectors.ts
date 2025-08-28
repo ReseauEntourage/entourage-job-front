@@ -1,9 +1,17 @@
-import { fetchSelectedCompanyAdapter } from './company.adapters';
+import {
+  fetchSelectedCompanyAdapter,
+  updateCompanyLogoAdapter,
+} from './company.adapters';
 import { RootState } from './company.slice';
 
 export const fetchSelectedCompanySelectors =
   fetchSelectedCompanyAdapter.getSelectors<RootState>(
     (state) => state.company.fetchSelectedCompany
+  );
+
+export const updateCompanyLogoSelectors =
+  updateCompanyLogoAdapter.getSelectors<RootState>(
+    (state) => state.company.updateCompanyLogo
   );
 
 export function selectSelectedCompanyId(state: RootState) {

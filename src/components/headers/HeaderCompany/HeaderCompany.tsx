@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { BusinessSector, Department } from '@/src/api/types';
 import { useIsMobile } from '@/src/hooks/utils';
+import { CompanyInfosModalEdit } from '../../backoffice/companies/modals/CompanyInfosModalEdit';
+import { openModal } from '../../modals/Modal';
 import { BackLink } from '../../utils/BackLink';
 import {
   Section,
@@ -19,6 +21,7 @@ import {
   StyledHeaderCompanyPublicInfoContainer,
   StyledHeaderNameAndRole,
 } from './HeaderCompany.styles';
+import { useHeaderCompany } from './useHeaderCompany';
 
 export interface HeaderCompanyProps {
   isEditable?: boolean;
@@ -38,9 +41,19 @@ export const HeaderCompany = ({
   isEditable = false,
 }: HeaderCompanyProps) => {
   const isMobile = useIsMobile();
+  const { updateCompany } = useHeaderCompany(id);
+
   const openEditCompany = useCallback(() => {
-    // TODO: open modal
-  }, []);
+    openModal(
+      <CompanyInfosModalEdit
+        dispatchOnSubmit={(fields) => {
+          updateCompany(fields);
+        }}
+        department={department}
+        businessSectors={businessSectors}
+      />
+    );
+  }, [businessSectors, department, updateCompany]);
 
   const COMPANY_PICTURE_SIZE = isMobile ? 75 : 145;
 
@@ -88,7 +101,6 @@ export const HeaderCompany = ({
               </Text>
             </StyledHeaderCompanyPublicInfoContainer>
 
-            {/* TODO: Handle condition to display CTA send message or edit company informations */}
             {isEditable && (
               <div>
                 <Button
