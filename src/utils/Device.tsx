@@ -7,12 +7,11 @@ interface PlateformParams<T> {
   Mobile?: T;
 }
 
-export function plateform<T extends React.ComponentType<AnyCantFix>>(
+export const platform = <T extends React.ComponentType<AnyCantFix>>(
   data: PlateformParams<T>
-): T {
+): React.FC<React.ComponentProps<T>> => {
   const { Mobile, Desktop } = data;
 
-  // @ts-expect-error ignore type error because return statement is already typed
   return (props: React.ComponentProps<T>) => {
     const isDesktop = useIsDesktop();
 
@@ -22,4 +21,4 @@ export function plateform<T extends React.ComponentType<AnyCantFix>>(
 
     return Mobile ? <Mobile {...props} /> : null;
   };
-}
+};
