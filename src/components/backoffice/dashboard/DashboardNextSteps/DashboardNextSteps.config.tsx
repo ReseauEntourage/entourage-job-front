@@ -24,6 +24,7 @@ const webinarStep = {
 
 const COMPANY_SETTINGS_URL = '/companies/settings';
 // const COMPANY_TBS_URL = '/companies/engagements';
+const COMPANY_RECRUITMENT_URL = '/companies/alerts';
 
 export const stepsByContext = {
   [Context.CANDIDATE]: [
@@ -121,7 +122,7 @@ export const stepsByContext = {
       content: 'Trouvez les candidats qui vous correspondent',
       cta: {
         label: 'Créer une alerte',
-        href: '/dashboard/recruitment', // TODO: replace with recruitment URL
+        href: COMPANY_RECRUITMENT_URL,
       },
     },
     // {
