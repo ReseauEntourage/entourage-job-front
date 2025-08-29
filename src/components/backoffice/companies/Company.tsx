@@ -32,10 +32,12 @@ export const Company = () => {
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledCompanyLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            <CompanyDescription
-              description={selectedCompany.description}
-              isEditable={false}
-            />
+            {selectedCompany.description && (
+              <CompanyDescription
+                description={selectedCompany.description}
+                isEditable={false}
+              />
+            )}
           </StyledCompanyLeftColumn>
           <StyledCompanyRightColumn>Right column</StyledCompanyRightColumn>
         </StyledBackofficeGrid>
