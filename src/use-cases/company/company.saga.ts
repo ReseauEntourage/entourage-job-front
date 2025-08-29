@@ -11,6 +11,9 @@ const {
   updateCompanyLogoRequested,
   updateCompanyLogoSucceeded,
   updateCompanyLogoFailed,
+  updateCompanyRequested,
+  updateCompanySucceeded,
+  updateCompanyFailed,
 } = slice.actions;
 
 function* fetchSelectedCompanySaga() {
@@ -25,7 +28,7 @@ function* fetchSelectedCompanySaga() {
   }
 }
 
-function* updateCompanyLogoSaga(
+function* updateCompanyLogoRequestedSaga(
   action: ReturnType<typeof updateCompanyLogoRequested>
 ) {
   try {
@@ -43,10 +46,29 @@ function* updateCompanyLogoSaga(
   }
 }
 
+function* updateCompanyRequestedSaga(
+  action: ReturnType<typeof updateCompanyRequested>
+) {
+  try {
+    const { companyData } = action.payload;
+
+    assertIsDefined(companyData, 'Company data must be defined');
+
+    yield* call(() => Api.updateCompany(companyData));
+    yield* put(updateCompanySucceeded());
+  } catch (error) {
+    yield* put(updateCompanyFailed(null));
+  }
+}
+
 export function* saga() {
   yield* takeLatest(
     fetchSelectedCompanyRequested.type,
     fetchSelectedCompanySaga
   );
-  yield* takeLatest(updateCompanyLogoRequested.type, updateCompanyLogoSaga);
+  yield* takeLatest(
+    updateCompanyLogoRequested.type,
+    updateCompanyLogoRequestedSaga
+  );
+  yield* takeLatest(updateCompanyRequested.type, updateCompanyRequestedSaga);
 }
