@@ -14,7 +14,7 @@ export interface DashboardCompanyCardProps {
 export const DashboardCompanyCard = ({
   company,
 }: DashboardCompanyCardProps) => {
-  const companySettingsUrl = `/`; // TODO : replace with actual company settings URL
+  const companySettingsUrl = `/compagnies/settings`;
 
   return (
     <Card

@@ -22,6 +22,9 @@ const webinarStep = {
   },
 };
 
+const COMPANY_SETTINGS_URL = '/companies/settings';
+// const COMPANY_TBS_URL = '/companies/engagements';
+
 export const stepsByContext = {
   [Context.CANDIDATE]: [
     {
@@ -76,18 +79,18 @@ export const stepsByContext = {
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
-        href: '/dashboard/entreprise', // TODO: replace with company settings URL
+        href: COMPANY_SETTINGS_URL,
       },
     },
-    {
-      title: 'Les team building solidaires',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
-      content: "Découvrir les formats d'engagement",
-      cta: {
-        label: 'Découvrir',
-        href: '/dashboard/company', // TODO: replace with company TBS URL
-      },
-    },
+    // {
+    //   title: 'Les team building solidaires',
+    //   icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+    //   content: "Découvrir les formats d'engagement",
+    //   cta: {
+    //     label: 'Découvrir',
+    //     href: COMPANY_TBS_URL,
+    //   },
+    // },
     {
       title: 'Inviter mes collaborateurs',
       icon: <IlluCoachEtCandidat {...iconSizeProps} />,
@@ -109,7 +112,7 @@ export const stepsByContext = {
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
-        href: '/dashboard/entreprise', // TODO: replace with company settings URL
+        href: COMPANY_SETTINGS_URL,
       },
     },
     {
@@ -121,14 +124,14 @@ export const stepsByContext = {
         href: '/dashboard/recruitment', // TODO: replace with recruitment URL
       },
     },
-    {
-      title: 'Les team building solidaires',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
-      content: "Découvrir les formats d'engagement",
-      cta: {
-        label: 'Découvrir',
-        href: '/dashboard/company', // TODO: replace with company TBS URL
-      },
-    },
+    // {
+    //   title: 'Les team building solidaires',
+    //   icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+    //   content: "Découvrir les formats d'engagement",
+    //   cta: {
+    //     label: 'Découvrir',
+    //     href: COMPANY_TBS_URL,
+    //   },
+    // },
   ],
 };
