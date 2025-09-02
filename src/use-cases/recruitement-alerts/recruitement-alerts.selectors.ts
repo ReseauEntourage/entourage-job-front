@@ -33,9 +33,13 @@ export const selectRecruitementAlerts = (state: RootState) =>
 export const selectRecruitementAlertMatchings = (state: RootState) =>
   state.recruitementAlerts.recruitementAlertMatchings;
 
-export const selectRecruitementAlertMatchingById =
-  (alertId: string) => (state: RootState) =>
-    state.recruitementAlerts.recruitementAlertMatchings[alertId] || [];
+// Using createSelector to memoize the selectors result
+export const selectRecruitementAlertMatchingById = (alertId: string) =>
+  createSelector(
+    (state: RootState) =>
+      state.recruitementAlerts.recruitementAlertMatchings[alertId],
+    (matching) => matching || []
+  );
 
 export const selectFetchRecruitementAlertsLoading = createSelector(
   fetchRecruitementAlertsSelectors.selectIsFetchRecruitementAlertsRequested,

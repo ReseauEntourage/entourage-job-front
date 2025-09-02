@@ -91,7 +91,11 @@ export const slice = createSlice({
           // action.meta est ajouté dans la saga
           const alertId = action.meta?.arg;
           if (alertId) {
-            state.recruitementAlertMatchings[alertId] = action.payload;
+            // S'assurer que action.payload est un tableau
+            const matchingData = Array.isArray(action.payload)
+              ? action.payload
+              : [];
+            state.recruitementAlertMatchings[alertId] = matchingData;
           }
         },
       }

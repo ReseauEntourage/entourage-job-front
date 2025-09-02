@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { call, put, takeLatest } from 'typed-redux-saga';
+import { call, put, takeLatest, takeEvery } from 'typed-redux-saga';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import { RecruitementAlertDto } from 'src/api/types';
@@ -75,6 +75,7 @@ function* fetchRecruitementAlertMatchingSaga(action: PayloadAction<string>) {
     const { data } = yield* call(() =>
       Api.getRecruitementAlertMatching(alertId)
     );
+
     // On passe l'ID de l'alerte comme meta pour pouvoir y accéder dans le reducer
     yield* put({
       type: fetchRecruitementAlertMatchingSucceeded.type,
@@ -82,7 +83,10 @@ function* fetchRecruitementAlertMatchingSaga(action: PayloadAction<string>) {
       meta: { arg: alertId },
     });
   } catch (error) {
-    console.error('Error fetching recruitement alert matching:', error);
+    console.error(
+      `Erreur lors de la récupération des matchings pour l'alerte ${action.payload}:`,
+      error
+    );
     yield* put(fetchRecruitementAlertMatchingFailed(undefined));
   }
 }
@@ -160,7 +164,8 @@ export function* saga() {
     updateRecruitementAlertAction.type,
     updateRecruitementAlertSaga
   );
-  yield* takeLatest(
+  // Use takeEvery to handle multiple matching requests concurrently
+  yield* takeEvery(
     fetchRecruitementAlertMatchingAction.type,
     fetchRecruitementAlertMatchingSaga
   );

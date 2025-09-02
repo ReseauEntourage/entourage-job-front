@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
@@ -71,6 +72,11 @@ export const StyledCandidatesInfo = styled.div`
   align-items: center;
   gap: 12px;
   min-height: 32px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const StyledSpinnerContainer = styled.div`
@@ -115,6 +121,15 @@ export const StyledAvatar = styled.div`
   }
 `;
 
+export const StyledMoreAvatar = styled(StyledAvatar)`
+  background-color: ${COLORS.blueShade3};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  font-weight: normal;
+`;
+
 export const StyledBadge = styled.div`
   display: inline-flex;
   align-items: center;
@@ -129,7 +144,7 @@ export const StyledCandidatesCount = styled.span`
   font-size: 14px;
 `;
 
-export const StyledViewCandidatesLink = styled.a`
+export const StyledViewCandidatesLink = styled(Link)`
   font-size: 14px;
   font-weight: 700;
   text-decoration: underline;

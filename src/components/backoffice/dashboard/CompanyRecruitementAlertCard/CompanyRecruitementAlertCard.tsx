@@ -39,7 +39,7 @@ export const CompanyRecruitementAlertCard = () => {
       <Card title="Vos alertes de recrutement" centerTitle>
         <StyledRecruitementAlertContainer>
           {recruitementAlerts.map((alert) => (
-            <CompanyRecruitementAlertContent key={alert.name} alert={alert} />
+            <CompanyRecruitementAlertContent key={alert.id} alert={alert} />
           ))}
 
           <Button variant="primary" rounded onClick={handleOpenModal}>

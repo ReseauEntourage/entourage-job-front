@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CONTRACTS, WORKING_EXPERIENCE_FILTERS } from '@/src/constants';
 import { RecruitementAlert, RecruitementAlertDto } from 'src/api/types';
@@ -36,54 +36,73 @@ export const useCompanyRecruitementAlertContent = (
     }
   }, [dispatch, id]);
 
-  const contractString =
-    (CONTRACTS.find((contract) => contract.value === contractType)
-      ?.label as string) || '';
-  const title = contractString ? `${name} - ${contractString}` : name;
+  const contractString = useMemo(
+    () =>
+      (CONTRACTS.find((contract) => contract.value === contractType)
+        ?.label as string) || '',
+    [contractType]
+  );
+
+  const title = useMemo(
+    () => (contractString ? `${name} - ${contractString}` : name),
+    [contractString, name]
+  );
 
   // Preparation of badges to display in the requested order
-  const badgesStringList: string[] = [];
+  const badgesStringList = useMemo(() => {
+    const badges: string[] = [];
 
-  // 1. Department
-  if (department) {
-    badgesStringList.push(department);
-  }
-
-  // 2. Job position
-  if (jobName) {
-    badgesStringList.push(jobName);
-  }
-
-  // 3. Working experience years
-  if (workingExperienceYears) {
-    const workingExperienceLabel = WORKING_EXPERIENCE_FILTERS.find(
-      (exp) => exp.value === workingExperienceYears
-    )?.label;
-    if (workingExperienceLabel) {
-      badgesStringList.push(workingExperienceLabel as string);
+    // 1. Department
+    if (department) {
+      badges.push(department);
     }
-  }
 
-  // 4. Contract type (already used in the title, but also added to badges)
-  if (contractString) {
-    badgesStringList.push(contractString);
-  }
+    // 2. Job position
+    if (jobName) {
+      badges.push(jobName);
+    }
 
-  // 5. Business sectors
-  if (businessSectors && businessSectors.length > 0) {
-    businessSectors.forEach((sector) => {
-      badgesStringList.push(sector.name);
-    });
-  }
+    // 3. Working experience years
+    if (workingExperienceYears) {
+      const workingExperienceLabel = WORKING_EXPERIENCE_FILTERS.find(
+        (exp) => exp.value === workingExperienceYears
+      )?.label;
+      if (workingExperienceLabel) {
+        badges.push(workingExperienceLabel as string);
+      }
+    }
 
-  // 6. Skills
-  if (skills && skills.length > 0) {
-    skills.forEach((skill) => {
-      badgesStringList.push(skill.name);
-    });
-  }
+    // 4. Contract type (already used in the title, but also added to badges)
+    if (contractString) {
+      badges.push(contractString);
+    }
 
-  const candidates = matching || [];
+    // 5. Business sectors
+    if (businessSectors && businessSectors.length > 0) {
+      businessSectors.forEach((sector) => {
+        badges.push(sector.name);
+      });
+    }
+
+    // 6. Skills
+    if (skills && skills.length > 0) {
+      skills.forEach((skill) => {
+        badges.push(skill.name);
+      });
+    }
+
+    return badges;
+  }, [
+    department,
+    jobName,
+    workingExperienceYears,
+    contractString,
+    businessSectors,
+    skills,
+  ]);
+
+  // Memoization of candidates from matching data
+  const candidates = useMemo(() => matching || [], [matching]);
 
   const handleDelete = useCallback(() => {
     dispatch(deleteRecruitementAlertAction(id));
@@ -107,17 +126,18 @@ export const useCompanyRecruitementAlertContent = (
     [dispatch, id]
   );
 
+  const alertData = useMemo(() => alert, [alert]);
+
   return {
     title,
     badgesStringList,
     isLoadingMatching,
-    matching,
     candidates,
     handleDelete,
     handleEdit,
     isEditModalOpen,
     handleCloseEditModal,
     handleUpdateAlert,
-    alertData: alert,
+    alertData,
   };
 };
