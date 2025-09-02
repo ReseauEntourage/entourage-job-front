@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { LoadingScreen } from '@/src/components/backoffice/LoadingScreen';
-import { Company } from '@/src/components/backoffice/companies/Company';
+import { CompanyProfile } from '@/src/components/backoffice/companies/CompanyProfile/CompanyProfile';
 import { useSelectedCompany } from '@/src/hooks/useSelectedCompany';
 import { fetchSelectedCompanySelectors } from '@/src/use-cases/company';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
@@ -15,7 +15,7 @@ const CompanyViewPage = () => {
   return (
     <LayoutBackOffice title={selectedCompany ? selectedCompany.name : ''}>
       {selectedCompany && !isFetchCompanyRequested ? (
-        <Company />
+        <CompanyProfile />
       ) : (
         <LoadingScreen />
       )}

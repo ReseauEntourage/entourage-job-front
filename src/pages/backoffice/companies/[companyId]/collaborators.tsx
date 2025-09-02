@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
-import { CompanyCollaboratorsList } from '@/src/components/backoffice/companies/CompanyCollaboratorsList';
+import { CompanyCollaboratorsList } from '@/src/components/backoffice/companies/CompanyCollaboratorsTable/CompanyCollaboratorsTable';
 import { useSelectedCompany } from '@/src/hooks/useSelectedCompany';
 import { notificationsActions } from '@/src/use-cases/notifications';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';

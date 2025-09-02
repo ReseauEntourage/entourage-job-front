@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { CompanyWithUsers } from '@/src/api/types';
-import { HeaderBackoffice } from '../../headers/HeaderBackoffice';
-import { StyledBackgroundedHeaderBackoffice } from '../../headers/HeaderBackoffice/HeaderBackoffice.styles';
-import { CompanyInviteCollaboratorsModal } from '../../modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
-import { openModal } from '../../modals/Modal';
-import { Table, TdDesktop, Th, TrDesktop } from '../../utils/Table';
+import { HeaderBackoffice } from '../../../headers/HeaderBackoffice';
+import { StyledBackgroundedHeaderBackoffice } from '../../../headers/HeaderBackoffice/HeaderBackoffice.styles';
+import { CompanyInviteCollaboratorsModal } from '../../../modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
+import { openModal } from '../../../modals/Modal';
+import { Table, TdDesktop, Th, TrDesktop } from '../../../utils/Table';
 import { Button, Section } from 'src/components/utils';
-import { StyledHeaderCompanyCollaboratorsList } from './CompanyCollaboratorsList.styles';
+import { StyledHeaderCompanyCollaboratorsList } from './CompanyCollaboratorsTable.styles';
 
 export interface CompanyCollaboratorsListProps {
   companyWithCollaborators: CompanyWithUsers;

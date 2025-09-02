@@ -45,12 +45,14 @@ import IlluCoeurSurLaMain from './illu-coeur-sur-la-main.svg';
 import IlluCoeurSurMainSeule from './illu-coeur-sur-main-seule.svg';
 import IlluConversation from './illu-conversation.svg';
 import IlluDesktop from './illu-desktop.svg';
+import IlluDiscussionBanc from './illu-discussion-banc.svg';
 import IlluDossierCandidat from './illu-dossier-candidat.svg';
 import IlluLinkedIn from './illu-linked-in.svg';
 import IlluMalette from './illu-malette.svg';
 import IlluOrdiCV from './illu-ordi-cv.svg';
 import IlluPoigneeDeMain from './illu-poignee-de-main.svg';
 import IlluQuestionReponseOrange from './illu-question-reponse-orange.svg';
+import IlluReseau from './illu-reseau.svg';
 import IlluReseauxSociaux from './illu-reseaux-sociaux.svg';
 import IlluTeteHomme from './illu-tete-homme.svg';
 import Info from './info.svg';
@@ -91,7 +93,6 @@ import User from './user.svg';
 import Warning from './warning.svg';
 import Whatsapp from './whatsapp.svg';
 import Youtube from './youtube.svg';
-import IlluDiscussionBanc from './illu-discussion-banc.svg';
 
 export {
 Archive,
@@ -143,6 +144,7 @@ IlluMalette,
 IlluPoigneeDeMain,
 IlluQuestionReponseOrange,
 IlluReseauxSociaux,
+IlluReseau,
 IlluTeteHomme,
 IlluBulleQuestionCheck,
 IlluCoeurSurLaMain,

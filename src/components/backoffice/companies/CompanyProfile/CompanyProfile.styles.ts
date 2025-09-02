@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledCompanyLeftColumn = styled.div`
   display: flex;
+  min-width: 0;
   flex-direction: column;
   flex: 2;
   gap: 40px;
