@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from 'src/components/utils/Button';
+import { Button } from '../utils';
+import { StyledFiltersOptions } from './FiltersOptions.styles';
 
 export const FiltersOptions = ({
   resetFilters,
@@ -7,22 +8,22 @@ export const FiltersOptions = ({
   resetFilters: () => void;
 }) => {
   return (
-    <div className="uk-flex uk-flex-top uk-flex-right uk-flex-1">
+    <StyledFiltersOptions className="uk-flex uk-flex-top uk-flex-right uk-flex-1">
       <div className="uk-flex uk-flex-middle uk-flex-right">
         <div className="uk-flex uk-flex-right uk-flex-wrap uk-flex-1">
           <div className="uk-flex">
             <Button
-              variant="secondary"
-              rounded
+              variant="default"
               size="small"
               dataTestId="reset-filters"
               onClick={resetFilters}
+              className="reset-filters-button"
             >
               Réinitialiser les filtres
             </Button>
           </div>
         </div>
       </div>
-    </div>
+    </StyledFiltersOptions>
   );
 };
