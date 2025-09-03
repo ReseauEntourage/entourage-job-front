@@ -34,7 +34,7 @@ export const ImgCompanyProfile = ({
 
   return (
     <ImgProfile
-      pictureUrl={`${company.logoUrl}?${hash}` || null}
+      pictureUrl={company.logoUrl ? `${company.logoUrl}?${hash}` : null}
       placeholder={company.name}
       size={size}
       highlight={highlight}
