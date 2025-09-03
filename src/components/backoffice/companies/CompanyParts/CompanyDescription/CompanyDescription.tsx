@@ -45,7 +45,6 @@ export const CompanyDescription = ({
       isEditable={isEditable}
       ctaTitle={ctaTitle}
       ctaCallback={openEditModal}
-      //     iaGenerated
       fallback={{
         content: (
           <StyledFallbackContentContainer>
