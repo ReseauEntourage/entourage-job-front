@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { RecruitementAlertDto } from '@/src/api/types';
+import { Department } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Contract } from 'src/constants';
@@ -29,7 +30,7 @@ export const CompanyRecruitementAlertModal = () => {
           companyId: user.company.id,
           name: values.name,
           jobName: values.jobName,
-          department: values.department?.value,
+          department: (values.department?.value as Department) || null,
           businessSectorIds: values.businessSectors?.map(
             (sector) => sector.value
           ),

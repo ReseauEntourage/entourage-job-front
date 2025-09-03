@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { RecruitementAlert, RecruitementAlertDto } from '@/src/api/types';
-import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
+import { Department, DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
@@ -61,7 +61,7 @@ export const CompanyRecruitementAlertEditModal = ({
           companyId: user.company.id,
           name: values.name,
           jobName: values.jobName,
-          department: values.department?.value,
+          department: (values.department?.value as Department) || null,
           businessSectorIds: values.businessSectors?.map(
             (sector) => sector.value
           ),

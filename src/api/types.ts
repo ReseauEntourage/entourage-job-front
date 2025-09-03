@@ -652,9 +652,9 @@ export type RecruitementAlert = {
   id: string;
   name: string;
   jobName: string;
-  department: Department;
-  workingExperienceYears?: WorkingExperience;
-  contractType?: ContractValue;
+  department: Department | null;
+  workingExperienceYears: WorkingExperience | null;
+  contractType: ContractValue | null;
   companyId: string;
   businessSectors?: BusinessSector[];
   skills?: Skill[];
@@ -666,9 +666,9 @@ export type RecruitementAlertDto = {
   companyId: string;
   name: string;
   jobName: string;
-  department?: string;
+  department: Department | null;
   businessSectorIds?: string[];
-  workingExperienceYears?: string;
-  contractType?: ContractValue;
+  workingExperienceYears: WorkingExperience | null;
+  contractType: ContractValue | null;
   skills?: FilterConstant<string>[];
 };

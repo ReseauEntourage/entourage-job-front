@@ -120,6 +120,15 @@ export const useCompanyRecruitementAlertContent = (
 
   const handleUpdateAlert = useCallback(
     (updatedData: RecruitementAlertDto) => {
+      if (!updatedData.department) {
+        updatedData.department = null;
+      }
+      if (!updatedData.contractType) {
+        updatedData.contractType = null;
+      }
+      if (!updatedData.workingExperienceYears) {
+        updatedData.workingExperienceYears = null;
+      }
       dispatch(updateRecruitementAlertAction({ id, data: updatedData }));
       // Don't close the modal here, it will be closed by the modal component itself
     },
