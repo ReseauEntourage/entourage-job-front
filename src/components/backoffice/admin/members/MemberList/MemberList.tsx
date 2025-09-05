@@ -112,14 +112,13 @@ export function MemberList({
     []
   );
 
-  const { selectElement, executeAction, hasSelection, resetSelection } =
-    useBulkActions(
-      'candidate',
-      async () => {
-        await fetchData(search, filters, role, offset, true);
-      },
-      GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
-    );
+  const { selectElement, resetSelection } = useBulkActions(
+    'candidate',
+    async () => {
+      await fetchData(search, filters, role, offset, true);
+    },
+    GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
+  );
 
   useDeepCompareEffect(() => {
     if (role) {
@@ -202,21 +201,6 @@ export function MemberList({
               setFilters={setFilters}
               placeholder="Rechercher..."
               smallSelectors
-              additionalButtons={
-                isRoleIncluded([UserRoles.CANDIDATE], role) && (
-                  <Button
-                    variant="primary"
-                    rounded
-                    size="small"
-                    disabled={!hasSelection}
-                    onClick={() => {
-                      return executeAction({ hidden: true }, 'put');
-                    }}
-                  >
-                    Masquer CV
-                  </Button>
-                )
-              }
             />
           </Section>
           {loading ? (

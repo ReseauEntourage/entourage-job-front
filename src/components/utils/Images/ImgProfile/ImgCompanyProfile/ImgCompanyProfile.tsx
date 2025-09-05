@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { CompanyIcon } from '@/assets/icons/icons';
 import { ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
 import { updateCompanyLogoSelectors } from '@/src/use-cases/company';
@@ -31,6 +32,10 @@ export const ImgCompanyProfile = ({
       setHash(Date.now());
     }
   }, [updateCompanyLogoStatus]);
+
+  if (!company.logoUrl) {
+    return <CompanyIcon width={size} height={size} />;
+  }
 
   return (
     <ImgProfile

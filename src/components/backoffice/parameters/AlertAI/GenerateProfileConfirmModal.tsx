@@ -1,5 +1,5 @@
 import React from 'react';
-import { Img } from '@/src/components/utils';
+import { LegacyImg } from '@/src/components/utils';
 import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
 import { useProfileGeneration } from '@/src/hooks';
 import { useModalContext } from 'src/components/modals/Modal';
@@ -28,7 +28,7 @@ export const GenerateProfileConfirmModal = () => {
     >
       {isLoading && (
         <StyledLoadingContainer>
-          <Img
+          <LegacyImg
             src="/static/img/illustrations/cv-ia.gif"
             width={150}
             height={150}

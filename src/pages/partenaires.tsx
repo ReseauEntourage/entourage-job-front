@@ -5,7 +5,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { SimpleSection } from 'src/components/partials/pages/Partenaires/SimpleSection';
 import { LogoList } from 'src/components/partials/utils/LogoList';
-import { Img, Section, SimpleLink, Grid } from 'src/components/utils';
+import { LegacyImg, Section, SimpleLink, Grid } from 'src/components/utils';
 import { PARTNERS } from 'src/constants/partners';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -139,14 +139,14 @@ const PartnerItem = ({
           >
             <div className="uk-flex uk-flex-middle uk-flex-center">
               <div className="uk-width-medium uk-flex uk-flex-column uk-flex-middle uk-flex-center">
-                <Img
+                <LegacyImg
                   src={`/static/img/partners/${key}/logo.png`}
                   alt="key"
                   width={300}
                   height={300}
                 />
                 {bis && (
-                  <Img
+                  <LegacyImg
                     src={`/static/img/partners/${key}/logo_bis.png`}
                     alt="key"
                     width={300}
@@ -179,7 +179,7 @@ const PartnerItem = ({
                   )}
                   <div className="uk-flex">
                     <div className="uk-flex uk-flex-top uk-margin-small-right">
-                      <Img
+                      <LegacyImg
                         alt=""
                         width={27}
                         height={21}
@@ -202,7 +202,7 @@ const PartnerItem = ({
                       )}
                     </div>
                     <div className="uk-flex uk-flex-bottom uk-margin-small-left">
-                      <Img
+                      <LegacyImg
                         alt=""
                         width={15}
                         height={12}

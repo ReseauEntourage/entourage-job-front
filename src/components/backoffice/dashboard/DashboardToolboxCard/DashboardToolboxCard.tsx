@@ -7,7 +7,7 @@ import {
   StyledDashboardCardContentContainer,
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
-import { Button, Card, Img } from 'src/components/utils';
+import { Button, Card, LegacyImg } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -99,7 +99,7 @@ export const DashboardToolboxCard = () => {
               >
                 <StyledDashboardArticle>
                   <StyledDashboardArticleImage>
-                    <Img src={article.image} alt={article.title} cover />
+                    <LegacyImg src={article.image} alt={article.title} cover />
                   </StyledDashboardArticleImage>
                   <StyledDashboardArticleText>
                     <H6 title={article.title} center />

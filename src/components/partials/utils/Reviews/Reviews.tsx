@@ -1,5 +1,5 @@
 import React from 'react';
-import { Img, Section } from 'src/components/utils';
+import { LegacyImg, Section } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -50,7 +50,7 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
                 <Text size="large">{review}</Text>
                 <StyledReviewCardAuthor className={isDesktop ? '' : 'mobile'}>
                   {image && (
-                    <Img
+                    <LegacyImg
                       src={image}
                       alt={`Témoignage de ${author}`}
                       width={45}

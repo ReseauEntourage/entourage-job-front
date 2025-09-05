@@ -2,7 +2,7 @@ import React from 'react';
 import { Company } from '@/src/api/types';
 import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
 import { openModal } from '@/src/components/modals/Modal';
-import { Button, Card, Text } from 'src/components/utils';
+import { Button, Card, ImgCompanyProfile, Text } from 'src/components/utils';
 import {
   StyledContainer,
   StyledCTAContainer,
@@ -28,7 +28,9 @@ export const DashboardCompanyCard = ({
       centerTitle
     >
       <StyledContainer>
-        <StyledPictureContainer>Image</StyledPictureContainer>
+        <StyledPictureContainer>
+          <ImgCompanyProfile company={company} size={110} highlight />
+        </StyledPictureContainer>
         <Text size="large" color="primaryBlue" weight="bold" center>
           {company.name}
         </Text>

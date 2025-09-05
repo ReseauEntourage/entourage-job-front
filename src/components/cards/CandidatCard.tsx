@@ -11,7 +11,7 @@ import {
   CandidateCardBusinessSectorsStyled,
 } from 'src/components/cards/CandidatCard.styles';
 
-import { Img, Tag } from 'src/components/utils';
+import { LegacyImg, Tag } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { sortByOrder } from 'src/utils';
@@ -63,7 +63,7 @@ export const CandidatCard = ({
   return (
     <CandidatCardStyled>
       <CandidatCardPictureContainerStyled onClick={onCardClicked}>
-        <Img src={imgSrc || DefaultProfilePic} alt={firstName} cover />
+        <LegacyImg src={imgSrc || DefaultProfilePic} alt={firstName} cover />
         <CandidatCardPictureOverlay>
           <p className="name">{firstName}</p>
           {sortedLocations && sortedLocations.length > 0 && (

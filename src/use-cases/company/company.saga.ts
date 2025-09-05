@@ -1,7 +1,12 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { COMPANIES_LIMIT } from '@/src/constants';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';
-import { selectSelectedCompanyId } from './company.selectors';
+import {
+  selectCompaniesHasFetchedAll,
+  selectCompaniesOffset,
+  selectSelectedCompanyId,
+} from './company.selectors';
 import { slice } from './company.slice';
 
 const {
@@ -14,6 +19,12 @@ const {
   updateCompanyRequested,
   updateCompanySucceeded,
   updateCompanyFailed,
+  resetCompaniesOffset,
+  fetchCompaniesRequested,
+  fetchCompaniesSucceeded,
+  fetchCompaniesFailed,
+  fetchCompaniesWithFilters,
+  fetchCompaniesNextPage,
 } = slice.actions;
 
 function* fetchSelectedCompanySaga() {
@@ -24,7 +35,7 @@ function* fetchSelectedCompanySaga() {
     const { data } = yield* call(() => Api.getCompanyById(companyId));
     yield* put(fetchSelectedCompanySucceeded(data));
   } catch (error) {
-    yield* put(fetchSelectedCompanyFailed(null));
+    yield* put(fetchSelectedCompanyFailed());
   }
 }
 
@@ -61,7 +72,54 @@ function* updateCompanyRequestedSaga(
   }
 }
 
+function* fetchCompaniesRequestedSaga(
+  action: ReturnType<typeof fetchCompaniesRequested>
+) {
+  try {
+    const offset = yield* select(selectCompaniesOffset);
+    const limit = COMPANIES_LIMIT;
+
+    const { departments, businessSectorIds, search } = action.payload;
+
+    const response = yield* call(() =>
+      Api.getAllCompanies({
+        search,
+        departments,
+        businessSectorIds,
+        limit,
+        offset,
+      })
+    );
+    yield* put(fetchCompaniesSucceeded(response.data));
+  } catch (e) {
+    yield* put(fetchCompaniesFailed());
+  }
+}
+
+function* fetchCompaniesNextPageSaga(
+  action: ReturnType<typeof fetchCompaniesNextPage>
+) {
+  const hasFetchedAll = yield* select(selectCompaniesHasFetchedAll);
+
+  if (!hasFetchedAll) {
+    yield* put(fetchCompaniesRequested(action.payload));
+  }
+}
+
+function* fetchCompaniesWithFiltersSaga(
+  action: ReturnType<typeof fetchCompaniesWithFilters>
+) {
+  yield* put(resetCompaniesOffset());
+  yield* put(fetchCompaniesRequested(action.payload));
+}
+
 export function* saga() {
+  yield* takeLatest(
+    fetchCompaniesWithFilters.type,
+    fetchCompaniesWithFiltersSaga
+  );
+  yield* takeLatest(fetchCompaniesNextPage.type, fetchCompaniesNextPageSaga);
+  yield* takeLatest(fetchCompaniesRequested.type, fetchCompaniesRequestedSaga);
   yield* takeLatest(
     fetchSelectedCompanyRequested.type,
     fetchSelectedCompanySaga

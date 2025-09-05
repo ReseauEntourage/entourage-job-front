@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { ImgUserProfile } from '@/src/components/utils/Images/ImgProfile';
 import { UserWithUserCandidate } from 'src/api/types';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { ImgUserProfile } from 'src/components/utils/ImgProfile';
 import { UserRoles } from 'src/constants/users';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { isRoleIncluded } from 'src/utils/Finding';

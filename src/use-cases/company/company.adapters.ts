@@ -1,13 +1,20 @@
-import { CompanyWithUsers, UpdateCompanyDto } from '@/src/api/types';
+import {
+  CompaniesFilters,
+  CompanyWithUsers,
+  UpdateCompanyDto,
+} from '@/src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
-export type FetchSelectedCompanyError = 'FETCH_FAILED';
 export type updateCompanyLogoError = 'UPDATE_LOGO_FAILED';
 export type updateCompanyError = 'UPDATE_FAILED';
 
+export const fetchCompaniesAdapter = createRequestAdapter(
+  'fetchCompanies'
+).withPayloads<CompaniesFilters, CompanyWithUsers[]>();
+
 export const fetchSelectedCompanyAdapter = createRequestAdapter(
   'fetchSelectedCompany'
-).withPayloads<void, CompanyWithUsers, FetchSelectedCompanyError | null>();
+).withPayloads<void, CompanyWithUsers>();
 
 export const updateCompanyLogoAdapter = createRequestAdapter(
   'updateCompanyLogo'

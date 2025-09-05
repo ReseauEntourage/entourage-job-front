@@ -12,7 +12,7 @@ import { CompanyWithUsers } from '@/src/api/types';
 import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
 import { openModal } from '@/src/components/modals/Modal';
 import { ProfilePartCard } from '@/src/components/profile/ProfilePartCards/Card/Card/Card';
-import { ProfileCard } from '@/src/components/utils/Cards/ProfileCard';
+import { ProfileCard } from '@/src/components/utils/Cards/EntityCards/ProfileCard';
 import { useIsMobile } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
 import { IlluReseau } from 'assets/icons/icons';

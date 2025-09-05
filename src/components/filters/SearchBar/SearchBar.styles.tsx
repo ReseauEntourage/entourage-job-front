@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledSearchBarContainer = styled.div`
   display: flex;
@@ -7,14 +7,12 @@ export const StyledSearchBarContainer = styled.div`
 `;
 
 export const StyledSearchBar = styled.div`
-  height: 45px;
   border-radius: 23px;
   display: flex;
   justify-content: center;
   align-items: center;
   // keep this background for better visibility
   background-color: ${({ light }) => (light ? COLORS.white : COLORS.lightGray)};
-  min-height: ${HEIGHTS.SEARCH_BAR_HEIGHT}px;
 `;
 
 export const StyledSearchBarInputContainer = styled.div`
@@ -29,6 +27,7 @@ export const StyledSearchBarInput = styled.input`
   margin: 0;
   border-radius: 0;
   font: inherit;
+  font-size: 14px;
   overflow: visible;
   -webkit-appearance: none;
   vertical-align: middle;

@@ -1,5 +1,5 @@
 import React, { Ref } from 'react';
-import { Img, Section } from 'src/components/utils';
+import { LegacyImg, Section } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -41,7 +41,7 @@ export const SimpleImageText = ({
             className={isDesktop ? '' : 'mobile'}
             ref={innerRef}
           >
-            <Img src={img} alt="" cover />
+            <LegacyImg src={img} alt="" cover />
           </StyledSimpleImageTextImageContainer>
           <StyledSimpleImageTextTextContainer>
             {isDesktop && <H3 title={title} />}

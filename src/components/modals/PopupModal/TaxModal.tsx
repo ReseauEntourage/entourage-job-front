@@ -1,6 +1,6 @@
 import React from 'react';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
-import { Img, SimpleLink } from 'src/components/utils';
+import { LegacyImg, SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS, STORAGE_KEYS } from 'src/constants';
 import { Container } from './PopupModal.styles';
 
@@ -15,7 +15,7 @@ export function TaxModal() {
     >
       <SimpleLink href={EXTERNAL_LINKS.TAX} isExternal target="_blank">
         <Container>
-          <Img
+          <LegacyImg
             src="/static/img/tax.jpg"
             width={1080}
             height={1080}
