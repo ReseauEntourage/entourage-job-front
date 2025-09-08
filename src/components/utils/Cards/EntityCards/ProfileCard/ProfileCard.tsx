@@ -131,7 +131,7 @@ export function ProfileCard({
       }}
       newTab
     >
-      <StyledProfileCardPictureContainer class="profile-card">
+      <StyledProfileCardPictureContainer className="profile-card">
         <StyledProfileCardPicture>
           {urlImg ? (
             <LegacyImg src={urlImg} alt={`photo de ${firstName}`} cover />
