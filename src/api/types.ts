@@ -261,7 +261,7 @@ export type Company = {
 
 export type CompaniesFilters = {
   search?: string;
-  departments: DepartmentName[];
+  departments: string[];
   businessSectorIds: string[];
 };
 

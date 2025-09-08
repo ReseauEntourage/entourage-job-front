@@ -38,6 +38,9 @@ export function Directory() {
   const { push } = useRouter();
   const isMobile = useIsMobile();
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [departmentsIdsFilters, setDepartmentsIdsFilters] = useState<
+    FilterConstant<string>[]
+  >([]);
   const [businessSectorsFilters, setBusinessSectorsFilters] = useState<
     FilterConstant<string>[]
   >([]);
@@ -54,6 +57,13 @@ export function Directory() {
 
   const DirectoryFilters: Filter[] = useMemo(() => {
     // Filters definitions
+    const departmentByIdFilter = {
+      key: 'departments',
+      constants: departmentsIdsFilters,
+      title: 'Département',
+      tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
+    } as Filter;
+
     const departmentFilter = {
       key: 'departments',
       constants: DEPARTMENTS_FILTERS,
@@ -88,9 +98,9 @@ export function Directory() {
       businessSectorsFilter,
       contactTypesFilter,
     ];
-    const companyFilters = [businessSectorsFilter, departmentFilter];
+    const companyFilters = [businessSectorsFilter, departmentByIdFilter];
     return entity === DirectoryEntity.USER ? userFilters : companyFilters;
-  }, [businessSectorsFilters, entity]);
+  }, [businessSectorsFilters, departmentsIdsFilters, entity]);
 
   const { setFilters, setSearch, resetFilters } = useFilters(
     DirectoryFilters,
@@ -155,6 +165,20 @@ export function Directory() {
       );
     } catch (error) {
       console.error('Error fetching business sectors:', error);
+    }
+  };
+
+  const fetchDepartments = async () => {
+    try {
+      const { data } = await Api.getAllDepartments({ search: '' });
+      setDepartmentsIdsFilters(
+        data.map((department) => ({
+          label: `${department.name} (${department.value})`,
+          value: department.id,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching departments:', error);
     }
   };
 
@@ -230,6 +254,7 @@ export function Directory() {
 
   useEffect(() => {
     fetchBusinessSectors();
+    fetchDepartments();
   }, []);
 
   return (
