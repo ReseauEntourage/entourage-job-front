@@ -39,6 +39,13 @@ export const CompanyRecruitementAlertContent = ({
     alertData,
   } = useCompanyRecruitementAlertContent(alert);
 
+  const matchingCandidatesText =
+    candidates.length === 0
+      ? 'Aucune candidat ne correspond à votre recherche.'
+      : `${candidates.length} candidat${
+          candidates.length > 1 ? 's' : ''
+        } correspond${candidates.length > 1 ? 'ent' : ''} à votre recherche.`;
+
   return (
     <StyledCompanyRecruitementAlertContainer>
       <StyledAlertHeader>
@@ -95,9 +102,7 @@ export const CompanyRecruitementAlertContent = ({
               </StyledCandidatesAvatars>
             )}
             <StyledCandidatesCount>
-              {candidates.length
-                ? `${candidates.length} personnes correspondent à votre recherche.`
-                : 'Aucune personne ne correspond à votre recherche.'}
+              {matchingCandidatesText}
             </StyledCandidatesCount>
           </>
         )}
