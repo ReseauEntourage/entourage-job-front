@@ -1,39 +1,30 @@
 import styled from 'styled-components';
-import { Button } from 'src/components/utils/Button';
 import { COLORS } from 'src/constants/styles';
 
-export const ResetFilterButton = styled(Button)`
-  background: transparent !important;
-  border: none;
-  font-weight: bold;
-  text-decoration: underline;
-  color: ${COLORS.black};
-
-  &:hover,
-  &:focus {
-    background: transparent;
-    color: ${COLORS.black};
-    text-decoration: underline;
-  }
-`;
-
 export const StyledFiltersOptions = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+
   .reset-filters-button {
     color: ${COLORS.black} !important;
     border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     text-decoration: underline !important;
     cursor: pointer;
     font-weight: 400 !important;
-    border-color: ${COLORS.primaryBlue} !important;
     background-color: transparent !important;
+    padding: 0 !important;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
       color: ${COLORS.black} !important;
-      border: none !important;
       text-decoration: underline !important;
-      cursor: pointer;
-      font-weight: 400 !important;
-      border-color: ${COLORS.primaryBlue} !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
       background-color: transparent !important;
     }
   }
