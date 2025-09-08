@@ -5,6 +5,7 @@ import { Filter, FilterObject } from 'src/constants/utils';
 import { MobileFilterList } from './MobileFilterList';
 import { MobileFilterOptions } from './MobileFilterOptions';
 import {
+  StyledMobileFilters,
   StyledMobileFilterButtonsContainer,
   StyledMobileFilterContent,
   StyledMobileFilterDrawer,
@@ -64,15 +65,15 @@ export const MobileFilterDrawer = ({
   };
 
   return (
-    <>
+    <StyledMobileFilters>
       <StyledMobileFilterOverlay isOpen={isOpen} onClick={onClose} />
       <StyledMobileFilterDrawer isOpen={isOpen}>
         <StyledMobileFilterHeader>
           <Button
-            variant="default"
             size="small"
             onClick={handleBackToListOrClose}
             dataTestId="mobile-filter-back-button"
+            className="back-button"
           >
             <LucidIcon name="ArrowLeft" size={20} />
           </Button>
@@ -110,6 +111,6 @@ export const MobileFilterDrawer = ({
           </StyledMobileFilterButtonsContainer>
         </StyledMobileFilterFooter>
       </StyledMobileFilterDrawer>
-    </>
+    </StyledMobileFilters>
   );
 };
