@@ -92,6 +92,7 @@ export function Directory() {
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
     } as Filter;
 
+    // Assigning filters based on entity
     const userFilters = [
       departmentFilter,
       helpFilter,
@@ -99,6 +100,8 @@ export function Directory() {
       contactTypesFilter,
     ];
     const companyFilters = [businessSectorsFilter, departmentByIdFilter];
+
+    // Return relevant filters
     return entity === DirectoryEntity.USER ? userFilters : companyFilters;
   }, [businessSectorsFilters, departmentsIdsFilters, entity]);
 
@@ -251,7 +254,6 @@ export function Directory() {
   /**
    * Hooks
    */
-
   useEffect(() => {
     fetchBusinessSectors();
     fetchDepartments();
@@ -284,6 +286,7 @@ export function Directory() {
                     query: {
                       ...directoryFiltersParams,
                       entity: 'user',
+                      departments: [],
                       role: [UserRoles.CANDIDATE],
                     },
                   });
@@ -305,6 +308,7 @@ export function Directory() {
                     query: {
                       ...directoryFiltersParams,
                       entity: 'user',
+                      departments: [],
                       role: UserRoles.COACH,
                     },
                   });
@@ -324,6 +328,7 @@ export function Directory() {
                       ...directoryFiltersParams,
                       entity: DirectoryEntity.COMPANY,
                       role: null,
+                      departments: [],
                     },
                   });
                 }}
