@@ -15,8 +15,8 @@ export interface DashboardCompanyCardProps {
 export const DashboardCompanyCard = ({
   company,
 }: DashboardCompanyCardProps) => {
-  const companySettingsUrl = `/`; // TODO : replace with actual company settings URL
-  const companyViewUrl = `/`; // TODO : replace with actual company view URL
+  const companySettingsUrl = `/backoffice/companies/parametres`;
+  const companyViewUrl = `/backoffice/companies/${company.id}`;
   const isCompanyAdmin = true; // TODO : replace with actual logic to determine if the user is a company admin
   const companyAdmin = {
     firstName: 'John',
