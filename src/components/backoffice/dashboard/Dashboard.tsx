@@ -53,6 +53,11 @@ export const Dashboard = () => {
                   <DashboardCompanyCard key={company.id} company={company} />
                 ))}
               <DashboardProfileCard />
+              {!isCompanyAdmin &&
+                user.companies &&
+                user.companies.map((company) => (
+                  <DashboardCompanyCard key={company.id} company={company} />
+                ))}
               {isNormalUser && <DashboardAvailabilityCard />}
               <DashboardReferentCard />
             </StyledDashboardLeftColumn>

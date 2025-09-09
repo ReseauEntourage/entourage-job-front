@@ -17,11 +17,8 @@ export const DashboardCompanyCard = ({
 }: DashboardCompanyCardProps) => {
   const companySettingsUrl = `/backoffice/companies/parametres`;
   const companyViewUrl = `/backoffice/companies/${company.id}`;
-  const isCompanyAdmin = true; // TODO : replace with actual logic to determine if the user is a company admin
-  const companyAdmin = {
-    firstName: 'John',
-    lastName: 'Doe',
-  }; // TODO: bind with actual admin
+  const isCompanyAdmin = company.companyUser?.isAdmin;
+  const companyAdmin = company.admin;
 
   return (
     <Card
@@ -33,18 +30,20 @@ export const DashboardCompanyCard = ({
         <StyledPictureContainer>
           <ImgCompanyProfile company={company} size={110} highlight />
         </StyledPictureContainer>
-        <Text size="large" color="primaryBlue" weight="bold" center>
-          {company.name}
-        </Text>
-        <StyledNameAndReferentContainer>
-          <Text>
-            {isCompanyAdmin
-              ? `Vous êtes le référent`
-              : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
-                  .charAt(0)
-                  .toUpperCase()}`}
+        <div>
+          <Text size="large" color="primaryBlue" weight="bold" center>
+            {company.name}
           </Text>
-        </StyledNameAndReferentContainer>
+          <StyledNameAndReferentContainer>
+            <Text>
+              {isCompanyAdmin
+                ? `Vous êtes le référent`
+                : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
+                    .charAt(0)
+                    .toUpperCase()}`}
+            </Text>
+          </StyledNameAndReferentContainer>
+        </div>
 
         <StyledCTAContainer>
           {isCompanyAdmin ? (
