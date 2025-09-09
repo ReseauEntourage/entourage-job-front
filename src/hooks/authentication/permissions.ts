@@ -7,6 +7,9 @@ export const authenticatedPermissions = [
       '/backoffice/profile/[userId]',
       '/backoffice/annuaire',
       '/backoffice/messaging',
+      '/backoffice/companies/parametres',
+      '/backoffice/companies/[companyId]',
+      '/backoffice/companies/[companyId]/collaborators',
     ],
     roles: '*',
   },
@@ -14,7 +17,6 @@ export const authenticatedPermissions = [
     paths: [
       '/backoffice/dashboard',
       '/backoffice/candidat/[candidateId]',
-      '/backoffice/candidat/[candidateId]/suivi',
       '/backoffice/candidat/[candidateId]/cv',
     ],
     roles: [UserRoles.CANDIDATE, UserRoles.COACH, UserRoles.REFERER],

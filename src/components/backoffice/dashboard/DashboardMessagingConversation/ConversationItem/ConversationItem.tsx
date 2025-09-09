@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Conversation, ConversationParticipant } from 'src/api/types';
 import { conversationHasUnreadMessages } from 'src/components/backoffice/messaging/messaging.utils';
-import { ImgProfile, Text } from 'src/components/utils';
+import { ImgUserProfile, Text } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -39,7 +39,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
     <StyledContainer onClick={openConversation}>
       <StyledConversationMainInfos>
         <StyledConversationParticipants>
-          <ImgProfile
+          <ImgUserProfile
             user={addresee}
             size={25}
             hasPicture={addresee.userProfile?.hasPicture || false}

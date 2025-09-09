@@ -5,7 +5,7 @@ import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formGetEmail } from 'src/components/forms/schemas/formGetEmail';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import { Button, Img } from 'src/components/utils';
+import { Button, LegacyImg } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -63,7 +63,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                 Entourage&nbsp;?
               </p>
               <div className="uk-flex uk-flex-center">
-                <Img
+                <LegacyImg
                   height={150}
                   width={150}
                   src="/static/img/logo-entourage.png"

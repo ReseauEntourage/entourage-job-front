@@ -1,11 +1,17 @@
 import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
+import { CompanyGoal, UpdateCompanyDto } from 'src/api/types';
+import {
+  CandidateCoachStepData,
+  CompanyStepData,
+  OnboardingFlow,
+} from 'src/components/backoffice/onboarding/Onboarding.types';
 import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
   selectOnboardingData,
-  selectUserRoleOnboarding,
+  selectOnboardingFlow,
 } from './onboarding.selectors';
 import { slice } from './onboarding.slice';
 import {
@@ -26,95 +32,162 @@ const {
 
 export function* launchOnboardingSaga() {
   const currentUser = yield* select(selectAuthenticatedUser);
-  const nextStep = findNextNotSkippableStep(0, currentUser);
+  const flow = yield* select(selectOnboardingFlow);
+
+  if (!flow) {
+    throw new Error('Onboarding flow is not defined');
+  }
+
+  const nextStep = findNextNotSkippableStep(0, currentUser, flow);
   yield* put(setOnboardingStep(nextStep));
 }
 
 export function* sendStepDataOnboardingSaga() {
   const data = yield* select(selectOnboardingData);
-  const userRole = yield* select(selectUserRoleOnboarding);
+  const flow = yield* select(selectOnboardingFlow);
   const currentStep = yield* select(selectOnboardingCurrentStep);
   const user = yield* select(selectAuthenticatedUser);
 
   const { id: userId } = user;
 
-  if (!userRole) {
-    throw new Error('User role is not defined in onboarding state');
+  if (!flow) {
+    throw new Error('Onboarding flow is not defined in onboarding state');
   }
 
-  const stepData = data[currentStep]?.[userRole];
-  const {
-    externalCv,
-    hasAcceptedEthicsCharter,
-    nationality,
-    accommodation,
-    hasSocialWorker,
-    resources,
-    studiesLevel,
-    workingExperience,
-    jobSearchDuration,
-    ...otherData
-  } = stepData;
+  const stepData = data[currentStep]?.[flow];
 
-  const socialSituationFields = {
-    nationality,
-    accommodation,
-    hasSocialWorker,
-    resources,
-    studiesLevel,
-    workingExperience,
-    jobSearchDuration,
-  };
+  if (!stepData) {
+    throw new Error('Step data not found for the current step and flow');
+  }
 
-  const userProfileFields = parseOnboadingProfileFields(otherData);
+  const hasAcceptedEthicsCharter =
+    'hasAcceptedEthicsCharter' in stepData
+      ? (stepData.hasAcceptedEthicsCharter as boolean)
+      : undefined;
+
+  // Check if user has accepted the ethics charter
+  if (hasAcceptedEthicsCharter === true) {
+    yield* call(() =>
+      Api.postReadDocument(
+        { documentName: DocumentNames.CharteEthique },
+        userId
+      )
+    );
+  }
+
   try {
-    yield* call(() => Api.putUserProfile(userId, userProfileFields));
+    // Extract fields based on the onboarding flow
+    if (flow === OnboardingFlow.COMPANY) {
+      const {
+        description,
+        logo,
+        businessSectorIds,
+        departmentId,
+        url,
+        linkedinUrl,
+        hiringUrl,
+        goal,
+      } = stepData as CompanyStepData;
 
-    // Check if step contains externalCv and user has uploaded one, upload it and wait for it to complete
-    // externalCv is an array of File
-    if (externalCv && externalCv[0]) {
-      const formData = new FormData();
-      formData.append('file', externalCv[0]);
-      yield* put(currentUserActions.uploadExternalCvRequested(formData));
-
-      // wait for the query to complete
-      const action = yield* take([
-        currentUserActions.uploadExternalCvSucceeded.type,
-        currentUserActions.uploadExternalCvFailed.type,
-      ]);
-
-      while (
-        action.type !== currentUserActions.uploadExternalCvSucceeded.type &&
-        action.type !== currentUserActions.uploadExternalCvFailed.type
-      ) {
-        yield* delay(1000);
+      let companyGoalValue: CompanyGoal | undefined;
+      if (goal) {
+        if (goal.length > 1) {
+          companyGoalValue = CompanyGoal.BOTH;
+        } else {
+          const [firstGoal] = goal;
+          companyGoalValue = firstGoal as CompanyGoal;
+        }
+      } else {
+        companyGoalValue = undefined;
       }
-    }
 
-    // Check if user has accepted the ethics charter
-    if (hasAcceptedEthicsCharter === true) {
-      yield* call(() =>
-        Api.postReadDocument(
-          { documentName: DocumentNames.CharteEthique },
-          userId
-        )
-      );
-    }
+      // Create an object for company profile data
+      const companyFields: UpdateCompanyDto = {
+        description,
+        url,
+        linkedinUrl,
+        hiringUrl,
+        goal: companyGoalValue,
+        departmentId: departmentId?.value as string,
+        businessSectorIds:
+          businessSectorIds?.map(
+            (businessSectorId) => businessSectorId.value
+          ) ?? undefined,
+      };
 
-    if (Object.keys(stepData).includes('nationality')) {
-      yield* call(() =>
-        Api.updateUserSocialSituation(userId, {
-          hasCompletedSurvey: true,
-          ...socialSituationFields,
-        })
-      );
+      // Update the company user profile
+      yield* call(() => Api.updateCompany(companyFields));
+
+      // Upload company logo
+      if (logo && logo[0]) {
+        const formData = new FormData();
+        formData.append('file', logo[0]);
+        yield* call(() => Api.updateCompanyLogo(formData));
+      }
+    } else {
+      // Handle CANDIDATE and COACH flows
+      const {
+        externalCv,
+        nationality,
+        accommodation,
+        hasSocialWorker,
+        resources,
+        studiesLevel,
+        workingExperience,
+        jobSearchDuration,
+        ...otherData
+      } = stepData as CandidateCoachStepData;
+
+      const socialSituationFields = {
+        nationality,
+        accommodation,
+        hasSocialWorker,
+        resources,
+        studiesLevel,
+        workingExperience,
+        jobSearchDuration,
+      };
+
+      const userProfileFields = parseOnboadingProfileFields(otherData);
+
+      yield* call(() => Api.putUserProfile(userId, userProfileFields));
+
+      // Check if step contains externalCv and user has uploaded one, upload it and wait for it to complete
+      // externalCv is an array of File
+      if (externalCv && externalCv[0]) {
+        const formData = new FormData();
+        formData.append('file', externalCv[0]);
+        yield* put(currentUserActions.uploadExternalCvRequested(formData));
+
+        // wait for the query to complete
+        const action = yield* take([
+          currentUserActions.uploadExternalCvSucceeded.type,
+          currentUserActions.uploadExternalCvFailed.type,
+        ]);
+
+        while (
+          action.type !== currentUserActions.uploadExternalCvSucceeded.type &&
+          action.type !== currentUserActions.uploadExternalCvFailed.type
+        ) {
+          yield* delay(1000);
+        }
+      }
+
+      if (Object.keys(stepData).includes('nationality')) {
+        yield* call(() =>
+          Api.updateUserSocialSituation(userId, {
+            hasCompletedSurvey: true,
+            ...socialSituationFields,
+          })
+        );
+      }
     }
     yield* put(sendStepDataOnboardingSucceeded());
 
-    // calculate with updated user data
     const nextStep = findNextNotSkippableStep(
       currentStep,
-      yield* select(selectAuthenticatedUser)
+      yield* select(selectAuthenticatedUser),
+      flow
     );
     yield* put(setOnboardingStep(nextStep));
     if (currentStep === nextStep) {

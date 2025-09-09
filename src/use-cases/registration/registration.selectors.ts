@@ -26,6 +26,10 @@ export function selectCreateUserError(state: RootState) {
   return state.registration.createUserError;
 }
 
+export function selectInvitationId(state: RootState) {
+  return state.registration.invitationId;
+}
+
 export function selectIsEmptyRegistrationData(state: RootState) {
   return _.isEmpty(state.registration.data);
 }

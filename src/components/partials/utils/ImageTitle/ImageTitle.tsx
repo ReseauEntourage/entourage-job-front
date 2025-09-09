@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, BackgroundImage, Text } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
-import { COLORS } from 'src/constants/styles';
+import { Color } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledImageTitle,
@@ -25,7 +25,7 @@ interface ImageTitleProps {
   title: React.ReactNode;
   description?: React.ReactNode;
   alt?: string;
-  textColor?: keyof typeof COLORS;
+  textColor?: Color;
   cta?: CTAProps | CTAProps[];
 }
 

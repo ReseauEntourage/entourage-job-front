@@ -25,11 +25,13 @@ import {
   Route,
   SocialMedia,
   UserDto,
+  UpdateCompanyDto,
   UserProfile,
   UserReferingDto,
   UserRegistrationDto,
   UserReportDto,
   UserWithUserCandidate,
+  CompaniesFilters,
 } from './types';
 
 export class APIHandler {
@@ -98,15 +100,19 @@ export class APIHandler {
 
   // get
 
-  getPublicProfileList(params): Promise<AxiosResponse> {
-    return this.get('/users/public-profiles', {
+  getPublicCVsList(params): Promise<AxiosResponse> {
+    return this.get('/users/public-cvs', {
       params,
     });
   }
 
-  getPublicProfileByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
-    return this.get(`/users/public-profiles/${candidateId}`, {}, headers);
+  getPublicCVByUserId(userId: string, headers?): Promise<AxiosResponse> {
+    return this.get(`/users/public-cvs/${userId}`, {}, headers);
   }
+
+  // ///////////////////////
+  //  profile-generation  //
+  // ///////////////////////
 
   getGenerateProfileFromCV(): Promise<AxiosResponse> {
     return this.get('/profile-generation/generate-profile-from-cv');
@@ -163,19 +169,6 @@ export class APIHandler {
     params: object
   ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
     return this.get('/user/members', params);
-  }
-
-  getUsersSearchCandidates(params: object): Promise<AxiosResponse> {
-    return this.get('/user/search/candidates', params);
-  }
-
-  getUsersSearch(params: object): Promise<AxiosResponse> {
-    return this.get('/user/search', params);
-  }
-
-  // can be both coach or candidate ID
-  getUserCandidate(): Promise<AxiosResponse> {
-    return this.get(`/user/candidate`);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
@@ -305,6 +298,14 @@ export class APIHandler {
     return this.delete(`/user/${userId}`);
   }
 
+  /// //////////// ///
+  /// Departments ///
+  /// ////////// ///
+
+  getAllDepartments(params: { search: string }): Promise<AxiosResponse> {
+    return this.get('/departments', { params });
+  }
+
   /// ///////////////// ///
   /// businessSectors  ///
   /// /////////////// ///
@@ -355,19 +356,37 @@ export class APIHandler {
   /// /////////// ///
   /// companies  ///
   /// ///////// ///
-  getAllCompanies(params: {
-    params: {
+  getAllCompanies(
+    params: CompaniesFilters & {
       limit: number;
       offset: number;
-      search?: string;
-    };
-  }): Promise<AxiosResponse> {
-    return this.get('/companies', params);
+    }
+  ): Promise<AxiosResponse> {
+    return this.get('/companies', { params });
   }
 
-  // post
+  getCompanyById(companyId: string): Promise<AxiosResponse> {
+    return this.get(`/companies/${companyId}`);
+  }
+
+  getCompanyByIdWithUsersAndPendingInvitations(
+    companyId: string
+  ): Promise<AxiosResponse> {
+    return this.get(`/companies/${companyId}/collaborators`);
+  }
+
   postCompany(params: CompanyDto): Promise<AxiosResponse> {
     return this.post('/companies', params);
+  }
+
+  updateCompany(companyFields: UpdateCompanyDto): Promise<AxiosResponse> {
+    return this.put(`/companies`, companyFields);
+  }
+
+  updateCompanyLogo(formData: FormData): Promise<AxiosResponse> {
+    return this.post(`/companies/logo`, formData, {
+      'Content-Type': 'multipart/form-data',
+    });
   }
 
   inviteCollaboratorsFromCompany(

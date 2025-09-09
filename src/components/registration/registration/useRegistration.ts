@@ -48,6 +48,9 @@ export function useRegistration() {
     ? (query.companyId as string)
     : undefined;
   const defaultFlow = query.flow ? (query.flow as RegistrationFlow) : undefined;
+  const invitationId = query.invitationId
+    ? (query.invitationId as string)
+    : undefined;
 
   const isRegistrationLoading = useSelector(selectIsRegistrationLoading);
 
@@ -333,12 +336,13 @@ export function useRegistration() {
 
   useEffect(() => {
     dispatch(
-      registrationActions.setDataFromQueryParams({
+      registrationActions.setStateFromQueryParams({
         companyId: defaultCompanyId,
         flow: defaultFlow,
+        invitationId,
       })
     );
-  }, [defaultCompanyId, defaultFlow, dispatch]);
+  }, [defaultCompanyId, defaultFlow, dispatch, invitationId]);
 
   return {
     isRegistrationLoading,

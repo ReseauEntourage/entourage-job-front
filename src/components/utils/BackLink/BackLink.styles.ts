@@ -7,18 +7,8 @@ export const StyledBackLink = styled.a`
   align-items: center;
   margin-bottom: 16px;
   color: ${COLORS.darkGray} !important;
+  font-size: 12px;
   &:visited {
     color: ${COLORS.darkGray} !important;
-  }
-  &:hover {
-    color: ${COLORS.primaryBlue} !important;
-    svg {
-      fill: ${COLORS.primaryBlue} !important;
-    }
-  }
-  svg {
-    height: 100%
-    margin-right: 8px;
-    fill: ${COLORS.darkGray};
   }
 `;

@@ -1,3 +1,5 @@
+import React from 'react';
+import { ProgramEligibilityAlert } from '../../utils/Alert/ProgramEligibilityAlert';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import {
   CANDIDATE_YES_NO_FILTERS,
@@ -37,10 +39,10 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
       rules: [
         {
           method: (materialInsecurityValue, formValues) => {
-            const { networkInsecurity } = formValues;
-            return (
-              materialInsecurityValue === CandidateYesNo.YES ||
-              networkInsecurity === CandidateYesNo.YES
+            const { networkInsecurity, materialInsecurity } = formValues;
+            return !(
+              materialInsecurity === CandidateYesNo.NO &&
+              networkInsecurity === CandidateYesNo.NO
             );
           },
           message:
@@ -48,7 +50,6 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
         },
       ],
     },
-
     {
       id: 'networkInsecurityLabel',
       name: 'networkInsecurityLabel',
@@ -68,16 +69,30 @@ export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
       rules: [
         {
           method: (networkInsecurityValue, formValues) => {
-            const { materialInsecurity } = formValues;
-            return (
-              materialInsecurity === CandidateYesNo.YES ||
-              networkInsecurityValue === CandidateYesNo.YES
+            const { networkInsecurity, materialInsecurity } = formValues;
+            return !(
+              materialInsecurity === CandidateYesNo.NO &&
+              networkInsecurity === CandidateYesNo.NO
             );
           },
           message:
             "Vous devez être en situation d'isolement ou de précarité pour accéder au programme",
         },
       ],
+    },
+    {
+      id: 'programEligibilityAlert',
+      name: 'programEligibilityAlert',
+      component: 'text',
+      title: <ProgramEligibilityAlert />,
+      hide: (getValue) => {
+        const materialInsecurity = getValue('materialInsecurity');
+        const networkInsecurity = getValue('networkInsecurity');
+        return !(
+          materialInsecurity === CandidateYesNo.NO &&
+          networkInsecurity === CandidateYesNo.NO
+        );
+      },
     },
   ],
 };

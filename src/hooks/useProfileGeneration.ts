@@ -92,8 +92,6 @@ export const useProfileGeneration = ({
       }
     } catch (err) {
       dispatchErrorNotification();
-    } finally {
-      setIsLoading(false);
     }
   };
 

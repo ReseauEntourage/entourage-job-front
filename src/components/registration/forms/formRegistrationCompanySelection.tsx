@@ -43,11 +43,11 @@ export const formRegistrationCompanySelection: FormSchema<FormRegistrationCompan
         loadOptions: async (callback, inputValue) => {
           try {
             const { data: companies } = await Api.getAllCompanies({
-              params: {
-                search: inputValue,
-                limit: 50,
-                offset: 0,
-              },
+              search: inputValue,
+              limit: 50,
+              offset: 0,
+              departments: [],
+              businessSectorIds: [],
             });
             callback([
               ...companies.map((u) => {

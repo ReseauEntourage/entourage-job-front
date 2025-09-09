@@ -5,12 +5,15 @@ import {
   CandidateYesNoNSPPValue,
   CandidateYesNoValue,
 } from 'src/constants';
-import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  DepartmentName,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formReferingInfo: FormSchema<{
   birthDate: string;
-  department: FilterConstant<Department>;
+  department: FilterConstant<DepartmentName>;
   workingRight: CandidateYesNoNSPPValue;
   materialInsecurity: CandidateYesNoValue;
   networkInsecurity: CandidateYesNoValue;

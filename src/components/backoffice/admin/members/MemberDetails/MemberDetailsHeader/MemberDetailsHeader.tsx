@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
-import { SimpleLink } from 'src/components/utils';
+import { ImgUserProfile, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -24,7 +23,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
 
   return (
     <StyledContainer>
-      <ImgProfile
+      <ImgUserProfile
         user={user}
         size={48}
         hasPicture={user.userProfile?.hasPicture || false}

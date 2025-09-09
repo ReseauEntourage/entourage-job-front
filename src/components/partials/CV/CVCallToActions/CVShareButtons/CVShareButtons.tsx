@@ -10,29 +10,29 @@ import FacebookIcon from 'assets/icons/facebook.svg';
 import LinkedInIcon from 'assets/icons/linked-in.svg';
 import TwitterIcon from 'assets/icons/twitter.svg';
 import WhatsappIcon from 'assets/icons/whatsapp.svg';
-import { PublicUser } from 'src/api/types';
+import { PublicCV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import {
-  StyledCVShareBUtton,
+  StyledCVShareButton,
   StyledCVShareButtonsContainer,
 } from './CVShareButtons.styles';
 
 interface CVShareButtonsProps {
-  publicProfile: PublicUser;
+  publicCV: PublicCV;
   actionDisabled?: boolean;
 }
 
 export const CVShareButtons = ({
-  publicProfile,
+  publicCV,
   actionDisabled = false,
 }: CVShareButtonsProps) => {
   const openNewsletterModal = useCallback(() => {
-    openModal(<ModalShareCV firstName={publicProfile.firstName} />);
-  }, [publicProfile.firstName]);
+    openModal(<ModalShareCV firstName={publicCV.firstName} />);
+  }, [publicCV.firstName]);
 
   const { asPath } = useRouter();
   const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -41,12 +41,12 @@ export const CVShareButtons = ({
     : asPath;
   const link = `${hostname}${path}`;
   const hashtags = ['EntouragePro'];
-  const candidateExists = !!publicProfile;
+  const candidateExists = !!publicCV;
   const sharedDescription = candidateExists
-    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicProfile.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
+    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicCV.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
     : '';
   const title = candidateExists
-    ? `Entourage Pro\xa0: Aidez ${publicProfile.firstName} à retrouver un emploi`
+    ? `Entourage Pro\xa0: Aidez ${publicCV.firstName} à retrouver un emploi`
     : '';
 
   return (
@@ -65,9 +65,9 @@ export const CVShareButtons = ({
         title={title}
         summary={sharedDescription}
       >
-        <StyledCVShareBUtton>
+        <StyledCVShareButton>
           <LinkedInIcon />
-        </StyledCVShareBUtton>
+        </StyledCVShareButton>
       </LinkedinShareButton>
       <FacebookShareButton
         disabled={actionDisabled}
@@ -83,9 +83,9 @@ export const CVShareButtons = ({
         quote={sharedDescription}
         hashtags={hashtags}
       >
-        <StyledCVShareBUtton>
+        <StyledCVShareButton>
           <FacebookIcon />
-        </StyledCVShareBUtton>
+        </StyledCVShareButton>
       </FacebookShareButton>
       <TwitterShareButton
         disabled={actionDisabled}
@@ -102,9 +102,9 @@ export const CVShareButtons = ({
         hashtags={hashtags}
         via="R_Entourage"
       >
-        <StyledCVShareBUtton>
+        <StyledCVShareButton>
           <TwitterIcon />
-        </StyledCVShareBUtton>
+        </StyledCVShareButton>
       </TwitterShareButton>
       <WhatsappShareButton
         disabled={actionDisabled}
@@ -119,9 +119,9 @@ export const CVShareButtons = ({
         url={link}
         title={sharedDescription}
       >
-        <StyledCVShareBUtton>
+        <StyledCVShareButton>
           <WhatsappIcon />
-        </StyledCVShareBUtton>
+        </StyledCVShareButton>
       </WhatsappShareButton>
     </StyledCVShareButtonsContainer>
   );

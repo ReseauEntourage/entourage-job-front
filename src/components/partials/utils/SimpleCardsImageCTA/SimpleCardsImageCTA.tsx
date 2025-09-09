@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { Button, Img, Section, Text } from 'src/components/utils';
+import { Button, LegacyImg, Section, Text } from 'src/components/utils';
 import { H2, H3 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import { AnyToFix } from 'src/utils/Types';
@@ -63,7 +63,7 @@ export const SimpleCardsImageCTA = ({
               className={`${isDesktop ? '' : 'mobile'} ${card.className}`}
             >
               <div className="image-container">
-                <Img src={card.img} alt="" cover />
+                <LegacyImg src={card.img} alt="" cover />
               </div>
               <div className="content">
                 <div className="text-container">

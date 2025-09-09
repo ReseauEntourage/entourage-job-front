@@ -1,6 +1,6 @@
 import React from 'react';
 import { Company } from '@/src/api/types';
-import { Button, Card, Text } from 'src/components/utils';
+import { Button, Card, ImgCompanyProfile, Text } from 'src/components/utils';
 import {
   StyledContainer,
   StyledCTAContainer,
@@ -22,7 +22,6 @@ export const DashboardCompanyCard = ({
     firstName: 'John',
     lastName: 'Doe',
   }; // TODO: bind with actual admin
-  const currentUserIsAdmin = false; // TODO: replace with actual logic to determine if the current user is an admin
 
   return (
     <Card
@@ -31,21 +30,22 @@ export const DashboardCompanyCard = ({
       centerTitle
     >
       <StyledContainer>
-        <StyledPictureContainer>Image</StyledPictureContainer>
+        <StyledPictureContainer>
+          <ImgCompanyProfile company={company} size={110} highlight />
+        </StyledPictureContainer>
+        <Text size="large" color="primaryBlue" weight="bold" center>
+          {company.name}
+        </Text>
         <StyledNameAndReferentContainer>
-          <Text size="large" color="primaryBlue" weight="bold" center>
-            {company.name}
-          </Text>
           <Text>
-            <i>
-              {currentUserIsAdmin
-                ? `Vous êtes le référent`
-                : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
-                    .charAt(0)
-                    .toUpperCase()}`}
-            </i>
+            {isCompanyAdmin
+              ? `Vous êtes le référent`
+              : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
+                  .charAt(0)
+                  .toUpperCase()}`}
           </Text>
         </StyledNameAndReferentContainer>
+
         <StyledCTAContainer>
           {isCompanyAdmin ? (
             <Button variant="secondary" rounded href={companySettingsUrl}>

@@ -3,7 +3,6 @@
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.less';
-import 'src/components/filters/Filters.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
@@ -22,6 +21,7 @@ import * as gtag from 'src/lib/gtag';
 import { gaEventWithUser } from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { store } from 'src/store/store';
+import { GlobalStyle } from 'src/styles/GlobalStyle';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 
 /** ************
@@ -78,6 +78,7 @@ const EntourageApp = (props: AppProps) => {
     <Provider store={store}>
       <DataProvider>
         <>
+          <GlobalStyle />
           <RouteReadyComponent {...props} />
           <ModalsListener />
         </>

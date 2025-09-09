@@ -25,16 +25,6 @@ export const adminRequests = {
       data: { fixture: 'api/generated/users-candidat' },
       alias: 'candidates',
     },
-    // la creation de membre est tricky - de nombreux type sont créés
-    // soit un candidat et un candidat externe
-    // soit un coach et un coach externe
-    {
-      path: '/user/search?**',
-      data: {
-        fixture: 'api/generated/search-user',
-      },
-      alias: 'userSearch',
-    },
     {
       path: '/organization?**',
       data: { fixture: 'api/generated/organizations' },

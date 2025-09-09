@@ -31,6 +31,7 @@ export const StyledCardTopContainer = styled.div<{
 
 export const StyledCardContent = styled.div`
   padding: 30px 22.5px 20px 22.5px;
+  width: 100%;
 `;
 
 export const StyledCardTitleContainer = styled.div`

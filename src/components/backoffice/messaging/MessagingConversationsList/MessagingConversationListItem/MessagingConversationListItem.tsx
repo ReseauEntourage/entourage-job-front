@@ -1,9 +1,9 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ImgUserProfile } from '@/src/components/utils';
 import { conversationHasUnreadMessages } from '../../messaging.utils';
 import { Conversation, ConversationParticipant } from 'src/api/types';
-import { ImgProfile } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   messagingActions,
@@ -54,7 +54,7 @@ export const MessagingConversationListItem = ({
     <ContainerStyled onClick={selectConversation} isActive={isActivated}>
       <ContainerAvatarStyled>
         {addresee && (
-          <ImgProfile
+          <ImgUserProfile
             user={addresee}
             size={35}
             hasPicture={addresee.userProfile?.hasPicture || false}

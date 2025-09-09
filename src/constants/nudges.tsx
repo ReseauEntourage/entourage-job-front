@@ -7,8 +7,8 @@ import {
   IlluPoigneeDeMain,
   IlluReseauxSociaux,
 } from '@/assets/icons/icons';
+import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
 import { SelectListType } from '../components/utils/Inputs/SelectList';
-import { Img } from 'src/components/utils/Img';
 import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
 
@@ -32,7 +32,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
 })[] = [
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-poignee-main.png"
         alt="Poignée de main"
         {...iconSizeProps}
@@ -47,7 +47,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-mallette.png"
         alt="Entretien"
         {...iconSizeProps}
@@ -62,7 +62,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-CV.png"
         alt="CV"
         {...iconSizeProps}
@@ -77,7 +77,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-disscution.png"
         alt="Disscution"
         {...iconSizeProps}
@@ -92,7 +92,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -130,7 +130,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
 })[] = [
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-poignee-main.png"
         alt="Poignée de main"
         {...iconSizeProps}
@@ -143,7 +143,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-mallette.png"
         alt="Mallette"
         {...iconSizeProps}
@@ -156,7 +156,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-CV.png"
         alt="CV"
         {...iconSizeProps}
@@ -169,7 +169,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-disscution.png"
         alt="Disscution"
         {...iconSizeProps}
@@ -182,7 +182,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -204,7 +204,7 @@ export const ParametresHelpCardContents: {
   [UserRoles.CANDIDATE]: [
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
@@ -217,7 +217,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
@@ -230,7 +230,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-CV.png"
           alt="CV"
           {...iconSizeProps}
@@ -243,7 +243,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-disscution.png"
           alt="Disscution"
           {...iconSizeProps}
@@ -256,7 +256,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -272,7 +272,7 @@ export const ParametresHelpCardContents: {
   [UserRoles.COACH]: [
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-CV.png"
           alt="CV"
           {...iconSizeProps}
@@ -285,7 +285,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
@@ -298,7 +298,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
@@ -311,7 +311,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-disscution.png"
           alt="Disscution"
           {...iconSizeProps}
@@ -325,7 +325,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
