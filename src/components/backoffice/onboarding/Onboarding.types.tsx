@@ -3,12 +3,12 @@ import { User } from '../../../api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
-import { formOnboardingCandidateHelps } from './Onboarding/forms/schemas/formOnboardingCandidateHelps';
 import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
+import { formOnboardingCandidateNudges } from './Onboarding/forms/schemas/formOnboardingCandidateNudges';
 import { formOnboardingCandidateProfile } from './Onboarding/forms/schemas/formOnboardingCandidateProfile';
 import { formOnboardingCandidateSocialSituation } from './Onboarding/forms/schemas/formOnboardingCandidateSocialSituation';
-import { formOnboardingCoachHelps } from './Onboarding/forms/schemas/formOnboardingCoachHelps';
 import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardingCoachJob';
+import { formOnboardingCoachNudges } from './Onboarding/forms/schemas/formOnboardingCoachNudges';
 import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingCompanyGoal } from './Onboarding/forms/schemas/formOnboardingCompanyGoal';
 import { formOnboardingCompanyInformation } from './Onboarding/forms/schemas/formOnboardingCompanyInformation';
@@ -25,7 +25,7 @@ export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 
 export type CandidateOnboardingForm =
   | typeof formOnboardingEthicsCharter
-  | typeof formOnboardingCandidateHelps
+  | typeof formOnboardingCandidateNudges
   | typeof formOnboardingCandidateJob
   | typeof formOnboardingCandidateProfile
   | typeof formOnboardingCandidateSocialSituation
@@ -33,7 +33,7 @@ export type CandidateOnboardingForm =
 
 export type CoachOnboardingForm =
   | typeof formOnboardingEthicsCharter
-  | typeof formOnboardingCoachHelps
+  | typeof formOnboardingCoachNudges
   | typeof formOnboardingCoachJob
   | typeof formOnboardingCoachProfile;
 
