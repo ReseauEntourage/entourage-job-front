@@ -1,4 +1,3 @@
-import { HelpValue } from '@/src/constants/nudges';
 import { CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
@@ -162,7 +161,7 @@ export type UserProfileSectorOccupation = {
 
 export type Nudge = {
   id: string;
-  value: HelpValue;
+  value: string;
   nameRequest: string;
   nameOffer: string;
   order: number;
@@ -234,6 +233,15 @@ export type CompanyUser = {
   isAdmin: boolean;
 };
 
+export type Invitation = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  userId?: string;
+  companyId?: string;
+};
+
 export type Company = {
   id: string;
   createdAt: Date;
@@ -241,11 +249,13 @@ export type Company = {
   name: string;
   description: string | null;
   companyUser?: CompanyUser;
+  pendingInvitations?: Invitation[];
 };
 
 export type User = {
   coach: User;
   id: string;
+  createdAt?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -272,6 +282,7 @@ export type User = {
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
   company?: Company;
+  invitations?: Invitation[];
 };
 
 export type CVStatus =
@@ -628,7 +639,7 @@ export type Profile = PublicProfile | PrivateProfile;
 export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
-  helps: HelpValue | HelpValue[];
+  nudgeIds: string | string[];
   departments: Department | Department[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
@@ -671,4 +682,12 @@ export type RecruitementAlertDto = {
   workingExperienceYears: WorkingExperience | null;
   contractType: ContractValue | null;
   skills?: FilterConstant<string>[];
+}
+
+export type UserWithConversations = User & {
+  conversations: Conversation[];
+};
+
+export type CompanyWithUsers = Company & {
+  users: UserWithConversations[];
 };

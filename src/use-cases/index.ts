@@ -1,4 +1,5 @@
 import { authenticationConfig } from './authentication';
+import { companyConfig } from './company';
 import { currentUserConfig } from './current-user';
 import { messagingConfig } from './messaging';
 import { notificationsConfig } from './notifications';
@@ -21,4 +22,5 @@ export const useCasesConfig: UseCaseConfigType = {
   messagingConfig,
   referingConfig,
   profileCompletionConfig,
+  companyConfig,
 };
