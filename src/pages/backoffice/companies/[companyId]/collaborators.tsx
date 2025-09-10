@@ -25,11 +25,9 @@ const CompanyCollaboratorsPage = () => {
    * If an error occurs during the fetch, it dispatches a notification.
    */
   useEffect(() => {
-    if (selectedCompany) {
+    if (selectedCompany && selectedCompany.id) {
       setFetchCollaboratorsLoading(true);
-      Api.getCompanyByIdWithUsersAndPendingInvitations(
-        selectedCompany?.id || ''
-      )
+      Api.getCompanyByIdWithUsersAndPendingInvitations(selectedCompany.id)
         .then((response) => {
           setCompanyWithCollaborators(response.data);
           setFetchCollaboratorsLoading(false);

@@ -1,4 +1,3 @@
-import { HelpValue } from '@/src/constants/nudges';
 import { CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
@@ -159,7 +158,7 @@ export type UserProfileSectorOccupation = {
 
 export type Nudge = {
   id: string;
-  value: HelpValue;
+  value: string;
   nameRequest: string;
   nameOffer: string;
   order: number;
@@ -636,7 +635,7 @@ export type Profile = PublicProfile | PrivateProfile;
 export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
-  helps: HelpValue | HelpValue[];
+  nudgeIds: string | string[];
   departments: Department | Department[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
