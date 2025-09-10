@@ -5,8 +5,8 @@ import { EthicsCharter } from '@/src/components/utils/EthicsCharter/EthicsCharte
 import { DocumentNames } from '@/src/constants';
 import { getCoachDefaultProfessionalValuesWithLinkedIn } from '../../../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { OnboardingProfileForm } from '../forms/OnboardingProfileForm';
-import { formOnboardingCoachHelps } from '../forms/schemas/formOnboardingCoachHelps';
 import { formOnboardingCoachJob } from '../forms/schemas/formOnboardingCoachJob';
+import { formOnboardingCoachNudges } from '../forms/schemas/formOnboardingCoachNudges';
 import { formOnboardingCoachProfile } from '../forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingEthicsCharter } from '../forms/schemas/formOnboardingEthicsCharter';
 
@@ -29,7 +29,7 @@ export const CoachOnboardingStepContents = {
     title: 'Complétez votre profil',
     subtitle:
       "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur ce que vous souhaitez apporter aux candidats",
-    form: formOnboardingCoachHelps,
+    form: formOnboardingCoachNudges,
     defaultValues: (user) => ({
       nudgeIds: user.userProfile?.nudges?.map((nudge) => nudge.id) ?? [],
     }),

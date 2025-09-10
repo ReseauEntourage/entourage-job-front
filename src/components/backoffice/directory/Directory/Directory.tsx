@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react';
 import { allContactTypes } from '@/src/constants/contactTypes';
-import { ProfileHelps } from '@/src/constants/nudges';
+import { ProfileNudges } from '@/src/constants/nudges';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
 import { Api } from 'src/api';
-import { BusinessSector } from 'src/api/types';
+import { BusinessSector, Nudge } from 'src/api/types';
 import {
   MobileFilterButton,
   MobileFilterDrawer,
@@ -40,9 +40,18 @@ export function Directory() {
   const [businessSectorsFilters, setBusinessSectorsFilters] = useState<
     FilterConstant<string>[]
   >([]);
+  const [nudgesFilters, setNudgesFilters] = useState<FilterConstant<string>[]>([
+    ...ProfileNudges,
+  ]);
   const directoryFiltersParams = useDirectoryQueryParams();
-  const { role, departments, helps, businessSectorIds, search, contactTypes } =
-    directoryFiltersParams;
+  const {
+    role,
+    departments,
+    nudgeIds,
+    businessSectorIds,
+    search,
+    contactTypes,
+  } = directoryFiltersParams;
 
   const DirectoryFilters: Filter[] = [
     {
@@ -52,8 +61,8 @@ export function Directory() {
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
     },
     {
-      key: 'helps',
-      constants: ProfileHelps,
+      key: 'nudgeIds',
+      constants: nudgesFilters,
       title: "Type d'aide",
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
     },
@@ -83,8 +92,8 @@ export function Directory() {
       departments: mutateToArray(departments).map((department) =>
         findConstantFromValue(department, DEPARTMENTS_FILTERS)
       ),
-      helps: mutateToArray(helps).map((help) =>
-        findConstantFromValue(help, ProfileHelps)
+      nudgeIds: mutateToArray(nudgeIds).map((nudgeId) =>
+        findConstantFromValue(nudgeId, nudgesFilters)
       ),
       businessSectorIds: mutateToArray(businessSectorIds).map(
         (businessSectorId) =>
@@ -96,10 +105,11 @@ export function Directory() {
     };
   }, [
     departments,
-    helps,
+    nudgeIds,
     businessSectorIds,
     contactTypes,
     businessSectorsFilters,
+    nudgesFilters,
   ]);
 
   const totalFiltersCount = useMemo(() => {
@@ -137,12 +147,33 @@ export function Directory() {
     }
   };
 
+  const fetchNudges = async () => {
+    try {
+      const { data } = await Api.getAllNudges({
+        limit: 50,
+        offset: 0,
+      });
+      setNudgesFilters(
+        data.map((nudge: Nudge) => ({
+          label:
+            ProfileNudges.find(
+              (profileNudge) => profileNudge.value === nudge.value
+            )?.label || '',
+          value: nudge.id,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching nudges:', error);
+    }
+  };
+
   /**
    * Hooks
    */
 
   useEffect(() => {
     fetchBusinessSectors();
+    fetchNudges();
   }, []);
 
   return (
@@ -155,6 +186,47 @@ export function Directory() {
               description="Découvrez les membres de la communauté et développez votre carnet d'adresse."
               noSeparator
             />
+            <StyledDirectoryButtonContainer isMobile={isMobile}>
+              <Button
+                size={isMobile ? 'small' : 'large'}
+                variant={
+                  isRoleIncluded([UserRoles.CANDIDATE], role)
+                    ? 'primary'
+                    : 'secondary'
+                }
+                rounded
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...directoryFiltersParams,
+                      role: [UserRoles.CANDIDATE],
+                    },
+                  });
+                }}
+              >
+                Les candidats
+              </Button>
+              <Button
+                size={isMobile ? 'small' : 'large'}
+                variant={
+                  isRoleIncluded([UserRoles.COACH], role)
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...directoryFiltersParams,
+                      role: UserRoles.COACH,
+                    },
+                  });
+                }}
+              >
+                Les coachs
+              </Button>
+            </StyledDirectoryButtonContainer>
             <SearchBar
               light
               filtersConstants={DirectoryFilters}
@@ -165,55 +237,16 @@ export function Directory() {
               search={search}
               setSearch={setSearch}
               setFilters={setFilters}
-              placeholder="Rechercher par prénom ou nom"
+              placeholder="Rechercher un prénom, nom ou métier"
               additionalButtons={
-                <StyledDirectoryButtonContainer isMobile={isMobile}>
+                <div>
                   {isMobile && (
                     <MobileFilterButton
                       onClick={handleOpenFilterDrawer}
                       count={totalFiltersCount}
                     />
                   )}
-                  <Button
-                    size={isMobile ? 'small' : 'large'}
-                    variant={
-                      isRoleIncluded([UserRoles.CANDIDATE], role)
-                        ? 'primary'
-                        : 'secondary'
-                    }
-                    rounded
-                    onClick={() => {
-                      push({
-                        pathname: route,
-                        query: {
-                          ...directoryFiltersParams,
-                          role: [UserRoles.CANDIDATE],
-                        },
-                      });
-                    }}
-                  >
-                    Les candidats
-                  </Button>
-                  <Button
-                    size={isMobile ? 'small' : 'large'}
-                    variant={
-                      isRoleIncluded([UserRoles.COACH], role)
-                        ? 'primary'
-                        : 'secondary'
-                    }
-                    onClick={() => {
-                      push({
-                        pathname: route,
-                        query: {
-                          ...directoryFiltersParams,
-                          role: UserRoles.COACH,
-                        },
-                      });
-                    }}
-                  >
-                    Les coachs
-                  </Button>
-                </StyledDirectoryButtonContainer>
+                </div>
               }
             />
           </StyledHeaderDirectory>
