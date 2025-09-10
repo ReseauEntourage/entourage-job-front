@@ -5,6 +5,26 @@ interface StyledMobileFilterDrawerProps {
   isOpen: boolean;
 }
 
+export const StyledMobileFilters = styled.div`
+  .back-button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 8px !important;
+    color: ${COLORS.black} !important;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 8px !important;
+      color: ${COLORS.black} !important;
+    }
+  }
+`;
+
 export const StyledMobileFilterDrawer = styled.div<StyledMobileFilterDrawerProps>`
   position: fixed;
   left: 0;
@@ -39,6 +59,7 @@ export const StyledMobileFilterHeader = styled.div`
   flex-direction: row;
   padding: 16px;
   min-height: 40px;
+  background: ${COLORS.gray};
 `;
 
 export const StyledMobileFilterTitle = styled.h3`
@@ -82,6 +103,7 @@ export const StyledMobileFilterItem = styled.button`
 
 export const StyledMobileFilterItemTitle = styled.span`
   font-size: 16px;
+  color: ${COLORS.black};
 `;
 
 export const StyledMobileFilterItemCount = styled.span`
@@ -90,11 +112,12 @@ export const StyledMobileFilterItemCount = styled.span`
   justify-content: center;
   background-color: ${COLORS.primaryBlue};
   color: ${COLORS.white};
-  border-radius: 100px;
-  min-width: 24px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
   font-size: 12px;
-  margin-left: 8px;
-  margin-right: 8px;
+  padding: 0;
+  text-align: center;
 `;
 
 export const StyledMobileFilterOptions = styled.div`
@@ -141,6 +164,7 @@ export const StyledMobileFilterButton = styled.button`
 export const StyledMobileFilterItemActions = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 `;
 
 export const StyledCheckboxContainer = styled.div`
