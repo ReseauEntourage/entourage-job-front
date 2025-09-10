@@ -25,7 +25,7 @@ export function DirectoryList() {
             sectorOccupations={profile.sectorOccupations}
             job={profile.currentJob}
             isAvailable={profile.isAvailable}
-            displayHelps
+            displayNudges
             hasPicture={profile.hasPicture}
             currentJob={profile.currentJob}
           />

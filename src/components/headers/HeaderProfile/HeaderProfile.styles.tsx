@@ -65,7 +65,7 @@ export const StyledHeaderProfileContent = styled.div`
   align-items: flex-start;
   margin-top: 30px;
 
-  @media (man-width: ${BREAKPOINTS.desktop}px) {
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
     margin-top: 10px;
   }
 `;

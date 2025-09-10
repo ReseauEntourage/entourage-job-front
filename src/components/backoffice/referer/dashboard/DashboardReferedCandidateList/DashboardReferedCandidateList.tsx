@@ -47,7 +47,7 @@ export const DashboardReferedCandidateList = () => {
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
-          displayHelps={false}
+          displayNudges={false}
           hasPicture={profile.hasPicture}
           currentJob={profile.currentJob}
         />

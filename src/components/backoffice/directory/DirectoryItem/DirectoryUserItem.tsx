@@ -15,7 +15,7 @@ interface DirectoryUserItemProps {
   department: DepartmentName;
   job?: string;
   isAvailable: boolean;
-  displayHelps: boolean;
+  displayNudges: boolean;
   hasPicture: boolean;
   currentJob?: string;
 }
@@ -30,7 +30,7 @@ export function DirectoryUserItem({
   sectorOccupations,
   job,
   isAvailable,
-  displayHelps,
+  displayNudges,
   hasPicture,
   currentJob,
 }: DirectoryUserItemProps) {
@@ -46,7 +46,7 @@ export function DirectoryUserItem({
         sectorOccupations={sectorOccupations}
         job={job}
         isAvailable={isAvailable}
-        displayHelps={displayHelps}
+        displayNudges={displayNudges}
         hasPicture={hasPicture}
         currentJob={currentJob}
       />
