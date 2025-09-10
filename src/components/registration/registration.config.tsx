@@ -135,7 +135,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
       },
       {
         icon: <IlluConversation {...iconSizeProps} />,
-        title: "Découvrez le réseau d'entraide et adressez lui vos candidats",
+        title: "Découvrez le réseau d'entraide et adressez-lui vos candidats",
         text: 'Consultez le réseau d’entraide pour orienter au mieux vos candidats vers les coachs qui peuvent leur donner un coup de pouce dans leur recherche d’emploi',
       },
       {
@@ -147,7 +147,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter un ou plusieurs candidat',
+      'Vous pouvez désormais accéder à votre compte entourage pro et orienter des candidats',
   },
   [RegistrationFlow.COMPANY]: {
     bullets: [
@@ -170,7 +170,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter un ou plusieurs candidat',
+      'Vous pouvez désormais accéder à votre compte entourage pro et orienter des candidats',
   },
 };
 

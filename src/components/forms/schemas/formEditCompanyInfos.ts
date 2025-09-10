@@ -80,7 +80,7 @@ export const formEditCompanyInfos: FormSchema<{
       title: 'Département',
       component: 'select-async',
       loadOptions: loadDepartmentsOptions,
-      placeholder: 'Séléctionnez un département',
+      placeholder: 'Sélectionnez un département',
       isRequired: true,
       showLabel: true,
       isMulti: false,

@@ -21,10 +21,10 @@ const loadNudgesOptions = async (callback) => {
   }
 };
 
-export const formOnboardingCoachHelps: FormSchema<{
+export const formOnboardingCoachNudges: FormSchema<{
   nudgeIds: string[];
 }> = {
-  id: 'form-onboarding-candidate-helps',
+  id: 'form-onboarding-coach-nudges',
   fields: [
     {
       id: 'nudgeIds',

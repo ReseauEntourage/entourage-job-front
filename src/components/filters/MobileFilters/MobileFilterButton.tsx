@@ -22,12 +22,12 @@ export const MobileFilterButton = ({
       size="small"
     >
       <LucidIcon name="ListFilter" size={16} />
-      <span style={{ marginLeft: 8 }}>
+      <span style={{ marginLeft: 8, marginRight: count && count > 0 ? 8 : 0 }}>
         Filtrer
-        {showCount && (
-          <StyledMobileFilterItemCount>{count}</StyledMobileFilterItemCount>
-        )}
       </span>
+      {showCount && (
+        <StyledMobileFilterItemCount>{count}</StyledMobileFilterItemCount>
+      )}
     </Button>
   );
 };

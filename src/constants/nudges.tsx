@@ -12,8 +12,6 @@ import { Img } from 'src/components/utils/Img';
 import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
 
-export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
-
 const iconSizeProps = { width: 40, height: 40 };
 
 export const nudgesIcons = {
@@ -24,7 +22,7 @@ export const nudgesIcons = {
   event: <IlluReseauxSociaux {...iconSizeProps} />,
 };
 
-export const ProfileHelps: (FilterConstant<HelpValue> & {
+export const ProfileNudges: (FilterConstant<string> & {
   icon: JSX.Element;
   shortTitle: {
     [K in NormalUserRoles]: string;
@@ -107,7 +105,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
 ];
 
-export const ParametresHelpCardTitles: {
+export const ParametresNudgeCardTitles: {
   [K in 'card' | 'modal']: {
     [R in NormalUserRoles]: string;
   };
@@ -124,7 +122,7 @@ export const ParametresHelpCardTitles: {
   },
 } as const;
 
-export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
+export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
   icon: React.ReactNode;
   description: string;
 })[] = [
@@ -195,8 +193,8 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
 ];
 
-export const ParametresHelpCardContents: {
-  [K in NormalUserRoles]: (FilterConstant<HelpValue> & {
+export const ParametresNudgeCardContents: {
+  [K in NormalUserRoles]: (FilterConstant<string> & {
     icon: React.ReactNode;
     description: string;
   })[];
@@ -340,7 +338,7 @@ export const ParametresHelpCardContents: {
 };
 
 export const createNudgeOption = (role: UserRoles, nudge) => {
-  const nudgeDetails = ParametresHelpCardContents[role].find(
+  const nudgeDetails = ParametresNudgeCardContents[role].find(
     (nudgeConstant) => nudgeConstant.value === nudge.value
   );
   if (nudgeDetails) {

@@ -51,11 +51,11 @@ export const StyledDashboardProfileCardIntroduction = styled.div`
   white-space: normal;
 `;
 
-export const StyledDashboardProfileCardHelps = styled.div`
+export const StyledDashboardProfileCardNudges = styled.div`
   margin: 20px 20px 30px 20px;
 `;
 
-export const StyledDashboardProfileCardhelpsTitle = styled.div`
+export const StyledDashboardProfileCardNudgesTitle = styled.div`
   width: 100%;
   padding-bottom: 15px;
   border-bottom: 1px solid ${COLORS.hoverBlue};
