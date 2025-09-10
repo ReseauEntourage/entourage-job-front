@@ -186,6 +186,47 @@ export function Directory() {
               description="Découvrez les membres de la communauté et développez votre carnet d'adresse."
               noSeparator
             />
+            <StyledDirectoryButtonContainer isMobile={isMobile}>
+              <Button
+                size={isMobile ? 'small' : 'large'}
+                variant={
+                  isRoleIncluded([UserRoles.CANDIDATE], role)
+                    ? 'primary'
+                    : 'secondary'
+                }
+                rounded
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...directoryFiltersParams,
+                      role: [UserRoles.CANDIDATE],
+                    },
+                  });
+                }}
+              >
+                Les candidats
+              </Button>
+              <Button
+                size={isMobile ? 'small' : 'large'}
+                variant={
+                  isRoleIncluded([UserRoles.COACH], role)
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...directoryFiltersParams,
+                      role: UserRoles.COACH,
+                    },
+                  });
+                }}
+              >
+                Les coachs
+              </Button>
+            </StyledDirectoryButtonContainer>
             <SearchBar
               light
               filtersConstants={DirectoryFilters}
@@ -198,53 +239,14 @@ export function Directory() {
               setFilters={setFilters}
               placeholder="Rechercher un prénom, nom ou métier"
               additionalButtons={
-                <StyledDirectoryButtonContainer isMobile={isMobile}>
+                <div>
                   {isMobile && (
                     <MobileFilterButton
                       onClick={handleOpenFilterDrawer}
                       count={totalFiltersCount}
                     />
                   )}
-                  <Button
-                    size={isMobile ? 'small' : 'large'}
-                    variant={
-                      isRoleIncluded([UserRoles.CANDIDATE], role)
-                        ? 'primary'
-                        : 'secondary'
-                    }
-                    rounded
-                    onClick={() => {
-                      push({
-                        pathname: route,
-                        query: {
-                          ...directoryFiltersParams,
-                          role: [UserRoles.CANDIDATE],
-                        },
-                      });
-                    }}
-                  >
-                    Les candidats
-                  </Button>
-                  <Button
-                    size={isMobile ? 'small' : 'large'}
-                    variant={
-                      isRoleIncluded([UserRoles.COACH], role)
-                        ? 'primary'
-                        : 'secondary'
-                    }
-                    onClick={() => {
-                      push({
-                        pathname: route,
-                        query: {
-                          ...directoryFiltersParams,
-                          role: UserRoles.COACH,
-                        },
-                      });
-                    }}
-                  >
-                    Les coachs
-                  </Button>
-                </StyledDirectoryButtonContainer>
+                </div>
               }
             />
           </StyledHeaderDirectory>
