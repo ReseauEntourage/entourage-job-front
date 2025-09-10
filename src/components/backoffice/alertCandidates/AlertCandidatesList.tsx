@@ -32,9 +32,9 @@ export function AlertCandidatesList({
           sectorOccupations={candidate.sectorOccupations}
           job={candidate.currentJob || undefined}
           isAvailable={candidate.isAvailable || false}
-          displayHelps
           hasPicture={candidate.hasPicture || false}
           currentJob={candidate.currentJob || undefined}
+          displayNudges
         />
       );
     });

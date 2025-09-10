@@ -682,7 +682,7 @@ export type RecruitementAlertDto = {
   workingExperienceYears: WorkingExperience | null;
   contractType: ContractValue | null;
   skills?: FilterConstant<string>[];
-}
+};
 
 export type UserWithConversations = User & {
   conversations: Conversation[];
