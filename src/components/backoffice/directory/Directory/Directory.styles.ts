@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledHeaderDirectory = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 20px;
 `;
 
 export const StyledDirectoryContainer = styled.div`

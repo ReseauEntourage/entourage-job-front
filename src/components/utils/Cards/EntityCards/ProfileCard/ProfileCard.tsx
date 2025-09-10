@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useMemo } from 'react';
 import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
-import { ProfileHelps } from '@/src/constants/nudges';
+import { ProfileNudges } from '@/src/constants/nudges';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../../Button';
@@ -30,13 +30,12 @@ import {
   StyledProfileCardContent,
   StyledProfileCardDepartment,
   StyledProfileCardEmptyBusinessSectorsContainer,
-  StyledProfileCardEmptyHelpsContainer,
+  StyledProfileCardEmptyNudgesContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
-  StyledProfileCardHelp,
-  StyledProfileCardHelpContainer,
-  StyledProfileCardHelpLabel,
-  StyledProfileCardHelps,
+  StyledProfileCardNudge,
+  StyledProfileCardNudgeContainer,
+  StyledProfileCardNudgeLabel,
   StyledProfileCardInfoContainer,
   StyledProfileCardJobContainer,
   StyledProfileCardLabel,
@@ -46,6 +45,7 @@ import {
   StyledProfileCardProfessionalSituation,
   StyledProfileCardRole,
   StyledSeparator,
+  StyledProfileCardNudges,
 } from './ProfileCard.styles';
 
 export interface ProfileCardProps {
@@ -60,7 +60,7 @@ export interface ProfileCardProps {
   department?: DepartmentName;
   job?: string;
   isAvailable: boolean;
-  displayHelps?: boolean;
+  displayNudges?: boolean;
   currentJob?: string;
 }
 
@@ -97,7 +97,7 @@ export function ProfileCard({
   sectorOccupations,
   currentJob,
   isAvailable,
-  displayHelps,
+  displayNudges,
   hasPicture,
 }: ProfileCardProps) {
   const { urlImg } = useImageFallback({
@@ -223,38 +223,38 @@ export function ProfileCard({
           </StyledProfileCardBusinessSectors>
         </StyledProfileCardProfessionalSituation>
         <StyledSeparator />
-        {displayHelps ? (
-          <StyledProfileCardHelpContainer>
+        {displayNudges ? (
+          <StyledProfileCardNudgeContainer>
             <StyledProfileCardLabel>
               <Text color="darkGray">{labels.helps}</Text>
             </StyledProfileCardLabel>
-            <StyledProfileCardHelps>
+            <StyledProfileCardNudges>
               {nudges && nudges?.length > 0 ? (
                 nudges.map((nudge) => {
-                  const nudgeDetails = ProfileHelps.find(
+                  const nudgeDetails = ProfileNudges.find(
                     (n) => nudge?.value === n.value
                   );
                   return (
-                    <StyledProfileCardHelp key={nudgeDetails?.value}>
+                    <StyledProfileCardNudge key={nudgeDetails?.value}>
                       {nudgeDetails?.icon}
-                      <StyledProfileCardHelpLabel>
+                      <StyledProfileCardNudgeLabel>
                         {nudgeDetails?.label}
-                      </StyledProfileCardHelpLabel>
-                    </StyledProfileCardHelp>
+                      </StyledProfileCardNudgeLabel>
+                    </StyledProfileCardNudge>
                   );
                 })
               ) : (
-                <StyledProfileCardEmptyHelpsContainer>
+                <StyledProfileCardEmptyNudgesContainer>
                   <StyledProfileCardEmptyIcon>
                     <HandsIcon {...iconSizeProps} />
                   </StyledProfileCardEmptyIcon>
                   <Text color="mediumGray" size="small" variant="italic">
                     {EMPTY_INFO}
                   </Text>
-                </StyledProfileCardEmptyHelpsContainer>
+                </StyledProfileCardEmptyNudgesContainer>
               )}
-            </StyledProfileCardHelps>
-          </StyledProfileCardHelpContainer>
+            </StyledProfileCardNudges>
+          </StyledProfileCardNudgeContainer>
         ) : (
           <StyledCTAContainer>
             <Button variant="secondary" rounded>

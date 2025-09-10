@@ -1,11 +1,8 @@
-import type { JSX } from 'react';
-import { plateform } from 'src/utils/Device';
+import { platform } from 'src/utils/Device';
 import { NavPublicContentDesktop } from './NavPublicContent.desktop';
 import { NavPublicContentMobile } from './NavPublicContent.mobile';
-import { NavPublicContentProps } from './NavPublicContent.types';
 
-export const NavPublicContent: (props: NavPublicContentProps) => JSX.Element =
-  plateform({
-    Desktop: NavPublicContentDesktop,
-    Mobile: NavPublicContentMobile,
-  });
+export const NavPublicContent = platform({
+  Desktop: NavPublicContentDesktop,
+  Mobile: NavPublicContentMobile,
+});

@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { allContactTypes } from '@/src/constants/contactTypes';
 import { DirectoryEntity } from '@/src/constants/entity';
-import { ProfileHelps } from '@/src/constants/nudges';
+import { ProfileNudges } from '@/src/constants/nudges';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
 import { Api } from 'src/api';
-import { BusinessSector } from 'src/api/types';
+import { BusinessSector, Nudge } from 'src/api/types';
 import {
   MobileFilterButton,
   MobileFilterDrawer,
@@ -44,12 +44,15 @@ export function Directory() {
   const [businessSectorsFilters, setBusinessSectorsFilters] = useState<
     FilterConstant<string>[]
   >([]);
+  const [nudgesFilters, setNudgesFilters] = useState<FilterConstant<string>[]>([
+    ...ProfileNudges,
+  ]);
   const directoryFiltersParams = useDirectoryQueryParams();
   const {
     entity,
     role,
     departments,
-    helps,
+    nudgeIds,
     businessSectorIds,
     search,
     contactTypes,
@@ -64,16 +67,9 @@ export function Directory() {
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
     } as Filter;
 
-    const departmentFilter = {
-      key: 'departments',
-      constants: DEPARTMENTS_FILTERS,
-      title: 'Département',
-      tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
-    } as Filter;
-
-    const helpFilter = {
-      key: 'helps',
-      constants: ProfileHelps,
+    const nudgesIdsFilters = {
+      key: 'nudgeIds',
+      constants: nudgesFilters,
       title: "Type d'aide",
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
     } as Filter;
@@ -94,8 +90,8 @@ export function Directory() {
 
     // Assigning filters based on entity
     const userFilters = [
-      departmentFilter,
-      helpFilter,
+      departmentByIdFilter,
+      nudgesIdsFilters,
       businessSectorsFilter,
       contactTypesFilter,
     ];
@@ -103,7 +99,7 @@ export function Directory() {
 
     // Return relevant filters
     return entity === DirectoryEntity.USER ? userFilters : companyFilters;
-  }, [businessSectorsFilters, departmentsIdsFilters, entity]);
+  }, [businessSectorsFilters, departmentsIdsFilters, entity, nudgesFilters]);
 
   const { setFilters, setSearch, resetFilters } = useFilters(
     DirectoryFilters,
@@ -117,8 +113,8 @@ export function Directory() {
       departments: mutateToArray(departments).map((department) =>
         findConstantFromValue(department, DEPARTMENTS_FILTERS)
       ),
-      helps: mutateToArray(helps).map((help) =>
-        findConstantFromValue(help, ProfileHelps)
+      nudgeIds: mutateToArray(nudgeIds).map((nudgeId) =>
+        findConstantFromValue(nudgeId, nudgesFilters)
       ),
       businessSectorIds: mutateToArray(businessSectorIds).map(
         (businessSectorId) =>
@@ -130,10 +126,11 @@ export function Directory() {
     };
   }, [
     departments,
-    helps,
+    nudgeIds,
     businessSectorIds,
     contactTypes,
     businessSectorsFilters,
+    nudgesFilters,
   ]);
 
   const totalFiltersCount = useMemo(() => {
@@ -185,6 +182,26 @@ export function Directory() {
     }
   };
 
+  const fetchNudges = async () => {
+    try {
+      const { data } = await Api.getAllNudges({
+        limit: 50,
+        offset: 0,
+      });
+      setNudgesFilters(
+        data.map((nudge: Nudge) => ({
+          label:
+            ProfileNudges.find(
+              (profileNudge) => profileNudge.value === nudge.value
+            )?.label || '',
+          value: nudge.id,
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching nudges:', error);
+    }
+  };
+
   const renderSearchBar = useCallback(() => {
     if (entity === DirectoryEntity.USER) {
       return (
@@ -198,7 +215,7 @@ export function Directory() {
           search={search}
           setSearch={setSearch}
           setFilters={setFilters}
-          placeholder="Rechercher par prénom ou nom"
+          placeholder="Rechercher par prénom, nom ou métier"
           additionalButtons={
             isMobile && (
               <StyledDirectoryButtonContainer isMobile={isMobile}>
@@ -257,6 +274,7 @@ export function Directory() {
   useEffect(() => {
     fetchBusinessSectors();
     fetchDepartments();
+    fetchNudges();
   }, []);
 
   return (
@@ -269,8 +287,7 @@ export function Directory() {
               description="Découvrez les membres de la communauté, nos entreprises partenaires et développez votre carnet d'adresse."
               noSeparator
             />
-
-            <StyledDirectoryButtonContainer>
+            <StyledDirectoryButtonContainer isMobile={isMobile}>
               <Button
                 size={isMobile ? 'small' : 'large'}
                 variant={
@@ -316,6 +333,7 @@ export function Directory() {
               >
                 Les coachs
               </Button>
+
               <Button
                 size={isMobile ? 'small' : 'large'}
                 variant={

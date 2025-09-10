@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledImgProfileContainer = styled.div<{
   size: NumberConstructor;
-  hightlight: boolean;
+  highlight: boolean;
   bgColor: string;
 }>`
   display: flex;
