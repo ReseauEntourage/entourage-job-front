@@ -289,13 +289,14 @@ const RefererLastStepContent: Pick<LastStepContent, 'bullets'> = {
     },
     {
       icon: <IlluConversation {...iconSizeProps} />,
-      title: "Découvrez le réseau d'entraide et adressez lui vos candidats",
+      title: "Découvrez le réseau d'entraide et adressez-lui vos candidats",
       text: 'Consultez le réseau d’entraide pour orienter au mieux vos candidats vers les coachs qui peuvent leur donner un coup de pouce dans leur recherche d’emploi',
     },
     {
       icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
-      title: 'Participez à des événements professionnels et conviviaux',
-      text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
+      title:
+        'Conviez vos candidats à des évènements professionnels et conviviaux',
+      text: 'Nos évènements professionnels leur feront vivre des moments conviviaux et leur permettront de se bâtir un réseau.',
     },
   ],
 };
@@ -338,6 +339,6 @@ export const LastStepContent: RegistrationLastStepContent = {
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter un ou plusieurs candidat',
+      'Vous pouvez désormais accéder à votre compte Entourage PRO et orienter des candidats',
   },
 };

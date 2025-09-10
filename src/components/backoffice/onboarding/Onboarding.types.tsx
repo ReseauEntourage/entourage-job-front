@@ -14,12 +14,12 @@ import { OnboardingAI } from './Onboarding/forms/OnboardingAI';
 import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
 import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
-import { formOnboardingCandidateHelps } from './Onboarding/forms/schemas/formOnboardingCandidateHelps';
 import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
+import { formOnboardingCandidateNudges } from './Onboarding/forms/schemas/formOnboardingCandidateNudges';
 import { formOnboardingCandidateProfile } from './Onboarding/forms/schemas/formOnboardingCandidateProfile';
 import { formOnboardingCandidateSocialSituation } from './Onboarding/forms/schemas/formOnboardingCandidateSocialSituation';
-import { formOnboardingCoachHelps } from './Onboarding/forms/schemas/formOnboardingCoachHelps';
 import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardingCoachJob';
+import { formOnboardingCoachNudges } from './Onboarding/forms/schemas/formOnboardingCoachNudges';
 import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';
 
@@ -32,7 +32,7 @@ export const ONBOARDING_LAST_STEP = {
 
 export type CandidateOnboardingForm =
   | typeof formOnboardingEthicsCharter
-  | typeof formOnboardingCandidateHelps
+  | typeof formOnboardingCandidateNudges
   | typeof formOnboardingCandidateJob
   | typeof formOnboardingCandidateProfile
   | typeof formOnboardingCandidateSocialSituation
@@ -40,7 +40,7 @@ export type CandidateOnboardingForm =
 
 export type CoachOnboardingForm =
   | typeof formOnboardingEthicsCharter
-  | typeof formOnboardingCoachHelps
+  | typeof formOnboardingCoachNudges
   | typeof formOnboardingCoachJob
   | typeof formOnboardingCoachProfile;
 
@@ -125,7 +125,7 @@ export const OnboardingStepContents: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur ce que vous souhaitez apporter aux candidats",
-      form: formOnboardingCoachHelps,
+      form: formOnboardingCoachNudges,
       defaultValues: (user) => ({
         nudgeIds: user.userProfile?.nudges?.map((nudge) => nudge.id) ?? [],
       }),
