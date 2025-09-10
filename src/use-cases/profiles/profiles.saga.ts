@@ -52,7 +52,7 @@ function* fetchProfilesRequestedSaga(
       departments,
       role,
       search,
-      helps,
+      nudgeIds,
       businessSectorIds,
       contactTypes,
     } = action.payload;
@@ -61,7 +61,7 @@ function* fetchProfilesRequestedSaga(
       Api.getAllUsersProfiles({
         departments: mutateToArray(departments),
         businessSectorIds: mutateToArray(businessSectorIds),
-        helps: mutateToArray(helps),
+        nudgeIds: mutateToArray(nudgeIds),
         contactTypes: mutateToArray(contactTypes),
         role,
         search,

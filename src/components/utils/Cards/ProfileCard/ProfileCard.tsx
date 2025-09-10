@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
-import { ProfileHelps } from '@/src/constants/nudges';
+import { ProfileNudges } from '@/src/constants/nudges';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../Button';
@@ -31,13 +31,13 @@ import {
   StyledProfileCardContent,
   StyledProfileCardDepartment,
   StyledProfileCardEmptyBusinessSectorsContainer,
-  StyledProfileCardEmptyHelpsContainer,
+  StyledProfileCardEmptyNudgesContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
-  StyledProfileCardHelp,
-  StyledProfileCardHelpContainer,
-  StyledProfileCardHelpLabel,
-  StyledProfileCardHelps,
+  StyledProfileCardNudge,
+  StyledProfileCardNudgeContainer,
+  StyledProfileCardNudgeLabel,
+  StyledProfileCardNudges,
   StyledProfileCardInfoContainer,
   StyledProfileCardJobContainer,
   StyledProfileCardLabel,
@@ -61,7 +61,7 @@ export interface ProfileCardProps {
   department?: DepartmentName;
   job?: string;
   isAvailable: boolean;
-  displayHelps?: boolean;
+  displayNudges?: boolean;
   currentJob?: string;
 }
 
@@ -69,14 +69,14 @@ const getLabelsDependingOnRole = (role: UserRoles) => {
   if (role === UserRoles.CANDIDATE) {
     return {
       businessSectors: 'Je recherche un emploi dans\xa0:',
-      helps: "Je souhaite avoir de l'aide dans\xa0:",
+      nudges: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
   if (role === UserRoles.COACH) {
     return {
       businessSectors: "J'ai du réseau dans\xa0:",
-      helps: 'Je peux aider à\xa0:',
+      nudges: 'Je peux aider à\xa0:',
       role: 'Coach',
     };
   }
@@ -98,7 +98,7 @@ export function ProfileCard({
   sectorOccupations,
   currentJob,
   isAvailable,
-  displayHelps,
+  displayNudges,
   hasPicture,
 }: ProfileCardProps) {
   const { urlImg } = useImageFallback({
@@ -228,38 +228,38 @@ export function ProfileCard({
             </StyledProfileCardBusinessSectors>
           </StyledProfileCardProfessionalSituation>
           <StyledSeparator />
-          {displayHelps ? (
-            <StyledProfileCardHelpContainer>
+          {displayNudges ? (
+            <StyledProfileCardNudgeContainer>
               <StyledProfileCardLabel>
-                <Text color="darkGray">{labels.helps}</Text>
+                <Text color="darkGray">{labels.nudges}</Text>
               </StyledProfileCardLabel>
-              <StyledProfileCardHelps>
+              <StyledProfileCardNudges>
                 {nudges && nudges?.length > 0 ? (
                   nudges.map((nudge) => {
-                    const nudgeDetails = ProfileHelps.find(
+                    const nudgeDetails = ProfileNudges.find(
                       (n) => nudge?.value === n.value
                     );
                     return (
-                      <StyledProfileCardHelp key={nudgeDetails?.value}>
+                      <StyledProfileCardNudge key={nudgeDetails?.value}>
                         {nudgeDetails?.icon}
-                        <StyledProfileCardHelpLabel>
+                        <StyledProfileCardNudgeLabel>
                           {nudgeDetails?.label}
-                        </StyledProfileCardHelpLabel>
-                      </StyledProfileCardHelp>
+                        </StyledProfileCardNudgeLabel>
+                      </StyledProfileCardNudge>
                     );
                   })
                 ) : (
-                  <StyledProfileCardEmptyHelpsContainer>
+                  <StyledProfileCardEmptyNudgesContainer>
                     <StyledProfileCardEmptyIcon>
                       <HandsIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
                     <Text color="mediumGray" size="small" variant="italic">
                       {EMPTY_INFO}
                     </Text>
-                  </StyledProfileCardEmptyHelpsContainer>
+                  </StyledProfileCardEmptyNudgesContainer>
                 )}
-              </StyledProfileCardHelps>
-            </StyledProfileCardHelpContainer>
+              </StyledProfileCardNudges>
+            </StyledProfileCardNudgeContainer>
           ) : (
             <StyledCTAContainer>
               <Button variant="secondary" rounded>

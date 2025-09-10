@@ -149,22 +149,22 @@ export const StyledProfileCardBusinessSectors = styled.div`
   gap: 8px;
 `;
 
-export const StyledProfileCardHelpContainer = styled.div``;
+export const StyledProfileCardNudgeContainer = styled.div``;
 
-export const StyledProfileCardHelps = styled.div`
+export const StyledProfileCardNudges = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
 `;
 
-export const StyledProfileCardHelp = styled.div`
+export const StyledProfileCardNudge = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-export const StyledProfileCardHelpLabel = styled.div`
+export const StyledProfileCardNudgeLabel = styled.div`
   font-size: 8px;
   color: ${COLORS.mediumGray};
 `;
@@ -175,7 +175,7 @@ export const StyledProfileCardEmptyBusinessSectorsContainer = styled.div`
   justify-content: flex-start;
 `;
 
-export const StyledProfileCardEmptyHelpsContainer = styled.div`
+export const StyledProfileCardEmptyNudgesContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
