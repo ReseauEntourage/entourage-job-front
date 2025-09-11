@@ -1,10 +1,10 @@
 import { DefaultValues } from 'react-hook-form';
-import { UserProfile, UserProfileSectorOccupation } from '@/src/api/types';
-import { ExtractFormSchemaValidation } from '@/src/components/forms/FormSchema';
-import { formEditCandidateProfessionalInformation } from '@/src/components/forms/schemas/formEditCandidateProfessionalInformation';
-import { formEditCoachProfessionalInformation } from '@/src/components/forms/schemas/formEditCoachProfessionalInformation';
-import { UserRoles } from '@/src/constants/users';
-import { formOnboardingCoachJob } from '../../../onboarding/Onboarding/forms/schemas/formOnboardingCoachJob';
+import { formOnboardingCoachJob } from '../../onboarding/Onboarding/forms/schemas/formOnboardingCoachJob';
+import { UserProfile, UserProfileSectorOccupation } from 'src/api/types';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
+import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
+import { UserRoles } from 'src/constants/users';
 
 interface userProfileParamsToCheck {
   currentJob: string | null;

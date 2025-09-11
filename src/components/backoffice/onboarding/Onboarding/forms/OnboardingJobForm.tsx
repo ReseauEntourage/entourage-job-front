@@ -1,9 +1,9 @@
 import React from 'react';
-import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
-} from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+} from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { UserRoles } from 'src/constants/users';
