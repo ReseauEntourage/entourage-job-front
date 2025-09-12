@@ -8,6 +8,7 @@ import { Section } from 'src/components/utils';
 import {
   selectFetchRecruitementAlertMatchingLoading,
   fetchRecruitementAlertMatchingAction,
+  selectRecruitementAlerts,
 } from 'src/use-cases/recruitement-alerts';
 import {
   StyledAlertCandidatesContainer,
@@ -23,6 +24,9 @@ interface AlertCandidatesProps {
 export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectFetchRecruitementAlertMatchingLoading);
+  const selectedAlert = useSelector(selectRecruitementAlerts).find(
+    (a) => a.id === alertId
+  );
 
   useEffect(() => {
     if (alertId) {
@@ -38,7 +42,7 @@ export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
     );
   }
 
-  if (!alert) {
+  if (!selectedAlert) {
     return (
       <Section>
         <div>Alerte non trouvée</div>
@@ -56,7 +60,7 @@ export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
               label="Retour à mon tableau de bord"
             />
             <HeaderBackoffice
-              title={`Candidats correspondant à l'alerte: ${alert.name}`}
+              title={`Candidats correspondant à l'alerte: ${selectedAlert.name}`}
               description="Voici les candidats qui correspondent aux critères de votre alerte."
               noSeparator
             />
