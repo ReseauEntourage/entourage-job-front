@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
+import { ModalEditProfessionalInformation } from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ModalEditProfessionalInformation';
+import {
+  getCandidateDefaultProfessionalValues,
+  getCoachDefaultProfessionalValues,
+} from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { UserRoles } from '@/src/constants/users';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { UserProfileSectorOccupation } from 'src/api/types';
-import { ModalEditProfessionalInformation } from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ModalEditProfessionalInformation';
-import {
-  getCandidateDefaultProfessionalValues,
-  getCoachDefaultProfessionalValues,
-} from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
