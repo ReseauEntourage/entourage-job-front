@@ -11,6 +11,7 @@ import { getNormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
+import { CompanyRecruitementAlertCard } from './CompanyRecruitementAlertCard';
 import {
   StyledDashboardLeftColumn,
   StyledDashboardRightColumn,
@@ -32,9 +33,7 @@ export const Dashboard = () => {
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
-  const isCompanyAdmin = user.companies?.some(
-    (company) => company.companyUser?.isAdmin === true
-  );
+  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
 
   if (isDesktop) {
     return (
@@ -47,17 +46,16 @@ export const Dashboard = () => {
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
-              {isCompanyAdmin &&
-                user.companies &&
-                user.companies.map((company) => (
-                  <DashboardCompanyCard key={company.id} company={company} />
-                ))}
+              {isCompanyAdmin && user.company && (
+                <DashboardCompanyCard company={user.company} />
+              )}
               <DashboardProfileCard />
               {isNormalUser && <DashboardAvailabilityCard />}
               <DashboardReferentCard />
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
               {isNormalUser && <DashboardNextSteps />}
+              {isCompanyAdmin && <CompanyRecruitementAlertCard />}
               <DashboardMessagingConversation />
               {isNormalUser && <DashboardRecommendationsCard />}
               {isReferer && <DashboardInviteToReferCandidate />}
@@ -82,6 +80,7 @@ export const Dashboard = () => {
         <StyledBackofficeGrid className="mobile">
           <StyledDashboardRightColumn className="mobile">
             {isNormalUser && <DashboardNextSteps />}
+            {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             {isNormalUser && <DashboardRecommendationsCard />}
             <DashboardMessagingConversation />
             {isReferer && <DashboardInviteToReferCandidate />}
@@ -89,6 +88,9 @@ export const Dashboard = () => {
             <DashboardToolboxCard />
           </StyledDashboardRightColumn>
           <StyledDashboardLeftColumn className="mobile">
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCard company={user.company} />
+            )}
             <DashboardProfileCard />
             {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardReferentCard />
