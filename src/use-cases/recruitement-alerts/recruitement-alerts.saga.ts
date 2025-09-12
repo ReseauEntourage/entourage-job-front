@@ -30,12 +30,12 @@ const {
 
 function* fetchRecruitementAlertsSaga() {
   try {
-    yield* put(fetchRecruitementAlertsRequested(undefined));
+    yield* put(fetchRecruitementAlertsRequested());
     const { data } = yield* call(() => Api.getRecruitementAlerts());
     yield* put(fetchRecruitementAlertsSucceeded(data));
   } catch (error) {
     console.error('Error fetching recruitement alerts:', error);
-    yield* put(fetchRecruitementAlertsFailed(undefined));
+    yield* put(fetchRecruitementAlertsFailed());
   }
 }
 
@@ -55,10 +55,10 @@ function* createRecruitementAlertSaga(
       })
     );
     // Rafraîchir la liste des alertes après la création
-    yield* put(fetchRecruitementAlertsAction(undefined));
+    yield* put(fetchRecruitementAlertsAction());
   } catch (error) {
     console.error('Error creating recruitement alert:', error);
-    yield* put(createRecruitementAlertFailed(undefined));
+    yield* put(createRecruitementAlertFailed());
     yield* put(
       notificationsActions.addNotification({
         type: 'danger',
@@ -87,7 +87,7 @@ function* fetchRecruitementAlertMatchingSaga(action: PayloadAction<string>) {
       `Erreur lors de la récupération des matchings pour l'alerte ${action.payload}:`,
       error
     );
-    yield* put(fetchRecruitementAlertMatchingFailed(undefined));
+    yield* put(fetchRecruitementAlertMatchingFailed());
   }
 }
 
@@ -104,10 +104,10 @@ function* deleteRecruitementAlertSaga(action: PayloadAction<string>) {
       })
     );
     // Rafraîchir la liste des alertes après la suppression
-    yield* put(fetchRecruitementAlertsAction(undefined));
+    yield* put(fetchRecruitementAlertsAction());
   } catch (error) {
     console.error('Error deleting recruitement alert:', error);
-    yield* put(deleteRecruitementAlertFailed(undefined));
+    yield* put(deleteRecruitementAlertFailed());
     yield* put(
       notificationsActions.addNotification({
         type: 'danger',
@@ -134,10 +134,10 @@ function* updateRecruitementAlertSaga(
       })
     );
     // Rafraîchir la liste des alertes après la mise à jour
-    yield* put(fetchRecruitementAlertsAction(undefined));
+    yield* put(fetchRecruitementAlertsAction());
   } catch (error) {
     console.error('Error updating recruitement alert:', error);
-    yield* put(updateRecruitementAlertFailed(undefined));
+    yield* put(updateRecruitementAlertFailed());
     yield* put(
       notificationsActions.addNotification({
         type: 'danger',
