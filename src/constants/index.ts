@@ -12,6 +12,8 @@ export { PUSHER_CHANNELS, PUSHER_EVENTS, getPusher } from './pusher';
 
 export const PROFILES_LIMIT = 25;
 
+export const COMPANIES_LIMIT = 25;
+
 export const JNSPR = {
   value: 'jnspr',
   label: 'Je ne souhaite pas répondre',

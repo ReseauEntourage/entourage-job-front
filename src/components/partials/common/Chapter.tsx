@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Section, Img } from 'src/components/utils';
+import { Grid, Section, LegacyImg } from 'src/components/utils';
 
 interface ChapterProps {
   title: React.ReactNode;
@@ -51,7 +51,7 @@ export const Chapter = ({
           </div>
           {imgSrc && (
             <div className="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-box-shadow-medium uk-border-rounded uk-cover-container">
-              <Img src={imgSrc} cover alt="" />
+              <LegacyImg src={imgSrc} cover alt="" />
             </div>
           )}
         </Grid>

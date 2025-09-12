@@ -1,11 +1,11 @@
 import React from 'react';
+import { ProfileCard } from '@/src/components/utils/Cards/EntityCards/ProfileCard';
 import { Nudge, UserProfileSectorOccupation } from 'src/api/types';
 import { CardListItem } from 'src/components/utils/CardList';
-import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { DepartmentName } from 'src/constants/departements';
 import { UserRoles } from 'src/constants/users';
 
-interface DirectoryItemProps {
+interface DirectoryUserItemProps {
   id: string;
   firstName: string;
   lastName: string;
@@ -20,7 +20,7 @@ interface DirectoryItemProps {
   currentJob?: string;
 }
 
-export function DirectoryItem({
+export function DirectoryUserItem({
   id,
   firstName,
   lastName,
@@ -33,7 +33,7 @@ export function DirectoryItem({
   displayNudges,
   hasPicture,
   currentJob,
-}: DirectoryItemProps) {
+}: DirectoryUserItemProps) {
   return (
     <CardListItem dataTestId={id}>
       <ProfileCard

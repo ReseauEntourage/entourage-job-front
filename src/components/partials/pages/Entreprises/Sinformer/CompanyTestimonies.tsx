@@ -1,6 +1,6 @@
 import React from 'react';
 import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
-import { Img, Section, Carousel } from 'src/components/utils';
+import { LegacyImg, Section, Carousel } from 'src/components/utils';
 
 const testimonies = [
   {
@@ -57,7 +57,7 @@ export const CompanyTestimonies = () => {
                 img={image}
                 description={
                   <div>
-                    <Img
+                    <LegacyImg
                       alt="guillemets"
                       width={27}
                       height={21}
@@ -70,7 +70,7 @@ export const CompanyTestimonies = () => {
                       className="uk-text-bottom"
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
-                      <Img
+                      <LegacyImg
                         alt="guillemets-petits"
                         width={15}
                         height={12}

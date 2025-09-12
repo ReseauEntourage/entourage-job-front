@@ -8,31 +8,43 @@ const buttonStyles = {
     default: COLORS.gray,
     primary: COLORS.primaryBlue,
     secondary: COLORS.primaryBlue,
+    text: 'transparent',
+  },
+  borderSize: {
+    default: '1px',
+    primary: '1px',
+    secondary: '1px',
+    text: '0px',
   },
   backgroundColor: {
     default: COLORS.white,
     primary: COLORS.primaryBlue,
     secondary: COLORS.white,
+    text: 'transparent',
   },
   color: {
     default: COLORS.black,
     primary: COLORS.white,
     secondary: COLORS.primaryBlue,
+    text: COLORS.black,
   },
   hoverBackgroundColor: {
     default: COLORS.hoverWhite,
     primary: COLORS.darkBlue,
     secondary: COLORS.hoverBlue,
+    text: 'transparent',
   },
   hoverColor: {
     default: COLORS.primaryBlue,
     primary: COLORS.white,
     secondary: COLORS.primaryBlue,
+    text: COLORS.black,
   },
   hoverBorder: {
     default: COLORS.primaryBlue,
     primary: COLORS.darkBlue,
     secondary: COLORS.primaryBlue,
+    text: 'none',
   },
 };
 
@@ -51,7 +63,10 @@ export const StyledButton = styled.button<ButtonProps>`
     border: ${(props: ButtonProps) => {
         return buttonStyles.border[props.variant || 'default'] || COLORS.white;
       }}
-      solid 1px !important;
+      solid
+      ${(props: ButtonProps) => {
+        return buttonStyles.borderSize[props.variant || 'default'] || '1px';
+      }} !important;
 
     background-color: ${(props: ButtonProps) => {
       return (
@@ -60,6 +75,9 @@ export const StyledButton = styled.button<ButtonProps>`
     }} !important;
 
     color: ${(props: ButtonProps) => {
+      if (props.color) {
+        return COLORS[props.color];
+      }
       return buttonStyles.color[props.variant || 'default'] || COLORS.white;
     }} !important;
 

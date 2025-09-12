@@ -31,6 +31,7 @@ import {
   UserRegistrationDto,
   UserReportDto,
   UserWithUserCandidate,
+  CompaniesFilters,
 } from './types';
 
 export class APIHandler {
@@ -355,14 +356,13 @@ export class APIHandler {
   /// /////////// ///
   /// companies  ///
   /// ///////// ///
-  getAllCompanies(params: {
-    params: {
+  getAllCompanies(
+    params: CompaniesFilters & {
       limit: number;
       offset: number;
-      search?: string;
-    };
-  }): Promise<AxiosResponse> {
-    return this.get('/companies', params);
+    }
+  ): Promise<AxiosResponse> {
+    return this.get('/companies', { params });
   }
 
   getCompanyById(companyId: string): Promise<AxiosResponse> {

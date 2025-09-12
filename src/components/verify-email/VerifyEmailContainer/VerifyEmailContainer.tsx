@@ -1,7 +1,7 @@
 import React from 'react';
 import { SendVerifyEmailButton } from '../SendVerifyEmailButton';
 import { useVerifyEmail } from '../useVerifyEmail';
-import { Button, Img } from 'src/components/utils';
+import { Button, LegacyImg } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import { VerifyEmailTokenErrorType } from 'src/use-cases/authentication/authentication.adapters';
@@ -35,7 +35,7 @@ export const VerifyEmailContainer = () => {
     <StyledVerifyEmailContainer>
       <H3 title="Vérification de mon adresse e-mail" />
       <StyledVerifyEmailRow>
-        <Img
+        <LegacyImg
           src={
             showSendButtonAndErrorImg
               ? '/static/img/illustrations/attention.png'

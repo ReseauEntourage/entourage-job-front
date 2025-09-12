@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Media } from 'src/api/types';
-import { Img, Text } from 'src/components/utils';
+import { LegacyImg, Text } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Spinner } from 'src/components/utils/Spinner';
 import { COLORS } from 'src/constants/styles';
@@ -42,7 +42,7 @@ export const MessageMedia = ({ media, mode = 'single' }: MessageMediaProps) => {
   return mode === 'single' ? (
     <StyledMessageMedia onClick={openMedia}>
       <StyledPreviewerContainer>
-        <Img
+        <LegacyImg
           src={media.signedUrl}
           alt={media.name}
           width={500}

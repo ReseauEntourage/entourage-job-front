@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
-import { Card, Img, SimpleLink } from 'src/components/utils';
+import { Card, LegacyImg, SimpleLink } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
 import { DEPARTMENTS } from 'src/constants/departements';
@@ -33,7 +33,7 @@ export const DashboardReferentCard = () => {
     <Card title="Votre contact Entourage Pro" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferentPicture>
-          <Img
+          <LegacyImg
             src={`/static/img/referents/${referent.img}`}
             alt={referent.name}
             cover

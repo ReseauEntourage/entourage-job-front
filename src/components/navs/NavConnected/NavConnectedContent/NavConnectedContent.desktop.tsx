@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import { ImgUserProfile } from '@/src/components/utils/Images/ImgProfile';
 import { COLORS } from '@/src/constants/styles';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import {
@@ -17,7 +18,6 @@ import {
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
 import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { ImgUserProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';
