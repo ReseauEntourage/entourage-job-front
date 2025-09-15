@@ -20,6 +20,7 @@ import {
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
+import { DashboardCompanyCollaboratorsList } from './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
@@ -55,6 +56,11 @@ export const Dashboard = () => {
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
               {isNormalUser && <DashboardNextSteps />}
+              {isCompanyAdmin && user.company && (
+                <DashboardCompanyCollaboratorsList
+                  companyId={user.company.id}
+                />
+              )}
               {isCompanyAdmin && <CompanyRecruitementAlertCard />}
               <DashboardMessagingConversation />
               {isNormalUser && <DashboardRecommendationsCard />}
