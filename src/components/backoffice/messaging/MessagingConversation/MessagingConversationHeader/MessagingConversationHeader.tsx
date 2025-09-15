@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ImgUserProfile } from '@/src/components/utils';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import {
   ConversationParticipant,
   ConversationParticipants,
 } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
-import { ImgProfile } from 'src/components/utils';
 import { ButtonIcon } from 'src/components/utils/Button/ButtonIcon';
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
 import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
@@ -71,7 +71,7 @@ export const MessagingConversationHeader = () => {
         )}
         {addresee && (
           <AddreseeInfosContainer onClick={onClickAddresseeInfos}>
-            <ImgProfile
+            <ImgUserProfile
               user={addresee}
               size={35}
               hasPicture={addresee.userProfile?.hasPicture || false}

@@ -1,6 +1,9 @@
 import React from 'react';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  DepartmentName,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
   StyledCVPDFContentInformations,
@@ -11,7 +14,7 @@ interface ContactInformationPDFProps {
   phone: string;
   email?: string;
   departments?: {
-    name: Department;
+    name: DepartmentName;
     order: number;
   }[];
 }

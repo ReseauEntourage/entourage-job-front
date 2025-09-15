@@ -8,6 +8,9 @@ const {
   fetchSelectedCompanyRequested,
   fetchSelectedCompanySucceeded,
   fetchSelectedCompanyFailed,
+  updateCompanyLogoRequested,
+  updateCompanyLogoSucceeded,
+  updateCompanyLogoFailed,
 } = slice.actions;
 
 function* fetchSelectedCompanySaga() {
@@ -22,9 +25,28 @@ function* fetchSelectedCompanySaga() {
   }
 }
 
+function* updateCompanyLogoSaga(
+  action: ReturnType<typeof updateCompanyLogoRequested>
+) {
+  try {
+    const { logoFile, companyId } = action.payload;
+
+    assertIsDefined(companyId, 'Company ID must be defined');
+    assertIsDefined(logoFile, 'Logo file must be defined');
+
+    const formData = new FormData();
+    formData.append('file', logoFile);
+    yield* call(() => Api.updateCompanyLogo(formData));
+    yield* put(updateCompanyLogoSucceeded());
+  } catch (error) {
+    yield* put(updateCompanyLogoFailed(null));
+  }
+}
+
 export function* saga() {
   yield* takeLatest(
     fetchSelectedCompanyRequested.type,
     fetchSelectedCompanySaga
   );
+  yield* takeLatest(updateCompanyLogoRequested.type, updateCompanyLogoSaga);
 }

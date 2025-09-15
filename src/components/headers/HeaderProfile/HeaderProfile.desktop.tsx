@@ -3,12 +3,18 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { BackLink } from '../../utils/BackLink';
-import { Button, ImgProfile, Section, Tag, Text } from 'src/components/utils';
+import {
+  Button,
+  ImgUserProfile,
+  Section,
+  Tag,
+  Text,
+} from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
-import { Department } from 'src/constants/departements';
+import { DepartmentName } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
 import {
@@ -40,7 +46,7 @@ export interface HeaderProfileProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  department: Department;
+  department: DepartmentName;
   introduction?: string;
   hasPicture: boolean;
 
@@ -97,7 +103,7 @@ export const HeaderProfileDesktop = ({
               {imageUploading ? (
                 <Spinner color={COLORS.white} />
               ) : (
-                <ImgProfile
+                <ImgUserProfile
                   user={{
                     id,
                     firstName,

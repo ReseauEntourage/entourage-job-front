@@ -17,7 +17,7 @@ import {
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
 import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { ImgProfile } from 'src/components/utils/ImgProfile';
+import { ImgUserProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';
@@ -70,7 +70,7 @@ export const NavConnectedContentDesktop = ({
               justifyContent: 'center',
             }}
           >
-            <ImgProfile
+            <ImgUserProfile
               user={user}
               size={40}
               hasPicture={user.userProfile?.hasPicture || false}

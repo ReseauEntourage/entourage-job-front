@@ -311,6 +311,14 @@ export class APIHandler {
     return this.delete(`/user/${userId}`);
   }
 
+  /// //////////// ///
+  /// Departments ///
+  /// ////////// ///
+
+  getAllDepartments(params: { search: string }): Promise<AxiosResponse> {
+    return this.get('/departments', { params });
+  }
+
   /// ///////////////// ///
   /// businessSectors  ///
   /// /////////////// ///

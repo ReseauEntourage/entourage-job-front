@@ -3,7 +3,8 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledImgProfileContainer = styled.div<{
   size: NumberConstructor;
-  hightlight: boolean;
+  highlight: boolean;
+  bgColor: string;
 }>`
   display: flex;
   flex-direction: column;
@@ -13,7 +14,7 @@ export const StyledImgProfileContainer = styled.div<{
   height: ${({ size }) => size}px;
 
   ${({ highlight }) => highlight && `border: 2px solid ${COLORS.primaryBlue};`}
-  background-color: ${COLORS.primaryBlue};
+  background-color: ${({ bgColor }) => bgColor};
 
   box-sizing: border-box;
   border-radius: 50%;

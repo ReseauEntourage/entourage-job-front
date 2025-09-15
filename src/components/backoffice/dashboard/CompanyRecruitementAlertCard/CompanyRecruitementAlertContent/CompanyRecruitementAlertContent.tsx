@@ -2,7 +2,7 @@ import React from 'react';
 import { Spinner } from '@/src/components/utils/Spinner';
 import { CompanyRecruitementAlertEditModal } from '../CompanyRecruitementAlertModal/CompanyRecruitementAlertEditModal';
 import { RecruitementAlert } from 'src/api/types';
-import { Button, ImgProfile, LucidIcon } from 'src/components/utils';
+import { Button, ImgUserProfile, LucidIcon } from 'src/components/utils';
 import {
   StyledAlertHeader,
   StyledBadgesContainer,
@@ -87,7 +87,7 @@ export const CompanyRecruitementAlertContent = ({
               <StyledCandidatesAvatars>
                 {candidates.slice(0, 4).map((candidate, index) => (
                   <StyledAvatar key={index}>
-                    <ImgProfile
+                    <ImgUserProfile
                       user={candidate}
                       size={30}
                       hasPicture={candidate?.hasPicture || false}

@@ -17,7 +17,7 @@ import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { Text } from 'src/components/utils/Text';
-import { Department } from 'src/constants/departements';
+import { DepartmentName } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
@@ -58,7 +58,7 @@ export interface ProfileCardProps {
   nudges?: Nudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
   userCandidate?: UserCandidateWithUsers;
-  department?: Department;
+  department?: DepartmentName;
   job?: string;
   isAvailable: boolean;
   displayNudges?: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '@/src/api/types';
-import { Img, ImgProfile, Text } from '@/src/components/utils';
+import { Img, ImgUserProfile, Text } from '@/src/components/utils';
 import {
   StyledCollaboratorSmallCardContainer,
   StyledCollaboratorSmallCardInfosContainer,
@@ -29,7 +29,7 @@ export const CollaboratorSmallCard = ({
     >
       {user && (
         <div>
-          <ImgProfile
+          <ImgUserProfile
             user={user}
             hasPicture={user.userProfile.hasPicture}
             size={80}

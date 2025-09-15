@@ -1,16 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CompanyWithUsers } from '@/src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
-import { fetchSelectedCompanyAdapter } from './company.adapters';
+import {
+  fetchSelectedCompanyAdapter,
+  updateCompanyLogoAdapter,
+} from './company.adapters';
 
 export interface State {
   fetchSelectedCompany: RequestState<typeof fetchSelectedCompanyAdapter>;
+  updateCompanyLogo: RequestState<typeof updateCompanyLogoAdapter>;
   selectedCompanyId: string | null;
   selectedCompany: CompanyWithUsers | null;
 }
 
 const initialState: State = {
   fetchSelectedCompany: fetchSelectedCompanyAdapter.getInitialState(),
+  updateCompanyLogo: updateCompanyLogoAdapter.getInitialState(),
   selectedCompanyId: null,
   selectedCompany: null,
 };
@@ -28,10 +33,11 @@ export const slice = createSlice({
         ) {
           state.selectedCompany = action.payload;
         },
-        fetchSelectedCompanyFailed(_state) {
-          // En cas d'échec, on ne modifie pas la société sélectionnée
-        },
       }
+    ),
+    ...updateCompanyLogoAdapter.getReducers<State>(
+      (state) => state.updateCompanyLogo,
+      {}
     ),
     setSelectedCompanyId(state, action: PayloadAction<string | null>) {
       state.selectedCompanyId = action.payload;

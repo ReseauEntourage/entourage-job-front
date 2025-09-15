@@ -2,7 +2,7 @@ import React from 'react';
 import { Nudge, UserProfileSectorOccupation } from 'src/api/types';
 import { CardListItem } from 'src/components/utils/CardList';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
-import { Department } from 'src/constants/departements';
+import { DepartmentName } from 'src/constants/departements';
 import { UserRoles } from 'src/constants/users';
 
 interface DirectoryItemProps {
@@ -12,7 +12,7 @@ interface DirectoryItemProps {
   role: UserRoles;
   nudges?: Nudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
-  department: Department;
+  department: DepartmentName;
   job?: string;
   isAvailable: boolean;
   displayNudges: boolean;

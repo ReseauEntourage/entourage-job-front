@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import { ProfilesFilters } from 'src/api/types';
-import { Department } from 'src/constants/departements';
+import { DepartmentName } from 'src/constants/departements';
 import { useDirectoryRole } from './useDirectoryRole';
 
 // Get the current query params for the directory filters
@@ -15,7 +15,7 @@ export function useDirectoryQueryParams() {
     role,
     nudgeIds: (nudgeIds || []) as string[],
     businessSectorIds: (businessSectorIds || []) as string[],
-    departments: (departments || []) as Department | Department[],
+    departments: (departments || []) as DepartmentName | DepartmentName[],
     contactTypes: (contactTypes || []) as ContactTypeEnum[],
   };
 
