@@ -1,5 +1,6 @@
 import {
   fetchSelectedCompanyAdapter,
+  updateCompanyAdapter,
   updateCompanyLogoAdapter,
 } from './company.adapters';
 import { RootState } from './company.slice';
@@ -12,6 +13,11 @@ export const fetchSelectedCompanySelectors =
 export const updateCompanyLogoSelectors =
   updateCompanyLogoAdapter.getSelectors<RootState>(
     (state) => state.company.updateCompanyLogo
+  );
+
+export const updateCompanySelectors =
+  updateCompanyAdapter.getSelectors<RootState>(
+    (state) => state.company.updateCompany
   );
 
 export function selectSelectedCompanyId(state: RootState) {
