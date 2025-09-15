@@ -1,5 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { assertIsDefined } from '@/src/utils/asserts';
+import { currentUserActions } from '../current-user';
+import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import { selectSelectedCompanyId } from './company.selectors';
 import { slice } from './company.slice';
@@ -56,8 +58,21 @@ function* updateCompanyRequestedSaga(
 
     yield* call(() => Api.updateCompany(companyData));
     yield* put(updateCompanySucceeded());
+    yield* put(currentUserActions.fetchUserRequested());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: `Le CV a bien été importé`,
+      })
+    );
   } catch (error) {
     yield* put(updateCompanyFailed(null));
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message: 'Une erreur est survenue',
+      })
+    );
   }
 }
 
