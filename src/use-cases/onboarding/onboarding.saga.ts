@@ -4,6 +4,7 @@ import { Api } from 'src/api';
 import { CompanyGoal, UpdateCompanyDto } from 'src/api/types';
 import {
   CandidateCoachStepData,
+  CoachStepData,
   CompanyStepData,
   OnboardingFlow,
 } from 'src/components/backoffice/onboarding/Onboarding.types';
@@ -125,6 +126,13 @@ export function* sendStepDataOnboardingSaga() {
         yield* call(() => Api.updateCompanyLogo(formData));
       }
     } else {
+      if (flow === OnboardingFlow.COACH) {
+        const { companyId } = stepData as CoachStepData;
+
+        // Update the company user profile
+        yield* call(() => Api.putUserCompany(companyId?.value || null));
+      }
+
       // Handle CANDIDATE and COACH flows
       const {
         externalCv,

@@ -42,7 +42,10 @@ export const CoachOnboardingStepContents = {
       "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
     form: formOnboardingCoachJob,
     defaultValues: (user) => {
-      return getCoachDefaultProfessionalValuesWithLinkedIn(user.userProfile);
+      return getCoachDefaultProfessionalValuesWithLinkedIn(
+        user.userProfile,
+        user.companies ? user.companies[0] : null
+      );
     },
     skippedBy: (user: User) =>
       !!(

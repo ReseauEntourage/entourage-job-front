@@ -12,6 +12,7 @@ import {
   updateCandidateAdapter,
   updateProfileAdapter,
   updateUserAdapter,
+  updateUserCompanyAdapter,
   updateUserProfilePictureAdapter,
   uploadExternalCvAdapter,
 } from './current-user.adapters';
@@ -38,6 +39,11 @@ export const readDocumentSelectors =
 export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(
   (state) => state.currentUser.updateUser
 );
+
+export const updateUserCompanySelectors =
+  updateUserCompanyAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.updateUserCompany
+  );
 
 export const updateCandidateSelectors =
   updateCandidateAdapter.getSelectors<RootState>(

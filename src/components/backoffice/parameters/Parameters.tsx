@@ -80,6 +80,7 @@ export const Parameters = () => {
             >
               <ParamProfessionalInformations
                 sectorOccupations={user.userProfile.sectorOccupations ?? []}
+                smallCard
                 isEditable
               />
               <ProfileDescription

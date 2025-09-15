@@ -33,6 +33,18 @@ export const updateUserAdapter = createRequestAdapter(
   }
 >();
 
+export const updateUserCompanyAdapter = createRequestAdapter(
+  'updateUserCompany'
+).withPayloads<
+  {
+    companyId: string | null;
+  },
+  void,
+  {
+    error: UpdateError;
+  }
+>();
+
 export const updateProfileAdapter = createRequestAdapter(
   'updateProfile'
 ).withPayloads<

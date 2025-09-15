@@ -1,15 +1,18 @@
+import Link from 'next/link';
 import React from 'react';
 import { UserRoles } from '@/src/constants/users';
-import { UserProfileSectorOccupation } from 'src/api/types';
+import { Company, UserProfileSectorOccupation } from 'src/api/types';
 import { Text, TextSize, TextWeight } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import {
   StyledCareerPathSectorOccupationTagContainer,
   StyledCareerPathSimpleSentenceTag,
+  StyledCompanyName,
 } from './ProfileCareerPathSentence.styles';
 
 interface ProfileCareerPathSentenceProps {
   sectorOccupations: UserProfileSectorOccupation[];
+  company?: Company | null;
   asSimpleSentence?: boolean;
   size?: TextSize;
   weight?: TextWeight;
@@ -19,6 +22,7 @@ interface ProfileCareerPathSentenceProps {
 
 export const ProfileCareerPathSentence = ({
   sectorOccupations,
+  company,
   asSimpleSentence = false,
   size = 'normal',
   weight = 'normal',
@@ -59,6 +63,15 @@ export const ProfileCareerPathSentence = ({
       <>
         <Text>
           Je travaille comme <strong>{currentJob}</strong>
+          {company && (
+            <>
+              {' '}
+              chez{' '}
+              <Link href={`/backoffice/companies/${company.id}`}>
+                <StyledCompanyName>{company.name}</StyledCompanyName>
+              </Link>
+            </>
+          )}
         </Text>
 
         <StyledCareerPathSectorOccupationTagContainer>
@@ -79,6 +92,7 @@ export const ProfileCareerPathSentence = ({
       </>
     );
   }
+
   return (
     <>
       <Text size={size} weight={weight}>

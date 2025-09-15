@@ -11,7 +11,6 @@ import {
 
 export const useUpdateUser = (user: UserWithUserCandidate) => {
   const dispatch = useDispatch();
-
   const [closeModal, setCloseModal] = useState<boolean>(false);
 
   const updateUserStatus = useSelector(
@@ -37,8 +36,21 @@ export const useUpdateUser = (user: UserWithUserCandidate) => {
         setCloseModal(true);
       }
     },
-    [dispatch, user]
+    [dispatch, user.id]
   );
 
-  return { updateUser, closeModal };
+  const updateUserCompany = useCallback(
+    (companyId: string | null) => {
+      if (user.id) {
+        dispatch(
+          currentUserActions.updateUserCompanyRequested({
+            companyId,
+          })
+        );
+      }
+    },
+    [dispatch, user.id]
+  );
+
+  return { updateUser, updateUserCompany, closeModal };
 };
