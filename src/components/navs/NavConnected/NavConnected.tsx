@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { renderLinks } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.utils';
+import { renderLinks } from '@/src/components/navs/NavConnected/NavConnectedContent/NavConnectedContent.utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useNotifBadges } from 'src/hooks/useNotifBadges';
@@ -12,9 +12,9 @@ import {
   selectConversations,
   selectSelectedConversation,
 } from 'src/use-cases/messaging';
-import { HeaderConnectedContent } from './HeaderConnectedContent';
+import { NavConnectedContent } from './NavConnectedContent';
 
-export const HeaderConnected = () => {
+export const NavConnected = () => {
   const user = useAuthenticatedUser();
   const selectedConversation = useSelector(selectSelectedConversation);
   const conversations = useSelector(selectConversations);
@@ -44,7 +44,7 @@ export const HeaderConnected = () => {
   }, [dispatch, user, selectedConversation, conversations]);
 
   return (
-    <HeaderConnectedContent
+    <NavConnectedContent
       badges={badges}
       links={linksConnected.links}
       dropdown={linksConnected.dropdown}

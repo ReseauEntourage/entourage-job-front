@@ -5,10 +5,10 @@ import {
   Offcanvas,
   OffcanvasRef,
 } from '@/src/components/utils/OffCanvas/Offcanvas';
-import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
+import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import {
-  StyledHeaderMobile,
   StyledMessagingIconContainer,
+  StyledNavContainerMobile,
 } from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
@@ -22,23 +22,23 @@ import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
-import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
+import { StyledConnectedItemMobile } from './NavConnectedContent.styles';
+import { NavConnectedContentProps } from './NavConnectedContent.types';
 import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
 
-export const HeaderConnectedContentMobile = ({
+export const NavConnectedContentMobile = ({
   badges,
   messaging,
   links = {
-    [UserRoles.ADMIN]: [HeaderConnectedMainItemDefaultProps],
-    [UserRoles.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
-    [UserRoles.COACH]: [HeaderConnectedMainItemDefaultProps],
-    [UserRoles.REFERER]: [HeaderConnectedMainItemDefaultProps],
+    [UserRoles.ADMIN]: [NavConnectedMainItemDefaultProps],
+    [UserRoles.CANDIDATE]: [NavConnectedMainItemDefaultProps],
+    [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
+    [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
-  dropdown = [HeaderConnectedMainItemDefaultProps],
-}: HeaderConnectedContentProps) => {
+  dropdown = [NavConnectedMainItemDefaultProps],
+}: NavConnectedContentProps) => {
   const offcanvasRef = useRef<OffcanvasRef>(null);
   const user = useAuthenticatedUser();
 
@@ -46,7 +46,7 @@ export const HeaderConnectedContentMobile = ({
   const logoLink = links[user?.role][0];
 
   return (
-    <StyledHeaderMobile id="header">
+    <StyledNavContainerMobile id="nav">
       <Navbar
         backgroundColor="black"
         sticky
@@ -188,6 +188,6 @@ export const HeaderConnectedContentMobile = ({
           })}
         </ul>
       </Offcanvas>
-    </StyledHeaderMobile>
+    </StyledNavContainerMobile>
   );
 };

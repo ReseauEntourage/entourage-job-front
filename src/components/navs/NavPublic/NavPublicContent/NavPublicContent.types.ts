@@ -1,4 +1,4 @@
-export interface HeaderPublicContentProps {
+export interface NavPublicContentProps {
   links: {
     href: string;
     name: string;

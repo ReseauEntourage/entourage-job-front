@@ -1,17 +1,15 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
+import { StyledNavContainerDesktop } from '@/src/components/headers/Header.styles';
 import { Nav, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledPublicItem } from './HeaderPublicContent.styles';
-import { HeaderPublicContentProps } from './HeaderPublicContent.types';
+import { StyledPublicItem } from './NavPublicContent.styles';
+import { NavPublicContentProps } from './NavPublicContent.types';
 
-export const HeaderPublicContentDesktop = ({
-  links,
-}: HeaderPublicContentProps) => {
+export const NavPublicContentDesktop = ({ links }: NavPublicContentProps) => {
   const { asPath } = useRouter();
 
   const rightItems = [
@@ -64,7 +62,7 @@ export const HeaderPublicContentDesktop = ({
     </div>,
   ];
   return (
-    <StyledHeaderDesktop id="header">
+    <StyledNavContainerDesktop id="nav">
       <Navbar
         backgroundColor="darkerBlack"
         sticky
@@ -75,6 +73,6 @@ export const HeaderPublicContentDesktop = ({
         }
         right={<Nav items={rightItems} color="white" />}
       />
-    </StyledHeaderDesktop>
+    </StyledNavContainerDesktop>
   );
 };
