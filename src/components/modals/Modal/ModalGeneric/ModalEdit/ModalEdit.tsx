@@ -41,6 +41,7 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   closeOnNextRender = false,
 }: ModalEditProps<S>) {
   const { onClose } = useModalContext();
+
   return (
     <ModalGeneric
       title={title}
@@ -59,8 +60,8 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
         }}
         onError={onError}
         onSubmit={(fields, setError) => {
-          if (!onClose) return;
-          onSubmit(fields, onClose, setError);
+          const safeClose = onClose || (() => {});
+          onSubmit(fields, safeClose, setError);
         }}
       />
     </ModalGeneric>

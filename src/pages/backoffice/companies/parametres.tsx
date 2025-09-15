@@ -6,10 +6,7 @@ import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 
 const CompanyParametresPage = () => {
   const currentUser = useAuthenticatedUser();
-  const company = useMemo(
-    () => currentUser?.companies?.[0],
-    [currentUser.companies]
-  );
+  const company = useMemo(() => currentUser?.company, [currentUser.company]);
 
   if (!company) {
     return null;
