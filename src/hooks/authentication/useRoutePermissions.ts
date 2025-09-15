@@ -13,18 +13,22 @@ export function useRoutePermissions() {
   const currentUserRole = currentUser?.role;
 
   const isUserAuthorized = useMemo(() => {
+    // Recherche des règles applicables à la route actuelle
     const routesRules = authenticatedPermissions.filter((route) => {
       return route.paths.some((path) => pathname.startsWith(path));
     });
 
+    // Si aucune règle trouvée, la route est publique (autorisée)
     if (routesRules.length === 0) {
       return true;
     }
 
+    // Si l'utilisateur n'est pas connecté et qu'il existe des règles, accès refusé
     if (!isUserAuthenticated) {
       return false;
     }
 
+    // Vérifier si la route autorise tous les rôles authentifiés
     const areAnyRolesAllowed = routesRules.some(
       (routeRules) => routeRules.roles === '*'
     );
@@ -33,7 +37,8 @@ export function useRoutePermissions() {
       return true;
     }
 
-    return routesRules.some((routeRules) => {
+    // Vérifier si le rôle de l'utilisateur correspond à un des rôles autorisés
+    const isRoleAuthorized = routesRules.some((routeRules) => {
       assertCondition(
         Array.isArray(routeRules.roles),
         'Roles must be an array'
@@ -43,6 +48,7 @@ export function useRoutePermissions() {
         return role === currentUserRole;
       });
     });
+    return isRoleAuthorized;
   }, [isUserAuthenticated, pathname, currentUserRole]);
 
   return {
