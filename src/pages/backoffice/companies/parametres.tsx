@@ -4,11 +4,7 @@ import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticate
 
 const CompanyParametresPage = () => {
   const currentUser = useAuthenticatedUser();
-
-  const company = useMemo(
-    () => currentUser?.companies?.[0],
-    [currentUser.companies]
-  );
+  const company = useMemo(() => currentUser?.company, [currentUser.company]);
 
   if (!company) {
     return null;
