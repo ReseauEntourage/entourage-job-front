@@ -96,7 +96,7 @@ export const stepsByContext = {
       cta: {
         label: 'Inviter',
         onClick: (currentUser) => {
-          const companyId = currentUser?.companies?.[0]?.id || null;
+          const companyId = currentUser?.company?.id || null;
           if (!companyId) return;
           openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
         },
