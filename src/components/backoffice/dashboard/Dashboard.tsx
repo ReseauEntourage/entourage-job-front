@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -34,7 +34,10 @@ export const Dashboard = () => {
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
-  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+  const isCompanyAdmin = useMemo(
+    () => user.company && user.company.companyUser?.isAdmin,
+    [user.company]
+  );
 
   if (isDesktop) {
     return (
@@ -51,6 +54,9 @@ export const Dashboard = () => {
                 <DashboardCompanyCard company={user.company} />
               )}
               <DashboardProfileCard />
+              {!isCompanyAdmin && user.company && (
+                <DashboardCompanyCard company={user.company} />
+              )}
               {isNormalUser && <DashboardAvailabilityCard />}
               <DashboardReferentCard />
             </StyledDashboardLeftColumn>

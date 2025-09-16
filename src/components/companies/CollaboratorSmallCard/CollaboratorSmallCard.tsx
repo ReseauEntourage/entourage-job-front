@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { User } from '@/src/api/types';
-import { Img, ImgUserProfile, Text } from '@/src/components/utils';
+import { ImgUserProfile, LegacyImg, Text } from '@/src/components/utils';
 import {
   StyledCollaboratorSmallCardContainer,
   StyledCollaboratorSmallCardInfosContainer,
@@ -16,18 +16,17 @@ export const CollaboratorSmallCard = ({
   user,
   email,
 }: CollaboratorSmallCardProps) => {
-  const openProfile = () => {
+  const openProfile = useCallback(() => {
     if (user) {
       window.location.href = `/backoffice/profile/${user.id}`;
     }
-  };
-
+  }, [user]);
   return (
     <StyledCollaboratorSmallCardContainer
-      pointer={user}
+      pointer={!!user}
       onClick={user ? openProfile : undefined}
     >
-      {user && (
+      {!!user && (
         <div>
           <ImgUserProfile
             user={user}
@@ -36,9 +35,9 @@ export const CollaboratorSmallCard = ({
           />
         </div>
       )}
-      {!user && email && (
+      {!!email && (
         <StyledCollaboratorSmallCardPictureContainerStyled>
-          <Img
+          <LegacyImg
             src="/static/img/profile-placeholder.png"
             alt="Default Profile"
             cover
@@ -46,7 +45,7 @@ export const CollaboratorSmallCard = ({
         </StyledCollaboratorSmallCardPictureContainerStyled>
       )}
       <StyledCollaboratorSmallCardInfosContainer>
-        {user ? (
+        {!!user && (
           <>
             <Text weight="semibold">
               {user.firstName} {user.lastName.charAt(0).toUpperCase()}.
@@ -55,7 +54,8 @@ export const CollaboratorSmallCard = ({
               <Text color="darkGray">{user.userProfile.currentJob} </Text>
             )}
           </>
-        ) : (
+        )}
+        {!!email && (
           <>
             <Text weight="semibold">{email}</Text>
             <Text color="darkGray">Invitation envoyée</Text>

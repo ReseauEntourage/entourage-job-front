@@ -1,11 +1,10 @@
 import React from 'react';
 import { Company } from '@/src/api/types';
-import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
-import { openModal } from '@/src/components/modals/Modal';
 import { Button, Card, ImgCompanyProfile, Text } from 'src/components/utils';
 import {
   StyledContainer,
   StyledCTAContainer,
+  StyledNameAndReferentContainer,
   StyledPictureContainer,
 } from './DashboardCompanyCard.styles';
 
@@ -16,11 +15,11 @@ export interface DashboardCompanyCardProps {
 export const DashboardCompanyCard = ({
   company,
 }: DashboardCompanyCardProps) => {
-  const companySettingsUrl = `/`; // TODO : replace with actual company settings URL
+  const companySettingsUrl = `/backoffice/companies/parametres`;
+  const companyViewUrl = `/backoffice/companies/${company.id}`;
+  const isCompanyAdmin = company.companyUser?.isAdmin;
+  const companyAdmin = company.admin;
 
-  const openCompanySendInviteModal = () => {
-    openModal(<CompanyInviteCollaboratorsModal companyId={company.id} />);
-  };
   return (
     <Card
       dataTestId="dashboard-profile-card"
@@ -31,22 +30,31 @@ export const DashboardCompanyCard = ({
         <StyledPictureContainer>
           <ImgCompanyProfile company={company} size={110} highlight />
         </StyledPictureContainer>
-        <Text size="large" color="primaryBlue" weight="bold" center>
-          {company.name}
-        </Text>
-        <StyledCTAContainer>
-          <Button variant="secondary" rounded href={companySettingsUrl}>
-            Modifier
-          </Button>
+        <div>
+          <Text size="large" color="primaryBlue" weight="bold" center>
+            {company.name}
+          </Text>
+          <StyledNameAndReferentContainer>
+            <Text>
+              {isCompanyAdmin
+                ? `Vous êtes le référent`
+                : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
+                    .charAt(0)
+                    .toUpperCase()}`}
+            </Text>
+          </StyledNameAndReferentContainer>
+        </div>
 
-          {/* Before implementing the next step invite collaborators */}
-          <Button
-            variant="secondary"
-            rounded
-            onClick={openCompanySendInviteModal}
-          >
-            Inviter des collaborateurs
-          </Button>
+        <StyledCTAContainer>
+          {isCompanyAdmin ? (
+            <Button variant="secondary" rounded href={companySettingsUrl}>
+              Modifier ma page entreprise
+            </Button>
+          ) : (
+            <Button variant="secondary" rounded href={companyViewUrl}>
+              Voir ma page entreprise
+            </Button>
+          )}
         </StyledCTAContainer>
       </StyledContainer>
     </Card>

@@ -259,6 +259,10 @@ export type Company = {
   pendingInvitations?: Invitation[];
   businessSectors?: BusinessSector[];
   department: Department;
+  admin: {
+    firstName: string;
+    lastName: string;
+  };
 };
 
 export type CompaniesFilters = {

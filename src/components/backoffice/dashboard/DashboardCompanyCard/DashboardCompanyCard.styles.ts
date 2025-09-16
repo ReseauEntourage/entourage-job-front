@@ -12,6 +12,12 @@ export const StyledPictureContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const StyledNameAndReferentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const StyledCTAContainer = styled.div`
   display: flex;
   justify-content: center;
