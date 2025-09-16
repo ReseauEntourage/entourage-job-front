@@ -1,1 +1,1 @@
-export * from './DirectoryItem';
+export * from './DirectoryUserItem';

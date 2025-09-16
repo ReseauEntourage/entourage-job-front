@@ -1,6 +1,6 @@
 import React from 'react';
+import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
 import { StyledBackground } from 'src/components/utils/BackgroundImage/BackgroundImage.styles';
-import { Img } from 'src/components/utils/Img';
 import { useIsDesktop } from 'src/hooks/utils';
 
 export interface BackgroundImageProps {
@@ -37,7 +37,7 @@ export const BackgroundImage = ({
       >
         <div className="banner-content">{children}</div>
         <div className="banner">
-          <Img src={isDesktop ? img : imgMobile || img} cover alt={alt} />
+          <LegacyImg src={isDesktop ? img : imgMobile || img} cover alt={alt} />
         </div>
       </div>
     </StyledBackground>

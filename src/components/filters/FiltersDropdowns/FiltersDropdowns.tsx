@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { LucidIcon } from '../utils/Icons/LucidIcon';
+import { LucidIcon } from '../../utils/Icons/LucidIcon';
 import { Button, Tag } from 'src/components/utils';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
+import { StyledDropdownContainer } from './FiltersDropdowns.styles';
 
 const uuidValue1 = uuid();
 const uuidValue2 = uuid();
@@ -114,18 +115,16 @@ export const FiltersDropdowns = ({
                     fullWidth ? 'uk-width-expand uk-margin-small-bottom' : ''
                   }`}
                 >
-                  <div
-                    className={`uk-inline ent-select-search ${
-                      smallSelectors ? 'ent-select-search-no-padding' : ''
-                    } ${showSeparator ? 'ent-select-separator' : ''}`}
-                    style={{ opacity: disabled ? 0.6 : 1 }}
+                  <StyledDropdownContainer
+                    disabled={disabled}
+                    smallSelectors={smallSelectors}
+                    showSeparator={showSeparator}
                   >
                     <Button
                       disabled={disabled}
-                      variant="default"
-                      className={`uk-width-expand ${
-                        filters[key].length === 0 ? 'uk-text-muted' : ''
-                      }`}
+                      variant="text"
+                      size="small"
+                      color="mediumGray"
                     >
                       <span className="uk-width-expand uk-text-left uk-flex uk-flex-middle uk-margin-small-right">
                         {title}
@@ -144,9 +143,12 @@ export const FiltersDropdowns = ({
                       <LucidIcon name="ChevronDown" />
                     </Button>
                     <div
-                      id={`dropdown-filters-toggle-${key}`}
                       data-uk-dropdown="mode: click;"
-                      className="uk-height-max-medium uk-overflow-auto uk-width-medium"
+                      style={{
+                        minWidth: '300px',
+                        maxHeight: '400px',
+                        overflowY: 'auto',
+                      }}
                     >
                       {priority && priority.length > 0 ? (
                         <>
@@ -182,7 +184,7 @@ export const FiltersDropdowns = ({
                         )
                       )}
                     </div>
-                  </div>
+                  </StyledDropdownContainer>
                 </div>
               );
             }

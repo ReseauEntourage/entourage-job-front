@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
-import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
+import { DirectoryUserItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
 import { NormalUserRoles, UserRoles } from 'src/constants/users';
@@ -43,7 +43,7 @@ export const DashboardRecommendationsCard = () => {
   const recommendationsList = useMemo(() => {
     return recommendations.map((profile) => {
       return (
-        <DirectoryItem
+        <DirectoryUserItem
           key={profile.id}
           id={profile.id}
           firstName={profile.firstName}

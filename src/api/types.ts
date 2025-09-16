@@ -261,6 +261,12 @@ export type Company = {
   department: Department;
 };
 
+export type CompaniesFilters = {
+  search?: string;
+  departments: string[];
+  businessSectorIds: string[];
+};
+
 export type User = {
   coach: User;
   id: string;

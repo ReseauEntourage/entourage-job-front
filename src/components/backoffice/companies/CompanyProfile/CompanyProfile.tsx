@@ -1,19 +1,20 @@
 import React from 'react';
 import { useSelectedCompany } from '@/src/hooks/useSelectedCompany';
 import { useIsDesktop } from '@/src/hooks/utils';
-import { HeaderCompany } from '../../headers/HeaderCompany/HeaderCompany';
-import { Section } from '../../utils';
+import { HeaderCompany } from '../../../headers/HeaderCompany/HeaderCompany';
+import { Section } from '../../../utils';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
-} from '../Backoffice.styles';
+} from '../../Backoffice.styles';
+import { CompanyCollaboratorsPreviewList } from './CompanyParts/CompanyCollaboratorsPreviewList/CompanyCollaboratorsPreviewList';
+import { CompanyDescription } from './CompanyParts/CompanyDescription/CompanyDescription';
 import {
   StyledCompanyLeftColumn,
   StyledCompanyRightColumn,
-} from './Company.styles';
-import { CompanyDescription } from './CompanyParts/CompanyDescription/CompanyDescription';
+} from './CompanyProfile.styles';
 
-export const Company = () => {
+export const CompanyProfile = () => {
   const { selectedCompany } = useSelectedCompany();
   const isDesktop = useIsDesktop();
 
@@ -38,6 +39,7 @@ export const Company = () => {
                 isEditable={false}
               />
             )}
+            <CompanyCollaboratorsPreviewList companyId={selectedCompany.id} />
           </StyledCompanyLeftColumn>
           <StyledCompanyRightColumn>Right column</StyledCompanyRightColumn>
         </StyledBackofficeGrid>

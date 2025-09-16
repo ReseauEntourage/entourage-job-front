@@ -2,7 +2,7 @@ import React from 'react';
 import { SimpleLink } from 'src/components/utils/SimpleLink';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { Img } from './Img';
+import { LegacyImg } from './LegacyImg';
 
 interface LogoProps {
   logoKey: string;
@@ -22,14 +22,14 @@ export const Logo = ({ logoKey, link, bis }: LogoProps) => {
       key={logoKey}
       href={link}
     >
-      <Img
+      <LegacyImg
         src={`/static/img/partners/${logoKey}/logo.png`}
         width={150}
         height={100}
         alt={logoKey}
       />
       {bis && (
-        <Img
+        <LegacyImg
           src={`/static/img/partners/${logoKey}/logo_bis.png`}
           width={150}
           height={100}

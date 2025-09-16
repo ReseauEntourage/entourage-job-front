@@ -3,7 +3,7 @@ import Image from 'next/legacy/image';
 import React from 'react';
 import { addPrefix } from 'src/utils/Prefixing';
 
-interface ImgProps {
+interface LegacyImgProps {
   src: string | StaticImageData;
   alt: string;
   width?: number;
@@ -13,7 +13,7 @@ interface ImgProps {
   id?: string;
 }
 
-export const Img = ({
+export const LegacyImg = ({
   src,
   alt,
   width,
@@ -21,7 +21,7 @@ export const Img = ({
   cover = false,
   onError = () => {},
   id = '',
-}: ImgProps) => {
+}: LegacyImgProps) => {
   if (cover) {
     return (
       <Image

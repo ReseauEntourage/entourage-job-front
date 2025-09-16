@@ -1,9 +1,15 @@
 import {
+  fetchCompaniesAdapter,
   fetchSelectedCompanyAdapter,
   updateCompanyAdapter,
   updateCompanyLogoAdapter,
 } from './company.adapters';
 import { RootState } from './company.slice';
+
+export const fetchCompaniesSelectors =
+  fetchCompaniesAdapter.getSelectors<RootState>(
+    (state) => state.company.fetchCompanies
+  );
 
 export const fetchSelectedCompanySelectors =
   fetchSelectedCompanyAdapter.getSelectors<RootState>(
@@ -26,6 +32,18 @@ export function selectSelectedCompanyId(state: RootState) {
 
 export function selectSelectedCompany(state: RootState) {
   return state.company.selectedCompany;
+}
+
+export function selectCompanies(state: RootState) {
+  return state.company.companies;
+}
+
+export function selectCompaniesHasFetchedAll(state: RootState) {
+  return state.company.companiesHasFetchedAll;
+}
+
+export function selectCompaniesOffset(state: RootState) {
+  return state.company.companiesOffset;
 }
 
 export const selectIsFetchCompanySelectors =

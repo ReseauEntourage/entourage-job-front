@@ -7,8 +7,8 @@ import {
   IlluPoigneeDeMain,
   IlluReseauxSociaux,
 } from '@/assets/icons/icons';
+import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
 import { SelectListType } from '../components/utils/Inputs/SelectList';
-import { Img } from 'src/components/utils/Img';
 import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
 
@@ -30,7 +30,7 @@ export const ProfileNudges: (FilterConstant<string> & {
 })[] = [
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-poignee-main.png"
         alt="Poignée de main"
         {...iconSizeProps}
@@ -45,7 +45,7 @@ export const ProfileNudges: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-mallette.png"
         alt="Entretien"
         {...iconSizeProps}
@@ -60,7 +60,7 @@ export const ProfileNudges: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-CV.png"
         alt="CV"
         {...iconSizeProps}
@@ -75,7 +75,7 @@ export const ProfileNudges: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-disscution.png"
         alt="Disscution"
         {...iconSizeProps}
@@ -90,7 +90,7 @@ export const ProfileNudges: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -128,7 +128,7 @@ export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
 })[] = [
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-poignee-main.png"
         alt="Poignée de main"
         {...iconSizeProps}
@@ -141,7 +141,7 @@ export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-mallette.png"
         alt="Mallette"
         {...iconSizeProps}
@@ -154,7 +154,7 @@ export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-CV.png"
         alt="CV"
         {...iconSizeProps}
@@ -167,7 +167,7 @@ export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-disscution.png"
         alt="Disscution"
         {...iconSizeProps}
@@ -180,7 +180,7 @@ export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -202,7 +202,7 @@ export const ParametresNudgeCardContents: {
   [UserRoles.CANDIDATE]: [
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
@@ -215,7 +215,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
@@ -228,7 +228,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-CV.png"
           alt="CV"
           {...iconSizeProps}
@@ -241,7 +241,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-disscution.png"
           alt="Disscution"
           {...iconSizeProps}
@@ -254,7 +254,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -270,7 +270,7 @@ export const ParametresNudgeCardContents: {
   [UserRoles.COACH]: [
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-CV.png"
           alt="CV"
           {...iconSizeProps}
@@ -283,7 +283,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
@@ -296,7 +296,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
@@ -309,7 +309,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-disscution.png"
           alt="Disscution"
           {...iconSizeProps}
@@ -323,7 +323,7 @@ export const ParametresNudgeCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}

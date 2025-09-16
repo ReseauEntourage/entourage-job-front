@@ -1,4 +1,4 @@
-import { COLORS, FONT_WEIGHTS } from 'src/constants/styles';
+import { Color, FONT_WEIGHTS } from 'src/constants/styles';
 
 export type TextSize =
   | 'xsmall'
@@ -17,7 +17,7 @@ export interface TextProps {
   children: React.ReactNode;
   size?: TextSize;
   weight?: TextWeight;
-  color?: keyof typeof COLORS;
+  color?: Color;
   variant?: TextVariant;
   center?: boolean;
   textAlign?: TextAlign;

@@ -8,11 +8,12 @@ import {
   StyledBackofficeGrid,
 } from '../../Backoffice.styles';
 import { LayoutBackOffice } from '../../LayoutBackOffice';
+import { CompanyCollaboratorsPreviewList } from '../CompanyProfile/CompanyParts/CompanyCollaboratorsPreviewList/CompanyCollaboratorsPreviewList';
+import { CompanyDescription } from '../CompanyProfile/CompanyParts/CompanyDescription/CompanyDescription';
 import {
   StyledCompanyLeftColumn,
   StyledCompanyRightColumn,
-} from '../Company.styles';
-import { CompanyDescription } from '../CompanyParts/CompanyDescription/CompanyDescription';
+} from '../CompanyProfile/CompanyProfile.styles';
 
 export interface CompanyParametersProps {
   company: Company;
@@ -36,6 +37,11 @@ export const CompanyParameters = ({ company }: CompanyParametersProps) => {
             <StyledCompanyLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
               <CompanyDescription
                 description={company.description}
+                isEditable
+                smallCard
+              />
+              <CompanyCollaboratorsPreviewList
+                companyId={company.id}
                 isEditable
               />
             </StyledCompanyLeftColumn>

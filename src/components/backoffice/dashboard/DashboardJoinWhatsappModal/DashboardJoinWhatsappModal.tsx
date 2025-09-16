@@ -2,7 +2,7 @@ import React from 'react';
 import { UserRoles } from '@/src/constants/users';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
-import { Button, Img, SimpleLink } from 'src/components/utils';
+import { Button, LegacyImg, SimpleLink } from 'src/components/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledImageContainer } from './DashboardJoinWhatsappModal.styles';
 
@@ -17,7 +17,7 @@ export const DashboardJoinWhatsappModal = () => {
       scannez le QR code
       <StyledImageContainer>
         <SimpleLink href={user.whatsappZoneUrl} target="_blank">
-          <Img
+          <LegacyImg
             src={user.whatsappZoneQR}
             alt="QR code Whatsapp"
             width={250}
