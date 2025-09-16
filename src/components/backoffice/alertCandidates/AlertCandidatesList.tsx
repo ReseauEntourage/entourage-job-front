@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
+import { DirectoryUserItem } from '../directory/DirectoryItem';
 import { CardList } from 'src/components/utils/CardList';
 import {
   selectRecruitementAlertMatchingById,
@@ -21,7 +21,7 @@ export function AlertCandidatesList({
   const candidatesList = useMemo(() => {
     return candidates.map((candidate) => {
       return (
-        <DirectoryItem
+        <DirectoryUserItem
           key={candidate.id}
           id={candidate.id}
           firstName={candidate.firstName}

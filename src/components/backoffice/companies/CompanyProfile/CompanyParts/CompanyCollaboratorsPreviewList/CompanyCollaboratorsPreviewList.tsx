@@ -65,7 +65,7 @@ export const CompanyCollaboratorsPreviewList = ({
     Api.getCompanyByIdWithUsersAndPendingInvitations(companyId)
       .then((response) => {
         const { data } = response;
-        data.users = data.users.filter((user) => !user.companyUsers.isAdmin);
+        data.users = data.users.filter((user) => !user.companyUser.isAdmin);
         setCompanyWithCollaborators(data);
         setFetchCollaboratorsLoading(false);
       })
