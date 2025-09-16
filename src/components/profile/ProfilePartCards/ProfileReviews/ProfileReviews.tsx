@@ -26,9 +26,7 @@ export const ProfileReviews = ({
   const currentUserId = useSelector(selectCurrentUserId);
   const isOwnProfile = userId === currentUserId;
   const isCompleted = reviews.length > 0;
-  const suggestReview = useCallback(() => {
-    // console.log('suggestMyReview');
-  }, []);
+  const suggestReview = useCallback(() => {}, []);
 
   const fallback = useMemo(() => {
     const content = isEditable ? (

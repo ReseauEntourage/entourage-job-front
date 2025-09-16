@@ -22,6 +22,7 @@ import {
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
+  RecruitementAlertDto,
   Route,
   SocialMedia,
   UserDto,
@@ -88,6 +89,19 @@ export class APIHandler {
       );
     }
     return this.api.put(route, payload, { headers });
+  }
+
+  private patch(
+    route: string,
+    payload?: object,
+    headers?: AxiosRequestHeaders
+  ): Promise<AxiosResponse> {
+    if (payload && typeof payload !== 'object') {
+      throw new Error(
+        `${this.name} patch() function expects payload argument to be of type Object`
+      );
+    }
+    return this.api.patch(route, payload, { headers });
   }
 
   private delete(route: string): Promise<AxiosResponse> {
@@ -353,6 +367,18 @@ export class APIHandler {
     return this.get('/nudges', { params });
   }
 
+  /// ///////// ///
+  ///  Skills  ///
+  /// //////// ///
+
+  getAllSkills(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/skills', { params });
+  }
+
   /// /////////// ///
   /// companies  ///
   /// ///////// ///
@@ -387,6 +413,35 @@ export class APIHandler {
     return this.post(`/companies/logo`, formData, {
       'Content-Type': 'multipart/form-data',
     });
+  }
+
+  /// /////////////////// ///
+  /// recruitement alert  ///
+  /// /////////////////// ///
+
+  getRecruitementAlerts(): Promise<AxiosResponse> {
+    return this.get(`/recruitement-alerts`);
+  }
+
+  getRecruitementAlertMatching(alertId: string): Promise<AxiosResponse> {
+    return this.get(`/recruitement-alerts/${alertId}/matching`, {});
+  }
+
+  createRecruitementAlert(
+    params: RecruitementAlertDto
+  ): Promise<AxiosResponse> {
+    return this.post('/recruitement-alerts', params);
+  }
+
+  deleteRecruitementAlert(alertId: string): Promise<AxiosResponse> {
+    return this.delete(`/recruitement-alerts/${alertId}`);
+  }
+
+  updateRecruitementAlert(
+    alertId: string,
+    params: RecruitementAlertDto
+  ): Promise<AxiosResponse> {
+    return this.put(`/recruitement-alerts/${alertId}`, params);
   }
 
   inviteCollaboratorsFromCompany(

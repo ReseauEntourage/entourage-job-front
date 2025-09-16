@@ -1,11 +1,11 @@
 /* eslint import/no-unresolved: "off" */
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
@@ -36,6 +36,7 @@ export const CompanyCollaboratorsPreviewList = ({
   isEditable = false,
   smallCard = false,
 }: CompanyCollaboratorsPreviewListProps) => {
+  const router = useRouter();
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const [companyWithCollaborators, setCompanyWithCollaborators] =
@@ -56,15 +57,15 @@ export const CompanyCollaboratorsPreviewList = ({
     if (!isCompleted) {
       openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
     }
-    // TODO : Else, redirect to company collaborators page
-  }, [companyId, isCompleted]);
+    router.push(`/backoffice/companies/${companyId}/collaborators`);
+  }, [companyId, isCompleted, router]);
 
   useEffect(() => {
     setFetchCollaboratorsLoading(true);
     Api.getCompanyByIdWithUsersAndPendingInvitations(companyId)
       .then((response) => {
         const { data } = response;
-        // data.users = data.users.filter((user) => !user.companyUsers.isAdmin);
+        data.users = data.users.filter((user) => !user.companyUsers.isAdmin);
         setCompanyWithCollaborators(data);
         setFetchCollaboratorsLoading(false);
       })

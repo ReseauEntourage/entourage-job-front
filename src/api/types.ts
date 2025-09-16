@@ -7,6 +7,7 @@ import {
   DocumentNameType,
   ExternalMessageContactType,
   HeardAboutValue,
+  WorkingExperience,
 } from 'src/constants';
 import { AdminZone, DepartmentName } from 'src/constants/departements';
 import {
@@ -14,6 +15,7 @@ import {
   RegistrableUserRoles,
   UserRoles,
 } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
   | 'facebook'
@@ -33,6 +35,7 @@ export const APIRoutes = {
   EXTERNAL_CVS: 'external-cv',
   MESSAGING: 'messaging',
   COMPANIES: 'companies',
+  RECRUITEMENT_ALERTS: 'recruitement-alerts',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -297,7 +300,7 @@ export type User = {
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
-  companies?: Company[];
+  company?: Company;
   invitations?: Invitation[];
 };
 
@@ -673,10 +676,36 @@ export type ExternalCv = {
   url: string;
 };
 
+export type RecruitementAlert = {
+  id: string;
+  name: string;
+  jobName: string;
+  department: DepartmentName | null;
+  workingExperienceYears: WorkingExperience | null;
+  contractType: ContractValue | null;
+  companyId: string;
+  businessSectors?: BusinessSector[];
+  skills?: Skill[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type RecruitementAlertDto = {
+  companyId: string;
+  name: string;
+  jobName: string;
+  department: DepartmentName | null;
+  businessSectorIds?: string[];
+  workingExperienceYears: WorkingExperience | null;
+  contractType: ContractValue | null;
+  skills?: FilterConstant<string>[];
+};
+
 export type UserWithConversations = User & {
   conversations: Conversation[];
 };
 
 export type CompanyWithUsers = Company & {
   users: UserWithConversations[];
+  pendingInvitations: Invitation[];
 };
