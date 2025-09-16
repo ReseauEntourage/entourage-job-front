@@ -3,7 +3,7 @@ import { User } from '@/src/api/types';
 import { isReadDocument } from '@/src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from '@/src/components/utils/EthicsCharter/EthicsCharter';
 import { DocumentNames } from '@/src/constants';
-import { getCandidateDefaultProfessionalValues } from '../../../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+import { getCandidateDefaultProfessionalValues } from '../../../parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { OnboardingAI } from '../forms/OnboardingAI';
 import { OnboardingCandidateSocialSituation } from '../forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from '../forms/OnboardingProfileForm';

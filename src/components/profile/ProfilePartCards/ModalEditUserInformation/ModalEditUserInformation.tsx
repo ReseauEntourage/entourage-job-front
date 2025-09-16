@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { DefaultValues } from 'react-hook-form';
+import { useUpdateUser } from '@/src/components/backoffice/parameters/useUpdateUser';
 import { UserRoles } from '@/src/constants/users';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
-import { useUpdateUser } from 'src/components/backoffice/parametres-old/useUpdateUser';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import {
   formPersonalDataAsAdmin,
