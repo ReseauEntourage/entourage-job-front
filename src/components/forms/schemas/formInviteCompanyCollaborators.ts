@@ -1,6 +1,6 @@
 import { isEmail } from 'validator';
 import { FilterConstant } from '@/src/constants/utils';
-import { FormSchema } from '../FormSchema';
+import { FormComponents, FormSchema } from '../FormSchema';
 
 export const formInviteCompanyCollaborators: FormSchema<{
   emails: FilterConstant<string>[];
@@ -10,7 +10,7 @@ export const formInviteCompanyCollaborators: FormSchema<{
     {
       id: 'emails',
       name: 'emails',
-      component: 'select-creatable',
+      component: FormComponents.SELECT_CREATABLE,
       title: 'Emails',
       placeholder: 'Entrez les emails des collaborateurs à inviter',
       maxItems: 100,

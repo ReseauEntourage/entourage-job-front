@@ -276,11 +276,15 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           maxChar={field.maxChar}
           maxItems={field.maxItems}
           setIsMaxItemsReached={setIsMaxItemsReached}
-          loadOptions={async (callback, inputValue) => {
-            if (field.loadOptions) {
-              await field.loadOptions(callback, inputValue, getValue);
-            }
-          }}
+          loadOptions={
+            field.loadOptions
+              ? async (callback, inputValue) => {
+                  if (field.loadOptions) {
+                    await field.loadOptions(callback, inputValue, getValue);
+                  }
+                }
+              : undefined
+          }
         />
       );
     }
