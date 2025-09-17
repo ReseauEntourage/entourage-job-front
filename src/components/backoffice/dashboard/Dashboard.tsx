@@ -92,6 +92,9 @@ export const Dashboard = () => {
         <StyledBackofficeGrid className="mobile">
           <StyledDashboardRightColumn className="mobile">
             {isNormalUser && <DashboardNextSteps />}
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
+            )}
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             {isNormalUser && <DashboardRecommendationsCard />}
             <DashboardMessagingConversation />
