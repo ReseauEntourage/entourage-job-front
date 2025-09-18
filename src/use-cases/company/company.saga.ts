@@ -73,7 +73,7 @@ function* updateCompanyRequestedSaga(
     yield* put(
       notificationsActions.addNotification({
         type: 'success',
-        message: `Le CV a bien été importé`,
+        message: `Votre entreprise a bien été mise à jour`,
       })
     );
   } catch (error) {

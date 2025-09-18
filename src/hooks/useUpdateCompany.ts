@@ -1,13 +1,23 @@
 import _ from 'lodash';
-import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxRequestEvents } from '../constants';
 import { UpdateCompanyDto } from 'src/api/types';
-import { companyActions } from 'src/use-cases/company';
+import { companyActions, updateCompanySelectors } from 'src/use-cases/company';
 
 export const useUpdateCompany = () => {
   const dispatch = useDispatch();
-
   const [closeModal, setCloseModal] = useState<boolean>(false);
+
+  const updateCompanyStatus = useSelector(
+    updateCompanySelectors.selectUpdateCompanyStatus
+  );
+
+  useEffect(() => {
+    if (updateCompanyStatus === ReduxRequestEvents.SUCCEEDED) {
+      setCloseModal(true);
+    }
+  }, [updateCompanyStatus]);
 
   const updateCompany = useCallback(
     (newCompanyData: Partial<UpdateCompanyDto>): void => {
