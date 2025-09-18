@@ -56,8 +56,9 @@ export const CompanyCollaboratorsPreviewList = ({
   const ctaCallback = useCallback(() => {
     if (!isCompleted) {
       openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
+    } else {
+      router.push(`/backoffice/companies/${companyId}/collaborators`);
     }
-    router.push(`/backoffice/companies/${companyId}/collaborators`);
   }, [companyId, isCompleted, router]);
 
   useEffect(() => {
