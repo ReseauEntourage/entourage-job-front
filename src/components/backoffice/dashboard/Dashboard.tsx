@@ -107,6 +107,9 @@ export const Dashboard = () => {
               <DashboardCompanyCard company={user.company} />
             )}
             <DashboardProfileCard />
+            {!isCompanyAdmin && user.company && (
+              <DashboardCompanyCard company={user.company} />
+            )}
             {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardReferentCard />
           </StyledDashboardLeftColumn>
