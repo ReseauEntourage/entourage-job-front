@@ -4,7 +4,7 @@ import {
   Background,
   Button,
   Grid,
-  Img,
+  LegacyImg,
   Section,
   Text,
 } from 'src/components/utils';
@@ -55,7 +55,7 @@ export const AssociationEntourage = () => {
               </div>
             </div>
             <StyledAssociationEntourageImageContainer>
-              <Img
+              <LegacyImg
                 cover
                 src="/static/img/association_pic.jpg"
                 alt="Association Entourage"

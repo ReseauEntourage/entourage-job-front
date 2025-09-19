@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Img, Grid } from 'src/components/utils';
+import { Button, LegacyImg, Grid } from 'src/components/utils';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -47,7 +47,7 @@ export const MultipleCTA = ({
             >
               {item.img && (
                 <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
-                  <Img src={item.img} alt="" height={100} width={100} />
+                  <LegacyImg src={item.img} alt="" height={100} width={100} />
                 </div>
               )}
               <div className="uk-flex uk-flex-1">

@@ -23,6 +23,7 @@ export const FormComponents = {
   RADIO_ASYNC: 'radio-async',
   HEADING: 'heading',
   TEXT: 'text',
+  REACT_NODE: 'react-node',
   FIELDGROUP: 'fieldgroup',
   MULTIPLE_FIELDS: 'multiple-fields',
   FILE: 'file-input',
@@ -30,6 +31,7 @@ export const FormComponents = {
 
 export const FileTypes = {
   CV: 'cv',
+  LOGO: 'logo',
 } as const;
 
 export type FormComponent =
@@ -68,6 +70,7 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.RADIO_ASYNC]: string | number;
   [FormComponents.HEADING]: never;
   [FormComponents.TEXT]: never;
+  [FormComponents.REACT_NODE]: never;
   [FormComponents.FIELDGROUP]: never;
   [FormComponents.MULTIPLE_FIELDS]: never;
   [FormComponents.FILE]: File;
@@ -137,6 +140,9 @@ export const TextComponents = [
   FormComponents.TEXT,
 ] as const;
 export type TextComponent = (typeof TextComponents)[number];
+
+export const ReactNodeComponents = [FormComponents.REACT_NODE] as const;
+export type ReactNodeComponent = (typeof ReactNodeComponents)[number];
 
 export const GroupComponents = [FormComponents.FIELDGROUP] as const;
 export type GroupComponent = (typeof GroupComponents)[number];
@@ -325,6 +331,12 @@ export interface FormFieldText<V extends FormSchemaValidation>
   component: TextComponent;
 }
 
+export interface FormFieldReactNode<V extends FormSchemaValidation>
+  extends FormFieldCommonProperties<V, string> {
+  component: ReactNodeComponent;
+  reactNode: JSX.Element;
+}
+
 export interface FormFieldMultiple<V extends FormSchemaValidation>
   extends FormFieldCommonProperties<V, ArrayPath<V>> {
   action: string;
@@ -335,13 +347,14 @@ export interface FormFieldMultiple<V extends FormSchemaValidation>
 export interface FormFieldGroup<V extends FormSchemaValidation>
   extends FormFieldCommonProperties<V, string> {
   component: GroupComponent;
-  fields: (FormFieldInput<V> | FormFieldText<V>)[];
+  fields: (FormFieldInput<V> | FormFieldText<V> | FormFieldReactNode<V>)[];
 }
 
 type FormFieldNonInput<V extends FormSchemaValidation> =
   | FormFieldText<V>
   | FormFieldGroup<V>
-  | FormFieldMultiple<V>;
+  | FormFieldMultiple<V>
+  | FormFieldReactNode<V>;
 
 export type FormField<V extends FormSchemaValidation> =
   | FormFieldInput<V>

@@ -28,7 +28,7 @@ export const LogoList = ({
   if (carousel) {
     return (
       <CarouselSwiper
-        slidesPerview={logosPerLine}
+        slidesPerView={logosPerLine}
         slides={logos.map(({ key, link, bis }) => {
           return (
             <StyledCarouselItem key={key}>

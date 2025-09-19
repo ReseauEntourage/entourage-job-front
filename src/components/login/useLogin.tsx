@@ -51,12 +51,31 @@ export function useLogin() {
   }, [email, loginError]);
 
   useEffect(() => {
-    const path = Array.isArray(requestedPath)
-      ? requestedPath[0]
-      : requestedPath;
+    let finalPath: string | undefined;
 
+    if (Array.isArray(requestedPath)) {
+      [finalPath] = requestedPath;
+    } else {
+      finalPath = requestedPath;
+    }
+
+    // Si le path contient un paramètre de route dynamique [alertId]
+    if (finalPath && finalPath.includes('[alertId]')) {
+      // Extraire l'ID de l'alerte depuis l'URL courante ou d'autres sources
+      // Exemple: si on a accès à l'ID réel de l'alerte via un autre moyen
+      const alertId = new URLSearchParams(window.location.search).get(
+        'alertId'
+      );
+      if (alertId) {
+        // Remplacer [alertId] par la valeur réelle
+        finalPath = finalPath.replace('[alertId]', alertId);
+      }
+    }
     if (user && user.isEmailVerified) {
-      replace(path || getDefaultUrl(user.role));
+      // Ajout d'un délai court pour s'assurer que la redirection fonctionne correctement
+      setTimeout(() => {
+        replace(finalPath || getDefaultUrl(user.role));
+      }, 100);
     }
   }, [replace, requestedPath, user]);
 

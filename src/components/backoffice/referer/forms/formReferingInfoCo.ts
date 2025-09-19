@@ -5,11 +5,11 @@ import 'moment/locale/fr';
 import { Api } from 'src/api';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { ANTENNE_INFO } from 'src/constants';
-import { Department } from 'src/constants/departements';
+import { DepartmentName } from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formReferingInfoCo: FormSchema<{
-  department: FilterConstant<Department>;
+  department: FilterConstant<DepartmentName>;
   campaign: string;
 }> = {
   id: 'form-refering-candidate-info-co',

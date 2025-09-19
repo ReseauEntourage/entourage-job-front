@@ -3,7 +3,7 @@
 import React from 'react';
 import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
 import {
-  Img,
+  LegacyImg,
   Section,
   Carousel,
   ContainerWithTextCentered,
@@ -94,7 +94,7 @@ export const CandidateTestimonies = () => {
                 img={image}
                 description={
                   <div>
-                    <Img
+                    <LegacyImg
                       alt="guillemets"
                       width={27}
                       height={21}
@@ -107,7 +107,7 @@ export const CandidateTestimonies = () => {
                       className="uk-text-bottom"
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
-                      <Img
+                      <LegacyImg
                         alt="guillemets-petits"
                         width={15}
                         height={12}

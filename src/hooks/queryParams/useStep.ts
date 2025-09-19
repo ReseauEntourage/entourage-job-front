@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { RegistrationStep } from 'src/components/registration/Registration.types';
+import { ReferingStep } from '@/src/components/backoffice/referer/Refering/Refering.types';
 
 export function useStep() {
   const {
     query: { step },
   } = useRouter();
 
-  return step as RegistrationStep;
+  return step as ReferingStep;
 }

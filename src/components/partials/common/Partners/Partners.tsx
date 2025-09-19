@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Img, Section } from 'src/components/utils';
+import { Button, LegacyImg, Section } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -33,7 +33,7 @@ export const Partners = ({
           {list.map((partner) => {
             return (
               <div key={partner.name}>
-                <Img
+                <LegacyImg
                   width={partner.width}
                   height={partner.height}
                   src={partner.logo}

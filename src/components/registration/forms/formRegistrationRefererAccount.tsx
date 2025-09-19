@@ -11,7 +11,10 @@ import {
 } from 'src/components/forms/FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  DepartmentName,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { FilterConstant } from 'src/constants/utils';
 
@@ -32,7 +35,7 @@ interface formRegistrationRefererAccountSchema extends FormSchemaValidation {
   lastName: string;
   phone: string;
   email: string;
-  department: FilterConstant<Department>;
+  department: FilterConstant<DepartmentName>;
   organizationId: FilterConstant<string>;
   password: string;
   confirmPassword: string;
@@ -170,8 +173,8 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
       {
         id: 'passwordCriteria',
         name: 'passwordCriteria',
-        component: 'text',
-        title: <PasswordCriterias removeMargin />,
+        component: 'react-node',
+        reactNode: <PasswordCriterias removeMargin />,
       },
       {
         id: 'confirmPassword',

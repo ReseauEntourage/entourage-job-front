@@ -9,9 +9,8 @@ import {
   StyledNameCellMobile,
 } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
-import { SimpleLink } from 'src/components/utils';
+import { ImgUserProfile, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TdMobile } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
@@ -53,7 +52,7 @@ export function MemberMobile({
     <StyledMobileMember selected={checked} cvStatus={cvStatus.toLowerCase()}>
       <div className="line">
         <StyledNameCellMobile>
-          <ImgProfile
+          <ImgUserProfile
             user={member}
             size={29}
             hasPicture={member.userProfile?.hasPicture || false}

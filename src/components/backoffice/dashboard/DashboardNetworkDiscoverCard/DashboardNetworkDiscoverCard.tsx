@@ -1,7 +1,7 @@
 import React from 'react';
 import { NormalUserRoles, UserRoles } from '@/src/constants/users';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
-import { Button, Card, Img } from 'src/components/utils';
+import { Button, Card, LegacyImg } from 'src/components/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -47,7 +47,7 @@ export const DashboardNetworkDiscoveryCard = () => {
         <StyledDashboardNetworkDiscoverContent>
           {isDesktop && (
             <StyledDashboardNetworkImageContainer>
-              <Img
+              <LegacyImg
                 src={cardVariables[user.role].imageUrl}
                 alt="Illustration réseau d'entraide"
                 width={138}

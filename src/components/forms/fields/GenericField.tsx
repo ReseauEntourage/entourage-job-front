@@ -276,6 +276,15 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           maxChar={field.maxChar}
           maxItems={field.maxItems}
           setIsMaxItemsReached={setIsMaxItemsReached}
+          loadOptions={
+            field.loadOptions
+              ? async (callback, inputValue) => {
+                  if (field.loadOptions) {
+                    await field.loadOptions(callback, inputValue, getValue);
+                  }
+                }
+              : undefined
+          }
         />
       );
     }
@@ -301,6 +310,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     if (field.component === 'select-list') {
       return (
         <SelectList
+          key={field.name}
           {...commonProps}
           isMulti={field.isMulti}
           options={
@@ -314,6 +324,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     if (field.component === 'select-list-async') {
       return (
         <SelectListAsync
+          key={field.name}
           {...commonProps}
           isMulti={field.isMulti}
           loadOptions={async (callback) => {

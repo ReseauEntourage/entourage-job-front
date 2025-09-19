@@ -6,7 +6,7 @@ import { BackLink } from '../../utils/BackLink';
 import {
   Button,
   ButtonIcon,
-  ImgProfile,
+  ImgUserProfile,
   Section,
   Tag,
   Text,
@@ -16,7 +16,7 @@ import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
-import { Department } from 'src/constants/departements';
+import { DepartmentName } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -47,7 +47,7 @@ export interface HeaderProfileProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
-  department: Department;
+  department: DepartmentName;
   introduction?: string;
 
   // Only for own profile
@@ -103,7 +103,7 @@ export const HeaderProfileMobile = ({
                 {imageUploading ? (
                   <Spinner color={COLORS.white} />
                 ) : (
-                  <ImgProfile
+                  <ImgUserProfile
                     user={{ id, role, firstName }}
                     size={PROFILE_PICTURE_SIZE}
                     hasPicture={hasPicture}

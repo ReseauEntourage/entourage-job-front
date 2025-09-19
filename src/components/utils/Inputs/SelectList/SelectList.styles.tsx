@@ -19,22 +19,9 @@ export const StyledSelectList = styled.ul`
       margin-bottom: 30px;
     }
 
-    > button {
-      width: 100%;
-      border: 2px solid ${COLORS.lightGray};
-      background-color: ${COLORS.white};
-      border-radius: 20px;
-      padding: 11px 1px;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
     &.selected {
       > button {
-        padding: 10px 0px;
-        border: 3px solid ${COLORS.primaryBlue};
+        border: 1px solid ${COLORS.primaryBlue};
         background-color: ${COLORS.hoverBlue};
       }
 
@@ -66,28 +53,38 @@ export const StyledCheckIconContainer = styled.div`
 
 export const StyledListOption = styled.div`
   display: flex;
+  gap: 20px;
   flex-direction: row;
   font-family: Poppins, sans-serif;
+  padding: 20px;
   > .img-container {
-    min-width: 100px;
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     > svg {
-      height: 45px;
-      width: 45px;
+      height: 55px;
+      width: 55px;
     }
   }
   > .text-container {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
     text-align: left;
-    h6 {
-      margin-bottom: 10px;
-    }
-    p {
-      margin: 0;
-      line-height: 24px;
-    }
+  }
+`;
+
+export const StyledButton = styled.button`
+  width: 100%;
+  border: 1px solid ${COLORS.gray};
+  background-color: ${COLORS.white};
+  border-radius: 20px;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
   }
 `;

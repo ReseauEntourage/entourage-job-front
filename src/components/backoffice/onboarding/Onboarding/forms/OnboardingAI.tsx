@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Img } from '@/src/components/utils';
+import { LegacyImg } from '@/src/components/utils';
 import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
 import { useProfileGeneration } from '@/src/hooks';
 import { IlluCV } from 'assets/icons/icons';
@@ -37,7 +37,7 @@ export const OnboardingAI = () => {
         <StyledImageContainer>
           {isLoading ? (
             <>
-              <Img
+              <LegacyImg
                 src="/static/img/illustrations/cv-ia.gif"
                 width={150}
                 height={150}

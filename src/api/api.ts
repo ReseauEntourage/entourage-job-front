@@ -9,25 +9,30 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
+  CompanyDto,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
   ConversationReportDto,
   ExternalCv,
+  InviteCollaboratorsFromCompanyDto,
   Organization,
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
+  RecruitementAlertDto,
   Route,
   SocialMedia,
   UserDto,
+  UpdateCompanyDto,
   UserProfile,
   UserReferingDto,
   UserRegistrationDto,
   UserReportDto,
   UserWithUserCandidate,
+  CompaniesFilters,
 } from './types';
 
 export class APIHandler {
@@ -84,6 +89,19 @@ export class APIHandler {
       );
     }
     return this.api.put(route, payload, { headers });
+  }
+
+  private patch(
+    route: string,
+    payload?: object,
+    headers?: AxiosRequestHeaders
+  ): Promise<AxiosResponse> {
+    if (payload && typeof payload !== 'object') {
+      throw new Error(
+        `${this.name} patch() function expects payload argument to be of type Object`
+      );
+    }
+    return this.api.patch(route, payload, { headers });
   }
 
   private delete(route: string): Promise<AxiosResponse> {
@@ -294,6 +312,14 @@ export class APIHandler {
     return this.delete(`/user/${userId}`);
   }
 
+  /// //////////// ///
+  /// Departments ///
+  /// ////////// ///
+
+  getAllDepartments(params: { search: string }): Promise<AxiosResponse> {
+    return this.get('/departments', { params });
+  }
+
   /// ///////////////// ///
   /// businessSectors  ///
   /// /////////////// ///
@@ -339,6 +365,90 @@ export class APIHandler {
     search?: string;
   }): Promise<AxiosResponse> {
     return this.get('/nudges', { params });
+  }
+
+  /// ///////// ///
+  ///  Skills  ///
+  /// //////// ///
+
+  getAllSkills(params: {
+    limit: number;
+    offset: number;
+    search?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/skills', { params });
+  }
+
+  /// /////////// ///
+  /// companies  ///
+  /// ///////// ///
+  getAllCompanies(
+    params: CompaniesFilters & {
+      limit: number;
+      offset: number;
+    }
+  ): Promise<AxiosResponse> {
+    return this.get('/companies', { params });
+  }
+
+  getCompanyById(companyId: string): Promise<AxiosResponse> {
+    return this.get(`/companies/${companyId}`);
+  }
+
+  getCompanyByIdWithUsersAndPendingInvitations(
+    companyId: string
+  ): Promise<AxiosResponse> {
+    return this.get(`/companies/${companyId}/collaborators`);
+  }
+
+  postCompany(params: CompanyDto): Promise<AxiosResponse> {
+    return this.post('/companies', params);
+  }
+
+  updateCompany(companyFields: UpdateCompanyDto): Promise<AxiosResponse> {
+    return this.put(`/companies`, companyFields);
+  }
+
+  updateCompanyLogo(formData: FormData): Promise<AxiosResponse> {
+    return this.post(`/companies/logo`, formData, {
+      'Content-Type': 'multipart/form-data',
+    });
+  }
+
+  /// /////////////////// ///
+  /// recruitement alert  ///
+  /// /////////////////// ///
+
+  getRecruitementAlerts(): Promise<AxiosResponse> {
+    return this.get(`/recruitement-alerts`);
+  }
+
+  getRecruitementAlertMatching(alertId: string): Promise<AxiosResponse> {
+    return this.get(`/recruitement-alerts/${alertId}/matching`, {});
+  }
+
+  createRecruitementAlert(
+    params: RecruitementAlertDto
+  ): Promise<AxiosResponse> {
+    return this.post('/recruitement-alerts', params);
+  }
+
+  deleteRecruitementAlert(alertId: string): Promise<AxiosResponse> {
+    return this.delete(`/recruitement-alerts/${alertId}`);
+  }
+
+  updateRecruitementAlert(
+    alertId: string,
+    params: RecruitementAlertDto
+  ): Promise<AxiosResponse> {
+    return this.put(`/recruitement-alerts/${alertId}`, params);
+  }
+
+  inviteCollaboratorsFromCompany(
+    companyId: string,
+    params: InviteCollaboratorsFromCompanyDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/companies/${companyId}/invite-collaborators`, params);
   }
 
   /// ///////////// ///

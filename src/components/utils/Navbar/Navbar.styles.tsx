@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledNavbar = styled.nav`
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
   background-color: ${({ backgroundColor }) => {
     return COLORS[backgroundColor] || COLORS.navBlack;
   }};

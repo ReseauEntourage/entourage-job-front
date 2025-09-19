@@ -4,7 +4,7 @@ import { FormSchema } from '../FormSchema';
 import {
   ADMIN_ZONES_FILTERS,
   AdminZone,
-  Department,
+  DepartmentName,
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
 import { AdminRoles } from 'src/constants/users';
@@ -18,7 +18,7 @@ export const formPersonalDataAsCandidate: FormSchema<{
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
-  department: FilterConstant<Department>;
+  department: FilterConstant<DepartmentName>;
   introduction: string;
 }> = {
   id: 'form-personal-data',
@@ -108,7 +108,7 @@ export const formPersonalDataAsCoach: FormSchema<{
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
-  department: FilterConstant<Department>;
+  department: FilterConstant<DepartmentName>;
   introduction: string;
 }> = {
   id: 'form-personal-data',
