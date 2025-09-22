@@ -1,39 +1,28 @@
 import React from 'react';
-import { IlluCV, IlluDossierCandidat, IlluLinkedIn } from 'assets/icons/icons';
 import { ButtonIcon, Text } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
 import { StyledDocumentItem, TitleAndIcon } from './DocumentItem.styles';
 
 export interface DocumentItemProps {
-  type: 'LinkedIn' | 'CVPerso' | 'CVPro';
+  name: string;
+  icon: React.ReactNode;
   onRemove?: () => void;
   onClick: () => void;
 }
 
-const ICON_MAP = {
-  LinkedIn: <IlluLinkedIn width={48} height={48} />,
-  CVPerso: <IlluDossierCandidat width={48} height={48} />,
-  CVPro: <IlluCV width={48} height={48} />,
-};
-
-const NAME_MAP = {
-  LinkedIn: 'Mon profil LinkedIn',
-  CVPerso: 'Mon CV perso',
-  CVPro: 'Mon CV publique',
-};
-
 export const DocumentItem = ({
-  type,
+  name,
+  icon,
   onRemove,
   onClick,
 }: DocumentItemProps) => {
   return (
     <StyledDocumentItem>
-      <div onClick={onClick}>{ICON_MAP[type]}</div>
+      <div onClick={onClick}>{icon}</div>
       <TitleAndIcon>
         <Text variant="underline" onClick={onClick}>
-          {NAME_MAP[type]}
+          {name}
         </Text>
         {onRemove && (
           <ButtonIcon

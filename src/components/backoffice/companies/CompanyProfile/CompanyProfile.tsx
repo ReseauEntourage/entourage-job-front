@@ -9,6 +9,7 @@ import {
 } from '../../Backoffice.styles';
 import { CompanyCollaboratorsPreviewList } from './CompanyParts/CompanyCollaboratorsPreviewList/CompanyCollaboratorsPreviewList';
 import { CompanyDescription } from './CompanyParts/CompanyDescription/CompanyDescription';
+import { CompanyLinks } from './CompanyParts/CompanyLinks/CompanyLinks';
 import {
   StyledCompanyLeftColumn,
   StyledCompanyRightColumn,
@@ -32,7 +33,7 @@ export const CompanyProfile = () => {
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
-          <StyledCompanyLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
+          <StyledCompanyLeftColumn>
             {selectedCompany.description && (
               <CompanyDescription
                 description={selectedCompany.description}
@@ -41,7 +42,14 @@ export const CompanyProfile = () => {
             )}
             <CompanyCollaboratorsPreviewList companyId={selectedCompany.id} />
           </StyledCompanyLeftColumn>
-          <StyledCompanyRightColumn>Right column</StyledCompanyRightColumn>
+          <StyledCompanyRightColumn>
+            <CompanyLinks
+              url={selectedCompany.url}
+              hiringUrl={selectedCompany.hiringUrl}
+              linkedInUrl={selectedCompany.linkedInUrl}
+              isEditable={false}
+            />
+          </StyledCompanyRightColumn>
         </StyledBackofficeGrid>
       </Section>
     </StyledBackofficeBackground>
