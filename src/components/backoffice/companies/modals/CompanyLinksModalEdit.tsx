@@ -33,8 +33,8 @@ export const CompanyLinksModalEdit = ({
 
   return (
     <ModalEdit
-      title="Renseignez les informations de votre entreprise"
-      description="Ces informations seront visibles par tous les candidats de la plateforme"
+      title="Liens de votre entreprise"
+      description="Ces informations seront visibles par tous les utilisateurs de la plateforme"
       formSchema={formEditCompanyLinks}
       defaultValues={defaultValues}
       closeOnNextRender={closeModal}
