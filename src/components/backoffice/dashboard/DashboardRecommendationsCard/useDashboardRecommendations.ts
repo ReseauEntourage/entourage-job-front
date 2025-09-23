@@ -19,7 +19,11 @@ import {
  * In case of context of company admin, fetch profiles instead of recommendations - so the list
  * is generated from profiles and isLoading is based on profiles fetch instead of recommendations fetch
  *
- * @returns
+ * @returns {Object} An object containing:
+ *   - recommendations: The list of recommended profiles.
+ *   - profiles: The list of profiles (used in company admin context).
+ *   - isLoading: Boolean indicating if data is being loaded.
+ *   - isError: Boolean indicating if there was an error fetching data.
  */
 export function useDashboardRecommendations(isCompanyAdminContext: boolean) {
   const dispatch = useDispatch();
