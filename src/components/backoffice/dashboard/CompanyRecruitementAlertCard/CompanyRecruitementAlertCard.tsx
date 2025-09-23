@@ -31,7 +31,7 @@ export const CompanyRecruitementAlertCard = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   if (recruitementAlerts.length > 0) {

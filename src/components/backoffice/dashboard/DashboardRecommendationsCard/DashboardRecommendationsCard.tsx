@@ -91,6 +91,10 @@ export const DashboardRecommendationsCard = () => {
     });
   }, [items]);
 
+  if (context === contextCompanyAdmin && profiles.length === 0 && !isLoading) {
+    return <></>;
+  }
+
   if ((items.length === 0 && !isLoading) || isError) {
     return <DashboardNetworkDiscoveryCard />;
   }

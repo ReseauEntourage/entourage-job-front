@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserRoles } from '@/src/constants/users';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 import { notificationsActions } from 'src/use-cases/notifications';
 
 import {
@@ -23,6 +24,7 @@ import {
 export function useDashboardRecommendations(isCompanyAdminContext: boolean) {
   const dispatch = useDispatch();
 
+  const currentUser = useSelector(selectCurrentUser);
   const recommendations = useSelector(selectProfilesRecommendations);
   const profiles = useSelector(selectProfiles);
 
@@ -62,12 +64,18 @@ export function useDashboardRecommendations(isCompanyAdminContext: boolean) {
   useEffect(() => {
     if (isCompanyAdminContext) {
       if (isFetchProfilesIdle) {
+        const companyBusinessSectorIds =
+          currentUser && currentUser.company?.businessSectors
+            ? currentUser.company.businessSectors.map(
+                (sector) => sector.id as string
+              )
+            : [];
         dispatch(
           profilesActions.fetchProfilesRequested({
             role: [UserRoles.CANDIDATE],
             departments: [],
             nudgeIds: [],
-            businessSectorIds: [], // TODO: Bind to company activity sector
+            businessSectorIds: companyBusinessSectorIds,
             contactTypes: [],
           })
         );
@@ -76,6 +84,7 @@ export function useDashboardRecommendations(isCompanyAdminContext: boolean) {
       dispatch(profilesActions.fetchProfilesRecommendationsRequested());
     }
   }, [
+    currentUser,
     dispatch,
     isCompanyAdminContext,
     isFetchProfilesIdle,
