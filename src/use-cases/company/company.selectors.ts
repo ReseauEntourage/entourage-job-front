@@ -19,7 +19,7 @@ export const fetchSelectedCompanySelectors =
   );
 
 export const fetchSelectedCompanyWithCollaboratorsSelectors =
-  fetchSelectedCompanyAdapter.getSelectors<RootState>(
+  fetchSelectedCompanyWithCollaboratorsAdapter.getSelectors<RootState>(
     (state) => state.company.fetchSelectedCompanyWithCollaborators
   );
 
