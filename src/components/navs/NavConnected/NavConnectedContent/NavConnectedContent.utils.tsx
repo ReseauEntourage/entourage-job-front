@@ -26,6 +26,8 @@ export const renderLinks = (
   messaging: NavConnectedMainItem;
   dropdown: NavConnectedMainItem[];
 } => {
+  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+
   const candidateHeaderItems: NavConnectedMainItem[] = [
     {
       href: '/backoffice/dashboard',
@@ -48,6 +50,53 @@ export const renderLinks = (
       external: true,
       tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
     },
+  ];
+
+  const coachHeaderItems: NavConnectedMainItem[] = [
+    {
+      href: '/backoffice/dashboard',
+      name: 'Tableau de bord',
+      tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
+    },
+    {
+      href: '/backoffice/parametres',
+      name: 'Mon profil',
+    },
+    ...(isCompanyAdmin
+      ? [
+          {
+            href: '/backoffice/companies/parametres',
+            name: 'Mon entreprise',
+            tag: GA_TAGS.BACKOFFICE_COACH_HEADER_MY_COMPANY_CLIC,
+          },
+        ]
+      : []),
+    {
+      href: '/backoffice/annuaire',
+      name: "Réseau d'entraide",
+    },
+
+    ...(isCompanyAdmin
+      ? [
+          {
+            href: `${
+              process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL
+            }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+            name: 'Boîte à outils',
+            external: true,
+            tag: GA_TAGS.BACKOFFICE_COMPANY_HEADER_BAO_CLIC,
+          },
+        ]
+      : [
+          {
+            href: `${
+              process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL
+            }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+            name: 'Boîte à outils',
+            external: true,
+            tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
+          },
+        ]),
   ];
 
   return {
@@ -103,29 +152,7 @@ export const renderLinks = (
         },
       ],
       [UserRoles.CANDIDATE]: candidateHeaderItems,
-      [UserRoles.COACH]: [
-        {
-          href: '/backoffice/dashboard',
-          name: 'Tableau de bord',
-          tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
-        },
-        {
-          href: '/backoffice/parametres',
-          name: 'Mon profil',
-        },
-        {
-          href: '/backoffice/annuaire',
-          name: "Réseau d'entraide",
-        },
-        {
-          href: `${
-            process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL
-          }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
-          name: 'Boîte à outils',
-          external: true,
-          tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
-        },
-      ],
+      [UserRoles.COACH]: coachHeaderItems,
       [UserRoles.REFERER]: [
         {
           href: '/backoffice/dashboard',
