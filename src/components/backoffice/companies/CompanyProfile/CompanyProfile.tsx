@@ -39,7 +39,10 @@ export const CompanyProfile = () => {
                 isEditable={false}
               />
             )}
-            <CompanyCollaboratorsPreviewList companyId={selectedCompany.id} />
+            <CompanyCollaboratorsPreviewList
+              companyId={selectedCompany.id}
+              isEditable={false}
+            />
           </StyledCompanyLeftColumn>
           <StyledCompanyRightColumn>Right column</StyledCompanyRightColumn>
         </StyledBackofficeGrid>
