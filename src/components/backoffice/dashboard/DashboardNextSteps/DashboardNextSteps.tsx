@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+import { CompanyGoal } from '@/src/constants/company';
 import { Card } from 'src/components/utils/Cards/Card/Card';
 import { UserRoles } from 'src/constants/users';
 import { selectCurrentUser } from 'src/use-cases/current-user';
@@ -16,16 +17,16 @@ export const DashboardNextSteps = () => {
 
   const context = useMemo(() => {
     if (!currentUser) return null;
+    if (
+      currentUser.role === UserRoles.COACH &&
+      currentUserIsCompanyAdmin &&
+      currentUser.company?.goal === CompanyGoal.RECRUIT
+    ) {
+      return Context.COMPANY_ADMIN_RECRUITMENT_MODE;
+    }
     if (currentUser.role === UserRoles.COACH && currentUserIsCompanyAdmin) {
       return Context.COMPANY_ADMIN_TBS_MODE;
     }
-    // Todo: Handle context for company admin in recruitment mode
-    // if (
-    //   currentUser.role === UserRoles.COACH &&
-    //   currentUserIsCompanyAdmin && CONDITION IS RECRUITMENT MODE
-    // ) {
-    //   return Context.COMPANY_ADMIN_RECRUITMENT_MODE;
-    // }
     if (currentUser.role === UserRoles.CANDIDATE) return Context.CANDIDATE;
     if (currentUser.role === UserRoles.COACH) return Context.COACH;
     return null;

@@ -1,7 +1,8 @@
 import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
+import { CompanyGoal } from '@/src/constants/company';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
-import { CompanyGoal, UpdateCompanyDto } from 'src/api/types';
+import { UpdateCompanyDto } from 'src/api/types';
 import {
   CandidateCoachStepData,
   CompanyStepData,

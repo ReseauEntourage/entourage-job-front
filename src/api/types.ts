@@ -1,4 +1,4 @@
-import { CompanyUserRole } from '../constants/company';
+import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
@@ -259,6 +259,7 @@ export type Company = {
   pendingInvitations?: Invitation[];
   businessSectors?: BusinessSector[];
   department: Department;
+  goal: CompanyGoal | null;
   admin: {
     firstName: string;
     lastName: string;
@@ -452,12 +453,6 @@ export type ContactContactUs = {
   heardAbout: HeardAboutValue;
   cgu: boolean;
 };
-
-export enum CompanyGoal {
-  SENSIBILIZE = 'sensibilize',
-  RECRUIT = 'recruit',
-  BOTH = 'both',
-}
 
 export type UpdateCompanyDto = {
   name?: string;
