@@ -1,10 +1,13 @@
+import { Color } from '@/src/constants/styles';
 import { AnyToFix } from 'src/utils/Types';
+
+export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'text';
 
 // resolsves a circular dependency issue
 export interface ButtonProps {
   id?: string;
   children: React.ReactNode;
-  variant?: 'default' | 'primary' | 'secondary';
+  variant?: ButtonVariant;
   disabled?: boolean;
   size?: 'small' | 'large';
   rounded?: boolean | 'circle';
@@ -17,4 +20,5 @@ export interface ButtonProps {
   scroll?: boolean;
   className?: string;
   dataTestId?: string;
+  color?: Color;
 }

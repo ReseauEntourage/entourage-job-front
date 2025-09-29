@@ -8,6 +8,7 @@ import {
   IlluCV,
   IlluOrdiCV,
 } from 'assets/icons/icons';
+import { CompanyRecruitementAlertModal } from '../CompanyRecruitementAlertCard/CompanyRecruitementAlertModal';
 import { Context } from './DashboardNextSteps.types';
 
 const iconSizeProps = { width: 80, height: 55 };
@@ -21,10 +22,6 @@ const webinarStep = {
     href: process.env.NEXT_PUBLIC_WEBINAR_URL,
   },
 };
-
-const COMPANY_SETTINGS_URL = '/companies/settings';
-// const COMPANY_TBS_URL = '/companies/engagements';
-const COMPANY_RECRUITMENT_URL = '/companies/alerts';
 
 export const stepsByContext = {
   [Context.CANDIDATE]: [
@@ -80,7 +77,7 @@ export const stepsByContext = {
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
-        href: COMPANY_SETTINGS_URL,
+        href: '/backoffice/companies/parametres',
       },
     },
     // {
@@ -89,7 +86,7 @@ export const stepsByContext = {
     //   content: "Découvrir les formats d'engagement",
     //   cta: {
     //     label: 'Découvrir',
-    //     href: COMPANY_TBS_URL,
+    //     href: '/backoffice/engager-mon-entreprise',
     //   },
     // },
     {
@@ -99,7 +96,7 @@ export const stepsByContext = {
       cta: {
         label: 'Inviter',
         onClick: (currentUser) => {
-          const companyId = currentUser?.companies?.[0]?.id || null;
+          const companyId = currentUser?.company?.id || null;
           if (!companyId) return;
           openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
         },
@@ -113,7 +110,7 @@ export const stepsByContext = {
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
-        href: COMPANY_SETTINGS_URL,
+        href: '/backoffice/companies/parametres',
       },
     },
     {
@@ -122,7 +119,9 @@ export const stepsByContext = {
       content: 'Trouvez les candidats qui vous correspondent',
       cta: {
         label: 'Créer une alerte',
-        href: COMPANY_RECRUITMENT_URL,
+        onClick: () => {
+          openModal(<CompanyRecruitementAlertModal />);
+        },
       },
     },
     // {
@@ -131,7 +130,7 @@ export const stepsByContext = {
     //   content: "Découvrir les formats d'engagement",
     //   cta: {
     //     label: 'Découvrir',
-    //     href: COMPANY_TBS_URL,
+    //     href: '/backoffice/engager-mon-entreprise',
     //   },
     // },
   ],

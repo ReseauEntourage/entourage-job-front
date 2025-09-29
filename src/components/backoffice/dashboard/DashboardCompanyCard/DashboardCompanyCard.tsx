@@ -1,9 +1,10 @@
 import React from 'react';
 import { Company } from '@/src/api/types';
-import { Button, Card, Text } from 'src/components/utils';
+import { Button, Card, ImgCompanyProfile, Text } from 'src/components/utils';
 import {
   StyledContainer,
   StyledCTAContainer,
+  StyledNameAndReferentContainer,
   StyledPictureContainer,
 } from './DashboardCompanyCard.styles';
 
@@ -14,7 +15,10 @@ export interface DashboardCompanyCardProps {
 export const DashboardCompanyCard = ({
   company,
 }: DashboardCompanyCardProps) => {
-  const companySettingsUrl = `/compagnies/settings`;
+  const companySettingsUrl = `/backoffice/companies/parametres`;
+  const companyViewUrl = `/backoffice/companies/${company.id}`;
+  const isCompanyAdmin = company.companyUser?.isAdmin;
+  const companyAdmin = company.admin;
 
   return (
     <Card
@@ -23,14 +27,34 @@ export const DashboardCompanyCard = ({
       centerTitle
     >
       <StyledContainer>
-        <StyledPictureContainer>Image</StyledPictureContainer>
-        <Text size="large" color="primaryBlue" weight="bold" center>
-          {company.name}
-        </Text>
+        <StyledPictureContainer>
+          <ImgCompanyProfile company={company} size={110} highlight />
+        </StyledPictureContainer>
+        <div>
+          <Text size="large" color="primaryBlue" weight="bold" center>
+            {company.name}
+          </Text>
+          <StyledNameAndReferentContainer>
+            <Text>
+              {isCompanyAdmin
+                ? `Vous êtes le référent`
+                : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
+                    .charAt(0)
+                    .toUpperCase()}`}
+            </Text>
+          </StyledNameAndReferentContainer>
+        </div>
+
         <StyledCTAContainer>
-          <Button variant="secondary" rounded href={companySettingsUrl}>
-            Modifier
-          </Button>
+          {isCompanyAdmin ? (
+            <Button variant="secondary" rounded href={companySettingsUrl}>
+              Modifier ma page entreprise
+            </Button>
+          ) : (
+            <Button variant="secondary" rounded href={companyViewUrl}>
+              Voir ma page entreprise
+            </Button>
+          )}
         </StyledCTAContainer>
       </StyledContainer>
     </Card>

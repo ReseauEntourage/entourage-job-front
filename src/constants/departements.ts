@@ -533,7 +533,7 @@ export const DEPARTMENTS = [
   },
 ] as const;
 
-export type Department = (typeof DEPARTMENTS)[number]['name'];
+export type DepartmentName = (typeof DEPARTMENTS)[number]['name'];
 export type Region = (typeof DEPARTMENTS)[number]['region'];
 export const REGIONS_LABELS = {
   'Île-de-France': 'Paris et sa région',
@@ -569,7 +569,7 @@ export const REGIONS_FILTERS: FilterConstant<Region>[] = _.sortBy(
   'label'
 );
 
-export const DEPARTMENTS_FILTERS: (FilterConstant<Department> & {
+export const DEPARTMENTS_FILTERS: (FilterConstant<DepartmentName> & {
   zone: AdminZone;
 })[] = [
   ...DEPARTMENTS.map(({ name, zone }) => {

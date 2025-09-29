@@ -10,13 +10,13 @@ export const Referents: {
   [K in AdminZone]: Referent;
 } = {
   [ADMIN_ZONES.PARIS]: {
-    name: 'Julie P.',
-    img: `julie.jpg`,
+    name: 'Clothilde B.',
+    img: `clothilde.jpg`,
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS as string,
   },
   [ADMIN_ZONES.LYON]: {
-    name: 'Céline D.',
-    img: `celine.jpg`,
+    name: 'Alice D.',
+    img: `alice.jpg`,
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LYON as string,
   },
   [ADMIN_ZONES.LILLE]: {
@@ -35,13 +35,13 @@ export const Referents: {
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LORIENT as string,
   },
   [ADMIN_ZONES.SUDOUEST]: {
-    name: 'Julie P.',
-    img: `julie.jpg`,
+    name: 'Valentine R.',
+    img: `valentine.jpg`,
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_HZ as string,
   },
   [ADMIN_ZONES.HZ]: {
-    name: 'Julie P.',
-    img: `julie.jpg`,
+    name: 'Valentine R.',
+    img: `valentine.jpg`,
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_HZ as string,
   },
 } as const;

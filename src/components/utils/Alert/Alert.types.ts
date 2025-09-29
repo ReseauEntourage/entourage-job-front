@@ -1,4 +1,4 @@
-export type AlertVariant = 'info' | 'lightGray' | 'darkBlue';
+export type AlertVariant = 'info' | 'lightGray' | 'darkBlue' | 'lightBlue';
 
 export interface AlertProps {
   children: React.ReactNode;

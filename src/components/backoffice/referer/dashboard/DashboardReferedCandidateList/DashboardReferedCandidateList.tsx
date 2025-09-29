@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Api } from 'src/api';
 import { Profile } from 'src/api/types';
 import { StyledDashboardCardContentContainer } from 'src/components/backoffice/dashboard/Dashboard.styles';
-import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
+import { DirectoryUserItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { CardList } from 'src/components/utils/CardList';
 import { Card } from 'src/components/utils/Cards/Card';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -36,7 +36,7 @@ export const DashboardReferedCandidateList = () => {
   const referedList = useMemo(() => {
     return referedCandidates.map((profile) => {
       return (
-        <DirectoryItem
+        <DirectoryUserItem
           key={profile.id}
           id={profile.id}
           firstName={profile.firstName}
@@ -47,7 +47,7 @@ export const DashboardReferedCandidateList = () => {
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
-          displayHelps={false}
+          displayNudges={false}
           hasPicture={profile.hasPicture}
           currentJob={profile.currentJob}
         />

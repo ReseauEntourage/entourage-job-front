@@ -1,18 +1,19 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileCompletion } from '@/src/components/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { RoundBadge } from '@/src/components/utils/Badge/RoundBadge';
 import { FilePreviewCV } from '@/src/components/utils/Inputs/FileInput/FilePreview';
-import { ProfileHelps } from '@/src/constants/nudges';
+import { ProfileNudges } from '@/src/constants/nudges';
 import { useCurrentUserExternalCv } from '@/src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from '@/src/use-cases/current-user';
+import { selectProfileCompletionRate } from '@/src/use-cases/profile-completion';
 import {
   IlluBulleQuestion,
   IlluCandidatFolder,
   IlluCoeurMainsOuvertesBleu,
 } from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
-import { Button, Card, ImgProfile, Tag, Text } from 'src/components/utils';
+import { Button, Card, ImgUserProfile, Tag, Text } from 'src/components/utils';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -32,6 +33,9 @@ export const DashboardProfileCard = () => {
   const user = useAuthenticatedUser();
   const externalCv = useCurrentUserExternalCv();
   const { contextualRole } = useContextualRole(user.role);
+  const completionRate = useSelector(selectProfileCompletionRate);
+
+  const buttonText = completionRate < 100 ? 'Compléter' : 'Modifier';
 
   const openExternalCV = () => {
     if (externalCv === null) return;
@@ -45,7 +49,7 @@ export const DashboardProfileCard = () => {
   return (
     <Card dataTestId="dashboard-profile-card">
       <StyledDashboardProfileCardPictureName>
-        <ImgProfile
+        <ImgUserProfile
           user={user}
           size={69}
           hasPicture={user.userProfile?.hasPicture || false}
@@ -104,7 +108,7 @@ export const DashboardProfileCard = () => {
           {user.userProfile.nudges && user.userProfile.nudges.length > 0 ? (
             <StyledDashboardProfileCardHelpList>
               {user.userProfile.nudges.slice(0, 3).map((nudge, index) => {
-                const nudgeDetails = ProfileHelps.find(
+                const nudgeDetails = ProfileNudges.find(
                   (nudgeConstant) => nudgeConstant.value === nudge?.value
                 );
                 if (nudgeDetails) {
@@ -168,7 +172,7 @@ export const DashboardProfileCard = () => {
 
       <StyledDashboardCTAContainer>
         <Button variant="secondary" rounded href="/backoffice/parametres">
-          Modifier
+          {buttonText}
         </Button>
       </StyledDashboardCTAContainer>
     </Card>

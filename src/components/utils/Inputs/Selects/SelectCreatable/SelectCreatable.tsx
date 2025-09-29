@@ -26,6 +26,10 @@ interface SelectCreatableProps<T extends FilterConstant | FilterConstant[]>
   maxChar?: number;
   maxItems?: number;
   setIsMaxItemsReached?: (isMaxItemsReached: boolean) => void;
+  loadOptions?: (
+    callback: (options: FilterConstant[]) => void,
+    inputValue: string
+  ) => void;
 }
 
 export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
@@ -46,11 +50,27 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   maxChar,
   maxItems,
   setIsMaxItemsReached,
+  loadOptions,
 }: SelectCreatableProps<T>) {
   const [remainingItems, setRemainingItems] = useState<number>(maxItems || 0);
   const [shouldDisplayOptions, setShouldDisplayOptions] =
     useState<boolean>(true);
+  const [defaultOptions, setDefaultOptions] = useState<FilterConstant[]>(
+    options || []
+  );
+  const [isLoading, setIsLoading] = useState(false);
   const selectRef = useRef<SelectInstance<FilterConstant, boolean>>(null);
+
+  useEffect(() => {
+    // Charger les options par défaut si loadOptions est fourni
+    if (loadOptions) {
+      setIsLoading(true);
+      loadOptions((fetchedOptions) => {
+        setDefaultOptions(fetchedOptions);
+        setIsLoading(false);
+      }, '');
+    }
+  }, [loadOptions]);
 
   useEffect(() => {
     const receivedValues = value as FilterConstant[];
@@ -131,6 +151,19 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
             const isEmpty = inputValue.trim().length === 0;
             return maxChar ? inputValue.length < maxChar && !isEmpty : !isEmpty;
           }}
+          loadOptions={(inputValue, callback) => {
+            if (loadOptions) {
+              loadOptions((fetchedOptions) => {
+                callback(fetchedOptions);
+              }, inputValue);
+            } else if (options) {
+              callback(options);
+            } else {
+              callback([]);
+            }
+          }}
+          defaultOptions={defaultOptions}
+          isLoading={isLoading}
         />
       </StyledSelect>
       <StyledAnnotations>

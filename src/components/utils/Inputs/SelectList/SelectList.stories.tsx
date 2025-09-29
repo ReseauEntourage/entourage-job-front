@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ParametresHelpCardContents } from '@/src/constants/nudges';
+import { ParametresNudgeCardContents } from '@/src/constants/nudges';
 import { UserRoles } from 'src/constants/users';
 import { SelectList } from './SelectList';
 
@@ -19,7 +19,7 @@ const meta = {
   },
   args: {
     id: 'select-list-stories',
-    options: ParametresHelpCardContents[UserRoles.CANDIDATE],
+    options: ParametresNudgeCardContents[UserRoles.CANDIDATE],
   },
   decorators: [
     (Story) => {
@@ -36,13 +36,13 @@ const meta = {
   ],
 };
 const Template = (args) => {
-  const [helps, setHelps] = useState<string[]>([]);
+  const [nudges, setNudges] = useState<string[]>([]);
 
   return (
     <SelectList
-      value={helps}
+      value={nudges}
       onChange={(values) => {
-        setHelps(values);
+        setNudges(values);
       }}
       {...args}
     />

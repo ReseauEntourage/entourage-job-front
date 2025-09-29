@@ -3,11 +3,11 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import { HeaderConnected } from 'src/components/headers/HeaderConnected';
-import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { Footer } from 'src/components/partials/Footer';
 import { NotificationsContainer } from 'src/components/utils/Notification';
 import { addPrefix } from 'src/utils';
+import { NavConnected } from './navs/NavConnected';
+import { NavPublic } from './navs/NavPublic';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;
@@ -87,7 +87,7 @@ export const Layout = withRouter<LayoutProps>(
           />
         </Head>
         {!noHeader && !isPDF && (
-          <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>
+          <>{isBackoffice ? <NavConnected /> : <NavPublic />}</>
         )}
         <NotificationsContainer />
         {children}

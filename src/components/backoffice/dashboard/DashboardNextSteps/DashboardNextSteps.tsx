@@ -12,9 +12,7 @@ import { Step } from './Step/Step';
 export const DashboardNextSteps = () => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserIsCompanyAdmin =
-    currentUser?.companies?.some(
-      (company) => company.companyUser?.isAdmin === true
-    ) || false;
+    currentUser?.company?.companyUser?.isAdmin || false;
 
   const context = useMemo(() => {
     if (!currentUser) return null;

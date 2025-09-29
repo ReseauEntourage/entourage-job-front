@@ -10,6 +10,7 @@ import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedFlow,
+  selectInvitationId,
   selectRegistrationData,
   selectRegistrationIsEnded,
 } from './registration.selectors';
@@ -27,6 +28,7 @@ const {
 export function* createUserRequestedSaga() {
   const data = yield* select(selectRegistrationData);
   const selectedFlow = yield* select(selectDefinedRegistrationSelectedFlow);
+  const invitationId = yield* select(selectInvitationId);
 
   assertIsDefined(selectedFlow, 'Selected flow must be defined');
   if (!data) {
@@ -76,6 +78,7 @@ export function* createUserRequestedSaga() {
       utmTerm: utmParameters[UtmParameters.UTM_TERM] ?? undefined,
       utmContent: utmParameters[UtmParameters.UTM_CONTENT] ?? undefined,
       utmId: utmParameters[UtmParameters.UTM_ID] ?? undefined,
+      invitationId, // Optional, only if the user is registering via an invitation
     };
     yield* call(() => Api.postUserRegistration(userData));
 

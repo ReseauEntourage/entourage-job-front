@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
+import { DirectoryEntity } from '@/src/constants/entity';
+import { useEntity } from '@/src/hooks/queryParams/useEntity';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useRole } from 'src/hooks/queryParams/useRole';
@@ -13,27 +15,32 @@ export function useDirectoryRoleRedirection() {
   const { role: userRole, userProfile } = useAuthenticatedUser();
 
   const role = useRole();
+  const entity = useEntity();
 
   useEffect(() => {
     const contactTypes = [] as ContactTypeEnum[];
     const departments = [] as string[];
-    if (userProfile.allowRemoteEvents) {
+    // If userProfile allows remote events and not physical events, we filter by remote only
+    if (userProfile.allowRemoteEvents && !userProfile.allowPhysicalEvents) {
       contactTypes.push(ContactTypeEnum.REMOTE);
     }
-    if (userProfile.allowPhysicalEvents) {
+    // Else if userProfile allows physical events and not remote events, we filter by physical only
+    // and within the same department
+    if (userProfile.allowPhysicalEvents && !userProfile.allowRemoteEvents) {
       contactTypes.push(ContactTypeEnum.PHYSICAL);
       if (!userProfile.allowRemoteEvents) {
         departments.push(userProfile.department);
       }
     }
 
-    if (!role) {
+    if (!role && !entity) {
       if (userRole === UserRoles.CANDIDATE) {
         replace(
           {
             pathname: route,
             query: {
               ...query,
+              entity: DirectoryEntity.USER,
               role: UserRoles.COACH,
               contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
               departments: departments.length > 0 ? departments : undefined,
@@ -48,6 +55,7 @@ export function useDirectoryRoleRedirection() {
             pathname: route,
             query: {
               ...query,
+              entity: DirectoryEntity.USER,
               role: [UserRoles.CANDIDATE],
               contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
               departments: departments.length > 0 ? departments : undefined,
@@ -66,5 +74,6 @@ export function useDirectoryRoleRedirection() {
     userProfile.allowRemoteEvents,
     userProfile.allowPhysicalEvents,
     userProfile.department,
+    entity,
   ]);
 }

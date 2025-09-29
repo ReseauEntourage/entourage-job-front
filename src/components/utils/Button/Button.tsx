@@ -18,6 +18,7 @@ export function Button({
   scroll = true,
   className = '',
   dataTestId = '',
+  color,
 }: ButtonProps) {
   const buttonComponent = (
     <StyledButton
@@ -30,6 +31,7 @@ export function Button({
       data-testid={dataTestId}
       variant={variant}
       size={size}
+      color={color}
     >
       {Array.isArray(children)
         ? children.map((child, index) => {

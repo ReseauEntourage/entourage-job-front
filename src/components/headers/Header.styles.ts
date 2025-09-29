@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { HEIGHTS } from 'src/constants/styles';
 
-export const StyledHeaderDesktop = styled.header`
+export const StyledNavContainerDesktop = styled.header`
   height: ${HEIGHTS.HEADER}px;
 `;
 
-export const StyledHeaderMobile = styled.header`
+export const StyledNavContainerMobile = styled.header`
   height: ${HEIGHTS.HEADER_MOBILE}px;
 `;
 

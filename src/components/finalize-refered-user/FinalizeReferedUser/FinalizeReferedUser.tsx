@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { PasswordCriterias } from '@/src/components/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { Api } from 'src/api';
 import {
   isEmailAlreadyVerifiedError,
@@ -8,7 +9,6 @@ import {
   isTokenExpiredError,
 } from 'src/api/axiosErrors';
 import { PostAuthFinalizeReferedUserParams } from 'src/api/types';
-import { PasswordCriterias } from 'src/components/backoffice/parametres-old/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formFinalizeReferedUser } from 'src/components/forms/schemas/formFinalizeReferedUser';
 import { Spinner } from 'src/components/utils/Spinner';

@@ -7,12 +7,10 @@ import {
   IlluPoigneeDeMain,
   IlluReseauxSociaux,
 } from '@/assets/icons/icons';
+import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
 import { SelectListType } from '../components/utils/Inputs/SelectList';
-import { Img } from 'src/components/utils/Img';
 import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
-
-export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
 const iconSizeProps = { width: 40, height: 40 };
 
@@ -24,7 +22,7 @@ export const nudgesIcons = {
   event: <IlluReseauxSociaux {...iconSizeProps} />,
 };
 
-export const ProfileHelps: (FilterConstant<HelpValue> & {
+export const ProfileNudges: (FilterConstant<string> & {
   icon: JSX.Element;
   shortTitle: {
     [K in NormalUserRoles]: string;
@@ -32,7 +30,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
 })[] = [
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-poignee-main.png"
         alt="Poignée de main"
         {...iconSizeProps}
@@ -47,7 +45,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-mallette.png"
         alt="Entretien"
         {...iconSizeProps}
@@ -62,7 +60,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-CV.png"
         alt="CV"
         {...iconSizeProps}
@@ -77,7 +75,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-disscution.png"
         alt="Disscution"
         {...iconSizeProps}
@@ -92,7 +90,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -107,7 +105,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   },
 ];
 
-export const ParametresHelpCardTitles: {
+export const ParametresNudgeCardTitles: {
   [K in 'card' | 'modal']: {
     [R in NormalUserRoles]: string;
   };
@@ -124,13 +122,13 @@ export const ParametresHelpCardTitles: {
   },
 } as const;
 
-export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
+export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
   icon: React.ReactNode;
   description: string;
 })[] = [
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-poignee-main.png"
         alt="Poignée de main"
         {...iconSizeProps}
@@ -143,7 +141,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-mallette.png"
         alt="Mallette"
         {...iconSizeProps}
@@ -156,7 +154,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-CV.png"
         alt="CV"
         {...iconSizeProps}
@@ -169,7 +167,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-disscution.png"
         alt="Disscution"
         {...iconSizeProps}
@@ -182,7 +180,7 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
   {
     icon: (
-      <Img
+      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -195,8 +193,8 @@ export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   },
 ];
 
-export const ParametresHelpCardContents: {
-  [K in NormalUserRoles]: (FilterConstant<HelpValue> & {
+export const ParametresNudgeCardContents: {
+  [K in NormalUserRoles]: (FilterConstant<string> & {
     icon: React.ReactNode;
     description: string;
   })[];
@@ -204,7 +202,7 @@ export const ParametresHelpCardContents: {
   [UserRoles.CANDIDATE]: [
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
@@ -217,7 +215,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
@@ -230,7 +228,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-CV.png"
           alt="CV"
           {...iconSizeProps}
@@ -243,7 +241,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-disscution.png"
           alt="Disscution"
           {...iconSizeProps}
@@ -256,7 +254,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -272,7 +270,7 @@ export const ParametresHelpCardContents: {
   [UserRoles.COACH]: [
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-CV.png"
           alt="CV"
           {...iconSizeProps}
@@ -285,7 +283,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
@@ -298,7 +296,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
@@ -311,7 +309,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-disscution.png"
           alt="Disscution"
           {...iconSizeProps}
@@ -325,7 +323,7 @@ export const ParametresHelpCardContents: {
     },
     {
       icon: (
-        <Img
+        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -340,7 +338,7 @@ export const ParametresHelpCardContents: {
 };
 
 export const createNudgeOption = (role: UserRoles, nudge) => {
-  const nudgeDetails = ParametresHelpCardContents[role].find(
+  const nudgeDetails = ParametresNudgeCardContents[role].find(
     (nudgeConstant) => nudgeConstant.value === nudge.value
   );
   if (nudgeDetails) {

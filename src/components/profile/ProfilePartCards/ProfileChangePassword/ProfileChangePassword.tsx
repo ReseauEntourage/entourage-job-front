@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { PasswordCriterias } from '@/src/components/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Api } from 'src/api';
-import { PasswordCriterias } from 'src/components/backoffice/parametres-old/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formChangePassword } from 'src/components/forms/schemas/formChangePassword';
 import { useResetForm } from 'src/hooks/utils';

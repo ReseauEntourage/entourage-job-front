@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSelectors } from 'src/use-cases/authentication';
 
@@ -45,19 +45,49 @@ export function useAuthentication() {
     if (isFetchUserIdle) {
       dispatch(currentUserActions.fetchUserRequested());
     }
-  }, [dispatch, isFetchUserIdle]);
+  }, [
+    dispatch,
+    isFetchUserIdle,
+    isFetchUserSucceeded,
+    isFetchUserFailed,
+    currentUser,
+  ]);
+
+  // Garde en mémoire la dernière redirection pour éviter les redirections en boucle
+  const [lastRedirectionPath, setLastRedirectionPath] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
-    if (!isAuthenticationPending && !isUserAuthorized) {
+    // Éviter les redirections en boucle en vérifiant si nous avons déjà redirigé vers ce chemin
+    const shouldRedirect =
+      !isAuthenticationPending &&
+      !isUserAuthorized &&
+      lastRedirectionPath !== asPath;
+
+    if (shouldRedirect) {
       if (isUserAuthenticated && currentUserRole) {
-        replace(getDefaultUrl(currentUserRole));
+        const defaultUrl = getDefaultUrl(currentUserRole);
+        setLastRedirectionPath(defaultUrl);
+        replace(defaultUrl);
       } else {
+        setLastRedirectionPath('/login');
+
+        // Extraire la valeur réelle de alertId si présente dans l'URL
+        const requestedPathWithRealValues = asPath;
+
+        // Si nous sommes sur la page de login, vérifier si le requestedPath contient des paramètres de route dynamiques
+        if (asPath.startsWith('/login') && asPath.includes('requestedPath=')) {
+          // On est déjà sur la page de login, ne pas rediriger à nouveau
+          return;
+        }
+
         push(
           asPath && !isLogoutSucceeded
             ? {
                 pathname: '/login',
                 query: {
-                  requestedPath: asPath,
+                  requestedPath: requestedPathWithRealValues,
                 },
               }
             : '/login'
@@ -71,6 +101,7 @@ export function useAuthentication() {
     isLogoutSucceeded,
     isUserAuthenticated,
     isUserAuthorized,
+    lastRedirectionPath,
     push,
     replace,
   ]);

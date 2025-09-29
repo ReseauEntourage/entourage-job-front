@@ -1,4 +1,3 @@
-import { HelpValue } from '@/src/constants/nudges';
 import { CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
@@ -8,13 +7,15 @@ import {
   DocumentNameType,
   ExternalMessageContactType,
   HeardAboutValue,
+  WorkingExperience,
 } from 'src/constants';
-import { AdminZone, Department } from 'src/constants/departements';
+import { AdminZone, DepartmentName } from 'src/constants/departements';
 import {
   AdminRoles,
   RegistrableUserRoles,
   UserRoles,
 } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
   | 'facebook'
@@ -34,11 +35,18 @@ export const APIRoutes = {
   EXTERNAL_CVS: 'external-cv',
   MESSAGING: 'messaging',
   COMPANIES: 'companies',
+  RECRUITEMENT_ALERTS: 'recruitement-alerts',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
 
 export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
+
+export type Department = {
+  id: string;
+  name: string;
+  value: string;
+};
 
 export type UserCandidate = {
   employed: boolean;
@@ -159,7 +167,7 @@ export type UserProfileSectorOccupation = {
 
 export type Nudge = {
   id: string;
-  value: HelpValue;
+  value: string;
   nameRequest: string;
   nameOffer: string;
   order: number;
@@ -187,7 +195,7 @@ export type UserProfile = {
   currentJob: string | null;
   description: string | null;
   introduction: string | null;
-  department: Department;
+  department: DepartmentName;
   isAvailable: boolean;
   unavailabilityReason: string | null;
   nudges: Nudge[] | null;
@@ -231,6 +239,15 @@ export type CompanyUser = {
   isAdmin: boolean;
 };
 
+export type Invitation = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  userId?: string;
+  companyId?: string;
+};
+
 export type Company = {
   id: string;
   createdAt: Date;
@@ -238,11 +255,26 @@ export type Company = {
   name: string;
   description: string | null;
   companyUser?: CompanyUser;
+  logoUrl?: string;
+  pendingInvitations?: Invitation[];
+  businessSectors?: BusinessSector[];
+  department: Department;
+  admin: {
+    firstName: string;
+    lastName: string;
+  };
+};
+
+export type CompaniesFilters = {
+  search?: string;
+  departments: string[];
+  businessSectorIds: string[];
 };
 
 export type User = {
   coach: User;
   id: string;
+  createdAt?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -268,7 +300,8 @@ export type User = {
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
   hasExtractedCvData?: boolean;
-  companies?: Company[];
+  company?: Company;
+  invitations?: Invitation[];
 };
 
 export type CVStatus =
@@ -302,7 +335,7 @@ export interface CV {
   catchphrase: string;
   introduction: string;
   locations: {
-    name: Department;
+    name: DepartmentName;
     order: number;
   }[];
   availability: string;
@@ -379,7 +412,7 @@ export type UserRegistrationDto = {
   password: string;
   role: RegistrableUserRoles;
   campaign?: string;
-  department: Department;
+  department: DepartmentName;
   nudges?: Nudge[];
   workingRight?: string;
   organizationId?: string;
@@ -402,7 +435,7 @@ export type UserReferingDto = {
   email: string;
   phone: string;
   campaign?: string;
-  department: Department;
+  department: DepartmentName;
   nudges?: Nudge[];
   workingRight?: string;
   birthDate: string;
@@ -418,6 +451,31 @@ export type ContactContactUs = {
   message: string;
   heardAbout: HeardAboutValue;
   cgu: boolean;
+};
+
+export enum CompanyGoal {
+  SENSIBILIZE = 'sensibilize',
+  RECRUIT = 'recruit',
+  BOTH = 'both',
+}
+
+export type UpdateCompanyDto = {
+  name?: string;
+  description?: string;
+  logo?: File;
+  departmentId?: string;
+  url?: string;
+  linkedinUrl?: string;
+  hiringUrl?: string;
+  goal?: CompanyGoal;
+  businessSectorIds?: string[];
+};
+
+export type CompanySectorOccupation = {
+  businessSectorId?: string;
+  businessSector?: BusinessSector;
+  occupation?: Occupation;
+  order: number;
 };
 
 export type ContactCompany = {
@@ -540,7 +598,7 @@ export type PublicProfile = {
   lastName: string;
   linkedinUrl?: string;
   role: UserRoles;
-  department: Department;
+  department: DepartmentName;
   currentJob: string;
   description: string;
   introduction: string;
@@ -564,10 +622,7 @@ export type PublicProfile = {
   hasPicture: boolean;
 };
 
-export type PublicUser = Pick<
-  User,
-  'id' | 'firstName' | 'lastName' | 'role'
-> & {
+export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
   userProfile: Pick<
     UserProfile,
     // Attributes
@@ -601,8 +656,8 @@ export type Profile = PublicProfile | PrivateProfile;
 export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
-  helps: HelpValue | HelpValue[];
-  departments: Department | Department[];
+  nudgeIds: string | string[];
+  departments: DepartmentName | DepartmentName[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };
@@ -619,4 +674,38 @@ export type PostAuthFinalizeReferedUserParams = {
 
 export type ExternalCv = {
   url: string;
+};
+
+export type RecruitementAlert = {
+  id: string;
+  name: string;
+  jobName: string;
+  department: DepartmentName | null;
+  workingExperienceYears: WorkingExperience | null;
+  contractType: ContractValue | null;
+  companyId: string;
+  businessSectors?: BusinessSector[];
+  skills?: Skill[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type RecruitementAlertDto = {
+  companyId: string;
+  name: string;
+  jobName: string;
+  department: DepartmentName | null;
+  businessSectorIds?: string[];
+  workingExperienceYears: WorkingExperience | null;
+  contractType: ContractValue | null;
+  skills?: FilterConstant<string>[];
+};
+
+export type UserWithConversations = User & {
+  conversations: Conversation[];
+};
+
+export type CompanyWithUsers = Company & {
+  users: UserWithConversations[];
+  pendingInvitations: Invitation[];
 };
