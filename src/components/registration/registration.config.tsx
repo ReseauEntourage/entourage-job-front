@@ -154,17 +154,17 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
       {
         icon: <IlluConversation {...iconSizeProps} />,
         title: 'Sensibiliser vos collaborateurs',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        text: "Permettez à vos collaborateurs de devenir coach et de s'engager dans des actions solidaires.",
       },
       {
         icon: <IlluPoigneeDeMain {...iconSizeProps} />,
         title: 'Inviter des collaborateurs',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        text: 'Invitez vos collaborateurs à rejoindre le réseau et à soutenir des candidat(e)s dans leur recherche d’emploi.',
       },
       {
         icon: <IlluCV color={COLORS.primaryBlue} {...iconSizeProps} />,
         title: 'Recruter des candidats',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        text: 'Créez des alertes de recrutement et recevez les profils de candidat(e)s correspondant à vos besoins',
       },
     ],
     title:
