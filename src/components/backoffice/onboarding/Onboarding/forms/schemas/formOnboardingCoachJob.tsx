@@ -1,4 +1,5 @@
 import React from 'react';
+import { loadBusinessSectorsOptions } from '@/src/components/forms/utils/loadOptions.utils';
 import { LucidIcon } from '@/src/components/utils';
 import { Api } from 'src/api';
 import {
@@ -8,27 +9,6 @@ import {
   GetValueType,
 } from 'src/components/forms/FormSchema';
 import { FilterConstant } from 'src/constants/utils';
-
-const loadBusinessSectorsOptions = async (callback, inputValue) => {
-  try {
-    const { data: businessSectors } = await Api.getAllBusinessSectors({
-      search: inputValue,
-      limit: 50,
-      offset: 0,
-    });
-    callback([
-      ...businessSectors.map((u) => {
-        return {
-          value: u.id,
-          label: u.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
 
 export const CREATE_NEW_COMPANY_VALUE = 'createNewCompany';
 
