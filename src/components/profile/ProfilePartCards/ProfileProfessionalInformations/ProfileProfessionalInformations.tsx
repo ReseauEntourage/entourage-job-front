@@ -45,7 +45,7 @@ export const ProfileProfessionalInformations = ({
       isEmpty={isEmpty}
     >
       <StyledContentContainer>
-        {sectorOccupations.length > 0 && (
+        {(sectorOccupations.length > 0 || company) && (
           <ProfileCareerPathSentence
             company={company}
             sectorOccupations={sectorOccupations}

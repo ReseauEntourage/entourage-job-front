@@ -77,21 +77,23 @@ export const ProfileCareerPathSentence = ({
           )}
         </Text>
 
-        <StyledCareerPathSectorOccupationTagContainer>
-          <Text>J&apos;ai du réseau dans : </Text>
-          {sectorOccupations.map((sectorOccupation, index) => (
-            <>
-              {asSimpleSentence ? (
-                <span>{sectorOccupation.businessSector?.name}</span>
-              ) : (
-                <Tag
-                  content={sectorOccupation.businessSector?.name}
-                  key={index}
-                />
-              )}
-            </>
-          ))}
-        </StyledCareerPathSectorOccupationTagContainer>
+        {sectorOccupations.length > 0 && (
+          <StyledCareerPathSectorOccupationTagContainer>
+            <Text>J&apos;ai du réseau dans : </Text>
+            {sectorOccupations.map((sectorOccupation, index) => (
+              <>
+                {asSimpleSentence ? (
+                  <span>{sectorOccupation.businessSector?.name}</span>
+                ) : (
+                  <Tag
+                    content={sectorOccupation.businessSector?.name}
+                    key={index}
+                  />
+                )}
+              </>
+            ))}
+          </StyledCareerPathSectorOccupationTagContainer>
+        )}
       </>
     );
   }
