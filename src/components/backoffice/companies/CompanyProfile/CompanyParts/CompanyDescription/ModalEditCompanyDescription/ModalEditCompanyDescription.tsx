@@ -14,11 +14,11 @@ export const ModalEditCompanyDescription = ({
     <ModalEdit
       title="Ecrire une description de votre entreprise"
       closeOnNextRender={closeModal}
+      description="Ces informations seront visibles par tous les utilisateurs de la plateforme"
       defaultValues={{
         description: description || '',
       }}
       formSchema={formEditCompanyDescription}
-      description="Ces informations seront visibles par tous les candidats de la plateforme"
       onSubmit={(values, onClose: () => void) => {
         updateCompany({
           description: values.description,
