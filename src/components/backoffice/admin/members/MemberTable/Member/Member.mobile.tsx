@@ -8,7 +8,6 @@ import {
   StyledMobileMember,
   StyledNameCellMobile,
 } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
-import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
 import { ImgUserProfile, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
@@ -36,7 +35,6 @@ export function MemberMobile({
   isEditable,
   disableLink,
 }: MemberProps) {
-  const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -49,7 +47,7 @@ export function MemberMobile({
     : null;
 
   return (
-    <StyledMobileMember selected={checked} cvStatus={cvStatus.toLowerCase()}>
+    <StyledMobileMember selected={checked}>
       <div className="line">
         <StyledNameCellMobile>
           <ImgUserProfile
