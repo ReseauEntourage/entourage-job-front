@@ -1,6 +1,8 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { COMPANIES_LIMIT } from '@/src/constants';
 import { assertIsDefined } from '@/src/utils/asserts';
+import { currentUserActions } from '../current-user';
+import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import {
   selectCompaniesHasFetchedAll,
@@ -67,8 +69,21 @@ function* updateCompanyRequestedSaga(
 
     yield* call(() => Api.updateCompany(companyData));
     yield* put(updateCompanySucceeded());
+    yield* put(currentUserActions.fetchUserRequested());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: `Votre entreprise a bien été mise à jour`,
+      })
+    );
   } catch (error) {
     yield* put(updateCompanyFailed(null));
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message: 'Une erreur est survenue',
+      })
+    );
   }
 }
 

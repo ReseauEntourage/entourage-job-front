@@ -29,9 +29,6 @@ export const ProfileCareerPathSentence = ({
   currentJob,
   role,
 }: ProfileCareerPathSentenceProps) => {
-  if (!sectorOccupations || sectorOccupations.length === 0) {
-    return <>Je suis ouvert à toutes les opportunités</>;
-  }
   const hasSecondPart = sectorOccupations?.length > 1;
 
   const getOccupationIfExists = (index, accent = false) => {
@@ -62,7 +59,13 @@ export const ProfileCareerPathSentence = ({
     return (
       <>
         <Text>
-          Je travaille comme <strong>{currentJob}</strong>
+          Je travaille
+          {currentJob && (
+            <>
+              {' '}
+              comme <strong>{currentJob}</strong>
+            </>
+          )}
           {company && (
             <>
               {' '}
@@ -91,6 +94,10 @@ export const ProfileCareerPathSentence = ({
         </StyledCareerPathSectorOccupationTagContainer>
       </>
     );
+  }
+
+  if (!sectorOccupations || sectorOccupations.length === 0) {
+    return <>Je suis ouvert à toutes les opportunités</>;
   }
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -11,6 +11,7 @@ import { getNormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
+import { CompanyRecruitementAlertCard } from './CompanyRecruitementAlertCard';
 import {
   StyledDashboardLeftColumn,
   StyledDashboardRightColumn,
@@ -19,6 +20,7 @@ import {
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
+import { DashboardCompanyCollaboratorsList } from './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
@@ -32,8 +34,9 @@ export const Dashboard = () => {
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
-  const isCompanyAdmin = user.companies?.some(
-    (company) => company.companyUser?.isAdmin === true
+  const isCompanyAdmin = useMemo(
+    () => user.company && user.company.companyUser?.isAdmin,
+    [user.company]
   );
 
   if (isDesktop) {
@@ -47,22 +50,24 @@ export const Dashboard = () => {
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
-              {isCompanyAdmin &&
-                user.companies &&
-                user.companies.map((company) => (
-                  <DashboardCompanyCard key={company.id} company={company} />
-                ))}
+              {isCompanyAdmin && user.company && (
+                <DashboardCompanyCard company={user.company} />
+              )}
               <DashboardProfileCard />
-              {!isCompanyAdmin &&
-                user.companies &&
-                user.companies.map((company) => (
-                  <DashboardCompanyCard key={company.id} company={company} />
-                ))}
+              {!isCompanyAdmin && user.company && (
+                <DashboardCompanyCard company={user.company} />
+              )}
               {isNormalUser && <DashboardAvailabilityCard />}
               <DashboardReferentCard />
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
               {isNormalUser && <DashboardNextSteps />}
+              {isCompanyAdmin && user.company && (
+                <DashboardCompanyCollaboratorsList
+                  companyId={user.company.id}
+                />
+              )}
+              {isCompanyAdmin && <CompanyRecruitementAlertCard />}
               <DashboardMessagingConversation />
               {isNormalUser && <DashboardRecommendationsCard />}
               {isReferer && <DashboardInviteToReferCandidate />}
@@ -87,6 +92,10 @@ export const Dashboard = () => {
         <StyledBackofficeGrid className="mobile">
           <StyledDashboardRightColumn className="mobile">
             {isNormalUser && <DashboardNextSteps />}
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
+            )}
+            {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             {isNormalUser && <DashboardRecommendationsCard />}
             <DashboardMessagingConversation />
             {isReferer && <DashboardInviteToReferCandidate />}
@@ -94,7 +103,13 @@ export const Dashboard = () => {
             <DashboardToolboxCard />
           </StyledDashboardRightColumn>
           <StyledDashboardLeftColumn className="mobile">
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCard company={user.company} />
+            )}
             <DashboardProfileCard />
+            {!isCompanyAdmin && user.company && (
+              <DashboardCompanyCard company={user.company} />
+            )}
             {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardReferentCard />
           </StyledDashboardLeftColumn>

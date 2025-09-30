@@ -8,6 +8,7 @@ import {
   IlluCV,
   IlluOrdiCV,
 } from 'assets/icons/icons';
+import { CompanyRecruitementAlertModal } from '../CompanyRecruitementAlertCard/CompanyRecruitementAlertModal';
 import { Context } from './DashboardNextSteps.types';
 
 const iconSizeProps = { width: 80, height: 55 };
@@ -76,18 +77,18 @@ export const stepsByContext = {
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
-        href: '/dashboard/entreprise', // TODO: replace with company settings URL
+        href: '/backoffice/companies/parametres',
       },
     },
-    {
-      title: 'Les team building solidaires',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
-      content: "Découvrir les formats d'engagement",
-      cta: {
-        label: 'Découvrir',
-        href: '/dashboard/company', // TODO: replace with company TBS URL
-      },
-    },
+    // {
+    //   title: 'Les team building solidaires',
+    //   icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+    //   content: "Découvrir les formats d'engagement",
+    //   cta: {
+    //     label: 'Découvrir',
+    //     href: '/dashboard/company', // TODO: replace with company TBS URL
+    //   },
+    // },
     {
       title: 'Inviter mes collaborateurs',
       icon: <IlluCoachEtCandidat {...iconSizeProps} />,
@@ -95,7 +96,7 @@ export const stepsByContext = {
       cta: {
         label: 'Inviter',
         onClick: (currentUser) => {
-          const companyId = currentUser?.companies?.[0]?.id || null;
+          const companyId = currentUser?.company?.id || null;
           if (!companyId) return;
           openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
         },
@@ -109,7 +110,7 @@ export const stepsByContext = {
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
-        href: '/dashboard/entreprise', // TODO: replace with company settings URL
+        href: '/backoffice/companies/parametres',
       },
     },
     {
@@ -118,7 +119,9 @@ export const stepsByContext = {
       content: 'Trouvez les candidats qui vous correspondent',
       cta: {
         label: 'Créer une alerte',
-        href: '/dashboard/recruitment', // TODO: replace with recruitment URL
+        onClick: () => {
+          openModal(<CompanyRecruitementAlertModal />);
+        },
       },
     },
     {

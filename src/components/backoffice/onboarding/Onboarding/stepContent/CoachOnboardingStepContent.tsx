@@ -44,7 +44,7 @@ export const CoachOnboardingStepContents = {
     defaultValues: (user) => {
       return getCoachDefaultProfessionalValuesWithLinkedIn(
         user.userProfile,
-        user.companies ? user.companies[0] : null
+        user.company
       );
     },
     skippedBy: (user: User) =>

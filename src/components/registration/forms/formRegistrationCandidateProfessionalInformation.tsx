@@ -1,27 +1,6 @@
-import { Api } from 'src/api';
+import { loadBusinessSectorsOptions } from '../../forms/utils/loadOptions.utils';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { FilterConstant } from 'src/constants/utils';
-
-const loadBusinessSectorsOptions = async (callback, inputValue) => {
-  try {
-    const { data: businessSectors } = await Api.getAllBusinessSectors({
-      search: inputValue,
-      limit: 50,
-      offset: 0,
-    });
-    callback([
-      ...businessSectors.map((u) => {
-        return {
-          value: u.id,
-          label: u.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
 
 export const formRegistrationCandidateProfessionalInformation: FormSchema<{
   businessSectorId0: FilterConstant<string>;

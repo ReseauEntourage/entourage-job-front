@@ -251,7 +251,7 @@ function* uploadExternalCvRequestedSaga(
     yield* put(
       notificationsActions.addNotification({
         type: 'success',
-        message: `Le CV a bien été importé`,
+        message: 'Votre entreprise a été mise à jour avec succès',
       })
     );
   } catch (error) {

@@ -148,7 +148,7 @@ export const findNextNotSkippableStep = (
 };
 
 export const getOnboardingFlow = (user: User): OnboardingFlow => {
-  if (user.companies && user.companies[0]?.companyUser?.isAdmin) {
+  if (user.company && user.company.companyUser?.isAdmin) {
     return OnboardingFlow.COMPANY;
   }
   if (user.role === UserRoles.CANDIDATE) {

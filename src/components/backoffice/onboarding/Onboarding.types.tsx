@@ -95,7 +95,7 @@ export interface CompanyStepData {
   businessSectorIds?: { value: string }[];
   departmentId?: { value: string };
   url?: string;
-  linkedinUrl?: string;
+  linkedInUrl?: string;
   hiringUrl?: string;
   goal?: string[];
 }

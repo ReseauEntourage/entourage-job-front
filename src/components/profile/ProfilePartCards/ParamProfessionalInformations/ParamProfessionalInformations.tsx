@@ -29,9 +29,7 @@ export const ParamProfessionalInformations = ({
   smallCard = false,
 }: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
-  const { userProfile, role, companies } = user;
-
-  const company = companies?.[0] || null;
+  const { userProfile, role, company } = user;
 
   const isCompleted = sectorOccupations?.length > 0;
 
