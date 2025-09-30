@@ -12,7 +12,7 @@ export const ModalEditCompanyDescription = ({
   return (
     <ModalEdit
       title="Ecrire une description de votre entreprise"
-      description="Ces informations seront visibles par tous les candidats de la plateforme"
+      description="Ces informations seront visibles par tous les utilisateurs de la plateforme"
       defaultValues={{
         description: description || '',
       }}

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledCompanyLeftColumn = styled.div`
   display: flex;
@@ -6,7 +7,7 @@ export const StyledCompanyLeftColumn = styled.div`
   flex-direction: column;
   flex: 2;
   gap: 40px;
-  &.mobile {
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
     min-width: unset;
     width: 100%;
     margin-bottom: 40px;
@@ -18,9 +19,10 @@ export const StyledCompanyRightColumn = styled.div`
   flex-direction: column;
   flex: 1;
   gap: 40px;
-  min-width: 400px;
-  &.mobile {
-    min-width: unset;
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    min-width: 400px;
+  }
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
   }
 `;
