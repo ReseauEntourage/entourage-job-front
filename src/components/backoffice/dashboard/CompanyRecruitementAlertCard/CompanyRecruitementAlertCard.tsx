@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { IlluCV } from '@/assets/icons/icons';
 import { openModal } from 'src/components/modals/Modal';
-import { Button, Card } from 'src/components/utils';
+import { Button, Card, Text } from 'src/components/utils';
 import {
   fetchRecruitementAlertsAction,
   selectRecruitementAlerts,
@@ -31,7 +31,7 @@ export const CompanyRecruitementAlertCard = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   if (recruitementAlerts.length > 0) {
@@ -55,8 +55,10 @@ export const CompanyRecruitementAlertCard = () => {
       <StyledRecruitementAlertContainer>
         <StyledEmptyRecruitementAlertContainer>
           <IlluCV width={90} height={90} />
-          Recevez par mail des profils de candidats qui correspondent à vos
-          besoins de recrutement
+          <Text textAlign="center">
+            Recevez par mail des profils de candidats qui correspondent à vos
+            besoins de recrutement
+          </Text>
         </StyledEmptyRecruitementAlertContainer>
         <Button variant="primary" rounded onClick={handleOpenModal}>
           Créer une alerte mail

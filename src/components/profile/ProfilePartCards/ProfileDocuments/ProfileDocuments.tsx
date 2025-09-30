@@ -1,7 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { IlluCandidatFolder } from '@/assets/icons/icons';
+import {
+  IlluCandidatFolder,
+  IlluDossierCandidat,
+  IlluLinkedIn,
+} from '@/assets/icons/icons';
 import { openModal } from '@/src/components/modals/Modal';
+import { DocumentItem } from '@/src/components/utils/DocumentItem/DocumentItem';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { currentUserActions } from '@/src/use-cases/current-user';
@@ -10,7 +15,6 @@ import { Api } from 'src/api';
 import { Text } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { DocumentItem } from './DocumentItem/DocumentItem';
 import { StyledDocumentList } from './ProfileDocuments.styles';
 import { ProfileDocumentsModalEdit } from './ProfileDocumentsModalEdit';
 
@@ -89,7 +93,8 @@ export const ProfileDocuments = ({
       <StyledDocumentList>
         {linkedinUrl && (
           <DocumentItem
-            type="LinkedIn"
+            name="Mon profil LinkedIn"
+            icon={<IlluLinkedIn width={38} height={38} />}
             onRemove={isEditable ? removeLinkedinUrl : undefined}
             onClick={() => {
               window.open(linkedinUrl, '_blank');
@@ -98,7 +103,8 @@ export const ProfileDocuments = ({
         )}
         {hasExternalCv && isEditable && (
           <DocumentItem
-            type="CVPerso"
+            name="Mon CV perso"
+            icon={<IlluDossierCandidat width={38} height={38} />}
             onRemove={
               isEditable
                 ? () => {

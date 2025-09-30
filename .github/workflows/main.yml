@@ -12,6 +12,7 @@ env:
   NEXT_PUBLIC_WEBINAR_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
+  NEXT_PUBLIC_TOOLBOX_COMPANY_URL: 'https://google.com'
   NEXT_PUBLIC_TUTORIAL_CV: 'https://google.com'
   NEXT_PUBLIC_TUTORIAL_PP: 'https://google.com'
   NEXT_PUBLIC_TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'

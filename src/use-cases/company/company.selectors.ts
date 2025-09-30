@@ -1,6 +1,8 @@
 import {
   fetchCompaniesAdapter,
   fetchSelectedCompanyAdapter,
+  fetchSelectedCompanyWithCollaboratorsAdapter,
+  inviteCollaboratorsAdapter,
   updateCompanyAdapter,
   updateCompanyLogoAdapter,
 } from './company.adapters';
@@ -16,6 +18,11 @@ export const fetchSelectedCompanySelectors =
     (state) => state.company.fetchSelectedCompany
   );
 
+export const fetchSelectedCompanyWithCollaboratorsSelectors =
+  fetchSelectedCompanyWithCollaboratorsAdapter.getSelectors<RootState>(
+    (state) => state.company.fetchSelectedCompanyWithCollaborators
+  );
+
 export const updateCompanyLogoSelectors =
   updateCompanyLogoAdapter.getSelectors<RootState>(
     (state) => state.company.updateCompanyLogo
@@ -26,12 +33,21 @@ export const updateCompanySelectors =
     (state) => state.company.updateCompany
   );
 
+export const inviteCollaboratorsSelectors =
+  inviteCollaboratorsAdapter.getSelectors<RootState>(
+    (state) => state.company.inviteCollaborators
+  );
+
 export function selectSelectedCompanyId(state: RootState) {
   return state.company.selectedCompanyId;
 }
 
 export function selectSelectedCompany(state: RootState) {
   return state.company.selectedCompany;
+}
+
+export function selectSelectedCompanyWithCollaborators(state: RootState) {
+  return state.company.selectedCompanyWithCollaborators;
 }
 
 export function selectCompanies(state: RootState) {
@@ -49,4 +65,9 @@ export function selectCompaniesOffset(state: RootState) {
 export const selectIsFetchCompanySelectors =
   fetchSelectedCompanyAdapter.getSelectors<RootState>(
     (state) => state.company.fetchSelectedCompany
+  );
+
+export const selectIsFetchCompanyWithCollaboratorsSelectors =
+  fetchSelectedCompanyWithCollaboratorsAdapter.getSelectors<RootState>(
+    (state) => state.company.fetchSelectedCompanyWithCollaborators
   );

@@ -30,7 +30,7 @@ export const CompanyOnboardingStepContents = {
   3: {
     title: 'Renseignez les informations de votre entreprise',
     subtitle:
-      'Ces informations seront visibles par tous les candidats de la plateforme',
+      'Ces informations seront visibles par tous les utilisateurs de la plateforme',
     form: formOnboardingCompanyInformation,
   },
 };

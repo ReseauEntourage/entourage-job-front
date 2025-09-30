@@ -259,6 +259,9 @@ export type Company = {
   pendingInvitations?: Invitation[];
   businessSectors?: BusinessSector[];
   department: Department;
+  url?: string | null;
+  hiringUrl?: string | null;
+  linkedInUrl?: string | null;
   admin: {
     firstName: string;
     lastName: string;
@@ -464,9 +467,9 @@ export type UpdateCompanyDto = {
   description?: string;
   logo?: File;
   departmentId?: string;
-  url?: string;
-  linkedinUrl?: string;
-  hiringUrl?: string;
+  url?: string | null;
+  linkedInUrl?: string | null;
+  hiringUrl?: string | null;
   goal?: CompanyGoal;
   businessSectorIds?: string[];
 };
