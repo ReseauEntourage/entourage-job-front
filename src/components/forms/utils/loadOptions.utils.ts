@@ -1,5 +1,6 @@
 import { Api } from '@/src/api';
 import { createNudgeOption } from '@/src/constants/nudges';
+import { FilterConstant } from '@/src/constants/utils';
 
 export const loadNudgesOptions = async (userRole, callback) => {
   try {
@@ -17,7 +18,10 @@ export const loadNudgesOptions = async (userRole, callback) => {
   }
 };
 
-export const loadLanguagesOptions = async (callback, inputValue) => {
+export const loadLanguagesOptions = async (
+  callback: (options: FilterConstant[]) => void,
+  inputValue?: string
+) => {
   try {
     const { data: businessSectors } = await Api.getAllLanguages({
       search: inputValue,
@@ -38,7 +42,10 @@ export const loadLanguagesOptions = async (callback, inputValue) => {
   }
 };
 
-export const loadBusinessSectorsOptions = async (callback, inputValue) => {
+export const loadBusinessSectorsOptions = async (
+  callback: (options: FilterConstant[]) => void,
+  inputValue?: string
+) => {
   try {
     const { data: businessSectors } = await Api.getAllBusinessSectors({
       search: inputValue,
@@ -59,10 +66,37 @@ export const loadBusinessSectorsOptions = async (callback, inputValue) => {
   }
 };
 
-export const loadDepartmentsOptions = async (callback, inputValue) => {
+export const loadSkillsOptions = async (
+  callback: (options: FilterConstant[]) => void,
+  inputValue?: string
+) => {
+  try {
+    const { data: skills } = await Api.getAllSkills({
+      search: inputValue || undefined,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...skills.map((skill) => {
+        return {
+          value: skill.id,
+          label: skill.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
+export const loadDepartmentsOptions = async (
+  callback: (options: FilterConstant[]) => void,
+  inputValue?: string
+) => {
   try {
     const { data: departments } = await Api.getAllDepartments({
-      search: inputValue,
+      search: inputValue || '',
     });
     callback([
       ...departments.map((u) => {
