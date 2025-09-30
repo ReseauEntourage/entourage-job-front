@@ -27,6 +27,12 @@ const {
   fetchCompaniesFailed,
   fetchCompaniesWithFilters,
   fetchCompaniesNextPage,
+  fetchSelectedCompanyWithCollaboratorsRequested,
+  fetchSelectedCompanyWithCollaboratorsSucceeded,
+  fetchSelectedCompanyWithCollaboratorsFailed,
+  inviteCollaboratorsRequested,
+  inviteCollaboratorsSucceeded,
+  inviteCollaboratorsFailed,
 } = slice.actions;
 
 function* fetchSelectedCompanySaga() {
@@ -38,6 +44,57 @@ function* fetchSelectedCompanySaga() {
     yield* put(fetchSelectedCompanySucceeded(data));
   } catch (error) {
     yield* put(fetchSelectedCompanyFailed());
+  }
+}
+
+function* fetchSelectedCompanyWithCollaboratorsSaga() {
+  try {
+    const companyId = yield* select(selectSelectedCompanyId);
+
+    assertIsDefined(companyId, 'Company ID must be defined');
+    const { data } = yield* call(() =>
+      Api.getCompanyByIdWithUsersAndPendingInvitations(companyId)
+    );
+    yield* put(fetchSelectedCompanyWithCollaboratorsSucceeded(data));
+  } catch (error) {
+    yield* put(fetchSelectedCompanyWithCollaboratorsFailed());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message:
+          "Une erreur s'est produite lors de la récupération des collaborateurs de l'entreprise",
+      })
+    );
+  }
+}
+
+function* inviteCollaboratorsRequestedSaga(
+  action: ReturnType<typeof slice.actions.inviteCollaboratorsRequested>
+) {
+  try {
+    const { companyId, emails } = action.payload;
+
+    assertIsDefined(companyId, 'Company ID must be defined');
+    assertIsDefined(emails, 'Emails must be defined');
+    yield* call(() =>
+      Api.inviteCollaboratorsFromCompany(companyId, { emails })
+    );
+    yield* put(inviteCollaboratorsSucceeded());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: 'Toutes les invitations ont été envoyées avec succès.',
+      })
+    );
+    yield* put(fetchSelectedCompanyWithCollaboratorsRequested());
+  } catch (error) {
+    yield* put(inviteCollaboratorsFailed());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message: `Une erreur est survenue lors de l'envoi des invitations`,
+      })
+    );
   }
 }
 
@@ -140,8 +197,16 @@ export function* saga() {
     fetchSelectedCompanySaga
   );
   yield* takeLatest(
+    fetchSelectedCompanyWithCollaboratorsRequested.type,
+    fetchSelectedCompanyWithCollaboratorsSaga
+  );
+  yield* takeLatest(
     updateCompanyLogoRequested.type,
     updateCompanyLogoRequestedSaga
   );
   yield* takeLatest(updateCompanyRequested.type, updateCompanyRequestedSaga);
+  yield* takeLatest(
+    inviteCollaboratorsRequested.type,
+    inviteCollaboratorsRequestedSaga
+  );
 }
