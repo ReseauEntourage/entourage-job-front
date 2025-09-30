@@ -98,7 +98,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
   [RegistrationFlow.CANDIDATE]: {
     bullets: candidateLastStepBullets,
     title:
-      "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
+      "Il ne vous reste plus qu'à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
     subtitle:
       "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
   },
@@ -121,7 +121,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
       },
     ],
     title:
-      "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
+      "Il ne vous reste plus qu'à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
     subtitle:
       'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
   },
@@ -170,7 +170,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter des candidats',
+      'Vous pouvez accéder à votre compte Entourage Pro, engager vos collaborateurs et recruter des candidats',
   },
 };
 
