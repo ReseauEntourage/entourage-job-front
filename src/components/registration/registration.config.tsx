@@ -147,7 +147,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter des candidats',
+      'Vous pouvez désormais accéder à votre compte Entourage Pro et orienter des candidats',
   },
   [RegistrationFlow.COMPANY]: {
     bullets: [
