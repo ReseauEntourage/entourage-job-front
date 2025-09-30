@@ -4,14 +4,24 @@ import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { DirectoryUserItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
-import { NormalUserRoles, UserRoles } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
+const contextCompanyAdmin = 'CompanyAdmin';
+
+const recommendationsContexts = [
+  UserRoles.CANDIDATE,
+  UserRoles.COACH,
+  contextCompanyAdmin,
+];
+
+type recommendationsContextsType = (typeof recommendationsContexts)[number];
+
 const recommendationsLabels: {
-  [K in NormalUserRoles]: {
+  [K in recommendationsContextsType]: {
     title: string;
     subtitle: string;
     button: string;
@@ -29,19 +39,38 @@ const recommendationsLabels: {
       "N'hésitez pas à prendre connaissance de leurs besoins et les contacter directement",
     button: 'Voir tous les candidats',
   },
+  [contextCompanyAdmin]: {
+    title: 'Les candidats qui pourraient vous intéresser',
+    subtitle: '',
+    button: 'Voir tous les candidats',
+  },
 };
 
 export const DashboardRecommendationsCard = () => {
   const user = useAuthenticatedUser();
-
-  const { recommendations, isLoading, isError } = useDashboardRecommendations();
-
+  const isCompanyAdmin = useMemo(
+    () => !!(user.company && user.company.companyUser?.isAdmin),
+    [user.company]
+  );
+  const { recommendations, profiles, isLoading, isError } =
+    useDashboardRecommendations(isCompanyAdmin);
   const query = {
     departments: mutateToArray(user.userProfile.department),
   };
 
-  const recommendationsList = useMemo(() => {
-    return recommendations.map((profile) => {
+  const context = useMemo<recommendationsContextsType>(() => {
+    if (isCompanyAdmin) return contextCompanyAdmin;
+    if (user.role === UserRoles.COACH) return UserRoles.COACH;
+    return UserRoles.CANDIDATE;
+  }, [isCompanyAdmin, user.role]);
+
+  const items = useMemo(() => {
+    if (context === contextCompanyAdmin) return profiles;
+    return recommendations;
+  }, [context, profiles, recommendations]);
+
+  const itemsList = useMemo(() => {
+    return items.map((profile) => {
       return (
         <DirectoryUserItem
           key={profile.id}
@@ -60,32 +89,32 @@ export const DashboardRecommendationsCard = () => {
         />
       );
     });
-  }, [recommendations]);
+  }, [items]);
 
-  if ((recommendations.length === 0 && !isLoading) || isError) {
+  if (context === contextCompanyAdmin && profiles.length === 0 && !isLoading) {
+    return <></>;
+  }
+
+  if ((items.length === 0 && !isLoading) || isError) {
     return <DashboardNetworkDiscoveryCard />;
   }
 
   return (
     <Card
-      title={recommendationsLabels[user.role].title}
-      subtitle={recommendationsLabels[user.role].subtitle}
+      title={recommendationsLabels[context].title}
+      subtitle={recommendationsLabels[context].subtitle}
       centerTitle
     >
       <StyledDashboardCardContentContainer>
         <StyledDashboardRecommendationsList>
-          <CardList
-            list={recommendationsList}
-            isLoading={isLoading}
-            condensed
-          />
+          <CardList list={itemsList} isLoading={isLoading} condensed />
         </StyledDashboardRecommendationsList>
         <Button
           variant="primary"
           rounded
           href={{ pathname: '/backoffice/annuaire', query }}
         >
-          {recommendationsLabels[user.role].button}
+          {recommendationsLabels[context].button}
         </Button>
       </StyledDashboardCardContentContainer>
     </Card>
