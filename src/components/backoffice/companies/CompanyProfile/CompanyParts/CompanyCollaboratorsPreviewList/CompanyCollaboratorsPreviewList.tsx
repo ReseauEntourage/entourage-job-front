@@ -49,9 +49,10 @@ export const CompanyCollaboratorsPreviewList = ({
     companyWithCollaborators.users.length > 0;
 
   const ctaTitle = useMemo(() => {
+    if (!isEditable) return null;
     if (!isCompleted) return 'Inviter des collaborateurs';
     return 'Voir tous les collaborateurs';
-  }, [isCompleted]);
+  }, [isCompleted, isEditable]);
 
   const ctaCallback = useCallback(() => {
     if (!isCompleted) {
@@ -106,6 +107,22 @@ export const CompanyCollaboratorsPreviewList = ({
     );
   }, [companyWithCollaborators?.users, slidesPerView]);
 
+  const fallback = useMemo(() => {
+    return {
+      content: isEditable ? (
+        <Text>
+          Vous n’avez pas encore de collaborateurs rattachés à votre entreprise.
+          Invitez les à devenir coach.
+        </Text>
+      ) : (
+        <Text>
+          Cette entreprise n’a pas encore de collaborateurs rattachés.
+        </Text>
+      ),
+      icon: <IlluReseau />,
+    };
+  }, [isEditable]);
+
   return (
     <ProfilePartCard
       title="Collaborateurs d'entreprise"
@@ -113,15 +130,7 @@ export const CompanyCollaboratorsPreviewList = ({
       isEditable={isEditable}
       ctaCallback={ctaCallback}
       ctaTitle={ctaTitle}
-      fallback={{
-        content: (
-          <Text>
-            Vous n’avez pas encore de collaborateurs rattachés à votre
-            entreprise. Invitez les à devenir coach.
-          </Text>
-        ),
-        icon: <IlluReseau />,
-      }}
+      fallback={fallback}
       smallCard={smallCard}
     >
       <StyledSwiperContainer>
