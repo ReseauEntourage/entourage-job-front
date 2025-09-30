@@ -86,12 +86,24 @@ export const ParamProfessionalInformations = ({
       fallback={{
         content: (
           <>
-            <H6 title="Renseignez ici les secteurs et métiers que vous recherchez" />
-            <Text>
-              Ces informations nous permettent de vous mettre en relation plus
-              facilement avec des personnes de la communauté qui pourraient vous
-              donner un coup de pouce{' '}
-            </Text>
+            {role === UserRoles.CANDIDATE ? (
+              <>
+                <H6 title="Renseignez ici les secteurs et métiers que vous recherchez" />
+                <Text>
+                  Ces informations nous permettent de vous mettre en relation
+                  plus facilement avec des personnes de la communauté qui
+                  pourraient vous donner un coup de pouce.
+                </Text>
+              </>
+            ) : (
+              <>
+                <H6 title="Renseignez ici votre métier et les secteurs" />
+                <Text>
+                  Ces informations permettent aux candidats de savoir dans quels
+                  secteurs vous avez du réseau et de l&apos;expérience.
+                </Text>
+              </>
+            )}
           </>
         ),
         icon: <IlluBulleQuestion />,
