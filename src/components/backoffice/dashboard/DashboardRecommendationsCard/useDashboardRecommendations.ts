@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentUser } from '@/src/use-cases/current-user';
 import { notificationsActions } from 'src/use-cases/notifications';
 
 import {
@@ -19,7 +18,6 @@ import {
 export function useDashboardRecommendations() {
   const dispatch = useDispatch();
 
-  const currentUser = useSelector(selectCurrentUser);
   const recommendations = useSelector(selectProfilesRecommendations);
 
   const isFetchProfilesRecommendationsIdle = useSelector(
