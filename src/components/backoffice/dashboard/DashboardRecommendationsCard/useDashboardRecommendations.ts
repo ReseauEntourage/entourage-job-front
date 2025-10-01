@@ -48,7 +48,7 @@ export function useDashboardRecommendations() {
   // fetch recommendations or profiles on mount
   useEffect(() => {
     dispatch(profilesActions.fetchProfilesRecommendationsRequested());
-  }, [currentUser, dispatch, isFetchProfilesRecommendationsIdle]);
+  }, [dispatch, isFetchProfilesRecommendationsIdle]);
 
   // notif on error if recommendations fails
   useEffect(() => {
