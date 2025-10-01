@@ -42,7 +42,7 @@ export const Dashboard = () => {
 
   const isCompanyAdminWithRecruitGoal = useMemo(
     () => isCompanyAdmin && user.company?.goal === CompanyGoal.RECRUIT,
-    [isCompanyAdmin, user.company]
+    [isCompanyAdmin, user.company?.goal]
   );
 
   const renderLeftColumnContent = () => {
