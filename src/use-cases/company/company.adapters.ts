@@ -16,6 +16,16 @@ export const fetchSelectedCompanyAdapter = createRequestAdapter(
   'fetchSelectedCompany'
 ).withPayloads<void, CompanyWithUsers>();
 
+export const fetchSelectedCompanyWithCollaboratorsAdapter =
+  createRequestAdapter('fetchSelectedCompanyWithCollaborators').withPayloads<
+    void,
+    CompanyWithUsers
+  >();
+
+export const inviteCollaboratorsAdapter = createRequestAdapter(
+  'inviteCollaborators'
+).withPayloads<{ companyId: string; emails: string[] }, void>();
+
 export const updateCompanyLogoAdapter = createRequestAdapter(
   'updateCompanyLogo'
 ).withPayloads<

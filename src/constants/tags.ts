@@ -367,6 +367,9 @@ export const GA_TAGS = {
   BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC: {
     action: 'Backoffice_Candidat_Header_BAO_Clic',
   },
+  BACKOFFICE_COMPANY_HEADER_BAO_CLIC: {
+    action: 'Backoffice_Company_Header_BAO_Clic',
+  },
   BACKOFFICE_REFERER_HEADER_BAO_CLIC: {
     action: 'Backoffice_Referer_Header_BAO_Clic',
   },
@@ -405,6 +408,9 @@ export const GA_TAGS = {
   },
   BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC: {
     action: 'Backoffice_Coach_Header_Dashboard_Clic',
+  },
+  BACKOFFICE_COACH_HEADER_MY_COMPANY_CLIC: {
+    action: 'Backoffice_Coach_Header_My_Company_Clic',
   },
   BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC: {
     action: 'Backoffice_Referer_Header_Dashboard_Clic',
