@@ -46,7 +46,7 @@ export const Dashboard = () => {
           <StyledDashboardTitleContainer>
             <H1 title="Bienvenue sur votre tableau de bord" color="black" />
             <br />
-            {isNormalUser && <DashboardAlertWhatsapp />}
+            {isNormalUser && !isCompanyAdmin && <DashboardAlertWhatsapp />}
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
