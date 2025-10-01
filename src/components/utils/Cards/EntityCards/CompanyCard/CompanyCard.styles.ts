@@ -45,6 +45,7 @@ export const StyledCompanyCardSeparator = styled.div`
 
 export const StyledCompanyCardCollaboratorsSection = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row;
   gap: 7px;
 `;
