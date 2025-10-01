@@ -89,7 +89,7 @@ export const CompanyCard = ({
           {businessSectors.length > 0 && (
             <StyledCompanyCardSectorsSectionContainer>
               <Text size="small" color="darkGray">
-                Secteurs
+                Secteur{businessSectors.length > 1 ? 's' : ''}
               </Text>
               <StyledCompanyCardSectorsContainer>
                 {businessSectors
