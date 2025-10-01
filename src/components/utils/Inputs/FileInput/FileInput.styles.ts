@@ -7,6 +7,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledFileInputGroupForm = styled.div`
   ${() => commonInputContainerStyles}
+  margin-bottom: 15px;
   input {
     ${() => commonInputStyles}
     &.secondary {
