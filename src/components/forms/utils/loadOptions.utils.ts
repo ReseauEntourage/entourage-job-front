@@ -17,6 +17,27 @@ export const loadNudgesOptions = async (userRole, callback) => {
   }
 };
 
+export const loadSkillsOptions = async (callback, inputValue) => {
+  try {
+    const { data: skills } = await Api.getAllSkills({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...skills.map((u) => {
+        return {
+          value: u.name,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
 export const loadLanguagesOptions = async (callback, inputValue) => {
   try {
     const { data: businessSectors } = await Api.getAllLanguages({
