@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { User } from '@/src/api/types';
 import { ImgUserProfile, LegacyImg, Text } from '@/src/components/utils';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   StyledCollaboratorSmallCardContainer,
   StyledCollaboratorSmallCardInfosContainer,
@@ -21,6 +22,8 @@ export const CollaboratorSmallCard = ({
       window.location.href = `/backoffice/profile/${user.id}`;
     }
   }, [user]);
+
+  const isMobile = useIsMobile();
   return (
     <StyledCollaboratorSmallCardContainer
       pointer={!!user}
@@ -31,7 +34,7 @@ export const CollaboratorSmallCard = ({
           <ImgUserProfile
             user={user}
             hasPicture={user.userProfile.hasPicture}
-            size={80}
+            size={isMobile ? 50 : 80}
           />
         </div>
       )}
