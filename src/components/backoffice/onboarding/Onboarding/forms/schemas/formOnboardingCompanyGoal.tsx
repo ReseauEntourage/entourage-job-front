@@ -1,5 +1,5 @@
 import React from 'react';
-import { CompanyGoal } from '@/src/api/types';
+import { CompanyGoal } from '@/src/constants/company';
 import { IlluCV, IlluPoigneeDeMain } from 'assets/icons/icons';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { SelectListType } from 'src/components/utils/Inputs/SelectList/SelectList.types';

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { CompanyGoal } from '@/src/api/types';
+import { CompanyGoal } from '@/src/constants/company';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,

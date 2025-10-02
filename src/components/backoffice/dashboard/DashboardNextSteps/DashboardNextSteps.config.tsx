@@ -86,7 +86,7 @@ export const stepsByContext = {
     //   content: "Découvrir les formats d'engagement",
     //   cta: {
     //     label: 'Découvrir',
-    //     href: '/dashboard/company', // TODO: replace with company TBS URL
+    //     href: '/backoffice/engager-mon-entreprise',
     //   },
     // },
     {
@@ -124,14 +124,14 @@ export const stepsByContext = {
         },
       },
     },
-    {
-      title: 'Les team building solidaires',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
-      content: "Découvrir les formats d'engagement",
-      cta: {
-        label: 'Découvrir',
-        href: '/dashboard/company', // TODO: replace with company TBS URL
-      },
-    },
+    // {
+    //   title: 'Les team building solidaires',
+    //   icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+    //   content: "Découvrir les formats d'engagement",
+    //   cta: {
+    //     label: 'Découvrir',
+    //     href: '/backoffice/engager-mon-entreprise',
+    //   },
+    // },
   ],
 };
