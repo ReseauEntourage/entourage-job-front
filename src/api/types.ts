@@ -624,7 +624,7 @@ export type PublicProfile = {
   hasExternalCv: boolean;
   averageDelayResponse: number | null;
   hasPicture: boolean;
-  company?: Company | null;
+  company: Company | null;
 };
 
 export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {

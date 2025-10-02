@@ -15,7 +15,7 @@ export interface ProfileProfessionalInformationsProps {
   skills: Skill[];
   role: UserRoles;
   currentJob?: string;
-  company?: Company | null;
+  company: Company | null;
   smallCard?: boolean;
 }
 
