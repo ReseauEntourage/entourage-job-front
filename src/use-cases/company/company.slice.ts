@@ -5,6 +5,8 @@ import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchCompaniesAdapter,
   fetchSelectedCompanyAdapter,
+  fetchSelectedCompanyWithCollaboratorsAdapter,
+  inviteCollaboratorsAdapter,
   updateCompanyAdapter,
   updateCompanyLogoAdapter,
 } from './company.adapters';
@@ -12,10 +14,15 @@ import {
 export interface State {
   fetchCompanies: RequestState<typeof fetchCompaniesAdapter>;
   fetchSelectedCompany: RequestState<typeof fetchSelectedCompanyAdapter>;
+  fetchSelectedCompanyWithCollaborators: RequestState<
+    typeof fetchSelectedCompanyWithCollaboratorsAdapter
+  >;
   updateCompanyLogo: RequestState<typeof updateCompanyLogoAdapter>;
   updateCompany: RequestState<typeof updateCompanyAdapter>;
+  inviteCollaborators: RequestState<typeof inviteCollaboratorsAdapter>;
   selectedCompanyId: string | null;
   selectedCompany: CompanyWithUsers | null;
+  selectedCompanyWithCollaborators: CompanyWithUsers | null;
   companies: CompanyWithUsers[];
   companiesOffset: number;
   companiesHasFetchedAll: boolean;
@@ -24,12 +31,16 @@ export interface State {
 const initialState: State = {
   fetchCompanies: fetchCompaniesAdapter.getInitialState(),
   fetchSelectedCompany: fetchSelectedCompanyAdapter.getInitialState(),
+  fetchSelectedCompanyWithCollaborators:
+    fetchSelectedCompanyWithCollaboratorsAdapter.getInitialState(),
   updateCompanyLogo: updateCompanyLogoAdapter.getInitialState(),
   updateCompany: updateCompanyAdapter.getInitialState(),
+  inviteCollaborators: inviteCollaboratorsAdapter.getInitialState(),
   companiesOffset: 0,
   companiesHasFetchedAll: false,
   selectedCompanyId: null,
   selectedCompany: null,
+  selectedCompanyWithCollaborators: null,
   companies: [],
 };
 
@@ -63,6 +74,21 @@ export const slice = createSlice({
           state.selectedCompany = action.payload;
         },
       }
+    ),
+    ...fetchSelectedCompanyWithCollaboratorsAdapter.getReducers<State>(
+      (state) => state.fetchSelectedCompanyWithCollaborators,
+      {
+        fetchSelectedCompanyWithCollaboratorsSucceeded(
+          state,
+          action: PayloadAction<CompanyWithUsers>
+        ) {
+          state.selectedCompanyWithCollaborators = action.payload;
+        },
+      }
+    ),
+    ...inviteCollaboratorsAdapter.getReducers<State>(
+      (state) => state.inviteCollaborators,
+      {}
     ),
     ...updateCompanyLogoAdapter.getReducers<State>(
       (state) => state.updateCompanyLogo,

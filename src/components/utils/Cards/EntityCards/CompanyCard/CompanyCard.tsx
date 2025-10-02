@@ -44,16 +44,14 @@ export const CompanyCard = ({
     if (users.length === 0) return <Text>Aucun collaborateur</Text>;
 
     let boldPart = '';
-    let rest = '';
+    const rest = 'dans la communauté';
     if (users.length === 1) {
       boldPart = '1 collaborateur';
-      rest = 'fait partie de la communauté';
     } else {
       boldPart = `${users.length} collaborateurs`;
-      rest = 'font partie de la communauté';
     }
     return (
-      <Text>
+      <Text size="small">
         <span style={{ fontWeight: FONT_WEIGHTS.semibold }}>{boldPart}</span>{' '}
         {rest}
       </Text>
@@ -89,7 +87,7 @@ export const CompanyCard = ({
           {businessSectors.length > 0 && (
             <StyledCompanyCardSectorsSectionContainer>
               <Text size="small" color="darkGray">
-                Secteurs
+                Secteur{businessSectors.length > 1 ? 's' : ''}
               </Text>
               <StyledCompanyCardSectorsContainer>
                 {businessSectors

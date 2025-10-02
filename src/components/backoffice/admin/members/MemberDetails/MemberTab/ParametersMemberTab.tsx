@@ -90,7 +90,6 @@ export function ParametersMemberTab({
       'zone',
       'cvUrl',
       'employed',
-      'cvHidden',
     ];
 
     if (user && isRoleIncluded([UserRoles.REFERER], user.role)) {

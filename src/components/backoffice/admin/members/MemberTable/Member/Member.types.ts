@@ -10,29 +10,13 @@ export type MemberColumn =
   | 'gender'
   | 'phone'
   | 'cvUrl'
-  | 'cvStatus'
-  | 'cvHidden'
   | 'organization'
   | 'countRefered'
   | 'selection';
 
 export const MemberTableByRole = {
-  [UserRoles.CANDIDATE]: [
-    'zone',
-    'lastConnection',
-    'employed',
-    'cvStatus',
-    'cvHidden',
-    'selection',
-  ],
-  [UserRoles.COACH]: [
-    'zone',
-    'lastConnection',
-    'employed',
-    'cvStatus',
-    'cvHidden',
-    'selection',
-  ],
+  [UserRoles.CANDIDATE]: ['zone', 'lastConnection', 'employed', 'selection'],
+  [UserRoles.COACH]: ['zone', 'lastConnection', 'employed', 'selection'],
   [UserRoles.REFERER]: [
     'organization',
     'zone',

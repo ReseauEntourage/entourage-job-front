@@ -98,7 +98,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
   [RegistrationFlow.CANDIDATE]: {
     bullets: candidateLastStepBullets,
     title:
-      "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
+      "Il ne vous reste plus qu'à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
     subtitle:
       "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
   },
@@ -121,7 +121,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
       },
     ],
     title:
-      "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
+      "Il ne vous reste plus qu'à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
     subtitle:
       'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
   },
@@ -147,30 +147,30 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter des candidats',
+      'Vous pouvez désormais accéder à votre compte Entourage Pro et orienter des candidats',
   },
   [RegistrationFlow.COMPANY]: {
     bullets: [
       {
         icon: <IlluConversation {...iconSizeProps} />,
         title: 'Sensibiliser vos collaborateurs',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        text: "Permettez à vos collaborateurs de devenir coach et de s'engager dans des actions solidaires.",
       },
       {
         icon: <IlluPoigneeDeMain {...iconSizeProps} />,
         title: 'Inviter des collaborateurs',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        text: 'Invitez vos collaborateurs à rejoindre le réseau et à soutenir des candidat(e)s dans leur recherche d’emploi.',
       },
       {
         icon: <IlluCV color={COLORS.primaryBlue} {...iconSizeProps} />,
         title: 'Recruter des candidats',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        text: 'Créez des alertes de recrutement et recevez les profils de candidat(e)s correspondant à vos besoins',
       },
     ],
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:
-      'Vous pouvez désormais accéder à votre compte entourage pro et orienter des candidats',
+      'Vous pouvez accéder à votre compte Entourage Pro, engager vos collaborateurs et recruter des candidats',
   },
 };
 

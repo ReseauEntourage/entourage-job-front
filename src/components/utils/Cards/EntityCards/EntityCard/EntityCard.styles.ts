@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
 export const StyledEntityCard = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   border-radius: 10px;
