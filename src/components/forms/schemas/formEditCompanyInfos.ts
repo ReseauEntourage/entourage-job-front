@@ -1,46 +1,9 @@
-import { Api } from '@/src/api';
 import { FilterConstant } from '@/src/constants/utils';
 import { FileTypes, FormComponents, FormSchema } from '../FormSchema';
-
-const loadDepartmentsOptions = async (callback, inputValue) => {
-  try {
-    const { data: departments } = await Api.getAllDepartments({
-      search: inputValue,
-    });
-    callback([
-      ...departments.map((u) => {
-        return {
-          value: u.id,
-          label: `${u.value} - ${u.name}`,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
-
-const loadBusinessSectorsOptions = async (callback, inputValue) => {
-  try {
-    const { data: businessSectors } = await Api.getAllBusinessSectors({
-      search: inputValue,
-      limit: 50,
-      offset: 0,
-    });
-    callback([
-      ...businessSectors.map((u) => {
-        return {
-          value: u.id,
-          label: u.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
+import {
+  loadBusinessSectorsOptions,
+  loadDepartmentsOptions,
+} from '../utils/loadOptions.utils';
 
 export const formEditCompanyInfos: FormSchema<{
   departmentId: FilterConstant<string>;

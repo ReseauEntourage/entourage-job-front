@@ -10,6 +10,7 @@ import {
 import { LayoutBackOffice } from '../../LayoutBackOffice';
 import { CompanyCollaboratorsPreviewList } from '../CompanyProfile/CompanyParts/CompanyCollaboratorsPreviewList/CompanyCollaboratorsPreviewList';
 import { CompanyDescription } from '../CompanyProfile/CompanyParts/CompanyDescription/CompanyDescription';
+import { CompanyLinks } from '../CompanyProfile/CompanyParts/CompanyLinks/CompanyLinks';
 import {
   StyledCompanyLeftColumn,
   StyledCompanyRightColumn,
@@ -34,18 +35,24 @@ export const CompanyParameters = ({ company }: CompanyParametersProps) => {
         />
         <Section className="custom-page">
           <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
-            <StyledCompanyLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
+            <StyledCompanyLeftColumn>
               <CompanyDescription
                 description={company.description}
                 isEditable
-                smallCard
               />
               <CompanyCollaboratorsPreviewList
                 companyId={company.id}
                 isEditable
               />
             </StyledCompanyLeftColumn>
-            <StyledCompanyRightColumn>Right column</StyledCompanyRightColumn>
+            <StyledCompanyRightColumn>
+              <CompanyLinks
+                url={company.url}
+                hiringUrl={company.hiringUrl}
+                linkedInUrl={company.linkedInUrl}
+                isEditable
+              />
+            </StyledCompanyRightColumn>
           </StyledBackofficeGrid>
         </Section>
       </StyledBackofficeBackground>

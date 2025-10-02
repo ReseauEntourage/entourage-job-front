@@ -248,6 +248,12 @@ export type Invitation = {
   companyId?: string;
 };
 
+export enum CompanyGoal {
+  SENSIBILIZE = 'sensibilize',
+  RECRUIT = 'recruit',
+  BOTH = 'both',
+}
+
 export type Company = {
   id: string;
   createdAt: Date;
@@ -259,6 +265,10 @@ export type Company = {
   pendingInvitations?: Invitation[];
   businessSectors?: BusinessSector[];
   department: Department;
+  url?: string | null;
+  hiringUrl?: string | null;
+  linkedInUrl?: string | null;
+  goal: CompanyGoal | null;
   admin: {
     firstName: string;
     lastName: string;
@@ -453,20 +463,14 @@ export type ContactContactUs = {
   cgu: boolean;
 };
 
-export enum CompanyGoal {
-  SENSIBILIZE = 'sensibilize',
-  RECRUIT = 'recruit',
-  BOTH = 'both',
-}
-
 export type UpdateCompanyDto = {
   name?: string;
   description?: string;
   logo?: File;
   departmentId?: string;
-  url?: string;
-  linkedinUrl?: string;
-  hiringUrl?: string;
+  url?: string | null;
+  linkedInUrl?: string | null;
+  hiringUrl?: string | null;
   goal?: CompanyGoal;
   businessSectorIds?: string[];
 };

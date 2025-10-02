@@ -79,3 +79,22 @@ export const loadBusinessSectorsOptions = async (callback, inputValue) => {
     callback([]);
   }
 };
+
+export const loadDepartmentsOptions = async (callback, inputValue) => {
+  try {
+    const { data: departments } = await Api.getAllDepartments({
+      search: inputValue,
+    });
+    callback([
+      ...departments.map((u) => {
+        return {
+          value: u.id,
+          label: `${u.value} - ${u.name}`,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};

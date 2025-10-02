@@ -84,7 +84,7 @@ export function* sendStepDataOnboardingSaga() {
         businessSectorIds,
         departmentId,
         url,
-        linkedinUrl,
+        linkedInUrl,
         hiringUrl,
         goal,
       } = stepData as CompanyStepData;
@@ -105,7 +105,7 @@ export function* sendStepDataOnboardingSaga() {
       const companyFields: UpdateCompanyDto = {
         description,
         url,
-        linkedinUrl,
+        linkedInUrl,
         hiringUrl,
         goal: companyGoalValue,
         departmentId: departmentId?.value as string,
