@@ -23,13 +23,13 @@ export const StyledSwiperContainer = styled.div`
     align-items: stretch;
   }
   .swiper-slide {
+    height: auto;
     flex-shrink: 0;
     min-width: 0;
   }
 `;
 
 export const StyledSwiperItemContainer = styled.div`
-  padding-bottom: 55px;
   width: 100%;
   height: 100%;
 `;
