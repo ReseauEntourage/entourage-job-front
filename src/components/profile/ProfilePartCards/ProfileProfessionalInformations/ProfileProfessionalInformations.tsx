@@ -3,7 +3,7 @@ import { UserRoles } from '@/src/constants/users';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
-import { Skill, UserProfileSectorOccupation } from 'src/api/types';
+import { Company, Skill, UserProfileSectorOccupation } from 'src/api/types';
 import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { Text } from 'src/components/utils';
 import { StyledContentContainer } from './ProfileProfessionalInformations.styles';
@@ -15,6 +15,7 @@ export interface ProfileProfessionalInformationsProps {
   skills: Skill[];
   role: UserRoles;
   currentJob?: string;
+  company: Company | null;
   smallCard?: boolean;
 }
 
@@ -25,6 +26,7 @@ export const ProfileProfessionalInformations = ({
   skills,
   role,
   currentJob,
+  company,
   smallCard = false,
 }: ProfileProfessionalInformationsProps) => {
   const isEmpty = !sectorOccupations.length && !description && !skills.length;
@@ -43,8 +45,9 @@ export const ProfileProfessionalInformations = ({
       isEmpty={isEmpty}
     >
       <StyledContentContainer>
-        {sectorOccupations.length > 0 && (
+        {(sectorOccupations.length > 0 || company) && (
           <ProfileCareerPathSentence
+            company={company}
             sectorOccupations={sectorOccupations}
             role={role}
             currentJob={currentJob}

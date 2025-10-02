@@ -111,6 +111,10 @@ export interface CandidateCoachStepData {
   jobSearchDuration?: string;
 }
 
+export interface CoachStepData extends CandidateCoachStepData {
+  companyId?: { value: string };
+}
+
 // Type représentant la structure de données complète pour l'onboarding
 export type OnboardingStepData = {
   [step: number]: { [flow in OnboardingFlow]?: OnboardingFormData };
