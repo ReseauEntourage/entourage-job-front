@@ -52,8 +52,7 @@ export const DashboardRecommendationsCard = () => {
     () => !!(user.company && user.company.companyUser?.isAdmin),
     [user.company]
   );
-  const { recommendations, profiles, isLoading, isError } =
-    useDashboardRecommendations(isCompanyAdmin);
+  const { recommendations, isLoading, isError } = useDashboardRecommendations();
   const query = {
     departments: mutateToArray(user.userProfile.department),
   };
@@ -64,13 +63,8 @@ export const DashboardRecommendationsCard = () => {
     return UserRoles.CANDIDATE;
   }, [isCompanyAdmin, user.role]);
 
-  const items = useMemo(() => {
-    if (context === contextCompanyAdmin) return profiles;
-    return recommendations;
-  }, [context, profiles, recommendations]);
-
   const itemsList = useMemo(() => {
-    return items.map((profile) => {
+    return recommendations.map((profile) => {
       return (
         <DirectoryUserItem
           key={profile.id}
@@ -89,13 +83,9 @@ export const DashboardRecommendationsCard = () => {
         />
       );
     });
-  }, [items]);
+  }, [recommendations]);
 
-  if (context === contextCompanyAdmin && profiles.length === 0 && !isLoading) {
-    return <></>;
-  }
-
-  if ((items.length === 0 && !isLoading) || isError) {
+  if ((recommendations.length === 0 && !isLoading) || isError) {
     return <DashboardNetworkDiscoveryCard />;
   }
 
