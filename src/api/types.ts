@@ -248,6 +248,12 @@ export type Invitation = {
   companyId?: string;
 };
 
+export enum CompanyGoal {
+  SENSIBILIZE = 'sensibilize',
+  RECRUIT = 'recruit',
+  BOTH = 'both',
+}
+
 export type Company = {
   id: string;
   createdAt: Date;
@@ -262,6 +268,7 @@ export type Company = {
   url?: string | null;
   hiringUrl?: string | null;
   linkedInUrl?: string | null;
+  goal: CompanyGoal | null;
   admin: {
     firstName: string;
     lastName: string;
@@ -455,12 +462,6 @@ export type ContactContactUs = {
   heardAbout: HeardAboutValue;
   cgu: boolean;
 };
-
-export enum CompanyGoal {
-  SENSIBILIZE = 'sensibilize',
-  RECRUIT = 'recruit',
-  BOTH = 'both',
-}
 
 export type UpdateCompanyDto = {
   name?: string;
