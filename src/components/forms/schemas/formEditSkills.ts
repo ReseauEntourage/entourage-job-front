@@ -1,4 +1,5 @@
-import { FormSchema } from '../FormSchema';
+import { FormComponents, FormSchema } from '../FormSchema';
+import { loadSkillsOptions } from '../utils/loadOptions.utils';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formEditSkills: FormSchema<{
@@ -9,7 +10,8 @@ export const formEditSkills: FormSchema<{
     {
       id: 'skills',
       name: 'skills',
-      component: 'select-creatable',
+      component: FormComponents.SELECT_CREATABLE,
+      loadOptions: loadSkillsOptions,
       title: 'Compétences',
       maxChar: 50,
       maxItems: 50,
