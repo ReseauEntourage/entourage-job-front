@@ -23,7 +23,7 @@ export const CompanyDescription = ({
   const isCompleted = !!description;
 
   const openEditModal = useCallback(() => {
-    return openModal(
+    openModal(
       <ModalEditCompanyDescription description={description || null} />
     );
   }, [description]);

@@ -3,7 +3,6 @@ import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
 import { GENDERS_FILTERS } from '@/src/constants/genders';
-import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
 import { ImgUserProfile, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
@@ -37,7 +36,6 @@ export function MemberDesktop({
   setMember,
   disableLink,
 }: MemberProps) {
-  const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -51,7 +49,7 @@ export function MemberDesktop({
 
   return (
     <TrDesktop selected={checked}>
-      <StyledNameCell cvStatus={cvStatus.toLowerCase()}>
+      <StyledNameCell>
         <MemberInfo
           id={member.id}
           firstName={member.firstName}

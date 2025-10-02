@@ -122,24 +122,6 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
           <Th key="memberEmployed">En emploi</Th>,
         ];
       }
-      if (columns.includes('cvStatus')) {
-        columnsArray = [
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          ...columnsArray,
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          <Th key="memberCVStatus">Statut CV</Th>,
-        ];
-      }
-      if (columns.includes('cvHidden')) {
-        columnsArray = [
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          ...columnsArray,
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          <Th key="memberCVHidden">CV masqué</Th>,
-        ];
-      }
       if (columns.includes('selection')) {
         columnsArray = [
           // @ts-expect-error after enable TS strict mode. Please, try to fix it

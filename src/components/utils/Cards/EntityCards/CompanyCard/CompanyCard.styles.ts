@@ -8,6 +8,7 @@ export const StyledCompanyCardContentContainer = styled.div`
   padding: 20px;
   position: relative;
   min-height: 345px;
+  height: 100%;
 `;
 
 export const StyledCompanyMainInfosContainer = styled.div`
@@ -45,6 +46,7 @@ export const StyledCompanyCardSeparator = styled.div`
 
 export const StyledCompanyCardCollaboratorsSection = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row;
   gap: 7px;
 `;

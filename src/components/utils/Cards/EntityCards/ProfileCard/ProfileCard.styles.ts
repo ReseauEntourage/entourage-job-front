@@ -76,6 +76,7 @@ export const StyledProfileCardRole = styled.div`
 export const StyledProfileCardContent = styled.div`
   padding: 24px 16px 16px;
   display: flex;
+
   flex-direction: column;
   flex: 1;
 `;

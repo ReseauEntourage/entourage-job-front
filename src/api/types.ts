@@ -314,70 +314,11 @@ export type User = {
   invitations?: Invitation[];
 };
 
-export type CVStatus =
-  | 'Draft'
-  | 'Published'
-  | 'New'
-  | 'Pending'
-  | 'Progress'
-  | 'Unknown';
-
-export interface CV {
-  id?: string;
-  version: string;
-  profileImage: Blob;
-  user: {
-    candidat: {
-      firstName: string;
-      lastName: string;
-      email: string;
-      phone: string;
-      address: string;
-      zone: AdminZone;
-      gender: Genders;
-      id: string;
-    };
-    employed: boolean;
-    url: string;
-    hidden: boolean;
-    endOfContract?: string;
-  };
-  catchphrase: string;
-  introduction: string;
-  locations: {
-    name: DepartmentName;
-    order: number;
-  }[];
-  availability: string;
-  urlImg: string;
-  contracts: {
-    name: ContractValue;
-  }[];
-  occupations: Occupation[];
-  businessSectors: BusinessSector[];
-  languages: {
-    name: string;
-  }[];
-  transport: string;
-  skills: Skill[];
-  passions: {
-    id?: string;
-    name: string;
-    order: number;
-  }[];
-  reviews: Review[];
-  formations?: Formation[];
-  experiences?: Experience[];
-  status: CVStatus;
-  UserId: string;
-}
-
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
   email?: string;
   candidat: User;
   coach?: User;
-  cvs?: CV[];
   firstName?: string;
   lastName?: string;
 }
