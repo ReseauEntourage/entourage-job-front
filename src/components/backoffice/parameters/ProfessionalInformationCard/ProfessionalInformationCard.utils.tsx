@@ -10,13 +10,13 @@ import { formEditCandidateProfessionalInformation } from 'src/components/forms/s
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { UserRoles } from 'src/constants/users';
 
-interface userProfileParamsToCheck {
+interface UserProfileParamsToCheck {
   currentJob: string | null;
   sectorOccupations: UserProfileSectorOccupation[] | null;
   role: UserRoles;
 }
 
-export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
+export const checkData = (userProfile: UserProfileParamsToCheck): boolean => {
   const gotOccupation = !!userProfile.sectorOccupations?.some(
     (so) => !!so.occupation
   );

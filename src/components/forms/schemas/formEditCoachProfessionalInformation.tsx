@@ -37,7 +37,7 @@ const loadBusinessSectorsOptions = async (callback, inputValue) => {
   }
 };
 
-interface formEditCoachProfessionalInformationFormSchema
+interface FormEditCoachProfessionalInformationFormSchema
   extends FormSchemaValidation {
   currentJob: string;
   companyId: FilterConstant<string>;
@@ -46,13 +46,13 @@ interface formEditCoachProfessionalInformationFormSchema
 }
 
 const hideCompanyNameField = (
-  getValue: GetValueType<formEditCoachProfessionalInformationFormSchema>
+  getValue: GetValueType<FormEditCoachProfessionalInformationFormSchema>
 ) => {
   const companyId = getValue('companyId')?.value;
   return companyId !== CREATE_NEW_COMPANY_VALUE;
 };
 
-export const formEditCoachProfessionalInformation: FormSchema<formEditCoachProfessionalInformationFormSchema> =
+export const formEditCoachProfessionalInformation: FormSchema<FormEditCoachProfessionalInformationFormSchema> =
   {
     id: 'form-coach-professional-information',
     fields: [
