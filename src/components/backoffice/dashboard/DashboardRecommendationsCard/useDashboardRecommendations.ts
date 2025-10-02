@@ -4,10 +4,17 @@ import { notificationsActions } from 'src/use-cases/notifications';
 
 import {
   fetchProfilesRecommendationsSelectors,
+  fetchProfilesSelectors,
   profilesActions,
   selectProfilesRecommendations,
 } from 'src/use-cases/profiles';
 
+/**
+ * @returns {Object} An object containing:
+ *   - recommendations: The list of recommended profiles.
+ *   - isLoading: Boolean indicating if data is being loaded.
+ *   - isError: Boolean indicating if there was an error fetching data.
+ */
 export function useDashboardRecommendations() {
   const dispatch = useDispatch();
 
@@ -29,9 +36,14 @@ export function useDashboardRecommendations() {
     fetchProfilesRecommendationsSelectors.selectIsFetchProfilesRecommendationsFailed
   );
 
-  const isError = isFetchDashboardRecommendationsFailed;
+  const isFetchDashboardProfilesFailed = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesFailed
+  );
 
-  // fetch recommendations
+  const isError =
+    isFetchDashboardRecommendationsFailed || isFetchDashboardProfilesFailed;
+
+  // fetch recommendations or profiles on mount
   useEffect(() => {
     if (isFetchProfilesRecommendationsIdle) {
       dispatch(profilesActions.fetchProfilesRecommendationsRequested());
@@ -49,9 +61,22 @@ export function useDashboardRecommendations() {
         })
       );
     }
-  }, [dispatch, isFetchDashboardRecommendationsFailed]);
+    if (isFetchDashboardProfilesFailed) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            'Une erreur est survenue lors de la récupération des profils',
+        })
+      );
+    }
+  }, [
+    dispatch,
+    isFetchDashboardRecommendationsFailed,
+    isFetchDashboardProfilesFailed,
+  ]);
 
-  // clean on unmount
+  // clean on unmount depending on context
   useEffect(() => {
     return () => {
       dispatch(profilesActions.fetchProfilesRecommendationsReset());

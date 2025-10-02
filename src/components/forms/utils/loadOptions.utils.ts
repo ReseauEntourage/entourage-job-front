@@ -17,6 +17,27 @@ export const loadNudgesOptions = async (userRole, callback) => {
   }
 };
 
+export const loadSkillsOptions = async (callback, inputValue) => {
+  try {
+    const { data: skills } = await Api.getAllSkills({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+    });
+    callback([
+      ...skills.map((u) => {
+        return {
+          value: u.name,
+          label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
 export const loadLanguagesOptions = async (callback, inputValue) => {
   try {
     const { data: businessSectors } = await Api.getAllLanguages({
@@ -50,6 +71,25 @@ export const loadBusinessSectorsOptions = async (callback, inputValue) => {
         return {
           value: u.id,
           label: u.name,
+        };
+      }),
+    ]);
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};
+
+export const loadDepartmentsOptions = async (callback, inputValue) => {
+  try {
+    const { data: departments } = await Api.getAllDepartments({
+      search: inputValue,
+    });
+    callback([
+      ...departments.map((u) => {
+        return {
+          value: u.id,
+          label: `${u.value} - ${u.name}`,
         };
       }),
     ]);

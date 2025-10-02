@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { DefaultValues } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Api } from '@/src/api';
-import { notificationsActions } from '@/src/use-cases/notifications';
+import { companyActions } from '@/src/use-cases/company';
 import { ExtractFormSchemaValidation } from '../../forms/FormSchema';
 import { formInviteCompanyCollaborators } from '../../forms/schemas/formInviteCompanyCollaborators';
 import { ModalEdit } from '../Modal/ModalGeneric/ModalEdit';
@@ -24,27 +23,12 @@ export function CompanyInviteCollaboratorsModal({
   };
 
   const dispatchOnSubmit = (fields) => {
-    Api.inviteCollaboratorsFromCompany(companyId, {
-      emails: fields.emails.map((email) => email.value),
-    })
-      .then(() => {
-        dispatch(
-          notificationsActions.addNotification({
-            type: 'success',
-            message: 'Toutes les invitations ont été envoyées avec succès.',
-          })
-        );
+    dispatch(
+      companyActions.inviteCollaboratorsRequested({
+        companyId,
+        emails: fields.emails.map((e) => e.value),
       })
-      .catch((error) => {
-        dispatch(
-          notificationsActions.addNotification({
-            type: 'danger',
-            message: `Une erreur est survenue lors de l'envoi des invitations`,
-          })
-        );
-        console.error('Error inviting collaborators:', error);
-      });
-    setCloseModal(true);
+    );
   };
 
   return (

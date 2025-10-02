@@ -20,6 +20,7 @@ export const StyledEmptyRecruitementAlertContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  gap: 30px;
   width: 100%;
 `;
 

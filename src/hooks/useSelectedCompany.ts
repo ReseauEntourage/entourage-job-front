@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { companyActions } from '../use-cases/company';
 import {
   selectIsFetchCompanySelectors,
+  selectIsFetchCompanyWithCollaboratorsSelectors,
   selectSelectedCompany,
+  selectSelectedCompanyWithCollaborators,
 } from '../use-cases/company/company.selectors';
 
 export function useSelectedCompany() {
@@ -12,8 +14,14 @@ export function useSelectedCompany() {
   const { query } = useRouter();
   const companyId = query.companyId as string;
   const selectedCompany = useSelector(selectSelectedCompany);
+  const selectedCompanyWithCollaborators = useSelector(
+    selectSelectedCompanyWithCollaborators
+  );
   const isFetchCompanyRequested = useSelector(
     selectIsFetchCompanySelectors.selectIsFetchSelectedCompanyRequested
+  );
+  const isFetchCompanyWithCollaboratorsRequested = useSelector(
+    selectIsFetchCompanyWithCollaboratorsSelectors.selectIsFetchSelectedCompanyWithCollaboratorsRequested
   );
 
   useEffect(() => {
@@ -29,7 +37,10 @@ export function useSelectedCompany() {
   }, [companyId, selectedCompany, dispatch]);
 
   return {
+    companyId,
     selectedCompany,
+    selectedCompanyWithCollaborators,
     isFetchCompanyRequested,
+    isFetchCompanyWithCollaboratorsRequested,
   };
 }

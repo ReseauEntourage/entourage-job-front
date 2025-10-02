@@ -101,7 +101,7 @@ export const formRegistrationAccount: FormSchema<{
       id: 'passwordCriteria',
       name: 'passwordCriteria',
       component: 'react-node',
-      reactNode: <PasswordCriterias removeMargin />,
+      reactNode: <PasswordCriterias />,
     },
     {
       id: 'confirmPassword',

@@ -87,18 +87,9 @@ export const CompanyCollaboratorsPreviewList = ({
   const slidesPerView = useMemo(() => {
     // Always display 1 slide on mobile
     if (isMobile) return 1.2;
-
-    // On desktop, if there are more than 2 collaborators, show 2.2 slides
-    if (
-      companyWithCollaborators?.users &&
-      companyWithCollaborators?.users.length > 2
-    ) {
-      return 2.4;
-    }
-
     // On desktop, if there less than 2 collaborators, show 2 slides
-    return 2;
-  }, [companyWithCollaborators?.users, isMobile]);
+    return 2.4;
+  }, [isMobile]);
 
   const enabledNavigation = useMemo(() => {
     return !!(

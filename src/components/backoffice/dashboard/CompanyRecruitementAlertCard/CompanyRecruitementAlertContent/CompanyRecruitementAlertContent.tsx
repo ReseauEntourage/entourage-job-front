@@ -41,7 +41,7 @@ export const CompanyRecruitementAlertContent = ({
 
   const matchingCandidatesText =
     candidates.length === 0
-      ? 'Aucune candidat ne correspond à votre recherche.'
+      ? 'Aucun candidat ne correspond à votre recherche.'
       : `${candidates.length} candidat${
           candidates.length > 1 ? 's' : ''
         } correspond${candidates.length > 1 ? 'ent' : ''} à votre recherche.`;

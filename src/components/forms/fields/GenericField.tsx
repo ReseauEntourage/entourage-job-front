@@ -226,7 +226,9 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   if (field.component === 'checkbox-alert') {
     return (
       <Alert icon={null}>
-        <CheckBox {...commonProps} />
+        <div style={{ marginTop: 15 }}>
+          <CheckBox {...commonProps} />
+        </div>
       </Alert>
     );
   }
