@@ -31,6 +31,12 @@ export const COMPANY_ROLES = [
   },
 ];
 
+export enum CompanyGoal {
+  SENSIBILIZE = 'sensibilize',
+  RECRUIT = 'recruit',
+  BOTH = 'both',
+}
+
 export type CompanyRoleName = (typeof COMPANY_ROLES)[number]['name'];
 
 export const COMPANY_ROLES_FILTERS: FilterConstant<CompanyRoleName>[] = [

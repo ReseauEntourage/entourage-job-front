@@ -1,4 +1,4 @@
-import { CompanyUserRole } from '../constants/company';
+import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { Genders } from '../constants/genders';
 import {
@@ -247,12 +247,6 @@ export type Invitation = {
   userId?: string;
   companyId?: string;
 };
-
-export enum CompanyGoal {
-  SENSIBILIZE = 'sensibilize',
-  RECRUIT = 'recruit',
-  BOTH = 'both',
-}
 
 export type Company = {
   id: string;
