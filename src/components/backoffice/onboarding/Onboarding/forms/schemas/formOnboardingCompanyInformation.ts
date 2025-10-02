@@ -1,50 +1,13 @@
-import { Api } from '@/src/api';
+import {
+  loadBusinessSectorsOptions,
+  loadDepartmentsOptions,
+} from '@/src/components/forms/utils/loadOptions.utils';
 import { FilterConstant } from '@/src/constants/utils';
 import {
   FileTypes,
   FormComponents,
   FormSchema,
 } from 'src/components/forms/FormSchema';
-
-const loadDepartmentsOptions = async (callback, inputValue) => {
-  try {
-    const { data: departments } = await Api.getAllDepartments({
-      search: inputValue,
-    });
-    callback([
-      ...departments.map((u) => {
-        return {
-          value: u.id,
-          label: `${u.value} - ${u.name}`,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
-
-const loadBusinessSectorsOptions = async (callback, inputValue) => {
-  try {
-    const { data: businessSectors } = await Api.getAllBusinessSectors({
-      search: inputValue,
-      limit: 50,
-      offset: 0,
-    });
-    callback([
-      ...businessSectors.map((u) => {
-        return {
-          value: u.id,
-          label: u.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
 
 export const formOnboardingCompanyInformation: FormSchema<{
   description: string;

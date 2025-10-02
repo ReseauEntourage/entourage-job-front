@@ -56,6 +56,7 @@ export const Profile = () => {
               skills={selectedProfile.skills}
               role={selectedProfile.role}
               currentJob={selectedProfile.currentJob}
+              company={selectedProfile.company}
             />
             {selectedProfile.customNudges.length > 0 &&
               selectedProfile.role === UserRoles.CANDIDATE && (

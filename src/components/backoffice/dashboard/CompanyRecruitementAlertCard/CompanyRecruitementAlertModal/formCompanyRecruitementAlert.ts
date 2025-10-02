@@ -1,5 +1,8 @@
-import { Api } from '@/src/api';
 import { FormComponents, FormSchema } from '@/src/components/forms/FormSchema';
+import {
+  loadBusinessSectorsOptions,
+  loadSkillsOptions,
+} from '@/src/components/forms/utils/loadOptions.utils';
 import { CONTRACTS, WORKING_EXPERIENCE_FILTERS } from '@/src/constants';
 import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { FilterConstant } from '@/src/constants/utils';
@@ -13,54 +16,6 @@ export type RecruitementAlertForm = {
   workingExperience: FilterConstant<string>;
   contract: FilterConstant<string>;
   skills: FilterConstant<string>[];
-};
-
-const loadBusinessSectorsOptions = async (
-  callback: (options: FilterConstant[]) => void,
-  inputValue?: string
-) => {
-  try {
-    const { data: businessSectors } = await Api.getAllBusinessSectors({
-      limit: 100,
-      offset: 0,
-      search: inputValue || undefined,
-    });
-    callback([
-      ...businessSectors.map((u) => {
-        return {
-          value: u.id,
-          label: u.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
-};
-
-const loadSkillsOptions = async (
-  callback: (options: FilterConstant[]) => void,
-  inputValue?: string
-) => {
-  try {
-    const { data: skills } = await Api.getAllSkills({
-      search: inputValue || undefined,
-      limit: 50,
-      offset: 0,
-    });
-    callback([
-      ...skills.map((skill) => {
-        return {
-          value: skill.id,
-          label: skill.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
 };
 
 export const formSchema: FormSchema<RecruitementAlertForm> = {

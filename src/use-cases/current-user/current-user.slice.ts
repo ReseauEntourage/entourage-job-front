@@ -12,6 +12,7 @@ import {
   UpdateError,
   updateProfileAdapter,
   updateUserAdapter,
+  updateUserCompanyAdapter,
   updateUserProfilePictureAdapter,
   uploadExternalCvAdapter,
 } from './current-user.adapters';
@@ -20,6 +21,7 @@ export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   updateUser: RequestState<typeof updateUserAdapter>;
+  updateUserCompany: RequestState<typeof updateUserCompanyAdapter>;
   updateCandidate: RequestState<typeof updateCandidateAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
   readDocument: RequestState<typeof readDocumentAdapter>;
@@ -30,6 +32,7 @@ export interface State {
   user: UserWithUserCandidate | null;
   complete: boolean;
   userUpdateError: UpdateError | null; // TODO: Add error types
+  userCompanyUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
   externalCv: string | null;
 }
@@ -38,6 +41,7 @@ const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
+  updateUserCompany: updateUserCompanyAdapter.getInitialState(),
   updateCandidate: updateCandidateAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
@@ -46,6 +50,7 @@ const initialState: State = {
   user: null,
   complete: false,
   userUpdateError: null,
+  userCompanyUpdateError: null,
   profileUpdateError: null,
   externalCv: null,
 };
@@ -79,6 +84,15 @@ export const slice = createSlice({
         state.userUpdateError = action.payload.error;
       },
     }),
+    ...updateUserCompanyAdapter.getReducers<State>(
+      (state) => state.updateUserCompany,
+      {
+        updateUserCompanySucceeded() {},
+        updateUserCompanyFailed(state, action) {
+          state.userCompanyUpdateError = action.payload.error;
+        },
+      }
+    ),
     ...updateCandidateAdapter.getReducers<State>(
       (state) => state.updateCandidate,
       {

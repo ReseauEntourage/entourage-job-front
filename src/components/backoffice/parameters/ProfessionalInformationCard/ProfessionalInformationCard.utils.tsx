@@ -1,18 +1,22 @@
 import { DefaultValues } from 'react-hook-form';
 import { formOnboardingCoachJob } from '../../onboarding/Onboarding/forms/schemas/formOnboardingCoachJob';
-import { UserProfile, UserProfileSectorOccupation } from 'src/api/types';
+import {
+  Company,
+  UserProfile,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { UserRoles } from 'src/constants/users';
 
-interface userProfileParamsToCheck {
+interface UserProfileParamsToCheck {
   currentJob: string | null;
   sectorOccupations: UserProfileSectorOccupation[] | null;
   role: UserRoles;
 }
 
-export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
+export const checkData = (userProfile: UserProfileParamsToCheck): boolean => {
   const gotOccupation = !!userProfile.sectorOccupations?.some(
     (so) => !!so.occupation
   );
@@ -23,7 +27,8 @@ export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
 };
 
 export const getCoachDefaultProfessionalValues = (
-  userProfileParam: UserProfile
+  userProfileParam: UserProfile,
+  company: Company | null
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
@@ -40,18 +45,27 @@ export const getCoachDefaultProfessionalValues = (
       value: businessSector?.id,
       label: businessSector?.name,
     })),
+    companyId: company
+      ? {
+          value: company.id,
+          label: company.name,
+        }
+      : undefined,
   };
 };
 
 export const getCoachDefaultProfessionalValuesWithLinkedIn = (
-  userProfileParam: UserProfile
+  userProfileParam: UserProfile,
+  company: Company | null
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formOnboardingCoachJob>
 > => {
   const { linkedinUrl } = userProfileParam;
 
-  const professionalInfoDefaultValues =
-    getCoachDefaultProfessionalValues(userProfileParam);
+  const professionalInfoDefaultValues = getCoachDefaultProfessionalValues(
+    userProfileParam,
+    company
+  );
 
   return {
     ...professionalInfoDefaultValues,

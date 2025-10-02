@@ -19,11 +19,14 @@ const {
   fetchUserSucceeded,
   fetchUserFailed,
   updateUserRequested,
+  updateUserCompanyRequested,
   fetchCompleteUserRequested,
   fetchCompleteUserSucceeded,
   fetchCompleteUserFailed,
   updateUserSucceeded,
   updateUserFailed,
+  updateUserCompanySucceeded,
+  updateUserCompanyFailed,
   updateProfileRequested,
   updateProfileSucceeded,
   updateProfileFailed,
@@ -123,6 +126,29 @@ function* updateUserRequestedSaga(
     yield* put(
       updateUserFailed({
         error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* updateUserCompanyRequestedSaga(
+  action: ReturnType<typeof updateUserCompanyRequested>
+) {
+  const { companyId } = action.payload;
+  try {
+    yield* call(() => Api.putUserCompany(companyId));
+    yield* put(updateUserCompanySucceeded());
+    yield* fetchUserRequestedSaga();
+  } catch (error) {
+    yield* put(
+      updateUserCompanyFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message: `Une erreur est survenue lors de la mise à jour de l'entreprise. Veuillez réessayer.`,
       })
     );
   }
@@ -279,4 +305,5 @@ export function* saga() {
   yield* takeLatest(deleteExternalCvRequested, deleteExternalCvRequestedSaga);
   yield* takeLatest(uploadExternalCvRequested, uploadExternalCvRequestedSaga);
   yield* takeLatest(getExternalCvRequested, getExternalCvRequestedSaga);
+  yield* takeLatest(updateUserCompanyRequested, updateUserCompanyRequestedSaga);
 }
