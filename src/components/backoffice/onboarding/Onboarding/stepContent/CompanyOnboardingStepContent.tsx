@@ -25,6 +25,9 @@ export const CompanyOnboardingStepContents = {
   2: {
     title: 'Quelles sont vos attentes avec Entourage Pro',
     subtitle: 'Sélectionnez la ou les actions que vous souhaitez entreprendre',
+    skippedBy: (user: User) => {
+      return !!user.company?.goal;
+    },
     form: formOnboardingCompanyGoal,
   },
   3: {
