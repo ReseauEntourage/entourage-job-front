@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { CompanyGoal } from '@/src/api/types';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -39,6 +40,62 @@ export const Dashboard = () => {
     [user.company]
   );
 
+  const isCompanyAdminWithRecruitGoal = useMemo(
+    () => isCompanyAdmin && user.company?.goal === CompanyGoal.RECRUIT,
+    [isCompanyAdmin, user.company?.goal]
+  );
+
+  const renderLeftColumnContent = () => {
+    return (
+      <>
+        {isCompanyAdmin && user.company && (
+          <DashboardCompanyCard company={user.company} />
+        )}
+        <DashboardProfileCard />
+        {!isCompanyAdmin && user.company && (
+          <DashboardCompanyCard company={user.company} />
+        )}
+        {isNormalUser && <DashboardAvailabilityCard />}
+        <DashboardReferentCard />
+      </>
+    );
+  };
+
+  const renderRightColumnContent = () => {
+    // Changing the order of the cards for company admins with a recruit goal
+    return (
+      <>
+        {isCompanyAdminWithRecruitGoal ? (
+          <>
+            {isNormalUser && <DashboardNextSteps />}
+            {isCompanyAdmin && <CompanyRecruitementAlertCard />}
+            {isNormalUser && <DashboardRecommendationsCard />}
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
+            )}
+            <DashboardMessagingConversation />
+            {isReferer && <DashboardInviteToReferCandidate />}
+            {isReferer && <DashboardReferedCandidateList />}
+            <DashboardToolboxCard />
+          </>
+        ) : (
+          <>
+            {isNormalUser && <DashboardNextSteps />}
+            {isCompanyAdmin && user.company && (
+              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
+            )}
+            {isCompanyAdmin && <CompanyRecruitementAlertCard />}
+            <DashboardMessagingConversation />
+            {isNormalUser && <DashboardRecommendationsCard />}
+            {isReferer && <DashboardInviteToReferCandidate />}
+            {isReferer && <DashboardReferedCandidateList />}
+            <DashboardToolboxCard />
+          </>
+        )}
+      </>
+    );
+  };
+
   if (isDesktop) {
     return (
       <StyledBackofficeBackground>
@@ -50,29 +107,10 @@ export const Dashboard = () => {
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
             <StyledDashboardLeftColumn>
-              {isCompanyAdmin && user.company && (
-                <DashboardCompanyCard company={user.company} />
-              )}
-              <DashboardProfileCard />
-              {!isCompanyAdmin && user.company && (
-                <DashboardCompanyCard company={user.company} />
-              )}
-              {isNormalUser && <DashboardAvailabilityCard />}
-              <DashboardReferentCard />
+              {renderLeftColumnContent()}
             </StyledDashboardLeftColumn>
             <StyledDashboardRightColumn>
-              {isNormalUser && <DashboardNextSteps />}
-              {isCompanyAdmin && user.company && (
-                <DashboardCompanyCollaboratorsList
-                  companyId={user.company.id}
-                />
-              )}
-              {isCompanyAdmin && <CompanyRecruitementAlertCard />}
-              <DashboardMessagingConversation />
-              {isNormalUser && <DashboardRecommendationsCard />}
-              {isReferer && <DashboardInviteToReferCandidate />}
-              {isReferer && <DashboardReferedCandidateList />}
-              <DashboardToolboxCard />
+              {renderRightColumnContent()}
             </StyledDashboardRightColumn>
           </StyledBackofficeGrid>
         </Section>
@@ -91,27 +129,10 @@ export const Dashboard = () => {
         </StyledDashboardTitleContainer>
         <StyledBackofficeGrid className="mobile">
           <StyledDashboardRightColumn className="mobile">
-            {isNormalUser && <DashboardNextSteps />}
-            {isCompanyAdmin && user.company && (
-              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
-            )}
-            {isCompanyAdmin && <CompanyRecruitementAlertCard />}
-            {isNormalUser && <DashboardRecommendationsCard />}
-            <DashboardMessagingConversation />
-            {isReferer && <DashboardInviteToReferCandidate />}
-            {isReferer && <DashboardReferedCandidateList />}
-            <DashboardToolboxCard />
+            {renderRightColumnContent()}
           </StyledDashboardRightColumn>
           <StyledDashboardLeftColumn className="mobile">
-            {isCompanyAdmin && user.company && (
-              <DashboardCompanyCard company={user.company} />
-            )}
-            <DashboardProfileCard />
-            {!isCompanyAdmin && user.company && (
-              <DashboardCompanyCard company={user.company} />
-            )}
-            {isNormalUser && <DashboardAvailabilityCard />}
-            <DashboardReferentCard />
+            {renderLeftColumnContent()}
           </StyledDashboardLeftColumn>
         </StyledBackofficeGrid>
       </Section>
