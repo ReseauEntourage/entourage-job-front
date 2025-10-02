@@ -284,6 +284,10 @@ export class APIHandler {
     return this.put(`/user/profile/${userId}`, userProfile);
   }
 
+  putUserCompany(companyId: string | null): Promise<AxiosResponse> {
+    return this.put(`/user/company`, { companyId });
+  }
+
   postProfileUserAbuse(
     userId: string,
     userReportDto: UserReportDto

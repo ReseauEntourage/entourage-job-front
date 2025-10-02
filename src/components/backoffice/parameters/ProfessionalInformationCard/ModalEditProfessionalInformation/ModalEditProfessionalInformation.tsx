@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
+import { useUpdateUser } from '@/src/hooks';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import {
@@ -18,7 +19,7 @@ interface ModalEditProfessionalInformationProps<
   formSchema: S;
   getValuesToSend: (
     fields: ExtractFormSchemaValidation<S>
-  ) => Partial<UserProfile>;
+  ) => Partial<UserProfile> & { companyId?: string | null };
   user: UserWithUserCandidate;
 }
 
@@ -33,6 +34,7 @@ export const ModalEditProfessionalInformation = <
   user,
 }: ModalEditProfessionalInformationProps<S>) => {
   const { updateUserProfile, closeModal } = useUpdateProfile(user);
+  const { updateUserCompany } = useUpdateUser(user);
 
   return (
     <ModalEdit
@@ -43,7 +45,9 @@ export const ModalEditProfessionalInformation = <
       formSchema={formSchema}
       onSubmit={(fields) => {
         const values = getValuesToSend(fields);
-        updateUserProfile(values);
+        const { companyId, ...userProfileFields } = values;
+        updateUserCompany(companyId || null);
+        updateUserProfile(userProfileFields);
       }}
       noCompulsory
     />

@@ -29,7 +29,7 @@ export const ParamProfessionalInformations = ({
   smallCard = false,
 }: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
-  const { userProfile, role } = user;
+  const { userProfile, role, company } = user;
 
   const isCompleted = sectorOccupations?.length > 0;
 
@@ -41,7 +41,10 @@ export const ParamProfessionalInformations = ({
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""
           user={user}
-          defaultValues={getCoachDefaultProfessionalValues(userProfile)}
+          defaultValues={getCoachDefaultProfessionalValues(
+            userProfile,
+            company
+          )}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
             return {
@@ -53,6 +56,7 @@ export const ParamProfessionalInformations = ({
                     order: idx,
                   } as UserProfileSectorOccupation)
               ),
+              companyId: values.companyId?.value || null,
             };
           }}
         />
@@ -70,7 +74,7 @@ export const ParamProfessionalInformations = ({
         />
       )
     );
-  }, [userProfile, role, user]);
+  }, [userProfile, role, user, company]);
 
   return (
     <ProfilePartCard
@@ -109,6 +113,7 @@ export const ParamProfessionalInformations = ({
         sectorOccupations={sectorOccupations}
         role={role}
         currentJob={userProfile?.currentJob || undefined}
+        company={company}
       />
     </ProfilePartCard>
   );
