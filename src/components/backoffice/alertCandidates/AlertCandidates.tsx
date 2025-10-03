@@ -9,6 +9,8 @@ import {
   selectFetchRecruitementAlertMatchingLoading,
   fetchRecruitementAlertMatchingAction,
   selectRecruitementAlerts,
+  fetchRecruitementAlertsAction,
+  selectFetchRecruitementAlertsLoading,
 } from 'src/use-cases/recruitement-alerts';
 import {
   StyledAlertCandidatesContainer,
@@ -23,13 +25,19 @@ interface AlertCandidatesProps {
 
 export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectFetchRecruitementAlertMatchingLoading);
+  const isMatchingLoading = useSelector(
+    selectFetchRecruitementAlertMatchingLoading
+  );
+  const isAlertsLoading = useSelector(selectFetchRecruitementAlertsLoading);
+  const isLoading = isMatchingLoading || isAlertsLoading;
   const selectedAlert = useSelector(selectRecruitementAlerts).find(
     (a) => a.id === alertId
   );
 
   useEffect(() => {
     if (alertId) {
+      // Récupérer à la fois les alertes et les correspondances
+      dispatch(fetchRecruitementAlertsAction());
       dispatch(fetchRecruitementAlertMatchingAction(alertId));
     }
   }, [dispatch, alertId]);
