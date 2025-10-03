@@ -143,6 +143,7 @@ export const StyledBadge = styled.div`
 
 export const StyledCandidatesCount = styled.span`
   font-size: 14px;
+  text-decoration: none;
 `;
 
 export const StyledViewCandidatesLink = styled(Link)`
@@ -156,4 +157,13 @@ export const StyledViewCandidatesLink = styled(Link)`
   &:hover {
     text-decoration: none;
   }
+`;
+
+export const StyledClickableLink = styled(Link)`
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  cursor: pointer;
 `;
