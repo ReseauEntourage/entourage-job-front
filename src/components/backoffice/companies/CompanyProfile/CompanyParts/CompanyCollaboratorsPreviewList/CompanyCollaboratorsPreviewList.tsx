@@ -18,6 +18,7 @@ import { notificationsActions } from '@/src/use-cases/notifications';
 import { IlluReseau } from 'assets/icons/icons';
 import { LucidIcon, Text } from 'src/components/utils';
 import {
+  StyledNavigationContainer,
   StyledNextButton,
   StyledPaginationDot,
   StyledPrevButton,
@@ -86,9 +87,9 @@ export const CompanyCollaboratorsPreviewList = ({
 
   const slidesPerView = useMemo(() => {
     // Always display 1 slide on mobile
-    if (isMobile) return 1.2;
-    // On desktop, if there less than 2 collaborators, show 2 slides
-    return 2.4;
+    if (isMobile) return 1.4;
+    // On desktop, display 2 slides and 60% of the next one
+    return 2.6;
   }, [isMobile]);
 
   const enabledNavigation = useMemo(() => {
@@ -160,17 +161,19 @@ export const CompanyCollaboratorsPreviewList = ({
               </StyledSwiperItemContainer>
             </SwiperSlide>
           ))}
-          <StyledPaginationDot className="dot-pagination" />
-          {enabledNavigation && (
-            <StyledPrevButton className="button-prev">
-              <LucidIcon name="ChevronLeft" />
-            </StyledPrevButton>
-          )}
-          {enabledNavigation && (
-            <StyledNextButton className="button-next">
-              <LucidIcon name="ChevronRight" />
-            </StyledNextButton>
-          )}
+          <StyledNavigationContainer>
+            <StyledPaginationDot className="dot-pagination" />
+            {enabledNavigation && (
+              <StyledPrevButton className="button-prev">
+                <LucidIcon name="ChevronLeft" />
+              </StyledPrevButton>
+            )}
+            {enabledNavigation && (
+              <StyledNextButton className="button-next">
+                <LucidIcon name="ChevronRight" />
+              </StyledNextButton>
+            )}
+          </StyledNavigationContainer>
         </Swiper>
       </StyledSwiperContainer>
     </ProfilePartCard>
