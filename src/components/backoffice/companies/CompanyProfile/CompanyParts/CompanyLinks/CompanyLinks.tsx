@@ -16,6 +16,7 @@ import {
 } from './CompanyLinks.styles';
 
 export interface CompanyLinksProps {
+  name: string;
   url?: string | null;
   hiringUrl?: string | null;
   linkedInUrl?: string | null;
@@ -24,6 +25,7 @@ export interface CompanyLinksProps {
 }
 
 export const CompanyLinks = ({
+  name,
   url,
   hiringUrl,
   linkedInUrl,
@@ -59,6 +61,23 @@ export const CompanyLinks = ({
     return `http://${urlString}`;
   };
 
+  const fallback = useMemo(() => {
+    const content = isEditable ? (
+      <StyledFallbackContentContainer>
+        <Text>
+          Ajoutez les liens utiles pour que les candidats découvrent votre
+          entreprise (LinkedIn, site, etc.).
+        </Text>
+      </StyledFallbackContentContainer>
+    ) : (
+      <Text>{`${name} n'a pas encore renseigné ses informations`}</Text>
+    );
+    return {
+      content,
+      icon: <IlluOrdiCV />,
+    };
+  }, [isEditable, name]);
+
   return (
     <ProfilePartCard
       title="Liens"
@@ -66,17 +85,7 @@ export const CompanyLinks = ({
       isEditable={isEditable}
       ctaTitle={ctaTitle}
       ctaCallback={openEditCompanyLinks}
-      fallback={{
-        content: (
-          <StyledFallbackContentContainer>
-            <Text>
-              Ajoutez les liens utiles pour que les candidats découvrent votre
-              entreprise (LinkedIn, site, etc.).
-            </Text>
-          </StyledFallbackContentContainer>
-        ),
-        icon: <IlluOrdiCV />,
-      }}
+      fallback={fallback}
       smallCard={smallCard}
     >
       <StyledDocumentList>
