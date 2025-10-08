@@ -58,24 +58,28 @@ export const ProfileCareerPathSentence = ({
   if (role === UserRoles.COACH) {
     return (
       <>
-        <Text>
-          Je travaille
-          {currentJob && (
-            <>
-              {' '}
-              comme <strong>{currentJob}</strong>
-            </>
-          )}
-          {company && (
-            <>
-              {' '}
-              chez{' '}
-              <Link href={`/backoffice/companies/${company.id}`}>
-                <StyledCompanyName>{company.name}</StyledCompanyName>
-              </Link>
-            </>
-          )}
-        </Text>
+        {currentJob || company ? (
+          <Text>
+            Je travaille
+            {currentJob && (
+              <>
+                {' '}
+                comme <strong>{currentJob}</strong>
+              </>
+            )}
+            {company && (
+              <>
+                {' '}
+                chez{' '}
+                <Link href={`/backoffice/companies/${company.id}`}>
+                  <StyledCompanyName>{company.name}</StyledCompanyName>
+                </Link>
+              </>
+            )}
+          </Text>
+        ) : (
+          <></>
+        )}
 
         {sectorOccupations.length > 0 && (
           <StyledCareerPathSectorOccupationTagContainer>
