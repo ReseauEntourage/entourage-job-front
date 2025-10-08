@@ -52,6 +52,13 @@ export const CompanyLinks = ({
     [isEditable]
   );
 
+  const normalizedUrl = (urlString: string) => {
+    if (urlString.startsWith('http://') || urlString.startsWith('https://')) {
+      return urlString;
+    }
+    return `http://${urlString}`;
+  };
+
   return (
     <ProfilePartCard
       title="Liens"
@@ -78,7 +85,7 @@ export const CompanyLinks = ({
             name="LinkedIn"
             icon={<IlluLinkedIn width={38} height={38} />}
             onClick={() => {
-              window.open(linkedInUrl, '_blank');
+              window.open(normalizedUrl(linkedInUrl), '_blank');
             }}
           />
         )}
@@ -87,7 +94,7 @@ export const CompanyLinks = ({
             name="Site internet"
             icon={<IlluOrdiCV width={38} height={38} />}
             onClick={() => {
-              window.open(url, '_blank');
+              window.open(normalizedUrl(url), '_blank');
             }}
           />
         )}
@@ -96,7 +103,7 @@ export const CompanyLinks = ({
             name="Site de recrutement"
             icon={<IlluCandidatFolder width={38} height={38} />}
             onClick={() => {
-              window.open(hiringUrl, '_blank');
+              window.open(normalizedUrl(hiringUrl), '_blank');
             }}
           />
         )}
