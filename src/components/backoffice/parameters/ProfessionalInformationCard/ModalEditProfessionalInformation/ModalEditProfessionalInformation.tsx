@@ -1,5 +1,7 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
+import { Api } from '@/src/api';
+import { CREATE_NEW_COMPANY_VALUE } from '@/src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { useUpdateUser } from '@/src/hooks';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
@@ -43,10 +45,18 @@ export const ModalEditProfessionalInformation = <
       defaultValues={defaultValues}
       closeOnNextRender={closeModal}
       formSchema={formSchema}
-      onSubmit={(fields) => {
+      onSubmit={async (fields) => {
         const values = getValuesToSend(fields);
         const { companyId, ...userProfileFields } = values;
-        updateUserCompany(companyId || null);
+        let newCompanyId = companyId;
+        if (companyId === CREATE_NEW_COMPANY_VALUE) {
+          ({
+            data: { id: newCompanyId },
+          } = await Api.postCompany({
+            name: fields.companyName,
+          }));
+        }
+        updateUserCompany(newCompanyId || null);
         updateUserProfile(userProfileFields);
       }}
       noCompulsory

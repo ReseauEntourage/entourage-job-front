@@ -1,6 +1,7 @@
 import React from 'react';
 import { LucidIcon } from '../../utils';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
+import { loadBusinessSectorsOptions } from '../utils/loadOptions.utils';
 import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants/utils';
 
@@ -14,27 +15,6 @@ const CREATE_NEW_COMPANY_OPTION = {
       Ajouter une nouvelle entreprise
     </>
   ),
-};
-
-const loadBusinessSectorsOptions = async (callback, inputValue) => {
-  try {
-    const { data: businessSectors } = await Api.getAllBusinessSectors({
-      search: inputValue,
-      limit: 50,
-      offset: 0,
-    });
-    callback([
-      ...businessSectors.map((u) => {
-        return {
-          value: u.id,
-          label: u.name,
-        };
-      }),
-    ]);
-  } catch (error) {
-    console.error(error);
-    callback([]);
-  }
 };
 
 interface FormEditCoachProfessionalInformationFormSchema

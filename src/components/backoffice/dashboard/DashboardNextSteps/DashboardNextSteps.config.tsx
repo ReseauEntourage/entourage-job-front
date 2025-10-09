@@ -102,6 +102,16 @@ export const stepsByContext = {
         },
       },
     },
+    // While waiting for TBS feature to be finished, we replace this step with the network discovery step
+    {
+      title: 'Découvrir le réseau d’entraide',
+      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+      content: 'Retrouvez tous les candidats de la communauté',
+      cta: {
+        label: 'Contacter un candidat',
+        href: '/backoffice/annuaire?role=Candidat',
+      },
+    },
   ],
   [Context.COMPANY_ADMIN_RECRUITMENT_MODE]: [
     {
@@ -133,5 +143,15 @@ export const stepsByContext = {
     //     href: '/backoffice/engager-mon-entreprise',
     //   },
     // },
+    // While waiting for TBS feature to be finished, we replace this step with the network discovery step
+    {
+      title: 'Découvrir le réseau d’entraide',
+      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+      content: 'Retrouvez tous les candidats de la communauté',
+      cta: {
+        label: 'Contacter un candidat',
+        href: '/backoffice/annuaire?role=Candidat',
+      },
+    },
   ],
 };

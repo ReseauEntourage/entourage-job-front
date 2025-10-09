@@ -131,7 +131,9 @@ export function* sendStepDataOnboardingSaga() {
         const { companyId } = stepData as CoachStepData;
 
         // Update the company user profile
-        yield* call(() => Api.putUserCompany(companyId?.value || null));
+        if (companyId) {
+          yield* call(() => Api.putUserCompany(companyId?.value || null));
+        }
       }
 
       // Handle CANDIDATE and COACH flows
