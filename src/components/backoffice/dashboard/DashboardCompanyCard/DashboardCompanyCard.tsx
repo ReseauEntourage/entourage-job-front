@@ -34,15 +34,17 @@ export const DashboardCompanyCard = ({
           <Text size="large" color="primaryBlue" weight="bold" center>
             {company.name}
           </Text>
-          <StyledNameAndReferentContainer>
-            <Text>
-              {isCompanyAdmin
-                ? `Vous êtes le référent`
-                : `Référent : ${companyAdmin.firstName} ${companyAdmin.lastName
-                    .charAt(0)
-                    .toUpperCase()}`}
-            </Text>
-          </StyledNameAndReferentContainer>
+          {companyAdmin && (
+            <StyledNameAndReferentContainer>
+              <Text>
+                {isCompanyAdmin
+                  ? `Vous êtes le référent`
+                  : `Référent : ${
+                      companyAdmin.firstName
+                    } ${companyAdmin.lastName.charAt(0).toUpperCase()}`}
+              </Text>
+            </StyledNameAndReferentContainer>
+          )}
         </div>
 
         <StyledCTAContainer>
