@@ -46,6 +46,7 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         name: 'currentJob',
         component: 'text-input',
         title: 'Mon métier',
+        placeholder: 'Ecrivez votre métier',
         showLabel: true,
       },
       {
@@ -53,6 +54,7 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         name: 'companyId',
         component: 'select-async',
         title: 'Mon entreprise',
+        placeholder: 'Séléctionnez dans la liste',
         loadOptions: async (callback, inputValue) => {
           try {
             const { data: companies } = await Api.getAllCompanies({
@@ -77,9 +79,9 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
             callback([]);
           }
         },
-        placeholder: 'Mon entreprise',
         isMulti: false,
         isRequired: false,
+        showLabel: true,
       },
       {
         id: 'companyName',
@@ -95,7 +97,8 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         name: 'businessSectorIds',
         component: 'select-async',
         loadOptions: loadBusinessSectorsOptions,
-        placeholder: "Les secteurs dans lesquels j'ai du réseau*",
+        title: "Les secteurs dans lesquels j'ai du réseau*",
+        placeholder: 'Sélectionnez un ou plusieurs secteurs dans la liste',
         isMulti: true,
         showLabel: true,
       },
@@ -104,8 +107,8 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         name: 'linkedinUrl',
         component: FormComponents.TEXT_INPUT,
         title:
-          'Ajoutez votre profil LinkedIn pour que les membres le découvrent et vous y soutiennent aussi',
-        placeholder: 'Ajouter le lien LinkedIn',
+          'Votre profil LinkedIn - pour que les membres le découvrent et vous y soutiennent aussi',
+        placeholder: 'Ajoutez le lien LinkedIn',
         showLabel: true,
         rules: [
           {
