@@ -27,11 +27,17 @@ export const StyledSwiperContainer = styled.div`
     flex-shrink: 0;
     min-width: 0;
   }
+  padding-bottom: 30px;
 `;
 
 export const StyledSwiperItemContainer = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+export const StyledNavigationContainer = styled.div`
+  position: relative;
+  padding: 20px 0;
 `;
 
 export const StyledPrevButton = styled.div`

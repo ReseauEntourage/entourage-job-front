@@ -14,10 +14,12 @@ export const StyledCollaboratorSmallCardContainer = styled.div<{
   }
 `;
 
-export const StyledCollaboratorSmallCardPictureContainerStyled = styled.div`
-  min-width: 80px;
-  width: 80px;
-  height: 80px;
+export const StyledCollaboratorSmallCardPictureContainerStyled = styled.div<{
+  isMobile: boolean;
+}>`
+  min-width: ${(props) => (props.isMobile ? ' 50px' : '80px')};
+  width: ${(props) => (props.isMobile ? ' 50px' : '80px')};
+  height: ${(props) => (props.isMobile ? ' 50px' : '80px')};
   border-radius: 50%;
   overflow: hidden;
   align-items: center;

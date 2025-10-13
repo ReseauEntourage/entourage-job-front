@@ -47,6 +47,7 @@ export const CompanyParameters = ({ company }: CompanyParametersProps) => {
             </StyledCompanyLeftColumn>
             <StyledCompanyRightColumn>
               <CompanyLinks
+                name={company.name}
                 url={company.url}
                 hiringUrl={company.hiringUrl}
                 linkedInUrl={company.linkedInUrl}
