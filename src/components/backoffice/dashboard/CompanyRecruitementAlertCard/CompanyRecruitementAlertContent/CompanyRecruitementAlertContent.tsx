@@ -16,6 +16,7 @@ import {
   StyledAvatar,
   StyledMoreAvatar,
   StyledSpinnerContainer,
+  StyledClickableLink,
 } from './CompanyRecruitementAlertContent.styles';
 import { useCompanyRecruitementAlertContent } from './useCompanyRecruitementAlertContent';
 
@@ -84,26 +85,40 @@ export const CompanyRecruitementAlertContent = ({
         ) : (
           <>
             {candidates.length > 0 && (
-              <StyledCandidatesAvatars>
-                {candidates.slice(0, 4).map((candidate, index) => (
-                  <StyledAvatar key={index}>
-                    <ImgUserProfile
-                      user={candidate}
-                      size={30}
-                      hasPicture={candidate?.hasPicture || false}
-                    />
-                  </StyledAvatar>
-                ))}
-                {candidates.length > 4 && (
-                  <StyledMoreAvatar key="more">
-                    +{candidates.length - 4}
-                  </StyledMoreAvatar>
-                )}
-              </StyledCandidatesAvatars>
+              <StyledClickableLink
+                href={`/backoffice/alerte-candidats/${alert.id}`}
+              >
+                <StyledCandidatesAvatars>
+                  {candidates.slice(0, 4).map((candidate, index) => (
+                    <StyledAvatar key={index}>
+                      <ImgUserProfile
+                        user={candidate}
+                        size={30}
+                        hasPicture={candidate?.hasPicture || false}
+                      />
+                    </StyledAvatar>
+                  ))}
+                  {candidates.length > 4 && (
+                    <StyledMoreAvatar key="more">
+                      +{candidates.length - 4}
+                    </StyledMoreAvatar>
+                  )}
+                </StyledCandidatesAvatars>
+              </StyledClickableLink>
             )}
-            <StyledCandidatesCount>
-              {matchingCandidatesText}
-            </StyledCandidatesCount>
+            {candidates.length > 0 ? (
+              <StyledClickableLink
+                href={`/backoffice/alerte-candidats/${alert.id}`}
+              >
+                <StyledCandidatesCount>
+                  {matchingCandidatesText}
+                </StyledCandidatesCount>
+              </StyledClickableLink>
+            ) : (
+              <StyledCandidatesCount>
+                {matchingCandidatesText}
+              </StyledCandidatesCount>
+            )}
           </>
         )}
         {candidates.length > 0 && (

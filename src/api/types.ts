@@ -266,7 +266,7 @@ export type Company = {
   admin: {
     firstName: string;
     lastName: string;
-  };
+  } | null;
 };
 
 export type CompaniesFilters = {
