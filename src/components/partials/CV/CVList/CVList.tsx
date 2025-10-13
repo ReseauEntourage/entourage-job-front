@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { BusinessSector, Occupation, User } from '@/src/api/types';
 import { Api } from 'src/api';
-import { BusinessSector, Occupation, User } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
@@ -9,7 +9,6 @@ import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
 import { FilterObject } from 'src/constants/utils';
-import { filtersToQueryParams } from 'src/utils/Filters';
 
 const NoCVInThisArea = () => {
   return (
@@ -33,7 +32,7 @@ interface CVListProps {
   hideSearchBar?: boolean;
   nb?: number;
   search?: string;
-  filters: FilterObject<typeof CV_FILTERS_DATA>;
+  filters?: FilterObject<typeof CV_FILTERS_DATA>;
   setFilters?: (updatedFilters: FilterObject<typeof CV_FILTERS_DATA>) => void;
   setSearch?: (updatedSearch?: string) => void;
   resetFilters?: () => void;
@@ -50,6 +49,7 @@ export const CVList = ({
 }: CVListProps) => {
   const defaultLimit = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
   const [items, setItems] = useState<User[]>([]);
+  const itemsRef = React.useRef<User[]>([]);
   const [offset, setOffset] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -57,7 +57,7 @@ export const CVList = ({
   const [endOfList, setEndOfList] = useState(false);
 
   const fetchData = useCallback(
-    (searchValue, filtersValue, isPagination = false) => {
+    (searchValue, isPagination = false, currentOffset?: number) => {
       setError(undefined);
 
       if (isPagination) {
@@ -65,25 +65,51 @@ export const CVList = ({
       } else {
         setLoading(true);
       }
+
+      // Utilisez soit l'offset passé en paramètre, soit l'état actuel
+      const offsetValue =
+        typeof currentOffset === 'number' ? currentOffset : offset;
+
       Api.getPublicCVsList({
         search: searchValue,
         limit: defaultLimit,
-        offset,
-        ...filtersToQueryParams(filtersValue),
+        offset: offsetValue,
+        // ...filtersToQueryParams(filtersValue),
       })
         .then(({ data }) => {
-          let countNewItems = 0;
-          setItems((prevItems) => {
-            const newItems = data.filter(
-              (newItem) => !prevItems.some((item) => item.id === newItem.id)
-            );
-            countNewItems += newItems.length;
-            return [...prevItems, ...newItems];
-          });
-          if (countNewItems === 0) {
+          // Vérifier si les données existent et ont la bonne structure
+          if (!data || !Array.isArray(data)) {
+            setError('Format de données invalide');
+            return;
+          }
+
+          // Assurer que chaque utilisateur a un userProfile valide
+          const validData = data.filter(
+            (item) =>
+              item && item.userProfile && item.userProfile.sectorOccupations
+          );
+
+          // Calculer les nouveaux éléments directement
+          let newItems;
+          if (isPagination) {
+            // En cas de pagination, on utilise itemsRef.current au lieu de items
+            const currentItems = itemsRef.current;
+            const itemIds = new Set(currentItems.map((item) => item.id));
+            newItems = validData.filter((item) => !itemIds.has(item.id));
+            setItems([...currentItems, ...newItems]);
+          } else {
+            // Sans pagination, on remplace complètement les éléments
+            newItems = validData;
+            setItems(newItems);
+          }
+
+          const countNewItems = newItems.length;
+
+          if (countNewItems === 0 && isPagination) {
             setEndOfList(true);
           }
-          setOffset((prevOffset) => prevOffset + countNewItems);
+
+          setOffset(offsetValue + countNewItems);
         })
         .catch((err) => {
           console.error(err);
@@ -94,13 +120,17 @@ export const CVList = ({
           setLoadingMore(false);
         });
     },
-    [defaultLimit, offset]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [defaultLimit, offset] // Sans items pour éviter la boucle infinie
   );
 
   useEffect(() => {
-    fetchData(search, filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, filters]);
+    // Réinitialiser l'offset et les items à chaque changement de search/filters
+    setItems([]);
+    setEndOfList(false);
+    // Toujours commencer avec offset=0 pour une nouvelle recherche
+    fetchData(search, false, 0);
+  }, [fetchData, search]);
 
   const renderCvList = useCallback(() => {
     return (
@@ -114,10 +144,16 @@ export const CVList = ({
             const imgSrc = user.userProfile?.hasPicture
               ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${user.id}.profile.jpg`
               : undefined;
+            // Vérifiez si userProfile existe et a la structure attendue
+            if (!user.userProfile) {
+              // Au lieu de retourner null, retournons un élément vide mais valide
+              return <div className="uk-text-danger">Profil incomplet</div>;
+            }
+
             return (
               <CandidatCard
                 businessSectors={
-                  (user.userProfile.sectorOccupations
+                  (user.userProfile?.sectorOccupations
                     ?.filter((so) => !!so.businessSector)
                     ?.map((so) => so.businessSector) as BusinessSector[]) || []
                 }
@@ -125,7 +161,7 @@ export const CVList = ({
                 imgSrc={imgSrc}
                 firstName={user.firstName}
                 occupations={
-                  (user.userProfile.sectorOccupations
+                  (user.userProfile?.sectorOccupations
                     ?.filter((so) => !!so.occupation)
                     ?.map((so) => so.occupation) as Occupation[]) || []
                 }
@@ -139,7 +175,8 @@ export const CVList = ({
             <Button
               variant="primary"
               onClick={() => {
-                fetchData(search, filters, true);
+                // Pour la pagination, on utilise l'offset actuel
+                fetchData(search, true, offset);
               }}
             >
               Voir plus
@@ -153,7 +190,7 @@ export const CVList = ({
         )}
       </div>
     );
-  }, [endOfList, fetchData, filters, items, loadingMore, nb, search]);
+  }, [endOfList, fetchData, items, loadingMore, nb, offset, search]);
 
   const content = useMemo(() => {
     if (loading) {
