@@ -23,7 +23,7 @@ export const StyledRowIconTitleTextContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 20px;
 `;
 

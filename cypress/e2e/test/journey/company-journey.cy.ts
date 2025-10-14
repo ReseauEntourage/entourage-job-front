@@ -1,7 +1,7 @@
 import { companyJourneyRequests } from '../../intercept/journey/company.req';
 import bootstrap from '../bootstrap';
 
-describe('En tant que - Employeur/Entreprise', () => {
+describe('En tant que - Employeur/Entreprise - Je veux recruter inclusif', () => {
   /**
    * Nous générons toutes les fixtures
    */
@@ -34,7 +34,7 @@ describe('En tant que - Employeur/Entreprise', () => {
     });
 
     // Visit the page /entreprises
-    cy.visit('/entreprises');
+    cy.visit('/entreprises/recruter-inclusif');
   });
 
   /**

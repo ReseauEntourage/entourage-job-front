@@ -13,6 +13,9 @@ export const GA_TAGS = {
   HOME_PARTAGE_CV_TWITTER_CLIC: {
     action: 'Home_Partage_CV_Twitter_Clic',
   },
+  PAGE_ENTREPRISES_REGISTER: {
+    action: 'Page_Entreprises_Register',
+  },
   PAGE_ENTREPRISES_GALERIE_CV_CLIC: {
     action: 'Page_Entreprises_Galerie_CV_Clic',
   },
@@ -48,6 +51,9 @@ export const GA_TAGS = {
   },
   PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC: {
     action: 'Page_Entreprises_Inscription_Newsletter_Clic',
+  },
+  PAGE_ENTREPRISE_WEBINAIRE_CLIC: {
+    action: 'Page_Entreprise_Webinaire_Clic',
   },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
@@ -523,6 +529,14 @@ export const FB_TAGS = {
   },
   COMPANY_CONTACT_SEND: {
     action: 'Prospect 2.1',
+    options: { content_category: '2.1' },
+  },
+  COMPANY_WEBINAIRE_OPEN: {
+    action: 'Pré-Prospect 2.1',
+    options: { content_category: '2.1' },
+  },
+  COMPANY_REGISTRATION_OPEN: {
+    action: 'Pré-Prospect 2.1',
     options: { content_category: '2.1' },
   },
   COACH_REGISTRATION_OPEN: {

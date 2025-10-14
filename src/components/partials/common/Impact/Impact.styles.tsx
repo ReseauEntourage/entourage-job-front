@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
+export const StyledImpactContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+`;
+
 const SHIFT = 45;
 export const StyledInsightsContainer = styled.div<{
   withIllu?: boolean;

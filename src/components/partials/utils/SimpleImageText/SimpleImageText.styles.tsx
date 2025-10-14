@@ -27,7 +27,6 @@ export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextCo
   align-items: stretch;
   flex-wrap: wrap;
   gap: 5%;
-  min-height: 400px;
 `;
 
 export const StyledSimpleImageTextImageContainer = styled.div`

@@ -45,7 +45,7 @@ export const SimpleImageText = ({
           </StyledSimpleImageTextImageContainer>
           <StyledSimpleImageTextTextContainer>
             {isDesktop && <H3 title={title} />}
-            {children}
+            <div>{children}</div>
           </StyledSimpleImageTextTextContainer>
         </StyledSimpleImageTextContainer>
       </Section>

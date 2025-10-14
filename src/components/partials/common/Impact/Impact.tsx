@@ -17,7 +17,11 @@ import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledInsight, StyledInsightsContainer } from './Impact.styles';
+import {
+  StyledImpactContainer,
+  StyledInsight,
+  StyledInsightsContainer,
+} from './Impact.styles';
 
 export type DisplayAs = 'Coach' | 'Candidat' | 'Referer' | 'Company';
 
@@ -166,38 +170,40 @@ export const Impact = ({
   return (
     <Section style={!invertBgColor ? 'hover-blue' : undefined}>
       <H3 title={contentAs[as].title} center />
-      <StyledInsightsContainer
-        withIllu={withIllu}
-        invertBgColor={invertBgColor}
-      >
-        {contentAs[as].insights.map((insight, index) => (
-          <StyledInsight key={index}>
-            {insight.illu}
-            <Text color="primaryBlue" size={40} weight="bold" center>
-              {insight.value}
-            </Text>
-            <Text color="darkGray" center>
-              {insight.description}
-            </Text>
-          </StyledInsight>
-        ))}
-      </StyledInsightsContainer>
-      {inviteToShowMore && (
-        <StyledCenteredButtonContainer>
-          <Button
-            variant="primary"
-            rounded
-            href={process.env.NEXT_PUBLIC_URL_MESURE_D_IMPACT}
-            isExternal
-            newTab
-            onClick={() => {
-              if (gaEventTag) gaEvent(gaEventTag);
-            }}
-          >
-            Télécharger la mesure d&lsquo;impact
-          </Button>
-        </StyledCenteredButtonContainer>
-      )}
+      <StyledImpactContainer>
+        <StyledInsightsContainer
+          withIllu={withIllu}
+          invertBgColor={invertBgColor}
+        >
+          {contentAs[as].insights.map((insight, index) => (
+            <StyledInsight key={index}>
+              {insight.illu}
+              <Text color="primaryBlue" size={40} weight="bold" center>
+                {insight.value}
+              </Text>
+              <Text color="darkGray" center>
+                {insight.description}
+              </Text>
+            </StyledInsight>
+          ))}
+        </StyledInsightsContainer>
+        {inviteToShowMore && (
+          <StyledCenteredButtonContainer>
+            <Button
+              variant="primary"
+              rounded
+              href={process.env.NEXT_PUBLIC_URL_MESURE_D_IMPACT}
+              isExternal
+              newTab
+              onClick={() => {
+                if (gaEventTag) gaEvent(gaEventTag);
+              }}
+            >
+              Télécharger la mesure d&lsquo;impact
+            </Button>
+          </StyledCenteredButtonContainer>
+        )}
+      </StyledImpactContainer>
     </Section>
   );
 };
