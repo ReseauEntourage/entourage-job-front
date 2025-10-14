@@ -15,7 +15,7 @@ const LINKS = [
     tag: GA_TAGS.HEADER_ORIENTER_CLIC,
   },
   {
-    href: '/entreprises',
+    href: '/entreprises/recruter-inclusif',
     name: 'Engager son entreprise',
     tag: GA_TAGS.HEADER_RECRUTER_CLIC,
   },
