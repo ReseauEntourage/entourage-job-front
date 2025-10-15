@@ -120,7 +120,6 @@ export const CVList = ({
           setLoadingMore(false);
         });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [defaultLimit, offset] // Sans items pour éviter la boucle infinie
   );
 
