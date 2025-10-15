@@ -143,12 +143,6 @@ export const CVList = ({
             const imgSrc = user.userProfile?.hasPicture
               ? `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${user.id}.profile.jpg`
               : undefined;
-            // Vérifiez si userProfile existe et a la structure attendue
-            if (!user.userProfile) {
-              // Au lieu de retourner null, retournons un élément vide mais valide
-              return <div className="uk-text-danger">Profil incomplet</div>;
-            }
-
             return (
               <CandidatCard
                 businessSectors={
