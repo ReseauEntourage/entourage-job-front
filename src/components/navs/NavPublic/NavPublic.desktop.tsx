@@ -1,41 +1,17 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { StyledNavContainerDesktop } from '@/src/components/headers/Header.styles';
 import { Nav, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledPublicItem } from './NavPublicContent.styles';
-import { NavPublicContentProps } from './NavPublicContent.types';
+import { LINKS } from './NavPublic.utils';
+import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 
-export const NavPublicContentDesktop = ({ links }: NavPublicContentProps) => {
-  const { asPath } = useRouter();
+export const NavPublicDesktop = () => {
+  const items = LINKS;
 
   const rightItems = [
-    ...links.map((link, i) => {
-      if (asPath.includes(link.href)) {
-        return (
-          <div>
-            <StyledPublicItem
-              selected
-              href={link.href}
-              color="white"
-              onClick={() => {
-                gaEvent(link.tag);
-              }}
-            >
-              {link.name}
-            </StyledPublicItem>
-          </div>
-        );
-      }
-      return (
-        <Link href={link.href} key={i} legacyBehavior>
-          <StyledPublicItem color="white">{link.name}</StyledPublicItem>
-        </Link>
-      );
-    }),
+    ...items.map((item, i) => <NavPublicItem item={item} key={i} />),
     <div>
       <Button
         href="/login"

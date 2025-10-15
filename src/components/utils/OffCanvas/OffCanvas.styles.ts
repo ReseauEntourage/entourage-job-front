@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledOffCanvas = styled.div<{
   isOpen: boolean;
@@ -14,4 +14,8 @@ export const StyledOffCanvas = styled.div<{
   width: 270px;
   background-color: ${COLORS.navBlack};
   padding: 20px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    width: 100%;
+  }
 `;

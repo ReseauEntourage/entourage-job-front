@@ -12,12 +12,15 @@ import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { NavPublicContentProps } from './NavPublicContent.types';
+import { LINKS } from './NavPublic.utils';
+import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 
-export const NavPublicContentMobile = ({ links }: NavPublicContentProps) => {
+export const NavPublicMobile = () => {
+  const items = LINKS;
+
   const offcanvasRef = useRef<OffcanvasRef>(null);
 
-  const { asPath, push } = useRouter();
+  const { push } = useRouter();
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -41,7 +44,7 @@ export const NavPublicContentMobile = ({ links }: NavPublicContentProps) => {
           </div>
         }
       />
-      <Offcanvas position="right" ref={offcanvasRef}>
+      <Offcanvas position="right" ref={offcanvasRef} closeButtonSize={40}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
@@ -56,52 +59,9 @@ export const NavPublicContentMobile = ({ links }: NavPublicContentProps) => {
             </a>
           </li>
           {[
-            links
-              .filter(({ href }) => {
-                return href !== '#';
-              })
-              .map(({ href, name, tag }, index) => {
-                if (asPath.includes(href)) {
-                  return (
-                    <li key={index} className="uk-flex-center">
-                      <a
-                        style={{
-                          borderBottom: 'white solid 1px',
-                          color: 'white',
-                        }}
-                        aria-hidden="true"
-                        className="uk-text-center"
-                        onClick={() => {
-                          gaEvent(tag);
-                          push(href);
-                        }}
-                      >
-                        {name}
-                      </a>
-                    </li>
-                  );
-                }
-
-                return (
-                  <li key={index} className="uk-flex-center">
-                    {/* Hack so that the links don't move when changing current page */}
-                    <a
-                      style={{
-                        borderBottom: '1px solid transparent',
-                        color: 'white',
-                      }}
-                      aria-hidden="true"
-                      className="uk-text-center"
-                      onClick={() => {
-                        gaEvent(tag);
-                        push(href);
-                      }}
-                    >
-                      {name}
-                    </a>
-                  </li>
-                );
-              }),
+            items.map((item) => {
+              return <NavPublicItem item={item} key={item.name} />;
+            }),
           ]}
           <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
