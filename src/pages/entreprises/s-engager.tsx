@@ -134,7 +134,7 @@ const RecruterInclusif = () => {
         <br />
         <Text>
           Vous vous positionnez sur la question du lien social, l’un des grands
-          sujets de société et déifs contemporians.
+          sujets de société et défis contemporains.
         </Text>
       </SimpleImageText>
 
