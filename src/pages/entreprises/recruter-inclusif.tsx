@@ -149,7 +149,7 @@ const RecruterInclusif = () => {
           <CheckListElement>
             <Text>
               Créez des alertes mail personnalisées pour être informé
-              automatiquement dès qu’un candidat correspondant à vos critères
+              automatiquement dès qu’un candidat correspond à vos critères
             </Text>
           </CheckListElement>
           <CheckListElement>

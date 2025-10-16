@@ -43,7 +43,7 @@ export const EntreprisesTuto = ({ context }: EntreprisesTutoProps) => {
       {
         title: 'Suivez l’impact de vos collaborateurs',
         paragraph:
-          'Retrouvez vos collaborateurs et leurs engagements (coup de coups de pouce, candidats accompagnés).',
+          'Retrouvez vos collaborateurs et leurs engagements (coups de coups de pouce, candidats accompagnés).',
         illu: <IlluPoigneeDeMain width={100} height={100} />,
       },
     ],
