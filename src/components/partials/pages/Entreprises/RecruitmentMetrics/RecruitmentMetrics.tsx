@@ -40,7 +40,7 @@ const metrics = [
 
 export const RecruitmentMetrics = () => {
   return (
-    <Section container="large">
+    <Section>
       <StyledRecruitmentMetricsContainer>
         <H2 center title="Un enjeu incontournable" />
 

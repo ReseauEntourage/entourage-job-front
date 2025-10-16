@@ -9,7 +9,7 @@ import { SimpleImageText } from '../../../utils/SimpleImageText';
 export const EntreprisesWebinaire = () => {
   return (
     <SimpleImageText
-      img="/static/img/company_why.jpg"
+      img="/static/img/company_webinar.jpg"
       title="L'inclusion aussi, ça s'apprend !"
     >
       <List>
@@ -38,7 +38,9 @@ export const EntreprisesWebinaire = () => {
           gaEvent(GA_TAGS.PAGE_ENTREPRISE_WEBINAIRE_CLIC);
           fbEvent(FB_TAGS.COMPANY_WEBINAIRE_OPEN);
         }}
-        href=""
+        href={process.env.NEXT_PUBLIC_COMPANY_WEBINAR}
+        newTab
+        isExternal
         dataTestId="button-company-first-section"
         variant="secondary"
         rounded

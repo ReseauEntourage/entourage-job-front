@@ -17,6 +17,7 @@ interface SimpleImageTextProps {
   img: string;
   children: React.ReactNode;
   reverse?: boolean;
+  contentPaddingY?: number;
 }
 
 export const SimpleImageText = ({
@@ -24,6 +25,7 @@ export const SimpleImageText = ({
   innerRef,
   title,
   img,
+  contentPaddingY = 0,
   children,
   reverse = false,
 }: SimpleImageTextProps) => {
@@ -43,7 +45,7 @@ export const SimpleImageText = ({
           >
             <LegacyImg src={img} alt="" cover />
           </StyledSimpleImageTextImageContainer>
-          <StyledSimpleImageTextTextContainer>
+          <StyledSimpleImageTextTextContainer contentPaddingY={contentPaddingY}>
             {isDesktop && <H3 title={title} />}
             <div>{children}</div>
           </StyledSimpleImageTextTextContainer>

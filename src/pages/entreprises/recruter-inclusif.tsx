@@ -114,8 +114,9 @@ const RecruterInclusif = () => {
       />
 
       <SimpleImageText
-        img="/static/img/company_why.jpg"
+        img="/static/img/company-what-s-inclusive-recruitment.jpg"
         title="Le recrutement inclusif, c'est quoi ?"
+        contentPaddingY={40}
       >
         <Text>
           Recruter inclusif, c’est donner la chance à une personne en dehors des
@@ -133,7 +134,7 @@ const RecruterInclusif = () => {
       <RecruitmentMetrics />
 
       <SimpleImageText
-        img="/static/img/company_why.jpg"
+        img="/static/img/ordinateur-EP.png"
         title="Pourquoi rejoindre Entourage Pro ?"
         reverse
       >
