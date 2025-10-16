@@ -50,7 +50,9 @@ describe('En tant que - Visiteur', () => {
    */
   it("J'accède à la page - /entreprises", () => {
     cy.get('header').within(() => {
-      cy.get('a').contains('Engager mon entreprise').click({ force: true });
+      cy.get('div').contains('Engager mon entreprise').click({ force: true });
+      cy.wait(1000);
+      cy.get('a').contains('Engager mes collaborateurs').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 's-engager');
     });
@@ -61,6 +63,8 @@ describe('En tant que - Visiteur', () => {
    */
   it("J'accède à la page - /entreprises", () => {
     cy.get('header').within(() => {
+      cy.get('div').contains('Engager mon entreprise').click({ force: true });
+      cy.wait(1000);
       cy.get('a').contains('Recruter inclusif').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'recruter-inclusif');

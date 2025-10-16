@@ -86,7 +86,7 @@ const RecruterInclusif = () => {
 
   const ctaRegister = useMemo(() => {
     return {
-      dataTest: 'button-contact-company-header',
+      dataTest: 'button-register-company-header',
       onClick: () => {
         gaEvent(GA_TAGS.PAGE_ENTREPRISES_REGISTER);
         fbEvent(FB_TAGS.COMPANY_REGISTRATION_OPEN);
