@@ -5,7 +5,7 @@ import {
   StyledProfileFormImageInputsContainer,
   StyledProfileFormImageContainer,
 } from '../../Onboarding.styles';
-import { Button, ImgProfile } from 'src/components/utils';
+import { Button, ImgUserProfile } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { ReduxRequestEvents } from 'src/constants';
@@ -51,7 +51,7 @@ export const OnboardingProfileForm = () => {
         {imageUploading ? (
           <Spinner color={COLORS.white} />
         ) : (
-          <ImgProfile
+          <ImgUserProfile
             user={{ id, role, firstName }}
             size={SIZE}
             hasPicture={user.userProfile?.hasPicture || false}

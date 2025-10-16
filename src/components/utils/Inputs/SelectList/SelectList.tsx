@@ -4,7 +4,9 @@ import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
+import { Text } from 'src/components/utils/Text';
 import {
+  StyledButton,
   StyledCheckIconContainer,
   StyledListOption,
   StyledSelectList,
@@ -68,7 +70,7 @@ export function SelectList<T extends string>({
               data-testid={`${id}-${value}`}
               className={valueProp?.includes(value) ? 'selected' : ''}
             >
-              <button
+              <StyledButton
                 onClick={() => handleSelect(value)}
                 type="button"
                 onBlur={onBlur}
@@ -78,10 +80,10 @@ export function SelectList<T extends string>({
                   <div className="img-container">{icon}</div>
                   <div className="text-container">
                     <H6 title={label} color="primaryBlue" />
-                    <p>{description}</p>
+                    <Text>{description}</Text>
                   </div>
                 </StyledListOption>
-              </button>
+              </StyledButton>
               <StyledCheckIconContainer
                 className={valueProp?.includes(value) ? 'selected' : ''}
               >

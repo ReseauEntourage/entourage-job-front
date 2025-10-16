@@ -16,7 +16,7 @@ export function BackLink({ label, url }: BackLinkProps) {
   return (
     <Link href={url} scroll={false} shallow passHref legacyBehavior>
       <StyledBackLink>
-        <LucidIcon name="ChevronLeft" />
+        <LucidIcon name="ChevronLeft" size={15} />
         {label}
       </StyledBackLink>
     </Link>

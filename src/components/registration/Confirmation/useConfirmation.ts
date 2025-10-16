@@ -1,20 +1,17 @@
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  registrationActions,
-  selectRegistrationConfirmationStepContent,
-} from 'src/use-cases/registration';
+import { useDispatch } from 'react-redux';
+import { registrationActions } from '@/src/use-cases/registration';
+import { RegistrationFlow } from '../flows/flows.types';
+import { LastStepContent } from '../registration.config';
 
 export function useConfirmation() {
   const dispatch = useDispatch();
-  const pageContent = useSelector(selectRegistrationConfirmationStepContent);
+  const flow = useSearchParams().get('flow') as RegistrationFlow;
+  const pageContent = LastStepContent[flow];
 
   useEffect(() => {
-    dispatch(registrationActions.setRegistrationStep(null));
-
-    return () => {
-      dispatch(registrationActions.resetRegistrationData());
-    };
+    dispatch(registrationActions.resetRegistrationData());
   }, [dispatch]);
 
   return { pageContent };

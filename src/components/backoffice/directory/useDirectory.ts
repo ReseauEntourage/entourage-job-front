@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  companyActions,
+  fetchCompaniesSelectors,
+  selectCompanies,
+} from '@/src/use-cases/company';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { usePrevious } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
@@ -15,6 +20,9 @@ import { useDirectoryQueryParams } from './useDirectoryQueryParams';
 export function useDirectory() {
   const dispatch = useDispatch();
 
+  /*
+   ** Profile selections
+   */
   const isFetchProfilesIdle = useSelector(
     fetchProfilesSelectors.selectIsFetchProfilesIdle
   );
@@ -23,12 +31,36 @@ export function useDirectory() {
     fetchProfilesSelectors.selectIsFetchProfilesRequested
   );
 
-  const isLoading = isFetchProfilesIdle || isFetchProfilesRequested;
+  const isProfileLoading = isFetchProfilesIdle || isFetchProfilesRequested;
 
   const isFetchProfileStatusFailed = useSelector(
     fetchProfilesSelectors.selectIsFetchProfilesFailed
   );
 
+  const profiles = useSelector(selectProfiles);
+
+  /**
+   * Companies selections
+   */
+  const isFetchCompaniesIdle = useSelector(
+    fetchCompaniesSelectors.selectIsFetchCompaniesIdle
+  );
+
+  const isFetechCompaniesRequested = useSelector(
+    fetchCompaniesSelectors.selectIsFetchCompaniesRequested
+  );
+
+  const isCompaniesLoading = isFetchCompaniesIdle || isFetechCompaniesRequested;
+
+  const isFetchCompanyStatusFailed = useSelector(
+    fetchCompaniesSelectors.selectIsFetchCompaniesFailed
+  );
+
+  const companies = useSelector(selectCompanies);
+
+  /**
+   * Filters and params
+   */
   const directoryFiltersParams = useDirectoryQueryParams();
 
   const prevDirectoryFiltersParams = usePrevious(directoryFiltersParams);
@@ -38,13 +70,17 @@ export function useDirectory() {
       dispatch(
         profilesActions.fetchProfilesWithFilters(directoryFiltersParams)
       );
+      dispatch(
+        companyActions.fetchCompaniesWithFilters(directoryFiltersParams)
+      );
     }
   }, [dispatch, directoryFiltersParams, prevDirectoryFiltersParams]);
 
-  const profiles = useSelector(selectProfiles);
-
+  /**
+   * Effects
+   */
   useEffect(() => {
-    if (isFetchProfileStatusFailed) {
+    if (isFetchProfileStatusFailed || isFetchCompanyStatusFailed) {
       dispatch(
         notificationsActions.addNotification({
           type: 'danger',
@@ -52,21 +88,26 @@ export function useDirectory() {
         })
       );
     }
-  }, [dispatch, isFetchProfileStatusFailed]);
+  }, [dispatch, isFetchProfileStatusFailed, isFetchCompanyStatusFailed]);
 
   useEffect(() => {
     return () => {
-      dispatch(profilesActions.fetchProfilesReset());
+      dispatch(profilesActions.resetProfilesOffset());
+      dispatch(companyActions.resetCompaniesOffset());
     };
   }, [dispatch]);
 
   // Manage offset and profiles request when scrolling to the bottom of the page
   useIsAtBottom(() => {
     dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
+    dispatch(companyActions.fetchCompaniesNextPage(directoryFiltersParams));
   });
 
   return {
     profiles,
-    isLoading,
+    companies,
+    isProfileLoading,
+    isCompaniesLoading,
+    directoryFiltersParams,
   };
 }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { FiltersDropdowns } from '@/src/components/filters/FiltersDropdowns/FiltersDropdowns';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
-import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
@@ -101,6 +101,7 @@ export const SearchBar = ({
         <form className="uk-width-expand">
           <StyledSearchBarInputContainer>
             <StyledSearchBarInput
+              id="search-input"
               type="text"
               data-testid="search-input"
               placeholder={placeholder}
@@ -130,32 +131,36 @@ export const SearchBar = ({
             filters={filters}
             setFilters={setFilters}
             smallSelectors={smallSelectors}
+            showSeparator
           />
         )}
         <StyledSearchBarSubmitButton onClick={startSearch}>
           <LucidIcon name="Search" />
         </StyledSearchBarSubmitButton>
       </StyledSearchBar>
-
-      {filtersConstants.length > 0 && (
-        <div className="uk-width-expand uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
-          <FiltersCheckboxes
-            filterData={filtersConstants}
-            filters={filters}
-            setFilters={setFilters}
-            hideOnMobile
-          />
-          <div className="uk-width-expand">{additionalButtons}</div>
-          {(numberOfFilters > 0 || (filtersConstants.length > 0 && search)) && (
-            <FiltersOptions
-              resetFilters={() => {
-                resetFilters();
-                setSearchBuffer('');
-              }}
+      {filtersConstants.filter((f) => f.type === 'checkbox').length > 0 ||
+        (additionalButtons && (
+          <div className="uk-width-expand uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
+            <FiltersCheckboxes
+              filterData={filtersConstants}
+              filters={filters}
+              setFilters={setFilters}
+              hideOnMobile
             />
-          )}
-        </div>
-      )}
+            {additionalButtons && (
+              <div className="uk-width-expand">{additionalButtons}</div>
+            )}
+            {(numberOfFilters > 0 ||
+              (filtersConstants.length > 0 && search)) && (
+              <FiltersOptions
+                resetFilters={() => {
+                  resetFilters();
+                  setSearchBuffer('');
+                }}
+              />
+            )}
+          </div>
+        ))}
     </StyledSearchBarContainer>
   );
 };

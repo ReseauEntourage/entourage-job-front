@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { NotifBadges } from '@/src/components/navs/NavConnected/NavConnected.types';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import { NotifBadges } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { selectUnseenConversationCount } from 'src/use-cases/messaging';
 import { usePrevious } from './utils';
 

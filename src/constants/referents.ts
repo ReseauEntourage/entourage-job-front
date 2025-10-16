@@ -15,8 +15,8 @@ export const Referents: {
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS as string,
   },
   [ADMIN_ZONES.LYON]: {
-    name: 'Céline D.',
-    img: `celine.jpg`,
+    name: 'Alice D.',
+    img: `alice.jpg`,
     mail: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LYON as string,
   },
   [ADMIN_ZONES.LILLE]: {

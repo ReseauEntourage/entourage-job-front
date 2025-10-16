@@ -16,7 +16,6 @@ import {
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
 import { LoadingScreen } from '../LoadingScreen';
-import { useConfirmationToaster } from '../parametres-old/useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
 import { ProfileChangePassword } from 'src/components/profile/ProfilePartCards/ProfileChangePassword/ProfileChangePassword';
 import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
@@ -37,6 +36,7 @@ import {
   StyledParametersRightColumn,
   StyledParametersSectionContent,
 } from './Parameters.styles';
+import { useConfirmationToaster } from './useConfirmationToaster';
 
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
@@ -80,6 +80,7 @@ export const Parameters = () => {
             >
               <ParamProfessionalInformations
                 sectorOccupations={user.userProfile.sectorOccupations ?? []}
+                smallCard
                 isEditable
               />
               <ProfileDescription

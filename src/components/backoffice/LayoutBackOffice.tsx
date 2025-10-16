@@ -1,6 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectShouldLaunchOnboarding } from '@/src/use-cases/onboarding';
 import { Layout } from 'src/components/Layout';
-import { useOnboardingCheck } from 'src/hooks/useOnboardingCheck';
 import { Onboarding } from './onboarding/Onboarding';
 
 export const LayoutBackOffice = ({
@@ -10,7 +11,7 @@ export const LayoutBackOffice = ({
   children: React.ReactNode;
   title?: string;
 }) => {
-  const { shouldLaunchOnboarding } = useOnboardingCheck();
+  const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
 
   return (
     <Layout title={`${title} - Entourage Pro`} noIndex isBackoffice>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Button } from '../../Button';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
@@ -10,6 +10,7 @@ import {
   StyledHiddenInput,
 } from './FileInput.styles';
 import { FilePreviewCV } from './FilePreview';
+import { FilePreviewLogo } from './FilePreview/FilePreviewLogo';
 
 export interface FileInputProps
   extends CommonInputProps<File | File[] | null, HTMLInputElement> {
@@ -37,6 +38,8 @@ export function FileInput({
   noPreview = false,
   activator,
 }: FileInputProps) {
+  const [fileName, setFileName] = useState<string | null>(null);
+
   const onButtonDownloadClick = () => {
     const input = document.getElementById(id);
     if (input) {
@@ -80,6 +83,13 @@ export function FileInput({
                 dataTestId="file-input-preview"
               />
             )}
+            {fileType === FileTypes.LOGO && (
+              <FilePreviewLogo
+                filename={fileName || 'Votre logo'}
+                onRemoveFile={removeFileCallback}
+                dataTestId="file-input-preview"
+              />
+            )}
           </>
         )}
         <StyledHiddenInput
@@ -88,6 +98,7 @@ export function FileInput({
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             if (event.target.files) {
               const files = Array.from(event.target.files);
+              setFileName(files[0]?.name || null);
               return onChange(files);
             }
           }}

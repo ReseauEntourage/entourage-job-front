@@ -6,7 +6,6 @@ import { flattenReferingData } from 'src/components/backoffice/referer/Refering/
 import { formatCareerPathSentence } from 'src/utils/Formatting';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
-  selectDefinedReferingSelectedProgram,
   selectIsLastReferingStep,
   selectReferingData,
 } from './refering.selectors';
@@ -23,7 +22,6 @@ const {
 
 export function* referCandidateSagaRequested() {
   const data = yield* select(selectReferingData);
-  const selectedProgram = yield* select(selectDefinedReferingSelectedProgram);
 
   const {
     businessSectorId0,
@@ -39,7 +37,6 @@ export function* referCandidateSagaRequested() {
     yield* call(() =>
       Api.postUserRefering({
         ...flattenedData,
-        program: selectedProgram,
         sectorOccupations: formatCareerPathSentence({
           businessSectorId0,
           businessSectorId1,

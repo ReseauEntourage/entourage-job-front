@@ -1,15 +1,18 @@
+import Link from 'next/link';
 import React from 'react';
 import { UserRoles } from '@/src/constants/users';
-import { UserProfileSectorOccupation } from 'src/api/types';
+import { Company, UserProfileSectorOccupation } from 'src/api/types';
 import { Text, TextSize, TextWeight } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import {
   StyledCareerPathSectorOccupationTagContainer,
   StyledCareerPathSimpleSentenceTag,
+  StyledCompanyName,
 } from './ProfileCareerPathSentence.styles';
 
 interface ProfileCareerPathSentenceProps {
   sectorOccupations: UserProfileSectorOccupation[];
+  company?: Company | null;
   asSimpleSentence?: boolean;
   size?: TextSize;
   weight?: TextWeight;
@@ -19,15 +22,13 @@ interface ProfileCareerPathSentenceProps {
 
 export const ProfileCareerPathSentence = ({
   sectorOccupations,
+  company,
   asSimpleSentence = false,
   size = 'normal',
   weight = 'normal',
   currentJob,
   role,
 }: ProfileCareerPathSentenceProps) => {
-  if (!sectorOccupations || sectorOccupations.length === 0) {
-    return <>Je suis ouvert à toutes les opportunités</>;
-  }
   const hasSecondPart = sectorOccupations?.length > 1;
 
   const getOccupationIfExists = (index, accent = false) => {
@@ -57,28 +58,54 @@ export const ProfileCareerPathSentence = ({
   if (role === UserRoles.COACH) {
     return (
       <>
-        <Text>
-          Je travaille comme <strong>{currentJob}</strong>
-        </Text>
+        {currentJob || company ? (
+          <Text>
+            Je travaille
+            {currentJob && (
+              <>
+                {' '}
+                comme <strong>{currentJob}</strong>
+              </>
+            )}
+            {company && (
+              <>
+                {' '}
+                chez{' '}
+                <Link href={`/backoffice/companies/${company.id}`}>
+                  <StyledCompanyName>{company.name}</StyledCompanyName>
+                </Link>
+              </>
+            )}
+          </Text>
+        ) : (
+          <></>
+        )}
 
-        <StyledCareerPathSectorOccupationTagContainer>
-          <Text>J&apos;ai du réseau dans : </Text>
-          {sectorOccupations.map((sectorOccupation, index) => (
-            <>
-              {asSimpleSentence ? (
-                <span>{sectorOccupation.businessSector?.name}</span>
-              ) : (
-                <Tag
-                  content={sectorOccupation.businessSector?.name}
-                  key={index}
-                />
-              )}
-            </>
-          ))}
-        </StyledCareerPathSectorOccupationTagContainer>
+        {sectorOccupations.length > 0 && (
+          <StyledCareerPathSectorOccupationTagContainer>
+            <Text>J&apos;ai du réseau dans : </Text>
+            {sectorOccupations.map((sectorOccupation, index) => (
+              <>
+                {asSimpleSentence ? (
+                  <span>{sectorOccupation.businessSector?.name}</span>
+                ) : (
+                  <Tag
+                    content={sectorOccupation.businessSector?.name}
+                    key={index}
+                  />
+                )}
+              </>
+            ))}
+          </StyledCareerPathSectorOccupationTagContainer>
+        )}
       </>
     );
   }
+
+  if (!sectorOccupations || sectorOccupations.length === 0) {
+    return <>Je suis ouvert à toutes les opportunités</>;
+  }
+
   return (
     <>
       <Text size={size} weight={weight}>

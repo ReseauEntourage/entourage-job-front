@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useProfileGeneration } from '@/src/hooks';
-import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
+import { UserRoles } from 'src/constants/users';
 import { selectAuthenticatedUser } from 'src/use-cases/current-user';
 import {
   onboardingActions,
@@ -15,6 +15,7 @@ import {
 import {
   findNextNotSkippableStep,
   findPreviousNotSkippableStep,
+  getOnboardingFlow,
 } from 'src/use-cases/onboarding/onboarding.utils';
 import { OnboardingFormData } from './Onboarding.types';
 
@@ -37,7 +38,10 @@ export const useOnboarding = () => {
   );
 
   const isFirstOnboardingStep = useMemo(() => {
-    const firstStep = findNextNotSkippableStep(0, authenticatedUser);
+    // Determine onboarding flow based on user role
+    const flow = getOnboardingFlow(authenticatedUser);
+
+    const firstStep = findNextNotSkippableStep(0, authenticatedUser, flow);
     return currentStep === firstStep;
   }, [authenticatedUser, currentStep]);
 
@@ -57,11 +61,9 @@ export const useOnboarding = () => {
       userRoleHasOnboarding &&
       currentStep === 0
     ) {
-      dispatch(
-        onboardingActions.launchOnboarding(
-          authenticatedUser.role as RegistrableUserRoles
-        )
-      );
+      const flow = getOnboardingFlow(authenticatedUser);
+
+      dispatch(onboardingActions.launchOnboarding(flow));
     } else if (hasAcceptedEthicsCharter || !userRoleHasOnboarding) {
       dispatch(onboardingActions.endOnboarding());
     }
@@ -98,9 +100,12 @@ export const useOnboarding = () => {
   );
 
   const onBeforeStep = useCallback(() => {
+    const flow = getOnboardingFlow(authenticatedUser);
+
     const previousStep = findPreviousNotSkippableStep(
       currentStep,
-      authenticatedUser
+      authenticatedUser,
+      flow
     );
     if (previousStep !== currentStep) {
       dispatch(onboardingActions.setOnboardingStep(previousStep));

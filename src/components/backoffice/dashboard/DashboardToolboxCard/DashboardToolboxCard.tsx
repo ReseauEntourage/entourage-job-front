@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
   StyledDashboardArticle,
@@ -7,7 +7,7 @@ import {
   StyledDashboardCardContentContainer,
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
-import { Button, Card, Img } from 'src/components/utils';
+import { Button, Card, LegacyImg } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -47,39 +47,45 @@ const candidateArticles = [
   },
 ];
 
-const toolboxContents: {
-  [K in UserRoles]?: {
-    subtitle: string;
-    url: string;
-    articles: {
-      title: string;
-      link: string;
-      image: string;
-    }[];
-  };
-} = {
-  [UserRoles.CANDIDATE]: {
-    subtitle:
-      'Découvrez les contenus pédagogiques pour booster vos opportunités professionnelles',
-    url: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL as string,
-    articles: candidateArticles,
-  },
-  [UserRoles.COACH]: {
-    subtitle:
-      'Découvrez les contenus pédagogiques pour vous orienter dans votre rôle de coach',
-    url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,
-    articles: coachArticles,
-  },
-  [UserRoles.REFERER]: {
-    subtitle:
-      'Découvrez les contenus pédagogiques pour accompagner les candidats dans leur recherche d’emploi',
-    url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,
-    articles: coachArticles,
-  },
-};
-
 export const DashboardToolboxCard = () => {
   const user = useAuthenticatedUser();
+  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+
+  const toolboxContents: {
+    [K in UserRoles]?: {
+      subtitle: string;
+      url: string;
+      articles: {
+        title: string;
+        link: string;
+        image: string;
+      }[];
+    };
+  } = useMemo(() => {
+    return {
+      [UserRoles.CANDIDATE]: {
+        subtitle:
+          'Découvrez les contenus pédagogiques pour booster vos opportunités professionnelles',
+        url: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL as string,
+        articles: candidateArticles,
+      },
+      [UserRoles.COACH]: {
+        subtitle:
+          'Découvrez les contenus pédagogiques pour vous orienter dans votre rôle de coach',
+        url: (isCompanyAdmin
+          ? process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL
+          : process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL) as string,
+        articles: coachArticles,
+      },
+      [UserRoles.REFERER]: {
+        subtitle:
+          'Découvrez les contenus pédagogiques pour accompagner les candidats dans leur recherche d’emploi',
+        url: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL as string,
+        articles: coachArticles,
+      },
+    };
+  }, [isCompanyAdmin]);
+
   const toolbox = toolboxContents[user.role];
   if (!toolbox) {
     return null;
@@ -99,7 +105,7 @@ export const DashboardToolboxCard = () => {
               >
                 <StyledDashboardArticle>
                   <StyledDashboardArticleImage>
-                    <Img src={article.image} alt={article.title} cover />
+                    <LegacyImg src={article.image} alt={article.title} cover />
                   </StyledDashboardArticleImage>
                   <StyledDashboardArticleText>
                     <H6 title={article.title} center />

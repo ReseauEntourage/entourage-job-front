@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
+import { ModalEditProfessionalInformation } from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ModalEditProfessionalInformation';
+import {
+  getCandidateDefaultProfessionalValues,
+  getCoachDefaultProfessionalValues,
+} from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { UserRoles } from '@/src/constants/users';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { UserProfileSectorOccupation } from 'src/api/types';
-import { ModalEditProfessionalInformation } from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ModalEditProfessionalInformation';
-import {
-  getCandidateDefaultProfessionalValues,
-  getCoachDefaultProfessionalValues,
-} from 'src/components/backoffice/parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
@@ -29,7 +29,7 @@ export const ParamProfessionalInformations = ({
   smallCard = false,
 }: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
-  const { userProfile, role } = user;
+  const { userProfile, role, company } = user;
 
   const isCompleted = sectorOccupations?.length > 0;
 
@@ -41,7 +41,10 @@ export const ParamProfessionalInformations = ({
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""
           user={user}
-          defaultValues={getCoachDefaultProfessionalValues(userProfile)}
+          defaultValues={getCoachDefaultProfessionalValues(
+            userProfile,
+            company
+          )}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
             return {
@@ -53,6 +56,7 @@ export const ParamProfessionalInformations = ({
                     order: idx,
                   } as UserProfileSectorOccupation)
               ),
+              companyId: values.companyId?.value || null,
             };
           }}
         />
@@ -70,7 +74,7 @@ export const ParamProfessionalInformations = ({
         />
       )
     );
-  }, [userProfile, role, user]);
+  }, [userProfile, role, user, company]);
 
   return (
     <ProfilePartCard
@@ -82,12 +86,24 @@ export const ParamProfessionalInformations = ({
       fallback={{
         content: (
           <>
-            <H6 title="Renseignez ici les secteurs et métiers que vous recherchez" />
-            <Text>
-              Ces informations nous permettent de vous mettre en relation plus
-              facilement avec des personnes de la communauté qui pourraient vous
-              donner un coup de pouce{' '}
-            </Text>
+            {role === UserRoles.CANDIDATE ? (
+              <>
+                <H6 title="Renseignez ici les secteurs et métiers que vous recherchez" />
+                <Text>
+                  Ces informations nous permettent de vous mettre en relation
+                  plus facilement avec des personnes de la communauté qui
+                  pourraient vous donner un coup de pouce.
+                </Text>
+              </>
+            ) : (
+              <>
+                <H6 title="Renseignez ici votre métier et les secteurs" />
+                <Text>
+                  Ces informations permettent aux candidats de savoir dans quels
+                  secteurs vous avez du réseau et de l&apos;expérience.
+                </Text>
+              </>
+            )}
           </>
         ),
         icon: <IlluBulleQuestion />,
@@ -97,6 +113,7 @@ export const ParamProfessionalInformations = ({
         sectorOccupations={sectorOccupations}
         role={role}
         currentJob={userProfile?.currentJob || undefined}
+        company={company}
       />
     </ProfilePartCard>
   );

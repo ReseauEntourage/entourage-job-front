@@ -14,3 +14,8 @@ export const StyledCareerPathSectorOccupationTagContainer = styled.div`
   flex-wrap: wrap;
   gap: 8px;
 `;
+
+export const StyledCompanyName = styled.span`
+  text-decoration: underline;
+  color: ${COLORS.black};
+`;

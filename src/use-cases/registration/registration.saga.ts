@@ -1,19 +1,18 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Nudge } from '@/src/api/types';
+import { UserRoleByFlow } from '@/src/components/registration/registration.config';
+import { getUtmFromLocalStorage } from '@/src/components/registration/registration.utils';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
+import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
-import {
-  flattenRegistrationDataByRole,
-  getUtmFromLocalStorage,
-} from 'src/components/registration/Registration.utils';
 import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
-  selectDefinedRegistrationSelectedProgram,
-  selectDefinedRegistrationSelectedRole,
-  selectIsLastRegistrationStep,
+  selectDefinedRegistrationSelectedFlow,
+  selectInvitationId,
   selectRegistrationData,
+  selectRegistrationIsEnded,
 } from './registration.selectors';
 import { slice } from './registration.slice';
 
@@ -21,18 +20,22 @@ const {
   createUserSucceeded,
   createUserRequested,
   createUserFailed,
-  setRegistrationCurrentStepData,
-  setRegistrationStep,
   setRegistrationIsLoading,
+  moveForwardInRegistration,
+  resetRegistrationData,
 } = slice.actions;
 
 export function* createUserRequestedSaga() {
   const data = yield* select(selectRegistrationData);
-  const selectedRole = yield* select(selectDefinedRegistrationSelectedRole);
-  const selectedProgram = yield* select(
-    selectDefinedRegistrationSelectedProgram
-  );
+  const selectedFlow = yield* select(selectDefinedRegistrationSelectedFlow);
+  const invitationId = yield* select(selectInvitationId);
 
+  assertIsDefined(selectedFlow, 'Selected flow must be defined');
+  if (!data) {
+    console.error('Registration data is not defined');
+    yield* put(createUserFailed(null));
+    return;
+  }
   const {
     confirmPassword,
     businessSectorId0,
@@ -40,41 +43,44 @@ export function* createUserRequestedSaga() {
     occupation0,
     occupation1,
     organizationId,
+    companyId,
+    companyRole,
     nudgeIds,
-    ...flattenedData
-  } = flattenRegistrationDataByRole(data, selectedRole);
+    ...restData
+  } = data;
 
   const utmParameters = getUtmFromLocalStorage();
 
   try {
-    yield* call(() =>
-      Api.postUserRegistration({
-        ...flattenedData,
-        role: selectedRole,
-        program: selectedProgram,
-        sectorOccupations: formatCareerPathSentence({
-          occupation0,
-          occupation1,
-          businessSectorId0,
-          businessSectorId1,
-        }),
-        department: flattenedData.department.value,
-        organizationId: organizationId ? organizationId.value : undefined,
-        nudges: nudgeIds?.length
-          ? nudgeIds.map((id) => {
-              return {
-                id,
-              } as Nudge;
-            })
-          : undefined,
-        utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
-        utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
-        utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,
-        utmTerm: utmParameters[UtmParameters.UTM_TERM] ?? undefined,
-        utmContent: utmParameters[UtmParameters.UTM_CONTENT] ?? undefined,
-        utmId: utmParameters[UtmParameters.UTM_ID] ?? undefined,
-      })
-    );
+    const userData = {
+      ...restData,
+      role: UserRoleByFlow[selectedFlow],
+      sectorOccupations: formatCareerPathSentence({
+        occupation0,
+        occupation1,
+        businessSectorId0,
+        businessSectorId1,
+      }),
+      department: restData.department.value,
+      organizationId: organizationId ? organizationId.value : undefined,
+      companyId: companyId ? companyId.value : undefined,
+      companyRole: companyRole ? companyRole.value : undefined,
+      nudges: nudgeIds?.length
+        ? nudgeIds.map((id) => {
+            return {
+              id,
+            } as Nudge;
+          })
+        : undefined,
+      utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
+      utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
+      utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,
+      utmTerm: utmParameters[UtmParameters.UTM_TERM] ?? undefined,
+      utmContent: utmParameters[UtmParameters.UTM_CONTENT] ?? undefined,
+      utmId: utmParameters[UtmParameters.UTM_ID] ?? undefined,
+      invitationId, // Optional, only if the user is registering via an invitation
+    };
+    yield* call(() => Api.postUserRegistration(userData));
 
     yield* put(createUserSucceeded());
   } catch (err) {
@@ -85,30 +91,31 @@ export function* createUserRequestedSaga() {
         })
       );
     } else {
+      console.error('Error during user registration:', err);
       yield* put(createUserFailed(null));
     }
   }
 }
 
-export function* setRegistrationCurrentStepDataSaga() {
-  const isLastRegistrationStep = yield* select(selectIsLastRegistrationStep);
-  if (isLastRegistrationStep) {
-    yield* put(setRegistrationIsLoading(true));
-    yield* put(createUserRequested());
+export function* moveForwardInRegistrationSaga() {
+  const RegistrationIsEnded = yield* select(selectRegistrationIsEnded);
+  // Necessary to force render of form after moving forward but not on last step
+  yield* put(setRegistrationIsLoading(true));
+  if (!RegistrationIsEnded) {
+    yield* call(() => asyncTimeout(300));
+    yield* put(setRegistrationIsLoading(false));
   }
 }
 
-export function* setRegistrationStepSaga() {
-  // Necessary to force render of form on step change
-  yield* call(() => asyncTimeout(500));
+export function* resetRegistrationDataSaga() {
+  // Necessary to force render of form after resetting registration data
+  yield* put(setRegistrationIsLoading(true));
+  yield* call(() => asyncTimeout(300));
   yield* put(setRegistrationIsLoading(false));
 }
 
 export function* saga() {
   yield* takeLatest(createUserRequested, createUserRequestedSaga);
-  yield* takeLatest(
-    setRegistrationCurrentStepData,
-    setRegistrationCurrentStepDataSaga
-  );
-  yield* takeLatest(setRegistrationStep, setRegistrationStepSaga);
+  yield* takeLatest(resetRegistrationData, resetRegistrationDataSaga);
+  yield* takeLatest(moveForwardInRegistration, moveForwardInRegistrationSaga);
 }
