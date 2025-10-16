@@ -2,8 +2,6 @@ import React, { useMemo } from 'react';
 import { EntreprisesFAQ } from '@/src/components/partials/pages/Entreprises/EntreprisesFAQ/EntreprisesFAQ';
 import { EntreprisesTuto } from '@/src/components/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/components/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
-import { EntreprisesWebinaire } from '@/src/components/partials/pages/Entreprises/EntreprisesWebinaire/EntreprisesWebinaire';
-import { RecruitmentMetrics } from '@/src/components/partials/pages/Entreprises/RecruitmentMetrics/RecruitmentMetrics';
 import { SimpleImageText } from '@/src/components/partials/utils/SimpleImageText';
 import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
 import { CheckListElement, List } from '@/src/components/utils/Lists';
@@ -15,7 +13,6 @@ import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
-import { EntreprisesCVList } from 'src/components/partials/pages/Entreprises/EntreprisesCVList';
 import { EntreprisesEnSavoirPlus } from 'src/components/partials/pages/Entreprises/EntreprisesEnSavoirPlus';
 import { CTAProps, ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Reviews } from 'src/components/partials/utils/Reviews';
@@ -99,46 +96,59 @@ const RecruterInclusif = () => {
   }, []);
 
   return (
-    <Layout title="Recruter inclusif - Entourage Pro">
+    <Layout title="S'engager - Entourage Pro">
       <ImageTitle
         img="/static/img/recruter-inclusif-banner-desktop.jpg"
         imgMobile="/static/img/recruter-inclusif-banner-mobile.jpg"
-        title="Pour gagner en performance et en impact, recrutez inclusif"
+        title="Sensibiliser et engager mes collaborateurs"
         description={
           <>
-            Accédez à un vivier de talents diversifiés et motivés
-            <br />
-            Engagez vos équipes dans une démarche RSE concrète
+            Depuis plus de 10 ans, Entourage se mobilise pour que chacun puisse
+            s’engager auprès des plus précaires. Rejoignez l&apos;aventure de
+            l&apos;inclusion !
           </>
         }
         cta={ctaRegister}
       />
 
       <SimpleImageText
-        img="/static/img/company-what-s-inclusive-recruitment.jpg"
-        title="Le recrutement inclusif, c'est quoi ?"
-        contentPaddingY={40}
+        img="/static/img/company-why-sensibilize.jpg"
+        title="Pourquoi engager mes collaborateurs ? "
       >
         <Text>
-          Recruter inclusif, c’est donner la chance à une personne en dehors des
-          canaux traditionnels d’intégrer votre entreprise et créer les
-          conditions pour l’intégrer durablement.
+          Aujourd’hui. les entreprises ont un réel rôle à jouer dans la lutte
+          contre l’exclusion. Mais encore faut-il savoir comment mobiliser ses
+          propres équipes !
         </Text>
-
+        <br />
         <Text>
-          Concrètement, vous adaptez votre processus de recrutement et
-          l’intégration de la personne. Avec Entourage Pro, vous êtes guidé et
-          accompagné pour faire de ce recrutement un succès.
+          En rejoignant Entourage Pro, vous engagez votre entreprise dans une
+          démarche d’inclusion, en changeant le regard de vos collaborateurs sur
+          la précarité et l’isolement.
+        </Text>
+        <br />
+        <Text>
+          Vous renforcez la cohésion entre collègues ainsi que votre marque
+          employeur et fidélisez vos talents.
+        </Text>
+        <br />
+        <Text>
+          Vous vous positionnez sur la question du lien social, l’un des grands
+          sujets de société et déifs contemporians.
         </Text>
       </SimpleImageText>
 
-      <RecruitmentMetrics />
+      <EntreprisesVideo />
 
       <SimpleImageText
-        img="/static/img/ordinateur-EP.png"
-        title="Pourquoi rejoindre Entourage Pro ?"
-        reverse
+        img="/static/img/why-become-coach.jpg"
+        title="Engagez vos collaborateurs à devenir coachs bénévoles"
       >
+        <Text>
+          Devenir coach, c’est donner des coups de pouce à des candidat(e)s afin
+          qu’ils aient toutes les cartes en main pour appréhender le monde
+          professionnel et y trouver leur place.
+        </Text>
         <List>
           <CheckListElement>
             <Text>
@@ -174,24 +184,56 @@ const RecruterInclusif = () => {
         </Button>
       </SimpleImageText>
 
-      <EntreprisesVideo />
+      <EntreprisesTuto context={CompanyGoal.SENSIBILIZE} />
 
-      <EntreprisesTuto context={CompanyGoal.RECRUIT} />
-
-      <EntreprisesWebinaire />
-
-      <EntreprisesCVList />
+      <SimpleImageText
+        img="/static/img/team-building.jpg"
+        title="Proposez un Team Building solidaire à vos équipes"
+        reverse
+      >
+        <List>
+          <CheckListElement>
+            <Text>
+              Un engagement authentique de vos collaborateurs dans des actions
+              de RSE concrètes.
+            </Text>
+          </CheckListElement>
+          <CheckListElement>
+            <Text>
+              Des ateliers variés et ludiques comme l’atelier job dating où vos
+              collaborateurs rencontrent et conseillent des candidats de tous
+              horizons.
+            </Text>
+          </CheckListElement>
+          <CheckListElement>
+            <Text>
+              Une augmentation de la satisfaction et de la cohésion interne et
+              des actions de bénévolat valorisantes pour vos équipes.
+            </Text>
+          </CheckListElement>
+        </List>
+        <Button
+          onClick={() => {
+            gaEvent(GA_TAGS.PAGE_ENTREPRISES_TBS_FORMATS_CLIC);
+          }}
+          href=""
+          dataTestId="button-company-first-section"
+          variant="secondary"
+          rounded
+        >
+          Découvrir les formats
+        </Button>
+      </SimpleImageText>
 
       <Impact
         as="Company"
         gaEventTag={GA_TAGS.PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK}
         inviteToShowMore
-        invertBgColor
       />
 
       <Reviews reviews={reviews} title="Témoignages" />
 
-      <EntreprisesFAQ context={CompanyGoal.RECRUIT} />
+      <EntreprisesFAQ context={CompanyGoal.SENSIBILIZE} />
 
       <EntreprisesEnSavoirPlus />
 
