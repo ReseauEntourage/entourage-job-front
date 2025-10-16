@@ -73,6 +73,7 @@ function* inviteCollaboratorsRequestedSaga(
 ) {
   try {
     const { companyId, emails } = action.payload;
+    const selectedCompanyId = yield* select(selectSelectedCompanyId);
 
     assertIsDefined(companyId, 'Company ID must be defined');
     assertIsDefined(emails, 'Emails must be defined');
@@ -86,7 +87,10 @@ function* inviteCollaboratorsRequestedSaga(
         message: 'Toutes les invitations ont été envoyées avec succès.',
       })
     );
-    yield* put(fetchSelectedCompanyWithCollaboratorsRequested());
+    if (selectedCompanyId) {
+      yield* put(fetchSelectedCompanyWithCollaboratorsRequested());
+    }
+    yield* put(currentUserActions.fetchUserRequested());
   } catch (error) {
     yield* put(inviteCollaboratorsFailed());
     yield* put(
