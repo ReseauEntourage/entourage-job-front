@@ -152,20 +152,20 @@ const RecruterInclusif = () => {
         <List>
           <CheckListElement>
             <Text>
-              Accédez à des talents qualifiés souvent non visibles dans les
-              canaux de recrutement traditionnels
+              Une mission de bénévolat concrète et valorisante pour vos
+              salariés.
             </Text>
           </CheckListElement>
           <CheckListElement>
             <Text>
-              Créez des alertes mail personnalisées pour être informé
-              automatiquement dès qu’un candidat correspondant à vos critères
+              Un format d’engagement souple, qui s’adapte à leurs disponibilités
+              et leur permet de s’engager à leur rythme.
             </Text>
           </CheckListElement>
           <CheckListElement>
             <Text>
-              Bénéficiez de l’ensemble des outils et formations de la plateforme
-              Entourage Pro
+              <b>Un suivi d’impact chiffré</b> avec le nombre de collaborateurs
+              engagés, le nombre de candidats accompagnés, etc.
             </Text>
           </CheckListElement>
         </List>
