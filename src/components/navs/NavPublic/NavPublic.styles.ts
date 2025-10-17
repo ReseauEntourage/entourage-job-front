@@ -9,11 +9,8 @@ export const StyledPublicItem = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: ${({ color, selected }) => {
-      return selected ? COLORS[color] || COLORS.white : 'transparent';
-    }}
-    solid 1px;
   font-weight: ${({ selected }) => (selected ? '600' : '400')};
+  text-decoration: ${({ selected }) => (selected ? 'underline' : 'none')};
   color: ${({ color }) => {
     return COLORS[color] || COLORS.white;
   }};
