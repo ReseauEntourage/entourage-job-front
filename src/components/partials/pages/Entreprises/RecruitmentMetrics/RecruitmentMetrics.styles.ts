@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledRecruitmentMetricsContainer = styled.div`
   display: flex;
@@ -7,7 +8,11 @@ export const StyledRecruitmentMetricsContainer = styled.div`
 `;
 
 export const StyledMetricsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  display: flex;
+  flex-direction: row;
   gap: 90px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex-direction: column;
+  }
 `;

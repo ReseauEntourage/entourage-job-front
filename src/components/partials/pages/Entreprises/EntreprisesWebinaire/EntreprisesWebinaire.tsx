@@ -11,6 +11,7 @@ export const EntreprisesWebinaire = () => {
     <SimpleImageText
       img="/static/img/company_webinar.jpg"
       title="L'inclusion aussi, ça s'apprend !"
+      contentPaddingY={40}
     >
       <StyledEntreprisesWebinaireContainer>
         <Text>
