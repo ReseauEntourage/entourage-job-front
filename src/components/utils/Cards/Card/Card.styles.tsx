@@ -5,6 +5,7 @@ import { COLORS } from 'src/constants/styles';
 export const StyledCard = styled(StyledCardCommon)`
   border-radius: 20px;
   border: 1px solid ${COLORS.lightGray};
+  overflow: hidden;
 
   &.mobile {
     width: 100%;

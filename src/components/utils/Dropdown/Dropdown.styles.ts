@@ -28,7 +28,7 @@ export const StyledDropdownMenu = styled.div`
 `;
 
 export const StyledDropdownMenuItem = styled.div`
-  color: #484848;
+  color: ${COLORS.black};
   font-size: 14px;
   cursor: pointer;
   :hover {
@@ -38,4 +38,9 @@ export const StyledDropdownMenuItem = styled.div`
 
 export const StyledDropdownMenuItemSeparator = styled.div`
   border-top: 1px solid #ececec;
+`;
+
+export const StyledDropdownToggleContainer = styled.div`
+  display: flex;
+  height: 100%;
 `;

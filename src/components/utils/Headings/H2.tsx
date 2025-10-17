@@ -8,7 +8,7 @@ export const H2 = ({
   variant,
   color,
   center = false,
-  weight = 'bold',
+  weight = 'semibold',
 }: HeadingComponentProps) => {
   const isDesktop = useIsDesktop();
   return (
