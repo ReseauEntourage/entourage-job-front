@@ -78,7 +78,7 @@ export const DashboardCompanyCollaboratorsList = ({
     companyWithCollaborators?.pendingInvitations.length === 0
   ) {
     return (
-      <Card title="Vous souhaitez engager vos collaboarteurs ?" centerTitle>
+      <Card title="Vous souhaitez engager vos collaborateurs ?" centerTitle>
         <StyledEmptyContainer>
           <StyledIlluContainer>
             <IlluReseau width={60} height={60} />
