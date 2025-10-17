@@ -174,7 +174,7 @@ const RecruterInclusif = () => {
         </Button>
       </SimpleImageText>
 
-      <EntreprisesVideo />
+      <EntreprisesVideo context={CompanyGoal.RECRUIT} />
 
       <EntreprisesTuto context={CompanyGoal.RECRUIT} />
 

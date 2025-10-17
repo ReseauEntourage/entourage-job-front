@@ -141,7 +141,7 @@ const RecruterInclusif = () => {
 
       <EntreprisesActions />
 
-      <EntreprisesVideo />
+      <EntreprisesVideo context={CompanyGoal.SENSIBILIZE} />
 
       <SimpleImageText
         img="/static/img/why-become-coach.jpg"
