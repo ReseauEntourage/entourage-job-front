@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, BackgroundImage, Text } from 'src/components/utils';
-import { H2 } from 'src/components/utils/Headings';
+import { H1 } from 'src/components/utils/Headings';
 import { Color } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -8,7 +8,7 @@ import {
   StyledImageTitleCTAsContainer,
 } from './ImageTitle.styles';
 
-interface CTAProps {
+export interface CTAProps {
   onClick?: () => void;
   label: string;
   href?: string;
@@ -49,7 +49,7 @@ export const ImageTitle = ({
       hasCta={!!cta}
     >
       <StyledImageTitle textColor={textColor || 'white'}>
-        <H2 title={title} color={textColor || 'white'} />
+        <H1 title={title} color={textColor || 'white'} />
         {description && (
           <Text
             size={isDesktop ? 'xlarge' : 'normal'}

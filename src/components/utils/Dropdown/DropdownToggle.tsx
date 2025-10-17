@@ -1,12 +1,17 @@
 import React from 'react';
 import { DropdownContext } from './Dropdown.context';
+import { StyledDropdownToggleContainer } from './Dropdown.styles';
 
-type DropdownToggleProps = {
+export interface DropdownToggleProps {
   children: React.ReactNode;
-};
+}
 
 export const DropdownToggle = ({ children }: DropdownToggleProps) => {
   const { toggleDropdown } = React.useContext(DropdownContext);
 
-  return <div onClick={toggleDropdown}>{children}</div>;
+  return (
+    <StyledDropdownToggleContainer onClick={toggleDropdown}>
+      {children}
+    </StyledDropdownToggleContainer>
+  );
 };

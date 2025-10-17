@@ -1,7 +1,7 @@
 import { companyJourneyRequests } from '../../intercept/journey/company.req';
 import bootstrap from '../bootstrap';
 
-describe('En tant que - Employeur/Entreprise', () => {
+describe('En tant que - Employeur/Entreprise - Je veux recruter inclusif', () => {
   /**
    * Nous générons toutes les fixtures
    */
@@ -34,7 +34,7 @@ describe('En tant que - Employeur/Entreprise', () => {
     });
 
     // Visit the page /entreprises
-    cy.visit('/entreprises');
+    cy.visit('/entreprises/recruter-inclusif');
   });
 
   /**
@@ -43,7 +43,7 @@ describe('En tant que - Employeur/Entreprise', () => {
   describe('Je souhaite recruter un employé', () => {
     // J'accède au formulaire de contact dans la modale
     it("J'affiche le formulaire de contact", () => {
-      cy.get('[data-testid="button-contact-company-header"]')
+      cy.get('[data-testid="button-contact-company-last-section"]')
         .should('be.visible')
         .first()
         .click();
@@ -53,7 +53,9 @@ describe('En tant que - Employeur/Entreprise', () => {
 
     it('Je remplis puis je valide le formulaire de contact', () => {
       // First open the contact form
-      cy.get('[data-testid="button-contact-company-header"]').first().click();
+      cy.get('[data-testid="button-contact-company-last-section"]')
+        .first()
+        .click();
 
       // Fill the form
       cy.get('#form-company-contact-firstName')

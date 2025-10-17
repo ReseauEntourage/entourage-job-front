@@ -5,7 +5,9 @@ export const StyledLi = styled.li`
   list-style: none;
   position: relative;
   padding-left: 32px;
-  margin-bottom: 40px;
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
   p {
     margin: 0;
   }
@@ -25,17 +27,18 @@ export const StyledBulletListElement = styled(StyledLi)`
 `;
 
 export const StyledList = styled.ul`
-  margin: 20px 0;
   padding: 0;
   list-style: none;
 `;
 
 export const StyledCheckIconContainer = styled.div`
+  width: 24px;
+  height: 24px;
   display: flex;
   padding: 2px;
   align-items: center;
   justify-content: center;
-  background-color: ${COLORS.primaryBlue};
+  background-color: ${COLORS.hoverBlue};
   color: white;
   position: absolute;
   border-radius: 14px;
