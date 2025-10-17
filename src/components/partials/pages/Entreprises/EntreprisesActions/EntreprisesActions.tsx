@@ -1,5 +1,6 @@
 import React from 'react';
 import { IlluCoachEtCandidat } from '@/assets/icons/icons';
+import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
 import { LegacyImg, Section } from '@/src/components/utils';
 import { H3 } from '@/src/components/utils/Headings';
 import { EntreprisesActionsItem } from './EntreprisesActionItem/EntreprisesActionItem';
@@ -15,7 +16,7 @@ const actions = [
     description:
       'Relecture de CV, préparation aux entretiens... En quelques clics, vos collaborateurs  peuvent devenir coachs bénévoles et donnner des coups de pouce à nos candidat.e.s.',
     cta: {
-      href: '/entreprises/coach-benevole',
+      href: `/inscription?flow=${RegistrationFlow.COMPANY}`,
       label: "S'inscrire",
     },
   },
