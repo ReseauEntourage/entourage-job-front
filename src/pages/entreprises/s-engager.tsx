@@ -98,8 +98,8 @@ const RecruterInclusif = () => {
   return (
     <Layout title="S'engager - Entourage Pro">
       <ImageTitle
-        img="/static/img/recruter-inclusif-banner-desktop.jpg"
-        imgMobile="/static/img/recruter-inclusif-banner-mobile.jpg"
+        img="/static/img/entreprises-engager-banner-desktop.jpg"
+        imgMobile="/static/img/entreprises-engager-banner-mobile.jpg"
         title="Sensibiliser et engager mes collaborateurs"
         description={
           <>

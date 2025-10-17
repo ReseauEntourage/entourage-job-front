@@ -136,22 +136,19 @@ const contentAs: { [K in DisplayAs]: Content } = {
     ),
     insights: [
       {
-        value: '2500',
-        description: 'candidat(e)s accompagné(e)s depuis le lancement',
+        value: '81%',
+        description: 'des personnes disent se sentir mieux',
+        illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
       {
-        value: '72%',
-        description:
-          'des candidat(e)s parvenus au bout du parcours ont retrouvé un travail',
+        value: '500',
+        description: 'entreprises partenaires',
+        illu: <IlluMalette {...illuSizes} />,
       },
       {
-        value: '130',
-        description: 'entreprises ont recruté',
-      },
-      {
-        value: '93%',
-        description:
-          'des candidat(e)s ont repris confiance en eux et en leurs capacités',
+        value: '19 000',
+        description: 'personnes sensibilisées',
+        illu: <IlluCoeurSurLaMain {...illuSizes} />,
       },
     ],
   },
@@ -174,6 +171,7 @@ export const Impact = ({
         <StyledInsightsContainer
           withIllu={withIllu}
           invertBgColor={invertBgColor}
+          nbColumns={contentAs[as].insights.length}
         >
           {contentAs[as].insights.map((insight, index) => (
             <StyledInsight key={index}>
