@@ -17,3 +17,18 @@ export const StyledCtaContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const StyledEmptyContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  padding-bottom: 20px;
+`;
+
+export const StyledIlluContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+`;
