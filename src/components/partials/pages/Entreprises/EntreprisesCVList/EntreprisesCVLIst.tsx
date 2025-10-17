@@ -6,7 +6,6 @@ import {
   StyledCenteredButtonContainer,
 } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
-import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledEntreprisesCVListContainer } from './EntreprisesCVList.styles';
@@ -15,17 +14,11 @@ export const EntreprisesCVList = () => {
   return (
     <Section container="large" style="muted">
       <StyledEntreprisesCVListContainer>
-        <H2 center title="Qui sont nos candidat(e)s ?" />
-        <CVList
-          hideSearchBar
-          nb={3}
-          filters={{
-            [CV_FILTERS_DATA[0].key]: CV_FILTERS_DATA[0].constants,
-          }}
-        />
+        <H2 center title="Ces candidats cherchent actuellement un emploi" />
+        <CVList hideSearchBar nb={3} />
         <StyledCenteredButtonContainer>
           <Button
-            href={{ pathname: '/candidats', query: { employed: false } }}
+            href="/candidats"
             variant="primary"
             rounded
             onClick={() => {
