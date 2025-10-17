@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, Text } from '@/src/components/utils';
+import { Card, Image, Text } from '@/src/components/utils';
+import { COLORS } from '@/src/constants/styles';
 import {
-  StyledBubble,
   StyledCoverContainer,
   StyledMetricCard,
+  StyledSourceContainer,
   StyledTitleAndSourceContainer,
 } from './Metric.styles';
 import { BubblePosition } from './Metric.types';
@@ -23,19 +24,22 @@ export interface MetricCardProps {
 
 export const MetricCard = ({ metric }: MetricCardProps) => {
   return (
-    <Card>
+    <Card borderColor={COLORS.gray}>
       <StyledMetricCard>
-        <StyledCoverContainer imageUrl={metric.imageUrl}>
-          <StyledBubble position={metric.bubblePosition}>
-            <Text size="large">{metric.value}</Text>
-            <Text>{metric.description}</Text>
-          </StyledBubble>
+        <StyledCoverContainer>
+          <Image src={metric.imageUrl} alt={metric.title} cover />
         </StyledCoverContainer>
         <StyledTitleAndSourceContainer>
-          <Text weight="bold" center>
-            {metric.title}
+          <Text size="xlarge" weight="bold">
+            {metric.value}
           </Text>
-          <Text center>{metric.source}</Text>
+          <Text size="small" color="darkGray">
+            {metric.description}
+          </Text>
+          <StyledSourceContainer>
+            <Text weight="bold">{metric.title}</Text>
+            <Text>{metric.source}</Text>
+          </StyledSourceContainer>
         </StyledTitleAndSourceContainer>
       </StyledMetricCard>
     </Card>
