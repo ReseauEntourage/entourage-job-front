@@ -27,7 +27,6 @@ export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextCo
   align-items: stretch;
   flex-wrap: wrap;
   gap: 5%;
-  min-height: 400px;
 `;
 
 export const StyledSimpleImageTextImageContainer = styled.div`
@@ -45,13 +44,16 @@ export const StyledSimpleImageTextImageContainer = styled.div`
   }
 `;
 
-export const StyledSimpleImageTextTextContainer = styled.div`
+export const StyledSimpleImageTextTextContainer = styled.div<{
+  contentPaddingY: number;
+}>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 30px;
   width: 100%;
+  padding: ${(props) => props.contentPaddingY}px 0;
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     width: 50%;
   }

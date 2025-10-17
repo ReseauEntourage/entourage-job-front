@@ -53,7 +53,7 @@ const pages: PageType = [
     children: [
       {
         title: 'Entreprises',
-        path: '/entreprises',
+        path: '/entreprises/recruter-inclusif',
         props: {
           onClick: () => {
             gaEvent(GA_TAGS.FOOTER_ENTREPRISES_CLIC);
@@ -62,7 +62,7 @@ const pages: PageType = [
         children: [
           {
             title: 'Engager mon entreprise',
-            path: '/entreprises/sinformer',
+            path: '/entreprises/s-engager',
             props: {
               onClick: () => {
                 gaEvent(GA_TAGS.FOOTER_ENTREPRISES_ENGAGER_CLIC);
@@ -70,8 +70,8 @@ const pages: PageType = [
             },
           },
           {
-            title: 'Recruter',
-            path: '/candidats?employed=false',
+            title: 'Recruter inclusif',
+            path: '/entreprises/recruter-inclusif',
             props: {
               onClick: () => {
                 gaEvent(GA_TAGS.FOOTER_ENTREPRISES_RECRUTER_CLIC);
