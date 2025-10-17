@@ -130,7 +130,11 @@ export const slice = createSlice({
     ...updateUserProfilePictureAdapter.getReducers<State>(
       (state) => state.updateUserProfilePicture,
       {
-        updateUserProfilePictureSucceeded() {},
+        updateUserProfilePictureSucceeded(state) {
+          if (state.user && state.user.userProfile) {
+            state.user.userProfile.hasPicture = true;
+          }
+        },
       }
     ),
     ...uploadExternalCvAdapter.getReducers<State>(

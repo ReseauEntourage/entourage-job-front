@@ -32,7 +32,11 @@ export const ProfileCustomNudgesModalEdit = ({
 
   return (
     <ModalEdit
-      title="Détaillez vos besoins"
+      title={
+        role === UserRoles.CANDIDATE
+          ? 'Détaillez vos besoins d’accompagnement'
+          : 'Détaillez vos offres d’accompagnement'
+      }
       formSchema={
         role === UserRoles.CANDIDATE
           ? formEditCustomNudgeCandidate
