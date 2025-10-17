@@ -3,12 +3,17 @@ import { useDispatch } from 'react-redux';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
 import { CollaboratorSmallCard } from '@/src/components/companies/CollaboratorSmallCard/CollaboratorSmallCard';
-import { Button, Card } from '@/src/components/utils';
+import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
+import { openModal } from '@/src/components/modals/Modal';
+import { Button, Card, Text } from '@/src/components/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
+import { IlluReseau } from 'assets/icons/icons';
 import {
   StyledCollaboratorSmallCardContainer,
   StyledContainer,
   StyledCtaContainer,
+  StyledEmptyContainer,
+  StyledIlluContainer,
 } from './DashboardCompanyCollaboratorsList.styles';
 
 interface DashboardCompanyCollaboratorsListProps {
@@ -41,6 +46,11 @@ export const DashboardCompanyCollaboratorsList = ({
     companyWithCollaborators?.pendingInvitations,
   ]);
 
+  const handleInviteCollabs = () => {
+    if (!companyId) return;
+    openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
+  };
+
   useEffect(() => {
     setFetchCollaboratorsLoading(true);
     Api.getCompanyByIdWithUsersAndPendingInvitations(companyId)
@@ -61,13 +71,31 @@ export const DashboardCompanyCollaboratorsList = ({
       });
   }, [companyId, dispatch]);
 
-  // If there are no collaborators or pending invitations, we hide the card
+  // If there are no collaborators or pending invitations, we show a placeholder
   if (
     !fetchCollaboratorsLoading &&
     companyWithCollaborators?.users.length === 0 &&
     companyWithCollaborators?.pendingInvitations.length === 0
   ) {
-    return null;
+    return (
+      <Card title="Vous souhaitez engager vos collaborateurs ?" centerTitle>
+        <StyledEmptyContainer>
+          <StyledIlluContainer>
+            <IlluReseau width={60} height={60} />
+          </StyledIlluContainer>
+          <Text>
+            Vous n&apos;avez pas encore de collaborateurs rattachés à votre
+            entreprise. Invitez les à devenir coach !
+          </Text>
+        </StyledEmptyContainer>
+
+        <StyledCtaContainer>
+          <Button variant="primary" onClick={handleInviteCollabs} rounded>
+            Inviter mes collaborateurs
+          </Button>
+        </StyledCtaContainer>
+      </Card>
+    );
   }
 
   return (
