@@ -7,8 +7,6 @@ import { Accordion } from '../../../utils/Accordion/Accordion';
 import { AccordionGroup } from '../../../utils/Accordion/AccordionGroup';
 import {
   StyledEntrepriseFAQContainer,
-  StyledFAQContainer,
-  StyledFirstColumn,
   StyledTitleContainer,
 } from './EntreprisesFAQ.styles';
 
@@ -307,25 +305,22 @@ export const EntreprisesFAQ = ({ context }: EntreprisesFAQProps) => {
   return (
     <Section>
       <StyledEntrepriseFAQContainer>
-        <StyledFirstColumn>
-          <StyledTitleContainer>
-            <IlluBulleQuestionCheck width={80} height={80} />
-            <H3 title="On répond à vos questions" />
-          </StyledTitleContainer>
-        </StyledFirstColumn>
-        <StyledFAQContainer>
-          <AccordionGroup>
-            {contentByContext[context].map((item, idx) => (
-              <Accordion
-                title={item.question}
-                key={item.question}
-                defaultOpen={idx === 0}
-              >
-                {item.answer}
-              </Accordion>
-            ))}
-          </AccordionGroup>
-        </StyledFAQContainer>
+        <StyledTitleContainer>
+          <IlluBulleQuestionCheck width={80} height={80} />
+          <H3 title="On répond à vos questions" />
+        </StyledTitleContainer>
+
+        <AccordionGroup>
+          {contentByContext[context].map((item, idx) => (
+            <Accordion
+              title={item.question}
+              key={item.question}
+              defaultOpen={idx === 0}
+            >
+              {item.answer}
+            </Accordion>
+          ))}
+        </AccordionGroup>
       </StyledEntrepriseFAQContainer>
     </Section>
   );

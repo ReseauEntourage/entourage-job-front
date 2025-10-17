@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { EntreprisesActions } from '@/src/components/partials/pages/Entreprises/EntreprisesActions/EntreprisesActions';
 import { EntreprisesFAQ } from '@/src/components/partials/pages/Entreprises/EntreprisesFAQ/EntreprisesFAQ';
 import { EntreprisesTuto } from '@/src/components/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/components/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
@@ -138,6 +139,8 @@ const RecruterInclusif = () => {
         </Text>
       </SimpleImageText>
 
+      <EntreprisesActions />
+
       <EntreprisesVideo />
 
       <SimpleImageText
@@ -216,7 +219,7 @@ const RecruterInclusif = () => {
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_TBS_FORMATS_CLIC);
           }}
-          href=""
+          href={process.env.NEXT_PUBLIC_ENTOURAGE_PRO_TEAM_BUILDING}
           dataTestId="button-company-first-section"
           variant="secondary"
           rounded
