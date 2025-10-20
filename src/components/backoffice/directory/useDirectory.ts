@@ -5,6 +5,7 @@ import {
   companyActions,
   fetchCompaniesSelectors,
   selectCompanies,
+  selectCompaniesHasFetchedAll,
 } from '@/src/use-cases/company';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { usePrevious } from 'src/hooks/utils';
@@ -13,6 +14,7 @@ import {
   fetchProfilesSelectors,
   profilesActions,
   selectProfiles,
+  selectProfilesHasFetchedAll,
 } from 'src/use-cases/profiles';
 import { useDirectoryQueryParams } from './useDirectoryQueryParams';
 
@@ -97,10 +99,21 @@ export function useDirectory() {
     };
   }, [dispatch]);
 
+  // Get state to check if all items have been fetched
+  const profilesHasFetchedAll = useSelector(selectProfilesHasFetchedAll);
+  const companiesHasFetchedAll = useSelector(selectCompaniesHasFetchedAll);
+
   // Manage offset and profiles request when scrolling to the bottom of the page
   useIsAtBottom(() => {
-    dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
-    dispatch(companyActions.fetchCompaniesNextPage(directoryFiltersParams));
+    // Only fetch more profiles if there are more to fetch
+    if (!profilesHasFetchedAll) {
+      dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
+    }
+
+    // Only fetch more companies if there are more to fetch
+    if (!companiesHasFetchedAll) {
+      dispatch(companyActions.fetchCompaniesNextPage(directoryFiltersParams));
+    }
   });
 
   return {
