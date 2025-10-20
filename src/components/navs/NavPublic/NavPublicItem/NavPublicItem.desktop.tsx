@@ -5,11 +5,10 @@ import { Dropdown } from '@/src/components/utils';
 import { DropdownToggle } from '@/src/components/utils/Dropdown/DropdownToggle';
 import { gaEvent } from '@/src/lib/gtag';
 import { StyledPublicItem } from '../NavPublic.styles';
-import { StyledPublicItemMenuItem } from './NavPublicItem.styles';
 import { NavPublicItemProps } from './NavPublicItem.types';
 
 export const NavPublicItemDesktop = ({ item }: NavPublicItemProps) => {
-  const { asPath } = useRouter();
+  const { asPath, push } = useRouter();
   const isExactPath = asPath === item.href;
   const isChildPath =
     item.childrens && item.childrens.some((child) => child.href === asPath);
@@ -39,17 +38,17 @@ export const NavPublicItemDesktop = ({ item }: NavPublicItemProps) => {
     return (
       <Dropdown key={item.name}>
         <DropdownToggle>{menuItem}</DropdownToggle>
-        <Dropdown.Menu openDirection="right">
+        <Dropdown.Menu openDirection="right" size="large">
           {item.childrens.map((child) => (
             <Dropdown.Item
               key={child.name}
               onClick={() => {
                 gaEvent(child.tag);
+                push(child.href || '#');
               }}
+              size="small"
             >
-              <StyledPublicItemMenuItem>
-                <Link href={child.href || '#'}>{child.name}</Link>
-              </StyledPublicItemMenuItem>
+              {child.name}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
