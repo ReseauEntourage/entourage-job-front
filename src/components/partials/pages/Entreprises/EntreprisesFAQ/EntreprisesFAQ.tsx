@@ -303,7 +303,7 @@ export const EntreprisesFAQ = ({ context }: EntreprisesFAQProps) => {
     ],
   };
   return (
-    <Section>
+    <Section container="small">
       <StyledEntrepriseFAQContainer>
         <StyledTitleContainer>
           <IlluBulleQuestionCheck width={80} height={80} />
