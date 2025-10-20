@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const StyledPublicItemMenuItem = styled.div`
-  a {
-    color: black;
-  }
-`;
-
 export const StyledNavPublicItemMobileLinkContainer = styled.div<{
   selected: boolean;
 }>`
