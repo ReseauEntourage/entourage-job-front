@@ -144,6 +144,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
               <LucidIcon name="Plus" size={25} />
             </Button>
           }
+          noPadding
         />
 
         <MessagingInputContainer>
