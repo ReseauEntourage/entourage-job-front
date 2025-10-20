@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { COLORS } from 'src/constants/styles';
-import { sizesPx, Text } from './Text';
+import { Text } from './Text';
+import { sizesPx } from './Text.utils';
 
 const meta = {
   title: 'Text',
