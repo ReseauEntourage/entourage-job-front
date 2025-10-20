@@ -46,7 +46,7 @@ export const PartnersWorkingWithUs = ({
 
   return (
     <Partners
-      title="Ils travaillent avec nous"
+      title="Ils travaillent avec Entourage Pro"
       list={list}
       tag={tag}
       displayCta={displayCta}

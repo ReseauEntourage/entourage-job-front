@@ -1,4 +1,5 @@
 import React from 'react';
+import { COLORS } from '@/src/constants/styles';
 import { LucidIcon } from '../Icons/LucidIcon';
 import {
   StyledLi,
@@ -13,7 +14,7 @@ export const CheckListElement = ({
   return (
     <StyledLi>
       <StyledCheckIconContainer>
-        <LucidIcon name="Check" size={15} />
+        <LucidIcon name="Check" size={15} color={COLORS.primaryBlue} />
       </StyledCheckIconContainer>
       {children}
     </StyledLi>

@@ -30,6 +30,7 @@ interface CardProps {
   editButtonText?: string;
   dataTestId?: string;
   editIcon?: React.ReactNode;
+  borderColor?: string;
 }
 
 export const Card = ({
@@ -45,6 +46,7 @@ export const Card = ({
   editButtonText,
   dataTestId,
   editIcon,
+  borderColor,
   centerTitle = false,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
@@ -58,6 +60,7 @@ export const Card = ({
       className={isDesktop ? '' : 'mobile'}
       onClick={onClick}
       data-testid={dataTestId}
+      borderColor={borderColor}
     >
       {title ? (
         <>

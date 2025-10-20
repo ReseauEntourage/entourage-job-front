@@ -7,7 +7,7 @@ export const H3 = ({
   title,
   center = false,
   color,
-  weight = 'bold',
+  weight = 'semibold',
 }: HeadingComponentProps) => {
   const isDesktop = useIsDesktop();
   return (
