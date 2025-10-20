@@ -34,7 +34,7 @@ export const StyledDropdownMenu = styled.div<{
 `;
 
 export const StyledDropdownMenuItem = styled.div<{
-  device: string;
+  device: 'desktop' | 'mobile';
   size?: TextSize;
 }>`
   color: ${COLORS.black};
