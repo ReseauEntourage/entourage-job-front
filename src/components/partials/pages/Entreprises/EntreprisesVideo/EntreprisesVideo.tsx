@@ -10,7 +10,7 @@ export interface EntreprisesVideoProps {
 
 export const EntreprisesVideo = ({ context }: EntreprisesVideoProps) => {
   const videoByContext = {
-    [CompanyGoal.SENSIBILIZE]: 'D3skxi-tC4I',
+    [CompanyGoal.SENSIBILIZE]: 'pDmHDeRxYec',
     [CompanyGoal.RECRUIT]: 'dByylMZ7MNg',
   };
 
