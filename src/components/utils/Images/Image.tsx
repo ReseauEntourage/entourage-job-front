@@ -8,6 +8,7 @@ export interface ImageProps {
   height?: number | `${number}`;
   fill?: boolean;
   objectPosition?: string;
+  cover?: boolean;
 }
 
 export const Image = ({
@@ -17,16 +18,17 @@ export const Image = ({
   height,
   fill = false,
   objectPosition,
+  cover = false,
 }: ImageProps) => {
   return (
     <NextImage
       src={src}
       alt={alt}
-      fill={fill}
+      fill={fill || cover}
       width={width}
       height={height}
       style={{
-        objectFit: 'contain',
+        objectFit: cover ? 'cover' : 'contain',
         objectPosition: objectPosition || 'center',
       }}
     />

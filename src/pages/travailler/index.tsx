@@ -60,7 +60,7 @@ const Travailler = () => {
   return (
     <Layout title="Travailler - Entourage Pro">
       <ImageTitle
-        img="/static/img/candidate-banner-desktop.png"
+        img="/static/img/candidate-banner-desktop.jpg"
         imgMobile="/static/img/candidate-banner-mobile.png"
         title={`Entourage Pro : un tremplin vers l’emploi${
           isDesktop ? ' pour les plus exclus' : ''

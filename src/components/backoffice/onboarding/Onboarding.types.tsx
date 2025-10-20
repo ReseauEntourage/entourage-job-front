@@ -47,6 +47,8 @@ export type OnboardingForms =
   | CoachOnboardingForm
   | CompanyOnboardingForm;
 
+export type OnboardingFormWithCompanyField = typeof formOnboardingCoachJob;
+
 export type OnboardingFormData = ExtractFormSchemaValidation<OnboardingForms>;
 
 export type OnboardingFormDataKeys = UnionKeys<OnboardingFormData>;

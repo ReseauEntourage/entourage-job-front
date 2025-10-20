@@ -1,20 +1,22 @@
 import styled from 'styled-components';
 
+const BACKGROUND_IMAGE_HEIGHT = 240;
+
 export const StyledBackground = styled.section`
   &.top-banner {
     .banner-container {
-      max-height: 300px;
-      height: 300px;
+      max-height: ${BACKGROUND_IMAGE_HEIGHT}px;
+      height: ${BACKGROUND_IMAGE_HEIGHT}px;
       .banner {
-        height: 300px;
-        max-height: 300px;
+        height: ${BACKGROUND_IMAGE_HEIGHT}px;
+        max-height: ${BACKGROUND_IMAGE_HEIGHT}px;
       }
       &.hasCta {
-        max-height: 360px;
-        height: 360px;
+        max-height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
+        height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
         .banner {
-          height: 360px;
-          max-height: 360px;
+          height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
+          max-height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
         }
       }
     }
@@ -22,8 +24,8 @@ export const StyledBackground = styled.section`
   .banner-container {
     width: 100%;
     position: relative;
-    max-height: 360px;
-    height: 360px;
+    max-height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
+    height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
     overflow: hidden;
     .banner {
       position: absolute;
@@ -32,8 +34,8 @@ export const StyledBackground = styled.section`
       left: 0;
       right: 0;
       bottom: 0;
-      height: 360px;
-      max-height: 360px;
+      height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
+      max-height: ${BACKGROUND_IMAGE_HEIGHT + 60}px;
       overflow: hidden;
       width: 100vw;
       display: block;

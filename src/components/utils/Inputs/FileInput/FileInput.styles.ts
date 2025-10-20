@@ -26,10 +26,9 @@ export const StyledFileInputGroupForm = styled.div`
   }
 `;
 
-export const StyledFileInputWrapper = styled.div`
+export const StyledFileInputWrapper = styled.div<{ noPadding: boolean }>`
   position: relative;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  padding: ${({ noPadding }) => (noPadding ? '0' : '10px 0 20px')};
 `;
 
 export const StyledHiddenInput = styled.input`

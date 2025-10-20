@@ -17,7 +17,11 @@ import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledInsight, StyledInsightsContainer } from './Impact.styles';
+import {
+  StyledImpactContainer,
+  StyledInsight,
+  StyledInsightsContainer,
+} from './Impact.styles';
 
 export type DisplayAs = 'Coach' | 'Candidat' | 'Referer' | 'Company';
 
@@ -132,22 +136,19 @@ const contentAs: { [K in DisplayAs]: Content } = {
     ),
     insights: [
       {
-        value: '2500',
-        description: 'candidat(e)s accompagné(e)s depuis le lancement',
+        value: '81%',
+        description: 'des personnes disent se sentir mieux',
+        illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
       {
-        value: '72%',
-        description:
-          'des candidat(e)s parvenus au bout du parcours ont retrouvé un travail',
+        value: '500',
+        description: 'entreprises partenaires',
+        illu: <IlluMalette {...illuSizes} />,
       },
       {
-        value: '130',
-        description: 'entreprises ont recruté',
-      },
-      {
-        value: '93%',
-        description:
-          'des candidat(e)s ont repris confiance en eux et en leurs capacités',
+        value: '19 000',
+        description: 'personnes sensibilisées',
+        illu: <IlluCoeurSurLaMain {...illuSizes} />,
       },
     ],
   },
@@ -166,38 +167,41 @@ export const Impact = ({
   return (
     <Section style={!invertBgColor ? 'hover-blue' : undefined}>
       <H3 title={contentAs[as].title} center />
-      <StyledInsightsContainer
-        withIllu={withIllu}
-        invertBgColor={invertBgColor}
-      >
-        {contentAs[as].insights.map((insight, index) => (
-          <StyledInsight key={index}>
-            {insight.illu}
-            <Text color="primaryBlue" size={40} weight="bold" center>
-              {insight.value}
-            </Text>
-            <Text color="darkGray" center>
-              {insight.description}
-            </Text>
-          </StyledInsight>
-        ))}
-      </StyledInsightsContainer>
-      {inviteToShowMore && (
-        <StyledCenteredButtonContainer>
-          <Button
-            variant="primary"
-            rounded
-            href={process.env.NEXT_PUBLIC_URL_MESURE_D_IMPACT}
-            isExternal
-            newTab
-            onClick={() => {
-              if (gaEventTag) gaEvent(gaEventTag);
-            }}
-          >
-            Télécharger la mesure d&lsquo;impact
-          </Button>
-        </StyledCenteredButtonContainer>
-      )}
+      <StyledImpactContainer>
+        <StyledInsightsContainer
+          withIllu={withIllu}
+          invertBgColor={invertBgColor}
+          nbColumns={contentAs[as].insights.length}
+        >
+          {contentAs[as].insights.map((insight, index) => (
+            <StyledInsight key={index}>
+              {insight.illu}
+              <Text color="primaryBlue" size={40} weight="bold" center>
+                {insight.value}
+              </Text>
+              <Text color="darkGray" center>
+                {insight.description}
+              </Text>
+            </StyledInsight>
+          ))}
+        </StyledInsightsContainer>
+        {inviteToShowMore && (
+          <StyledCenteredButtonContainer>
+            <Button
+              variant="primary"
+              rounded
+              href={process.env.NEXT_PUBLIC_URL_MESURE_D_IMPACT}
+              isExternal
+              newTab
+              onClick={() => {
+                if (gaEventTag) gaEvent(gaEventTag);
+              }}
+            >
+              Télécharger la mesure d&lsquo;impact
+            </Button>
+          </StyledCenteredButtonContainer>
+        )}
+      </StyledImpactContainer>
     </Section>
   );
 };

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { StyledCardCommon } from '../Cards.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledCard = styled(StyledCardCommon)`
+export const StyledCard = styled(StyledCardCommon)<{ borderColor?: string }>`
   border-radius: 20px;
-  border: 1px solid ${COLORS.lightGray};
+  border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};};
 
   &.mobile {
     width: 100%;
