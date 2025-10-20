@@ -18,6 +18,7 @@ export interface FileInputProps
   fileType?: FileType;
   noPreview?: boolean;
   activator?: React.ReactNode;
+  noPadding?: boolean;
 }
 
 export function FileInput({
@@ -37,6 +38,7 @@ export function FileInput({
   fileType,
   noPreview = false,
   activator,
+  noPadding = false,
 }: FileInputProps) {
   const [fileName, setFileName] = useState<string | null>(null);
 
@@ -72,7 +74,7 @@ export function FileInput({
           {title}
         </StyledInputLabel>
       )}
-      <StyledFileInputWrapper>
+      <StyledFileInputWrapper noPadding={noPadding}>
         {activator || defaultActivator}
         {!noPreview && value && (
           <>
