@@ -22,12 +22,7 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
       <Section className="custom-page">
         <Grid column gap="medium">
           <Grid between eachWidths={['expand@m', 'auto@m']}>
-            <BackLink
-              url={`/backoffice/admin/membres?role=${user.role}${
-                user.zone ? `&zone=${user.zone}` : ''
-              }`}
-              label="Retour à la liste"
-            />
+            <BackLink label="Retour" />
           </Grid>
           <MemberDetailsHeader user={user} />
           <ul className="uk-subnav">

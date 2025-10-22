@@ -77,12 +77,7 @@ export const PageCVContent = ({
 
   return (
     <StyledCVPageContent>
-      {!isPreview && (
-        <BackLink
-          url="/candidats?employed=false"
-          label="Retour à la page candidats"
-        />
-      )}
+      {!isPreview && <BackLink label="Retour" />}
       <StyledCVPageContentHeader>
         <StyledCVProfilePictureContainer className={!isDesktop ? 'mobile' : ''}>
           <StyledCVProfilePicture

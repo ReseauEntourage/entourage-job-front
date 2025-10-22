@@ -7,24 +7,13 @@ type Url = string | UrlObject;
 
 export interface EntityCardProps {
   href: Url;
-  newTab: boolean;
   onClick: () => void;
   children: React.ReactNode;
 }
 
-export const EntityCard = ({
-  href,
-  newTab,
-  onClick,
-  children,
-}: EntityCardProps) => {
+export const EntityCard = ({ href, onClick, children }: EntityCardProps) => {
   return (
-    <Link
-      href={href}
-      passHref
-      onClick={onClick}
-      target={newTab ? '_blank' : undefined}
-    >
+    <Link href={href} passHref onClick={onClick}>
       <StyledEntityCard>{children}</StyledEntityCard>
     </Link>
   );

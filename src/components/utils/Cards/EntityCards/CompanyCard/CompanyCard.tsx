@@ -67,7 +67,6 @@ export const CompanyCard = ({
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
       }}
-      newTab
     >
       <StyledCompanyCardContentContainer>
         <StyledCompanyMainInfosContainer>
