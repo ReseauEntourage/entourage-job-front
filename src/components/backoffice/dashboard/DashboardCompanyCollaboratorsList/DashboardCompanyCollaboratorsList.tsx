@@ -30,9 +30,11 @@ export const DashboardCompanyCollaboratorsList = ({
     React.useState(true);
 
   const items = useMemo(() => {
-    const itemsFromUsers = companyWithCollaborators?.users.map((user) => ({
-      user,
-    }));
+    const itemsFromUsers = companyWithCollaborators?.users
+      .filter((user) => !user.companyUser.isAdmin)
+      .map((user) => ({
+        user,
+      }));
     const itemsFromInvitations =
       companyWithCollaborators?.pendingInvitations.map((invitation) => ({
         email: invitation.email,
@@ -72,11 +74,7 @@ export const DashboardCompanyCollaboratorsList = ({
   }, [companyId, dispatch]);
 
   // If there are no collaborators or pending invitations, we show a placeholder
-  if (
-    !fetchCollaboratorsLoading &&
-    companyWithCollaborators?.users.length === 0 &&
-    companyWithCollaborators?.pendingInvitations.length === 0
-  ) {
+  if (!fetchCollaboratorsLoading && items.length === 0) {
     return (
       <Card title="Vous souhaitez engager vos collaborateurs ?" centerTitle>
         <StyledEmptyContainer>
