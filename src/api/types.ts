@@ -641,11 +641,12 @@ export type RecruitementAlertDto = {
   skills?: FilterConstant<string>[];
 };
 
-export type UserWithConversations = User & {
+export type UserWithCompanyAndConversations = User & {
   conversations: Conversation[];
+  companyUser: CompanyUser;
 };
 
 export type CompanyWithUsers = Company & {
-  users: UserWithConversations[];
+  users: UserWithCompanyAndConversations[];
   pendingInvitations: Invitation[];
 };
