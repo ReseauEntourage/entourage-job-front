@@ -60,11 +60,7 @@ export const HeaderCompany = ({
   return (
     <StyledHeaderCompany>
       <Section className="custom-page">
-        <BackLink
-          url="/backoffice/dashboard"
-          label="Retour à mon tableau de bord"
-        />
-
+        <BackLink label="Retour" />
         <StyledHeaderCompanyContent>
           <StyledHeaderCompanyPictureContainer>
             <StyledHeaderCompanyPicture size={COMPANY_PICTURE_SIZE}>
