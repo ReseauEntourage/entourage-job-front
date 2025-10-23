@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { CompanyCollaboratorsList } from '@/src/components/backoffice/companies/CompanyCollaboratorsTable/CompanyCollaboratorsTable';
+import { CompanyCollaboratorsList } from '@/src/components/backoffice/companies/CompanyCollaboratorsList/CompanyCollaboratorsList';
 import { useSelectedCompany } from '@/src/hooks/useSelectedCompany';
 import { companyActions } from '@/src/use-cases/company';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
