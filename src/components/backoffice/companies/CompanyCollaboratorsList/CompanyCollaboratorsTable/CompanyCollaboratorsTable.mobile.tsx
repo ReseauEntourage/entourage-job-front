@@ -64,10 +64,8 @@ export const CompanyCollaboratorsTableMobile = ({
                 Invitation envoyée
               </Text>
               <Text size="large">
-                {item.invitedAt} -
-                {item.accountCreated === '-'
-                  ? 'En attente de création'
-                  : 'Compte créé'}
+                {item.invitedAt}
+                {item.accountCreated === '-' && '- En attente de création'}
               </Text>
             </StyledMobileCollaboratorItemField>
           )}
