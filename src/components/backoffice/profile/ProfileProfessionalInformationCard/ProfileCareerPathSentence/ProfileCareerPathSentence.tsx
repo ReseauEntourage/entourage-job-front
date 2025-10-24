@@ -84,7 +84,7 @@ export const ProfileCareerPathSentence = ({
           <StyledCareerPathSectorOccupationTagContainer>
             <Text>J&apos;ai du réseau dans : </Text>
             {sectorOccupations.map((sectorOccupation) => (
-              <span key={sectorOccupation.businessSector?.name}>
+              <span key={sectorOccupation.id}>
                 {asSimpleSentence ? (
                   <span>{sectorOccupation.businessSector?.name}</span>
                 ) : (
