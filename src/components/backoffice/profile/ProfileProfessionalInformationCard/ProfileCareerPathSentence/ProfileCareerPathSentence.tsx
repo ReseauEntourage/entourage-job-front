@@ -54,6 +54,13 @@ export const ProfileCareerPathSentence = ({
     sectorOccupations[1].businessSector?.name ===
       sectorOccupations[0].businessSector?.name &&
     sectorOccupations[1].occupation;
+  const linkToCompany = company?.admin ? (
+    <Link href={`/backoffice/companies/${company.id}`}>
+      <StyledCompanyName withLink>{company.name}</StyledCompanyName>
+    </Link>
+  ) : (
+    <StyledCompanyName>{company?.name}</StyledCompanyName>
+  );
 
   if (role === UserRoles.COACH) {
     return (
@@ -67,15 +74,7 @@ export const ProfileCareerPathSentence = ({
                 comme <strong>{currentJob}</strong>
               </>
             )}
-            {company && (
-              <>
-                {' '}
-                chez{' '}
-                <Link href={`/backoffice/companies/${company.id}`}>
-                  <StyledCompanyName>{company.name}</StyledCompanyName>
-                </Link>
-              </>
-            )}
+            {company && <> chez {linkToCompany}</>}
           </Text>
         ) : (
           <></>
@@ -84,17 +83,14 @@ export const ProfileCareerPathSentence = ({
         {sectorOccupations.length > 0 && (
           <StyledCareerPathSectorOccupationTagContainer>
             <Text>J&apos;ai du réseau dans : </Text>
-            {sectorOccupations.map((sectorOccupation, index) => (
-              <>
+            {sectorOccupations.map((sectorOccupation) => (
+              <span key={sectorOccupation.businessSector?.name}>
                 {asSimpleSentence ? (
                   <span>{sectorOccupation.businessSector?.name}</span>
                 ) : (
-                  <Tag
-                    content={sectorOccupation.businessSector?.name}
-                    key={index}
-                  />
+                  <Tag content={sectorOccupation.businessSector?.name} />
                 )}
-              </>
+              </span>
             ))}
           </StyledCareerPathSectorOccupationTagContainer>
         )}
