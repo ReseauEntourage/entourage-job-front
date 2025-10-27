@@ -54,7 +54,7 @@ export function CompanyInviteCollaboratorsModal({
         </Text>
         <Text>
           La mission de coach consiste à donner des coups de pouce à des
-          candidat(e)s afin qu’ils aient toutes les cartes en main pour
+          candidat(e)s afin qu&apos;ils aient toutes les cartes en main pour
           appréhender le monde professionnel et y trouver leur place. (Aider à
           définir un projet professionnel, relire un CV, passer entretien
           d’embauche). <br />
@@ -75,14 +75,25 @@ export function CompanyInviteCollaboratorsModal({
       </StyledModalSection>
       <StyledModalSection>
         <Text weight="bold" size="large">
-          Comment ca se passe ?
+          Comment ça se passe ?
         </Text>
         <StyledPreambleStepContainer>
           <StyledPreambleStep>
             <IlluOrdiCV width={60} height={60} />
             <Text>
               Vos collaborateurs recevront un email les invitant à rejoindre
-              Entourage Pro et se créer un compte. Voir
+              Entourage Pro et se créer un compte.{' '}
+              {process.env.NEXT_PUBLIC_URL_PREVIEW_COMPANY_INVITE_EMAIL && (
+                <Link
+                  href={
+                    process.env.NEXT_PUBLIC_URL_PREVIEW_COMPANY_INVITE_EMAIL
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Voir un aperçu
+                </Link>
+              )}
             </Text>
           </StyledPreambleStep>
           <StyledPreambleStep>
