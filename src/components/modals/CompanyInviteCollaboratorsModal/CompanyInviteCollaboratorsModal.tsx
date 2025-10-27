@@ -56,7 +56,7 @@ export function CompanyInviteCollaboratorsModal({
           La mission de coach consiste à donner des coups de pouce à des
           candidat(e)s afin qu&apos;ils aient toutes les cartes en main pour
           appréhender le monde professionnel et y trouver leur place. (Aider à
-          définir un projet professionnel, relire un CV, passer entretien
+          définir un projet professionnel, relire un CV, passer un entretien
           d’embauche). <br />
           C’est un format d’engagement souple, qui permet de s’engager selon ses
           disponibilités.
