@@ -45,10 +45,7 @@ const User = () => {
       <LayoutBackOffice title="Chargement - Gestion des membres">
         <Section>
           <Grid column gap="large">
-            <BackLink
-              url="/backoffice/admin/membres"
-              label="Retour à la liste"
-            />
+            <BackLink label="Retour" />
             <div>
               <div data-uk-spinner="" />
               <hr className="ent-divier-backoffice" />
@@ -64,10 +61,7 @@ const User = () => {
       <LayoutBackOffice title="Page introuvable - Gestion des membres">
         <Section className="uk-text-center" size="large">
           <Grid column gap="large">
-            <BackLink
-              url="/backoffice/admin/membres"
-              label="Retour à la liste"
-            />
+            <BackLink label="Retour" />
             <div>
               <hr className="ent-divier-backoffice" />
               <h3 className="uk-text-bold">Ce profil n’est pas disponible</h3>
