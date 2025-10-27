@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { LINE_HEIGHT_MULTIPLIER } from '../Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
 import { ButtonProps } from './ButtonProps';
 
@@ -58,7 +59,10 @@ export const StyledButton = styled.button<ButtonProps>`
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     text-align: center;
-    line-height: 17px;
+    line-height: ${({ size }) =>
+      size === 'large'
+        ? 14 * LINE_HEIGHT_MULTIPLIER
+        : 12 * LINE_HEIGHT_MULTIPLIER}px;
 
     border: ${(props: ButtonProps) => {
         return buttonStyles.border[props.variant || 'default'] || COLORS.white;
@@ -91,6 +95,9 @@ export const StyledButton = styled.button<ButtonProps>`
     padding: ${(props: ButtonProps) => {
       if (props.rounded === 'circle') {
         return `6px`;
+      }
+      if (props.variant === 'text') {
+        return `0px`;
       }
       return props.size === 'large' ? `11px 20px` : `6px 10px`;
     }}!important;

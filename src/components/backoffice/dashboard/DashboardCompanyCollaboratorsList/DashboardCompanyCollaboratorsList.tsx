@@ -83,10 +83,27 @@ export const DashboardCompanyCollaboratorsList = ({
           <StyledIlluContainer>
             <IlluReseau width={60} height={60} />
           </StyledIlluContainer>
-          <Text>
-            Vous n&apos;avez pas encore de collaborateurs rattachés à votre
-            entreprise. Invitez les à devenir coach !
-          </Text>
+          <div>
+            <Text weight="bold">
+              Invitez vos collaborateurs à devenir coachs bénévoles
+            </Text>
+            <Text>
+              La mission de coach consiste à donner des coups de pouces à des
+              personnes isolées en recherche d&apos;emploi pour qu&apos;elles
+              aient toutes les cartes en main pour appréhender le monde
+              professionnel et y trouver leur place. Un format d’engagement
+              souple, qui permet de s’engager selon ses disponibilités.
+            </Text>
+            <Button
+              variant="text"
+              onClick={() => {
+                handleInviteCollabs();
+              }}
+              color="primaryBlue"
+            >
+              En savoir plus
+            </Button>
+          </div>
         </StyledEmptyContainer>
 
         <StyledCtaContainer>
