@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Api } from '@/src/api';
@@ -93,16 +92,17 @@ export const DashboardCompanyCollaboratorsList = ({
               personnes isolées en recherche d&apos;emploi pour qu&apos;elles
               aient toutes les cartes en main pour appréhender le monde
               professionnel et y trouver leur place. Un format d’engagement
-              souple, qui permet de s’engager selon ses disponibilités.{' '}
-              <Link
-                href="#"
-                onClick={() => {
-                  handleInviteCollabs();
-                }}
-              >
-                En savoir plus
-              </Link>
+              souple, qui permet de s’engager selon ses disponibilités.
             </Text>
+            <Button
+              variant="text"
+              onClick={() => {
+                handleInviteCollabs();
+              }}
+              color="primaryBlue"
+            >
+              En savoir plus
+            </Button>
           </div>
         </StyledEmptyContainer>
 

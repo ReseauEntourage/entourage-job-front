@@ -16,3 +16,5 @@ export const sizesPx = {
     xxlarge: 18,
   },
 };
+
+export const LINE_HEIGHT_MULTIPLIER = 1.5;
