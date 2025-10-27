@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { DefaultValues } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -59,6 +60,17 @@ export function CompanyInviteCollaboratorsModal({
           d’embauche). <br />
           C’est un format d’engagement souple, qui permet de s’engager selon ses
           disponibilités.
+        </Text>
+        <Text>
+          {process.env.NEXT_PUBLIC_URL_COACH_COMPANY_KIT && (
+            <Link
+              href={process.env.NEXT_PUBLIC_URL_COACH_COMPANY_KIT}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Télécharger le kit de com
+            </Link>
+          )}
         </Text>
       </StyledModalSection>
       <StyledModalSection>
