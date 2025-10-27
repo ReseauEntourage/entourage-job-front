@@ -31,4 +31,5 @@ export const StyledIlluContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 60px;
+  flex-shrink: 0;
 `;
