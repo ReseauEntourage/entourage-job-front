@@ -93,10 +93,7 @@ export const HeaderProfileDesktop = ({
   return (
     <StyledHeaderProfile>
       <Section className="custom-page">
-        <BackLink
-          url="/backoffice/dashboard"
-          label="Retour à mon tableau de bord"
-        />
+        <BackLink label="Retour" />
         <StyledHeaderProfileContent>
           <StyledHeaderProfilePictureContainer>
             <StyledHeaderProfilePicture size={PROFILE_PICTURE_SIZE}>
