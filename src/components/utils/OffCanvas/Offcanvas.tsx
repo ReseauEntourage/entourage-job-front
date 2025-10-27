@@ -12,6 +12,7 @@ import { StyledOffCanvas } from './OffCanvas.styles';
 
 export interface OffcanvasRef {
   open: () => void;
+  close: () => void;
 }
 
 interface OffcanvasProps {
@@ -35,6 +36,7 @@ export const Offcanvas = forwardRef<OffcanvasRef, OffcanvasProps>(
 
     useImperativeHandle(ref, () => ({
       open: openOffCanvas,
+      close: closeOffCanvas,
     }));
 
     useEffect(() => {

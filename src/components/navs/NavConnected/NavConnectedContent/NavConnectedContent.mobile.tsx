@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
   Offcanvas,
@@ -10,14 +10,8 @@ import {
   StyledMessagingIconContainer,
   StyledNavContainerMobile,
 } from 'src/components/headers/Header.styles';
-import {
-  ButtonIcon,
-  Navbar,
-  NavbarLogo,
-  SimpleLink,
-} from 'src/components/utils';
+import { ButtonIcon, Navbar, NavbarLogo } from 'src/components/utils';
 import { Hamburger } from 'src/components/utils/Hamburger';
-import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -44,6 +38,12 @@ export const NavConnectedContentMobile = ({
 
   const { push, asPath } = useRouter();
   const logoLink = links[user?.role][0];
+
+  const closeOffCanvas = useCallback(() => {
+    if (offcanvasRef.current) {
+      offcanvasRef.current.close();
+    }
+  }, []);
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -81,12 +81,6 @@ export const NavConnectedContentMobile = ({
       />
       <Offcanvas ref={offcanvasRef} position="right">
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
-          <li>
-            <SimpleLink href="/">
-              <LucidIcon name="House" />
-              &nbsp; Accueil
-            </SimpleLink>
-          </li>
           {links[user.role]
             .filter(({ href }) => {
               return href !== '#';
@@ -116,6 +110,7 @@ export const NavConnectedContentMobile = ({
                         if (href) {
                           push(href + (queryParams || ''));
                         }
+                        closeOffCanvas();
                       }}
                     >
                       <span>
@@ -154,6 +149,7 @@ export const NavConnectedContentMobile = ({
                 if (messaging.onClick) {
                   messaging.onClick();
                 }
+                closeOffCanvas();
               }}
             >
               <span>
@@ -176,6 +172,7 @@ export const NavConnectedContentMobile = ({
                     if (onClick) {
                       onClick();
                     }
+                    closeOffCanvas();
                   }}
                 >
                   <span>

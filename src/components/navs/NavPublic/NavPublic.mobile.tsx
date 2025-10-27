@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { StyledNavContainerMobile } from '@/src/components/headers/Header.styles';
 import { Hamburger } from '@/src/components/utils/Hamburger';
 import {
@@ -21,6 +21,12 @@ export const NavPublicMobile = () => {
   const offcanvasRef = useRef<OffcanvasRef>(null);
 
   const { push } = useRouter();
+
+  const closeOffcanvas = useCallback(() => {
+    if (offcanvasRef.current) {
+      offcanvasRef.current.close();
+    }
+  }, []);
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -53,6 +59,7 @@ export const NavPublicMobile = () => {
               style={{ color: 'white' }}
               onClick={() => {
                 push('/');
+                closeOffcanvas();
               }}
             >
               <div className="uk-flex">Accueil</div>
@@ -60,7 +67,15 @@ export const NavPublicMobile = () => {
           </li>
           {[
             items.map((item) => {
-              return <NavPublicItem item={item} key={item.name} />;
+              return (
+                <NavPublicItem
+                  item={item}
+                  key={item.name}
+                  onClick={() => {
+                    closeOffcanvas();
+                  }}
+                />
+              );
             }),
           ]}
           <li className="uk-margin-small-top uk-flex uk-flex-center">
@@ -70,6 +85,7 @@ export const NavPublicMobile = () => {
               rounded
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
+                closeOffcanvas();
               }}
               size="small"
             >
@@ -84,6 +100,7 @@ export const NavPublicMobile = () => {
               size="small"
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
+                closeOffcanvas();
               }}
             >
               Inscription
@@ -97,6 +114,7 @@ export const NavPublicMobile = () => {
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_DON_CLIC);
                 fbEvent(FB_TAGS.DONATION);
+                closeOffcanvas();
               }}
               variant="default"
             >
