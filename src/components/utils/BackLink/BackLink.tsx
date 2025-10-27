@@ -12,7 +12,7 @@ export function BackLink({ label }: BackLinkProps) {
   const router = useRouter();
 
   return (
-    <StyledBackLink>
+    <StyledBackLink aria-label={label}>
       <LucidIcon name="ChevronLeft" size={22} color={COLORS.darkGray} />
       <Text onClick={() => router.back()} color="darkGray">
         {label}
