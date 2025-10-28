@@ -44,7 +44,7 @@ export const ImgCompanyProfile = ({
       size={size}
       highlight={highlight}
       alt={`Logo de ${company.name}`}
-      cover={false}
+      cover
       bgColor={COLORS.white}
     />
   );
