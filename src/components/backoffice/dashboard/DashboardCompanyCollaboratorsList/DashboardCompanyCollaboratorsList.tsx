@@ -134,7 +134,13 @@ export const DashboardCompanyCollaboratorsList = ({
           )}
         </StyledCollaboratorSmallCardContainer>
         <StyledCtaContainer>
-          <Button href={`/backoffice/companies/${companyId}/collaborators`}>
+          <Button variant="secondary" onClick={() => handleInviteCollabs()}>
+            Inviter des collaborateurs
+          </Button>
+          <Button
+            variant="secondary"
+            href={`/backoffice/companies/${companyId}/collaborators`}
+          >
             Voir tous les collaborateurs
           </Button>
         </StyledCtaContainer>
