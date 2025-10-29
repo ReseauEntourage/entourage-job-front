@@ -23,8 +23,12 @@ export const CompanyRecruitementAlertCard = () => {
   const isLoading = useSelector(selectFetchRecruitementAlertsLoading);
 
   useEffect(() => {
-    dispatch(fetchRecruitementAlertsAction());
-  }, [dispatch]);
+    // On ne charge les alertes que si elles ne sont pas déjà présentes dans le store
+    // Elles sont refresh automatiquement après chaque création/suppression
+    if (recruitementAlerts.length === 0) {
+      dispatch(fetchRecruitementAlertsAction());
+    }
+  }, [dispatch, recruitementAlerts.length]);
 
   const handleOpenModal = () => {
     openModal(<CompanyRecruitementAlertModal />);

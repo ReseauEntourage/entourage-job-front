@@ -14,7 +14,13 @@ export const useCompanyRecruitementAlertContent = (
   alert: RecruitementAlert
 ) => {
   const dispatch = useDispatch();
-  const matching = useSelector(selectRecruitementAlertMatchingById(alert.id));
+  const matchingData = useSelector(
+    selectRecruitementAlertMatchingById(alert.id)
+  );
+  const MATCHING_TTL = 10 * 60 * 1000; // 10 minutes
+  const now = Date.now();
+  const isExpired =
+    !matchingData || now - matchingData.timestamp > MATCHING_TTL;
   const isLoadingMatching = useSelector(
     selectFetchRecruitementAlertMatchingLoading
   );
@@ -31,10 +37,10 @@ export const useCompanyRecruitementAlertContent = (
   } = alert;
 
   useEffect(() => {
-    if (id) {
+    if (id && isExpired) {
       dispatch(fetchRecruitementAlertMatchingAction(id));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, isExpired]);
 
   const contractString = useMemo(
     () =>
@@ -102,7 +108,10 @@ export const useCompanyRecruitementAlertContent = (
   ]);
 
   // Memoization of candidates from matching data
-  const candidates = useMemo(() => matching || [], [matching]);
+  const candidates = useMemo(
+    () => matchingData?.profiles || [],
+    [matchingData]
+  );
 
   const handleDelete = useCallback(() => {
     dispatch(deleteRecruitementAlertAction(id));
