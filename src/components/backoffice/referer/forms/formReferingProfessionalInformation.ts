@@ -41,8 +41,8 @@ export const formReferingProfessionalInformation: FormSchema<{
       component: 'fieldgroup',
       fields: [
         {
-          id: 'businessSectorId0',
-          name: 'businessSectorId0',
+          id: 'businessSectorId1',
+          name: 'businessSectorId1',
           component: 'select-async',
           isRequired: false,
           loadOptions: loadBusinessSectorsOptions,
