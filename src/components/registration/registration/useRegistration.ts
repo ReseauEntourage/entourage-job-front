@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GA_TAGS_FACTORY } from '@/src/constants/tags';
 import { gaEvent } from '@/src/lib/gtag';
 import { RegistrationFlow } from '../flows/flows.types';
-import { CREATE_NEW_COMPANY_VALUE } from '../forms/formRegistrationCompanySelection';
 import { CREATE_NEW_ORGANIZATION_VALUE } from '../forms/formRegistrationRefererAccount';
 import {
   REGISTRATION_CONFIRMATION_STEP,
@@ -12,12 +11,11 @@ import {
   RegistrationExcludedFieldsKeys,
 } from '../registration.config';
 import {
-  RegistrationFlowFormWithCompanyField,
   RegistrationFlowFormWithOrganizationField,
   RegistrationFormData,
 } from '../registration.types';
 import { Api } from 'src/api';
-import { CompanyDto, OrganizationDto } from 'src/api/types';
+import { OrganizationDto } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { ReduxRequestEvents } from 'src/constants';
 import { DEPARTMENTS } from 'src/constants/departements';
@@ -44,8 +42,8 @@ export function useRegistration() {
   // Retrieve optionnal query parameters from the URL "companyId"
   const router = useRouter();
   const { query } = router;
-  const defaultCompanyId = query.companyId
-    ? (query.companyId as string)
+  const defaultCompanyName = query.companyName
+    ? (query.companyName as string)
     : undefined;
   const defaultFlow = query.flow ? (query.flow as RegistrationFlow) : undefined;
   const invitationId = query.invitationId
@@ -119,46 +117,6 @@ export function useRegistration() {
     [dispatch]
   );
 
-  const handleCompanyFields = useCallback(
-    async (fields: RegistrationFormData) => {
-      const fieldsWithCompany =
-        fields as ExtractFormSchemaValidation<RegistrationFlowFormWithCompanyField>;
-      const shouldTryToCreateCompany =
-        fieldsWithCompany.companyId.value === CREATE_NEW_COMPANY_VALUE;
-
-      // Create company if needed
-      if (shouldTryToCreateCompany) {
-        let { companyName } = fieldsWithCompany;
-        const companyFields = {
-          name: companyName,
-        } as CompanyDto;
-
-        let newCompanyId: string;
-        try {
-          ({
-            data: { id: newCompanyId, name: companyName },
-          } = await Api.postCompany(companyFields));
-
-          // Update companyId field with the new company id
-          fieldsWithCompany.companyId = {
-            label: companyName as string,
-            value: newCompanyId,
-          };
-        } catch (error) {
-          console.error(error);
-          dispatch(
-            notificationsActions.addNotification({
-              type: 'danger',
-              message:
-                "Une erreur s'est produite lors de la création de l'entreprise",
-            })
-          );
-        }
-      }
-    },
-    [dispatch]
-  );
-
   const handleRegistrationDispatcher = useCallback(
     (fields: RegistrationFormData) => {
       // Compute the flow
@@ -202,11 +160,6 @@ export function useRegistration() {
       // Handle organizationId field
       if (fieldsKeys.includes('organizationId')) {
         await handleOrganizationFields(fields);
-      }
-
-      // Handle companyId field
-      if (fieldsKeys.includes('companyId')) {
-        await handleCompanyFields(fields);
       }
 
       // Compute registration fields to store but exclude non-registration fields
@@ -270,7 +223,6 @@ export function useRegistration() {
       handleRegistrationDispatcher,
       nextIsLastRegistrationStep,
       handleOrganizationFields,
-      handleCompanyFields,
       dispatch,
     ]
   );
@@ -337,12 +289,12 @@ export function useRegistration() {
   useEffect(() => {
     dispatch(
       registrationActions.setStateFromQueryParams({
-        companyId: defaultCompanyId,
+        companyName: defaultCompanyName,
         flow: defaultFlow,
         invitationId,
       })
     );
-  }, [defaultCompanyId, defaultFlow, dispatch, invitationId]);
+  }, [defaultCompanyName, defaultFlow, dispatch, invitationId]);
 
   return {
     isRegistrationLoading,

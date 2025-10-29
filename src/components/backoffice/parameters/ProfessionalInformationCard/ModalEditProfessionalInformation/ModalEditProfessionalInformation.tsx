@@ -1,7 +1,5 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { Api } from '@/src/api';
-import { CREATE_NEW_COMPANY_VALUE } from '@/src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { useUpdateUser } from '@/src/hooks';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
@@ -21,7 +19,7 @@ interface ModalEditProfessionalInformationProps<
   formSchema: S;
   getValuesToSend: (
     fields: ExtractFormSchemaValidation<S>
-  ) => Partial<UserProfile> & { companyId?: string | null };
+  ) => Partial<UserProfile> & { companyName?: string | null };
   user: UserWithUserCandidate;
 }
 
@@ -47,16 +45,8 @@ export const ModalEditProfessionalInformation = <
       formSchema={formSchema}
       onSubmit={async (fields) => {
         const values = getValuesToSend(fields);
-        const { companyId, ...userProfileFields } = values;
-        let newCompanyId = companyId;
-        if (companyId === CREATE_NEW_COMPANY_VALUE) {
-          ({
-            data: { id: newCompanyId },
-          } = await Api.postCompany({
-            name: fields.companyName,
-          }));
-        }
-        updateUserCompany(newCompanyId || null);
+        const { companyName, ...userProfileFields } = values;
+        updateUserCompany(companyName || null);
         updateUserProfile(userProfileFields);
       }}
       noCompulsory
