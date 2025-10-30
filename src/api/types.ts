@@ -597,7 +597,7 @@ export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
   nudgeIds: string | string[];
-  departments: DepartmentName | DepartmentName[];
+  departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };
@@ -641,11 +641,12 @@ export type RecruitementAlertDto = {
   skills?: FilterConstant<string>[];
 };
 
-export type UserWithConversations = User & {
+export type UserWithCompanyAndConversations = User & {
   conversations: Conversation[];
+  companyUser: CompanyUser;
 };
 
 export type CompanyWithUsers = Company & {
-  users: UserWithConversations[];
+  users: UserWithCompanyAndConversations[];
   pendingInvitations: Invitation[];
 };
