@@ -134,7 +134,7 @@ export const DashboardCompanyCollaboratorsList = ({
           )}
         </StyledCollaboratorSmallCardContainer>
         <StyledCtaContainer>
-          <Button variant="secondary" onClick={() => handleInviteCollabs()}>
+          <Button variant="secondary" onClick={handleInviteCollabs}>
             Inviter des collaborateurs
           </Button>
           <Button
