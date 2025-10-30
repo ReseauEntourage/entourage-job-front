@@ -200,8 +200,6 @@ export type UserProfile = {
   nudges: Nudge[] | null;
   customNudges: UserProfileNudge[] | null;
   sectorOccupations?: UserProfileSectorOccupation[];
-  lastSendMessage: string | null;
-  lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
   hasAcceptedEthicsCharter: boolean;
