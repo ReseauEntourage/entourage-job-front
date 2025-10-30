@@ -5,7 +5,6 @@ import {
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
-  ExternalMessageContactType,
   HeardAboutValue,
   WorkingExperience,
 } from 'src/constants';
@@ -456,34 +455,6 @@ export type Media = {
   size: number;
   userId: string;
   signedUrl: string;
-};
-
-export type ExternalMessage = {
-  UserId: string;
-
-  senderFirstName: string;
-
-  senderLastName: string;
-
-  senderEmail: string;
-
-  senderPhone: string;
-
-  subject: string;
-
-  message: string;
-
-  type: ExternalMessageContactType;
-};
-
-export type InternalMessage = {
-  addresseeUserId: string;
-  subject: string;
-  message: string;
-  // answered by the DB
-  senderUserId?: string;
-  createdAt?: string;
-  id?: string;
 };
 
 export type Message = {
