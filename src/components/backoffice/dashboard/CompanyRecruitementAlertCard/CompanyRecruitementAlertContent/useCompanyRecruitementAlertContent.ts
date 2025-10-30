@@ -10,6 +10,8 @@ import {
   updateRecruitementAlertAction,
 } from 'src/use-cases/recruitement-alerts';
 
+const MATCHING_TTL = 10 * 60 * 1000; // 10 minutes
+
 export const useCompanyRecruitementAlertContent = (
   alert: RecruitementAlert
 ) => {
@@ -17,13 +19,14 @@ export const useCompanyRecruitementAlertContent = (
   const matchingData = useSelector(
     selectRecruitementAlertMatchingById(alert.id)
   );
-  const MATCHING_TTL = 10 * 60 * 1000; // 10 minutes
   const now = Date.now();
-  const isExpired =
-    !matchingData || now - matchingData.timestamp > MATCHING_TTL;
+
   const isLoadingMatching = useSelector(
     selectFetchRecruitementAlertMatchingLoading
   );
+  const isExpired = isLoadingMatching
+    ? false
+    : !matchingData || now - matchingData.timestamp > MATCHING_TTL;
 
   const {
     id,
