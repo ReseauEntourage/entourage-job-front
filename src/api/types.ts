@@ -597,7 +597,7 @@ export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
   nudgeIds: string | string[];
-  departments: DepartmentName | DepartmentName[];
+  departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };

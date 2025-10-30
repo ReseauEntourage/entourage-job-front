@@ -63,10 +63,7 @@ export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
       <StyledBackgroundedHeaderBackoffice>
         <Section className="custom-page">
           <StyledHeaderContainer>
-            <BackLink
-              url="/backoffice/dashboard"
-              label="Retour à mon tableau de bord"
-            />
+            <BackLink label="Retour" />
             <HeaderBackoffice
               title={`Candidats correspondant à l'alerte: ${selectedAlert.name}`}
               description="Voici les candidats qui correspondent aux critères de votre alerte."

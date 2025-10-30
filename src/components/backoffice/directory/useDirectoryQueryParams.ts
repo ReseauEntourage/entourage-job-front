@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import { DirectoryEntity } from '@/src/constants/entity';
 import { UserRoles } from '@/src/constants/users';
-import { DepartmentName } from 'src/constants/departements';
 import { useDirectoryEntity } from './useDirectoryEntity';
 import { useDirectoryRole } from './useDirectoryRole';
 
@@ -10,7 +9,7 @@ export type DirectoryFilters = {
   role: UserRoles[];
   search?: string;
   nudgeIds: string[];
-  departments: DepartmentName[];
+  departments: string[];
   businessSectorIds: string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
   entity: DirectoryEntity;
@@ -30,10 +29,10 @@ export function useDirectoryQueryParams() {
     return [businessSectorIds as string];
   };
 
-  const normalizeDepartments = (): DepartmentName[] => {
+  const normalizeDepartments = (): string[] => {
     if (!departments) return [];
-    if (Array.isArray(departments)) return departments as DepartmentName[];
-    return [departments as DepartmentName];
+    if (Array.isArray(departments)) return departments as string[];
+    return [departments as string];
   };
 
   const filters: DirectoryFilters = {

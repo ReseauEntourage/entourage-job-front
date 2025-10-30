@@ -129,7 +129,6 @@ export function ProfileCard({
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
       }}
-      newTab
     >
       <StyledProfileCardPictureContainer className="profile-card">
         <StyledProfileCardPicture>
