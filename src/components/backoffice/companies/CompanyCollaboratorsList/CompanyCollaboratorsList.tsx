@@ -29,8 +29,9 @@ export const CompanyCollaboratorsList = ({
           }))
         : [];
 
-    const itemsFromUsers: TableItem[] = companyWithCollaborators.users.map(
-      (user) => ({
+    const itemsFromUsers: TableItem[] = companyWithCollaborators.users
+      .filter((user) => !user.companyUser.isAdmin)
+      .map((user) => ({
         id: user.id,
         name: `${user.firstName} ${user.lastName}`,
         email: user.email,
@@ -43,8 +44,7 @@ export const CompanyCollaboratorsList = ({
         accountCreated: user.createdAt
           ? new Date(user.createdAt).toLocaleDateString('fr')
           : '-',
-      })
-    );
+      }));
 
     return [...itemsFromInvitations, ...itemsFromUsers] as TableItem[];
   }, [
