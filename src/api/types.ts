@@ -524,8 +524,6 @@ export type PublicProfile = {
   reviews: Review[];
   contracts: Contract[];
   occupations: Occupation[];
-  lastSentMessage: string;
-  lastReceivedMessage: string;
   cvUrl?: string;
   hasExternalCv: boolean;
   averageDelayResponse: number | null;
