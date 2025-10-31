@@ -10,18 +10,18 @@ import React, {
 import { CloseButton } from 'src/components/utils/CloseButton/CloseButton';
 import { StyledOffCanvas } from './OffCanvas.styles';
 
-export interface OffcanvasRef {
+export interface OffCanvasRef {
   open: () => void;
   close: () => void;
 }
 
-interface OffcanvasProps {
+interface OffCanvasProps {
   children: React.ReactNode;
   position?: 'left' | 'right';
   closeButtonSize?: number;
 }
 
-export const Offcanvas = forwardRef<OffcanvasRef, OffcanvasProps>(
+export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
   ({ children, position = 'left', closeButtonSize }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const offCanvasRef = useRef<HTMLElement>(null);

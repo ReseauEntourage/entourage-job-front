@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
-  Offcanvas,
-  OffcanvasRef,
-} from '@/src/components/utils/OffCanvas/Offcanvas';
+  OffCanvas,
+  OffCanvasRef,
+} from '@/src/components/utils/OffCanvas/OffCanvas';
+import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import {
   StyledMessagingIconContainer,
@@ -33,17 +34,12 @@ export const NavConnectedContentMobile = ({
   },
   dropdown = [NavConnectedMainItemDefaultProps],
 }: NavConnectedContentProps) => {
-  const offcanvasRef = useRef<OffcanvasRef>(null);
+  const offCanvasRef = useRef<OffCanvasRef>(null);
+  const { closeOffCanvas } = useOffCanvas(offCanvasRef);
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
   const logoLink = links[user?.role][0];
-
-  const closeOffCanvas = useCallback(() => {
-    if (offcanvasRef.current) {
-      offcanvasRef.current.close();
-    }
-  }, []);
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -71,15 +67,15 @@ export const NavConnectedContentMobile = ({
             </StyledMessagingIconContainer>
             <Hamburger
               onClick={() => {
-                if (offcanvasRef.current) {
-                  offcanvasRef.current.open();
+                if (offCanvasRef.current) {
+                  offCanvasRef.current.open();
                 }
               }}
             />
           </div>
         }
       />
-      <Offcanvas ref={offcanvasRef} position="right">
+      <OffCanvas ref={offCanvasRef} position="right">
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           {links[user.role]
             .filter(({ href }) => {
@@ -184,7 +180,7 @@ export const NavConnectedContentMobile = ({
             );
           })}
         </ul>
-      </Offcanvas>
+      </OffCanvas>
     </StyledNavContainerMobile>
   );
 };
