@@ -57,6 +57,7 @@ export const StyledProfileCardDepartment = styled.div`
   width: 100%;
 
   > * {
+    line-height: 24px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

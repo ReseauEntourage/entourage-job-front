@@ -15,7 +15,7 @@ export const StyledCareerPathSectorOccupationTagContainer = styled.div`
   gap: 8px;
 `;
 
-export const StyledCompanyName = styled.span`
-  text-decoration: underline;
+export const StyledCompanyName = styled.span<{ withLink?: boolean }>`
   color: ${COLORS.black};
+  text-decoration: ${(props) => (props.withLink ? 'underline' : 'none')};
 `;

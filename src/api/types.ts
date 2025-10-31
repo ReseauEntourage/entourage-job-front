@@ -5,7 +5,6 @@ import {
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
-  ExternalMessageContactType,
   HeardAboutValue,
   WorkingExperience,
 } from 'src/constants';
@@ -159,6 +158,7 @@ export type UserProfileLanguage = {
 };
 
 export type UserProfileSectorOccupation = {
+  id: string;
   businessSectorId?: string;
   businessSector?: BusinessSector;
   occupation?: Occupation;
@@ -201,8 +201,6 @@ export type UserProfile = {
   nudges: Nudge[] | null;
   customNudges: UserProfileNudge[] | null;
   sectorOccupations?: UserProfileSectorOccupation[];
-  lastSendMessage: string | null;
-  lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
   hasAcceptedEthicsCharter: boolean;
@@ -458,34 +456,6 @@ export type Media = {
   signedUrl: string;
 };
 
-export type ExternalMessage = {
-  UserId: string;
-
-  senderFirstName: string;
-
-  senderLastName: string;
-
-  senderEmail: string;
-
-  senderPhone: string;
-
-  subject: string;
-
-  message: string;
-
-  type: ExternalMessageContactType;
-};
-
-export type InternalMessage = {
-  addresseeUserId: string;
-  subject: string;
-  message: string;
-  // answered by the DB
-  senderUserId?: string;
-  createdAt?: string;
-  id?: string;
-};
-
 export type Message = {
   id: string;
   content: string;
@@ -553,8 +523,6 @@ export type PublicProfile = {
   reviews: Review[];
   contracts: Contract[];
   occupations: Occupation[];
-  lastSentMessage: string;
-  lastReceivedMessage: string;
   cvUrl?: string;
   hasExternalCv: boolean;
   averageDelayResponse: number | null;
@@ -597,7 +565,7 @@ export type ProfilesFilters = {
   role: UserRoles[];
   search?: string;
   nudgeIds: string | string[];
-  departments: DepartmentName | DepartmentName[];
+  departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
 };
@@ -641,11 +609,12 @@ export type RecruitementAlertDto = {
   skills?: FilterConstant<string>[];
 };
 
-export type UserWithConversations = User & {
+export type UserWithCompanyAndConversations = User & {
   conversations: Conversation[];
+  companyUser: CompanyUser;
 };
 
 export type CompanyWithUsers = Company & {
-  users: UserWithConversations[];
+  users: UserWithCompanyAndConversations[];
   pendingInvitations: Invitation[];
 };

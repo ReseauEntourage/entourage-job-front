@@ -12,7 +12,7 @@ export const HeaderModal = ({
 }) => {
   return (
     <StyledHeaderModal>
-      {title && <H3 title={title} weight="normal" center />}
+      {title && <H3 title={title} weight="semibold" center />}
       {description && (
         <Text color="mediumGray" size="large" weight="normal" center>
           {description}

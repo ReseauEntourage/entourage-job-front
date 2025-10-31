@@ -38,7 +38,7 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
           const isChildPath = child.href === asPath;
 
           return (
-            <li className="uk-flex-center">
+            <li className="uk-flex-center" key={child.name}>
               <StyledNavPublicItemMobileLinkContainer
                 selected={isChildPath}
                 key={child.name}

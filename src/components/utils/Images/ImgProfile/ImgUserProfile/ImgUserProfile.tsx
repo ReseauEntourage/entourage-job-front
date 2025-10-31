@@ -52,6 +52,7 @@ export const ImgUserProfile = ({
       size={size}
       highlight={highlight}
       alt={`photo de ${user.firstName}`}
+      cover
     />
   );
 };
