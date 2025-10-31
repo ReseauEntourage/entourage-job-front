@@ -38,7 +38,7 @@ export const selectRecruitementAlertMatchingById = (alertId: string) =>
   createSelector(
     (state: RootState) =>
       state.recruitementAlerts.recruitementAlertMatchings[alertId],
-    (matching) => matching || []
+    (matching) => matching || { profiles: [], timestamp: 0 }
   );
 
 export const selectFetchRecruitementAlertsLoading = createSelector(

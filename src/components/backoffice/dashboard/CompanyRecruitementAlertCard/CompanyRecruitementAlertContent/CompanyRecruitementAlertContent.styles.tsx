@@ -167,3 +167,10 @@ export const StyledClickableLink = styled(Link)`
   font-weight: inherit;
   cursor: pointer;
 `;
+
+export const StyledLoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+`;
