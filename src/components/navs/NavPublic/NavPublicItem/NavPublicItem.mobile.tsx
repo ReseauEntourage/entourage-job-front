@@ -5,7 +5,7 @@ import { gaEvent } from '@/src/lib/gtag';
 import { StyledNavPublicItemMobileLinkContainer } from './NavPublicItem.styles';
 import { NavPublicItemProps } from './NavPublicItem.types';
 
-export const NavPublicItemMobile = ({ item }: NavPublicItemProps) => {
+export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
   const { asPath } = useRouter();
   const isExactPath = asPath === item.href;
 
@@ -19,6 +19,7 @@ export const NavPublicItemMobile = ({ item }: NavPublicItemProps) => {
           href={item.href || '#'}
           onClick={() => {
             gaEvent(item.tag);
+            if (onClick) onClick();
           }}
         >
           {item.name}

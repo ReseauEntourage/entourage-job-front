@@ -2,11 +2,13 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import { StyledNavContainerMobile } from '@/src/components/headers/Header.styles';
 import { Hamburger } from '@/src/components/utils/Hamburger';
+import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import {
-  Offcanvas,
-  OffcanvasRef,
-} from '@/src/components/utils/OffCanvas/Offcanvas';
-import { Navbar, NavbarLogo } from 'src/components/utils';
+  Navbar,
+  NavbarLogo,
+  OffCanvas,
+  OffCanvasRef,
+} from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -18,7 +20,8 @@ import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 export const NavPublicMobile = () => {
   const items = LINKS;
 
-  const offcanvasRef = useRef<OffcanvasRef>(null);
+  const offCanvasRef = useRef<OffCanvasRef>(null);
+  const { closeOffCanvas } = useOffCanvas(offCanvasRef);
 
   const { push } = useRouter();
 
@@ -36,15 +39,15 @@ export const NavPublicMobile = () => {
           <div className="uk-padding-small uk-flex uk-flex-middle">
             <Hamburger
               onClick={() => {
-                if (offcanvasRef.current) {
-                  offcanvasRef.current.open();
+                if (offCanvasRef.current) {
+                  offCanvasRef.current.open();
                 }
               }}
             />
           </div>
         }
       />
-      <Offcanvas position="right" ref={offcanvasRef} closeButtonSize={40}>
+      <OffCanvas position="right" ref={offCanvasRef} closeButtonSize={40}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
@@ -53,6 +56,7 @@ export const NavPublicMobile = () => {
               style={{ color: 'white' }}
               onClick={() => {
                 push('/');
+                closeOffCanvas();
               }}
             >
               <div className="uk-flex">Accueil</div>
@@ -60,7 +64,15 @@ export const NavPublicMobile = () => {
           </li>
           {[
             items.map((item) => {
-              return <NavPublicItem item={item} key={item.name} />;
+              return (
+                <NavPublicItem
+                  item={item}
+                  key={item.name}
+                  onClick={() => {
+                    closeOffCanvas();
+                  }}
+                />
+              );
             }),
           ]}
           <li className="uk-margin-small-top uk-flex uk-flex-center">
@@ -70,6 +82,7 @@ export const NavPublicMobile = () => {
               rounded
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
+                closeOffCanvas();
               }}
               size="small"
             >
@@ -84,6 +97,7 @@ export const NavPublicMobile = () => {
               size="small"
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
+                closeOffCanvas();
               }}
             >
               Inscription
@@ -97,6 +111,7 @@ export const NavPublicMobile = () => {
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_DON_CLIC);
                 fbEvent(FB_TAGS.DONATION);
+                closeOffCanvas();
               }}
               variant="default"
             >
@@ -105,7 +120,7 @@ export const NavPublicMobile = () => {
             </Button>
           </li>
         </ul>
-      </Offcanvas>
+      </OffCanvas>
     </StyledNavContainerMobile>
   );
 };
