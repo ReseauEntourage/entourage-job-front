@@ -5,7 +5,6 @@ import {
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
-  ExternalMessageContactType,
   HeardAboutValue,
   WorkingExperience,
 } from 'src/constants';
@@ -201,8 +200,6 @@ export type UserProfile = {
   nudges: Nudge[] | null;
   customNudges: UserProfileNudge[] | null;
   sectorOccupations?: UserProfileSectorOccupation[];
-  lastSendMessage: string | null;
-  lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
   hasAcceptedEthicsCharter: boolean;
@@ -458,34 +455,6 @@ export type Media = {
   signedUrl: string;
 };
 
-export type ExternalMessage = {
-  UserId: string;
-
-  senderFirstName: string;
-
-  senderLastName: string;
-
-  senderEmail: string;
-
-  senderPhone: string;
-
-  subject: string;
-
-  message: string;
-
-  type: ExternalMessageContactType;
-};
-
-export type InternalMessage = {
-  addresseeUserId: string;
-  subject: string;
-  message: string;
-  // answered by the DB
-  senderUserId?: string;
-  createdAt?: string;
-  id?: string;
-};
-
 export type Message = {
   id: string;
   content: string;
@@ -553,8 +522,6 @@ export type PublicProfile = {
   reviews: Review[];
   contracts: Contract[];
   occupations: Occupation[];
-  lastSentMessage: string;
-  lastReceivedMessage: string;
   cvUrl?: string;
   hasExternalCv: boolean;
   averageDelayResponse: number | null;
