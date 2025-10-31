@@ -134,9 +134,9 @@ function* updateUserRequestedSaga(
 function* updateUserCompanyRequestedSaga(
   action: ReturnType<typeof updateUserCompanyRequested>
 ) {
-  const { companyId } = action.payload;
+  const { companyName } = action.payload;
   try {
-    yield* call(() => Api.putUserCompany(companyId));
+    yield* call(() => Api.putUserCompany(companyName));
     yield* put(updateUserCompanySucceeded());
     yield* fetchUserRequestedSaga();
   } catch (error) {

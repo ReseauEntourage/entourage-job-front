@@ -43,7 +43,7 @@ export function* createUserRequestedSaga() {
     occupation0,
     occupation1,
     organizationId,
-    companyId,
+    companyName,
     companyRole,
     nudgeIds,
     ...restData
@@ -63,7 +63,7 @@ export function* createUserRequestedSaga() {
       }),
       department: restData.department.value,
       organizationId: organizationId ? organizationId.value : undefined,
-      companyId: companyId ? companyId.value : undefined,
+      companyName: companyName ? companyName.value : undefined,
       companyRole: companyRole ? companyRole.value : undefined,
       nudges: nudgeIds?.length
         ? nudgeIds.map((id) => {

@@ -128,11 +128,11 @@ export function* sendStepDataOnboardingSaga() {
       }
     } else {
       if (flow === OnboardingFlow.COACH) {
-        const { companyId } = stepData as CoachStepData;
+        const { companyName } = stepData as CoachStepData;
 
         // Update the company user profile
-        if (companyId) {
-          yield* call(() => Api.putUserCompany(companyId?.value || null));
+        if (companyName) {
+          yield* call(() => Api.putUserCompany(companyName.value || null));
         }
       }
 

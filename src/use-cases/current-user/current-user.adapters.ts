@@ -37,7 +37,7 @@ export const updateUserCompanyAdapter = createRequestAdapter(
   'updateUserCompany'
 ).withPayloads<
   {
-    companyId: string | null;
+    companyName: string | null;
   },
   void,
   {

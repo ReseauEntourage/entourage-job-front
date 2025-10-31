@@ -1,41 +1,18 @@
-import React from 'react';
 import { loadBusinessSectorsOptions } from '@/src/components/forms/utils/loadOptions.utils';
-import { LucidIcon } from '@/src/components/utils';
 import { Api } from 'src/api';
 import {
   FormComponents,
   FormSchema,
   FormSchemaValidation,
-  GetValueType,
 } from 'src/components/forms/FormSchema';
 import { FilterConstant } from 'src/constants/utils';
-
-export const CREATE_NEW_COMPANY_VALUE = 'createNewCompany';
-
-const CREATE_NEW_COMPANY_OPTION = {
-  value: CREATE_NEW_COMPANY_VALUE,
-  label: (
-    <>
-      <LucidIcon name="Plus" />
-      Ajouter une nouvelle entreprise
-    </>
-  ),
-};
 
 export interface formOnboardingCoachJobSchema extends FormSchemaValidation {
   currentJob: string;
   businessSectorIds: FilterConstant<string>[];
   linkedinUrl: string;
-  companyId: FilterConstant<string>;
-  companyName: string;
+  companyName: FilterConstant<string>;
 }
-
-const hideCompanyNameField = (
-  getValue: GetValueType<formOnboardingCoachJobSchema>
-) => {
-  const companyId = getValue('companyId')?.value;
-  return companyId !== CREATE_NEW_COMPANY_VALUE;
-};
 
 export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
   {
@@ -50,11 +27,11 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         showLabel: true,
       },
       {
-        id: 'companyId',
-        name: 'companyId',
-        component: 'select-async',
+        id: 'companyName',
+        name: 'companyName',
+        component: FormComponents.SELECT_CREATABLE,
         title: 'Mon entreprise',
-        placeholder: 'Séléctionnez dans la liste',
+        placeholder: 'Sélectionnez ou ajoutez le nom de votre entreprise',
         loadOptions: async (callback, inputValue) => {
           try {
             const { data: companies } = await Api.getAllCompanies({
@@ -64,16 +41,15 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
               departments: [],
               businessSectorIds: [],
             });
-            callback([
-              ...companies.map((u) => {
+            callback(
+              companies.map((u) => {
                 return {
-                  value: u.id,
+                  value: u.name,
                   label: u.name,
                   key: u.id,
                 };
-              }),
-              CREATE_NEW_COMPANY_OPTION,
-            ]);
+              })
+            );
           } catch (error) {
             console.error(error);
             callback([]);
@@ -82,15 +58,7 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         isMulti: false,
         isRequired: false,
         showLabel: true,
-      },
-      {
-        id: 'companyName',
-        name: 'companyName',
-        component: 'text-input',
-        title: 'Nom de votre entreprise *',
-        showLabel: true,
-        isRequired: true,
-        hide: hideCompanyNameField,
+        openMenuOnClick: true,
       },
       {
         id: 'businessSectorIds',

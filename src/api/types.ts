@@ -84,11 +84,6 @@ export type OrganizationDto = {
   zone: AdminZone;
 };
 
-export type CompanyDto = {
-  id?: string;
-  name: string;
-};
-
 export type InviteCollaboratorsFromCompanyDto = {
   emails: string[];
 };
