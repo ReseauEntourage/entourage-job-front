@@ -158,6 +158,7 @@ export type UserProfileLanguage = {
 };
 
 export type UserProfileSectorOccupation = {
+  id: string;
   businessSectorId?: string;
   businessSector?: BusinessSector;
   occupation?: Occupation;
