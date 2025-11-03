@@ -22,7 +22,13 @@ export interface State {
     typeof fetchRecruitementAlertMatchingAdapter
   >;
   recruitementAlerts: RecruitementAlert[];
-  recruitementAlertMatchings: Record<string, PublicProfile[]>;
+  recruitementAlertMatchings: Record<
+    string,
+    {
+      profiles: PublicProfile[];
+      timestamp: number;
+    }
+  >;
 }
 
 const initialState: State = {
@@ -95,7 +101,10 @@ export const slice = createSlice({
             const matchingData = Array.isArray(action.payload)
               ? action.payload
               : [];
-            state.recruitementAlertMatchings[alertId] = matchingData;
+            state.recruitementAlertMatchings[alertId] = {
+              profiles: matchingData,
+              timestamp: Date.now(),
+            };
           }
         },
       }
