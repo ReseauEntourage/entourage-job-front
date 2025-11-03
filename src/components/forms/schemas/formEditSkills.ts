@@ -11,7 +11,8 @@ export const formEditSkills: FormSchema<{
       id: 'skills',
       name: 'skills',
       component: FormComponents.SELECT_CREATABLE,
-      loadOptions: loadSkillsOptions,
+      loadOptions: (callback, inputValue) =>
+        loadSkillsOptions(callback, inputValue, true),
       title: 'Compétences',
       maxChar: 50,
       maxItems: 50,

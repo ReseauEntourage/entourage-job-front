@@ -68,7 +68,8 @@ export const loadBusinessSectorsOptions = async (
 
 export const loadSkillsOptions = async (
   callback: (options: FilterConstant[]) => void,
-  inputValue?: string
+  inputValue?: string,
+  valueAsName = false
 ) => {
   try {
     const { data: skills } = await Api.getAllSkills({
@@ -79,7 +80,7 @@ export const loadSkillsOptions = async (
     callback([
       ...skills.map((skill) => {
         return {
-          value: skill.id,
+          value: valueAsName ? skill.name : skill.id,
           label: skill.name,
         };
       }),
