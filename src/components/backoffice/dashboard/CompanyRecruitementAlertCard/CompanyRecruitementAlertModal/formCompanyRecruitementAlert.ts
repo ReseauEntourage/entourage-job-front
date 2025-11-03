@@ -111,7 +111,8 @@ export const formSchema: FormSchema<RecruitementAlertForm> = {
       id: 'skills',
       name: 'skills',
       component: FormComponents.SELECT_CREATABLE,
-      loadOptions: loadSkillsOptions,
+      loadOptions: (callback, inputValue) =>
+        loadSkillsOptions(callback, inputValue, false),
       title: 'Compétences',
       placeholder: 'Sélectionnez les compétences clés pour ce poste',
       isMulti: true,
