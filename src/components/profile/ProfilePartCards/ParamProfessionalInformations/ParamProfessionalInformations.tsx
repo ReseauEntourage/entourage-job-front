@@ -56,7 +56,7 @@ export const ParamProfessionalInformations = ({
                     order: idx,
                   } as UserProfileSectorOccupation)
               ),
-              companyId: values.companyId?.value || null,
+              companyName: values.companyName?.value || null,
             };
           }}
         />

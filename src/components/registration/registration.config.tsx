@@ -49,7 +49,6 @@ export const RegistrationErrorMessages = {
 
 export const RegistrationExcludedFieldsKeys = [
   'nameOrganization',
-  'companyName',
   'acceptCGU',
   'flow',
 ];

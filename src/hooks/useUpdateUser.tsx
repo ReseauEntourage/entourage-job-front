@@ -40,11 +40,11 @@ export const useUpdateUser = (user: UserWithUserCandidate) => {
   );
 
   const updateUserCompany = useCallback(
-    (companyId: string | null) => {
+    (companyName: string | null) => {
       if (user.id) {
         dispatch(
           currentUserActions.updateUserCompanyRequested({
-            companyId,
+            companyName,
           })
         );
       }

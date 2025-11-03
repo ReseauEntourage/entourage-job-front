@@ -2,22 +2,17 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
-  Offcanvas,
-  OffcanvasRef,
-} from '@/src/components/utils/OffCanvas/Offcanvas';
+  OffCanvas,
+  OffCanvasRef,
+} from '@/src/components/utils/OffCanvas/OffCanvas';
+import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import {
   StyledMessagingIconContainer,
   StyledNavContainerMobile,
 } from 'src/components/headers/Header.styles';
-import {
-  ButtonIcon,
-  Navbar,
-  NavbarLogo,
-  SimpleLink,
-} from 'src/components/utils';
+import { ButtonIcon, Navbar, NavbarLogo } from 'src/components/utils';
 import { Hamburger } from 'src/components/utils/Hamburger';
-import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -39,7 +34,8 @@ export const NavConnectedContentMobile = ({
   },
   dropdown = [NavConnectedMainItemDefaultProps],
 }: NavConnectedContentProps) => {
-  const offcanvasRef = useRef<OffcanvasRef>(null);
+  const offCanvasRef = useRef<OffCanvasRef>(null);
+  const { closeOffCanvas } = useOffCanvas(offCanvasRef);
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
@@ -71,22 +67,16 @@ export const NavConnectedContentMobile = ({
             </StyledMessagingIconContainer>
             <Hamburger
               onClick={() => {
-                if (offcanvasRef.current) {
-                  offcanvasRef.current.open();
+                if (offCanvasRef.current) {
+                  offCanvasRef.current.open();
                 }
               }}
             />
           </div>
         }
       />
-      <Offcanvas ref={offcanvasRef} position="right">
+      <OffCanvas ref={offCanvasRef} position="right">
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
-          <li>
-            <SimpleLink href="/">
-              <LucidIcon name="House" />
-              &nbsp; Accueil
-            </SimpleLink>
-          </li>
           {links[user.role]
             .filter(({ href }) => {
               return href !== '#';
@@ -116,6 +106,7 @@ export const NavConnectedContentMobile = ({
                         if (href) {
                           push(href + (queryParams || ''));
                         }
+                        closeOffCanvas();
                       }}
                     >
                       <span>
@@ -154,6 +145,7 @@ export const NavConnectedContentMobile = ({
                 if (messaging.onClick) {
                   messaging.onClick();
                 }
+                closeOffCanvas();
               }}
             >
               <span>
@@ -176,6 +168,7 @@ export const NavConnectedContentMobile = ({
                     if (onClick) {
                       onClick();
                     }
+                    closeOffCanvas();
                   }}
                 >
                   <span>
@@ -187,7 +180,7 @@ export const NavConnectedContentMobile = ({
             );
           })}
         </ul>
-      </Offcanvas>
+      </OffCanvas>
     </StyledNavContainerMobile>
   );
 };

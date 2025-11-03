@@ -9,7 +9,6 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
   CandidateInscription,
-  CompanyDto,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
@@ -284,8 +283,8 @@ export class APIHandler {
     return this.put(`/user/profile/${userId}`, userProfile);
   }
 
-  putUserCompany(companyId: string | null): Promise<AxiosResponse> {
-    return this.put(`/user/company`, { companyId });
+  putUserCompany(companyName: string | null): Promise<AxiosResponse> {
+    return this.put(`/user/company`, { companyName });
   }
 
   postProfileUserAbuse(
@@ -403,10 +402,6 @@ export class APIHandler {
     companyId: string
   ): Promise<AxiosResponse> {
     return this.get(`/companies/${companyId}/collaborators`);
-  }
-
-  postCompany(params: CompanyDto): Promise<AxiosResponse> {
-    return this.post('/companies', params);
   }
 
   updateCompany(companyFields: UpdateCompanyDto): Promise<AxiosResponse> {
