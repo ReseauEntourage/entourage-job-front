@@ -48,11 +48,11 @@ export function useDirectory() {
     fetchCompaniesSelectors.selectIsFetchCompaniesIdle
   );
 
-  const isFetechCompaniesRequested = useSelector(
+  const isFetchCompaniesRequested = useSelector(
     fetchCompaniesSelectors.selectIsFetchCompaniesRequested
   );
 
-  const isCompaniesLoading = isFetchCompaniesIdle || isFetechCompaniesRequested;
+  const isCompaniesLoading = isFetchCompaniesIdle || isFetchCompaniesRequested;
 
   const isFetchCompanyStatusFailed = useSelector(
     fetchCompaniesSelectors.selectIsFetchCompaniesFailed

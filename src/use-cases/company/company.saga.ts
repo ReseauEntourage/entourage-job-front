@@ -164,6 +164,7 @@ function* fetchCompaniesRequestedSaga(
         businessSectorIds,
         limit,
         offset,
+        onlyWithReferent: true,
       })
     );
     yield* put(fetchCompaniesSucceeded(response.data));
