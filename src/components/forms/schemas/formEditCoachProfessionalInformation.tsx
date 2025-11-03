@@ -37,6 +37,7 @@ export const formEditCoachProfessionalInformation: FormSchema<FormEditCoachProfe
               offset: 0,
               departments: [],
               businessSectorIds: [],
+              onlyWithReferent: false,
             });
             callback(
               companies.map((u) => {

@@ -266,6 +266,7 @@ export type CompaniesFilters = {
   search?: string;
   departments: string[];
   businessSectorIds: string[];
+  onlyWithReferent: boolean;
 };
 
 export type User = {
