@@ -16,6 +16,7 @@ export const StyledCollaboratorSmallCardContainer = styled.div`
 export const StyledCtaContainer = styled.div`
   display: flex;
   justify-content: center;
+  gap: 16px;
 `;
 
 export const StyledEmptyContainer = styled.div`
