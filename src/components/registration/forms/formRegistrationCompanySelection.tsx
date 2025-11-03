@@ -27,6 +27,7 @@ export const formRegistrationCompanySelection: FormSchema<FormRegistrationCompan
               offset: 0,
               departments: [],
               businessSectorIds: [],
+              onlyWithReferent: false,
             });
             callback([
               ...companies.map((company) => {

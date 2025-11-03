@@ -40,6 +40,7 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
               offset: 0,
               departments: [],
               businessSectorIds: [],
+              onlyWithReferent: false,
             });
             callback(
               companies.map((u) => {

@@ -389,7 +389,6 @@ export class APIHandler {
     params: CompaniesFilters & {
       limit: number;
       offset: number;
-      onlyWithReferent?: boolean;
     }
   ): Promise<AxiosResponse> {
     return this.get('/companies', { params });

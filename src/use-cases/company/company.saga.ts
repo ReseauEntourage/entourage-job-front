@@ -155,7 +155,8 @@ function* fetchCompaniesRequestedSaga(
     const offset = yield* select(selectCompaniesOffset);
     const limit = COMPANIES_LIMIT;
 
-    const { departments, businessSectorIds, search } = action.payload;
+    const { departments, businessSectorIds, search, onlyWithReferent } =
+      action.payload;
 
     const response = yield* call(() =>
       Api.getAllCompanies({
@@ -164,7 +165,7 @@ function* fetchCompaniesRequestedSaga(
         businessSectorIds,
         limit,
         offset,
-        onlyWithReferent: true,
+        onlyWithReferent,
       })
     );
     yield* put(fetchCompaniesSucceeded(response.data));
