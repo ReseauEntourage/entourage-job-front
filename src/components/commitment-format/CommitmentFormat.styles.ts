@@ -39,11 +39,9 @@ export const CommitmentFormatCardImg = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Centrage vertical et horizontal de l'image */
 
   img {
     object-fit: contain;
-    background: #eee;
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     display: block;
@@ -56,19 +54,25 @@ export const CommitmentFormatCardContent = styled.div`
   padding: 20px 20px 16px 20px;
   flex: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h3 {
+    margin: 0;
+  }
 `;
 
 export const CommitmentFormatCardInfos = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   margin: 12px 0 8px 0;
   color: ${COLORS.mediumGray};
   flex-wrap: wrap;
 `;
 
 export const CommitmentFormatCardDesc = styled.div`
-  margin-top: 16px;
   color: ${COLORS.darkGray};
 `;
 
@@ -76,9 +80,8 @@ export const CommitmentFormatCardPrice = styled.div`
   position: absolute;
   top: 16px;
   right: 16px;
-  background: ${COLORS.lightBlueGreen};
-  color: ${COLORS.mediumGreen};
-  font-weight: 700;
+  background: ${COLORS.extraDarkBlue};
+  color: ${COLORS.white};
   border-radius: 20px;
   padding: 6px 18px;
 `;

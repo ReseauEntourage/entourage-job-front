@@ -25,8 +25,10 @@ export const CommitmentFormat = () => (
           ))}
         </CommitmentFormatCards>
         <CommitmentFormatCta>
+          Vous avez des questions ou vous souhaitez avoir plus
+          d&apos;informations sur les Team building solidaires ?
           <CommitmentFormatCtaBtn type="button">
-            Découvrir les formats
+            Contacter Entourage
           </CommitmentFormatCtaBtn>
         </CommitmentFormatCta>
       </Section>
