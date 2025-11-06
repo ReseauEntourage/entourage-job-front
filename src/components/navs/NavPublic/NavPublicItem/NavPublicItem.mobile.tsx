@@ -10,7 +10,7 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
   const isExactPath = asPath === item.href;
 
   // Generate <Link> or simple text if not necessary
-  let link: React.ReactNode = item.name;
+  let link: React.ReactNode = <span>{item.name}</span>;
   if (item.href) {
     link = (
       <StyledNavPublicItemMobileLinkContainer selected={isExactPath}>
@@ -28,32 +28,25 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
     );
   }
 
-  // Generate menu item containing the <Link>
-  const menuItem = <li className="uk-flex-center">{link}</li>;
-
   if (item.childrens && item.childrens.length > 0) {
     return (
       <>
         {item.childrens.map((child) => {
           const isChildPath = child.href === asPath;
-
           return (
-            <li className="uk-flex-center" key={child.name}>
-              <StyledNavPublicItemMobileLinkContainer
-                selected={isChildPath}
-                key={child.name}
-              >
-                <Link href={child.href || '#'} key={child.name}>
-                  {child.name}
-                </Link>
-              </StyledNavPublicItemMobileLinkContainer>
-            </li>
+            <StyledNavPublicItemMobileLinkContainer
+              selected={isChildPath}
+              key={child.name}
+            >
+              <Link href={child.href || '#'} key={child.name}>
+                {child.name}
+              </Link>
+            </StyledNavPublicItemMobileLinkContainer>
           );
         })}
       </>
     );
   }
 
-  // Return a simple menuItem
-  return menuItem;
+  return <>{link}</>;
 };
