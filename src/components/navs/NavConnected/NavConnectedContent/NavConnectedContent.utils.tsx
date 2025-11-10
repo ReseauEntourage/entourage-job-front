@@ -69,6 +69,10 @@ export const renderLinks = (
             name: 'Mon entreprise',
             tag: GA_TAGS.BACKOFFICE_COACH_HEADER_MY_COMPANY_CLIC,
           },
+          {
+            href: '/backoffice/companies/team-building',
+            name: 'Team building',
+          },
         ]
       : []),
     {
