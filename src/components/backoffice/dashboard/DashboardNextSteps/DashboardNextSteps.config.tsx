@@ -43,7 +43,7 @@ export const stepsByContext = {
       content: 'Retrouvez tous les coachs de la communauté',
       cta: {
         label: 'Contacter un coach',
-        href: '/backoffice/annuaire?entity=Coach',
+        href: '/backoffice/annuaire?entity=user&role=Coach',
       },
     },
   ],
@@ -57,7 +57,7 @@ export const stepsByContext = {
       content: 'Retrouvez tous les candidats de la communauté',
       cta: {
         label: 'Contacter un candidat',
-        href: '/backoffice/annuaire?entity=Candidat',
+        href: '/backoffice/annuaire?entity=user&role=Candidat',
       },
     },
     {
@@ -109,7 +109,7 @@ export const stepsByContext = {
       content: 'Retrouvez tous les candidats de la communauté',
       cta: {
         label: 'Contacter un candidat',
-        href: '/backoffice/annuaire?entity=Candidat',
+        href: '/backoffice/annuaire?entity=user&role=Candidat',
       },
     },
   ],
@@ -150,7 +150,7 @@ export const stepsByContext = {
       content: 'Retrouvez tous les candidats de la communauté',
       cta: {
         label: 'Contacter un candidat',
-        href: '/backoffice/annuaire?entity=Candidat',
+        href: '/backoffice/annuaire?entity=user&role=Candidat',
       },
     },
   ],
