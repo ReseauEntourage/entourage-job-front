@@ -11,6 +11,8 @@ export const authenticatedPermissions = [
       '/backoffice/companies/[companyId]',
       '/backoffice/alerte-candidats/[alertId]',
       '/backoffice/companies/[companyId]/collaborators',
+      '/backoffice/events',
+      '/backoffice/events/[eventId]',
     ],
     roles: '*',
   },

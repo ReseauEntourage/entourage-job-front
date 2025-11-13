@@ -110,7 +110,6 @@ export const FiltersDropdowns = ({
                 <div
                   key={key}
                   data-testid={`input-container-${key}`}
-                  style={{ minWidth: smallSelectors ? 100 : 150 }}
                   className={`uk-inline ${
                     fullWidth ? 'uk-width-expand uk-margin-small-bottom' : ''
                   }`}
