@@ -45,9 +45,9 @@ export const getCoachDefaultProfessionalValues = (
       value: businessSector?.id,
       label: businessSector?.name,
     })),
-    companyId: company
+    companyName: company
       ? {
-          value: company.id,
+          value: company.name,
           label: company.name,
         }
       : undefined,

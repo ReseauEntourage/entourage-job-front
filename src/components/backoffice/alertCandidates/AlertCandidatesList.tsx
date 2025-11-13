@@ -19,7 +19,7 @@ export function AlertCandidatesList({
   const isLoading = useSelector(selectFetchRecruitementAlertMatchingLoading);
 
   const candidatesList = useMemo(() => {
-    return candidates.map((candidate) => {
+    return candidates?.profiles?.map((candidate) => {
       return (
         <DirectoryUserItem
           key={candidate.id}

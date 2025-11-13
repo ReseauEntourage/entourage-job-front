@@ -15,7 +15,7 @@ export const StyledModal = styled.div`
   // On desktop, we can set a custom width
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     ${({ width }) => width && `width: ${width};`}
-    padding: 80px;
+    padding: 42px;
   }
 `;
 
@@ -23,7 +23,7 @@ export const StyledHeaderModal = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 14px;
   border-bottom: 1px solid ${COLORS.gray};
   margin-bottom: 40px;
 `;

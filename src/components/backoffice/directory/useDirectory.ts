@@ -48,11 +48,11 @@ export function useDirectory() {
     fetchCompaniesSelectors.selectIsFetchCompaniesIdle
   );
 
-  const isFetechCompaniesRequested = useSelector(
+  const isFetchCompaniesRequested = useSelector(
     fetchCompaniesSelectors.selectIsFetchCompaniesRequested
   );
 
-  const isCompaniesLoading = isFetchCompaniesIdle || isFetechCompaniesRequested;
+  const isCompaniesLoading = isFetchCompaniesIdle || isFetchCompaniesRequested;
 
   const isFetchCompanyStatusFailed = useSelector(
     fetchCompaniesSelectors.selectIsFetchCompaniesFailed
@@ -73,7 +73,10 @@ export function useDirectory() {
         profilesActions.fetchProfilesWithFilters(directoryFiltersParams)
       );
       dispatch(
-        companyActions.fetchCompaniesWithFilters(directoryFiltersParams)
+        companyActions.fetchCompaniesWithFilters({
+          ...directoryFiltersParams,
+          onlyWithReferent: true,
+        })
       );
     }
   }, [dispatch, directoryFiltersParams, prevDirectoryFiltersParams]);
@@ -112,7 +115,12 @@ export function useDirectory() {
 
     // Only fetch more companies if there are more to fetch
     if (!companiesHasFetchedAll) {
-      dispatch(companyActions.fetchCompaniesNextPage(directoryFiltersParams));
+      dispatch(
+        companyActions.fetchCompaniesNextPage({
+          ...directoryFiltersParams,
+          onlyWithReferent: true,
+        })
+      );
     }
   });
 

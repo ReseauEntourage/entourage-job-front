@@ -16,6 +16,7 @@ export const StyledCollaboratorSmallCardContainer = styled.div`
 export const StyledCtaContainer = styled.div`
   display: flex;
   justify-content: center;
+  gap: 16px;
 `;
 
 export const StyledEmptyContainer = styled.div`
@@ -31,4 +32,5 @@ export const StyledIlluContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 60px;
+  flex-shrink: 0;
 `;

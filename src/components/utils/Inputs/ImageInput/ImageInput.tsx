@@ -69,6 +69,7 @@ export function ImageInput({
         onBlur={onBlur}
         disabled={disabled}
         activator={children}
+        noPadding
       />
     </StyledImageInputContainer>
   );

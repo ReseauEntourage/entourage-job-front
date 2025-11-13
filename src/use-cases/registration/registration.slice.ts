@@ -97,7 +97,7 @@ export const slice = createSlice({
     setStateFromQueryParams(
       state,
       action: PayloadAction<{
-        companyId?: string;
+        companyName?: string;
         flow?: RegistrationFlow;
         invitationId?: string;
       }>
@@ -109,15 +109,15 @@ export const slice = createSlice({
         ? REGISTRATION_FIRST_STEP
         : state.currentStep; // Reset to the first step
 
-      // Set a company ID if provided in the action payload
+      // Set a company name if provided in the action payload
       const newData = {
-        companyId: {
+        companyName: {
           // The label will not be displayed, but will be used for form submission
-          value: action.payload.companyId,
-          label: action.payload.companyId,
+          value: action.payload.companyName,
+          label: action.payload.companyName,
         },
       };
-      if (action.payload.companyId) {
+      if (action.payload.companyName) {
         if (!state.data) {
           state.data = newData as RegistrationData;
         } else {

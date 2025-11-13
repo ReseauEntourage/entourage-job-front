@@ -135,6 +135,8 @@ function* updateRecruitementAlertSaga(
     );
     // Rafraîchir la liste des alertes après la mise à jour
     yield* put(fetchRecruitementAlertsAction());
+    // Rafraîchir le matching de l'alerte modifiée
+    yield* put(fetchRecruitementAlertMatchingAction(id));
   } catch (error) {
     console.error('Error updating recruitement alert:', error);
     yield* put(updateRecruitementAlertFailed());

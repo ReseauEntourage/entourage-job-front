@@ -114,7 +114,7 @@ export interface CandidateCoachStepData {
 }
 
 export interface CoachStepData extends CandidateCoachStepData {
-  companyId?: { value: string };
+  companyName?: { value: string };
 }
 
 // Type représentant la structure de données complète pour l'onboarding
