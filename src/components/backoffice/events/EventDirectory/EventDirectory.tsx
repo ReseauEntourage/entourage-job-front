@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { Api } from '@/src/api';
 import {
   MobileFilterButton,
@@ -14,6 +15,7 @@ import { Filter, FilterConstant } from '@/src/constants/utils';
 import { useFilters } from '@/src/hooks';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useIsMobile } from '@/src/hooks/utils';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { findConstantFromValue, mutateToArray } from '@/src/utils';
 import { EventDirectoryList } from '../EventDirectoryList/EventDirectoryList';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
@@ -28,6 +30,7 @@ import { useEventDirectoryQueryParams } from './useEventDirectoryQueryParams';
 
 export function EventDirectory() {
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
 
   // State to avoid reapplying the default filter
   const [isDefaultDepartmentSet, setIsDefaultDepartmentSet] =
@@ -81,6 +84,13 @@ export function EventDirectory() {
         }))
       );
     } catch (error) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            "Une erreur s'est produite lors du chargement des départements",
+        })
+      );
       console.error('Error fetching departments:', error);
     }
   };
@@ -122,6 +132,7 @@ export function EventDirectory() {
   useEffect(() => {
     // Fetch departments on mount
     fetchDepartments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
