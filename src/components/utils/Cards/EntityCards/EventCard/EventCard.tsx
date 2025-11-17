@@ -55,7 +55,7 @@ export function EventCard({
         query: { id: salesForceId },
       }}
       onClick={() => {
-        gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
+        gaEvent(GA_TAGS.PAGE_EVENTS_CARTE_CLIC);
       }}
       borderColor={participating ? 'primaryBlue' : undefined}
     >
