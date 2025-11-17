@@ -176,7 +176,7 @@ export const renderLinks = (
         },
         {
           href: '/backoffice/events',
-          name: 'Evénements',
+          name: 'Événements',
         },
         {
           href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
