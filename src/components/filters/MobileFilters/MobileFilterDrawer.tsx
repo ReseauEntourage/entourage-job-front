@@ -18,7 +18,7 @@ import {
 interface MobileFilterDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onApplyFilters: () => void;
+  onApplyFilters?: () => void;
   filters: FilterObject;
   setFilters: (updatedFilters: FilterObject) => void;
   filterData: Filter[];
@@ -60,7 +60,9 @@ export const MobileFilterDrawer = ({
   };
 
   const handleApplyFilters = () => {
-    onApplyFilters();
+    if (onApplyFilters) {
+      onApplyFilters();
+    }
     onClose();
   };
 

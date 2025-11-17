@@ -214,7 +214,6 @@ export function EventDirectory() {
         <MobileFilterDrawer
           isOpen={isFilterDrawerOpen}
           onClose={handleCloseFilterDrawer}
-          onApplyFilters={() => undefined}
           filters={filters}
           setFilters={setFilters}
           filterData={eventDirectoryFilters}

@@ -369,7 +369,6 @@ export function Directory() {
         <MobileFilterDrawer
           isOpen={isFilterDrawerOpen}
           onClose={handleCloseFilterDrawer}
-          onApplyFilters={() => undefined}
           filters={filters}
           setFilters={setFilters}
           filterData={DirectoryFilters}
