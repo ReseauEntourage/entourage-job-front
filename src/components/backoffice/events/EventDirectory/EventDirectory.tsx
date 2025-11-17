@@ -174,7 +174,7 @@ export function EventDirectory() {
         <Section className="custom-page">
           <StyledEventDirectoryHeaderSectionContent>
             <HeaderBackoffice
-              title="Découvrez tous les évenements"
+              title="Découvrez tous les événements"
               description="Découvrez tous les événements Entourage Pro"
               noSeparator
             />
