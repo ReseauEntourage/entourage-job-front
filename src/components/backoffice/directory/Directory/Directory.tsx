@@ -218,7 +218,7 @@ export function Directory() {
           placeholder="Rechercher par prénom, nom ou métier"
           additionalButtons={
             isMobile && (
-              <StyledDirectoryButtonContainer isMobile={isMobile}>
+              <StyledDirectoryButtonContainer>
                 <MobileFilterButton
                   onClick={handleOpenFilterDrawer}
                   count={totalFiltersCount}
@@ -244,7 +244,7 @@ export function Directory() {
           placeholder="Rechercher par nom d'entreprise"
           additionalButtons={
             isMobile && (
-              <StyledDirectoryButtonContainer isMobile={isMobile}>
+              <StyledDirectoryButtonContainer>
                 <MobileFilterButton
                   onClick={handleOpenFilterDrawer}
                   count={totalFiltersCount}
@@ -287,7 +287,7 @@ export function Directory() {
               description="Découvrez les membres de la communauté, nos entreprises partenaires et développez votre carnet d'adresse."
               noSeparator
             />
-            <StyledDirectoryButtonContainer isMobile={isMobile}>
+            <StyledDirectoryButtonContainer>
               <Button
                 size={isMobile ? 'small' : 'large'}
                 variant={

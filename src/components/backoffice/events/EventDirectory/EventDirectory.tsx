@@ -181,7 +181,7 @@ export function EventDirectory() {
               placeholder="Rechercher par nom"
               additionalButtons={
                 isMobile && (
-                  <StyledEventDirectoryButtonContainer isMobile={isMobile}>
+                  <StyledEventDirectoryButtonContainer>
                     <MobileFilterButton
                       onClick={handleOpenFilterDrawer}
                       count={totalFiltersCount}
