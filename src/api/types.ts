@@ -223,8 +223,8 @@ export type Event = {
   eventType: EventType;
   participantsCount: number;
   mode: EventMode;
-  meetingLink: string;
-  fullAddress: string;
+  meetingLink: string | null;
+  fullAddress: string | null;
   duration: number | null;
   format?: string;
   goal?: string;
