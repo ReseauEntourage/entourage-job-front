@@ -113,7 +113,7 @@ export function EventDirectory() {
     eventDirectoryFilters,
     `/backoffice/events`,
     [],
-    GA_TAGS.PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC
+    GA_TAGS.PAGE_EVENTS_SUPPRIMER_FILTRES_CLIC
   );
 
   /**
