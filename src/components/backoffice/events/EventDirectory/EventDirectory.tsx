@@ -1,5 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { Api } from '@/src/api';
+import {
+  MobileFilterButton,
+  MobileFilterDrawer,
+} from '@/src/components/filters/MobileFilters';
 import { SearchBar } from '@/src/components/filters/SearchBar/SearchBar';
 import {
   EVENT_MODES_FILTERS,
@@ -9,28 +13,38 @@ import { GA_TAGS } from '@/src/constants/tags';
 import { Filter, FilterConstant } from '@/src/constants/utils';
 import { useFilters } from '@/src/hooks';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useIsMobile } from '@/src/hooks/utils';
 import { findConstantFromValue, mutateToArray } from '@/src/utils';
 import { EventDirectoryList } from '../EventDirectoryList/EventDirectoryList';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Section } from 'src/components/utils';
 import {
+  StyledEventDirectoryButtonContainer,
   StyledEventDirectoryContainer,
   StyledEventDirectoryHeaderSectionContent,
 } from './EventDirectory.styles';
 import { useEventDirectoryQueryParams } from './useEventDirectoryQueryParams';
 
 export function EventDirectory() {
+  const isMobile = useIsMobile();
+
   // State to avoid reapplying the default filter
   const [isDefaultDepartmentSet, setIsDefaultDepartmentSet] =
     React.useState(false);
+
   // Query params for filters
   const { modes, search, departmentIds, eventTypes } =
     useEventDirectoryQueryParams();
+
   // Departments for the department filter
   const [departmentsIdsFilters, setDepartmentsIdsFilters] = React.useState<
     FilterConstant[]
   >([]);
+
+  // State for filter drawer visibility on mobile
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = React.useState(false);
+
   // Current authenticated user
   const currentUser = useAuthenticatedUser();
 
@@ -86,6 +100,14 @@ export function EventDirectory() {
     };
   }, [modes, eventTypes, departmentIds, departmentsIdsFilters]);
 
+  // Compute total number of applied filters
+  const totalFiltersCount = useMemo(() => {
+    return Object.values(filters).reduce(
+      (acc, curr) => acc + (curr ? curr.length : 0),
+      0
+    );
+  }, [filters]);
+
   // Handlers for setting filters and search
   const { setFilters, setSearch, resetFilters } = useFilters(
     eventDirectoryFilters,
@@ -127,6 +149,14 @@ export function EventDirectory() {
     setFilters,
   ]);
 
+  const handleOpenFilterDrawer = () => {
+    setIsFilterDrawerOpen(true);
+  };
+
+  const handleCloseFilterDrawer = () => {
+    setIsFilterDrawerOpen(false);
+  };
+
   return (
     <>
       <StyledBackgroundedHeaderBackoffice>
@@ -149,16 +179,16 @@ export function EventDirectory() {
               setSearch={setSearch}
               setFilters={setFilters}
               placeholder="Rechercher par nom"
-              // additionalButtons={
-              //   isMobile && (
-              //     <StyledDirectoryButtonContainer isMobile={isMobile}>
-              //       <MobileFilterButton
-              //         onClick={handleOpenFilterDrawer}
-              //         count={totalFiltersCount}
-              //       />
-              //     </StyledDirectoryButtonContainer>
-              //   )
-              // }
+              additionalButtons={
+                isMobile && (
+                  <StyledEventDirectoryButtonContainer isMobile={isMobile}>
+                    <MobileFilterButton
+                      onClick={handleOpenFilterDrawer}
+                      count={totalFiltersCount}
+                    />
+                  </StyledEventDirectoryButtonContainer>
+                )
+              }
             />
           </StyledEventDirectoryHeaderSectionContent>
         </Section>
@@ -169,16 +199,16 @@ export function EventDirectory() {
         </StyledEventDirectoryContainer>
       </Section>
 
-      {/* {isMobile && (
+      {isMobile && (
         <MobileFilterDrawer
           isOpen={isFilterDrawerOpen}
           onClose={handleCloseFilterDrawer}
           onApplyFilters={() => undefined}
           filters={filters}
           setFilters={setFilters}
-          filterData={DirectoryFilters}
+          filterData={eventDirectoryFilters}
         />
-      )} */}
+      )}
     </>
   );
 }
