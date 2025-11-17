@@ -51,7 +51,7 @@ export function EventCard({
   return (
     <EntityCard
       href={{
-        pathname: `/backoffice/event/[id]`,
+        pathname: `/backoffice/events/[id]`,
         query: { id: salesForceId },
       }}
       onClick={() => {
