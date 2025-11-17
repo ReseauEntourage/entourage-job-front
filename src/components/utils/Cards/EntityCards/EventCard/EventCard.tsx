@@ -19,7 +19,17 @@ import {
   StyledSeparator,
 } from './EventCard.styles';
 
-export type EventCardProps = Event;
+export type EventCardProps = Pick<
+  Event,
+  | 'salesForceId'
+  | 'name'
+  | 'startDate'
+  | 'eventType'
+  | 'mode'
+  | 'meetingLink'
+  | 'fullAddress'
+  | 'participantsCount'
+>;
 
 export function EventCard({
   salesForceId,
