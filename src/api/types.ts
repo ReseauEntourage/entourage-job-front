@@ -1,5 +1,6 @@
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
+import { EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
@@ -211,6 +212,24 @@ export type UserProfile = {
   optInRecommendations: boolean;
   allowPhysicalEvents: boolean;
   allowRemoteEvents: boolean;
+};
+
+export type Event = {
+  salesForceId: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  eventType: EventType;
+  participantsCount: number;
+  mode: EventMode;
+  meetingLink: string;
+  fullAddress: string;
+  duration: number | null;
+  format?: string;
+  goal?: string;
+  audience?: string;
+  sequences?: string[];
 };
 
 export type UserReportDto = {
@@ -564,6 +583,13 @@ export type ProfilesFilters = {
   departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
+};
+
+export type EventsFilters = {
+  eventTypes: EventType | EventType[];
+  search?: string;
+  departmentIds: string | string[];
+  modes?: EventMode | EventMode[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

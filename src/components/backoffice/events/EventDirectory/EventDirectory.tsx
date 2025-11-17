@@ -4,12 +4,13 @@ import { SearchBar } from '@/src/components/filters/SearchBar/SearchBar';
 import {
   EVENT_MODES_FILTERS,
   EVENT_TYPES_FILTERS,
-} from '@/src/constants/event';
+} from '@/src/constants/events';
 import { GA_TAGS } from '@/src/constants/tags';
 import { Filter, FilterConstant } from '@/src/constants/utils';
 import { useFilters } from '@/src/hooks';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { findConstantFromValue, mutateToArray } from '@/src/utils';
-import { DirectoryList } from '../../directory/DirectoryList';
+import { EventDirectoryList } from '../EventDirectoryList/EventDirectoryList';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Section } from 'src/components/utils';
@@ -20,13 +21,20 @@ import {
 import { useEventDirectoryQueryParams } from './useEventDirectoryQueryParams';
 
 export function EventDirectory() {
-  const eventDirectoryFiltersParams = useEventDirectoryQueryParams();
+  // State to avoid reapplying the default filter
+  const [isDefaultDepartmentSet, setIsDefaultDepartmentSet] =
+    React.useState(false);
+  // Query params for filters
   const { modes, search, departmentIds, eventTypes } =
-    eventDirectoryFiltersParams;
+    useEventDirectoryQueryParams();
+  // Departments for the department filter
   const [departmentsIdsFilters, setDepartmentsIdsFilters] = React.useState<
     FilterConstant[]
   >([]);
+  // Current authenticated user
+  const currentUser = useAuthenticatedUser();
 
+  // Define filters for the Event Directory
   const eventDirectoryFilters: Filter[] = [
     {
       key: 'modes',
@@ -48,6 +56,7 @@ export function EventDirectory() {
     } as Filter,
   ];
 
+  // Fetch departments for the department filter
   const fetchDepartments = async () => {
     try {
       const { data } = await Api.getAllDepartments({ search: '' });
@@ -62,6 +71,7 @@ export function EventDirectory() {
     }
   };
 
+  // Compute filters based on query params
   const filters = useMemo(() => {
     return {
       modes: mutateToArray(modes).map((format) =>
@@ -76,6 +86,7 @@ export function EventDirectory() {
     };
   }, [modes, eventTypes, departmentIds, departmentsIdsFilters]);
 
+  // Handlers for setting filters and search
   const { setFilters, setSearch, resetFilters } = useFilters(
     eventDirectoryFilters,
     `/backoffice/events`,
@@ -87,8 +98,34 @@ export function EventDirectory() {
    * Hooks
    */
   useEffect(() => {
+    // Fetch departments on mount
     fetchDepartments();
   }, []);
+
+  useEffect(() => {
+    // Set default department filter based on user's profile
+    if (
+      !isDefaultDepartmentSet &&
+      currentUser?.userProfile?.department &&
+      departmentsIdsFilters.length > 0
+    ) {
+      const department = departmentsIdsFilters.find((dept) => {
+        if (dept.label && currentUser.userProfile.department) {
+          return dept.label === currentUser.userProfile.department;
+        }
+        return null;
+      });
+      setFilters({
+        departmentIds: department ? [department] : [],
+      });
+      setIsDefaultDepartmentSet(true);
+    }
+  }, [
+    isDefaultDepartmentSet,
+    currentUser.userProfile.department,
+    departmentsIdsFilters,
+    setFilters,
+  ]);
 
   return (
     <>
@@ -111,7 +148,7 @@ export function EventDirectory() {
               search={search}
               setSearch={setSearch}
               setFilters={setFilters}
-              placeholder="Rechercher par nom ou lieu"
+              placeholder="Rechercher par nom"
               // additionalButtons={
               //   isMobile && (
               //     <StyledDirectoryButtonContainer isMobile={isMobile}>
@@ -128,7 +165,7 @@ export function EventDirectory() {
       </StyledBackgroundedHeaderBackoffice>
       <Section className="custom-page">
         <StyledEventDirectoryContainer>
-          <DirectoryList />
+          <EventDirectoryList />
         </StyledEventDirectoryContainer>
       </Section>
 

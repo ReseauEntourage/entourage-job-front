@@ -1,7 +1,7 @@
 import { FilterConstant } from './utils';
 
 export enum EventMode {
-  IN_PERSON = 'in_person',
+  IN_PERSON = 'irl',
   ONLINE = 'online',
 }
 
@@ -57,6 +57,19 @@ export const EVENT_TYPES = [
     type: EventType.APERO_COACH,
   },
 ];
+
+export const EVENT_IMAGES: {
+  [key in EventType]: string;
+} = {
+  [EventType.WELCOME_SESSION]: '/static/img/events/welcome_session.jpg',
+  [EventType.COFFEE_SESSION]: '/static/img/events/coffee_session.jpg',
+  [EventType.NETWORKING]: '/static/img/events/networking.jpg',
+  [EventType.SPEED_MEETING]: '/static/img/events/speed_meeting.jpg',
+  [EventType.PAPOTAGES_PRO]: '/static/img/events/papotages_pro.jpg',
+  [EventType.PHOTO_SHOOTING]: '/static/img/events/photo_shooting.png',
+  [EventType.APERO_COACH]: '/static/img/events/apero_coach.jpg',
+  [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
+};
 
 export const EVENT_MODES_FILTERS: FilterConstant<EventMode>[] = [
   ...EVENT_MODES.map(({ name, format }) => {
