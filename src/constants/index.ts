@@ -725,12 +725,12 @@ const ADDRESSES = {
   LYON: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LYON,
   LILLE: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LILLE,
   RENNES: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_RENNES,
-  LORIENT: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LORIENT,
 };
 
 export const ANTENNE_INFO = [
   {
     dpt: '93',
+    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_PARIS,
     mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_PARIS,
     mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_PARIS,
     city: 'Paris',
@@ -738,6 +738,7 @@ export const ANTENNE_INFO = [
   },
   {
     dpt: '75',
+    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_PARIS,
     mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_PARIS,
     mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_PARIS,
     city: 'Paris',
@@ -745,6 +746,7 @@ export const ANTENNE_INFO = [
   },
   {
     dpt: '92',
+    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_PARIS,
     mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_PARIS,
     mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_PARIS,
     city: 'Paris',
@@ -752,6 +754,7 @@ export const ANTENNE_INFO = [
   },
   {
     dpt: '35',
+    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_RENNES,
     mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_RENNES,
     mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_RENNES,
     city: 'Rennes',
@@ -759,6 +762,7 @@ export const ANTENNE_INFO = [
   },
   {
     dpt: '59',
+    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_LILLE,
     mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_LILLE,
     mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_LILLE,
     city: 'Lille',
@@ -766,6 +770,7 @@ export const ANTENNE_INFO = [
   },
   {
     dpt: '69',
+    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_LYON,
     mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_LYON,
     mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_LYON,
     city: 'Lyon',
