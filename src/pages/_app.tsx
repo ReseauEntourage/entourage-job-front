@@ -92,6 +92,10 @@ const EntourageApp = (props: AppProps) => {
       );
       return;
     }
+    if (datadogRum.getInitConfiguration()) {
+      // already initialized
+      return;
+    }
     datadogRum.init({
       applicationId: process.env.NEXT_PUBLIC_DD_APP_ID,
       clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
