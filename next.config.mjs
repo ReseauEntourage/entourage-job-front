@@ -7,17 +7,14 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import tracer from 'dd-trace';
 
-const ENV = `${process.env.NODE_ENV}`;
-
-if (ENV === 'production') {
-  tracer.init({
-    version: process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION,
-  });
-}
+tracer.init({
+  version: process.env.HEROKU_RELEASE_VERSION,
+  env: process.env.NODE_ENV,
+});
 
 dotenv.config();
 
-const dev = ENV !== 'production';
+const dev = process.env.NODE_ENV !== 'production';
 const context = dirname(fileURLToPath(import.meta.url));
 
 const securityHeaders = [
@@ -88,6 +85,9 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withLess({
+  publicRuntimeConfig: {
+    COMMIT_SHA: process.env.HEROKU_RELEASE_COMMIT || 'development',
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,

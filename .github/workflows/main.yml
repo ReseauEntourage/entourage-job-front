@@ -8,7 +8,6 @@ on:
 
 env:
   PORT: 3000
-  NEXT_PUBLIC_HEROKU_RELEASE_VERSION: 'v100'
   NEXT_PUBLIC_WEBINAR_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
@@ -25,7 +24,7 @@ env:
   NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY: /images/
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
   NEXT_PUBLIC_PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
-  NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS: '174 Rue Championnet 75018, Paris'
+  NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS: '174 Rue Championnet 75018, Paris'
   NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
@@ -37,35 +36,28 @@ jobs:
       image: cypress/browsers:node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1 # use node-20.x from dockerhub
       options: --user 1001 # to grant user permission
     steps:
-      # Move on the ref
+      # Checkout code
       - name: Checkout on PR
         uses: actions/checkout@v4 # action to checkout on the ref
 
+      # Setup pnpm
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           run_install: false
 
+      # Setup Node.js environment with pnpm cache
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           cache: 'pnpm'
 
-      # Get node module from cache
-      # - name: Cache Node Modules
-      #   id: pnpm-cache-deps
-      #   uses: actions/cache@v3 # action to cache node modules
-      #   with:
-      #     # pnpm cache files are stored in `/node_modules` on Linux/macOS
-      #     path: '**/node_modules'
-      #     key: linux-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
-      #     restore-keys: |
-      #       linux-node-modules-
-      #       linux-node-
+      # Install dependencies with pnpm
       - name: Install dependencies
         run: pnpm install
         # if: steps.pnpm-cache-deps.outputs.cache-hit != 'true'
 
+      # Install Cypress binary
       - name: Install Cypress binary
         run: pnpm exec cypress install
 
