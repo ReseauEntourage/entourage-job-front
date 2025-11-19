@@ -36,10 +36,6 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     if (currentUser) {
-      datadogRum.setUser({
-        id: currentUser.id,
-        role: currentUser.role,
-      });
       gaEventWithUser(GA_TAGS.BACKOFFICE_OPEN.action, {
         userId: currentUser.id,
         zone: currentUser.zone,
@@ -103,21 +99,17 @@ const EntourageApp = (props: AppProps) => {
       service: 'entourage-pro-next',
       env: process.env.NEXT_PUBLIC_ENV,
       version: publicRuntimeConfig.RELEASE_VERSION,
-      sessionSampleRate: 100,
-      sessionReplaySampleRate: 20,
+      sessionSampleRate: 0,
+      sessionReplaySampleRate: 0,
       trackBfcacheViews: true,
-      trackUserInteractions: true,
-      trackResources: true,
+      trackUserInteractions: false,
+      trackResources: false,
       trackLongTasks: true,
       trackEarlyRequests: true,
       trackAnonymousUser: true,
       defaultPrivacyLevel: 'mask',
+      trackingConsent: 'not-granted',
     });
-
-    // Start the session replay recording only in production
-    if (process.env.NEXT_PUBLIC_ENV === 'production') {
-      datadogRum.startSessionReplayRecording();
-    }
   }, []);
 
   return (
