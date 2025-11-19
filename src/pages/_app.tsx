@@ -108,7 +108,6 @@ const EntourageApp = (props: AppProps) => {
       trackEarlyRequests: true,
       trackAnonymousUser: true,
       defaultPrivacyLevel: 'mask',
-      trackingConsent: 'not-granted',
     });
   }, []);
 
