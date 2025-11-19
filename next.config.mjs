@@ -86,7 +86,7 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 /** @type {import('next').NextConfig} */
 const nextConfig = withLess({
   publicRuntimeConfig: {
-    COMMIT_SHA: process.env.HEROKU_RELEASE_COMMIT || 'development',
+    RELEASE_VERSION: process.env.HEROKU_RELEASE_VERSION || 'development',
   },
   webpack: (config) => {
     config.module.rules.push({

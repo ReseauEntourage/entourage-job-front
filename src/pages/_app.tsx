@@ -102,7 +102,7 @@ const EntourageApp = (props: AppProps) => {
       site: 'datadoghq.eu',
       service: 'entourage-pro-next',
       env: process.env.NEXT_PUBLIC_ENV,
-      version: publicRuntimeConfig.COMMIT_SHA,
+      version: publicRuntimeConfig.RELEASE_VERSION,
       sessionSampleRate: 100,
       sessionReplaySampleRate: 20,
       trackBfcacheViews: true,
