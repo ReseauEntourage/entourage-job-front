@@ -720,61 +720,36 @@ export const EVENT_TYPES_FILTERS = [
   },
 ];
 
-const ADDRESSES = {
-  PARIS: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  LYON: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LYON,
-  LILLE: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LILLE,
-  RENNES: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_RENNES,
-};
-
 export const ANTENNE_INFO = [
   {
     dpt: '93',
-    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_PARIS,
-    mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_PARIS,
-    mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_PARIS,
     city: 'Paris',
-    address: ADDRESSES.PARIS,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
   },
   {
     dpt: '75',
-    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_PARIS,
-    mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_PARIS,
-    mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_PARIS,
     city: 'Paris',
-    address: ADDRESSES.PARIS,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
   },
   {
     dpt: '92',
-    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_PARIS,
-    mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_PARIS,
-    mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_PARIS,
     city: 'Paris',
-    address: ADDRESSES.PARIS,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
   },
   {
     dpt: '35',
-    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_RENNES,
-    mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_RENNES,
-    mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_RENNES,
     city: 'Rennes',
-    address: ADDRESSES.RENNES,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_RENNES,
   },
   {
     dpt: '59',
-    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_LILLE,
-    mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_LILLE,
-    mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_LILLE,
     city: 'Lille',
-    address: ADDRESSES.LILLE,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LILLE,
   },
   {
     dpt: '69',
-    mailLocalBranch: process.env.NEXT_PUBLIC_LOCAL_BRANCH_EMAIL_LYON,
-    mailCoordo: process.env.NEXT_PUBLIC_REFERRAL_MAIN_LYON,
-    mailEntreprise: process.env.NEXT_PUBLIC_REFERRAL_COMPANIES_LYON,
     city: 'Lyon',
-    address: ADDRESSES.LYON,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LYON,
   },
 ] as const;
 
