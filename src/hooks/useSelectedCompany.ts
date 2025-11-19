@@ -31,7 +31,7 @@ export function useSelectedCompany() {
   }, [companyId, dispatch]);
 
   useEffect(() => {
-    if (companyId && !selectedCompany) {
+    if (companyId && selectedCompany?.id !== companyId) {
       dispatch(companyActions.fetchSelectedCompanyRequested());
     }
   }, [companyId, selectedCompany, dispatch]);
