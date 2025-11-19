@@ -7,17 +7,14 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import tracer from 'dd-trace';
 
-const ENV = `${process.env.NODE_ENV}`;
-
-if (ENV === 'production') {
-  tracer.init({
-    version: process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION,
-  });
-}
+tracer.init({
+  version: process.env.HEROKU_RELEASE_VERSION,
+  env: process.env.NODE_ENV,
+});
 
 dotenv.config();
 
-const dev = ENV !== 'production';
+const dev = process.env.NODE_ENV !== 'production';
 const context = dirname(fileURLToPath(import.meta.url));
 
 const securityHeaders = [
@@ -88,6 +85,9 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withLess({
+  publicRuntimeConfig: {
+    RELEASE_VERSION: process.env.HEROKU_RELEASE_VERSION || 'development',
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
@@ -150,16 +150,6 @@ const nextConfig = withLess({
       {
         source: '/don',
         destination: process.env.NEXT_PUBLIC_DONATION_LINK,
-        permanent: false,
-      },
-      {
-        source: '/tutoriel-video-premiers-pas',
-        destination: process.env.NEXT_PUBLIC_TUTORIAL_VIDEO_FIRST_STEPS,
-        permanent: false,
-      },
-      {
-        source: '/tutoriel-projet-pro',
-        destination: process.env.NEXT_PUBLIC_TUTORIAL_PP,
         permanent: false,
       },
       {

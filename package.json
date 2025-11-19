@@ -36,6 +36,7 @@
     ".next/cache"
   ],
   "dependencies": {
+    "@datadog/browser-rum": "^6.24.0",
     "@n8tb1t/use-scroll-position": "^2.0.3",
     "@react-hook/change": "^1.0.0",
     "@react-hook/window-size": "^3.1.1",

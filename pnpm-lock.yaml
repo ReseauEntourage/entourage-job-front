@@ -11,6 +11,9 @@ importers:
 
   .:
     dependencies:
+      '@datadog/browser-rum':
+        specifier: ^6.24.0
+        version: 6.24.0
       '@n8tb1t/use-scroll-position':
         specifier: ^2.0.3
         version: 2.0.3(@types/react@19.0.12)(react@19.0.0)
@@ -982,6 +985,20 @@ packages:
 
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
+
+  '@datadog/browser-core@6.24.0':
+    resolution: {integrity: sha512-mTv01ckd+QDiNbhqYhvj6UxwMhoM5LWrPODEWpWSHRc2T9xnWqUBdaJmCudfz72qlhCYqp44uBwv5cZ7bdHxUA==}
+
+  '@datadog/browser-rum-core@6.24.0':
+    resolution: {integrity: sha512-rtnYr3xP2aYz0Bw9SPHB6WOTOBnuS7UiGV72e5ry8NgoUiMPtGRtfg5NAPvgM6+TnPQ26J0kLXCSGvCVLGNMVw==}
+
+  '@datadog/browser-rum@6.24.0':
+    resolution: {integrity: sha512-phZXs11nsJ0LwUPJlOvE4wNth0RQ4K2h35Dk4m+mYByCzEAH50uwv4x3fxpGUN9fqydQZoqo+uelIggmjyBXxA==}
+    peerDependencies:
+      '@datadog/browser-logs': 6.24.0
+    peerDependenciesMeta:
+      '@datadog/browser-logs':
+        optional: true
 
   '@datadog/native-appsec@7.1.1':
     resolution: {integrity: sha512-1XVrCY4g1ArN79SQANMtiIkaxKSPfgdAGv0VAM4Pz+NQuxKfl+2xQPXjQPm87LI1KQIO6MU6qzv3sUUSesb9lA==}
@@ -7720,6 +7737,17 @@ snapshots:
       lodash.once: 4.1.1
     transitivePeerDependencies:
       - supports-color
+
+  '@datadog/browser-core@6.24.0': {}
+
+  '@datadog/browser-rum-core@6.24.0':
+    dependencies:
+      '@datadog/browser-core': 6.24.0
+
+  '@datadog/browser-rum@6.24.0':
+    dependencies:
+      '@datadog/browser-core': 6.24.0
+      '@datadog/browser-rum-core': 6.24.0
 
   '@datadog/native-appsec@7.1.1':
     dependencies:
