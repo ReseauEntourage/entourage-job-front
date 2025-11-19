@@ -13,7 +13,6 @@ env:
   NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COMPANY_URL: 'https://google.com'
   NEXT_PUBLIC_TUTORIAL_CV: 'https://google.com'
-  NEXT_PUBLIC_TUTORIAL_PP: 'https://google.com'
   NEXT_PUBLIC_DONATION_LINK: 'https://google.com'
   NEXT_PUBLIC_SERVER_URL: 'http://localhost:3000'
   NEXT_PUBLIC_API_URL: 'http://localhost:3002'

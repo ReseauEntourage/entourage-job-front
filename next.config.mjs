@@ -153,11 +153,6 @@ const nextConfig = withLess({
         permanent: false,
       },
       {
-        source: '/tutoriel-projet-pro',
-        destination: process.env.NEXT_PUBLIC_TUTORIAL_PP,
-        permanent: false,
-      },
-      {
         source: '/boite-a-outils',
         destination: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL,
         permanent: false,
