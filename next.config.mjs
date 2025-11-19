@@ -153,11 +153,6 @@ const nextConfig = withLess({
         permanent: false,
       },
       {
-        source: '/tutoriel-video-premiers-pas',
-        destination: process.env.NEXT_PUBLIC_TUTORIAL_VIDEO_FIRST_STEPS,
-        permanent: false,
-      },
-      {
         source: '/tutoriel-projet-pro',
         destination: process.env.NEXT_PUBLIC_TUTORIAL_PP,
         permanent: false,
