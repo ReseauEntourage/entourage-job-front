@@ -32,6 +32,7 @@ import {
   UserReportDto,
   UserWithUserCandidate,
   CompaniesFilters,
+  EventsFilters,
 } from './types';
 
 export class APIHandler {
@@ -207,6 +208,17 @@ export class APIHandler {
     }
   ): Promise<AxiosResponse> {
     return this.get('/user/profile', {
+      params,
+    });
+  }
+
+  getAllEvents(
+    params: {
+      offset: number;
+      limit: number;
+    } & EventsFilters
+  ): Promise<AxiosResponse> {
+    return this.get('/events', {
       params,
     });
   }

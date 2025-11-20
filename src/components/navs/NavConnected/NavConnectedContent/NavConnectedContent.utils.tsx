@@ -43,6 +43,10 @@ export const renderLinks = (
       name: "Réseau d'entraide",
     },
     {
+      href: '/backoffice/events',
+      name: 'Événements',
+    },
+    {
       href: `${
         process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL
       }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
@@ -75,7 +79,10 @@ export const renderLinks = (
       href: '/backoffice/annuaire',
       name: "Réseau d'entraide",
     },
-
+    {
+      href: '/backoffice/events',
+      name: 'Événements',
+    },
     ...(isCompanyAdmin
       ? [
           {
@@ -166,6 +173,10 @@ export const renderLinks = (
         {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
+        },
+        {
+          href: '/backoffice/events',
+          name: 'Événements',
         },
         {
           href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,

@@ -416,6 +416,21 @@ export const GA_TAGS = {
   PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC: {
     action: 'Page_Annuaire_Supprimer_Filtres_Clic',
   },
+  PAGE_EVENTS_FILTRE_MODE_CLIC: {
+    action: 'Page_Events_Filtre_Format_Clic',
+  },
+  PAGE_EVENTS_FILTRE_TYPE_CLIC: {
+    action: 'Page_Events_Filtre_Type_Clic',
+  },
+  PAGE_EVENTS_FILTRE_DEPARTMENT_CLIC: {
+    action: 'Page_Events_Filtre_Department_Clic',
+  },
+  PAGE_EVENTS_CARTE_CLIC: {
+    action: 'Page_Events_Carte_Clic',
+  },
+  PAGE_EVENTS_SUPPRIMER_FILTRES_CLIC: {
+    action: 'Page_Events_Supprimer_Filtres_Clic',
+  },
   PAGE_DASHBOARD_DISPONIBILITE_CLIC: {
     action: 'Page_Dashboard_Disponibilite_Clic',
   },
