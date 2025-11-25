@@ -25,7 +25,7 @@ const cardVariables: {
     content:
       "N'hésitez pas à prendre contact avec eux pour les accompagner dans votre recherche",
     button: 'Découvrez les coachs',
-    buttonHref: '/backoffice/annuaire?entity=Coach',
+    buttonHref: '/backoffice/annuaire?entity=user&role=Coach',
   },
   [UserRoles.COACH]: {
     title: 'Découvrez les candidats que vous pourriez accompagner',
@@ -33,7 +33,7 @@ const cardVariables: {
     content:
       "N'hésitez pas à prendre contact avec eux pour les accompagner dans leur projet professionnel",
     button: 'Découvrez les candidats',
-    buttonHref: '/backoffice/annuaire?entity=Candidat',
+    buttonHref: '/backoffice/annuaire?entity=user&role=Candidat',
   },
 };
 
