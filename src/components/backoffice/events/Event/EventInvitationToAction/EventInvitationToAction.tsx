@@ -45,7 +45,7 @@ export const EventInvitationToAction = ({
     <Card bgColor="extraDarkBlue">
       <StyledInvitationToActionContainer>
         <Text color="white" size="xlarge" weight="semibold" center>
-          Souhaitez vous participez à l&apos;événement ?
+          Souhaitez-vous participer à l&apos;événement ?
         </Text>
         <StyledActionContainer>
           <Button>Participer à l&apos;événement</Button>
