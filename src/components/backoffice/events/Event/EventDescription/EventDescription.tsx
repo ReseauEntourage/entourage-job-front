@@ -13,11 +13,9 @@ export const EventDescription = ({ description }: EventDescriptionProps) => {
 
   return (
     <Card title="Description">
-      {description && (
-        <StyledDescriptionContainer>
-          <Text>{description}</Text>
-        </StyledDescriptionContainer>
-      )}
+      <StyledDescriptionContainer>
+        <Text>{description}</Text>
+      </StyledDescriptionContainer>
     </Card>
   );
 };
