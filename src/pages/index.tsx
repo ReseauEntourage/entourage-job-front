@@ -28,7 +28,7 @@ const Index = () => {
         }
         img="/static/img/home-banner.jpg"
         imgMobile="/static/img/home-banner.jpg"
-        alt="entourage pro réseau solidaire professionnel"
+        alt="Entourage Pro réseau solidaire professionnel"
         cta={[
           {
             label: 'Devenir candidat(e)',
