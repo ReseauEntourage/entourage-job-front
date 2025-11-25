@@ -11,7 +11,7 @@ export const StyledCard = styled.div<{
   box-shadow: 0 4px 8px 0 ${COLORS.lightGray};
   position: relative;
   border-radius: 20px;
-  border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};};
+  border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};
   background-color: ${(props) => COLORS[props.bgColor]};
 
   &.mobile {
