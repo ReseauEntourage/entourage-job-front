@@ -16,8 +16,8 @@ const PageEvent = () => {
     <LayoutBackOffice
       title={
         selectedEvent
-          ? `Evenement - ${selectedEvent.name}`
-          : 'Evenement - Chargement...'
+          ? `Événement - ${selectedEvent.name}`
+          : 'Événement - Chargement...'
       }
     >
       {selectedEvent && !isFetchEventRequested ? <Event /> : <LoadingScreen />}
