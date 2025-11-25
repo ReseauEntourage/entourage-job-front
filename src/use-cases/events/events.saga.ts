@@ -16,6 +16,9 @@ const {
   fetchEventsNextPage,
   resetEventsOffset,
   fetchEventsWithFilters,
+  fetchSelectedEventRequested,
+  fetchSelectedEventSucceeded,
+  fetchSelectedEventFailed,
 } = slice.actions;
 
 function* fetchEventsNextPageSaga(
@@ -60,8 +63,21 @@ function* fetchEventsRequestedSaga(
   }
 }
 
+function* fetchSelectedEventSaga(
+  action: ReturnType<typeof fetchSelectedEventRequested>
+) {
+  const { eventId } = action.payload;
+  try {
+    const { data: event } = yield* call(() => Api.getEvent(eventId));
+    yield* put(fetchSelectedEventSucceeded({ ...event }));
+  } catch {
+    yield* put(fetchSelectedEventFailed());
+  }
+}
+
 export function* saga() {
   yield* takeLatest(fetchEventsWithFilters, fetchEventsWithFiltersSaga);
   yield* takeLeading(fetchEventsNextPage, fetchEventsNextPageSaga);
   yield* takeLatest(fetchEventsRequested, fetchEventsRequestedSaga);
+  yield* takeLatest(fetchSelectedEventRequested, fetchSelectedEventSaga);
 }

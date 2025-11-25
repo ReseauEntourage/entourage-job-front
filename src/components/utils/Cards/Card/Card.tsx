@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Color } from '@/src/constants/styles';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Text } from '../../Text';
 import { Button, ButtonIcon } from 'src/components/utils/Button';
@@ -31,6 +32,7 @@ interface CardProps {
   dataTestId?: string;
   editIcon?: React.ReactNode;
   borderColor?: string;
+  bgColor?: Color;
 }
 
 export const Card = ({
@@ -48,6 +50,7 @@ export const Card = ({
   editIcon,
   borderColor,
   centerTitle = false,
+  bgColor = 'white',
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -61,6 +64,7 @@ export const Card = ({
       onClick={onClick}
       data-testid={dataTestId}
       borderColor={borderColor}
+      bgColor={bgColor}
     >
       {title ? (
         <>

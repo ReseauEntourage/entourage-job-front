@@ -31,21 +31,3 @@ export const StyledEventCardContentContainer = styled.div`
   gap: 10px;
   flex: 1;
 `;
-
-export const StyledEventInfoElementContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 8px;
-`;
-
-export const StyledEventInfoElement = styled.div`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-`;
-
-export const StyledSeparator = styled.hr`
-  width: 100%;
-  margin: 5px 0;
-`;

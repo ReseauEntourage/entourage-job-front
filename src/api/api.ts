@@ -124,6 +124,13 @@ export class APIHandler {
     return this.get(`/users/public-cvs/${userId}`, {}, headers);
   }
 
+  /// //////
+  /// events //
+  /// //////
+  getEvent(eventId: string): Promise<AxiosResponse> {
+    return this.get(`/events/${eventId}`);
+  }
+
   // ///////////////////////
   //  profile-generation  //
   // ///////////////////////

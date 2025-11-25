@@ -1,7 +1,6 @@
-import moment from 'moment';
-import 'moment/locale/fr';
 import React, { useMemo } from 'react';
-import { EVENT_IMAGES, EventMode } from '@/src/constants/events';
+import { EventInfoSummary } from '@/src/components/backoffice/events/EventInfoSummary/EventInfoSummary';
+import { EVENT_IMAGES } from '@/src/constants/events';
 import { H5 } from '../../../Headings';
 import { LegacyImg } from '../../../Images';
 import { EntityCard } from '../EntityCard/EntityCard';
@@ -14,9 +13,6 @@ import {
   StyledEventCardParticipation,
   StyledEventCardPicture,
   StyledEventCardPictureContainer,
-  StyledEventInfoElement,
-  StyledEventInfoElementContainer,
-  StyledSeparator,
 } from './EventCard.styles';
 
 export type EventCardProps = Pick<
@@ -77,42 +73,14 @@ export function EventCard({
         <H5 title={name} />
         {/* TODO: Add the targeted roles badges */}
 
-        <StyledEventInfoElementContainer>
-          {/* Date start */}
-          <StyledEventInfoElement>
-            <LucidIcon name="Calendar" size={20} />
-            <Text>Le {moment(startDate).locale('fr').format('LLL')}</Text>
-          </StyledEventInfoElement>
-
-          {/* IRL Location */}
-          {mode === EventMode.IN_PERSON && fullAddress && (
-            <StyledEventInfoElement>
-              <LucidIcon name="MapPin" size={20} />
-              <Text>{fullAddress}</Text>
-            </StyledEventInfoElement>
-          )}
-
-          {/* Online Location */}
-          {mode === EventMode.ONLINE && meetingLink && (
-            <StyledEventInfoElement>
-              <LucidIcon name="Laptop" size={20} />
-              <Text>En visio</Text>
-            </StyledEventInfoElement>
-          )}
-        </StyledEventInfoElementContainer>
-
-        <StyledSeparator />
-        {/* Participants count */}
-        <StyledEventInfoElement>
-          <LucidIcon name="Users" size={20} />
-          {participantsCount === 0 ? (
-            <Text>Aucun participant</Text>
-          ) : (
-            <Text>
-              {participantsCount} participant{participantsCount > 1 ? 's' : ''}
-            </Text>
-          )}
-        </StyledEventInfoElement>
+        <EventInfoSummary
+          startDate={startDate}
+          mode={mode}
+          meetingLink={meetingLink}
+          fullAddress={fullAddress}
+          participantsCount={participantsCount}
+          displayParticipants
+        />
       </StyledEventCardContentContainer>
     </EntityCard>
   );

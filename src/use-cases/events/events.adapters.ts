@@ -5,3 +5,12 @@ import { createRequestAdapter } from 'src/store/utils';
 export const fetchEventsAdapter = createRequestAdapter(
   'fetchEvents'
 ).withPayloads<EventDirectoryFilters, Event[]>();
+
+export const fetchSelectedEventAdapter = createRequestAdapter(
+  'fetchSelectedEvent'
+).withPayloads<
+  {
+    eventId: string;
+  },
+  Event
+>();
