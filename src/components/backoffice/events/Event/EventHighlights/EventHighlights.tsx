@@ -28,7 +28,7 @@ export const EventHighlights = ({
         <Item
           icon={<LucidIcon name="Users" size={30} color={COLORS.primaryBlue} />}
           title="Pour qui ?"
-          content={audience || ''}
+          content={audience}
         />
 
         <Item
@@ -40,7 +40,7 @@ export const EventHighlights = ({
             />
           }
           title="Format"
-          content={format || ''}
+          content={format}
         />
 
         <Item
@@ -48,7 +48,7 @@ export const EventHighlights = ({
             <LucidIcon name="Target" size={30} color={COLORS.primaryBlue} />
           }
           title="Objectif"
-          content={goal || ''}
+          content={goal}
         />
       </StyledItemsContainer>
     </Card>

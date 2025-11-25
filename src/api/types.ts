@@ -226,9 +226,9 @@ export type Event = {
   meetingLink: string | null;
   fullAddress: string | null;
   duration: number | null;
-  format?: string;
-  goal?: string;
-  audience?: string;
+  format: string;
+  goal: string;
+  audience: string;
   sequences?: string[];
 };
 
