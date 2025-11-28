@@ -26,7 +26,7 @@ export function Refering() {
     <StyledReferingPage>
       <StyledReferingContainer>
         <EntourageProLogoPrimary width={226} height={78} />
-        <Card title="Créer le compte Entourage pro">
+        <Card title="Créer le compte Entourage Pro">
           {!isReferingLoading && (
             <>
               {stepContent.subtitle && (

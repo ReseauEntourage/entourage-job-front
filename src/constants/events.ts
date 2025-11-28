@@ -33,7 +33,7 @@ export const EVENT_TYPES = [
     type: EventType.WELCOME_SESSION,
   },
   {
-    name: 'Café d’information Entourage pro',
+    name: 'Café d’information Entourage Pro',
     type: EventType.COFFEE_SESSION,
   },
   {
