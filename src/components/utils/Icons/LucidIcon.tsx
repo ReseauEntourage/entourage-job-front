@@ -1,6 +1,6 @@
 import { icons } from 'lucide-react';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export type IconName = keyof typeof icons;
 
@@ -12,7 +12,14 @@ export interface IconProps {
   style?: 'solid' | 'outline';
   fill?: string;
   absoluteStrokeWidth?: boolean;
+  spin?: boolean;
 }
+
+const lucidStrokeWidth = {
+  thin: 1.5,
+  regular: 1.8,
+  bold: 2.5,
+};
 
 export const LucidIcon = ({
   name,
@@ -22,28 +29,36 @@ export const LucidIcon = ({
   style = 'outline',
   fill = color,
   absoluteStrokeWidth = false,
+  spin = false,
 }: IconProps) => {
   const Icon = icons[name];
 
-  const lucidStrokeWidth = {
-    thin: 1.5,
-    regular: 1.8,
-    bold: 2.5,
-  };
+  const iconProps = useMemo(() => {
+    const common = {
+      color,
+      size,
+    };
 
-  if (style === 'solid') {
-    return (
-      <Icon
-        color={color}
-        size={size}
-        strokeWidth={0}
-        fill={fill}
-        absoluteStrokeWidth={absoluteStrokeWidth}
-      />
-    );
-  }
+    if (style === 'solid') {
+      return {
+        ...common,
+        strokeWidth: 0,
+        fill,
+        absoluteStrokeWidth,
+      };
+    }
+
+    return {
+      ...common,
+      strokeWidth: lucidStrokeWidth[stroke],
+      absoluteStrokeWidth,
+    };
+  }, [color, size, style, stroke, fill, absoluteStrokeWidth]);
 
   return (
-    <Icon color={color} size={size} strokeWidth={lucidStrokeWidth[stroke]} />
+    <Icon
+      {...iconProps}
+      style={spin ? { animation: 'spin 1s linear infinite' } : undefined}
+    />
   );
 };

@@ -8,13 +8,13 @@ export const StyledHeader = styled.div`
 export const StyledHeaderContent = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 30px;
   gap: 30px;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     margin-top: 10px;
-    gap: 10px;
+    gap: 15px;
   }
 `;
 
@@ -24,10 +24,6 @@ export const StyledHeaderPictureContainer = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
-    margin-right: 20px;
-  }
 `;
 
 export const StyledHeaderInfoContainer = styled.div`

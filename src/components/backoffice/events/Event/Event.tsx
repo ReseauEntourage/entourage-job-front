@@ -28,7 +28,7 @@ export const Event = () => {
         meetingLink={selectedEvent.meetingLink}
         startDate={selectedEvent.startDate}
         fullAddress={selectedEvent.fullAddress}
-        participantsCount={selectedEvent.participantsCount}
+        registrationCount={selectedEvent.registrationCount}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
@@ -41,15 +41,23 @@ export const Event = () => {
               audience={selectedEvent.audience}
             />
             <EventSequences sequences={selectedEvent.sequences} />
-            <EventInvitationToAction
-              name={selectedEvent.name}
-              salesForceId={selectedEvent.salesForceId}
-              description={selectedEvent.description}
-            />
+            {isDesktop && (
+              <EventInvitationToAction
+                name={selectedEvent.name}
+                salesForceId={selectedEvent.salesForceId}
+                description={selectedEvent.description}
+                isParticipating={selectedEvent.isParticipating}
+              />
+            )}
           </StyledLeftColumn>
           <StyledRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            <EventActions />
-            <EventParticipants />
+            <EventActions
+              name={selectedEvent.name}
+              description={selectedEvent.description}
+              salesForceId={selectedEvent.salesForceId}
+              isParticipating={selectedEvent.isParticipating}
+            />
+            <EventParticipants participants={selectedEvent.participants} />
           </StyledRightColumn>
         </StyledBackofficeGrid>
       </Section>

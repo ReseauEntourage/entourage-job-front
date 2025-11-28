@@ -15,7 +15,7 @@ export function DirectoryEventItem({
   mode,
   meetingLink,
   fullAddress,
-  participantsCount,
+  registrationCount,
 }: DirectoryEventItemProps) {
   return (
     <CardListItem dataTestId={salesForceId}>
@@ -27,7 +27,7 @@ export function DirectoryEventItem({
         mode={mode}
         meetingLink={meetingLink}
         fullAddress={fullAddress}
-        participantsCount={participantsCount}
+        registrationCount={registrationCount}
       />
     </CardListItem>
   );

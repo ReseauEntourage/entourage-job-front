@@ -1,6 +1,8 @@
 import {
   fetchEventsAdapter,
   fetchSelectedEventAdapter,
+  fetchSelectedEventParticipantsAdapter,
+  updateUserParticipationAdapter,
 } from './events.adapters';
 import { RootState } from './events.slice';
 
@@ -11,6 +13,16 @@ export const fetchEventsSelectors = fetchEventsAdapter.getSelectors<RootState>(
 export const fetchSelectedEventSelectors =
   fetchSelectedEventAdapter.getSelectors<RootState>(
     (state) => state.events.fetchSelectedEvent
+  );
+
+export const fetchSelectedEventParticipantsSelectors =
+  fetchSelectedEventParticipantsAdapter.getSelectors<RootState>(
+    (state) => state.events.fetchSelectedEventParticipants
+  );
+
+export const updateUserParticipationSelectors =
+  updateUserParticipationAdapter.getSelectors<RootState>(
+    (state) => state.events.updateUserParticipation
   );
 
 export function selectEvents(state: RootState) {

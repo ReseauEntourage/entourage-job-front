@@ -21,13 +21,13 @@ export type HeaderEventProps = Pick<
   | 'mode'
   | 'meetingLink'
   | 'fullAddress'
-  | 'participantsCount'
+  | 'registrationCount'
 >;
 
 export const EVENT_PICTURE_SIZE = {
   desktop: {
-    width: 320,
-    height: 220,
+    width: 150,
+    height: 150,
   },
   mobile: {
     width: 120,
@@ -42,7 +42,7 @@ export const HeaderEvent = ({
   meetingLink,
   startDate,
   fullAddress,
-  participantsCount,
+  registrationCount,
 }: HeaderEventProps) => {
   const isMobile = useIsMobile();
   const imageSize = EVENT_PICTURE_SIZE[isMobile ? 'mobile' : 'desktop'];
@@ -66,7 +66,7 @@ export const HeaderEvent = ({
               mode={mode}
               meetingLink={meetingLink}
               fullAddress={fullAddress}
-              participantsCount={participantsCount}
+              registrationCount={registrationCount}
             />
           </StyledHeaderInfoContainer>
         </StyledHeaderContent>

@@ -19,6 +19,12 @@ const {
   fetchSelectedEventRequested,
   fetchSelectedEventSucceeded,
   fetchSelectedEventFailed,
+  updateUserParticipationRequested,
+  updateUserParticipationSucceeded,
+  updateUserParticipationFailed,
+  fetchSelectedEventParticipantsRequested,
+  fetchSelectedEventParticipantsSucceeded,
+  fetchSelectedEventParticipantsFailed,
 } = slice.actions;
 
 function* fetchEventsNextPageSaga(
@@ -75,9 +81,46 @@ function* fetchSelectedEventSaga(
   }
 }
 
+function* fetchSelectedEventParticipantsSaga(
+  action: ReturnType<typeof fetchSelectedEventParticipantsRequested>
+) {
+  const { eventId } = action.payload;
+  try {
+    const { data } = yield* call(() => Api.getEventParticipants(eventId));
+    yield* put(fetchSelectedEventParticipantsSucceeded(data));
+  } catch {
+    yield* put(fetchSelectedEventParticipantsFailed());
+  }
+}
+
+function* updateUserParticipationSaga(
+  action: ReturnType<typeof updateUserParticipationRequested>
+) {
+  const { eventSalesForceId, isParticipating } = action.payload;
+  try {
+    yield* call(() =>
+      Api.updateEventParticipation(eventSalesForceId, isParticipating)
+    );
+    yield* put(updateUserParticipationSucceeded({ isParticipating }));
+    yield* put(
+      fetchSelectedEventParticipantsRequested({ eventId: eventSalesForceId })
+    );
+  } catch {
+    yield* put(updateUserParticipationFailed());
+  }
+}
+
 export function* saga() {
   yield* takeLatest(fetchEventsWithFilters, fetchEventsWithFiltersSaga);
   yield* takeLeading(fetchEventsNextPage, fetchEventsNextPageSaga);
   yield* takeLatest(fetchEventsRequested, fetchEventsRequestedSaga);
+  yield* takeLatest(
+    fetchSelectedEventParticipantsRequested,
+    fetchSelectedEventParticipantsSaga
+  );
   yield* takeLatest(fetchSelectedEventRequested, fetchSelectedEventSaga);
+  yield* takeLatest(
+    updateUserParticipationRequested,
+    updateUserParticipationSaga
+  );
 }

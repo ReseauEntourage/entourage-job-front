@@ -50,7 +50,7 @@ const meta = {
       if: { arg: 'mode', eq: EventMode.IN_PERSON },
       description: "Adresse complète de l'événement (optionnel)",
     },
-    participantsCount: {
+    registrationCount: {
       control: 'number',
       description: 'Nombre de participants inscrits (optionnel)',
     },
@@ -68,7 +68,7 @@ export const Irl = {
     eventType: EventType.COFFEE_SESSION,
     mode: EventMode.IN_PERSON,
     fullAddress: "123 Rue de l'Exemple, 75000 Paris",
-    participantsCount: 42,
+    registrationCount: 42,
     meetingLink: null,
   },
 } satisfies Story;
@@ -81,7 +81,7 @@ export const Online = {
     eventType: EventType.PAPOTAGES_PRO,
     mode: EventMode.ONLINE,
     fullAddress: null,
-    participantsCount: 42,
+    registrationCount: 42,
     meetingLink: 'https://example.com/meeting',
   },
 } satisfies Story;

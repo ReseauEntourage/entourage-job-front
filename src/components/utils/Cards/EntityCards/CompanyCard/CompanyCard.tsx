@@ -118,7 +118,6 @@ export const CompanyCard = ({
                     id: user.id,
                     firstName: user.firstName,
                     role: user.role,
-                    candidat: undefined,
                   }}
                   hasPicture={user.userProfile.hasPicture}
                 />
