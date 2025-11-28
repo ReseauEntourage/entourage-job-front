@@ -3,7 +3,6 @@ import { AnyToFix } from 'src/utils/Types';
 
 export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'text';
 
-// resolsves a circular dependency issue
 export interface ButtonProps {
   id?: string;
   children: React.ReactNode;

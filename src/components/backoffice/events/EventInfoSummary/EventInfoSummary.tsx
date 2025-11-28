@@ -13,7 +13,7 @@ import {
 
 export type EventInfoSummaryProps = Pick<
   Event,
-  'startDate' | 'mode' | 'meetingLink' | 'fullAddress' | 'participantsCount'
+  'startDate' | 'mode' | 'meetingLink' | 'fullAddress' | 'registrationCount'
 > & {
   displayParticipants?: boolean;
 };
@@ -24,7 +24,7 @@ export const EventInfoSummary = ({
   meetingLink,
   fullAddress,
   displayParticipants = false,
-  participantsCount,
+  registrationCount,
 }: EventInfoSummaryProps) => {
   return (
     <>
@@ -56,12 +56,12 @@ export const EventInfoSummary = ({
           <StyledSeparator />
           <StyledElement>
             <LucidIcon name="Users" size={20} />
-            {participantsCount === 0 ? (
+            {registrationCount === 0 ? (
               <Text>Aucun participant</Text>
             ) : (
               <Text>
-                {participantsCount} participant
-                {participantsCount > 1 ? 's' : ''}
+                {registrationCount} participant
+                {registrationCount > 1 ? 's' : ''}
               </Text>
             )}
           </StyledElement>

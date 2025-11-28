@@ -127,8 +127,32 @@ export class APIHandler {
   /// //////
   /// events //
   /// //////
+  getAllEvents(
+    params: {
+      offset: number;
+      limit: number;
+    } & EventsFilters
+  ): Promise<AxiosResponse> {
+    return this.get('/events', {
+      params,
+    });
+  }
+
   getEvent(eventId: string): Promise<AxiosResponse> {
     return this.get(`/events/${eventId}`);
+  }
+
+  getEventParticipants(eventId: string): Promise<AxiosResponse> {
+    return this.get(`/events/${eventId}/participants`);
+  }
+
+  updateEventParticipation(
+    eventSalesForceId: string,
+    isParticipating: boolean
+  ): Promise<AxiosResponse> {
+    return this.put(`/events/${eventSalesForceId}/participation`, {
+      participate: isParticipating,
+    });
   }
 
   // ///////////////////////
@@ -215,17 +239,6 @@ export class APIHandler {
     }
   ): Promise<AxiosResponse> {
     return this.get('/user/profile', {
-      params,
-    });
-  }
-
-  getAllEvents(
-    params: {
-      offset: number;
-      limit: number;
-    } & EventsFilters
-  ): Promise<AxiosResponse> {
-    return this.get('/events', {
       params,
     });
   }

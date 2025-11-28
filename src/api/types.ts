@@ -222,6 +222,7 @@ export type Event = {
   endDate: string;
   eventType: EventType;
   participantsCount: number;
+  registrationCount: number;
   mode: EventMode;
   meetingLink: string | null;
   fullAddress: string | null;
@@ -230,6 +231,7 @@ export type Event = {
   goal: string;
   audience: string;
   sequences?: string[];
+  isParticipating: boolean;
 };
 
 export type UserReportDto = {
@@ -319,6 +321,19 @@ export type User = {
   hasExtractedCvData?: boolean;
   company: Company | null;
   invitations?: Invitation[];
+};
+
+export type UserProfileHasPicture = Pick<UserProfile, 'hasPicture'>;
+
+export type EventParticipant = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+> & {
+  userProfile: Pick<UserProfile, 'hasPicture'>;
+};
+
+export type EventWithParticipants = Event & {
+  participants: EventParticipant[];
 };
 
 export interface UserCandidateWithUsers extends UserCandidate {

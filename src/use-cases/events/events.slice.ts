@@ -1,25 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EventDirectoryFilters } from '@/src/components/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
-import { Event } from 'src/api/types';
+import { Event, EventWithParticipants } from 'src/api/types';
 import { EVENTS_LIMIT } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchEventsAdapter,
   fetchSelectedEventAdapter,
+  fetchSelectedEventParticipantsAdapter,
+  updateUserParticipationAdapter,
 } from './events.adapters';
 
 export interface State {
   fetchEvents: RequestState<typeof fetchEventsAdapter>;
   fetchSelectedEvent: RequestState<typeof fetchSelectedEventAdapter>;
+  fetchSelectedEventParticipants: RequestState<
+    typeof fetchSelectedEventParticipantsAdapter
+  >;
+  updateUserParticipation: RequestState<typeof updateUserParticipationAdapter>;
   events: Event[];
   eventsOffset: number;
   eventsHasFetchedAll: boolean;
-  selectedEvent: Event | null;
+  selectedEvent: EventWithParticipants | null;
 }
 
 const initialState: State = {
   fetchEvents: fetchEventsAdapter.getInitialState(),
   fetchSelectedEvent: fetchSelectedEventAdapter.getInitialState(),
+  fetchSelectedEventParticipants:
+    fetchSelectedEventParticipantsAdapter.getInitialState(),
+  updateUserParticipation: updateUserParticipationAdapter.getInitialState(),
   events: [],
   eventsOffset: 0,
   eventsHasFetchedAll: false,
@@ -44,6 +53,27 @@ export const slice = createSlice({
       {
         fetchSelectedEventSucceeded(state, action) {
           state.selectedEvent = action.payload;
+        },
+      }
+    ),
+    ...updateUserParticipationAdapter.getReducers<State>(
+      (state) => state.updateUserParticipation,
+      {
+        updateUserParticipationSucceeded(state, _action) {
+          if (state.selectedEvent) {
+            state.selectedEvent.isParticipating =
+              _action.payload.isParticipating;
+          }
+        },
+      }
+    ),
+    ...fetchSelectedEventParticipantsAdapter.getReducers<State>(
+      (state) => state.fetchSelectedEventParticipants,
+      {
+        fetchSelectedEventParticipantsSucceeded(state, action) {
+          if (state.selectedEvent) {
+            state.selectedEvent.participants = action.payload;
+          }
         },
       }
     ),

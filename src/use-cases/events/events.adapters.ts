@@ -1,5 +1,5 @@
 import { EventDirectoryFilters } from '@/src/components/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
-import { Event } from 'src/api/types';
+import { Event, EventWithParticipants } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchEventsAdapter = createRequestAdapter(
@@ -12,5 +12,24 @@ export const fetchSelectedEventAdapter = createRequestAdapter(
   {
     eventId: string;
   },
-  Event
+  EventWithParticipants
+>();
+
+export const fetchSelectedEventParticipantsAdapter = createRequestAdapter(
+  'fetchSelectedEventParticipants'
+).withPayloads<
+  {
+    eventId: string;
+  },
+  EventWithParticipants['participants']
+>();
+
+export const updateUserParticipationAdapter = createRequestAdapter(
+  'updateUserParticipation'
+).withPayloads<
+  {
+    eventSalesForceId: string;
+    isParticipating: boolean;
+  },
+  { isParticipating: boolean }
 >();

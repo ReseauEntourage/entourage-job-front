@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ImgProfile } from '../ImgProfile';
-import { UserCandidateWithUsers } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
@@ -12,7 +11,6 @@ interface ImgUserProfileProps {
     id: string;
     firstName: string;
     role: UserRoles;
-    candidat?: UserCandidateWithUsers;
   };
   size?: number;
   hasPicture: boolean;

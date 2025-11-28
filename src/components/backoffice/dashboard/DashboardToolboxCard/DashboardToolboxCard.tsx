@@ -44,7 +44,7 @@ const candidateArticles = [
     image: '/static/img/dashboard-bao-candidat-1.jpg',
   },
   {
-    title: 'Bien réaliser son CV Entourage pro',
+    title: 'Bien réaliser son CV Entourage Pro',
     link: '/L-laboration-du-CV-Entourage-Pro-e814207d6a784337874df207a6bd0a49',
     image: '/static/img/dashboard-bao-candidat-2.jpg',
   },

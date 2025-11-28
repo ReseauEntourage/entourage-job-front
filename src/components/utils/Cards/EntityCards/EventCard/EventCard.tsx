@@ -24,7 +24,7 @@ export type EventCardProps = Pick<
   | 'mode'
   | 'meetingLink'
   | 'fullAddress'
-  | 'participantsCount'
+  | 'registrationCount'
 >;
 
 export function EventCard({
@@ -35,7 +35,7 @@ export function EventCard({
   mode,
   meetingLink,
   fullAddress,
-  participantsCount,
+  registrationCount,
 }: EventCardProps) {
   // Compute image based on event type
   const image = useMemo(() => {
@@ -78,7 +78,7 @@ export function EventCard({
           mode={mode}
           meetingLink={meetingLink}
           fullAddress={fullAddress}
-          participantsCount={participantsCount}
+          registrationCount={registrationCount}
           displayParticipants
         />
       </StyledEventCardContentContainer>
