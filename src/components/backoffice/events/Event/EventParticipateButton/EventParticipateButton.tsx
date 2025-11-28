@@ -22,7 +22,7 @@ export const EventParticipateButton = ({
   const isLoading = isUpdateUserParticipationRequested;
 
   const dispatch = useDispatch();
-  const requestParticipation = async () => {
+  const requestParticipation = () => {
     dispatch(
       eventsActions.updateUserParticipationRequested({
         eventSalesForceId,
