@@ -55,8 +55,8 @@ export const DashboardReferentCard = () => {
         </StyledDashboardReferentNameContainer>
         <StyledDashboardReferentMail>
           <Text weight="bold">
-            <SimpleLink isExternal href={`mailto:${referral.mail}`}>
-              {referral.mail}
+            <SimpleLink isExternal href={`mailto:${referral.email}`}>
+              {referral.email}
             </SimpleLink>
           </Text>
         </StyledDashboardReferentMail>

@@ -325,7 +325,7 @@ export type User = {
 
 export type Referral = {
   name: string;
-  mail: string;
+  email: string;
   img: string;
 };
 
