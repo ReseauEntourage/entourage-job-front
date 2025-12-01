@@ -517,17 +517,6 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(
-    complete = false,
-    headers: AxiosRequestHeaders | undefined = undefined
-  ): Promise<AxiosResponse> {
-    return this.get(
-      `/auth/current${complete ? '?complete=true' : ''}`,
-      {},
-      headers
-    );
-  }
-
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {
     return this.get(`/auth/reset/${userId}/${token}`);
   }
@@ -572,6 +561,27 @@ export class APIHandler {
     params: { newPassword: string; confirmPassword: string }
   ): Promise<AxiosResponse> {
     return this.post(`/auth/reset/${userId}/${token}`, params);
+  }
+
+  /// // //////
+  // currentUser /
+  /// // //////
+
+  getAuthCurrent(
+    complete = false,
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(
+      `/auth/current${complete ? '?complete=true' : ''}`,
+      {},
+      headers
+    );
+  }
+
+  getReferralInfo(
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(`/auth/current/referral`, {}, headers);
   }
 
   /// // //////

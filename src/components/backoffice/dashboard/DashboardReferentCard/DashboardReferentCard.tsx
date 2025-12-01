@@ -1,11 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { DEPARTMENTS } from '@/src/constants/departements';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserReferral } from '@/src/hooks/useCurrentUserReferral';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { Card, LegacyImg, SimpleLink } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
-import { DEPARTMENTS } from 'src/constants/departements';
-import { Referents } from 'src/constants/referents';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
 import {
   StyledDashboardReferentMail,
@@ -17,11 +19,9 @@ import {
 } from './DashboardReferentCard.styles';
 
 export const DashboardReferentCard = () => {
+  const dispatch = useDispatch();
   const user = useAuthenticatedUser();
-
-  const referent = useMemo(() => {
-    return Referents[user.zone];
-  }, [user.zone]);
+  const referral = useCurrentUserReferral();
 
   const referentRegion = useMemo(() => {
     return DEPARTMENTS.find((deptObj) => {
@@ -29,19 +29,23 @@ export const DashboardReferentCard = () => {
     })?.region;
   }, [user.userProfile.department]);
 
+  useEffect(() => {
+    dispatch(currentUserActions.fetchReferralRequested());
+  }, [dispatch]);
+
+  if (!referral) {
+    return null;
+  }
+
   return (
     <Card title="Votre contact Entourage Pro" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferentPicture>
-          <LegacyImg
-            src={`/static/img/referents/${referent.img}`}
-            alt={referent.name}
-            cover
-          />
+          <LegacyImg src={referral.img} alt={referral.name} cover />
         </StyledDashboardReferentPicture>
         <StyledDashboardReferentNameContainer>
           <StyledDashboardReferentName>
-            <H3 color="primaryBlue" title={referent.name} />
+            <H3 color="primaryBlue" title={referral.name} />
           </StyledDashboardReferentName>
           <StyledDashboardReferentRole>
             <Text variant="italic">
@@ -51,8 +55,8 @@ export const DashboardReferentCard = () => {
         </StyledDashboardReferentNameContainer>
         <StyledDashboardReferentMail>
           <Text weight="bold">
-            <SimpleLink isExternal href={`mailto:${referent.mail}`}>
-              {referent.mail}
+            <SimpleLink isExternal href={`mailto:${referral.mail}`}>
+              {referral.mail}
             </SimpleLink>
           </Text>
         </StyledDashboardReferentMail>

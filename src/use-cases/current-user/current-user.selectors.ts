@@ -64,6 +64,10 @@ export function selectCurrentUser(state: RootState) {
   return state.currentUser.user;
 }
 
+export function selectReferral(state: RootState) {
+  return state.currentUser.referral;
+}
+
 export function selectAuthenticatedUser(state: RootState) {
   const currentUser = selectCurrentUser(state);
 
