@@ -99,7 +99,7 @@ const EntourageApp = (props: AppProps) => {
       service: 'entourage-pro-next',
       env: process.env.NEXT_PUBLIC_ENV,
       version: publicRuntimeConfig.RELEASE_VERSION,
-      sessionSampleRate: 0,
+      sessionSampleRate: 1,
       sessionReplaySampleRate: 0,
       trackBfcacheViews: true,
       trackUserInteractions: false,
