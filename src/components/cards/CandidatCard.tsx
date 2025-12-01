@@ -83,7 +83,7 @@ export const CandidatCard = ({
             <CandidateCardBusinessSectorsStyled>
               {isNewCareerPath
                 ? _.uniqWith(sortedBusinessSectors.slice(0, 2), (a, b) => {
-                    return a.value === b.value;
+                    return a.id === b.id;
                   }).map(({ name }, index) => {
                     return (
                       <Tag
