@@ -12,6 +12,8 @@ export { PUSHER_CHANNELS, PUSHER_EVENTS, getPusher } from './pusher';
 
 export const PROFILES_LIMIT = 25;
 
+export const EVENTS_LIMIT = 25;
+
 export const COMPANIES_LIMIT = 25;
 
 export const JNSPR = {
@@ -718,56 +720,36 @@ export const EVENT_TYPES_FILTERS = [
   },
 ];
 
-const ADDRESSES = {
-  PARIS: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS,
-  LYON: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LYON,
-  LILLE: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LILLE,
-  RENNES: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_RENNES,
-  LORIENT: process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_LORIENT,
-};
-
 export const ANTENNE_INFO = [
   {
     dpt: '93',
-    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
-    address: ADDRESSES.PARIS,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
   },
   {
     dpt: '75',
-    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
-    address: ADDRESSES.PARIS,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
   },
   {
     dpt: '92',
-    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_PARIS,
-    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_PARIS,
     city: 'Paris',
-    address: ADDRESSES.PARIS,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
   },
   {
     dpt: '35',
-    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_RENNES,
-    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_RENNES,
     city: 'Rennes',
-    address: ADDRESSES.RENNES,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_RENNES,
   },
   {
     dpt: '59',
-    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LILLE,
-    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_LILLE,
     city: 'Lille',
-    address: ADDRESSES.LILLE,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LILLE,
   },
   {
     dpt: '69',
-    mailCoordo: process.env.NEXT_PUBLIC_ADMIN_CANDIDATES_LYON,
-    mailEntreprise: process.env.NEXT_PUBLIC_ADMIN_COMPANIES_LYON,
     city: 'Lyon',
-    address: ADDRESSES.LYON,
+    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LYON,
   },
 ] as const;
 

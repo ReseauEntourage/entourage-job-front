@@ -1,12 +1,11 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
-import { STORAGE_KEYS } from 'src/constants';
 import {
   authenticationActions,
   selectAccessToken,
 } from 'src/use-cases/authentication';
-import { assertCondition, assertIsDefined } from 'src/utils/asserts';
+import { assertIsDefined } from 'src/utils/asserts';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -50,29 +49,8 @@ const {
   uploadExternalCvFailed,
 } = slice.actions;
 
-function getIsReleaseVersionAllowed() {
-  const releaseVersion = localStorage.getItem(STORAGE_KEYS.RELEASE_VERSION);
-  const herokuReleaseVersion =
-    (process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION as string) || '';
-
-  return releaseVersion === herokuReleaseVersion;
-}
-
-function setReleaseVersion() {
-  const herokuReleaseVersion =
-    (process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION as string) || '';
-
-  localStorage.setItem(STORAGE_KEYS.RELEASE_VERSION, herokuReleaseVersion);
-}
-
 function* fetchUserRequestedSaga() {
   try {
-    const isReleaseVersionAllowed = getIsReleaseVersionAllowed();
-    if (!isReleaseVersionAllowed) {
-      setReleaseVersion();
-    }
-    assertCondition(isReleaseVersionAllowed, 'Release version is not allowed');
-
     const accessToken = yield* select(selectAccessToken);
 
     assertIsDefined(accessToken, 'Access token is not set');
@@ -88,12 +66,6 @@ function* fetchUserRequestedSaga() {
 
 function* fetchCompleteUserRequestedSaga() {
   try {
-    const isReleaseVersionAllowed = getIsReleaseVersionAllowed();
-    if (!isReleaseVersionAllowed) {
-      setReleaseVersion();
-    }
-    assertCondition(isReleaseVersionAllowed, 'Release version is not allowed');
-
     const accessToken = yield* select(selectAccessToken);
 
     assertIsDefined(accessToken, 'Access token is not set');

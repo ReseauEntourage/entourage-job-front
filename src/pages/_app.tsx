@@ -8,7 +8,9 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';
 
+import { datadogRum } from '@datadog/browser-rum';
 import type { AppProps } from 'next/app';
+import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
@@ -23,6 +25,8 @@ import { DataProvider } from 'src/store/DataProvider';
 import { store } from 'src/store/store';
 import { GlobalStyle } from 'src/styles/GlobalStyle';
 import { selectCurrentUser } from 'src/use-cases/current-user';
+
+const { publicRuntimeConfig } = getConfig();
 
 /** ************
  * This component is detached because it needs Redux content to work properly
@@ -73,6 +77,39 @@ const EntourageApp = (props: AppProps) => {
       events.off('routeChangeComplete', scrollToTop);
     };
   }, [events, shouldScrollToTop]);
+
+  useEffect(() => {
+    if (
+      !process.env.NEXT_PUBLIC_DD_APP_ID ||
+      !process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN
+    ) {
+      console.warn(
+        'Datadog RUM not initialized: missing environment variables'
+      );
+      return;
+    }
+    if (datadogRum.getInitConfiguration()) {
+      // already initialized
+      return;
+    }
+    datadogRum.init({
+      applicationId: process.env.NEXT_PUBLIC_DD_APP_ID,
+      clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
+      site: 'datadoghq.eu',
+      service: 'entourage-pro-next',
+      env: process.env.NEXT_PUBLIC_ENV,
+      version: publicRuntimeConfig.RELEASE_VERSION,
+      sessionSampleRate: 0,
+      sessionReplaySampleRate: 0,
+      trackBfcacheViews: true,
+      trackUserInteractions: false,
+      trackResources: false,
+      trackLongTasks: true,
+      trackEarlyRequests: true,
+      trackAnonymousUser: true,
+      defaultPrivacyLevel: 'mask',
+    });
+  }, []);
 
   return (
     <Provider store={store}>
