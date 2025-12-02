@@ -10,15 +10,15 @@ import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
 
 import {
-  StyledDashboardReferentMail,
-  StyledDashboardReferentName,
-  StyledDashboardReferentNameContainer,
-  StyledDashboardReferentPicture,
-  StyledDashboardReferentRole,
-  StyledDashboardReferentText,
-} from './DashboardReferentCard.styles';
+  StyledDashboardStaffContactMail,
+  StyledDashboardStaffContactName,
+  StyledDashboardStaffContactNameContainer,
+  StyledDashboardStaffContactPicture,
+  StyledDashboardStaffContactRole,
+  StyledDashboardStaffContactText,
+} from './DashboardStaffContactCard.styles';
 
-export const DashboardReferentCard = () => {
+export const DashboardStaffContactCard = () => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const staffContact = useCurrentUserStaffContact();
@@ -40,33 +40,33 @@ export const DashboardReferentCard = () => {
   return (
     <Card title="Votre contact Entourage Pro" centerTitle>
       <StyledDashboardCardContentContainer>
-        <StyledDashboardReferentPicture>
+        <StyledDashboardStaffContactPicture>
           <LegacyImg src={staffContact.img} alt={staffContact.name} cover />
-        </StyledDashboardReferentPicture>
-        <StyledDashboardReferentNameContainer>
-          <StyledDashboardReferentName>
+        </StyledDashboardStaffContactPicture>
+        <StyledDashboardStaffContactNameContainer>
+          <StyledDashboardStaffContactName>
             <H3 color="primaryBlue" title={staffContact.name} />
-          </StyledDashboardReferentName>
-          <StyledDashboardReferentRole>
+          </StyledDashboardStaffContactName>
+          <StyledDashboardStaffContactRole>
             <Text variant="italic">
               Référent(e) Entourage Pro {staffContactRegion || ''}
             </Text>
-          </StyledDashboardReferentRole>
-        </StyledDashboardReferentNameContainer>
-        <StyledDashboardReferentMail>
+          </StyledDashboardStaffContactRole>
+        </StyledDashboardStaffContactNameContainer>
+        <StyledDashboardStaffContactMail>
           <Text weight="bold">
             <SimpleLink isExternal href={`mailto:${staffContact.email}`}>
               {staffContact.email}
             </SimpleLink>
           </Text>
-        </StyledDashboardReferentMail>
-        <StyledDashboardReferentText>
+        </StyledDashboardStaffContactMail>
+        <StyledDashboardStaffContactText>
           <Text center>
             Vous souhaitez obtenir plus d&apos;informations sur le programme,
             vous rencontrez des difficultés sur la plateforme, ou autre demande,
             contactez-nous&nbsp;!
           </Text>
-        </StyledDashboardReferentText>
+        </StyledDashboardStaffContactText>
       </StyledDashboardCardContentContainer>
     </Card>
   );

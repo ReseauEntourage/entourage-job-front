@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledDashboardReferentPicture = styled.div`
+export const StyledDashboardStaffContactPicture = styled.div`
   border-radius: 50%;
   overflow: hidden;
   width: 100px;
@@ -10,13 +10,13 @@ export const StyledDashboardReferentPicture = styled.div`
   margin-bottom: 16px;
 `;
 
-export const StyledDashboardReferentNameContainer = styled.div`
+export const StyledDashboardStaffContactNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-export const StyledDashboardReferentName = styled.div`
+export const StyledDashboardStaffContactName = styled.div`
   text-align: center;
 
   > * {
@@ -24,10 +24,10 @@ export const StyledDashboardReferentName = styled.div`
   }
 `;
 
-export const StyledDashboardReferentRole = styled.div`
+export const StyledDashboardStaffContactRole = styled.div`
   text-align: center;
 `;
-export const StyledDashboardReferentMail = styled.div`
+export const StyledDashboardStaffContactMail = styled.div`
   text-align: center;
   a {
     color: ${COLORS.black};
@@ -35,6 +35,6 @@ export const StyledDashboardReferentMail = styled.div`
   }
 `;
 
-export const StyledDashboardReferentText = styled.div`
+export const StyledDashboardStaffContactText = styled.div`
   text-align: center;
 `;

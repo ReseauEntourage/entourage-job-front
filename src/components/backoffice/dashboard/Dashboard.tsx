@@ -26,7 +26,7 @@ import { DashboardMessagingConversation } from './DashboardMessagingConversation
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
-import { DashboardReferentCard } from './DashboardReferentCard';
+import { DashboardStaffContactCard } from './DashboardStaffContactCard';
 import { DashboardToolboxCard } from './DashboardToolboxCard';
 
 export const Dashboard = () => {
@@ -56,7 +56,7 @@ export const Dashboard = () => {
           <DashboardCompanyCard company={user.company} />
         )}
         {isNormalUser && <DashboardAvailabilityCard />}
-        <DashboardReferentCard />
+        <DashboardStaffContactCard />
       </>
     );
   };
