@@ -323,6 +323,12 @@ export type User = {
   invitations?: Invitation[];
 };
 
+export type StaffContact = {
+  name: string;
+  email: string;
+  img: string;
+};
+
 export type UserProfileHasPicture = Pick<UserProfile, 'hasPicture'>;
 
 export type EventParticipant = Pick<

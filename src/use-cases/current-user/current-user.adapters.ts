@@ -1,4 +1,5 @@
 import {
+  StaffContact,
   User,
   UserCandidateWithUsers,
   UserProfile,
@@ -11,6 +12,10 @@ export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   void,
   User
 >();
+
+export const fetchStaffContactAdapter = createRequestAdapter(
+  'fetchStaffContact'
+).withPayloads<void, StaffContact>();
 
 export const fetchCompleteUserAdapter = createRequestAdapter(
   'fetchCompleteUser'
