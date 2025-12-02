@@ -1,6 +1,8 @@
 import React from 'react';
-import { PinnedCommunication } from '../components/partials/pages/common/PinnedCommunication/PinnedCommunication';
+import { PinnedCommunicationModale } from '../components/modals/PopupModal/PinnedCommunicationModale';
+import { STORAGE_KEYS } from '../constants';
 import { useUtm } from '../hooks/queryParams/useUTM';
+import { useMount } from '../hooks/utils';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -63,6 +65,16 @@ const reviewContent = [
 
 const Aider = () => {
   useUtm();
+  useMount(() => {
+    const closed = localStorage.getItem(
+      STORAGE_KEYS.PINNED_COMMUNICATION_CLOSED
+    );
+    if (process.env.NEXT_PUBLIC_PINNED_COMMUNICATION_TITLE && !closed) {
+      setTimeout(() => {
+        openModal(<PinnedCommunicationModale />);
+      }, 1500);
+    }
+  });
   return (
     <Layout title="Aider - Entourage Pro">
       <ImageTitle
@@ -72,8 +84,6 @@ const Aider = () => {
         imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
       />
-
-      <PinnedCommunication />
 
       <UnderstandFormat as="Coach" />
 

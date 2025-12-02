@@ -1,6 +1,9 @@
 import React from 'react';
-import { PinnedCommunication } from '../components/partials/pages/common/PinnedCommunication/PinnedCommunication';
+import { openModal } from '../components/modals/Modal';
+import { PinnedCommunicationModale } from '../components/modals/PopupModal/PinnedCommunicationModale';
+import { STORAGE_KEYS } from '../constants';
 import { useUtm } from '../hooks/queryParams/useUTM';
+import { useMount } from '../hooks/utils';
 import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
@@ -18,6 +21,16 @@ import { gaEvent } from 'src/lib/gtag';
 
 const Index = () => {
   useUtm();
+  useMount(() => {
+    const closed = localStorage.getItem(
+      STORAGE_KEYS.PINNED_COMMUNICATION_CLOSED
+    );
+    if (process.env.NEXT_PUBLIC_PINNED_COMMUNICATION_TITLE && !closed) {
+      setTimeout(() => {
+        openModal(<PinnedCommunicationModale />);
+      }, 1500);
+    }
+  });
   return (
     <Layout>
       <ImageTitle
@@ -51,7 +64,6 @@ const Index = () => {
           },
         ]}
       />
-      <PinnedCommunication />
       <Decouvrir />
       <Rejoindre />
       <CandidatListPartial />
