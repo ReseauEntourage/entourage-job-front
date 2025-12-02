@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Card, LegacyImg, SimpleLink } from '@/src/components/utils';
+import { H3 } from '@/src/components/utils/Headings';
 import { Spinner } from '@/src/components/utils/Spinner';
+import { Text } from '@/src/components/utils/Text';
 import { DEPARTMENTS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
@@ -9,9 +12,6 @@ import {
   fetchStaffContactSelectors,
 } from '@/src/use-cases/current-user';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
-import { Card, LegacyImg, SimpleLink } from 'src/components/utils';
-import { H3 } from 'src/components/utils/Headings';
-import { Text } from 'src/components/utils/Text';
 
 import {
   StyledDashboardStaffContactMail,
