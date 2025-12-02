@@ -323,7 +323,7 @@ export type User = {
   invitations?: Invitation[];
 };
 
-export type Referral = {
+export type StaffContact = {
   name: string;
   email: string;
   img: string;

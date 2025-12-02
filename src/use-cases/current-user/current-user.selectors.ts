@@ -64,8 +64,8 @@ export function selectCurrentUser(state: RootState) {
   return state.currentUser.user;
 }
 
-export function selectReferral(state: RootState) {
-  return state.currentUser.referral;
+export function selectStaffContact(state: RootState) {
+  return state.currentUser.staffContact;
 }
 
 export function selectAuthenticatedUser(state: RootState) {

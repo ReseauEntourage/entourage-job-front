@@ -1,5 +1,5 @@
 import {
-  Referral,
+  StaffContact,
   User,
   UserCandidateWithUsers,
   UserProfile,
@@ -13,9 +13,9 @@ export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   User
 >();
 
-export const fetchReferralAdapter = createRequestAdapter(
-  'fetchReferral'
-).withPayloads<void, Referral>();
+export const fetchStaffContactAdapter = createRequestAdapter(
+  'fetchStaffContact'
+).withPayloads<void, StaffContact>();
 
 export const fetchCompleteUserAdapter = createRequestAdapter(
   'fetchCompleteUser'

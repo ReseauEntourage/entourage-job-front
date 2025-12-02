@@ -578,10 +578,10 @@ export class APIHandler {
     );
   }
 
-  getReferralInfo(
+  getStaffContactInfo(
     headers: AxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
-    return this.get(`/auth/current/referral`, {}, headers);
+    return this.get(`/auth/current/staff-contact`, {}, headers);
   }
 
   /// // //////

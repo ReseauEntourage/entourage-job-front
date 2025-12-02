@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { DEPARTMENTS } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserReferral } from '@/src/hooks/useCurrentUserReferral';
+import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { Card, LegacyImg, SimpleLink } from 'src/components/utils';
@@ -21,19 +21,19 @@ import {
 export const DashboardReferentCard = () => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
-  const referral = useCurrentUserReferral();
+  const staffContact = useCurrentUserStaffContact();
 
-  const referentRegion = useMemo(() => {
+  const staffContactRegion = useMemo(() => {
     return DEPARTMENTS.find((deptObj) => {
       return deptObj.name === user.userProfile.department;
     })?.region;
   }, [user.userProfile.department]);
 
   useEffect(() => {
-    dispatch(currentUserActions.fetchReferralRequested());
+    dispatch(currentUserActions.fetchStaffContactRequested());
   }, [dispatch]);
 
-  if (!referral) {
+  if (!staffContact) {
     return null;
   }
 
@@ -41,22 +41,22 @@ export const DashboardReferentCard = () => {
     <Card title="Votre contact Entourage Pro" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferentPicture>
-          <LegacyImg src={referral.img} alt={referral.name} cover />
+          <LegacyImg src={staffContact.img} alt={staffContact.name} cover />
         </StyledDashboardReferentPicture>
         <StyledDashboardReferentNameContainer>
           <StyledDashboardReferentName>
-            <H3 color="primaryBlue" title={referral.name} />
+            <H3 color="primaryBlue" title={staffContact.name} />
           </StyledDashboardReferentName>
           <StyledDashboardReferentRole>
             <Text variant="italic">
-              Référent(e) Entourage Pro {referentRegion || ''}
+              Référent(e) Entourage Pro {staffContactRegion || ''}
             </Text>
           </StyledDashboardReferentRole>
         </StyledDashboardReferentNameContainer>
         <StyledDashboardReferentMail>
           <Text weight="bold">
-            <SimpleLink isExternal href={`mailto:${referral.email}`}>
-              {referral.email}
+            <SimpleLink isExternal href={`mailto:${staffContact.email}`}>
+              {staffContact.email}
             </SimpleLink>
           </Text>
         </StyledDashboardReferentMail>
