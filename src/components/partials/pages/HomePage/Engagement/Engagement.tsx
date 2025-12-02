@@ -29,7 +29,7 @@ export const Engagement = () => {
         {
           icon: <IlluCV height={140} width={140} />,
           title: 'Découvrir les candidats',
-          description: 'Retrouvez tous les profils des candidats Entourage pro',
+          description: 'Retrouvez tous les profils des candidats Entourage Pro',
           onClick: () => {
             gaEvent(GA_TAGS.HOME_ENGAGEMENT_ENTREPRISE_CANDIDATS);
           },

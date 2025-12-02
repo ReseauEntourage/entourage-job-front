@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { CompanyIcon } from '@/assets/icons/icons';
-import { BusinessSector, User } from '@/src/api/types';
+import { BusinessSector, User, UserProfile } from '@/src/api/types';
 import {
   Button,
   Image,
@@ -25,12 +25,19 @@ import {
   StyledCompanyMainInfosContainer,
 } from './CompanyCard.styles';
 
+export type CompanyCardUser = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+> & {
+  userProfile: Pick<UserProfile, 'hasPicture'>;
+};
+
 export interface CompanyCardProps {
   id: string;
   name: string;
   logoUrl?: string;
   businessSectors: BusinessSector[];
-  users: User[];
+  users: CompanyCardUser[];
 }
 
 export const CompanyCard = ({
@@ -111,7 +118,6 @@ export const CompanyCard = ({
                     id: user.id,
                     firstName: user.firstName,
                     role: user.role,
-                    candidat: undefined,
                   }}
                   hasPicture={user.userProfile.hasPicture}
                 />

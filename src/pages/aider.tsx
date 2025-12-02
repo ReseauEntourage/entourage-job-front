@@ -36,7 +36,7 @@ const reviewContent = [
     review: (
       <>
         &quot;Maria est la troisième candidate que j’accompagne. Je sais que si
-        j’ai une question, j’aurai toujours une personne d’Entourage pro pour
+        j’ai une question, j’aurai toujours une personne d’Entourage Pro pour
         répondre à mes questions. L&apos;association est très mature : le
         contact est facile et informel mais en même temps très professionnel.
         C&apos;est vraiment positif !&quot;

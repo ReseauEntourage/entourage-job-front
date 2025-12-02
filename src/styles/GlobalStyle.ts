@@ -14,4 +14,8 @@ export const GlobalStyle = createGlobalStyle`
   button, input, select, textarea, span {
     font-family: inherit;
   }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 `;

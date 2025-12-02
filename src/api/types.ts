@@ -1,5 +1,6 @@
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
+import { EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
@@ -213,6 +214,26 @@ export type UserProfile = {
   allowRemoteEvents: boolean;
 };
 
+export type Event = {
+  salesForceId: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  eventType: EventType;
+  participantsCount: number;
+  registrationCount: number;
+  mode: EventMode;
+  meetingLink: string | null;
+  fullAddress: string | null;
+  duration: number | null;
+  format: string;
+  goal: string;
+  audience: string;
+  sequences?: string[];
+  isParticipating: boolean;
+};
+
 export type UserReportDto = {
   reason: string;
   comment: string;
@@ -300,6 +321,25 @@ export type User = {
   hasExtractedCvData?: boolean;
   company: Company | null;
   invitations?: Invitation[];
+};
+
+export type StaffContact = {
+  name: string;
+  email: string;
+  img: string;
+};
+
+export type UserProfileHasPicture = Pick<UserProfile, 'hasPicture'>;
+
+export type EventParticipant = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+> & {
+  userProfile: Pick<UserProfile, 'hasPicture'>;
+};
+
+export type EventWithParticipants = Event & {
+  participants: EventParticipant[];
 };
 
 export interface UserCandidateWithUsers extends UserCandidate {
@@ -564,6 +604,13 @@ export type ProfilesFilters = {
   departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
+};
+
+export type EventsFilters = {
+  eventTypes: EventType | EventType[];
+  search?: string;
+  departmentIds: string | string[];
+  modes?: EventMode | EventMode[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

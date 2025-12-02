@@ -1,10 +1,18 @@
 import styled from 'styled-components';
-import { StyledCardCommon } from '../Cards.styles';
-import { COLORS } from 'src/constants/styles';
+import { Color, COLORS } from 'src/constants/styles';
 
-export const StyledCard = styled(StyledCardCommon)<{ borderColor?: string }>`
+export const StyledCard = styled.div<{
+  borderColor?: Color;
+  bgColor: Color;
+}>`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 ${COLORS.lightGray};
+  position: relative;
   border-radius: 20px;
-  border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};};
+  border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};
+  background-color: ${(props) => COLORS[props.bgColor]};
 
   &.mobile {
     width: 100%;

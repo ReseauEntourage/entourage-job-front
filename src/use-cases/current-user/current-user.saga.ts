@@ -47,6 +47,9 @@ const {
   uploadExternalCvRequested,
   uploadExternalCvSucceeded,
   uploadExternalCvFailed,
+  fetchStaffContactRequested,
+  fetchStaffContactSucceeded,
+  fetchStaffContactFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
@@ -61,6 +64,20 @@ function* fetchUserRequestedSaga() {
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function* fetchStaffContactRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+
+    assertIsDefined(accessToken, 'Access token is not set');
+    const response = yield* call(() => Api.getStaffContactInfo());
+
+    yield* put(fetchStaffContactSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchStaffContactFailed());
   }
 }
 
@@ -265,6 +282,7 @@ export function* saga() {
   yield* takeLatest(authenticationActions.loginSucceeded, loginSucceededSaga);
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
+  yield* takeLatest(fetchStaffContactRequested, fetchStaffContactRequestedSaga);
   yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);

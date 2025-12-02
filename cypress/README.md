@@ -1,4 +1,4 @@
-# Tests Cypress pour l'app Entourage pro
+# Tests Cypress pour l'app Entourage Pro
 
 Les tests e2e sont utilisés afin de tester des parcours utilisateurs.
 

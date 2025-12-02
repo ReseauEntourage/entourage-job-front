@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { StyledButton } from './Button.styles';
-import { ButtonProps } from './ButtonProps';
+import { ButtonProps } from './Button.types';
 
 export function Button({
   id,

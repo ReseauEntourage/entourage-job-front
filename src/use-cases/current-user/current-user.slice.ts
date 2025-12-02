@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserWithUserCandidate } from 'src/api/types';
+import { StaffContact, UserWithUserCandidate } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
+  fetchStaffContactAdapter,
   fetchUserAdapter,
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
@@ -19,6 +20,7 @@ import {
 
 export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
+  fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   updateUser: RequestState<typeof updateUserAdapter>;
   updateUserCompany: RequestState<typeof updateUserCompanyAdapter>;
@@ -35,10 +37,12 @@ export interface State {
   userCompanyUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
   externalCv: string | null;
+  staffContact: StaffContact | null;
 }
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
+  fetchStaffContact: fetchStaffContactAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
   updateUserCompany: updateUserCompanyAdapter.getInitialState(),
@@ -53,6 +57,7 @@ const initialState: State = {
   userCompanyUpdateError: null,
   profileUpdateError: null,
   externalCv: null,
+  staffContact: null,
 };
 
 export const slice = createSlice({
@@ -65,6 +70,14 @@ export const slice = createSlice({
         state.complete = false;
       },
     }),
+    ...fetchStaffContactAdapter.getReducers<State>(
+      (state) => state.fetchStaffContact,
+      {
+        fetchStaffContactSucceeded(state, action) {
+          state.staffContact = action.payload;
+        },
+      }
+    ),
     ...fetchCompleteUserAdapter.getReducers<State>(
       (state) => state.fetchCompleteUser,
       {
