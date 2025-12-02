@@ -13,7 +13,7 @@ export const PinnedCommunication = () => {
   return (
     <Section className="custom-page">
       <div className="uk-container">
-        <Link href={linkHref || '/'} target="_blank" rel="noopener noreferrer">
+        <Link href={linkHref} target="_blank" rel="noopener noreferrer">
           <div style={{ position: 'relative', aspectRatio: 1360 / 504 }}>
             <NextImage
               src={imageUrl}
