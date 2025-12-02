@@ -1,4 +1,5 @@
 import React from 'react';
+import { PinnedCommunication } from '../components/partials/pages/common/PinnedCommunication/PinnedCommunication';
 import { useUtm } from '../hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
@@ -71,6 +72,8 @@ const Aider = () => {
         imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
       />
+
+      <PinnedCommunication />
 
       <UnderstandFormat as="Coach" />
 

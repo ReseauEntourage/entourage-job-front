@@ -1,4 +1,5 @@
 import React from 'react';
+import { PinnedCommunication } from '../components/partials/pages/common/PinnedCommunication/PinnedCommunication';
 import { useUtm } from '../hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
@@ -50,6 +51,7 @@ const Index = () => {
           },
         ]}
       />
+      <PinnedCommunication />
       <Decouvrir />
       <Rejoindre />
       <CandidatListPartial />
