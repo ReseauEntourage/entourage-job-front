@@ -4,7 +4,7 @@ import { isReadDocument } from '@/src/components/partials/pages/Documents/Docume
 import { EthicsCharter } from '@/src/components/utils/EthicsCharter/EthicsCharter';
 import { DocumentNames } from '@/src/constants';
 import { getCandidateDefaultProfessionalValues } from '../../../parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
-import { OnboardingAI } from '../forms/OnboardingAI';
+import { ProfileGenerationProcess } from '../../../profile/ProfileGenerationProcess/ProfileGenerationProcess';
 import { OnboardingCandidateSocialSituation } from '../forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from '../forms/OnboardingProfileForm';
 import { formOnboardingCandidateAI } from '../forms/schemas/formOnboardingCandidateAI';
@@ -65,7 +65,12 @@ export const CandidateOnboardingStepContents = {
   },
   5: {
     title: 'Enrichissez votre profil grâce à votre CV',
-    content: <OnboardingAI />,
+    content: (
+      <ProfileGenerationProcess
+        title="Souhaitez vous completer automatiquement votre profil avec les
+                informations de votre CV ?"
+      />
+    ),
     form: formOnboardingCandidateAI,
     skippedBy: (user: User) =>
       !user.userProfile.hasExternalCv || !!user.hasExtractedCvData,
