@@ -2,14 +2,14 @@ import useChange from '@react-hook/change';
 import _ from 'lodash';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { UserProfile, User } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import {
   currentUserActions,
   updateProfileSelectors,
 } from 'src/use-cases/current-user';
 
-export const useUpdateProfile = (user: UserWithUserCandidate) => {
+export const useUpdateProfile = (user: User) => {
   const dispatch = useDispatch();
 
   const [closeModal, setCloseModal] = useState<boolean>(false);

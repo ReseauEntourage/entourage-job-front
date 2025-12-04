@@ -55,11 +55,7 @@ export const CandidatListPartial = () => {
           }
         />
         <Grid middle column gap="collapse">
-          <Button
-            href={{ pathname: '/candidats', query: { employed: false } }}
-            variant="primary"
-            rounded
-          >
+          <Button href={{ pathname: '/candidats' }} variant="primary" rounded>
             {process.env.NEXT_PUBLIC_WOMENS_DAY === 'true'
               ? 'Découvrir les candidates'
               : 'Découvrir les candidats'}

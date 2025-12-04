@@ -48,17 +48,6 @@ export type Department = {
   value: string;
 };
 
-export type UserCandidate = {
-  employed: boolean;
-  contract: ContractValue | null;
-  endOfContract: string | null;
-  hidden: boolean;
-  note: string;
-  url: string;
-  lastModifiedBy: string;
-  deletedAt: string;
-};
-
 export type Organization = {
   id: string;
   name: string;
@@ -321,6 +310,10 @@ export type User = {
   hasExtractedCvData?: boolean;
   company: Company | null;
   invitations?: Invitation[];
+
+  referredCandidates?: User[];
+  averageDelayResponse?: number | null;
+  responseRate?: number | null;
 };
 
 export type StaffContact = {
@@ -342,22 +335,6 @@ export type EventWithParticipants = Event & {
   participants: EventParticipant[];
 };
 
-export interface UserCandidateWithUsers extends UserCandidate {
-  id?: string;
-  email?: string;
-  candidat: User;
-  coach?: User;
-  firstName?: string;
-  lastName?: string;
-}
-
-export interface UserWithUserCandidate extends User {
-  candidat?: UserCandidateWithUsers;
-  referredCandidates?: UserCandidateWithUsers[];
-  averageDelayResponse?: number | null;
-  responseRate?: number | null;
-}
-
 export type UserDto = {
   firstName: string;
   lastName: string;
@@ -371,16 +348,6 @@ export type UserDto = {
   id?: string;
   userProfile?: UserProfile;
   lastConnection?: string;
-};
-
-export type PutCandidate = {
-  employed: boolean;
-  contract: ContractValue | null;
-  endOfContract: string | null;
-  hidden: boolean;
-  note: string;
-  url: string;
-  lastModifiedBy: string;
 };
 
 export type UserRegistrationDto = {

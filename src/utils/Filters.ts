@@ -6,7 +6,7 @@ export const mutateTypeFilterDependingOnRole = (
   role: UserRoles | UserRoles[]
 ) => {
   if (role === UserRoles.COACH) {
-    return [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]];
+    return [...MEMBER_FILTERS_DATA];
   }
   if (role === UserRoles.CANDIDATE) {
     return [...MEMBER_FILTERS_DATA];

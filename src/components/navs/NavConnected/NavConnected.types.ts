@@ -1,8 +1,6 @@
 import type { JSX } from 'react';
 
 export interface NotifBadges {
-  note: number;
-  members: number;
   messaging: number;
 }
 

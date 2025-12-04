@@ -20,7 +20,6 @@ import {
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
-  PutCandidate,
   RecruitementAlertDto,
   Route,
   SocialMedia,
@@ -30,9 +29,9 @@ import {
   UserReferingDto,
   UserRegistrationDto,
   UserReportDto,
-  UserWithUserCandidate,
   CompaniesFilters,
   EventsFilters,
+  User,
 } from './types';
 
 export class APIHandler {
@@ -210,18 +209,12 @@ export class APIHandler {
 
   // get
 
-  getUsersMembers(
-    params: object
-  ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
+  getUsersMembers(params: object): Promise<AxiosResponse<User[]>> {
     return this.get('/user/members', params);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/${userId}`);
-  }
-
-  getCandidateCheckUpdate(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/user/candidate/checkUpdate/${candidateId}`);
   }
 
   getPublicUserProfile(userId: string): Promise<AxiosResponse> {
@@ -291,21 +284,6 @@ export class APIHandler {
     oldPassword: string;
   }): Promise<AxiosResponse> {
     return this.put(`/user/changePwd`, params);
-  }
-
-  putBulkCandidates(params: object): Promise<AxiosResponse> {
-    return this.put('/user/candidate/bulk', params);
-  }
-
-  putCandidate(
-    candidateId: string,
-    params: Partial<PutCandidate>
-  ): Promise<AxiosResponse> {
-    return this.put(`/user/candidate/${candidateId}`, params);
-  }
-
-  putCandidateRead(candidateId: string): Promise<AxiosResponse> {
-    return this.put(`/user/candidate/read/${candidateId}`);
   }
 
   putUserProfile(

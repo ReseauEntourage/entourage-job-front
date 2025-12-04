@@ -13,18 +13,6 @@ export const generateUsersApiResponse = (numbersOfUsers, roleUsers) => {
     zone: faker.location.city(),
     gender: faker.number.int(1),
     lastConnection: null,
-    candidat: {
-      coachId: null,
-      employed: false,
-      hidden: true,
-      note: null,
-      url: '',
-      contract: null,
-      endOfContract: null,
-      lastModifiedBy: null,
-      cvs: [],
-      coach: {},
-    },
     userProfile: {
       id: faker.string.uuid(),
       hasPicture: false,

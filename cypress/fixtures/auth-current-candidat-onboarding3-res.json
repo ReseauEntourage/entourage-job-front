@@ -10,16 +10,6 @@
   "zone": "PARIS",
   "gender": 0,
   "lastConnection": "2022-10-31T16:32:17.127Z",
-  "candidat": {
-    "employed": false,
-    "hidden": false,
-    "note": "Suite à notre rdv de ce lundi : retravailler ensemble mon CV\n\n23.03 - revoir comment mener mon prochain entretien",
-    "url": "michael-198e8950",
-    "contract": null,
-    "endOfContract": null,
-    "lastModifiedBy": "198e8950-d5be-4e82-aaf8-d18840dffba1",
-    "coach": null
-  },
   "coach": null,
   "userProfile": {
     "introduction": "hello",

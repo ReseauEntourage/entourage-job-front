@@ -1,10 +1,9 @@
 import React from 'react';
+import { User } from '@/src/api/types';
 import { NavConnectedMainItem } from '../NavConnected.types';
-import { UserWithUserCandidate } from 'src/api/types';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
-import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
 
 const rolesToParams = (roles) => {
   return `${roles
@@ -19,7 +18,7 @@ const coachRolesParams = rolesToParams([UserRoles.COACH]);
 const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
 export const renderLinks = (
-  user: UserWithUserCandidate,
+  user: User,
   logout: () => void
 ): {
   links: { [K in UserRoles]: NavConnectedMainItem[] };
@@ -47,9 +46,7 @@ export const renderLinks = (
       name: 'Événements',
     },
     {
-      href: `${
-        process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL
-      }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+      href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}}`,
       name: 'Boîte à outils',
       external: true,
       tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
@@ -86,9 +83,7 @@ export const renderLinks = (
     ...(isCompanyAdmin
       ? [
           {
-            href: `${
-              process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL
-            }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+            href: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL || '',
             name: 'Boîte à outils',
             external: true,
             tag: GA_TAGS.BACKOFFICE_COMPANY_HEADER_BAO_CLIC,
@@ -96,9 +91,7 @@ export const renderLinks = (
         ]
       : [
           {
-            href: `${
-              process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL
-            }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+            href: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL || '',
             name: 'Boîte à outils',
             external: true,
             tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
@@ -123,8 +116,6 @@ export const renderLinks = (
                 user?.zone ? `zone=${user?.zone}` : ''
               }`,
               name: 'Les candidats',
-              // icon: <UserEmptyIcon />,
-              badge: 'members',
               tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
             },
             {
@@ -133,7 +124,6 @@ export const renderLinks = (
                 user?.zone ? `zone=${user?.zone}` : ''
               }`,
               name: 'Les coachs',
-              // icon: <UserEmptyIcon />,
               tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
             },
             {
@@ -142,7 +132,6 @@ export const renderLinks = (
                 user?.zone ? `zone=${user?.zone}` : ''
               }`,
               name: 'Les prescripteurs',
-              // icon: <UserEmptyIcon />,
               tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
             },
           ],

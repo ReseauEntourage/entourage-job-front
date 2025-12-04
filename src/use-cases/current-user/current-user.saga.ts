@@ -29,9 +29,6 @@ const {
   updateProfileRequested,
   updateProfileSucceeded,
   updateProfileFailed,
-  updateCandidateRequested,
-  updateCandidateSucceeded,
-  updateCandidateFailed,
   readDocumentSucceeded,
   readDocumentRequested,
   readDocumentFailed,
@@ -138,27 +135,6 @@ function* updateUserCompanyRequestedSaga(
       notificationsActions.addNotification({
         type: 'danger',
         message: `Une erreur est survenue lors de la mise à jour de l'entreprise. Veuillez réessayer.`,
-      })
-    );
-  }
-}
-
-function* updateCandidateRequestedSaga(
-  action: ReturnType<typeof updateCandidateRequested>
-) {
-  const { userId, userCandidate } = action.payload;
-  try {
-    yield* call(() => Api.putCandidate(userId, userCandidate));
-    yield* put(
-      updateCandidateSucceeded({
-        userId,
-        userCandidate,
-      })
-    );
-  } catch (error) {
-    yield* put(
-      updateCandidateFailed({
-        error: 'UPDATE_FAILED',
       })
     );
   }
@@ -286,7 +262,6 @@ export function* saga() {
   yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
-  yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);
   yield* takeLatest(readDocumentRequested, readDocumentRequestedSaga);
   yield* takeLatest(
     updateUserProfilePictureRequested,

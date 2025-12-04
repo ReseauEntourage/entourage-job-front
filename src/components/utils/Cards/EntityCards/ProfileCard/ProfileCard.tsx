@@ -10,7 +10,6 @@ import {
   BusinessSector,
   Nudge,
   Occupation,
-  UserCandidateWithUsers,
   UserProfileSectorOccupation,
 } from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
@@ -56,7 +55,6 @@ export interface ProfileCardProps {
   hasPicture: boolean;
   nudges?: Nudge[];
   sectorOccupations?: UserProfileSectorOccupation[];
-  userCandidate?: UserCandidateWithUsers;
   department?: DepartmentName;
   job?: string;
   isAvailable: boolean;

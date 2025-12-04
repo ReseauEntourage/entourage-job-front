@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
+import { User } from '@/src/api/types';
 import { getNormalUserRoles, UserRoles } from '@/src/constants/users';
-import { UserWithUserCandidate } from 'src/api/types';
 import {
   formPersonalDataAsAdmin,
   formPersonalDataAsCandidate,
@@ -11,7 +11,7 @@ import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import { ModalEditUserInformation } from '.';
 
-export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
+export const useOpenCorrespondingModal = (user: User) => {
   const openPersonalDataModalAsAdmin = useCallback(() => {
     openModal(
       <ModalEditUserInformation

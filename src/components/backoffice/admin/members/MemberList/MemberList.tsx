@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { User } from '@/src/api/types';
 import { MemberTable } from '../MemberTable';
 import { Member } from '../MemberTable/Member';
 import {
@@ -8,8 +9,6 @@ import {
   MemberTableByRole,
 } from '../MemberTable/Member/Member.types';
 import { Api } from 'src/api';
-
-import { UserWithUserCandidate } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
@@ -19,10 +18,8 @@ import { ContainerWithTextCentered } from 'src/components/utils/Containers';
 import { StyledContainerWithTextCentered } from 'src/components/utils/Containers/Containers.styles';
 import { H4 } from 'src/components/utils/Headings';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
-import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
-import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
 import {
   filtersToQueryParams,
@@ -62,7 +59,7 @@ export function MemberList({
   const [filtersConst, setFiltersConst] =
     useState<typeof MEMBER_FILTERS_DATA>(MEMBER_FILTERS_DATA);
 
-  const [members, setMembers] = useState<UserWithUserCandidate[]>([]);
+  const [members, setMembers] = useState<User[]>([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [allLoaded, setAllLoaded] = useState(false);
@@ -112,18 +109,9 @@ export function MemberList({
     []
   );
 
-  const { selectElement, resetSelection } = useBulkActions(
-    'candidate',
-    async () => {
-      await fetchData(search, filters, role, offset, true);
-    },
-    GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
-  );
-
   useDeepCompareEffect(() => {
     if (role) {
       fetchData(search, filters, role, offset, true);
-      resetSelection();
     }
   }, [search, filters, role]);
 
@@ -134,13 +122,6 @@ export function MemberList({
       );
     }
   }, [prevRole, role]);
-
-  const handleSelectedMembers = useCallback(
-    (memberId) => {
-      selectElement({ id: memberId });
-    },
-    [selectElement]
-  );
 
   let roleToDisplay;
   if (isRoleIncluded([UserRoles.COACH], role)) {
@@ -158,16 +139,10 @@ export function MemberList({
   const memberList = useMemo(() => {
     return members.map((member, key) => {
       return (
-        <Member
-          columns={memberColumns}
-          role={role}
-          member={member}
-          key={key}
-          selectionCallback={handleSelectedMembers}
-        />
+        <Member columns={memberColumns} role={role} member={member} key={key} />
       );
     });
-  }, [handleSelectedMembers, memberColumns, members, role]);
+  }, [memberColumns, members, role]);
 
   return (
     <>

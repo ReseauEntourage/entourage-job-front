@@ -4,7 +4,6 @@ import { Api } from '@/src/api';
 import { PublicCV } from '@/src/api/types';
 import { PageCVContent } from '@/src/components/partials/CV/PageCVContent';
 import { Layout } from 'src/components/Layout';
-import { CVDiscover } from 'src/components/partials/CV/CVDiscover';
 import { CVList } from 'src/components/partials/CV/CVList';
 import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
@@ -53,7 +52,7 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
             <h2 className="uk-margin-medium-bottom uk-text-bold">
               Soutenez un autre candidat&nbsp;:
               <SimpleLink
-                href={{ pathname: '/candidats', query: { employed: false } }}
+                href={{ pathname: '/candidats' }}
                 className="uk-text-bold"
               >
                 {' '}
@@ -69,7 +68,7 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
             />
             <Grid middle column gap="collapse">
               <Button
-                href={{ pathname: '/candidats', query: { employed: false } }}
+                href={{ pathname: '/candidats' }}
                 variant="primary"
                 className="uk-margin-large-top"
               >
@@ -98,7 +97,6 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
           padding={false}
           tag={GA_TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
         />
-        <CVDiscover />
       </Layout>
     );
   }
