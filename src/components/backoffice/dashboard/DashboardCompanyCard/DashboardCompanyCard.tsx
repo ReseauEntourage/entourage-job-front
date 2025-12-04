@@ -36,7 +36,7 @@ export const DashboardCompanyCard = ({
           </Text>
           {companyAdmin && (
             <StyledNameAndReferentContainer>
-              <Text>
+              <Text center>
                 {isCompanyAdmin
                   ? `Vous êtes le référent`
                   : `Référent : ${
