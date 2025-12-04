@@ -10,7 +10,6 @@ const DECALE = 3;
 export const StyledToggleContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px;
   gap: 5px;
 `;
 
@@ -51,7 +50,7 @@ export const StyledSlider = styled.div<{ isToggled: boolean }>`
   width: ${WIDTH}px;
   height: ${HEIGHT}px;
   background-color: ${({ isToggled }) =>
-    isToggled ? COLORS.primaryBlue : COLORS.lightGray};
+    isToggled ? COLORS.primaryBlue : COLORS.darkGray};
   border-radius: ${HEIGHT_ROUNDED}px;
   transition: background-color 0.4s;
 
