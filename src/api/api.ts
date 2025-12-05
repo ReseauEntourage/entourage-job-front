@@ -245,8 +245,8 @@ export class APIHandler {
     });
   }
 
-  getProfilesRecommendations(userId: string): Promise<AxiosResponse> {
-    return this.get(`/user/profile/recommendations/${userId}`);
+  getProfilesRecommendations(): Promise<AxiosResponse> {
+    return this.get(`/user/profile/recommendations`);
   }
 
   // post
