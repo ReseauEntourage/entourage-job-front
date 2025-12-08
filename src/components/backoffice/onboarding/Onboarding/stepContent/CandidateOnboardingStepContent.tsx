@@ -67,8 +67,7 @@ export const CandidateOnboardingStepContents = {
     title: 'Enrichissez votre profil grâce à votre CV',
     content: (
       <ProfileGenerationProcess
-        title="Souhaitez vous completer automatiquement votre profil avec les
-                informations de votre CV ?"
+        title="Souhaitez vous completer automatiquement votre profil avec les informations de votre CV ?"
       />
     ),
     form: formOnboardingCandidateAI,
