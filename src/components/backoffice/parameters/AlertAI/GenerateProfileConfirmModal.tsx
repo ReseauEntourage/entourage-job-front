@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   ProfileGenerationProcess,
   ProfileGenerationProcessHandle,
@@ -11,9 +11,9 @@ export const GenerateProfileConfirmModal = () => {
   const ref = useRef<ProfileGenerationProcessHandle>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const onLoadingChange = (loading: boolean) => {
+  const onLoadingChange = useCallback((loading: boolean) => {
     setIsLoading(loading);
-  };
+  }, []);
 
   return (
     <ModalConfirm
