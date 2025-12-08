@@ -11,7 +11,7 @@ import { StyledNameCell, StyledNoWrapCellContent } from './Member.styles';
 import { MemberProps } from './Member.types';
 import { MemberInfo } from './MemberInfo';
 
-export function MemberDesktop({ member, columns }: MemberProps) {
+export function MemberDesktop({ member, columns, disableLink }: MemberProps) {
   return (
     <TrDesktop>
       <StyledNameCell>
@@ -27,6 +27,7 @@ export function MemberDesktop({ member, columns }: MemberProps) {
               ? member.organization?.name
               : null
           }
+          disableLink={disableLink}
         >
           <ImgUserProfile
             user={member}
