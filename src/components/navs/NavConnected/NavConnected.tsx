@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { renderLinks } from '@/src/components/navs/NavConnected/NavConnectedContent/NavConnectedContent.utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useNotifBadges } from 'src/hooks/useNotifBadges';
 import { usePrevious } from 'src/hooks/utils';
 import { authenticationActions } from 'src/use-cases/authentication';
@@ -18,8 +16,6 @@ export const NavConnected = () => {
   const user = useAuthenticatedUser();
   const selectedConversation = useSelector(selectSelectedConversation);
   const conversations = useSelector(selectConversations);
-  const { asPath } = useRouter();
-  const candidateId = useCandidateId();
   const dispatch = useDispatch();
 
   const logout = useCallback(async () => {
@@ -30,14 +26,14 @@ export const NavConnected = () => {
     renderLinks(user, logout)
   );
 
-  const badges = useNotifBadges(user, asPath, candidateId);
+  const badges = useNotifBadges();
   const prevUser = usePrevious(user);
 
   useEffect(() => {
     if (user !== prevUser) {
       setLinksConnected(renderLinks(user, logout));
     }
-  }, [user, logout, prevUser, candidateId]);
+  }, [user, logout, prevUser]);
 
   useEffect(() => {
     dispatch(messagingActions.getUnseenConversationsCountRequested());

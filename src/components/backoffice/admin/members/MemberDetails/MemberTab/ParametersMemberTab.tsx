@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Api } from 'src/api';
-import { UserWithUserCandidate } from 'src/api/types';
+import { User } from 'src/api/types';
 import { EditMemberModal } from 'src/components/backoffice/admin/members/MemberDetails/EditMemberModal';
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
 import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
@@ -24,8 +24,8 @@ import {
 } from './MemberTab.styles';
 
 interface ParametersMemberTabProps {
-  user: UserWithUserCandidate;
-  setUser: (user: UserWithUserCandidate) => void;
+  user: User;
+  setUser: (user: User) => void;
 }
 export function ParametersMemberTab({
   user,
@@ -89,7 +89,6 @@ export function ParametersMemberTab({
       'address',
       'zone',
       'cvUrl',
-      'employed',
     ];
 
     if (user && isRoleIncluded([UserRoles.REFERER], user.role)) {
@@ -101,13 +100,7 @@ export function ParametersMemberTab({
 
   const referredCandidates = useMemo(() => {
     if (user) {
-      if (user.referredCandidates && user.referredCandidates.length > 0) {
-        return user.referredCandidates.map(({ candidat }) => {
-          const userWithCandidate = candidat;
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          return userWithCandidate.candidat;
-        });
-      }
+      return user.referredCandidates;
     }
     return null;
   }, [user]);
@@ -180,8 +173,6 @@ export function ParametersMemberTab({
             columns={memberColumns}
             member={user}
             role={user.role}
-            isEditable
-            setMember={setUser}
             disableLink
           />,
         ]}

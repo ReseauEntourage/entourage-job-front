@@ -1,16 +1,9 @@
-import { User } from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
-import {
-  getCandidateIdFromCoachOrCandidate,
-  getUserCandidateFromCoachOrCandidate,
-} from 'src/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
   readDocumentAdapter,
-  updateCandidateAdapter,
   updateProfileAdapter,
   updateUserAdapter,
   updateUserCompanyAdapter,
@@ -49,11 +42,6 @@ export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(
 export const updateUserCompanySelectors =
   updateUserCompanyAdapter.getSelectors<RootState>(
     (state) => state.currentUser.updateUserCompany
-  );
-
-export const updateCandidateSelectors =
-  updateCandidateAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.updateCandidate
   );
 
 export const updateUserProfilePictureSelectors =
@@ -95,33 +83,6 @@ export function selectCurrentUserId(state: RootState) {
   const currentUser = selectAuthenticatedUser(state);
 
   return currentUser.id;
-}
-
-// select candidate User for the current user => doesn't work for external coach
-export function selectCandidateAsUser(state: RootState): User | null {
-  const currentUser = selectAuthenticatedUser(state);
-
-  let candidate = getUserCandidateFromCoachOrCandidate(currentUser);
-
-  if (currentUser.role === UserRoles.COACH && Array.isArray(candidate)) {
-    [candidate] = candidate;
-    if (candidate?.candidat) {
-      return candidate.candidat;
-    }
-    return null;
-  }
-  return currentUser;
-}
-
-// select candidateId for the current user => doesn't work for external coach
-export function selectCandidateId(state: RootState): string | null {
-  const currentUser = selectAuthenticatedUser(state);
-
-  let candidateId = getCandidateIdFromCoachOrCandidate(currentUser);
-  if (Array.isArray(candidateId)) {
-    [candidateId] = candidateId;
-  }
-  return candidateId;
 }
 
 export function selectIsComplete(state: RootState): boolean {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { UserWithUserCandidate } from 'src/api/types';
+import { User } from '@/src/api/types';
 import { getRolesWithOrganization } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberInfo } from './MemberInfo';
@@ -9,7 +9,7 @@ import { StyledRelatedMemberListItem } from './RelatedMemberInfo.styles';
 const uuidValue = uuid();
 
 interface RelatedMemberInfoProps {
-  relatedUser: UserWithUserCandidate[] | null;
+  relatedUser: User[] | null;
 }
 
 export function RelatedMemberInfo({ relatedUser }: RelatedMemberInfoProps) {

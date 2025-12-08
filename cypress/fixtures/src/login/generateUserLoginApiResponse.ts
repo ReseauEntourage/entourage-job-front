@@ -21,16 +21,6 @@ export const generateUserLoginApiResponse = (roleUser) => {
     ...userBase,
     role: 'Candidat',
     coach: null,
-    candidat: {
-      employed: false,
-      hidden: false,
-      note: '',
-      url: 'michael-198e8950',
-      contract: null,
-      endOfContract: null,
-      lastModifiedBy: '',
-      coach: null,
-    },
     userProfile: {
       introduction: null,
       description: null,

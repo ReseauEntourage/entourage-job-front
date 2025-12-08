@@ -104,35 +104,6 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       ];
     }
 
-    if (role === UserRoles.CANDIDATE) {
-      if (columns.includes('cvUrl')) {
-        columnsArray = [
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          ...columnsArray,
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          <Th key="memberCVLink">Lien CV</Th>,
-        ];
-      }
-      if (columns.includes('employed')) {
-        columnsArray = [
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          ...columnsArray,
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          <Th key="memberEmployed">En emploi</Th>,
-        ];
-      }
-      if (columns.includes('selection')) {
-        columnsArray = [
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          ...columnsArray,
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          <Th key="memberSelected">Sélection</Th>,
-        ];
-      }
-    }
-
     return columnsArray;
   }, [columns, role]);
 

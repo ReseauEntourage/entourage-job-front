@@ -1,4 +1,3 @@
-import { data } from 'cypress/types/jquery';
 import { RequestConfig } from './request.types';
 
 /**

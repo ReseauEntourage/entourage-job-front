@@ -11,7 +11,7 @@ export interface ButtonProps {
   size?: 'small' | 'large';
   rounded?: boolean | 'circle';
   // link
-  href?: string | { pathname: string; query: AnyToFix };
+  href?: string | { pathname: string; query?: AnyToFix };
   isExternal?: boolean;
   newTab?: boolean;
   onClick?: (e: Event) => Promise<void> | void;

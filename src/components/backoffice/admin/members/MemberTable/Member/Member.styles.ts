@@ -15,21 +15,6 @@ export const StyledNoWrapCellContent = styled.div`
   }
 `;
 
-export const StyledEmployedCellContent = styled.div`
-  .yes {
-    color: ${COLORS.green};
-  }
-  .no {
-    color: ${COLORS.red};
-  }
-`;
-
-export const StyledCheckBoxCellContent = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const StyledMobileMember = styled(TrMobile)`
   .line {
     border-left: solid 3px ${COLORS.white} !important;

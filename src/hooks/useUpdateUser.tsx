@@ -2,14 +2,14 @@ import useChange from '@react-hook/change';
 import _ from 'lodash';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserWithUserCandidate } from 'src/api/types';
+import { User } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import {
   currentUserActions,
   updateUserSelectors,
 } from 'src/use-cases/current-user';
 
-export const useUpdateUser = (user: UserWithUserCandidate) => {
+export const useUpdateUser = (user: User) => {
   const dispatch = useDispatch();
   const [closeModal, setCloseModal] = useState<boolean>(false);
 
@@ -24,7 +24,7 @@ export const useUpdateUser = (user: UserWithUserCandidate) => {
   });
 
   const updateUser = useCallback(
-    (newUserData: Partial<UserWithUserCandidate>) => {
+    (newUserData: Partial<User>) => {
       if (!_.isEmpty(newUserData) && user.id) {
         dispatch(
           currentUserActions.updateUserRequested({

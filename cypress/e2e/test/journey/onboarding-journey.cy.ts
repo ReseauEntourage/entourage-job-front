@@ -34,7 +34,7 @@ describe('Onboarding', () => {
      * Ajoutez vos URLs à cette liste selon vos besoins
      */
     const urlsToIntercept = [
-      'user/profile/recommendations/**',
+      'user/profile/recommendations',
       '/user/profile/completion',
       '/messaging/conversations',
       '/messaging/conversations/**',
