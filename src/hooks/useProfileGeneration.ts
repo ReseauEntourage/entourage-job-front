@@ -15,7 +15,7 @@ interface UseProfileGenerationProps {
   onProfileGenerated?: () => void;
 }
 
-interface UseProfileGenerationReturn {
+export interface UseProfileGenerationReturn {
   generateProfileFromCV: () => Promise<void>;
   isLoading: boolean;
 }

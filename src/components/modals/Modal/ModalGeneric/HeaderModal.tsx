@@ -10,6 +10,9 @@ export const HeaderModal = ({
   title?: React.ReactNode;
   description?: React.ReactNode;
 }) => {
+  if (!title && !description) {
+    return null;
+  }
   return (
     <StyledHeaderModal>
       {title && <H3 title={title} weight="semibold" center />}
