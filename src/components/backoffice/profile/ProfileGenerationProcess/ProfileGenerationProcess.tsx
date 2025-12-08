@@ -79,7 +79,7 @@ export const ProfileGenerationProcess = forwardRef<
           )}
           <StyledContainerMarginY margin="20px" />
           <Text size="large" color="darkGray" center>
-            Cette fonctionnalité vous permet de récuperer les informations de
+            Cette fonctionnalité vous permet de récupérer les informations de
             votre CV et les ajouter directement à votre profil. Ex: vos
             expériences, formations, compétences et un résumé professionnel.
           </Text>
