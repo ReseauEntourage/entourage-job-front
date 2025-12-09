@@ -1,6 +1,7 @@
 import React from 'react';
 import { Event } from '@/src/api/types';
 import { useIsMobile } from '@/src/hooks/utils';
+import { EventParticipateButton } from '../../backoffice/events/Event/EventParticipateButton/EventParticipateButton';
 import { EventInfoSummary } from '../../backoffice/events/EventInfoSummary/EventInfoSummary';
 import { Section } from '../../utils';
 import { BackLink } from '../../utils/BackLink';
@@ -15,6 +16,7 @@ import {
 
 export type HeaderEventProps = Pick<
   Event,
+  | 'salesForceId'
   | 'name'
   | 'eventType'
   | 'startDate'
@@ -22,6 +24,7 @@ export type HeaderEventProps = Pick<
   | 'meetingLink'
   | 'fullAddress'
   | 'registrationCount'
+  | 'isParticipating'
 >;
 
 export const EVENT_PICTURE_SIZE = {
@@ -36,6 +39,7 @@ export const EVENT_PICTURE_SIZE = {
 };
 
 export const HeaderEvent = ({
+  salesForceId,
   name,
   eventType,
   mode,
@@ -43,6 +47,7 @@ export const HeaderEvent = ({
   startDate,
   fullAddress,
   registrationCount,
+  isParticipating,
 }: HeaderEventProps) => {
   const isMobile = useIsMobile();
   const imageSize = EVENT_PICTURE_SIZE[isMobile ? 'mobile' : 'desktop'];
@@ -68,6 +73,12 @@ export const HeaderEvent = ({
               fullAddress={fullAddress}
               registrationCount={registrationCount}
             />
+            {isMobile && (
+              <EventParticipateButton
+                eventSalesForceId={salesForceId}
+                isParticipating={isParticipating}
+              />
+            )}
           </StyledHeaderInfoContainer>
         </StyledHeaderContent>
       </Section>

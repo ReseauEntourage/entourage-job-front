@@ -13,7 +13,6 @@ export const StyledItem = styled.div`
   gap: 10px;
   padding: 10px;
   border-radius: 8px;
-  background: ${COLORS.hoverBlue};
 `;
 
 export const StyledIndex = styled.div`

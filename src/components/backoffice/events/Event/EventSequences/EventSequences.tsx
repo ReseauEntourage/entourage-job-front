@@ -12,7 +12,7 @@ export const EventSequences = ({ sequences }: EventSequencesProps) => {
     return null;
   }
   return (
-    <Card title="A quoi s'attendre ?">
+    <Card title="Programme">
       <StyledSequencesContainer>
         {sequences.map((sequence, index) => (
           <Item key={index} sequence={sequence} idx={index} />
