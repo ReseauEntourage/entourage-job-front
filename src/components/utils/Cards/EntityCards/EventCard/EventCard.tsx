@@ -25,6 +25,7 @@ export type EventCardProps = Pick<
   | 'meetingLink'
   | 'fullAddress'
   | 'registrationCount'
+  | 'isParticipating'
 >;
 
 export function EventCard({
@@ -36,13 +37,12 @@ export function EventCard({
   meetingLink,
   fullAddress,
   registrationCount,
+  isParticipating,
 }: EventCardProps) {
   // Compute image based on event type
   const image = useMemo(() => {
     return EVENT_IMAGES[eventType] || EVENT_IMAGES.UNKNOWN;
   }, [eventType]);
-
-  const participating = false; // TODO: Replace with real participation status
 
   return (
     <EntityCard
@@ -53,7 +53,7 @@ export function EventCard({
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_EVENTS_CARTE_CLIC);
       }}
-      borderColor={participating ? 'primaryBlue' : undefined}
+      borderColor={isParticipating ? 'primaryBlue' : undefined}
     >
       <StyledEventCardPictureContainer className="profile-card">
         {/* Picture */}
@@ -62,7 +62,7 @@ export function EventCard({
         </StyledEventCardPicture>
 
         {/* Participation status */}
-        {participating && (
+        {isParticipating && (
           <StyledEventCardParticipation>
             <LucidIcon name="Check" size={16} color="white" />
             <Text color="white">Inscrit</Text>
