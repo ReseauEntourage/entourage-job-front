@@ -22,6 +22,7 @@ export const Event = () => {
   return (
     <StyledBackofficeBackground>
       <HeaderEvent
+        salesForceId={selectedEvent.salesForceId}
         name={selectedEvent.name}
         eventType={selectedEvent.eventType}
         mode={selectedEvent.mode}
@@ -29,6 +30,7 @@ export const Event = () => {
         startDate={selectedEvent.startDate}
         fullAddress={selectedEvent.fullAddress}
         registrationCount={selectedEvent.registrationCount}
+        isParticipating={selectedEvent.isParticipating}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
