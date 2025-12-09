@@ -16,6 +16,7 @@ export function DirectoryEventItem({
   meetingLink,
   fullAddress,
   registrationCount,
+  isParticipating,
 }: DirectoryEventItemProps) {
   return (
     <CardListItem dataTestId={salesForceId}>
@@ -28,6 +29,7 @@ export function DirectoryEventItem({
         meetingLink={meetingLink}
         fullAddress={fullAddress}
         registrationCount={registrationCount}
+        isParticipating={isParticipating}
       />
     </CardListItem>
   );

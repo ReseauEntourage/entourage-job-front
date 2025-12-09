@@ -7,7 +7,7 @@ export const StyledEntityCard = styled.div<{ borderColor?: string }>`
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.borderColor || COLORS.gray};
+  border: 1px solid ${(props) => COLORS[props.borderColor] || COLORS.gray};
   cursor: pointer;
   transition: box-shadow 0.2s ease-in-out;
   box-sizing: border-box;
