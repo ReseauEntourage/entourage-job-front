@@ -54,6 +54,10 @@ const meta = {
       control: 'number',
       description: 'Nombre de participants inscrits (optionnel)',
     },
+    isParticipating: {
+      control: 'boolean',
+      description: "Indique si l'utilisateur participe à l'événement",
+    },
   },
 } satisfies Meta<typeof EventCard>;
 
@@ -70,6 +74,7 @@ export const Irl = {
     fullAddress: "123 Rue de l'Exemple, 75000 Paris",
     registrationCount: 42,
     meetingLink: null,
+    isParticipating: false,
   },
 } satisfies Story;
 
@@ -83,5 +88,20 @@ export const Online = {
     fullAddress: null,
     registrationCount: 42,
     meetingLink: 'https://example.com/meeting',
+    isParticipating: false,
+  },
+} satisfies Story;
+
+export const Participate = {
+  args: {
+    salesForceId: uuid(),
+    name: 'Les Papotages Pro en ligne',
+    startDate: new Date().toISOString(),
+    eventType: EventType.PAPOTAGES_PRO,
+    mode: EventMode.ONLINE,
+    fullAddress: null,
+    registrationCount: 42,
+    meetingLink: 'https://example.com/meeting',
+    isParticipating: true,
   },
 } satisfies Story;
