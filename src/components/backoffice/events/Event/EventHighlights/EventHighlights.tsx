@@ -20,9 +20,11 @@ export const EventHighlights = ({
     <Card title="Points clefs de l'événement">
       <StyledItemsContainer>
         <Item
-          icon={<LucidIcon name="Clock" size={30} color={COLORS.primaryBlue} />}
-          title="Durée"
-          content={`${duration} minutes d'échanges enrichissants`}
+          icon={
+            <LucidIcon name="Target" size={30} color={COLORS.primaryBlue} />
+          }
+          title="Objectif"
+          content={goal}
         />
 
         <Item
@@ -44,11 +46,9 @@ export const EventHighlights = ({
         />
 
         <Item
-          icon={
-            <LucidIcon name="Target" size={30} color={COLORS.primaryBlue} />
-          }
-          title="Objectif"
-          content={goal}
+          icon={<LucidIcon name="Clock" size={30} color={COLORS.primaryBlue} />}
+          title="Durée"
+          content={`${duration} minutes d'échanges enrichissants`}
         />
       </StyledItemsContainer>
     </Card>
