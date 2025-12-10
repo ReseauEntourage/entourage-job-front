@@ -22,6 +22,5 @@ export const StyledOffCanvas = styled.div<{
 
 export const StyledCloseButtonContainer = styled.div`
   display: flex;
-  flex: 1;
   justify-content: flex-end;
 `;

@@ -58,14 +58,19 @@ const CustomModal = ({
     [onClose]
   );
 
+  const headerHeight = useMemo(
+    () => (isMobile ? HEIGHTS.HEADER_MOBILE : HEIGHTS.HEADER),
+    [isMobile]
+  );
+
   const style = useMemo(() => {
     const mobileStyle = {
       overlay: {},
       content: {
         width: '100%',
         maxWidth: '100%',
-        marginTop: HEIGHTS.HEADER_MOBILE,
-        maxHeight: `calc(100vh - ${HEIGHTS.HEADER}px)`,
+        marginTop: headerHeight,
+        maxHeight: `calc(100vh - ${headerHeight}px)`,
         padding: '20px 0',
         bottom: 0,
         left: 0,
@@ -107,11 +112,12 @@ const CustomModal = ({
         ...(isMobile ? mobileStyle.content : {}),
       },
     };
-  }, [isMobile, width]);
+  }, [headerHeight, isMobile, width]);
 
   return (
     <ReactModal
       id={id}
+      closeTimeoutMS={200}
       onAfterOpen={() => {
         // Fix to make modal scroll to top on open
         if (document.getElementsByClassName('ReactModal__Overlay')?.[0]) {
