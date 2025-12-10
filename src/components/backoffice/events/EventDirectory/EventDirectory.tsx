@@ -138,9 +138,10 @@ export function EventDirectory() {
   useEffect(() => {
     // Set default department filter based on user's profile
     if (
-      !isDefaultDepartmentSet &&
-      currentUser?.userProfile?.department &&
-      departmentsIdsFilters.length > 0
+      !isDefaultDepartmentSet && // Only set once
+      currentUser?.userProfile?.department && // User has a department
+      departmentsIdsFilters.length > 0 && // Departments are loaded
+      !departmentIds // No department filter in query params
     ) {
       const department = departmentsIdsFilters.find((dept) => {
         if (dept.label && currentUser.userProfile.department) {
@@ -158,6 +159,7 @@ export function EventDirectory() {
     currentUser.userProfile.department,
     departmentsIdsFilters,
     setFilters,
+    departmentIds,
   ]);
 
   const handleOpenFilterDrawer = () => {
