@@ -6,6 +6,7 @@ import { Button } from 'src/components/utils';
 import { HeaderModal } from './HeaderModal';
 
 interface ModalGenericProps {
+  id?: string;
   children: React.ReactNode;
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -16,9 +17,8 @@ interface ModalGenericProps {
   noCloseIcon?: boolean;
 }
 
-const id = 'modal-generic';
-
 export const ModalGeneric = ({
+  id = 'modal-generic',
   title,
   description,
   children,
@@ -30,12 +30,7 @@ export const ModalGeneric = ({
 }: ModalGenericProps) => {
   const { onClose } = useModalContext();
   return (
-    <Modal
-      id={`${id}-container`}
-      size={size}
-      closeOnNextRender={closeOnNextRender}
-      data-testid={id}
-    >
+    <Modal id={id} size={size} closeOnNextRender={closeOnNextRender}>
       <HeaderModal
         title={title}
         description={description}

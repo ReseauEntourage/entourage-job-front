@@ -117,6 +117,7 @@ const CustomModal = ({
   return (
     <ReactModal
       id={id}
+      testId={id}
       closeTimeoutMS={200}
       onAfterOpen={() => {
         // Fix to make modal scroll to top on open
