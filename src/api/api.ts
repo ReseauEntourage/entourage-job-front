@@ -20,7 +20,6 @@ import {
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
-  PutCandidate,
   RecruitementAlertDto,
   Route,
   SocialMedia,
@@ -30,8 +29,9 @@ import {
   UserReferingDto,
   UserRegistrationDto,
   UserReportDto,
-  UserWithUserCandidate,
   CompaniesFilters,
+  EventsFilters,
+  User,
 } from './types';
 
 export class APIHandler {
@@ -123,6 +123,37 @@ export class APIHandler {
     return this.get(`/users/public-cvs/${userId}`, {}, headers);
   }
 
+  /// //////
+  /// events //
+  /// //////
+  getAllEvents(
+    params: {
+      offset: number;
+      limit: number;
+    } & EventsFilters
+  ): Promise<AxiosResponse> {
+    return this.get('/events', {
+      params,
+    });
+  }
+
+  getEvent(eventId: string): Promise<AxiosResponse> {
+    return this.get(`/events/${eventId}`);
+  }
+
+  getEventParticipants(eventId: string): Promise<AxiosResponse> {
+    return this.get(`/events/${eventId}/participants`);
+  }
+
+  updateEventParticipation(
+    eventSalesForceId: string,
+    isParticipating: boolean
+  ): Promise<AxiosResponse> {
+    return this.put(`/events/${eventSalesForceId}/participation`, {
+      participate: isParticipating,
+    });
+  }
+
   // ///////////////////////
   //  profile-generation  //
   // ///////////////////////
@@ -178,18 +209,12 @@ export class APIHandler {
 
   // get
 
-  getUsersMembers(
-    params: object
-  ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
+  getUsersMembers(params: object): Promise<AxiosResponse<User[]>> {
     return this.get('/user/members', params);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/${userId}`);
-  }
-
-  getCandidateCheckUpdate(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/user/candidate/checkUpdate/${candidateId}`);
   }
 
   getPublicUserProfile(userId: string): Promise<AxiosResponse> {
@@ -220,8 +245,8 @@ export class APIHandler {
     });
   }
 
-  getProfilesRecommendations(userId: string): Promise<AxiosResponse> {
-    return this.get(`/user/profile/recommendations/${userId}`);
+  getProfilesRecommendations(): Promise<AxiosResponse> {
+    return this.get(`/user/profile/recommendations`);
   }
 
   // post
@@ -243,7 +268,7 @@ export class APIHandler {
     userId: string,
     profileImage: FormData
   ): Promise<AxiosResponse> {
-    return this.post(`/user/profile/uploadImage/${userId}`, profileImage, {
+    return this.post(`/user/profile/upload-image/${userId}`, profileImage, {
       'Content-Type': 'multipart/form-data',
     });
   }
@@ -259,21 +284,6 @@ export class APIHandler {
     oldPassword: string;
   }): Promise<AxiosResponse> {
     return this.put(`/user/changePwd`, params);
-  }
-
-  putBulkCandidates(params: object): Promise<AxiosResponse> {
-    return this.put('/user/candidate/bulk', params);
-  }
-
-  putCandidate(
-    candidateId: string,
-    params: Partial<PutCandidate>
-  ): Promise<AxiosResponse> {
-    return this.put(`/user/candidate/${candidateId}`, params);
-  }
-
-  putCandidateRead(candidateId: string): Promise<AxiosResponse> {
-    return this.put(`/user/candidate/read/${candidateId}`);
   }
 
   putUserProfile(
@@ -485,17 +495,6 @@ export class APIHandler {
 
   // get
 
-  getAuthCurrent(
-    complete = false,
-    headers: AxiosRequestHeaders | undefined = undefined
-  ): Promise<AxiosResponse> {
-    return this.get(
-      `/auth/current${complete ? '?complete=true' : ''}`,
-      {},
-      headers
-    );
-  }
-
   getResetUserToken(userId: string, token: string): Promise<AxiosResponse> {
     return this.get(`/auth/reset/${userId}/${token}`);
   }
@@ -540,6 +539,27 @@ export class APIHandler {
     params: { newPassword: string; confirmPassword: string }
   ): Promise<AxiosResponse> {
     return this.post(`/auth/reset/${userId}/${token}`, params);
+  }
+
+  /// // //////
+  // currentUser /
+  /// // //////
+
+  getAuthCurrent(
+    complete = false,
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(
+      `/auth/current${complete ? '?complete=true' : ''}`,
+      {},
+      headers
+    );
+  }
+
+  getStaffContactInfo(
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(`/auth/current/staff-contact`, {}, headers);
   }
 
   /// // //////

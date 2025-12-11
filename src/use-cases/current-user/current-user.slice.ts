@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserWithUserCandidate } from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
+import { StaffContact, User } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
+  fetchStaffContactAdapter,
   fetchUserAdapter,
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
-  updateCandidateAdapter,
   UpdateError,
   updateProfileAdapter,
   updateUserAdapter,
@@ -19,30 +18,31 @@ import {
 
 export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
+  fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   updateUser: RequestState<typeof updateUserAdapter>;
   updateUserCompany: RequestState<typeof updateUserCompanyAdapter>;
-  updateCandidate: RequestState<typeof updateCandidateAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
   readDocument: RequestState<typeof readDocumentAdapter>;
   updateUserProfilePicture: RequestState<
     typeof updateUserProfilePictureAdapter
   >;
   uploadExternalCv: RequestState<typeof uploadExternalCvAdapter>;
-  user: UserWithUserCandidate | null;
+  user: User | null;
   complete: boolean;
   userUpdateError: UpdateError | null; // TODO: Add error types
   userCompanyUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
   externalCv: string | null;
+  staffContact: StaffContact | null;
 }
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
+  fetchStaffContact: fetchStaffContactAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
   updateUserCompany: updateUserCompanyAdapter.getInitialState(),
-  updateCandidate: updateCandidateAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
@@ -53,6 +53,7 @@ const initialState: State = {
   userCompanyUpdateError: null,
   profileUpdateError: null,
   externalCv: null,
+  staffContact: null,
 };
 
 export const slice = createSlice({
@@ -65,6 +66,14 @@ export const slice = createSlice({
         state.complete = false;
       },
     }),
+    ...fetchStaffContactAdapter.getReducers<State>(
+      (state) => state.fetchStaffContact,
+      {
+        fetchStaffContactSucceeded(state, action) {
+          state.staffContact = action.payload;
+        },
+      }
+    ),
     ...fetchCompleteUserAdapter.getReducers<State>(
       (state) => state.fetchCompleteUser,
       {
@@ -90,24 +99,6 @@ export const slice = createSlice({
         updateUserCompanySucceeded() {},
         updateUserCompanyFailed(state, action) {
           state.userCompanyUpdateError = action.payload.error;
-        },
-      }
-    ),
-    ...updateCandidateAdapter.getReducers<State>(
-      (state) => state.updateCandidate,
-      {
-        updateCandidateSucceeded(state, action) {
-          assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
-
-          if (state.user.role === UserRoles.CANDIDATE && state.user.candidat) {
-            state.user.candidat = {
-              ...state.user.candidat,
-              ...action.payload.userCandidate,
-            };
-          }
-        },
-        updateCandidateFailed(state, action) {
-          state.userUpdateError = action.payload.error;
         },
       }
     ),
@@ -148,7 +139,7 @@ export const slice = createSlice({
         },
       }
     ),
-    setUser(state, action: PayloadAction<UserWithUserCandidate | null>) {
+    setUser(state, action: PayloadAction<User | null>) {
       state.user = action.payload;
     },
     deleteExternalCvRequested() {},

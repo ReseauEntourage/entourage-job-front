@@ -1,53 +1,22 @@
 import moment from 'moment';
 import React from 'react';
 
-import { Tooltip } from 'react-tooltip';
 import { GENDERS_FILTERS } from '@/src/constants/genders';
 import {
-  StyledEmployedCellContent,
   StyledMobileMember,
   StyledNameCellMobile,
 } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
-import { ImgUserProfile, SimpleLink } from 'src/components/utils';
-import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
+import { ImgUserProfile } from 'src/components/utils';
 import { TdMobile } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
-import { UserRoles, getRolesWithOrganization } from 'src/constants/users';
-import {
-  getUserCandidateFromCoachOrCandidate,
-  isRoleIncluded,
-  findConstantFromValue,
-} from 'src/utils/Finding';
-import { buildContractLabel } from 'src/utils/Formatting';
+import { getRolesWithOrganization } from 'src/constants/users';
+import { isRoleIncluded, findConstantFromValue } from 'src/utils/Finding';
 import { MemberProps } from './Member.types';
 import { MemberInfo } from './MemberInfo';
-import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
 
-const tooltipId = 'contract-tooltip';
-
-export function MemberMobile({
-  member,
-  role,
-  selectionCallback,
-  columns,
-  setMember,
-  isEditable,
-  disableLink,
-}: MemberProps) {
-  const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
-
-  const userCandidate = getUserCandidateFromCoachOrCandidate(member);
-
-  const contractLabel = member.candidat?.contract
-    ? buildContractLabel(
-        member.candidat.contract,
-        member.candidat.endOfContract
-      )
-    : null;
-
+export function MemberMobile({ member, columns, disableLink }: MemberProps) {
   return (
-    <StyledMobileMember selected={checked}>
+    <StyledMobileMember>
       <div className="line">
         <StyledNameCellMobile>
           <ImgUserProfile
@@ -68,19 +37,6 @@ export function MemberMobile({
             }
             disableLink={disableLink}
           />
-          {columns.includes('selection') &&
-            selectionCallback &&
-            !Array.isArray(userCandidate) &&
-            role !== UserRoles.COACH && (
-              <CheckBox
-                id={`member-${member.id}-check`}
-                name={`member-${member.id}-check`}
-                value={checked}
-                onChange={handleCheckBox}
-                useOutsideOfForm
-                disabled={userCandidate?.hidden}
-              />
-            )}
         </StyledNameCellMobile>
       </div>
       {(columns.includes('phone') || columns.includes('gender')) && (
@@ -140,49 +96,6 @@ export function MemberMobile({
           </TdMobile>
         )}
       </div>
-      {role !== UserRoles.COACH && !Array.isArray(userCandidate) && (
-        <div className="line">
-          {columns.includes('cvUrl') && (
-            <TdMobile title="Lien CV">
-              <span>
-                <SimpleLink
-                  href={`/cv/${userCandidate?.url}`}
-                  isExternal
-                  target="_blank"
-                >
-                  <LucidIcon name="Link" />
-                </SimpleLink>
-              </span>
-            </TdMobile>
-          )}
-          {columns.includes('employed') && (
-            <TdMobile title="En emploi">
-              <StyledEmployedCellContent>
-                {isEditable ? (
-                  <MemberEmployedToggle
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                    setMember={setMember}
-                    member={member}
-                  />
-                ) : (
-                  <span
-                    data-tooltip-id={tooltipId}
-                    data-tooltip-content={contractLabel}
-                    data-tooltip-place="bottom"
-                  >
-                    {userCandidate?.employed ? (
-                      <span className="yes">Oui</span>
-                    ) : (
-                      <span className="no">Non</span>
-                    )}
-                    <Tooltip id={tooltipId} />
-                  </span>
-                )}
-              </StyledEmployedCellContent>
-            </TdMobile>
-          )}
-        </div>
-      )}
     </StyledMobileMember>
   );
 }

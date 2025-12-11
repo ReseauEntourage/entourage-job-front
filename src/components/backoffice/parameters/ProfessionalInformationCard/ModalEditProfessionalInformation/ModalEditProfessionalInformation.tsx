@@ -2,7 +2,7 @@ import React from 'react';
 import { DefaultValues } from 'react-hook-form';
 import { useUpdateUser } from '@/src/hooks';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { User, UserProfile } from 'src/api/types';
 import {
   ExtractFormSchemaValidation,
   FormSchema,
@@ -20,7 +20,7 @@ interface ModalEditProfessionalInformationProps<
   getValuesToSend: (
     fields: ExtractFormSchemaValidation<S>
   ) => Partial<UserProfile> & { companyName?: string | null };
-  user: UserWithUserCandidate;
+  user: User;
 }
 
 export const ModalEditProfessionalInformation = <

@@ -5,6 +5,7 @@ import {
   IlluCV,
   IlluPoigneeDeMain,
 } from '@/assets/icons/icons';
+import { CompanyUserRole } from '@/src/constants/company';
 import { COLORS } from '@/src/constants/styles';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { ExtractFormSchemaValidation } from '../forms/FormSchema';
@@ -218,7 +219,7 @@ export const RegistrationFlows: {
           typeof formRegistrationCompanyRole
         >;
 
-        if (companyRole.value === 'employee') {
+        if (companyRole.value === CompanyUserRole.EMPLOYEE) {
           return {
             flow: RegistrationFlow.COACH,
             nextStep: 0,

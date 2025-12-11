@@ -10,8 +10,6 @@
   "zone": "PARIS",
   "gender": 0,
   "lastConnection": "2022-10-31T16:32:17.127Z",
-  "candidat": null,
-  "coach": null,
   "userProfile": {
     "introduction": null,
     "description": "hello",

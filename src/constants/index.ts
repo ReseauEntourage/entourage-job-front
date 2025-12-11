@@ -91,16 +91,6 @@ export const CONTRACTS: (FilterConstant<Contract> & {
 
 export const CV_FILTERS_DATA: Filter[] = [
   {
-    key: 'employed',
-    type: 'checkbox',
-    constants: [
-      { label: "Recherche d'emploi", value: false },
-      { label: 'En emploi', value: true },
-    ],
-    title: 'Masquer les candidats en emploi',
-    tag: GA_TAGS.PAGE_GALERIE_FILTRE_EMPLOYE_CLIC,
-  },
-  {
     key: 'locations',
     constants: REGIONS_FILTERS,
     priority: _.orderBy(
@@ -152,20 +142,9 @@ export const MEMBER_FILTERS_DATA: Filter[] = [
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
   },
-  {
-    key: 'employed',
-    constants: [
-      { label: 'En emploi', value: true },
-      { label: "Recherche d'emploi", value: false },
-    ],
-    title: 'En emploi',
-    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_EMPLOYE_CLIC,
-  },
 ];
 
 export const EXTERNAL_LINKS = {
-  LKO_VG: 'https://www.linkedout-vendeeglobe.com',
-  LKO_VG_CONTEST: 'https://www.linkedout-vendeeglobe.com/vendeearctique',
   LKO_BLOG: 'https://entourage.social/blog',
   ENTOURAGE: 'https://www.entourage.social',
   ARTICLE_BC: 'https://blog.entourage.social/2020/06/22/benevole-coach/',
@@ -235,6 +214,7 @@ export const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access-token',
   TAX_MODAL_CLOSED: 'tax-modal-closed',
   ENTOURAGE_PRO_MODAL_CLOSED: 'entourage-pro-modal-closed',
+  PINNED_COMMUNICATION_CLOSED: 'pinned-communication-closed',
 };
 
 export const SOCKETS = {
@@ -512,56 +492,6 @@ export const CANDIDATE_ACCOMMODATIONS_FILTERS: FilterConstant<CandidateAccommoda
     {
       value: CandidateAccommodations.JNSPR,
       label: JNSPR.label,
-    },
-  ];
-
-export const CandidateProfessionalSituations = {
-  UNEMPLOYED: 'unemployed',
-  CDI: 'cdi',
-  CDD: 'cdd',
-  FORM: 'form',
-  INTE: 'inte',
-  STUDENT: 'student',
-  CDDI: 'cddi',
-  OTHER: 'other',
-} as const;
-
-export type CandidateProfessionalSituation =
-  (typeof CandidateProfessionalSituations)[keyof typeof CandidateProfessionalSituations];
-
-export const CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS: FilterConstant<CandidateProfessionalSituation>[] =
-  [
-    {
-      label: 'Sans emploi',
-      value: CandidateProfessionalSituations.UNEMPLOYED,
-    },
-    {
-      label: 'CDI',
-      value: CandidateProfessionalSituations.CDI,
-    },
-    {
-      label: 'CDD',
-      value: CandidateProfessionalSituations.CDD,
-    },
-    {
-      label: 'Intérim',
-      value: CandidateProfessionalSituations.INTE,
-    },
-    {
-      label: 'Étudiant',
-      value: CandidateProfessionalSituations.STUDENT,
-    },
-    {
-      label: 'En formation',
-      value: CandidateProfessionalSituations.FORM,
-    },
-    {
-      label: "Contrat d'insertion",
-      value: CandidateProfessionalSituations.CDDI,
-    },
-    {
-      label: 'Autre',
-      value: CandidateProfessionalSituations.OTHER,
     },
   ];
 

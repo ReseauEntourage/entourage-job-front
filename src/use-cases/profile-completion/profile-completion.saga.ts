@@ -44,12 +44,6 @@ export function* saga() {
     refreshProfileCompletionSaga
   );
 
-  // Écouter aussi les mises à jour du candidat
-  yield* takeLatest(
-    currentUserActions.updateCandidateSucceeded.type,
-    refreshProfileCompletionSaga
-  );
-
   // Écouter les mises à jour de la photo de profil
   yield* takeLatest(
     currentUserActions.updateUserProfilePictureSucceeded.type,

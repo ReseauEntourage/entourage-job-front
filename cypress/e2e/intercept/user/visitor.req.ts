@@ -25,14 +25,14 @@ export const visitorRequests = {
       },
     },
     {
-      path: '/cv/cards/random?nb=9&employed[]=false',
+      path: '/cv/cards/random?nb=9',
       data: {
         statusCode: 200,
       },
       alias: 'cvCardsRandom',
     },
     {
-      path: '/cv/cards/random?nb=3&employed[]=false&employed[]=true',
+      path: '/cv/cards/random?nb=3',
       data: {
         statusCode: 200,
       },

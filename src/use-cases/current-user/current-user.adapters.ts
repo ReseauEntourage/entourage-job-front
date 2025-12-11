@@ -1,9 +1,4 @@
-import {
-  User,
-  UserCandidateWithUsers,
-  UserProfile,
-  UserWithUserCandidate,
-} from 'src/api/types';
+import { StaffContact, User, UserProfile } from 'src/api/types';
 import { DocumentNameType } from 'src/constants';
 import { createRequestAdapter } from 'src/store/utils';
 
@@ -11,6 +6,10 @@ export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   void,
   User
 >();
+
+export const fetchStaffContactAdapter = createRequestAdapter(
+  'fetchStaffContact'
+).withPayloads<void, StaffContact>();
 
 export const fetchCompleteUserAdapter = createRequestAdapter(
   'fetchCompleteUser'
@@ -25,9 +24,9 @@ export const updateUserAdapter = createRequestAdapter(
 ).withPayloads<
   {
     userId: string;
-    user: Partial<UserWithUserCandidate>;
+    user: Partial<User>;
   },
-  { user: Partial<UserWithUserCandidate> },
+  { user: Partial<User> },
   {
     error: UpdateError;
   }
@@ -53,22 +52,6 @@ export const updateProfileAdapter = createRequestAdapter(
     userProfile: Partial<UserProfile>;
   },
   { userProfile: Partial<UserProfile> },
-  {
-    error: UpdateError;
-  }
->();
-
-export const updateCandidateAdapter = createRequestAdapter(
-  'updateCandidate'
-).withPayloads<
-  {
-    userId: string;
-    userCandidate: Partial<UserCandidateWithUsers>;
-  },
-  {
-    userId: string;
-    userCandidate: Partial<UserCandidateWithUsers>;
-  },
   {
     error: UpdateError;
   }

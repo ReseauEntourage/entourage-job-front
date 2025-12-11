@@ -9,7 +9,7 @@ interface SimpleLinkProps {
     | string
     | {
         pathname: string;
-        query: AnyCantFix; // query can be an object with any key-value
+        query?: AnyCantFix; // query can be an object with any key-value
       };
   visible?: UIKIT_SCREENS;
   children: React.ReactNode;

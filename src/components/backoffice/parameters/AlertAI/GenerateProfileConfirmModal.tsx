@@ -1,45 +1,37 @@
-import React from 'react';
-import { LegacyImg } from '@/src/components/utils';
-import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
-import { useProfileGeneration } from '@/src/hooks';
+import React, { useCallback, useRef } from 'react';
+import {
+  ProfileGenerationProcess,
+  ProfileGenerationProcessHandle,
+} from '../../profile/ProfileGenerationProcess/ProfileGenerationProcess';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm/ModalConfirm';
-import { Text } from 'src/components/utils/Text';
-import { StyledLoadingContainer } from './AlertAI.styles';
 
 export const GenerateProfileConfirmModal = () => {
   const { onClose } = useModalContext();
-  const { generateProfileFromCV, isLoading } = useProfileGeneration({
-    onProfileGenerated: () => {
-      if (onClose) {
-        onClose();
-      }
-    },
-  });
+  const ref = useRef<ProfileGenerationProcessHandle>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const onLoadingChange = useCallback((loading: boolean) => {
+    setIsLoading(loading);
+  }, []);
 
   return (
     <ModalConfirm
-      title="Générer mon profil à partir de mon CV"
-      text="Vos données du profil vont être écrasées. Voulez-vous continuer ?"
       buttonText="Générer"
-      onConfirm={generateProfileFromCV}
+      onConfirm={() => {
+        ref.current?.generateProfileFromCV();
+      }}
       isLoading={isLoading}
       keepOpenOnConfirm
     >
-      {isLoading && (
-        <StyledLoadingContainer>
-          <LegacyImg
-            src="/static/img/illustrations/cv-ia.gif"
-            width={150}
-            height={150}
-            alt="Chargement en cours"
-          />
-          <StyledContainerMarginY margin="20px" />
-          <Text weight="bold" size="normal" center>
-            Patientez quelques secondes ...
-          </Text>
-        </StyledLoadingContainer>
-      )}
+      <ProfileGenerationProcess
+        ref={ref}
+        title="Générer mon profil à partir de mon CV"
+        overwriteWarning
+        noAction
+        onProfileGenerated={onClose}
+        onLoadingChange={onLoadingChange}
+      />
     </ModalConfirm>
   );
 };

@@ -1,5 +1,6 @@
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
+import { EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
@@ -45,17 +46,6 @@ export type Department = {
   id: string;
   name: string;
   value: string;
-};
-
-export type UserCandidate = {
-  employed: boolean;
-  contract: ContractValue | null;
-  endOfContract: string | null;
-  hidden: boolean;
-  note: string;
-  url: string;
-  lastModifiedBy: string;
-  deletedAt: string;
 };
 
 export type Organization = {
@@ -213,6 +203,26 @@ export type UserProfile = {
   allowRemoteEvents: boolean;
 };
 
+export type Event = {
+  salesForceId: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  eventType: EventType;
+  participantsCount: number;
+  registrationCount: number;
+  mode: EventMode;
+  meetingLink: string | null;
+  fullAddress: string | null;
+  duration: number | null;
+  format: string;
+  goal: string;
+  audience: string;
+  sequences?: string[];
+  isParticipating: boolean;
+};
+
 export type UserReportDto = {
   reason: string;
   comment: string;
@@ -300,23 +310,30 @@ export type User = {
   hasExtractedCvData?: boolean;
   company: Company | null;
   invitations?: Invitation[];
-};
 
-export interface UserCandidateWithUsers extends UserCandidate {
-  id?: string;
-  email?: string;
-  candidat: User;
-  coach?: User;
-  firstName?: string;
-  lastName?: string;
-}
-
-export interface UserWithUserCandidate extends User {
-  candidat?: UserCandidateWithUsers;
-  referredCandidates?: UserCandidateWithUsers[];
+  referredCandidates?: User[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
-}
+};
+
+export type StaffContact = {
+  name: string;
+  email: string;
+  img: string;
+};
+
+export type UserProfileHasPicture = Pick<UserProfile, 'hasPicture'>;
+
+export type EventParticipant = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+> & {
+  userProfile: Pick<UserProfile, 'hasPicture'>;
+};
+
+export type EventWithParticipants = Event & {
+  participants: EventParticipant[];
+};
 
 export type UserDto = {
   firstName: string;
@@ -331,16 +348,6 @@ export type UserDto = {
   id?: string;
   userProfile?: UserProfile;
   lastConnection?: string;
-};
-
-export type PutCandidate = {
-  employed: boolean;
-  contract: ContractValue | null;
-  endOfContract: string | null;
-  hidden: boolean;
-  note: string;
-  url: string;
-  lastModifiedBy: string;
 };
 
 export type UserRegistrationDto = {
@@ -564,6 +571,13 @@ export type ProfilesFilters = {
   departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
+};
+
+export type EventsFilters = {
+  eventTypes: EventType | EventType[];
+  search?: string;
+  departmentIds: string | string[];
+  modes?: EventMode | EventMode[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

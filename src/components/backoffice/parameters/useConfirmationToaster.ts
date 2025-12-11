@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from 'src/constants';
 import {
   currentUserActions,
-  updateCandidateSelectors,
   updateProfileSelectors,
   updateUserSelectors,
 } from 'src/use-cases/current-user';
@@ -20,15 +19,10 @@ export function useConfirmationToaster() {
     updateUserSelectors.selectUpdateUserStatus
   );
 
-  const updateCandidateStatus = useSelector(
-    updateCandidateSelectors.selectUpdateCandidateStatus
-  );
-
   useEffect(() => {
     return () => {
       dispatch(currentUserActions.updateProfileReset());
       dispatch(currentUserActions.updateUserReset());
-      dispatch(currentUserActions.updateCandidateReset());
     };
   }, [dispatch]);
 
@@ -67,22 +61,4 @@ export function useConfirmationToaster() {
       );
     }
   }, [updateUserStatus, dispatch]);
-
-  useEffect(() => {
-    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'success',
-          message: 'Les informations candidat ont bien été mises à jour',
-        })
-      );
-    } else if (updateCandidateStatus === ReduxRequestEvents.FAILED) {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'danger',
-          message: `Une erreur est survenue lors de la modification`,
-        })
-      );
-    }
-  }, [updateCandidateStatus, dispatch]);
 }

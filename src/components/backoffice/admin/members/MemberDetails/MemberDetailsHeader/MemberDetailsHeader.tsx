@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import { UserWithUserCandidate } from 'src/api/types';
-import { ImgUserProfile, SimpleLink } from 'src/components/utils';
+import { User } from 'src/api/types';
+import { ImgUserProfile } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -13,7 +13,7 @@ import {
 } from './MemberDetailsHeader.styles';
 
 interface MemberDetailsHeaderProps {
-  user: UserWithUserCandidate;
+  user: User;
 }
 
 export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
@@ -53,21 +53,6 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
                 {` d'aucun candidat`}
               </div>
             )}
-          </StyledRoleContainer>
-        )}
-        {user.role === UserRoles.CANDIDATE && (
-          <StyledRoleContainer>
-            <LucidIcon name="Link" />
-            &nbsp;
-            <SimpleLink
-              className="uk-link-text"
-              target="_blank"
-              href={`/cv/${user?.candidat?.url}`}
-            >
-              <span>
-                {process.env.NEXT_PUBLIC_SERVER_URL}/cv/{user?.candidat?.url}
-              </span>
-            </SimpleLink>
           </StyledRoleContainer>
         )}
       </StyledInfoContainer>

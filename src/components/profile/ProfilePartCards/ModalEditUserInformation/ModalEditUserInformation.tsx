@@ -3,7 +3,7 @@ import { DefaultValues } from 'react-hook-form';
 import { UserRoles } from '@/src/constants/users';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { useUpdateUser } from '@/src/hooks/useUpdateUser';
-import { UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { User, UserProfile } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import {
   formPersonalDataAsAdmin,
@@ -76,7 +76,7 @@ export const ModalEditUserInformation = ({
         const { firstName, lastName, oldEmail, newEmail0, newEmail1, phone } =
           values;
 
-        let newUserData: Partial<UserWithUserCandidate> = {};
+        let newUserData: Partial<User> = {};
         let newUserProfileData: Partial<UserProfile> = {};
 
         if (

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-const WIDTH = '45px';
-const HEIGHT = '25px';
-const TEST = '19.5px';
-const HEIGHT_ROUNDED = '19.5px';
-const DECALE = '3px';
+const WIDTH = 45;
+const HEIGHT = 25;
+const TRANSLATE_X_CHECKED = 19;
+const HEIGHT_ROUNDED = 19;
+const DECALE = 3;
 
 export const StyledToggleContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+  gap: 5px;
 `;
 
 export const StyledToggle = styled.div`
@@ -25,6 +25,7 @@ export const StyledToggle = styled.div`
     opacity: 0;
     width: 0;
     height: 0;
+    margin: 0px;
 
     &:checked + .ent-slider {
       background-color: ${COLORS.primaryBlue};
@@ -35,56 +36,40 @@ export const StyledToggle = styled.div`
     }
 
     &:checked + .ent-slider:before {
-      -webkit-transform: translateX(${TEST});
-      -ms-transform: translateX(${TEST});
-      transform: translateX(${TEST});
+      -webkit-transform: translateX(${TRANSLATE_X_CHECKED}px);
+      -ms-transform: translateX(${TRANSLATE_X_CHECKED}px);
+      transform: translateX(${TRANSLATE_X_CHECKED}px);
     }
   }
 `;
 
-export const StyledSlider = styled.span`
-  width: ${WIDTH};
-  height: ${HEIGHT};
-  border: 2px solid white;
-  border-radius: ${HEIGHT};
-  margin-right: 10px;
-
-  position: absolute;
+export const StyledSlider = styled.div<{ isToggled: boolean }>`
+  flex-shrink: 0;
+  position: relative;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: ${(props) => {
-    return props.isToggled ? COLORS.green : 'black';
-  }};
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 25.5px;
+  width: ${WIDTH}px;
+  height: ${HEIGHT}px;
+  background-color: ${({ isToggled }) =>
+    isToggled ? COLORS.primaryBlue : COLORS.darkGray};
+  border-radius: ${HEIGHT_ROUNDED}px;
+  transition: background-color 0.4s;
 
   &:before {
     position: absolute;
     content: '';
-    height: ${HEIGHT_ROUNDED};
-    width: ${HEIGHT_ROUNDED};
-    left: ${DECALE};
-    bottom: ${DECALE};
+    height: ${HEIGHT_ROUNDED}px;
+    width: ${HEIGHT_ROUNDED}px;
+    left: ${DECALE}px;
+    bottom: ${DECALE}px;
     background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: ${HEIGHT};
     border-radius: 50%;
-    transform: ${(props) => {
-      return props.isToggled ? 'translateX(19.5px)' : 'translateX(0px)';
-    }};
+    transition: transform 0.4s;
+    transform: ${({ isToggled }) =>
+      isToggled ? `translateX(${TRANSLATE_X_CHECKED}px)` : 'none'};
   }
 `;
 
 export const StyledToggleLabel = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   cursor: pointer;
-  margin-left: calc(${WIDTH} + 4px);
-  min-height: calc(${HEIGHT} + 4px);
+  margin-left: 5px;
 `;

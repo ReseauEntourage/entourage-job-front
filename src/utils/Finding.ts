@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { UserRoles } from '../constants/users';
-import { UserCandidateWithUsers, UserWithUserCandidate } from 'src/api/types';
 import { FilterConstant } from 'src/constants/utils';
 
 export function findConstantFromValue<T extends FilterConstant>(
@@ -45,26 +44,4 @@ export function isRoleIncluded(
     return _.difference([subset], superset).length === 0;
   }
   return _.difference(subset, superset).length === 0;
-}
-
-export function getUserCandidateFromCoachOrCandidate(
-  member: UserWithUserCandidate
-): UserCandidateWithUsers | UserCandidateWithUsers[] | null {
-  if (member) {
-    if (member.role === UserRoles.CANDIDATE && !!member.candidat) {
-      return member.candidat;
-    }
-  }
-  return null;
-}
-
-export function getCandidateIdFromCoachOrCandidate(
-  member: UserWithUserCandidate
-): string | string[] | null {
-  if (member) {
-    if (member.role === UserRoles.CANDIDATE) {
-      return member.id;
-    }
-  }
-  return null;
 }

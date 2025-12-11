@@ -1,5 +1,8 @@
 import React from 'react';
+import { PinnedCommunicationModale } from '../components/modals/PopupModal/PinnedCommunicationModale';
+import { STORAGE_KEYS } from '../constants';
 import { useUtm } from '../hooks/queryParams/useUTM';
+import { useMount } from '../hooks/utils';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -36,7 +39,7 @@ const reviewContent = [
     review: (
       <>
         &quot;Maria est la troisième candidate que j’accompagne. Je sais que si
-        j’ai une question, j’aurai toujours une personne d’Entourage pro pour
+        j’ai une question, j’aurai toujours une personne d’Entourage Pro pour
         répondre à mes questions. L&apos;association est très mature : le
         contact est facile et informel mais en même temps très professionnel.
         C&apos;est vraiment positif !&quot;
@@ -62,6 +65,16 @@ const reviewContent = [
 
 const Aider = () => {
   useUtm();
+  useMount(() => {
+    const closed = localStorage.getItem(
+      STORAGE_KEYS.PINNED_COMMUNICATION_CLOSED
+    );
+    if (process.env.NEXT_PUBLIC_PINNED_COMMUNICATION_TITLE && !closed) {
+      setTimeout(() => {
+        openModal(<PinnedCommunicationModale />);
+      }, 1500);
+    }
+  });
   return (
     <Layout title="Aider - Entourage Pro">
       <ImageTitle
