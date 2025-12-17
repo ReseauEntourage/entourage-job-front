@@ -8,7 +8,10 @@ import React, {
 } from 'react';
 
 import { CloseButton } from 'src/components/utils/CloseButton/CloseButton';
-import { StyledOffCanvas } from './OffCanvas.styles';
+import {
+  StyledCloseButtonContainer,
+  StyledOffCanvas,
+} from './OffCanvas.styles';
 
 export interface OffCanvasRef {
   open: () => void;
@@ -58,11 +61,13 @@ export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
 
     return (
       <StyledOffCanvas position={position} isOpen={isOpen} ref={offCanvasRef}>
-        <CloseButton
-          onClick={closeOffCanvas}
-          color="white"
-          size={closeButtonSize}
-        />
+        <StyledCloseButtonContainer>
+          <CloseButton
+            onClick={closeOffCanvas}
+            color="white"
+            size={closeButtonSize}
+          />
+        </StyledCloseButtonContainer>
         {children}
       </StyledOffCanvas>
     );

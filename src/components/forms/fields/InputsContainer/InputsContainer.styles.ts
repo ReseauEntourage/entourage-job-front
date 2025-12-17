@@ -13,7 +13,7 @@ export const StyledInputsContainer = styled.div`
     flex: 1;
     :not(:last-child) {
       margin-right: ${({ isDesktop }) => {
-        return isDesktop ? '36px' : '0';
+        return isDesktop ? '36px' : '18px';
       }};
     }
   }

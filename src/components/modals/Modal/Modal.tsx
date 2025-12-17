@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import ReactModal from 'react-modal';
+import { useIsMobile } from '@/src/hooks/utils';
 import { useModalContext } from 'src/components/modals/Modal/ModalContext';
-import { BREAKPOINTS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 import { ModalSize } from './Modal.types';
-import { StyledModal } from './Modals.styles';
 
 ReactModal.setAppElement('#__next');
 
@@ -11,25 +11,28 @@ interface CustomModalProps {
   id: string;
   children: React.ReactNode;
   closeOnNextRender?: boolean;
-  className?: string;
   size: ModalSize;
-  removePadding: boolean;
 }
 
 const CustomModal = ({
   id = 'modal-screen',
   children,
   closeOnNextRender = false,
-  className,
   size,
-  removePadding,
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Désactive le scroll du body quand la modal est ouverte
+    document.body.style.overflow = 'hidden';
     if (closeOnNextRender && onClose) {
       onClose();
     }
+    return () => {
+      // Réactive le scroll du body à la fermeture
+      document.body.style.overflow = '';
+    };
   }, [closeOnNextRender, onClose]);
 
   const width = useMemo(() => {
@@ -42,9 +45,79 @@ const CustomModal = ({
     return sizes[size];
   }, [size]);
 
+  const onRequestClose = useCallback(
+    (
+      _event: React.MouseEvent | React.KeyboardEvent,
+      reason: ReactModal.OnRequestCloseReason
+    ) => {
+      if (reason === 'backdropClick') {
+        return;
+      }
+      if (onClose) onClose();
+    },
+    [onClose]
+  );
+
+  const headerHeight = useMemo(
+    () => (isMobile ? HEIGHTS.HEADER_MOBILE : HEIGHTS.HEADER),
+    [isMobile]
+  );
+
+  const style = useMemo(() => {
+    const mobileStyle = {
+      overlay: {},
+      content: {
+        width: '100%',
+        maxWidth: '100%',
+        marginTop: headerHeight,
+        maxHeight: `calc(100vh - ${headerHeight}px)`,
+        padding: '20px 0',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        marginRight: 0,
+        marginLeft: 0,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      },
+    };
+
+    return {
+      overlay: {
+        zIndex: 1050,
+        backgroundColor: 'rgba(0,0,0,.6)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        ...(isMobile ? mobileStyle.overlay : {}),
+      },
+      content: {
+        width,
+        padding: '50px 0',
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 0,
+        backgroundColor: COLORS.white,
+        marginLeft: 15,
+        marginRight: 15,
+        top: 'auto',
+        bottom: 'auto',
+        left: 'auto',
+        right: 'auto',
+        borderRadius: 5,
+        border: 'none',
+        maxHeight: '90vh',
+        ...(isMobile ? mobileStyle.content : {}),
+      },
+    };
+  }, [headerHeight, isMobile, width]);
+
   return (
     <ReactModal
       id={id}
+      testId={id}
       closeTimeoutMS={200}
       onAfterOpen={() => {
         // Fix to make modal scroll to top on open
@@ -54,46 +127,12 @@ const CustomModal = ({
             .scrollTo(0, 0);
         }
       }}
-      style={{
-        overlay: {
-          zIndex: 1050,
-          backgroundColor: 'rgba(0,0,0,.6)',
-          display: 'flex',
-          justifyContent: 'center',
-          overflowY: 'auto',
-        },
-        content: {
-          marginTop: 'auto',
-          marginBottom: 'auto',
-          top: 'auto',
-          bottom: 'auto',
-          left: 'auto',
-          right: 'auto',
-          borderRadius: 0,
-          border: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 0,
-          backgroundColor: 'transparent',
-        },
-      }}
-      shouldCloseOnOverlayClick={false}
+      style={style}
+      shouldCloseOnOverlayClick={isMobile}
       isOpen
-      onRequestClose={(event, reason) => {
-        if (reason === 'backdropClick') {
-          return;
-        }
-        if (onClose) onClose();
-      }}
+      onRequestClose={onRequestClose}
     >
-      <StyledModal
-        className={className}
-        width={width}
-        removePadding={removePadding}
-      >
-        {children}
-      </StyledModal>
+      {children}
     </ReactModal>
   );
 };

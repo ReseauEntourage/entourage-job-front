@@ -21,8 +21,8 @@ jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');
   return {
     ...modalModule,
-    Modal: ({ children }) => {
-      return <div>{children}</div>;
+    Modal: ({ children, id }) => {
+      return <div data-testid={id}>{children}</div>;
     },
   };
 });
@@ -57,7 +57,9 @@ describe('Modal Confirm', () => {
     expect(genericModal).toBeInTheDocument();
     const confirmBtn = screen.getByText(defaultProps.buttonText);
     fireEvent.click(confirmBtn);
-    expect(screen.queryByTestId('modal-generic')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('modal-generic-container')
+    ).not.toBeInTheDocument();
   });
 
   it('should close on cancel button', () => {

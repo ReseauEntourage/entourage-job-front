@@ -9,8 +9,6 @@ import { CheckListElement, List } from '@/src/components/utils/Lists';
 import { CompanyGoal } from '@/src/constants/company';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { Layout } from 'src/components/Layout';
-import { openModal } from 'src/components/modals/Modal';
-import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
@@ -18,9 +16,7 @@ import { EntreprisesEnSavoirPlus } from 'src/components/partials/pages/Entrepris
 import { CTAProps, ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Button, Text } from 'src/components/utils';
-import { STORAGE_KEYS } from 'src/constants';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
-import { useMount } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { linkEvent } from 'src/lib/lintrk';
@@ -74,14 +70,6 @@ const reviews = [
 
 const RecruterInclusif = () => {
   useUtm();
-  useMount(() => {
-    const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
-    if (process.env.NEXT_PUBLIC_SHOW_POPUP === 'true' && !taxModalClosed) {
-      setTimeout(() => {
-        openModal(<TaxModal />);
-      }, 1500);
-    }
-  });
 
   const ctaRegister = useMemo(() => {
     return {
