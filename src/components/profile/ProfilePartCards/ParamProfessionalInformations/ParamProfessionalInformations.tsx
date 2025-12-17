@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ModalEditProfessionalInformation } from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
 } from '@/src/components/backoffice/parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { UserRoles } from '@/src/constants/users';
-import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { UserProfileSectorOccupation } from 'src/api/types';
 import { ProfileCareerPathSentence } from 'src/components/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
@@ -106,7 +106,7 @@ export const ParamProfessionalInformations = ({
             )}
           </>
         ),
-        icon: <IlluBulleQuestion />,
+        icon: <SvgIcon name="IlluBulleQuestion" width={35} height={30} />,
       }}
     >
       <ProfileCareerPathSentence

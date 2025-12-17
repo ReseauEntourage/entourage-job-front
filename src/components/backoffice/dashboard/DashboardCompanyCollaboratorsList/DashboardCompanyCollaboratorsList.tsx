@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
 import { CollaboratorSmallCard } from '@/src/components/companies/CollaboratorSmallCard/CollaboratorSmallCard';
@@ -7,7 +8,6 @@ import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/Company
 import { openModal } from '@/src/components/modals/Modal';
 import { Button, Card, Text } from '@/src/components/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
-import { IlluReseau } from 'assets/icons/icons';
 import {
   StyledCollaboratorSmallCardContainer,
   StyledContainer,
@@ -79,7 +79,7 @@ export const DashboardCompanyCollaboratorsList = ({
       <Card title="Vous souhaitez engager vos collaborateurs ?" centerTitle>
         <StyledEmptyContainer>
           <StyledIlluContainer>
-            <IlluReseau width={60} height={60} />
+            <SvgIcon name="IlluReseau" width={60} height={60} />
           </StyledIlluContainer>
           <div>
             <Text weight="bold">

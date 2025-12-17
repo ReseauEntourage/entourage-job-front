@@ -1,9 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import {
-  EntourageProLogoPrimary,
-  EntourageProLogoSecondary,
-} from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 
 interface NavbarLogoProps {
   href: string;
@@ -17,9 +14,9 @@ export const NavbarLogo = ({ href, type }: NavbarLogoProps) => {
       className="uk-margin-small-left uk-margin-small-right uk-flex-center uk-flex"
     >
       {type === 'primary' ? (
-        <EntourageProLogoPrimary width={180} height={60} />
+        <SvgIcon name="EntourageProLogoPrimary" width={180} height={60} />
       ) : (
-        <EntourageProLogoSecondary width={180} height={60} />
+        <SvgIcon name="EntourageProLogoSecondary" width={180} height={60} />
       )}
     </Link>
   );

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  IlluCoeurMainsOuvertesBleu,
-  IlluCV,
-  IlluDossierCandidat,
-  IlluMalette,
-} from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import {
   Button,
   Section,
@@ -27,23 +22,24 @@ import {
 
 const staticNumbers = [
   {
-    icon: <IlluCV width={140} height={110} />,
+    icon: <SvgIcon name="IlluCV" width={140} height={110} />,
     value: '2500',
     description: 'candidat(e)s accompagnés',
   },
   {
-    icon: <IlluMalette width={140} height={110} />,
+    icon: <SvgIcon name="IlluMalette" width={140} height={110} />,
     value: '700',
     description: 'entreprises mobilisées',
   },
   {
-    icon: <IlluDossierCandidat width={140} height={110} />,
+    icon: <SvgIcon name="IlluDossierCandidat" width={140} height={110} />,
     value: '70%',
     description: 'de sorties positives en 2023',
   },
   {
     icon: (
-      <IlluCoeurMainsOuvertesBleu
+      <SvgIcon
+        name="IlluCoeurMainsOuvertesBleu"
         width={140}
         height={110}
         color={COLORS.hoverBlue}

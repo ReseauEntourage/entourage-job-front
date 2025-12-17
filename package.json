@@ -7,7 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "next": "next",
     "start": "next start",
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",

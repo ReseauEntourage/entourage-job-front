@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntourageProLogoPrimary } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { Card, Text } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -25,7 +25,7 @@ export function Refering() {
   return (
     <StyledReferingPage>
       <StyledReferingContainer>
-        <EntourageProLogoPrimary width={226} height={78} />
+        <SvgIcon name="EntourageProLogoPrimary" width={226} height={78} />
         <Card title="Créer le compte Entourage Pro">
           {!isReferingLoading && (
             <>

@@ -1,5 +1,5 @@
 import React, { Ref } from 'react';
-import { IlluCalendrier, IlluTeteHomme } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { Button, Text } from 'src/components/utils';
@@ -114,12 +114,16 @@ const contentAs: { [K in DisplayAs]: Content } = {
     criterias: [
       {
         text: 'Recevoir et suivre leurs actualités ',
-        illu: <IlluTeteHomme {...criteriasIlluSizes} />,
+        illu: <SvgIcon name="IlluTeteHomme" {...criteriasIlluSizes} />,
       },
       {
         text: 'Suivre les grandes étapes',
         illu: (
-          <IlluCalendrier {...criteriasIlluSizes} color={COLORS.orangeSocial} />
+          <SvgIcon
+            name="IlluCalendrier"
+            {...criteriasIlluSizes}
+            color={COLORS.orangeSocial}
+          />
         ),
       },
     ],

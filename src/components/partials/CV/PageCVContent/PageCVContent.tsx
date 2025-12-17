@@ -6,36 +6,29 @@ import {
   StyledCVSkillTagContainer,
   StyledSkillTag,
 } from '@/src/components/profile/CVExperienceOrFormation/CVExperienceOrFormation.styles';
-import { CarouselSwiper } from '@/src/components/utils/CarouselSwiper';
-import QuoteLeftIcon from 'assets/icons/quote-left.svg';
-import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { PublicCV } from 'src/api/types';
 
 import {
   StyledCVPageContent,
-  StyledCVPageContentCarousel,
   StyledCVPageContentDetailsContainer,
   StyledCVPageContentExperience,
   StyledCVPageContentHeader,
   StyledCVPageContentInformations,
   StyledCVPageContentPassions,
-  StyledCVPageContentSlide,
   StyledCVPageContentStory,
   StyledCVProfilePicture,
   StyledCVProfilePictureContainer,
   StyledHeaderDetails,
   StyledLeftColumn,
-  StyledLeftQuoteContainer,
   StyledRightColumn,
-  StyledRightQuoteContainer,
   StyledShareContainer,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { Text } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
-import { H1, H2, H3, H5 } from 'src/components/utils/Headings';
+import { H1, H2, H5 } from 'src/components/utils/Headings';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CONTRACTS } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
@@ -354,36 +347,6 @@ export const PageCVContent = ({
           )}
         </StyledRightColumn>
       </StyledCVPageContentDetailsContainer>
-      {publicCV.userProfile.reviews?.length > 0 && (
-        <StyledCVPageContentCarousel>
-          <H3 title="Ils me recommandent" color={COLORS.black} center />
-          <CarouselSwiper
-            slides={[
-              ...publicCV.userProfile.reviews.map(
-                ({ content, id, authorLabel, authorName }) => {
-                  return (
-                    <StyledCVPageContentSlide key={id}>
-                      <StyledLeftQuoteContainer>
-                        <QuoteLeftIcon />
-                      </StyledLeftQuoteContainer>
-                      <div>
-                        <span>{content}</span>
-                        <br />
-                        <span className="name">
-                          {authorName}, {authorLabel}
-                        </span>
-                      </div>
-                      <StyledRightQuoteContainer>
-                        <QuoteRightIcon />
-                      </StyledRightQuoteContainer>
-                    </StyledCVPageContentSlide>
-                  );
-                }
-              ),
-            ]}
-          />
-        </StyledCVPageContentCarousel>
-      )}
       <CVCallToActions actionDisabled={actionDisabled} publicCv={publicCV} />
     </StyledCVPageContent>
   );

@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { openModal } from '@/src/components/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { UserProfileLanguage } from 'src/api/types';
@@ -56,7 +56,7 @@ export const ProfileLanguages = ({
         content: (
           <Text>Vous n’avez pas encore renseigné vos langues parlées</Text>
         ),
-        icon: <IlluBulleQuestionCheck />,
+        icon: <SvgIcon name="IlluBulleQuestionCheck" width={80} height={80} />,
       }}
     >
       <CardTagList

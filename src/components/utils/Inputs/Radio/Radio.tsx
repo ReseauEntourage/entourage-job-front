@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import WarningIcon from 'assets/icons/warning.svg';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '../../Text';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { COLORS } from 'src/constants/styles';
@@ -98,7 +98,8 @@ export function Radio({
                 </label>
                 {disabledOption && (
                   <StyledRadioDisabledOverlay>
-                    <WarningIcon
+                    <SvgIcon
+                      name="Warning"
                       width={30}
                       height={30}
                       color={COLORS.primaryBlue}

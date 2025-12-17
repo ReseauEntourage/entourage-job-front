@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Interest } from '@/src/api/types';
 import { openModal } from '@/src/components/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { IlluCoeurMainsOuvertes } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { Text } from 'src/components/utils';
@@ -58,7 +58,7 @@ export const ProfileInterests = ({
             Vous n’avez pas encore renseigné vos centres d&apos;intérêt
           </Text>
         ),
-        icon: <IlluCoeurMainsOuvertes />,
+        icon: <SvgIcon name="IlluCoeurMainsOuvertes" />,
       }}
     >
       <CardTagList

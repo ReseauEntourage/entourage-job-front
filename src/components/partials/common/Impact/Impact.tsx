@@ -1,13 +1,5 @@
 import React, { useMemo } from 'react';
-import {
-  IlluAmpoule,
-  IlluCoachEtCandidat,
-  IlluCoeurMainsOuvertes,
-  IlluCoeurSurLaMain,
-  IlluCV,
-  IlluMalette,
-  IlluPoigneeDeMain,
-} from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import {
   Button,
   StyledCenteredButtonContainer,
@@ -56,22 +48,22 @@ const contentAs: { [K in DisplayAs]: Content } = {
         // https://metabase-analytics.entourage.social/question/1899-stat-total-candidats-engages-kpi-site-entourage-pro
         value: '2500',
         description: 'candidats accompagnés depuis le lancement',
-        illu: <IlluPoigneeDeMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluPoigneeDeMain" {...illuSizes} />,
       },
       {
         value: '67%',
         description: 'des candidats ont retrouvé un emploi',
-        illu: <IlluMalette {...illuSizes} />,
+        illu: <SvgIcon name="IlluMalette" {...illuSizes} />,
       },
       {
         value: '80%',
         description: 'des candidats ont développé de nouvelles compétences',
-        illu: <IlluAmpoule {...illuSizes} />,
+        illu: <SvgIcon name="IlluAmpoule" {...illuSizes} />,
       },
       {
         value: '75%',
         description: 'des candidats sont plus à l’aise en milieu professionnel',
-        illu: <IlluCV {...illuSizes} />,
+        illu: <SvgIcon name="IlluCV" {...illuSizes} />,
       },
     ],
   },
@@ -82,22 +74,22 @@ const contentAs: { [K in DisplayAs]: Content } = {
         // https://metabase-analytics.entourage.social/question/1884-stat-total-coachs-engages-kpi-site-entourage-pro
         value: '900',
         description: 'coachs se sont engagé(e)s depuis le lancement',
-        illu: <IlluPoigneeDeMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluPoigneeDeMain" {...illuSizes} />,
       },
       {
         value: '90%',
         description: 'des coachs sont satisfaits de leur expérience',
-        illu: <IlluCoeurMainsOuvertes {...illuSizes} />,
+        illu: <SvgIcon name="IlluCoeurMainsOuvertes" {...illuSizes} />,
       },
       {
         value: '75%',
         description: 'des coachs veulent se réengager',
-        illu: <IlluCoachEtCandidat {...illuSizes} />,
+        illu: <SvgIcon name="IlluCoachEtCandidat" {...illuSizes} />,
       },
       {
         value: '60%',
         description: "des coachs se sentent faire partie d'un collectif",
-        illu: <IlluCoeurSurLaMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluCoeurSurLaMain" {...illuSizes} />,
       },
     ],
   },
@@ -108,23 +100,23 @@ const contentAs: { [K in DisplayAs]: Content } = {
         // https://metabase-analytics.entourage.social/question/1899-stat-total-candidats-engages-kpi-site-entourage-pro
         value: '2500',
         description: 'candidats accompagnés depuis le lancement',
-        illu: <IlluPoigneeDeMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluPoigneeDeMain" {...illuSizes} />,
       },
       {
         value: '67%',
         description: 'des candidats ont retrouvé un emploi',
-        illu: <IlluMalette {...illuSizes} />,
+        illu: <SvgIcon name="IlluMalette" {...illuSizes} />,
       },
       {
         value: '80%',
         description: 'des candidats ont développé de nouvelles compétences',
-        illu: <IlluAmpoule {...illuSizes} />,
+        illu: <SvgIcon name="IlluAmpoule" {...illuSizes} />,
       },
       {
         value: '92%',
         description:
           'des structures sociales sont satisfaites de leur expérience',
-        illu: <IlluCoeurSurLaMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluCoeurSurLaMain" {...illuSizes} />,
       },
     ],
   },
@@ -138,17 +130,17 @@ const contentAs: { [K in DisplayAs]: Content } = {
       {
         value: '81%',
         description: 'des personnes disent se sentir mieux',
-        illu: <IlluPoigneeDeMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluPoigneeDeMain" {...illuSizes} />,
       },
       {
         value: '500',
         description: 'entreprises partenaires',
-        illu: <IlluMalette {...illuSizes} />,
+        illu: <SvgIcon name="IlluMalette" {...illuSizes} />,
       },
       {
         value: '19 000',
         description: 'personnes sensibilisées',
-        illu: <IlluCoeurSurLaMain {...illuSizes} />,
+        illu: <SvgIcon name="IlluCoeurSurLaMain" {...illuSizes} />,
       },
     ],
   },

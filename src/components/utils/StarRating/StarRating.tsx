@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { StyledStarRating } from './StarRating.styles';
 
 interface StarRatingProps {
@@ -19,14 +19,16 @@ export const StarRating = ({ onClick }: StarRatingProps) => {
         const ratingValue: number = i + 1;
         const shouldFill = hover && ratingValue <= hover;
         return (
-          <div key={i}>
-            <Star
-              size={50}
+          <>
+            <SvgIcon
+              key={i}
+              name={shouldFill ? 'StarActive' : 'Star'}
+              height={30}
+              width={30}
               onMouseEnter={() => setHover(ratingValue)}
               onClick={() => onStarRatingClick(ratingValue)}
-              className={shouldFill ? 'activeStar' : 'star'}
             />
-          </div>
+          </>
         );
       })}
     </StyledStarRating>

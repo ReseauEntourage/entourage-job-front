@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { IlluBulleQuestion } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ConversationParticipant } from 'src/api/types';
 import { Alert } from 'src/components/utils/Alert/Alert';
 import { StarRating } from 'src/components/utils/StarRating/StarRating';
@@ -61,7 +61,7 @@ export const MessagingFeedback = ({
       rounded={false}
       icon={
         isDesktop ? (
-          <IlluBulleQuestion className="icon" width={35} height={30} />
+          <SvgIcon name="IlluBulleQuestion" width={35} height={30} />
         ) : null
       }
       onClose={() => onClose()}

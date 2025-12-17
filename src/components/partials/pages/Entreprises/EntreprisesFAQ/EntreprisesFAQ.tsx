@@ -1,5 +1,5 @@
 import React from 'react';
-import { IlluBulleQuestionCheck } from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Text, Section } from '@/src/components/utils';
 import { H3 } from '@/src/components/utils/Headings';
 import { CompanyGoal } from '@/src/constants/company';
@@ -306,7 +306,7 @@ export const EntreprisesFAQ = ({ context }: EntreprisesFAQProps) => {
     <Section container="small">
       <StyledEntrepriseFAQContainer>
         <StyledTitleContainer>
-          <IlluBulleQuestionCheck width={80} height={80} />
+          <SvgIcon name="IlluBulleQuestionCheck" width={80} height={80} />
           <H3 title="On répond à vos questions" />
         </StyledTitleContainer>
 

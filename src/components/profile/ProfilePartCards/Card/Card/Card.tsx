@@ -1,5 +1,5 @@
 import React from 'react';
-import { IlluBulleQuestion } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { CardEmptyContent } from '../CardEmptyContent/CardEmptyContent';
 import { CardTitle } from '../CardTitle/CardTitle';
 import { Button, Card } from 'src/components/utils';
@@ -33,7 +33,7 @@ export const ProfilePartCard = ({
   iaGenerated = false,
   fallback = {
     content: 'Commencez par renseigner cette partie',
-    icon: <IlluBulleQuestion />,
+    icon: <SvgIcon name="IlluBulleQuestion" width={35} height={30} />,
   },
   smallCard = false,
   isDefaultOpen = true,

@@ -1,9 +1,9 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
+import { SvgIcon } from '@/assets/icons/icons';
 import { LegacyImg } from '@/src/components/utils';
 import { StyledContainerMarginY } from '@/src/components/utils/Containers/Containers.styles';
 import { useProfileGeneration } from '@/src/hooks';
-import { IlluCV } from 'assets/icons/icons';
 import { Button } from 'src/components/utils/Button/Button';
 import { StyledCenteredButtonContainer } from 'src/components/utils/Button/Button.styles';
 import { ContainerWithTextCentered } from 'src/components/utils/Containers/ContainerWithTextCentered';
@@ -98,7 +98,7 @@ export const ProfileGenerationProcess = forwardRef<
                 </Text>
               </>
             ) : (
-              <IlluCV width={226} height={226} />
+              <SvgIcon name="IlluCV" width={226} height={226} />
             )}
           </StyledImageContainer>
           {!noAction && (

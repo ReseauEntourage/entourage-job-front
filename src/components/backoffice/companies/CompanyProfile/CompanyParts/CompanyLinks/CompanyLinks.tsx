@@ -1,13 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { openModal } from '@/src/components/modals/Modal';
 import { ProfilePartCard } from '@/src/components/profile/ProfilePartCards/Card/Card/Card';
 import { DocumentItem } from '@/src/components/utils/DocumentItem/DocumentItem';
 import { useUpdateCompany } from '@/src/hooks/useUpdateCompany';
-import {
-  IlluCandidatFolder,
-  IlluLinkedIn,
-  IlluOrdiCV,
-} from 'assets/icons/icons';
 import { CompanyLinksModalEdit } from '../../../modals/CompanyLinksModalEdit';
 import { Text } from 'src/components/utils';
 import {
@@ -74,7 +70,7 @@ export const CompanyLinks = ({
     );
     return {
       content,
-      icon: <IlluOrdiCV />,
+      icon: <SvgIcon name="IlluOrdiCV" width={38} height={38} />,
     };
   }, [isEditable, name]);
 
@@ -92,7 +88,7 @@ export const CompanyLinks = ({
         {linkedInUrl && (
           <DocumentItem
             name="LinkedIn"
-            icon={<IlluLinkedIn width={38} height={38} />}
+            icon={<SvgIcon name="IlluLinkedIn" width={38} height={38} />}
             onClick={() => {
               window.open(normalizedUrl(linkedInUrl), '_blank');
             }}
@@ -101,7 +97,7 @@ export const CompanyLinks = ({
         {url && (
           <DocumentItem
             name="Site internet"
-            icon={<IlluOrdiCV width={38} height={38} />}
+            icon={<SvgIcon name="IlluOrdiCV" width={38} height={38} />}
             onClick={() => {
               window.open(normalizedUrl(url), '_blank');
             }}
@@ -110,7 +106,7 @@ export const CompanyLinks = ({
         {hiringUrl && (
           <DocumentItem
             name="Site de recrutement"
-            icon={<IlluCandidatFolder width={38} height={38} />}
+            icon={<SvgIcon name="IlluCandidatFolder" width={38} height={38} />}
             onClick={() => {
               window.open(normalizedUrl(hiringUrl), '_blank');
             }}
