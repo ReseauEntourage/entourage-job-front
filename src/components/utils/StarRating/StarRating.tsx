@@ -19,16 +19,14 @@ export const StarRating = ({ onClick }: StarRatingProps) => {
         const ratingValue: number = i + 1;
         const shouldFill = hover && ratingValue <= hover;
         return (
-          <>
-            <SvgIcon
-              key={i}
-              name={shouldFill ? 'StarActive' : 'Star'}
-              height={30}
-              width={30}
-              onMouseEnter={() => setHover(ratingValue)}
-              onClick={() => onStarRatingClick(ratingValue)}
-            />
-          </>
+          <SvgIcon
+            key={i}
+            name={shouldFill ? 'StarActive' : 'Star'}
+            height={30}
+            width={30}
+            onMouseEnter={() => setHover(ratingValue)}
+            onClick={() => onStarRatingClick(ratingValue)}
+          />
         );
       })}
     </StyledStarRating>
