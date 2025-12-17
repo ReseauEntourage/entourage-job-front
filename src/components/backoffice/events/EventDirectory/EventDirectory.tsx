@@ -138,20 +138,25 @@ export function EventDirectory() {
   useEffect(() => {
     // Set default department filter based on user's profile
     if (
-      !isDefaultDepartmentSet && // Only set once
-      currentUser?.userProfile?.department && // User has a department
-      departmentsIdsFilters.length > 0 && // Departments are loaded
-      departmentIds?.length === 0 // No department filter in query params
+      departmentsIdsFilters.length > 0 &&
+      currentUser?.userProfile?.department
     ) {
-      const department = departmentsIdsFilters.find((dept) => {
-        if (dept.label && currentUser.userProfile.department) {
-          return dept.label === currentUser.userProfile.department;
-        }
-        return null;
-      });
-      setFilters({
-        departmentIds: department ? [department] : [],
-      });
+      // Set default department filter only if not already set and no department filter in query params
+      if (
+        !isDefaultDepartmentSet && // Only set once
+        (!departmentIds || departmentIds.length === 0) // No department filter in query params
+      ) {
+        const department = departmentsIdsFilters.find((dept) => {
+          if (dept.label && currentUser.userProfile.department) {
+            return dept.label === currentUser.userProfile.department;
+          }
+          return null;
+        });
+        setFilters({
+          departmentIds: department ? [department] : [],
+        });
+      }
+      // Mark that default department has been set to avoid reapplying
       setIsDefaultDepartmentSet(true);
     }
   }, [
