@@ -1,7 +1,6 @@
 import path from 'path';
 import { StorybookConfig } from '@storybook/nextjs';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import { AnyCantFix } from '../src/utils/Types';
 
 const config: StorybookConfig = {
   framework: '@storybook/nextjs',
