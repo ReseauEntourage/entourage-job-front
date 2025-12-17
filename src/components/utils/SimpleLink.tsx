@@ -56,15 +56,16 @@ export const SimpleLink = ({
       {children}
     </a>
   ) : (
-    <Link scroll={scroll} href={href} shallow={shallow} legacyBehavior>
-      <a
-        onClick={onClick}
-        target={target}
-        className={classBuffer}
-        rel={target ? 'noopener' : ''}
-      >
-        {children}
-      </a>
+    <Link
+      scroll={scroll}
+      href={href}
+      shallow={shallow}
+      onClick={onClick}
+      target={target}
+      className={classBuffer}
+      rel={target ? 'noopener' : ''}
+    >
+      {children}
     </Link>
   );
 };
