@@ -11,7 +11,7 @@ import ChevronLeftSvg from './chevron-left.svg';
 import ChevronRightSvg from './chevron-right.svg';
 import ChevronUpSvg from './chevron-up.svg';
 import CloseSvg from './close.svg';
-import CompanyIconSvg from './company-icon.svg'
+import CompanyIconSvg from './company-icon.svg';
 import CopySvg from './copy.svg';
 import CreditCardSvg from './credit-card.svg';
 import DocumentSvg from './document.svg';
