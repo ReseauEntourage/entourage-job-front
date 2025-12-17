@@ -7,7 +7,6 @@ import {
   StyledCenteredButtonContainer,
 } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
-import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -38,12 +37,7 @@ const staticNumbers = [
   },
   {
     icon: (
-      <SvgIcon
-        name="IlluCoeurMainsOuvertesBleu"
-        width={140}
-        height={110}
-        color={COLORS.hoverBlue}
-      />
+      <SvgIcon name="IlluCoeurMainsOuvertesBleu" width={140} height={110} />
     ),
     value: '+ 1000',
     description: 'bénévoles engagés',

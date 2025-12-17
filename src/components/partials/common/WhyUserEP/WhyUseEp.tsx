@@ -4,7 +4,6 @@ import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { Button, Text } from 'src/components/utils';
 
-import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCriteria, StyledCriteriasContainer } from './WhyUseEp.styles';
@@ -118,13 +117,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
       },
       {
         text: 'Suivre les grandes étapes',
-        illu: (
-          <SvgIcon
-            name="IlluCalendrier"
-            {...criteriasIlluSizes}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="IlluCalendrier" {...criteriasIlluSizes} />,
       },
     ],
     content: (

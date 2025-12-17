@@ -3,7 +3,6 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '../../../utils';
 import { SimpleImageText } from '../../utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
-import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -46,25 +45,11 @@ const contentAs: { [K in DisplayAs]: Content } = {
     img: '/static/img/front-office/understand-format/understand-format-candidate.jpg',
     criterias: [
       {
-        illu: (
-          <SvgIcon
-            name="IlluCalendrier"
-            width={30}
-            height={30}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="IlluCalendrier" width={30} height={30} />,
         text: 'Ponctuel',
       },
       {
-        illu: (
-          <SvgIcon
-            name="OrienterSablier"
-            width={30}
-            height={30}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="OrienterSablier" width={30} height={30} />,
         text: 'Selon vos besoins',
       },
       {
@@ -107,25 +92,11 @@ const contentAs: { [K in DisplayAs]: Content } = {
     img: '/static/img/front-office/understand-format/understand-format-coach.png',
     criterias: [
       {
-        illu: (
-          <SvgIcon
-            name="IlluCalendrier"
-            width={30}
-            height={30}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="IlluCalendrier" width={30} height={30} />,
         text: 'Selon vos disponibilités',
       },
       {
-        illu: (
-          <SvgIcon
-            name="IlluMalette"
-            width={30}
-            height={30}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="IlluMalette" width={30} height={30} />,
         text: 'En fonction de votre expertise',
       },
       {
@@ -162,25 +133,11 @@ const contentAs: { [K in DisplayAs]: Content } = {
     img: '/static/img/front-office/understand-format/understand-format-referer.jpg',
     criterias: [
       {
-        illu: (
-          <SvgIcon
-            name="IlluCalendrier"
-            width={30}
-            height={30}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="IlluCalendrier" width={30} height={30} />,
         text: 'Ponctuel',
       },
       {
-        illu: (
-          <SvgIcon
-            name="OrienterSablier"
-            width={30}
-            height={30}
-            color={COLORS.orangeSocial}
-          />
-        ),
+        illu: <SvgIcon name="OrienterSablier" width={30} height={30} />,
         text: 'Selon les besoins',
       },
       {

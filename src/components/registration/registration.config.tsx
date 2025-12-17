@@ -1,7 +1,6 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { CompanyUserRole } from '@/src/constants/company';
-import { COLORS } from '@/src/constants/styles';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { ExtractFormSchemaValidation } from '../forms/FormSchema';
 import { RegistrationFlow } from './flows/flows.types';
@@ -84,13 +83,7 @@ export const candidateLastStepBullets = [
     text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
   },
   {
-    icon: (
-      <SvgIcon
-        name="IlluCalendrier"
-        color={COLORS.primaryBlue}
-        {...iconSizeProps}
-      />
-    ),
+    icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
     title: 'Participez à des événements professionnels et conviviaux',
     text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
   },
@@ -116,13 +109,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
         text: "Faites profiter de votre expérience à des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
       },
       {
-        icon: (
-          <SvgIcon
-            name="IlluCalendrier"
-            color={COLORS.primaryBlue}
-            {...iconSizeProps}
-          />
-        ),
+        icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
         title: 'Participez à des événements professionnels et conviviaux',
         text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
       },
@@ -146,13 +133,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
         text: 'Consultez le réseau d’entraide pour orienter au mieux vos candidats vers les coachs qui peuvent leur donner un coup de pouce dans leur recherche d’emploi',
       },
       {
-        icon: (
-          <SvgIcon
-            name="IlluCalendrier"
-            color={COLORS.primaryBlue}
-            {...iconSizeProps}
-          />
-        ),
+        icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
         title: 'Participez à des événements professionnels et conviviaux',
         text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
       },
@@ -175,13 +156,7 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
         text: 'Invitez vos collaborateurs à rejoindre le réseau et à soutenir des candidat(e)s dans leur recherche d’emploi.',
       },
       {
-        icon: (
-          <SvgIcon
-            name="IlluCV"
-            color={COLORS.primaryBlue}
-            {...iconSizeProps}
-          />
-        ),
+        icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
         title: 'Recruter des candidats',
         text: 'Créez des alertes de recrutement et recevez les profils de candidat(e)s correspondant à vos besoins',
       },

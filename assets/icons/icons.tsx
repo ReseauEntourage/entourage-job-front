@@ -195,13 +195,12 @@ export interface SvgIconProps {
   name: keyof typeof SvgIcons;
   width?: number;
   height?: number;
-  color?: string;
 
   onMouseEnter?: () => void;
   onClick?: () => void;
   className?: string;
 }
 
-export const SvgIcon = ({ name, width, height = width, color, className, ...props }: SvgIconProps) => (
-  <Image src={SvgIcons[name]} alt={`${name} Icon`} width={width} height={height} color={color} {...props} />
+export const SvgIcon = ({ name, width, height = width, className, ...props }: SvgIconProps) => (
+  <Image src={SvgIcons[name]} alt={`${name} Icon`} width={width} height={height} {...props} />
 );
