@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type AlertVariant = 'info' | 'lightGray' | 'darkBlue' | 'lightBlue';
 
 export interface AlertProps {

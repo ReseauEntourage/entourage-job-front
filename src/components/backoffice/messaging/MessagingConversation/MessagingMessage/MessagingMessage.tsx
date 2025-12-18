@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';

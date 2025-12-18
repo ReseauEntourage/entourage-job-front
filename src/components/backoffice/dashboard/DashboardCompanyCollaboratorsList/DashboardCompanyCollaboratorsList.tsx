@@ -49,7 +49,9 @@ export const DashboardCompanyCollaboratorsList = ({
   ]);
 
   const handleInviteCollabs = () => {
-    if (!companyId) return;
+    if (!companyId) {
+      return;
+    }
     openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
   };
 

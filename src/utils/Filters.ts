@@ -68,7 +68,11 @@ export const getFiltersTagsFromQueryParamsFront = (tag, filters) => {
   const filterToActivate = updatedFilters.find((filter) => {
     return filter.tag === tag;
   });
-  if (filterToDeActivate) filterToDeActivate.active = false;
-  if (filterToActivate) filterToActivate.active = true;
+  if (filterToDeActivate) {
+    filterToDeActivate.active = false;
+  }
+  if (filterToActivate) {
+    filterToActivate.active = true;
+  }
   return updatedFilters;
 };

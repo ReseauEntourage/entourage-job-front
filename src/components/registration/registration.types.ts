@@ -1,3 +1,4 @@
+import React from 'react';
 import { UnionKeys, UnionToIntersection } from '@/src/utils/Types';
 import { ExtractFormSchemaValidation } from '../forms/FormSchema';
 import { RegistrationFlow } from './flows/flows.types';

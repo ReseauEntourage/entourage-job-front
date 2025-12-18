@@ -34,7 +34,9 @@ export const MessageMedia = ({ media, mode = 'single' }: MessageMediaProps) => {
   const icon = media.mimeType.includes('image') ? 'Image' : 'FileText';
 
   const openMedia = () => {
-    if (media.signedUrl) window.open(media.signedUrl, '_blank');
+    if (media.signedUrl) {
+      window.open(media.signedUrl, '_blank');
+    }
   };
 
   const isLoading = !media.signedUrl;

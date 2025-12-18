@@ -1,7 +1,6 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 
-// eslint-disable-next-line no-shadow
 export enum UtmParameters {
   UTM_SOURCE = 'utm_source',
   UTM_MEDIUM = 'utm_medium',

@@ -228,7 +228,9 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                         </div>
                       );
                     }
-                    if (!childrenPath) return null;
+                    if (!childrenPath) {
+                      return null;
+                    }
                     return (
                       <React.Fragment key={uuid()}>
                         <SimpleLink
@@ -259,7 +261,9 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                                   </div>
                                 );
                               }
-                              if (!childrenChildrenPath) return null;
+                              if (!childrenChildrenPath) {
+                                return null;
+                              }
                               return (
                                 <SimpleLink
                                   key={

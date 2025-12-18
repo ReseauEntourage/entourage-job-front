@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export type UnionKeys<T> = T extends any ? keyof T : never;
 
 type StrictUnionHelper<T, TAll> = T extends any

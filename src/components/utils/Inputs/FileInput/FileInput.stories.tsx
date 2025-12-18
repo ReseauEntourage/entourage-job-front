@@ -15,7 +15,9 @@ const FileInputConfigured = ({ fileType, accept }: FileInputProps) => {
       onChange={(value) => {
         if (Array.isArray(value)) {
           setFile(value[0]);
-        } else setFile(value);
+        } else {
+          setFile(value);
+        }
       }}
     />
   );

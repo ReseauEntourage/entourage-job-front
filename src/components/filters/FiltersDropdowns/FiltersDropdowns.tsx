@@ -54,7 +54,9 @@ export const FiltersDropdowns = ({
           } else {
             // add filter
             updatedFilters[key].push(filterConst);
-            if (tag) gaEvent(tag);
+            if (tag) {
+              gaEvent(tag);
+            }
           }
 
           setFilters(updatedFilters);

@@ -48,7 +48,9 @@ export const CompanyCard = ({
   users,
 }: CompanyCardProps) => {
   const collaboratorCountText = useMemo(() => {
-    if (users.length === 0) return <Text>Aucun collaborateur</Text>;
+    if (users.length === 0) {
+      return <Text>Aucun collaborateur</Text>;
+    }
 
     let boldPart = '';
     const rest = 'dans la communauté';

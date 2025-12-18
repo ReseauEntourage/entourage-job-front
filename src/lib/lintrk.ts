@@ -7,5 +7,7 @@ declare global {
 }
 
 export const linkEvent = ({ conversionId }: { conversionId: number }) => {
-  if (window.lintrk) window.lintrk('track', { conversion_id: conversionId });
+  if (window.lintrk) {
+    window.lintrk('track', { conversion_id: conversionId });
+  }
 };

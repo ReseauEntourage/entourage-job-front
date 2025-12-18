@@ -34,7 +34,9 @@ export const DashboardProfileCard = () => {
   const buttonText = completionRate < 100 ? 'Compléter' : 'Modifier';
 
   const openExternalCV = () => {
-    if (externalCv === null) return;
+    if (externalCv === null) {
+      return;
+    }
     window.open(externalCv, '_blank');
   };
 

@@ -108,7 +108,7 @@ function* updateUserRequestedSaga(
     if (user.email && user.email !== formerUser?.email) {
       yield* put(authenticationActions.logoutRequested());
     }
-  } catch (error) {
+  } catch {
     yield* put(
       updateUserFailed({
         error: 'UPDATE_FAILED',
@@ -125,7 +125,7 @@ function* updateUserCompanyRequestedSaga(
     yield* call(() => Api.putUserCompany(companyName));
     yield* put(updateUserCompanySucceeded());
     yield* fetchUserRequestedSaga();
-  } catch (error) {
+  } catch {
     yield* put(
       updateUserCompanyFailed({
         error: 'UPDATE_FAILED',
@@ -152,7 +152,7 @@ function* updateProfileRequestedSaga(
         userProfile: data,
       })
     );
-  } catch (error) {
+  } catch {
     yield* put(
       updateProfileFailed({
         error: 'UPDATE_FAILED',
@@ -202,7 +202,7 @@ function* deleteExternalCvRequestedSaga() {
         message: `Le CV a bien été supprimé`,
       })
     );
-  } catch (error) {
+  } catch {
     yield* put(deleteExternalCvFailed());
   }
 }
@@ -219,7 +219,7 @@ function* uploadExternalCvRequestedSaga(
         message: 'Votre entreprise a été mise à jour avec succès',
       })
     );
-  } catch (error) {
+  } catch {
     yield* put(
       uploadExternalCvFailed({
         error: 'UPLOAD_FAILED',
@@ -239,7 +239,7 @@ function* getExternalCvRequestedSaga() {
     const userId = yield* select(selectCurrentUserId);
     const response = yield* call(() => Api.getExternalCvByUser(userId));
     yield* put(getExternalCvSucceeded(response.data.url));
-  } catch (error) {
+  } catch {
     yield* put(getExternalCvFailed());
   }
 }

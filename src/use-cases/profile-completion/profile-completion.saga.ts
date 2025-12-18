@@ -13,7 +13,7 @@ function* fetchProfileCompletionSaga() {
   try {
     const { data } = yield* call(() => Api.getProfileCompletion());
     yield* put(fetchProfileCompletionSucceeded(data || 0));
-  } catch (error) {
+  } catch {
     yield* put(fetchProfileCompletionFailed(null));
   }
 }

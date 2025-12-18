@@ -12,11 +12,11 @@ import { UserRoles } from 'src/constants/users';
 import { Actions } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 
-interface EditMemberModal {
+interface EditMemberModalProps {
   user: User;
   setUser: (user: User) => void;
 }
-export function EditMemberModal({ user, setUser }: EditMemberModal) {
+export function EditMemberModal({ user, setUser }: EditMemberModalProps) {
   const organization = useMemo(() => {
     return isRoleIncluded(UserRoles.REFERER, user.role) && user.organization
       ? {

@@ -20,7 +20,9 @@ export const DropdownItem = ({
   const device = isDesktop ? 'desktop' : 'mobile';
 
   const handleClick = () => {
-    if (onClick) onClick();
+    if (onClick) {
+      onClick();
+    }
     closeDropdown();
   };
 

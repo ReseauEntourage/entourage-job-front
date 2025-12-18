@@ -19,7 +19,9 @@ export const CompanyProfile = () => {
   const { selectedCompany } = useSelectedCompany();
   const isDesktop = useIsDesktop();
 
-  if (!selectedCompany) return null;
+  if (!selectedCompany) {
+    return null;
+  }
 
   return (
     <StyledBackofficeBackground>

@@ -127,7 +127,9 @@ export const formSchema: FormSchema<RecruitementAlertForm> = {
         },
         {
           method: (value) => {
-            if (!value) return true;
+            if (!value) {
+              return true;
+            }
             return value.every((item) => {
               return (
                 !item.label ||

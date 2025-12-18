@@ -1,4 +1,3 @@
-/* eslint-disable import/namespace */
 // this rule is disabled because "All" import sends an error
 
 import React from 'react';

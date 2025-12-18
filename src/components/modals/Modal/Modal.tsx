@@ -53,7 +53,9 @@ const CustomModal = ({
       if (reason === 'backdropClick') {
         return;
       }
-      if (onClose) onClose();
+      if (onClose) {
+        onClose();
+      }
     },
     [onClose]
   );

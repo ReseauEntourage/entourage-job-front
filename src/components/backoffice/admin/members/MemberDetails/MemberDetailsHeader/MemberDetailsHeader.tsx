@@ -19,7 +19,9 @@ interface MemberDetailsHeaderProps {
 export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
   const connectedUser = useAuthenticatedUser();
 
-  if (!user || !connectedUser) return null;
+  if (!user || !connectedUser) {
+    return null;
+  }
 
   return (
     <StyledContainer>

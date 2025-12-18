@@ -45,7 +45,9 @@ export function TextArea({
     useLineLimit(value, name, onChange, maxLines?.lines);
 
   useEffect(() => {
-    if (!maxLines) return;
+    if (!maxLines) {
+      return;
+    }
     if (setIsMaxLinesReached) {
       if (maxLinesReached) {
         setIsMaxLinesReached(true);
@@ -81,7 +83,9 @@ export function TextArea({
           hasLineLimit={!!maxLines}
           width={maxLinesWidth}
           ref={(e) => {
-            if (inputRef) inputRef(e);
+            if (inputRef) {
+              inputRef(e);
+            }
             textAreaRef.current = e;
           }}
           name={name}

@@ -91,7 +91,9 @@ export const stepsByContext = {
         label: 'Inviter',
         onClick: (currentUser) => {
           const companyId = currentUser?.company?.id || null;
-          if (!companyId) return;
+          if (!companyId) {
+            return;
+          }
           openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
         },
       },
