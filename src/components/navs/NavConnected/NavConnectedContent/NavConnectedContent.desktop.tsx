@@ -87,7 +87,9 @@ export const NavConnectedContentDesktop = ({
               <Dropdown.Item
                 key={`${index}-right-${uuidValue}`}
                 onClick={() => {
-                  if (tag) gaEvent(tag);
+                  if (tag) {
+                    gaEvent(tag);
+                  }
                   if (href) {
                     push(href);
                   }
@@ -132,7 +134,9 @@ export const NavConnectedContentDesktop = ({
                   },
                   index
                 ) => {
-                  if (disabled) return;
+                  if (disabled) {
+                    return;
+                  }
                   const isActiveOrChildActive =
                     asPath.includes(href) ||
                     (subMenu &&
@@ -150,7 +154,9 @@ export const NavConnectedContentDesktop = ({
                       <SimpleLink
                         href={href + (queryParams || '')}
                         onClick={() => {
-                          if (tag) gaEvent(tag);
+                          if (tag) {
+                            gaEvent(tag);
+                          }
                         }}
                         isExternal={external}
                         target={external ? '_blank' : '_self'}

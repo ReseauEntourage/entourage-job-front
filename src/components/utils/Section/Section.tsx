@@ -28,12 +28,22 @@ export const Section = ({
   if (className?.includes('custom')) {
     custom = true;
   } else {
-    if (style) classBuffer += ` uk-section-${style}`;
-    if (size) classBuffer += ` uk-section-${size}`;
-    if (className) classBuffer += ` ${className}`;
-    if (preserveColor) classBuffer += ` uk-preserve-color`;
+    if (style) {
+      classBuffer += ` uk-section-${style}`;
+    }
+    if (size) {
+      classBuffer += ` uk-section-${size}`;
+    }
+    if (className) {
+      classBuffer += ` ${className}`;
+    }
+    if (preserveColor) {
+      classBuffer += ` uk-preserve-color`;
+    }
 
-    if (container) classBuffer2 += ` uk-container-${container}`;
+    if (container) {
+      classBuffer2 += ` uk-container-${container}`;
+    }
   }
 
   return custom ? (

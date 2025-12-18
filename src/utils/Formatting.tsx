@@ -10,7 +10,9 @@ import { findConstantFromValue } from './Finding';
 export function formatParagraph(text: string, condense?: boolean) {
   if (text) {
     let formattedText = text;
-    if (condense) formattedText = text.replace(/\n\n/g, '\n');
+    if (condense) {
+      formattedText = text.replace(/\n\n/g, '\n');
+    }
     return formattedText.split('\n').reduce(
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       (acc, item, key, arr) => {
@@ -26,7 +28,9 @@ export function formatParagraph(text: string, condense?: boolean) {
 }
 
 export function addSpaceToPrefixIfNeeded(prefix) {
-  if (!prefix) return '';
+  if (!prefix) {
+    return '';
+  }
   return prefix.includes("'") ? prefix : `${prefix} `;
 }
 

@@ -102,7 +102,9 @@ export const NavConnectedContentMobile = ({
                     <a
                       aria-hidden="true"
                       onClick={() => {
-                        if (tag) gaEvent(tag);
+                        if (tag) {
+                          gaEvent(tag);
+                        }
                         if (href) {
                           push(href + (queryParams || ''));
                         }
@@ -138,7 +140,9 @@ export const NavConnectedContentMobile = ({
             <a
               aria-hidden="true"
               onClick={() => {
-                if (messaging.tag) gaEvent(messaging.tag);
+                if (messaging.tag) {
+                  gaEvent(messaging.tag);
+                }
                 if (messaging.href) {
                   push(messaging.href);
                 }
@@ -161,7 +165,9 @@ export const NavConnectedContentMobile = ({
                 <a
                   aria-hidden="true"
                   onClick={() => {
-                    if (tag) gaEvent(tag);
+                    if (tag) {
+                      gaEvent(tag);
+                    }
                     if (href) {
                       push(href);
                     }

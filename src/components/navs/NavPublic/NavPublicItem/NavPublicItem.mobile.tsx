@@ -19,7 +19,9 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
           href={item.href || '#'}
           onClick={() => {
             gaEvent(item.tag);
-            if (onClick) onClick();
+            if (onClick) {
+              onClick();
+            }
           }}
         >
           {item.name}

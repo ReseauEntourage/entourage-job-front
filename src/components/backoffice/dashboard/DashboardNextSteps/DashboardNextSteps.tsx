@@ -16,7 +16,9 @@ export const DashboardNextSteps = () => {
     currentUser?.company?.companyUser?.isAdmin || false;
 
   const context = useMemo(() => {
-    if (!currentUser) return null;
+    if (!currentUser) {
+      return null;
+    }
     if (
       currentUser.role === UserRoles.COACH &&
       currentUserIsCompanyAdmin &&
@@ -27,8 +29,12 @@ export const DashboardNextSteps = () => {
     if (currentUser.role === UserRoles.COACH && currentUserIsCompanyAdmin) {
       return Context.COMPANY_ADMIN_TBS_MODE;
     }
-    if (currentUser.role === UserRoles.CANDIDATE) return Context.CANDIDATE;
-    if (currentUser.role === UserRoles.COACH) return Context.COACH;
+    if (currentUser.role === UserRoles.CANDIDATE) {
+      return Context.CANDIDATE;
+    }
+    if (currentUser.role === UserRoles.COACH) {
+      return Context.COACH;
+    }
     return null;
   }, [currentUser, currentUserIsCompanyAdmin]);
 

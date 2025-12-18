@@ -53,7 +53,9 @@ export const Parameters = () => {
     }
   }, [userIsComplete, dispatch]);
 
-  if (!user || !userIsComplete) return <LoadingScreen />;
+  if (!user || !userIsComplete) {
+    return <LoadingScreen />;
+  }
 
   return (
     <StyledBackofficeBackground>

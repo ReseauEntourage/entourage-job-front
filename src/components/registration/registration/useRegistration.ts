@@ -124,7 +124,6 @@ export function useRegistration() {
       if (selectedFlow) {
         flow = selectedFlow;
       } else if (Object.keys(fields).includes('flow')) {
-        // eslint-disable-next-line dot-notation
         [flow] = fields['flow'];
       }
 

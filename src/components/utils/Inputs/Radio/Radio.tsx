@@ -72,7 +72,9 @@ export function Radio({
             const disabledOption = optionsToDisable.find(
               ({ option }) => option === value
             );
-            if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
+            if (!inputId) {
+              inputId = `radio-${value.replace(/\s+/g, '')}`;
+            }
             return (
               <div key={`$div-${i}-${uuidValue}`}>
                 <label

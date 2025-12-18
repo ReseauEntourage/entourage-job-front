@@ -186,7 +186,9 @@ export const Impact = ({
               isExternal
               newTab
               onClick={() => {
-                if (gaEventTag) gaEvent(gaEventTag);
+                if (gaEventTag) {
+                  gaEvent(gaEventTag);
+                }
               }}
             >
               Télécharger la mesure d&lsquo;impact

@@ -55,8 +55,12 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
         defaultValues={defaultValues}
         noCompulsory={noCompulsory}
         onCancel={() => {
-          if (onCancel) onCancel();
-          if (onClose) onClose();
+          if (onCancel) {
+            onCancel();
+          }
+          if (onClose) {
+            onClose();
+          }
         }}
         onError={onError}
         onSubmit={(fields, setError) => {

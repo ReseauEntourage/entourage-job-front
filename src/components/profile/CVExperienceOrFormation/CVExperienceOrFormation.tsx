@@ -80,13 +80,17 @@ export function CVExperienceOrFormation({
           <ButtonIcon
             icon={<LucidIcon name="Pencil" />}
             onClick={() => {
-              if (editItem) editItem();
+              if (editItem) {
+                editItem();
+              }
             }}
           />
           <ButtonIcon
             icon={<LucidIcon name="Trash" />}
             onClick={() => {
-              if (deleteItem) deleteItem();
+              if (deleteItem) {
+                deleteItem();
+              }
             }}
           />
         </StyledEditToolsContainer>

@@ -50,8 +50,12 @@ export const CompanyCollaboratorsPreviewList = ({
     companyWithCollaborators.users.length > 0;
 
   const ctaTitle = useMemo(() => {
-    if (!isEditable) return null;
-    if (!isCompleted) return 'Inviter des collaborateurs';
+    if (!isEditable) {
+      return null;
+    }
+    if (!isCompleted) {
+      return 'Inviter des collaborateurs';
+    }
     return 'Voir tous les collaborateurs';
   }, [isCompleted, isEditable]);
 
@@ -86,7 +90,9 @@ export const CompanyCollaboratorsPreviewList = ({
 
   const slidesPerView = useMemo(() => {
     // Always display 1 slide on mobile
-    if (isMobile) return 1.4;
+    if (isMobile) {
+      return 1.4;
+    }
     // On desktop, display 2 slides and 60% of the next one
     return 2.6;
   }, [isMobile]);

@@ -76,7 +76,9 @@ export const Card = ({
             )}
             <StyledCardTitleContainer
               onClick={() => {
-                if (isClosable) setIsOpen(!isOpen);
+                if (isClosable) {
+                  setIsOpen(!isOpen);
+                }
               }}
               centerTitle={centerTitle}
             >

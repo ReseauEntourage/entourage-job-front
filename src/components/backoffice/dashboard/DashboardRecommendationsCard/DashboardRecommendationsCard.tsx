@@ -12,13 +12,10 @@ import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const contextCompanyAdmin = 'CompanyAdmin';
 
-const recommendationsContexts = [
-  UserRoles.CANDIDATE,
-  UserRoles.COACH,
-  contextCompanyAdmin,
-];
-
-type recommendationsContextsType = (typeof recommendationsContexts)[number];
+type recommendationsContextsType =
+  | UserRoles.CANDIDATE
+  | UserRoles.COACH
+  | typeof contextCompanyAdmin;
 
 const recommendationsLabels: {
   [K in recommendationsContextsType]: {
@@ -58,8 +55,12 @@ export const DashboardRecommendationsCard = () => {
   };
 
   const context = useMemo<recommendationsContextsType>(() => {
-    if (isCompanyAdmin) return contextCompanyAdmin;
-    if (user.role === UserRoles.COACH) return UserRoles.COACH;
+    if (isCompanyAdmin) {
+      return contextCompanyAdmin;
+    }
+    if (user.role === UserRoles.COACH) {
+      return UserRoles.COACH;
+    }
     return UserRoles.CANDIDATE;
   }, [isCompanyAdmin, user.role]);
 

@@ -14,8 +14,12 @@ export function useEventDirectoryQueryParams() {
   } = useRouter();
 
   const normalizeArray = (value: unknown): string[] => {
-    if (!value) return [];
-    if (Array.isArray(value)) return value as string[];
+    if (!value) {
+      return [];
+    }
+    if (Array.isArray(value)) {
+      return value as string[];
+    }
     return [value as string];
   };
 

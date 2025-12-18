@@ -1,3 +1,4 @@
+import React from 'react';
 import { FONT_WEIGHTS } from 'src/constants/styles';
 
 export type WeightProps = (typeof FONT_WEIGHTS)[keyof typeof FONT_WEIGHTS];

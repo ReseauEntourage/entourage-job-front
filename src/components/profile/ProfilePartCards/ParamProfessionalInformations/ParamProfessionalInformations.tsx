@@ -34,7 +34,9 @@ export const ParamProfessionalInformations = ({
   const isCompleted = sectorOccupations?.length > 0;
 
   const editModal = useCallback(() => {
-    if (!userProfile) return;
+    if (!userProfile) {
+      return;
+    }
     openModal(
       role === UserRoles.COACH ? (
         <ModalEditProfessionalInformation

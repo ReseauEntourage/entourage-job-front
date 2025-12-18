@@ -28,7 +28,9 @@ export function DatePicker({
     return null;
   }
 
-  if (!min) min = '1900-01-01';
+  if (!min) {
+    min = '1900-01-01';
+  }
 
   return (
     <StyledDatePickerContainer

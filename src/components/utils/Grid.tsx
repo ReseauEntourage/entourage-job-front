@@ -61,19 +61,43 @@ export const Grid = ({
       })
       .join(' ');
   }
-  if (gap) classBuffer += ` uk-grid-${gap}`;
-  if (match) classBuffer += ' uk-grid-match';
-  if (divider) classBuffer += ' uk-grid-divider';
-  if (center) classBuffer += ' uk-flex-center';
-  if (between) classBuffer += ' uk-flex-between';
-  if (top) classBuffer += ' uk-flex-top';
-  if (middle) classBuffer += ' uk-flex-middle';
-  if (bottom) classBuffer += ' uk-flex-bottom';
-  if (column) classBuffer += ' uk-flex-column';
-  if (row) classBuffer += ' uk-flex-row';
-  if (reverse) classBuffer += ' uk-flex-row-reverse';
+  if (gap) {
+    classBuffer += ` uk-grid-${gap}`;
+  }
+  if (match) {
+    classBuffer += ' uk-grid-match';
+  }
+  if (divider) {
+    classBuffer += ' uk-grid-divider';
+  }
+  if (center) {
+    classBuffer += ' uk-flex-center';
+  }
+  if (between) {
+    classBuffer += ' uk-flex-between';
+  }
+  if (top) {
+    classBuffer += ' uk-flex-top';
+  }
+  if (middle) {
+    classBuffer += ' uk-flex-middle';
+  }
+  if (bottom) {
+    classBuffer += ' uk-flex-bottom';
+  }
+  if (column) {
+    classBuffer += ' uk-flex-column';
+  }
+  if (row) {
+    classBuffer += ' uk-flex-row';
+  }
+  if (reverse) {
+    classBuffer += ' uk-flex-row-reverse';
+  }
 
-  if (className) classBuffer += ` ${className}`;
+  if (className) {
+    classBuffer += ` ${className}`;
+  }
   const content = useMemo(() => {
     if (items !== undefined) {
       return items;

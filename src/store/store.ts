@@ -26,7 +26,6 @@ function* rootSaga() {
     useCasesList
       .filter((useCase) => !!useCase.saga)
       .map((useCase) =>
-        // eslint-disable-next-line func-names
         spawn(function* () {
           while (true) {
             try {

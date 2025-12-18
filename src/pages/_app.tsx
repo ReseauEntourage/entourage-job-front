@@ -1,5 +1,4 @@
 // use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
-// eslint-disable-next-line import/order
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.css';

@@ -9,7 +9,9 @@ interface NotificationProps {
 }
 export const Notification = ({ type, message }: NotificationProps) => {
   const iconName: IconName = useMemo(() => {
-    if (type === 'danger') return 'CircleX';
+    if (type === 'danger') {
+      return 'CircleX';
+    }
     return 'CircleCheck';
   }, [type]);
 

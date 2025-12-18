@@ -15,7 +15,9 @@ const CompanyCollaboratorsPage = () => {
   } = useSelectedCompany();
 
   useEffect(() => {
-    if (!companyId) return;
+    if (!companyId) {
+      return;
+    }
     dispatch(companyActions.fetchSelectedCompanyWithCollaboratorsRequested());
   }, [dispatch, companyId]);
 

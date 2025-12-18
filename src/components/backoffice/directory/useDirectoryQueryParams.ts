@@ -24,14 +24,22 @@ export function useDirectoryQueryParams() {
   } = useRouter();
 
   const normalizeBusinessSectorIds = (): string[] => {
-    if (!businessSectorIds) return [];
-    if (Array.isArray(businessSectorIds)) return businessSectorIds as string[];
+    if (!businessSectorIds) {
+      return [];
+    }
+    if (Array.isArray(businessSectorIds)) {
+      return businessSectorIds as string[];
+    }
     return [businessSectorIds as string];
   };
 
   const normalizeDepartments = (): string[] => {
-    if (!departments) return [];
-    if (Array.isArray(departments)) return departments as string[];
+    if (!departments) {
+      return [];
+    }
+    if (Array.isArray(departments)) {
+      return departments as string[];
+    }
     return [departments as string];
   };
 

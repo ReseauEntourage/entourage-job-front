@@ -26,12 +26,16 @@ export const CardToggleList = ({
       }
       return item;
     });
-    if (onChange) onChange(updatedItems);
+    if (onChange) {
+      onChange(updatedItems);
+    }
   };
   return (
     <StyledToggleList>
       {items.map((item, idx) => {
-        if (!isEditable && !item.value) return null;
+        if (!isEditable && !item.value) {
+          return null;
+        }
         return (
           <ToggleItem
             key={idx}

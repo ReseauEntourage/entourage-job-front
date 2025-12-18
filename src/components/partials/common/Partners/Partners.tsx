@@ -49,7 +49,9 @@ export const Partners = ({
             rounded
             href="https://www.entourage.social/qui-sommes-nous/partenaires"
             onClick={() => {
-              if (tag) gaEvent(tag);
+              if (tag) {
+                gaEvent(tag);
+              }
             }}
             newTab
             isExternal

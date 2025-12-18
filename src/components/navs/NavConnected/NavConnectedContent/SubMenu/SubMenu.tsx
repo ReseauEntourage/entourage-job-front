@@ -39,7 +39,9 @@ export const SubMenu = ({
               className="subMenu-item"
               key={`${key}-${uuidValue}`}
               onClick={() => {
-                if (tag) gaEvent(tag);
+                if (tag) {
+                  gaEvent(tag);
+                }
               }}
               target={external ? '_blank' : '_self'}
             >

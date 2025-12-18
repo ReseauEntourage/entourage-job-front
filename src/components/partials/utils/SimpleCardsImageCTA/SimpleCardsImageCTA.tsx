@@ -88,7 +88,9 @@ export const SimpleCardsImageCTA = ({
                     rounded
                     href={card.href}
                     onClick={() => {
-                      if (card.onClick) card.onClick();
+                      if (card.onClick) {
+                        card.onClick();
+                      }
                     }}
                   >
                     {card.CTAText}

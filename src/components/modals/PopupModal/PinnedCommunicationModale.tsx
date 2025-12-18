@@ -23,7 +23,9 @@ export const PinnedCommunicationModale = () => {
           STORAGE_KEYS.PINNED_COMMUNICATION_CLOSED,
           String(true)
         );
-        if (onClose) onClose();
+        if (onClose) {
+          onClose();
+        }
       }}
     >
       <Link href={linkHref} target="_blank" rel="noopener noreferrer">

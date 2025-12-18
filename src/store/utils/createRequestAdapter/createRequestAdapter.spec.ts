@@ -1,6 +1,5 @@
-/* eslint-disable no-param-reassign */
-
 import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/no-named-as-default
 import expect from 'expect';
 import { SliceRootState } from '../types';
 import { ReduxRequestEvents } from 'src/constants';
