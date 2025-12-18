@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { IlluConversation } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ButtonIcon, ButtonIconProps } from './ButtonIcon';
 
 const meta = {
@@ -9,7 +9,7 @@ const meta = {
     return (
       <>
         Bouton vers : {href}
-        <ButtonIcon icon={<IlluConversation />} href={href} />
+        <ButtonIcon icon={<SvgIcon name="IlluConversation" />} href={href} />
       </>
     );
   },

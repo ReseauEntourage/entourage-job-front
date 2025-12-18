@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { DashboardJoinWhatsappModal } from '../DashboardJoinWhatsappModal/DashboardJoinWhatsappModal';
 import { openModal } from 'src/components/modals/Modal';
 import { Button } from 'src/components/utils';
@@ -17,7 +17,7 @@ export const DashboardAlertWhatsapp = () => {
 
   return (
     <Alert
-      icon={<IlluBulleQuestionCheck width={35} height={30} />}
+      icon={<SvgIcon name="IlluBulleQuestionCheck" width={35} height={30} />}
       closable
       visible={alertVisible}
       onClose={() => {

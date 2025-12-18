@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ProfileCompletion } from '@/src/components/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { RoundBadge } from '@/src/components/utils/Badge/RoundBadge';
 import { FilePreviewCV } from '@/src/components/utils/Inputs/FileInput/FilePreview';
@@ -7,11 +8,6 @@ import { ProfileNudges } from '@/src/constants/nudges';
 import { useCurrentUserExternalCv } from '@/src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { selectProfileCompletionRate } from '@/src/use-cases/profile-completion';
-import {
-  IlluBulleQuestion,
-  IlluCandidatFolder,
-  IlluCoeurMainsOuvertesBleu,
-} from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
 import { Button, Card, ImgUserProfile, Tag, Text } from 'src/components/utils';
 import { UserRoles } from 'src/constants/users';
@@ -86,7 +82,7 @@ export const DashboardProfileCard = () => {
               <Text size="small">{user.userProfile.introduction}</Text>
             ) : (
               <StyledDashboardProfileCardEmptyState>
-                <IlluBulleQuestion height={48} width={48} />
+                <SvgIcon name="IlluBulleQuestion" height={48} width={48} />
                 <Text size="small">
                   Vous n’avez pas encore rédigé votre présentation
                 </Text>
@@ -126,7 +122,11 @@ export const DashboardProfileCard = () => {
             </StyledDashboardProfileCardHelpList>
           ) : (
             <StyledDashboardProfileCardEmptyState>
-              <IlluCoeurMainsOuvertesBleu height={48} width={48} />
+              <SvgIcon
+                name="IlluCoeurMainsOuvertesBleu"
+                height={48}
+                width={48}
+              />
 
               <Text size="small">
                 {user.role === UserRoles.CANDIDATE
@@ -159,7 +159,7 @@ export const DashboardProfileCard = () => {
               />
             ) : (
               <StyledDashboardProfileCardEmptyState>
-                <IlluCandidatFolder height={48} width={48} />
+                <SvgIcon name="IlluCandidatFolder" height={48} width={48} />
                 <Text size="small">
                   Vous n&apos;avez pas importé de CV existant vous permettant de
                   générer votre profil.

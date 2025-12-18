@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Icons } from './Icons';
+import { SvgIcon, SvgIcons } from '@/assets/icons/icons';
 
 const meta = {
   title: 'Icons SVG',
@@ -12,7 +11,15 @@ const meta = {
 };
 
 const IconsTemplate = () => {
-  return <Icons />;
+  return Object.keys(SvgIcons).map((iconName, index) => (
+    <div key={index} style={{ margin: '20px', display: 'inline-block' }}>
+      <SvgIcon
+        name={iconName as keyof typeof SvgIcons}
+        width={50}
+        height={50}
+      />
+    </div>
+  ));
 };
 
 export const IconsSVG = {

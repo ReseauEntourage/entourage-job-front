@@ -1,6 +1,6 @@
 import React from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { UserRoles } from '@/src/constants/users';
-import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { Company, Skill, UserProfileSectorOccupation } from 'src/api/types';
@@ -40,7 +40,7 @@ export const ProfileProfessionalInformations = ({
             {`${userFirstName} n'a pas encore renseigné ses informations professionnelles`}
           </Text>
         ),
-        icon: <IlluBulleQuestion />,
+        icon: <SvgIcon name="IlluBulleQuestion" width={80} height={80} />,
       }}
       isEmpty={isEmpty}
     >

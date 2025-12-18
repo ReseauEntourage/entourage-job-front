@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { SvgIcon } from '@/assets/icons/icons';
 import { openModal } from '@/src/components/modals/Modal';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { IlluMalette } from 'assets/icons/icons';
 import { CVExperienceOrFormation } from '../../CVExperienceOrFormation/CVExperienceOrFormation';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Formation } from 'src/api/types';
@@ -47,7 +47,7 @@ export const ProfileFormations = ({
     );
     return {
       content,
-      icon: <IlluMalette />,
+      icon: <SvgIcon name="IlluMalette" />,
     };
   }, [isEditable, userFirstName]);
 

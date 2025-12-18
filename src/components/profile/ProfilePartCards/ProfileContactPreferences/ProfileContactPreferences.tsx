@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { IlluDiscussionBanc, IlluOrdiCV } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import {
   CardToggleList,
@@ -34,12 +34,12 @@ export const ProfileContactPreferences = ({
       return [
         {
           name: 'Je préfère être accompagné en visio',
-          icon: <IlluOrdiCV {...illuProps} />,
+          icon: <SvgIcon name="IlluOrdiCV" {...illuProps} />,
           key: 'allowRemoteEvents',
         },
         {
           name: 'Je préfère être accompagné en présentiel',
-          icon: <IlluDiscussionBanc {...illuProps} />,
+          icon: <SvgIcon name="IlluDiscussionBanc" {...illuProps} />,
           key: 'allowPhysicalEvents',
         },
       ];
@@ -47,12 +47,12 @@ export const ProfileContactPreferences = ({
     return [
       {
         name: 'Je préfère accompagner en visio',
-        icon: <IlluOrdiCV {...illuProps} />,
+        icon: <SvgIcon name="IlluOrdiCV" {...illuProps} />,
         key: 'allowRemoteEvents',
       },
       {
         name: 'Je préfère accompagner en présentiel',
-        icon: <IlluDiscussionBanc {...illuProps} />,
+        icon: <SvgIcon name="IlluDiscussionBanc" {...illuProps} />,
         key: 'allowPhysicalEvents',
       },
     ];

@@ -1,0 +1,66 @@
+:root {
+  --orange: #47a8b9;
+  --black: #363636;
+  --light-grey: #e5e5e5;
+  --lighter-grey: #f5f5f5;
+  --white: #fff;
+  --disabled: #999;
+}
+
+/* permet de créer un ellipsis sur un text à plusieurs lignes */
+body {
+  overflow-wrap: anywhere;
+  font-family: Poppins, sans-serif;
+}
+
+#__next {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.ent-logo-hover:hover {
+  opacity: 0.7;
+  transition: 0.1s;
+}
+
+.ent-line-clamp-1,
+.ent-line-clamp-2,
+.ent-line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.ent-line-clamp-1 {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.ent-line-clamp-2 {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.ent-line-clamp-3 {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+hr.uk-divider-small::after {
+  border-top: 1px solid var(--orange);
+}
+
+.ent-site-map {
+  color: var(--white) !important;
+  margin-bottom: 10px;
+}
+
+.ent-site-map:not(:first-child) {
+  margin-top: 10px;
+}
+
+/* overwrite YT lite player start button */
+.yt-lite > .lty-playbtn {
+  border: none;
+}

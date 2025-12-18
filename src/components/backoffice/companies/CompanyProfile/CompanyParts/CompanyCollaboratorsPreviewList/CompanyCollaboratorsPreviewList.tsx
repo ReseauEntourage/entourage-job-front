@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
 import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
@@ -15,7 +16,6 @@ import { ProfilePartCard } from '@/src/components/profile/ProfilePartCards/Card/
 import { ProfileCard } from '@/src/components/utils/Cards/EntityCards/ProfileCard';
 import { useIsMobile } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
-import { IlluReseau } from 'assets/icons/icons';
 import { LucidIcon, Text } from 'src/components/utils';
 import {
   StyledNavigationContainer,
@@ -110,7 +110,7 @@ export const CompanyCollaboratorsPreviewList = ({
           Cette entreprise n’a pas encore de collaborateurs rattachés.
         </Text>
       ),
-      icon: <IlluReseau />,
+      icon: <SvgIcon name="IlluReseau" />,
     };
   }, [isEditable]);
 

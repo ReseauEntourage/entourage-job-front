@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { IlluCandidatFolder } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from 'src/components/utils';
 import { Card } from 'src/components/utils/Cards/Card';
 import {
@@ -21,7 +21,7 @@ export const DashboardInviteToReferCandidate = () => {
     >
       <StyledContainer>
         <StyledDescriptionContainer>
-          <IlluCandidatFolder width={136} height={136} />
+          <SvgIcon name="IlluCandidatFolder" width={136} height={136} />
           <Text>
             Pré-inscrivez les personnes actuellement en recherche d’emploi que
             vous accompagnez avec votre structure pour qu’ils puissent accéder à

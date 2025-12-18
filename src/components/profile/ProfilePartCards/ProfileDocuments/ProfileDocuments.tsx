@@ -1,10 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  IlluCandidatFolder,
-  IlluDossierCandidat,
-  IlluLinkedIn,
-} from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { openModal } from '@/src/components/modals/Modal';
 import { DocumentItem } from '@/src/components/utils/DocumentItem/DocumentItem';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -87,14 +83,14 @@ export const ProfileDocuments = ({
             autres documents
           </Text>
         ),
-        icon: <IlluCandidatFolder />,
+        icon: <SvgIcon name="IlluCandidatFolder" width={38} height={38} />,
       }}
     >
       <StyledDocumentList>
         {linkedinUrl && (
           <DocumentItem
             name="Mon profil LinkedIn"
-            icon={<IlluLinkedIn width={38} height={38} />}
+            icon={<SvgIcon name="IlluLinkedIn" width={38} height={38} />}
             onRemove={isEditable ? removeLinkedinUrl : undefined}
             onClick={() => {
               window.open(linkedinUrl, '_blank');
@@ -104,7 +100,7 @@ export const ProfileDocuments = ({
         {hasExternalCv && isEditable && (
           <DocumentItem
             name="Mon CV perso"
-            icon={<IlluDossierCandidat width={38} height={38} />}
+            icon={<SvgIcon name="IlluDossierCandidat" width={38} height={38} />}
             onRemove={
               isEditable
                 ? () => {

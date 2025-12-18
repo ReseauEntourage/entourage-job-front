@@ -1,5 +1,5 @@
 import React from 'react';
-import { IlluCoachEtCandidat } from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
 import { LegacyImg, Section } from '@/src/components/utils';
 import { H3 } from '@/src/components/utils/Headings';
@@ -11,7 +11,7 @@ import {
 
 const actions = [
   {
-    illu: <IlluCoachEtCandidat width={200} height={140} />,
+    illu: <SvgIcon name="IlluCoachEtCandidat" width={200} height={140} />,
     title: 'Engagez vos collaborateurs à devenir coachs bénévoles',
     description:
       'Relecture de CV, préparation aux entretiens... En quelques clics, vos collaborateurs  peuvent devenir coachs bénévoles et donnner des coups de pouce à nos candidat.e.s.',

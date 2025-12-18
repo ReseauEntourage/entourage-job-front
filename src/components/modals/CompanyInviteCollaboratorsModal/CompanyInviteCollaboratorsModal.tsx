@@ -2,11 +2,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { DefaultValues } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import {
-  IlluCoachEtCandidat,
-  IlluCoeurMainsOuvertesBleu,
-  IlluOrdiCV,
-} from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { companyActions } from '@/src/use-cases/company';
 import { ExtractFormSchemaValidation } from '../../forms/FormSchema';
 import { FormWithValidation } from '../../forms/FormWithValidation';
@@ -79,7 +75,7 @@ export function CompanyInviteCollaboratorsModal({
         </Text>
         <StyledPreambleStepContainer>
           <StyledPreambleStep>
-            <IlluOrdiCV width={60} height={60} />
+            <SvgIcon name="IlluOrdiCV" width={60} height={60} />
             <Text>
               Vos collaborateurs recevront un email les invitant à rejoindre
               Entourage Pro et se créer un compte.{' '}
@@ -97,14 +93,14 @@ export function CompanyInviteCollaboratorsModal({
             </Text>
           </StyledPreambleStep>
           <StyledPreambleStep>
-            <IlluCoachEtCandidat width={60} height={60} />
+            <SvgIcon name="IlluCoachEtCandidat" width={60} height={60} />
             <Text>
               Les collaborateurs vont pouvoir contacter et accompagner des
               candidats
             </Text>
           </StyledPreambleStep>
           <StyledPreambleStep>
-            <IlluCoeurMainsOuvertesBleu width={60} height={60} />
+            <SvgIcon name="IlluCoeurMainsOuvertesBleu" width={60} height={60} />
             <Text>
               Suivre l’engagement de vos collaborateurs sur la plateforme
             </Text>

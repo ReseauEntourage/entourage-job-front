@@ -1,6 +1,6 @@
 import React from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { CompanyGoal } from '@/src/constants/company';
-import { IlluCV, IlluPoigneeDeMain } from 'assets/icons/icons';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { SelectListType } from 'src/components/utils/Inputs/SelectList/SelectList.types';
 
@@ -8,14 +8,14 @@ const flowOptions: SelectListType<CompanyGoal>[] = [
   {
     value: CompanyGoal.SENSIBILIZE,
     label: 'Je souhaite sensibiliser et engager mes collaborateurs',
-    icon: <IlluPoigneeDeMain width={50} height={50} />,
+    icon: <SvgIcon name="IlluPoigneeDeMain" width={50} height={50} />,
     description:
       'Je souhaite engager mes collaborateurs en tant que coach et les faire participer à des teambuilding solidaires',
   },
   {
     value: CompanyGoal.RECRUIT,
     label: 'Je souhaite recruter des candidats',
-    icon: <IlluCV width={50} height={50} />,
+    icon: <SvgIcon name="IlluCV" width={50} height={50} />,
     description:
       'Trouver des candidats et recevoir des alertes par mail en fonction de mes besoins de recrutement',
   },

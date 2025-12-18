@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { UserProfileNudge } from '@/src/api/types';
 import { openModal } from '@/src/components/modals/Modal';
 import { LucidIcon } from '@/src/components/utils/Icons/LucidIcon';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Button, Text } from 'src/components/utils';
 import { UserRoles } from 'src/constants/users';
@@ -106,7 +106,7 @@ export const ProfileCustomNudges = ({
               : 'Détaillez les coups de pouce que vous pouvez offrir aux candidats.'}
           </Text>
         ),
-        icon: <IlluBulleQuestionCheck />,
+        icon: <SvgIcon name="IlluBulleQuestionCheck" width={80} height={80} />,
       }}
       ctaCallback={isEditable ? () => openEditModal() : undefined}
       ctaTitle="Ajouter"

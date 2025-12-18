@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { SvgIcon } from '@/assets/icons/icons';
 import { UserRoles } from '@/src/constants/users';
-import { IlluConversation } from 'assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Button, Text } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -56,7 +56,7 @@ export const ProfileContactCard = ({
           )}
           <StyledProfileContactForm>
             <StyledConversationInviteToContact>
-              <IlluConversation width="75" height="75" />
+              <SvgIcon name="IlluConversation" width={75} height={75} />
               {isCoach ? (
                 <p>
                   Vous souhaitez prendre contact avec {firstName} pour qu’il

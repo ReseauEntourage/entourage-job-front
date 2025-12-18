@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { IlluMalette } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Review } from 'src/api/types';
 import { Text } from 'src/components/utils';
@@ -36,7 +36,7 @@ export const ProfileReviews = ({
     );
     return {
       content,
-      icon: <IlluMalette />,
+      icon: <SvgIcon name="IlluMalette" />,
     };
   }, [isEditable, userFirstName]);
 

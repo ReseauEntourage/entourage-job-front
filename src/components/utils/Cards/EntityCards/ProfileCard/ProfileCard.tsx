@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, { useMemo } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
 import { ProfileNudges } from '@/src/constants/nudges';
-import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
-import CaseIcon from 'assets/icons/illu-malette.svg';
 import { Button } from '../../../Button';
 import { EntityCard } from '../EntityCard/EntityCard';
 import {
@@ -210,7 +209,7 @@ export function ProfileCard({
             ) : (
               <StyledProfileCardEmptyBusinessSectorsContainer>
                 <StyledProfileCardEmptyIcon>
-                  <CaseIcon {...iconSizeProps} />
+                  <SvgIcon name="IlluMalette" {...iconSizeProps} />
                 </StyledProfileCardEmptyIcon>
                 <Text color="mediumGray" size="small" variant="italic">
                   {EMPTY_INFO}
@@ -243,7 +242,7 @@ export function ProfileCard({
               ) : (
                 <StyledProfileCardEmptyNudgesContainer>
                   <StyledProfileCardEmptyIcon>
-                    <HandsIcon {...iconSizeProps} />
+                    <SvgIcon name="IlluCoeurMainsOuvertes" {...iconSizeProps} />
                   </StyledProfileCardEmptyIcon>
                   <Text color="mediumGray" size="small" variant="italic">
                     {EMPTY_INFO}

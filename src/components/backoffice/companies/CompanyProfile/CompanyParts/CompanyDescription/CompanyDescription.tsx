@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { openModal } from '@/src/components/modals/Modal';
 import { ProfilePartCard } from '@/src/components/profile/ProfilePartCards/Card/Card/Card';
-import { IlluBulleQuestion } from 'assets/icons/icons';
 import { Text } from 'src/components/utils';
 import {
   StyledDescriptionContainer,
@@ -56,7 +56,7 @@ export const CompanyDescription = ({
             </Text>
           </StyledFallbackContentContainer>
         ),
-        icon: <IlluBulleQuestion />,
+        icon: <SvgIcon name="IlluBulleQuestion" />,
       }}
       smallCard={smallCard}
     >

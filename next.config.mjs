@@ -1,8 +1,4 @@
 import dotenv from 'dotenv';
-import withLess from 'next-with-less';
-import CircularDependencyPlugin from 'circular-dependency-plugin';
-import hash from 'string-hash';
-import { relative } from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import tracer from 'dd-trace';
@@ -84,58 +80,9 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 }
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withLess({
+const nextConfig = {
   publicRuntimeConfig: {
     RELEASE_VERSION: process.env.HEROKU_RELEASE_VERSION || 'development',
-  },
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ({ resource }) => [
-        {
-          loader: '@svgr/webpack',
-          options: {
-            icon: true,
-            svgoConfig: {
-              plugins: [
-                {
-                  name: 'preset-default',
-                  params: {
-                    overrides: {
-                      // disable plugins
-                      removeViewBox: false,
-                      cleanupIDs: false,
-                    },
-                  },
-                },
-                {
-                  name: 'cleanupIDs',
-                  params: {
-                    prefix: `svg${hash(relative(context, resource))}`,
-                  },
-                },
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    config.plugins.push(
-      new CircularDependencyPlugin({
-        // exclude detection of files based on a RegExp
-        exclude: /a\.js|node_modules/,
-        // add errors to webpack instead of warnings
-        failOnError: true,
-        // allow const cycles that include an asyncronous const,
-        // e.g. via const(/* webpackMode: "weak" */ './file.js')
-        allowAsyncCycles: false,
-        // set the current working directory for displaying module paths
-        cwd: process.cwd(),
-      })
-    );
-
-    return config;
   },
   typescript: {
     tsconfigPath: 'src/tsconfig.json',
@@ -177,6 +124,6 @@ const nextConfig = withLess({
       ssr: true,
     },
   },
-});
+};
 
 export default nextConfig;
