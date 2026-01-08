@@ -43,7 +43,7 @@ export const NavConnectedContentDesktop = ({
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0];
+  const logoLink = links[user?.role][0] || null;
 
   const rightItems = [
     <div className="uk-flex uk-flex-middle">
@@ -115,7 +115,9 @@ export const NavConnectedContentDesktop = ({
         left={
           <>
             <NavbarLogo
-              href={logoLink.href + (logoLink.queryParams || '')}
+              href={
+                logoLink ? logoLink.href + (logoLink.queryParams || '') : '#'
+              }
               type="primary"
             />
             <StyledNav className="uk-navbar-nav">

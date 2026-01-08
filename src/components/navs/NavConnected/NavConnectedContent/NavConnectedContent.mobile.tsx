@@ -39,7 +39,7 @@ export const NavConnectedContentMobile = ({
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0];
+  const logoLink = links[user?.role][0] || null;
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -48,7 +48,7 @@ export const NavConnectedContentMobile = ({
         sticky
         left={
           <NavbarLogo
-            href={logoLink.href + (logoLink.queryParams || '')}
+            href={logoLink ? logoLink.href + (logoLink.queryParams || '') : '#'}
             type="secondary"
           />
         }

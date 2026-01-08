@@ -17,34 +17,35 @@ const candidateRolesParams = rolesToParams([UserRoles.CANDIDATE]);
 const coachRolesParams = rolesToParams([UserRoles.COACH]);
 const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
-export const renderLinks = (
-  user: User,
-  logout: () => void
-): {
-  links: { [K in UserRoles]: NavConnectedMainItem[] };
-  messaging: NavConnectedMainItem;
-  dropdown: NavConnectedMainItem[];
-} => {
-  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
+  const onboardingStatus = user.onboardingStatus;
+  let items: NavConnectedMainItem[] = [];
 
-  const candidateHeaderItems: NavConnectedMainItem[] = [
-    {
-      href: '/backoffice/dashboard',
-      name: 'Tableau de bord',
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
-    },
-    {
-      href: '/backoffice/parametres',
-      name: 'Mon profil',
-    },
-    {
-      href: '/backoffice/annuaire',
-      name: "Réseau d'entraide",
-    },
-    {
-      href: '/backoffice/events',
-      name: 'Événements',
-    },
+  if (onboardingStatus === 'completed') {
+    items = [
+      ...items,
+      {
+        href: '/backoffice/dashboard',
+        name: 'Tableau de bord',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
+      },
+      {
+        href: '/backoffice/parametres',
+        name: 'Mon profil',
+      },
+      {
+        href: '/backoffice/annuaire',
+        name: "Réseau d'entraide",
+      },
+      {
+        href: '/backoffice/events',
+        name: 'Événements',
+      },
+    ];
+  }
+
+  items = [
+    ...items,
     {
       href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
       name: 'Boîte à outils',
@@ -53,51 +54,77 @@ export const renderLinks = (
     },
   ];
 
-  const coachHeaderItems: NavConnectedMainItem[] = [
-    {
-      href: '/backoffice/dashboard',
-      name: 'Tableau de bord',
-      tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
-    },
-    {
-      href: '/backoffice/parametres',
-      name: 'Mon profil',
-    },
-    ...(isCompanyAdmin
-      ? [
-          {
-            href: '/backoffice/companies/parametres',
-            name: 'Mon entreprise',
-            tag: GA_TAGS.BACKOFFICE_COACH_HEADER_MY_COMPANY_CLIC,
-          },
-        ]
-      : []),
-    {
-      href: '/backoffice/annuaire',
-      name: "Réseau d'entraide",
-    },
-    {
-      href: '/backoffice/events',
-      name: 'Événements',
-    },
-    ...(isCompanyAdmin
-      ? [
-          {
-            href: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL || '',
-            name: 'Boîte à outils',
-            external: true,
-            tag: GA_TAGS.BACKOFFICE_COMPANY_HEADER_BAO_CLIC,
-          },
-        ]
-      : [
-          {
-            href: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL || '',
-            name: 'Boîte à outils',
-            external: true,
-            tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
-          },
-        ]),
-  ];
+  return items;
+};
+
+const renderCoachHeaderItems = (user: User): NavConnectedMainItem[] => {
+  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+  const onboardingStatus = user.onboardingStatus;
+
+  let items: NavConnectedMainItem[] = [];
+
+  if (onboardingStatus === 'completed') {
+    items = [
+      ...items,
+      {
+        href: '/backoffice/dashboard',
+        name: 'Tableau de bord',
+        tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
+      },
+      {
+        href: '/backoffice/parametres',
+        name: 'Mon profil',
+      },
+      ...(isCompanyAdmin
+        ? [
+            {
+              href: '/backoffice/companies/parametres',
+              name: 'Mon entreprise',
+              tag: GA_TAGS.BACKOFFICE_COACH_HEADER_MY_COMPANY_CLIC,
+            },
+          ]
+        : []),
+      {
+        href: '/backoffice/annuaire',
+        name: "Réseau d'entraide",
+      },
+      {
+        href: '/backoffice/events',
+        name: 'Événements',
+      },
+      ...(isCompanyAdmin
+        ? [
+            {
+              href: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL || '',
+              name: 'Boîte à outils',
+              external: true,
+              tag: GA_TAGS.BACKOFFICE_COMPANY_HEADER_BAO_CLIC,
+            },
+          ]
+        : [
+            {
+              href: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL || '',
+              name: 'Boîte à outils',
+              external: true,
+              tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
+            },
+          ]),
+    ];
+  }
+
+  return items;
+};
+
+export const renderLinks = (
+  user: User,
+  logout: () => void
+): {
+  links: { [K in UserRoles]: NavConnectedMainItem[] };
+  messaging: NavConnectedMainItem;
+  dropdown: NavConnectedMainItem[];
+} => {
+  const candidateHeaderItems = renderCandidateHeaderItems(user);
+  const coachHeaderItems = renderCoachHeaderItems(user);
 
   return {
     links: {
