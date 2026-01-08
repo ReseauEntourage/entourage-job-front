@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledHeaderBackOffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
-import { Grid } from 'src/components/utils';
+import { Text, Grid } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 
 interface HeaderBackofficeProps {
@@ -27,7 +27,7 @@ export const HeaderBackoffice = ({
       >
         <div>
           <H1 title={title} />
-          <p className="uk-text-lead">{description}</p>
+          <Text size="large">{description}</Text>
         </div>
         <div>{children}</div>
       </Grid>
