@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { STORAGE_KEYS } from '@/src/constants';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import {
@@ -61,6 +62,18 @@ function* fetchUserRequestedSaga() {
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function fetchUserSucceededSaga(action: ReturnType<typeof fetchUserSucceeded>) {
+  const { onboardingStatus } = action.payload;
+  try {
+    localStorage.setItem(
+      STORAGE_KEYS.ONBOARDING_COMPLETION_STATUS,
+      onboardingStatus
+    );
+  } catch (e) {
+    console.error('Failed to store onboarding status in localStorage', e);
   }
 }
 
@@ -258,6 +271,7 @@ export function* saga() {
   yield* takeLatest(authenticationActions.loginSucceeded, loginSucceededSaga);
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
+  yield* takeLatest(fetchUserSucceeded, fetchUserSucceededSaga);
   yield* takeLatest(fetchStaffContactRequested, fetchStaffContactRequestedSaga);
   yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);

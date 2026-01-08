@@ -5,10 +5,10 @@ import { ConseilsPosture } from 'src/components/partials/pages/Documents/Conseil
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 
 const ConseilsPosturePage = () => {
-  const { isCurrentRouteReady } = useAuthentication();
+  const { isAuthRouteReady } = useAuthentication();
   return (
     <Layout title="Conseils de posture - Entourage Pro">
-      {isCurrentRouteReady ? <ConseilsPosture /> : <LoadingScreen />}
+      {isAuthRouteReady ? <ConseilsPosture /> : <LoadingScreen />}
     </Layout>
   );
 };

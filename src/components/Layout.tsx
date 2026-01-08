@@ -27,8 +27,8 @@ export const Layout = withRouter<LayoutProps>(
   ({
     children,
     router,
-    title = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-    metaTitle = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    title = 'Entourage Pro - Partagez votre réseau avec ceux qui n’en ont pas',
+    metaTitle = 'Entourage Pro - Partagez votre réseau avec ceux qui n’en ont pas',
     metaImage = `${process.env.NEXT_PUBLIC_SERVER_URL}/static/img/entourage-pro-preview.jpg`,
     metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec Entourage Pro, faites don de votre visibilité. Un partage peut tout changer.",
     metaUrl = process.env.NEXT_PUBLIC_SERVER_URL,

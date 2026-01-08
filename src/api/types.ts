@@ -2,6 +2,7 @@ import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
+import { OnboardingStatus } from '../constants/onboarding';
 import {
   CompanyApproach,
   Contract as ContractValue,
@@ -314,6 +315,9 @@ export type User = {
   referredCandidates?: User[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
+
+  onboardingStatus: OnboardingStatus;
+  onboardingCompletedAt: string | null;
 };
 
 export type StaffContact = {

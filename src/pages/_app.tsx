@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 
+import { useOnboardingRedirect } from '../hooks/useOnboardingRedirect';
 import { ModalsListener } from 'src/components/modals/Modal';
 import { GA_TAGS } from 'src/constants/tags';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
@@ -43,8 +44,12 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
     }
   }, [currentUser]);
 
-  const { isCurrentRouteReady } = useAuthentication();
-  return isCurrentRouteReady ? <Component {...pageProps} /> : null;
+  const { isAuthRouteReady } = useAuthentication();
+  const { isOnboardingRouteReady } = useOnboardingRedirect({ currentUser });
+
+  return isAuthRouteReady && isOnboardingRouteReady ? (
+    <Component {...pageProps} />
+  ) : null;
 };
 
 const EntourageApp = (props: AppProps) => {
