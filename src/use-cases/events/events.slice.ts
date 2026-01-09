@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EventDirectoryFilters } from '@/src/components/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
+import { EventDirectoryFilters } from '@/src/features/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
 import { Event, EventWithParticipants } from 'src/api/types';
 import { EVENTS_LIMIT } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';

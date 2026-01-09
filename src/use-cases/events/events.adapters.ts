@@ -1,4 +1,4 @@
-import { EventDirectoryFilters } from '@/src/components/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
+import { EventDirectoryFilters } from '@/src/features/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
 import { Event, EventWithParticipants } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 

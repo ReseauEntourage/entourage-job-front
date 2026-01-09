@@ -1,6 +1,6 @@
 import React from 'react';
-import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { Dashboard } from 'src/components/backoffice/dashboard';
+import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
+import { Dashboard } from '@/src/features/backoffice/dashboard';
 
 const DashboardPage = () => {
   return (

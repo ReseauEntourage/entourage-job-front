@@ -1,7 +1,7 @@
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { Confirmation } from 'src/components/registration/Confirmation';
-import { Section } from 'src/components/utils';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
+import { Confirmation } from '@/src/features/registration/Confirmation';
 
 const InscriptionConfirmation = () => {
   return (

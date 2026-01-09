@@ -1,0 +1,47 @@
+import React from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
+import { Button, Card } from '@/src/components/ui';
+import { H6 } from '@/src/components/ui/Headings';
+import { Text } from '@/src/components/ui/Text';
+import {
+  StyledReferingButtonContainer,
+  StyledReferingContainer,
+  StyledReferingListItem,
+  StyledReferingListItemIcon,
+  StyledReferingListItemLabels,
+  StyledReferingPage,
+  StyledReferingSubtitle,
+} from '../Refering.styles';
+import { useConfirmation } from './useConfirmation';
+
+export function Confirmation() {
+  const { pageContent } = useConfirmation();
+
+  return (
+    <StyledReferingPage>
+      <StyledReferingContainer>
+        <SvgIcon name="EntourageProLogoPrimary" width={226} height={78} />
+
+        <Card title={pageContent.title}>
+          <StyledReferingSubtitle>
+            <Text weight="normal">{pageContent.subtitle}</Text>
+          </StyledReferingSubtitle>
+          {pageContent.bullets.map(({ icon, title, text }) => (
+            <StyledReferingListItem key={title}>
+              <StyledReferingListItemIcon>{icon}</StyledReferingListItemIcon>
+              <StyledReferingListItemLabels>
+                <H6 title={title} color="primaryBlue" />
+                <Text size="small">{text}</Text>
+              </StyledReferingListItemLabels>
+            </StyledReferingListItem>
+          ))}
+          <StyledReferingButtonContainer>
+            <Button variant="primary" rounded href="/login">
+              Retourner à mon tableau de bord
+            </Button>
+          </StyledReferingButtonContainer>
+        </Card>
+      </StyledReferingContainer>
+    </StyledReferingPage>
+  );
+}

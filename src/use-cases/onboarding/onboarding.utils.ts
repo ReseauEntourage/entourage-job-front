@@ -1,15 +1,9 @@
+import { UserRoles } from '@/src/constants/users';
 import {
   CandidateOnboardingStepContents,
   CoachOnboardingStepContents,
   CompanyOnboardingStepContents,
-} from '@/src/components/backoffice/onboarding/Onboarding/stepContent';
-import { UserRoles } from '@/src/constants/users';
-import {
-  Nudge,
-  User,
-  UserProfile,
-  UserProfileSectorOccupation,
-} from 'src/api/types';
+} from '@/src/features/backoffice/oldOnboarding/Onboarding/stepContent';
 import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
@@ -17,7 +11,13 @@ import {
   OnboardingStep,
   OnboardingStepContent,
   OnboardingStepData,
-} from 'src/components/backoffice/onboarding/Onboarding.types';
+} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
+import {
+  Nudge,
+  User,
+  UserProfile,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 
 export const flattenOnboardingDataByFlow = (
   data: OnboardingStepData,

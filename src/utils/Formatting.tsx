@@ -1,10 +1,10 @@
 import moment from 'moment/moment';
 import React from 'react';
+import { formReferingProfessionalInformation } from '@/src/features/backoffice/referer/forms/formReferingProfessionalInformation';
+import { formRegistrationCandidateProfessionalInformation } from '@/src/features/registration/forms/formRegistrationCandidateProfessionalInformation';
 import { UserProfileSectorOccupation } from 'src/api/types';
-import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
-import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
-import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
 import { CONTRACTS } from 'src/constants';
+import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
 import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {

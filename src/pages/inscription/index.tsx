@@ -1,8 +1,8 @@
 import React from 'react';
-import { Registration } from '@/src/components/registration/registration';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
+import { Registration } from '@/src/features/registration/registration';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
-import { Layout } from 'src/components/Layout';
-import { Section } from 'src/components/utils';
 
 const Inscription = () => {
   useUtm();

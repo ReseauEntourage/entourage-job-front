@@ -1,0 +1,46 @@
+import React, { useCallback, useMemo } from 'react';
+import { useOnOrganizationFormSubmit } from '@/src/features/backoffice/admin/useOnOrganizationFormSubmit';
+import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
+import { Api } from 'src/api';
+import { Organization, OrganizationDto } from 'src/api/types';
+import { Actions } from 'src/constants/utils';
+import { formAddOrganization } from 'src/features/forms/schemas/formAddOrganization';
+
+interface EditOrganizationModalProps {
+  organization: Organization;
+  refreshOrganizations: () => void;
+}
+export function EditOrganizationModal({
+  organization,
+  refreshOrganizations,
+}: EditOrganizationModalProps) {
+  const { onSubmit } = useOnOrganizationFormSubmit(
+    async (organizationToUpdate: OrganizationDto) => {
+      return Api.putOrganization(organization.id, organizationToUpdate);
+    },
+    Actions.UPDATE
+  );
+
+  const handleMemberUpdateSubmit = useCallback(
+    async (fields, closeModal) => {
+      await onSubmit(fields, closeModal);
+      await refreshOrganizations();
+    },
+    [onSubmit, refreshOrganizations]
+  );
+
+  const updateUserModalProps = useMemo(() => {
+    return {
+      formId: formAddOrganization.id,
+      formSchema: formAddOrganization,
+      title: "Edition d'une structure partenaire",
+      description:
+        'Merci de modifier les informations que vous souhaitez concernant la structure.',
+      submitText: 'Modifier la structure',
+      onSubmit: handleMemberUpdateSubmit,
+      defaultValues: { ...organization, ...organization.organizationReferent },
+    };
+  }, [handleMemberUpdateSubmit, organization]);
+
+  return <ModalEdit {...updateUserModalProps} />;
+}

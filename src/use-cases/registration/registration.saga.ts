@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Nudge } from '@/src/api/types';
-import { UserRoleByFlow } from '@/src/components/registration/registration.config';
-import { getUtmFromLocalStorage } from '@/src/components/registration/registration.utils';
+import { UserRoleByFlow } from '@/src/features/registration/registration.config';
+import { getUtmFromLocalStorage } from '@/src/features/registration/registration.utils';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';

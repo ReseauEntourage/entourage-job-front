@@ -4,7 +4,7 @@ import {
   OnboardingErrorMessages,
   OnboardingFormData,
   OnboardingStepContent,
-} from 'src/components/backoffice/onboarding/Onboarding.types';
+} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
 import { assertIsDefined } from 'src/utils/asserts';
 import { sendStepDataOnboardingAdapter } from './onboarding.adapters';
 import { RootState } from './onboarding.slice';

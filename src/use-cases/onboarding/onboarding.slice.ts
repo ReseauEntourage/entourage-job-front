@@ -5,7 +5,7 @@ import {
   OnboardingFormData,
   OnboardingStep,
   OnboardingStepData,
-} from 'src/components/backoffice/onboarding/Onboarding.types';
+} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {

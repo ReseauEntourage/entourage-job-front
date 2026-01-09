@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
+import { Grid, Section } from '@/src/components/ui';
+import { BackLink } from '@/src/components/ui/BackLink';
+import { MemberDetails } from '@/src/features/backoffice/admin/members/MemberDetails';
 import { Api } from 'src/api';
 import { User as UserType } from 'src/api/types';
-import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
-import { Grid, Section } from 'src/components/utils';
-import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useTab } from 'src/hooks/queryParams/useTab';

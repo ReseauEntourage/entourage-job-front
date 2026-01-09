@@ -1,6 +1,6 @@
 import React from 'react';
-import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { Parameters } from 'src/components/backoffice/parameters/Parameters';
+import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
+import { Parameters } from '@/src/features/backoffice/parameters/Parameters';
 
 const Parametres = () => {
   return (

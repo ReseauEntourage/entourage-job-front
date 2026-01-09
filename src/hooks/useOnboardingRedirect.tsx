@@ -10,12 +10,16 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
   const onboardingStatus = currentUser?.onboardingStatus;
   const isUserAuthenticated = !!currentUser;
   const isInBackoffice = asPath.startsWith('/backoffice');
+  // On considère toute page /backoffice/onboarding ou ses sous-pages
+  const isOnOnboardingPage =
+    asPath === '/backoffice/onboarding' ||
+    asPath.startsWith('/backoffice/onboarding/');
 
   useEffect(() => {
     const isOnboardingRequired =
       isUserAuthenticated &&
       onboardingStatus !== OnboardingStatus.COMPLETED &&
-      asPath !== '/backoffice/onboarding' &&
+      !isOnOnboardingPage &&
       lastRedirectionPath !== '/backoffice/onboarding' &&
       isInBackoffice;
 
@@ -30,6 +34,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     lastRedirectionPath,
     replace,
     isInBackoffice,
+    isOnOnboardingPage,
   ]);
 
   // Si la route ne nécessite pas d'authentification (pas de currentUser), on considère la route comme prête
@@ -37,7 +42,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     !isUserAuthenticated ||
     !isInBackoffice ||
     onboardingStatus === OnboardingStatus.COMPLETED ||
-    asPath === '/backoffice/onboarding';
+    isOnOnboardingPage;
 
   return { isOnboardingRouteReady };
 }

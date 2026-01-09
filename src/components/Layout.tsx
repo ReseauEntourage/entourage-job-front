@@ -3,11 +3,11 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import { Footer } from 'src/components/partials/Footer';
-import { NotificationsContainer } from 'src/components/utils/Notification';
-import { addPrefix } from 'src/utils';
-import { NavConnected } from './navs/NavConnected';
-import { NavPublic } from './navs/NavPublic';
+import { NotificationsContainer } from '@/src/components/ui/Notification';
+import { NavConnected } from '@/src/features/navs/NavConnected';
+import { NavPublic } from '@/src/features/navs/NavPublic';
+import { Footer } from '@/src/features/partials/Footer';
+import { addPrefix } from '@/src/utils';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;

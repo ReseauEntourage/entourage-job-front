@@ -1,7 +1,7 @@
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { ConseilsPosture } from 'src/components/partials/pages/Documents/ConseilsPosture';
+import { Layout } from '@/src/components/layouts/Layout';
+import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
+import { ConseilsPosture } from '@/src/features/partials/pages/Documents/ConseilsPosture';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 
 const ConseilsPosturePage = () => {

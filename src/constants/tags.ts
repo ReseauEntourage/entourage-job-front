@@ -1,4 +1,4 @@
-import { RegistrationFlow } from '../components/registration/flows/flows.types';
+import { RegistrationFlow } from '../features/registration/flows/flows.types';
 
 export const GA_TAGS = {
   HOME_CV_CLIC: {

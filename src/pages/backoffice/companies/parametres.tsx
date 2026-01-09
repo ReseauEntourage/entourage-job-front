@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { CompanyParameters } from '@/src/components/backoffice/companies/CompanyParameters/CompanyParameters';
+import { CompanyParameters } from '@/src/features/backoffice/companies/CompanyParameters/CompanyParameters';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 
 const CompanyParametresPage = () => {

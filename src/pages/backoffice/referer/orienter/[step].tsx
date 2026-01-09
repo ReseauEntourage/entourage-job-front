@@ -1,8 +1,8 @@
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { Refering } from 'src/components/backoffice/referer/Refering/Refering';
-import { useReferingRedirection } from 'src/components/backoffice/referer/Refering/useReferingRedirection';
+import { Layout } from '@/src/components/layouts/Layout';
+import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
+import { Refering } from '@/src/features/backoffice/referer/Refering/Refering';
+import { useReferingRedirection } from '@/src/features/backoffice/referer/Refering/useReferingRedirection';
 
 const Orienter = () => {
   const { isLoading } = useReferingRedirection();

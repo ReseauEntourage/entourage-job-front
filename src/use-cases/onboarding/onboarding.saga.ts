@@ -1,14 +1,14 @@
 import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
 import { CompanyGoal } from '@/src/constants/company';
-import { currentUserActions, selectAuthenticatedUser } from '../current-user';
-import { Api } from 'src/api';
-import { UpdateCompanyDto } from 'src/api/types';
 import {
   CandidateCoachStepData,
   CoachStepData,
   CompanyStepData,
   OnboardingFlow,
-} from 'src/components/backoffice/onboarding/Onboarding.types';
+} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
+import { currentUserActions, selectAuthenticatedUser } from '../current-user';
+import { Api } from 'src/api';
+import { UpdateCompanyDto } from 'src/api/types';
 import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
