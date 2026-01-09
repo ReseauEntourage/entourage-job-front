@@ -1,15 +1,8 @@
 import { useMemo } from 'react';
 import { Text, LucidIcon, Button } from '@/src/components/ui';
 import { H4, H5 } from '@/src/components/ui/Headings';
+import { ListGroupTimeLineVertical } from '@/src/components/ui/ListGroup/ListGroupTimeLineVertical';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import {
-  StyledStepItem,
-  StyledStepItemCounterContainer,
-  StyledStepsContainer,
-  StyledStepItemCounterLinker,
-  StyledStepItemCounter,
-  StyledStepItemContent,
-} from './stepsSummary.styles';
 
 export const StepsSummary = () => {
   const user = useAuthenticatedUser();
@@ -76,29 +69,22 @@ export const StepsSummary = () => {
         minutes + 1 heure de webinaire
       </Text>
       <br />
-      <StyledStepsContainer>
+      <ListGroupTimeLineVertical.Container>
         {steps.map((step, index) => (
-          <StyledStepItem key={index}>
-            {/* Counter */}
-            <StyledStepItemCounterContainer>
-              <StyledStepItemCounter>
-                <Text color="white" weight="semibold" size={20}>
-                  {index + 1}
-                </Text>
-              </StyledStepItemCounter>
-              {index !== steps.length - 1 && <StyledStepItemCounterLinker />}
-            </StyledStepItemCounterContainer>
-            <StyledStepItemContent>
-              <H5 title={step.title} noMarginBottom />
-              <Text>{step.description}</Text>
-              <Text>
-                <LucidIcon name="Clock" size={16} /> Durée estimée :{' '}
-                {step.duration}
-              </Text>
-            </StyledStepItemContent>
-          </StyledStepItem>
+          <ListGroupTimeLineVertical.Item
+            key={index}
+            number={index + 1}
+            isLast={index === steps.length - 1}
+          >
+            <H5 title={step.title} noMarginBottom />
+            <Text>{step.description}</Text>
+            <Text>
+              <LucidIcon name="Clock" size={16} /> Durée estimée :{' '}
+              {step.duration}
+            </Text>
+          </ListGroupTimeLineVertical.Item>
         ))}
-      </StyledStepsContainer>
+      </ListGroupTimeLineVertical.Container>
       <Button>Commencer le parcours</Button>
     </>
   );
