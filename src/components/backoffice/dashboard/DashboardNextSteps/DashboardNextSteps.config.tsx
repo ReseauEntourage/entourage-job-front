@@ -13,7 +13,7 @@ const webinarStep = {
   content: 'Besoin d’en savoir plus sur la plateforme Entourage Pro ?',
   cta: {
     label: "S'inscrire",
-    href: process.env.NEXT_PUBLIC_WEBINAR_URL,
+    href: `/backoffice/events?eventTypes=WELCOME_SESSION`,
   },
 };
 
