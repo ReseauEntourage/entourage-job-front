@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledContainer } from './ListGroupTimeLineVertical.styles';
+import { StyledContainer } from './TimeLineHorizontal.styles';
 
 export interface ContainerProps {
   children: React.ReactNode;

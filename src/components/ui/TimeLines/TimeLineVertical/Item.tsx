@@ -6,7 +6,7 @@ import {
   StyledItemCounter,
   StyledItemCounterContainer,
   StyledItemCounterLinker,
-} from './ListGroupTimeLineVertical.styles';
+} from './TimeLineVertical.styles';
 
 export interface ItemProps {
   number: number;

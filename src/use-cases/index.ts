@@ -4,7 +4,8 @@ import { currentUserConfig } from './current-user';
 import { eventsConfig } from './events';
 import { messagingConfig } from './messaging';
 import { notificationsConfig } from './notifications';
-import { onboardingConfig } from './onboarding';
+import { onboardingConfig as onboardingNewConfig } from './onboarding';
+import { onboardingConfig } from './onboardingOld';
 import { profileCompletionConfig } from './profile-completion';
 import { profilesConfig } from './profiles';
 import { recruitementAlertsConfig } from './recruitement-alerts';
@@ -25,4 +26,5 @@ export const useCasesConfig: UseCaseConfigType = {
   profileCompletionConfig,
   companyConfig,
   eventsConfig,
+  onboardingNewConfig,
 };

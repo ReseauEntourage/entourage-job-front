@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text } from '@/src/components/ui';
-import { selectOnboardingCurrentStep } from '@/src/use-cases/onboarding';
+import { selectOnboardingCurrentStep } from '@/src/use-cases/onboardingOld';
 import {
   profileCompletionActions,
   selectProfileCompletionRate,
