@@ -73,7 +73,7 @@ export const EVENT_IMAGES: {
   [EventType.PAPOTAGES_PRO]: '/static/img/events/papotages_pro.jpg',
   [EventType.PHOTO_SHOOTING]: '/static/img/events/photo_shooting.jpg',
   [EventType.APERO_COACH]: '/static/img/events/apero_coach.jpg',
-  [EventType.WORKSHOP]: '/static/img/events/apero_coach.jpg',
+  [EventType.WORKSHOP]: '/static/img/events/workshop.jpg',
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
 
