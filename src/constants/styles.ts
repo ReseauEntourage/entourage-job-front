@@ -1,3 +1,5 @@
+import { AlertVariant } from '../components/ui/Alert/Alert.types';
+
 export const BREAKPOINTS = {
   desktop: 960,
 };
@@ -81,25 +83,30 @@ export const STATUS_COLORS = {
 };
 
 export const ALERT_COLORS = {
-  info: {
+  [AlertVariant.Info]: {
     background: COLORS.hoverBlue,
     text: COLORS.black,
+    border: COLORS.primaryBlue,
   },
-  lightGray: {
+  [AlertVariant.LightGray]: {
     background: COLORS.lightGray,
     text: COLORS.black,
+    border: COLORS.gray,
   },
-  darkBlue: {
+  [AlertVariant.DarkBlue]: {
     background: COLORS.darkBlue,
     text: COLORS.white,
+    border: COLORS.blue,
   },
-  lightBlue: {
+  [AlertVariant.LightBlue]: {
     background: COLORS.hoverBlue,
-    text: COLORS.white,
+    text: COLORS.black,
+    border: COLORS.primaryBlue,
   },
-  error: {
+  [AlertVariant.Error]: {
     background: COLORS.lightRed,
     text: COLORS.white,
+    border: COLORS.red,
   },
 };
 

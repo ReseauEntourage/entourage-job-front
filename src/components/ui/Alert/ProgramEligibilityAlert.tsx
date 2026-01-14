@@ -1,11 +1,12 @@
 import React from 'react';
 import { Alert, Text } from '@/src/components/ui';
+import { AlertVariant } from './Alert.types';
 import { StyledProgramEligibilityAlertContainer } from './ProgramEligibilityAlert.styles';
 
 export const ProgramEligibilityAlert = () => {
   return (
     <StyledProgramEligibilityAlertContainer>
-      <Alert variant="lightBlue">
+      <Alert variant={AlertVariant.LightBlue}>
         <Text weight="bold">Rappel des critères</Text>
         <br />
         <Text color="black">

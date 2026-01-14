@@ -4,7 +4,7 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { H3, H5 } from '@/src/components/ui/Headings';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
-import { Tag } from '@/src/components/ui/Tag';
+import { Tag, TagVariant } from '@/src/components/ui/Tag';
 import { Text } from '@/src/components/ui/Text';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { Button } from '../../../Button';
@@ -157,7 +157,7 @@ export function ProfileCard({
           )}
         </StyledProfileCardInfoContainer>
         <StyledProfileCardRole>
-          <Tag content={labels.role} style="secondary" />
+          <Tag variant={TagVariant.Secondary}>{labels.role}</Tag>
         </StyledProfileCardRole>
       </StyledProfileCardPictureContainer>
       <StyledProfileCardContent>
@@ -199,11 +199,11 @@ export function ProfileCard({
             {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
               <>
                 {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
-                  return <Tag key={id} content={name} />;
+                  return <Tag key={id}>{name}</Tag>;
                 })}
                 {role !== UserRoles.CANDIDATE &&
                   sortedBusinessSectors.length > 2 && (
-                    <Tag content={`+${sortedBusinessSectors.length - 2}`} />
+                    <Tag>{`+${sortedBusinessSectors.length - 2}`}</Tag>
                   )}
               </>
             ) : (

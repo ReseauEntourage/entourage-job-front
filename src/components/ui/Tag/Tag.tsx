@@ -3,22 +3,37 @@ import { ButtonIcon } from '../Button';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledTag } from './Tag.styles';
 
+export enum TagVariant {
+  Default = 'default',
+  Secondary = 'secondary',
+  HoverBlue = 'hoverBlue',
+  DarkBlue = 'darkBlue',
+  PrimaryBlue = 'primaryBlue',
+  ExtraDarkBlue = 'extraDarkBlue',
+}
+
+export enum TagSize {
+  Default = 'default',
+  Small = 'small',
+  Large = 'large',
+}
+
 export interface TagProps {
-  content: React.ReactNode;
-  style?: 'default' | 'secondary' | 'hoverBlue';
-  size?: 'default' | 'small';
+  children: React.ReactNode;
+  variant?: TagVariant;
+  size?: TagSize;
   removeCallback?: () => void;
 }
 
 export const Tag = ({
-  content,
-  style = 'default',
-  size = 'default',
+  children,
+  variant = TagVariant.Default,
+  size = TagSize.Default,
   removeCallback,
 }: TagProps) => {
   return (
-    <StyledTag size={size} customStyle={style}>
-      {content}
+    <StyledTag size={size} variant={variant}>
+      {children}
       {removeCallback && (
         <ButtonIcon
           icon={<LucidIcon name="X" size={13} color="black" />}

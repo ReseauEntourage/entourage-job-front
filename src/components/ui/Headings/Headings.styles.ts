@@ -16,6 +16,7 @@ export const StyledH1 = styled.h1<StyledHeadingProps>`
     return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
+  margin-top: 0;
   margin-bottom: ${(props) => (props.noMarginBottom ? '0' : '5px')};
 `;
 
@@ -36,6 +37,7 @@ export const StyledH2 = styled.h2<StyledHeadingProps>`
   span.orange {
     color: ${COLORS.primaryBlue};
   }
+  margin-top: 0;
   margin-bottom: ${(props) => (props.noMarginBottom ? '0' : '5px')};
 `;
 
@@ -54,6 +56,7 @@ export const StyledH3 = styled.h3<StyledHeadingProps>`
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-size: ${(props) => (props.mobile ? '18px' : '24px')};
+  margin-top: 0;
   margin-bottom: ${(props) => (props.noMarginBottom ? '0' : '5px')};
 `;
 
@@ -71,6 +74,7 @@ export const StyledH4 = styled.h4<StyledHeadingProps>`
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-size: ${(props) => (props.mobile ? '16px' : '20px')};
+  margin-top: 0;
   margin-bottom: ${(props) => (props.noMarginBottom ? '0' : '5px')};
 `;
 
@@ -89,6 +93,7 @@ export const StyledH5 = styled.h5<StyledHeadingProps>`
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-size: ${(props) => (props.mobile ? '14px' : '16px')};
+  margin-top: 0;
   margin-bottom: ${(props) => (props.noMarginBottom ? '0' : '5px')};
 `;
 
@@ -106,5 +111,6 @@ export const StyledH6 = styled.h6<StyledHeadingProps>`
     return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
+  margin-top: 0;
   margin-bottom: ${(props) => (props.noMarginBottom ? '0' : '5px')};
 `;

@@ -7,7 +7,7 @@ import {
   OffCanvas,
   OffCanvasRef,
 } from '@/src/components/ui/OffCanvas/OffCanvas';
-import { Tag } from '@/src/components/ui/Tag';
+import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
 import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import { UserRoles } from 'src/constants/users';
@@ -122,10 +122,11 @@ export const NavConnectedContentMobile = ({
                       <div>
                         &nbsp;
                         <Tag
-                          size="small"
-                          style="secondary"
-                          content={badges[badge]}
-                        />
+                          size={TagSize.Small}
+                          variant={TagVariant.Secondary}
+                        >
+                          {badges[badge]}
+                        </Tag>
                       </div>
                     )}
                     {subMenu && subMenu.length > 0 && (

@@ -95,10 +95,10 @@ export const CompanyCard = ({
                 {businessSectors
                   .slice(0, 2)
                   .map(({ id: sectorId, name: sectorName }) => {
-                    return <Tag key={sectorId} content={sectorName} />;
+                    return <Tag key={sectorId}>{sectorName}</Tag>;
                   })}
                 {businessSectors.length > 2 && (
-                  <Tag content={`+${businessSectors.length - 2}`} />
+                  <Tag>+${businessSectors.length - 2}</Tag>
                 )}
               </StyledCompanyCardSectorsContainer>
             </StyledCompanyCardSectorsSectionContainer>

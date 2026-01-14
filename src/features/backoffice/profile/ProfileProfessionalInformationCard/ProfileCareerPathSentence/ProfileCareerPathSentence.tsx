@@ -88,7 +88,7 @@ export const ProfileCareerPathSentence = ({
                 {asSimpleSentence ? (
                   <span>{sectorOccupation.businessSector?.name}</span>
                 ) : (
-                  <Tag content={sectorOccupation.businessSector?.name} />
+                  <Tag>{sectorOccupation.businessSector?.name}</Tag>
                 )}
               </span>
             ))}
@@ -114,7 +114,7 @@ export const ProfileCareerPathSentence = ({
         {asSimpleSentence ? (
           <span>{sectorOccupations[0].businessSector?.name}</span>
         ) : (
-          <Tag content={sectorOccupations[0].businessSector?.name} />
+          <Tag>{sectorOccupations[0].businessSector?.name}</Tag>
         )}
         {getOccupationIfExists(0, asSimpleSentence)}
         {hasSecondPart && hasSameBusinessSector && (
@@ -149,7 +149,7 @@ export const ProfileCareerPathSentence = ({
             {asSimpleSentence ? (
               <span>{sectorOccupations[1].businessSector?.name}</span>
             ) : (
-              <Tag content={sectorOccupations[1].businessSector?.name} />
+              <Tag>{sectorOccupations[1].businessSector?.name}</Tag>
             )}
             {getOccupationIfExists(1, asSimpleSentence)}
           </>

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Tag } from './Tag';
+import { Tag, TagSize, TagVariant } from './Tag';
 
 const meta = {
   title: 'Tag',
@@ -13,7 +13,7 @@ const meta = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['default', 'small'],
+      options: Object.values(TagSize),
       defaultValue: 'default',
     },
   },
@@ -29,13 +29,14 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultTag = {
   args: {
-    content: 'Hello',
+    variant: TagVariant.Default,
+    children: 'Default',
   },
 } satisfies Story;
 
 export const SecondaryTag = {
   args: {
-    content: 'Hello',
-    style: 'secondary',
+    variant: TagVariant.Secondary,
+    children: 'Secondary',
   },
 } satisfies Story;

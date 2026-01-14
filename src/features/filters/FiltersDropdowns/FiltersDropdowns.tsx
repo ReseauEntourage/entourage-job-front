@@ -1,7 +1,13 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { Button, LucidIcon, Tag } from '@/src/components/ui';
+import {
+  Button,
+  LucidIcon,
+  Tag,
+  TagSize,
+  TagVariant,
+} from '@/src/components/ui';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledDropdownContainer } from './FiltersDropdowns.styles';
@@ -133,10 +139,11 @@ export const FiltersDropdowns = ({
                         <div>
                           &nbsp;
                           <Tag
-                            size="small"
-                            style="secondary"
-                            content={filters[key].length}
-                          />
+                            size={TagSize.Small}
+                            variant={TagVariant.Secondary}
+                          >
+                            {filters[key].length}
+                          </Tag>
                           &nbsp;
                         </div>
                       )}

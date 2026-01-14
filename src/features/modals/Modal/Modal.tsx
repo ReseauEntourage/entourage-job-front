@@ -97,7 +97,7 @@ const CustomModal = ({
       },
       content: {
         width,
-        padding: '50px 0',
+        padding: '25px 0',
         display: 'flex',
         flexDirection: 'column',
         flexShrink: 0,
@@ -108,7 +108,7 @@ const CustomModal = ({
         bottom: 'auto',
         left: 'auto',
         right: 'auto',
-        borderRadius: 5,
+        borderRadius: 20,
         border: 'none',
         maxHeight: '90vh',
         ...(isMobile ? mobileStyle.content : {}),

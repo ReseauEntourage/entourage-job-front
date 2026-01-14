@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Button, Text } from '@/src/components/ui';
+import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -65,7 +66,7 @@ export const AlertIA = () => {
     }
     return (
       <Alert
-        variant="darkBlue"
+        variant={AlertVariant.DarkBlue}
         icon={<LucidIcon name="WandSparkles" color="white" />}
         clickable
         onClick={handleGenerateProfile}
@@ -100,7 +101,7 @@ export const AlertIA = () => {
 
   return (
     <Alert
-      variant="darkBlue"
+      variant={AlertVariant.DarkBlue}
       icon={<LucidIcon name="WandSparkles" size={32} color="white" />}
       clickable
       onClick={handleUploadCv}

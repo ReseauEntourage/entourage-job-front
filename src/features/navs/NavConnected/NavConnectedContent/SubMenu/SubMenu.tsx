@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { SimpleLink } from '@/src/components/ui';
-import { Tag } from '@/src/components/ui/Tag';
+import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
 import {
   NavConnectedItem,
   NotifBadges,
@@ -52,7 +52,9 @@ export const SubMenu = ({
               {badges[badge] > 0 && (
                 <div>
                   &nbsp;
-                  <Tag size="small" style="secondary" content={badges[badge]} />
+                  <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                    {badges[badge]}
+                  </Tag>
                 </div>
               )}
             </SimpleLink>

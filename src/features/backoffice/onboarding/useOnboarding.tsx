@@ -5,7 +5,7 @@ import { Api } from '@/src/api';
 import { Text } from '@/src/components/ui';
 import { EventType } from '@/src/constants/events';
 import { OnboardingStatus } from '@/src/constants/onboarding';
-import { OnboardingWebinar } from '@/src/features/backoffice/onboarding/steps/step-onboarding/OnboardingWebinar';
+import { OnboardingWebinar } from '@/src/features/backoffice/onboarding/steps/step-webinar/OnboardingWebinar';
 
 import type { AppDispatch } from '@/src/store/store';
 import { currentUserActions } from '@/src/use-cases/current-user';
@@ -18,9 +18,11 @@ import {
   selectIsLoading,
   selectWebinarSfId,
 } from '../../../use-cases/onboarding/onboarding.selectors';
+import { openModal } from '../../modals/Modal/openModal';
 import { StyledOnboardingStepContainer } from './onboarding.styles';
 import { OnboardingStep } from './onboarding.types';
 import { OnboardingElearning } from './steps/step-elearning/OnboardingElearning';
+import { ConfirmModalStep as OnboardingWebinarConfirmModalStep } from './steps/step-webinar/ConfirmModalStep';
 
 /**
  * useOnboarding - Hook to manage onboarding steps and state.
@@ -115,6 +117,7 @@ export const useOnboarding = () => {
                   isParticipating: true,
                 })
               ).unwrap();
+              openModal(<OnboardingWebinarConfirmModalStep />);
               return true;
             } catch (e) {
               console.error(e);
@@ -219,6 +222,16 @@ export const useOnboarding = () => {
 
   const nextStepAllowed = true; // Placeholder for actual logic to determine if the next step is allowed
 
+  const nextOnboardingStep = useMemo(() => {
+    if (currentOnboardingIdx === null) {
+      return null;
+    }
+    if (currentOnboardingIdx + 1 >= onboardingSteps.length) {
+      return null;
+    }
+    return onboardingSteps[currentOnboardingIdx + 1];
+  }, [onboardingSteps, currentOnboardingIdx]);
+
   /**
    * onOnboardingComplete - Callback when onboarding is complete.
    */
@@ -276,6 +289,7 @@ export const useOnboarding = () => {
     currentOnboardingStep,
     currentOnboardingStepContent,
     nextStepAllowed,
+    nextOnboardingStep,
     incrementStep,
   };
 };

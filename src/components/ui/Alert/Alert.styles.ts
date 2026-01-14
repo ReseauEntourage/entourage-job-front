@@ -11,6 +11,10 @@ export const StyledAlert = styled.div<{
   display: ${(props) => {
     return props.visible ? 'flex' : 'none';
   }};
+  border: 1px solid
+    ${(props) => {
+      return ALERT_COLORS[props.variant]?.border || COLORS.transparent;
+    }};
   align-items: center;
   gap: 10px;
   border-radius: ${(props) => {
@@ -20,9 +24,9 @@ export const StyledAlert = styled.div<{
     return ALERT_COLORS[props.variant]?.background || COLORS.white;
   }};
   color: ${(props) => {
-    return ALERT_COLORS[props.variant]?.text || COLORS.white;
+    return ALERT_COLORS[props.variant]?.text || COLORS.black;
   }};
-  color: ${ALERT_COLORS.info.text};
+  color: ${(props) => ALERT_COLORS[props.variant]?.text};
   padding: 10px 20px;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {

@@ -13,7 +13,7 @@ import { DropdownToggle } from '@/src/components/ui/Dropdown/DropdownToggle';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile';
 import { StyledNav } from '@/src/components/ui/Navbar/Nav/Nav.styles';
-import { Tag } from '@/src/components/ui/Tag';
+import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
 import { COLORS } from '@/src/constants/styles';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import { UserRoles } from 'src/constants/users';
@@ -174,10 +174,11 @@ export const NavConnectedContentDesktop = ({
                           <div>
                             &nbsp;
                             <Tag
-                              size="small"
-                              style="secondary"
-                              content={badges[badge]}
-                            />
+                              size={TagSize.Small}
+                              variant={TagVariant.Secondary}
+                            >
+                              {badges[badge]}
+                            </Tag>
                           </div>
                         )}
                       </SimpleLink>

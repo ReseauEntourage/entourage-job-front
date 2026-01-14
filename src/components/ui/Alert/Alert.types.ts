@@ -1,11 +1,12 @@
 import React from 'react';
 
-export type AlertVariant =
-  | 'info'
-  | 'lightGray'
-  | 'darkBlue'
-  | 'lightBlue'
-  | 'error';
+export enum AlertVariant {
+  Info = 'info',
+  LightGray = 'lightGray',
+  DarkBlue = 'darkBlue',
+  LightBlue = 'lightBlue',
+  Error = 'error',
+}
 
 export interface AlertProps {
   children: React.ReactNode;

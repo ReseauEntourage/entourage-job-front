@@ -6,6 +6,8 @@ import {
   Tag,
   ImgCompanyProfile,
   Button,
+  TagSize,
+  TagVariant,
 } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { useIsMobile } from '@/src/hooks/utils';
@@ -82,11 +84,9 @@ export const HeaderCompany = ({
                   <Text size={isMobile ? 20 : 36} weight="semibold">
                     {name}
                   </Text>
-                  <Tag
-                    content="Entreprise partenaire"
-                    size="small"
-                    style="secondary"
-                  />
+                  <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                    Entreprise partenaire
+                  </Tag>
                 </StyledHeaderNameAndRole>
               </StyledHeaderCompanyNameContainer>
               <Text size={isMobile ? 12 : 16}>

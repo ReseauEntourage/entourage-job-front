@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
+import { TagSize, TagVariant } from './Tag';
 
 const styleVariants = {
   default: css`
@@ -17,6 +18,21 @@ const styleVariants = {
     border-color: ${COLORS.hoverBlue};
     color: ${COLORS.primaryBlue};
   `,
+  darkBlue: css`
+    background-color: ${COLORS.darkBlue};
+    border-color: ${COLORS.darkBlue};
+    color: ${COLORS.white};
+  `,
+  extraDarkBlue: css`
+    background-color: ${COLORS.extraDarkBlue};
+    border-color: ${COLORS.extraDarkBlue};
+    color: ${COLORS.white};
+  `,
+  primaryBlue: css`
+    background-color: ${COLORS.primaryBlue};
+    border-color: ${COLORS.primaryBlue};
+    color: ${COLORS.white};
+  `,
 };
 
 const sizeVariants = {
@@ -28,9 +44,16 @@ const sizeVariants = {
     padding: 0 8px;
     font-size: 12px;
   `,
+  large: css`
+    padding: 6px 14px;
+    font-size: 16px;
+  `,
 };
 
-export const StyledTag = styled.div`
+export const StyledTag = styled.div<{
+  size: TagSize;
+  variant: TagVariant;
+}>`
   display: inline-flex;
   gap: 5px;
   padding: 3px 10px;
@@ -38,6 +61,6 @@ export const StyledTag = styled.div`
   border: 1px solid;
   font-weight: 400;
   overflow-wrap: normal;
-  ${({ customStyle }) => styleVariants[customStyle]}
+  ${({ variant }) => styleVariants[variant]}
   ${({ size }) => sizeVariants[size]}
 `;

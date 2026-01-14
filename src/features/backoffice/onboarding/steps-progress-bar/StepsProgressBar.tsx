@@ -4,7 +4,7 @@ import { useOnboarding } from '@/src/features/backoffice/onboarding/useOnboardin
 export const StepsProgressBar = () => {
   const { onboardingSteps, currentOnboardingIdx } = useOnboarding();
 
-  if (!currentOnboardingIdx) {
+  if (currentOnboardingIdx === null) {
     return null;
   }
 

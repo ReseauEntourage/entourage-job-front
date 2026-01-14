@@ -1,5 +1,6 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
+import { ALERT_COLORS } from '@/src/constants/styles';
 import { ButtonIcon } from '../Button';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledAlert, StyledAlertContainer } from './Alert.styles';
@@ -20,7 +21,7 @@ const DefaultAlertIcon = ({ variant }: AlertIconProps) => {
 export const Alert = ({
   children,
   rounded = true,
-  variant = 'info',
+  variant = AlertVariant.Info,
   closable = false,
   visible = true,
   onClose = () => {},
@@ -55,11 +56,10 @@ export const Alert = ({
             icon={
               <LucidIcon
                 name="X"
-                {...(variant === 'darkBlue'
-                  ? { color: 'white', stroke: 'bold' }
-                  : {})}
+                color={ALERT_COLORS[variant]?.text || 'black'}
               />
             }
+            color={ALERT_COLORS[variant]?.text || 'black'}
             onClick={onClose}
           />
         </div>

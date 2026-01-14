@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { BusinessSector, Occupation } from '@/src/api/types';
-import { LegacyImg, Tag } from '@/src/components/ui';
+import { LegacyImg, Tag, TagSize, TagVariant } from '@/src/components/ui';
 import DefaultProfilePic from 'public/static/img/arthur.jpg';
 
 import { GA_TAGS } from 'src/constants/tags';
@@ -88,20 +88,22 @@ export const CandidatCard = ({
                     return (
                       <Tag
                         key={index}
-                        size="small"
-                        style="hoverBlue"
-                        content={name}
-                      />
+                        size={TagSize.Small}
+                        variant={TagVariant.HoverBlue}
+                      >
+                        {name}
+                      </Tag>
                     );
                   })
                 : sortedOccupations?.slice(0, 2).map(({ name }, index) => {
                     return (
                       <Tag
                         key={index}
-                        size="small"
-                        style="hoverBlue"
-                        content={name}
-                      />
+                        size={TagSize.Small}
+                        variant={TagVariant.HoverBlue}
+                      >
+                        {name}
+                      </Tag>
                     );
                   })}
             </CandidateCardBusinessSectorsStyled>

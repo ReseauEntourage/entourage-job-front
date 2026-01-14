@@ -1,6 +1,7 @@
 import React from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section, Button, Text, Alert } from '@/src/components/ui';
+import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { OnboardingLoading } from '@/src/features/backoffice/onboarding/onboarding-loading/OnboardingLoading';
 import { StepsIndicator } from '@/src/features/backoffice/onboarding/steps-indicator/StepsIndicator';
@@ -28,6 +29,7 @@ const OnboardingRun = () => {
         <Section className="custom-page">
           <StepsIndicator />
           <br />
+          <br />
           {currentOnboardingStep ? (
             <>
               <HeaderBackoffice
@@ -35,9 +37,7 @@ const OnboardingRun = () => {
                 description={currentOnboardingStep.description}
               />
               {formErrorMessage && (
-                <Alert variant="error">
-                  <Text color="white">{formErrorMessage}</Text>
-                </Alert>
+                <Alert variant={AlertVariant.Error}>{formErrorMessage}</Alert>
               )}
               {currentOnboardingStepContent}
               <Button

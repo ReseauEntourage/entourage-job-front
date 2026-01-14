@@ -1,7 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
-import { Button, Card, ImgUserProfile, Tag, Text } from '@/src/components/ui';
+import {
+  Button,
+  Card,
+  ImgUserProfile,
+  Tag,
+  TagSize,
+  Text,
+} from '@/src/components/ui';
 import { RoundBadge } from '@/src/components/ui/Badge/RoundBadge';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { ProfileNudges } from '@/src/constants/nudges';
@@ -111,15 +118,18 @@ export const DashboardProfileCard = () => {
                 );
                 if (nudgeDetails) {
                   const tagContent = nudgeDetails.shortTitle[contextualRole];
-                  return <Tag size="small" key={index} content={tagContent} />;
+                  return (
+                    <Tag size={TagSize.Small} key={index}>
+                      {tagContent}
+                    </Tag>
+                  );
                 }
                 return null;
               })}
               {user.userProfile.nudges?.length > 3 && (
-                <Tag
-                  size="small"
-                  content={`+${user.userProfile.nudges.length - 3}`}
-                />
+                <Tag size={TagSize.Small}>
+                  +${user.userProfile.nudges.length - 3}
+                </Tag>
               )}
             </StyledDashboardProfileCardHelpList>
           ) : (

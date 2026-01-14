@@ -7,6 +7,8 @@ import {
   ImgUserProfile,
   Section,
   Tag,
+  TagSize,
+  TagVariant,
   Text,
 } from '@/src/components/ui';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
@@ -130,15 +132,11 @@ export const HeaderProfileMobile = ({
                     <Text size={20} weight="semibold">
                       {firstName} {lastName}
                     </Text>
-                    <Tag
-                      content={
-                        role === UserRoles.ADMIN
-                          ? UserRoles.ADMIN
-                          : contextualRole
-                      }
-                      size="small"
-                      style="secondary"
-                    />
+                    <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                      {role === UserRoles.ADMIN
+                        ? UserRoles.ADMIN
+                        : contextualRole}
+                    </Tag>
                   </StyledHeaderNameAndRole>
                 </StyledHeaderProfileNameContainer>
                 {shouldShowAllProfile && (

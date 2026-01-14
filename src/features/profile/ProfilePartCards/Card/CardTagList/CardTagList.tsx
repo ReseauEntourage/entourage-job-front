@@ -22,7 +22,6 @@ export const CardTagList = ({
     <StyledTagList>
       {items.map((item, idx) => (
         <Tag
-          content={item.name}
           key={idx}
           removeCallback={
             isEditable && removeCallback
@@ -31,7 +30,9 @@ export const CardTagList = ({
                 }
               : undefined
           }
-        />
+        >
+          {item.name}
+        </Tag>
       ))}
     </StyledTagList>
   );
