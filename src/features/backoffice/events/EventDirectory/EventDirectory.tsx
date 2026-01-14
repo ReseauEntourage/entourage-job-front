@@ -153,6 +153,7 @@ export function EventDirectory() {
           return null;
         });
         setFilters({
+          ...filters,
           departmentIds: department ? [department] : [],
         });
       }
@@ -165,6 +166,7 @@ export function EventDirectory() {
     departmentsIdsFilters,
     setFilters,
     departmentIds,
+    filters,
   ]);
 
   const handleOpenFilterDrawer = () => {
