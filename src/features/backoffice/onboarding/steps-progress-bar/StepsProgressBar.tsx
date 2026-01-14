@@ -1,8 +1,12 @@
 import { TimeLineHorizontal } from '@/src/components/ui/TimeLines/TimeLineHorizontal';
-import { useOnboarding } from '@/src/hooks/useOnboarding';
+import { useOnboarding } from '@/src/features/backoffice/onboarding/useOnboarding';
 
 export const StepsProgressBar = () => {
   const { onboardingSteps, currentOnboardingIdx } = useOnboarding();
+
+  if (!currentOnboardingIdx) {
+    return null;
+  }
 
   return (
     <TimeLineHorizontal.Container>

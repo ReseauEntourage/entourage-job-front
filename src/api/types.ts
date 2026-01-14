@@ -352,6 +352,7 @@ export type UserDto = {
   id?: string;
   userProfile?: UserProfile;
   lastConnection?: string;
+  onboardingStatus?: OnboardingStatus;
 };
 
 export type UserRegistrationDto = {
@@ -582,6 +583,8 @@ export type EventsFilters = {
   search?: string;
   departmentIds: string | string[];
   modes?: EventMode | EventMode[];
+  isParticipating?: boolean;
+  includePastEvents?: boolean;
 };
 
 export type PostAuthSendVerifyEmailParams = {

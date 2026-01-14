@@ -48,6 +48,9 @@ const {
   fetchStaffContactRequested,
   fetchStaffContactSucceeded,
   fetchStaffContactFailed,
+  updateOnboardingStatusRequested,
+  updateOnboardingStatusSucceeded,
+  updateOnboardingStatusFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
@@ -124,6 +127,27 @@ function* updateUserRequestedSaga(
   } catch {
     yield* put(
       updateUserFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* updateOnboardingStatusRequestedSaga(
+  action: ReturnType<typeof updateOnboardingStatusRequested>
+) {
+  const { onboardingStatus } = action.payload;
+  try {
+    const userId = yield* select(selectCurrentUserId);
+    yield* call(() => Api.putUser(userId, { onboardingStatus }));
+    yield* put(
+      updateOnboardingStatusSucceeded({
+        onboardingStatus,
+      })
+    );
+  } catch {
+    yield* put(
+      updateOnboardingStatusFailed({
         error: 'UPDATE_FAILED',
       })
     );
@@ -275,6 +299,10 @@ export function* saga() {
   yield* takeLatest(fetchStaffContactRequested, fetchStaffContactRequestedSaga);
   yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
+  yield* takeLatest(
+    updateOnboardingStatusRequested,
+    updateOnboardingStatusRequestedSaga
+  );
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(readDocumentRequested, readDocumentRequestedSaga);
   yield* takeLatest(

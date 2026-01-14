@@ -1,4 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  combineReducers,
+  configureStore,
+  ThunkDispatch,
+} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { all, spawn, call } from 'typed-redux-saga';
 import { useCasesConfig } from 'src/use-cases';
@@ -6,20 +11,26 @@ import { UseCaseConfigItem } from 'src/use-cases/types';
 
 const useCasesList = Object.values(useCasesConfig) as UseCaseConfigItem[];
 
-const reducers = useCasesList.reduce(
-  (acc, { slice }) => ({
-    ...acc,
-    [slice.name]: slice.reducer,
-  }),
-  {}
-);
+const reducersMap: Record<string, any> = {};
+
+useCasesList.forEach(({ slice }) => {
+  reducersMap[slice.name] = slice.reducer;
+});
+
+const reducers = combineReducers(reducersMap);
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: reducers,
-  middleware: [sagaMiddleware],
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware({ thunk: true, serializableCheck: false }),
+    sagaMiddleware,
+  ],
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
 
 function* rootSaga() {
   yield* all(

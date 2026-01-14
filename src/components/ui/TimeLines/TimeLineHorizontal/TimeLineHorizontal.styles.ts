@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Color, COLORS } from '@/src/constants/styles';
 
-const COUNTER_SIZE = 40;
+const COUNTER_SIZE = 50;
 const LINE_HEIGHT = 2;
 const BORDER_WIDTH = 3;
 
@@ -37,6 +37,7 @@ export const StyledItem = styled.div<{ isLast?: boolean }>`
   flex-direction: row;
   gap: 16px;
   justify-content: flex-start;
+  max-width: 220px;
   ${({ isLast }) => !isLast && 'flex: 1;'}
 `;
 

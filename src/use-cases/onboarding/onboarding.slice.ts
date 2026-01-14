@@ -2,11 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import { SliceRootState } from 'src/store/utils';
 
 export interface State {
-  currentOnboardingIdx: number;
+  currentOnboardingIdx: number | null;
+  webinarSfId: string | null;
+  formErrorMessage: string | null;
+  isLoading: boolean;
 }
 
 const initialState: State = {
-  currentOnboardingIdx: 0,
+  currentOnboardingIdx: null,
+  webinarSfId: null,
+  formErrorMessage: null,
+  isLoading: false,
 };
 
 export const slice = createSlice({
@@ -15,6 +21,15 @@ export const slice = createSlice({
   reducers: {
     setCurrentOnboardingIdx(state, action) {
       state.currentOnboardingIdx = action.payload;
+    },
+    setWebinarSfId(state, action) {
+      state.webinarSfId = action.payload;
+    },
+    setFormErrorMessage(state, action) {
+      state.formErrorMessage = action.payload;
+    },
+    setIsLoading(state, action) {
+      state.isLoading = action.payload;
     },
   },
 });

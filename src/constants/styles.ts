@@ -67,6 +67,10 @@ export const COLORS = {
   green: '#79CC6B',
   mediumGreen: '#1E7F51',
   darkGreen: '#1F4946',
+
+  // Skelton
+  skeltonLight: '#EDEDED',
+  skeltonDark: '#F7F7F7',
 };
 
 export type Color = keyof typeof COLORS;
@@ -91,6 +95,10 @@ export const ALERT_COLORS = {
   },
   lightBlue: {
     background: COLORS.hoverBlue,
+    text: COLORS.white,
+  },
+  error: {
+    background: COLORS.lightRed,
     text: COLORS.white,
   },
 };

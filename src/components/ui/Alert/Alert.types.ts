@@ -1,6 +1,11 @@
 import React from 'react';
 
-export type AlertVariant = 'info' | 'lightGray' | 'darkBlue' | 'lightBlue';
+export type AlertVariant =
+  | 'info'
+  | 'lightGray'
+  | 'darkBlue'
+  | 'lightBlue'
+  | 'error';
 
 export interface AlertProps {
   children: React.ReactNode;

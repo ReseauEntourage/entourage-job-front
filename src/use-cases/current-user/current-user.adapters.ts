@@ -32,6 +32,18 @@ export const updateUserAdapter = createRequestAdapter(
   }
 >();
 
+export const updateOnboardingStatusAdapter = createRequestAdapter(
+  'updateOnboardingStatus'
+).withPayloads<
+  {
+    onboardingStatus: User['onboardingStatus'];
+  },
+  { onboardingStatus: User['onboardingStatus'] },
+  {
+    error: UpdateError;
+  }
+>();
+
 export const updateUserCompanyAdapter = createRequestAdapter(
   'updateUserCompany'
 ).withPayloads<

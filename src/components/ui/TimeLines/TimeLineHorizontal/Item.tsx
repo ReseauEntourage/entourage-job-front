@@ -41,6 +41,7 @@ export const Item = ({
           size="large"
           weight={active ? 'semibold' : 'normal'}
           color={active ? 'black' : 'gray'}
+          center
         >
           {content}
         </Text>

@@ -9,6 +9,7 @@ import {
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
   UpdateError,
+  updateOnboardingStatusAdapter,
   updateProfileAdapter,
   updateUserAdapter,
   updateUserCompanyAdapter,
@@ -21,6 +22,7 @@ export interface State {
   fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   updateUser: RequestState<typeof updateUserAdapter>;
+  updateOnboardingStatus: RequestState<typeof updateOnboardingStatusAdapter>;
   updateUserCompany: RequestState<typeof updateUserCompanyAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
   readDocument: RequestState<typeof readDocumentAdapter>;
@@ -42,6 +44,7 @@ const initialState: State = {
   fetchStaffContact: fetchStaffContactAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
+  updateOnboardingStatus: updateOnboardingStatusAdapter.getInitialState(),
   updateUserCompany: updateUserCompanyAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
@@ -115,6 +118,16 @@ export const slice = createSlice({
         state.userUpdateError = action.payload.error;
       },
     }),
+    ...updateOnboardingStatusAdapter.getReducers<State>(
+      (state) => state.updateOnboardingStatus,
+      {
+        updateOnboardingStatusSucceeded(state, action) {
+          assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
+          state.user.onboardingStatus = action.payload.onboardingStatus;
+        },
+      }
+    ),
     ...readDocumentAdapter.getReducers<State>((state) => state.readDocument, {
       readDocumentSucceeded() {},
     }),

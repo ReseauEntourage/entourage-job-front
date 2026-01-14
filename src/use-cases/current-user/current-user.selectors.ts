@@ -4,6 +4,7 @@ import {
   fetchStaffContactAdapter,
   fetchUserAdapter,
   readDocumentAdapter,
+  updateOnboardingStatusAdapter,
   updateProfileAdapter,
   updateUserAdapter,
   updateUserCompanyAdapter,
@@ -38,6 +39,11 @@ export const readDocumentSelectors =
 export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(
   (state) => state.currentUser.updateUser
 );
+
+export const selectUpdateOnboardingStatusSelectors =
+  updateOnboardingStatusAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.updateOnboardingStatus
+  );
 
 export const updateUserCompanySelectors =
   updateUserCompanyAdapter.getSelectors<RootState>(

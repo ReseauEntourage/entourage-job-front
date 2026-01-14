@@ -1,16 +1,46 @@
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Text, LucidIcon, Button } from '@/src/components/ui';
 import { H4, H5 } from '@/src/components/ui/Headings';
 import { TimeLineVertical } from '@/src/components/ui/TimeLines/TimeLineVertical';
-import { useOnboarding } from '@/src/hooks/useOnboarding';
+import { OnboardingStatus } from '@/src/constants/onboarding';
+import { useOnboarding } from '@/src/features/backoffice/onboarding/useOnboarding';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import {
+  currentUserActions,
+  selectUpdateOnboardingStatusSelectors,
+} from '@/src/use-cases/current-user';
 import { StyledActionContainer } from './StepsSummary.styles';
 
 export const StepsSummary = () => {
   const { onboardingSteps, totalDuration } = useOnboarding();
   const router = useRouter();
+  const dispatch = useDispatch();
+  const currentUser = useAuthenticatedUser();
+  const updateOnboardingStatus = useSelector(
+    selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
+  );
 
-  const runOnboarding = () => {
-    router.push('/backoffice/onboarding/run');
+  useEffect(() => {
+    if (
+      updateOnboardingStatus === 'SUCCEEDED' &&
+      currentUser?.onboardingStatus === OnboardingStatus.IN_PROGRESS
+    ) {
+      router.push('/backoffice/onboarding/run');
+    }
+  }, [updateOnboardingStatus, currentUser, router]);
+
+  const startOnboarding = () => {
+    if (!currentUser) {
+      throw new Error('User must be authenticated to start onboarding');
+    }
+
+    dispatch(
+      currentUserActions.updateOnboardingStatusRequested({
+        onboardingStatus: OnboardingStatus.IN_PROGRESS,
+      })
+    );
   };
 
   return (
@@ -43,7 +73,7 @@ export const StepsSummary = () => {
       </TimeLineVertical.Container>
 
       <StyledActionContainer>
-        <Button onClick={runOnboarding}>Commencer le parcours</Button>
+        <Button onClick={startOnboarding}>Commencer le parcours</Button>
         <Text>
           <LucidIcon name="Clock" size={16} /> Durée totale : ~{totalDuration}{' '}
           minutes
