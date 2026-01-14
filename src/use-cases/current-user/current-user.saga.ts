@@ -1,5 +1,6 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { STORAGE_KEYS } from '@/src/constants';
+import { OnboardingStatus } from '@/src/constants/onboarding';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import {
@@ -51,6 +52,9 @@ const {
   updateOnboardingStatusRequested,
   updateOnboardingStatusSucceeded,
   updateOnboardingStatusFailed,
+  forceOnboardingAsCompletedRequested,
+  forceOnboardingAsCompletedSucceeded,
+  forceOnboardingAsCompletedFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
@@ -148,6 +152,26 @@ function* updateOnboardingStatusRequestedSaga(
   } catch {
     yield* put(
       updateOnboardingStatusFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* forceOnboardingAsCompletedRequestedSaga() {
+  try {
+    const userId = yield* select(selectCurrentUserId);
+    const { data } = yield* call(() =>
+      Api.putUser(userId, { onboardingStatus: OnboardingStatus.COMPLETED })
+    );
+    yield* put(
+      forceOnboardingAsCompletedSucceeded({
+        onboardingStatus: data.onboardingStatus,
+      })
+    );
+  } catch {
+    yield* put(
+      forceOnboardingAsCompletedFailed({
         error: 'UPDATE_FAILED',
       })
     );
@@ -302,6 +326,10 @@ export function* saga() {
   yield* takeLatest(
     updateOnboardingStatusRequested,
     updateOnboardingStatusRequestedSaga
+  );
+  yield* takeLatest(
+    forceOnboardingAsCompletedRequested,
+    forceOnboardingAsCompletedRequestedSaga
   );
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(readDocumentRequested, readDocumentRequestedSaga);

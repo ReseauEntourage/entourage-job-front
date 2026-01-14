@@ -10,9 +10,9 @@ export const ConfirmModalStep = () => {
 
   return (
     <PrettyModal
-      id="webinar-onboarding-success"
-      title="Excellent ! Votre place est réservée"
-      subtitle="Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire."
+      id="elearning-onboarding-success"
+      title="Bravo ! Vous avez terminé la formation"
+      subtitle="Vous faites désormais partie des membres engagés d'Entourage Pro."
       submitBtnTxt="Continuer vers l'étape suivante"
     >
       <Alert variant={AlertVariant.Info} icon={null}>

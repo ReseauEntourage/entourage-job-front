@@ -6,6 +6,7 @@ export const StyledModalHeaderContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   align-items: center;
+  padding: 0 25px;
 `;
 
 export const StyledModalHeaderIconContainer = styled.div`

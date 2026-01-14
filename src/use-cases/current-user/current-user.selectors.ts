@@ -3,6 +3,7 @@ import {
   fetchCompleteUserAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
+  forceOnboardingAsCompletedAdapter,
   readDocumentAdapter,
   updateOnboardingStatusAdapter,
   updateProfileAdapter,
@@ -43,6 +44,11 @@ export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(
 export const selectUpdateOnboardingStatusSelectors =
   updateOnboardingStatusAdapter.getSelectors<RootState>(
     (state) => state.currentUser.updateOnboardingStatus
+  );
+
+export const selectForceOnboardingAsCompletedSelectors =
+  forceOnboardingAsCompletedAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.forceOnboardingAsCompleted
   );
 
 export const updateUserCompanySelectors =

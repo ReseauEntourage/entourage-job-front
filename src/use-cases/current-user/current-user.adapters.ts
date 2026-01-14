@@ -44,6 +44,14 @@ export const updateOnboardingStatusAdapter = createRequestAdapter(
   }
 >();
 
+export const forceOnboardingAsCompletedAdapter = createRequestAdapter(
+  'forceOnboardingAsCompleted'
+).withPayloads<
+  void,
+  { onboardingStatus: User['onboardingStatus'] },
+  { error: UpdateError }
+>();
+
 export const updateUserCompanyAdapter = createRequestAdapter(
   'updateUserCompany'
 ).withPayloads<

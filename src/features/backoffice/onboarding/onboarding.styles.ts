@@ -10,3 +10,8 @@ export const StyledOnboardingModalAlertTitleContainer = styled.div`
   justify-content: space-between;
   gap: 10px;
 `;
+
+export const StyledOnboardingActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

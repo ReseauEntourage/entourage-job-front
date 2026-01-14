@@ -1,14 +1,19 @@
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Api } from '@/src/api';
 import { Text } from '@/src/components/ui';
+import { ReduxRequestEvents } from '@/src/constants';
 import { EventType } from '@/src/constants/events';
 import { OnboardingStatus } from '@/src/constants/onboarding';
 import { OnboardingWebinar } from '@/src/features/backoffice/onboarding/steps/step-webinar/OnboardingWebinar';
 
 import type { AppDispatch } from '@/src/store/store';
-import { currentUserActions } from '@/src/use-cases/current-user';
+import {
+  currentUserActions,
+  selectForceOnboardingAsCompletedSelectors,
+} from '@/src/use-cases/current-user';
 import { updateUserParticipationThunk } from '@/src/use-cases/events';
 import { useAuthenticatedUser } from '../../../hooks/authentication/useAuthenticatedUser';
 import { onboardingActions } from '../../../use-cases/onboarding';
@@ -21,6 +26,7 @@ import {
 import { openModal } from '../../modals/Modal/openModal';
 import { StyledOnboardingStepContainer } from './onboarding.styles';
 import { OnboardingStep } from './onboarding.types';
+import { ConfirmModalStep as OnboardingElearningConfirmModalStep } from './steps/step-elearning/ConfirmModalStep';
 import { OnboardingElearning } from './steps/step-elearning/OnboardingElearning';
 import { ConfirmModalStep as OnboardingWebinarConfirmModalStep } from './steps/step-webinar/ConfirmModalStep';
 
@@ -39,10 +45,14 @@ import { ConfirmModalStep as OnboardingWebinarConfirmModalStep } from './steps/s
 export const useOnboarding = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useAuthenticatedUser();
+  const router = useRouter();
   const currentOnboardingIdx = useSelector(selectCurrentOnboardingIdx);
   const webinarSfId = useSelector(selectWebinarSfId);
   const formErrorMessage = useSelector(selectFormErrorMessage);
   const isLoading = useSelector(selectIsLoading);
+  const forceOnboardingAsCompletedStatus = useSelector(
+    selectForceOnboardingAsCompletedSelectors.selectForceOnboardingAsCompletedStatus
+  );
 
   /**
    * Determine starting step on mount - Checks if the user is already registered for a webinar and sets the starting step accordingly.
@@ -73,6 +83,15 @@ export const useOnboarding = () => {
       dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
     });
   }, [determineStartingStep, dispatch]);
+
+  /**
+   * useEffect - Redirect to dashboard upon successful force completion of onboarding.
+   */
+  useEffect(() => {
+    if (forceOnboardingAsCompletedStatus === ReduxRequestEvents.SUCCEEDED) {
+      router.push('/backoffice/dashboard'); // Redirect to dashboard after forcing onboarding completion
+    }
+  }, [router, forceOnboardingAsCompletedStatus]);
 
   /**
    * onboardingSteps - Memoized array of onboarding steps based on user role.
@@ -147,6 +166,7 @@ export const useOnboarding = () => {
             </StyledOnboardingStepContainer>
           ),
           onSubmit: () => {
+            openModal(<OnboardingElearningConfirmModalStep />);
             return true;
           },
         },
@@ -235,7 +255,7 @@ export const useOnboarding = () => {
   /**
    * onOnboardingComplete - Callback when onboarding is complete.
    */
-  const onOnboardingComplete = useCallback(() => {
+  const onOnboardingCompleted = useCallback(() => {
     // Logic to mark onboarding as complete (e.g., API call)
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({
@@ -261,7 +281,7 @@ export const useOnboarding = () => {
     }
     dispatch(onboardingActions.setFormErrorMessage(null));
     if (currentOnboardingIdx + 1 >= onboardingSteps.length) {
-      onOnboardingComplete();
+      onOnboardingCompleted();
       return;
     }
     dispatch(
@@ -271,9 +291,13 @@ export const useOnboarding = () => {
     currentOnboardingIdx,
     currentOnboardingStep,
     dispatch,
-    onOnboardingComplete,
+    onOnboardingCompleted,
     onboardingSteps.length,
   ]);
+
+  const skipOnboarding = useCallback(() => {
+    dispatch(currentUserActions.forceOnboardingAsCompletedRequested());
+  }, [dispatch]);
 
   const currentOnboardingStepContent = currentOnboardingStep?.content;
 
@@ -291,5 +315,6 @@ export const useOnboarding = () => {
     nextStepAllowed,
     nextOnboardingStep,
     incrementStep,
+    skipOnboarding,
   };
 };

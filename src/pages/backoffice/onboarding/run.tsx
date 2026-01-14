@@ -1,14 +1,16 @@
 import React from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
-import { Section, Button, Text, Alert } from '@/src/components/ui';
+import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { OnboardingLoading } from '@/src/features/backoffice/onboarding/onboarding-loading/OnboardingLoading';
+import { StyledOnboardingActions } from '@/src/features/backoffice/onboarding/onboarding.styles';
 import { StepsIndicator } from '@/src/features/backoffice/onboarding/steps-indicator/StepsIndicator';
 import { StepsProgressBar } from '@/src/features/backoffice/onboarding/steps-progress-bar/StepsProgressBar';
 import { useOnboarding } from '@/src/features/backoffice/onboarding/useOnboarding';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
+import { useIsDev } from '@/src/hooks/useIsDev';
 
 const OnboardingRun = () => {
   const {
@@ -18,7 +20,10 @@ const OnboardingRun = () => {
     nextStepAllowed,
     incrementStep,
     isLoading,
+    skipOnboarding,
   } = useOnboarding();
+
+  const isDev = useIsDev();
 
   return (
     <LayoutBackOffice title="Bien démarrer">
@@ -40,18 +45,30 @@ const OnboardingRun = () => {
                 <Alert variant={AlertVariant.Error}>{formErrorMessage}</Alert>
               )}
               {currentOnboardingStepContent}
-              <Button
-                onClick={incrementStep}
-                disabled={!nextStepAllowed || isLoading}
-              >
-                {isLoading && (
-                  <>
-                    <Spinner size={16} color="white" />
-                    &nbsp;&nbsp;Chargement...
-                  </>
+              <StyledOnboardingActions>
+                <Button
+                  onClick={incrementStep}
+                  disabled={!nextStepAllowed || isLoading}
+                >
+                  {isLoading && (
+                    <>
+                      <Spinner size={16} color="white" />
+                      &nbsp;&nbsp;Chargement...
+                    </>
+                  )}
+                  {!isLoading && 'Étape suivante'}
+                </Button>
+
+                {isDev && (
+                  <Button
+                    variant="secondary"
+                    onClick={skipOnboarding}
+                    disabled={isLoading}
+                  >
+                    ⚙️ Dev only - Passer l'onboarding
+                  </Button>
                 )}
-                {!isLoading && 'Étape suivante'}
-              </Button>
+              </StyledOnboardingActions>
             </>
           ) : (
             <OnboardingLoading />
