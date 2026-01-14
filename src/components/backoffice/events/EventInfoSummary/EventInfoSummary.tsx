@@ -1,7 +1,6 @@
 import moment from 'moment';
 import 'moment/locale/fr';
 
-import Link from 'next/link';
 import React from 'react';
 import { LucidIcon, Text } from '@/src/components/utils';
 import { EventMode } from '@/src/constants/events';
@@ -22,7 +21,6 @@ export type EventInfoSummaryProps = Pick<
 export const EventInfoSummary = ({
   startDate,
   mode,
-  meetingLink,
   fullAddress,
   displayParticipants = false,
   registrationCount,
