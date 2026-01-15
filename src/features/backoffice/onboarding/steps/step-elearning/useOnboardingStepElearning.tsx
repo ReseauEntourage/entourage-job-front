@@ -25,8 +25,8 @@ export const useOnboardingStepElearning = ({
       return true;
     },
     confirmationStep: {
-      title: 'Bravo ! Vous avez terminé la formation',
-      subtitle: 'Vous savez à présent tout ce qu’il faut savoir.',
+      title: 'Bravo ! Formation terminée',
+      subtitle: `Vous faites maintenant partie des ${userRole} Entourage Pro formés.`,
       submitBtnTxt: 'Continuer vers l’étape suivante',
     },
   } as OnboardingStep;
