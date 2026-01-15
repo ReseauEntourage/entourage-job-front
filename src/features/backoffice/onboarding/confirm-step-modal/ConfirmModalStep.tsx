@@ -28,20 +28,22 @@ export const ConfirmModalStep = ({
       submitBtnTxt={submitBtnTxt}
       onSubmit={onSubmit}
     >
-      <Alert variant={AlertVariant.Info} icon={null}>
-        <StyledOnboardingModalAlertTitleContainer>
-          <H5
-            title={`Prochaine étape : ${nextOnboardingStep?.smallTitle}`}
-            noMarginBottom
-          />
-          <Tag variant={TagVariant.PrimaryBlue} size={TagSize.Small}>
-            {nextOnboardingStep?.summary.duration}
-          </Tag>
-        </StyledOnboardingModalAlertTitleContainer>
-        {nextOnboardingStep?.summary.description && (
-          <Text>{nextOnboardingStep?.summary.description}</Text>
-        )}
-      </Alert>
+      {nextOnboardingStep && (
+        <Alert variant={AlertVariant.Info} icon={null}>
+          <StyledOnboardingModalAlertTitleContainer>
+            <H5
+              title={`Prochaine étape : ${nextOnboardingStep?.smallTitle}`}
+              noMarginBottom
+            />
+            <Tag variant={TagVariant.PrimaryBlue} size={TagSize.Small}>
+              {nextOnboardingStep?.summary.duration}
+            </Tag>
+          </StyledOnboardingModalAlertTitleContainer>
+          {nextOnboardingStep?.summary.description && (
+            <Text>{nextOnboardingStep?.summary.description}</Text>
+          )}
+        </Alert>
+      )}
     </PrettyModal>
   );
 };

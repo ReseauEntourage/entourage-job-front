@@ -13,6 +13,7 @@ import type { AppDispatch } from '@/src/store/store';
 import {
   currentUserActions,
   selectForceOnboardingAsCompletedSelectors,
+  selectUpdateOnboardingStatusSelectors,
 } from '@/src/use-cases/current-user';
 import { updateUserParticipationThunk } from '@/src/use-cases/events';
 import { useAuthenticatedUser } from '../../../hooks/authentication/useAuthenticatedUser';
@@ -26,22 +27,15 @@ import {
 import { openModal } from '../../modals/Modal/openModal';
 import { ConfirmModalStep } from './confirm-step-modal/ConfirmModalStep';
 import { StyledOnboardingStepContainer } from './onboarding.styles';
-import { OnboardingStep } from './onboarding.types';
+import { OnboardingStep, UseOnboardingReturn } from './onboarding.types';
+import { determineStartingStep } from './onboarding.utils';
 import { OnboardingElearning } from './steps/step-elearning/OnboardingElearning';
 
 /**
- * useOnboarding - Hook to manage onboarding steps and state.
- *
- * @returns {
- *   onboardingSteps: The list of onboarding steps.
- *   totalDuration: The total estimated duration of the onboarding process.
- *   currentOnboardingIdx: The index of the current onboarding step.
- *   currentOnboardingStep: The current onboarding step object.
- *   currentOnboardingStepContent: The content component of the current onboarding step.
- * }
+ * useOnboarding - Custom hook to manage onboarding state and actions.
+ * @returns UseOnboardingReturn - An object containing onboarding state and actions.
  */
-
-export const useOnboarding = () => {
+export const useOnboarding = (): UseOnboardingReturn => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useAuthenticatedUser();
   const router = useRouter();
@@ -49,34 +43,14 @@ export const useOnboarding = () => {
   const webinarSfId = useSelector(selectWebinarSfId);
   const formErrorMessage = useSelector(selectFormErrorMessage);
   const isLoading = useSelector(selectIsLoading);
+  const updateOnboardingStatus = useSelector(
+    selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
+  );
   const forceOnboardingAsCompletedStatus = useSelector(
     selectForceOnboardingAsCompletedSelectors.selectForceOnboardingAsCompletedStatus
   );
 
-  /**
-   * Determine starting step on mount - Checks if the user is already registered for a webinar and sets the starting step accordingly.
-   */
-  const determineStartingStep = useCallback(async () => {
-    let stepToLoad = 0;
-    await Api.getAllEvents({
-      eventTypes: [EventType.WELCOME_SESSION],
-      limit: 1,
-      offset: 0,
-      departmentIds: [],
-      isParticipating: true,
-      includePastEvents: true,
-    }).then((response) => {
-      if (response.data.length > 0) {
-        // User is already registered for a webinar, skip to next step
-        stepToLoad = 1;
-      }
-    });
-    return stepToLoad;
-  }, []);
-
-  /**
-   * useEffect - On component mount, determine the starting onboarding step.
-   */
+  // useEffect - Initialize current onboarding step on mount.
   useEffect(() => {
     if (currentOnboardingIdx !== null) {
       return; // Current step already set
@@ -84,20 +58,34 @@ export const useOnboarding = () => {
     determineStartingStep().then((stepToLoad) => {
       dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
     });
-  }, [currentOnboardingIdx, determineStartingStep, dispatch]);
+  }, [currentOnboardingIdx, dispatch]);
 
-  /**
-   * useEffect - Redirect to dashboard upon successful force completion of onboarding.
-   */
+  // useEffect - Redirect based on onboarding status updates.
+  useEffect(() => {
+    if (
+      updateOnboardingStatus === 'SUCCEEDED' &&
+      user?.onboardingStatus === OnboardingStatus.IN_PROGRESS &&
+      router.pathname !== '/backoffice/onboarding/run'
+    ) {
+      router.push('/backoffice/onboarding/run');
+    }
+    if (
+      updateOnboardingStatus === 'SUCCEEDED' &&
+      user?.onboardingStatus === OnboardingStatus.COMPLETED &&
+      router.pathname !== '/backoffice/dashboard'
+    ) {
+      router.push('/backoffice/dashboard');
+    }
+  }, [updateOnboardingStatus, user, router]);
+
+  // useEffect - Redirect to dashboard upon successful force completion of onboarding.
   useEffect(() => {
     if (forceOnboardingAsCompletedStatus === ReduxRequestEvents.SUCCEEDED) {
       router.push('/backoffice/dashboard'); // Redirect to dashboard after forcing onboarding completion
     }
   }, [router, forceOnboardingAsCompletedStatus]);
 
-  /**
-   * onboardingSteps - Memoized array of onboarding steps based on user role.
-   */
+  // onboardingSteps - Memoized array of onboarding steps based on user role.
   const onboardingSteps = useMemo(
     () =>
       [
@@ -181,29 +169,29 @@ export const useOnboarding = () => {
             submitBtnTxt: 'Continuer vers l’étape suivante',
           },
         },
-        // ...(user.role === 'Candidat'
-        //   ? [
-        {
-          summary: {
-            title: 'Indiquer la situation sociale et économique',
-            duration: '~1-2 minutes',
-            description: 'Pour nous permettre de mieux vous connaître',
-          },
-          title: 'Indiquer la situation sociale et économique',
-          smallTitle: 'Votre situation',
-          description: 'Pour nous permettre de mieux vous connaître',
-          onSubmit: () => {
-            return true;
-          },
-          confirmationStep: {
-            title: 'Félicitations ! Vous avez complété vos informations',
-            subtitle:
-              'Ces informations nous aideront à mieux vous accompagner dans votre parcours.',
-            submitBtnTxt: 'Continuer vers l’étape suivante',
-          },
-        },
-        //   ]
-        // : []),
+        ...(user.role === 'Candidat'
+          ? [
+              {
+                summary: {
+                  title: 'Indiquer la situation sociale et économique',
+                  duration: '~1-2 minutes',
+                  description: 'Pour nous permettre de mieux vous connaître',
+                },
+                title: 'Indiquer la situation sociale et économique',
+                smallTitle: 'Votre situation',
+                description: 'Pour nous permettre de mieux vous connaître',
+                onSubmit: () => {
+                  return true;
+                },
+                confirmationStep: {
+                  title: 'Félicitations ! Vous avez complété vos informations',
+                  subtitle:
+                    'Ces informations nous aideront à mieux vous accompagner dans votre parcours.',
+                  submitBtnTxt: 'Continuer vers l’étape suivante',
+                },
+              },
+            ]
+          : []),
         {
           summary: {
             title: 'Compléter le profil',
@@ -223,14 +211,17 @@ export const useOnboarding = () => {
           onSubmit: () => {
             return true;
           },
+          confirmationStep: {
+            title: 'Félicitations ! Vous avez complété votre profil',
+            subtitle: 'Vous êtes maintenant prêt à utiliser Entourage Pro',
+            submitBtnTxt: 'Démarrer l’aventure Entourage Pro',
+          },
         },
       ] as OnboardingStep[],
     [user.role, webinarSfId, dispatch]
   );
 
-  /**
-   * totalDuration - Memoized total duration of all onboarding steps.
-   */
+  // totalDuration - Memoized total duration of all onboarding steps.
   const totalDuration = useMemo(() => {
     return onboardingSteps
       .reduce((total, step) => {
@@ -247,9 +238,7 @@ export const useOnboarding = () => {
       .toFixed(0);
   }, [onboardingSteps]);
 
-  /**
-   * currentOnboardingStep - Memoized current onboarding step object.
-   */
+  // currentOnboardingStep - Memoized current onboarding step object.
   const currentOnboardingStep = useMemo(() => {
     if (currentOnboardingIdx === null) {
       return null;
@@ -257,8 +246,10 @@ export const useOnboarding = () => {
     return onboardingSteps[currentOnboardingIdx];
   }, [onboardingSteps, currentOnboardingIdx]);
 
+  // nextStepAllowed - Determines if moving to the next step is allowed.
   const nextStepAllowed = true; // Placeholder for actual logic to determine if the next step is allowed
 
+  // nextOnboardingStep - Memoized next onboarding step object.
   const nextOnboardingStep = useMemo(() => {
     if (currentOnboardingIdx === null) {
       return null;
@@ -269,11 +260,8 @@ export const useOnboarding = () => {
     return onboardingSteps[currentOnboardingIdx + 1];
   }, [onboardingSteps, currentOnboardingIdx]);
 
-  /**
-   * onOnboardingComplete - Callback when onboarding is complete.
-   */
+  // onOnboardingComplete - Callback when onboarding is complete.
   const onOnboardingCompleted = useCallback(() => {
-    // Logic to mark onboarding as complete (e.g., API call)
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({
         onboardingStatus: OnboardingStatus.COMPLETED,
@@ -281,9 +269,7 @@ export const useOnboarding = () => {
     );
   }, [dispatch]);
 
-  /**
-   * incrementStep - Callback to move to the next onboarding step.
-   */
+  // incrementStep - Callback to move to the next onboarding step.
   const incrementStep = useCallback(async () => {
     if (currentOnboardingIdx === null || !currentOnboardingStep) {
       throw new Error('Current onboarding step is not defined');
@@ -327,15 +313,15 @@ export const useOnboarding = () => {
     onboardingSteps.length,
   ]);
 
+  // skipOnboarding - Callback to skip the onboarding process.
   const skipOnboarding = useCallback(() => {
     dispatch(currentUserActions.forceOnboardingAsCompletedRequested());
   }, [dispatch]);
 
+  // currentOnboardingStepContent - Content component of the current onboarding step.
   const currentOnboardingStepContent = currentOnboardingStep?.content;
 
-  /**
-   * Return values from the useOnboarding hook.
-   */
+  // Return values from the useOnboarding hook.
   return {
     formErrorMessage,
     isLoading,

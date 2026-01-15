@@ -15,21 +15,8 @@ import { StyledActionContainer } from './StepsSummary.styles';
 
 export const StepsSummary = () => {
   const { onboardingSteps, totalDuration } = useOnboarding();
-  const router = useRouter();
   const dispatch = useDispatch();
   const currentUser = useAuthenticatedUser();
-  const updateOnboardingStatus = useSelector(
-    selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
-  );
-
-  useEffect(() => {
-    if (
-      updateOnboardingStatus === 'SUCCEEDED' &&
-      currentUser?.onboardingStatus === OnboardingStatus.IN_PROGRESS
-    ) {
-      router.push('/backoffice/onboarding/run');
-    }
-  }, [updateOnboardingStatus, currentUser, router]);
 
   const startOnboarding = () => {
     if (!currentUser) {
