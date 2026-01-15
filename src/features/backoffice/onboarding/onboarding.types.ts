@@ -13,7 +13,7 @@ export interface OnboardingStep {
   smallTitle: string;
   description: React.ReactNode;
   content: React.ReactNode;
-  onSubmit?: () => boolean | void;
+  onSubmit?: () => Promise<boolean | void>;
   confirmationStep?: {
     title: string;
     subtitle: string;

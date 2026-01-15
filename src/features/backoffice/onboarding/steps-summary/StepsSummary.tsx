@@ -1,16 +1,11 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Text, LucidIcon, Button } from '@/src/components/ui';
 import { H4, H5 } from '@/src/components/ui/Headings';
 import { TimeLineVertical } from '@/src/components/ui/TimeLines/TimeLineVertical';
 import { OnboardingStatus } from '@/src/constants/onboarding';
 import { useOnboarding } from '@/src/features/backoffice/onboarding/useOnboarding';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import {
-  currentUserActions,
-  selectUpdateOnboardingStatusSelectors,
-} from '@/src/use-cases/current-user';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import { StyledActionContainer } from './StepsSummary.styles';
 
 export const StepsSummary = () => {

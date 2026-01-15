@@ -2,12 +2,8 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { Api } from '@/src/api';
-import { Text } from '@/src/components/ui';
 import { ReduxRequestEvents } from '@/src/constants';
-import { EventType } from '@/src/constants/events';
 import { OnboardingStatus } from '@/src/constants/onboarding';
-import { OnboardingWebinar } from '@/src/features/backoffice/onboarding/steps/step-webinar/OnboardingWebinar';
 
 import type { AppDispatch } from '@/src/store/store';
 import {
@@ -15,21 +11,24 @@ import {
   selectForceOnboardingAsCompletedSelectors,
   selectUpdateOnboardingStatusSelectors,
 } from '@/src/use-cases/current-user';
-import { updateUserParticipationThunk } from '@/src/use-cases/events';
 import { useAuthenticatedUser } from '../../../hooks/authentication/useAuthenticatedUser';
 import { onboardingActions } from '../../../use-cases/onboarding';
 import {
   selectCurrentOnboardingIdx,
   selectFormErrorMessage,
   selectIsLoading,
-  selectWebinarSfId,
 } from '../../../use-cases/onboarding/onboarding.selectors';
 import { openModal } from '../../modals/Modal/openModal';
 import { ConfirmModalStep } from './confirm-step-modal/ConfirmModalStep';
-import { StyledOnboardingStepContainer } from './onboarding.styles';
 import { OnboardingStep, UseOnboardingReturn } from './onboarding.types';
-import { determineStartingStep } from './onboarding.utils';
-import { OnboardingElearning } from './steps/step-elearning/OnboardingElearning';
+import {
+  computeTotalDuration,
+  determineStartingStep,
+} from './onboarding.utils';
+import { useOnboardingStepElearning } from './steps/step-elearning/useOnboardingStepElearning';
+import { useOnboardingStepProfileCompletion } from './steps/step-profile-completion/useOnboardingStepProfileCompletion';
+import { useOnboardingStepSocialSituation } from './steps/step-social-situation/useOnboardingStepSocialSituation';
+import { useOnboardingStepWebinar } from './steps/step-webinar/useOnboardingStepWebinar';
 
 /**
  * useOnboarding - Custom hook to manage onboarding state and actions.
@@ -40,7 +39,6 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const user = useAuthenticatedUser();
   const router = useRouter();
   const currentOnboardingIdx = useSelector(selectCurrentOnboardingIdx);
-  const webinarSfId = useSelector(selectWebinarSfId);
   const formErrorMessage = useSelector(selectFormErrorMessage);
   const isLoading = useSelector(selectIsLoading);
   const updateOnboardingStatus = useSelector(
@@ -49,11 +47,19 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const forceOnboardingAsCompletedStatus = useSelector(
     selectForceOnboardingAsCompletedSelectors.selectForceOnboardingAsCompletedStatus
   );
+  const { onboardingStepWebinar } = useOnboardingStepWebinar();
+  const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation();
+  const { onboardingStepElearning } = useOnboardingStepElearning({
+    userRole: user.role,
+  });
+  const { onboardingStepProfileCompletion } =
+    useOnboardingStepProfileCompletion();
 
   // useEffect - Initialize current onboarding step on mount.
   useEffect(() => {
+    // Only set starting step if not already set
     if (currentOnboardingIdx !== null) {
-      return; // Current step already set
+      return;
     }
     determineStartingStep().then((stepToLoad) => {
       dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
@@ -86,161 +92,30 @@ export const useOnboarding = (): UseOnboardingReturn => {
   }, [router, forceOnboardingAsCompletedStatus]);
 
   // onboardingSteps - Memoized array of onboarding steps based on user role.
-  const onboardingSteps = useMemo(
-    () =>
-      [
-        {
-          summary: {
-            title: 'S’inscrire au Webinaire de bienvenue',
-            description:
-              "Découvrez le programme, rencontrez l'équipe, posez vos questions en direct",
-            duration: '~1 minute',
-          },
-          title: 'Webinaire de bienvenue',
-          smallTitle: 'S’inscrire au Webinaire de bienvenue',
-          description:
-            "Ce webinaire vous permettra de comprendre votre rôle, rencontrer l'équipe et poser toutes vos questions en direct.",
-          content: (
-            <StyledOnboardingStepContainer>
-              <OnboardingWebinar
-                webinarSfId={webinarSfId}
-                onChange={(value) => {
-                  dispatch(onboardingActions.setWebinarSfId(value));
-                }}
-              />
-            </StyledOnboardingStepContainer>
-          ),
-          onSubmit: async () => {
-            if (!webinarSfId) {
-              dispatch(
-                onboardingActions.setFormErrorMessage(
-                  'Veuillez sélectionner une date pour le webinaire afin de pouvoir passer à l’étape suivante.'
-                )
-              );
-              return false;
-            }
-            try {
-              await dispatch(
-                updateUserParticipationThunk({
-                  eventSalesForceId: webinarSfId,
-                  isParticipating: true,
-                })
-              ).unwrap();
-              return true;
-            } catch (e) {
-              console.error(e);
-              dispatch(
-                onboardingActions.setFormErrorMessage(
-                  "Erreur lors de l'inscription au webinaire."
-                )
-              );
-              return false;
-            }
-          },
-          confirmationStep: {
-            title: 'Votre place est réservée !',
-            subtitle:
-              'Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire.',
-            submitBtnTxt: 'Continuer vers l’étape suivante',
-          },
-        },
-        {
-          summary: {
-            title: `Comprendre le rôle et les missions du ${user.role} Entourage Pro`,
-            description:
-              'Des modules vidéos avec des cas concrets pour être prêt',
-            duration: '~20 minutes',
-          },
-          title: `Comprendre le rôle et les missions du ${user.role} Entourage Pro`,
-          smallTitle: 'Rôle et missions',
-          description:
-            'Des modules vidéos avec des cas concrets pour être prêt',
-          content: (
-            <StyledOnboardingStepContainer>
-              <OnboardingElearning />
-            </StyledOnboardingStepContainer>
-          ),
-          onSubmit: () => {
-            return true;
-          },
-          confirmationStep: {
-            title: 'Bravo ! Vous avez terminé la formation',
-            subtitle: 'Vous savez à présent tout ce qu’il faut savoir.',
-            submitBtnTxt: 'Continuer vers l’étape suivante',
-          },
-        },
-        ...(user.role === 'Candidat'
-          ? [
-              {
-                summary: {
-                  title: 'Indiquer la situation sociale et économique',
-                  duration: '~1-2 minutes',
-                  description: 'Pour nous permettre de mieux vous connaître',
-                },
-                title: 'Indiquer la situation sociale et économique',
-                smallTitle: 'Votre situation',
-                description: 'Pour nous permettre de mieux vous connaître',
-                onSubmit: () => {
-                  return true;
-                },
-                confirmationStep: {
-                  title: 'Félicitations ! Vous avez complété vos informations',
-                  subtitle:
-                    'Ces informations nous aideront à mieux vous accompagner dans votre parcours.',
-                  submitBtnTxt: 'Continuer vers l’étape suivante',
-                },
-              },
-            ]
-          : []),
-        {
-          summary: {
-            title: 'Compléter le profil',
-            description:
-              'Permettez au reste de la communauté de vous découvrir et recevez des mises en relation personnalisées',
-            duration: '~4-5 minutes',
-          },
-          title: 'Compléter le profil',
-          smallTitle: 'Compléter le profil',
-          description:
-            'Permettez au reste de la communauté de vous découvrir et recevez des mises en relation personnalisées',
-          content: (
-            <StyledOnboardingStepContainer>
-              <Text>Step Profile</Text>
-            </StyledOnboardingStepContainer>
-          ),
-          onSubmit: () => {
-            return true;
-          },
-          confirmationStep: {
-            title: 'Félicitations ! Vous avez complété votre profil',
-            subtitle: 'Vous êtes maintenant prêt à utiliser Entourage Pro',
-            submitBtnTxt: 'Démarrer l’aventure Entourage Pro',
-          },
-        },
-      ] as OnboardingStep[],
-    [user.role, webinarSfId, dispatch]
-  );
+  const onboardingSteps: OnboardingStep[] = useMemo(() => {
+    return [
+      onboardingStepWebinar,
+      onboardingStepElearning,
+      ...(user.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
+      onboardingStepProfileCompletion,
+    ];
+  }, [
+    onboardingStepWebinar,
+    onboardingStepElearning,
+    user.role,
+    onboardingStepSocialSituation,
+    onboardingStepProfileCompletion,
+  ]);
 
   // totalDuration - Memoized total duration of all onboarding steps.
-  const totalDuration = useMemo(() => {
-    return onboardingSteps
-      .reduce((total, step) => {
-        const durationMatch = step.summary.duration.match(
-          /~(\d+)(-(\d+))? minute/
-        );
-        if (durationMatch) {
-          const min = parseInt(durationMatch[1], 10);
-          const max = durationMatch[3] ? parseInt(durationMatch[3], 10) : min;
-          return total + (min + max) / 2;
-        }
-        return total;
-      }, 0)
-      .toFixed(0);
-  }, [onboardingSteps]);
+  const totalDuration = computeTotalDuration(onboardingSteps);
 
   // currentOnboardingStep - Memoized current onboarding step object.
   const currentOnboardingStep = useMemo(() => {
-    if (currentOnboardingIdx === null) {
+    if (
+      currentOnboardingIdx === null ||
+      currentOnboardingIdx >= onboardingSteps.length
+    ) {
       return null;
     }
     return onboardingSteps[currentOnboardingIdx];
@@ -272,11 +147,15 @@ export const useOnboarding = (): UseOnboardingReturn => {
   // incrementStep - Callback to move to the next onboarding step.
   const incrementStep = useCallback(async () => {
     if (currentOnboardingIdx === null || !currentOnboardingStep) {
-      throw new Error('Current onboarding step is not defined');
+      throw new Error('Current onboarding step or steps are not defined');
     }
     if (currentOnboardingStep.onSubmit) {
       dispatch(onboardingActions.setIsLoading(true));
       const result = await currentOnboardingStep.onSubmit();
+      dispatch(onboardingActions.setIsLoading(false));
+      if (result === false) {
+        return;
+      }
       // Run confirmation step modal if defined in the current step
       if (currentOnboardingStep.confirmationStep) {
         const { title, subtitle, submitBtnTxt } =
@@ -292,13 +171,12 @@ export const useOnboarding = (): UseOnboardingReturn => {
           );
         });
       }
-      dispatch(onboardingActions.setIsLoading(false));
-      if (result === false) {
-        return;
-      }
     }
     dispatch(onboardingActions.setFormErrorMessage(null));
-    if (currentOnboardingIdx + 1 >= onboardingSteps.length) {
+    if (
+      typeof onboardingSteps.length !== 'number' ||
+      currentOnboardingIdx + 1 >= onboardingSteps.length
+    ) {
       onOnboardingCompleted();
       return;
     }
@@ -310,7 +188,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
     currentOnboardingStep,
     dispatch,
     onOnboardingCompleted,
-    onboardingSteps.length,
+    onboardingSteps,
   ]);
 
   // skipOnboarding - Callback to skip the onboarding process.

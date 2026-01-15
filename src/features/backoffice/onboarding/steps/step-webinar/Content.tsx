@@ -10,15 +10,12 @@ import { Skelton } from '@/src/components/ui/Skelton/Skelton';
 import { EventType } from '@/src/constants/events';
 import { WebinarOptionLabel } from './WebinarOptionLabel/WebinarOptionLabel';
 
-export interface OnboardingWebinarProps {
+export interface ContentProps {
   webinarSfId: string | null;
   onChange: (value: string) => void;
 }
 
-export const OnboardingWebinar = ({
-  webinarSfId,
-  onChange,
-}: OnboardingWebinarProps) => {
+export const Content = ({ webinarSfId, onChange }: ContentProps) => {
   const [options, setOptions] = React.useState<Option[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
