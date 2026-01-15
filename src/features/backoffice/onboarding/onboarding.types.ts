@@ -14,4 +14,9 @@ export interface OnboardingStep {
   description: React.ReactNode;
   content: React.ReactNode;
   onSubmit?: () => boolean | void;
+  confirmationStep?: {
+    title: string;
+    subtitle: string;
+    submitBtnTxt: string;
+  };
 }

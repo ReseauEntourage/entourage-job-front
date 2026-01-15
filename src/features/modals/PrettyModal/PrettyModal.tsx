@@ -18,6 +18,7 @@ export interface PrettyModalProps {
   subtitle?: string;
   size?: ModalSize;
   submitBtnTxt?: string;
+  onSubmit?: () => void;
   children?: React.ReactNode;
 }
 
@@ -27,9 +28,19 @@ export const PrettyModal = ({
   subtitle,
   size = 'medium',
   submitBtnTxt = 'Envoyer',
+  onSubmit,
   children,
 }: PrettyModalProps) => {
   const { onClose } = useModalContext();
+
+  const handleClose = () => {
+    if (onSubmit) {
+      onSubmit();
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <Modal id={id} size={size}>
@@ -47,7 +58,7 @@ export const PrettyModal = ({
         </>
       )}
       <StyledModalFooterContainer>
-        <Button size="large" onClick={onClose}>
+        <Button size="large" onClick={handleClose}>
           {submitBtnTxt}
         </Button>
       </StyledModalFooterContainer>

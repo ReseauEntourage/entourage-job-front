@@ -24,11 +24,10 @@ import {
   selectWebinarSfId,
 } from '../../../use-cases/onboarding/onboarding.selectors';
 import { openModal } from '../../modals/Modal/openModal';
+import { ConfirmModalStep } from './confirm-step-modal/ConfirmModalStep';
 import { StyledOnboardingStepContainer } from './onboarding.styles';
 import { OnboardingStep } from './onboarding.types';
-import { ConfirmModalStep as OnboardingElearningConfirmModalStep } from './steps/step-elearning/ConfirmModalStep';
 import { OnboardingElearning } from './steps/step-elearning/OnboardingElearning';
-import { ConfirmModalStep as OnboardingWebinarConfirmModalStep } from './steps/step-webinar/ConfirmModalStep';
 
 /**
  * useOnboarding - Hook to manage onboarding steps and state.
@@ -79,10 +78,13 @@ export const useOnboarding = () => {
    * useEffect - On component mount, determine the starting onboarding step.
    */
   useEffect(() => {
+    if (currentOnboardingIdx !== null) {
+      return; // Current step already set
+    }
     determineStartingStep().then((stepToLoad) => {
       dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
     });
-  }, [determineStartingStep, dispatch]);
+  }, [currentOnboardingIdx, determineStartingStep, dispatch]);
 
   /**
    * useEffect - Redirect to dashboard upon successful force completion of onboarding.
@@ -136,7 +138,6 @@ export const useOnboarding = () => {
                   isParticipating: true,
                 })
               ).unwrap();
-              openModal(<OnboardingWebinarConfirmModalStep />);
               return true;
             } catch (e) {
               console.error(e);
@@ -147,6 +148,12 @@ export const useOnboarding = () => {
               );
               return false;
             }
+          },
+          confirmationStep: {
+            title: 'Votre place est réservée !',
+            subtitle:
+              'Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire.',
+            submitBtnTxt: 'Continuer vers l’étape suivante',
           },
         },
         {
@@ -166,27 +173,37 @@ export const useOnboarding = () => {
             </StyledOnboardingStepContainer>
           ),
           onSubmit: () => {
-            openModal(<OnboardingElearningConfirmModalStep />);
             return true;
           },
+          confirmationStep: {
+            title: 'Bravo ! Vous avez terminé la formation',
+            subtitle: 'Vous savez à présent tout ce qu’il faut savoir.',
+            submitBtnTxt: 'Continuer vers l’étape suivante',
+          },
         },
-        ...(user.role === 'Candidat'
-          ? [
-              {
-                summary: {
-                  title: 'Indiquer la situation sociale et économique',
-                  duration: '~1-2 minutes',
-                  description: 'Pour nous permettre de mieux vous connaître',
-                },
-                title: 'Indiquer la situation sociale et économique',
-                smallTitle: 'Situation sociale et économique',
-                description: 'Pour nous permettre de mieux vous connaître',
-                onSubmit: () => {
-                  return true;
-                },
-              },
-            ]
-          : []),
+        // ...(user.role === 'Candidat'
+        //   ? [
+        {
+          summary: {
+            title: 'Indiquer la situation sociale et économique',
+            duration: '~1-2 minutes',
+            description: 'Pour nous permettre de mieux vous connaître',
+          },
+          title: 'Indiquer la situation sociale et économique',
+          smallTitle: 'Votre situation',
+          description: 'Pour nous permettre de mieux vous connaître',
+          onSubmit: () => {
+            return true;
+          },
+          confirmationStep: {
+            title: 'Félicitations ! Vous avez complété vos informations',
+            subtitle:
+              'Ces informations nous aideront à mieux vous accompagner dans votre parcours.',
+            submitBtnTxt: 'Continuer vers l’étape suivante',
+          },
+        },
+        //   ]
+        // : []),
         {
           summary: {
             title: 'Compléter le profil',
@@ -274,6 +291,21 @@ export const useOnboarding = () => {
     if (currentOnboardingStep.onSubmit) {
       dispatch(onboardingActions.setIsLoading(true));
       const result = await currentOnboardingStep.onSubmit();
+      // Run confirmation step modal if defined in the current step
+      if (currentOnboardingStep.confirmationStep) {
+        const { title, subtitle, submitBtnTxt } =
+          currentOnboardingStep.confirmationStep;
+        await new Promise<void>((resolve) => {
+          openModal(
+            <ConfirmModalStep
+              title={title}
+              subtitle={subtitle}
+              submitBtnTxt={submitBtnTxt}
+              onSubmit={() => resolve()}
+            />
+          );
+        });
+      }
       dispatch(onboardingActions.setIsLoading(false));
       if (result === false) {
         return;
