@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback, useState } from 'react';
 
 const OFFSET_TO_FETCH = 150;
@@ -48,7 +49,7 @@ export function useOnScroll(params: UseOnScrollParams = {}) {
           try {
             await onScrollBottomEnd();
             enableFetchRef.current = true;
-          } catch (e) {
+          } catch {
             // do nothing
           }
         }
@@ -60,7 +61,7 @@ export function useOnScroll(params: UseOnScrollParams = {}) {
           try {
             await onScrollTopEnd();
             enableFetchRef.current = true;
-          } catch (e) {
+          } catch {
             // do nothing
           }
         }

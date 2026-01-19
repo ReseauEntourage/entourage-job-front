@@ -24,8 +24,12 @@ export const MessagingConversationList = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!allConversations) return setConversations(null);
-    if (!query) return setConversations(allConversations);
+    if (!allConversations) {
+      return setConversations(null);
+    }
+    if (!query) {
+      return setConversations(allConversations);
+    }
     setConversations(
       allConversations.filter((conversation) =>
         conversation.participants

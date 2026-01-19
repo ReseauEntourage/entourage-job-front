@@ -48,7 +48,9 @@ export const FiltersCheckboxes = ({
                       updatedFilters[key] = e.target.checked
                         ? [constants[0]]
                         : [];
-                      if (tag) gaEvent(tag);
+                      if (tag) {
+                        gaEvent(tag);
+                      }
                       setFilters(updatedFilters);
                     }}
                   />

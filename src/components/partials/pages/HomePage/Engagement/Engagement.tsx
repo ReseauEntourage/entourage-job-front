@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  IlluCoeurMainsOuvertesBleu,
-  IlluCV,
-  IlluMalette,
-  IlluPoigneeDeMain,
-} from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { SimpleIconCTACardsGrid } from 'src/components/partials/utils/SimpleIconCTACardsGrid';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -16,7 +11,7 @@ export const Engagement = () => {
       subtitle="Si aujourd’hui la RSE est au centre des préoccupations des entreprises, c'est parce qu'elles sont en première ligne pour construire une société qui ne laisse personne en marge. En effet, le travail constitue un levier important de remobilisation et d’intégration."
       cards={[
         {
-          icon: <IlluMalette height={140} width={140} />,
+          icon: <SvgIcon name="IlluMalette" height={140} width={140} />,
           title: 'Engager ses collaborateurs',
           description:
             'Faites vivre des moments inspirants et solidaires à vos équipes',
@@ -27,7 +22,7 @@ export const Engagement = () => {
           CTAText: 'Découvrir les formats d’engagement',
         },
         {
-          icon: <IlluCV height={140} width={140} />,
+          icon: <SvgIcon name="IlluCV" height={140} width={140} />,
           title: 'Découvrir les candidats',
           description: 'Retrouvez tous les profils des candidats Entourage Pro',
           onClick: () => {
@@ -37,7 +32,7 @@ export const Engagement = () => {
           CTAText: 'Découvrir les candidats',
         },
         {
-          icon: <IlluPoigneeDeMain height={140} width={140} />,
+          icon: <SvgIcon name="IlluPoigneeDeMain" height={140} width={140} />,
           title: 'Faire du mécénat de compétences',
           description:
             'Engagez ponctuellement vos collaborateurs à nos côtés ou apportez votre aide sur une expertise ciblée',
@@ -48,7 +43,13 @@ export const Engagement = () => {
           CTAText: 'Découvrir les formats d’engagement',
         },
         {
-          icon: <IlluCoeurMainsOuvertesBleu height={140} width={140} />,
+          icon: (
+            <SvgIcon
+              name="IlluCoeurMainsOuvertesBleu"
+              height={140}
+              width={140}
+            />
+          ),
           title: 'Proposer du mécénat en nature',
           description:
             'Soutenez-nous via des dons matériels : ordinateurs, mise à disposition de locaux, de dispositifs de communication, etc.',

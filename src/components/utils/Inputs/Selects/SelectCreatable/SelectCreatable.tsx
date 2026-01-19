@@ -88,7 +88,9 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   }, [value, maxItems]);
 
   useEffect(() => {
-    if (!maxItems) return;
+    if (!maxItems) {
+      return;
+    }
     if (setIsMaxItemsReached) {
       if (remainingItems < 0) {
         setIsMaxItemsReached(true);

@@ -42,7 +42,7 @@ function* fetchSelectedCompanySaga() {
     assertIsDefined(companyId, 'Company ID must be defined');
     const { data } = yield* call(() => Api.getCompanyById(companyId));
     yield* put(fetchSelectedCompanySucceeded(data));
-  } catch (error) {
+  } catch {
     yield* put(fetchSelectedCompanyFailed());
   }
 }
@@ -56,7 +56,7 @@ function* fetchSelectedCompanyWithCollaboratorsSaga() {
       Api.getCompanyByIdWithUsersAndPendingInvitations(companyId)
     );
     yield* put(fetchSelectedCompanyWithCollaboratorsSucceeded(data));
-  } catch (error) {
+  } catch {
     yield* put(fetchSelectedCompanyWithCollaboratorsFailed());
     yield* put(
       notificationsActions.addNotification({
@@ -91,7 +91,7 @@ function* inviteCollaboratorsRequestedSaga(
       yield* put(fetchSelectedCompanyWithCollaboratorsRequested());
     }
     yield* put(currentUserActions.fetchUserRequested());
-  } catch (error) {
+  } catch {
     yield* put(inviteCollaboratorsFailed());
     yield* put(
       notificationsActions.addNotification({
@@ -115,7 +115,7 @@ function* updateCompanyLogoRequestedSaga(
     formData.append('file', logoFile);
     yield* call(() => Api.updateCompanyLogo(formData));
     yield* put(updateCompanyLogoSucceeded());
-  } catch (error) {
+  } catch {
     yield* put(updateCompanyLogoFailed(null));
   }
 }
@@ -137,7 +137,7 @@ function* updateCompanyRequestedSaga(
         message: `Votre entreprise a bien été mise à jour`,
       })
     );
-  } catch (error) {
+  } catch {
     yield* put(updateCompanyFailed(null));
     yield* put(
       notificationsActions.addNotification({
@@ -169,7 +169,7 @@ function* fetchCompaniesRequestedSaga(
       })
     );
     yield* put(fetchCompaniesSucceeded(response.data));
-  } catch (e) {
+  } catch {
     yield* put(fetchCompaniesFailed());
   }
 }

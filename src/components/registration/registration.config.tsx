@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  IlluCalendrier,
-  IlluConversation,
-  IlluCV,
-  IlluPoigneeDeMain,
-} from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { CompanyUserRole } from '@/src/constants/company';
-import { COLORS } from '@/src/constants/styles';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { ExtractFormSchemaValidation } from '../forms/FormSchema';
 import { RegistrationFlow } from './flows/flows.types';
@@ -74,22 +68,22 @@ const iconSizeProps = { width: 60, height: 60 };
 
 export const candidateLastStepBullets = [
   {
-    icon: <IlluCV {...iconSizeProps} />,
+    icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
     title: 'Mettez à jour votre CV',
     text: "Créez votre CV en quelques clics et bénéficiez d'une meilleure visibilité sur notre site",
   },
   {
-    icon: <IlluConversation {...iconSizeProps} />,
+    icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
     title: 'Discutez et échangez avec des candidat(e)s et des coachs',
     text: 'Commencez à construire votre réseau en prenant contact avec les autres membres de la communauté',
   },
   {
-    icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+    icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
     title: 'Demandez des coups de pouces à des coachs',
     text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
   },
   {
-    icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
+    icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
     title: 'Participez à des événements professionnels et conviviaux',
     text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
   },
@@ -105,17 +99,17 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
   [RegistrationFlow.COACH]: {
     bullets: [
       {
-        icon: <IlluConversation {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
         title: 'Discutez et échangez avec des candidat(e)s et des coachs',
         text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
       },
       {
-        icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
         title: 'Donnez des coup de pouces à des candidat(e)s',
         text: "Faites profiter de votre expérience à des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
       },
       {
-        icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
         title: 'Participez à des événements professionnels et conviviaux',
         text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
       },
@@ -128,18 +122,18 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
   [RegistrationFlow.REFERER]: {
     bullets: [
       {
-        icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
         title:
           'Facilitez l’inscription et le suivi des personnes que vous accompagnez',
         text: "Consultez les profils de vos candidats et soutenez-les dans leur recherche d'emploi",
       },
       {
-        icon: <IlluConversation {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
         title: "Découvrez le réseau d'entraide et adressez-lui vos candidats",
         text: 'Consultez le réseau d’entraide pour orienter au mieux vos candidats vers les coachs qui peuvent leur donner un coup de pouce dans leur recherche d’emploi',
       },
       {
-        icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
         title: 'Participez à des événements professionnels et conviviaux',
         text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
       },
@@ -152,17 +146,17 @@ export const LastStepContent: RegistrationLastStepContentByFlow = {
   [RegistrationFlow.COMPANY]: {
     bullets: [
       {
-        icon: <IlluConversation {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
         title: 'Sensibiliser vos collaborateurs',
         text: "Permettez à vos collaborateurs de devenir coach et de s'engager dans des actions solidaires.",
       },
       {
-        icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
         title: 'Inviter des collaborateurs',
         text: 'Invitez vos collaborateurs à rejoindre le réseau et à soutenir des candidat(e)s dans leur recherche d’emploi.',
       },
       {
-        icon: <IlluCV color={COLORS.primaryBlue} {...iconSizeProps} />,
+        icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
         title: 'Recruter des candidats',
         text: 'Créez des alertes de recrutement et recevez les profils de candidat(e)s correspondant à vos besoins',
       },

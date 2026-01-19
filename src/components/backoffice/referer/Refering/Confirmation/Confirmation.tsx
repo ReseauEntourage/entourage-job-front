@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntourageProLogoPrimary } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import {
   StyledReferingButtonContainer,
   StyledReferingContainer,
@@ -20,7 +20,7 @@ export function Confirmation() {
   return (
     <StyledReferingPage>
       <StyledReferingContainer>
-        <EntourageProLogoPrimary width={226} height={78} />
+        <SvgIcon name="EntourageProLogoPrimary" width={226} height={78} />
 
         <Card title={pageContent.title}>
           <StyledReferingSubtitle>

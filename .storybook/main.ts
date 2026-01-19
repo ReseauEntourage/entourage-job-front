@@ -1,7 +1,6 @@
 import path from 'path';
 import { StorybookConfig } from '@storybook/nextjs';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import { AnyCantFix } from '../src/utils/Types';
 
 const config: StorybookConfig = {
   framework: '@storybook/nextjs',
@@ -37,27 +36,6 @@ const config: StorybookConfig = {
           extensions: webpackConfig.resolve.extensions,
         }),
       ];
-    }
-
-    if (webpackConfig.module && webpackConfig.module.rules) {
-      const { rules } = webpackConfig.module;
-
-      const imageRule = rules.find((rule) => {
-        const { test } = rule as { test: RegExp };
-
-        if (!test) {
-          return false;
-        }
-
-        return test.test('.svg');
-      }) as { [key: string]: AnyCantFix };
-
-      imageRule.exclude = /\.svg$/;
-
-      rules.push({
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      });
     }
 
     return webpackConfig;

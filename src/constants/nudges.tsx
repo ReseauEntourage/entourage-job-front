@@ -1,12 +1,6 @@
 import React, { type JSX } from 'react';
 
-import {
-  IlluConversation,
-  IlluCV,
-  IlluMalette,
-  IlluPoigneeDeMain,
-  IlluReseauxSociaux,
-} from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
 import { SelectListType } from '../components/utils/Inputs/SelectList';
 import { NormalUserRoles, UserRoles } from './users';
@@ -15,11 +9,11 @@ import { FilterConstant } from './utils';
 const iconSizeProps = { width: 40, height: 40 };
 
 export const nudgesIcons = {
-  tips: <IlluPoigneeDeMain {...iconSizeProps} />,
-  interview: <IlluMalette {...iconSizeProps} />,
-  cv: <IlluCV {...iconSizeProps} />,
-  network: <IlluConversation {...iconSizeProps} />,
-  event: <IlluReseauxSociaux {...iconSizeProps} />,
+  tips: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
+  interview: <SvgIcon name="IlluMalette" {...iconSizeProps} />,
+  cv: <SvgIcon name="IlluCV" {...iconSizeProps} />,
+  network: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
+  event: <SvgIcon name="IlluReseauxSociaux" {...iconSizeProps} />,
 };
 
 export const ProfileNudges: (FilterConstant<string> & {

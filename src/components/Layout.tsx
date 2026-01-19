@@ -53,15 +53,6 @@ export const Layout = withRouter<LayoutProps>(
             href={addPrefix('/static/img/favicon.svg')}
           />
           <link rel="canonical" href="https://www.entourage-pro.fr/" />
-          {isPDF && (
-            // eslint-disable-next-line @next/next/no-css-tags
-            <link
-              rel="stylesheet"
-              type="text/css"
-              href="/static/css/uikit.entourage.print.min.css"
-              media="print"
-            />
-          )}
           {noIndex && <meta name="robots" content="noindex" />}
           <meta
             name="viewport"

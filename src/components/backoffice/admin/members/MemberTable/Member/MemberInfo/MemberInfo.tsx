@@ -54,14 +54,12 @@ export function MemberInfo({
   ) : (
     <Link
       shallow
-      passHref
       href={
         user.role === UserRoles.ADMIN
           ? `/backoffice/admin/membres/${id}`
           : `/backoffice/candidat/${id}/cv`
       }
       scroll={false}
-      legacyBehavior
     >
       <StyledMemberInfoLink>{content}</StyledMemberInfoLink>
     </Link>

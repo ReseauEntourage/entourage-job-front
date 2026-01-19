@@ -1,5 +1,5 @@
 import React from 'react';
-import { IlluCV } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ButtonIcon } from '../../../Button';
 import { Text, TextSize } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
@@ -27,7 +27,7 @@ export function FilePreviewCV({
 }: FilePreviewCVProps) {
   return (
     <StyledFileInfosContainer>
-      <IlluCV width={size} height={size} />
+      <SvgIcon name="IlluCV" width={size} height={size} />
       <Text size={textSize} onClick={onOpenFile}>
         {filename}
       </Text>

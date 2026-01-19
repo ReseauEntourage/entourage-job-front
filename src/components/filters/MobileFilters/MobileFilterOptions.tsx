@@ -34,7 +34,9 @@ export const MobileFilterOptions = ({
       // Add filter if not already included
       if (indexInSelectedFilters === -1) {
         updatedFilters[key] = [...updatedFilters[key], filterConst];
-        if (tag) gaEvent(tag);
+        if (tag) {
+          gaEvent(tag);
+        }
       }
     } else if (indexInSelectedFilters > -1) {
       // Remove filter if included

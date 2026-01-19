@@ -24,7 +24,9 @@ export const Background = ({
   let classBuffer = 'uk-background-cover';
   const styleBuffer: { backgroundImage?: string; backgroundColor?: string } =
     {};
-  if (position) classBuffer += ` uk-background-${position}`;
+  if (position) {
+    classBuffer += ` uk-background-${position}`;
+  }
   if (
     // @ts-expect-error after enable TS strict mode. Please, try to fix it
     blend.mode
@@ -34,7 +36,9 @@ export const Background = ({
       blend.mode
     }`;
   }
-  if (fixed) classBuffer += ` uk-background-fixed`;
+  if (fixed) {
+    classBuffer += ` uk-background-fixed`;
+  }
   if (src) {
     styleBuffer.backgroundImage = `url(${addPrefix(src)})`;
   }

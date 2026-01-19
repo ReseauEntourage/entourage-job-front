@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { IlluConversation } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { H3 } from 'src/components/utils/Headings/H3';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { Item } from './Item/Item';
@@ -59,7 +59,7 @@ export const MessagingSuggestions = ({
       {newMessage.length <= 0 && (
         <>
           <MessagingSuggestionsExplanation>
-            <IlluConversation width="226" height="226" />
+            <SvgIcon name="IlluConversation" width={226} height={226} />
             <H3 title="Vous avez besoin d’aide pour vous lancer ?" center />
             <p>
               Choisissez un sujet ci-dessous et envoyez votre premier message en

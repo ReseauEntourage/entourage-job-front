@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import WarningIcon from 'assets/icons/warning.svg';
+import { LucidIcon } from '../../Icons';
 import { Text } from '../../Text';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
-import { COLORS } from 'src/constants/styles';
 import {
   StyledRadioContainer,
   StyledRadioDisabledOverlay,
@@ -73,7 +72,9 @@ export function Radio({
             const disabledOption = optionsToDisable.find(
               ({ option }) => option === value
             );
-            if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
+            if (!inputId) {
+              inputId = `radio-${value.replace(/\s+/g, '')}`;
+            }
             return (
               <div key={`$div-${i}-${uuidValue}`}>
                 <label
@@ -98,10 +99,10 @@ export function Radio({
                 </label>
                 {disabledOption && (
                   <StyledRadioDisabledOverlay>
-                    <WarningIcon
-                      width={30}
-                      height={30}
-                      color={COLORS.primaryBlue}
+                    <LucidIcon
+                      name="TriangleAlert"
+                      size={30}
+                      color="primaryBlue"
                     />
                     {typeof disabledOption.message === 'string' ? (
                       <Text size="small" weight="bold">

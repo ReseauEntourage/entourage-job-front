@@ -1,5 +1,5 @@
 import React from 'react';
-import { IlluBulleQuestion } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ButtonIcon } from '../Button';
 import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledAlert, StyledAlertContainer } from './Alert.styles';
@@ -11,7 +11,7 @@ interface AlertIconProps {
 
 const DefaultAlertIcon = ({ variant }: AlertIconProps) => {
   if (variant === 'info') {
-    return <IlluBulleQuestion width={35} height={30} />;
+    return <SvgIcon name="IlluBulleQuestion" width={35} height={30} />;
   }
 
   return null;

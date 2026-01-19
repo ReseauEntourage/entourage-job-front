@@ -77,7 +77,9 @@ export const SearchBar = ({
 
   const startSearch = useCallback(() => {
     if (searchBuffer) {
-      if (startSearchEvent) gaEvent(startSearchEvent);
+      if (startSearchEvent) {
+        gaEvent(startSearchEvent);
+      }
       setSearch(searchBuffer);
     } else {
       setSearch();

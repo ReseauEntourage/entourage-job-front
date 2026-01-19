@@ -42,9 +42,13 @@ export const ModalConfirm = ({
           dataTestId="modal-confirm-confirm"
           disabled={isLoading}
           onClick={() => {
-            if (isLoading) return;
+            if (isLoading) {
+              return;
+            }
             onConfirm();
-            if (onClose && !keepOpenOnConfirm) onClose();
+            if (onClose && !keepOpenOnConfirm) {
+              onClose();
+            }
           }}
         >
           {buttonText}

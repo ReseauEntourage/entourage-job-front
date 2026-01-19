@@ -19,3 +19,8 @@ export const StyledOffCanvas = styled.div<{
     width: 100%;
   }
 `;
+
+export const StyledCloseButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

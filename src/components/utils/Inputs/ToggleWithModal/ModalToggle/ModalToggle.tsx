@@ -32,7 +32,9 @@ export const ModalToggle = ({
           dataTestId={`test-confirm-${id}`}
           onClick={() => {
             onToggle();
-            if (onClose) onClose();
+            if (onClose) {
+              onClose();
+            }
           }}
         >
           {modalConfirmation}

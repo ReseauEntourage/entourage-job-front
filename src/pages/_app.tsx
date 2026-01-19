@@ -1,9 +1,8 @@
 // use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
-// eslint-disable-next-line import/order
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
-import 'src/styles/styles.less';
-import 'src/components/modals/Modal/Modal.less';
+import 'src/styles/styles.css';
+import 'src/components/modals/Modal/Modal.css';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';

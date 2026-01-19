@@ -8,7 +8,6 @@ on:
 
 env:
   PORT: 3000
-  NEXT_PUBLIC_WEBINAR_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
   NEXT_PUBLIC_TOOLBOX_COMPANY_URL: 'https://google.com'

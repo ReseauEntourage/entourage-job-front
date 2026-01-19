@@ -1,13 +1,7 @@
 import React from 'react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
 import { openModal } from '@/src/components/modals/Modal';
-import {
-  IlluBulleQuestion,
-  IlluCoachEtCandidat,
-  IlluCoeurMainsOuvertesBleu,
-  IlluCV,
-  IlluOrdiCV,
-} from 'assets/icons/icons';
 import { CompanyRecruitementAlertModal } from '../CompanyRecruitementAlertCard/CompanyRecruitementAlertModal';
 import { Context } from './DashboardNextSteps.types';
 
@@ -15,11 +9,11 @@ const iconSizeProps = { width: 80, height: 55 };
 
 const webinarStep = {
   title: "S'inscrire au webinaire",
-  icon: <IlluBulleQuestion {...iconSizeProps} />,
+  icon: <SvgIcon name="IlluBulleQuestion" {...iconSizeProps} />,
   content: 'Besoin d’en savoir plus sur la plateforme Entourage Pro ?',
   cta: {
     label: "S'inscrire",
-    href: process.env.NEXT_PUBLIC_WEBINAR_URL,
+    href: `/backoffice/events?eventTypes=WELCOME_SESSION`,
   },
 };
 
@@ -30,7 +24,7 @@ export const stepsByContext = {
     },
     {
       title: 'Ajouter mon CV',
-      icon: <IlluCV {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
       content: 'Rendre visible et valoriser votre projet professionnel',
       cta: {
         label: 'Ajouter mon CV',
@@ -39,7 +33,7 @@ export const stepsByContext = {
     },
     {
       title: 'Découvrir le réseau d’entraide',
-      icon: <IlluCoachEtCandidat {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
       content: 'Retrouvez tous les coachs de la communauté',
       cta: {
         label: 'Contacter un coach',
@@ -53,7 +47,7 @@ export const stepsByContext = {
     },
     {
       title: 'Découvrir le réseau d’entraide',
-      icon: <IlluCoachEtCandidat {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
       content: 'Retrouvez tous les candidats de la communauté',
       cta: {
         label: 'Contacter un candidat',
@@ -62,7 +56,7 @@ export const stepsByContext = {
     },
     {
       title: 'Avoir la bonne posture',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
       content: 'Lire le document sur la posture Entourage Pro',
       cta: {
         label: 'Lire',
@@ -73,7 +67,7 @@ export const stepsByContext = {
   [Context.COMPANY_ADMIN_TBS_MODE]: [
     {
       title: 'Compléter ma page entreprise',
-      icon: <IlluOrdiCV {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluOrdiCV" {...iconSizeProps} />,
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
@@ -91,13 +85,15 @@ export const stepsByContext = {
     // },
     {
       title: 'Inviter mes collaborateurs',
-      icon: <IlluCoachEtCandidat {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
       content: 'Proposer à mes collaborateurs de devenir coach',
       cta: {
         label: 'Inviter',
         onClick: (currentUser) => {
           const companyId = currentUser?.company?.id || null;
-          if (!companyId) return;
+          if (!companyId) {
+            return;
+          }
           openModal(<CompanyInviteCollaboratorsModal companyId={companyId} />);
         },
       },
@@ -105,7 +101,7 @@ export const stepsByContext = {
     // While waiting for TBS feature to be finished, we replace this step with the network discovery step
     {
       title: 'Découvrir le réseau d’entraide',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
       content: 'Retrouvez tous les candidats de la communauté',
       cta: {
         label: 'Contacter un candidat',
@@ -116,7 +112,7 @@ export const stepsByContext = {
   [Context.COMPANY_ADMIN_RECRUITMENT_MODE]: [
     {
       title: 'Compléter ma page entreprise',
-      icon: <IlluOrdiCV {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluOrdiCV" {...iconSizeProps} />,
       content: 'Renseignez les informations de votre entreprise',
       cta: {
         label: 'Compléter',
@@ -125,7 +121,7 @@ export const stepsByContext = {
     },
     {
       title: 'Créer une alerte',
-      icon: <IlluCoachEtCandidat {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
       content: 'Trouvez les candidats qui vous correspondent',
       cta: {
         label: 'Créer une alerte',
@@ -146,7 +142,7 @@ export const stepsByContext = {
     // While waiting for TBS feature to be finished, we replace this step with the network discovery step
     {
       title: 'Découvrir le réseau d’entraide',
-      icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
+      icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
       content: 'Retrouvez tous les candidats de la communauté',
       cta: {
         label: 'Contacter un candidat',

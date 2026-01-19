@@ -23,11 +23,6 @@ export const StyledAlert = styled.div<{
     return ALERT_COLORS[props.variant]?.text || COLORS.white;
   }};
   color: ${ALERT_COLORS.info.text};
-  .icon {
-    width: 46px;
-    height: 46px;
-  }
-
   padding: 10px 20px;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {

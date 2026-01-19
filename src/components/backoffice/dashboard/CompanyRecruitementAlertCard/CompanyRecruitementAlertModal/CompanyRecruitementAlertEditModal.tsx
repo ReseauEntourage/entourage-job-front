@@ -74,7 +74,9 @@ export const CompanyRecruitementAlertEditModal = ({
         };
 
         onSubmit(recruitementAlertDto);
-        if (onClose) onClose();
+        if (onClose) {
+          onClose();
+        }
       } catch (error) {
         console.error('Error in handleSubmit:', error);
       }
@@ -82,7 +84,9 @@ export const CompanyRecruitementAlertEditModal = ({
     [user, onSubmit, onClose]
   );
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     // I had issues with ModalEdit here, so I replaced it with ModalGeneric + FormWithValidation directly
@@ -97,7 +101,9 @@ export const CompanyRecruitementAlertEditModal = ({
         formSchema={formSchema}
         defaultValues={initialValues}
         onCancel={() => {
-          if (onClose) onClose();
+          if (onClose) {
+            onClose();
+          }
         }}
         onSubmit={(fields) => {
           handleSubmit(fields);

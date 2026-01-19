@@ -7,7 +7,9 @@ export const DataProvider = ({ children }) => {
   const [data, setData] = useState(true);
 
   const storeData = useCallback((key, value, storeInStorage) => {
-    if (storeInStorage) localStorage.setItem(key, JSON.stringify(value));
+    if (storeInStorage) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
     setData((prevData) => {
       return {
         ...prevData,

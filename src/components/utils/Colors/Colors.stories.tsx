@@ -37,7 +37,7 @@ const ColorsTemplate = () => {
             <StyledColorContainer
               onClick={() => {
                 navigator.clipboard.writeText(COLORS[colorKey]);
-                alert(`Copied: ${COLORS[colorKey]}`); // eslint-disable-line no-alert
+                alert(`Copied: ${COLORS[colorKey]}`);
               }}
             >
               <StyledColor color={COLORS[colorKey]} isDarkColor={isDarkColor}>
@@ -57,7 +57,7 @@ const ColorsTemplate = () => {
                 navigator.clipboard.writeText(
                   ALERT_COLORS[colorKey].background
                 );
-                alert(`Copied: ${ALERT_COLORS[colorKey].background}`); // eslint-disable-line no-alert
+                alert(`Copied: ${ALERT_COLORS[colorKey].background}`);
               }}
             >
               <StyledColor color={ALERT_COLORS[colorKey].background}>

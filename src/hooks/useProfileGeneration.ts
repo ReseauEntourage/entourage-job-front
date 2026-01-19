@@ -39,7 +39,9 @@ export const useProfileGeneration = ({
   }, [dispatch]);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
 
     // Abonnement au channel Pusher
     const pusher = getPusher();
@@ -90,7 +92,7 @@ export const useProfileGeneration = ({
       if (!response || response.status !== 200) {
         dispatchErrorNotification();
       }
-    } catch (err) {
+    } catch {
       dispatchErrorNotification();
     }
   };

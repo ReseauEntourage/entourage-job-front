@@ -1,5 +1,5 @@
 import React from 'react';
-import EntourageLogo from 'assets/icons/logo-entourage.svg';
+import { SvgIcon } from '@/assets/icons/icons';
 import {
   Background,
   Button,
@@ -30,7 +30,7 @@ export const AssociationEntourage = () => {
             className="uk-margin-large-top"
           >
             <div>
-              <EntourageLogo width={50} height={50} />
+              <SvgIcon name="LogoEntourage" width={50} height={50} />
               <H2 center color="white" title="A propos d'Entourage" />
               <div className="uk-light">
                 <Text center color="white">

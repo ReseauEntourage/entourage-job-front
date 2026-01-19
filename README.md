@@ -185,13 +185,7 @@ pnpm run add-icons
 
 > Suppression progressive de la librairie **_UIkit_**
 
-Les fichiers du thème globale, qui utilisent la librairie <strike>**_UIkit_**</strike>, se trouvent dans le dossier `/assets/custom`
-
-- `entourage.less` : style globale qui surcharge le thème par défaut de <strike>**_UIkit_**</strike>
-
-- `entourage.print.less` : style utilisé pour le CV en version PDF
-
-- `/icons` : icônes en SVG rajoutés aux icônes <strike>**_UIkit_**</strike>
+- `/icons` : icônes en SVG
 
 Les fichiers compilés se retrouvent dans le dossier _/src/styles/dist_.
 

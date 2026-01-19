@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { CompanyIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { BusinessSector, User, UserProfile } from '@/src/api/types';
 import {
   Button,
@@ -48,7 +48,9 @@ export const CompanyCard = ({
   users,
 }: CompanyCardProps) => {
   const collaboratorCountText = useMemo(() => {
-    if (users.length === 0) return <Text>Aucun collaborateur</Text>;
+    if (users.length === 0) {
+      return <Text>Aucun collaborateur</Text>;
+    }
 
     let boldPart = '';
     const rest = 'dans la communauté';
@@ -86,7 +88,7 @@ export const CompanyCard = ({
                 fill
               />
             ) : (
-              <CompanyIcon width={45} height={45} />
+              <SvgIcon name="CompanyIcon" width={45} height={45} />
             )}
           </StyledCompanyCardPictureContainer>
           <Text size="large">{name}</Text>

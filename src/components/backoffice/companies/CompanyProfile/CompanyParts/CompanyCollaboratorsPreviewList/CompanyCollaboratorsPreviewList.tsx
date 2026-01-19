@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
 import { CompanyInviteCollaboratorsModal } from '@/src/components/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
@@ -15,7 +16,6 @@ import { ProfilePartCard } from '@/src/components/profile/ProfilePartCards/Card/
 import { ProfileCard } from '@/src/components/utils/Cards/EntityCards/ProfileCard';
 import { useIsMobile } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
-import { IlluReseau } from 'assets/icons/icons';
 import { LucidIcon, Text } from 'src/components/utils';
 import {
   StyledNavigationContainer,
@@ -50,8 +50,12 @@ export const CompanyCollaboratorsPreviewList = ({
     companyWithCollaborators.users.length > 0;
 
   const ctaTitle = useMemo(() => {
-    if (!isEditable) return null;
-    if (!isCompleted) return 'Inviter des collaborateurs';
+    if (!isEditable) {
+      return null;
+    }
+    if (!isCompleted) {
+      return 'Inviter des collaborateurs';
+    }
     return 'Voir tous les collaborateurs';
   }, [isCompleted, isEditable]);
 
@@ -86,7 +90,9 @@ export const CompanyCollaboratorsPreviewList = ({
 
   const slidesPerView = useMemo(() => {
     // Always display 1 slide on mobile
-    if (isMobile) return 1.4;
+    if (isMobile) {
+      return 1.4;
+    }
     // On desktop, display 2 slides and 60% of the next one
     return 2.6;
   }, [isMobile]);
@@ -110,7 +116,7 @@ export const CompanyCollaboratorsPreviewList = ({
           Cette entreprise n’a pas encore de collaborateurs rattachés.
         </Text>
       ),
-      icon: <IlluReseau />,
+      icon: <SvgIcon name="IlluReseau" />,
     };
   }, [isEditable]);
 

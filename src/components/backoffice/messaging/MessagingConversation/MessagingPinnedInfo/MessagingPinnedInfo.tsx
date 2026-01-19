@@ -1,5 +1,5 @@
 import React from 'react';
-import { IlluBulleQuestion } from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { Alert } from 'src/components/utils/Alert/Alert';
 import { useIsDesktop } from 'src/hooks/utils';
 
@@ -27,7 +27,7 @@ export const MessagingPinnedInfo = ({
       rounded={false}
       icon={
         isDesktop ? (
-          <IlluBulleQuestion className="icon" width={35} height={30} />
+          <SvgIcon name="IlluBulleQuestion" width={35} height={30} />
         ) : null
       }
       onClose={() => setVisible(false)}

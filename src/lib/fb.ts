@@ -17,5 +17,7 @@ export const fbEvent = ({
   action: string;
   options?: { content_category: string };
 }) => {
-  if (window.fbq) window.fbq(type || 'trackCustom', action, options);
+  if (window.fbq) {
+    window.fbq(type || 'trackCustom', action, options);
+  }
 };

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-target-blank */
 import Link from 'next/link';
 import React from 'react';
 import { UIKIT_SCREENS } from 'src/components/variables';
@@ -35,8 +34,12 @@ export const SimpleLink = ({
   toggle,
 }: SimpleLinkProps) => {
   let classBuffer = '';
-  if (visible) classBuffer += ` uk-visible@${visible}`;
-  if (className) classBuffer += ` ${className}`;
+  if (visible) {
+    classBuffer += ` uk-visible@${visible}`;
+  }
+  if (className) {
+    classBuffer += ` ${className}`;
+  }
 
   if (toggle) {
     return (
@@ -56,15 +59,16 @@ export const SimpleLink = ({
       {children}
     </a>
   ) : (
-    <Link scroll={scroll} href={href} shallow={shallow} legacyBehavior>
-      <a
-        onClick={onClick}
-        target={target}
-        className={classBuffer}
-        rel={target ? 'noopener' : ''}
-      >
-        {children}
-      </a>
+    <Link
+      scroll={scroll}
+      href={href}
+      shallow={shallow}
+      onClick={onClick}
+      target={target}
+      className={classBuffer}
+      rel={target ? 'noopener' : ''}
+    >
+      {children}
     </Link>
   );
 };

@@ -21,7 +21,6 @@ export type EventInfoSummaryProps = Pick<
 export const EventInfoSummary = ({
   startDate,
   mode,
-  meetingLink,
   fullAddress,
   displayParticipants = false,
   registrationCount,
@@ -36,18 +35,34 @@ export const EventInfoSummary = ({
         </StyledElement>
 
         {/* IRL Location */}
-        {mode === EventMode.IN_PERSON && fullAddress && (
+        {mode === EventMode.IN_PERSON && (
           <StyledElement>
             <LucidIcon name="MapPin" size={20} />
-            <Text>{fullAddress}</Text>
+            <Text>{fullAddress ? fullAddress : 'En présentiel'}</Text>
           </StyledElement>
         )}
 
         {/* Online Location */}
-        {mode === EventMode.ONLINE && meetingLink && (
+        {mode === EventMode.ONLINE && (
           <StyledElement>
             <LucidIcon name="Laptop" size={20} />
-            <Text>En visio</Text>
+            <Text>
+              En visio
+              {/* {meetingLink && (
+                <>
+                  {' - '}
+                  <Link
+                    href={`${
+                      meetingLink.startsWith('http') ? '' : 'https://'
+                    }${meetingLink}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Accéder
+                  </Link>
+                </>
+              )} */}
+            </Text>
           </StyledElement>
         )}
       </StyledContainer>

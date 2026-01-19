@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError } from 'axios';
 
 function isAxiosError(error: any): error is AxiosError {

@@ -6,10 +6,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import FacebookIcon from 'assets/icons/facebook.svg';
-import LinkedInIcon from 'assets/icons/linked-in.svg';
-import TwitterIcon from 'assets/icons/twitter.svg';
-import WhatsappIcon from 'assets/icons/whatsapp.svg';
+import { SvgIcon } from '@/assets/icons/icons';
 import { PublicCV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
@@ -66,7 +63,7 @@ export const CVShareButtons = ({
         summary={sharedDescription}
       >
         <StyledCVShareButton>
-          <LinkedInIcon />
+          <SvgIcon name="LinkedIn" />
         </StyledCVShareButton>
       </LinkedinShareButton>
       <FacebookShareButton
@@ -84,7 +81,7 @@ export const CVShareButtons = ({
         hashtags={hashtags}
       >
         <StyledCVShareButton>
-          <FacebookIcon />
+          <SvgIcon name="Facebook" />
         </StyledCVShareButton>
       </FacebookShareButton>
       <TwitterShareButton
@@ -103,7 +100,7 @@ export const CVShareButtons = ({
         via="R_Entourage"
       >
         <StyledCVShareButton>
-          <TwitterIcon />
+          <SvgIcon name="Twitter" />
         </StyledCVShareButton>
       </TwitterShareButton>
       <WhatsappShareButton
@@ -120,7 +117,7 @@ export const CVShareButtons = ({
         title={sharedDescription}
       >
         <StyledCVShareButton>
-          <WhatsappIcon />
+          <SvgIcon name="Whatsapp" />
         </StyledCVShareButton>
       </WhatsappShareButton>
     </StyledCVShareButtonsContainer>

@@ -1,9 +1,5 @@
 import React, { useMemo } from 'react';
-import {
-  IlluDossierCandidat,
-  IlluOrdiCV,
-  OrienterSablier,
-} from 'assets/icons/icons';
+import { SvgIcon } from '@/assets/icons/icons';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Text } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
@@ -55,7 +51,7 @@ export const ProfileStats = ({
       list.push({
         title: 'Taux de réponse',
         value: `${responseRate}%`,
-        icon: <IlluDossierCandidat {...iconProps} />,
+        icon: <SvgIcon name="IlluDossierCandidat" {...iconProps} />,
       });
     }
     if (relativeConnectionDateInDays !== null) {
@@ -67,7 +63,7 @@ export const ProfileStats = ({
             : `Il y'a ${relativeConnectionDateInDays} jour${
                 relativeConnectionDateInDays > 1 ? 's' : ''
               }`,
-        icon: <IlluOrdiCV {...iconProps} />,
+        icon: <SvgIcon name="IlluOrdiCV" {...iconProps} />,
       });
     }
     if (averageDelayResponse !== null) {
@@ -76,7 +72,14 @@ export const ProfileStats = ({
         value: `Moins d${
           averageDelayResponse > 1 ? 'e ' : "'"
         }${averageDelayResponse} jour${averageDelayResponse > 1 ? 's' : ''}`,
-        icon: <OrienterSablier {...iconProps} width={25} height={25} />,
+        icon: (
+          <SvgIcon
+            name="OrienterSablier"
+            {...iconProps}
+            width={25}
+            height={25}
+          />
+        ),
       });
     }
     return list;

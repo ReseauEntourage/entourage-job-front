@@ -74,7 +74,6 @@ export function useRefering() {
         shallow: true,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextStep, replace, shouldSkipStep, dispatch, stepContent]);
 
   useEffect(() => {
