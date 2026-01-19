@@ -264,11 +264,8 @@ export class APIHandler {
     return this.post('/user/refering', params);
   }
 
-  postProfileImage(
-    userId: string,
-    profileImage: FormData
-  ): Promise<AxiosResponse> {
-    return this.post(`/user/profile/upload-image/${userId}`, profileImage, {
+  postProfileImage(profileImage: FormData): Promise<AxiosResponse> {
+    return this.post(`/user/profile/upload-image`, profileImage, {
       'Content-Type': 'multipart/form-data',
     });
   }
