@@ -180,12 +180,11 @@ function* readDocumentRequestedSaga(
 function* updateUserProfilePictureRequestedSaga(
   action: ReturnType<typeof updateUserProfilePictureRequested>
 ) {
-  const userId = yield* select(selectCurrentUserId);
   const { profileImage } = action.payload;
   try {
     const formData = new FormData();
     formData.append('profileImage', profileImage);
-    yield* call(() => Api.postProfileImage(userId, formData));
+    yield* call(() => Api.postProfileImage(formData));
     yield* put(updateUserProfilePictureSucceeded());
   } catch {
     yield* put(updateUserProfilePictureFailed());
