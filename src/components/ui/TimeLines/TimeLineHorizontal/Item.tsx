@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text } from '@/src/components/ui/Text/Text';
 import { Color } from '@/src/constants/styles';
+import { NumberCheckableBadge } from '../../Badge/NumberCheckableBadge/NumberCheckableBadge';
 import {
   StyledItem,
-  StyledItemCounter,
   StyledItemCounterContainer,
 } from './TimeLineHorizontal.styles';
 
@@ -13,6 +13,7 @@ export interface ItemProps {
   isLast?: boolean;
   active?: boolean;
   activeColor?: Color;
+  badgeSize?: number;
 }
 
 export const Item = ({
@@ -20,27 +21,26 @@ export const Item = ({
   content,
   isLast = false,
   active = false,
-  activeColor = 'darkBlue',
+  activeColor,
+  badgeSize = 50,
 }: ItemProps) => {
   return (
     <StyledItem isLast={isLast} active={active}>
       {/* Counter */}
       <StyledItemCounterContainer>
-        <StyledItemCounter active={active} activeColor={activeColor}>
-          <Text
-            weight={active ? 'semibold' : 'normal'}
-            size={20}
-            color={active ? 'black' : 'gray'}
-          >
-            {number}
-          </Text>
-        </StyledItemCounter>
+        <NumberCheckableBadge
+          number={number}
+          active={active}
+          borderColor={activeColor}
+          checked={active}
+          size={badgeSize}
+        />
 
         {/* Content */}
         <Text
           size="large"
           weight={active ? 'semibold' : 'normal'}
-          color={active ? 'black' : 'gray'}
+          color={active ? 'black' : 'darkGray'}
           center
         >
           {content}

@@ -73,6 +73,8 @@ export const COLORS = {
   // Skelton
   skeltonLight: '#EDEDED',
   skeltonDark: '#F7F7F7',
+
+  cardShadow: '#0000000D',
 };
 
 export type Color = keyof typeof COLORS;

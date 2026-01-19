@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Color, COLORS } from 'src/constants/styles';
 
-export const StyledRoundBadge = styled.div<{ color: Color }>`
+export const StyledDot = styled.div<{ color: Color }>`
   display: flex;
   align-items: center;
   justify-content: center;

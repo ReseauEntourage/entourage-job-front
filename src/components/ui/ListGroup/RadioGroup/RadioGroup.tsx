@@ -1,4 +1,5 @@
 import React from 'react';
+import { Skelton } from '../../Skelton/Skelton';
 import {
   StyledInput,
   StyledRadioGroupItem,
@@ -15,15 +16,20 @@ export interface RadioGroupProps {
   options: Option[];
   selection: string | null;
   onChange: (value: string) => void;
+  isLoading?: boolean;
+  estimatedOptionLength?: number;
 }
 
 export const RadioGroup = ({
   options,
   selection,
   onChange,
+  isLoading = false,
+  estimatedOptionLength = 3,
 }: RadioGroupProps) => {
   return (
     <StyledRadioGroupList>
+      {isLoading && <Skelton height="90px" count={estimatedOptionLength} />}
       {options.map((option, index) => (
         <StyledRadioGroupItem
           key={index}

@@ -33,6 +33,7 @@ interface CardProps {
   editIcon?: React.ReactNode;
   borderColor?: string;
   bgColor?: Color;
+  shadow?: boolean;
 }
 
 export const Card = ({
@@ -51,6 +52,7 @@ export const Card = ({
   borderColor,
   centerTitle = false,
   bgColor = 'white',
+  shadow = false,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -65,6 +67,7 @@ export const Card = ({
       data-testid={dataTestId}
       borderColor={borderColor}
       bgColor={bgColor}
+      shadow={shadow}
     >
       {title ? (
         <>

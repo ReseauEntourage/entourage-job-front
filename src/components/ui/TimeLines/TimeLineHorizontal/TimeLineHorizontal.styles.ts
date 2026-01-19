@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import { Color, COLORS } from '@/src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
-const COUNTER_SIZE = 50;
 const LINE_HEIGHT = 2;
-const BORDER_WIDTH = 3;
 
 export const StyledContainer = styled.div`
   position: relative;
@@ -12,9 +10,9 @@ export const StyledContainer = styled.div`
   flex-wrap: nowrap;
 `;
 
-export const StyledLine = styled.div`
+export const StyledLine = styled.div<{ badgeSize: number }>`
   position: absolute;
-  top: ${COUNTER_SIZE / 2}px;
+  top: ${({ badgeSize }) => badgeSize / 2}px;
   left: 0;
   right: 0;
   height: ${LINE_HEIGHT}px;
@@ -46,21 +44,6 @@ export const StyledItemCounterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
-`;
-
-export const StyledItemCounter = styled.div<{
-  active?: boolean;
-  activeColor?: Color;
-}>`
-  width: ${COUNTER_SIZE}px;
-  height: ${COUNTER_SIZE}px;
-  border-radius: 50%;
-  background-color: ${COLORS.white};
-  border: ${BORDER_WIDTH}px solid
-    ${({ active, activeColor }) => (active ? COLORS[activeColor] : COLORS.gray)};
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const StyledItemContent = styled.div`

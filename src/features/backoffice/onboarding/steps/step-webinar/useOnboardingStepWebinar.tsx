@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Api } from '@/src/api';
+import { EventType } from '@/src/constants/events';
 import { AppDispatch } from '@/src/store/store';
 import { updateUserParticipationThunk } from '@/src/use-cases/events/events.thunks';
 import {
@@ -12,6 +14,18 @@ import { Content } from './Content';
 export const useOnboardingStepWebinar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const webinarSfId = useSelector(selectWebinarSfId);
+
+  const fetchRegisteredWebinarEvents = async () => {
+    const { data } = await Api.getAllEvents({
+      eventTypes: [EventType.WELCOME_SESSION],
+      limit: 50,
+      offset: 0,
+      departmentIds: [],
+      isParticipating: true,
+      includePastEvents: true,
+    });
+    return data;
+  };
 
   const onboardingStepWebinar = {
     summary: {
@@ -34,6 +48,12 @@ export const useOnboardingStepWebinar = () => {
         />
       </StyledOnboardingStepContainer>
     ),
+    isStepCompleted: async () => {
+      // Step is considered complete if the user is registered for a webinar
+      const events = await fetchRegisteredWebinarEvents();
+      return events.length > 0;
+    },
+    incrementationIsAllowed: async () => true, // Always allow incrementation; validation is done in onSubmit
     onSubmit: async () => {
       if (!webinarSfId) {
         dispatch(

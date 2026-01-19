@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { OnboardingStatus } from '@/src/constants/onboarding';
 
-import type { AppDispatch } from '@/src/store/store';
+import { store, type AppDispatch } from '@/src/store/store';
 import {
   currentUserActions,
   selectForceOnboardingAsCompletedSelectors,
@@ -55,16 +55,9 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const { onboardingStepProfileCompletion } =
     useOnboardingStepProfileCompletion();
 
-  // useEffect - Initialize current onboarding step on mount.
-  useEffect(() => {
-    // Only set starting step if not already set
-    if (currentOnboardingIdx !== null) {
-      return;
-    }
-    determineStartingStep().then((stepToLoad) => {
-      dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
-    });
-  }, [currentOnboardingIdx, dispatch]);
+  // incrementationIsAllowed - State boolean indicating if moving to the next step is allowed.
+  const [incrementationIsAllowed, setIncrementationIsAllowed] =
+    useState<boolean>(false);
 
   // useEffect - Redirect based on onboarding status updates.
   useEffect(() => {
@@ -121,8 +114,52 @@ export const useOnboarding = (): UseOnboardingReturn => {
     return onboardingSteps[currentOnboardingIdx];
   }, [onboardingSteps, currentOnboardingIdx]);
 
-  // nextStepAllowed - Determines if moving to the next step is allowed.
-  const nextStepAllowed = true; // Placeholder for actual logic to determine if the next step is allowed
+  // useEffect - Update incrementationIsAllowed when current step changes.
+  useEffect(() => {
+    let cancelled = false;
+    let running = false;
+
+    const checkIncrementationAllowed = async () => {
+      if (running) {
+        return;
+      }
+      running = true;
+
+      if (currentOnboardingIdx === null || !currentOnboardingStep) {
+        if (!cancelled) {
+          setIncrementationIsAllowed(false);
+        }
+        running = false;
+        return;
+      }
+      if (!currentOnboardingStep.incrementationIsAllowed) {
+        if (!cancelled) {
+          setIncrementationIsAllowed(true);
+        }
+        running = false;
+        return;
+      }
+
+      const result = await currentOnboardingStep.incrementationIsAllowed();
+      if (!cancelled) {
+        setIncrementationIsAllowed((prev) => (prev === result ? prev : result));
+      }
+      running = false;
+    };
+
+    checkIncrementationAllowed();
+
+    // Important: some steps become “complete” after async store updates
+    // (e.g. elearning units fetched), without changing the current step.
+    const unsubscribe = store.subscribe(() => {
+      checkIncrementationAllowed();
+    });
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
+  }, [currentOnboardingIdx, currentOnboardingStep]);
 
   // nextOnboardingStep - Memoized next onboarding step object.
   const nextOnboardingStep = useMemo(() => {
@@ -148,6 +185,13 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const incrementStep = useCallback(async () => {
     if (currentOnboardingIdx === null || !currentOnboardingStep) {
       throw new Error('Current onboarding step or steps are not defined');
+    }
+
+    if (currentOnboardingStep.incrementationIsAllowed) {
+      const isAllowed = await currentOnboardingStep.incrementationIsAllowed();
+      if (!isAllowed) {
+        return;
+      }
     }
     if (currentOnboardingStep.onSubmit) {
       dispatch(onboardingActions.setIsLoading(true));
@@ -199,6 +243,17 @@ export const useOnboarding = (): UseOnboardingReturn => {
   // currentOnboardingStepContent - Content component of the current onboarding step.
   const currentOnboardingStepContent = currentOnboardingStep?.content;
 
+  // useEffect - Initialize current onboarding step on mount.
+  useEffect(() => {
+    // Only set starting step if not already set
+    if (currentOnboardingIdx !== null) {
+      return;
+    }
+    determineStartingStep(onboardingSteps).then((stepToLoad) => {
+      dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
+    });
+  }, [currentOnboardingIdx, dispatch, onboardingSteps]);
+
   // Return values from the useOnboarding hook.
   return {
     formErrorMessage,
@@ -208,7 +263,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
     currentOnboardingIdx,
     currentOnboardingStep,
     currentOnboardingStepContent,
-    nextStepAllowed,
+    incrementationIsAllowed,
     nextOnboardingStep,
     incrementStep,
     skipOnboarding,

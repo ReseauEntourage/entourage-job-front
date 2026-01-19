@@ -17,7 +17,7 @@ const OnboardingRun = () => {
     formErrorMessage,
     currentOnboardingStep,
     currentOnboardingStepContent,
-    nextStepAllowed,
+    incrementationIsAllowed,
     incrementStep,
     isLoading,
     skipOnboarding,
@@ -48,7 +48,7 @@ const OnboardingRun = () => {
               <StyledOnboardingActions>
                 <Button
                   onClick={incrementStep}
-                  disabled={!nextStepAllowed || isLoading}
+                  disabled={!incrementationIsAllowed || isLoading}
                 >
                   {isLoading && (
                     <>

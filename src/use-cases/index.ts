@@ -1,6 +1,7 @@
 import { authenticationConfig } from './authentication';
 import { companyConfig } from './company';
 import { currentUserConfig } from './current-user';
+import { elearningConfig } from './elearning';
 import { eventsConfig } from './events';
 import { messagingConfig } from './messaging';
 import { notificationsConfig } from './notifications';
@@ -27,4 +28,5 @@ export const useCasesConfig: UseCaseConfigType = {
   companyConfig,
   eventsConfig,
   onboardingNewConfig,
+  elearningConfig,
 };

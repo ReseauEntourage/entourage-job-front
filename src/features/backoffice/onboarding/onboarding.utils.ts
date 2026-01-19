@@ -1,26 +1,26 @@
-import { Api } from '@/src/api';
-import { EventType } from '@/src/constants/events';
 import { OnboardingStep } from './onboarding.types';
 
 // determineStartingStep - Determines the starting onboarding step based on user data.
-export const determineStartingStep = async () => {
-  let stepToLoad = 0;
-  await Api.getAllEvents({
-    eventTypes: [EventType.WELCOME_SESSION],
-    limit: 1,
-    offset: 0,
-    departmentIds: [],
-    isParticipating: true,
-    includePastEvents: true,
-  }).then((response) => {
-    if (response.data.length > 0) {
-      // User is already registered for a webinar, skip to next step
-      stepToLoad = 1;
+export const determineStartingStep = async (
+  onboardingSteps: OnboardingStep[]
+) => {
+  // For each step, check if it's completed; return the index of the first incomplete step.
+  for (let i = 0; i < onboardingSteps.length; i++) {
+    const step = onboardingSteps[i];
+    if (step.isStepCompleted) {
+      const completed = await step.isStepCompleted();
+      if (!completed) {
+        return i;
+      }
+    } else {
+      // If no completion check is provided, assume the step is incomplete.
+      return i;
     }
-  });
-  return stepToLoad;
+  }
+  return 0; // Default to the first step if all are complete.
 };
 
+// computeTotalDuration - Computes the total duration of all onboarding steps.
 export const computeTotalDuration = (onboardingSteps: OnboardingStep[]) => {
   return onboardingSteps
     .reduce((total, step) => {

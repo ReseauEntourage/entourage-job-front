@@ -9,7 +9,7 @@ import {
   TagSize,
   Text,
 } from '@/src/components/ui';
-import { RoundBadge } from '@/src/components/ui/Badge/RoundBadge';
+import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { ProfileCompletion } from '@/src/features/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
@@ -79,9 +79,7 @@ export const DashboardProfileCard = () => {
         {/* Completion presentation */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <RoundBadge
-              color={user.userProfile.introduction ? 'green' : 'lightRed'}
-            />
+            <Dot color={user.userProfile.introduction ? 'green' : 'lightRed'} />
             <Text size="large" weight="semibold">
               Présentation
             </Text>
@@ -103,7 +101,7 @@ export const DashboardProfileCard = () => {
         {/* Completion nudges */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <RoundBadge
+            <Dot
               color={user.userProfile.nudges?.length ? 'green' : 'lightRed'}
             />
             <Text size="large" weight="semibold">
@@ -152,7 +150,7 @@ export const DashboardProfileCard = () => {
         {/* External CV Completion */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <RoundBadge
+            <Dot
               color={user.userProfile.hasExternalCv ? 'green' : 'lightRed'}
             />
             <Text size="large" weight="semibold">

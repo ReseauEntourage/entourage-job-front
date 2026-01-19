@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
-export const StyledSkeltonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
 export const StyledSkeltonLoader = styled.div<{
   width?: string;
   height?: string;

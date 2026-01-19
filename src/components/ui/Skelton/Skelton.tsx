@@ -1,4 +1,4 @@
-import { StyledSkeltonContainer, StyledSkeltonLoader } from './Skelton.styles';
+import { StyledSkeltonLoader } from './Skelton.styles';
 
 export interface SkeltonProps {
   width?: string;
@@ -8,16 +8,15 @@ export interface SkeltonProps {
 }
 
 export const Skelton = ({
-  width,
+  width = '100%',
   height,
   count = 1,
-  gap = '12px',
 }: SkeltonProps) => {
   return (
-    <StyledSkeltonContainer style={{ gap }}>
+    <>
       {Array.from({ length: count }).map((_, key) => (
         <StyledSkeltonLoader key={key} width={width} height={height} />
       ))}
-    </StyledSkeltonContainer>
+    </>
   );
 };

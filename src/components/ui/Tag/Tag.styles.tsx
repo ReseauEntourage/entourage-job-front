@@ -41,11 +41,11 @@ const sizeVariants = {
     font-size: 14px;
   `,
   small: css`
-    padding: 0 8px;
+    padding: 6px 10px;
     font-size: 12px;
   `,
   large: css`
-    padding: 6px 14px;
+    padding: 11px 20px;
     font-size: 16px;
   `,
 };

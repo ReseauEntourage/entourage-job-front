@@ -37,6 +37,7 @@ export const APIRoutes = {
   MESSAGING: 'messaging',
   COMPANIES: 'companies',
   RECRUITEMENT_ALERTS: 'recruitement-alerts',
+  ELEARNING: 'elearning',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];

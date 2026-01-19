@@ -6,7 +6,6 @@ import {
   RadioGroup,
   Option,
 } from '@/src/components/ui/ListGroup/RadioGroup/RadioGroup';
-import { Skelton } from '@/src/components/ui/Skelton/Skelton';
 import { EventType } from '@/src/constants/events';
 import { WebinarOptionLabel } from './WebinarOptionLabel/WebinarOptionLabel';
 
@@ -19,7 +18,7 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
   const [options, setOptions] = React.useState<Option[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const fetchWebinarOptions = useCallback(async () => {
+  const fetchNextWebinarOptions = useCallback(async () => {
     const response = await Api.getAllEvents({
       eventTypes: [EventType.WELCOME_SESSION],
       limit: 6,
@@ -36,22 +35,21 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
   }, []);
 
   useEffect(() => {
-    fetchWebinarOptions();
-  }, [fetchWebinarOptions]);
+    fetchNextWebinarOptions();
+  }, [fetchNextWebinarOptions]);
 
   return (
     <>
       <H4 title="Séléctionnez la date qui vous convient le mieux" />
       <br />
-      {isLoading && <Skelton height="90px" />}
-      {!isLoading && options.length > 0 && (
-        <RadioGroup
-          radioSize="large"
-          options={options}
-          selection={webinarSfId}
-          onChange={onChange}
-        />
-      )}
+      <RadioGroup
+        radioSize="large"
+        options={options}
+        selection={webinarSfId}
+        onChange={onChange}
+        isLoading={isLoading}
+        estimatedOptionLength={6}
+      />
     </>
   );
 };

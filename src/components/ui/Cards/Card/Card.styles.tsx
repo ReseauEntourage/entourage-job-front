@@ -4,11 +4,12 @@ import { Color, COLORS } from 'src/constants/styles';
 export const StyledCard = styled.div<{
   borderColor?: Color;
   bgColor: Color;
+  shadow: boolean;
 }>`
   display: flex;
   flex: 1;
   flex-direction: column;
-  box-shadow: 0 4px 8px 0 ${COLORS.lightGray};
+  box-shadow: 0 4px 4px 0 ${COLORS.cardShadow};
   position: relative;
   border-radius: 20px;
   border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};
