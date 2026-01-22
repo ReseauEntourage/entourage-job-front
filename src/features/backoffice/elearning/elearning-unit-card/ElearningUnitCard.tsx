@@ -1,17 +1,10 @@
 import { useMemo } from 'react';
-import {
-  Button,
-  Card,
-  LucidIcon,
-  Tag,
-  TagSize,
-  TagVariant,
-  Text,
-} from '@/src/components/ui';
+import { Button, Card, LucidIcon, Text } from '@/src/components/ui';
 import { NumberCheckableBadge } from '@/src/components/ui/Badge/NumberCheckableBadge/NumberCheckableBadge';
 import { H4 } from '@/src/components/ui/Headings';
+import { openModal } from '@/src/features/modals/Modal';
+import { ElearningUnitModal } from '../elearning-unit-modal/ElearningUnitModal';
 import { ElearningUnit } from '../elearning.types';
-import { useElearning } from '../useElearning';
 import {
   StyledElearningUnitCardContainer,
   StyledElearningUnitCardContentContainer,
@@ -27,10 +20,13 @@ export const ElearningUnitCard = ({
   elearningUnit,
   idx,
 }: ElearningUnitCardProps) => {
-  const { completeUnit } = useElearning();
   const isCompleted = useMemo(() => {
     return elearningUnit.userCompletions.length > 0;
   }, [elearningUnit.userCompletions]);
+
+  const start = () => {
+    openModal(<ElearningUnitModal elearningUnit={elearningUnit} />);
+  };
 
   return (
     <Card>
@@ -50,15 +46,17 @@ export const ElearningUnitCard = ({
           <Text size="large">
             <LucidIcon name="Clock" /> {elearningUnit.durationMinutes} minutes
           </Text>
-          {!isCompleted ? (
-            <Button onClick={() => completeUnit(elearningUnit.id)}>
-              <LucidIcon name="Play" /> &nbsp;Démarrer
-            </Button>
-          ) : (
-            <Tag size={TagSize.Large} variant={TagVariant.PrimaryBlue}>
-              <LucidIcon name="Check" /> &nbsp;Complété
-            </Tag>
-          )}
+          <Button onClick={() => start()} disabled={isCompleted}>
+            {!isCompleted ? (
+              <>
+                <LucidIcon name="Play" /> &nbsp;Démarrer
+              </>
+            ) : (
+              <>
+                <LucidIcon name="Check" /> &nbsp;Terminé
+              </>
+            )}
+          </Button>
         </StyledElearningUnitCardMetaContainer>
       </StyledElearningUnitCardContainer>
     </Card>

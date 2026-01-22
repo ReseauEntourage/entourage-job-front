@@ -132,7 +132,7 @@ export const StyledButton = styled.button<ButtonProps>`
 
     &:disabled {
       background-color: ${COLORS.gray} !important;
-      color: ${COLORS.white} !important;
+      color: ${COLORS.darkGray} !important;
       border: ${COLORS.gray} solid 1px !important;
       cursor: not-allowed;
       pointer-events: none;

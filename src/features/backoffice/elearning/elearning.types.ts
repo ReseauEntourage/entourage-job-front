@@ -9,6 +9,7 @@ export type ElearningAnswer = {
   questionId: string;
   label: string;
   isCorrect: boolean;
+  explaination: string | null;
 };
 
 export type ElearningQuestion = {

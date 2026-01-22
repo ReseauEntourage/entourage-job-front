@@ -110,6 +110,11 @@ export const ALERT_COLORS = {
     text: COLORS.white,
     border: COLORS.red,
   },
+  [AlertVariant.White]: {
+    background: COLORS.white,
+    text: COLORS.black,
+    border: COLORS.gray,
+  },
 };
 
 export const FONT_WEIGHTS = {

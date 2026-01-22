@@ -5,6 +5,7 @@ export enum AlertVariant {
   LightGray = 'lightGray',
   DarkBlue = 'darkBlue',
   LightBlue = 'lightBlue',
+  White = 'white',
   Error = 'error',
 }
 
