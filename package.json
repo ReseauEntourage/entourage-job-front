@@ -60,7 +60,7 @@
     "google-maps-react": "^2.0.6",
     "less": "^4.2.2",
     "less-loader": "^10.2.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "lucide-react": "^0.447.0",
     "mobile-detect": "^1.4.5",
     "moment": "^2.30.1",
