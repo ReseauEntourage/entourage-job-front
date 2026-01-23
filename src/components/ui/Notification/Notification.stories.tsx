@@ -2,7 +2,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Notification } from './Notification';
 
 const meta = {
-  title: 'Notification',
   component: Notification,
 } satisfies Meta<typeof Notification>;
 

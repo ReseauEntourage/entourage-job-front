@@ -20,7 +20,7 @@ const SearchBarConfigured = ({ placeholder, light }: SearchBarProps) => {
 };
 
 const meta = {
-  title: 'SearchBar',
+  component: SearchBar,
   render: SearchBarConfigured,
 } satisfies Meta<typeof SearchBar>;
 

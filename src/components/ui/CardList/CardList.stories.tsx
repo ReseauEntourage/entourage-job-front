@@ -9,7 +9,6 @@ import { CardList } from './CardList';
 import { CardListItem } from './CardListItem';
 
 const meta = {
-  title: 'CardList',
   component: CardList,
   parameters: {
     controls: {

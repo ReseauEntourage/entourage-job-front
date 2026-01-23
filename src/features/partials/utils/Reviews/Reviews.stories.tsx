@@ -2,7 +2,6 @@ import React from 'react';
 import { Reviews } from './Reviews';
 
 const meta = {
-  title: 'Reviews',
   component: Reviews,
   decorators: [
     (Story) => {

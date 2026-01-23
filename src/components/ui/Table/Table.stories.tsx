@@ -6,7 +6,7 @@ import { Th } from './Th';
 import { TrDesktop, TrMobile } from './Tr';
 
 const meta = {
-  title: 'Table',
+  component: Table,
   parameters: {
     controls: {
       exclude: /.*/g,

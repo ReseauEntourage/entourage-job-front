@@ -15,7 +15,7 @@ const Component = (props: CompanyCardProps) => {
 };
 
 const meta = {
-  title: 'Company Card',
+  title: 'Components/UI/Cards/EntityCards/CompanyCard',
   component: Component,
 } satisfies Meta<typeof CompanyCard>;
 

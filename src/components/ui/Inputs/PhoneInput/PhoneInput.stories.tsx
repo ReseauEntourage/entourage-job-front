@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { PhoneInput } from './PhoneInput';
 
 const meta = {
-  title: 'Phone Input',
   component: PhoneInput,
   parameters: {
     controls: {

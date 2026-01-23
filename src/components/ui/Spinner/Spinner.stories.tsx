@@ -4,7 +4,6 @@ import { COLORS } from 'src/constants/styles';
 import { Spinner } from './Spinner';
 
 const meta = {
-  title: 'Spinner',
   component: Spinner,
   parameters: {
     controls: {

@@ -4,7 +4,6 @@ import { Text } from './Text';
 import { sizesPx } from './Text.utils';
 
 const meta = {
-  title: 'Text',
   component: Text,
   parameters: {
     controls: {

@@ -4,7 +4,6 @@ import { LucidIcon } from '../../Icons/LucidIcon';
 import { ImageInput } from './ImageInput';
 
 const meta = {
-  title: 'Image Input',
   component: ImageInput,
   parameters: {
     controls: {

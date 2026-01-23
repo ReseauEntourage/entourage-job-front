@@ -15,7 +15,7 @@ const Component = (props: EventCardProps) => {
 };
 
 const meta = {
-  title: 'Event Card',
+  title: 'Components/UI/Cards/EntityCards/EventCard',
   component: Component,
   argTypes: {
     salesForceId: {

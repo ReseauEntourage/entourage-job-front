@@ -4,7 +4,7 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { ButtonIcon, ButtonIconProps } from './ButtonIcon';
 
 const meta = {
-  title: 'ButtonIcon',
+  component: ButtonIcon,
   render: ({ href }: ButtonIconProps) => {
     return (
       <>

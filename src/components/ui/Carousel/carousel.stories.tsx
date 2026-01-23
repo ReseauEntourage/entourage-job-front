@@ -4,7 +4,7 @@ import { CarouselItem } from '@/src/features/partials/utils/CarouselItem';
 import { Carousel } from './Carousel';
 
 const meta = {
-  title: 'Carousel',
+  component: Carousel,
   render: () => {
     const slides = [
       {

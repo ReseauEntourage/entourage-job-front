@@ -4,7 +4,6 @@ import { FilterConstant } from 'src/constants/utils';
 import { Select } from './Select';
 
 const meta = {
-  title: 'Select',
   component: Select,
   parameters: {
     controls: {

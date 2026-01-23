@@ -3,7 +3,6 @@ import React from 'react';
 import { Card } from './Card';
 
 const meta = {
-  title: 'Card',
   component: Card,
   decorators: [
     (Story) => {

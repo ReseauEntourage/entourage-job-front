@@ -4,7 +4,6 @@ import { COLORS } from 'src/constants/styles';
 import { ButtonMultiple } from './ButtonMultiple';
 
 const meta = {
-  title: 'ButtonMultiple',
   component: ButtonMultiple,
   parameters: {
     controls: {

@@ -12,7 +12,7 @@ const AlertWithContent = ({ variant, closable }: AlertProps) => {
 };
 
 const meta = {
-  title: 'Alert',
+  component: Alert,
   render: AlertWithContent,
   argTypes: {
     variant: {

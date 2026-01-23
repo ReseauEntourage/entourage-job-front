@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { DatePicker } from './DatePicker';
 
 const meta = {
-  title: 'DatePicker',
   component: DatePicker,
   parameters: {
     controls: {

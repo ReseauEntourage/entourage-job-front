@@ -24,7 +24,7 @@ const FileInputConfigured = ({ fileType, accept }: FileInputProps) => {
 };
 
 const meta = {
-  title: 'FileInput',
+  component: FileInput,
   render: FileInputConfigured,
 } satisfies Meta<typeof FileInput>;
 

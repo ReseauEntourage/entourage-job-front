@@ -3,7 +3,6 @@ import React from 'react';
 import { Tag, TagSize, TagVariant } from './Tag';
 
 const meta = {
-  title: 'Tag',
   component: Tag,
   parameters: {
     controls: {

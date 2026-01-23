@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Radio } from './Radio';
 
 const meta = {
-  title: 'Radio',
   component: Radio,
   parameters: {
     controls: {

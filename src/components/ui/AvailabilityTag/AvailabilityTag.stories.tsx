@@ -3,7 +3,6 @@ import React from 'react';
 import { AvailabilityTag } from '.';
 
 const meta = {
-  title: 'Availability Tag',
   component: AvailabilityTag,
   decorators: [
     (Story) => {

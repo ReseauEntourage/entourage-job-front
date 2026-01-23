@@ -4,7 +4,6 @@ import { PartnersSupportUs } from './PartnersSupportUs/PartnersSupportUs';
 import { PartnersWorkingWithUs } from './PartnersWorkingWithUs/PartnersWorkingWithUs';
 
 const meta = {
-  title: 'Partials',
   component: Partners,
   decorators: [
     (Story) => {

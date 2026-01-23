@@ -2,9 +2,10 @@ import React from 'react';
 import { H6 } from '@/src/components/ui/Headings';
 import { BulletListElement } from './BulletListElement';
 import { CheckListElement } from './CheckListElement';
+import { List } from './List';
 
 const meta = {
-  title: 'Lists',
+  component: List,
   parameters: {
     controls: {
       exclude: /.*/g,

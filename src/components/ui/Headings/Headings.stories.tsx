@@ -8,7 +8,7 @@ type HeadingStoryProps = React.ComponentProps<
 >;
 
 const meta = {
-  title: 'Headings',
+  title: 'Components/UI/Headings',
 } satisfies Meta<HeadingStoryProps>;
 
 export default meta;

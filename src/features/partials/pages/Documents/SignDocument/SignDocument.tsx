@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@/src/components/ui';
+import { Alert, Button } from '@/src/components/ui';
+import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { CheckBox } from '@/src/components/ui/Inputs';
-import { WarningStrip } from '@/src/components/ui/WarningStrip';
 import { DocumentNameType, ReduxRequestEvents } from 'src/constants';
 import {
   currentUserActions,
@@ -59,7 +59,7 @@ export const SignDocument = ({ documentName, label }: SignDocumentProps) => {
 
   return (
     <StyledSignDocument>
-      <WarningStrip>
+      <Alert variant={AlertVariant.Info} icon={null}>
         <CheckBox
           title={label}
           value={isChecked}
@@ -68,7 +68,7 @@ export const SignDocument = ({ documentName, label }: SignDocumentProps) => {
           name="accept-ethic-charter"
           id="charte-ethique-checkbox"
         />
-      </WarningStrip>
+      </Alert>
       <StyledSignDocumentButtonContainer>
         <Button variant="primary" rounded onClick={handleSignDocument}>
           Valider

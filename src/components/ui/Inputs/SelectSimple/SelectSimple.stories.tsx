@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { SelectSimple } from './SelectSimple';
 
 const meta = {
-  title: 'SelectSimple',
   component: SelectSimple,
   parameters: {
     controls: {

@@ -4,7 +4,6 @@ import { FilterConstant } from 'src/constants/utils';
 import { SelectCreatable } from './SelectCreatable';
 
 const meta = {
-  title: 'SelectCreatable',
   component: SelectCreatable,
   parameters: {
     controls: {

@@ -4,7 +4,6 @@ import { UserRoles } from 'src/constants/users';
 import { SelectList } from './SelectList';
 
 const meta = {
-  title: 'Select List',
   component: SelectList,
   parameters: {
     controls: {

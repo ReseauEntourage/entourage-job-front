@@ -5,7 +5,6 @@ import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { SelectAsync } from './SelectAsync';
 
 const meta = {
-  title: 'SelectAsync',
   component: SelectAsync,
   parameters: {
     controls: {

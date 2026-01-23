@@ -8,7 +8,7 @@ import {
 } from './Colors.styles';
 
 const meta = {
-  title: 'Colors',
+  title: 'Components/UI/Colors',
   decorators: [
     (Story) => {
       return <Story />;

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TextArea } from './TextArea';
 
 const meta = {
-  title: 'Text Area',
   component: TextArea,
   parameters: {
     controls: {

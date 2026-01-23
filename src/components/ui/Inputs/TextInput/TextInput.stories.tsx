@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TextInput } from './TextInput';
 
 const meta = {
-  title: 'Text Input',
   component: TextInput,
   parameters: {
     controls: {

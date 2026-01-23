@@ -2,7 +2,7 @@ import React from 'react';
 import { SvgIcon, SvgIcons } from '@/assets/icons/icons';
 
 const meta = {
-  title: 'Icons SVG',
+  title: 'Components/UI/Icons',
   decorators: [
     (Story) => {
       return <Story />;

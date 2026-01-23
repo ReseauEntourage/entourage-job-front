@@ -2,7 +2,7 @@ import React from 'react';
 import { CarouselSwiper as CS } from './CarouselSwiper';
 
 const meta = {
-  title: 'Carousel Swiper',
+  component: CS,
   decorators: [
     (Story) => {
       return (

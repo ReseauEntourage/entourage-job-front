@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { CheckBox } from './CheckBox';
 
 const meta = {
-  title: 'CheckBox',
   component: CheckBox,
   parameters: {
     controls: {

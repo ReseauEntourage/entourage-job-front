@@ -3,7 +3,6 @@ import React from 'react';
 import { BackgroundImage, BackgroundImageProps } from './BackgroundImage';
 
 const meta = {
-  title: 'BackgroundImage',
   render: ({ img, imgMobile, alt }: BackgroundImageProps) => {
     return (
       <BackgroundImage img={img} imgMobile={imgMobile} alt={alt}>
