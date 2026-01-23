@@ -13,7 +13,7 @@ const meta = {
   component: Accordion,
   render: Template,
   args: {
-    headerContent: 'En savoir plus',
+    headerContent: 'Titre de l’accordéon',
     children: (
       <div>
         Contenu de l’accordéon. Tu peux mettre ici du texte, des liens, des
@@ -35,9 +35,11 @@ const meta = {
     variant: {
       control: { type: 'radio' },
       options: ['default', 'simple'],
+      description: 'Variante visuelle de l’accordéon.',
     },
     defaultOpen: {
       control: 'boolean',
+      description: "Définit si l'accordéon est ouvert par défaut.",
     },
   },
   parameters: {

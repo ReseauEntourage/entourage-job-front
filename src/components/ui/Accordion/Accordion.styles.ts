@@ -26,7 +26,7 @@ export const AccordionHeaderOpenIconVariantStyles = {
   simple: {},
   default: {
     backgroundColor: COLORS.white,
-    borderColor: COLORS.hoverBlue,
+    borderColor: COLORS.gray,
   },
 };
 
