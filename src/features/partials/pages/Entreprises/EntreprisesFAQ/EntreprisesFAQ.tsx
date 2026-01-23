@@ -1,10 +1,10 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Text, Section } from '@/src/components/ui';
-import { H3 } from '@/src/components/ui/Headings';
+import { Accordion } from '@/src/components/ui/Accordion/Accordion';
+import { AccordionGroup } from '@/src/components/ui/Accordion/AccordionGroup';
+import { H3, H5 } from '@/src/components/ui/Headings';
 import { CompanyGoal } from '@/src/constants/company';
-import { Accordion } from '../../../utils/Accordion/Accordion';
-import { AccordionGroup } from '../../../utils/Accordion/AccordionGroup';
 import {
   StyledEntrepriseFAQContainer,
   StyledTitleContainer,
@@ -313,9 +313,10 @@ export const EntreprisesFAQ = ({ context }: EntreprisesFAQProps) => {
         <AccordionGroup>
           {contentByContext[context].map((item, idx) => (
             <Accordion
-              title={item.question}
+              headerContent={<H5 title={item.question} />}
               key={item.question}
               defaultOpen={idx === 0}
+              variant="simple"
             >
               {item.answer}
             </Accordion>

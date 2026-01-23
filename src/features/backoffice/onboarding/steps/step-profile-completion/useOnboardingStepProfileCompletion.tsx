@@ -1,6 +1,6 @@
-import { Text } from '@/src/components/ui';
 import { StyledOnboardingStepContainer } from '../../onboarding.styles';
 import { OnboardingStep } from '../../onboarding.types';
+import { Content } from './Content';
 
 export const useOnboardingStepProfileCompletion = () => {
   const onboardingStepProfileCompletion = {
@@ -10,13 +10,13 @@ export const useOnboardingStepProfileCompletion = () => {
         'Permettez au reste de la communauté de vous découvrir et recevez des mises en relation personnalisées',
       duration: '~4-5 minutes',
     },
-    title: 'Compléter le profil',
+    title: 'Complétez votre profil',
     smallTitle: 'Compléter le profil',
     description:
       'Permettez au reste de la communauté de vous découvrir et recevez des mises en relation personnalisées',
     content: (
       <StyledOnboardingStepContainer>
-        <Text>Step Profile</Text>
+        <Content />
       </StyledOnboardingStepContainer>
     ),
     onSubmit: async () => {
