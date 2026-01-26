@@ -127,6 +127,11 @@ export const PersonalInfoAccordion = () => {
                 message:
                   'Votre présentation ne peut pas dépasser 500 caractères.',
               },
+              minLength: {
+                value: 50,
+                message:
+                  'Votre présentation doit contenir au moins 50 caractères.',
+              },
             }}
             render={({ field }) => (
               <TextArea
@@ -144,6 +149,7 @@ export const PersonalInfoAccordion = () => {
                 showLabel
                 placeholder={introductionPlaceholder}
                 maxLength={500}
+                minLength={50}
                 rows={3}
               />
             )}

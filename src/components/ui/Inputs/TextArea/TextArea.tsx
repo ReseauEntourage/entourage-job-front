@@ -18,6 +18,7 @@ import { useLineLimit } from './useLineLimit';
 interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   maxLines?: { lines: number; width: number };
   maxLength?: number;
+  minLength?: number;
   rows?: number;
   setIsMaxLinesReached?: (isMaxLinesReached: boolean) => void;
 }
@@ -34,6 +35,7 @@ export function TextArea({
   disabled = false,
   error,
   maxLines,
+  minLength,
   maxLength,
   showLabel,
   inputRef,
@@ -64,6 +66,9 @@ export function TextArea({
   const maxLinesWidth = maxLines?.width || 655;
 
   const remainingCharacters = (maxLength || 0) - (value || '').length;
+  const currentLength = (value || '').length;
+  const missingCharacters = minLength ? minLength - currentLength : 0;
+  const isBelowMinLength = !!minLength && missingCharacters > 0;
 
   return (
     <StyledTextAreaContainer disabled={disabled}>
@@ -104,7 +109,7 @@ export function TextArea({
           value={value || ''}
         />
       </StyledTextAreaScrollContainer>
-      {maxLines || maxLength ? (
+      {maxLines || maxLength || minLength ? (
         <StyledAnnotations>
           <div>
             <StyledAnnotationsErrorMessage error={error} />
@@ -120,17 +125,29 @@ export function TextArea({
               )}
             </StyledLimit>
           )}
-          {!maxLines && maxLength && (
-            <StyledLimit warning={remainingCharacters < 0}>
-              {remainingCharacters >= 0 ? (
-                <span>{remainingCharacters} caractère(s) restant(s)</span>
+          {!maxLines && (
+            <>
+              {isBelowMinLength ? (
+                <StyledLimit>
+                  <span>
+                    Encore {missingCharacters} caractère(s) nécessaire(s)
+                  </span>
+                </StyledLimit>
               ) : (
-                <span>
-                  Limite dépassée de {Math.abs(remainingCharacters)}{' '}
-                  caractères(s)
-                </span>
+                maxLength && (
+                  <StyledLimit warning={remainingCharacters < 0}>
+                    {remainingCharacters >= 0 ? (
+                      <span>{remainingCharacters} caractère(s) restant(s)</span>
+                    ) : (
+                      <span>
+                        Limite dépassée de {Math.abs(remainingCharacters)}{' '}
+                        caractères(s)
+                      </span>
+                    )}
+                  </StyledLimit>
+                )
               )}
-            </StyledLimit>
+            </>
           )}
         </StyledAnnotations>
       ) : (
