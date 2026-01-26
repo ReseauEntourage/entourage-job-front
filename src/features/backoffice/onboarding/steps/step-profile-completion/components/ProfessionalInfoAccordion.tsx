@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, FieldError, useFormContext } from 'react-hook-form';
 import { LucidIcon, Text } from '@/src/components/ui';
 import { Accordion } from '@/src/components/ui/Accordion/Accordion';
 import { H4 } from '@/src/components/ui/Headings';
-import { TextInput } from '@/src/components/ui/Inputs';
+import { SelectCreatable, TextInput } from '@/src/components/ui/Inputs';
 import { COLORS } from '@/src/constants/styles';
+import { loadCompaniesOptions } from '@/src/features/forms/utils/loadOptions.utils';
 import {
   StyledAccordionHeader,
   StyledAccordionHeaderIcon,
@@ -20,10 +21,10 @@ export const ProfessionalInfoAccordion = () => {
   } = useFormContext<ProfileCompletionFormValues>();
 
   useEffect(() => {
-    if (submitCount > 0 && !!errors.currentJob) {
+    if (submitCount > 0 && (!!errors.currentJob || !!errors.companyName)) {
       setIsOpen(true);
     }
-  }, [errors.currentJob, submitCount]);
+  }, [errors.companyName, errors.currentJob, submitCount]);
 
   return (
     <Accordion
@@ -67,7 +68,34 @@ export const ProfessionalInfoAccordion = () => {
             error={errors.currentJob}
             showLabel
             placeholder="Ecrivez votre métier"
-            maxLength={50} // TODO: Ajuster la limite pour le TextInput avec la limite existante dans l'édition de profil classique
+            maxLength={50}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="companyName"
+        render={({ field }) => (
+          <SelectCreatable
+            id="onboarding-companyName"
+            name="onboarding-companyName"
+            title={
+              <Text weight="semibold">
+                L'entreprise dans laquelle je travaille
+              </Text>
+            }
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            error={errors.companyName as unknown as FieldError | undefined}
+            showLabel
+            placeholder="Sélectionnez ou ajoutez le nom de votre entreprise"
+            options={[]}
+            isMulti={false}
+            openMenuOnClick
+            maxChar={60}
+            loadOptions={loadCompaniesOptions}
           />
         )}
       />

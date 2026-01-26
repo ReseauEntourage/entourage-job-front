@@ -112,3 +112,29 @@ export const loadDepartmentsOptions = async (
     callback([]);
   }
 };
+
+export const loadCompaniesOptions = async (
+  callback: (options: FilterConstant<string>[]) => void,
+  inputValue?: string
+) => {
+  try {
+    const { data: companies } = await Api.getAllCompanies({
+      search: inputValue,
+      limit: 50,
+      offset: 0,
+      departments: [],
+      businessSectorIds: [],
+      onlyWithReferent: false,
+    });
+
+    callback(
+      companies.map((company) => ({
+        value: company.name,
+        label: company.name,
+      }))
+    );
+  } catch (error) {
+    console.error(error);
+    callback([]);
+  }
+};

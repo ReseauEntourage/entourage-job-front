@@ -17,7 +17,6 @@ export const AccordionVariantStyles = {
 export const AccordionHeaderVariantStyles = {
   simple: {},
   default: {
-    backgroundColor: COLORS.white,
     padding: '20px',
   },
 };
@@ -45,7 +44,6 @@ export const StyledAccordion = styled.div<{ $variant: AccordionVariant }>`
   border-radius: 4px;
   margin-bottom: 10px;
   width: 100%;
-  overflow: hidden;
 
   ${({ $variant }) => AccordionVariantStyles[$variant]};
 `;
@@ -77,7 +75,6 @@ export const StyledAccordionOpenIcon = styled.div<{
   height: 40px;
   border-radius: 50%;
   border: 1px solid ${COLORS.hoverBlue};
-  background-color: ${COLORS.white};
   drop-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   ${({ $variant }) => AccordionHeaderOpenIconVariantStyles[$variant]};

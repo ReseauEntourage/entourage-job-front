@@ -52,7 +52,9 @@ const meta = {
   ],
 };
 const Template = (args) => {
-  const [value, setValue] = useState<FilterConstant | FilterConstant[]>();
+  const [value, setValue] = useState<FilterConstant | FilterConstant[] | null>(
+    null
+  );
 
   return (
     <SelectCreatable

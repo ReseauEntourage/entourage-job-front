@@ -2,11 +2,13 @@ import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
+import { useUpdateUser } from '@/src/hooks';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import {
   currentUserActions,
   updateProfileSelectors,
+  updateUserCompanySelectors,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { StyledOnboardingStepContainer } from '../../onboarding.styles';
@@ -18,12 +20,18 @@ export const useOnboardingStepProfileCompletion = () => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
+  const { updateUserCompany } = useUpdateUser(user);
 
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
 
+  const updateUserCompanyStatus = useSelector(
+    updateUserCompanySelectors.selectUpdateUserCompanyStatus
+  );
+
   const pendingResolveRef = useRef<((value: boolean) => void) | null>(null);
+  const pendingCompanyUpdateRef = useRef<boolean>(false);
 
   const initialFormValues = useMemo<ProfileCompletionFormValues>(() => {
     return {
@@ -31,30 +39,51 @@ export const useOnboardingStepProfileCompletion = () => {
       profileImageObjectUrl: null,
       introduction: user.userProfile?.introduction ?? '',
       currentJob: user.userProfile?.currentJob ?? '',
+      companyName: user.company?.name
+        ? { value: user.company.name, label: user.company.name }
+        : null,
     };
-  }, [user.userProfile?.currentJob, user.userProfile?.introduction]);
+  }, [
+    user.company?.name,
+    user.userProfile?.currentJob,
+    user.userProfile?.introduction,
+  ]);
 
   useEffect(() => {
     if (!pendingResolveRef.current) {
       return;
     }
 
-    if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
-      pendingResolveRef.current(true);
-      pendingResolveRef.current = null;
-      return;
-    }
-
-    if (updateProfileStatus === ReduxRequestEvents.FAILED) {
+    if (
+      updateProfileStatus === ReduxRequestEvents.FAILED ||
+      (pendingCompanyUpdateRef.current &&
+        updateUserCompanyStatus === ReduxRequestEvents.FAILED)
+    ) {
       dispatch(
         onboardingActions.setFormErrorMessage(
-          'Une erreur est survenue lors de la sauvegarde de votre profil. Veuillez réessayer.'
+          updateUserCompanyStatus === ReduxRequestEvents.FAILED
+            ? 'Une erreur est survenue lors de la mise à jour de votre entreprise. Veuillez réessayer.'
+            : 'Une erreur est survenue lors de la sauvegarde de votre profil. Veuillez réessayer.'
         )
       );
       pendingResolveRef.current(false);
       pendingResolveRef.current = null;
+      pendingCompanyUpdateRef.current = false;
+      return;
     }
-  }, [dispatch, updateProfileStatus]);
+
+    if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
+      if (
+        !pendingCompanyUpdateRef.current ||
+        updateUserCompanyStatus === ReduxRequestEvents.SUCCEEDED
+      ) {
+        pendingResolveRef.current(true);
+        pendingResolveRef.current = null;
+        pendingCompanyUpdateRef.current = false;
+        return;
+      }
+    }
+  }, [dispatch, updateProfileStatus, updateUserCompanyStatus]);
 
   const formMethods = useForm<ProfileCompletionFormValues>({
     defaultValues: initialFormValues,
@@ -95,7 +124,24 @@ export const useOnboardingStepProfileCompletion = () => {
         formMethods.handleSubmit(
           async (values) => {
             dispatch(currentUserActions.updateProfileReset());
+            dispatch(currentUserActions.updateUserCompanyReset());
+
+            const submittedCompanyName = values.companyName?.value
+              ? String(values.companyName.value).trim()
+              : null;
+            const existingCompanyName = user.company?.name
+              ? String(user.company.name).trim()
+              : null;
+            const shouldUpdateCompany =
+              submittedCompanyName !== existingCompanyName;
+
             pendingResolveRef.current = resolve;
+
+            pendingCompanyUpdateRef.current = shouldUpdateCompany;
+            if (shouldUpdateCompany) {
+              updateUserCompany(submittedCompanyName);
+            }
+
             updateUserProfile({
               introduction: values.introduction,
               currentJob: values.currentJob,

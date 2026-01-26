@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { LINE_HEIGHT_MULTIPLIER, sizesPx } from '../../Text/Text.utils';
 import {
   commonInputContainerStyles,
+  commonInputStyles,
   commonMenuOptionStyles,
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
@@ -20,8 +22,7 @@ export const StyledSelect = styled.div`
   & .Select__control--is-focused {
     background-color: transparent !important;
     box-shadow: none !important;
-    border: none !important;
-    border-radius: 0 !important;
+    border: 1px solid ${COLORS.primaryBlue} !important;
     box-sizing: border-box;
   }
 
@@ -72,12 +73,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__control {
-    background-color: transparent;
-    min-height: 30px;
-    border: none;
-    border-bottom: solid 2px ${COLORS.gray} !important;
-    box-sizing: border-box;
-    border-radius: 0 !important;
+    ${() => commonInputStyles}
     :hover {
       cursor: text;
     }
@@ -98,7 +94,7 @@ export const StyledSelect = styled.div`
   & .Select__placeholder {
     color: ${COLORS.mediumGray};
     font-style: italic;
-    font-size: 14px;
+    font-size: ${sizesPx.desktop.normal}px;
     font-family: Poppins, sans-serif !important;
   }
 
@@ -161,7 +157,7 @@ export const StyledSelect = styled.div`
 
   & .Select__single-value {
     color: ${COLORS.black} !important;
-    font-size: 14px !important;
+    font-size: ${sizesPx.desktop.normal}px !important;
     display: flex;
     align-items: center;
     & svg {
@@ -170,8 +166,9 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__input > input {
-    font-size: 14px !important;
-    line-height: 17px !important;
+    font-size: ${sizesPx.desktop.normal}px !important;
+    line-height: ${LINE_HEIGHT_MULTIPLIER *
+    sizesPx.desktop.normal}px !important;
     font-family: Poppins, sans-serif !important;
   }
 `;

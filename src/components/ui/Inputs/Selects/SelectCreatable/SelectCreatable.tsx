@@ -18,8 +18,9 @@ import {
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FilterConstant } from 'src/constants/utils';
 
-interface SelectCreatableProps<T extends FilterConstant | FilterConstant[]>
-  extends CommonInputProps<T, HTMLSelectElement> {
+interface SelectCreatableProps<
+  T extends FilterConstant | FilterConstant[] | null
+> extends CommonInputProps<T, HTMLSelectElement> {
   options: FilterConstant[];
   isMulti?: boolean;
   openMenuOnClick?: boolean;
@@ -32,7 +33,9 @@ interface SelectCreatableProps<T extends FilterConstant | FilterConstant[]>
   ) => void;
 }
 
-export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
+export function SelectCreatable<
+  T extends FilterConstant | FilterConstant[] | null
+>({
   id,
   name,
   title,

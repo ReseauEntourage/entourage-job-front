@@ -3,8 +3,10 @@ import {
   FormSchema,
   FormSchemaValidation,
 } from '../FormSchema';
-import { loadBusinessSectorsOptions } from '../utils/loadOptions.utils';
-import { Api } from 'src/api';
+import {
+  loadBusinessSectorsOptions,
+  loadCompaniesOptions,
+} from '../utils/loadOptions.utils';
 import { FilterConstant } from 'src/constants/utils';
 
 interface FormEditCoachProfessionalInformationFormSchema
@@ -29,30 +31,7 @@ export const formEditCoachProfessionalInformation: FormSchema<FormEditCoachProfe
         name: 'companyName',
         component: FormComponents.SELECT_CREATABLE,
         title: 'Mon entreprise',
-        loadOptions: async (callback, inputValue) => {
-          try {
-            const { data: companies } = await Api.getAllCompanies({
-              search: inputValue,
-              limit: 50,
-              offset: 0,
-              departments: [],
-              businessSectorIds: [],
-              onlyWithReferent: false,
-            });
-            callback(
-              companies.map((u) => {
-                return {
-                  value: u.name,
-                  label: u.name,
-                  key: u.name,
-                };
-              })
-            );
-          } catch (error) {
-            console.error(error);
-            callback([]);
-          }
-        },
+        loadOptions: loadCompaniesOptions,
         placeholder: 'Mon entreprise',
         isMulti: false,
         openMenuOnClick: true,

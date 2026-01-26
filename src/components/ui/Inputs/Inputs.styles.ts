@@ -42,6 +42,11 @@ export const commonInputStyles = css`
   line-height: ${LINE_HEIGHT_MULTIPLIER * sizesPx.desktop.normal}px;
   min-height: 30px;
   box-sizing: border-box;
+
+  :focus {
+    outline: none;
+    border: 1px solid ${COLORS.primaryBlue};
+  }
 `;
 
 export const StyledInputLabel = styled.label`

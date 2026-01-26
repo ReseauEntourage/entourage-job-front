@@ -3,8 +3,10 @@ import {
   FormSchema,
   FormSchemaValidation,
 } from '@/src/features/forms/FormSchema';
-import { loadBusinessSectorsOptions } from '@/src/features/forms/utils/loadOptions.utils';
-import { Api } from 'src/api';
+import {
+  loadBusinessSectorsOptions,
+  loadCompaniesOptions,
+} from '@/src/features/forms/utils/loadOptions.utils';
 import { FilterConstant } from 'src/constants/utils';
 
 export interface formOnboardingCoachJobSchema extends FormSchemaValidation {
@@ -32,30 +34,7 @@ export const formOnboardingCoachJob: FormSchema<formOnboardingCoachJobSchema> =
         component: FormComponents.SELECT_CREATABLE,
         title: 'Mon entreprise',
         placeholder: 'Sélectionnez ou ajoutez le nom de votre entreprise',
-        loadOptions: async (callback, inputValue) => {
-          try {
-            const { data: companies } = await Api.getAllCompanies({
-              search: inputValue,
-              limit: 50,
-              offset: 0,
-              departments: [],
-              businessSectorIds: [],
-              onlyWithReferent: false,
-            });
-            callback(
-              companies.map((u) => {
-                return {
-                  value: u.name,
-                  label: u.name,
-                  key: u.id,
-                };
-              })
-            );
-          } catch (error) {
-            console.error(error);
-            callback([]);
-          }
-        },
+        loadOptions: loadCompaniesOptions,
         isMulti: false,
         isRequired: false,
         showLabel: true,
