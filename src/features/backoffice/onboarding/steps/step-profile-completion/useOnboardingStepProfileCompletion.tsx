@@ -59,11 +59,13 @@ export const useOnboardingStepProfileCompletion = () => {
           })
           .filter((value): value is FilterConstant<string> => value !== null) ??
         [],
+      linkedinUrl: user.userProfile?.linkedinUrl ?? '',
     };
   }, [
     user.company?.name,
     user.userProfile?.currentJob,
     user.userProfile?.introduction,
+    user.userProfile?.linkedinUrl,
     user.userProfile?.sectorOccupations,
   ]);
 
@@ -163,6 +165,9 @@ export const useOnboardingStepProfileCompletion = () => {
             updateUserProfile({
               introduction: values.introduction,
               currentJob: values.currentJob,
+              linkedinUrl: values.linkedinUrl?.trim()
+                ? values.linkedinUrl.trim()
+                : null,
               sectorOccupations: values.businessSectorIds.map(
                 (businessSector, idx) =>
                   ({

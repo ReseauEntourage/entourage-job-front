@@ -7,4 +7,5 @@ export interface ProfileCompletionFormValues {
   currentJob: string;
   companyName: FilterConstant<string> | null;
   businessSectorIds: FilterConstant<string>[];
+  linkedinUrl: string;
 }

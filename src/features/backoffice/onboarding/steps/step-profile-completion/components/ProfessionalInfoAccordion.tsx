@@ -32,7 +32,8 @@ export const ProfessionalInfoAccordion = () => {
       submitCount > 0 &&
       (!!errors.currentJob ||
         !!errors.companyName ||
-        !!errors.businessSectorIds)
+        !!errors.businessSectorIds ||
+        !!errors.linkedinUrl)
     ) {
       setIsOpen(true);
     }
@@ -40,6 +41,7 @@ export const ProfessionalInfoAccordion = () => {
     errors.businessSectorIds,
     errors.companyName,
     errors.currentJob,
+    errors.linkedinUrl,
     submitCount,
   ]);
 
@@ -148,6 +150,32 @@ export const ProfessionalInfoAccordion = () => {
             loadOptions={(callback, inputValue) =>
               loadBusinessSectorsOptions(callback, inputValue)
             }
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="linkedinUrl"
+        rules={{
+          validate: (fieldValue) => {
+            return (
+              !fieldValue ||
+              (!!fieldValue && fieldValue.includes('linkedin.com'))
+            );
+          },
+        }}
+        render={({ field }) => (
+          <TextInput
+            id="onboarding-linkedinUrl"
+            name="onboarding-linkedinUrl"
+            title={<Text weight="semibold">Profil LinkedIn</Text>}
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            error={errors.linkedinUrl}
+            showLabel
+            placeholder="https://www.linkedin.com/in/votre-profil"
           />
         )}
       />
