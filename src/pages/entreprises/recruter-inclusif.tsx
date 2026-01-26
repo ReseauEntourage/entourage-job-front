@@ -166,8 +166,6 @@ const RecruterInclusif = () => {
 
       <EntreprisesTuto context={CompanyGoal.RECRUIT} />
 
-      <EntreprisesWebinaire />
-
       <EntreprisesCVList />
 
       <Impact
