@@ -145,7 +145,7 @@ export const PersonalInfoAccordion = () => {
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
-                error={errors.introduction}
+                error={submitCount > 0 ? errors.introduction : undefined}
                 showLabel
                 placeholder={introductionPlaceholder}
                 maxLength={500}

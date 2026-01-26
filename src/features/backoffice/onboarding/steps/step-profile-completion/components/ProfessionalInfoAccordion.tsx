@@ -84,7 +84,7 @@ export const ProfessionalInfoAccordion = () => {
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
-            error={errors.currentJob}
+            error={submitCount > 0 ? errors.currentJob : undefined}
             showLabel
             placeholder="Ecrivez votre métier"
             maxLength={50}
@@ -107,7 +107,11 @@ export const ProfessionalInfoAccordion = () => {
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
-            error={errors.companyName as unknown as FieldError | undefined}
+            error={
+              submitCount > 0
+                ? (errors.companyName as unknown as FieldError | undefined)
+                : undefined
+            }
             showLabel
             placeholder="Sélectionnez ou ajoutez le nom de votre entreprise"
             options={[]}
@@ -141,7 +145,11 @@ export const ProfessionalInfoAccordion = () => {
             onChange={(value) => field.onChange(value || [])}
             onBlur={field.onBlur}
             error={
-              errors.businessSectorIds as unknown as FieldError | undefined
+              submitCount > 0
+                ? (errors.businessSectorIds as unknown as
+                    | FieldError
+                    | undefined)
+                : undefined
             }
             showLabel
             placeholder="Sélectionnez un ou plusieurs secteurs dans la liste"
@@ -173,7 +181,7 @@ export const ProfessionalInfoAccordion = () => {
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
-            error={errors.linkedinUrl}
+            error={submitCount > 0 ? errors.linkedinUrl : undefined}
             showLabel
             placeholder="https://www.linkedin.com/in/votre-profil"
           />

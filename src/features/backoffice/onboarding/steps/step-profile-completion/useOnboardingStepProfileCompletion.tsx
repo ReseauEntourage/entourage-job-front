@@ -110,8 +110,8 @@ export const useOnboardingStepProfileCompletion = () => {
 
   const formMethods = useForm<ProfileCompletionFormValues>({
     defaultValues: initialFormValues,
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     shouldUnregister: false, // Keep values when inputs are unmounted
   });
 
