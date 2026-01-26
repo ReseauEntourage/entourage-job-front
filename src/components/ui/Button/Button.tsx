@@ -19,6 +19,7 @@ export function Button({
   className = '',
   dataTestId = '',
   color,
+  style,
 }: ButtonProps) {
   const buttonComponent = (
     <StyledButton
@@ -32,6 +33,7 @@ export function Button({
       variant={variant}
       size={size}
       color={color}
+      style={style}
     >
       {Array.isArray(children)
         ? children.map((child, index) => {

@@ -79,7 +79,7 @@ export function TextArea({
         width={maxLinesWidth}
       >
         <StyledTextArea
-          isMobile={isMobile}
+          device={isMobile ? 'mobile' : 'desktop'}
           hasLineLimit={!!maxLines}
           width={maxLinesWidth}
           ref={(e) => {

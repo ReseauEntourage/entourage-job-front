@@ -9,7 +9,12 @@ export const StyledTextAreaContainer = styled.div`
   ${() => commonInputContainerStyles}
 `;
 
-export const StyledTextArea = styled.textarea`
+export const StyledTextArea = styled.textarea<{
+  hasLineLimit: boolean;
+  textAreaWidth?: number;
+  width: number;
+  device: 'mobile' | 'desktop';
+}>`
   ${() => commonInputStyles}
   width: 100%;
   padding-bottom: 12px;

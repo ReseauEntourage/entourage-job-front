@@ -32,6 +32,9 @@ export const StyledTextInputWrapper = styled.div`
 
 export const StyledEyeIconWrapper = styled.div`
   position: absolute;
-  right: 0;
-  top: 4px;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
 `;

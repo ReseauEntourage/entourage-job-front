@@ -34,7 +34,7 @@ export const AccordionContentVariantStyles = {
   simple: {},
   default: {
     borderTop: `1px solid ${COLORS.gray}`,
-    padding: '10px 20px',
+    padding: '20px 20px',
   },
 };
 

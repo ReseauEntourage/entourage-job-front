@@ -21,4 +21,5 @@ export interface ButtonProps {
   className?: string;
   dataTestId?: string;
   color?: Color;
+  style?: React.CSSProperties;
 }

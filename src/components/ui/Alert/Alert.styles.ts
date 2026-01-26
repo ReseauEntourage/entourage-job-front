@@ -16,7 +16,7 @@ export const StyledAlert = styled.div<{
       return ALERT_COLORS[props.variant]?.border || COLORS.transparent;
     }};
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   border-radius: ${(props) => {
     return props.rounded ? '10px' : '0';
   }};

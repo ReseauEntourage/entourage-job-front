@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { LINE_HEIGHT_MULTIPLIER, sizesPx } from '../Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
 import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 
@@ -25,18 +26,20 @@ export const commonInputContainerStyles = css`
   flex-direction: column;
   position: relative;
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+  margin-bottom: 16px;
 `;
 export const commonInputStyles = css`
   font-family: Poppins, sans-serif;
+  font-size: ${sizesPx.desktop.normal}px;
   width: 100%;
   background-color: transparent;
-  border: 0.5px solid white;
+  border: 1px solid ${COLORS.gray};
   color: ${COLORS.black};
-  border-bottom: solid 2px ${COLORS.gray};
+  border-radius: 8px;
   text-align: left;
+  padding: 12px 16px;
   font-size: 14px;
-  line-height: 17px;
-  padding: 4px 0;
+  line-height: ${LINE_HEIGHT_MULTIPLIER * sizesPx.desktop.normal}px;
   min-height: 30px;
   box-sizing: border-box;
 `;
@@ -60,6 +63,7 @@ export const StyledAnnotations = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: flex-start;
+  margin-top: 5px;
 `;
 
 export const StyledAnnotationsErrorMessage = styled(FieldErrorMessage)`

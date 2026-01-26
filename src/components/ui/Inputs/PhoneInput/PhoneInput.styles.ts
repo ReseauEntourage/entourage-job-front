@@ -13,8 +13,8 @@ export const StyledPhoneInput = styled.div`
     padding: 0 !important;
   }
   .PhoneInputCountry {
-    margin-right: 10px;
-    margin-left: 5px;
+    margin-right: 0px;
+    margin-left: 16px;
   }
   input {
     ${() => commonInputStyles}
