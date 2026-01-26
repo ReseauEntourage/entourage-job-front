@@ -46,8 +46,11 @@ export const useOnboardingStepProfileCompletion = () => {
         : null,
       businessSectorIds:
         user.userProfile?.sectorOccupations
+          ?.slice()
+          .sort((a, b) => a.order - b.order)
           ?.map((so) => {
-            const businessSectorId = so.businessSectorId;
+            const businessSectorId =
+              so.businessSectorId ?? so.businessSector?.id;
             if (!businessSectorId) {
               return null;
             }
