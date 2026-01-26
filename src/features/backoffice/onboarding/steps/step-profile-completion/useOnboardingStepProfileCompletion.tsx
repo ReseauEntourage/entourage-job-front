@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
+import { FilterConstant } from '@/src/constants/utils';
 import { useUpdateUser } from '@/src/hooks';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
@@ -42,11 +44,27 @@ export const useOnboardingStepProfileCompletion = () => {
       companyName: user.company?.name
         ? { value: user.company.name, label: user.company.name }
         : null,
+      businessSectorIds:
+        user.userProfile?.sectorOccupations
+          ?.map((so) => {
+            const businessSectorId = so.businessSectorId;
+            if (!businessSectorId) {
+              return null;
+            }
+
+            return {
+              value: businessSectorId,
+              label: so.businessSector?.name ?? businessSectorId,
+            } as FilterConstant<string>;
+          })
+          .filter((value): value is FilterConstant<string> => value !== null) ??
+        [],
     };
   }, [
     user.company?.name,
     user.userProfile?.currentJob,
     user.userProfile?.introduction,
+    user.userProfile?.sectorOccupations,
   ]);
 
   useEffect(() => {
@@ -145,6 +163,13 @@ export const useOnboardingStepProfileCompletion = () => {
             updateUserProfile({
               introduction: values.introduction,
               currentJob: values.currentJob,
+              sectorOccupations: values.businessSectorIds.map(
+                (businessSector, idx) =>
+                  ({
+                    businessSectorId: businessSector.value,
+                    order: idx,
+                  } as UserProfileSectorOccupation)
+              ),
             });
           },
           () => {

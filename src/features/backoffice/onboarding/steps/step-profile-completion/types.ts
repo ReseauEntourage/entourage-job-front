@@ -6,4 +6,5 @@ export interface ProfileCompletionFormValues {
   introduction: string;
   currentJob: string;
   companyName: FilterConstant<string> | null;
+  businessSectorIds: FilterConstant<string>[];
 }

@@ -3,9 +3,16 @@ import { Controller, FieldError, useFormContext } from 'react-hook-form';
 import { LucidIcon, Text } from '@/src/components/ui';
 import { Accordion } from '@/src/components/ui/Accordion/Accordion';
 import { H4 } from '@/src/components/ui/Headings';
-import { SelectCreatable, TextInput } from '@/src/components/ui/Inputs';
+import {
+  SelectAsync,
+  SelectCreatable,
+  TextInput,
+} from '@/src/components/ui/Inputs';
 import { COLORS } from '@/src/constants/styles';
-import { loadCompaniesOptions } from '@/src/features/forms/utils/loadOptions.utils';
+import {
+  loadBusinessSectorsOptions,
+  loadCompaniesOptions,
+} from '@/src/features/forms/utils/loadOptions.utils';
 import {
   StyledAccordionHeader,
   StyledAccordionHeaderIcon,
@@ -21,10 +28,20 @@ export const ProfessionalInfoAccordion = () => {
   } = useFormContext<ProfileCompletionFormValues>();
 
   useEffect(() => {
-    if (submitCount > 0 && (!!errors.currentJob || !!errors.companyName)) {
+    if (
+      submitCount > 0 &&
+      (!!errors.currentJob ||
+        !!errors.companyName ||
+        !!errors.businessSectorIds)
+    ) {
       setIsOpen(true);
     }
-  }, [errors.companyName, errors.currentJob, submitCount]);
+  }, [
+    errors.businessSectorIds,
+    errors.companyName,
+    errors.currentJob,
+    submitCount,
+  ]);
 
   return (
     <Accordion
@@ -96,6 +113,41 @@ export const ProfessionalInfoAccordion = () => {
             openMenuOnClick
             maxChar={60}
             loadOptions={loadCompaniesOptions}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="businessSectorIds"
+        rules={{
+          validate: (value) =>
+            (Array.isArray(value) && value.length > 0) ||
+            'Veuillez sélectionner au moins un secteur.',
+        }}
+        render={({ field }) => (
+          <SelectAsync
+            id="onboarding-businessSectorIds"
+            name="onboarding-businessSectorIds"
+            title={
+              <Text weight="semibold">
+                Les secteurs dans lesquels j'ai du réseau{' '}
+                <span aria-hidden="true">*</span>
+              </Text>
+            }
+            value={field.value || []}
+            onChange={(value) => field.onChange(value || [])}
+            onBlur={field.onBlur}
+            error={
+              errors.businessSectorIds as unknown as FieldError | undefined
+            }
+            showLabel
+            placeholder="Sélectionnez un ou plusieurs secteurs dans la liste"
+            isMulti
+            openMenuOnClick
+            loadOptions={(callback, inputValue) =>
+              loadBusinessSectorsOptions(callback, inputValue)
+            }
           />
         )}
       />

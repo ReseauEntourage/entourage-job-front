@@ -143,6 +143,7 @@ export const StyledSelect = styled.div`
   & .Select__multi-value__label {
     border-radius: 0 !important;
     padding: 0 !important;
+    font-size: ${sizesPx.desktop.normal}px !important;
   }
 
   & .Select__multi-value__remove {
