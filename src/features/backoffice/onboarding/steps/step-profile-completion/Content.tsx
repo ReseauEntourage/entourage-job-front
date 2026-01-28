@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useWatch, useFormContext } from 'react-hook-form';
 import { Text } from '@/src/components/ui';
 import { AccordionGroup } from '@/src/components/ui/Accordion/AccordionGroup';
+import { UserRoles } from '@/src/constants/users';
 import { listCompletionFields } from '@/src/features/forms/utils/computeCompletionRate.utils';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { CompletionStatus } from './CompletionStatus';
@@ -9,6 +10,7 @@ import { StyledProfileSubHeader } from './Content.styles';
 import { CvCompletionAccordion } from './components/CvCompletionAccordion/CvCompletionAccordion';
 import { PersonalInfoAccordion } from './components/PersonalInfoAccordion';
 import { ProfessionalInfoAccordion } from './components/ProfessionalInfoAccordion';
+import { ProfessionalInfoAccordionCandidate } from './components/ProfessionalInfoAccordionCandidate';
 import { ProfileCompletionFormValues } from './types';
 
 export const Content = () => {
@@ -32,9 +34,21 @@ export const Content = () => {
     const donePicture =
       !!user.userProfile?.hasPicture || !!formValues?.profileImage;
 
+    const excludePaths = ['profileImageObjectUrl', 'profileImage'];
+    if (user.role === UserRoles.CANDIDATE) {
+      excludePaths.push('currentJob', 'companyName', 'businessSectorIds');
+    } else {
+      excludePaths.push(
+        'businessSectorId0',
+        'occupation0',
+        'businessSectorId1',
+        'occupation1'
+      );
+    }
+
     const fields = listCompletionFields(formValues, {
       // Avoid counting technical fields / duplicates.
-      excludePaths: ['profileImageObjectUrl', 'profileImage'],
+      excludePaths,
     });
 
     // Only count fields that are either:
@@ -58,7 +72,13 @@ export const Content = () => {
 
     const done = doneFieldsCount + (donePicture ? 1 : 0);
     return Math.round((done / total) * 100);
-  }, [formState, formValues, getFieldState, user.userProfile?.hasPicture]);
+  }, [
+    formState,
+    formValues,
+    getFieldState,
+    user.role,
+    user.userProfile?.hasPicture,
+  ]);
 
   return (
     <>
@@ -70,7 +90,11 @@ export const Content = () => {
       <br />
       <AccordionGroup>
         <PersonalInfoAccordion />
-        <ProfessionalInfoAccordion />
+        {user.role === UserRoles.CANDIDATE ? (
+          <ProfessionalInfoAccordionCandidate />
+        ) : (
+          <ProfessionalInfoAccordion />
+        )}
         <CvCompletionAccordion />
       </AccordionGroup>
     </>

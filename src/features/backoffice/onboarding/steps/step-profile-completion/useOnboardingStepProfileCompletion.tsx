@@ -8,6 +8,7 @@ import {
   UserProfileSectorOccupation,
 } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
+import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { useUpdateUser } from '@/src/hooks';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -19,6 +20,7 @@ import {
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { sortByOrder } from '@/src/utils';
+import { formatCareerPathSentence } from '@/src/utils/Formatting';
 import { StyledOnboardingStepContainer } from '../../onboarding.styles';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content';
@@ -42,10 +44,45 @@ export const useOnboardingStepProfileCompletion = () => {
   const pendingCompanyUpdateRef = useRef<boolean>(false);
 
   const initialFormValues = useMemo<ProfileCompletionFormValues>(() => {
+    const sortedSectorOccupations =
+      user.userProfile?.sectorOccupations
+        ?.slice()
+        .sort((a, b) => a.order - b.order) ?? [];
+
+    const sectorOccupation0 = sortedSectorOccupations[0];
+    const sectorOccupation1 = sortedSectorOccupations[1];
+
+    const businessSector0Id =
+      sectorOccupation0?.businessSectorId ??
+      sectorOccupation0?.businessSector?.id;
+    const businessSector1Id =
+      sectorOccupation1?.businessSectorId ??
+      sectorOccupation1?.businessSector?.id;
+
     return {
       profileImage: null,
       profileImageObjectUrl: null,
       introduction: user.userProfile?.introduction ?? '',
+
+      businessSectorId0: businessSector0Id
+        ? {
+            value: businessSector0Id,
+            label:
+              sectorOccupation0?.businessSector?.name ??
+              String(businessSector0Id),
+          }
+        : null,
+      occupation0: sectorOccupation0?.occupation?.name ?? '',
+      businessSectorId1: businessSector1Id
+        ? {
+            value: businessSector1Id,
+            label:
+              sectorOccupation1?.businessSector?.name ??
+              String(businessSector1Id),
+          }
+        : null,
+      occupation1: sectorOccupation1?.occupation?.name ?? '',
+
       currentJob: user.userProfile?.currentJob ?? '',
       companyName: user.company?.name
         ? { value: user.company.name, label: user.company.name }
@@ -189,6 +226,40 @@ export const useOnboardingStepProfileCompletion = () => {
             dispatch(currentUserActions.updateProfileReset());
             dispatch(currentUserActions.updateUserCompanyReset());
 
+            pendingResolveRef.current = resolve;
+
+            if (user.role === UserRoles.CANDIDATE) {
+              pendingCompanyUpdateRef.current = false;
+
+              const candidateCareerPathValues = {
+                businessSectorId0: values.businessSectorId0 ?? undefined,
+                occupation0: values.occupation0,
+                businessSectorId1: values.businessSectorId1 ?? undefined,
+                occupation1: values.occupation1,
+              };
+
+              updateUserProfile({
+                introduction: values.introduction,
+                linkedinUrl: values.linkedinUrl?.trim()
+                  ? values.linkedinUrl.trim()
+                  : null,
+                sectorOccupations: formatCareerPathSentence(
+                  candidateCareerPathValues
+                ),
+                skills: values.skills.map((skill) => ({ name: skill.value })),
+                userProfileLanguages: values.languages.map((language) => ({
+                  languageId: language.value,
+                })) as UserProfileLanguage[],
+                interests: values.interests.map((interest, order) => ({
+                  name: interest.value,
+                  order,
+                })),
+                experiences: values.experiences,
+                formations: values.formations,
+              });
+              return;
+            }
+
             const submittedCompanyName = values.companyName?.value
               ? String(values.companyName.value).trim()
               : null;
@@ -197,8 +268,6 @@ export const useOnboardingStepProfileCompletion = () => {
               : null;
             const shouldUpdateCompany =
               submittedCompanyName !== existingCompanyName;
-
-            pendingResolveRef.current = resolve;
 
             pendingCompanyUpdateRef.current = shouldUpdateCompany;
             if (shouldUpdateCompany) {
