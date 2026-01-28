@@ -150,6 +150,7 @@ export const ProfileFormations = ({
               location={formation.location}
               structure={formation.institution}
               skills={formation.skills}
+              variant="timeline"
               isEditable={isEditable}
               editItem={() => editFormation(formation.id)}
               deleteItem={() => deleteFormation(formation.id)}

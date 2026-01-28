@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserProfileSectorOccupation } from '@/src/api/types';
+import {
+  Experience,
+  Formation,
+  UserProfileLanguage,
+  UserProfileSectorOccupation,
+} from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { FilterConstant } from '@/src/constants/utils';
 import { useUpdateUser } from '@/src/hooks';
@@ -75,13 +80,33 @@ export const useOnboardingStepProfileCompletion = () => {
               label: interest.name,
             }))
           : [],
+      experiences: (user.userProfile?.experiences as Experience[]) ?? [],
+      formations: (user.userProfile?.formations as Formation[]) ?? [],
+      languages:
+        user.userProfile?.userProfileLanguages
+          ?.map((upLanguage) => {
+            const languageId = upLanguage.language?.id;
+            const languageName = upLanguage.language?.name;
+            if (!languageId || !languageName) {
+              return null;
+            }
+            return {
+              value: languageId,
+              label: languageName,
+            } as FilterConstant<string>;
+          })
+          .filter((value): value is FilterConstant<string> => value !== null) ??
+        [],
       linkedinUrl: user.userProfile?.linkedinUrl ?? '',
     };
   }, [
     user.company?.name,
     user.userProfile?.currentJob,
+    user.userProfile?.experiences,
+    user.userProfile?.formations,
     user.userProfile?.introduction,
     user.userProfile?.interests,
+    user.userProfile?.userProfileLanguages,
     user.userProfile?.linkedinUrl,
     user.userProfile?.sectorOccupations,
     user.userProfile?.skills,
@@ -194,10 +219,15 @@ export const useOnboardingStepProfileCompletion = () => {
                   } as UserProfileSectorOccupation)
               ),
               skills: values.skills.map((skill) => ({ name: skill.value })),
+              userProfileLanguages: values.languages.map((language) => ({
+                languageId: language.value,
+              })) as UserProfileLanguage[],
               interests: values.interests.map((interest, order) => ({
                 name: interest.value,
                 order,
               })),
+              experiences: values.experiences,
+              formations: values.formations,
             });
           },
           () => {

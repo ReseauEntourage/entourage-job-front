@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Skill } from '@/src/api/types';
 import { H5 } from '@/src/components/ui/Headings';
 import { ButtonIcon } from '../../../components/ui';
 import { LucidIcon } from '../../../components/ui/Icons/LucidIcon';
-import { CVDate } from '../CVDate';
+import { CVDate, formatDate } from '../CVDate';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
@@ -11,8 +11,12 @@ import {
   StyledCVExperienceDate,
   StyledCVExperienceDateMobile,
   StyledCVExperienceDescription,
+  StyledCVExperienceCard,
+  StyledCVExperienceCardMain,
+  StyledCVExperienceCardMeta,
   StyledCVSkillTagContainer,
   StyledEditToolsContainer,
+  StyledEditToolsContainerCard,
   StyledSkillTag,
 } from './CVExperienceOrFormation.styles';
 
@@ -27,6 +31,7 @@ interface ExperienceOrFormationProps {
   isEditable?: boolean;
   editItem?: () => void;
   deleteItem?: () => void;
+  variant?: 'card' | 'timeline';
 }
 
 export function CVExperienceOrFormation({
@@ -40,8 +45,73 @@ export function CVExperienceOrFormation({
   isEditable = false,
   editItem,
   deleteItem,
+  variant = 'card',
 }: ExperienceOrFormationProps) {
   const isDesktop = useIsDesktop();
+
+  const handleEdit = useCallback(() => {
+    editItem?.();
+  }, [editItem]);
+
+  const handleDelete = useCallback(() => {
+    deleteItem?.();
+  }, [deleteItem]);
+
+  const structureLocationLine = useMemo(() => {
+    if (!structure && !location) {
+      return null;
+    }
+    return `${structure ?? ''}${structure && location ? ' - ' : ''}${
+      location ?? ''
+    }`;
+  }, [location, structure]);
+
+  const dateRangeLine = useMemo(() => {
+    if (!startDate) {
+      return null;
+    }
+
+    const start = formatDate(startDate);
+    const end = endDate ? formatDate(endDate) : "Aujourd'hui";
+    return `${start} - ${end}`;
+  }, [endDate, startDate]);
+
+  if (variant === 'card') {
+    return (
+      <StyledCVExperienceCard>
+        <StyledCVExperienceCardMain>
+          {title && <H5 title={title} color={COLORS.black} />}
+          {structureLocationLine && (
+            <div className="name-gray">{structureLocationLine}</div>
+          )}
+          {dateRangeLine && (
+            <StyledCVExperienceCardMeta>
+              {dateRangeLine}
+            </StyledCVExperienceCardMeta>
+          )}
+          {description && <div>{description}</div>}
+          <StyledCVSkillTagContainer>
+            {skills?.map(({ name, id: skillId }) => {
+              return <StyledSkillTag key={skillId}>{name}</StyledSkillTag>;
+            })}
+          </StyledCVSkillTagContainer>
+        </StyledCVExperienceCardMain>
+
+        {isEditable && (
+          <StyledEditToolsContainerCard>
+            <ButtonIcon
+              icon={<LucidIcon name="Pencil" />}
+              onClick={handleEdit}
+            />
+            <ButtonIcon
+              icon={<LucidIcon name="Trash" />}
+              onClick={handleDelete}
+            />
+          </StyledEditToolsContainerCard>
+        )}
+      </StyledCVExperienceCard>
+    );
+  }
 
   return (
     <StyledCVExperience>
@@ -61,12 +131,8 @@ export function CVExperienceOrFormation({
             )}
           </StyledCVExperienceDateMobile>
         )}
-        {(structure || location) && (
-          <div className="name-gray">
-            {structure}
-            {structure && location && ' - '}
-            {location}
-          </div>
+        {structureLocationLine && (
+          <div className="name-gray">{structureLocationLine}</div>
         )}
         {description && <div>{description}</div>}
         <StyledCVSkillTagContainer>
@@ -77,21 +143,10 @@ export function CVExperienceOrFormation({
       </StyledCVExperienceDescription>
       {isEditable && (
         <StyledEditToolsContainer>
-          <ButtonIcon
-            icon={<LucidIcon name="Pencil" />}
-            onClick={() => {
-              if (editItem) {
-                editItem();
-              }
-            }}
-          />
+          <ButtonIcon icon={<LucidIcon name="Pencil" />} onClick={handleEdit} />
           <ButtonIcon
             icon={<LucidIcon name="Trash" />}
-            onClick={() => {
-              if (deleteItem) {
-                deleteItem();
-              }
-            }}
+            onClick={handleDelete}
           />
         </StyledEditToolsContainer>
       )}

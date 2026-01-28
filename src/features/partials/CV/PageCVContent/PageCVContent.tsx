@@ -266,6 +266,7 @@ export const PageCVContent = ({
                       location={experience.location}
                       structure={experience.company}
                       skills={experience.skills}
+                      variant="timeline"
                     />
                   );
                 })}
@@ -307,6 +308,7 @@ export const PageCVContent = ({
                       location={formation.location}
                       structure={formation.institution}
                       skills={formation.skills}
+                      variant="timeline"
                     />
                   );
                 })}

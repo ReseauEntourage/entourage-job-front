@@ -1,3 +1,4 @@
+import { Experience, Formation } from '@/src/api/types';
 import { FilterConstant } from '@/src/constants/utils';
 
 export interface ProfileCompletionFormValues {
@@ -10,4 +11,7 @@ export interface ProfileCompletionFormValues {
   linkedinUrl: string;
   skills: FilterConstant<string>[];
   interests: FilterConstant<string>[];
+  experiences: Experience[];
+  formations: Formation[];
+  languages: FilterConstant<string>[];
 }

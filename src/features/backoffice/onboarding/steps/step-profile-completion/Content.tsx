@@ -6,7 +6,7 @@ import { listCompletionFields } from '@/src/features/forms/utils/computeCompleti
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { CompletionStatus } from './CompletionStatus';
 import { StyledProfileSubHeader } from './Content.styles';
-import { CvCompletionAccordion } from './components/CvCompletionAccordion';
+import { CvCompletionAccordion } from './components/CvCompletionAccordion/CvCompletionAccordion';
 import { PersonalInfoAccordion } from './components/PersonalInfoAccordion';
 import { ProfessionalInfoAccordion } from './components/ProfessionalInfoAccordion';
 import { ProfileCompletionFormValues } from './types';

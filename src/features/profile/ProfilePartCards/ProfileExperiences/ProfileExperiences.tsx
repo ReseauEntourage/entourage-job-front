@@ -164,6 +164,7 @@ export const ProfileExperiences = ({
               location={experience.location}
               structure={experience.company}
               skills={experience.skills}
+              variant="timeline"
               isEditable={isEditable}
               editItem={() => editExperience(experience.id)}
               deleteItem={() => deleteExperience(experience.id)}
