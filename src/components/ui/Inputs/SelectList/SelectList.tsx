@@ -93,7 +93,7 @@ export function SelectList<T extends string>({
           );
         })}
       </StyledSelectList>
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledSelectListContainer>
   );
 }

@@ -6,9 +6,10 @@ import {
   StyledAnnotationsErrorMessage,
   StyledInputLabel,
   StyledLimit,
+  StyledLimitContainer,
 } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
+import { Text } from 'src/components/ui';
 import {
   StyledTextInputGroupForm,
   StyledTextInputWrapper,
@@ -48,6 +49,7 @@ export function TextInput({
     return null;
   }
   const remainingCharacters = (maxLength || 0) - (value || '').length;
+  const shouldShowFooter = !!error || !!maxLength;
 
   return (
     <StyledTextInputGroupForm disabled={disabled}>
@@ -88,23 +90,26 @@ export function TextInput({
           </StyledEyeIconWrapper>
         )}
       </StyledTextInputWrapper>
-      {maxLength ? (
+      {shouldShowFooter && (
         <StyledAnnotations>
-          <div>
-            <StyledAnnotationsErrorMessage error={error} />
-          </div>
-          <StyledLimit warning={remainingCharacters < 0}>
-            {remainingCharacters >= 0 ? (
-              <span>{remainingCharacters} caractère(s) restant(s)</span>
-            ) : (
-              <span>
-                Limite dépassée de {Math.abs(remainingCharacters)} caractères(s)
-              </span>
-            )}
-          </StyledLimit>
+          {error && <StyledAnnotationsErrorMessage error={error} />}
+          {maxLength && (
+            <StyledLimitContainer>
+              <StyledLimit>
+                {remainingCharacters >= 0 ? (
+                  <Text size="small" color="darkGray">
+                    {remainingCharacters} caractère(s) restant(s)
+                  </Text>
+                ) : (
+                  <Text size="small" color="lightRed">
+                    Limite dépassée de {Math.abs(remainingCharacters)}
+                    caractères(s)
+                  </Text>
+                )}
+              </StyledLimit>
+            </StyledLimitContainer>
+          )}
         </StyledAnnotations>
-      ) : (
-        <FieldErrorMessage error={error} />
       )}
     </StyledTextInputGroupForm>
   );

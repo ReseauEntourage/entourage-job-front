@@ -16,6 +16,7 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
+import { Text } from 'src/components/ui';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectCreatableProps<
@@ -171,31 +172,36 @@ export function SelectCreatable<
           isLoading={isLoading}
         />
       </StyledSelect>
-      <StyledAnnotations>
-        <div>
-          <StyledAnnotationsErrorMessage error={error} />
-        </div>
-        <StyledLimitContainer>
-          {maxChar && (
-            <StyledLimit>
-              <span>
-                Chaque élément ne doit pas dépasser {maxChar} caractères.
-              </span>
-            </StyledLimit>
-          )}
-          {maxItems && (
-            <StyledLimit warning={remainingItems < 0}>
-              {remainingItems >= 0 ? (
-                <span>{remainingItems} élément(s) restant(s)</span>
-              ) : (
-                <span>
-                  Limite dépassée de {Math.abs(remainingItems)} élément(s)
-                </span>
-              )}
-            </StyledLimit>
-          )}
-        </StyledLimitContainer>
-      </StyledAnnotations>
+      {(error || maxChar || maxItems) && (
+        <StyledAnnotations>
+          <div>
+            <StyledAnnotationsErrorMessage error={error} />
+          </div>
+          <StyledLimitContainer>
+            {maxChar && (
+              <StyledLimit>
+                <Text size="small" color="darkGray">
+                  Chaque élément ne doit pas dépasser {maxChar} caractères.
+                </Text>
+              </StyledLimit>
+            )}
+            {maxItems && (
+              <StyledLimit>
+                {remainingItems >= 0 ? (
+                  <Text size="small" color="darkGray">
+                    {remainingItems} élément{remainingItems > 1 ? 's' : ''}{' '}
+                    restant{remainingItems > 1 ? 's' : ''}
+                  </Text>
+                ) : (
+                  <Text size="small" color="lightRed">
+                    Limite dépassée de {Math.abs(remainingItems)} élément(s)
+                  </Text>
+                )}
+              </StyledLimit>
+            )}
+          </StyledLimitContainer>
+        </StyledAnnotations>
+      )}
     </StyledSelectContainer>
   );
 }

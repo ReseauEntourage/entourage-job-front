@@ -61,7 +61,7 @@ export function PhoneInput({
         autoComplete="tel"
         ref={inputRef}
       />
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledPhoneInput>
   );
 }

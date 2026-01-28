@@ -84,7 +84,7 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
           ref={selectRef}
         />
       </StyledSelect>
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledSelectContainer>
   );
 }

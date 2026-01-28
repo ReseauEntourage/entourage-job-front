@@ -18,3 +18,10 @@ export const StyledExperienceOrFormationFormFieldLabelContainer = styled.div`
   align-items: center;
   gap: 12px;
 `;
+
+export const StyledAlertImportCVContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+`;

@@ -61,7 +61,7 @@ export function DatePicker({
         disabled={disabled}
         ref={inputRef}
       />
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledDatePickerContainer>
   );
 }

@@ -17,69 +17,24 @@ import { openModal } from '@/src/features/modals/Modal';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { ProfileExperiencesModalEdit } from '@/src/features/profile/ProfilePartCards/ProfileExperiences/ProfileExperiencesModalEdit/ProfileExperiencesModalEdit';
 import { ProfileFormationsModalEdit } from '@/src/features/profile/ProfilePartCards/ProfileFormations/ProfileFormationsModalEdit/ProfileFormationsModalEdit';
-import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
-import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { useProfileGeneration } from '@/src/hooks/useProfileGeneration';
 import {
   currentUserActions,
   selectIsComplete,
-  uploadExternalCvSelectors,
 } from '@/src/use-cases/current-user';
 import {
   StyledAccordionHeader,
   StyledAccordionHeaderIcon,
   StyledAccordionHeaderTitleContainer,
-} from '../../Content.styles';
-import { ProfileCompletionFormValues } from '../../types';
-import {
-  StyledAlertImportCVContainer,
-  StyledExperienceOrFormationFormFieldContainer,
-  StyledExperienceOrFormationFormFieldLabelContainer,
-  StyledExperienceOrFormationList,
-} from './CvCompletionAccordion.styles';
+} from '../Content.styles';
+import { ProfileCompletionFormValues } from '../types';
+import { StyledExperienceOrFormationList } from './CvCompletionAccordion/CvCompletionAccordion.styles';
 
 export const CvCompletionAccordion = () => {
   const dispatch = useDispatch();
   const currentUser = useAuthenticatedUser();
   const userIsComplete = useSelector(selectIsComplete);
   const [isOpen, setIsOpen] = useState(false);
-
-  const isUploadExternalCvRequested = useSelector(
-    uploadExternalCvSelectors.selectIsUploadExternalCvRequested
-  );
-  const isUploadExternalCvSucceeded = useSelector(
-    uploadExternalCvSelectors.selectIsUploadExternalCvSucceeded
-  );
-  const isUploadExternalCvFailed = useSelector(
-    uploadExternalCvSelectors.selectIsUploadExternalCvFailed
-  );
-
-  const [
-    shouldGenerateProfileAfterUpload,
-    setShouldGenerateProfileAfterUpload,
-  ] = useState(false);
-
-  const [hasJustGeneratedProfile, setHasJustGeneratedProfile] = useState(false);
-
-  const { generateProfileFromCV, isLoading: isProfileGenerationLoading } =
-    useProfileGeneration({
-      onProfileGenerated: () => {
-        setHasJustGeneratedProfile(true);
-      },
-    });
-
-  useEffect(() => {
-    if (isProfileGenerationLoading) {
-      setHasJustGeneratedProfile(false);
-    }
-  }, [isProfileGenerationLoading]);
-
-  const isGenerated = hasJustGeneratedProfile || currentUser.hasExtractedCvData;
-  const shouldShowUploadButton =
-    !currentUser.userProfile.hasExternalCv &&
-    !isProfileGenerationLoading &&
-    !isGenerated;
 
   const {
     control,
@@ -276,12 +231,7 @@ export const CvCompletionAccordion = () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        setShouldGenerateProfileAfterUpload(true);
-        dispatch(
-          currentUserActions.uploadExternalCvRequested({
-            formData,
-          })
-        );
+        dispatch(currentUserActions.uploadExternalCvRequested({ formData }));
       }
     };
 
@@ -296,34 +246,6 @@ export const CvCompletionAccordion = () => {
       dispatch(currentUserActions.fetchCompleteUserRequested());
     }
   }, [userIsComplete, dispatch]);
-
-  useEffect(() => {
-    if (!shouldGenerateProfileAfterUpload) {
-      return;
-    }
-
-    // On attend explicitement le succès de l'upload avant de lancer la génération.
-    // Le flag permet de ne pas déclencher la génération si l'upload vient d'ailleurs.
-    if (isUploadExternalCvSucceeded && currentUser.userProfile.hasExternalCv) {
-      setShouldGenerateProfileAfterUpload(false);
-      void generateProfileFromCV();
-    }
-  }, [
-    shouldGenerateProfileAfterUpload,
-    isUploadExternalCvSucceeded,
-    currentUser.userProfile.hasExternalCv,
-    generateProfileFromCV,
-  ]);
-
-  useEffect(() => {
-    if (!shouldGenerateProfileAfterUpload) {
-      return;
-    }
-
-    if (isUploadExternalCvFailed) {
-      setShouldGenerateProfileAfterUpload(false);
-    }
-  }, [shouldGenerateProfileAfterUpload, isUploadExternalCvFailed]);
 
   return (
     <Accordion
@@ -342,125 +264,133 @@ export const CvCompletionAccordion = () => {
       isOpen={isOpen}
       onOpenChange={setIsOpen}
     >
-      <Text weight="semibold">Importer votre CV</Text>
-
       <Alert
-        variant={isGenerated ? AlertVariant.Success : AlertVariant.Info}
+        variant={AlertVariant.Info}
         icon={
-          isGenerated ? (
-            <LucidIcon name="Check" color={COLORS.black} size={25} />
-          ) : (
-            <LucidIcon name="Sparkles" color={COLORS.primaryBlue} size={25} />
-          )
+          <LucidIcon name="Sparkles" color={COLORS.primaryBlue} size={25} />
         }
       >
-        <StyledAlertImportCVContainer>
-          {isGenerated ? (
-            <>
-              <H5 title="Votre profil est à présent complet" noMarginBottom />
-              <Text>
-                Votre profil a été rempli automatiquement à partir de votre CV.
-                <br />
-                Vous pouvez ajuster les informations si besoin.
-              </Text>
-            </>
-          ) : (
-            <>
-              <H5 title="Gagnez du temps avec l'IA" noMarginBottom />
-              <Text>
-                Importez votre CV et laissez notre IA remplir automatiquement
-                vos expériences, formations, compétences, langues et centres
-                d’intérêt. Vous pourrez ensuite modifier ces informations si
-                besoin.
-              </Text>
-            </>
-          )}
-
-          {isProfileGenerationLoading && <ProfileGenerationLoadingIndicator />}
-
-          {/* Button shown when CV has not been uploaded yet */}
-          {shouldShowUploadButton && (
-            <>
-              <Button
-                variant="secondary"
-                onClick={handleUploadCv}
-                disabled={isUploadExternalCvRequested}
-              >
-                Importer mon CV et remplir mon profil avec l'IA
-              </Button>
-              <OpenAILegalMention center={false} />
-            </>
-          )}
-        </StyledAlertImportCVContainer>
+        <H5 title="Gagnez du temps avec l'IA" />
+        <Text>
+          Importez votre CV et laissez notre IA remplir automatiquement vos
+          expériences, formations, compétences, langues et centres d’intérêt.
+          Vous pourrez ensuite modifier ces informations si besoin.
+        </Text>
       </Alert>
+      <br />
+      <Text weight="semibold">Votre CV existant</Text>
+
+      {/* Button shown when CV has not been uploaded yet */}
+      {!currentUser.userProfile.hasExternalCv && (
+        <Button
+          style={{ display: 'block', width: '100%' }}
+          variant="primary"
+          rounded={false}
+          onClick={handleUploadCv}
+        >
+          Importer mon CV
+        </Button>
+      )}
+
+      {/* Alert success shown when CV has been successfully uploaded */}
+      {currentUser.userProfile.hasExternalCv && (
+        <>
+          <Alert
+            variant={AlertVariant.Success}
+            icon={<LucidIcon name="Check" color={COLORS.black} size={25} />}
+          >
+            <Text weight="semibold">Votre CV a bien été importé !</Text>
+          </Alert>
+          {!currentUser.hasExtractedCvData && (
+            <>
+              <br />
+              <Button
+                style={{ display: 'block', width: '100%' }}
+                variant="primary"
+              >
+                <LucidIcon name="Sparkles" />
+                &nbsp; Remplir automatiquement mon profil avec l'IA
+              </Button>
+            </>
+          )}
+        </>
+      )}
 
       <br />
       {/* Form should only be shown when user data is complete */}
-      {userIsComplete && isGenerated && (
+      {userIsComplete && (
         <>
-          <StyledExperienceOrFormationFormFieldContainer>
-            <StyledExperienceOrFormationFormFieldLabelContainer>
-              <Text weight="semibold">Expériences professionnelles</Text>
-              <Button
-                variant="default"
-                size="small"
-                color="darkGray"
-                onClick={addExperience}
-              >
-                Ajouter une expérience
-              </Button>
-            </StyledExperienceOrFormationFormFieldLabelContainer>
-            <StyledExperienceOrFormationList>
-              {experiences.map((experience, idx) => (
-                <CVExperienceOrFormation
-                  key={experience.id ?? `${experience.title}-${idx}`}
-                  title={experience.title}
-                  description={experience.description}
-                  startDate={experience.startDate}
-                  endDate={experience.endDate}
-                  location={experience.location}
-                  structure={experience.company}
-                  skills={experience.skills || []}
-                  isEditable
-                  editItem={() => editExperience(idx)}
-                  deleteItem={() => deleteExperience(idx)}
-                />
-              ))}
-            </StyledExperienceOrFormationList>
-          </StyledExperienceOrFormationFormFieldContainer>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
+            <Text weight="semibold">Expériences professionnelles</Text>
+            <Button
+              variant="default"
+              size="small"
+              color="darkGray"
+              onClick={addExperience}
+            >
+              Ajouter une expérience
+            </Button>
+          </div>
+          {experiences.map((experience, idx) => (
+            <CVExperienceOrFormation
+              key={experience.id ?? `${experience.title}-${idx}`}
+              title={experience.title}
+              description={experience.description}
+              startDate={experience.startDate}
+              endDate={experience.endDate}
+              location={experience.location}
+              structure={experience.company}
+              skills={experience.skills || []}
+              isEditable
+              editItem={() => editExperience(idx)}
+              deleteItem={() => deleteExperience(idx)}
+            />
+          ))}
 
           <br />
 
-          <StyledExperienceOrFormationFormFieldContainer>
-            <StyledExperienceOrFormationFormFieldLabelContainer>
-              <Text weight="semibold">Formations</Text>
-              <Button
-                variant="default"
-                size="small"
-                color="darkGray"
-                onClick={addFormation}
-              >
-                Ajouter une formation
-              </Button>
-            </StyledExperienceOrFormationFormFieldLabelContainer>
-            <StyledExperienceOrFormationList>
-              {formations.map((formation, idx) => (
-                <CVExperienceOrFormation
-                  key={formation.id ?? `${formation.title}-${idx}`}
-                  title={formation.title}
-                  description={formation.description}
-                  startDate={formation.startDate}
-                  endDate={formation.endDate}
-                  location={formation.location}
-                  structure={formation.institution}
-                  skills={formation.skills || []}
-                  isEditable
-                  editItem={() => editFormation(idx)}
-                  deleteItem={() => deleteFormation(idx)}
-                />
-              ))}
-            </StyledExperienceOrFormationList>
-          </StyledExperienceOrFormationFormFieldContainer>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
+            <Text weight="semibold">Formations</Text>
+            <Button
+              variant="default"
+              size="small"
+              color="darkGray"
+              onClick={addFormation}
+            >
+              Ajouter une formation
+            </Button>
+          </div>
+          <StyledExperienceOrFormationList>
+            {formations.map((formation, idx) => (
+              <CVExperienceOrFormation
+                key={formation.id ?? `${formation.title}-${idx}`}
+                title={formation.title}
+                description={formation.description}
+                startDate={formation.startDate}
+                endDate={formation.endDate}
+                location={formation.location}
+                structure={formation.institution}
+                skills={formation.skills || []}
+                isEditable
+                editItem={() => editFormation(idx)}
+                deleteItem={() => deleteFormation(idx)}
+              />
+            ))}
+          </StyledExperienceOrFormationList>
 
           <br />
 

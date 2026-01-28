@@ -98,7 +98,7 @@ export const updateUserProfilePictureAdapter = createRequestAdapter(
 export const uploadExternalCvAdapter = createRequestAdapter(
   'uploadExternalCv'
 ).withPayloads<
-  FormData,
+  { formData: FormData },
   void,
   {
     error: string;

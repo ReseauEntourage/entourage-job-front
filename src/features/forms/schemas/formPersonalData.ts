@@ -50,6 +50,7 @@ export const formPersonalDataAsCandidate: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Nouvel email',
+      showLabel: true,
     },
     {
       id: 'newEmail1',

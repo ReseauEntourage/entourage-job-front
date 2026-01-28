@@ -149,7 +149,7 @@ export function SelectCard<T extends string>({
           );
         })}
       </StyledSelectCard>
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledSelectCardContainer>
   );
 }

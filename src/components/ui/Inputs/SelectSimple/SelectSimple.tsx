@@ -131,7 +131,7 @@ export function SelectSimple<T extends string | number | boolean>({
           </ul>
         )}
       </div>
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledSelectContainer>
   );
 }

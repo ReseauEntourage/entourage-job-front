@@ -4,9 +4,10 @@ import {
   StyledAnnotationsErrorMessage,
   StyledInputLabel,
   StyledLimit,
+  StyledLimitContainer,
 } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
+import { Text } from 'src/components/ui';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   StyledTextArea,
@@ -69,6 +70,8 @@ export function TextArea({
   const currentLength = (value || '').length;
   const missingCharacters = minLength ? minLength - currentLength : 0;
   const isBelowMinLength = !!minLength && missingCharacters > 0;
+  const shouldShowAnnotations = !!maxLines || !!maxLength || !!minLength;
+  const shouldShowFooter = !!error || shouldShowAnnotations;
 
   return (
     <StyledTextAreaContainer disabled={disabled}>
@@ -109,49 +112,53 @@ export function TextArea({
           value={value || ''}
         />
       </StyledTextAreaScrollContainer>
-      {maxLines || maxLength || minLength ? (
+      {shouldShowFooter && (
         <StyledAnnotations>
-          <div>
-            <StyledAnnotationsErrorMessage error={error} />
-          </div>
-          {maxLines && (
-            <StyledLimit warning={remainingLines < 0}>
-              {remainingLines >= 0 ? (
-                <span>{remainingLines} ligne(s) restante(s)</span>
-              ) : (
-                <span>
-                  Limite dépassée de {Math.abs(remainingLines)} ligne(s)
-                </span>
-              )}
-            </StyledLimit>
-          )}
-          {!maxLines && (
-            <>
-              {isBelowMinLength ? (
+          {error && <StyledAnnotationsErrorMessage error={error} />}
+          {shouldShowAnnotations && (
+            <StyledLimitContainer>
+              {maxLines && (
                 <StyledLimit>
-                  <span>
-                    Encore {missingCharacters} caractère(s) nécessaire(s)
-                  </span>
+                  {remainingLines >= 0 ? (
+                    <Text size="small" color="darkGray">
+                      {remainingLines} ligne(s) restante(s)
+                    </Text>
+                  ) : (
+                    <Text size="small" color="lightRed">
+                      Limite dépassée de {Math.abs(remainingLines)} ligne(s)
+                    </Text>
+                  )}
                 </StyledLimit>
-              ) : (
-                maxLength && (
-                  <StyledLimit warning={remainingCharacters < 0}>
-                    {remainingCharacters >= 0 ? (
-                      <span>{remainingCharacters} caractère(s) restant(s)</span>
-                    ) : (
-                      <span>
-                        Limite dépassée de {Math.abs(remainingCharacters)}{' '}
-                        caractères(s)
-                      </span>
-                    )}
-                  </StyledLimit>
-                )
               )}
-            </>
+              {!maxLines && (
+                <>
+                  {isBelowMinLength ? (
+                    <StyledLimit>
+                      <Text size="small" color="darkGray">
+                        Encore {missingCharacters} caractère(s) nécessaire(s)
+                      </Text>
+                    </StyledLimit>
+                  ) : (
+                    maxLength && (
+                      <StyledLimit>
+                        {remainingCharacters >= 0 ? (
+                          <Text size="small" color="darkGray">
+                            {remainingCharacters} caractère(s) restant(s)
+                          </Text>
+                        ) : (
+                          <Text size="small" color="lightRed">
+                            Limite dépassée de {Math.abs(remainingCharacters)}{' '}
+                            caractères(s)
+                          </Text>
+                        )}
+                      </StyledLimit>
+                    )
+                  )}
+                </>
+              )}
+            </StyledLimitContainer>
           )}
         </StyledAnnotations>
-      ) : (
-        <FieldErrorMessage error={error} />
       )}
     </StyledTextAreaContainer>
   );

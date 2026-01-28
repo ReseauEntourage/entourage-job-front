@@ -18,6 +18,7 @@ import {
   StyledEditToolsContainer,
   StyledEditToolsContainerCard,
   StyledSkillTag,
+  StyledCVExperienceOrFormationDescriptionContainer,
 } from './CVExperienceOrFormation.styles';
 
 interface ExperienceOrFormationProps {
@@ -82,19 +83,29 @@ export function CVExperienceOrFormation({
         <StyledCVExperienceCardMain>
           {title && <H5 title={title} color={COLORS.black} />}
           {structureLocationLine && (
-            <div className="name-gray">{structureLocationLine}</div>
+            <StyledCVExperienceCardMeta>
+              <LucidIcon name="Building" size={14} />
+              {structureLocationLine}
+            </StyledCVExperienceCardMeta>
           )}
           {dateRangeLine && (
             <StyledCVExperienceCardMeta>
+              <LucidIcon name="Calendar" size={14} />
               {dateRangeLine}
             </StyledCVExperienceCardMeta>
           )}
-          {description && <div>{description}</div>}
-          <StyledCVSkillTagContainer>
-            {skills?.map(({ name, id: skillId }) => {
-              return <StyledSkillTag key={skillId}>{name}</StyledSkillTag>;
-            })}
-          </StyledCVSkillTagContainer>
+          {description && (
+            <StyledCVExperienceOrFormationDescriptionContainer>
+              {description}
+            </StyledCVExperienceOrFormationDescriptionContainer>
+          )}
+          {skills?.length > 0 && (
+            <StyledCVSkillTagContainer>
+              {skills.map(({ name, id: skillId }) => {
+                return <StyledSkillTag key={skillId}>{name}</StyledSkillTag>;
+              })}
+            </StyledCVSkillTagContainer>
+          )}
         </StyledCVExperienceCardMain>
 
         {isEditable && (
@@ -102,10 +113,12 @@ export function CVExperienceOrFormation({
             <ButtonIcon
               icon={<LucidIcon name="Pencil" />}
               onClick={handleEdit}
+              color={COLORS.darkGray}
             />
             <ButtonIcon
               icon={<LucidIcon name="Trash" />}
               onClick={handleDelete}
+              color={COLORS.darkGray}
             />
           </StyledEditToolsContainerCard>
         )}
@@ -132,7 +145,9 @@ export function CVExperienceOrFormation({
           </StyledCVExperienceDateMobile>
         )}
         {structureLocationLine && (
-          <div className="name-gray">{structureLocationLine}</div>
+          <StyledCVExperienceCardMeta>
+            {structureLocationLine}
+          </StyledCVExperienceCardMeta>
         )}
         {description && <div>{description}</div>}
         <StyledCVSkillTagContainer>

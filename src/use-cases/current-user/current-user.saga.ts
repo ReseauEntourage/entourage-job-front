@@ -13,6 +13,7 @@ import {
   selectCurrentUserId,
 } from './current-user.selectors';
 import { slice } from './current-user.slice';
+import { currentUserActions } from '.';
 
 const {
   fetchUserRequested,
@@ -270,8 +271,9 @@ function* deleteExternalCvRequestedSaga() {
 function* uploadExternalCvRequestedSaga(
   action: ReturnType<typeof uploadExternalCvRequested>
 ) {
+  const formData = action.payload.formData;
   try {
-    yield* call(() => Api.postExternalCv(action.payload));
+    yield* call(() => Api.postExternalCv(formData));
     yield* put(uploadExternalCvSucceeded());
     yield* put(
       notificationsActions.addNotification({

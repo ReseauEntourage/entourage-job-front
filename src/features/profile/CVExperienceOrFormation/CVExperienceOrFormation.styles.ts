@@ -30,6 +30,9 @@ export const StyledCVExperienceCardMain = styled.div`
 `;
 
 export const StyledCVExperienceCardMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: ${COLORS.darkGray};
 `;
 
@@ -44,6 +47,11 @@ export const StyledCVExperienceDateMobile = styled.div`
   color: ${COLORS.darkGray};
   text-align: left;
   font-size: 13px;
+`;
+
+export const StyledCVExperienceOrFormationDescriptionContainer = styled.div`
+  margin-top: 8px;
+  color: ${COLORS.darkGray};
 `;
 
 export const StyledCVExperienceDescription = styled.div`
@@ -100,4 +108,11 @@ export const StyledEditToolsContainerCard = styled.div`
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  > * {
+    padding: 8px;
+    border-radius: 8px;
+    :hover {
+      background-color: ${COLORS.lightGray};
+    }
+  }
 `;

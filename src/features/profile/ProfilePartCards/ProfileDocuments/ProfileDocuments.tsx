@@ -50,7 +50,9 @@ export const ProfileDocuments = ({
           if (fields.externalCv && fields.externalCv[0]) {
             const formData = new FormData();
             formData.append('file', fields.externalCv[0]);
-            dispatch(currentUserActions.uploadExternalCvRequested(formData));
+            dispatch(
+              currentUserActions.uploadExternalCvRequested({ formData })
+            );
           }
         }}
         linkedinUrl={linkedinUrl || ''}

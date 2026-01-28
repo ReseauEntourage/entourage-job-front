@@ -168,7 +168,7 @@ export function* sendStepDataOnboardingSaga() {
       if (externalCv && externalCv[0]) {
         const formData = new FormData();
         formData.append('file', externalCv[0]);
-        yield* put(currentUserActions.uploadExternalCvRequested(formData));
+        yield* put(currentUserActions.uploadExternalCvRequested({ formData }));
 
         // wait for the query to complete
         const action = yield* take([

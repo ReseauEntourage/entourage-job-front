@@ -117,7 +117,7 @@ export function Radio({
             );
           })}
       </div>
-      <FieldErrorMessage error={error} />
+      {error && <FieldErrorMessage error={error} />}
     </StyledRadioContainer>
   );
 }

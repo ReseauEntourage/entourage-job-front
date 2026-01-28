@@ -51,7 +51,7 @@ export const AlertIA = () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        dispatch(currentUserActions.uploadExternalCvRequested(formData));
+        dispatch(currentUserActions.uploadExternalCvRequested({ formData }));
       }
     };
 

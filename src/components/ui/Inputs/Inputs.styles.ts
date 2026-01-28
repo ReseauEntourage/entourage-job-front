@@ -69,15 +69,16 @@ export const StyledInputLabelOptional = styled.span`
 
 export const StyledAnnotations = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 12px;
   width: 100%;
   align-items: flex-start;
-  margin-top: 5px;
 `;
 
 export const StyledAnnotationsErrorMessage = styled(FieldErrorMessage)`
   position: relative !important;
   bottom: 0 !important;
+  margin-right: auto;
 `;
 
 export const StyledLimitContainer = styled.div`
@@ -88,16 +89,9 @@ export const StyledLimitContainer = styled.div`
 `;
 
 export const StyledLimit = styled.div`
-  color: ${({ warning }) => {
-    return warning ? COLORS.darkOrange : COLORS.mediumGray;
-  }};
-  font-size: 12px;
-  line-height: 12px;
   text-align: right;
   align-self: flex-end;
   min-height: 30px;
   display: flex;
-  > * {
-    padding-top: 5px;
-  }
+  padding-top: 5px;
 `;
