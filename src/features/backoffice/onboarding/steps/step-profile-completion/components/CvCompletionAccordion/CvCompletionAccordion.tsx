@@ -488,6 +488,7 @@ export const CvCompletionAccordion = () => {
                   loadSkillsOptions(callback, inputValue, true)
                 }
                 options={[]}
+                maxItems={50}
               />
             )}
           />
