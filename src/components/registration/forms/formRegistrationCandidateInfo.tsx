@@ -9,6 +9,12 @@ import {
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
+import {
+  isBirthDateAtLeastAge,
+  isBirthDateAtMostAge,
+  isBirthDateNotInFuture,
+  parseISODateOnly,
+} from 'src/utils/BirthDate';
 
 export const formRegistrationCandidateInfo: FormSchema<{
   birthDate: string;
@@ -39,10 +45,28 @@ export const formRegistrationCandidateInfo: FormSchema<{
       rules: [
         {
           method: (fieldValue) => {
-            const minBirthdate = new Date();
-            minBirthdate.setFullYear(minBirthdate.getFullYear() - 18);
-            const realBirthdate = new Date(fieldValue);
-            return minBirthdate > realBirthdate;
+            return parseISODateOnly(fieldValue) !== null;
+          },
+          message: 'Veuillez saisir une date de naissance valide',
+        },
+        {
+          method: (fieldValue) => {
+            const birthDate = parseISODateOnly(fieldValue);
+            return birthDate ? isBirthDateNotInFuture(birthDate) : false;
+          },
+          message: 'La date de naissance ne peut pas être dans le futur',
+        },
+        {
+          method: (fieldValue) => {
+            const birthDate = parseISODateOnly(fieldValue);
+            return birthDate ? isBirthDateAtMostAge(birthDate, 120) : false;
+          },
+          message: 'La date de naissance est trop ancienne',
+        },
+        {
+          method: (fieldValue) => {
+            const birthDate = parseISODateOnly(fieldValue);
+            return birthDate ? isBirthDateAtLeastAge(birthDate, 18) : false;
           },
           message:
             'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
