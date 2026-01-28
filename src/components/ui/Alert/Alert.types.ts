@@ -7,6 +7,7 @@ export enum AlertVariant {
   LightBlue = 'lightBlue',
   White = 'white',
   Error = 'error',
+  Success = 'success',
 }
 
 export interface AlertProps {

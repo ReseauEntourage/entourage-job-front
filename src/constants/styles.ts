@@ -66,6 +66,7 @@ export const COLORS = {
 
   // Green
   lightGreen: '#A7DB9F',
+  extraLightGreen: '#D4FFCE',
   green: '#79CC6B',
   mediumGreen: '#1E7F51',
   darkGreen: '#1F4946',
@@ -114,6 +115,11 @@ export const ALERT_COLORS = {
     background: COLORS.white,
     text: COLORS.black,
     border: COLORS.gray,
+  },
+  [AlertVariant.Success]: {
+    background: COLORS.extraLightGreen,
+    text: COLORS.black,
+    border: COLORS.green,
   },
 };
 

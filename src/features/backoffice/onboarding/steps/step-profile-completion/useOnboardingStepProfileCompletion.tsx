@@ -62,6 +62,11 @@ export const useOnboardingStepProfileCompletion = () => {
           })
           .filter((value): value is FilterConstant<string> => value !== null) ??
         [],
+      skills:
+        user.userProfile?.skills?.map((skill) => ({
+          value: skill.name,
+          label: skill.name,
+        })) ?? [],
       linkedinUrl: user.userProfile?.linkedinUrl ?? '',
     };
   }, [
@@ -70,6 +75,7 @@ export const useOnboardingStepProfileCompletion = () => {
     user.userProfile?.introduction,
     user.userProfile?.linkedinUrl,
     user.userProfile?.sectorOccupations,
+    user.userProfile?.skills,
   ]);
 
   useEffect(() => {
@@ -165,6 +171,7 @@ export const useOnboardingStepProfileCompletion = () => {
               updateUserCompany(submittedCompanyName);
             }
 
+            console.log('values.skills', values.skills);
             updateUserProfile({
               introduction: values.introduction,
               currentJob: values.currentJob,
@@ -178,6 +185,7 @@ export const useOnboardingStepProfileCompletion = () => {
                     order: idx,
                   } as UserProfileSectorOccupation)
               ),
+              skills: values.skills.map((skill) => ({ name: skill.value })),
             });
           },
           () => {

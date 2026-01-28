@@ -47,6 +47,10 @@ export const commonInputStyles = css`
     outline: none;
     border: 1px solid ${COLORS.primaryBlue};
   }
+
+  :hover {
+    border: 1px solid ${COLORS.darkGray};
+  }
 `;
 
 export const StyledInputLabel = styled.label`
