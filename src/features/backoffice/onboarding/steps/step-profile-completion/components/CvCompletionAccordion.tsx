@@ -32,10 +32,10 @@ export const CvCompletionAccordion = () => {
   } = useFormContext<ProfileCompletionFormValues>();
 
   useEffect(() => {
-    if (submitCount > 0 && !!errors.skills) {
+    if (submitCount > 0 && (!!errors.skills || !!errors.interests)) {
       setIsOpen(true);
     }
-  }, [errors.skills, submitCount]);
+  }, [errors.interests, errors.skills, submitCount]);
 
   const handleUploadCv = () => {
     const input = document.createElement('input');
@@ -158,6 +158,35 @@ export const CvCompletionAccordion = () => {
                 loadOptions={(callback, inputValue) =>
                   loadSkillsOptions(callback, inputValue, true)
                 }
+                options={[]}
+              />
+            )}
+          />
+
+          <br />
+
+          <Controller
+            control={control}
+            name="interests"
+            render={({ field }) => (
+              <SelectCreatable
+                id="onboarding-interests"
+                name="onboarding-interests"
+                title={<Text weight="semibold">Centres d'intérêt</Text>}
+                value={field.value || []}
+                onChange={(value) => field.onChange(value || [])}
+                onBlur={field.onBlur}
+                error={
+                  submitCount > 0
+                    ? (errors.interests as unknown as FieldError | undefined)
+                    : undefined
+                }
+                showLabel
+                placeholder="Ajoutez jusqu’à 6 centres d’intérêt"
+                isMulti
+                openMenuOnClick
+                maxChar={30}
+                maxItems={6}
                 options={[]}
               />
             )}

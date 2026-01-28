@@ -13,6 +13,7 @@ import {
   updateUserCompanySelectors,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
+import { sortByOrder } from '@/src/utils';
 import { StyledOnboardingStepContainer } from '../../onboarding.styles';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content';
@@ -67,12 +68,20 @@ export const useOnboardingStepProfileCompletion = () => {
           value: skill.name,
           label: skill.name,
         })) ?? [],
+      interests:
+        user.userProfile?.interests && user.userProfile.interests.length > 0
+          ? sortByOrder(user.userProfile.interests).map((interest) => ({
+              value: interest.name,
+              label: interest.name,
+            }))
+          : [],
       linkedinUrl: user.userProfile?.linkedinUrl ?? '',
     };
   }, [
     user.company?.name,
     user.userProfile?.currentJob,
     user.userProfile?.introduction,
+    user.userProfile?.interests,
     user.userProfile?.linkedinUrl,
     user.userProfile?.sectorOccupations,
     user.userProfile?.skills,
@@ -171,7 +180,6 @@ export const useOnboardingStepProfileCompletion = () => {
               updateUserCompany(submittedCompanyName);
             }
 
-            console.log('values.skills', values.skills);
             updateUserProfile({
               introduction: values.introduction,
               currentJob: values.currentJob,
@@ -186,6 +194,10 @@ export const useOnboardingStepProfileCompletion = () => {
                   } as UserProfileSectorOccupation)
               ),
               skills: values.skills.map((skill) => ({ name: skill.value })),
+              interests: values.interests.map((interest, order) => ({
+                name: interest.value,
+                order,
+              })),
             });
           },
           () => {

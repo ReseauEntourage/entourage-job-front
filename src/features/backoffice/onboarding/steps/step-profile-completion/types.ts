@@ -9,4 +9,5 @@ export interface ProfileCompletionFormValues {
   businessSectorIds: FilterConstant<string>[];
   linkedinUrl: string;
   skills: FilterConstant<string>[];
+  interests: FilterConstant<string>[];
 }
