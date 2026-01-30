@@ -74,8 +74,6 @@ export const useOnboardingStepElearning = ({
     description: `Complétez les modules de formation pour obtenir votre certification ${userRole} Entourage Pro.`,
     content: <Content />,
     isStepCompleted: async () => {
-      // Important: wait for elearning units fetch to settle before deciding.
-      // Otherwise an empty list (initial state) can look like “all completed”.
       return ensureAndComputeHasCompleteAllUnits();
     },
     onSubmit: async () => {

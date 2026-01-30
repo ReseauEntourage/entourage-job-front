@@ -122,6 +122,14 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
             },
           }
         : {}),
+      ...(isFormFieldTextInput(field) && field.minLength
+        ? {
+            minLength: {
+              value: field.minLength,
+              message: `${field.minLength} caractères minimum`,
+            },
+          }
+        : {}),
       validate: rules || {},
     },
   });

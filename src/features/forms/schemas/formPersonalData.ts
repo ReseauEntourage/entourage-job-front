@@ -98,6 +98,8 @@ export const formPersonalDataAsCandidate: FormSchema<{
       name: 'introduction',
       component: 'textarea',
       title: 'Tapez votre courte présentation',
+      minLength: 50,
+      maxLength: 500,
     },
   ],
 };
@@ -206,6 +208,8 @@ export const formPersonalDataAsCoach: FormSchema<{
       name: 'introduction',
       component: 'textarea',
       title: 'Tapez votre courte présentation',
+      minLength: 50,
+      maxLength: 500,
     },
   ],
 };
@@ -220,6 +224,7 @@ export const formPersonalDataAsAdmin: FormSchema<{
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
+  introduction: string;
 }> = {
   id: 'form-personal-data',
   fields: [
@@ -244,16 +249,6 @@ export const formPersonalDataAsAdmin: FormSchema<{
       component: 'select-simple',
       options: ADMIN_ZONES_FILTERS,
       isRequired: true,
-    },
-    {
-      id: 'adminRole',
-      title: 'Responsabilité',
-      name: 'adminRole',
-      component: 'select-simple',
-      options: [
-        { value: AdminRoles.CANDIDATES, label: AdminRoles.CANDIDATES },
-        { value: AdminRoles.COMPANIES, label: AdminRoles.COMPANIES },
-      ],
     },
     {
       id: 'gender',
@@ -320,6 +315,14 @@ export const formPersonalDataAsAdmin: FormSchema<{
           message: 'Numéro de téléphone invalide',
         },
       ],
+    },
+    {
+      id: 'introduction',
+      name: 'introduction',
+      component: 'textarea',
+      title: 'Tapez votre courte présentation',
+      minLength: 50,
+      maxLength: 500,
     },
   ],
 };

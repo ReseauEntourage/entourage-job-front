@@ -207,6 +207,7 @@ export interface FormFieldTextInput<V extends FormSchemaValidation>
   rows?: number;
   maxLines?: { lines: number; width: number };
   maxLength?: number;
+  minLength?: number;
   min?: string;
   max?: string;
 }
