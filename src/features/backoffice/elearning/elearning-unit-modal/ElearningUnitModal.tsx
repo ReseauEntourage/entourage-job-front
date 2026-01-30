@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
-import { Button } from '@/src/components/ui';
-import { H3 } from '@/src/components/ui/Headings';
+import { Button, Text } from '@/src/components/ui';
+import { H3, H5 } from '@/src/components/ui/Headings';
 import { Modal, useModalContext } from '@/src/features/modals/Modal';
 import { ElearningUnit } from '../elearning.types';
 import { useElearning } from '../useElearning';
@@ -9,6 +9,7 @@ import {
   StyledElearningUnitModalActions,
   StyledElearningUnitModalContainer,
   StyledElearningUnitModalHeader,
+  StyledInviteToGoToQuiz,
 } from './ElearningUnitModal.styles';
 import { ElearningUnitModalQuiz } from './ElearningUnitModalQuiz';
 import { ElearningUnitModalVideo } from './ElearningUnitModalVideo';
@@ -146,7 +147,11 @@ export const ElearningUnitModal = ({
   };
 
   return (
-    <Modal id={`elearning-unit-modal-${elearningUnit.id}`} size="large">
+    <Modal
+      id={`elearning-unit-modal-${elearningUnit.id}`}
+      size="large"
+      withCloseButton
+    >
       <StyledElearningUnitModalContainer>
         <StyledElearningUnitModalHeader>
           <H3 title={elearningUnit.title} />
@@ -165,16 +170,36 @@ export const ElearningUnitModal = ({
           />
         )}
         {mode === ElearningUnitModalMode.VIDEO && (
-          <ElearningUnitModalVideo
-            title={elearningUnit.title}
-            videoUrl={elearningUnit.videoUrl}
-          />
+          <>
+            <ElearningUnitModalVideo
+              title={elearningUnit.title}
+              videoUrl={elearningUnit.videoUrl}
+            />
+            <StyledInviteToGoToQuiz>
+              {mode === ElearningUnitModalMode.VIDEO && (
+                <>
+                  <H5 title="Regardez la vidéo puis passez au quiz" center />
+                  <Text center>
+                    Après avoir visionné la vidéo, cliquez sur "Passer au quiz"
+                    pour répondre aux questions.
+                  </Text>
+                </>
+              )}
+            </StyledInviteToGoToQuiz>
+          </>
         )}
         <StyledElearningUnitModalActions>
-          <Button onClick={closeModal} variant="secondary">
-            Fermer
+          <Button
+            onClick={onConfirm}
+            variant="secondary"
+            style={{
+              ...(mode === ElearningUnitModalMode.VIDEO
+                ? { display: 'block', width: '100%' }
+                : {}),
+            }}
+          >
+            {buttonText}
           </Button>
-          <Button onClick={onConfirm}>{buttonText}</Button>
         </StyledElearningUnitModalActions>
       </StyledElearningUnitModalContainer>
     </Modal>

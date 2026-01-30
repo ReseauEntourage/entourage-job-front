@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import ReactModal from 'react-modal';
+import { LucidIcon } from '@/src/components/ui';
 import { useModalContext } from '@/src/features/modals/Modal/ModalContext';
 import { useIsMobile } from '@/src/hooks/utils';
 import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 import { ModalSize } from './Modal.types';
+import { StyledCloseButton } from './Modals.styles';
 
 ReactModal.setAppElement('#__next');
 
@@ -11,6 +13,7 @@ interface CustomModalProps {
   id: string;
   children: React.ReactNode;
   closeOnNextRender?: boolean;
+  withCloseButton?: boolean;
   size: ModalSize;
 }
 
@@ -18,6 +21,7 @@ const CustomModal = ({
   id = 'modal-screen',
   children,
   closeOnNextRender = false,
+  withCloseButton = false,
   size,
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
@@ -97,7 +101,7 @@ const CustomModal = ({
       },
       content: {
         width,
-        padding: '25px 0',
+        padding: '10px 0',
         display: 'flex',
         flexDirection: 'column',
         flexShrink: 0,
@@ -134,6 +138,18 @@ const CustomModal = ({
       isOpen
       onRequestClose={onRequestClose}
     >
+      {withCloseButton && (
+        <StyledCloseButton
+          type="button"
+          onClick={() => {
+            if (onClose) {
+              onClose();
+            }
+          }}
+        >
+          <LucidIcon name="X" size={24} color={COLORS.darkGray} />
+        </StyledCloseButton>
+      )}
       {children}
     </ReactModal>
   );

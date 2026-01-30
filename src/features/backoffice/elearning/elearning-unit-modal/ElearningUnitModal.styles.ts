@@ -35,9 +35,18 @@ export const StyledElearningQuestionCard = styled.div`
   border-radius: 8px;
 `;
 
+export const StyledInviteToGoToQuiz = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  padding: 10px 15px;
+  background-color: ${COLORS.hoverBlue};
+`;
+
 export const StyledElearningUnitModalActions = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 16px;
   gap: 8px;
 `;

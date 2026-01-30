@@ -1,6 +1,22 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
+export const StyledCloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: ${COLORS.lightGray};
+  }
+`;
+
 export const StyledHeaderModal = styled.div`
   padding: 0 50px;
   @media (max-width: ${BREAKPOINTS.desktop}px) {
