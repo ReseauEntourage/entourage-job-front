@@ -7,6 +7,7 @@ import { Accordion } from '@/src/components/ui/Accordion/Accordion';
 import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { H4, H5 } from '@/src/components/ui/Headings';
 import { SelectAsync, SelectCreatable } from '@/src/components/ui/Inputs';
+import { TextArea } from '@/src/components/ui/Inputs/TextArea/TextArea';
 import { COLORS } from '@/src/constants/styles';
 import { FilterConstant } from '@/src/constants/utils';
 import {
@@ -320,6 +321,37 @@ export const CvCompletionAccordion = () => {
       {/* Form should only be shown when user data is complete */}
       {userIsComplete && (
         <>
+          <Controller
+            control={control}
+            name="description"
+            rules={{
+              maxLength: {
+                value: 1000,
+                message:
+                  'Le résumé de votre profil ne peut pas dépasser 1000 caractères.',
+              },
+            }}
+            render={({ field }) => (
+              <TextArea
+                id="onboarding-profile-description"
+                name="onboarding-profile-description"
+                title={<Text weight="semibold">Résumé de votre profil</Text>}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                error={
+                  submitCount > 0
+                    ? (errors.description as FieldError | undefined)
+                    : undefined
+                }
+                showLabel
+                placeholder="En quelques lignes, présentez votre profil, vos objectifs et ce que vous recherchez."
+                maxLength={1000}
+                rows={4}
+              />
+            )}
+          />
+
           <div
             style={{
               display: 'flex',
@@ -353,8 +385,6 @@ export const CvCompletionAccordion = () => {
               deleteItem={() => deleteExperience(idx)}
             />
           ))}
-
-          <br />
 
           <div
             style={{
@@ -392,8 +422,6 @@ export const CvCompletionAccordion = () => {
             ))}
           </StyledExperienceOrFormationList>
 
-          <br />
-
           <Controller
             control={control}
             name="skills"
@@ -422,8 +450,6 @@ export const CvCompletionAccordion = () => {
             )}
           />
 
-          <br />
-
           <Controller
             control={control}
             name="languages"
@@ -450,8 +476,6 @@ export const CvCompletionAccordion = () => {
               />
             )}
           />
-
-          <br />
 
           <Controller
             control={control}

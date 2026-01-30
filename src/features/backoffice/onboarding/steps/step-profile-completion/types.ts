@@ -5,6 +5,7 @@ export interface ProfileCompletionFormValues {
   profileImage: Blob | null;
   profileImageObjectUrl: string | null;
   introduction: string;
+  description: string;
 
   // Candidate professional information
   businessSectorId0: FilterConstant<string> | null;

@@ -63,6 +63,7 @@ export const useOnboardingStepProfileCompletion = () => {
       profileImage: null,
       profileImageObjectUrl: null,
       introduction: user.userProfile?.introduction ?? '',
+      description: user.userProfile?.description ?? '',
 
       businessSectorId0: businessSector0Id
         ? {
@@ -137,16 +138,17 @@ export const useOnboardingStepProfileCompletion = () => {
       linkedinUrl: user.userProfile?.linkedinUrl ?? '',
     };
   }, [
-    user.company?.name,
+    user.userProfile?.sectorOccupations,
+    user.userProfile?.introduction,
+    user.userProfile?.description,
     user.userProfile?.currentJob,
+    user.userProfile?.skills,
+    user.userProfile.interests,
     user.userProfile?.experiences,
     user.userProfile?.formations,
-    user.userProfile?.introduction,
-    user.userProfile?.interests,
     user.userProfile?.userProfileLanguages,
     user.userProfile?.linkedinUrl,
-    user.userProfile?.sectorOccupations,
-    user.userProfile?.skills,
+    user.company?.name,
   ]);
 
   useEffect(() => {
@@ -240,6 +242,9 @@ export const useOnboardingStepProfileCompletion = () => {
 
               updateUserProfile({
                 introduction: values.introduction,
+                description: values.description?.trim()
+                  ? values.description.trim()
+                  : null,
                 linkedinUrl: values.linkedinUrl?.trim()
                   ? values.linkedinUrl.trim()
                   : null,
@@ -276,6 +281,9 @@ export const useOnboardingStepProfileCompletion = () => {
 
             updateUserProfile({
               introduction: values.introduction,
+              description: values.description?.trim()
+                ? values.description.trim()
+                : null,
               currentJob: values.currentJob,
               linkedinUrl: values.linkedinUrl?.trim()
                 ? values.linkedinUrl.trim()

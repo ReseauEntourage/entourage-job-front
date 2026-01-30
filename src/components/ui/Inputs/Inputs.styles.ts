@@ -91,7 +91,6 @@ export const StyledLimitContainer = styled.div`
 export const StyledLimit = styled.div`
   text-align: right;
   align-self: flex-end;
-  min-height: 30px;
   display: flex;
   padding-top: 5px;
 `;
