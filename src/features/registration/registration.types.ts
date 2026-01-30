@@ -6,7 +6,6 @@ import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateEconomicSocialInformation } from './forms/formRegistrationCandidateEconomicSocialInformation';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
-import { formRegistrationCandidateProfessionalInformation } from './forms/formRegistrationCandidateProfessionalInformation';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCompanyRole } from './forms/formRegistrationCompanyRole';
 import { formRegistrationCompanySelection } from './forms/formRegistrationCompanySelection';
@@ -25,7 +24,6 @@ export type CandidateRegistrationFlowForm =
   | typeof formRegistrationCandidateExpectations
   | typeof formRegistrationCandidateInfo
   | typeof formRegistrationCandidateEconomicSocialInformation
-  | typeof formRegistrationCandidateProfessionalInformation
   | typeof formRegistrationAccount;
 
 export type CoachRegistrationFlowForm =

@@ -6,7 +6,6 @@ import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
-import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedFlow,
@@ -38,10 +37,6 @@ export function* createUserRequestedSaga() {
   }
   const {
     confirmPassword,
-    businessSectorId0,
-    businessSectorId1,
-    occupation0,
-    occupation1,
     organizationId,
     companyName,
     companyRole,
@@ -55,12 +50,6 @@ export function* createUserRequestedSaga() {
     const userData = {
       ...restData,
       role: UserRoleByFlow[selectedFlow],
-      sectorOccupations: formatCareerPathSentence({
-        occupation0,
-        occupation1,
-        businessSectorId0,
-        businessSectorId1,
-      }),
       department: restData.department.value,
       organizationId: organizationId ? organizationId.value : undefined,
       companyName: companyName ? companyName.value : undefined,

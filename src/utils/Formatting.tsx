@@ -1,7 +1,6 @@
 import moment from 'moment/moment';
 import React from 'react';
 import { formReferingProfessionalInformation } from '@/src/features/backoffice/referer/forms/formReferingProfessionalInformation';
-import { formRegistrationCandidateProfessionalInformation } from '@/src/features/registration/forms/formRegistrationCandidateProfessionalInformation';
 import { UserProfileSectorOccupation } from 'src/api/types';
 import { CONTRACTS } from 'src/constants';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
@@ -69,10 +68,7 @@ export const limitChar = (string: string, limit: number) => {
 
 export const formatCareerPathSentence = (
   values: Partial<
-    ExtractFormSchemaValidation<
-      | typeof formRegistrationCandidateProfessionalInformation
-      | typeof formReferingProfessionalInformation
-    >
+    ExtractFormSchemaValidation<typeof formReferingProfessionalInformation>
   >
 ): UserProfileSectorOccupation[] => {
   const sectorOccupation0 = {
