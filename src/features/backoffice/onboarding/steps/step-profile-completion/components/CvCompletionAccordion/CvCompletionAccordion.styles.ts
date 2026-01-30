@@ -4,6 +4,7 @@ export const StyledExperienceOrFormationList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-bottom: 16px;
 `;
 
 export const StyledExperienceOrFormationFormFieldContainer = styled.div`

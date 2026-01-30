@@ -7,7 +7,6 @@ export const StyledErrorMessage = styled.div`
   line-height: 12px;
   display: flex;
   align-items: flex-start;
-  min-height: 30px;
   > * {
     padding-top: 5px;
   }

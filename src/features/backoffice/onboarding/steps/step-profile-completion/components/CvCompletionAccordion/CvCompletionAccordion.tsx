@@ -343,8 +343,6 @@ export const CvCompletionAccordion = () => {
       isOpen={isOpen}
       onOpenChange={setIsOpen}
     >
-      <Text weight="semibold">Importer votre CV</Text>
-
       <Alert
         variant={isGenerated ? AlertVariant.Success : AlertVariant.Info}
         icon={
@@ -396,8 +394,9 @@ export const CvCompletionAccordion = () => {
       </Alert>
 
       <br />
+
       {/* Form should only be shown when user data is complete */}
-      {userIsComplete && isGenerated && (
+      {userIsComplete && (
         <>
           <Controller
             control={control}
@@ -430,8 +429,6 @@ export const CvCompletionAccordion = () => {
             )}
           />
 
-          <br />
-
           <StyledExperienceOrFormationFormFieldContainer>
             <StyledExperienceOrFormationFormFieldLabelContainer>
               <Text weight="semibold">Expériences professionnelles</Text>
@@ -462,8 +459,6 @@ export const CvCompletionAccordion = () => {
               ))}
             </StyledExperienceOrFormationList>
           </StyledExperienceOrFormationFormFieldContainer>
-
-          <br />
 
           <StyledExperienceOrFormationFormFieldContainer>
             <StyledExperienceOrFormationFormFieldLabelContainer>
@@ -496,8 +491,6 @@ export const CvCompletionAccordion = () => {
             </StyledExperienceOrFormationList>
           </StyledExperienceOrFormationFormFieldContainer>
 
-          <br />
-
           <Controller
             control={control}
             name="skills"
@@ -527,8 +520,6 @@ export const CvCompletionAccordion = () => {
             )}
           />
 
-          <br />
-
           <Controller
             control={control}
             name="languages"
@@ -555,8 +546,6 @@ export const CvCompletionAccordion = () => {
               />
             )}
           />
-
-          <br />
 
           <Controller
             control={control}
