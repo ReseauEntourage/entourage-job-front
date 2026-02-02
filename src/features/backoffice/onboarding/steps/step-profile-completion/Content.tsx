@@ -9,8 +9,8 @@ import { CompletionStatus } from './CompletionStatus';
 import { StyledProfileSubHeader } from './Content.styles';
 import { CvCompletionAccordion } from './components/CvCompletionAccordion/CvCompletionAccordion';
 import { PersonalInfoAccordion } from './components/PersonalInfoAccordion';
-import { ProfessionalInfoAccordion } from './components/ProfessionalInfoAccordion';
-import { ProfessionalInfoAccordionCandidate } from './components/ProfessionalInfoAccordionCandidate';
+import { ProfessionalInfoAccordion } from './components/ProfessionalInfoAccordion/ProfessionalInfoAccordion';
+import { ProfessionalInfoAccordionCandidate } from './components/ProfessionalInfoAccordion/ProfessionalInfoAccordionCandidate';
 import { ProfileCompletionFormValues } from './types';
 
 export const Content = () => {

@@ -8,13 +8,13 @@ import {
   StyledAccordionHeader,
   StyledAccordionHeaderIcon,
   StyledAccordionHeaderTitleContainer,
-} from '../Content.styles';
+} from '../../Content.styles';
 import {
   profileCompletionFormSchema,
   profileCompletionProfessionalInfoCoachFields,
-} from '../profileCompletionFormSchema';
-import type { ProfileCompletionFormValues } from '../types';
-import { ProfileCompletionSchemaField } from './ProfileCompletionSchemaField';
+} from '../../profileCompletionFormSchema';
+import type { ProfileCompletionFormValues } from '../../types';
+import { ProfileCompletionSchemaField } from '../ProfileCompletionSchemaField';
 
 export const ProfessionalInfoAccordion = () => {
   const [isOpen, setIsOpen] = useState(false);

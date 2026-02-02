@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { LucidIcon, Text } from '@/src/components/ui';
 import { Accordion } from '@/src/components/ui/Accordion/Accordion';
@@ -8,15 +8,16 @@ import {
   StyledAccordionHeader,
   StyledAccordionHeaderIcon,
   StyledAccordionHeaderTitleContainer,
-} from '../Content.styles';
+} from '../../Content.styles';
 import {
   profileCompletionFormSchema,
-  profileCompletionProfessionalInfoCoachFields,
-} from '../profileCompletionFormSchema';
-import type { ProfileCompletionFormValues } from '../types';
-import { ProfileCompletionSchemaField } from './ProfileCompletionSchemaField';
+  profileCompletionProfessionalInfoCandidateRows,
+} from '../../profileCompletionFormSchema';
+import type { ProfileCompletionFormValues } from '../../types';
+import { ProfileCompletionSchemaField } from '../ProfileCompletionSchemaField';
+import { StyledTwoColumns } from './ProfesionalInfoAccordion.styles';
 
-export const ProfessionalInfoAccordion = () => {
+export const ProfessionalInfoAccordionCandidate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     formState: { errors, submitCount },
@@ -25,20 +26,24 @@ export const ProfessionalInfoAccordion = () => {
   useEffect(() => {
     if (
       submitCount > 0 &&
-      (!!errors.currentJob ||
-        !!errors.companyName ||
-        !!errors.businessSectorIds ||
-        !!errors.linkedinUrl)
+      (!!errors.businessSectorId0 ||
+        !!errors.occupation0 ||
+        !!errors.businessSectorId1 ||
+        !!errors.occupation1)
     ) {
       setIsOpen(true);
     }
   }, [
-    errors.businessSectorIds,
-    errors.companyName,
-    errors.currentJob,
-    errors.linkedinUrl,
+    errors.businessSectorId0,
+    errors.occupation0,
+    errors.businessSectorId1,
+    errors.occupation1,
     submitCount,
   ]);
+
+  const rows = useMemo(() => {
+    return profileCompletionProfessionalInfoCandidateRows;
+  }, []);
 
   return (
     <Accordion
@@ -57,13 +62,17 @@ export const ProfessionalInfoAccordion = () => {
       isOpen={isOpen}
       onOpenChange={setIsOpen}
     >
-      {profileCompletionProfessionalInfoCoachFields.map((field) => (
-        <ProfileCompletionSchemaField
-          key={String(field.name)}
-          formSchema={profileCompletionFormSchema}
-          field={field}
-          showError={submitCount > 0}
-        />
+      {rows.map((row) => (
+        <StyledTwoColumns key={row.rowIndex}>
+          {row.fields.map((field) => (
+            <ProfileCompletionSchemaField
+              key={String(field.name)}
+              formSchema={profileCompletionFormSchema}
+              field={field}
+              showError={submitCount > 0}
+            />
+          ))}
+        </StyledTwoColumns>
       ))}
     </Accordion>
   );

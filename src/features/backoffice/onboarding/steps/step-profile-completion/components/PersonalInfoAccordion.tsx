@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Button, ImgUserProfile, LucidIcon, Text } from '@/src/components/ui';
 import { Accordion } from '@/src/components/ui/Accordion/Accordion';
 import { H4 } from '@/src/components/ui/Headings';
 import { ImageInput } from '@/src/components/ui/Inputs/ImageInput/ImageInput';
-import { TextArea } from '@/src/components/ui/Inputs/TextArea/TextArea';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
@@ -20,12 +19,16 @@ import {
   StyledPhotoRow,
   StyledPhotosAndIntroductionContainer,
 } from '../Content.styles';
-import { ProfileCompletionFormValues } from '../types';
+import {
+  buildIntroductionField,
+  profileCompletionFormSchema,
+} from '../profileCompletionFormSchema';
+import type { ProfileCompletionFormValues } from '../types';
+import { ProfileCompletionSchemaField } from './ProfileCompletionSchemaField';
 
 export const PersonalInfoAccordion = () => {
   const [isOpen, setIsOpen] = useState(true);
   const {
-    control,
     formState: { errors, submitCount },
   } = useFormContext<ProfileCompletionFormValues>();
 
@@ -59,6 +62,10 @@ export const PersonalInfoAccordion = () => {
     }
     return 'Exemple : Coach bénévole avec 10 années d’expérience en vente dans le secteur du Commerce. J’aime accompagner des personnes éloignées de l’emploi sur des sujets comme le CV, la confiance en soi ou la préparation aux entretiens. Disponible pour partager mon expérience et mon réseau.';
   }, [user.role]);
+
+  const introductionField = useMemo(() => {
+    return buildIntroductionField(introductionPlaceholder);
+  }, [introductionPlaceholder]);
 
   return (
     <Accordion
@@ -117,42 +124,10 @@ export const PersonalInfoAccordion = () => {
         </div>
 
         <div>
-          <Controller
-            control={control}
-            name="introduction"
-            rules={{
-              required: 'Veuillez renseigner votre présentation.',
-              maxLength: {
-                value: 500,
-                message:
-                  'Votre présentation ne peut pas dépasser 500 caractères.',
-              },
-              minLength: {
-                value: 50,
-                message:
-                  'Votre présentation doit contenir au moins 50 caractères.',
-              },
-            }}
-            render={({ field }) => (
-              <TextArea
-                id="onboarding-introduction"
-                name="onboarding-introduction"
-                title={
-                  <Text weight="semibold">
-                    Présentation <span aria-hidden="true">*</span>
-                  </Text>
-                }
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                error={submitCount > 0 ? errors.introduction : undefined}
-                showLabel
-                placeholder={introductionPlaceholder}
-                maxLength={500}
-                minLength={50}
-                rows={3}
-              />
-            )}
+          <ProfileCompletionSchemaField
+            formSchema={profileCompletionFormSchema}
+            field={introductionField}
+            showError={submitCount > 0}
           />
         </div>
       </StyledPhotosAndIntroductionContainer>

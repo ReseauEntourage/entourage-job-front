@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
-import { openModal } from '@/src/features/modals/Modal';
+import { useEditableExperiencesById } from '@/src/features/profile/hooks/useEditableExperiences';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { CVExperienceOrFormation } from '../../CVExperienceOrFormation/CVExperienceOrFormation';
@@ -12,7 +12,6 @@ import { ProfilePartCard } from '../Card/Card/Card';
 import { Experience } from 'src/api/types';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledProfileExperiencesList } from './ProfileExperiences.styles';
-import { ProfileExperiencesModalEdit } from './ProfileExperiencesModalEdit/ProfileExperiencesModalEdit';
 
 export interface ProfileExperiencesProps {
   userId: string;
@@ -73,63 +72,24 @@ export const ProfileExperiences = ({
     router.push(`/backoffice/messaging?userId=${userId}`);
   }, [router, userId]);
 
-  const editExperience = useCallback(
-    (id?: string) => {
-      openModal(
-        <ProfileExperiencesModalEdit
-          dispatchOnSubmit={(values) => {
-            let newExperiences = experiences;
-            if (id) {
-              newExperiences = newExperiences.filter((exp) => exp.id !== id);
-            }
-            updateUserProfile({
-              experiences: [
-                ...newExperiences,
-                {
-                  id: id || undefined,
-                  title: values.title || undefined,
-                  location: values.location || undefined,
-                  company: values.company || undefined,
-                  startDate: values.startDate || undefined,
-                  endDate: values.endDate || undefined,
-                  description: values.description || undefined,
-                  skills:
-                    values.skills?.map((skill) => ({
-                      name: skill.label,
-                    })) || [],
-                } as Experience,
-              ],
-            });
-          }}
-          experience={experiences.find((exp) => exp.id === id) as Experience}
-        />
-      );
-    },
-    [experiences, updateUserProfile]
-  );
-
-  const deleteExperience = useCallback(
-    (id?: string) => {
-      let newExperiences = experiences;
-      if (id) {
-        newExperiences = newExperiences.filter((exp) => exp.id !== id);
-      }
-      updateUserProfile({
-        experiences: newExperiences,
-      });
-    },
-    [experiences, updateUserProfile]
-  );
+  const { addExperience, editExperience, deleteExperience } =
+    useEditableExperiencesById({
+      experiences,
+      includeSkillId: false,
+      onChange: (nextExperiences) => {
+        updateUserProfile({ experiences: nextExperiences });
+      },
+    });
 
   const ctaCallback = useCallback(() => {
     if (isEditable) {
-      return editExperience();
+      return addExperience();
     }
     if (!isOwnProfile) {
       return suggestHelpToComplete();
     }
     return undefined;
-  }, [editExperience, isEditable, isOwnProfile, suggestHelpToComplete]);
+  }, [addExperience, isEditable, isOwnProfile, suggestHelpToComplete]);
 
   const ctaTitle = useMemo(() => {
     if (!isOwnProfile && !isCompleted && userRole === UserRoles.CANDIDATE) {

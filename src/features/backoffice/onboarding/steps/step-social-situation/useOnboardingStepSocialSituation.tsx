@@ -1,4 +1,5 @@
 import { OnboardingStep } from '../../onboarding.types';
+import { Content } from './Content';
 
 export const useOnboardingStepSocialSituation = () => {
   const onboardingStepSocialSituation = {
@@ -13,6 +14,7 @@ export const useOnboardingStepSocialSituation = () => {
     onSubmit: async () => {
       return true;
     },
+    content: <Content />,
     confirmationStep: {
       title: 'Félicitations ! Vous avez complété vos informations',
       subtitle:

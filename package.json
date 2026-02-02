@@ -12,7 +12,7 @@
     "start": "next start",
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",
     "test": "run-s test:*",
-    "test:ts-check": "tsc -p tsconfig.base.json --noEmit",
+    "test:ts-check": "tsc -p tsconfig.base.json --noEmit && echo 'TypeScript type checking passed.'",
     "test:eslint": "npx eslint 'src/**/*.{js,jsx,ts,tsx}' --ext js,jsx,ts,tsx --fix --max-warnings=0",
     "test:integ": "jest",
     "test:e2e": "pnpm run cypress:io",

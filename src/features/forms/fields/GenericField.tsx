@@ -63,6 +63,7 @@ interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
   control: Control<ExtractFormSchemaValidation<S>>;
   resetField: UseFormResetField<ExtractFormSchemaValidation<S>>;
   watch: UseFormWatch<ExtractFormSchemaValidation<S>>;
+  showError?: boolean;
 }
 
 export function GenericField<S extends FormSchema<AnyCantFix>>({
@@ -74,6 +75,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   control,
   resetField,
   watch,
+  showError = true,
 }: GenericFieldProps<S>) {
   const { id: formId } = formSchema;
 
@@ -161,7 +163,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       title:
         typeof field.title === 'function' ? field.title(getValue) : field.title,
       value,
-      error,
+      error: showError ? error : undefined,
       onChange: onChangeCustom,
       onBlur,
       disabled: field.disable ? field.disable(getValue) : field.disabled,
@@ -184,6 +186,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     onBlur,
     onChangeCustom,
     ref,
+    showError,
     value,
     allWatch,
   ]);

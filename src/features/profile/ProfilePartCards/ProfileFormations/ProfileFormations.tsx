@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
-import { openModal } from '@/src/features/modals/Modal';
+import { useEditableFormationsById } from '@/src/features/profile/hooks/useEditableFormations';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { CVExperienceOrFormation } from '../../CVExperienceOrFormation/CVExperienceOrFormation';
@@ -12,7 +12,6 @@ import { ProfilePartCard } from '../Card/Card/Card';
 import { Formation } from 'src/api/types';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledProfileFormationsList } from './ProfileFormations.styles';
-import { ProfileFormationsModalEdit } from './ProfileFormationsModalEdit/ProfileFormationsModalEdit';
 
 export interface ProfileFormationsProps {
   userId: string;
@@ -55,67 +54,24 @@ export const ProfileFormations = ({
     router.push(`/backoffice/messaging?userId=${userId}`);
   }, [router, userId]);
 
-  const editFormation = useCallback(
-    (id?: string) => {
-      openModal(
-        <ProfileFormationsModalEdit
-          dispatchOnSubmit={(values) => {
-            let newFormations = formations;
-            if (id) {
-              newFormations = newFormations.filter(
-                (formation) => formation.id !== id
-              );
-            }
-            updateUserProfile({
-              formations: [
-                ...newFormations,
-                {
-                  id: id || undefined,
-                  title: values.title || undefined,
-                  location: values.location || undefined,
-                  institution: values.institution || undefined,
-                  startDate: values.startDate || undefined,
-                  endDate: values.endDate || undefined,
-                  description: values.description || undefined,
-                  skills:
-                    values.skills?.map((skill) => ({
-                      name: skill.label,
-                    })) || [],
-                } as Formation,
-              ],
-            });
-          }}
-          formation={
-            formations.find((formation) => formation.id === id) as Formation
-          }
-        />
-      );
-    },
-    [formations, updateUserProfile]
-  );
-
-  const deleteFormation = useCallback(
-    (id?: string) => {
-      let newFormations = formations;
-      if (id) {
-        newFormations = newFormations.filter((exp) => exp.id !== id);
-      }
-      updateUserProfile({
-        formations: newFormations,
-      });
-    },
-    [formations, updateUserProfile]
-  );
+  const { addFormation, editFormation, deleteFormation } =
+    useEditableFormationsById({
+      formations,
+      includeSkillId: false,
+      onChange: (nextFormations) => {
+        updateUserProfile({ formations: nextFormations });
+      },
+    });
 
   const ctaCallback = useCallback(() => {
     if (isEditable) {
-      return editFormation();
+      return addFormation();
     }
     if (!isOwnProfile) {
       return suggestHelpToComplete();
     }
     return undefined;
-  }, [editFormation, isEditable, isOwnProfile, suggestHelpToComplete]);
+  }, [addFormation, isEditable, isOwnProfile, suggestHelpToComplete]);
 
   const ctaTitle = useMemo(() => {
     if (!isOwnProfile && !isCompleted && userRole === UserRoles.CANDIDATE) {
