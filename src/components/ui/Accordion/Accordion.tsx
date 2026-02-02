@@ -7,9 +7,7 @@ import {
   StyledAccordionHeaderContent,
   StyledAccordionOpenIcon,
 } from './Accordion.styles';
-
-/** Variants for the Accordion component. */
-export type AccordionVariant = 'simple' | 'default';
+import { AccordionVariant } from './Accordion.types';
 
 export interface AccordionProps {
   /** Content to display in the accordion header. */

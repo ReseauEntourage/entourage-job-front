@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
-import type { AccordionVariant } from './Accordion';
+import { AccordionVariant } from './Accordion.types';
 
 export const AccordionVariantStyles = {
   simple: {
