@@ -143,8 +143,16 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
         },
         {
+          href: '/backoffice/parametres',
+          name: 'Mon profil',
+        },
+        {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
+        },
+        {
+          href: '/backoffice/events',
+          name: 'Événements',
         },
       ],
       [UserRoles.CANDIDATE]: candidateHeaderItems,
