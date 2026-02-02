@@ -42,7 +42,10 @@ const OnboardingRun = () => {
                 description={currentOnboardingStep.description}
               />
               {formErrorMessage && (
-                <Alert variant={AlertVariant.Error}>{formErrorMessage}</Alert>
+                <>
+                  <Alert variant={AlertVariant.Error}>{formErrorMessage}</Alert>
+                  <br />
+                </>
               )}
               {currentOnboardingStepContent}
               <StyledOnboardingActions>

@@ -13,13 +13,15 @@ import {
   selectCurrentUserId,
 } from './current-user.selectors';
 import { slice } from './current-user.slice';
-import { currentUserActions } from '.';
 
 const {
   fetchUserRequested,
   setUser,
   fetchUserSucceeded,
   fetchUserFailed,
+  fetchCurrentUserSocialSituationRequested,
+  fetchCurrentUserSocialSituationSucceeded,
+  fetchCurrentUserSocialSituationFailed,
   updateUserRequested,
   updateUserCompanyRequested,
   fetchCompleteUserRequested,
@@ -56,6 +58,9 @@ const {
   forceOnboardingAsCompletedRequested,
   forceOnboardingAsCompletedSucceeded,
   forceOnboardingAsCompletedFailed,
+  updateSocialSituationRequested,
+  updateSocialSituationSucceeded,
+  updateSocialSituationFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
@@ -70,6 +75,15 @@ function* fetchUserRequestedSaga() {
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function* fetchCurrentUserSocialSituationRequestedSaga() {
+  try {
+    const response = yield* call(() => Api.getUserSocialSituation());
+    yield* put(fetchCurrentUserSocialSituationSucceeded(response.data));
+  } catch {
+    yield* put(fetchCurrentUserSocialSituationFailed());
   }
 }
 
@@ -223,6 +237,31 @@ function* updateProfileRequestedSaga(
   }
 }
 
+function* updateSocialSituationRequestedSaga(
+  action: ReturnType<typeof updateSocialSituationRequested>
+) {
+  const userId = yield* select(selectCurrentUserId);
+  const socialSituation = action.payload;
+
+  assertIsDefined(userId, 'User ID is not defined');
+  try {
+    yield* call(() =>
+      Api.updateUserSocialSituation(userId, {
+        hasCompletedSurvey: true,
+        ...socialSituation,
+      })
+    );
+    yield* put(updateSocialSituationSucceeded({}));
+    yield* fetchUserRequestedSaga();
+  } catch {
+    yield* put(
+      updateSocialSituationFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
 function* readDocumentRequestedSaga(
   action: ReturnType<typeof readDocumentRequested>
 ) {
@@ -321,9 +360,17 @@ export function* saga() {
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
   yield* takeLatest(fetchUserSucceeded, fetchUserSucceededSaga);
+  yield* takeLatest(
+    fetchCurrentUserSocialSituationRequested,
+    fetchCurrentUserSocialSituationRequestedSaga
+  );
   yield* takeLatest(fetchStaffContactRequested, fetchStaffContactRequestedSaga);
   yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
+  yield* takeLatest(
+    updateSocialSituationRequested,
+    updateSocialSituationRequestedSaga
+  );
   yield* takeLatest(
     updateOnboardingStatusRequested,
     updateOnboardingStatusRequestedSaga

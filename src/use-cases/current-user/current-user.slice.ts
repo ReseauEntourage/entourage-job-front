@@ -4,6 +4,7 @@ import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
+  fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
   forceOnboardingAsCompletedAdapter,
@@ -12,6 +13,7 @@ import {
   UpdateError,
   updateOnboardingStatusAdapter,
   updateProfileAdapter,
+  updateSocialSituationAdapter,
   updateUserAdapter,
   updateUserCompanyAdapter,
   updateUserProfilePictureAdapter,
@@ -22,6 +24,9 @@ export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
   fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
+  fetchCurrentUserSocialSituation: RequestState<
+    typeof fetchCurrentUserSocialSituationAdapter
+  >;
   updateUser: RequestState<typeof updateUserAdapter>;
   updateOnboardingStatus: RequestState<typeof updateOnboardingStatusAdapter>;
   forceOnboardingAsCompleted: RequestState<
@@ -29,6 +34,7 @@ export interface State {
   >;
   updateUserCompany: RequestState<typeof updateUserCompanyAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
+  updateSocialSituation: RequestState<typeof updateSocialSituationAdapter>;
   readDocument: RequestState<typeof readDocumentAdapter>;
   updateUserProfilePicture: RequestState<
     typeof updateUserProfilePictureAdapter
@@ -45,6 +51,8 @@ export interface State {
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
+  fetchCurrentUserSocialSituation:
+    fetchCurrentUserSocialSituationAdapter.getInitialState(),
   fetchStaffContact: fetchStaffContactAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
@@ -52,6 +60,7 @@ const initialState: State = {
   forceOnboardingAsCompleted:
     forceOnboardingAsCompletedAdapter.getInitialState(),
   updateUserCompany: updateUserCompanyAdapter.getInitialState(),
+  updateSocialSituation: updateSocialSituationAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
@@ -75,6 +84,19 @@ export const slice = createSlice({
         state.complete = false;
       },
     }),
+    ...fetchCurrentUserSocialSituationAdapter.getReducers<State>(
+      (state) => state.fetchCurrentUserSocialSituation,
+      {
+        fetchCurrentUserSocialSituationSucceeded(state, action) {
+          if (state.user) {
+            state.user.userSocialSituation = {
+              ...state.user.userSocialSituation,
+              ...action.payload,
+            };
+          }
+        },
+      }
+    ),
     ...fetchStaffContactAdapter.getReducers<State>(
       (state) => state.fetchStaffContact,
       {
@@ -109,6 +131,13 @@ export const slice = createSlice({
         updateUserCompanyFailed(state, action) {
           state.userCompanyUpdateError = action.payload.error;
         },
+      }
+    ),
+    ...updateSocialSituationAdapter.getReducers<State>(
+      (state) => state.updateSocialSituation,
+      {
+        updateSocialSituationSucceeded() {},
+        updateSocialSituationFailed() {},
       }
     ),
     ...updateProfileAdapter.getReducers<State>((state) => state.updateProfile, {

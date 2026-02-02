@@ -44,6 +44,33 @@ export const updateOnboardingStatusAdapter = createRequestAdapter(
   }
 >();
 
+export const fetchCurrentUserSocialSituationAdapter = createRequestAdapter(
+  'fetchCurrentUserSocialSituation'
+).withPayloads<
+  void,
+  Partial<{
+    hasCompletedSurvey?: boolean;
+  }>
+>();
+
+export const updateSocialSituationAdapter = createRequestAdapter(
+  'updateSocialSituation'
+).withPayloads<
+  Partial<{
+    nationality?: string;
+    accommodation?: string;
+    resources?: string;
+    studiesLevel?: string;
+    workingExperience?: string;
+    jobSearchDuration?: string;
+    hasCompletedSurvey?: boolean;
+  }>,
+  {},
+  {
+    error: UpdateError;
+  }
+>();
+
 export const forceOnboardingAsCompletedAdapter = createRequestAdapter(
   'forceOnboardingAsCompleted'
 ).withPayloads<

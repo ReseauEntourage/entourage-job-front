@@ -1,12 +1,14 @@
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
+  fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
   forceOnboardingAsCompletedAdapter,
   readDocumentAdapter,
   updateOnboardingStatusAdapter,
   updateProfileAdapter,
+  updateSocialSituationAdapter,
   updateUserAdapter,
   updateUserCompanyAdapter,
   updateUserProfilePictureAdapter,
@@ -27,6 +29,12 @@ export const fetchUserCompleteSelectors =
   fetchCompleteUserAdapter.getSelectors<RootState>(
     (state) => state.currentUser.fetchCompleteUser
   );
+
+export const fetchCurrentUserSocialSituationSelectors =
+  fetchCurrentUserSocialSituationAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.fetchCurrentUserSocialSituation
+  );
+
 export const updateProfileSelectors =
   updateProfileAdapter.getSelectors<RootState>(
     (state) => state.currentUser.updateProfile
@@ -64,6 +72,11 @@ export const updateUserProfilePictureSelectors =
 export const uploadExternalCvSelectors =
   uploadExternalCvAdapter.getSelectors<RootState>(
     (state) => state.currentUser.uploadExternalCv
+  );
+
+export const updateSocialSituationSelectors =
+  updateSocialSituationAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.updateSocialSituation
   );
 
 export function selectCurrentUser(state: RootState) {

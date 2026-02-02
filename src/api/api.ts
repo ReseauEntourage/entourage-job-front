@@ -302,6 +302,10 @@ export class APIHandler {
   }
 
   // Social Situation
+  getUserSocialSituation(): Promise<AxiosResponse> {
+    return this.get(`/users/social-situations`);
+  }
+
   updateUserSocialSituation(
     userId: string,
     socialSituationDto: {
