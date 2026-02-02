@@ -6,7 +6,10 @@ import { OnboardingStatus } from '@/src/constants/onboarding';
 import { useOnboarding } from '@/src/features/backoffice/onboarding/useOnboarding';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { currentUserActions } from '@/src/use-cases/current-user';
-import { StyledActionContainer } from './StepsSummary.styles';
+import {
+  StyledActionContainer,
+  StyledStepSummaryContainer,
+} from './StepsSummary.styles';
 
 export const StepsSummary = () => {
   const { onboardingSteps, totalDuration } = useOnboarding();
@@ -26,7 +29,7 @@ export const StepsSummary = () => {
   };
 
   return (
-    <>
+    <StyledStepSummaryContainer>
       <H4
         title={`Votre parcours d'intégration : ${onboardingSteps.length} étapes essentielles`}
       />
@@ -61,6 +64,6 @@ export const StepsSummary = () => {
           minutes
         </Text>
       </StyledActionContainer>
-    </>
+    </StyledStepSummaryContainer>
   );
 };

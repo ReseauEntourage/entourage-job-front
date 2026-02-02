@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
@@ -7,10 +8,16 @@ import { StepsSummary } from '@/src/features/backoffice/onboarding/steps-summary
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useIsDesktop } from '@/src/hooks/utils';
+import {
+  StyledOnboardingIllustration,
+  StyledOnboardingPresentationContainer,
+} from './onboarding.styles';
 
 const OnboardingHome = () => {
   const authenticatedUser = useAuthenticatedUser();
   const router = useRouter();
+  const isDesktop = useIsDesktop();
 
   useEffect(() => {
     // If the user has already completed the onboarding, redirect to the run page
@@ -41,7 +48,19 @@ const OnboardingHome = () => {
         </Section>
       </StyledBackgroundedHeaderBackoffice>
       <Section className="custom-page">
-        <StepsSummary />
+        <StyledOnboardingPresentationContainer>
+          <StepsSummary />
+          {isDesktop && (
+            <StyledOnboardingIllustration>
+              <Image
+                src="/static/img/onboarding-illustration.jpg"
+                alt="Onboarding Illustration"
+                layout="fill"
+                objectFit="cover"
+              />
+            </StyledOnboardingIllustration>
+          )}
+        </StyledOnboardingPresentationContainer>
       </Section>
     </LayoutBackOffice>
   );
