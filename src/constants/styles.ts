@@ -1,3 +1,5 @@
+import { AlertVariant } from '../components/ui/Alert/Alert.types';
+
 export const BREAKPOINTS = {
   desktop: 960,
 };
@@ -64,9 +66,16 @@ export const COLORS = {
 
   // Green
   lightGreen: '#A7DB9F',
+  extraLightGreen: '#D4FFCE',
   green: '#79CC6B',
   mediumGreen: '#1E7F51',
   darkGreen: '#1F4946',
+
+  // Skeleton
+  skeletonLight: '#EDEDED',
+  skeletonDark: '#F7F7F7',
+
+  cardShadow: '#0000000D',
 };
 
 export type Color = keyof typeof COLORS;
@@ -77,21 +86,40 @@ export const STATUS_COLORS = {
 };
 
 export const ALERT_COLORS = {
-  info: {
+  [AlertVariant.Info]: {
     background: COLORS.hoverBlue,
     text: COLORS.black,
+    border: COLORS.primaryBlue,
   },
-  lightGray: {
+  [AlertVariant.LightGray]: {
     background: COLORS.lightGray,
     text: COLORS.black,
+    border: COLORS.gray,
   },
-  darkBlue: {
+  [AlertVariant.DarkBlue]: {
     background: COLORS.darkBlue,
     text: COLORS.white,
+    border: COLORS.blue,
   },
-  lightBlue: {
+  [AlertVariant.LightBlue]: {
     background: COLORS.hoverBlue,
+    text: COLORS.black,
+    border: COLORS.primaryBlue,
+  },
+  [AlertVariant.Error]: {
+    background: COLORS.lightRed,
     text: COLORS.white,
+    border: COLORS.red,
+  },
+  [AlertVariant.White]: {
+    background: COLORS.white,
+    text: COLORS.black,
+    border: COLORS.gray,
+  },
+  [AlertVariant.Success]: {
+    background: COLORS.extraLightGreen,
+    text: COLORS.black,
+    border: COLORS.green,
   },
 };
 

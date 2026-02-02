@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';
-import { REGISTRATION_FIRST_STEP } from '@/src/components/registration/registration.config';
+import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
+import { REGISTRATION_FIRST_STEP } from '@/src/features/registration/registration.config';
 import {
   RegistrationData,
   RegistrationFormData,
   RegistrationStep,
-} from '@/src/components/registration/registration.types';
+} from '@/src/features/registration/registration.types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
 

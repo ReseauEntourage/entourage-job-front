@@ -1,7 +1,7 @@
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
-import { Section } from 'src/components/utils';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
+import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { GA_TAGS } from 'src/constants/tags';
 
 const Custom404 = () => {

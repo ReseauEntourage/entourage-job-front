@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { Chapter } from 'src/components/partials/common/Chapter';
-import { Grid, Section } from 'src/components/utils';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Grid, Section } from '@/src/components/ui';
+import { Chapter } from '@/src/features/partials/common/Chapter';
 
 const Card = ({ text, number }) => {
   return (

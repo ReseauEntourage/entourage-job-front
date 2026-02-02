@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section, SimpleLink } from '@/src/components/ui';
 import { Api } from 'src/api';
-import { Layout } from 'src/components/Layout';
-import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formInterestLinkedOut } from 'src/components/forms/schemas/formInterestLinkedOut';
-import { Section, SimpleLink } from 'src/components/utils';
+import { FormWithValidation } from 'src/features/forms/FormWithValidation';
+import { formInterestLinkedOut } from 'src/features/forms/schemas/formInterestLinkedOut';
 import { useResetForm } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
 

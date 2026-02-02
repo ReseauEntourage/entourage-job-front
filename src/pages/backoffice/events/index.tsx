@@ -1,6 +1,6 @@
 import React from 'react';
-import { EventDirectory } from '@/src/components/backoffice/events/EventDirectory/EventDirectory';
-import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
+import { EventDirectory } from '@/src/features/backoffice/events/EventDirectory/EventDirectory';
 
 const EventList = () => {
   return (

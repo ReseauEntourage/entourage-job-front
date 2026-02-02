@@ -1,8 +1,8 @@
 import React from 'react';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
+import { Login } from '@/src/features/login/Login';
 import { useUtm } from '../hooks/queryParams/useUTM';
-import { Layout } from 'src/components/Layout';
-import { Login } from 'src/components/login/Login';
-import { Section } from 'src/components/utils';
 
 const LoginPage = () => {
   useUtm();

@@ -1,0 +1,82 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Section } from '@/src/components/ui';
+import { Spinner } from '@/src/components/ui/Spinner';
+import { BackLink } from '../../../components/ui/BackLink';
+import { HeaderBackoffice } from 'src/features/headers/HeaderBackoffice';
+import { StyledBackgroundedHeaderBackoffice } from 'src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
+import {
+  selectFetchRecruitementAlertMatchingLoading,
+  fetchRecruitementAlertMatchingAction,
+  selectRecruitementAlerts,
+  fetchRecruitementAlertsAction,
+  selectFetchRecruitementAlertsLoading,
+} from 'src/use-cases/recruitement-alerts';
+import {
+  StyledAlertCandidatesContainer,
+  StyledHeaderContainer,
+  StyledLoadingContainer,
+} from './AlertCandidates.styles';
+import { AlertCandidatesList } from './AlertCandidatesList';
+
+interface AlertCandidatesProps {
+  alertId: string;
+}
+
+export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
+  const dispatch = useDispatch();
+  const isMatchingLoading = useSelector(
+    selectFetchRecruitementAlertMatchingLoading
+  );
+  const isAlertsLoading = useSelector(selectFetchRecruitementAlertsLoading);
+  const isLoading = isMatchingLoading || isAlertsLoading;
+  const selectedAlert = useSelector(selectRecruitementAlerts).find(
+    (a) => a.id === alertId
+  );
+
+  useEffect(() => {
+    if (alertId) {
+      // Récupérer à la fois les alertes et les correspondances
+      dispatch(fetchRecruitementAlertsAction());
+      dispatch(fetchRecruitementAlertMatchingAction(alertId));
+    }
+  }, [dispatch, alertId]);
+
+  if (isLoading) {
+    return (
+      <StyledLoadingContainer>
+        <Spinner />
+      </StyledLoadingContainer>
+    );
+  }
+
+  if (!selectedAlert) {
+    return (
+      <Section>
+        <div>Alerte non trouvée</div>
+      </Section>
+    );
+  }
+
+  return (
+    <>
+      <StyledBackgroundedHeaderBackoffice>
+        <Section className="custom-page">
+          <StyledHeaderContainer>
+            <BackLink label="Retour" />
+            <HeaderBackoffice
+              title={`Candidats correspondant à l'alerte: ${selectedAlert.name}`}
+              description="Voici les candidats qui correspondent aux critères de votre alerte."
+              noSeparator
+            />
+          </StyledHeaderContainer>
+        </Section>
+      </StyledBackgroundedHeaderBackoffice>
+      <Section className="custom-page">
+        <StyledAlertCandidatesContainer>
+          <AlertCandidatesList alertId={alertId} />
+        </StyledAlertCandidatesContainer>
+      </Section>
+    </>
+  );
+};

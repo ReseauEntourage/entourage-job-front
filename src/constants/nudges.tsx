@@ -1,8 +1,8 @@
 import React, { type JSX } from 'react';
 
 import { SvgIcon } from '@/assets/icons/icons';
-import { LegacyImg } from '@/src/components/utils/Images/LegacyImg';
-import { SelectListType } from '../components/utils/Inputs/SelectList';
+import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
+import { SelectListType } from '../components/ui/Inputs/SelectList';
 import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
 

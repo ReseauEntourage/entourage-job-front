@@ -1,11 +1,11 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
+import { Card } from '@/src/components/ui';
 import {
   StyledReferingContainer,
   StyledReferingPage,
-} from 'src/components/backoffice/referer/Refering/Refering.styles';
-import { FinalizeReferedUser } from 'src/components/finalize-refered-user/FinalizeReferedUser';
-import { Card } from 'src/components/utils';
+} from '@/src/features/backoffice/referer/Refering/Refering.styles';
+import { FinalizeReferedUser } from '@/src/features/finalize-refered-user/FinalizeReferedUser';
 
 const FinalizeReferedUserPage = () => {
   return (

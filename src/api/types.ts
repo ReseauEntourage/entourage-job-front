@@ -2,6 +2,7 @@ import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
+import { OnboardingStatus } from '../constants/onboarding';
 import {
   CompanyApproach,
   Contract as ContractValue,
@@ -36,6 +37,7 @@ export const APIRoutes = {
   MESSAGING: 'messaging',
   COMPANIES: 'companies',
   RECRUITEMENT_ALERTS: 'recruitement-alerts',
+  ELEARNING: 'elearning',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -314,6 +316,9 @@ export type User = {
   referredCandidates?: User[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
+
+  onboardingStatus: OnboardingStatus;
+  onboardingCompletedAt: string | null;
 };
 
 export type StaffContact = {
@@ -348,6 +353,7 @@ export type UserDto = {
   id?: string;
   userProfile?: UserProfile;
   lastConnection?: string;
+  onboardingStatus?: OnboardingStatus;
 };
 
 export type UserRegistrationDto = {
@@ -578,6 +584,8 @@ export type EventsFilters = {
   search?: string;
   departmentIds: string | string[];
   modes?: EventMode | EventMode[];
+  isParticipating?: boolean;
+  includePastEvents?: boolean;
 };
 
 export type PostAuthSendVerifyEmailParams = {

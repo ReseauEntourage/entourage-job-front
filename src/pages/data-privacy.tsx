@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { Section, Text, TextSize } from 'src/components/utils';
-import { H1, H2 } from 'src/components/utils/Headings';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section, Text, TextSize } from '@/src/components/ui';
+import { H1, H2 } from '@/src/components/ui/Headings';
 
 export const DataPrivacy = () => {
   const textAttr = {
