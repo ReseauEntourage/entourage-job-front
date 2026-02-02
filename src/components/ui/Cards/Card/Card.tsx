@@ -65,9 +65,9 @@ export const Card = ({
       className={isDesktop ? '' : 'mobile'}
       onClick={onClick}
       data-testid={dataTestId}
-      borderColor={borderColor}
-      bgColor={bgColor}
-      shadow={shadow}
+      $borderColor={borderColor}
+      $bgColor={bgColor}
+      $shadow={shadow}
     >
       {title ? (
         <>

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { Color, COLORS } from 'src/constants/styles';
 
 export const StyledCard = styled.div<{
-  borderColor?: Color;
-  bgColor: Color;
-  shadow: boolean;
+  $borderColor?: Color;
+  $bgColor: Color;
+  $shadow: boolean;
 }>`
   display: flex;
   flex: 1;
