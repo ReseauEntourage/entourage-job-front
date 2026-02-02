@@ -21,10 +21,10 @@ export const ElearningUnitModalQuizSuccess = ({
           Bonne réponse !
         </Text>
         <Alert variant={AlertVariant.White} icon={null}>
-          {correctAnswer.explaination && (
+          {correctAnswer.explanation && (
             <>
               <Text weight="semibold">Explication :</Text>
-              <Text size="large">{correctAnswer.explaination}</Text>
+              <Text size="large">{correctAnswer.explanation}</Text>
             </>
           )}
         </Alert>
