@@ -17,8 +17,8 @@ jest.mock('@react-hook/window-size', () => {
 
 jest.mock('react-modal');
 
-jest.mock('src/components/modals/Modal', () => {
-  const modalModule = jest.requireActual('src/components/modals/Modal');
+jest.mock('src/features/modals/Modal', () => {
+  const modalModule = jest.requireActual('src/features/modals/Modal');
   return {
     ...modalModule,
     Modal: ({ children, id }) => {

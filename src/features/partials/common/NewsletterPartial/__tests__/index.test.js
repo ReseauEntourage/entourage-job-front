@@ -25,8 +25,8 @@ jest.mock('@react-hook/window-size', () => {
     useWindowWidth: () => BREAKPOINTS.desktop,
   };
 });
-jest.mock('src/components/modals/Modal', () => {
-  const modalModule = jest.requireActual('src/components/modals/Modal');
+jest.mock('src/features/modals/Modal', () => {
+  const modalModule = jest.requireActual('src/features/modals/Modal');
   return {
     ...modalModule,
     // eslint-disable-next-line react/prop-types
