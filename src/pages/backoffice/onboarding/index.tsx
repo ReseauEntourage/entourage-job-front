@@ -4,15 +4,15 @@ import React, { useEffect } from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section } from '@/src/components/ui';
 import { OnboardingStatus } from '@/src/constants/onboarding';
+import {
+  StyledOnboardingIllustration,
+  StyledOnboardingPresentationContainer,
+} from '@/src/features/backoffice/onboarding/onboarding.styles';
 import { StepsSummary } from '@/src/features/backoffice/onboarding/steps-summary/StepsSummary';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from '@/src/hooks/utils';
-import {
-  StyledOnboardingIllustration,
-  StyledOnboardingPresentationContainer,
-} from './onboarding.styles';
 
 const OnboardingHome = () => {
   const authenticatedUser = useAuthenticatedUser();
