@@ -172,7 +172,7 @@ export const useOnboardingStepSocialSituation = () => {
       </FormProvider>
     ),
     confirmationStep: {
-      title: 'Félicitations ! Vous avez complété vos informations',
+      title: 'Merci pour ces informations !',
       subtitle:
         'Ces informations nous aideront à mieux vous accompagner dans votre parcours.',
       submitBtnTxt: 'Continuer vers l’étape suivante',
