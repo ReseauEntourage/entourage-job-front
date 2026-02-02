@@ -23,9 +23,6 @@ export const StyledAlert = styled.div<{
   background-color: ${(props) => {
     return ALERT_COLORS[props.variant]?.background || COLORS.white;
   }};
-  color: ${(props) => {
-    return ALERT_COLORS[props.variant]?.text || COLORS.black;
-  }};
   color: ${(props) => ALERT_COLORS[props.variant]?.text};
   padding: 10px 20px;
 
