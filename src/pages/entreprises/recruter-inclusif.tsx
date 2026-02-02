@@ -11,7 +11,6 @@ import { EntreprisesEnSavoirPlus } from '@/src/features/partials/pages/Entrepris
 import { EntreprisesFAQ } from '@/src/features/partials/pages/Entreprises/EntreprisesFAQ/EntreprisesFAQ';
 import { EntreprisesTuto } from '@/src/features/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/features/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
-import { EntreprisesWebinaire } from '@/src/features/partials/pages/Entreprises/EntreprisesWebinaire/EntreprisesWebinaire';
 import { RecruitmentMetrics } from '@/src/features/partials/pages/Entreprises/RecruitmentMetrics/RecruitmentMetrics';
 import { CTAProps, ImageTitle } from '@/src/features/partials/utils/ImageTitle';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
@@ -165,8 +164,6 @@ const RecruterInclusif = () => {
       <EntreprisesVideo context={CompanyGoal.RECRUIT} />
 
       <EntreprisesTuto context={CompanyGoal.RECRUIT} />
-
-      <EntreprisesWebinaire />
 
       <EntreprisesCVList />
 
