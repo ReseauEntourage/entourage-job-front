@@ -43,7 +43,6 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
       <H4 title="Séléctionnez la date qui vous convient le mieux" />
       <br />
       <RadioGroup
-        radioSize="large"
         options={options}
         selection={webinarSfId}
         onChange={onChange}

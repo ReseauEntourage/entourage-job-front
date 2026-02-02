@@ -12,7 +12,6 @@ export type Option = {
 };
 
 export interface RadioGroupProps {
-  radioSize?: 'small' | 'large';
   options: Option[];
   selection: string | null;
   onChange: (value: string) => void;
