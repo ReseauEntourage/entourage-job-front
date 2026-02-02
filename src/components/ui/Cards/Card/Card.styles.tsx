@@ -9,7 +9,8 @@ export const StyledCard = styled.div<{
   display: flex;
   flex: 1;
   flex-direction: column;
-  box-shadow: 0 4px 4px 0 ${COLORS.cardShadow};
+  box-shadow: 0 4px 4px 0
+    ${({ shadow }) => (shadow ? COLORS.cardShadow : 'transparent')};
   position: relative;
   border-radius: 20px;
   border: 1px solid ${(props) => props.borderColor || COLORS.lightGray};

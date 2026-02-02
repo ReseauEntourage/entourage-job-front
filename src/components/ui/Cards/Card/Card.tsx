@@ -52,7 +52,7 @@ export const Card = ({
   borderColor,
   centerTitle = false,
   bgColor = 'white',
-  shadow = false,
+  shadow = true,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
