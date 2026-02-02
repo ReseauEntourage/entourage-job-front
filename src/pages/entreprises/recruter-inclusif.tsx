@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { EntreprisesFAQ } from '@/src/components/partials/pages/Entreprises/EntreprisesFAQ/EntreprisesFAQ';
 import { EntreprisesTuto } from '@/src/components/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/components/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
-import { EntreprisesWebinaire } from '@/src/components/partials/pages/Entreprises/EntreprisesWebinaire/EntreprisesWebinaire';
 import { RecruitmentMetrics } from '@/src/components/partials/pages/Entreprises/RecruitmentMetrics/RecruitmentMetrics';
 import { SimpleImageText } from '@/src/components/partials/utils/SimpleImageText';
 import { RegistrationFlow } from '@/src/components/registration/flows/flows.types';

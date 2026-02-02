@@ -53,9 +53,6 @@ export const GA_TAGS = {
   PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC: {
     action: 'Page_Entreprises_Inscription_Newsletter_Clic',
   },
-  PAGE_ENTREPRISE_WEBINAIRE_CLIC: {
-    action: 'Page_Entreprise_Webinaire_Clic',
-  },
   PAGE_ENTREPRISES_TBS_FORMATS_CLIC: {
     action: 'Page_Entreprises_TBS_Formats_Clic',
   },
