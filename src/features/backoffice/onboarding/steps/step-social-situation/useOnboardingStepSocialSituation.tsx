@@ -147,7 +147,8 @@ export const useOnboardingStepSocialSituation = () => {
     },
     title: 'Indiquer la situation sociale et économique',
     smallTitle: 'Votre situation',
-    description: 'Pour nous permettre de mieux vous connaître',
+    description:
+      'Pour nous permettre de mieux vous connaître et de mieux vous accompagner.',
     onSubmit: async () => {
       return await new Promise<boolean>((resolve) => {
         formMethods.handleSubmit(

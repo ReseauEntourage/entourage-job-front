@@ -41,18 +41,14 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
         href: '/backoffice/events',
         name: 'Événements',
       },
+      {
+        href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
+        name: 'Boîte à outils',
+        external: true,
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
+      },
     ];
   }
-
-  items = [
-    ...items,
-    {
-      href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
-      name: 'Boîte à outils',
-      external: true,
-      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
-    },
-  ];
 
   return items;
 };
