@@ -71,9 +71,9 @@ export const COLORS = {
   mediumGreen: '#1E7F51',
   darkGreen: '#1F4946',
 
-  // Skelton
-  skeltonLight: '#EDEDED',
-  skeltonDark: '#F7F7F7',
+  // Skeleton
+  skeletonLight: '#EDEDED',
+  skeletonDark: '#F7F7F7',
 
   cardShadow: '#0000000D',
 };

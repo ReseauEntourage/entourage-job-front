@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skelton } from '../../Skelton/Skelton';
+import { Skeleton } from '../../Skeleton/Skeleton';
 import {
   StyledInput,
   StyledRadioGroupItem,
@@ -28,7 +28,7 @@ export const RadioGroup = ({
 }: RadioGroupProps) => {
   return (
     <StyledRadioGroupList>
-      {isLoading && <Skelton height="90px" count={estimatedOptionLength} />}
+      {isLoading && <Skeleton height="90px" count={estimatedOptionLength} />}
       {options.map((option, index) => (
         <StyledRadioGroupItem
           key={index}

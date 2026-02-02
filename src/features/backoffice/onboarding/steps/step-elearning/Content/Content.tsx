@@ -1,4 +1,4 @@
-import { Skelton } from '@/src/components/ui/Skelton/Skelton';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { ElearningProgressTracker } from '@/src/features/backoffice/elearning/elearning-progress-tracker/ElearningProgressTracker';
 import { useElearning } from '@/src/features/backoffice/elearning/useElearning';
 import { ElearningUnitCard } from '../../../../elearning/elearning-unit-card/ElearningUnitCard';
@@ -12,7 +12,7 @@ export const Content = () => {
     <StyledOnboardingStepContainer>
       <ElearningProgressTracker />
       <StyledOnboardingElearningUnitCardList>
-        {isLoading && <Skelton height="130px" width="100%" count={4} />}
+        {isLoading && <Skeleton height="130px" width="100%" count={4} />}
         {!isLoading &&
           elearningUnits &&
           elearningUnits.map((unit, idx) => (

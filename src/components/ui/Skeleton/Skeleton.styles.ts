@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
-export const StyledSkeltonLoader = styled.div<{
+export const StyledSkeletonLoader = styled.div<{
   width?: string;
   height?: string;
   inverted?: boolean;
@@ -13,11 +13,11 @@ export const StyledSkeltonLoader = styled.div<{
   border: 1px solid ${COLORS.gray};
   background: linear-gradient(
     90deg,
-    ${(props) => (props.inverted ? COLORS.skeltonDark : COLORS.skeltonLight)}
+    ${(props) => (props.inverted ? COLORS.skeletonDark : COLORS.skeletonLight)}
       25%,
-    ${(props) => (props.inverted ? COLORS.skeltonLight : COLORS.skeltonDark)}
+    ${(props) => (props.inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
       50%,
-    ${(props) => (props.inverted ? COLORS.skeltonDark : COLORS.skeltonLight)}
+    ${(props) => (props.inverted ? COLORS.skeletonDark : COLORS.skeletonLight)}
       75%
   );
   background-repeat: no-repeat;
