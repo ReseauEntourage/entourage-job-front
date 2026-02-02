@@ -115,19 +115,6 @@ describe('Registration', () => {
           cy.get('[data-testid="network-insecurity-no"]').click();
           cy.contains('Suivant').click();
 
-          // Fill the professional information
-          cy.get(
-            '#form-registration-candidate-professional-information-businessSectorId0'
-          ).click();
-          cy.wait('@businessSectors');
-          cy.get(
-            '#form-registration-candidate-professional-information-businessSectorId0'
-          )
-            .find('.Select__option')
-            .contains('Sector 1')
-            .click();
-          cy.contains('Suivant').click();
-
           // Fill the account information
           cy.get('[data-testid="form-registration-account-firstName"]').type(
             'John'
