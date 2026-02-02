@@ -38,7 +38,6 @@ export const commonInputStyles = css`
   border-radius: 8px;
   text-align: left;
   padding: 12px 16px;
-  font-size: 14px;
   line-height: ${LINE_HEIGHT_MULTIPLIER * sizesPx.desktop.normal}px;
   min-height: 30px;
   box-sizing: border-box;
