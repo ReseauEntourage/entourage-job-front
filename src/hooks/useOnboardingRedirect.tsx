@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OnboardingStatus } from '../constants/onboarding';
+import {
+  OnboardingStatus,
+  onboardingExcludedRoles,
+} from '../constants/onboarding';
+import { UserRoles } from '../constants/users';
 
 export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
   const { replace, asPath } = useRouter();
@@ -9,6 +13,9 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
   );
   const onboardingStatus = currentUser?.onboardingStatus;
   const isUserAuthenticated = !!currentUser;
+  const isOnboardingExcludedRole = onboardingExcludedRoles.includes(
+    currentUser?.role as UserRoles
+  );
   const isInBackoffice = asPath.startsWith('/backoffice');
   // On considère toute page /backoffice/onboarding ou ses sous-pages
   const isOnOnboardingPage =
@@ -18,6 +25,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
   useEffect(() => {
     const isOnboardingRequired =
       isUserAuthenticated &&
+      !isOnboardingExcludedRole &&
       onboardingStatus !== OnboardingStatus.COMPLETED &&
       !isOnOnboardingPage &&
       lastRedirectionPath !== '/backoffice/onboarding' &&
@@ -35,12 +43,14 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     replace,
     isInBackoffice,
     isOnOnboardingPage,
+    isOnboardingExcludedRole,
   ]);
 
   // Si la route ne nécessite pas d'authentification (pas de currentUser), on considère la route comme prête
   const isOnboardingRouteReady =
     !isUserAuthenticated ||
     !isInBackoffice ||
+    isOnboardingExcludedRole ||
     onboardingStatus === OnboardingStatus.COMPLETED ||
     isOnOnboardingPage;
 
