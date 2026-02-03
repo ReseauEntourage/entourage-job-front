@@ -1,45 +1,75 @@
 import React from 'react';
-import { Button, Card } from '@/src/components/ui';
-import { H6 } from '@/src/components/ui/Headings';
+import { Button, Card, LucidIcon } from '@/src/components/ui';
 import { Text } from '@/src/components/ui/Text';
+import { COLORS } from '@/src/constants/styles';
 import {
-  StyledRegistrationButtonContainer,
-  StyledRegistrationListItem,
-  StyledRegistrationListItemIcon,
-  StyledRegistrationListItemLabels,
-  StyledRegistrationSubtitle,
-} from '../Registration.styles';
+  StyledConfirmationActions,
+  StyledConfirmationIcon,
+  StyledConfirmationIntro,
+  StyledHelp,
+  StyledHelpList,
+} from './Confirmation.styles';
 import { useConfirmation } from './useConfirmation';
 
 export function Confirmation() {
-  const { pageContent } = useConfirmation();
-
-  if (!pageContent) {
-    console.error('No page content found for the confirmation step.');
-    return null; // Handle the case where pageContent is not defined
-  }
+  const { email, webmailProvider } = useConfirmation();
 
   return (
-    <Card title={pageContent.title}>
-      <StyledRegistrationSubtitle>
-        <Text weight="normal">{pageContent.subtitle}</Text>
-      </StyledRegistrationSubtitle>
-      {pageContent.bullets.map(({ icon, title, text }) => (
-        <StyledRegistrationListItem key={title}>
-          <StyledRegistrationListItemIcon>
-            {icon}
-          </StyledRegistrationListItemIcon>
-          <StyledRegistrationListItemLabels>
-            <H6 title={title} color="primaryBlue" />
-            <Text size="small">{text}</Text>
-          </StyledRegistrationListItemLabels>
-        </StyledRegistrationListItem>
-      ))}
-      <StyledRegistrationButtonContainer>
-        <Button variant="primary" rounded href="/login">
-          Accéder à mon profil
-        </Button>
-      </StyledRegistrationButtonContainer>
+    <Card title="Votre inscription est presque terminée !">
+      <StyledConfirmationIntro>
+        <StyledConfirmationIcon>
+          <LucidIcon name="Inbox" size={64} color={COLORS.primaryBlue} />
+        </StyledConfirmationIcon>
+
+        <Text size="large" weight="bold" center>
+          Vérifiez votre boîte mail
+        </Text>
+        <Text center>
+          Nous venons de vous envoyer un email de confirmation
+          {email ? ` à ${email}` : ''}. Cliquez sur le lien dans cet email pour
+          activer votre compte.
+        </Text>
+      </StyledConfirmationIntro>
+
+      {webmailProvider && (
+        <StyledConfirmationActions>
+          <Button
+            variant="primary"
+            rounded
+            href={webmailProvider?.url}
+            size="large"
+            isExternal
+            newTab
+            style={{ display: 'block', width: '100%' }}
+          >
+            {`Ouvrir ${webmailProvider.label}`}
+          </Button>
+        </StyledConfirmationActions>
+      )}
+
+      <StyledHelp>
+        <Text weight="bold">Vous ne voyez pas l’email ?</Text>
+        <StyledHelpList>
+          <li>
+            <Text size="small">
+              Vérifiez vos dossiers « Indésirables / Spam ».
+            </Text>
+          </li>
+          <li>
+            <Text size="small">Attendez 1 à 2 minutes puis actualisez.</Text>
+          </li>
+          <li>
+            <Text size="small">
+              Recherchez « Entourage Pro » dans votre boîte de réception.
+            </Text>
+          </li>
+          <li>
+            <Text size="small">
+              Contactez notre équipe pour obtenir de l'aide.
+            </Text>
+          </li>
+        </StyledHelpList>
+      </StyledHelp>
     </Card>
   );
 }
