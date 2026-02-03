@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Layout } from '@/src/components/layouts/Layout';
-import { Section, SimpleLink } from '@/src/components/ui';
+import { Section } from '@/src/components/ui';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/features/forms/FormWithValidation';
 import { formInterestLinkedOut } from 'src/features/forms/schemas/formInterestLinkedOut';
@@ -12,7 +12,6 @@ import { notificationsActions } from 'src/use-cases/notifications';
 const Contact = () => {
   const [form, resetForm] = useResetForm();
   const dispatch = useDispatch();
-  const CONTACT_NUMBER = '07 49 69 31 12';
 
   return (
     <Layout title="Contact - Entourage Pro">
@@ -36,7 +35,7 @@ const Contact = () => {
               .then(() => {
                 dispatch(
                   notificationsActions.addNotification({
-                    type: 'danger',
+                    type: 'success',
                     message: 'Merci pour votre message',
                   })
                 );
@@ -52,30 +51,6 @@ const Contact = () => {
               });
           }}
         />
-        <h4 className="uk-align-center uk-text-center uk-margin-large-bottom">
-          Vous êtes journaliste&nbsp;? Contactez-nous :
-          <br />
-          <br />
-          <SimpleLink
-            className="uk-link uk-margin-small-top uk-margin-small-bottom"
-            href={`mailto:${process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}`}
-            target="_blank"
-            isExternal
-          >
-            {process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}
-          </SimpleLink>
-          <br />
-          <div className="uk-margin-small-top uk-margin-small-bottom uk-text-italic uk-text-muted">
-            ou
-          </div>
-          <SimpleLink
-            className="uk-link"
-            href={`tel:${CONTACT_NUMBER}`}
-            isExternal
-          >
-            {CONTACT_NUMBER}
-          </SimpleLink>
-        </h4>
       </Section>
     </Layout>
   );
