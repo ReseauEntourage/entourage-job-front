@@ -35,7 +35,6 @@ export function FilePreviewCV({
         <ButtonIcon
           icon={<LucidIcon name="X" size={15} />}
           dataTestId={`${dataTestId}-cv-delete`}
-          size="small"
         />
       </StyledDeleteIconContainer>
     </StyledFileInfosContainer>
