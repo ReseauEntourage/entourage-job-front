@@ -8,6 +8,7 @@ import { useElearning } from '../useElearning';
 import {
   StyledElearningUnitModalActions,
   StyledElearningUnitModalContainer,
+  StyledElearningUnitModalBody,
   StyledElearningUnitModalHeader,
   StyledInviteToGoToQuiz,
 } from './ElearningUnitModal.styles';
@@ -151,42 +152,42 @@ export const ElearningUnitModal = ({
       id={`elearning-unit-modal-${elearningUnit.id}`}
       size="large"
       withCloseButton
+      fillHeight={mode === ElearningUnitModalMode.VIDEO}
     >
       <StyledElearningUnitModalContainer>
         <StyledElearningUnitModalHeader>
           <H3 title={elearningUnit.title} />
         </StyledElearningUnitModalHeader>
-        {mode === ElearningUnitModalMode.QUIZ && (
-          <ElearningUnitModalQuiz
-            questions={questions}
-            quizQuestionIndex={quizQuestionIndex}
-            currentQuestion={currentQuestion}
-            currentSelectedAnswerId={currentSelectedAnswerId}
-            isCurrentQuestionValidatedCorrect={
-              isCurrentQuestionValidatedCorrect
-            }
-            hasError={!!quizError}
-            onAnswerChange={onQuizAnswerChange}
-          />
-        )}
-        {mode === ElearningUnitModalMode.VIDEO && (
-          <>
+        <StyledElearningUnitModalBody>
+          {mode === ElearningUnitModalMode.QUIZ && (
+            <ElearningUnitModalQuiz
+              questions={questions}
+              quizQuestionIndex={quizQuestionIndex}
+              currentQuestion={currentQuestion}
+              currentSelectedAnswerId={currentSelectedAnswerId}
+              isCurrentQuestionValidatedCorrect={
+                isCurrentQuestionValidatedCorrect
+              }
+              hasError={!!quizError}
+              onAnswerChange={onQuizAnswerChange}
+            />
+          )}
+          {mode === ElearningUnitModalMode.VIDEO && (
             <ElearningUnitModalVideo
               title={elearningUnit.title}
               videoUrl={elearningUnit.videoUrl}
             />
-            <StyledInviteToGoToQuiz>
-              {mode === ElearningUnitModalMode.VIDEO && (
-                <>
-                  <H5 title="Regardez la vidéo puis passez au quiz" center />
-                  <Text center>
-                    Après avoir visionné la vidéo, cliquez sur "Passer au quiz"
-                    pour répondre aux questions.
-                  </Text>
-                </>
-              )}
-            </StyledInviteToGoToQuiz>
-          </>
+          )}
+        </StyledElearningUnitModalBody>
+
+        {mode === ElearningUnitModalMode.VIDEO && (
+          <StyledInviteToGoToQuiz>
+            <H5 title="Regardez la vidéo puis passez au quiz" center />
+            <Text center>
+              Après avoir visionné la vidéo, cliquez sur "Passer au quiz" pour
+              répondre aux questions.
+            </Text>
+          </StyledInviteToGoToQuiz>
         )}
         <StyledElearningUnitModalActions>
           <Button

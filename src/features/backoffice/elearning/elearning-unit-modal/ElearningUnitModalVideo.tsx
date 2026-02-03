@@ -65,6 +65,9 @@ export const ElearningUnitModalVideo = ({
               aspectWidth={aspectWidth}
               aspectHeight={aspectHeight}
               poster="maxresdefault"
+              style={{
+                aspectRatio: `${aspectWidth} / ${aspectHeight}`,
+              }}
             />
           </div>
         </StyledElearningUnitModalVideoFrame>

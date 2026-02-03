@@ -15,6 +15,7 @@ interface CustomModalProps {
   closeOnNextRender?: boolean;
   withCloseButton?: boolean;
   size: ModalSize;
+  fillHeight?: boolean;
 }
 
 const CustomModal = ({
@@ -23,6 +24,7 @@ const CustomModal = ({
   closeOnNextRender = false,
   withCloseButton = false,
   size,
+  fillHeight = false,
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
   const isMobile = useIsMobile();
@@ -77,6 +79,7 @@ const CustomModal = ({
         maxWidth: '100%',
         marginTop: headerHeight,
         maxHeight: `calc(100vh - ${headerHeight}px)`,
+        height: fillHeight ? `calc(100vh - ${headerHeight}px)` : 'auto',
         padding: '20px 0',
         bottom: 0,
         left: 0,
@@ -115,10 +118,11 @@ const CustomModal = ({
         borderRadius: 20,
         border: 'none',
         maxHeight: '90vh',
+        height: fillHeight ? '90vh' : 'auto',
         ...(isMobile ? mobileStyle.content : {}),
       },
     };
-  }, [headerHeight, isMobile, width]);
+  }, [fillHeight, headerHeight, isMobile, width]);
 
   return (
     <ReactModal

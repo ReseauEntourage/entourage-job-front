@@ -12,11 +12,20 @@ export const StyledElearningUnitModalHeader = styled.div`
   padding: 16px;
 `;
 
+export const StyledElearningUnitModalBody = styled.div`
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const StyledElearningUnitModalContent = styled.div<{
   noPadding?: boolean;
 }>`
   display: flex;
   flex-direction: column;
+  flex: 1;
   min-height: 0;
   padding: ${(props) => (props.noPadding ? '0' : '16px')};
   gap: 16px;
@@ -25,10 +34,15 @@ export const StyledElearningUnitModalContent = styled.div<{
 export const StyledElearningUnitModalVideoFrame = styled.div<{
   maxWidthRatio: number;
 }>`
-  --maxVideoHeight: 60vh;
-
   display: flex;
+  flex: 1;
+  min-height: 0;
   justify-content: center;
+  align-items: center;
+  padding: 16px;
+
+  /* Permet d'utiliser cqh (container query height units) */
+  container-type: size;
 
   /*
     La hauteur du player dépend de sa largeur (ratio YouTube).
@@ -36,22 +50,19 @@ export const StyledElearningUnitModalVideoFrame = styled.div<{
     on garantit que la vidéo « rétrécit » quand la fenêtre est basse.
   */
   .video-inner {
-    width: min(
-      100%,
-      calc(var(--maxVideoHeight) * ${(props) => props.maxWidthRatio})
-    );
+    width: 100%;
+    max-width: 100%;
   }
 
-  @media (max-height: 800px) {
-    --maxVideoHeight: 46vh;
-  }
-
-  @media (max-height: 700px) {
-    --maxVideoHeight: 40vh;
-  }
-
-  @media (max-height: 600px) {
-    --maxVideoHeight: 34vh;
+  /*
+    Le player react-lite-youtube-embed est dimensionné par la largeur.
+    Ici on calcule une largeur maximale à partir de la HAUTEUR disponible du container,
+    afin de faire grandir la vidéo jusqu'à remplir l'espace restant.
+  */
+  @supports (width: 1cqh) {
+    .video-inner {
+      width: min(100%, calc(100cqh * ${(props) => props.maxWidthRatio}));
+    }
   }
 `;
 
@@ -78,6 +89,7 @@ export const StyledInviteToGoToQuiz = styled.div`
   align-items: stretch;
   padding: 10px 15px;
   background-color: ${COLORS.hoverBlue};
+  flex-shrink: 0;
 `;
 
 export const StyledElearningUnitModalActions = styled.div`
@@ -85,6 +97,7 @@ export const StyledElearningUnitModalActions = styled.div`
   justify-content: center;
   padding: 16px;
   gap: 8px;
+  flex-shrink: 0;
 `;
 
 export const StyledElearningUnitModalQuizSuccessContainer = styled.div`
