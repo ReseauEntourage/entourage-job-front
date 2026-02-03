@@ -70,9 +70,9 @@ export const useOnboardingStepElearning = ({
       duration: '~20 minutes',
     },
     hideGenericStepHeader: true,
-    title: `Modules de formation`,
+    title: `Votre parcours de formation`,
     smallTitle: 'Rôle et missions',
-    description: `Complétez les modules de formation pour obtenir votre certification ${userRole} Entourage Pro.`,
+    description: `Suivez ces modules pour rejoindre notre communauté de ${userRole.toLowerCase()}s bienveillants Entourage Pro.`,
     content: <Content />,
     isStepCompleted: async () => {
       return ensureAndComputeHasCompleteAllUnits();
@@ -82,7 +82,7 @@ export const useOnboardingStepElearning = ({
     },
     confirmationStep: {
       title: 'Bravo ! Formation terminée',
-      subtitle: `Vous faites maintenant partie des ${userRole} Entourage Pro formés.`,
+      subtitle: `Vous faites maintenant partie des ${userRole.toLowerCase()} Entourage Pro formés.`,
       submitBtnTxt: 'Continuer vers l’étape suivante',
     },
     incrementationIsAllowed: async () => {
