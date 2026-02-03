@@ -13,7 +13,9 @@ export const StyledOnboardingModalAlertTitleContainer = styled.div`
 
 export const StyledOnboardingActions = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
 `;
 
 export const StyledOnboardingPresentationContainer = styled.div`

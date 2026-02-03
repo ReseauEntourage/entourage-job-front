@@ -52,6 +52,7 @@ const OnboardingRun = () => {
                 <Button
                   onClick={incrementStep}
                   disabled={!incrementationIsAllowed || isLoading}
+                  size="large"
                 >
                   {isLoading && (
                     <>
@@ -61,16 +62,6 @@ const OnboardingRun = () => {
                   )}
                   {!isLoading && 'Étape suivante'}
                 </Button>
-
-                {isDev && (
-                  <Button
-                    variant="secondary"
-                    onClick={skipOnboarding}
-                    disabled={isLoading}
-                  >
-                    ⚙️ Dev only - Passer l'onboarding
-                  </Button>
-                )}
               </StyledOnboardingActions>
             </>
           ) : (
