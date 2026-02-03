@@ -162,7 +162,7 @@ export const profileCompletionCvFields: FormFieldInput<AnyCantFix>[] = [
     component: 'textarea',
     title: 'Résumé de votre profil',
     placeholder:
-      'En quelques lignes, présentez votre profil, vos objectifs et ce que vous recherchez.',
+      'En quelques lignes, présentez votre profil, vos objectifs et ce que vous recherchez.\n\nEx. : J’ai travaillé pendant 6 ans comme agent polyvalent en restauration collective. J’ai également une expérience en manutention et en préparation de commandes.',
     showLabel: true,
     maxLength: 1000,
     rows: 4,

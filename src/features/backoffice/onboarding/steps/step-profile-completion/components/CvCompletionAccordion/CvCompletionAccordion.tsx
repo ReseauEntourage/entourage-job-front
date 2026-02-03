@@ -287,7 +287,7 @@ export const CvCompletionAccordion = () => {
 
           <StyledExperienceOrFormationFormFieldContainer>
             <StyledExperienceOrFormationFormFieldLabelContainer>
-              <Text weight="semibold">Expériences professionnelles</Text>
+              <Text>Expériences professionnelles</Text>
               <Button
                 variant="default"
                 size="small"
@@ -318,7 +318,7 @@ export const CvCompletionAccordion = () => {
 
           <StyledExperienceOrFormationFormFieldContainer>
             <StyledExperienceOrFormationFormFieldLabelContainer>
-              <Text weight="semibold">Formations</Text>
+              <Text>Formations</Text>
               <Button
                 variant="default"
                 size="small"
