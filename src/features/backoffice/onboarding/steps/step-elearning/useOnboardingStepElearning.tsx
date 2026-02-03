@@ -71,7 +71,7 @@ export const useOnboardingStepElearning = ({
     },
     hideGenericStepHeader: true,
     title: `Votre parcours de formation`,
-    smallTitle: 'Rôle et missions',
+    smallTitle: 'Suivre la formation',
     description: `Suivez ces modules pour rejoindre notre communauté de ${userRole.toLowerCase()}s bienveillants Entourage Pro.`,
     content: <Content />,
     isStepCompleted: async () => {

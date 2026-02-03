@@ -35,7 +35,7 @@ export const useOnboardingStepWebinar = () => {
       duration: '~1 minute',
     },
     title: 'Webinaire de bienvenue',
-    smallTitle: 'S’inscrire au Webinaire de bienvenue',
+    smallTitle: 'Webinaire de bienvenue',
     description:
       "Ce webinaire vous permettra de comprendre votre rôle, rencontrer l'équipe et poser toutes vos questions en direct.",
     content: (

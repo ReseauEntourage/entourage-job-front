@@ -22,6 +22,7 @@ export const StepsProgressBar = () => {
             active={currentOnboardingIdx > index}
             content={step.smallTitle}
             badgeSize={BADGE_SIZE}
+            duration={step.summary.duration}
           />
         ))}
       </TimeLineHorizontal.ItemGroup>

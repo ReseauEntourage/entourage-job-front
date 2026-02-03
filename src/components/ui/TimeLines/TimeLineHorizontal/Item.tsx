@@ -10,6 +10,7 @@ import {
 export interface ItemProps {
   number: number;
   content: string;
+  duration?: string;
   isLast?: boolean;
   active?: boolean;
   activeColor?: Color;
@@ -19,6 +20,7 @@ export interface ItemProps {
 export const Item = ({
   number,
   content,
+  duration,
   isLast = false,
   active = false,
   activeColor,
@@ -45,6 +47,11 @@ export const Item = ({
         >
           {content}
         </Text>
+        {duration && (
+          <Text size="small" color="darkGray" center>
+            {duration}
+          </Text>
+        )}
       </StyledItemCounterContainer>
     </StyledItem>
   );

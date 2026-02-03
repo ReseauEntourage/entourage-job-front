@@ -43,7 +43,7 @@ export const StyledItemCounterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 `;
 
 export const StyledItemContent = styled.div`
