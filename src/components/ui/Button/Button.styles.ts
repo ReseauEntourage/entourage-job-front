@@ -34,20 +34,20 @@ export const StyledButton = styled.button<{
       solid
       ${(props) => {
         return BUTTON_STYLES.borderSize[props.variant || 'default'] || '1px';
-      }} !important;
+      }};
 
     background-color: ${({ variant }) => {
       return (
         BUTTON_STYLES.backgroundColor[variant || 'default'] || COLORS.white
       );
-    }} !important;
+    }};
 
     color: ${({ color, variant }) => {
       if (color) {
         return COLORS[color];
       }
       return BUTTON_STYLES.color[variant || 'default'] || COLORS.white;
-    }} !important;
+    }};
 
     border-radius: ${({ rounded }) => {
       if (rounded === 'circle') {
@@ -78,24 +78,24 @@ export const StyledButton = styled.button<{
           BUTTON_STYLES.hoverBackgroundColor[variant || 'default'] ||
           COLORS.white
         );
-      }} !important;
+      }};
 
       border: ${({ variant }) => {
           return (
             BUTTON_STYLES.hoverBorder[variant || 'default'] || COLORS.white
           );
         }}
-        solid 1px !important;
+        solid 1px;
 
       color: ${({ variant }) => {
         return BUTTON_STYLES.hoverColor[variant || 'default'] || COLORS.white;
-      }} !important;
+      }};
     }
 
     &:disabled {
-      background-color: ${COLORS.gray} !important;
-      color: ${COLORS.darkGray} !important;
-      border: ${COLORS.gray} solid 1px !important;
+      background-color: ${COLORS.gray};
+      color: ${COLORS.darkGray};
+      border: ${COLORS.gray} solid 1px;
       cursor: not-allowed;
       pointer-events: none;
     }

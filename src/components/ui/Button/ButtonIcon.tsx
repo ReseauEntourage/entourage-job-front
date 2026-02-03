@@ -5,7 +5,7 @@ import { ButtonSize } from './Button.types';
 
 export interface ButtonIconProps {
   icon: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: Event) => Promise<void> | void;
   href?: string;
   dataTestId?: string;
   newTab?: boolean;
@@ -35,7 +35,7 @@ export const ButtonIcon = ({
       href={href}
       rounded="circle"
       onClick={onClick}
-      data-testid={dataTestId}
+      dataTestId={dataTestId}
       newTab={newTab}
       disabled={disabled}
       variant="text"

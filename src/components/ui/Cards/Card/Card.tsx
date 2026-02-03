@@ -25,7 +25,6 @@ interface CardProps {
   isMobileClosable?: boolean;
   isDesktopClosable?: boolean;
   isDefaultOpen?: boolean;
-  editButtonText?: string;
   dataTestId?: string;
   borderColor?: string;
   bgColor?: Color;

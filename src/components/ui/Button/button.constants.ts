@@ -11,7 +11,6 @@ export const BUTTON_SIZES = {
     fontSize: 14,
     padding: '11px 19px',
     paddingCircle: '3px',
-
     iconSize: 20,
   },
   large: {
