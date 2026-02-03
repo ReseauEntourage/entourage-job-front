@@ -17,7 +17,7 @@ const WEBMAIL_PROVIDERS: WebmailProvider[] = [
     key: 'gmail',
     label: 'Gmail',
     url: 'https://mail.google.com/',
-    domains: ['gmail.com', 'googlemail.com'],
+    domains: ['gmail.com', 'googlemail.com', 'entourage.social'],
   },
   {
     key: 'outlook',
