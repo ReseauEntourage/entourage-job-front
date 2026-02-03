@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonIcon } from '@/src/components/ui/Button';
+import { ButtonIcon } from '@/src/components/ui/Button';
 import { H5 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Color } from '@/src/constants/styles';
@@ -9,11 +9,9 @@ import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledCard,
   StyledCardContent,
-  StyledCardFooter,
   StyledCardTitleContainer,
   StyledCardTopContainer,
   StyledChevronContainer,
-  StyledEditIconContainer,
   StyledSpinnerContainer,
 } from './Card.styles';
 
@@ -23,14 +21,11 @@ interface CardProps {
   subtitle?: string;
   centerTitle?: boolean;
   onClick?: () => void;
-  editCallback?: () => void;
   isLoading?: boolean;
   isMobileClosable?: boolean;
   isDesktopClosable?: boolean;
   isDefaultOpen?: boolean;
-  editButtonText?: string;
   dataTestId?: string;
-  editIcon?: React.ReactNode;
   borderColor?: string;
   bgColor?: Color;
   shadow?: boolean;
@@ -41,14 +36,11 @@ export const Card = ({
   subtitle,
   onClick,
   children,
-  editCallback,
   isLoading = false,
   isMobileClosable = false,
   isDesktopClosable = false,
   isDefaultOpen = true,
-  editButtonText,
   dataTestId,
-  editIcon,
   borderColor,
   centerTitle = false,
   bgColor = 'white',
@@ -87,15 +79,6 @@ export const Card = ({
             >
               <H5 title={title} center={centerTitle} />
               {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
-              {!isLoading && editCallback && isDesktop && (
-                <StyledEditIconContainer>
-                  <ButtonIcon
-                    icon={editIcon || <LucidIcon name="Pencil" size={15} />}
-                    onClick={editCallback}
-                    dataTestId={`${dataTestId}-button-edit`}
-                  />
-                </StyledEditIconContainer>
-              )}
             </StyledCardTitleContainer>
             {isClosable && (
               <StyledChevronContainer>
@@ -114,18 +97,7 @@ export const Card = ({
               </StyledChevronContainer>
             )}
           </StyledCardTopContainer>
-          {isOpen && (
-            <StyledCardContent>
-              {children}
-              {!isLoading && editCallback && !isDesktop && (
-                <StyledCardFooter>
-                  <Button variant="secondary" rounded onClick={editCallback}>
-                    {editButtonText || 'Modifier'}
-                  </Button>
-                </StyledCardFooter>
-              )}
-            </StyledCardContent>
-          )}
+          {isOpen && <StyledCardContent>{children}</StyledCardContent>}
         </>
       ) : (
         children

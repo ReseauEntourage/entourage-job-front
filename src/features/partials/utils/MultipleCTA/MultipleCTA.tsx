@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, LegacyImg, Grid } from '@/src/components/ui';
+import { Button, LegacyImg, Grid, ButtonSize } from '@/src/components/ui';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -17,7 +17,7 @@ interface MultipleCTAProps {
       external?: boolean;
       modal?: string;
       onClick?: () => void;
-      size?: 'small' | 'large';
+      size?: ButtonSize;
       variant?: 'default' | 'primary' | 'secondary';
       dataTestId?: string;
     };

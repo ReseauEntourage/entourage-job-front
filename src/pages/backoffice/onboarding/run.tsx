@@ -52,6 +52,7 @@ const OnboardingRun = () => {
                 <Button
                   onClick={incrementStep}
                   disabled={!incrementationIsAllowed || isLoading}
+                  size="large"
                 >
                   {isLoading && (
                     <>

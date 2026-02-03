@@ -56,7 +56,6 @@ export const Edition = {
   args: {
     title: 'This is an edit card',
     isLoading: false,
-    editCallback: () => null,
     children: (
       <ul>
         <li>Example</li>

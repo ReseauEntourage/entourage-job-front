@@ -103,7 +103,7 @@ export const HeaderCompany = ({
                   onClick={openEditCompany}
                   variant="secondary"
                   rounded
-                  size={isMobile ? 'small' : 'large'}
+                  size={isMobile ? 'small' : 'medium'}
                 >
                   Modifier
                 </Button>

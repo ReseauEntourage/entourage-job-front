@@ -31,6 +31,7 @@ import type { ProfileCompletionFormValues } from '../../types';
 import { ProfileCompletionSchemaField } from '../ProfileCompletionSchemaField';
 import {
   StyledAlertImportCVContainer,
+  StyledCvContentFormContainer,
   StyledExperienceOrFormationFormFieldContainer,
   StyledExperienceOrFormationFormFieldLabelContainer,
   StyledExperienceOrFormationList,
@@ -277,7 +278,7 @@ export const CvCompletionAccordion = () => {
 
       {/* Form should only be shown when user data is complete */}
       {userIsComplete && (
-        <>
+        <StyledCvContentFormContainer $disabled={isProfileGenerationLoading}>
           <ProfileCompletionSchemaField
             formSchema={profileCompletionFormSchema}
             field={profileDescriptionField}
@@ -354,7 +355,7 @@ export const CvCompletionAccordion = () => {
               showError={submitCount > 0}
             />
           ))}
-        </>
+        </StyledCvContentFormContainer>
       )}
     </Accordion>
   );

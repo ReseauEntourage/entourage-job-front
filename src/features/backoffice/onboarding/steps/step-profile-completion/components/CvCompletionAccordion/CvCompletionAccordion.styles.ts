@@ -1,4 +1,22 @@
 import styled from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
+
+export const StyledCvContentFormContainer = styled.div<{
+  $disabled?: boolean;
+}>`
+  position: relative;
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: ${COLORS.overlayWhite};
+    display: ${({ $disabled }) => ($disabled ? 'block' : 'none')};
+    z-index: 1;
+  }
+`;
 
 export const StyledExperienceOrFormationList = styled.div`
   display: flex;

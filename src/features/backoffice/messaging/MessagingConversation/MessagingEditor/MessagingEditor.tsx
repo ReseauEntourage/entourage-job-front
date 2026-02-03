@@ -140,6 +140,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
               variant="secondary"
               onClick={onRequestAttachFileClick}
               rounded="circle"
+              size="large"
             >
               <LucidIcon name="Plus" size={25} />
             </Button>

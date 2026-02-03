@@ -1,55 +1,21 @@
 import styled from 'styled-components';
 import { LINE_HEIGHT_MULTIPLIER } from '../Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
-import { ButtonProps } from './Button.types';
+import { ButtonProps, ButtonSize } from './Button.types';
+import {
+  BUTTON_CIRCLE_RADIUS,
+  BUTTON_DEFAULT_RADIUS,
+  BUTTON_ROUNDED_RADIUS,
+  BUTTON_SIZES,
+  BUTTON_STYLES,
+} from './button.constants';
 
-// Color config
-const buttonStyles = {
-  border: {
-    default: COLORS.gray,
-    primary: COLORS.primaryBlue,
-    secondary: COLORS.primaryBlue,
-    text: 'transparent',
-  },
-  borderSize: {
-    default: '1px',
-    primary: '1px',
-    secondary: '1px',
-    text: '0px',
-  },
-  backgroundColor: {
-    default: COLORS.white,
-    primary: COLORS.primaryBlue,
-    secondary: COLORS.white,
-    text: 'transparent',
-  },
-  color: {
-    default: COLORS.black,
-    primary: COLORS.white,
-    secondary: COLORS.primaryBlue,
-    text: COLORS.black,
-  },
-  hoverBackgroundColor: {
-    default: COLORS.hoverWhite,
-    primary: COLORS.darkBlue,
-    secondary: COLORS.hoverBlue,
-    text: 'transparent',
-  },
-  hoverColor: {
-    default: COLORS.primaryBlue,
-    primary: COLORS.white,
-    secondary: COLORS.primaryBlue,
-    text: COLORS.black,
-  },
-  hoverBorder: {
-    default: COLORS.primaryBlue,
-    primary: COLORS.darkBlue,
-    secondary: COLORS.primaryBlue,
-    text: 'none',
-  },
-};
-
-export const StyledButton = styled.button<ButtonProps>`
+export const StyledButton = styled.button<{
+  variant: ButtonProps['variant'];
+  size: ButtonSize;
+  rounded: ButtonProps['rounded'];
+  color?: ButtonProps['color'];
+}>`
   &.button {
     align-items: center;
     justify-content: center;
@@ -60,80 +26,76 @@ export const StyledButton = styled.button<ButtonProps>`
     font-weight: 400;
     text-align: center;
     line-height: ${({ size }) =>
-      size === 'large'
-        ? 14 * LINE_HEIGHT_MULTIPLIER
-        : 12 * LINE_HEIGHT_MULTIPLIER}px;
+      BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;
 
-    border: ${(props: ButtonProps) => {
-        return buttonStyles.border[props.variant || 'default'] || COLORS.white;
+    border: ${(props) => {
+        return BUTTON_STYLES.border[props.variant || 'default'] || COLORS.white;
       }}
       solid
-      ${(props: ButtonProps) => {
-        return buttonStyles.borderSize[props.variant || 'default'] || '1px';
-      }} !important;
+      ${(props) => {
+        return BUTTON_STYLES.borderSize[props.variant || 'default'] || '1px';
+      }};
 
-    background-color: ${(props: ButtonProps) => {
+    background-color: ${({ variant }) => {
       return (
-        buttonStyles.backgroundColor[props.variant || 'default'] || COLORS.white
+        BUTTON_STYLES.backgroundColor[variant || 'default'] || COLORS.white
       );
-    }} !important;
+    }};
 
-    color: ${(props: ButtonProps) => {
-      if (props.color) {
-        return COLORS[props.color];
+    color: ${({ color, variant }) => {
+      if (color) {
+        return COLORS[color];
       }
-      return buttonStyles.color[props.variant || 'default'] || COLORS.white;
-    }} !important;
+      return BUTTON_STYLES.color[variant || 'default'] || COLORS.white;
+    }};
 
-    border-radius: ${(props: ButtonProps) => {
-      if (props.rounded === 'circle') {
-        return `50%`;
+    border-radius: ${({ rounded }) => {
+      if (rounded === 'circle') {
+        return BUTTON_CIRCLE_RADIUS;
       }
-      return props.rounded ? `20px` : `5px`;
-    }}!important;
+      return rounded ? BUTTON_ROUNDED_RADIUS : BUTTON_DEFAULT_RADIUS;
+    }};
 
-    padding: ${(props: ButtonProps) => {
-      if (props.rounded === 'circle') {
-        return `6px`;
+    padding: ${({ rounded, variant, size }) => {
+      if (rounded === 'circle') {
+        return BUTTON_SIZES[size].paddingCircle;
       }
-      if (props.variant === 'text') {
+      if (variant === 'text') {
         return `0px`;
       }
-      return props.size === 'large' ? `11px 20px` : `6px 10px`;
-    }}!important;
+      return BUTTON_SIZES[size].padding;
+    }};
 
-    font-size: ${(props: ButtonProps) => {
-      return props.size === 'large' ? `14px` : `12px`;
-    }}!important;
+    font-size: ${({ size }) => {
+      return `${BUTTON_SIZES[size].fontSize}px`;
+    }};
 
     &:hover {
       transition: 0.2s ease-in-out;
 
-      background-color: ${(props: ButtonProps) => {
+      background-color: ${({ variant }) => {
         return (
-          buttonStyles.hoverBackgroundColor[props.variant || 'default'] ||
+          BUTTON_STYLES.hoverBackgroundColor[variant || 'default'] ||
           COLORS.white
         );
-      }} !important;
+      }};
 
-      border: ${(props: ButtonProps) => {
+      border: ${({ variant }) => {
           return (
-            buttonStyles.hoverBorder[props.variant || 'default'] || COLORS.white
+            BUTTON_STYLES.hoverBorder[variant || 'default'] || COLORS.white
           );
         }}
-        solid 1px !important;
+        solid 1px;
 
-      color: ${(props: ButtonProps) => {
-        return (
-          buttonStyles.hoverColor[props.variant || 'default'] || COLORS.white
-        );
-      }} !important;
+      color: ${({ variant }) => {
+        return BUTTON_STYLES.hoverColor[variant || 'default'] || COLORS.white;
+      }};
     }
 
     &:disabled {
-      background-color: ${COLORS.gray} !important;
-      color: ${COLORS.darkGray} !important;
-      border: ${COLORS.gray} solid 1px !important;
+      background-color: ${COLORS.gray};
+      color: ${COLORS.darkGray};
+      border: ${COLORS.gray} solid 1px;
       cursor: not-allowed;
       pointer-events: none;
     }

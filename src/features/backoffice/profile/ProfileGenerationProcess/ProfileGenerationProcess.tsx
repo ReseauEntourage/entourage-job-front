@@ -96,7 +96,7 @@ export const ProfileGenerationProcess = forwardRef<
               <Button
                 variant="primary"
                 rounded
-                size="large"
+                size="medium"
                 onClick={generateProfileFromCV}
                 disabled={isLoading}
               >

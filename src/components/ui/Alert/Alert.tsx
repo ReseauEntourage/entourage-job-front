@@ -59,7 +59,6 @@ export const Alert = ({
                 color={ALERT_COLORS[variant]?.text || 'black'}
               />
             }
-            color={ALERT_COLORS[variant]?.text || 'black'}
             onClick={onClose}
           />
         </div>

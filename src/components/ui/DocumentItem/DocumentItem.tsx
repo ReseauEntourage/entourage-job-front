@@ -26,7 +26,8 @@ export const DocumentItem = ({
         </Text>
         {onRemove && (
           <ButtonIcon
-            icon={<LucidIcon size={15} name="X" color={COLORS.black} />}
+            icon={<LucidIcon name="X" />}
+            color={COLORS.darkGray}
             onClick={onRemove}
           />
         )}

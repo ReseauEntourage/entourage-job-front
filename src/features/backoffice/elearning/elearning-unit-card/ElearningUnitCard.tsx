@@ -46,16 +46,18 @@ export const ElearningUnitCard = ({
           <Text size="large">
             <LucidIcon name="Clock" /> {elearningUnit.durationMinutes} minutes
           </Text>
-          <Button onClick={() => start()} disabled={isCompleted}>
-            {!isCompleted ? (
-              <>
-                <LucidIcon name="Play" /> &nbsp;Démarrer
-              </>
-            ) : (
-              <>
-                <LucidIcon name="Check" /> &nbsp;Terminé
-              </>
-            )}
+          <Button
+            onClick={start}
+            disabled={isCompleted}
+            prependIcon={
+              isCompleted ? (
+                <LucidIcon name="Check" />
+              ) : (
+                <LucidIcon name="Play" />
+              )
+            }
+          >
+            {!isCompleted ? 'Démarrer' : 'Terminé'}
           </Button>
         </StyledElearningUnitCardMetaContainer>
       </StyledElearningUnitCardContainer>

@@ -76,6 +76,7 @@ export const COLORS = {
   skeletonDark: '#F7F7F7',
 
   cardShadow: '#0000000D',
+  overlayWhite: '#FFFFFFCC',
 };
 
 export type Color = keyof typeof COLORS;

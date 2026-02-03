@@ -70,12 +70,14 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
     <MessageContainer className={isOwnMessage ? 'own-message' : ''}>
       <StyledMessage className={isOwnMessage ? 'own-message' : ''}>
         {message.medias.length > 0 && <MessageMedias medias={message.medias} />}
-        <p
-          dangerouslySetInnerHTML={{
-            __html: linkify(escapeHtml(message.content)),
-          }}
-          onClick={handleClick}
-        />
+        <Text>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: linkify(escapeHtml(message.content)),
+            }}
+            onClick={handleClick}
+          />
+        </Text>
       </StyledMessage>
       {!isOwnMessage && isSuspicious && (
         <StyledWarning>
