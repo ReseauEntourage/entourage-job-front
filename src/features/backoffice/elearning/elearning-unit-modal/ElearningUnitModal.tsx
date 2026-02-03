@@ -191,7 +191,7 @@ export const ElearningUnitModal = ({
         <StyledElearningUnitModalActions>
           <Button
             onClick={onConfirm}
-            variant="secondary"
+            variant="primary"
             style={{
               ...(mode === ElearningUnitModalMode.VIDEO
                 ? { display: 'block', width: '100%' }
