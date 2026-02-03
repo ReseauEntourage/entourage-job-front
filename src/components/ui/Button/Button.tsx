@@ -2,28 +2,42 @@ import Link from 'next/link';
 import React from 'react';
 import { StyledButton } from './Button.styles';
 import { ButtonProps } from './Button.types';
+import { BUTTON_SIZES } from './button.constants';
 
 export function Button({
   id,
-  children,
-  variant = 'primary',
-  disabled = false,
-  size = 'large',
-  rounded = true,
   href,
+  color,
+  style,
+  children,
+  prependIcon,
+  appendIcon,
+  dataTestId = '',
   isExternal = false,
   newTab = false,
   onClick = () => {},
   shallow = false,
   scroll = true,
   className = '',
-  dataTestId = '',
-  color,
-  style,
+  variant = 'primary',
+  disabled = false,
+  size = 'medium',
+  rounded = true,
 }: ButtonProps) {
+  const resizedPrependIcon = prependIcon
+    ? React.cloneElement(prependIcon as React.ReactElement<{ size: number }>, {
+        size: BUTTON_SIZES[size].iconSize,
+      })
+    : prependIcon;
+  const resizedAppendIcon = appendIcon
+    ? React.cloneElement(appendIcon as React.ReactElement<{ size: number }>, {
+        size: BUTTON_SIZES[size].iconSize,
+      })
+    : appendIcon;
+
   const buttonComponent = (
     <StyledButton
-      id={id || undefined}
+      id={id}
       className={`button ${className}`}
       rounded={rounded}
       disabled={disabled}
@@ -35,14 +49,10 @@ export function Button({
       color={color}
       style={style}
     >
-      {Array.isArray(children)
-        ? children.map((child, index) => {
-            if (typeof child === 'string') {
-              return <span key={index.toString()}>{child}</span>;
-            }
-            return child;
-          })
-        : children}
+      {resizedPrependIcon && <>{resizedPrependIcon}&nbsp;</>}
+      {/** Children */}
+      {children}
+      {resizedAppendIcon && <>&nbsp;{resizedAppendIcon}</>}
     </StyledButton>
   );
 

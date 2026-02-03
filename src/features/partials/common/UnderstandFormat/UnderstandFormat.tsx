@@ -202,7 +202,7 @@ export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
             variant="primary"
             rounded
             key={index}
-            size="large"
+            size="medium"
             onClick={() => gaEvent(cta.gaTag)}
             href={cta.href}
           >

@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { AnyToFix } from 'src/utils/Types';
 import { Button } from './Button';
+import type { ButtonSize } from './Button.types';
 import {
   StyledButtonContainer,
   StyledButtonMenu,
@@ -15,8 +16,7 @@ interface ButtonMultipleProps {
   children: React.ReactNode;
   disabled?: boolean;
   variant?: 'default' | 'primary' | 'secondary';
-  size?: 'small' | 'large';
-  className?: string;
+  size?: ButtonSize;
   dataTestId?: string;
   align?: 'left' | 'right';
   buttons: {
@@ -35,12 +35,11 @@ interface ButtonMultipleProps {
 export function ButtonMultiple({
   id,
   children,
-  className,
   buttons,
   align = 'left',
   disabled = false,
   variant = 'primary',
-  size = 'large',
+  size = 'medium',
   dataTestId = '',
 }: ButtonMultipleProps) {
   const { componentId, isOpen, setIsOpen } =
@@ -52,7 +51,6 @@ export function ButtonMultiple({
         variant={variant}
         size={size}
         disabled={disabled}
-        className={className}
         onClick={() => {
           if (!disabled) {
             setIsOpen((prevIsOpen) => {

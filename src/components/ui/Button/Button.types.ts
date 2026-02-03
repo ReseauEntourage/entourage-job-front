@@ -4,14 +4,15 @@ import { AnyToFix } from 'src/utils/Types';
 
 export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'text';
 
+export type ButtonSize = 'small' | 'medium' | 'large';
+
 export interface ButtonProps {
   id?: string;
   children: React.ReactNode;
   variant?: ButtonVariant;
   disabled?: boolean;
-  size?: 'small' | 'large';
+  size?: ButtonSize;
   rounded?: boolean | 'circle';
-  // link
   href?: string | { pathname: string; query?: AnyToFix };
   isExternal?: boolean;
   newTab?: boolean;
@@ -22,4 +23,6 @@ export interface ButtonProps {
   dataTestId?: string;
   color?: Color;
   style?: React.CSSProperties;
+  prependIcon?: React.ReactNode;
+  appendIcon?: React.ReactNode;
 }

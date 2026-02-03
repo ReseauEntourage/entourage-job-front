@@ -15,7 +15,7 @@ export const ContactUsSection = ({ onClick }: { onClick: () => void }) => {
         <Button
           variant="secondary"
           rounded
-          size="large"
+          size="medium"
           onClick={onClick}
           dataTestId="button-contact"
         >

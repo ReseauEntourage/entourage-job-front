@@ -289,7 +289,7 @@ export function Directory() {
             />
             <StyledDirectoryButtonContainer>
               <Button
-                size={isMobile ? 'small' : 'large'}
+                size={isMobile ? 'small' : 'medium'}
                 variant={
                   entity === DirectoryEntity.USER &&
                   isRoleIncluded([UserRoles.CANDIDATE], role)
@@ -312,7 +312,7 @@ export function Directory() {
                 Les candidats
               </Button>
               <Button
-                size={isMobile ? 'small' : 'large'}
+                size={isMobile ? 'small' : 'medium'}
                 variant={
                   entity === DirectoryEntity.USER &&
                   isRoleIncluded([UserRoles.COACH], role)
@@ -335,7 +335,7 @@ export function Directory() {
               </Button>
 
               <Button
-                size={isMobile ? 'small' : 'large'}
+                size={isMobile ? 'small' : 'medium'}
                 variant={
                   entity === DirectoryEntity.COMPANY ? 'primary' : 'secondary'
                 }
