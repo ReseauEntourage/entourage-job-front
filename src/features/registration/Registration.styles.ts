@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledRegistrationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: ${COLORS.lightGray};
+  width: 100%;
+  min-height: calc(100vh - ${HEIGHTS.HEADER}px);
 
-  > * {
-    max-width: 700px;
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    min-height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
   }
 `;
 
