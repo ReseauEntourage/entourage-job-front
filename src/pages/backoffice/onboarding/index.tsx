@@ -42,7 +42,6 @@ const OnboardingHome = () => {
         <Section className="custom-page">
           <HeaderBackoffice
             title="Bienvenue dans la communauté Entourage Pro"
-            description="Prêt à faire vos premiers pas ? On vous a préparé une petite formation avant de vous lancer !"
             noSeparator
           />
         </Section>

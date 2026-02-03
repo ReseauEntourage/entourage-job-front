@@ -5,7 +5,7 @@ import { StyledHeaderBackOffice } from './HeaderBackoffice.styles';
 
 interface HeaderBackofficeProps {
   title: React.ReactNode;
-  description: React.ReactNode;
+  description?: React.ReactNode;
   children?: React.ReactNode;
   childrenBottom?: boolean;
   noSeparator?: boolean;
@@ -27,7 +27,7 @@ export const HeaderBackoffice = ({
       >
         <div>
           <H1 title={title} />
-          <Text size="large">{description}</Text>
+          {description && <Text size="large">{description}</Text>}
         </div>
         <div>{children}</div>
       </Grid>

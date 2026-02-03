@@ -10,6 +10,7 @@ export interface OnboardingStep {
     description?: string; // Brief description of the step
     duration: string; // Estimated duration of the step (e.g., "~10-15 minutes")
   };
+  hideGenericStepHeader: undefined | true; // Whether to hide the generic header for this step
   title: React.ReactNode; // Main title of the step
   smallTitle: string; // Short title for progress bar
   description: React.ReactNode; // Brief description of the step

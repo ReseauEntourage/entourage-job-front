@@ -37,10 +37,12 @@ const OnboardingRun = () => {
           <br />
           {currentOnboardingStep ? (
             <>
-              <HeaderBackoffice
-                title={currentOnboardingStep.title}
-                description={currentOnboardingStep.description}
-              />
+              {!currentOnboardingStep.hideGenericStepHeader && (
+                <HeaderBackoffice
+                  title={currentOnboardingStep.title}
+                  description={currentOnboardingStep.description}
+                />
+              )}
               {formErrorMessage && (
                 <>
                   <Alert variant={AlertVariant.Error}>{formErrorMessage}</Alert>

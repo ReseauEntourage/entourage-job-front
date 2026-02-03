@@ -141,11 +141,12 @@ export const useOnboardingStepSocialSituation = () => {
 
   const onboardingStepSocialSituation = {
     summary: {
-      title: 'Indiquer la situation sociale et économique',
+      title: 'Dites-nous en plus sur vous',
       duration: '~1-2 minutes',
-      description: 'Pour nous permettre de mieux vous connaître',
+      description:
+        'Décrivez-nous votre situation personnelle et professionnelle',
     },
-    title: 'Indiquer la situation sociale et économique',
+    title: 'Indiquer votre situation sociale et économique',
     smallTitle: 'Votre situation',
     description:
       'Pour nous permettre de mieux vous connaître et de mieux vous accompagner.',
