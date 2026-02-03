@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
+import { Button } from './Button';
+import { ButtonSize } from './Button.types';
 
 export interface ButtonIconProps {
   icon: React.ReactNode;
@@ -8,36 +9,39 @@ export interface ButtonIconProps {
   href?: string;
   dataTestId?: string;
   newTab?: boolean;
+  disabled?: boolean;
   color?: string;
+  size?: ButtonSize;
 }
-
-const StyledButtonIcon = styled.a`
-  color: ${({ color }) => {
-    return COLORS[color] || COLORS.primaryBlue;
-  }};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export const ButtonIcon = ({
   icon,
   onClick = () => {},
-  color = 'primaryBlue',
+  color = COLORS.primaryBlue,
   href,
   dataTestId,
   newTab,
+  size,
+  disabled = false,
 }: ButtonIconProps) => {
+  const formattedIcon = React.cloneElement(
+    icon as React.ReactElement<{ color: string }>,
+    {
+      color,
+    }
+  );
   return (
-    <StyledButtonIcon
+    <Button
       href={href}
+      rounded="circle"
       onClick={onClick}
       data-testid={dataTestId}
-      target={newTab ? '_blank' : ''}
-      rel="noreferrer"
-      color={color}
+      newTab={newTab}
+      disabled={disabled}
+      variant="text"
+      size={size}
     >
-      {icon}
-    </StyledButtonIcon>
+      {formattedIcon}
+    </Button>
   );
 };

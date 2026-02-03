@@ -63,22 +63,6 @@ export const StyledCardTitleContainer = styled.div`
   }
 `;
 
-export const StyledEditIconContainer = styled.div`
-  position: absolute;
-  right: 25px;
-  top: 25px;
-  display: flex;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: ${COLORS.primaryBlue} 1px solid;
-  transition: 0.3s ease-in-out;
-  :hover {
-    background-color: ${COLORS.hoverBlue};
-  }
-`;
-
 export const StyledSpinnerContainer = styled.div`
   position: absolute;
   right: 25px;
@@ -91,12 +75,4 @@ export const StyledChevronContainer = styled.div`
     height: 19px;
     width: 19px;
   }
-`;
-
-export const StyledCardFooter = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 10px;
 `;

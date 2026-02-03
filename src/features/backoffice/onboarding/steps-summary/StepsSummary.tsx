@@ -58,7 +58,9 @@ export const StepsSummary = () => {
       </TimeLineVertical.Container>
 
       <StyledActionContainer>
-        <Button onClick={startOnboarding}>Commencer le parcours</Button>
+        <Button onClick={startOnboarding} size="large">
+          Commencer le parcours
+        </Button>
         <Text>
           <LucidIcon name="Clock" size={16} /> Durée totale : ~{totalDuration}{' '}
           minutes

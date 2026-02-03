@@ -4,16 +4,20 @@ export const BUTTON_SIZES = {
   small: {
     fontSize: 13,
     padding: '6px 10px',
+    paddingCircle: '0px',
     iconSize: 14,
   },
   medium: {
     fontSize: 14,
     padding: '11px 19px',
+    paddingCircle: '3px',
+
     iconSize: 20,
   },
   large: {
     fontSize: 16,
     padding: '16px 32px',
+    paddingCircle: '6px',
     iconSize: 24,
   },
 } as const;

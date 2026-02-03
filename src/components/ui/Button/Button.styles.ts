@@ -58,7 +58,7 @@ export const StyledButton = styled.button<{
 
     padding: ${({ rounded, variant, size }) => {
       if (rounded === 'circle') {
-        return `6px`;
+        return BUTTON_SIZES[size].paddingCircle;
       }
       if (variant === 'text') {
         return `0px`;

@@ -6,10 +6,11 @@ export const StyledDocumentItem = styled.div`
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  width: fit-content;
 `;
 
 export const TitleAndIcon = styled.div`
   display: flex;
+  flex: 1;
+  justify-content: space-between;
   gap: 5px;
 `;
