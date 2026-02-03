@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 const LIST_GAP = 25;
 const MIN_CARD_WIDTH = '500px';
@@ -11,4 +12,8 @@ export const StyledOnboardingElearningUnitCardList = styled.div`
     minmax(${MIN_CARD_WIDTH}, ${MAX_CARD_WIDTH})
   );
   gap: ${LIST_GAP}px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    grid-template-columns: 1fr;
+  }
 `;
