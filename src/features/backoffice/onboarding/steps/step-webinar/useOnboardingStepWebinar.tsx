@@ -85,7 +85,7 @@ export const useOnboardingStepWebinar = () => {
       title: 'Votre place est réservée !',
       subtitle:
         'Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire.',
-      submitBtnTxt: 'Continuer vers l’étape suivante',
+      submitBtnTxt: 'Passer à l’étape suivante',
     },
   } as OnboardingStep;
 

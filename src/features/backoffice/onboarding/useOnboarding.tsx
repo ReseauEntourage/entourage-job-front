@@ -26,6 +26,7 @@ import {
   determineStartingStep,
 } from './onboarding.utils';
 import { useOnboardingStepElearning } from './steps/step-elearning/useOnboardingStepElearning';
+import { useOnboardingStepNudges } from './steps/step-nudges/useOnboardingStepNudges';
 import { useOnboardingStepProfileCompletion } from './steps/step-profile-completion/useOnboardingStepProfileCompletion';
 import { useOnboardingStepSocialSituation } from './steps/step-social-situation/useOnboardingStepSocialSituation';
 import { useOnboardingStepWebinar } from './steps/step-webinar/useOnboardingStepWebinar';
@@ -52,6 +53,10 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: user.role,
   });
+  const { onboardingStepNudges } = useOnboardingStepNudges({
+    userRole: user.role,
+  });
+
   const { onboardingStepProfileCompletion } =
     useOnboardingStepProfileCompletion();
 
@@ -90,12 +95,14 @@ export const useOnboarding = (): UseOnboardingReturn => {
       onboardingStepWebinar,
       onboardingStepElearning,
       ...(user.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
+      onboardingStepNudges,
       onboardingStepProfileCompletion,
     ];
   }, [
+    user.role,
     onboardingStepWebinar,
     onboardingStepElearning,
-    user.role,
+    onboardingStepNudges,
     onboardingStepSocialSituation,
     onboardingStepProfileCompletion,
   ]);
