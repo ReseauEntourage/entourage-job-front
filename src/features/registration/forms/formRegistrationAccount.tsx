@@ -43,6 +43,7 @@ export const formRegistrationAccount: FormSchema<{
       name: 'gender',
       title: 'Genre *',
       component: 'select-simple',
+      showLabel: true,
       options: GENDERS_FILTERS,
       isRequired: true,
     },
