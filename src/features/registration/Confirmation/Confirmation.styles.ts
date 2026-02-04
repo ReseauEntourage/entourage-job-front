@@ -41,3 +41,7 @@ export const StyledHelpList = styled.ul`
     margin: 8px 0;
   }
 `;
+
+export const StyledConfirmationResendEmail = styled.div`
+  margin-top: 16px;
+`;

@@ -1,18 +1,58 @@
-import React from 'react';
+import Link from 'next/link';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Card, LucidIcon } from '@/src/components/ui';
 import { Text } from '@/src/components/ui/Text';
+import { useSendVerifyEmail } from '@/src/components/verify-email/useSendVerifyEmail';
 import { COLORS } from '@/src/constants/styles';
 import {
   StyledConfirmationActions,
   StyledConfirmationIcon,
   StyledConfirmationIntro,
+  StyledConfirmationResendEmail,
   StyledHelp,
   StyledHelpList,
 } from './Confirmation.styles';
 import { useConfirmation } from './useConfirmation';
 
+const RESEND_COOLDOWN_SECONDS = 30;
+
 export function Confirmation() {
   const { email, webmailProvider } = useConfirmation();
+  const { sendVerifyEmail } = useSendVerifyEmail(email);
+
+  const [cooldownSecondsLeft, setCooldownSecondsLeft] = useState<number>(
+    RESEND_COOLDOWN_SECONDS
+  );
+  const [hasResentEmail, setHasResentEmail] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+
+  const canResend = useMemo(
+    () => !hasResentEmail && !isResending && cooldownSecondsLeft <= 0,
+    [cooldownSecondsLeft, hasResentEmail, isResending]
+  );
+
+  useEffect(() => {
+    if (hasResentEmail || cooldownSecondsLeft <= 0) {
+      return;
+    }
+    const intervalId = window.setInterval(() => {
+      setCooldownSecondsLeft((seconds) => Math.max(0, seconds - 1));
+    }, 1000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [cooldownSecondsLeft, hasResentEmail]);
+
+  const handleResendEmail = useCallback(() => {
+    if (!canResend) {
+      return;
+    }
+    setIsResending(true);
+    sendVerifyEmail();
+    setHasResentEmail(true);
+    setIsResending(false);
+  }, [canResend, sendVerifyEmail]);
 
   return (
     <Card title="Votre inscription est presque terminée !">
@@ -63,13 +103,35 @@ export function Confirmation() {
               Recherchez « Entourage Pro » dans votre boîte de réception.
             </Text>
           </li>
-          <li>
-            <Text size="small">
-              Contactez notre équipe pour obtenir de l'aide.
-            </Text>
-          </li>
         </StyledHelpList>
       </StyledHelp>
+
+      <StyledConfirmationResendEmail>
+        {email && (
+          <>
+            {hasResentEmail ? (
+              <Text size="small" color="lightGreen">
+                Un nouvel email permettant de vérifier votre compte vient de
+                vous être envoyé
+              </Text>
+            ) : (
+              <Text size="small" weight="semibold">
+                Vous n'avez toujours pas reçu l'email ?{' '}
+                {cooldownSecondsLeft > 0 ? (
+                  `Vous pourrez envoyer un nouvel email de validation dans ${cooldownSecondsLeft}s`
+                ) : (
+                  <Link
+                    onClick={handleResendEmail}
+                    href={'#resend-verify-email'}
+                  >
+                    Renvoyer un email de validation
+                  </Link>
+                )}
+              </Text>
+            )}
+          </>
+        )}
+      </StyledConfirmationResendEmail>
     </Card>
   );
 }
