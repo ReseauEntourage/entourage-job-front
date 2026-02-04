@@ -4,7 +4,6 @@ import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 export const StyledLoginContainer = styled.div`
   background-color: ${COLORS.lightGray};
   width: 100%;
-  min-height: calc(100vh - ${HEIGHTS.HEADER}px);
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     min-height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
