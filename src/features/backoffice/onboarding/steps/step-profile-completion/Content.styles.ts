@@ -1,10 +1,15 @@
 import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledProfileSubHeader = styled.div`
   display: flex;
   gap: 30px;
-  justify-content: space-between;
+  flex-direction: column;
+
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 export const StyledAccordionHeader = styled.div`
