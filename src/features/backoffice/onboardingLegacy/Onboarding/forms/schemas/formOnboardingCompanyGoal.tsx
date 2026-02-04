@@ -1,10 +1,14 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
-import { SelectListType } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
+import { SelectListType } from '@/src/components/ui/Inputs/SelectList';
+import { SelectTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectTitleIconDescriptionLabel/SelectTitleIconDescriptionLabel';
 import { CompanyGoal } from '@/src/constants/company';
 import { FormSchema } from '@/src/features/forms/FormSchema';
 
-const flowOptions: SelectListType<CompanyGoal>[] = [
+const flowOptions: (SelectListType<CompanyGoal> & {
+  icon: React.ReactNode;
+  description: string;
+})[] = [
   {
     value: CompanyGoal.SENSIBILIZE,
     label: 'Je souhaite sensibiliser et engager mes collaborateurs',
@@ -30,7 +34,16 @@ export const formOnboardingCompanyGoal: FormSchema<{
       id: 'goal',
       name: 'goal',
       component: 'select-list',
-      options: flowOptions,
+      options: flowOptions.map((option) => ({
+        value: option.value,
+        label: (
+          <SelectTitleIconDescriptionLabel
+            title={option.label}
+            icon={option.icon}
+            description={option.description}
+          />
+        ),
+      })),
       showLabel: false,
       isRequired: true,
       isMulti: true,

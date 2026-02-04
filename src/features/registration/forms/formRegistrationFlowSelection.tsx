@@ -1,10 +1,11 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
-import { SelectListType } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
+import { SelectTitleIconDescriptionLabelType } from '@/src/components/ui/Inputs/SelectList';
+import { SelectTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectTitleIconDescriptionLabel/SelectTitleIconDescriptionLabel';
 import { RegistrationFlow } from '../flows/flows.types';
 import { FormSchema } from 'src/features/forms/FormSchema';
 
-const FlowOptions: SelectListType<RegistrationFlow>[] = [
+const FlowOptions: SelectTitleIconDescriptionLabelType<RegistrationFlow>[] = [
   {
     value: RegistrationFlow.CANDIDATE,
     label: 'Nous rejoindre en tant que candidat(e)',
@@ -41,7 +42,16 @@ export const formRegistrationFlowSelection: FormSchema<{
       id: 'flow',
       name: 'flow',
       component: 'select-list',
-      options: FlowOptions,
+      options: FlowOptions.map((option) => ({
+        value: option.value,
+        label: (
+          <SelectTitleIconDescriptionLabel
+            title={option.label}
+            icon={option.icon}
+            description={option.description}
+          />
+        ),
+      })),
       showLabel: false,
       isRequired: true,
       isMulti: false,

@@ -6,7 +6,6 @@ import { ExtractFormSchemaValidation } from '../forms/FormSchema';
 import { RegistrationFlow } from './flows/flows.types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateEconomicSocialInformation } from './forms/formRegistrationCandidateEconomicSocialInformation';
-import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCompanyRole } from './forms/formRegistrationCompanyRole';
@@ -171,11 +170,6 @@ export const RegistrationFlows: {
   [K in RegistrationFlow]: RegistrationStepContentByFlow[K];
 } = {
   [RegistrationFlow.CANDIDATE]: [
-    {
-      subtitle: 'Quelles sont vos attentes en rejoignant Entourage Pro ?*',
-      form: formRegistrationCandidateExpectations,
-      annotation: RegistrationStepAnnotation.MULTIPLE_CHOICE,
-    },
     {
       form: formRegistrationCandidateInfo,
     },

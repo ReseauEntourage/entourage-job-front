@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CommonInputProps } from '../Inputs.types';
-import { SelectList } from './SelectList';
-import { SelectListType } from './SelectList.types';
+import { SelectList, SelectListType } from '.';
 
 export interface SelectListAsyncProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {

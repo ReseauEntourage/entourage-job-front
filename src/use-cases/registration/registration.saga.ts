@@ -40,7 +40,6 @@ export function* createUserRequestedSaga() {
     organizationId,
     companyName,
     companyRole,
-    nudgeIds,
     ...restData
   } = data;
 
@@ -54,13 +53,6 @@ export function* createUserRequestedSaga() {
       organizationId: organizationId ? organizationId.value : undefined,
       companyName: companyName ? companyName.value : undefined,
       companyRole: companyRole ? companyRole.value : undefined,
-      nudges: nudgeIds?.length
-        ? nudgeIds.map((id) => {
-            return {
-              id,
-            } as Nudge;
-          })
-        : undefined,
       utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
       utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
       utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,

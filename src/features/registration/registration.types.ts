@@ -4,7 +4,6 @@ import { ExtractFormSchemaValidation } from '../forms/FormSchema';
 import { RegistrationFlow } from './flows/flows.types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateEconomicSocialInformation } from './forms/formRegistrationCandidateEconomicSocialInformation';
-import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCompanyRole } from './forms/formRegistrationCompanyRole';
@@ -21,7 +20,6 @@ export enum RegistrationStepAnnotation {
 }
 
 export type CandidateRegistrationFlowForm =
-  | typeof formRegistrationCandidateExpectations
   | typeof formRegistrationCandidateInfo
   | typeof formRegistrationCandidateEconomicSocialInformation
   | typeof formRegistrationAccount;

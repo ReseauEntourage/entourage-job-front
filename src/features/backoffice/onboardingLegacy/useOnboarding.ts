@@ -41,6 +41,9 @@ export const useOnboarding = () => {
     // Determine onboarding flow based on user role
     const flow = getOnboardingFlow(authenticatedUser);
 
+    if (!flow) {
+      return false;
+    }
     const firstStep = findNextNotSkippableStep(0, authenticatedUser, flow);
     return currentStep === firstStep;
   }, [authenticatedUser, currentStep]);
@@ -51,9 +54,7 @@ export const useOnboarding = () => {
       authenticatedUser.readDocuments?.some(
         (doc) => doc.documentName === 'CharteEthique'
       );
-    const userRoleHasOnboarding =
-      authenticatedUser?.role === UserRoles.CANDIDATE ||
-      authenticatedUser?.role === UserRoles.COACH;
+    const userRoleHasOnboarding = authenticatedUser?.role === UserRoles.COACH;
 
     // Ne relance pas l'onboarding s'il est déjà en cours
     if (
@@ -63,6 +64,9 @@ export const useOnboarding = () => {
     ) {
       const flow = getOnboardingFlow(authenticatedUser);
 
+      if (!flow) {
+        return;
+      }
       dispatch(onboardingActions.launchOnboarding(flow));
     } else if (hasAcceptedEthicsCharter || !userRoleHasOnboarding) {
       dispatch(onboardingActions.endOnboarding());
@@ -102,6 +106,9 @@ export const useOnboarding = () => {
   const onBeforeStep = useCallback(() => {
     const flow = getOnboardingFlow(authenticatedUser);
 
+    if (!flow) {
+      return;
+    }
     const previousStep = findPreviousNotSkippableStep(
       currentStep,
       authenticatedUser,
