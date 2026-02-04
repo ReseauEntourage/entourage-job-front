@@ -34,7 +34,7 @@ const initialState: State = {
 };
 
 export const slice = createSlice({
-  name: 'onboarding',
+  name: 'onboardingOld',
   initialState,
   reducers: {
     ...sendStepDataOnboardingAdapter.getReducers<State>(
