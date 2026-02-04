@@ -43,6 +43,8 @@ export const formRegistrationAccount: FormSchema<{
       name: 'gender',
       title: 'Genre *',
       component: 'select-simple',
+      placeholder: 'Sélectionnez votre genre',
+      showLabel: true,
       options: GENDERS_FILTERS,
       isRequired: true,
     },
@@ -87,7 +89,7 @@ export const formRegistrationAccount: FormSchema<{
       type: 'password',
       component: 'text-input',
       title: 'Mot de passe*',
-      placeholder: 'Entrez votre mot de passe',
+      placeholder: 'Entrez un mot de passe',
       isRequired: true,
       showLabel: true,
       rules: [
@@ -109,7 +111,7 @@ export const formRegistrationAccount: FormSchema<{
       type: 'password',
       component: 'text-input',
       title: 'Confirmation du mot de passe*',
-      placeholder: 'Entrez votre mot de passe',
+      placeholder: 'Confirmez le mot de passe',
       isRequired: true,
       showLabel: true,
       rules: [
