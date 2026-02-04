@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
+import { StyledRegistrationContainer } from '@/src/features/registration/Registration.styles';
 import { Registration } from '@/src/features/registration/registration';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
 
@@ -9,9 +10,11 @@ const Inscription = () => {
 
   return (
     <Layout title="Inscription - Entourage Pro" noFooter>
-      <Section className="custom-page">
-        <Registration />
-      </Section>
+      <StyledRegistrationContainer>
+        <Section className="custom-page small">
+          <Registration />
+        </Section>
+      </StyledRegistrationContainer>
     </Layout>
   );
 };

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
+import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledLoginContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: ${COLORS.lightGray};
+  width: 100%;
 
-  > * {
-    max-width: 700px;
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    min-height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
   }
 `;
 
