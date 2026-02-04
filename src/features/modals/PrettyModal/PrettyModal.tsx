@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, LucidIcon } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { Text } from '@/src/components/ui/Text/Text';
-import { useIsMobile } from '@/src/hooks/utils';
 import { Modal, useModalContext } from '../Modal';
 import { ModalSize } from '../Modal/Modal.types';
 import {
