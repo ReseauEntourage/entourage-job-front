@@ -43,7 +43,7 @@ export const StyledPhotosAndIntroductionContainer = styled.div`
 
 export const StyledPhotoRow = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 16px;
   flex-wrap: wrap;
 `;
@@ -53,7 +53,6 @@ export const StyledPhotoInputContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 150px;
 `;
 
 export const StyledPhotoPreviewImg = styled.img`
