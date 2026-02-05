@@ -83,7 +83,7 @@ export const useOnboardingStepElearning = ({
     confirmationStep: {
       title: 'Bravo ! Formation terminée',
       subtitle: `Vous faites maintenant partie des ${userRole.toLowerCase()} Entourage Pro formés.`,
-      submitBtnTxt: 'Continuer vers l’étape suivante',
+      submitBtnTxt: 'Passer à l’étape suivante',
     },
     incrementationIsAllowed: async () => {
       return ensureAndComputeHasCompleteAllUnits();

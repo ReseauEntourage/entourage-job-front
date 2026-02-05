@@ -1,11 +1,9 @@
-import { call, delay, put, select, take, takeLatest } from 'typed-redux-saga';
+import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { CompanyGoal } from '@/src/constants/company';
 import {
-  CandidateCoachStepData,
-  CoachStepData,
   CompanyStepData,
   OnboardingFlow,
-} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
+} from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
 import { UpdateCompanyDto } from 'src/api/types';
@@ -16,10 +14,7 @@ import {
   selectOnboardingFlow,
 } from './onboarding.selectors';
 import { slice } from './onboarding.slice';
-import {
-  findNextNotSkippableStep,
-  parseOnboadingProfileFields,
-} from './onboarding.utils';
+import { findNextNotSkippableStep } from './onboarding.utils';
 
 const {
   setOnboardingStep,
@@ -125,72 +120,6 @@ export function* sendStepDataOnboardingSaga() {
         const formData = new FormData();
         formData.append('file', logo[0]);
         yield* call(() => Api.updateCompanyLogo(formData));
-      }
-    } else {
-      if (flow === OnboardingFlow.COACH) {
-        const { companyName } = stepData as CoachStepData;
-
-        // Update the company user profile
-        if (companyName) {
-          yield* call(() => Api.putUserCompany(companyName.value || null));
-        }
-      }
-
-      // Handle CANDIDATE and COACH flows
-      const {
-        externalCv,
-        nationality,
-        accommodation,
-        hasSocialWorker,
-        resources,
-        studiesLevel,
-        workingExperience,
-        jobSearchDuration,
-        ...otherData
-      } = stepData as CandidateCoachStepData;
-
-      const socialSituationFields = {
-        nationality,
-        accommodation,
-        hasSocialWorker,
-        resources,
-        studiesLevel,
-        workingExperience,
-        jobSearchDuration,
-      };
-
-      const userProfileFields = parseOnboadingProfileFields(otherData);
-
-      yield* call(() => Api.putUserProfile(userId, userProfileFields));
-
-      // Check if step contains externalCv and user has uploaded one, upload it and wait for it to complete
-      // externalCv is an array of File
-      if (externalCv && externalCv[0]) {
-        const formData = new FormData();
-        formData.append('file', externalCv[0]);
-        yield* put(currentUserActions.uploadExternalCvRequested({ formData }));
-
-        // wait for the query to complete
-        const action = yield* take([
-          currentUserActions.uploadExternalCvSucceeded.type,
-          currentUserActions.uploadExternalCvFailed.type,
-        ]);
-
-        while (
-          action.type !== currentUserActions.uploadExternalCvSucceeded.type &&
-          action.type !== currentUserActions.uploadExternalCvFailed.type
-        ) {
-          yield* delay(1000);
-        }
-      }
-
-      if (Object.keys(stepData).includes('nationality')) {
-        yield* call(() =>
-          Api.updateUserSocialSituation(userId, {
-            hasCompletedSurvey: true,
-            ...socialSituationFields,
-          })
-        );
       }
     }
     yield* put(sendStepDataOnboardingSucceeded());

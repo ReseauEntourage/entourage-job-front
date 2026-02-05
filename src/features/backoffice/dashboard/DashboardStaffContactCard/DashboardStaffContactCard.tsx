@@ -67,7 +67,7 @@ export const DashboardStaffContactCard = () => {
               </StyledDashboardStaffContactRole>
             </StyledDashboardStaffContactNameContainer>
             <StyledDashboardStaffContactMail>
-              <Text weight="bold">
+              <Text weight="bold" center>
                 <SimpleLink isExternal href={`mailto:${staffContact.email}`}>
                   {staffContact.email}
                 </SimpleLink>

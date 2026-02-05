@@ -5,51 +5,53 @@ import { Text, LucidIcon } from '@/src/components/ui';
 import { EventMode } from '@/src/constants/events';
 import { Event } from 'src/api/types';
 import {
-  StyledWebinarOptionLabel,
-  StyledWebinarOptionLabelData,
-  StyledWebinarOptionLabelDateTimeContainer,
-  StyledWebinarOptionLabelDetails,
-} from './WebinarOptionLabel.styles';
+  StyledSelectOptionWebinarLabel,
+  StyledSelectOptionWebinarLabelData,
+  StyledSelectOptionWebinarLabelDateTimeContainer,
+  StyledSelectOptionWebinarLabelDetails,
+} from './SelectOptionWebinarLabel.styles';
 
-export interface WebinarOptionLabelProps {
+export interface SelectOptionWebinarLabelProps {
   event: Event;
 }
 
-export const WebinarOptionLabel = ({ event }: WebinarOptionLabelProps) => {
+export const SelectOptionWebinarLabel = ({
+  event,
+}: SelectOptionWebinarLabelProps) => {
   return (
-    <StyledWebinarOptionLabel>
-      <StyledWebinarOptionLabelDateTimeContainer>
+    <StyledSelectOptionWebinarLabel>
+      <StyledSelectOptionWebinarLabelDateTimeContainer>
         <Text size="large" weight="semibold">
           {moment(event.startDate)
             .format('dddd D MMMM YYYY')
             .replace(/^\w/, (c) => c.toUpperCase())}
         </Text>
         <Text>à</Text>
-        <StyledWebinarOptionLabelData>
+        <StyledSelectOptionWebinarLabelData>
           <LucidIcon name="Clock" size={16} stroke="bold" />
           <Text weight="semibold">
             {moment(event.startDate).format('HH:mm')}
           </Text>
-        </StyledWebinarOptionLabelData>
-      </StyledWebinarOptionLabelDateTimeContainer>
-      <StyledWebinarOptionLabelDetails>
-        <StyledWebinarOptionLabelData>
+        </StyledSelectOptionWebinarLabelData>
+      </StyledSelectOptionWebinarLabelDateTimeContainer>
+      <StyledSelectOptionWebinarLabelDetails>
+        <StyledSelectOptionWebinarLabelData>
           <LucidIcon name="Clock" size={16} />
           <Text>Durée : {event.duration} minutes</Text>
-        </StyledWebinarOptionLabelData>
+        </StyledSelectOptionWebinarLabelData>
         {event.mode === EventMode.ONLINE && (
-          <StyledWebinarOptionLabelData>
+          <StyledSelectOptionWebinarLabelData>
             <LucidIcon name="Camera" size={16} />
             <Text>Visioconférence en ligne</Text>
-          </StyledWebinarOptionLabelData>
+          </StyledSelectOptionWebinarLabelData>
         )}
         {event.mode === EventMode.IN_PERSON && (
-          <StyledWebinarOptionLabelData>
+          <StyledSelectOptionWebinarLabelData>
             <LucidIcon name="User" size={16} />
             <Text>Présentiel</Text>
-          </StyledWebinarOptionLabelData>
+          </StyledSelectOptionWebinarLabelData>
         )}
-      </StyledWebinarOptionLabelDetails>
-    </StyledWebinarOptionLabel>
+      </StyledSelectOptionWebinarLabelDetails>
+    </StyledSelectOptionWebinarLabel>
   );
 };

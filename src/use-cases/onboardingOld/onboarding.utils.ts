@@ -1,9 +1,4 @@
-import { UserRoles } from '@/src/constants/users';
-import {
-  CandidateOnboardingStepContents,
-  CoachOnboardingStepContents,
-  CompanyOnboardingStepContents,
-} from '@/src/features/backoffice/oldOnboarding/Onboarding/stepContent';
+import { CompanyOnboardingStepContents } from '@/src/features/backoffice/onboardingLegacy/Onboarding/stepContent';
 import {
   FlattenedOnboardingFormData,
   ONBOARDING_FIRST_STEP,
@@ -11,13 +6,8 @@ import {
   OnboardingStep,
   OnboardingStepContent,
   OnboardingStepData,
-} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
-import {
-  Nudge,
-  User,
-  UserProfile,
-  UserProfileSectorOccupation,
-} from 'src/api/types';
+} from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
+import { User } from 'src/api/types';
 
 export const flattenOnboardingDataByFlow = (
   data: OnboardingStepData,
@@ -57,35 +47,8 @@ export const shouldSkipStepOnboardingStep = (
   return stepContent?.skippedBy(user);
 };
 
-export const parseOnboadingProfileFields = (
-  fields: Partial<FlattenedOnboardingFormData>
-): Partial<UserProfile> => {
-  return {
-    introduction: fields.introduction ?? undefined,
-    linkedinUrl: fields.linkedinUrl ?? undefined,
-    currentJob: fields.currentJob ? fields.currentJob : undefined,
-    sectorOccupations:
-      fields.businessSectorIds?.map((businessSectorId, idx) => {
-        return {
-          businessSectorId: businessSectorId.value,
-          order: idx,
-        } as UserProfileSectorOccupation;
-      }) ?? undefined,
-    nudges:
-      fields.nudgeIds?.map((nudgeId) => {
-        return {
-          id: nudgeId,
-        } as Nudge;
-      }) ?? undefined,
-  };
-};
-
 export const getOnboardingStepContent = (flow: OnboardingFlow) => {
   switch (flow) {
-    case OnboardingFlow.CANDIDATE:
-      return CandidateOnboardingStepContents;
-    case OnboardingFlow.COACH:
-      return CoachOnboardingStepContents;
     case OnboardingFlow.COMPANY:
       return CompanyOnboardingStepContents;
     default:
@@ -147,13 +110,9 @@ export const findNextNotSkippableStep = (
   return currentStep; // if no next step, return current step
 };
 
-export const getOnboardingFlow = (user: User): OnboardingFlow => {
+export const getOnboardingFlow = (user: User): OnboardingFlow | null => {
   if (user.company && user.company.companyUser?.isAdmin) {
     return OnboardingFlow.COMPANY;
   }
-  if (user.role === UserRoles.CANDIDATE) {
-    return OnboardingFlow.CANDIDATE;
-  }
-
-  return OnboardingFlow.COACH;
+  return null;
 };

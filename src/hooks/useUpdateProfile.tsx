@@ -25,7 +25,7 @@ export const useUpdateProfile = (user: User) => {
   });
 
   const updateUserProfile = useCallback(
-    (newProfileData: Partial<UserProfile> & { nudgeIds?: string[] }): void => {
+    (newProfileData: Partial<UserProfile>): void => {
       if (!_.isEmpty(newProfileData) && user.id) {
         dispatch(
           currentUserActions.updateProfileRequested({

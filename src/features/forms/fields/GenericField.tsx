@@ -30,10 +30,10 @@ import {
   SelectCardType,
 } from '@/src/components/ui/Inputs/SelectCard';
 
+import { SelectListAsync } from '@/src/components/ui/Inputs/SelectList';
 import {
   SelectList,
   SelectListType,
-  SelectListAsync,
 } from '@/src/components/ui/Inputs/SelectList';
 import {
   ComponentException,
@@ -334,6 +334,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         />
       );
     }
+
     if (field.component === 'select-list-async') {
       return (
         <SelectListAsync

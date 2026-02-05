@@ -320,7 +320,10 @@ export const useOnboardingStepProfileCompletion = () => {
     },
     confirmationStep: {
       title: 'Félicitations ! Vous avez complété votre profil',
-      subtitle: 'Vous êtes maintenant prêt à utiliser Entourage Pro',
+      subtitle:
+        user.role === UserRoles.CANDIDATE
+          ? 'Vous êtes désormais prêt à contacter des coachs prêts à vous soutenir'
+          : 'Vous êtes désormais prêt à soutenir des candidats',
       submitBtnTxt: 'Démarrer l’aventure Entourage Pro',
     },
   } as OnboardingStep;

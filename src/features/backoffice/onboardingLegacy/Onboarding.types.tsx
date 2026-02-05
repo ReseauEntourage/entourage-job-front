@@ -2,52 +2,23 @@ import React from 'react';
 import { User } from '../../../api/types';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
-import { formOnboardingCandidateAI } from './Onboarding/forms/schemas/formOnboardingCandidateAI';
-import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
-import { formOnboardingCandidateNudges } from './Onboarding/forms/schemas/formOnboardingCandidateNudges';
-import { formOnboardingCandidateProfile } from './Onboarding/forms/schemas/formOnboardingCandidateProfile';
-import { formOnboardingCandidateSocialSituation } from './Onboarding/forms/schemas/formOnboardingCandidateSocialSituation';
-import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardingCoachJob';
-import { formOnboardingCoachNudges } from './Onboarding/forms/schemas/formOnboardingCoachNudges';
-import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingCompanyGoal } from './Onboarding/forms/schemas/formOnboardingCompanyGoal';
 import { formOnboardingCompanyInformation } from './Onboarding/forms/schemas/formOnboardingCompanyInformation';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';
 
 export enum OnboardingFlow {
-  CANDIDATE = 'CANDIDATE',
-  COACH = 'COACH',
   COMPANY = 'COMPANY',
 }
 
 export type OnboardingStep = 0 | 1 | 2 | 3 | 4 | 5; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 
-export type CandidateOnboardingForm =
-  | typeof formOnboardingEthicsCharter
-  | typeof formOnboardingCandidateNudges
-  | typeof formOnboardingCandidateJob
-  | typeof formOnboardingCandidateProfile
-  | typeof formOnboardingCandidateSocialSituation
-  | typeof formOnboardingCandidateAI;
-
-export type CoachOnboardingForm =
-  | typeof formOnboardingEthicsCharter
-  | typeof formOnboardingCoachNudges
-  | typeof formOnboardingCoachJob
-  | typeof formOnboardingCoachProfile;
-
 export type CompanyOnboardingForm =
   | typeof formOnboardingEthicsCharter
   | typeof formOnboardingCompanyGoal
   | typeof formOnboardingCompanyInformation;
 
-export type OnboardingForms =
-  | CandidateOnboardingForm
-  | CoachOnboardingForm
-  | CompanyOnboardingForm;
-
-export type OnboardingFormWithCompanyField = typeof formOnboardingCoachJob;
+export type OnboardingForms = CompanyOnboardingForm;
 
 export type OnboardingFormData = ExtractFormSchemaValidation<OnboardingForms>;
 
@@ -70,24 +41,12 @@ export interface OnboardingStepContent<
   defaultValues?: (user: User) => Partial<OnboardingFormData>;
 }
 
-// Type pour chaque étape de l'onboarding candidat
-export type CandidateOnboardingStepContents = {
-  [K in OnboardingStep]?: OnboardingStepContent<CandidateOnboardingForm>;
-};
-
-// Type pour chaque étape de l'onboarding coach
-export type CoachOnboardingStepContents = {
-  [K in OnboardingStep]?: OnboardingStepContent<CoachOnboardingForm>;
-};
-
 // Type pour chaque étape de l'onboarding entreprise
 export type CompanyOnboardingStepContents = {
   [K in OnboardingStep]?: OnboardingStepContent<CompanyOnboardingForm>;
 };
 
 export type OnboardingStepContentByFlow = Partial<{
-  [OnboardingFlow.CANDIDATE]: OnboardingStepContent<CandidateOnboardingForm>;
-  [OnboardingFlow.COACH]: OnboardingStepContent<CoachOnboardingForm>;
   [OnboardingFlow.COMPANY]: OnboardingStepContent<CompanyOnboardingForm>;
 }>;
 
@@ -100,21 +59,6 @@ export interface CompanyStepData {
   linkedInUrl?: string;
   hiringUrl?: string;
   goal?: string[];
-}
-
-export interface CandidateCoachStepData {
-  externalCv?: File[];
-  nationality?: string;
-  accommodation?: string;
-  hasSocialWorker?: boolean;
-  resources?: string;
-  studiesLevel?: string;
-  workingExperience?: string;
-  jobSearchDuration?: string;
-}
-
-export interface CoachStepData extends CandidateCoachStepData {
-  companyName?: { value: string };
 }
 
 // Type représentant la structure de données complète pour l'onboarding

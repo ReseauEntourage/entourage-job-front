@@ -1,5 +1,4 @@
 import { DefaultValues } from 'react-hook-form';
-import { formOnboardingCoachJob } from '../../oldOnboarding/Onboarding/forms/schemas/formOnboardingCoachJob';
 import {
   Company,
   UserProfile,
@@ -51,25 +50,6 @@ export const getCoachDefaultProfessionalValues = (
           label: company.name,
         }
       : undefined,
-  };
-};
-
-export const getCoachDefaultProfessionalValuesWithLinkedIn = (
-  userProfileParam: UserProfile,
-  company: Company | null
-): DefaultValues<
-  ExtractFormSchemaValidation<typeof formOnboardingCoachJob>
-> => {
-  const { linkedinUrl } = userProfileParam;
-
-  const professionalInfoDefaultValues = getCoachDefaultProfessionalValues(
-    userProfileParam,
-    company
-  );
-
-  return {
-    ...professionalInfoDefaultValues,
-    linkedinUrl: linkedinUrl || undefined,
   };
 };
 

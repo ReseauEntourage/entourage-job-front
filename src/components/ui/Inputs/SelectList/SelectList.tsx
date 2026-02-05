@@ -1,27 +1,34 @@
 import React, { useCallback } from 'react';
-import { H6 } from '@/src/components/ui/Headings';
-import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
-import { Text } from '@/src/components/ui/Text';
-import { LucidIcon } from '../../Icons/LucidIcon';
+import { COLORS } from '@/src/constants/styles';
+import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage';
+import { LucidIcon } from '../../Icons';
+import { Skeleton } from '../../Skeleton/Skeleton';
+import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage';
 import {
-  StyledButton,
-  StyledCheckIconContainer,
-  StyledListOption,
   StyledSelectList,
   StyledSelectListContainer,
+  StyledButton,
+  StyledCheckIconContainer,
+  StyledListOptionContainer,
 } from './SelectList.styles';
 import { SelectListType } from './SelectList.types';
+
+export type SelectListItem = {
+  value: string;
+  content: React.ReactNode;
+};
 
 export interface SelectListProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;
   options: SelectListType<T>[];
+  estimatedOptionLength?: number;
+  isLoading?: boolean;
 }
 
-export function SelectList<T extends string>({
+export const SelectList = <T extends string>({
   id,
   value: valueProp,
   title,
@@ -35,7 +42,9 @@ export function SelectList<T extends string>({
   hidden = false,
   showLabel = false,
   inputRef,
-}: SelectListProps<T>) {
+  estimatedOptionLength = 3,
+  isLoading = false,
+}: SelectListProps<T>) => {
   const handleSelect = useCallback(
     (value: T) => {
       const currentValue = valueProp || [];
@@ -62,38 +71,28 @@ export function SelectList<T extends string>({
         </StyledInputLabel>
       )}
       <StyledSelectList data-testid={id}>
-        {options.map(({ value, label, description, icon }) => {
+        {isLoading && <Skeleton height="90px" count={estimatedOptionLength} />}
+        {options.map(({ value, label }) => {
           return (
-            <li
+            <StyledButton
               id={`${id}-${value}`}
               key={`${id}-${value}`}
               data-testid={`${id}-${value}`}
-              className={valueProp?.includes(value) ? 'selected' : ''}
+              onClick={() => handleSelect(value)}
+              type="button"
+              onBlur={onBlur}
+              ref={inputRef}
+              $selected={valueProp?.includes(value)}
             >
-              <StyledButton
-                onClick={() => handleSelect(value)}
-                type="button"
-                onBlur={onBlur}
-                ref={inputRef}
-              >
-                <StyledListOption>
-                  <div className="img-container">{icon}</div>
-                  <div className="text-container">
-                    <H6 title={label} color="primaryBlue" />
-                    <Text>{description}</Text>
-                  </div>
-                </StyledListOption>
-              </StyledButton>
-              <StyledCheckIconContainer
-                className={valueProp?.includes(value) ? 'selected' : ''}
-              >
-                <LucidIcon name="Check" />
+              <StyledCheckIconContainer $selected={valueProp?.includes(value)}>
+                <LucidIcon name="Check" color={COLORS.white} />
               </StyledCheckIconContainer>
-            </li>
+              <StyledListOptionContainer>{label}</StyledListOptionContainer>
+            </StyledButton>
           );
         })}
       </StyledSelectList>
       {error && <FieldErrorMessage error={error} />}
     </StyledSelectListContainer>
   );
-}
+};

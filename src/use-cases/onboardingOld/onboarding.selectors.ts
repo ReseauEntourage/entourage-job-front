@@ -4,7 +4,7 @@ import {
   OnboardingErrorMessages,
   OnboardingFormData,
   OnboardingStepContent,
-} from '@/src/features/backoffice/oldOnboarding/Onboarding.types';
+} from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
 import { assertIsDefined } from 'src/utils/asserts';
 import { sendStepDataOnboardingAdapter } from './onboarding.adapters';
 import { RootState } from './onboarding.slice';
@@ -14,32 +14,32 @@ import {
 } from './onboarding.utils';
 
 export const selectShouldLaunchOnboarding = (state: RootState) =>
-  state.onboarding.shouldLaunchOnboarding;
+  state.onboardingOld.shouldLaunchOnboarding;
 
 export const sendStepDataSelectors =
   sendStepDataOnboardingAdapter.getSelectors<RootState>(
-    (state) => state.onboarding.sendStepData
+    (state) => state.onboardingOld.sendStepData
   );
 
 // Ce sélecteur est supprimé car userRole n'existe plus
 
 export const selectOnboardingFlow = (state: RootState) =>
-  state.onboarding.onboardingFlow;
+  state.onboardingOld.onboardingFlow;
 
 export function selectSendStepDataError(state: RootState) {
-  return state.onboarding.sendStepDataError;
+  return state.onboardingOld.sendStepDataError;
 }
 
 export function selectIsEmptyOnboardingData(state: RootState) {
-  return _.isEmpty(state.onboarding.data);
+  return _.isEmpty(state.onboardingOld.data);
 }
 
 export function selectOnboardingData(state: RootState) {
-  return state.onboarding.data;
+  return state.onboardingOld.data;
 }
 
 export function selectOnboardingCurrentStep(state: RootState) {
-  return state.onboarding.currentStep;
+  return state.onboardingOld.currentStep;
 }
 
 export function selectDefinedOnboardingCurrentStep(state: RootState) {
@@ -51,7 +51,7 @@ export function selectDefinedOnboardingCurrentStep(state: RootState) {
 }
 
 export function selectIsOnboardingLoading(state: RootState) {
-  return state.onboarding.isLoading;
+  return state.onboardingOld.isLoading;
 }
 
 export function selectOnboardingCurrentStepData(
@@ -63,7 +63,7 @@ export function selectOnboardingCurrentStepData(
   if (!onboardingFlow) {
     return null;
   }
-  return state.onboarding.data[currentStep]?.[onboardingFlow] || null;
+  return state.onboardingOld.data[currentStep]?.[onboardingFlow] || null;
 }
 
 export function selectOnboardingCurrentStepContent(
