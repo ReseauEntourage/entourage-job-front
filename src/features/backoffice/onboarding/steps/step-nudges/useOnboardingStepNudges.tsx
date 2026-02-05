@@ -1,4 +1,8 @@
+import { useEffect, useRef, useState } from 'react';
+import { Nudge } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
@@ -9,6 +13,23 @@ export interface useOnboardingStepNudgesProps {
 export const useOnboardingStepNudges = ({
   userRole,
 }: useOnboardingStepNudgesProps) => {
+  const currentUser = useAuthenticatedUser();
+  const { updateUserProfile } = useUpdateProfile(currentUser);
+
+  const [selectedNudgeIds, setSelectedNudgeIds] = useState<string[]>([]);
+  const hasInitializedFromProfileRef = useRef(false);
+
+  useEffect(() => {
+    if (hasInitializedFromProfileRef.current) {
+      return;
+    }
+    const existingNudgeIds = currentUser.userProfile?.nudges?.map((n) => n.id);
+    if (existingNudgeIds?.length) {
+      setSelectedNudgeIds(existingNudgeIds);
+    }
+    hasInitializedFromProfileRef.current = true;
+  }, [currentUser.userProfile?.nudges]);
+
   const onboardingStepNudges = {
     summary: {
       title:
@@ -31,11 +52,24 @@ export const useOnboardingStepNudges = ({
       userRole === UserRoles.CANDIDATE
         ? 'Afin de vous recommander les coachs qui seraient suceptible de vous aider'
         : "Afin de vous recommander les candidats que vous seriez suceptible d'aider",
-    content: <Content />,
+    content: (
+      <Content
+        userRole={userRole}
+        nudgeIds={selectedNudgeIds}
+        onChange={setSelectedNudgeIds}
+      />
+    ),
     isStepCompleted: async () => {
-      return false;
+      return (
+        selectedNudgeIds.length > 0 ||
+        (currentUser.userProfile.nudges ?? []).length > 0
+      );
     },
     onSubmit: async () => {
+      updateUserProfile({
+        nudges: selectedNudgeIds.map((id) => ({ id } as Nudge)),
+      });
+
       return true;
     },
     confirmationStep: {

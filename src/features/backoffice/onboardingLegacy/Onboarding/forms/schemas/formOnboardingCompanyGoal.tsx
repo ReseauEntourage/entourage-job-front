@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { SelectListType } from '@/src/components/ui/Inputs/SelectList';
-import { SelectTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectTitleIconDescriptionLabel/SelectTitleIconDescriptionLabel';
+import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
 import { CompanyGoal } from '@/src/constants/company';
 import { FormSchema } from '@/src/features/forms/FormSchema';
 
@@ -37,7 +37,7 @@ export const formOnboardingCompanyGoal: FormSchema<{
       options: flowOptions.map((option) => ({
         value: option.value,
         label: (
-          <SelectTitleIconDescriptionLabel
+          <SelectOptionTitleIconDescriptionLabel
             title={option.label}
             icon={option.icon}
             description={option.description}

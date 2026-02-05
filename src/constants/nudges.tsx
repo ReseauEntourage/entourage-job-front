@@ -4,7 +4,7 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
 import {
   SelectListType,
-  SelectTitleIconDescriptionLabelType,
+  SelectOptionTitleIconDescriptionLabelType,
 } from '../components/ui/Inputs/SelectList';
 import { NormalUserRoles, UserRoles } from './users';
 import { FilterConstant } from './utils';
@@ -191,7 +191,7 @@ export const ReferedCandidateNudgeCardContents: (FilterConstant<string> & {
 ];
 
 export const ParametresNudgeCardContents: {
-  [K in NormalUserRoles]: SelectTitleIconDescriptionLabelType[];
+  [K in NormalUserRoles]: SelectOptionTitleIconDescriptionLabelType[];
 } = {
   [UserRoles.CANDIDATE]: [
     {
