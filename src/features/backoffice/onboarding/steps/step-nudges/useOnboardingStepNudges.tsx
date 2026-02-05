@@ -34,7 +34,7 @@ export const useOnboardingStepNudges = ({
     summary: {
       title:
         userRole === UserRoles.CANDIDATE
-          ? 'Partagez vos besoin d’aide'
+          ? 'Partagez vos besoins d’aide'
           : 'Proposez vos coups de pouce',
       description:
         userRole === UserRoles.CANDIDATE
@@ -44,14 +44,14 @@ export const useOnboardingStepNudges = ({
     },
     title:
       userRole === UserRoles.CANDIDATE
-        ? 'Partagez vos besoin d’aide'
+        ? 'Partagez vos besoins d’aide'
         : 'Précisez les coups de pouce que vous souhaitez apporter',
     smallTitle:
       userRole === UserRoles.CANDIDATE ? 'Vos besoins' : 'Vos coups de pouce',
     description:
       userRole === UserRoles.CANDIDATE
-        ? 'Afin de vous recommander les coachs qui seraient suceptible de vous aider'
-        : "Afin de vous recommander les candidats que vous seriez suceptible d'aider",
+        ? 'Afin de vous recommander les coachs qui seraient susceptibles de vous aider'
+        : "Afin de vous recommander les candidats que vous seriez susceptibles d'aider",
     content: (
       <Content
         userRole={userRole}
@@ -74,7 +74,7 @@ export const useOnboardingStepNudges = ({
     },
     confirmationStep: {
       title: 'Merci pour ces informations !',
-      subtitle: `Ces informations nous permettrons de vous proposer les bons ${
+      subtitle: `Ces informations nous permettront de vous proposer les bons ${
         userRole === UserRoles.CANDIDATE ? 'coachs' : 'candidats'
       }`,
       submitBtnTxt: 'Passer à l’étape suivante',
