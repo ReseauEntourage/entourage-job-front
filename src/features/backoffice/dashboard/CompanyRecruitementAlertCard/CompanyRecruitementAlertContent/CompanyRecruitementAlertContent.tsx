@@ -52,21 +52,11 @@ export const CompanyRecruitementAlertContent = ({
       <StyledAlertHeader>
         <h3>{title}</h3>
         <ButtonContainer>
-          <Button
-            variant="secondary"
-            size="small"
-            rounded="circle"
-            onClick={handleEdit}
-          >
-            <LucidIcon name="Pencil" size={20} />
+          <Button variant="secondary" rounded="circle" onClick={handleEdit}>
+            <LucidIcon name="Pencil" />
           </Button>
-          <Button
-            variant="secondary"
-            size="small"
-            rounded="circle"
-            onClick={handleDelete}
-          >
-            <LucidIcon name="Trash2" size={20} fill="transparent" />
+          <Button variant="secondary" rounded="circle" onClick={handleDelete}>
+            <LucidIcon name="Trash2" fill="transparent" />
           </Button>
         </ButtonContainer>
       </StyledAlertHeader>
