@@ -88,16 +88,6 @@ describe('Registration', () => {
           cy.contains('Suivant').click();
         });
         it('should be able to fill the candidate registration form', () => {
-          cy.wait('@nudges');
-          // Fill the candidate expectations
-          cy.get(
-            '[data-testid="form-registration-candidate-expectations-nudgeIds"]'
-          )
-            .should('be.visible')
-            .first() // Select the first nudge
-            .click();
-          cy.contains('Suivant').click();
-
           // Fill the candidate info
           cy.get(
             '[data-testid="form-registration-candidate-info-birthDate"]'
