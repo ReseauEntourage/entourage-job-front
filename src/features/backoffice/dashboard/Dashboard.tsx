@@ -70,6 +70,7 @@ export const Dashboard = () => {
             {isNormalUser && <DashboardNextSteps />}
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             {isNormalUser && <DashboardRecommendationsCard />}
+
             {isCompanyAdmin && user.company && (
               <DashboardCompanyCollaboratorsList companyId={user.company.id} />
             )}
@@ -80,13 +81,16 @@ export const Dashboard = () => {
           </>
         ) : (
           <>
+            {isNormalUser && !isCompanyAdmin && (
+              <DashboardRecommendationsCard />
+            )}
             {isNormalUser && <DashboardNextSteps />}
             {isCompanyAdmin && user.company && (
               <DashboardCompanyCollaboratorsList companyId={user.company.id} />
             )}
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             <DashboardMessagingConversation />
-            {isNormalUser && <DashboardRecommendationsCard />}
+            {isNormalUser && isCompanyAdmin && <DashboardRecommendationsCard />}
             {isReferer && <DashboardInviteToReferCandidate />}
             {isReferer && <DashboardReferedCandidateList />}
             <DashboardToolboxCard />
