@@ -25,19 +25,19 @@ const recommendationsLabels: {
   };
 } = {
   [UserRoles.CANDIDATE]: {
-    title: 'Les coachs qui pourraient vous aider',
+    title: 'Les coachs recommandés pour vous',
     subtitle:
       "N'hésitez pas à prendre connaissance de leurs propositions d’aide et les contacter directement",
     button: 'Voir tous les coachs',
   },
   [UserRoles.COACH]: {
-    title: 'Les candidats que vous pourriez aider',
+    title: 'Les candidats recommandés pour vous',
     subtitle:
       "N'hésitez pas à prendre connaissance de leurs besoins et les contacter directement",
     button: 'Voir tous les candidats',
   },
   [contextCompanyAdmin]: {
-    title: 'Les candidats qui pourraient vous intéresser',
+    title: 'Les candidats recommandés pour votre entreprise',
     subtitle: '',
     button: 'Voir tous les candidats',
   },
