@@ -51,7 +51,7 @@ export const DashboardNextSteps = () => {
   const steps = stepsByContext[context] || [];
 
   return (
-    <Card title="Les prochaines étapes" centerTitle>
+    <Card title="Pour aller plus loin" centerTitle>
       <StyledStepsContainer>
         {steps.map((step) => {
           const uuidValue = uuid();

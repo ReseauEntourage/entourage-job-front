@@ -7,21 +7,19 @@ import { Context } from './DashboardNextSteps.types';
 
 const iconSizeProps = { width: 80, height: 55 };
 
-const webinarStep = {
-  title: "S'inscrire au webinaire",
-  icon: <SvgIcon name="IlluBulleQuestion" {...iconSizeProps} />,
-  content: 'Besoin d’en savoir plus sur la plateforme Entourage Pro ?',
+const stepEvents = {
+  title: 'Participer à une rencontre',
+  content: 'Rencontrez des coachs et candidats en ligne ou en physique',
+  icon: <SvgIcon name="IlluDiscussionBanc" {...iconSizeProps} />,
   cta: {
-    label: "S'inscrire",
-    href: `/backoffice/events?eventTypes=WELCOME_SESSION`,
+    label: 'Voir les événements',
+    href: '/backoffice/events',
   },
 };
 
 export const stepsByContext = {
   [Context.CANDIDATE]: [
-    {
-      ...webinarStep,
-    },
+    { ...stepEvents },
     {
       title: 'Ajouter mon CV',
       icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
@@ -42,9 +40,8 @@ export const stepsByContext = {
     },
   ],
   [Context.COACH]: [
-    {
-      ...webinarStep,
-    },
+    { ...stepEvents },
+
     {
       title: 'Découvrir le réseau d’entraide',
       icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
