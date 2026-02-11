@@ -203,7 +203,7 @@ export const useOnboardingStepProfileCompletion = () => {
 
   const onboardingStepProfileCompletion = {
     summary: {
-      title: 'Compléter le profil',
+      title: 'Compléter votre profil',
       description:
         'Permettez au reste de la communauté de vous découvrir et recevez des mises en relation personnalisées',
       duration: '~5 minutes',

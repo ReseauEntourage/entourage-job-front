@@ -67,7 +67,7 @@ export const useOnboardingStepElearning = ({
     summary: {
       title: `Comprendre le rôle et les missions du ${userRole} Entourage Pro`,
       description: 'Des modules vidéos avec des cas concrets pour être prêt',
-      duration: '~20 minutes',
+      duration: '~10 minutes',
     },
     hideGenericStepHeader: true,
     title: `Votre parcours de formation`,
