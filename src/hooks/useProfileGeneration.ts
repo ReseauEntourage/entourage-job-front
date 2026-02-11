@@ -70,7 +70,8 @@ export const useProfileGeneration = ({
               message: 'Votre profil a été généré avec succès !',
             })
           );
-          dispatch(currentUserActions.fetchUserRequested());
+          // Refresh the user data to get the updated profile information
+          dispatch(currentUserActions.fetchCompleteUserRequested());
         }
       }
     );

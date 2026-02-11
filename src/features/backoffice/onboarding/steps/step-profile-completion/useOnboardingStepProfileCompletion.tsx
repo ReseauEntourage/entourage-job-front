@@ -194,12 +194,33 @@ export const useOnboardingStepProfileCompletion = () => {
     shouldUnregister: false, // Keep values when inputs are unmounted
   });
 
+  const { isDirty } = formMethods.formState;
+
+  const hasPrefilledRef = useRef(false);
+
   // If user data arrives/updates after the form is created (async fetch),
   // prefill the form without overriding user edits.
   useEffect(() => {
-    formMethods.reset(initialFormValues, { keepDirtyValues: true });
+    if (!hasPrefilledRef.current) {
+      hasPrefilledRef.current = true;
+      formMethods.reset(initialFormValues);
+      return;
+    }
+
+    // After the user has started typing, we avoid resetting the entire form
+    // during user refreshes (e.g., AI generation) to not overwrite other accordions.
+    // CV fields are synchronized separately.
+    if (isDirty) {
+      return;
+    }
+
+    formMethods.reset(initialFormValues, {
+      keepDirtyValues: true,
+      keepDirty: true,
+      keepTouched: true,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialFormValues]);
+  }, [initialFormValues, isDirty]);
 
   const onboardingStepProfileCompletion = {
     summary: {

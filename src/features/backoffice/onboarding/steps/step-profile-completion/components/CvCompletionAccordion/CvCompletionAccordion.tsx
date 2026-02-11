@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Button, LucidIcon, Text } from '@/src/components/ui';
@@ -18,6 +24,7 @@ import {
   selectIsComplete,
   uploadExternalCvSelectors,
 } from '@/src/use-cases/current-user';
+import { sortByOrder } from '@/src/utils';
 import {
   StyledAccordionHeader,
   StyledAccordionHeaderIcon,
@@ -87,6 +94,77 @@ export const CvCompletionAccordion = () => {
 
   const [profileDescriptionField, ...cvSecondaryFields] =
     profileCompletionCvFields;
+
+  const hasAppliedGeneratedCvValuesRef = useRef(false);
+
+  useEffect(() => {
+    // Synchronize from the server only when a generation has just been triggered from this component.
+    if (!hasJustGeneratedProfile) {
+      hasAppliedGeneratedCvValuesRef.current = false;
+      return;
+    }
+
+    if (hasAppliedGeneratedCvValuesRef.current) {
+      return;
+    }
+
+    // Wait for the user refetch (triggered after the pusher event) to get the generated data in currentUser.
+    if (!currentUser.hasExtractedCvData) {
+      return;
+    }
+
+    const nextDescription = currentUser.userProfile?.description ?? '';
+
+    const nextSkills =
+      currentUser.userProfile?.skills?.map((skill) => ({
+        value: skill.name,
+        label: skill.name,
+      })) ?? [];
+
+    const nextInterests =
+      currentUser.userProfile?.interests &&
+      currentUser.userProfile.interests.length > 0
+        ? sortByOrder(currentUser.userProfile.interests).map((interest) => ({
+            value: interest.name,
+            label: interest.name,
+          }))
+        : [];
+
+    const nextLanguages =
+      currentUser.userProfile?.userProfileLanguages
+        ?.map((upLanguage) => {
+          const languageId = upLanguage.language?.id;
+          const languageName = upLanguage.language?.name;
+          if (!languageId || !languageName) {
+            return null;
+          }
+          return {
+            value: languageId,
+            label: languageName,
+          };
+        })
+        .filter(
+          (value): value is { value: string; label: string } => value !== null
+        ) ?? [];
+
+    const nextExperiences = currentUser.userProfile?.experiences ?? [];
+    const nextFormations = currentUser.userProfile?.formations ?? [];
+
+    // CV accordion fields: force sync from generated values.
+    setValue('description', nextDescription, { shouldValidate: true });
+    setValue('skills', nextSkills, { shouldValidate: true });
+    setValue('interests', nextInterests, { shouldValidate: true });
+    setValue('languages', nextLanguages, { shouldValidate: true });
+    setValue('experiences', nextExperiences, { shouldValidate: true });
+    setValue('formations', nextFormations, { shouldValidate: true });
+
+    hasAppliedGeneratedCvValuesRef.current = true;
+  }, [
+    currentUser.hasExtractedCvData,
+    currentUser.userProfile,
+    hasJustGeneratedProfile,
+    setValue,
+  ]);
 
   useEffect(() => {
     if (
@@ -184,8 +262,8 @@ export const CvCompletionAccordion = () => {
       return;
     }
 
-    // On attend explicitement le succès de l'upload avant de lancer la génération.
-    // Le flag permet de ne pas déclencher la génération si l'upload vient d'ailleurs.
+    // Explicitly wait for the upload success before starting the generation.
+    // The flag prevents triggering the generation if the upload comes from elsewhere.
     if (isUploadExternalCvSucceeded && currentUser.userProfile.hasExternalCv) {
       setShouldGenerateProfileAfterUpload(false);
       void generateProfileFromCV();
