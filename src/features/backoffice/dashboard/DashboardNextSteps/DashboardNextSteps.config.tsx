@@ -17,18 +17,19 @@ const stepEvents = {
   },
 };
 
+const stepPosture = {
+  title: 'Avoir la bonne posture',
+  icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
+  content: 'Lire le document sur la posture Entourage Pro',
+  cta: {
+    label: 'Lire la charte',
+    href: '/conseils-posture',
+  },
+};
+
 export const stepsByContext = {
   [Context.CANDIDATE]: [
     { ...stepEvents },
-    {
-      title: 'Ajouter mon CV',
-      icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
-      content: 'Rendre visible et valoriser votre projet professionnel',
-      cta: {
-        label: 'Ajouter mon CV',
-        href: `/backoffice/parametres`,
-      },
-    },
     {
       title: 'Découvrir le réseau d’entraide',
       icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
@@ -38,6 +39,7 @@ export const stepsByContext = {
         href: '/backoffice/annuaire?entity=user&role=Coach',
       },
     },
+    stepPosture,
   ],
   [Context.COACH]: [
     { ...stepEvents },
@@ -51,15 +53,7 @@ export const stepsByContext = {
         href: '/backoffice/annuaire?entity=user&role=Candidat',
       },
     },
-    {
-      title: 'Avoir la bonne posture',
-      icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
-      content: 'Lire le document sur la posture Entourage Pro',
-      cta: {
-        label: 'Lire',
-        href: '/conseils-posture',
-      },
-    },
+    stepPosture,
   ],
   [Context.COMPANY_ADMIN_TBS_MODE]: [
     {
@@ -71,15 +65,6 @@ export const stepsByContext = {
         href: '/backoffice/companies/parametres',
       },
     },
-    // {
-    //   title: 'Les team building solidaires',
-    //   icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
-    //   content: "Découvrir les formats d'engagement",
-    //   cta: {
-    //     label: 'Découvrir',
-    //     href: '/backoffice/engager-mon-entreprise',
-    //   },
-    // },
     {
       title: 'Inviter mes collaborateurs',
       icon: <SvgIcon name="IlluCoachEtCandidat" {...iconSizeProps} />,
@@ -95,7 +80,6 @@ export const stepsByContext = {
         },
       },
     },
-    // While waiting for TBS feature to be finished, we replace this step with the network discovery step
     {
       title: 'Découvrir le réseau d’entraide',
       icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
@@ -127,16 +111,6 @@ export const stepsByContext = {
         },
       },
     },
-    // {
-    //   title: 'Les team building solidaires',
-    //   icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
-    //   content: "Découvrir les formats d'engagement",
-    //   cta: {
-    //     label: 'Découvrir',
-    //     href: '/backoffice/engager-mon-entreprise',
-    //   },
-    // },
-    // While waiting for TBS feature to be finished, we replace this step with the network discovery step
     {
       title: 'Découvrir le réseau d’entraide',
       icon: <SvgIcon name="IlluCoeurMainsOuvertesBleu" {...iconSizeProps} />,
