@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 import { commonInputContainerStyles } from '../Inputs.styles';
 
 export const StyledSelectListContainer = styled.div<{ disabled?: boolean }>`
@@ -12,6 +12,10 @@ export const StyledSelectList = styled.div<{ $asGrid?: boolean }>`
       ? `
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+      @media (max-width: ${BREAKPOINTS.desktop}px) {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
       `
       : `
       display: flex;
