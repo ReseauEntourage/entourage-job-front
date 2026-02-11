@@ -27,6 +27,7 @@ export const Content = ({ userRole, nudgeIds, onChange }: ContentProps) => {
                 title={option.label}
                 icon={option.icon}
                 description={option.description}
+                flexDirection="column"
               />
             ),
           }))
@@ -47,6 +48,7 @@ export const Content = ({ userRole, nudgeIds, onChange }: ContentProps) => {
       onChange={onChange}
       isLoading={isLoading}
       estimatedOptionLength={5}
+      asGrid
     />
   );
 };

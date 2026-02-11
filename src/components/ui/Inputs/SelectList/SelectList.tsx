@@ -26,6 +26,7 @@ export interface SelectListProps<T extends string>
   options: SelectListType<T>[];
   estimatedOptionLength?: number;
   isLoading?: boolean;
+  asGrid?: boolean;
 }
 
 export const SelectList = <T extends string>({
@@ -44,6 +45,7 @@ export const SelectList = <T extends string>({
   inputRef,
   estimatedOptionLength = 3,
   isLoading = false,
+  asGrid = false,
 }: SelectListProps<T>) => {
   const handleSelect = useCallback(
     (value: T) => {
@@ -70,7 +72,7 @@ export const SelectList = <T extends string>({
           {title}
         </StyledInputLabel>
       )}
-      <StyledSelectList data-testid={id}>
+      <StyledSelectList data-testid={id} $asGrid={asGrid}>
         {isLoading && <Skeleton height="90px" count={estimatedOptionLength} />}
         {options.map(({ value, label }) => {
           return (

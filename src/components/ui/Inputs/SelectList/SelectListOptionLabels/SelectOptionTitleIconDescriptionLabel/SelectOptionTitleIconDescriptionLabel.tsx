@@ -11,12 +11,14 @@ export interface SelectOptionTitleIconDescriptionLabelProps {
   title: React.ReactNode;
   icon: React.ReactNode;
   description: string;
+  flexDirection?: 'row' | 'column';
 }
 
 export const SelectOptionTitleIconDescriptionLabel = ({
   title,
   icon,
   description,
+  flexDirection = 'row',
 }: SelectOptionTitleIconDescriptionLabelProps) => {
   const formattedIcon = React.cloneElement(
     icon as React.ReactElement<{ width: number; height: number }>,
@@ -27,7 +29,7 @@ export const SelectOptionTitleIconDescriptionLabel = ({
   );
 
   return (
-    <StyledSelectOptionTitleIconDescriptionLabel>
+    <StyledSelectOptionTitleIconDescriptionLabel $flexDirection={flexDirection}>
       <StyledIconContainer>{formattedIcon}</StyledIconContainer>
       <StyledTitleDescriptionContainer>
         <H6 title={title} color="primaryBlue" />

@@ -6,10 +6,19 @@ export const StyledSelectListContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
 `;
 
-export const StyledSelectList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+export const StyledSelectList = styled.div<{ $asGrid?: boolean }>`
+  ${({ $asGrid }) =>
+    $asGrid
+      ? `
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      `
+      : `
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      `}
+
   padding: 0;
   margin-bottom: 8px;
   gap: 16px;
@@ -17,6 +26,7 @@ export const StyledSelectList = styled.div`
 
 export const StyledButton = styled.button<{ $selected?: boolean }>`
   width: 100%;
+  display: flex;
   position: relative;
   border: 1px solid ${COLORS.gray};
   background-color: ${COLORS.white};

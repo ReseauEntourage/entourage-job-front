@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
-export const StyledSelectOptionTitleIconDescriptionLabel = styled.div`
+export const StyledSelectOptionTitleIconDescriptionLabel = styled.div<{
+  $flexDirection?: 'row' | 'column';
+}>`
   display: flex;
   gap: 20px;
-  flex-direction: row;
+  flex-direction: ${({ $flexDirection }) => $flexDirection || 'row'};
   font-family: Poppins, sans-serif;
   padding: 20px;
+  align-items: flex-start;
 `;
 
 export const StyledIconContainer = styled.div`
