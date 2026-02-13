@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Layout } from 'src/components/Layout';
-import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
-import { SearchCandidates } from 'src/components/partials/pages/Candidats/SearchCandidates';
-import { ShareCandidatesCVTutorial } from 'src/components/partials/pages/Candidats/ShareCandidatesCVTutorial';
+import { Layout } from '@/src/components/layouts/Layout';
+import { CandidateTestimoniesOrientation } from '@/src/features/partials/common/CandidateTestimoniesOrientation';
+import { SearchCandidates } from '@/src/features/partials/pages/Candidats/SearchCandidates';
+import { ShareCandidatesCVTutorial } from '@/src/features/partials/pages/Candidats/ShareCandidatesCVTutorial';
 
 const Candidats = () => {
   return (

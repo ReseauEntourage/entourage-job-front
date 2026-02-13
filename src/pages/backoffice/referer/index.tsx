@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
+import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 
 const Redirection = () => {
   const { replace, pathname, query } = useRouter();

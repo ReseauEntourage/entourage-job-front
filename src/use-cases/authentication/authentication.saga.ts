@@ -68,6 +68,10 @@ function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
 
 function loginSucceededSaga(action: ReturnType<typeof loginSucceeded>) {
   localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, action.payload.accessToken);
+  localStorage.setItem(
+    STORAGE_KEYS.ONBOARDING_COMPLETION_STATUS,
+    action.payload.user.onboardingStatus
+  );
 }
 
 function* logoutRequestedSaga() {

@@ -88,16 +88,6 @@ describe('Registration', () => {
           cy.contains('Suivant').click();
         });
         it('should be able to fill the candidate registration form', () => {
-          cy.wait('@nudges');
-          // Fill the candidate expectations
-          cy.get(
-            '[data-testid="form-registration-candidate-expectations-nudgeIds"]'
-          )
-            .should('be.visible')
-            .first() // Select the first nudge
-            .click();
-          cy.contains('Suivant').click();
-
           // Fill the candidate info
           cy.get(
             '[data-testid="form-registration-candidate-info-birthDate"]'
@@ -113,19 +103,6 @@ describe('Registration', () => {
           // Fill the candidate situation questions
           cy.get('[data-testid="material-insecurity-yes"]').click();
           cy.get('[data-testid="network-insecurity-no"]').click();
-          cy.contains('Suivant').click();
-
-          // Fill the professional information
-          cy.get(
-            '#form-registration-candidate-professional-information-businessSectorId0'
-          ).click();
-          cy.wait('@businessSectors');
-          cy.get(
-            '#form-registration-candidate-professional-information-businessSectorId0'
-          )
-            .find('.Select__option')
-            .contains('Sector 1')
-            .click();
           cy.contains('Suivant').click();
 
           // Fill the account information

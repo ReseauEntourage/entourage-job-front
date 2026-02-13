@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ReferingStep } from '@/src/components/backoffice/referer/Refering/Refering.types';
+import { ReferingStep } from '@/src/features/backoffice/referer/Refering/Refering.types';
 
 export function useStep() {
   const {

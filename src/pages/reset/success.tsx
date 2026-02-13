@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResetPasswordSuccess } from 'src/components/reset-password/PasswordResetSuccess';
+import { ResetPasswordSuccess } from '@/src/features/reset-password/PasswordResetSuccess';
 
 const ResetSuccessPage = () => {
   return <ResetPasswordSuccess />;

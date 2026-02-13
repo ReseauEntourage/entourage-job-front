@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { AlertCandidates } from '@/src/components/backoffice/alertCandidates/AlertCandidates';
-import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
+import { AlertCandidates } from '@/src/features/backoffice/alertCandidates/AlertCandidates';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 
 const AlertCandidatesPage = () => {

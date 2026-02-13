@@ -4,7 +4,7 @@ import {
   ReferingFormData,
   ReferingStep,
   ReferingStepData,
-} from 'src/components/backoffice/referer/Refering/Refering.types';
+} from '@/src/features/backoffice/referer/Refering/Refering.types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {

@@ -32,6 +32,53 @@ export const updateUserAdapter = createRequestAdapter(
   }
 >();
 
+export const updateOnboardingStatusAdapter = createRequestAdapter(
+  'updateOnboardingStatus'
+).withPayloads<
+  {
+    onboardingStatus: User['onboardingStatus'];
+  },
+  { onboardingStatus: User['onboardingStatus'] },
+  {
+    error: UpdateError;
+  }
+>();
+
+export const fetchCurrentUserSocialSituationAdapter = createRequestAdapter(
+  'fetchCurrentUserSocialSituation'
+).withPayloads<
+  void,
+  Partial<{
+    hasCompletedSurvey?: boolean;
+  }>
+>();
+
+export const updateSocialSituationAdapter = createRequestAdapter(
+  'updateSocialSituation'
+).withPayloads<
+  Partial<{
+    nationality?: string;
+    accommodation?: string;
+    resources?: string;
+    studiesLevel?: string;
+    workingExperience?: string;
+    jobSearchDuration?: string;
+    hasCompletedSurvey?: boolean;
+  }>,
+  {},
+  {
+    error: UpdateError;
+  }
+>();
+
+export const forceOnboardingAsCompletedAdapter = createRequestAdapter(
+  'forceOnboardingAsCompleted'
+).withPayloads<
+  void,
+  { onboardingStatus: User['onboardingStatus'] },
+  { error: UpdateError }
+>();
+
 export const updateUserCompanyAdapter = createRequestAdapter(
   'updateUserCompany'
 ).withPayloads<
@@ -78,7 +125,7 @@ export const updateUserProfilePictureAdapter = createRequestAdapter(
 export const uploadExternalCvAdapter = createRequestAdapter(
   'uploadExternalCv'
 ).withPayloads<
-  FormData,
+  { formData: FormData },
   void,
   {
     error: string;

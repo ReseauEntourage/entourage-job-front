@@ -1,4 +1,6 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { STORAGE_KEYS } from '@/src/constants';
+import { OnboardingStatus } from '@/src/constants/onboarding';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import {
@@ -17,6 +19,9 @@ const {
   setUser,
   fetchUserSucceeded,
   fetchUserFailed,
+  fetchCurrentUserSocialSituationRequested,
+  fetchCurrentUserSocialSituationSucceeded,
+  fetchCurrentUserSocialSituationFailed,
   updateUserRequested,
   updateUserCompanyRequested,
   fetchCompleteUserRequested,
@@ -47,6 +52,15 @@ const {
   fetchStaffContactRequested,
   fetchStaffContactSucceeded,
   fetchStaffContactFailed,
+  updateOnboardingStatusRequested,
+  updateOnboardingStatusSucceeded,
+  updateOnboardingStatusFailed,
+  forceOnboardingAsCompletedRequested,
+  forceOnboardingAsCompletedSucceeded,
+  forceOnboardingAsCompletedFailed,
+  updateSocialSituationRequested,
+  updateSocialSituationSucceeded,
+  updateSocialSituationFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
@@ -61,6 +75,27 @@ function* fetchUserRequestedSaga() {
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function* fetchCurrentUserSocialSituationRequestedSaga() {
+  try {
+    const response = yield* call(() => Api.getUserSocialSituation());
+    yield* put(fetchCurrentUserSocialSituationSucceeded(response.data));
+  } catch {
+    yield* put(fetchCurrentUserSocialSituationFailed());
+  }
+}
+
+function fetchUserSucceededSaga(action: ReturnType<typeof fetchUserSucceeded>) {
+  const { onboardingStatus } = action.payload;
+  try {
+    localStorage.setItem(
+      STORAGE_KEYS.ONBOARDING_COMPLETION_STATUS,
+      onboardingStatus
+    );
+  } catch (e) {
+    console.error('Failed to store onboarding status in localStorage', e);
   }
 }
 
@@ -117,6 +152,47 @@ function* updateUserRequestedSaga(
   }
 }
 
+function* updateOnboardingStatusRequestedSaga(
+  action: ReturnType<typeof updateOnboardingStatusRequested>
+) {
+  const { onboardingStatus } = action.payload;
+  try {
+    const userId = yield* select(selectCurrentUserId);
+    yield* call(() => Api.putUser(userId, { onboardingStatus }));
+    yield* put(
+      updateOnboardingStatusSucceeded({
+        onboardingStatus,
+      })
+    );
+  } catch {
+    yield* put(
+      updateOnboardingStatusFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* forceOnboardingAsCompletedRequestedSaga() {
+  try {
+    const userId = yield* select(selectCurrentUserId);
+    const { data } = yield* call(() =>
+      Api.putUser(userId, { onboardingStatus: OnboardingStatus.COMPLETED })
+    );
+    yield* put(
+      forceOnboardingAsCompletedSucceeded({
+        onboardingStatus: data.onboardingStatus,
+      })
+    );
+  } catch {
+    yield* put(
+      forceOnboardingAsCompletedFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
 function* updateUserCompanyRequestedSaga(
   action: ReturnType<typeof updateUserCompanyRequested>
 ) {
@@ -155,6 +231,31 @@ function* updateProfileRequestedSaga(
   } catch {
     yield* put(
       updateProfileFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* updateSocialSituationRequestedSaga(
+  action: ReturnType<typeof updateSocialSituationRequested>
+) {
+  const userId = yield* select(selectCurrentUserId);
+  const socialSituation = action.payload;
+
+  assertIsDefined(userId, 'User ID is not defined');
+  try {
+    yield* call(() =>
+      Api.updateUserSocialSituation(userId, {
+        hasCompletedSurvey: true,
+        ...socialSituation,
+      })
+    );
+    yield* put(updateSocialSituationSucceeded({}));
+    yield* fetchUserRequestedSaga();
+  } catch {
+    yield* put(
+      updateSocialSituationFailed({
         error: 'UPDATE_FAILED',
       })
     );
@@ -209,13 +310,14 @@ function* deleteExternalCvRequestedSaga() {
 function* uploadExternalCvRequestedSaga(
   action: ReturnType<typeof uploadExternalCvRequested>
 ) {
+  const formData = action.payload.formData;
   try {
-    yield* call(() => Api.postExternalCv(action.payload));
+    yield* call(() => Api.postExternalCv(formData));
     yield* put(uploadExternalCvSucceeded());
     yield* put(
       notificationsActions.addNotification({
         type: 'success',
-        message: 'Votre entreprise a été mise à jour avec succès',
+        message: 'Votre CV a bien été importé',
       })
     );
   } catch {
@@ -257,9 +359,26 @@ export function* saga() {
   yield* takeLatest(authenticationActions.loginSucceeded, loginSucceededSaga);
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
+  yield* takeLatest(fetchUserSucceeded, fetchUserSucceededSaga);
+  yield* takeLatest(
+    fetchCurrentUserSocialSituationRequested,
+    fetchCurrentUserSocialSituationRequestedSaga
+  );
   yield* takeLatest(fetchStaffContactRequested, fetchStaffContactRequestedSaga);
   yield* takeLatest(fetchCompleteUserRequested, fetchCompleteUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
+  yield* takeLatest(
+    updateSocialSituationRequested,
+    updateSocialSituationRequestedSaga
+  );
+  yield* takeLatest(
+    updateOnboardingStatusRequested,
+    updateOnboardingStatusRequestedSaga
+  );
+  yield* takeLatest(
+    forceOnboardingAsCompletedRequested,
+    forceOnboardingAsCompletedRequestedSaga
+  );
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(readDocumentRequested, readDocumentRequestedSaga);
   yield* takeLatest(

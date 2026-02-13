@@ -22,25 +22,17 @@ export function useAuthentication() {
   const isLogoutSucceeded = useSelector(
     logoutSelectors.selectIsLogoutSucceeded
   );
-
   const isFetchUserFailed = useSelector(
     fetchUserSelectors.selectIsFetchUserFailed
   );
-
   const isFetchUserIdle = useSelector(fetchUserSelectors.selectIsFetchUserIdle);
-
   const currentUser = useSelector(selectCurrentUser);
-
   const isAuthenticationPending = !isFetchUserSucceeded && !isFetchUserFailed;
-
   const { isUserAuthorized } = useRoutePermissions();
-
-  const isCurrentRouteReady = isUserAuthorized;
-
   const isUserAuthenticated = !!currentUser;
-
   const currentUserRole = currentUser?.role;
 
+  // Trigger fetching user data if idle
   useEffect(() => {
     if (isFetchUserIdle) {
       dispatch(currentUserActions.fetchUserRequested());
@@ -58,30 +50,24 @@ export function useAuthentication() {
     null
   );
 
+  // Gestion des redirections en fonction de l'état d'authentification/permissions uniquement
   useEffect(() => {
-    // Éviter les redirections en boucle en vérifiant si nous avons déjà redirigé vers ce chemin
-    const shouldRedirect =
+    const shouldRedirectToLogin =
       !isAuthenticationPending &&
       !isUserAuthorized &&
       lastRedirectionPath !== asPath;
 
-    if (shouldRedirect) {
+    if (shouldRedirectToLogin) {
       if (isUserAuthenticated && currentUserRole) {
         const defaultUrl = getDefaultUrl(currentUserRole);
         setLastRedirectionPath(defaultUrl);
         replace(defaultUrl);
       } else {
         setLastRedirectionPath('/login');
-
-        // Extraire la valeur réelle de alertId si présente dans l'URL
         const requestedPathWithRealValues = asPath;
-
-        // Si nous sommes sur la page de login, vérifier si le requestedPath contient des paramètres de route dynamiques
         if (asPath.startsWith('/login') && asPath.includes('requestedPath=')) {
-          // On est déjà sur la page de login, ne pas rediriger à nouveau
           return;
         }
-
         push(
           asPath && !isLogoutSucceeded
             ? {
@@ -107,6 +93,7 @@ export function useAuthentication() {
   ]);
 
   return {
-    isCurrentRouteReady,
+    isAuthRouteReady: isUserAuthorized,
+    currentUser,
   };
 }

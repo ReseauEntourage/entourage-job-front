@@ -57,17 +57,19 @@ jobs:
       - name: Install Cypress binary
         run: pnpm exec cypress install
 
-      # Run ts-check test then eslint test
-      - name: Run ts-check & eslint - Code Quality Test
-        run: |
-          pnpm run test:ts-check
-          pnpm run test:eslint
+      # Run TS-check test
+      - name: Run TS-check
+        run: pnpm run test:ts-check
 
-      # Run jest test
+      # Run ESLint test
+      - name: Run ESLint - Code Quality Test
+        run: pnpm run test:eslint
+
+      # Run Jest test
       - name: Run Jest - Integration Test
         run: pnpm run test:integ
 
-      # Run cypress test
+      # Run Cypress test
       - name: Run Cypress - End to End Test
         uses: cypress-io/github-action@v4 # action to exec cypress-io
         with:

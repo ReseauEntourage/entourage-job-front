@@ -302,6 +302,10 @@ export class APIHandler {
   }
 
   // Social Situation
+  getUserSocialSituation(): Promise<AxiosResponse> {
+    return this.get(`/users/social-situations`);
+  }
+
   updateUserSocialSituation(
     userId: string,
     socialSituationDto: {
@@ -637,5 +641,22 @@ export class APIHandler {
     userId: string
   ): Promise<AxiosResponse> {
     return this.post(`/readDocuments/read/${userId}`, params);
+  }
+
+  // ////////// //
+  // Elearning //
+  // ///////// //
+  getAllElearningUnits(params: {
+    limit: number;
+    offset: number;
+    role?: string;
+  }): Promise<AxiosResponse> {
+    return this.get('/elearning/units', {
+      params,
+    });
+  }
+
+  postElearningCompletion(unitId: string): Promise<AxiosResponse> {
+    return this.post(`/elearning/units/${unitId}/completions`, {});
   }
 }

@@ -36,20 +36,6 @@ export const generateUserLoginApiResponse = (roleUser) => {
           order: 0,
         },
       ],
-      userProfileNudges: [
-        {
-          id: faker.string.uuid(),
-          content: null,
-          createdAt: faker.date.past(),
-          nudge: {
-            id: faker.string.uuid(),
-            value: 'interview',
-            nameRequest: 'Se préparer aux entretiens d’embauche',
-            nameOffer: 'Aider à préparer les entretiens d’embauche',
-            order: 1,
-          },
-        },
-      ],
     },
     readDocuments: [],
   };
@@ -80,20 +66,6 @@ export const generateUserLoginApiResponse = (roleUser) => {
             name: faker.person.jobTitle(),
           },
           order: 0,
-        },
-      ],
-      userProfileNudges: [
-        {
-          id: faker.string.uuid(),
-          content: null,
-          createdAt: faker.date.past(),
-          nudge: {
-            id: faker.string.uuid(),
-            value: 'interview',
-            nameRequest: 'Se préparer aux entretiens d’embauche',
-            nameOffer: 'Aider à préparer les entretiens d’embauche',
-            order: 1,
-          },
         },
       ],
     },

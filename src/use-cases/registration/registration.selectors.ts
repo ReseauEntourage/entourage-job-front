@@ -5,15 +5,15 @@ import {
   RegistrationErrorMessages,
   RegistrationFlows,
   RegistrationStepSelectFlow,
-} from '@/src/components/registration/registration.config';
+} from '@/src/features/registration/registration.config';
 import {
   RegistrationFormDataKeys,
   RegistrationLastStepContent,
   RegistrationStep,
   RegistrationStepContent,
   SkippedByKeysUnion,
-} from '@/src/components/registration/registration.types';
-import { incrementRegistrationStep } from '@/src/components/registration/registration.utils';
+} from '@/src/features/registration/registration.types';
+import { incrementRegistrationStep } from '@/src/features/registration/registration.utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';

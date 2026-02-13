@@ -1,9 +1,9 @@
 import React from 'react';
-import { Api } from 'src/api';
 import {
   ResetPassword,
   ResetPasswordProps,
-} from 'src/components/reset-password/ResetPassword';
+} from '@/src/features/reset-password/ResetPassword';
+import { Api } from 'src/api';
 
 const ResetPasswordPage = ({
   valid,

@@ -10,11 +10,11 @@ import {
   ReferingStepContent,
   ReferingStepContents,
   SkippedByKeysUnion,
-} from 'src/components/backoffice/referer/Refering/Refering.types';
+} from '@/src/features/backoffice/referer/Refering/Refering.types';
 import {
   flattenReferingData,
   incrementReferingStep,
-} from 'src/components/backoffice/referer/Refering/Refering.utils';
+} from '@/src/features/backoffice/referer/Refering/Refering.utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import { referCandidateAdapter } from './refering.adapters';
 import { RootState } from './refering.slice';

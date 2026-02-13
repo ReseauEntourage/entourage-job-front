@@ -1,8 +1,8 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 
-import { Layout } from 'src/components/Layout';
-import { Section } from 'src/components/utils';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
 import { VerifyEmailContainer } from 'src/components/verify-email/VerifyEmailContainer';
 
 const VerificationEmailPage = () => {

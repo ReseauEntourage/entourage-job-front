@@ -1,12 +1,10 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
-import { Nudge } from '@/src/api/types';
-import { UserRoleByFlow } from '@/src/components/registration/registration.config';
-import { getUtmFromLocalStorage } from '@/src/components/registration/registration.utils';
+import { UserRoleByFlow } from '@/src/features/registration/registration.config';
+import { getUtmFromLocalStorage } from '@/src/features/registration/registration.utils';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
-import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedFlow,
@@ -38,14 +36,9 @@ export function* createUserRequestedSaga() {
   }
   const {
     confirmPassword,
-    businessSectorId0,
-    businessSectorId1,
-    occupation0,
-    occupation1,
     organizationId,
     companyName,
     companyRole,
-    nudgeIds,
     ...restData
   } = data;
 
@@ -55,23 +48,10 @@ export function* createUserRequestedSaga() {
     const userData = {
       ...restData,
       role: UserRoleByFlow[selectedFlow],
-      sectorOccupations: formatCareerPathSentence({
-        occupation0,
-        occupation1,
-        businessSectorId0,
-        businessSectorId1,
-      }),
       department: restData.department.value,
       organizationId: organizationId ? organizationId.value : undefined,
       companyName: companyName ? companyName.value : undefined,
       companyRole: companyRole ? companyRole.value : undefined,
-      nudges: nudgeIds?.length
-        ? nudgeIds.map((id) => {
-            return {
-              id,
-            } as Nudge;
-          })
-        : undefined,
       utmSource: utmParameters[UtmParameters.UTM_SOURCE] ?? undefined,
       utmMedium: utmParameters[UtmParameters.UTM_MEDIUM] ?? undefined,
       utmCampaign: utmParameters[UtmParameters.UTM_CAMPAIGN] ?? undefined,

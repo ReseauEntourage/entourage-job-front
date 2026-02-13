@@ -2,7 +2,7 @@
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.css';
-import 'src/components/modals/Modal/Modal.css';
+import 'src/features/modals/Modal/Modal.css';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -14,7 +14,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 
-import { ModalsListener } from 'src/components/modals/Modal';
+import { ModalsListener } from '../features/modals/Modal';
+import { useOnboardingRedirect } from '../hooks/useOnboardingRedirect';
 import { GA_TAGS } from 'src/constants/tags';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';
@@ -43,8 +44,12 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
     }
   }, [currentUser]);
 
-  const { isCurrentRouteReady } = useAuthentication();
-  return isCurrentRouteReady ? <Component {...pageProps} /> : null;
+  const { isAuthRouteReady } = useAuthentication();
+  const { isOnboardingRouteReady } = useOnboardingRedirect({ currentUser });
+
+  return isAuthRouteReady && isOnboardingRouteReady ? (
+    <Component {...pageProps} />
+  ) : null;
 };
 
 const EntourageApp = (props: AppProps) => {

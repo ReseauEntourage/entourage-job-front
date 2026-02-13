@@ -4,12 +4,16 @@ import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
+  fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
+  forceOnboardingAsCompletedAdapter,
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
   UpdateError,
+  updateOnboardingStatusAdapter,
   updateProfileAdapter,
+  updateSocialSituationAdapter,
   updateUserAdapter,
   updateUserCompanyAdapter,
   updateUserProfilePictureAdapter,
@@ -20,9 +24,17 @@ export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
   fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
+  fetchCurrentUserSocialSituation: RequestState<
+    typeof fetchCurrentUserSocialSituationAdapter
+  >;
   updateUser: RequestState<typeof updateUserAdapter>;
+  updateOnboardingStatus: RequestState<typeof updateOnboardingStatusAdapter>;
+  forceOnboardingAsCompleted: RequestState<
+    typeof forceOnboardingAsCompletedAdapter
+  >;
   updateUserCompany: RequestState<typeof updateUserCompanyAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
+  updateSocialSituation: RequestState<typeof updateSocialSituationAdapter>;
   readDocument: RequestState<typeof readDocumentAdapter>;
   updateUserProfilePicture: RequestState<
     typeof updateUserProfilePictureAdapter
@@ -39,10 +51,16 @@ export interface State {
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
+  fetchCurrentUserSocialSituation:
+    fetchCurrentUserSocialSituationAdapter.getInitialState(),
   fetchStaffContact: fetchStaffContactAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
+  updateOnboardingStatus: updateOnboardingStatusAdapter.getInitialState(),
+  forceOnboardingAsCompleted:
+    forceOnboardingAsCompletedAdapter.getInitialState(),
   updateUserCompany: updateUserCompanyAdapter.getInitialState(),
+  updateSocialSituation: updateSocialSituationAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
@@ -66,6 +84,19 @@ export const slice = createSlice({
         state.complete = false;
       },
     }),
+    ...fetchCurrentUserSocialSituationAdapter.getReducers<State>(
+      (state) => state.fetchCurrentUserSocialSituation,
+      {
+        fetchCurrentUserSocialSituationSucceeded(state, action) {
+          if (state.user) {
+            state.user.userSocialSituation = {
+              ...state.user.userSocialSituation,
+              ...action.payload,
+            };
+          }
+        },
+      }
+    ),
     ...fetchStaffContactAdapter.getReducers<State>(
       (state) => state.fetchStaffContact,
       {
@@ -102,6 +133,13 @@ export const slice = createSlice({
         },
       }
     ),
+    ...updateSocialSituationAdapter.getReducers<State>(
+      (state) => state.updateSocialSituation,
+      {
+        updateSocialSituationSucceeded() {},
+        updateSocialSituationFailed() {},
+      }
+    ),
     ...updateProfileAdapter.getReducers<State>((state) => state.updateProfile, {
       updateProfileSucceeded(state, action) {
         assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
@@ -115,6 +153,26 @@ export const slice = createSlice({
         state.userUpdateError = action.payload.error;
       },
     }),
+    ...updateOnboardingStatusAdapter.getReducers<State>(
+      (state) => state.updateOnboardingStatus,
+      {
+        updateOnboardingStatusSucceeded(state, action) {
+          assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
+          state.user.onboardingStatus = action.payload.onboardingStatus;
+        },
+      }
+    ),
+    ...forceOnboardingAsCompletedAdapter.getReducers<State>(
+      (state) => state.forceOnboardingAsCompleted,
+      {
+        forceOnboardingAsCompletedSucceeded(state, action) {
+          assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
+          state.user.onboardingStatus = action.payload.onboardingStatus;
+        },
+      }
+    ),
     ...readDocumentAdapter.getReducers<State>((state) => state.readDocument, {
       readDocumentSucceeded() {},
     }),

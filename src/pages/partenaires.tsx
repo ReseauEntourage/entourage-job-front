@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Layout } from 'src/components/Layout';
-import { openModal } from 'src/components/modals/Modal';
-import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { SimpleSection } from 'src/components/partials/pages/Partenaires/SimpleSection';
-import { LogoList } from 'src/components/partials/utils/LogoList';
-import { LegacyImg, Section, SimpleLink, Grid } from 'src/components/utils';
+import { Layout } from '@/src/components/layouts/Layout';
+import { LegacyImg, Section, SimpleLink, Grid } from '@/src/components/ui';
+import { openModal } from '@/src/features/modals/Modal';
+import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { SimpleSection } from '@/src/features/partials/pages/Partenaires/SimpleSection';
+import { LogoList } from '@/src/features/partials/utils/LogoList';
 import { PARTNERS } from 'src/constants/partners';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';

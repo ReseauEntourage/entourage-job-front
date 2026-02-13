@@ -3,11 +3,11 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import { Footer } from 'src/components/partials/Footer';
-import { NotificationsContainer } from 'src/components/utils/Notification';
-import { addPrefix } from 'src/utils';
-import { NavConnected } from './navs/NavConnected';
-import { NavPublic } from './navs/NavPublic';
+import { NotificationsContainer } from '@/src/components/ui/Notification';
+import { NavConnected } from '@/src/features/navs/NavConnected';
+import { NavPublic } from '@/src/features/navs/NavPublic';
+import { Footer } from '@/src/features/partials/Footer';
+import { addPrefix } from '@/src/utils';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;
@@ -27,8 +27,8 @@ export const Layout = withRouter<LayoutProps>(
   ({
     children,
     router,
-    title = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-    metaTitle = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    title = 'Entourage Pro - Partagez votre réseau avec ceux qui n’en ont pas',
+    metaTitle = 'Entourage Pro - Partagez votre réseau avec ceux qui n’en ont pas',
     metaImage = `${process.env.NEXT_PUBLIC_SERVER_URL}/static/img/entourage-pro-preview.jpg`,
     metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec Entourage Pro, faites don de votre visibilité. Un partage peut tout changer.",
     metaUrl = process.env.NEXT_PUBLIC_SERVER_URL,

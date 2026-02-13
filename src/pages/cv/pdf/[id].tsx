@@ -1,10 +1,10 @@
 import { NextRouter, withRouter } from 'next/router';
 import React from 'react';
+import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
+import { CVPDF } from '@/src/features/profile';
 import { Api } from 'src/api';
 import { User } from 'src/api/types';
-import { Layout } from 'src/components/Layout';
-import { CVPDF } from 'src/components/profile';
-import { Section } from 'src/components/utils';
 
 interface CVPDFPageProps {
   user: User;
