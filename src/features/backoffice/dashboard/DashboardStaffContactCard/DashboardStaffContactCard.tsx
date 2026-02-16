@@ -58,7 +58,9 @@ export const DashboardStaffContactCard = () => {
             </StyledDashboardStaffContactPicture>
             <StyledDashboardStaffContactNameContainer>
               <StyledDashboardStaffContactName>
-                <H3 color="primaryBlue" title={staffContact.name} />
+                <Text color="primaryBlue" size="xlarge" weight="semibold">
+                  {staffContact.name}
+                </Text>
               </StyledDashboardStaffContactName>
               <StyledDashboardStaffContactRole>
                 <Text variant="italic">

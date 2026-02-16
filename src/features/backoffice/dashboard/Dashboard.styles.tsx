@@ -36,8 +36,7 @@ export const StyledDashboardCardContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
-  gap: 20px;
+  gap: 12px;
 `;
 
 export const StyledDashboardCardContent = styled.div`
