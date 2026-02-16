@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, LegacyImg, SimpleLink } from '@/src/components/ui';
-import { H3 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Text } from '@/src/components/ui/Text';
 import { DEPARTMENTS } from '@/src/constants/departements';
