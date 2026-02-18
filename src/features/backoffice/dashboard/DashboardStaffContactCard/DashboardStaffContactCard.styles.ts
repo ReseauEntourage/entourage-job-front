@@ -4,10 +4,10 @@ import { COLORS } from 'src/constants/styles';
 export const StyledDashboardStaffContactPicture = styled.div`
   border-radius: 50%;
   overflow: hidden;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 `;
 
 export const StyledDashboardStaffContactNameContainer = styled.div`

@@ -25,6 +25,7 @@ export enum EventType {
   PAPOTAGES_PRO = 'PAPOTAGES_PRO',
   PHOTO_SHOOTING = 'PHOTO_SHOOTING',
   APERO_COACH = 'APERO_COACH',
+  APERO_ENTOURAGE = 'APERO_ENTOURAGE',
   WORKSHOP = 'WORKSHOP',
 }
 
@@ -58,6 +59,10 @@ export const EVENT_TYPES = [
     type: EventType.APERO_COACH,
   },
   {
+    name: 'Apéro Entourage',
+    type: EventType.APERO_ENTOURAGE,
+  },
+  {
     name: 'Atelier Entourage Pro',
     type: EventType.WORKSHOP,
   },
@@ -73,6 +78,7 @@ export const EVENT_IMAGES: {
   [EventType.PAPOTAGES_PRO]: '/static/img/events/papotages_pro.jpg',
   [EventType.PHOTO_SHOOTING]: '/static/img/events/photo_shooting.jpg',
   [EventType.APERO_COACH]: '/static/img/events/apero_coach.jpg',
+  [EventType.APERO_ENTOURAGE]: '/static/img/events/apero_entourage.jpg',
   [EventType.WORKSHOP]: '/static/img/events/workshop.jpg',
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
