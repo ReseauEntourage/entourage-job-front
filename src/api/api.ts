@@ -618,6 +618,13 @@ export class APIHandler {
     });
   }
 
+  postMailingList(params: {
+    recipientEmails: string[];
+    content: string;
+  }): Promise<AxiosResponse> {
+    return this.post('/messaging/mailing-lists', params);
+  }
+
   reportMessage(conversationId: string, params: ConversationReportDto) {
     return this.post(
       `/messaging/conversations/${conversationId}/report`,
