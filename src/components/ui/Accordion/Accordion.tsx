@@ -10,6 +10,8 @@ import {
 import { AccordionVariant } from './Accordion.types';
 
 export interface AccordionProps {
+  /** Unique identifier for the accordion (used for testing). */
+  id?: string;
   /** Content to display in the accordion header. */
   headerContent: React.ReactNode;
   /** Content to display inside the accordion when it is expanded. */
@@ -29,6 +31,7 @@ export interface AccordionProps {
 }
 
 export const Accordion = ({
+  id = 'accordion',
   headerContent,
   children,
   defaultOpen,
@@ -55,6 +58,8 @@ export const Accordion = ({
   return (
     <StyledAccordion $variant={variant}>
       <StyledAccordionHeader
+        id={id}
+        data-testid={`${id}-header`}
         onClick={() => setIsOpen(!isOpen)}
         $isOpen={isOpen}
         $variant={variant}
@@ -68,6 +73,8 @@ export const Accordion = ({
       </StyledAccordionHeader>
       {shouldRenderContent && (
         <StyledAccordionContent
+          id={`${id}-content`}
+          data-testid={`${id}-content`}
           $variant={variant}
           hidden={!isOpen}
           aria-hidden={!isOpen}

@@ -210,7 +210,6 @@ export const NEWSLETTER_TAGS = {
 };
 
 export const STORAGE_KEYS = {
-  RELEASE_VERSION: 'release-version',
   ACCESS_TOKEN: 'access-token',
   ONBOARDING_COMPLETION_STATUS: 'onboarding-completion-status',
   TAX_MODAL_CLOSED: 'tax-modal-closed',

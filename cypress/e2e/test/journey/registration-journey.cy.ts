@@ -16,7 +16,6 @@ describe('Registration', () => {
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     window.localStorage.setItem('access-token', '1234');
-    window.localStorage.setItem('release-version', 'v100');
 
     registrationJourneyRequests.GET.forEach((request) => {
       if (request.alias) {

@@ -48,6 +48,7 @@ import {
   mapFieldRules,
   Rule,
 } from '../FormSchema';
+import { FilterConstant } from 'src/constants/utils';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
@@ -137,6 +138,20 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   });
 
   const allWatch = watch();
+
+  const fieldLoadOptions = field.loadOptions;
+
+  const selectRequestLoadOptions = useCallback(
+    async (
+      callback: (options: FilterConstant[]) => void,
+      inputValue?: string
+    ) => {
+      if (fieldLoadOptions) {
+        await fieldLoadOptions(callback, inputValue, getValue);
+      }
+    },
+    [fieldLoadOptions, getValue]
+  );
 
   const onChangeCustom = useCallback(
     (updatedValue) => {
@@ -289,15 +304,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           maxChar={field.maxChar}
           maxItems={field.maxItems}
           setIsMaxItemsReached={setIsMaxItemsReached}
-          loadOptions={
-            field.loadOptions
-              ? async (callback, inputValue) => {
-                  if (field.loadOptions) {
-                    await field.loadOptions(callback, inputValue, getValue);
-                  }
-                }
-              : undefined
-          }
+          loadOptions={field.loadOptions ? selectRequestLoadOptions : undefined}
         />
       );
     }
@@ -309,11 +316,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           placeholder={placeholder}
           isMulti={isMulti}
           openMenuOnClick={field.openMenuOnClick}
-          loadOptions={async (callback, inputValue) => {
-            if (field.loadOptions) {
-              await field.loadOptions(callback, inputValue, getValue);
-            }
-          }}
+          loadOptions={selectRequestLoadOptions}
         />
       );
     }
