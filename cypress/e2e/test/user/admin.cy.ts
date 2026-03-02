@@ -20,7 +20,6 @@ describe('En tant que - Administrateur', () => {
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     window.localStorage.setItem('access-token', '0x1x2x3x4');
-    window.localStorage.setItem('release-version', 'v100');
 
     /**
      * Intercept requests

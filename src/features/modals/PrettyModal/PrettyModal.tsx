@@ -58,7 +58,11 @@ export const PrettyModal = ({
         </>
       )}
       <StyledModalFooterContainer>
-        <Button size="large" onClick={handleClose}>
+        <Button
+          size="large"
+          onClick={handleClose}
+          dataTestId={`${id}-submit-btn`}
+        >
           {submitBtnTxt}
         </Button>
       </StyledModalFooterContainer>

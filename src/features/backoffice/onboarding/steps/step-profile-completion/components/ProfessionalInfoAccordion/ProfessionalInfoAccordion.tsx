@@ -42,6 +42,7 @@ export const ProfessionalInfoAccordion = () => {
 
   return (
     <Accordion
+      id="professional-info-accordion"
       headerContent={
         <StyledAccordionHeader>
           <StyledAccordionHeaderIcon>
