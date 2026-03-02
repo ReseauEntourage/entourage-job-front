@@ -55,6 +55,7 @@ const OnboardingRun = () => {
                   onClick={incrementStep}
                   disabled={!incrementationIsAllowed || isLoading}
                   size="large"
+                  dataTestId="onboarding-next-step-btn"
                 >
                   {isLoading && (
                     <>
@@ -70,6 +71,7 @@ const OnboardingRun = () => {
                     variant="secondary"
                     onClick={skipOnboarding}
                     disabled={isLoading}
+                    dataTestId="onboarding-skip-btn"
                   >
                     ⚙️ Dev only - Passer l'onboarding
                   </Button>
