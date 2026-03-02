@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { Text } from '@/src/components/ui/Text';
+import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { Message } from 'src/api/types';
@@ -46,8 +47,9 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       const isVerifiedDomain = whitelist.some((whitelistedDomain) =>
         domain.endsWith(whitelistedDomain)
       );
+      const isSentByAdmin = message.author.role === UserRoles.ADMIN;
 
-      if (!isVerifiedDomain) {
+      if (!isVerifiedDomain && !isSentByAdmin) {
         event.preventDefault();
         openModal(<MessagingMessageSuspiciousModal href={target.href} />);
       }
