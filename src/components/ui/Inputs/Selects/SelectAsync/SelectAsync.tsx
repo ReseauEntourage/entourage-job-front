@@ -53,7 +53,7 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
           callback(options);
           setIsLoading(false);
         }, inputValue);
-      }, 1000);
+      }, 500);
     },
     [loadOptions]
   );
