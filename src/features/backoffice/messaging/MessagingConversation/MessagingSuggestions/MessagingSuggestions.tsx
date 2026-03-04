@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { ConversationParticipant } from '@/src/api/types';
 import { H3 } from '@/src/components/ui/Headings/H3';
-import { getNormalUserRoles, UserRoles } from '@/src/constants/users';
+import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { isRoleIncluded } from '@/src/utils';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { Item } from './Item/Item';
@@ -63,8 +63,8 @@ export const MessagingSuggestions = ({
           message: `Bonjour ${participantsFirstNames},\nJe m'appelle ${currentUser.firstName}, je vois que vous avez de l'expérience dans le secteur [...] et serais ravi(e) d’échanger avec vous par rapport à mon projet professionnel.\nSeriez-vous disponible pour en parler ensemble ?\nMerci d'avance`,
         },
       ] as MessagingSuggestionItem[];
-    } else if (isRoleIncluded(getNormalUserRoles(), currentUser.role)) {
-      // Suggestions for all other normal users (coaches, referers) (not admins)
+    } else if (isRoleIncluded(getRolesNotAdmin(), currentUser.role)) {
+      // Suggestions for all other users (not admins)
       return [
         {
           name: 'Proposer un échange',
