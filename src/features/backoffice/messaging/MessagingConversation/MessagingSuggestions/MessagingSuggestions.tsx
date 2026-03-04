@@ -92,6 +92,10 @@ export const MessagingSuggestions = ({
     onSuggestionClick(suggestion);
   };
 
+  if (suggestions.length === 0) {
+    return null;
+  }
+
   return (
     <MessagingSuggestionsContainer>
       {newMessage.length <= 0 && (
