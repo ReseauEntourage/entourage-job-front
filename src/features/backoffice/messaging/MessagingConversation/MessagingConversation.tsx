@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserRoles } from '@/src/constants/users';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { useIsMobile } from 'src/hooks/utils';
@@ -48,11 +47,7 @@ export const MessagingConversation = () => {
     'instant' as ScrollBehavior
   );
   const displaySuggestions = useMemo(() => {
-    return (
-      selectedConversationId === 'new' &&
-      currentUser &&
-      currentUser.role === UserRoles.CANDIDATE
-    );
+    return selectedConversationId === 'new' && currentUser;
   }, [currentUser, selectedConversationId]);
 
   const reversedMessages = useMemo(() => {
@@ -166,6 +161,7 @@ export const MessagingConversation = () => {
             <MessagingSuggestions
               onSuggestionClick={onSuggestionClick}
               newMessage={newMessage}
+              participants={selectedConversation?.participants || []}
             />
           ) : (
             <MessagingMessagesContainer
