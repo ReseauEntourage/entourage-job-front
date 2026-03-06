@@ -15,12 +15,18 @@ export type RegistrableUserRoles =
   | UserRoles.COACH
   | UserRoles.REFERER;
 export type RolesWithOrganization = UserRoles.REFERER;
+export type RolesNotAdmin = Exclude<UserRoles, UserRoles.ADMIN>;
 
 // Helpers
 export const getNormalUserRoles = (): UserRoles[] => {
   return Object.values(UserRoles).filter(
     (role): role is NormalUserRoles =>
       role === UserRoles.CANDIDATE || role === UserRoles.COACH
+  );
+};
+export const getRolesNotAdmin = (): UserRoles[] => {
+  return Object.values(UserRoles).filter(
+    (role): role is RolesNotAdmin => role !== UserRoles.ADMIN
   );
 };
 
