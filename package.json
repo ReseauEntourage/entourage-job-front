@@ -47,7 +47,7 @@
     "@sentry/webpack-plugin": "^1.15.0",
     "@svgr/webpack": "^6.5.1",
     "array-move": "^2.2.2",
-    "axios": "^0.30.2",
+    "axios": "^0.30.3",
     "check-password-strength": "^2.0.10",
     "circular-dependency-plugin": "^5.2.2",
     "cookies-next": "^2.1.2",
