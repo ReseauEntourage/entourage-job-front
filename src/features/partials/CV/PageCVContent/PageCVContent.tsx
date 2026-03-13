@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Text } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
-import { H1, H2, H5 } from '@/src/components/ui/Headings';
+import { H1, H3, H5 } from '@/src/components/ui/Headings';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ProfileCareerPathSentence } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import {
@@ -26,8 +26,7 @@ import {
   StyledCVSkillTagContainer,
   StyledSkillTag,
 } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation.styles';
-import { CVCallToActions } from '../CVCallToActions';
-import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
+import { CVShareButtons } from '../CVShareButtons';
 import { PublicCV } from 'src/api/types';
 
 import { CONTRACTS } from 'src/constants';
@@ -55,7 +54,7 @@ export const PageCVContent = ({
 }: PageCVContentProps) => {
   const isDesktop = useIsDesktop();
 
-  const [isStoryHidden, setIsStoryHidden] = useState<boolean>(true);
+  const [isDescriptionHidden, setIsDescriptionHidden] = useState<boolean>(true);
 
   const [openedPanel, setOpenedPanel] = useState<openedPanelType>({
     informations: false,
@@ -109,14 +108,20 @@ export const PageCVContent = ({
               />
             )}
 
-            {publicCV.userProfile.introduction && (
+            {publicCV.userProfile.description && (
               <StyledCVPageContentStory
-                className={!isDesktop && isStoryHidden ? 'mobile-hidden' : ''}
+                className={
+                  !isDesktop && isDescriptionHidden ? 'mobile-hidden' : ''
+                }
               >
-                <p className="">{publicCV.userProfile.introduction}</p>
-                {!isDesktop && isStoryHidden && (
+                <p className="">{publicCV.userProfile.description}</p>
+                {!isDesktop && isDescriptionHidden && (
                   <div className="seeMore">
-                    <div onClick={() => setIsStoryHidden(!isStoryHidden)}>
+                    <div
+                      onClick={() =>
+                        setIsDescriptionHidden(!isDescriptionHidden)
+                      }
+                    >
                       En lire plus
                     </div>
                   </div>
@@ -172,7 +177,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Informations" />
+                <H3 title="Informations" />
                 <LucidIcon
                   name="ChevronDown"
                   color={COLORS.primaryBlue}
@@ -245,7 +250,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Expériences" />
+                <H3 title="Expériences" />
                 {!isDesktop && (
                   <LucidIcon
                     name="ChevronDown"
@@ -287,7 +292,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Formation" />
+                <H3 title="Formation" />
                 {!isDesktop && (
                   <LucidIcon
                     name="ChevronDown"
@@ -332,7 +337,7 @@ export const PageCVContent = ({
                     });
                   }}
                 >
-                  <H2 title="Mes centres d'intérêts" />
+                  <H3 title="Mes centres d'intérêts" />
                   <LucidIcon
                     name="ChevronDown"
                     color={COLORS.primaryBlue}
@@ -349,7 +354,6 @@ export const PageCVContent = ({
           )}
         </StyledRightColumn>
       </StyledCVPageContentDetailsContainer>
-      <CVCallToActions actionDisabled={actionDisabled} publicCv={publicCV} />
     </StyledCVPageContent>
   );
 };
