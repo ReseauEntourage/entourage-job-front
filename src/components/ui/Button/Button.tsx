@@ -23,6 +23,8 @@ export function Button({
   disabled = false,
   size = 'medium',
   rounded = true,
+  onMouseEnter,
+  onMouseLeave,
 }: ButtonProps) {
   const resizedPrependIcon = prependIcon
     ? React.cloneElement(prependIcon as React.ReactElement<{ size: number }>, {
@@ -43,6 +45,8 @@ export function Button({
       disabled={disabled}
       type="button"
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       data-testid={dataTestId}
       variant={variant}
       size={size}

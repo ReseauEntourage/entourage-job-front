@@ -29,17 +29,6 @@ const cards: ProfileCardProps[] = new Array(4)
       firstName: 'John',
       lastName: 'Doe',
       role: UserRoles.CANDIDATE,
-      nudges: [
-        {
-          id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-          value: 'event',
-          nameRequest:
-            'Se rencontrer et échanger avec les membres de la communauté',
-          nameOffer:
-            'Se rencontrer lors d’événements avec les membres de la communauté',
-          order: 4,
-        },
-      ],
       sectorOccupations: [
         {
           businessSector: { name: 'Informatique et digital' },
@@ -66,7 +55,6 @@ const list = cards.map(
     firstName,
     lastName,
     role,
-    nudges,
     sectorOccupations,
     department,
     isAvailable,
@@ -82,7 +70,6 @@ const list = cards.map(
           role={role}
           department={department}
           sectorOccupations={sectorOccupations}
-          nudges={nudges}
           isAvailable={isAvailable}
           hasPicture={hasPicture}
           currentJob={currentJob}

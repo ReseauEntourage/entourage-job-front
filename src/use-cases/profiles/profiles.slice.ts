@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProfilesFilters, PublicProfile } from 'src/api/types';
+import {
+  ProfilesFilters,
+  PublicProfile,
+  ProfileRecommendation,
+} from 'src/api/types';
 import { PROFILES_LIMIT } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
@@ -17,7 +21,7 @@ export interface State {
   profiles: PublicProfile[];
   profilesOffset: number;
   profilesHasFetchedAll: boolean;
-  profilesRecommendations: PublicProfile[];
+  profilesRecommendations: ProfileRecommendation[];
   selectedProfile: PublicProfile | null;
 }
 
