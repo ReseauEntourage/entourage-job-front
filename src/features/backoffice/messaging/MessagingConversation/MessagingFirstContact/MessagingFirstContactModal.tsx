@@ -216,6 +216,7 @@ export const MessagingFirstContactModal = ({
     <ModalGeneric
       title="Comment structurer votre premier échange"
       withCloseButton
+      buttonText="J'ai compris"
     >
       {role === UserRoles.CANDIDATE ? <CandidateContent /> : <CoachContent />}
     </ModalGeneric>

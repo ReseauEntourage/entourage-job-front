@@ -15,6 +15,7 @@ interface ModalGenericProps {
   withCloseButton?: boolean;
   closeOnNextRender?: boolean;
   noCloseIcon?: boolean;
+  buttonText?: string;
 }
 
 export const ModalGeneric = ({
@@ -27,7 +28,8 @@ export const ModalGeneric = ({
   withCloseButton = false,
   closeOnNextRender = false,
   noCloseIcon = false,
-}: ModalGenericProps) => {
+  buttonText = 'Fermer',
+}: ModalGenericProps & { buttonText?: string }) => {
   const { onClose } = useModalContext();
   return (
     <Modal id={id} size={size} closeOnNextRender={closeOnNextRender}>
@@ -47,7 +49,7 @@ export const ModalGeneric = ({
             variant="primary"
             rounded
           >
-            Fermer
+            {buttonText}
           </Button>
         )}
       </StyledModalContent>
