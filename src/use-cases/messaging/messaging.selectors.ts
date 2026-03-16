@@ -41,3 +41,15 @@ export const selectShouldGiveFeedback = (state: RootState): boolean => {
   }
   return selectedConversation.shouldGiveFeedback || false;
 };
+
+export const selectCurrentUserHasSentMessages =
+  (currentUserId: string | null) =>
+  (state: RootState): boolean => {
+    const selectedConversation = selectSelectedConversation(state);
+    if (!selectedConversation || !currentUserId) {
+      return false;
+    }
+    return selectedConversation.messages.some(
+      (message) => message.authorId === currentUserId
+    );
+  };
