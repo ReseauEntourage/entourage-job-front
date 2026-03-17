@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Button, Card, LucidIcon, Text } from '@/src/components/ui';
+import { Button, Card, LucidIcon } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { DirectoryUserItem } from '@/src/features/backoffice/directory/DirectoryItem';
-import { useIsDesktop } from '@/src/hooks/utils';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { PublicProfile } from 'src/api/types';
