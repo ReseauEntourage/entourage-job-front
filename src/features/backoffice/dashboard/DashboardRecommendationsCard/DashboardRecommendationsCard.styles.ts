@@ -13,10 +13,6 @@ export const StyledRecommendationsHowItWorksWrapper = styled.div`
   width: 100%;
 `;
 
-export const StyledRecommendationsBetaText = styled.div`
-  margin-right: auto;
-`;
-
 export const StyledRecommendationsHowItWorksTooltip = styled.div`
   position: absolute;
   right: 0;
