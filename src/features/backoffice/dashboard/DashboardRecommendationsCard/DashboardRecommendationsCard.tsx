@@ -11,7 +11,6 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
-  StyledRecommendationsBetaText,
   StyledRecommendationsHowItWorksTooltip,
   StyledRecommendationsHowItWorksWrapper,
 } from './DashboardRecommendationsCard.styles';
@@ -58,7 +57,6 @@ const recommendationsLabels: {
 };
 
 export const DashboardRecommendationsCard = () => {
-  const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
   const isCompanyAdmin = useMemo(
     () => !!(user.company && user.company.companyUser?.isAdmin),
@@ -125,14 +123,6 @@ export const DashboardRecommendationsCard = () => {
       <StyledDashboardCardContentContainer>
         {hasAiRecommendations && (
           <StyledRecommendationsHowItWorksWrapper>
-            {isDesktop && (
-              <StyledRecommendationsBetaText>
-                <Text size="small" variant="italic">
-                  Cette fonctionnalité est en beta, la qualité des résultats
-                  peut varier.
-                </Text>
-              </StyledRecommendationsBetaText>
-            )}
             <Button
               variant="hoverBlue"
               size="small"
