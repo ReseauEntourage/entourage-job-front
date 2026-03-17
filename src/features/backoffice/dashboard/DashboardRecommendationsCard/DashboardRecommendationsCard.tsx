@@ -36,7 +36,7 @@ const recommendationsLabels: {
       "N'hésitez pas à prendre connaissance de leurs propositions d'aide et les contacter directement",
     button: 'Voir tous les coachs',
     howItWorksText:
-      'Chaque semaine, nous analysons votre profil et vos demandes pour vous suggérer les coachs les plus susceptibles de vous aider — en tenant compte de leurs propositions, de leur proximité géographique et de leur disponibilité.',
+      'Chaque semaine, nous analysons votre profil et vos demandes pour vous suggérer les coachs les plus susceptibles de vous aider — en tenant compte de leurs propositions, de leur expérience, de leur proximité géographique et de leur disponibilité.',
   },
   [UserRoles.COACH]: {
     title: 'Les candidats recommandés pour vous',
@@ -44,14 +44,14 @@ const recommendationsLabels: {
       "N'hésitez pas à prendre connaissance de leurs besoins et les contacter directement",
     button: 'Voir tous les candidats',
     howItWorksText:
-      'Chaque semaine, nous analysons votre profil et vos coups de pouce pour vous suggérer les candidats les plus susceptibles de bénéficier de votre aide — en tenant compte de leurs besoins, de leur proximité géographique et de leur disponibilité.',
+      'Chaque semaine, nous analysons votre profil et vos coups de pouce pour vous suggérer les candidats les plus susceptibles de bénéficier de votre aide — en tenant compte de leurs besoins, de leur profil, de leur proximité géographique et de leur disponibilité.',
   },
   [contextCompanyAdmin]: {
     title: 'Les candidats recommandés pour votre entreprise',
     subtitle: '',
     button: 'Voir tous les candidats',
     howItWorksText:
-      'Chaque semaine, nous analysons les profils de votre entreprise pour vous suggérer les candidats les plus susceptibles de bénéficier de votre aide — en tenant compte de leurs besoins, de leur proximité géographique et de leur disponibilité.',
+      'Chaque semaine, nous analysons les profils de candidats pour vous suggérer les plus susceptibles de vous intéresser.',
   },
 };
 
