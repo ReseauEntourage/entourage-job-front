@@ -563,6 +563,18 @@ export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
   >;
 };
 
+export type MatchingReason =
+  | 'profile'
+  | 'needs'
+  | 'activity'
+  | 'locationCompatibility';
+
+export type ProfileRecommendation = {
+  id: string;
+  publicProfile: PublicProfile;
+  reason: MatchingReason | null;
+};
+
 export type PrivateProfile = PublicProfile & {
   email: string;
   phone: string;
