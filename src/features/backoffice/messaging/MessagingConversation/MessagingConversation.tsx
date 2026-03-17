@@ -69,8 +69,21 @@ export const MessagingConversation = () => {
     if (selectedConversationId === 'new') {
       return true;
     }
+    // Avoid using potentially stale messaging state while a new
+    // conversation is loading or does not match the selected id.
+    if (
+      !selectedConversation ||
+      (selectedConversation as any).id !== selectedConversationId
+    ) {
+      return false;
+    }
     return !currentUserHasSentMessages;
-  }, [currentUser, selectedConversationId, currentUserHasSentMessages]);
+  }, [
+    currentUser,
+    selectedConversationId,
+    selectedConversation,
+    currentUserHasSentMessages,
+  ]);
 
   const reversedMessages = useMemo(() => {
     if (!selectedConversation || !selectedConversation.messages) {
