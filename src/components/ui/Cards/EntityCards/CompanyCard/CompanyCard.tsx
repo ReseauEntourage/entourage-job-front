@@ -98,7 +98,7 @@ export const CompanyCard = ({
                     return <Tag key={sectorId}>{sectorName}</Tag>;
                   })}
                 {businessSectors.length > 2 && (
-                  <Tag>+${businessSectors.length - 2}</Tag>
+                  <Tag>+{businessSectors.length - 2}</Tag>
                 )}
               </StyledCompanyCardSectorsContainer>
             </StyledCompanyCardSectorsSectionContainer>
