@@ -43,17 +43,20 @@ export const BUTTON_STYLES = {
     primary: COLORS.primaryBlue,
     secondary: COLORS.white,
     text: 'transparent',
+    hoverBlue: COLORS.hoverBlue,
   },
   color: {
     default: COLORS.black,
     primary: COLORS.white,
     secondary: COLORS.primaryBlue,
     text: COLORS.black,
+    hoverBlue: COLORS.darkBlue,
   },
   hoverBackgroundColor: {
     default: COLORS.hoverWhite,
     primary: COLORS.darkBlue,
     secondary: COLORS.hoverBlue,
+    hoverBlue: COLORS.darkBlue,
     text: 'transparent',
   },
   hoverColor: {
@@ -61,6 +64,7 @@ export const BUTTON_STYLES = {
     primary: COLORS.white,
     secondary: COLORS.primaryBlue,
     text: COLORS.black,
+    hoverBlue: COLORS.white,
   },
   hoverBorder: {
     default: COLORS.primaryBlue,

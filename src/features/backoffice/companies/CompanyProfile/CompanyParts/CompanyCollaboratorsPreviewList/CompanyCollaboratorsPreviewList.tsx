@@ -161,7 +161,6 @@ export const CompanyCollaboratorsPreviewList = ({
                   isAvailable={user.userProfile.isAvailable}
                   currentJob={user.userProfile.currentJob || undefined}
                   sectorOccupations={user.userProfile.sectorOccupations}
-                  nudges={user.userProfile.nudges || []}
                 />
               </StyledSwiperItemContainer>
             </SwiperSlide>

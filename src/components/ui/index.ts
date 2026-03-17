@@ -1,3 +1,4 @@
+export * from './Badge';
 export * from './Background';
 export * from './Cards/Card';
 export * from './Tag';
