@@ -48,6 +48,8 @@ export const COLORS = {
   lightYellow: '#FFF2D7',
   yellowSport: '#FFC449',
   darkYellow: '#FFB00D',
+  extraLightAmber: '#fff3e0',
+  amber: '#92400e',
 
   // Red
   lightRed: '#F1545D',
@@ -58,11 +60,13 @@ export const COLORS = {
   blueShade2: '#61BECF',
   primaryBlue: '#47A8B9',
   blueShade3: '#427F8D',
-  hoverBlue: '#ECF8FB',
+  hoverBlue: '#EEF8FA',
   lightBlueGreen: '#C1E9DF',
   blue: '#8FC4E2',
-  darkBlue: '#267D8C',
+  darkBlue: '#2D7FA6',
   extraDarkBlue: '#2A4C72',
+  extraLightTeal: '#e8f6f8',
+  teal: '#1a7a94',
 
   // Green
   lightGreen: '#A7DB9F',
@@ -70,6 +74,10 @@ export const COLORS = {
   green: '#79CC6B',
   mediumGreen: '#1E7F51',
   darkGreen: '#1F4946',
+
+  // Purple
+  extraLightPurple: '#ede9fe',
+  purple: '#4c2ea0',
 
   // Skeleton
   skeletonLight: '#EDEDED',

@@ -1,13 +1,18 @@
-import React, { useMemo } from 'react';
-import { Button, Card } from '@/src/components/ui';
+import React, { useMemo, useState } from 'react';
+import { Button, Card, LucidIcon } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { DirectoryUserItem } from '@/src/features/backoffice/directory/DirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
+import { PublicProfile } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { mutateToArray } from 'src/utils';
-import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
+import {
+  StyledDashboardRecommendationsList,
+  StyledRecommendationsHowItWorksTooltip,
+  StyledRecommendationsHowItWorksWrapper,
+} from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const contextCompanyAdmin = 'CompanyAdmin';
@@ -22,24 +27,31 @@ const recommendationsLabels: {
     title: string;
     subtitle: string;
     button: string;
+    howItWorksText: string;
   };
 } = {
   [UserRoles.CANDIDATE]: {
     title: 'Les coachs recommandés pour vous',
     subtitle:
-      "N'hésitez pas à prendre connaissance de leurs propositions d’aide et les contacter directement",
+      "N'hésitez pas à prendre connaissance de leurs propositions d'aide et les contacter directement",
     button: 'Voir tous les coachs',
+    howItWorksText:
+      'Chaque semaine, nous analysons votre profil et vos demandes pour vous suggérer les coachs les plus susceptibles de vous aider — en tenant compte de leurs propositions, de leur expérience, de leur proximité géographique et de leur disponibilité.',
   },
   [UserRoles.COACH]: {
     title: 'Les candidats recommandés pour vous',
     subtitle:
       "N'hésitez pas à prendre connaissance de leurs besoins et les contacter directement",
     button: 'Voir tous les candidats',
+    howItWorksText:
+      'Chaque semaine, nous analysons votre profil et vos coups de pouce pour vous suggérer les candidats les plus susceptibles de bénéficier de votre aide — en tenant compte de leurs besoins, de leur profil, de leur proximité géographique et de leur disponibilité.',
   },
   [contextCompanyAdmin]: {
     title: 'Les candidats recommandés pour votre entreprise',
     subtitle: '',
     button: 'Voir tous les candidats',
+    howItWorksText:
+      'Chaque semaine, nous analysons les profils de candidats pour vous suggérer les plus susceptibles de vous intéresser.',
   },
 };
 
@@ -54,6 +66,8 @@ export const DashboardRecommendationsCard = () => {
     departments: mutateToArray(user.userProfile.department),
   };
 
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
   const context = useMemo<recommendationsContextsType>(() => {
     if (isCompanyAdmin) {
       return contextCompanyAdmin;
@@ -64,8 +78,18 @@ export const DashboardRecommendationsCard = () => {
     return UserRoles.CANDIDATE;
   }, [isCompanyAdmin, user.role]);
 
+  const hasAiRecommendations = useMemo(
+    () => recommendations.some((r) => r.reason !== null),
+    [recommendations]
+  );
+
   const itemsList = useMemo(() => {
-    return recommendations.map((profile) => {
+    return recommendations.map((recommendation) => {
+      // TODO: supprimer après migration backend
+      const profile =
+        recommendation.publicProfile ??
+        (recommendation as unknown as PublicProfile);
+      const reason = recommendation.reason ?? null;
       return (
         <DirectoryUserItem
           key={profile.id}
@@ -74,13 +98,12 @@ export const DashboardRecommendationsCard = () => {
           lastName={profile.lastName}
           role={profile.role}
           department={profile.department}
-          nudges={profile.nudges}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
-          displayNudges={false}
           hasPicture={profile.hasPicture}
           currentJob={profile.currentJob}
+          recommendationReason={reason}
         />
       );
     });
@@ -97,6 +120,24 @@ export const DashboardRecommendationsCard = () => {
       centerTitle
     >
       <StyledDashboardCardContentContainer>
+        {hasAiRecommendations && (
+          <StyledRecommendationsHowItWorksWrapper>
+            <Button
+              variant="hoverBlue"
+              size="small"
+              rounded
+              onMouseEnter={() => setIsTooltipOpen(true)}
+              onMouseLeave={() => setIsTooltipOpen(false)}
+            >
+              <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
+            </Button>
+            {isTooltipOpen && (
+              <StyledRecommendationsHowItWorksTooltip>
+                {recommendationsLabels[context].howItWorksText}
+              </StyledRecommendationsHowItWorksTooltip>
+            )}
+          </StyledRecommendationsHowItWorksWrapper>
+        )}
         <StyledDashboardRecommendationsList>
           <CardList list={itemsList} isLoading={isLoading} condensed />
         </StyledDashboardRecommendationsList>

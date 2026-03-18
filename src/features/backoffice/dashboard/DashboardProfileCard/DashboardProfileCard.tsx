@@ -126,7 +126,7 @@ export const DashboardProfileCard = () => {
               })}
               {user.userProfile.nudges?.length > 3 && (
                 <Tag size={TagSize.Small}>
-                  +${user.userProfile.nudges.length - 3}
+                  +{user.userProfile.nudges.length - 3}
                 </Tag>
               )}
             </StyledDashboardProfileCardHelpList>

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
+import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   selectCurrentUser,
@@ -15,6 +16,7 @@ import {
 } from 'src/use-cases/messaging';
 import {
   selectConversationParticipantsAreDeleted,
+  selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
@@ -25,6 +27,7 @@ import {
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
 import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
+import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
@@ -41,6 +44,9 @@ export const MessagingConversation = () => {
     selectConversationParticipantsAreDeleted
   );
   const pinnedInfo = useSelector(selectPinnedInfo);
+  const currentUserHasSentMessages = useSelector(
+    selectCurrentUserHasSentMessages(currentUserId)
+  );
 
   const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
@@ -49,6 +55,44 @@ export const MessagingConversation = () => {
   const displaySuggestions = useMemo(() => {
     return selectedConversationId === 'new' && currentUser;
   }, [currentUser, selectedConversationId]);
+
+  const displayFirstContactBanner = useMemo(() => {
+    if (!currentUser) {
+      return false;
+    }
+    if (
+      currentUser.role !== UserRoles.COACH &&
+      currentUser.role !== UserRoles.CANDIDATE
+    ) {
+      return false;
+    }
+    if (selectedConversationId === 'new') {
+      return true;
+    }
+    // Avoid using potentially stale messaging state while a new
+    // conversation is loading or does not match the selected id.
+    if (
+      !selectedConversation ||
+      (selectedConversation as any).id !== selectedConversationId
+    ) {
+      return false;
+    }
+    if (
+      selectedConversation.participants.some(
+        (p) => p.id !== currentUserId && p.role === UserRoles.ADMIN
+      )
+    ) {
+      return false;
+    }
+
+    return !currentUserHasSentMessages;
+  }, [
+    currentUser,
+    selectedConversationId,
+    selectedConversation,
+    currentUserHasSentMessages,
+    currentUserId,
+  ]);
 
   const reversedMessages = useMemo(() => {
     if (!selectedConversation || !selectedConversation.messages) {
@@ -146,7 +190,17 @@ export const MessagingConversation = () => {
       ) : (
         <>
           <MessagingConversationHeader />
-          {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
+          {pinnedInfo ? (
+            <MessagingPinnedInfo pinnedInfo={pinnedInfo} />
+          ) : (
+            displayFirstContactBanner &&
+            currentUser && (
+              <MessagingFirstContactBanner
+                key={selectedConversationId}
+                role={currentUser.role as UserRoles}
+              />
+            )
+          )}
 
           {shouldGiveFeedback && (
             <MessagingFeedback
