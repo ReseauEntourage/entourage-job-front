@@ -231,10 +231,7 @@ export function ProfileCard({
         </StyledProfileCardProfessionalSituation>
         <StyledSeparator />
         {recommendationReason ? (
-          <RecommendationReasonBadge
-            reason={recommendationReason}
-            role={role}
-          />
+          <RecommendationReasonBadge reason={recommendationReason} />
         ) : (
           <StyledCTAContainer>
             <Button variant="secondary" rounded>
