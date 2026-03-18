@@ -77,12 +77,21 @@ export const MessagingConversation = () => {
     ) {
       return false;
     }
+    if (
+      selectedConversation.participants.some(
+        (p) => p.id !== currentUserId && p.role === UserRoles.ADMIN
+      )
+    ) {
+      return false;
+    }
+
     return !currentUserHasSentMessages;
   }, [
     currentUser,
     selectedConversationId,
     selectedConversation,
     currentUserHasSentMessages,
+    currentUserId,
   ]);
 
   const reversedMessages = useMemo(() => {
@@ -181,13 +190,16 @@ export const MessagingConversation = () => {
       ) : (
         <>
           <MessagingConversationHeader />
-          {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
-
-          {displayFirstContactBanner && currentUser && (
-            <MessagingFirstContactBanner
-              key={selectedConversationId}
-              role={currentUser.role as UserRoles}
-            />
+          {pinnedInfo ? (
+            <MessagingPinnedInfo pinnedInfo={pinnedInfo} />
+          ) : (
+            displayFirstContactBanner &&
+            currentUser && (
+              <MessagingFirstContactBanner
+                key={selectedConversationId}
+                role={currentUser.role as UserRoles}
+              />
+            )
           )}
 
           {shouldGiveFeedback && (
