@@ -3,7 +3,6 @@ import 'moment/locale/fr';
 import React from 'react';
 import { Text, LucidIcon } from '@/src/components/ui';
 import { EventMode } from '@/src/constants/events';
-import { COLORS } from '@/src/constants/styles';
 import { Event } from 'src/api/types';
 import {
   StyledSelectOptionWebinarLabel,
