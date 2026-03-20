@@ -41,16 +41,22 @@ export const SelectOptionWebinarLabel = ({
         </StyledSelectOptionWebinarLabelData>
         {event.mode === EventMode.ONLINE && (
           <StyledSelectOptionWebinarLabelData>
-            <LucidIcon name="Camera" size={16} />
+            <LucidIcon name="Laptop" size={16} />
             <Text>Visioconférence en ligne</Text>
           </StyledSelectOptionWebinarLabelData>
         )}
-        {event.mode === EventMode.IN_PERSON && (
-          <StyledSelectOptionWebinarLabelData>
-            <LucidIcon name="User" size={16} />
-            <Text>Présentiel</Text>
-          </StyledSelectOptionWebinarLabelData>
-        )}
+        {event.mode === EventMode.IN_PERSON &&
+          (event.fullAddress ? (
+            <StyledSelectOptionWebinarLabelData>
+              <LucidIcon name="MapPin" size={16} />
+              <Text>{event.fullAddress}</Text>
+            </StyledSelectOptionWebinarLabelData>
+          ) : (
+            <StyledSelectOptionWebinarLabelData>
+              <LucidIcon name="User" size={16} />
+              <Text>Présentiel - Lieu défini ultérieurement</Text>
+            </StyledSelectOptionWebinarLabelData>
+          ))}
       </StyledSelectOptionWebinarLabelDetails>
     </StyledSelectOptionWebinarLabel>
   );

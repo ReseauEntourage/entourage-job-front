@@ -44,6 +44,12 @@ const interceptOnboardingApis = () => {
     }
   });
 
+  // Departments: needed when the user has a department in their profile
+  cy.intercept('GET', '/departments*', {
+    statusCode: 200,
+    body: [],
+  });
+
   // Webinar: return options for the date picker, but return an empty list for
   // the “already registered” check (isParticipating=true).
   const webinarEvent = {

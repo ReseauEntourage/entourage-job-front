@@ -29,15 +29,15 @@ export const useOnboardingStepWebinar = () => {
 
   const onboardingStepWebinar = {
     summary: {
-      title: 'S’inscrire au Webinaire de bienvenue',
+      title: 'S’inscrire à une réunion de bienvenue',
       description:
-        "Découvrez le programme, rencontrez l'équipe, posez vos questions en direct",
+        "Découvrez le programme, rencontrez l'équipe, posez vos questions",
       duration: '~1 minute',
     },
-    title: 'Webinaire de bienvenue',
-    smallTitle: 'Webinaire de bienvenue',
+    title: 'S’inscrire à une réunion de bienvenue',
+    smallTitle: 'Réunion de bienvenue',
     description:
-      "Ce webinaire vous permettra de comprendre votre rôle, rencontrer l'équipe et poser toutes vos questions en direct.",
+      "Cette réunion vous permettra de comprendre votre rôle, rencontrer l'équipe et poser toutes vos questions.",
     content: (
       <StyledOnboardingStepContainer>
         <Content
