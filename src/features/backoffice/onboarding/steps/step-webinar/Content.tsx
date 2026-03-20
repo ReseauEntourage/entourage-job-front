@@ -59,7 +59,7 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
     const groups: SelectListGroup<string>[] = [];
     if (onlineEvents.length > 0) {
       groups.push({
-        label: <WebinarSelectGroupLabel icon="User" label="À distance" />,
+        label: <WebinarSelectGroupLabel icon="Laptop" label="À distance" />,
         options: onlineEvents.map(toOption),
       });
     }
