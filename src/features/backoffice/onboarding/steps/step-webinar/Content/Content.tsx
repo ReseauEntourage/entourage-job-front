@@ -1,20 +1,32 @@
 import React, { useCallback, useEffect } from 'react';
 import { Api } from '@/src/api';
 import { Event } from '@/src/api/types';
+import { Alert } from '@/src/components/ui';
+import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { H4 } from '@/src/components/ui/Headings';
 import { SelectList } from '@/src/components/ui/Inputs/SelectList';
 import { SelectListGroup } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
 import { SelectOptionWebinarLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionWebinarLabel/SelectOptionWebinarLabel';
 import { EventMode, EventType } from '@/src/constants/events';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { WebinarSelectGroupLabel } from './WebinarSelectGroupLabel/WebinarSelectGroupLabel';
+import { WebinarSelectGroupLabel } from '../WebinarSelectGroupLabel/WebinarSelectGroupLabel';
+import { StyledSeparator } from './Content.styles';
+
+const NO_DATE_VALUE = 'no-date';
 
 export interface ContentProps {
   webinarSfId: string | null;
   onChange: (value: string) => void;
+  noDateSelected: boolean;
+  onNoDateChange: (value: boolean) => void;
 }
 
-export const Content = ({ webinarSfId, onChange }: ContentProps) => {
+export const Content = ({
+  webinarSfId,
+  onChange,
+  noDateSelected,
+  onNoDateChange,
+}: ContentProps) => {
   const [options, setOptions] = React.useState<SelectListGroup<string>[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isIdle, setIsIdle] = React.useState<boolean>(true);
@@ -69,6 +81,21 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
         options: inPersonEvents.map(toOption),
       });
     }
+    groups.push({
+      label: (
+        <StyledSeparator>
+          <hr />
+          <span>ou</span>
+          <hr />
+        </StyledSeparator>
+      ),
+      options: [
+        {
+          value: NO_DATE_VALUE,
+          label: <SelectOptionWebinarLabel noDate />,
+        },
+      ],
+    });
     setOptions(groups);
     setIsLoading(false);
     setIsIdle(false);
@@ -80,6 +107,12 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
     }
   }, [fetchNextWebinarOptions, isIdle]);
 
+  const selectedValues = noDateSelected
+    ? [NO_DATE_VALUE]
+    : webinarSfId
+    ? [webinarSfId]
+    : [];
+
   return (
     <>
       <H4 title="Séléctionnez la date qui vous convient le mieux" />
@@ -89,12 +122,28 @@ export const Content = ({ webinarSfId, onChange }: ContentProps) => {
         name="webinarSfId"
         title="Sélectionnez la date qui vous convient le mieux"
         options={options}
-        value={webinarSfId ? [webinarSfId] : []}
-        onChange={(value) => onChange(value[0] ?? '')}
+        value={selectedValues}
+        onChange={(value) => {
+          const selected = value[0];
+          if (selected === NO_DATE_VALUE) {
+            onNoDateChange(true);
+            onChange('');
+          } else {
+            onNoDateChange(false);
+            onChange(selected ?? '');
+          }
+        }}
         isMulti={false}
         isLoading={isLoading}
         estimatedOptionLength={6}
       />
+      {noDateSelected && (
+        <Alert variant={AlertVariant.Info}>
+          Pas de souci&nbsp;! Vous retrouverez les prochaines sessions
+          disponibles directement dans votre espace. Nous vous enverrons un
+          rappel par e-mail dès qu&apos;une nouvelle date sera ouverte.
+        </Alert>
+      )}
     </>
   );
 };
