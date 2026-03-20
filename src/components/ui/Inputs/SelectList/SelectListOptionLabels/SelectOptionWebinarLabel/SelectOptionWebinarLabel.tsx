@@ -3,6 +3,7 @@ import 'moment/locale/fr';
 import React from 'react';
 import { Text, LucidIcon } from '@/src/components/ui';
 import { EventMode } from '@/src/constants/events';
+import { COLORS } from '@/src/constants/styles';
 import { Event } from 'src/api/types';
 import {
   StyledSelectOptionWebinarLabel,
@@ -45,12 +46,18 @@ export const SelectOptionWebinarLabel = ({
             <Text>Visioconférence en ligne</Text>
           </StyledSelectOptionWebinarLabelData>
         )}
-        {event.mode === EventMode.IN_PERSON && (
-          <StyledSelectOptionWebinarLabelData>
-            <LucidIcon name="User" size={16} />
-            <Text>Présentiel</Text>
-          </StyledSelectOptionWebinarLabelData>
-        )}
+        {event.mode === EventMode.IN_PERSON &&
+          (event.fullAddress ? (
+            <StyledSelectOptionWebinarLabelData>
+              <LucidIcon color={COLORS.amber} name="MapPin" size={16} />
+              <Text color="amber">{event.fullAddress}</Text>
+            </StyledSelectOptionWebinarLabelData>
+          ) : (
+            <StyledSelectOptionWebinarLabelData>
+              <LucidIcon name="User" size={16} />
+              <Text>Présentiel - Lieu défini ultérieurement</Text>
+            </StyledSelectOptionWebinarLabelData>
+          ))}
       </StyledSelectOptionWebinarLabelDetails>
     </StyledSelectOptionWebinarLabel>
   );
