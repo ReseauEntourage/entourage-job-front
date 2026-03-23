@@ -78,6 +78,7 @@ export const useOnboardingStepNudges = ({
         userRole === UserRoles.CANDIDATE ? 'coachs' : 'candidats'
       }`,
       submitBtnTxt: 'Passer à l’étape suivante',
+      id: 'nudges-confirmation',
     },
     incrementationIsAllowed: async () => {
       return true;

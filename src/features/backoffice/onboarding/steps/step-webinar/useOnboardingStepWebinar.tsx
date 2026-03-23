@@ -111,6 +111,7 @@ export const useOnboardingStepWebinar = () => {
           subtitle:
             'Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire.',
           submitBtnTxt: "Passer à l'étape suivante",
+          id: 'webinar-confirmation',
         },
   } as OnboardingStep;
 
