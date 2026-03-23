@@ -11,13 +11,27 @@ import {
   StyledSelectOptionWebinarLabelDetails,
 } from './SelectOptionWebinarLabel.styles';
 
-export interface SelectOptionWebinarLabelProps {
-  event: Event;
-}
+export type SelectOptionWebinarLabelProps =
+  | { event: Event; noDate?: false }
+  | { event?: never; noDate: true };
 
 export const SelectOptionWebinarLabel = ({
   event,
+  noDate,
 }: SelectOptionWebinarLabelProps) => {
+  if (noDate) {
+    return (
+      <StyledSelectOptionWebinarLabel>
+        <Text size="large" weight="semibold">
+          Aucune de ces dates ne me convient
+        </Text>
+        <Text>
+          Vous pourrez vous inscrire plus tard depuis votre espace personnel
+        </Text>
+      </StyledSelectOptionWebinarLabel>
+    );
+  }
+
   return (
     <StyledSelectOptionWebinarLabel>
       <StyledSelectOptionWebinarLabelDateTimeContainer>

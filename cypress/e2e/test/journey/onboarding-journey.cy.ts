@@ -171,7 +171,7 @@ describe('Onboarding - Journey', () => {
     cy.get('[data-testid="webinarSfId-sf-webinar-1"]').click();
     cy.get('[data-testid="onboarding-next-step-btn"]').click();
     cy.wait('@webinarParticipation');
-    cy.contains('button', 'Passer à l’étape suivante').click();
+    cy.get('[data-testid="webinar-confirmation-submit-btn"]').click();
 
     // Step 2: Elearning - already completed
     cy.wait('@elearningUnits');
@@ -181,9 +181,7 @@ describe('Onboarding - Journey', () => {
     // Step 3: Social situation - submit empty optional form
     cy.get('[data-testid="onboarding-next-step-btn"]').click();
     cy.wait('@updateSocialSituation');
-    cy.get(
-      '[data-testid="social-situation-onboarding-success-submit-btn"]'
-    ).click();
+    cy.get('[data-testid="social-situation-confirmation-submit-btn"]').click();
 
     // Step 4: Nudges - pick one nudge and submit
     cy.wait('@nudges');
