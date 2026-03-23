@@ -33,7 +33,7 @@ export const MessagingSuggestions = ({
 }: MessagingSuggestionProps) => {
   const currentUser = useSelector(selectCurrentUser);
 
-  const suggestions = useMemo(() => {
+  const suggestions: MessagingSuggestionItem[] = useMemo(() => {
     const participantsFirstNames = participants
       .map((p) => p.firstName)
       .join(', ');
@@ -55,7 +55,7 @@ export const MessagingSuggestions = ({
           name: "Mon domaine d'activité est différent",
           message: `Bonjour ${participantsFirstNames},\nMerci pour votre message. Votre recherche ne correspond pas directement à mon domaine d'activité, ce qui limite ma capacité à vous aider efficacement.\n\nJe vous invite à contacter d'autres membres plus proches de votre secteur.\n\nBonne continuation dans vos démarches.`,
         },
-      ] as MessagingSuggestionItem[];
+      ];
     }
 
     if (currentUser.role === UserRoles.CANDIDATE) {
@@ -85,7 +85,7 @@ export const MessagingSuggestions = ({
           name: "Solliciter un retour d'expérience",
           message: `Bonjour ${participantsFirstNames},\nJe m'appelle ${currentUser.firstName}, je vois que vous avez de l'expérience dans le secteur [...] et serais ravi(e) d'échanger avec vous par rapport à mon projet professionnel.\nSeriez-vous disponible pour en parler ensemble ?\nMerci d'avance`,
         },
-      ] as MessagingSuggestionItem[];
+      ];
     } else if (isRoleIncluded(getRolesNotAdmin(), currentUser.role)) {
       // Suggestions for all other users (not admins)
       return [
@@ -105,7 +105,7 @@ export const MessagingSuggestions = ({
           name: 'Partager mon expérience',
           message: `Bonjour ${participantsFirstNames},\nJe travaille dans le secteur […] et serais ravi(e) d'échanger avec vous sur votre projet.\nDites-moi ce que vous recherchez actuellement et je pourrai vous partager un retour d'expérience ou vous orienter vers des contacts utiles.`,
         },
-      ] as MessagingSuggestionItem[];
+      ];
     }
 
     return [];
