@@ -6,7 +6,7 @@ import { H3 } from '@/src/components/ui/Headings/H3';
 import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { isRoleIncluded } from '@/src/utils';
-import { LucidIcon } from 'src/components/ui';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { Item } from './Item/Item';
 import {
