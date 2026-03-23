@@ -54,6 +54,7 @@ function* fetchProfilesRequestedSaga(
       nudgeIds,
       businessSectorIds,
       contactTypes,
+      isAvailable,
     } = action.payload;
 
     const response = yield* call(() =>
@@ -66,6 +67,7 @@ function* fetchProfilesRequestedSaga(
         search,
         offset,
         limit,
+        isAvailable,
       })
     );
     yield* put(fetchProfilesSucceeded(response.data));
