@@ -64,7 +64,7 @@ export const MessagingConversation = () => {
     if (!selectedConversation || selectedConversationId === 'new') {
       return false;
     }
-    if ((selectedConversation as any).id !== selectedConversationId) {
+    if (selectedConversation.id !== selectedConversationId) {
       return false;
     }
     if (currentUserHasSentMessages) {
