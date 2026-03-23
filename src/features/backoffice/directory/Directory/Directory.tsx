@@ -34,6 +34,10 @@ import {
 
 const route = '/backoffice/annuaire';
 
+const availabilityFilters: FilterConstant<boolean>[] = [
+  { value: true, label: 'Uniquement les profils disponibles' },
+];
+
 export function Directory() {
   const { push } = useRouter();
   const isMobile = useIsMobile();
@@ -56,6 +60,7 @@ export function Directory() {
     businessSectorIds,
     search,
     contactTypes,
+    isAvailable,
   } = directoryFiltersParams;
 
   const DirectoryFilters: Filter[] = useMemo(() => {
@@ -88,12 +93,19 @@ export function Directory() {
       tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
     } as Filter;
 
+    const availabilityFilter = {
+      key: 'isAvailable',
+      constants: availabilityFilters,
+      title: 'Disponibilité',
+    } as Filter;
+
     // Assigning filters based on entity
     const userFilters = [
       departmentByIdFilter,
       nudgesIdsFilters,
       businessSectorsFilter,
       contactTypesFilter,
+      availabilityFilter,
     ];
     const companyFilters = [businessSectorsFilter, departmentByIdFilter];
 
@@ -123,12 +135,17 @@ export function Directory() {
       contactTypes: mutateToArray(contactTypes).map((contactType) =>
         findConstantFromValue(contactType, allContactTypes)
       ),
+      isAvailable:
+        isAvailable !== undefined
+          ? [findConstantFromValue(isAvailable, availabilityFilters)]
+          : [],
     };
   }, [
     departments,
     nudgeIds,
     businessSectorIds,
     contactTypes,
+    isAvailable,
     businessSectorsFilters,
     nudgesFilters,
   ]);
