@@ -386,6 +386,12 @@ export const GA_TAGS = {
   BACKOFFICE_REFERER_HEADER_BAO_CLIC: {
     action: 'Backoffice_Referer_Header_BAO_Clic',
   },
+  BACKOFFICE_HEADER_RESSOURCES_CLIC: {
+    action: 'Backoffice_Header_Ressources_Clic',
+  },
+  BACKOFFICE_HEADER_AIDES_LOCALES_CLIC: {
+    action: 'Backoffice_Header_Aides_Locales_Clic',
+  },
   BACKOFFICE_CV_AIDE: {
     action: 'Backoffice_CV_Aide',
   },
