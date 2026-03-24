@@ -87,7 +87,7 @@ export const NavConnectedContentMobile = ({
                 index
               ) => {
                 const isActiveOrChildActive =
-                  asPath.includes(href) ||
+                  (!!href && asPath.includes(href)) ||
                   (subMenu &&
                     subMenu.some(({ href: subMenuHref }) => {
                       return asPath.includes(subMenuHref);

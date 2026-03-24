@@ -42,10 +42,22 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
         name: 'Événements',
       },
       {
-        href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
-        name: 'Boîte à outils',
-        external: true,
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
+        href: '',
+        name: 'Ressources',
+        tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
+        subMenu: [
+          {
+            href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
+            name: 'Boîte à outils',
+            external: true,
+            tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
+          },
+          {
+            href: '/backoffice/ressources/aides-locales',
+            name: 'Aides locales',
+            tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
+          },
+        ],
       },
     ];
   }
@@ -88,23 +100,35 @@ const renderCoachHeaderItems = (user: User): NavConnectedMainItem[] => {
         href: '/backoffice/events',
         name: 'Événements',
       },
-      ...(isCompanyAdmin
-        ? [
-            {
-              href: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL || '',
-              name: 'Boîte à outils',
-              external: true,
-              tag: GA_TAGS.BACKOFFICE_COMPANY_HEADER_BAO_CLIC,
-            },
-          ]
-        : [
-            {
-              href: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL || '',
-              name: 'Boîte à outils',
-              external: true,
-              tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
-            },
-          ]),
+      {
+        href: '',
+        name: 'Ressources',
+        tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
+        subMenu: [
+          ...(isCompanyAdmin
+            ? [
+                {
+                  href: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL || '',
+                  name: 'Boîte à outils',
+                  external: true,
+                  tag: GA_TAGS.BACKOFFICE_COMPANY_HEADER_BAO_CLIC,
+                },
+              ]
+            : [
+                {
+                  href: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL || '',
+                  name: 'Boîte à outils',
+                  external: true,
+                  tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
+                },
+              ]),
+          {
+            href: '/backoffice/ressources/aides-locales',
+            name: 'Aides locales',
+            tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
+          },
+        ],
+      },
     ];
   }
 
@@ -199,10 +223,22 @@ export const renderLinks = (
           name: 'Événements',
         },
         {
-          href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
-          name: 'Boîte à outils',
-          external: true,
-          tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_BAO_CLIC,
+          href: '',
+          name: 'Ressources',
+          tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
+          subMenu: [
+            {
+              href: `${process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL}`,
+              name: 'Boîte à outils',
+              external: true,
+              tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_BAO_CLIC,
+            },
+            {
+              href: '/backoffice/ressources/aides-locales',
+              name: 'Aides locales',
+              tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
+            },
+          ],
         },
       ],
     },
