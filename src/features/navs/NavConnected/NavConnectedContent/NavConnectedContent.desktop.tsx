@@ -157,35 +157,53 @@ export const NavConnectedContentDesktop = ({
                         isActiveOrChildActive ? 'active' : ''
                       }`}
                     >
-                      <SimpleLink
-                        href={href + (queryParams || '')}
-                        onClick={() => {
-                          if (tag) {
-                            gaEvent(tag);
-                          }
-                        }}
-                        isExternal={external}
-                        target={external ? '_blank' : '_self'}
-                        className="uk-flex uk-flex-middle menu-link"
-                      >
-                        {icon && (
-                          <span className="uk-margin-small-right icon-span">
-                            {icon}
-                          </span>
-                        )}
-                        <span className="name-span">{name}</span>
-                        {badge && badges[badge] > 0 && (
-                          <div>
-                            &nbsp;
-                            <Tag
-                              size={TagSize.Small}
-                              variant={TagVariant.Secondary}
-                            >
-                              {badges[badge]}
-                            </Tag>
-                          </div>
-                        )}
-                      </SimpleLink>
+                      {href ? (
+                        <SimpleLink
+                          href={href + (queryParams || '')}
+                          onClick={() => {
+                            if (tag) {
+                              gaEvent(tag);
+                            }
+                          }}
+                          isExternal={external}
+                          target={external ? '_blank' : '_self'}
+                          className="uk-flex uk-flex-middle menu-link"
+                        >
+                          {icon && (
+                            <span className="uk-margin-small-right icon-span">
+                              {icon}
+                            </span>
+                          )}
+                          <span className="name-span">{name}</span>
+                          {badge && badges[badge] > 0 && (
+                            <div>
+                              &nbsp;
+                              <Tag
+                                size={TagSize.Small}
+                                variant={TagVariant.Secondary}
+                              >
+                                {badges[badge]}
+                              </Tag>
+                            </div>
+                          )}
+                        </SimpleLink>
+                      ) : (
+                        <a
+                          className="uk-flex uk-flex-middle menu-link"
+                          onClick={() => {
+                            if (tag) {
+                              gaEvent(tag);
+                            }
+                          }}
+                        >
+                          {icon && (
+                            <span className="uk-margin-small-right icon-span">
+                              {icon}
+                            </span>
+                          )}
+                          <span className="name-span">{name}</span>
+                        </a>
+                      )}
                       {subMenu && subMenu.length > 0 && (
                         <SubMenu items={subMenu} badges={badges} />
                       )}

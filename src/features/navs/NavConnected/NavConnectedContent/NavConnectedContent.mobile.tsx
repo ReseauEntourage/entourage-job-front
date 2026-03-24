@@ -99,25 +99,44 @@ export const NavConnectedContentMobile = ({
                       isActiveOrChildActive ? 'active' : ''
                     }`}
                   >
-                    <a
-                      aria-hidden="true"
-                      onClick={() => {
-                        if (tag) {
-                          gaEvent(tag);
-                        }
-                        if (href) {
+                    {href ? (
+                      <a
+                        aria-hidden="true"
+                        onClick={() => {
+                          if (tag) {
+                            gaEvent(tag);
+                          }
                           push(href + (queryParams || ''));
-                        }
-                        closeOffCanvas();
-                      }}
-                    >
-                      <span>
-                        {icon && (
-                          <span className="uk-margin-small-right">{icon}</span>
-                        )}
-                        {name}
-                      </span>
-                    </a>
+                          closeOffCanvas();
+                        }}
+                      >
+                        <span>
+                          {icon && (
+                            <span className="uk-margin-small-right">
+                              {icon}
+                            </span>
+                          )}
+                          {name}
+                        </span>
+                      </a>
+                    ) : (
+                      <a
+                        onClick={() => {
+                          if (tag) {
+                            gaEvent(tag);
+                          }
+                        }}
+                      >
+                        <span>
+                          {icon && (
+                            <span className="uk-margin-small-right">
+                              {icon}
+                            </span>
+                          )}
+                          {name}
+                        </span>
+                      </a>
+                    )}
                     {badge && badges[badge] > 0 && (
                       <div>
                         &nbsp;

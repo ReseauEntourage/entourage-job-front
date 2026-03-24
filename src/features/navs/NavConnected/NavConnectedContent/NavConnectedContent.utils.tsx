@@ -42,7 +42,6 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
         name: 'Événements',
       },
       {
-        href: '',
         name: 'Ressources',
         tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
         subMenu: [
@@ -101,7 +100,6 @@ const renderCoachHeaderItems = (user: User): NavConnectedMainItem[] => {
         name: 'Événements',
       },
       {
-        href: '',
         name: 'Ressources',
         tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
         subMenu: [
@@ -223,7 +221,6 @@ export const renderLinks = (
           name: 'Événements',
         },
         {
-          href: '',
           name: 'Ressources',
           tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
           subMenu: [
