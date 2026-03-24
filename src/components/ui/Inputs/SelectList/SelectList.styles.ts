@@ -76,6 +76,14 @@ export const StyledInput = styled.input<{ radioSize?: 'small' | 'large' }>`
   height: ${(props) => (props.radioSize === 'small' ? '16px' : '20px')};
 `;
 
+export const StyledSelectListGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const StyledSelectListGroupLabel = styled.div``;
+
 export const StyledSelectListItem = styled.div`
   display: flex;
   align-items: center;

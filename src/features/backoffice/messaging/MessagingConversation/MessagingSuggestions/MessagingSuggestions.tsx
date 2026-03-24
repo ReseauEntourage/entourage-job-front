@@ -3,11 +3,15 @@ import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { ConversationParticipant } from '@/src/api/types';
 import { H3 } from '@/src/components/ui/Headings/H3';
+import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { isRoleIncluded } from '@/src/utils';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { Item } from './Item/Item';
 import {
+  MessagingQuickRepliesContainer,
+  MessagingQuickRepliesListContainer,
   MessagingSuggestionsContainer,
   MessagingSuggestionsExplanation,
   MessagingSuggestionsListContainer,
@@ -18,21 +22,40 @@ export interface MessagingSuggestionProps {
   newMessage: string;
   onSuggestionClick: (suggestion: MessagingSuggestionItem) => void;
   participants: ConversationParticipant[];
+  variant?: 'default' | 'coach-quick-replies';
 }
 
 export const MessagingSuggestions = ({
   newMessage,
   onSuggestionClick,
   participants,
+  variant = 'default',
 }: MessagingSuggestionProps) => {
   const currentUser = useSelector(selectCurrentUser);
 
-  const suggestions = useMemo(() => {
+  const suggestions: MessagingSuggestionItem[] = useMemo(() => {
     const participantsFirstNames = participants
       .map((p) => p.firstName)
       .join(', ');
     if (!currentUser) {
       return [];
+    }
+
+    if (variant === 'coach-quick-replies') {
+      return [
+        {
+          name: "Proposer de l'aide",
+          message: `Bonjour ${participantsFirstNames},\nMerci pour votre message.\nJe suis disponible pour échanger avec vous.\n\nPouvez-vous me préciser votre objectif actuel afin que nous organisions un premier échange ?`,
+        },
+        {
+          name: 'Je ne suis pas disponible',
+          message: `Bonjour ${participantsFirstNames},\nMerci pour votre message.\nJe ne suis pas disponible actuellement pour m'impliquer dans un nouvel échange.\nJe vous invite à contacter d'autres membres du réseau afin de poursuivre vos démarches.\nTous mes encouragements pour la suite.`,
+        },
+        {
+          name: "Mon domaine d'activité est différent",
+          message: `Bonjour ${participantsFirstNames},\nMerci pour votre message. Votre recherche ne correspond pas directement à mon domaine d'activité, ce qui limite ma capacité à vous aider efficacement.\n\nJe vous invite à contacter d'autres membres plus proches de votre secteur.\n\nBonne continuation dans vos démarches.`,
+        },
+      ];
     }
 
     if (currentUser.role === UserRoles.CANDIDATE) {
@@ -60,9 +83,9 @@ export const MessagingSuggestions = ({
         },
         {
           name: "Solliciter un retour d'expérience",
-          message: `Bonjour ${participantsFirstNames},\nJe m'appelle ${currentUser.firstName}, je vois que vous avez de l'expérience dans le secteur [...] et serais ravi(e) d’échanger avec vous par rapport à mon projet professionnel.\nSeriez-vous disponible pour en parler ensemble ?\nMerci d'avance`,
+          message: `Bonjour ${participantsFirstNames},\nJe m'appelle ${currentUser.firstName}, je vois que vous avez de l'expérience dans le secteur [...] et serais ravi(e) d'échanger avec vous par rapport à mon projet professionnel.\nSeriez-vous disponible pour en parler ensemble ?\nMerci d'avance`,
         },
-      ] as MessagingSuggestionItem[];
+      ];
     } else if (isRoleIncluded(getRolesNotAdmin(), currentUser.role)) {
       // Suggestions for all other users (not admins)
       return [
@@ -80,20 +103,42 @@ export const MessagingSuggestions = ({
         },
         {
           name: 'Partager mon expérience',
-          message: `Bonjour ${participantsFirstNames},\nJe travaille dans le secteur […] et serais ravi(e) d’échanger avec vous sur votre projet.\nDites-moi ce que vous recherchez actuellement et je pourrai vous partager un retour d’expérience ou vous orienter vers des contacts utiles.`,
+          message: `Bonjour ${participantsFirstNames},\nJe travaille dans le secteur […] et serais ravi(e) d'échanger avec vous sur votre projet.\nDites-moi ce que vous recherchez actuellement et je pourrai vous partager un retour d'expérience ou vous orienter vers des contacts utiles.`,
         },
-      ] as MessagingSuggestionItem[];
+      ];
     }
 
     return [];
-  }, [currentUser, participants]);
-
-  const bindSelectedSuggestion = (suggestion: MessagingSuggestionItem) => {
-    onSuggestionClick(suggestion);
-  };
+  }, [currentUser, participants, variant]);
 
   if (suggestions.length === 0) {
     return null;
+  }
+
+  if (variant === 'coach-quick-replies') {
+    if (newMessage.length > 0) {
+      return null;
+    }
+    return (
+      <MessagingQuickRepliesContainer>
+        <MessagingQuickRepliesListContainer>
+          <LucidIcon
+            name="MessageCircleReply"
+            size={18}
+            color={COLORS.darkGray}
+          />
+          {suggestions.map((suggestion) => (
+            <Item
+              key={suggestion.name}
+              suggestion={suggestion}
+              onClick={() => {
+                onSuggestionClick(suggestion);
+              }}
+            />
+          ))}
+        </MessagingQuickRepliesListContainer>
+      </MessagingQuickRepliesContainer>
+    );
   }
 
   return (
@@ -102,7 +147,7 @@ export const MessagingSuggestions = ({
         <>
           <MessagingSuggestionsExplanation>
             <SvgIcon name="IlluConversation" width={226} height={226} />
-            <H3 title="Vous avez besoin d’aide pour vous lancer ?" center />
+            <H3 title="Vous avez besoin d'aide pour vous lancer ?" center />
             <p>
               Choisissez un sujet ci-dessous et envoyez votre premier message en
               toute simplicité
@@ -114,7 +159,7 @@ export const MessagingSuggestions = ({
                 key={suggestion.name}
                 suggestion={suggestion}
                 onClick={() => {
-                  bindSelectedSuggestion(suggestion);
+                  onSuggestionClick(suggestion);
                 }}
               />
             ))}

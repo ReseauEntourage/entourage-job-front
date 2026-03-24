@@ -11,13 +11,27 @@ import {
   StyledSelectOptionWebinarLabelDetails,
 } from './SelectOptionWebinarLabel.styles';
 
-export interface SelectOptionWebinarLabelProps {
-  event: Event;
-}
+export type SelectOptionWebinarLabelProps =
+  | { event: Event; noDate?: false }
+  | { event?: never; noDate: true };
 
 export const SelectOptionWebinarLabel = ({
   event,
+  noDate,
 }: SelectOptionWebinarLabelProps) => {
+  if (noDate) {
+    return (
+      <StyledSelectOptionWebinarLabel>
+        <Text size="large" weight="semibold">
+          Aucune de ces dates ne me convient
+        </Text>
+        <Text>
+          Vous pourrez vous inscrire plus tard depuis votre espace personnel
+        </Text>
+      </StyledSelectOptionWebinarLabel>
+    );
+  }
+
   return (
     <StyledSelectOptionWebinarLabel>
       <StyledSelectOptionWebinarLabelDateTimeContainer>
@@ -41,16 +55,22 @@ export const SelectOptionWebinarLabel = ({
         </StyledSelectOptionWebinarLabelData>
         {event.mode === EventMode.ONLINE && (
           <StyledSelectOptionWebinarLabelData>
-            <LucidIcon name="Camera" size={16} />
+            <LucidIcon name="Laptop" size={16} />
             <Text>Visioconférence en ligne</Text>
           </StyledSelectOptionWebinarLabelData>
         )}
-        {event.mode === EventMode.IN_PERSON && (
-          <StyledSelectOptionWebinarLabelData>
-            <LucidIcon name="User" size={16} />
-            <Text>Présentiel</Text>
-          </StyledSelectOptionWebinarLabelData>
-        )}
+        {event.mode === EventMode.IN_PERSON &&
+          (event.fullAddress ? (
+            <StyledSelectOptionWebinarLabelData>
+              <LucidIcon name="MapPin" size={16} />
+              <Text>{event.fullAddress}</Text>
+            </StyledSelectOptionWebinarLabelData>
+          ) : (
+            <StyledSelectOptionWebinarLabelData>
+              <LucidIcon name="User" size={16} />
+              <Text>Présentiel - Lieu défini ultérieurement</Text>
+            </StyledSelectOptionWebinarLabelData>
+          ))}
       </StyledSelectOptionWebinarLabelDetails>
     </StyledSelectOptionWebinarLabel>
   );

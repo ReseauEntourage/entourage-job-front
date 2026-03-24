@@ -13,6 +13,7 @@ export type DirectoryFilters = {
   businessSectorIds: string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
   entity: DirectoryEntity;
+  isAvailable?: boolean;
 };
 
 // Get the current query params for the directory filters
@@ -20,7 +21,14 @@ export function useDirectoryQueryParams() {
   const role = useDirectoryRole();
   const entity = useDirectoryEntity();
   const {
-    query: { search, nudgeIds, businessSectorIds, departments, contactTypes },
+    query: {
+      search,
+      nudgeIds,
+      businessSectorIds,
+      departments,
+      contactTypes,
+      isAvailable,
+    },
   } = useRouter();
 
   const normalizeBusinessSectorIds = (): string[] => {
@@ -50,6 +58,7 @@ export function useDirectoryQueryParams() {
     departments: normalizeDepartments(),
     contactTypes: (contactTypes || []) as ContactTypeEnum[],
     entity,
+    ...(isAvailable === 'true' ? { isAvailable: true } : {}),
   };
 
   if (search) {

@@ -6,6 +6,7 @@ import { StyledOnboardingModalAlertTitleContainer } from '../onboarding.styles';
 import { useOnboarding } from '../useOnboarding';
 
 export interface ConfirmModalStepProps {
+  id?: string;
   title: string;
   subtitle: string;
   submitBtnTxt: string;
@@ -13,6 +14,7 @@ export interface ConfirmModalStepProps {
 }
 
 export const ConfirmModalStep = ({
+  id = 'confirm-modal-step',
   title,
   subtitle,
   submitBtnTxt,
@@ -22,7 +24,7 @@ export const ConfirmModalStep = ({
 
   return (
     <PrettyModal
-      id="social-situation-onboarding-success"
+      id={id}
       title={title}
       subtitle={subtitle}
       submitBtnTxt={submitBtnTxt}
