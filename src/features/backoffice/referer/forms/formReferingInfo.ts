@@ -50,6 +50,15 @@ export const formReferingInfo: FormSchema<{
           message:
             'Le candidat doit avoir plus de 18 ans pour participer au programme Entourage Pro',
         },
+        {
+          method: (fieldValue) => {
+            const maxBirthdate = new Date();
+            maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 120);
+            const realBirthdate = new Date(fieldValue);
+            return realBirthdate > maxBirthdate;
+          },
+          message: 'Veuillez saisir une date de naissance valide',
+        },
       ],
     },
     {
