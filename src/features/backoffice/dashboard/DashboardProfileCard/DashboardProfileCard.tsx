@@ -9,6 +9,7 @@ import {
   TagSize,
   Text,
 } from '@/src/components/ui';
+import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { ProfileNudges } from '@/src/constants/nudges';
@@ -29,6 +30,7 @@ import {
   StyledDashbardProfileCardSectionContainer,
   StyledDashboardProfileCardEmptyState,
   StyledDashboardProfileCardCompletionContainer,
+  StyledDashboardProfileCardMainInfos,
 } from './DashboardProfileCard.styles';
 
 export const DashboardProfileCard = () => {
@@ -59,7 +61,7 @@ export const DashboardProfileCard = () => {
           size={69}
           hasPicture={user.userProfile?.hasPicture || false}
         />
-        <div>
+        <StyledDashboardProfileCardMainInfos>
           <Text size="xlarge" weight="bold">
             {`${user.firstName} ${user.lastName.charAt(0).toUpperCase()}.`}
           </Text>
@@ -67,7 +69,8 @@ export const DashboardProfileCard = () => {
           {user.userProfile.department && (
             <Text>{user.userProfile.department}</Text>
           )}
-        </div>
+          <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+        </StyledDashboardProfileCardMainInfos>
       </StyledDashboardProfileCardPictureName>
 
       {/* Completion rate bar */}
