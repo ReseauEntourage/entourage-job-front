@@ -53,7 +53,7 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
           },
           {
             href: '/backoffice/ressources/aides-locales',
-            name: 'Aides locales',
+            name: "Structures de l'inclusion",
             tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
           },
         ],
@@ -122,7 +122,7 @@ const renderCoachHeaderItems = (user: User): NavConnectedMainItem[] => {
               ]),
           {
             href: '/backoffice/ressources/aides-locales',
-            name: 'Aides locales',
+            name: "Structures de l'inclusion",
             tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
           },
         ],
@@ -232,7 +232,7 @@ export const renderLinks = (
             },
             {
               href: '/backoffice/ressources/aides-locales',
-              name: 'Aides locales',
+              name: "Structures de l'inclusion",
               tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
             },
           ],

@@ -13,12 +13,12 @@ const AidesLocales = () => {
     [key in UserRoles]?: { title: string; description: string };
   } & { default: { title: string; description: string } } = {
     [UserRoles.CANDIDATE]: {
-      title: 'Aides locales',
+      title: "Structures de l'inclusion",
       description:
         'Trouvez des aides près de chez vous pour faciliter votre parcours vers l’emploi',
     },
     default: {
-      title: 'Aides locales',
+      title: "Structures de l'inclusion",
       description:
         'Identifiez des services pour aider votre candidat à lever les freins qui peuvent ralentir son accès à l’emploi',
     },
@@ -28,7 +28,7 @@ const AidesLocales = () => {
     ? contentByRole[user?.role] || contentByRole.default
     : contentByRole.default;
   return (
-    <LayoutBackOffice title="Aides locales">
+    <LayoutBackOffice title="Structures de l'inclusion">
       <Section className="custom-page">
         <HeaderBackoffice
           title={contents.title}
