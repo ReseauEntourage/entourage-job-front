@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Section } from '@/src/components/ui';
 import { H1 } from '@/src/components/ui/Headings';
 import { CompanyGoal } from '@/src/constants/company';
+import { UserProfileAvailabilityCard } from '../../profile/ProfilePartCards/UserProfileAvailabilityCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -19,7 +20,6 @@ import {
   StyledDashboardTitleContainer,
 } from './Dashboard.styles';
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
-import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
 import { DashboardCompanyCollaboratorsList } from './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
@@ -55,7 +55,7 @@ export const Dashboard = () => {
         {!isCompanyAdmin && user.company && (
           <DashboardCompanyCard company={user.company} />
         )}
-        {isNormalUser && <DashboardAvailabilityCard />}
+        {isNormalUser && <UserProfileAvailabilityCard />}
         <DashboardStaffContactCard />
       </>
     );

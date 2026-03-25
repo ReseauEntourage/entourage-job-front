@@ -11,7 +11,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import { gaEvent } from 'src/lib/gtag';
 import { currentUserActions } from 'src/use-cases/current-user';
 
-export const DashboardAvailabilityCard = () => {
+export const UserProfileAvailabilityCard = () => {
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
 
