@@ -11,8 +11,10 @@ import {
   StyledButton,
   StyledCheckIconContainer,
   StyledListOptionContainer,
+  StyledSelectListGroup,
+  StyledSelectListGroupLabel,
 } from './SelectList.styles';
-import { SelectListType } from './SelectList.types';
+import { SelectListOptions, isGroupedOptions } from './SelectList.types';
 
 export type SelectListItem = {
   value: string;
@@ -23,7 +25,7 @@ export interface SelectListProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: SelectListType<T>[];
+  options: SelectListOptions<T>;
   estimatedOptionLength?: number;
   isLoading?: boolean;
   asGrid?: boolean;
@@ -74,25 +76,54 @@ export const SelectList = <T extends string>({
       )}
       <StyledSelectList data-testid={id} $asGrid={asGrid}>
         {isLoading && <Skeleton height="90px" count={estimatedOptionLength} />}
-        {options.map(({ value, label }) => {
-          return (
-            <StyledButton
-              id={`${id}-${value}`}
-              key={`${id}-${value}`}
-              data-testid={`${id}-${value}`}
-              onClick={() => handleSelect(value)}
-              type="button"
-              onBlur={onBlur}
-              ref={inputRef}
-              $selected={valueProp?.includes(value)}
-            >
-              <StyledCheckIconContainer $selected={valueProp?.includes(value)}>
-                <LucidIcon name="Check" color={COLORS.white} />
-              </StyledCheckIconContainer>
-              <StyledListOptionContainer>{label}</StyledListOptionContainer>
-            </StyledButton>
-          );
-        })}
+        {isGroupedOptions(options)
+          ? options.map((group, groupIndex) => (
+              <StyledSelectListGroup key={groupIndex}>
+                <StyledSelectListGroupLabel>
+                  {group.label}
+                </StyledSelectListGroupLabel>
+                {group.options.map(({ value, label }) => (
+                  <StyledButton
+                    id={`${id}-${value}`}
+                    key={`${id}-${value}`}
+                    data-testid={`${id}-${value}`}
+                    onClick={() => handleSelect(value)}
+                    type="button"
+                    onBlur={onBlur}
+                    ref={inputRef}
+                    $selected={valueProp?.includes(value)}
+                  >
+                    <StyledCheckIconContainer
+                      $selected={valueProp?.includes(value)}
+                    >
+                      <LucidIcon name="Check" color={COLORS.white} />
+                    </StyledCheckIconContainer>
+                    <StyledListOptionContainer>
+                      {label}
+                    </StyledListOptionContainer>
+                  </StyledButton>
+                ))}
+              </StyledSelectListGroup>
+            ))
+          : options.map(({ value, label }) => (
+              <StyledButton
+                id={`${id}-${value}`}
+                key={`${id}-${value}`}
+                data-testid={`${id}-${value}`}
+                onClick={() => handleSelect(value)}
+                type="button"
+                onBlur={onBlur}
+                ref={inputRef}
+                $selected={valueProp?.includes(value)}
+              >
+                <StyledCheckIconContainer
+                  $selected={valueProp?.includes(value)}
+                >
+                  <LucidIcon name="Check" color={COLORS.white} />
+                </StyledCheckIconContainer>
+                <StyledListOptionContainer>{label}</StyledListOptionContainer>
+              </StyledButton>
+            ))}
       </StyledSelectList>
       {error && <FieldErrorMessage error={error} />}
     </StyledSelectListContainer>

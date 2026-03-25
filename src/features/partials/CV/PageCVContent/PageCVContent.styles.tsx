@@ -198,7 +198,7 @@ export const StyledLeftColumn = styled.div`
 `;
 
 export const StyledRightColumn = styled.div`
-  flex: 3;
+  flex: 2;
 `;
 
 export const StyledTitleAccordion = styled.div`

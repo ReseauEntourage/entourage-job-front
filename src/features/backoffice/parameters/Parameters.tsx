@@ -23,6 +23,7 @@ import {
   selectIsComplete,
 } from '@/src/use-cases/current-user';
 import { ProfileDeleteAccount } from '../../profile/ProfilePartCards/ProfileDeleteAccount/ProfileDeleteAccount';
+import { UserProfileAvailabilityCard } from '../../profile/ProfilePartCards/UserProfileAvailabilityCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -149,6 +150,7 @@ export const Parameters = () => {
                   smallCard
                 />
               )}
+              <UserProfileAvailabilityCard />
               <ProfileContactPreferences
                 userRole={user.role}
                 isEditable

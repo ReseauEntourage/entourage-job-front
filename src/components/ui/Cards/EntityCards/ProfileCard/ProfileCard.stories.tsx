@@ -28,17 +28,6 @@ export const Candidate = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.CANDIDATE,
-    nudges: [
-      {
-        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-        value: 'event',
-        nameRequest:
-          'Se rencontrer et échanger avec les membres de la communauté',
-        nameOffer:
-          'Se rencontrer lors d’événements avec les membres de la communauté',
-        order: 4,
-      },
-    ],
     isAvailable: true,
     sectorOccupations: [
       {
@@ -66,17 +55,6 @@ export const Coach = {
     lastName: 'Doe',
     role: UserRoles.COACH,
     isAvailable: true,
-    nudges: [
-      {
-        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-        value: 'event',
-        nameRequest:
-          'Se rencontrer et échanger avec les membres de la communauté',
-        nameOffer:
-          'Se rencontrer lors d’événements avec les membres de la communauté',
-        order: 4,
-      },
-    ],
     sectorOccupations: [
       {
         id: '664a4779-06a6-4693-98a3-551a56478ed2',

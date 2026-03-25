@@ -28,13 +28,11 @@ export function AlertCandidatesList({
           lastName={candidate.lastName}
           role={candidate.role}
           department={candidate.department}
-          nudges={candidate.nudges || []}
           sectorOccupations={candidate.sectorOccupations}
           job={candidate.currentJob || undefined}
           isAvailable={candidate.isAvailable || false}
           hasPicture={candidate.hasPicture || false}
           currentJob={candidate.currentJob || undefined}
-          displayNudges
         />
       );
     });

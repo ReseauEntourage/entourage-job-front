@@ -319,6 +319,7 @@ export type User = {
 
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
+  onboardingWebinarSkippedAt: string | null;
 };
 
 export type StaffContact = {
@@ -354,6 +355,7 @@ export type UserDto = {
   userProfile?: UserProfile;
   lastConnection?: string;
   onboardingStatus?: OnboardingStatus;
+  onboardingWebinarSkippedAt?: string | null;
 };
 
 export type UserRegistrationDto = {
@@ -563,6 +565,18 @@ export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
   >;
 };
 
+export type MatchingReason =
+  | 'profile'
+  | 'needs'
+  | 'activity'
+  | 'locationCompatibility';
+
+export type ProfileRecommendation = {
+  id: string;
+  publicProfile: PublicProfile;
+  reason: MatchingReason | null;
+};
+
 export type PrivateProfile = PublicProfile & {
   email: string;
   phone: string;
@@ -577,6 +591,7 @@ export type ProfilesFilters = {
   departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
+  isAvailable?: boolean;
 };
 
 export type EventsFilters = {

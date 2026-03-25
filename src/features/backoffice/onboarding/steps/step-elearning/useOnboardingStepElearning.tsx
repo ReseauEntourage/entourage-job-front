@@ -81,6 +81,7 @@ export const useOnboardingStepElearning = ({
       return true;
     },
     confirmationStep: {
+      id: 'elearning-confirmation',
       title: 'Bravo ! Formation terminée',
       subtitle: `Vous faites maintenant partie des ${userRole.toLowerCase()} Entourage Pro formés.`,
       submitBtnTxt: 'Passer à l’étape suivante',

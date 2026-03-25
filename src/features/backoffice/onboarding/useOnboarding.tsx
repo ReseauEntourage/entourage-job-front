@@ -209,11 +209,12 @@ export const useOnboarding = (): UseOnboardingReturn => {
       }
       // Run confirmation step modal if defined in the current step
       if (currentOnboardingStep.confirmationStep) {
-        const { title, subtitle, submitBtnTxt } =
+        const { title, subtitle, submitBtnTxt, id } =
           currentOnboardingStep.confirmationStep;
         await new Promise<void>((resolve) => {
           openModal(
             <ConfirmModalStep
+              id={id}
               title={title}
               subtitle={subtitle}
               submitBtnTxt={submitBtnTxt}

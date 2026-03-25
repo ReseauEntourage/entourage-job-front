@@ -16,6 +16,7 @@ export const formEditLanguages: FormSchema<{
       placeholder: 'Langues',
       isMulti: true,
       showLabel: true,
+      maxItems: 10,
     },
   ],
 };

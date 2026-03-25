@@ -23,6 +23,13 @@ export const StyledDashboardProfileCardPictureName = styled.div`
   }
 `;
 
+export const StyledDashboardProfileCardMainInfos = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+`;
+
 export const StyledDashboardProfileCardCompletionContainer = styled.div`
   margin: 0 20px;
 `;

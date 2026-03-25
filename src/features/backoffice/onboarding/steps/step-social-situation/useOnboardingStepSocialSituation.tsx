@@ -177,6 +177,7 @@ export const useOnboardingStepSocialSituation = () => {
       subtitle:
         'Ces informations nous aideront à mieux vous accompagner dans votre parcours.',
       submitBtnTxt: 'Passer à l’étape suivante',
+      id: 'social-situation-confirmation',
     },
     isStepCompleted: async () => {
       const ok = await waitForSocialSituationFetch();

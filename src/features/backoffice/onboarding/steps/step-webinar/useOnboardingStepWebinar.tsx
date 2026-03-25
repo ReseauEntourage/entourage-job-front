@@ -1,19 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@/src/api';
 import { EventType } from '@/src/constants/events';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { AppDispatch } from '@/src/store/store';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import { updateUserParticipationThunk } from '@/src/use-cases/events/events.thunks';
 import {
   onboardingActions,
+  selectNoDateSelected,
   selectWebinarSfId,
 } from '@/src/use-cases/onboarding';
 import { StyledOnboardingStepContainer } from '../../onboarding.styles';
 import { OnboardingStep } from '../../onboarding.types';
-import { Content } from './Content';
+import { Content } from './Content/Content';
 
 export const useOnboardingStepWebinar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const webinarSfId = useSelector(selectWebinarSfId);
+  const noDateSelected = useSelector(selectNoDateSelected);
+  const currentUser = useAuthenticatedUser();
 
   const fetchRegisteredWebinarEvents = async () => {
     const { data } = await Api.getAllEvents({
@@ -29,15 +34,15 @@ export const useOnboardingStepWebinar = () => {
 
   const onboardingStepWebinar = {
     summary: {
-      title: 'S’inscrire au Webinaire de bienvenue',
+      title: "S'inscrire à une réunion de bienvenue",
       description:
-        "Découvrez le programme, rencontrez l'équipe, posez vos questions en direct",
+        "Découvrez le programme, rencontrez l'équipe, posez vos questions",
       duration: '~1 minute',
     },
-    title: 'Webinaire de bienvenue',
-    smallTitle: 'Webinaire de bienvenue',
+    title: "S'inscrire à une réunion de bienvenue",
+    smallTitle: 'Réunion de bienvenue',
     description:
-      "Ce webinaire vous permettra de comprendre votre rôle, rencontrer l'équipe et poser toutes vos questions en direct.",
+      "Cette réunion vous permettra de comprendre votre rôle, rencontrer l'équipe et poser toutes vos questions.",
     content: (
       <StyledOnboardingStepContainer>
         <Content
@@ -45,20 +50,38 @@ export const useOnboardingStepWebinar = () => {
           onChange={(value) => {
             dispatch(onboardingActions.setWebinarSfId(value));
           }}
+          noDateSelected={noDateSelected}
+          onNoDateChange={(value) => {
+            dispatch(onboardingActions.setNoDateSelected(value));
+          }}
         />
       </StyledOnboardingStepContainer>
     ),
     isStepCompleted: async () => {
-      // Step is considered complete if the user is registered for a webinar
+      if (currentUser?.onboardingWebinarSkippedAt) {
+        return true;
+      }
       const events = await fetchRegisteredWebinarEvents();
       return events.length > 0;
     },
     incrementationIsAllowed: async () => true, // Always allow incrementation; validation is done in onSubmit
     onSubmit: async () => {
+      if (noDateSelected) {
+        const skippedAt = new Date().toISOString();
+        await Api.putUser(currentUser.id, {
+          onboardingWebinarSkippedAt: skippedAt,
+        });
+        dispatch(
+          currentUserActions.updateUserSucceeded({
+            user: { onboardingWebinarSkippedAt: skippedAt },
+          })
+        );
+        return true;
+      }
       if (!webinarSfId) {
         dispatch(
           onboardingActions.setFormErrorMessage(
-            'Veuillez sélectionner une date pour le webinaire afin de pouvoir passer à l’étape suivante.'
+            "Veuillez sélectionner une date ou indiquer qu'aucune date ne vous convient."
           )
         );
         return false;
@@ -81,12 +104,15 @@ export const useOnboardingStepWebinar = () => {
         return false;
       }
     },
-    confirmationStep: {
-      title: 'Votre place est réservée !',
-      subtitle:
-        'Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire.',
-      submitBtnTxt: 'Passer à l’étape suivante',
-    },
+    confirmationStep: noDateSelected
+      ? undefined
+      : {
+          title: 'Votre place est réservée !',
+          subtitle:
+            'Vous recevrez un email de confirmation avec le lien pour rejoindre le webinaire.',
+          submitBtnTxt: "Passer à l'étape suivante",
+          id: 'webinar-confirmation',
+        },
   } as OnboardingStep;
 
   return { onboardingStepWebinar };

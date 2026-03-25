@@ -1,4 +1,4 @@
-import { ProfilesFilters, Profile } from 'src/api/types';
+import { ProfilesFilters, Profile, ProfileRecommendation } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchProfilesAdapter = createRequestAdapter(
@@ -7,7 +7,7 @@ export const fetchProfilesAdapter = createRequestAdapter(
 
 export const fetchProfilesRecommendationsAdapter = createRequestAdapter(
   'fetchProfilesRecommendations'
-).withPayloads<void, Profile[]>();
+).withPayloads<void, ProfileRecommendation[]>();
 
 export const fetchSelectedProfileAdapter = createRequestAdapter(
   'fetchSelectedProfile'

@@ -346,6 +346,7 @@ export const useOnboardingStepProfileCompletion = () => {
           ? 'Vous êtes désormais prêt à contacter des coachs prêts à vous soutenir'
           : 'Vous êtes désormais prêt à soutenir des candidats',
       submitBtnTxt: 'Démarrer l’aventure Entourage Pro',
+      id: 'profile-completion-confirmation',
     },
   } as OnboardingStep;
 
