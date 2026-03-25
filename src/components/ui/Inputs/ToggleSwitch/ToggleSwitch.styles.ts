@@ -22,7 +22,7 @@ export const Slider = styled.span<{ checked: boolean }>`
   right: 0;
   bottom: 0;
   background-color: ${({ checked }) =>
-    checked ? COLORS.green : COLORS.mediumGray};
+    checked ? COLORS.darkBlue : COLORS.mediumGray};
   transition: 0.4s;
   border-radius: 34px;
 
