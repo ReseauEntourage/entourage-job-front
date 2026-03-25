@@ -71,6 +71,7 @@ export function useEventDirectory() {
   useEffect(() => {
     return () => {
       dispatch(eventsActions.resetEventsOffset());
+      dispatch(eventsActions.fetchEventsReset());
     };
   }, [dispatch]);
 
