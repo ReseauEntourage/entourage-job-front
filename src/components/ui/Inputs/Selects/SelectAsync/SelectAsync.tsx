@@ -44,21 +44,27 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   const debounceTimeoutId = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   );
+  const currentRequestId = useRef(0);
 
   useEffect(() => {
     return () => {
       clearTimeout(debounceTimeoutId.current);
+      currentRequestId.current += 1;
+      setIsLoading(false);
     };
-  }, []);
+  }, [loadOptions]);
 
   const debouncedLoadOptions = useCallback(
     (inputValue, callback) => {
       setIsLoading(true);
       clearTimeout(debounceTimeoutId.current);
+      const requestId = ++currentRequestId.current;
       debounceTimeoutId.current = setTimeout(() => {
         loadOptions((options) => {
-          callback(options);
-          setIsLoading(false);
+          if (requestId === currentRequestId.current) {
+            callback(options);
+            setIsLoading(false);
+          }
         }, inputValue);
       }, 500);
     },
@@ -68,9 +74,12 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   const onFocus = useCallback(() => {
     setDefaultOptions([] as FilterConstant[]);
     setIsLoading(true);
+    const requestId = ++currentRequestId.current;
     loadOptions((options) => {
-      setDefaultOptions(options);
-      setIsLoading(false);
+      if (requestId === currentRequestId.current) {
+        setDefaultOptions(options);
+        setIsLoading(false);
+      }
     }, '');
   }, [loadOptions]);
 
