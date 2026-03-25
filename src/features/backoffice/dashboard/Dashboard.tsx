@@ -55,7 +55,7 @@ export const Dashboard = () => {
         {!isCompanyAdmin && user.company && (
           <DashboardCompanyCard company={user.company} />
         )}
-        {isNormalUser && <UserProfileAvailabilityCard />}
+        {isNormalUser && <UserProfileAvailabilityCard centerTitle />}
         <DashboardStaffContactCard />
       </>
     );
