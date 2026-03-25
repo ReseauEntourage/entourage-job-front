@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MultiValue, SelectInstance, SingleValue } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { StyledInputLabel } from '../../Inputs.styles';
@@ -11,8 +11,6 @@ import {
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FilterConstant } from 'src/constants/utils';
 import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
-
-let debounceTimeoutId;
 
 interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
@@ -43,12 +41,21 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   const [defaultOptions, setDefaultOptions] = useState<FilterConstant[]>();
   const [isLoading, setIsLoading] = useState(false);
   const selectRef = useRef<SelectInstance<FilterConstant, boolean>>(null);
+  const debounceTimeoutId = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(debounceTimeoutId.current);
+    };
+  }, []);
 
   const debouncedLoadOptions = useCallback(
     (inputValue, callback) => {
       setIsLoading(true);
-      clearTimeout(debounceTimeoutId);
-      debounceTimeoutId = setTimeout(() => {
+      clearTimeout(debounceTimeoutId.current);
+      debounceTimeoutId.current = setTimeout(() => {
         loadOptions((options) => {
           callback(options);
           setIsLoading(false);
