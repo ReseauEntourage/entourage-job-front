@@ -22,10 +22,17 @@ const interceptGenericBackofficeRequests = () => {
     body: 0,
   }).as('profileCompletion');
 
+  cy.intercept('GET', '/user/profile/recommendations?*', {
+    statusCode: 200,
+    body: {
+      recommendations: [],
+      nextCursor: null,
+    },
+  });
+
   const urlsToIntercept = [
     '/messaging/conversations',
     '/messaging/conversations/**',
-    '/user/profile/recommendations**',
   ];
 
   urlsToIntercept.forEach((url) => {
