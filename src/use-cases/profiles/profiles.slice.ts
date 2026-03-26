@@ -56,6 +56,9 @@ export const slice = createSlice({
         fetchDashboardProfilesRecommendationsSucceeded(state, action) {
           state.profilesRecommendations = action.payload.recommendations;
         },
+        fetchDashboardProfilesRecommendationsReset(state) {
+          state.profilesRecommendations = [];
+        },
       }
     ),
     ...fetchSelectedProfileAdapter.getReducers<State>(
