@@ -245,8 +245,13 @@ export class APIHandler {
     });
   }
 
-  getProfilesRecommendations(): Promise<AxiosResponse> {
-    return this.get(`/user/profile/recommendations`);
+  getProfilesRecommendations(params: {
+    limit: number;
+    cursor?: number;
+  }): Promise<AxiosResponse> {
+    return this.get(`/user/profile/recommendations`, {
+      params,
+    });
   }
 
   // post

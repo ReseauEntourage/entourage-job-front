@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
-import { PROFILES_LIMIT } from 'src/constants';
+import { DASHBOARD_RECOMMENDATIONS_LIMIT, PROFILES_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
 import {
   selectProfilesHasFetchedAll,
@@ -18,9 +18,9 @@ const {
   fetchProfilesNextPage,
   resetProfilesOffset,
   fetchProfilesWithFilters,
-  fetchProfilesRecommendationsRequested,
-  fetchProfilesRecommendationsSucceeded,
-  fetchProfilesRecommendationsFailed,
+  fetchDashboardProfilesRecommendationsRequested,
+  fetchDashboardProfilesRecommendationsSucceeded,
+  fetchDashboardProfilesRecommendationsFailed,
 } = slice.actions;
 
 function* fetchProfilesNextPageSaga(
@@ -76,12 +76,16 @@ function* fetchProfilesRequestedSaga(
   }
 }
 
-function* fetchProfilesRecommendationsRequestedSaga() {
+function* fetchDashboardProfilesRecommendationsRequestedSaga() {
   try {
-    const response = yield* call(() => Api.getProfilesRecommendations());
-    yield* put(fetchProfilesRecommendationsSucceeded(response.data));
+    const response = yield* call(() =>
+      Api.getProfilesRecommendations({
+        limit: DASHBOARD_RECOMMENDATIONS_LIMIT,
+      })
+    );
+    yield* put(fetchDashboardProfilesRecommendationsSucceeded(response.data));
   } catch {
-    yield* put(fetchProfilesRecommendationsFailed());
+    yield* put(fetchDashboardProfilesRecommendationsFailed());
   }
 }
 
@@ -104,8 +108,8 @@ export function* saga() {
   yield* takeLeading(fetchProfilesNextPage, fetchProfilesNextPageSaga);
   yield* takeLatest(fetchProfilesRequested, fetchProfilesRequestedSaga);
   yield* takeLatest(
-    fetchProfilesRecommendationsRequested,
-    fetchProfilesRecommendationsRequestedSaga
+    fetchDashboardProfilesRecommendationsRequested,
+    fetchDashboardProfilesRecommendationsRequestedSaga
   );
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
 }
