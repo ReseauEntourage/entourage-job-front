@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notificationsActions } from 'src/use-cases/notifications';
 
 import {
-  fetchProfilesRecommendationsSelectors,
+  fetchDashboardProfilesRecommendationsSelectors,
   fetchProfilesSelectors,
   profilesActions,
   selectProfilesRecommendations,
@@ -20,20 +20,20 @@ export function useDashboardRecommendations() {
 
   const recommendations = useSelector(selectProfilesRecommendations);
 
-  const isFetchProfilesRecommendationsIdle = useSelector(
-    fetchProfilesRecommendationsSelectors.selectIsFetchProfilesRecommendationsIdle
+  const isFetchDashboardProfilesRecommendationsIdle = useSelector(
+    fetchDashboardProfilesRecommendationsSelectors.selectIsFetchDashboardProfilesRecommendationsIdle
   );
 
-  const isFetchProfilesRecommendationsRequested = useSelector(
-    fetchProfilesRecommendationsSelectors.selectIsFetchProfilesRecommendationsRequested
+  const isFetchDashboardProfilesRecommendationsRequested = useSelector(
+    fetchDashboardProfilesRecommendationsSelectors.selectIsFetchDashboardProfilesRecommendationsRequested
   );
 
   const isLoading =
-    isFetchProfilesRecommendationsIdle ||
-    isFetchProfilesRecommendationsRequested;
+    isFetchDashboardProfilesRecommendationsIdle ||
+    isFetchDashboardProfilesRecommendationsRequested;
 
-  const isFetchDashboardRecommendationsFailed = useSelector(
-    fetchProfilesRecommendationsSelectors.selectIsFetchProfilesRecommendationsFailed
+  const isFetchDashboardProfilesRecommendationsFailed = useSelector(
+    fetchDashboardProfilesRecommendationsSelectors.selectIsFetchDashboardProfilesRecommendationsFailed
   );
 
   const isFetchDashboardProfilesFailed = useSelector(
@@ -41,18 +41,21 @@ export function useDashboardRecommendations() {
   );
 
   const isError =
-    isFetchDashboardRecommendationsFailed || isFetchDashboardProfilesFailed;
+    isFetchDashboardProfilesRecommendationsFailed ||
+    isFetchDashboardProfilesFailed;
 
   // fetch recommendations or profiles on mount
   useEffect(() => {
-    if (isFetchProfilesRecommendationsIdle) {
-      dispatch(profilesActions.fetchProfilesRecommendationsRequested());
+    if (isFetchDashboardProfilesRecommendationsIdle) {
+      dispatch(
+        profilesActions.fetchDashboardProfilesRecommendationsRequested()
+      );
     }
-  }, [dispatch, isFetchProfilesRecommendationsIdle]);
+  }, [dispatch, isFetchDashboardProfilesRecommendationsIdle]);
 
   // notif on error if recommendations fails
   useEffect(() => {
-    if (isFetchDashboardRecommendationsFailed) {
+    if (isFetchDashboardProfilesRecommendationsFailed) {
       dispatch(
         notificationsActions.addNotification({
           type: 'danger',
@@ -72,14 +75,14 @@ export function useDashboardRecommendations() {
     }
   }, [
     dispatch,
-    isFetchDashboardRecommendationsFailed,
+    isFetchDashboardProfilesRecommendationsFailed,
     isFetchDashboardProfilesFailed,
   ]);
 
   // clean on unmount depending on context
   useEffect(() => {
     return () => {
-      dispatch(profilesActions.fetchProfilesRecommendationsReset());
+      dispatch(profilesActions.fetchDashboardProfilesRecommendationsReset());
     };
   }, [dispatch]);
 
