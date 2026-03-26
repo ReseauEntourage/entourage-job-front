@@ -20,7 +20,8 @@ export interface NavConnectedItem {
   };
 }
 
-export interface NavConnectedMainItem extends NavConnectedItem {
+export interface NavConnectedMainItem extends Omit<NavConnectedItem, 'href'> {
+  href?: string;
   subMenu?: NavConnectedItem[];
 }
 
