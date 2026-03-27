@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Card, LucidIcon } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
-import { DirectoryUserItem } from '@/src/features/backoffice/directory/DirectoryItem';
+import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { PublicProfile } from 'src/api/types';
@@ -91,7 +91,7 @@ export const DashboardRecommendationsCard = () => {
         (recommendation as unknown as PublicProfile);
       const reason = recommendation.reason ?? null;
       return (
-        <DirectoryUserItem
+        <NetworkDirectoryUserItem
           key={profile.id}
           id={profile.id}
           firstName={profile.firstName}

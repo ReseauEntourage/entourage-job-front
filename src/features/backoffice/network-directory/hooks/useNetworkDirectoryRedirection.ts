@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
-import { DirectoryEntity } from '@/src/constants/entity';
+import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
 import { useEntity } from '@/src/hooks/queryParams/useEntity';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -9,8 +9,23 @@ import { useRole } from 'src/hooks/queryParams/useRole';
 
 const route = '/backoffice/annuaire';
 
-// Manage redirection to add the mandatory role query param
-export function useDirectoryRoleRedirection() {
+/**
+ * Handles the initial redirection to the network directory page with the mandatory
+ * `role` and `entity` query params when they are missing from the URL.
+ *
+ * On mount, if neither `role` nor `entity` is present in the URL, performs a
+ * shallow replace so that:
+ * - A **candidate** is redirected to see coaches (`role=COACH`, `entity=USER`).
+ * - Any other role is redirected to see candidates (`role=CANDIDATE`, `entity=USER`).
+ *
+ * In both cases, `contactTypes` and `departments` are pre-filled based on the
+ * authenticated user's profile preferences:
+ * - Remote-only users get `contactTypes=REMOTE`.
+ * - Physical-only users get `contactTypes=PHYSICAL` and their department pre-selected.
+ *
+ * This hook produces no output and is intended to be called once at the page level.
+ */
+export function useNetworkDirectoryRedirection() {
   const { replace, query } = useRouter();
   const { role: userRole, userProfile } = useAuthenticatedUser();
 
@@ -40,7 +55,7 @@ export function useDirectoryRoleRedirection() {
             pathname: route,
             query: {
               ...query,
-              entity: DirectoryEntity.USER,
+              entity: NetworkDirectoryEntity.USER,
               role: UserRoles.COACH,
               contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
               departments: departments.length > 0 ? departments : undefined,
@@ -55,7 +70,7 @@ export function useDirectoryRoleRedirection() {
             pathname: route,
             query: {
               ...query,
-              entity: DirectoryEntity.USER,
+              entity: NetworkDirectoryEntity.USER,
               role: [UserRoles.CANDIDATE],
               contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
               departments: departments.length > 0 ? departments : undefined,

@@ -1,20 +1,23 @@
 import React, { useMemo } from 'react';
 import { CardList } from '@/src/components/ui/CardList';
-import { DirectoryEntity } from '@/src/constants/entity';
-import { DirectoryUserItem } from '../DirectoryItem';
-import { DirectoryCompanyItem } from '../DirectoryItem/DirectoryCompanyItem';
-import { useDirectory } from '../useDirectory';
-import { StyledDirectoryListContainer } from './DirectoryList.styles';
+import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
+import {
+  NetworkDirectoryUserItem,
+  NetworkDirectoryCompanyItem,
+} from '../NetworkDirectoryItem';
+import { useNetworkDirectory } from '../hooks/useNetworkDirectory';
+import { StyledDirectoryListContainer } from './NetworkDirectoryList.styles';
 
-export function DirectoryList() {
+export function NetworkDirectoryList() {
   const { profiles, companies, isProfileLoading, directoryFiltersParams } =
-    useDirectory();
+    useNetworkDirectory();
   const { entity } = directoryFiltersParams;
+
   const listItems = useMemo(() => {
-    if (entity === DirectoryEntity.USER) {
+    if (entity === NetworkDirectoryEntity.USER) {
       return profiles.map((profile) => {
         return (
-          <DirectoryUserItem
+          <NetworkDirectoryUserItem
             key={profile.id}
             id={profile.id}
             firstName={profile.firstName}
@@ -30,10 +33,10 @@ export function DirectoryList() {
         );
       });
     }
-    if (entity === DirectoryEntity.COMPANY) {
+    if (entity === NetworkDirectoryEntity.COMPANY) {
       return companies.map((company) => {
         return (
-          <DirectoryCompanyItem
+          <NetworkDirectoryCompanyItem
             key={company.id}
             id={company.id}
             name={company.name}

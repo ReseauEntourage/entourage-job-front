@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { CardList } from '@/src/components/ui/CardList';
 import { Card } from '@/src/components/ui/Cards/Card';
 import { StyledDashboardCardContentContainer } from '@/src/features/backoffice/dashboard/Dashboard.styles';
-import { DirectoryUserItem } from '@/src/features/backoffice/directory/DirectoryItem';
+import { NetworkDirectoryUserItem } from '../../../network-directory/NetworkDirectoryItem';
 import { Api } from 'src/api';
 import { Profile } from 'src/api/types';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -36,7 +36,7 @@ export const DashboardReferedCandidateList = () => {
   const referedList = useMemo(() => {
     return referedCandidates.map((profile) => {
       return (
-        <DirectoryUserItem
+        <NetworkDirectoryUserItem
           key={profile.id}
           id={profile.id}
           firstName={profile.firstName}

@@ -3,7 +3,7 @@ import { BusinessSector, User } from '@/src/api/types';
 import { CardListItem } from '@/src/components/ui/CardList';
 import { CompanyCard } from '@/src/components/ui/Cards/EntityCards/CompanyCard/CompanyCard';
 
-interface DirectoryCompanyItemProps {
+interface NetworkDirectoryCompanyItemProps {
   id: string;
   name: string;
   businessSectors: BusinessSector[];
@@ -11,13 +11,13 @@ interface DirectoryCompanyItemProps {
   logoUrl?: string;
 }
 
-export function DirectoryCompanyItem({
+export function NetworkDirectoryCompanyItem({
   id,
   name,
   businessSectors,
   users,
   logoUrl,
-}: DirectoryCompanyItemProps) {
+}: NetworkDirectoryCompanyItemProps) {
   return (
     <CardListItem dataTestId={id}>
       <CompanyCard

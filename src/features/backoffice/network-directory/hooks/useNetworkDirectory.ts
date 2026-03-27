@@ -16,10 +16,28 @@ import {
   selectProfiles,
   selectProfilesHasFetchedAll,
 } from 'src/use-cases/profiles';
-import { useDirectoryQueryParams } from './useDirectoryQueryParams';
+import { useNetworkDirectoryQueryParams } from './useNetworkDirectoryQueryParams';
 
-// Manage directory requests and filters
-export function useDirectory() {
+/**
+ * Central hook that drives the network directory data layer.
+ *
+ * Responsibilities:
+ * - Dispatches profile and company fetch requests whenever the active filters change
+ *   (detected via deep-equality comparison with the previous params).
+ * - Companies are always fetched with `onlyWithReferent: true`.
+ * - Triggers pagination by dispatching `fetchProfilesNextPage` / `fetchCompaniesNextPage`
+ *   when the user scrolls to the bottom of the page, as long as more items remain to fetch.
+ * - Shows a danger notification when either the profile or company fetch fails.
+ * - Resets the pagination offsets for both profiles and companies on unmount.
+ *
+ * @returns An object containing:
+ * - `profiles` — the list of profiles currently loaded in the Redux store.
+ * - `companies` — the list of companies currently loaded in the Redux store.
+ * - `isProfileLoading` — `true` while the profile fetch is idle or in progress.
+ * - `isCompaniesLoading` — `true` while the company fetch is idle or in progress.
+ * - `directoryFiltersParams` — the current filter/sort params aggregated by `useNetworkDirectoryQueryParams`.
+ */
+export function useNetworkDirectory() {
   const dispatch = useDispatch();
 
   /*
@@ -63,7 +81,7 @@ export function useDirectory() {
   /**
    * Filters and params
    */
-  const directoryFiltersParams = useDirectoryQueryParams();
+  const directoryFiltersParams = useNetworkDirectoryQueryParams();
 
   const prevDirectoryFiltersParams = usePrevious(directoryFiltersParams);
 
