@@ -577,6 +577,11 @@ export type ProfileRecommendation = {
   reason: MatchingReason | null;
 };
 
+export type ProfileRecommendationPage = {
+  recommendations: ProfileRecommendation[];
+  nextCursor: number | null;
+};
+
 export type PrivateProfile = PublicProfile & {
   email: string;
   phone: string;
