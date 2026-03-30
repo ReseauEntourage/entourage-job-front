@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
 import {
   companyActions,
   fetchCompaniesSelectors,
@@ -16,10 +17,28 @@ import {
   selectProfiles,
   selectProfilesHasFetchedAll,
 } from 'src/use-cases/profiles';
-import { useDirectoryQueryParams } from './useDirectoryQueryParams';
+import { useNetworkDirectoryQueryParams } from './useNetworkDirectoryQueryParams';
 
-// Manage directory requests and filters
-export function useDirectory() {
+/**
+ * Central hook that drives the network directory data layer.
+ *
+ * Responsibilities:
+ * - Dispatches profile and company fetch requests whenever the active filters change
+ *   (detected via deep-equality comparison with the previous params).
+ * - Companies are always fetched with `onlyWithReferent: true`.
+ * - Triggers pagination by dispatching `fetchProfilesNextPage` / `fetchCompaniesNextPage`
+ *   when the user scrolls to the bottom of the page, as long as more items remain to fetch.
+ * - Shows a danger notification when either the profile or company fetch fails.
+ * - Resets the pagination offsets for both profiles and companies on unmount.
+ *
+ * @returns An object containing:
+ * - `profiles` — the list of profiles currently loaded in the Redux store.
+ * - `companies` — the list of companies currently loaded in the Redux store.
+ * - `isProfileLoading` — `true` while the profile fetch is idle or in progress.
+ * - `isCompaniesLoading` — `true` while the company fetch is idle or in progress.
+ * - `directoryFiltersParams` — the current filter/sort params aggregated by `useNetworkDirectoryQueryParams`.
+ */
+export function useNetworkDirectory() {
   const dispatch = useDispatch();
 
   /*
@@ -63,23 +82,38 @@ export function useDirectory() {
   /**
    * Filters and params
    */
-  const directoryFiltersParams = useDirectoryQueryParams();
+  const directoryFiltersParams = useNetworkDirectoryQueryParams();
 
   const prevDirectoryFiltersParams = usePrevious(directoryFiltersParams);
 
+  const isUserEntity =
+    directoryFiltersParams.entity === NetworkDirectoryEntity.USER;
+  const isCompanyEntity =
+    directoryFiltersParams.entity === NetworkDirectoryEntity.COMPANY;
+
   useEffect(() => {
     if (!_.isEqual(prevDirectoryFiltersParams, directoryFiltersParams)) {
-      dispatch(
-        profilesActions.fetchProfilesWithFilters(directoryFiltersParams)
-      );
-      dispatch(
-        companyActions.fetchCompaniesWithFilters({
-          ...directoryFiltersParams,
-          onlyWithReferent: true,
-        })
-      );
+      if (isUserEntity) {
+        dispatch(
+          profilesActions.fetchProfilesWithFilters(directoryFiltersParams)
+        );
+      }
+      if (isCompanyEntity) {
+        dispatch(
+          companyActions.fetchCompaniesWithFilters({
+            ...directoryFiltersParams,
+            onlyWithReferent: true,
+          })
+        );
+      }
     }
-  }, [dispatch, directoryFiltersParams, prevDirectoryFiltersParams]);
+  }, [
+    dispatch,
+    directoryFiltersParams,
+    prevDirectoryFiltersParams,
+    isUserEntity,
+    isCompanyEntity,
+  ]);
 
   /**
    * Effects
@@ -108,13 +142,11 @@ export function useDirectory() {
 
   // Manage offset and profiles request when scrolling to the bottom of the page
   useIsAtBottom(() => {
-    // Only fetch more profiles if there are more to fetch
-    if (!profilesHasFetchedAll) {
+    if (isUserEntity && !profilesHasFetchedAll) {
       dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
     }
 
-    // Only fetch more companies if there are more to fetch
-    if (!companiesHasFetchedAll) {
+    if (isCompanyEntity && !companiesHasFetchedAll) {
       dispatch(
         companyActions.fetchCompaniesNextPage({
           ...directoryFiltersParams,
