@@ -11,7 +11,7 @@ import { useNetworkDirectoryRole } from './useNetworkDirectoryRole';
 import { useNetworkDirectorySort } from './useNetworkDirectorySort';
 
 export type NetworkDirectoryQueryParams = {
-  role: UserRoles[];
+  role: UserRoles;
   search?: string;
   nudgeIds: string[];
   departments: string[];

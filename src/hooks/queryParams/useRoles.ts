@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import { UserRoles } from 'src/constants/users';
 
-export function useRole() {
+export function useRoles() {
   const {
     query: { role },
   } = useRouter();
 
   if (!role) {
-    return undefined;
+    return [];
   }
-  return (Array.isArray(role) ? role[0] : role) as UserRoles;
+  return (Array.isArray(role) ? role : [role]) as UserRoles[];
 }

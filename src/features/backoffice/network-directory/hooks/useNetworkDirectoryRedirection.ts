@@ -71,7 +71,7 @@ export function useNetworkDirectoryRedirection() {
             query: {
               ...query,
               entity: NetworkDirectoryEntity.USER,
-              role: [UserRoles.CANDIDATE],
+              role: UserRoles.CANDIDATE,
               contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
               departments: departments.length > 0 ? departments : undefined,
             },
