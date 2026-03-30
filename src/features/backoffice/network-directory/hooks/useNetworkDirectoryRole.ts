@@ -14,5 +14,5 @@ import { useRole } from '@/src/hooks/queryParams/useRole';
 export function useNetworkDirectoryRole() {
   const roleFilter = useRole();
 
-  return roleFilter || [UserRoles.COACH];
+  return roleFilter || UserRoles.COACH;
 }
