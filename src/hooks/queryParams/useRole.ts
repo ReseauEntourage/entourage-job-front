@@ -6,5 +6,8 @@ export function useRole() {
     query: { role },
   } = useRouter();
 
-  return role as UserRoles[];
+  if (!role) {
+    return [] as UserRoles[];
+  }
+  return (Array.isArray(role) ? role : [role]) as UserRoles[];
 }
