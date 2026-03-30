@@ -84,7 +84,9 @@ export function useNetworkDirectoryQueryParams() {
     businessSectorIds: normalizeBusinessSectorIds(),
     departments: normalizeDepartments(),
     contactTypes: (contactTypes || []) as ContactTypeEnum[],
-    entity,
+    entity: entity
+      ? (entity as NetworkDirectoryEntity)
+      : NetworkDirectoryEntity.USER,
     ...(sort
       ? { sort: sort as NetworkDirectorySort }
       : { sort: NetworkDirectorySort.LAST_CONNECTION }),
