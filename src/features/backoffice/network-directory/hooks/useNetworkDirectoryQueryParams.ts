@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import {
   NetworkDirectoryEntity,
@@ -57,7 +58,7 @@ export function useNetworkDirectoryQueryParams() {
     },
   } = useRouter();
 
-  const normalizeBusinessSectorIds = (): string[] => {
+  const normalizeBusinessSectorIds = useCallback((): string[] => {
     if (!businessSectorIds) {
       return [];
     }
@@ -65,9 +66,9 @@ export function useNetworkDirectoryQueryParams() {
       return businessSectorIds as string[];
     }
     return [businessSectorIds as string];
-  };
+  }, [businessSectorIds]);
 
-  const normalizeDepartments = (): string[] => {
+  const normalizeDepartments = useCallback((): string[] => {
     if (!departments) {
       return [];
     }
@@ -75,7 +76,7 @@ export function useNetworkDirectoryQueryParams() {
       return departments as string[];
     }
     return [departments as string];
-  };
+  }, [departments]);
 
   const queryParams: NetworkDirectoryQueryParams = {
     role,
@@ -84,7 +85,9 @@ export function useNetworkDirectoryQueryParams() {
     departments: normalizeDepartments(),
     contactTypes: (contactTypes || []) as ContactTypeEnum[],
     entity,
-    sort: sort as NetworkDirectorySort,
+    ...(sort
+      ? { sort: sort as NetworkDirectorySort }
+      : { sort: NetworkDirectorySort.LAST_CONNECTION }),
     ...(isAvailable === 'true' ? { isAvailable: true } : {}),
   };
 

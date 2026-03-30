@@ -1,5 +1,5 @@
-import { UserRoles } from 'src/constants/users';
-import { useRole } from 'src/hooks/queryParams/useRole';
+import { UserRoles } from '@/src/constants/users';
+import { useRole } from '@/src/hooks/queryParams/useRole';
 
 /**
  * Returns the active role(s) for the network directory

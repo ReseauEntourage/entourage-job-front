@@ -597,6 +597,7 @@ export type ProfilesFilters = {
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
   isAvailable?: boolean;
+  sort?: string;
 };
 
 export type EventsFilters = {

@@ -2,8 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Api } from '@/src/api';
 import { BusinessSector, Nudge } from '@/src/api/types';
-import { Button } from '@/src/components/ui';
-import { Text } from '@/src/components/ui';
+import { Text, Button } from '@/src/components/ui';
 import { allContactTypes } from '@/src/constants/contactTypes';
 import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import {
@@ -385,6 +384,7 @@ export const NetworkDirectoryFilters = () => {
                 entity: NetworkDirectoryEntity.COMPANY,
                 role: null,
                 departments: [],
+                sort: undefined,
               },
             });
           }}
@@ -395,48 +395,54 @@ export const NetworkDirectoryFilters = () => {
 
       {renderSearchBar()}
 
-      <StyledSeparator />
-      <StyledDirectoryOrderBy>
-        <Text size="small">Trier par :</Text>
-        <StyledDirectoryOrderByButtonsContainer>
-          <Button
-            size="small"
-            variant={
-              sort === NetworkDirectorySort.LAST_CONNECTION
-                ? 'primary'
-                : 'secondary'
-            }
-            onClick={() => {
-              push({
-                pathname: route,
-                query: {
-                  ...networkDirectoryQueryParams,
-                  sort: NetworkDirectorySort.LAST_CONNECTION,
-                },
-              });
-            }}
-          >
-            Dernière connexion
-          </Button>
-          <Button
-            size="small"
-            variant={
-              sort === NetworkDirectorySort.RELEVANCE ? 'primary' : 'secondary'
-            }
-            onClick={() => {
-              push({
-                pathname: route,
-                query: {
-                  ...networkDirectoryQueryParams,
-                  sort: NetworkDirectorySort.RELEVANCE,
-                },
-              });
-            }}
-          >
-            Pertinence
-          </Button>
-        </StyledDirectoryOrderByButtonsContainer>
-      </StyledDirectoryOrderBy>
+      {entity === NetworkDirectoryEntity.USER && (
+        <>
+          <StyledSeparator />
+          <StyledDirectoryOrderBy>
+            <Text size="small">Trier par :</Text>
+            <StyledDirectoryOrderByButtonsContainer>
+              <Button
+                size="small"
+                variant={
+                  sort === NetworkDirectorySort.LAST_CONNECTION
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...networkDirectoryQueryParams,
+                      sort: NetworkDirectorySort.LAST_CONNECTION,
+                    },
+                  });
+                }}
+              >
+                Dernière connexion
+              </Button>
+              <Button
+                size="small"
+                variant={
+                  sort === NetworkDirectorySort.RELEVANCE
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...networkDirectoryQueryParams,
+                      sort: NetworkDirectorySort.RELEVANCE,
+                    },
+                  });
+                }}
+              >
+                Pertinence
+              </Button>
+            </StyledDirectoryOrderByButtonsContainer>
+          </StyledDirectoryOrderBy>
+        </>
+      )}
     </StyledDirectoryFilters>
   );
 };

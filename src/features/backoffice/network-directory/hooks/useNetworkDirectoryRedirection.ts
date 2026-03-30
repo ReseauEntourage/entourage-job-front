@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
+import { UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useEntity } from '@/src/hooks/queryParams/useEntity';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useRole } from 'src/hooks/queryParams/useRole';
+import { useRole } from '@/src/hooks/queryParams/useRole';
 
 const route = '/backoffice/annuaire';
 
