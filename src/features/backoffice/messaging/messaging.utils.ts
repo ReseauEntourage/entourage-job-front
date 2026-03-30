@@ -11,6 +11,15 @@ export const conversationHasUnreadMessages = (
   if (!lastMessage) {
     return false;
   }
+  const otherParticipants = conversation.participants.filter(
+    (participant) => participant.id !== userId
+  );
+  const allOtherParticipantsDeleted =
+    otherParticipants.length > 0 &&
+    otherParticipants.every((participant) => participant.userProfile === null);
+  if (allOtherParticipantsDeleted) {
+    return false;
+  }
   const { seenAt } = conversation;
   const hasUnreadMessages =
     !seenAt || moment(lastMessage.createdAt).isSameOrAfter(seenAt);
