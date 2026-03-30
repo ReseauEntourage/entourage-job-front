@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
 import {
   companyActions,
   fetchCompaniesSelectors,
@@ -85,19 +86,34 @@ export function useNetworkDirectory() {
 
   const prevDirectoryFiltersParams = usePrevious(directoryFiltersParams);
 
+  const isUserEntity =
+    directoryFiltersParams.entity === NetworkDirectoryEntity.USER;
+  const isCompanyEntity =
+    directoryFiltersParams.entity === NetworkDirectoryEntity.COMPANY;
+
   useEffect(() => {
     if (!_.isEqual(prevDirectoryFiltersParams, directoryFiltersParams)) {
-      dispatch(
-        profilesActions.fetchProfilesWithFilters(directoryFiltersParams)
-      );
-      dispatch(
-        companyActions.fetchCompaniesWithFilters({
-          ...directoryFiltersParams,
-          onlyWithReferent: true,
-        })
-      );
+      if (isUserEntity) {
+        dispatch(
+          profilesActions.fetchProfilesWithFilters(directoryFiltersParams)
+        );
+      }
+      if (isCompanyEntity) {
+        dispatch(
+          companyActions.fetchCompaniesWithFilters({
+            ...directoryFiltersParams,
+            onlyWithReferent: true,
+          })
+        );
+      }
     }
-  }, [dispatch, directoryFiltersParams, prevDirectoryFiltersParams]);
+  }, [
+    dispatch,
+    directoryFiltersParams,
+    prevDirectoryFiltersParams,
+    isUserEntity,
+    isCompanyEntity,
+  ]);
 
   /**
    * Effects
@@ -126,13 +142,11 @@ export function useNetworkDirectory() {
 
   // Manage offset and profiles request when scrolling to the bottom of the page
   useIsAtBottom(() => {
-    // Only fetch more profiles if there are more to fetch
-    if (!profilesHasFetchedAll) {
+    if (isUserEntity && !profilesHasFetchedAll) {
       dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
     }
 
-    // Only fetch more companies if there are more to fetch
-    if (!companiesHasFetchedAll) {
+    if (isCompanyEntity && !companiesHasFetchedAll) {
       dispatch(
         companyActions.fetchCompaniesNextPage({
           ...directoryFiltersParams,
