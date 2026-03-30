@@ -5,5 +5,5 @@ export function useSort() {
     query: { sort },
   } = useRouter();
 
-  return sort;
+  return Array.isArray(sort) ? sort[0] : sort;
 }
