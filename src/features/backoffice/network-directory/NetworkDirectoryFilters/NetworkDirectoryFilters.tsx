@@ -6,7 +6,10 @@ import { Button } from '@/src/components/ui';
 import { Text } from '@/src/components/ui';
 import { allContactTypes } from '@/src/constants/contactTypes';
 import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
-import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
+import {
+  NetworkDirectoryEntity,
+  NetworkDirectorySort,
+} from '@/src/constants/network-directory';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { GA_TAGS } from '@/src/constants/tags';
 import { UserRoles } from '@/src/constants/users';
@@ -52,6 +55,16 @@ export const NetworkDirectoryFilters = () => {
   const [nudgesFilters, setNudgesFilters] = useState<FilterConstant<string>[]>([
     ...ProfileNudges,
   ]);
+  const sortsFilter: FilterConstant<NetworkDirectorySort>[] = useMemo(
+    () => [
+      {
+        value: NetworkDirectorySort.LAST_CONNECTION,
+        label: 'Dernière connexion',
+      },
+      { value: NetworkDirectorySort.RELEVANCE, label: 'Pertinence' },
+    ],
+    []
+  );
   const {
     entity,
     role,
@@ -61,6 +74,7 @@ export const NetworkDirectoryFilters = () => {
     search,
     contactTypes,
     isAvailable,
+    sort,
   } = networkDirectoryQueryParams;
 
   const selectedEntityNetworkDirectoryFilters: Filter[] = useMemo(() => {
@@ -99,15 +113,6 @@ export const NetworkDirectoryFilters = () => {
       title: 'Disponibilité',
     } as Filter;
 
-    const sortsFilter = {
-      key: 'sorts',
-      constants: [
-        { value: 'lastConnection', label: 'Dernière connexion' },
-        { value: 'relevance', label: 'Pertinence' },
-      ],
-      title: 'Trier par',
-    } as Filter;
-
     // Assigning filters based on entity
     const userFilters = [
       departmentByIdFilter,
@@ -115,7 +120,6 @@ export const NetworkDirectoryFilters = () => {
       businessSectorsFilter,
       contactTypesFilter,
       availabilityFilter,
-      sortsFilter,
     ];
     const companyFilters = [businessSectorsFilter, departmentByIdFilter];
 
@@ -151,6 +155,8 @@ export const NetworkDirectoryFilters = () => {
         isAvailable !== undefined
           ? [findConstantFromValue(isAvailable, availabilityFilters)]
           : [],
+      sort:
+        sort !== undefined ? [findConstantFromValue(sort, sortsFilter)] : [],
     };
   }, [
     departments,
@@ -158,8 +164,10 @@ export const NetworkDirectoryFilters = () => {
     businessSectorIds,
     contactTypes,
     isAvailable,
-    businessSectorsFilters,
+    sort,
+    sortsFilter,
     nudgesFilters,
+    businessSectorsFilters,
   ]);
 
   const totalFiltersCount = useMemo(() => {
@@ -391,10 +399,40 @@ export const NetworkDirectoryFilters = () => {
       <StyledDirectoryOrderBy>
         <Text size="small">Trier par :</Text>
         <StyledDirectoryOrderByButtonsContainer>
-          <Button size="small" variant="secondary">
+          <Button
+            size="small"
+            variant={
+              sort === NetworkDirectorySort.LAST_CONNECTION
+                ? 'primary'
+                : 'secondary'
+            }
+            onClick={() => {
+              push({
+                pathname: route,
+                query: {
+                  ...networkDirectoryQueryParams,
+                  sort: NetworkDirectorySort.LAST_CONNECTION,
+                },
+              });
+            }}
+          >
             Dernière connexion
           </Button>
-          <Button size="small" variant="secondary">
+          <Button
+            size="small"
+            variant={
+              sort === NetworkDirectorySort.RELEVANCE ? 'primary' : 'secondary'
+            }
+            onClick={() => {
+              push({
+                pathname: route,
+                query: {
+                  ...networkDirectoryQueryParams,
+                  sort: NetworkDirectorySort.RELEVANCE,
+                },
+              });
+            }}
+          >
             Pertinence
           </Button>
         </StyledDirectoryOrderByButtonsContainer>
