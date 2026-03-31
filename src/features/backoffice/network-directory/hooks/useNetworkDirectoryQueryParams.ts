@@ -89,7 +89,7 @@ export function useNetworkDirectoryQueryParams() {
       : NetworkDirectoryEntity.USER,
     ...(sort
       ? { sort: sort as NetworkDirectorySort }
-      : { sort: NetworkDirectorySort.LAST_CONNECTION }),
+      : { sort: NetworkDirectorySort.RELEVANCE }),
     ...(isAvailable === 'true' ? { isAvailable: true } : {}),
   };
 
