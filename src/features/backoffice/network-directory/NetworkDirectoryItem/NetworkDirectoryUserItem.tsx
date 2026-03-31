@@ -5,7 +5,7 @@ import { MatchingReason, UserProfileSectorOccupation } from 'src/api/types';
 import { DepartmentName } from 'src/constants/departements';
 import { UserRoles } from 'src/constants/users';
 
-interface DirectoryUserItemProps {
+interface NetworkDirectoryUserItemProps {
   id: string;
   firstName: string;
   lastName: string;
@@ -19,7 +19,7 @@ interface DirectoryUserItemProps {
   recommendationReason?: MatchingReason | null;
 }
 
-export function DirectoryUserItem({
+export function NetworkDirectoryUserItem({
   id,
   firstName,
   lastName,
@@ -31,7 +31,7 @@ export function DirectoryUserItem({
   hasPicture,
   currentJob,
   recommendationReason,
-}: DirectoryUserItemProps) {
+}: NetworkDirectoryUserItemProps) {
   return (
     <CardListItem dataTestId={id}>
       <ProfileCard

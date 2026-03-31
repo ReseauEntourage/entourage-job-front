@@ -1,36 +1,38 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Section } from '@/src/components/ui';
+import { Api } from '@/src/api';
+import { BusinessSector, Nudge } from '@/src/api/types';
+import { Text, Button } from '@/src/components/ui';
 import { allContactTypes } from '@/src/constants/contactTypes';
-import { DirectoryEntity } from '@/src/constants/entity';
+import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
+import {
+  NetworkDirectoryEntity,
+  NetworkDirectorySort,
+} from '@/src/constants/network-directory';
 import { ProfileNudges } from '@/src/constants/nudges';
-import { DirectoryList } from '../DirectoryList';
-import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
-import { Api } from 'src/api';
-import { BusinessSector, Nudge } from 'src/api/types';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { GA_TAGS } from 'src/constants/tags';
-import { UserRoles } from 'src/constants/users';
-import { Filter, FilterConstant } from 'src/constants/utils';
+import { GA_TAGS } from '@/src/constants/tags';
+import { UserRoles } from '@/src/constants/users';
+import { Filter, FilterConstant } from '@/src/constants/utils';
 import {
   MobileFilterButton,
   MobileFilterDrawer,
-} from 'src/features/filters/MobileFilters';
-import { SearchBar } from 'src/features/filters/SearchBar/SearchBar';
-import { HeaderBackoffice } from 'src/features/headers/HeaderBackoffice';
-import { StyledBackgroundedHeaderBackoffice } from 'src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
-import { useFilters } from 'src/hooks';
-import { useIsMobile } from 'src/hooks/utils';
+} from '@/src/features/filters/MobileFilters';
+import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
+import { useFilters } from '@/src/hooks';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   findConstantFromValue,
   isRoleIncluded,
   mutateToArray,
-} from 'src/utils';
+} from '@/src/utils';
+import { useNetworkDirectoryQueryParams } from '../hooks/useNetworkDirectoryQueryParams';
 import {
   StyledDirectoryButtonContainer,
-  StyledDirectoryContainer,
-  StyledHeaderDirectory,
-} from './Directory.styles';
+  StyledDirectoryFilters,
+  StyledDirectoryOrderBy,
+  StyledDirectoryOrderByButtonsContainer,
+  StyledSeparator,
+} from './NetworkDirectoryFilters.styles';
 
 const route = '/backoffice/annuaire';
 
@@ -38,8 +40,9 @@ const availabilityFilters: FilterConstant<boolean>[] = [
   { value: true, label: 'Uniquement les profils disponibles' },
 ];
 
-export function Directory() {
+export const NetworkDirectoryFilters = () => {
   const { push } = useRouter();
+  const networkDirectoryQueryParams = useNetworkDirectoryQueryParams();
   const isMobile = useIsMobile();
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [departmentsIdsFilters, setDepartmentsIdsFilters] = useState<
@@ -51,7 +54,16 @@ export function Directory() {
   const [nudgesFilters, setNudgesFilters] = useState<FilterConstant<string>[]>([
     ...ProfileNudges,
   ]);
-  const directoryFiltersParams = useDirectoryQueryParams();
+  const sortsFilter: FilterConstant<NetworkDirectorySort>[] = useMemo(
+    () => [
+      {
+        value: NetworkDirectorySort.LAST_CONNECTION,
+        label: 'Dernière connexion',
+      },
+      { value: NetworkDirectorySort.RELEVANCE, label: 'Pertinence' },
+    ],
+    []
+  );
   const {
     entity,
     role,
@@ -61,9 +73,10 @@ export function Directory() {
     search,
     contactTypes,
     isAvailable,
-  } = directoryFiltersParams;
+    sort,
+  } = networkDirectoryQueryParams;
 
-  const DirectoryFilters: Filter[] = useMemo(() => {
+  const selectedEntityNetworkDirectoryFilters: Filter[] = useMemo(() => {
     // Filters definitions
     const departmentByIdFilter = {
       key: 'departments',
@@ -110,11 +123,13 @@ export function Directory() {
     const companyFilters = [businessSectorsFilter, departmentByIdFilter];
 
     // Return relevant filters
-    return entity === DirectoryEntity.USER ? userFilters : companyFilters;
+    return entity === NetworkDirectoryEntity.USER
+      ? userFilters
+      : companyFilters;
   }, [businessSectorsFilters, departmentsIdsFilters, entity, nudgesFilters]);
 
   const { setFilters, setSearch, resetFilters } = useFilters(
-    DirectoryFilters,
+    selectedEntityNetworkDirectoryFilters,
     `/backoffice/annuaire`,
     [],
     GA_TAGS.PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC
@@ -139,6 +154,8 @@ export function Directory() {
         isAvailable !== undefined
           ? [findConstantFromValue(isAvailable, availabilityFilters)]
           : [],
+      sort:
+        sort !== undefined ? [findConstantFromValue(sort, sortsFilter)] : [],
     };
   }, [
     departments,
@@ -146,8 +163,10 @@ export function Directory() {
     businessSectorIds,
     contactTypes,
     isAvailable,
-    businessSectorsFilters,
+    sort,
+    sortsFilter,
     nudgesFilters,
+    businessSectorsFilters,
   ]);
 
   const totalFiltersCount = useMemo(() => {
@@ -218,73 +237,6 @@ export function Directory() {
       console.error('Error fetching nudges:', error);
     }
   };
-
-  const renderSearchBar = useCallback(() => {
-    if (entity === DirectoryEntity.USER) {
-      return (
-        <SearchBar
-          light
-          filtersConstants={DirectoryFilters}
-          filters={filters}
-          resetFilters={() => {
-            resetFilters();
-          }}
-          search={search}
-          setSearch={setSearch}
-          setFilters={setFilters}
-          placeholder="Rechercher par prénom, nom ou métier"
-          additionalButtons={
-            isMobile && (
-              <StyledDirectoryButtonContainer>
-                <MobileFilterButton
-                  onClick={handleOpenFilterDrawer}
-                  count={totalFiltersCount}
-                />
-              </StyledDirectoryButtonContainer>
-            )
-          }
-        />
-      );
-    }
-    if (entity === DirectoryEntity.COMPANY) {
-      return (
-        <SearchBar
-          light
-          filtersConstants={DirectoryFilters}
-          filters={filters}
-          resetFilters={() => {
-            resetFilters();
-          }}
-          search={search}
-          setSearch={setSearch}
-          setFilters={setFilters}
-          placeholder="Rechercher par nom d'entreprise"
-          additionalButtons={
-            isMobile && (
-              <StyledDirectoryButtonContainer>
-                <MobileFilterButton
-                  onClick={handleOpenFilterDrawer}
-                  count={totalFiltersCount}
-                />
-              </StyledDirectoryButtonContainer>
-            )
-          }
-        />
-      );
-    }
-    return null;
-  }, [
-    DirectoryFilters,
-    entity,
-    filters,
-    isMobile,
-    resetFilters,
-    search,
-    setFilters,
-    setSearch,
-    totalFiltersCount,
-  ]);
-
   /**
    * Hooks
    */
@@ -294,103 +246,203 @@ export function Directory() {
     fetchNudges();
   }, []);
 
-  return (
-    <>
-      <StyledBackgroundedHeaderBackoffice>
-        <Section className="custom-page">
-          <StyledHeaderDirectory>
-            <HeaderBackoffice
-              title="Bienvenue sur votre réseau"
-              description="Découvrez les membres de la communauté, nos entreprises partenaires et développez votre carnet d'adresse."
-              noSeparator
+  const additionalButtons = useMemo(() => {
+    return (
+      isMobile && (
+        <>
+          <StyledDirectoryButtonContainer>
+            <MobileFilterButton
+              onClick={handleOpenFilterDrawer}
+              count={totalFiltersCount}
             />
-            <StyledDirectoryButtonContainer>
-              <Button
-                size={isMobile ? 'small' : 'medium'}
-                variant={
-                  entity === DirectoryEntity.USER &&
-                  isRoleIncluded([UserRoles.CANDIDATE], role)
-                    ? 'primary'
-                    : 'secondary'
-                }
-                rounded
-                onClick={() => {
-                  push({
-                    pathname: route,
-                    query: {
-                      ...directoryFiltersParams,
-                      entity: 'user',
-                      departments: [],
-                      role: [UserRoles.CANDIDATE],
-                    },
-                  });
-                }}
-              >
-                Les candidats
-              </Button>
-              <Button
-                size={isMobile ? 'small' : 'medium'}
-                variant={
-                  entity === DirectoryEntity.USER &&
-                  isRoleIncluded([UserRoles.COACH], role)
-                    ? 'primary'
-                    : 'secondary'
-                }
-                onClick={() => {
-                  push({
-                    pathname: route,
-                    query: {
-                      ...directoryFiltersParams,
-                      entity: 'user',
-                      departments: [],
-                      role: UserRoles.COACH,
-                    },
-                  });
-                }}
-              >
-                Les coachs
-              </Button>
+          </StyledDirectoryButtonContainer>
+          <MobileFilterDrawer
+            isOpen={isFilterDrawerOpen}
+            onClose={handleCloseFilterDrawer}
+            filters={filters}
+            setFilters={setFilters}
+            filterData={selectedEntityNetworkDirectoryFilters}
+          />
+        </>
+      )
+    );
+  }, [
+    isMobile,
+    totalFiltersCount,
+    isFilterDrawerOpen,
+    filters,
+    setFilters,
+    selectedEntityNetworkDirectoryFilters,
+  ]);
 
-              <Button
-                size={isMobile ? 'small' : 'medium'}
-                variant={
-                  entity === DirectoryEntity.COMPANY ? 'primary' : 'secondary'
-                }
-                onClick={() => {
-                  push({
-                    pathname: route,
-                    query: {
-                      ...directoryFiltersParams,
-                      entity: DirectoryEntity.COMPANY,
-                      role: null,
-                      departments: [],
-                    },
-                  });
-                }}
-              >
-                Les entreprises
-              </Button>
-            </StyledDirectoryButtonContainer>
-
-            {renderSearchBar()}
-          </StyledHeaderDirectory>
-        </Section>
-      </StyledBackgroundedHeaderBackoffice>
-      <Section className="custom-page">
-        <StyledDirectoryContainer>
-          <DirectoryList />
-        </StyledDirectoryContainer>
-      </Section>
-
-      {isMobile && (
-        <MobileFilterDrawer
-          isOpen={isFilterDrawerOpen}
-          onClose={handleCloseFilterDrawer}
+  const renderSearchBar = useCallback(() => {
+    if (entity === NetworkDirectoryEntity.USER) {
+      return (
+        <SearchBar
+          light
+          filtersConstants={selectedEntityNetworkDirectoryFilters}
           filters={filters}
+          resetFilters={() => {
+            resetFilters();
+          }}
+          search={search}
+          setSearch={setSearch}
           setFilters={setFilters}
-          filterData={DirectoryFilters}
+          placeholder="Rechercher par prénom, nom ou métier"
+          additionalButtons={additionalButtons}
         />
+      );
+    }
+    if (entity === NetworkDirectoryEntity.COMPANY) {
+      return (
+        <SearchBar
+          light
+          filtersConstants={selectedEntityNetworkDirectoryFilters}
+          filters={filters}
+          resetFilters={() => {
+            resetFilters();
+          }}
+          search={search}
+          setSearch={setSearch}
+          setFilters={setFilters}
+          placeholder="Rechercher par nom d'entreprise"
+          additionalButtons={additionalButtons}
+        />
+      );
+    }
+    return null;
+  }, [
+    entity,
+    selectedEntityNetworkDirectoryFilters,
+    filters,
+    search,
+    setSearch,
+    setFilters,
+    additionalButtons,
+    resetFilters,
+  ]);
+
+  return (
+    <StyledDirectoryFilters>
+      <StyledDirectoryButtonContainer>
+        <Button
+          size={isMobile ? 'small' : 'medium'}
+          variant={
+            entity === NetworkDirectoryEntity.USER &&
+            isRoleIncluded([UserRoles.CANDIDATE], role)
+              ? 'primary'
+              : 'secondary'
+          }
+          rounded
+          onClick={() => {
+            push({
+              pathname: route,
+              query: {
+                ...networkDirectoryQueryParams,
+                entity: NetworkDirectoryEntity.USER,
+                departments: [],
+                role: [UserRoles.CANDIDATE],
+              },
+            });
+          }}
+        >
+          Les candidats
+        </Button>
+        <Button
+          size={isMobile ? 'small' : 'medium'}
+          variant={
+            entity === NetworkDirectoryEntity.USER &&
+            isRoleIncluded([UserRoles.COACH], role)
+              ? 'primary'
+              : 'secondary'
+          }
+          onClick={() => {
+            push({
+              pathname: route,
+              query: {
+                ...networkDirectoryQueryParams,
+                entity: NetworkDirectoryEntity.USER,
+                departments: [],
+                role: [UserRoles.COACH],
+              },
+            });
+          }}
+        >
+          Les coachs
+        </Button>
+
+        <Button
+          size={isMobile ? 'small' : 'medium'}
+          variant={
+            entity === NetworkDirectoryEntity.COMPANY ? 'primary' : 'secondary'
+          }
+          onClick={() => {
+            push({
+              pathname: route,
+              query: {
+                ...networkDirectoryQueryParams,
+                entity: NetworkDirectoryEntity.COMPANY,
+                role: null,
+                departments: [],
+                sort: undefined,
+              },
+            });
+          }}
+        >
+          Les entreprises
+        </Button>
+      </StyledDirectoryButtonContainer>
+
+      {renderSearchBar()}
+
+      {entity === NetworkDirectoryEntity.USER && (
+        <>
+          <StyledSeparator />
+          <StyledDirectoryOrderBy>
+            <Text size="small">Trier par :</Text>
+            <StyledDirectoryOrderByButtonsContainer>
+              <Button
+                size="small"
+                variant={
+                  sort === NetworkDirectorySort.LAST_CONNECTION
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...networkDirectoryQueryParams,
+                      sort: NetworkDirectorySort.LAST_CONNECTION,
+                    },
+                  });
+                }}
+              >
+                Dernière connexion
+              </Button>
+              <Button
+                size="small"
+                variant={
+                  sort === NetworkDirectorySort.RELEVANCE
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...networkDirectoryQueryParams,
+                      sort: NetworkDirectorySort.RELEVANCE,
+                    },
+                  });
+                }}
+              >
+                Pertinence
+              </Button>
+            </StyledDirectoryOrderByButtonsContainer>
+          </StyledDirectoryOrderBy>
+        </>
       )}
-    </>
+    </StyledDirectoryFilters>
   );
-}
+};

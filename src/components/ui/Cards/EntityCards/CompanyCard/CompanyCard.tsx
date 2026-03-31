@@ -95,10 +95,12 @@ export const CompanyCard = ({
                 {businessSectors
                   .slice(0, 2)
                   .map(({ id: sectorId, name: sectorName }) => {
-                    return <Tag key={sectorId}>{sectorName}</Tag>;
+                    return <Tag key={`${id}-${sectorId}`}>{sectorName}</Tag>;
                   })}
                 {businessSectors.length > 2 && (
-                  <Tag>+{businessSectors.length - 2}</Tag>
+                  <Tag key={`${id}-more-sectors`}>
+                    +{businessSectors.length - 2}
+                  </Tag>
                 )}
               </StyledCompanyCardSectorsContainer>
             </StyledCompanyCardSectorsSectionContainer>
@@ -116,6 +118,7 @@ export const CompanyCard = ({
                     role: user.role,
                   }}
                   hasPicture={user.userProfile.hasPicture}
+                  key={`${id}-img-profile-profile-${user.id}`}
                 />
               );
             })}

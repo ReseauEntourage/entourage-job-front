@@ -590,13 +590,14 @@ export type PrivateProfile = PublicProfile & {
 export type Profile = PublicProfile | PrivateProfile;
 
 export type ProfilesFilters = {
-  role: UserRoles[];
+  role: UserRoles;
   search?: string;
   nudgeIds: string | string[];
   departments: string | string[];
   businessSectorIds: string | string[];
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
   isAvailable?: boolean;
+  sort?: string;
 };
 
 export type EventsFilters = {

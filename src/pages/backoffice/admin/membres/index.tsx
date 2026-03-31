@@ -6,7 +6,7 @@ import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { MemberList } from '@/src/features/backoffice/admin/members/MemberList';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useRole } from 'src/hooks/queryParams/useRole';
+import { useRoles } from 'src/hooks/queryParams/useRoles';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
 import { mutateTypeFilterDependingOnRole } from 'src/utils/Filters';
@@ -15,7 +15,7 @@ import { isRoleIncluded } from 'src/utils/Finding';
 const MembersAdmin = () => {
   const { replace, query } = useRouter();
 
-  const role = useRole();
+  const role = useRoles();
 
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
   const user = useAuthenticatedUser();
