@@ -87,10 +87,15 @@ export const ProfileStats = ({
         icon: <LucidIcon name="Timer" />,
       });
     }
-    if (totalConversationWithMirrorRoleCount !== null) {
+    if (
+      totalConversationWithMirrorRoleCount &&
+      totalConversationWithMirrorRoleCount > 0
+    ) {
       if (userRole === UserRoles.COACH) {
         list.push({
-          value: `${totalConversationWithMirrorRoleCount} candidats soutenus`,
+          value: `${totalConversationWithMirrorRoleCount} candidat${
+            totalConversationWithMirrorRoleCount > 1 ? 's' : ''
+          } soutenu${totalConversationWithMirrorRoleCount > 1 ? 's' : ''}`,
           icon: <LucidIcon name="HandHeart" />,
         });
       }
