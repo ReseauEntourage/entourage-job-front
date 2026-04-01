@@ -45,13 +45,13 @@ export const Profile = () => {
         department={selectedProfile.department}
         introduction={selectedProfile.introduction}
         hasPicture={selectedProfile.hasPicture}
-        createdAt={selectedProfile.createdAt || null}
-        averageDelayResponse={selectedProfile.averageDelayResponse || null}
-        responseRate={selectedProfile.responseRate || null}
+        createdAt={selectedProfile.createdAt ?? null}
+        averageDelayResponse={selectedProfile.averageDelayResponse ?? null}
+        responseRate={selectedProfile.responseRate ?? null}
         totalConversationWithMirrorRoleCount={
-          selectedProfile.totalConversationWithMirrorRoleCount || null
+          selectedProfile.totalConversationWithMirrorRoleCount ?? null
         }
-        lastConnection={selectedProfile.lastConnection}
+        lastConnection={selectedProfile.lastConnection ?? null}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>

@@ -171,10 +171,10 @@ export const HeaderProfileDesktop = ({
                       <ProfileStats
                         createdAt={createdAt}
                         userRole={role}
-                        averageDelayResponse={averageDelayResponse || null}
-                        responseRate={responseRate || null}
+                        averageDelayResponse={averageDelayResponse ?? null}
+                        responseRate={responseRate ?? null}
                         totalConversationWithMirrorRoleCount={
-                          totalConversationWithMirrorRoleCount || null
+                          totalConversationWithMirrorRoleCount ?? null
                         }
                         lastConnection={lastConnection}
                         isOwnProfile={ownProfile}
@@ -201,10 +201,10 @@ export const HeaderProfileDesktop = ({
                 <ProfileStats
                   createdAt={createdAt}
                   userRole={role}
-                  averageDelayResponse={averageDelayResponse || null}
-                  responseRate={responseRate || null}
+                  averageDelayResponse={averageDelayResponse ?? null}
+                  responseRate={responseRate ?? null}
                   totalConversationWithMirrorRoleCount={
-                    totalConversationWithMirrorRoleCount || null
+                    totalConversationWithMirrorRoleCount ?? null
                   }
                   lastConnection={lastConnection}
                   isOwnProfile={ownProfile}

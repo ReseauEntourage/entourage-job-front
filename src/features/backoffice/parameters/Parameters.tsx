@@ -70,15 +70,15 @@ export const Parameters = () => {
         phone={user.phone}
         email={user.email}
         driverLicenses={[]}
-        hasPicture={user.userProfile?.hasPicture || false}
+        hasPicture={user.userProfile?.hasPicture ?? false}
         isEditable
-        createdAt={user.createdAt || null}
-        averageDelayResponse={user.averageDelayResponse || null}
-        responseRate={user.responseRate || null}
+        createdAt={user.createdAt ?? null}
+        averageDelayResponse={user.averageDelayResponse ?? null}
+        responseRate={user.responseRate ?? null}
         totalConversationWithMirrorRoleCount={
-          user.totalConversationWithMirrorRoleCount || null
+          user.totalConversationWithMirrorRoleCount ?? null
         }
-        lastConnection={user.lastConnection}
+        lastConnection={user.lastConnection ?? null}
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
@@ -94,15 +94,15 @@ export const Parameters = () => {
               />
               <ProfileDescription
                 isEditable
-                description={user.userProfile.description}
+                description={user.userProfile.description ?? ''}
               />
               <ProfileSkills
-                skills={user.userProfile.skills || []}
+                skills={user.userProfile.skills ?? []}
                 isEditable
               />
               <ProfileCustomNudges
                 isEditable
-                customNudges={user.userProfile.customNudges || []}
+                customNudges={user.userProfile.customNudges ?? []}
                 firstName={user.firstName}
                 role={user.role}
                 userId={user.id}
@@ -112,20 +112,20 @@ export const Parameters = () => {
                 userId={user.id}
                 userFirstName={user.firstName}
                 userRole={user.role}
-                experiences={user.userProfile.experiences || []}
+                experiences={user.userProfile.experiences ?? []}
                 isEditable
               />
               <ProfileFormations
                 userId={user.id}
                 userFirstName={user.firstName}
                 userRole={user.role}
-                formations={user.userProfile.formations || []}
+                formations={user.userProfile.formations ?? []}
                 isEditable
               />
               {/* <ProfileReviews
                 userId={user.id}
                 userFirstName={user.firstName}
-                reviews={user.userProfile.reviews || []}
+                reviews={user.userProfile.reviews ?? []}
                 isEditable
               /> */}
             </StyledParametersLeftColumn>

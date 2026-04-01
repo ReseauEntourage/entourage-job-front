@@ -8,11 +8,6 @@ import {
   StyledStatTitleValue,
 } from './ProfileStats.styles';
 
-const iconProps = {
-  width: 20,
-  height: 20,
-};
-
 export interface ProfileStatsProps {
   createdAt: string | null;
   userRole: UserRoles;
@@ -60,7 +55,7 @@ export const ProfileStats = ({
             day: 'numeric',
           }
         )}`,
-        icon: <LucidIcon name="Calendar" {...iconProps} />,
+        icon: <LucidIcon name="Calendar" />,
       });
     }
 
@@ -70,17 +65,17 @@ export const ProfileStats = ({
           ? "aujourd'hui"
           : `il y'a ${relativeConnectionDateInDays} jour${
               relativeConnectionDateInDays > 1 ? 's' : ''
-            }}`;
+            }`;
       list.push({
         value: `Dernière connexion ${relativeTimeText}`,
-        icon: <LucidIcon name="KeyRound" {...iconProps} />,
+        icon: <LucidIcon name="KeyRound" />,
       });
     }
 
     if (responseRate !== null) {
       list.push({
         value: `Répond à ${responseRate}% des messages`,
-        icon: <LucidIcon name="MailCheck" {...iconProps} />,
+        icon: <LucidIcon name="MailCheck" />,
       });
     }
 
@@ -89,14 +84,14 @@ export const ProfileStats = ({
         value: `Répond en moins d${averageDelayResponse > 1 ? 'e ' : "'"}${
           averageDelayResponse === 1 ? 'un' : averageDelayResponse
         } jour${averageDelayResponse > 1 ? 's' : ''}`,
-        icon: <LucidIcon name="Timer" {...iconProps} />,
+        icon: <LucidIcon name="Timer" />,
       });
     }
     if (totalConversationWithMirrorRoleCount !== null) {
       if (userRole === UserRoles.COACH) {
         list.push({
           value: `${totalConversationWithMirrorRoleCount} candidats soutenus`,
-          icon: <LucidIcon name="HandHeart" {...iconProps} />,
+          icon: <LucidIcon name="HandHeart" />,
         });
       }
     }
