@@ -45,6 +45,13 @@ export const Profile = () => {
         department={selectedProfile.department}
         introduction={selectedProfile.introduction}
         hasPicture={selectedProfile.hasPicture}
+        createdAt={selectedProfile.createdAt || null}
+        averageDelayResponse={selectedProfile.averageDelayResponse || null}
+        responseRate={selectedProfile.responseRate || null}
+        totalConversationWithMirrorRoleCount={
+          selectedProfile.totalConversationWithMirrorRoleCount || null
+        }
+        lastConnection={selectedProfile.lastConnection}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
@@ -93,7 +100,6 @@ export const Profile = () => {
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileContactCard
               userId={selectedProfile.id}
-              averageDelayResponse={selectedProfile.averageDelayResponse}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
               isAvailable={selectedProfile.isAvailable}

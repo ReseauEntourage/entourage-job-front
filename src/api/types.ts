@@ -316,6 +316,7 @@ export type User = {
   referredCandidates?: User[];
   averageDelayResponse?: number | null;
   responseRate?: number | null;
+  totalConversationWithMirrorRoleCount?: number | null;
 
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
@@ -539,6 +540,10 @@ export type PublicProfile = {
   averageDelayResponse: number | null;
   hasPicture: boolean;
   company: Company | null;
+  responseRate: number | null;
+  totalConversationWithMirrorRoleCount: number | null;
+  createdAt: string | null;
+  lastConnection: string;
 };
 
 export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {

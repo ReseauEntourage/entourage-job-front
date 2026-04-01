@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { HEIGHTS } from 'src/constants/styles';
+import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledNavContainerDesktop = styled.header`
   height: ${HEIGHTS.HEADER}px;
@@ -15,11 +15,11 @@ export const StyledMessagingIconContainer = styled.div`
 
   .pin-notification {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
     width: 16px;
     height: 16px;
-    background: red;
+    background: ${COLORS.lightRed};
     border-radius: 50%;
   }
 `;

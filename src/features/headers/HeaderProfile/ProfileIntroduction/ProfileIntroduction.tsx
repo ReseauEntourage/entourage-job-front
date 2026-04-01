@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from '@/src/components/ui';
 import {
   StyledIntroductionContainer,
   StyledIntroductionParagraphe,
@@ -15,7 +16,7 @@ export const ProfileIntroduction = ({
     <StyledIntroductionContainer>
       {introduction && (
         <StyledIntroductionParagraphe data-testid="profile-introduction">
-          &ldquo;{introduction}&rdquo;
+          <Text variant="italic">&ldquo;{introduction}&rdquo;</Text>
         </StyledIntroductionParagraphe>
       )}
     </StyledIntroductionContainer>

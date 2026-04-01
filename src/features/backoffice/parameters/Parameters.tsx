@@ -16,7 +16,6 @@ import { ProfileLanguages } from '@/src/features/profile/ProfilePartCards/Profil
 import { ProfileNotificationsPreferences } from '@/src/features/profile/ProfilePartCards/ProfileNotificationsPreferences/ProfileNotificationsPreferences';
 import { ProfileNudges } from '@/src/features/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { ProfileSkills } from '@/src/features/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
-import { ProfileStats } from '@/src/features/profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import {
   currentUserActions,
@@ -73,6 +72,13 @@ export const Parameters = () => {
         driverLicenses={[]}
         hasPicture={user.userProfile?.hasPicture || false}
         isEditable
+        createdAt={user.createdAt || null}
+        averageDelayResponse={user.averageDelayResponse || null}
+        responseRate={user.responseRate || null}
+        totalConversationWithMirrorRoleCount={
+          user.totalConversationWithMirrorRoleCount || null
+        }
+        lastConnection={user.lastConnection}
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
@@ -165,12 +171,6 @@ export const Parameters = () => {
               <ProfileNotificationsPreferences
                 userProfile={user.userProfile}
                 smallCard
-              />
-              <ProfileStats
-                smallCard
-                averageDelayResponse={user.averageDelayResponse || null}
-                responseRate={user.responseRate || null}
-                lastConnection={user.lastConnection}
               />
               <ProfileChangePassword smallCard />
               <ProfileDeleteAccount smallCard />
