@@ -95,7 +95,7 @@ export const ProfileStats = ({
     if (totalConversationWithMirrorRoleCount !== null) {
       if (userRole === UserRoles.COACH) {
         list.push({
-          value: `Nombre de candidats aidés : ${totalConversationWithMirrorRoleCount}`,
+          value: `${totalConversationWithMirrorRoleCount} candidats soutenus`,
           icon: <LucidIcon name="HandHeart" {...iconProps} />,
         });
       }
