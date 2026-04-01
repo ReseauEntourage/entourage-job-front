@@ -59,15 +59,15 @@ export interface ProfileCardProps {
 const getLabelsDependingOnRole = (role: UserRoles) => {
   if (role === UserRoles.CANDIDATE) {
     return {
-      businessSectors: 'Je recherche un emploi dans\xa0:',
-      helps: "Je souhaite avoir de l'aide dans\xa0:",
+      businessSectors: 'Je recherche un emploi dans :',
+      helps: "Je souhaite avoir de l'aide dans :",
       role: 'Candidat',
     };
   }
   if (role === UserRoles.COACH) {
     return {
-      businessSectors: "J'ai du réseau dans\xa0:",
-      helps: 'Je peux aider à\xa0:',
+      businessSectors: "J'ai du réseau dans :",
+      helps: 'Je peux aider à :',
       role: 'Coach',
     };
   }

@@ -11,7 +11,7 @@ export const ProfileContactItem = ({ icon, text }: ContactItemProps) => {
   return (
     <StyledProfileContactItem>
       {icon}
-      <Text size="large">{text}</Text>
+      <Text size="small">{text}</Text>
     </StyledProfileContactItem>
   );
 };

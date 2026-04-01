@@ -1,24 +1,34 @@
 import styled from 'styled-components';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledStatList = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: row;
+  gap: 15px;
+  flex-wrap: wrap;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledStatItem = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 5px;
+  align-items: center;
 `;
 
 export const StyledIconContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
+  flex-wrap: nowrap;
 `;
 
 export const StyledStatTitleValue = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: nowrap;
 `;

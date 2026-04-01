@@ -18,7 +18,7 @@ import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
-import { DepartmentName } from 'src/constants/departements';
+import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -35,29 +35,13 @@ import {
   StyledHeaderProfilePublicInfoContainer,
   StyledHeaderProfileSectionMobile,
 } from './HeaderProfile.styles';
+import { HeaderProfileProps } from './HeaderProfile.types';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
 import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 64;
-
-export interface HeaderProfileProps {
-  isEditable?: boolean;
-  id: string;
-  isAvailable: boolean;
-  firstName: string;
-  lastName: string;
-  role: UserRoles;
-  department: DepartmentName;
-  introduction?: string;
-
-  // Only for own profile
-  phone?: string;
-  email?: string;
-  driverLicenses?: string[];
-  hasPicture: boolean;
-}
 
 export const HeaderProfileMobile = ({
   id,
@@ -72,6 +56,11 @@ export const HeaderProfileMobile = ({
   driverLicenses,
   hasPicture,
   isEditable = false,
+  createdAt,
+  averageDelayResponse,
+  responseRate,
+  totalConversationWithMirrorRoleCount,
+  lastConnection,
 }: HeaderProfileProps) => {
   const {
     imageUploading,
@@ -148,19 +137,18 @@ export const HeaderProfileMobile = ({
                     )}
                   </>
                 )}
-                {displayMessageButton && (
-                  <div>
-                    <Button
-                      onClick={openConversation}
-                      variant="secondary"
-                      rounded
-                    >
-                      Envoyer un message
-                    </Button>
-                  </div>
-                )}
               </StyledHeaderProfilePublicInfoContainer>
             </StyledHeaderProfileInfoContainer>
+            {displayMessageButton && (
+              <Button
+                onClick={openConversation}
+                variant="secondary"
+                rounded="circle"
+                size="xlarge"
+              >
+                <LucidIcon name="MessageCircle" size={24} />
+              </Button>
+            )}
           </StyledHeaderProfileContent>
 
           <StyledHeaderAvailibilityAndUserActions>
@@ -173,6 +161,18 @@ export const HeaderProfileMobile = ({
           {shouldShowAllProfile && introduction && (
             <ProfileIntroduction introduction={introduction} />
           )}
+
+          <ProfileStats
+            createdAt={createdAt}
+            userRole={role}
+            averageDelayResponse={averageDelayResponse || null}
+            responseRate={responseRate || null}
+            totalConversationWithMirrorRoleCount={
+              totalConversationWithMirrorRoleCount || null
+            }
+            lastConnection={lastConnection}
+            isOwnProfile={ownProfile}
+          />
 
           {ownProfile && isEditable && (
             <>

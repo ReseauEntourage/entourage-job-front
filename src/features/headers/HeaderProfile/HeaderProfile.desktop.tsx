@@ -16,7 +16,7 @@ import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
-import { DepartmentName } from 'src/constants/departements';
+import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
 import {
@@ -33,30 +33,15 @@ import {
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfilePublicInfoContainer,
+  StyledHeaderProfileSubinfoContainer,
 } from './HeaderProfile.styles';
+import { HeaderProfileProps } from './HeaderProfile.types';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
 import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
-const PROFILE_PICTURE_SIZE = 146;
-
-export interface HeaderProfileProps {
-  isEditable?: boolean;
-  id: string;
-  isAvailable: boolean;
-  firstName: string;
-  lastName: string;
-  role: UserRoles;
-  department: DepartmentName;
-  introduction?: string;
-  hasPicture: boolean;
-
-  // Only for own profile
-  phone?: string;
-  email?: string;
-  driverLicenses?: string[];
-}
+const PROFILE_PICTURE_SIZE = 160;
 
 export const HeaderProfileDesktop = ({
   id,
@@ -71,6 +56,11 @@ export const HeaderProfileDesktop = ({
   driverLicenses,
   hasPicture,
   isEditable = false,
+  createdAt,
+  averageDelayResponse,
+  responseRate,
+  totalConversationWithMirrorRoleCount,
+  lastConnection,
 }: HeaderProfileProps) => {
   const {
     imageUploading,
@@ -136,48 +126,64 @@ export const HeaderProfileDesktop = ({
           </StyledHeaderProfilePictureContainer>
           <StyledHeaderProfileInfoContainer>
             <StyledHeaderProfilePublicInfoContainer>
-              <StyledHeaderProfileNameContainer>
-                <StyledHeaderNameAndRole>
-                  <Text size={36} weight="semibold">
-                    {firstName} {lastName}
-                  </Text>
-                  <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
-                    {role === UserRoles.ADMIN
-                      ? UserRoles.ADMIN
-                      : contextualRole}
-                  </Tag>
-                </StyledHeaderNameAndRole>
-                <StyledHeaderAvailibilityAndUserActions>
-                  {shouldShowAllProfile && (
-                    <AvailabilityTag isAvailable={isAvailable} />
-                  )}
-                  <UserActions userId={id} userRole={role} />
-                </StyledHeaderAvailibilityAndUserActions>
-              </StyledHeaderProfileNameContainer>
-              {shouldShowAllProfile && (
-                <>
-                  {department && (
-                    <Text color="black" weight="medium" size="large">
-                      {department}
+              <div>
+                <StyledHeaderProfileNameContainer>
+                  <StyledHeaderNameAndRole>
+                    <Text size={36} weight="semibold">
+                      {firstName} {lastName}
                     </Text>
-                  )}
-                  {introduction && (
-                    <>
-                      <ProfileIntroduction introduction={introduction} />
-                      {isEditable && (
-                        <Text
-                          color="mediumGray"
-                          size="small"
-                          underline
-                          onClick={() => openCorrespondingModal()}
-                        >
-                          Modifier l&apos;introduction
-                        </Text>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
+                    <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                      {role === UserRoles.ADMIN
+                        ? UserRoles.ADMIN
+                        : contextualRole}
+                    </Tag>
+                  </StyledHeaderNameAndRole>
+                  <StyledHeaderAvailibilityAndUserActions>
+                    {shouldShowAllProfile && (
+                      <AvailabilityTag isAvailable={isAvailable} />
+                    )}
+                    <UserActions userId={id} userRole={role} />
+                  </StyledHeaderAvailibilityAndUserActions>
+                </StyledHeaderProfileNameContainer>
+                {shouldShowAllProfile && (
+                  <StyledHeaderProfileSubinfoContainer>
+                    {department && (
+                      <Text color="black" weight="medium" size="large">
+                        {department}
+                      </Text>
+                    )}
+                    {introduction && (
+                      <>
+                        <ProfileIntroduction introduction={introduction} />
+                        {isEditable && (
+                          <Text
+                            color="mediumGray"
+                            size="small"
+                            underline
+                            onClick={() => openCorrespondingModal()}
+                          >
+                            Modifier l&apos;introduction
+                          </Text>
+                        )}
+                      </>
+                    )}
+                    {!isEditable && (
+                      <ProfileStats
+                        createdAt={createdAt}
+                        userRole={role}
+                        averageDelayResponse={averageDelayResponse ?? null}
+                        responseRate={responseRate ?? null}
+                        totalConversationWithMirrorRoleCount={
+                          totalConversationWithMirrorRoleCount ?? null
+                        }
+                        lastConnection={lastConnection}
+                        isOwnProfile={ownProfile}
+                      />
+                    )}
+                    {ownProfile && isEditable && <ProfileCompletion />}
+                  </StyledHeaderProfileSubinfoContainer>
+                )}
+              </div>
               {displayMessageButton && (
                 <div>
                   <Button
@@ -192,12 +198,22 @@ export const HeaderProfileDesktop = ({
             </StyledHeaderProfilePublicInfoContainer>
             {ownProfile && isEditable && (
               <>
+                <ProfileStats
+                  createdAt={createdAt}
+                  userRole={role}
+                  averageDelayResponse={averageDelayResponse ?? null}
+                  responseRate={responseRate ?? null}
+                  totalConversationWithMirrorRoleCount={
+                    totalConversationWithMirrorRoleCount ?? null
+                  }
+                  lastConnection={lastConnection}
+                  isOwnProfile={ownProfile}
+                />
                 <ProfileContactInfos
                   phone={phone}
                   email={email}
                   driverLicenses={driverLicenses}
                 />
-                <ProfileCompletion />
               </>
             )}
           </StyledHeaderProfileInfoContainer>
