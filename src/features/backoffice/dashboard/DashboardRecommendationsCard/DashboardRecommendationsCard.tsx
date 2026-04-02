@@ -8,7 +8,10 @@ import { PublicProfile } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { mutateToArray } from 'src/utils';
-import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
+import {
+  StyledDashboardRecommendationsList,
+  StyledRecommendationsHowItWorksWrapper,
+} from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const contextCompanyAdmin = 'CompanyAdmin';
@@ -115,19 +118,13 @@ export const DashboardRecommendationsCard = () => {
     >
       <StyledDashboardCardContentContainer>
         {hasAiRecommendations && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              width: '100%',
-            }}
-          >
+          <StyledRecommendationsHowItWorksWrapper>
             <Tooltip content={recommendationsLabels[context].howItWorksText}>
               <Button variant="hoverBlue" size="small" rounded>
                 <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
               </Button>
             </Tooltip>
-          </div>
+          </StyledRecommendationsHowItWorksWrapper>
         )}
         <StyledDashboardRecommendationsList>
           <CardList list={itemsList} isLoading={isLoading} condensed />
