@@ -79,6 +79,7 @@ export const Parameters = () => {
           user.totalConversationWithMirrorRoleCount ?? null
         }
         lastConnection={user.lastConnection ?? null}
+        achievements={user.achievements ?? []}
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>

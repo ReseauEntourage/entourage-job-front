@@ -33,6 +33,11 @@ const styleVariants = {
     border-color: ${COLORS.primaryBlue};
     color: ${COLORS.white};
   `,
+  lightYellow: css`
+    background-color: ${COLORS.lightYellow};
+    border-color: ${COLORS.darkYellow};
+    color: ${COLORS.darkYellow};
+  `,
 };
 
 const sizeVariants = {
@@ -41,7 +46,7 @@ const sizeVariants = {
     font-size: 14px;
   `,
   small: css`
-    padding: 6px 10px;
+    padding: 3px 10px;
     font-size: 12px;
   `,
   large: css`

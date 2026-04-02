@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Card, LucidIcon } from '@/src/components/ui';
+import React, { useMemo } from 'react';
+import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
@@ -8,11 +8,7 @@ import { PublicProfile } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { mutateToArray } from 'src/utils';
-import {
-  StyledDashboardRecommendationsList,
-  StyledRecommendationsHowItWorksTooltip,
-  StyledRecommendationsHowItWorksWrapper,
-} from './DashboardRecommendationsCard.styles';
+import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const contextCompanyAdmin = 'CompanyAdmin';
@@ -65,8 +61,6 @@ export const DashboardRecommendationsCard = () => {
   const query = {
     departments: mutateToArray(user.userProfile.department),
   };
-
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   const context = useMemo<recommendationsContextsType>(() => {
     if (isCompanyAdmin) {
@@ -121,22 +115,19 @@ export const DashboardRecommendationsCard = () => {
     >
       <StyledDashboardCardContentContainer>
         {hasAiRecommendations && (
-          <StyledRecommendationsHowItWorksWrapper>
-            <Button
-              variant="hoverBlue"
-              size="small"
-              rounded
-              onMouseEnter={() => setIsTooltipOpen(true)}
-              onMouseLeave={() => setIsTooltipOpen(false)}
-            >
-              <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
-            </Button>
-            {isTooltipOpen && (
-              <StyledRecommendationsHowItWorksTooltip>
-                {recommendationsLabels[context].howItWorksText}
-              </StyledRecommendationsHowItWorksTooltip>
-            )}
-          </StyledRecommendationsHowItWorksWrapper>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              width: '100%',
+            }}
+          >
+            <Tooltip content={recommendationsLabels[context].howItWorksText}>
+              <Button variant="hoverBlue" size="small" rounded>
+                <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
+              </Button>
+            </Tooltip>
+          </div>
         )}
         <StyledDashboardRecommendationsList>
           <CardList list={itemsList} isLoading={isLoading} condensed />

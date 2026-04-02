@@ -18,6 +18,7 @@ import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
+import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
@@ -61,6 +62,7 @@ export const HeaderProfileMobile = ({
   responseRate,
   totalConversationWithMirrorRoleCount,
   lastConnection,
+  achievements,
 }: HeaderProfileProps) => {
   const {
     imageUploading,
@@ -121,11 +123,6 @@ export const HeaderProfileMobile = ({
                     <Text size={20} weight="semibold">
                       {firstName} {lastName}
                     </Text>
-                    <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
-                      {role === UserRoles.ADMIN
-                        ? UserRoles.ADMIN
-                        : contextualRole}
-                    </Tag>
                   </StyledHeaderNameAndRole>
                 </StyledHeaderProfileNameContainer>
                 {shouldShowAllProfile && (
@@ -152,6 +149,12 @@ export const HeaderProfileMobile = ({
           </StyledHeaderProfileContent>
 
           <StyledHeaderAvailibilityAndUserActions>
+            <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+              {role === UserRoles.ADMIN ? UserRoles.ADMIN : contextualRole}
+            </Tag>
+            {achievements.length > 0 && (
+              <ProfileAchievementHighlighter achievement={achievements[0]} />
+            )}
             {shouldShowAllProfile && (
               <AvailabilityTag isAvailable={isAvailable} />
             )}
