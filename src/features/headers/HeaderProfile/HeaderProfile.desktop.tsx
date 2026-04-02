@@ -49,6 +49,7 @@ export const HeaderProfileDesktop = ({
   isAvailable,
   firstName,
   lastName,
+  gender,
   role,
   department,
   introduction,
@@ -142,6 +143,7 @@ export const HeaderProfileDesktop = ({
                     {achievements.length > 0 && (
                       <ProfileAchievementHighlighter
                         achievement={achievements[0]}
+                        gender={gender}
                       />
                     )}
                   </StyledHeaderNameAndRole>

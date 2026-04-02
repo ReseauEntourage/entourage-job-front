@@ -324,10 +324,15 @@ export type User = {
   onboardingWebinarSkippedAt: string | null;
 };
 
+export enum AchievementType {
+  SUPER_ENGAGED_COACH = 'super_engaged_coach',
+}
+
 export type UserAchievement = {
   id: string;
   createdAt: string;
   title: string;
+  achievementType: AchievementType;
 };
 
 export type StaffContact = {
@@ -526,6 +531,7 @@ export type PublicProfile = {
   lastName: string;
   linkedinUrl?: string;
   role: UserRoles;
+  gender: Genders;
   department: DepartmentName;
   currentJob: string;
   description: string;

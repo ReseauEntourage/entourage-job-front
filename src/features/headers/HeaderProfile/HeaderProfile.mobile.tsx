@@ -50,6 +50,7 @@ export const HeaderProfileMobile = ({
   firstName,
   lastName,
   role,
+  gender,
   department,
   introduction,
   phone,
@@ -153,7 +154,10 @@ export const HeaderProfileMobile = ({
               {role === UserRoles.ADMIN ? UserRoles.ADMIN : contextualRole}
             </Tag>
             {achievements.length > 0 && (
-              <ProfileAchievementHighlighter achievement={achievements[0]} />
+              <ProfileAchievementHighlighter
+                achievement={achievements[0]}
+                gender={gender}
+              />
             )}
             {shouldShowAllProfile && (
               <AvailabilityTag isAvailable={isAvailable} />

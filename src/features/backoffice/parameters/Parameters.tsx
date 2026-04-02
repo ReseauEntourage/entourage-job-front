@@ -65,6 +65,7 @@ export const Parameters = () => {
         lastName={user.lastName}
         introduction={user.userProfile.introduction ?? ''}
         role={user.role}
+        gender={user.gender}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}

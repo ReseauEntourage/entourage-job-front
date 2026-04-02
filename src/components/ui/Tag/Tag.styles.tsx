@@ -60,6 +60,7 @@ export const StyledTag = styled.div<{
   variant: TagVariant;
 }>`
   display: inline-flex;
+  align-items: center;
   gap: 5px;
   padding: 3px 10px;
   border-radius: 30px;
