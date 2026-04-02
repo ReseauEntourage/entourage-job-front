@@ -10,14 +10,20 @@ export const BUTTON_SIZES = {
   medium: {
     fontSize: 14,
     padding: '11px 19px',
-    paddingCircle: '3px',
+    paddingCircle: '6px',
     iconSize: 20,
   },
   large: {
     fontSize: 16,
     padding: '16px 32px',
-    paddingCircle: '6px',
+    paddingCircle: '9px',
     iconSize: 24,
+  },
+  xlarge: {
+    fontSize: 18,
+    padding: '20px 40px',
+    paddingCircle: '12px',
+    iconSize: 28,
   },
 } as const;
 

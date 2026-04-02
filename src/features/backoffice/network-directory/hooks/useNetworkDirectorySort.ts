@@ -5,12 +5,12 @@ import { useSort } from '@/src/hooks/queryParams/useSort';
  * Returns the active sort order for the network directory
  * from the `sort` URL query param.
  *
- * Falls back to `NetworkDirectorySort.LAST_CONNECTION` when no query param is set.
+ * Falls back to `NetworkDirectorySort.RELEVANCE` when no query param is set.
  *
- * @returns The sort value from the URL, or `NetworkDirectorySort.LAST_CONNECTION` by default.
+ * @returns The sort value from the URL, or `NetworkDirectorySort.RELEVANCE` by default.
  */
 export function useNetworkDirectorySort() {
   const sortQueryParam = useSort();
 
-  return sortQueryParam || NetworkDirectorySort.LAST_CONNECTION;
+  return sortQueryParam || NetworkDirectorySort.RELEVANCE;
 }

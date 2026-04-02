@@ -404,25 +404,6 @@ export const NetworkDirectoryFilters = () => {
               <Button
                 size="small"
                 variant={
-                  sort === NetworkDirectorySort.LAST_CONNECTION
-                    ? 'primary'
-                    : 'secondary'
-                }
-                onClick={() => {
-                  push({
-                    pathname: route,
-                    query: {
-                      ...networkDirectoryQueryParams,
-                      sort: NetworkDirectorySort.LAST_CONNECTION,
-                    },
-                  });
-                }}
-              >
-                Dernière connexion
-              </Button>
-              <Button
-                size="small"
-                variant={
                   sort === NetworkDirectorySort.RELEVANCE
                     ? 'primary'
                     : 'secondary'
@@ -438,6 +419,25 @@ export const NetworkDirectoryFilters = () => {
                 }}
               >
                 Pertinence
+              </Button>
+              <Button
+                size="small"
+                variant={
+                  sort === NetworkDirectorySort.LAST_CONNECTION
+                    ? 'primary'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...networkDirectoryQueryParams,
+                      sort: NetworkDirectorySort.LAST_CONNECTION,
+                    },
+                  });
+                }}
+              >
+                Dernière connexion
               </Button>
             </StyledDirectoryOrderByButtonsContainer>
           </StyledDirectoryOrderBy>

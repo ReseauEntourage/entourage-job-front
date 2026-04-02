@@ -34,19 +34,19 @@ export const ProfileContactInfos = ({
       <StyledInfosContainer>
         {phone && (
           <ProfileContactItem
-            icon={<LucidIcon name="Phone" size={20} />}
+            icon={<LucidIcon name="Phone" size={15} />}
             text={phone}
           />
         )}
         {email && (
           <ProfileContactItem
-            icon={<LucidIcon name="Mail" size={20} />}
+            icon={<LucidIcon name="Mail" size={15} />}
             text={email}
           />
         )}
         {driverLicenses && driverLicenses.length > 0 && (
           <ProfileContactItem
-            icon={<LucidIcon name="Car" size={20} />}
+            icon={<LucidIcon name="Car" size={15} />}
             text={`Permis ${driverLicenses.join(', ')}`}
           />
         )}

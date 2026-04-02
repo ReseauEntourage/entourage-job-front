@@ -11,6 +11,7 @@ export const StyledCareerPathSimpleSentenceTag = styled.span`
 
 export const StyledCareerPathSectorOccupationTagContainer = styled.div`
   display: inline-flex;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
 `;
