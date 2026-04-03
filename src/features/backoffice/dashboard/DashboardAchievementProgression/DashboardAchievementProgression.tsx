@@ -96,13 +96,15 @@ export const DashboardAchievementProgression = () => {
                 Badge &quot;Super Engagé&quot;
                 {hasSuperEngagedBadge ? ' obtenu' : ''}
               </Text>
-              <Tooltip content={tooltipContent}>
-                <LucidIcon
-                  name="CircleHelp"
-                  size={16}
-                  color={COLORS.mediumGray}
-                />
-              </Tooltip>
+              {isDesktop && (
+                <Tooltip content={tooltipContent}>
+                  <LucidIcon
+                    name="CircleHelp"
+                    size={16}
+                    color={COLORS.mediumGray}
+                  />
+                </Tooltip>
+              )}
             </div>
             {!hasSuperEngagedBadge ? (
               <Text size="small" color="darkGray">

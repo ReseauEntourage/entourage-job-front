@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
@@ -60,6 +61,7 @@ export const DashboardRecommendationsCard = () => {
     () => !!(user.company && user.company.companyUser?.isAdmin),
     [user.company]
   );
+  const isDesktop = useIsDesktop();
   const { recommendations, isLoading, isError } = useDashboardRecommendations();
   const query = {
     departments: mutateToArray(user.userProfile.department),
@@ -117,7 +119,7 @@ export const DashboardRecommendationsCard = () => {
       centerTitle
     >
       <StyledDashboardCardContentContainer>
-        {hasAiRecommendations && (
+        {hasAiRecommendations && isDesktop && (
           <StyledRecommendationsHowItWorksWrapper>
             <Tooltip content={recommendationsLabels[context].howItWorksText}>
               <Button variant="hoverBlue" size="small" rounded>
