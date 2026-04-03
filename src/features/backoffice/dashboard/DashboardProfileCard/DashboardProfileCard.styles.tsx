@@ -30,6 +30,12 @@ export const StyledDashboardProfileCardMainInfos = styled.div`
   align-items: flex-start;
 `;
 
+export const StyledTagList = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+`;
+
 export const StyledDashboardProfileCardCompletionContainer = styled.div`
   margin: 0 20px;
 `;

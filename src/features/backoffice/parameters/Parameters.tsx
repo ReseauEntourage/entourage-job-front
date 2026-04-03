@@ -65,6 +65,7 @@ export const Parameters = () => {
         lastName={user.lastName}
         introduction={user.userProfile.introduction ?? ''}
         role={user.role}
+        gender={user.gender}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
@@ -79,6 +80,7 @@ export const Parameters = () => {
           user.totalConversationWithMirrorRoleCount ?? null
         }
         lastConnection={user.lastConnection ?? null}
+        achievements={user.achievements ?? []}
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>

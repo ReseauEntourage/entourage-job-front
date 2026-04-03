@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Card, LucidIcon } from '@/src/components/ui';
+import React, { useMemo } from 'react';
+import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
@@ -10,7 +10,6 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
-  StyledRecommendationsHowItWorksTooltip,
   StyledRecommendationsHowItWorksWrapper,
 } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
@@ -66,8 +65,6 @@ export const DashboardRecommendationsCard = () => {
     departments: mutateToArray(user.userProfile.department),
   };
 
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-
   const context = useMemo<recommendationsContextsType>(() => {
     if (isCompanyAdmin) {
       return contextCompanyAdmin;
@@ -122,20 +119,11 @@ export const DashboardRecommendationsCard = () => {
       <StyledDashboardCardContentContainer>
         {hasAiRecommendations && (
           <StyledRecommendationsHowItWorksWrapper>
-            <Button
-              variant="hoverBlue"
-              size="small"
-              rounded
-              onMouseEnter={() => setIsTooltipOpen(true)}
-              onMouseLeave={() => setIsTooltipOpen(false)}
-            >
-              <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
-            </Button>
-            {isTooltipOpen && (
-              <StyledRecommendationsHowItWorksTooltip>
-                {recommendationsLabels[context].howItWorksText}
-              </StyledRecommendationsHowItWorksTooltip>
-            )}
+            <Tooltip content={recommendationsLabels[context].howItWorksText}>
+              <Button variant="hoverBlue" size="small" rounded>
+                <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
+              </Button>
+            </Tooltip>
           </StyledRecommendationsHowItWorksWrapper>
         )}
         <StyledDashboardRecommendationsList>

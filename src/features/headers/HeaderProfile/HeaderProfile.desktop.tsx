@@ -16,6 +16,7 @@ import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
+import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
@@ -48,6 +49,7 @@ export const HeaderProfileDesktop = ({
   isAvailable,
   firstName,
   lastName,
+  gender,
   role,
   department,
   introduction,
@@ -61,6 +63,7 @@ export const HeaderProfileDesktop = ({
   responseRate,
   totalConversationWithMirrorRoleCount,
   lastConnection,
+  achievements,
 }: HeaderProfileProps) => {
   const {
     imageUploading,
@@ -137,6 +140,12 @@ export const HeaderProfileDesktop = ({
                         ? UserRoles.ADMIN
                         : contextualRole}
                     </Tag>
+                    {achievements.length > 0 && (
+                      <ProfileAchievementHighlighter
+                        achievement={achievements[0]}
+                        gender={gender}
+                      />
+                    )}
                   </StyledHeaderNameAndRole>
                   <StyledHeaderAvailibilityAndUserActions>
                     {shouldShowAllProfile && (

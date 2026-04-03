@@ -87,6 +87,8 @@ import SettingsSvg from './settings.svg';
 import ShareSvg from './share.svg';
 import StarActiveSvg from './star-active.svg';
 import StarSvg from './star.svg';
+import SuperCoachDiamondSvg from './super-coach-diamond.svg';
+import SuperCoachRoundSvg from './super-coach-round.svg';
 import TrashSvg from './trash.svg';
 import TwitterSvg from './twitter.svg';
 import UserEmptySvg from './user-empty.svg';
@@ -189,6 +191,8 @@ export const SvgIcons = {
   Warning: WarningSvg,
   Whatsapp: WhatsappSvg,
   Youtube: YoutubeSvg,
+  SuperCoachRound: SuperCoachRoundSvg,
+  SuperCoachDiamond: SuperCoachDiamondSvg,
 };
 
 export interface SvgIconProps {

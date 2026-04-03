@@ -312,6 +312,7 @@ export type User = {
   hasExtractedCvData?: boolean;
   company: Company | null;
   invitations?: Invitation[];
+  achievements?: UserAchievement[];
 
   referredCandidates?: User[];
   averageDelayResponse?: number | null;
@@ -321,6 +322,17 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+};
+
+export enum AchievementType {
+  SUPER_ENGAGED_COACH = 'super_engaged_coach',
+}
+
+export type UserAchievement = {
+  id: string;
+  createdAt: string;
+  title: string;
+  achievementType: AchievementType;
 };
 
 export type StaffContact = {
@@ -519,6 +531,7 @@ export type PublicProfile = {
   lastName: string;
   linkedinUrl?: string;
   role: UserRoles;
+  gender: Genders;
   department: DepartmentName;
   currentJob: string;
   description: string;
@@ -544,6 +557,7 @@ export type PublicProfile = {
   totalConversationWithMirrorRoleCount: number | null;
   createdAt: string | null;
   lastConnection: string;
+  achievements: UserAchievement[];
 };
 
 export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {

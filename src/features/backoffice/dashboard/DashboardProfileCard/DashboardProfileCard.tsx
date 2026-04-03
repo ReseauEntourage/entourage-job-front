@@ -14,6 +14,7 @@ import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { ProfileCompletion } from '@/src/features/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
+import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
 import { useCurrentUserExternalCv } from '@/src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { selectProfileCompletionRate } from '@/src/use-cases/profile-completion';
@@ -31,6 +32,7 @@ import {
   StyledDashboardProfileCardEmptyState,
   StyledDashboardProfileCardCompletionContainer,
   StyledDashboardProfileCardMainInfos,
+  StyledTagList,
 } from './DashboardProfileCard.styles';
 
 export const DashboardProfileCard = () => {
@@ -69,7 +71,15 @@ export const DashboardProfileCard = () => {
           {user.userProfile.department && (
             <Text>{user.userProfile.department}</Text>
           )}
-          <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+          <StyledTagList>
+            <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+            {user.achievements && user.achievements.length > 0 && (
+              <ProfileAchievementHighlighter
+                achievement={user.achievements[0]}
+                gender={user.gender}
+              />
+            )}
+          </StyledTagList>
         </StyledDashboardProfileCardMainInfos>
       </StyledDashboardProfileCardPictureName>
 

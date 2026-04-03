@@ -52,6 +52,8 @@ export const Profile = () => {
           selectedProfile.totalConversationWithMirrorRoleCount ?? null
         }
         lastConnection={selectedProfile.lastConnection ?? null}
+        achievements={selectedProfile.achievements ?? []}
+        gender={selectedProfile.gender}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
