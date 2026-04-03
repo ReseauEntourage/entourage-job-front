@@ -562,6 +562,10 @@ export class APIHandler {
     );
   }
 
+  getAuthCurrentStats(): Promise<AxiosResponse> {
+    return this.get(`/auth/current/stats`);
+  }
+
   getStaffContactInfo(
     headers: AxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {

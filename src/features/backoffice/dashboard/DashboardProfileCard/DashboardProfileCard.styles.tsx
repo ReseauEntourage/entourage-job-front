@@ -6,7 +6,6 @@ export const StyledDashbardProfileCardSectionContainer = styled.div`
   flex-direction: column;
   gap: 30px;
   margin-bottom: 20px;
-  padding: 0 20px;
 `;
 
 export const StyledDashboardProfileCardPictureName = styled.div`
@@ -14,7 +13,8 @@ export const StyledDashboardProfileCardPictureName = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  margin: 20px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
   h5 {
     margin-bottom: 0;
   }
@@ -34,10 +34,7 @@ export const StyledTagList = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-`;
-
-export const StyledDashboardProfileCardCompletionContainer = styled.div`
-  margin: 0 20px;
+  flex-wrap: wrap;
 `;
 
 export const StyledDashboardProfileCardSection = styled.div`

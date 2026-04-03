@@ -19,6 +19,7 @@ import {
   StyledDashboardRightColumn,
   StyledDashboardTitleContainer,
 } from './Dashboard.styles';
+import { DashboardAchievementProgression } from './DashboardAchievementProgression/DashboardAchievementProgression';
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
 import { DashboardCompanyCollaboratorsList } from './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList';
@@ -32,6 +33,7 @@ import { DashboardToolboxCard } from './DashboardToolboxCard';
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
+  const isCoach = useMemo(() => user.role === UserRoles.COACH, [user.role]);
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
@@ -81,6 +83,7 @@ export const Dashboard = () => {
           </>
         ) : (
           <>
+            {isCoach && !isCompanyAdmin && <DashboardAchievementProgression />}
             {isNormalUser && !isCompanyAdmin && (
               <DashboardRecommendationsCard />
             )}
