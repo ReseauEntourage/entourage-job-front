@@ -100,7 +100,7 @@ export const Card = ({
           {isOpen && <StyledCardContent>{children}</StyledCardContent>}
         </>
       ) : (
-        children
+        <StyledCardContent>{children}</StyledCardContent>
       )}
     </StyledCard>
   );

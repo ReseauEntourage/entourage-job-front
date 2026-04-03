@@ -30,7 +30,6 @@ import {
   StyledDashboardProfileCardSectionTitle,
   StyledDashbardProfileCardSectionContainer,
   StyledDashboardProfileCardEmptyState,
-  StyledDashboardProfileCardCompletionContainer,
   StyledDashboardProfileCardMainInfos,
   StyledTagList,
 } from './DashboardProfileCard.styles';
@@ -84,9 +83,7 @@ export const DashboardProfileCard = () => {
       </StyledDashboardProfileCardPictureName>
 
       {/* Completion rate bar */}
-      <StyledDashboardProfileCardCompletionContainer>
-        <ProfileCompletion />
-      </StyledDashboardProfileCardCompletionContainer>
+      <ProfileCompletion />
 
       <StyledDashbardProfileCardSectionContainer>
         {/* Completion presentation */}
