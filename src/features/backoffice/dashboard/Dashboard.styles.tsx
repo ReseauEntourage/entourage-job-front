@@ -26,8 +26,12 @@ export const StyledDashboardRightColumn = styled.div`
 `;
 
 export const StyledDashboardTitleContainer = styled.div`
-  @media (min-width: ${BREAKPOINTS.desktop}px) {
-    padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    padding-bottom: 40px;
   }
 `;
 

@@ -109,7 +109,6 @@ export const Dashboard = () => {
         <Section className="custom-page">
           <StyledDashboardTitleContainer>
             <H1 title="Bienvenue sur votre tableau de bord" color="black" />
-            <br />
             {isNormalUser && !isCompanyAdmin && <DashboardAlertWhatsapp />}
           </StyledDashboardTitleContainer>
           <StyledBackofficeGrid>
@@ -131,7 +130,6 @@ export const Dashboard = () => {
       <Section className="custom-page">
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre tableau de bord" color="black" />
-          <br />
           {isNormalUser && <DashboardAlertWhatsapp />}
         </StyledDashboardTitleContainer>
         <StyledBackofficeGrid className="mobile">
