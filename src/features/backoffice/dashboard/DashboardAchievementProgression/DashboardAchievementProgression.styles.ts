@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
+type BadgeStatus = 'not_started' | 'in_progress' | 'obtained';
+
+const ICON_CIRCLE_COLOR: Record<BadgeStatus, string> = {
+  not_started: COLORS.lightGray,
+  in_progress: COLORS.lightYellow,
+  obtained: COLORS.darkBlue,
+};
+
 export const StyledAchievementCard = styled.div`
   display: flex;
   flex-direction: row;
@@ -28,13 +36,11 @@ export const StyledAchievementLeft = styled.div`
   }
 `;
 
-type BadgeStatus = 'not_started' | 'in_progress' | 'obtained';
-
-const ICON_CIRCLE_COLOR: Record<BadgeStatus, string> = {
-  not_started: COLORS.lightGray,
-  in_progress: COLORS.lightYellow,
-  obtained: COLORS.darkBlue,
-};
+export const StyledTooltipContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
 
 export const StyledIconCircle = styled.div<{ $status: BadgeStatus }>`
   display: flex;

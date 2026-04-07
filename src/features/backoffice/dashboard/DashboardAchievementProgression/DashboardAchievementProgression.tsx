@@ -16,6 +16,7 @@ import {
   StyledProgressLabel,
   StyledProgressRow,
   StyledProgressRowHeader,
+  StyledTooltipContent,
 } from './DashboardAchievementProgression.styles';
 import { useDashboardAchievementStats } from './useDashboardAchievementStats';
 
@@ -24,16 +25,21 @@ const CONVERSATION_COUNT_THRESHOLD = 3;
 const BADGE_DURATION_MONTHS = 6;
 
 const tooltipContent = (
-  <>
+  <StyledTooltipContent>
     <Text weight="semibold">Ce que ça change pour les candidats</Text>
     <Text color="darkGray">
-      ✅ Ton profil est mis en avant dans les suggestions de candidats
+      <LucidIcon name="Eye" /> Votre profil remonte en priorité quand un
+      candidat cherche un coach.
     </Text>
     <Text color="darkGray">
-      ✅ Les candidats osent écrire, sachant qu'ils auront une réponse{' '}
+      <LucidIcon name="Mail" /> Les candidats osent écrire, en sachant
+      qu&apos;ils auront une réponse.
     </Text>
-    <Text color="darkGray">✅ Leur démarche est prise au sérieux</Text>
-  </>
+    <Text color="darkGray">
+      <LucidIcon name="Handshake" /> Un signal fort de leur démarche est pris au
+      sérieux
+    </Text>
+  </StyledTooltipContent>
 );
 
 const formatExpiryDate = (createdAt: string): string => {
