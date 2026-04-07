@@ -28,7 +28,8 @@ export function useAchievementProgressionModal() {
 
     openModal(
       React.createElement(AchievementProgressionModal, {
-        entry: achievementProgressionToShow,
+        entry: achievementProgressionToShow.entry,
+        changedCriterionKey: achievementProgressionToShow.changedCriterionKey,
       })
     );
     dispatch(gamificationActions.dismissAchievementProgressionModal());

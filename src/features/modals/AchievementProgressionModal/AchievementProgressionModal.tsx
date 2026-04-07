@@ -5,13 +5,13 @@ import { PrettyModal } from '../PrettyModal/PrettyModal';
 import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
 import { LucidIcon, Text } from 'src/components/ui';
 import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
-import { COLORS } from 'src/constants/styles';
 import {
   StyledCriteriaList,
   StyledCriterionHeader,
   StyledCriterionLabel,
   StyledCriterionRow,
 } from './AchievementProgressionModal.styles';
+import { getModalMessage } from './achievement.messages';
 
 const MODAL_ID = 'achievement-progression-modal';
 
@@ -30,11 +30,6 @@ const CriterionRow = ({ criterion }: CriterionRowProps) => {
     <StyledCriterionRow>
       <StyledCriterionHeader>
         <StyledCriterionLabel>
-          <LucidIcon
-            name={isMet ? 'CircleCheck' : 'Circle'}
-            size={24}
-            color={isMet ? COLORS.primaryBlue : COLORS.mediumGray}
-          />
           <Text size="small" color={isMet ? 'black' : 'darkGray'}>
             {criterion.label}
           </Text>
@@ -54,39 +49,38 @@ const CriterionRow = ({ criterion }: CriterionRowProps) => {
 
 interface AchievementProgressionModalProps {
   entry: AchievementProgressionEntry;
+  /** Key of the criterion that progressed, or null when the badge was just obtained. */
+  changedCriterionKey: string | null;
 }
 
 export const AchievementProgressionModal = ({
   entry,
+  changedCriterionKey,
 }: AchievementProgressionModalProps) => {
   const { onClose } = useModalContext();
 
-  const pendingCount = entry.criteria.filter(
-    (c) => c.currentValue < c.threshold
-  ).length;
-
-  const title = entry.hasAchievement
-    ? `Badge "${entry.label}" obtenu !`
-    : 'Continue comme ça !';
-
-  const subtitle = entry.hasAchievement
-    ? 'Vous faites partie des coachs les plus engagés. Votre profil est maintenant mis en avant auprès des candidats.'
-    : pendingCount > 0
-    ? `Encore ${pendingCount} objectif${
-        pendingCount > 1 ? 's' : ''
-      } à atteindre pour décrocher le badge.`
-    : 'Tu as presque atteint le badge !';
+  const { title, subtitle } = getModalMessage(entry, changedCriterionKey);
+  const isObtained = changedCriterionKey === null && entry.hasAchievement;
 
   return (
     <PrettyModal
       id={MODAL_ID}
       size="small"
       title={title}
-      icon={<SvgIcon name="SuperCoachDiamond" width={48} height={48} />}
+      icon={
+        isObtained ? (
+          <SvgIcon name="SuperCoachDiamond" width={48} height={48} />
+        ) : (
+          <LucidIcon name="Handshake" size={48} color="white" />
+        )
+      }
       subtitle={subtitle}
       onSubmit={onClose}
-      submitBtnTxt={entry.hasAchievement ? 'Super !' : 'Continuer'}
+      submitBtnTxt={isObtained ? 'Super !' : "C'est noté, merci !"}
     >
+      <Text weight="semibold" size="small" color="darkGray">
+        Progression vers le badge
+      </Text>
       <StyledCriteriaList>
         {entry.criteria.map((criterion) => (
           <CriterionRow key={criterion.key} criterion={criterion} />
