@@ -42,7 +42,7 @@ export const ProfileAchievementHighlighter = ({
   return (
     <Tooltip
       content={tooltipContent}
-      placement="right"
+      placement="bottom"
       width={isMobile ? 200 : undefined}
     >
       <Tag size={TagSize.Small} variant={TagVariant.DarkBlue}>
