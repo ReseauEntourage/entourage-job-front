@@ -3,6 +3,7 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { UserAchievement } from '@/src/api/types';
 import { Tag, TagSize, TagVariant, Tooltip, Text } from '@/src/components/ui';
 import { Genders } from '@/src/constants/genders';
+import { useIsMobile } from '@/src/hooks/utils';
 
 interface ProfileAchievementHighlighterProps {
   achievement: UserAchievement;
@@ -13,6 +14,7 @@ export const ProfileAchievementHighlighter = ({
   achievement,
   gender,
 }: ProfileAchievementHighlighterProps) => {
+  const isMobile = useIsMobile();
   const tooltipContent = (
     // Note: Hardcoded content for now, as we only have one achievement type. We can easily make it dynamic later if we add more achievement types.
     <Text size="small">
@@ -38,7 +40,11 @@ export const ProfileAchievementHighlighter = ({
   }, [achievement.achievementType, achievement.title, gender]);
 
   return (
-    <Tooltip content={tooltipContent}>
+    <Tooltip
+      content={tooltipContent}
+      placement="right"
+      width={isMobile ? 200 : undefined}
+    >
       <Tag size={TagSize.Small} variant={TagVariant.DarkBlue}>
         {achievementIcon}
         {achievementTitle}

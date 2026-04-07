@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
+
+export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 export const StyledTooltipWrapper = styled.div`
   position: relative;
@@ -8,10 +10,39 @@ export const StyledTooltipWrapper = styled.div`
   cursor: pointer;
 `;
 
-export const StyledTooltipContent = styled.div<{ width?: number }>`
+const placementStyles = (placement: TooltipPlacement) => {
+  switch (placement) {
+    case 'top':
+      return css`
+        bottom: calc(100% + 8px);
+        right: 0;
+      `;
+    case 'left':
+      return css`
+        right: calc(100% + 8px);
+        top: 50%;
+        transform: translateY(-50%);
+      `;
+    case 'right':
+      return css`
+        left: calc(100% + 8px);
+        top: 50%;
+        transform: translateY(-50%);
+      `;
+    case 'bottom':
+    default:
+      return css`
+        top: calc(100% + 8px);
+        right: 0;
+      `;
+  }
+};
+
+export const StyledTooltipContent = styled.div<{
+  width?: number;
+  placement: TooltipPlacement;
+}>`
   position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
   width: ${({ width }) => (width ? `${width}px` : '300px')};
   padding: 14px 16px;
   background: ${COLORS.lightGray};
@@ -21,4 +52,5 @@ export const StyledTooltipContent = styled.div<{ width?: number }>`
   line-height: 1.5;
   color: ${COLORS.black};
   z-index: 10;
+  ${({ placement }) => placementStyles(placement)}
 `;
