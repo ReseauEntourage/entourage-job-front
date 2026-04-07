@@ -2,9 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AchievementProgressionEntry } from 'src/api/types';
 import { SliceRootState } from 'src/store/utils';
 
+export interface AchievementProgressionToShow {
+  entry: AchievementProgressionEntry;
+  /**
+   * Key of the criterion whose value increased since the last check.
+   * `null` when the badge itself was just obtained (Cas 1 — prioritaire).
+   */
+  changedCriterionKey: string | null;
+}
+
 export interface State {
   achievementProgressions: AchievementProgressionEntry[];
-  achievementProgressionToShow: AchievementProgressionEntry | null;
+  achievementProgressionToShow: AchievementProgressionToShow | null;
   isInitialized: boolean;
 }
 
@@ -43,29 +52,42 @@ export const slice = createSlice({
     ) {
       const newProgressions = action.payload;
 
-      const progressed = newProgressions.find((newEntry) => {
+      let progressionToShow: AchievementProgressionToShow | null = null;
+
+      for (const newEntry of newProgressions) {
         const prev = state.achievementProgressions.find(
           (p) => p.type === newEntry.type
         );
         if (!prev) {
-          return false;
+          continue;
         }
 
+        // Cas 1 (prioritaire) — badge just obtained
         if (newEntry.hasAchievement && !prev.hasAchievement) {
-          return true;
+          progressionToShow = { entry: newEntry, changedCriterionKey: null };
+          break;
         }
 
-        return newEntry.criteria.some((newCrit) => {
+        // Cas 2 — a specific criterion value increased
+        const changedCriterion = newEntry.criteria.find((newCrit) => {
           const prevCrit = prev.criteria.find((c) => c.key === newCrit.key);
           return (
             prevCrit !== undefined &&
             newCrit.currentValue > prevCrit.currentValue
           );
         });
-      });
+
+        if (changedCriterion) {
+          progressionToShow = {
+            entry: newEntry,
+            changedCriterionKey: changedCriterion.key,
+          };
+          break;
+        }
+      }
 
       state.achievementProgressions = newProgressions;
-      state.achievementProgressionToShow = progressed ?? null;
+      state.achievementProgressionToShow = progressionToShow;
       state.isInitialized = true;
     },
 
