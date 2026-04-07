@@ -27,12 +27,14 @@ export function AlertCandidatesList({
           firstName={candidate.firstName}
           lastName={candidate.lastName}
           role={candidate.role}
+          gender={candidate.gender}
           department={candidate.department}
           sectorOccupations={candidate.sectorOccupations}
           job={candidate.currentJob || undefined}
           isAvailable={candidate.isAvailable || false}
           hasPicture={candidate.hasPicture || false}
           currentJob={candidate.currentJob || undefined}
+          achievements={candidate.achievements || []}
         />
       );
     });

@@ -68,10 +68,13 @@ export const StyledProfileCardDepartment = styled.div`
 }
 `;
 
-export const StyledProfileCardRole = styled.div`
+export const StyledProfileCardTags = styled.div`
   position: absolute;
   left: 16px;
   bottom: -14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 export const StyledProfileCardContent = styled.div`

@@ -1,7 +1,12 @@
 import React from 'react';
 import { CardListItem } from '@/src/components/ui/CardList';
 import { ProfileCard } from '@/src/components/ui/Cards/EntityCards/ProfileCard';
-import { MatchingReason, UserProfileSectorOccupation } from 'src/api/types';
+import { Genders } from '@/src/constants/genders';
+import {
+  MatchingReason,
+  UserAchievement,
+  UserProfileSectorOccupation,
+} from 'src/api/types';
 import { DepartmentName } from 'src/constants/departements';
 import { UserRoles } from 'src/constants/users';
 
@@ -10,6 +15,7 @@ interface NetworkDirectoryUserItemProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
+  gender: Genders;
   sectorOccupations?: UserProfileSectorOccupation[];
   department: DepartmentName;
   job?: string;
@@ -17,6 +23,7 @@ interface NetworkDirectoryUserItemProps {
   hasPicture: boolean;
   currentJob?: string;
   recommendationReason?: MatchingReason | null;
+  achievements: UserAchievement[];
 }
 
 export function NetworkDirectoryUserItem({
@@ -24,6 +31,7 @@ export function NetworkDirectoryUserItem({
   firstName,
   lastName,
   role,
+  gender,
   department,
   sectorOccupations,
   job,
@@ -31,6 +39,7 @@ export function NetworkDirectoryUserItem({
   hasPicture,
   currentJob,
   recommendationReason,
+  achievements,
 }: NetworkDirectoryUserItemProps) {
   return (
     <CardListItem dataTestId={id}>
@@ -39,6 +48,7 @@ export function NetworkDirectoryUserItem({
         firstName={firstName}
         lastName={lastName}
         role={role}
+        gender={gender}
         department={department}
         sectorOccupations={sectorOccupations}
         job={job}
@@ -46,6 +56,7 @@ export function NetworkDirectoryUserItem({
         hasPicture={hasPicture}
         currentJob={currentJob}
         recommendationReason={recommendationReason}
+        achievements={achievements}
       />
     </CardListItem>
   );

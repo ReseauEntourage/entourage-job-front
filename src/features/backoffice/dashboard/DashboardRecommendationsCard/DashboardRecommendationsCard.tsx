@@ -96,6 +96,7 @@ export const DashboardRecommendationsCard = () => {
           firstName={profile.firstName}
           lastName={profile.lastName}
           role={profile.role}
+          gender={profile.gender}
           department={profile.department}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
@@ -103,6 +104,7 @@ export const DashboardRecommendationsCard = () => {
           hasPicture={profile.hasPicture}
           currentJob={profile.currentJob}
           recommendationReason={reason}
+          achievements={profile.achievements}
         />
       );
     });

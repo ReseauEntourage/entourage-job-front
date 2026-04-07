@@ -157,10 +157,12 @@ export const CompanyCollaboratorsPreviewList = ({
                   firstName={user.firstName}
                   lastName={user.lastName}
                   role={user.role}
+                  gender={user.gender}
                   hasPicture={user.userProfile.hasPicture}
                   isAvailable={user.userProfile.isAvailable}
                   currentJob={user.userProfile.currentJob || undefined}
                   sectorOccupations={user.userProfile.sectorOccupations}
+                  achievements={user.achievements ?? []}
                 />
               </StyledSwiperItemContainer>
             </SwiperSlide>
