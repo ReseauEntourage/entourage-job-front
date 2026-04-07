@@ -15,7 +15,6 @@ export const StyledBackofficeGrid = styled.div`
 
   &.mobile {
     flex-direction: column;
-    gap: 0;
   }
 `;
 

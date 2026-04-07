@@ -335,6 +335,26 @@ export type UserAchievement = {
   achievementType: AchievementType;
 };
 
+export type CriterionStat = {
+  key: string;
+  label: string;
+  currentValue: number;
+  threshold: number;
+};
+
+export type AchievementProgressionEntry = {
+  type: AchievementType;
+  label: string;
+  hasAchievement: boolean;
+  /** ISO date string of when the badge was obtained, null if not yet obtained. */
+  achievedAt: string | null;
+  /** ISO date string of when the badge expires, null if not yet obtained. */
+  expireAt: string | null;
+  /** Rolling window (in months) over which the criteria stats are computed. */
+  statsWindowMonths: number;
+  criteria: CriterionStat[];
+};
+
 export type StaffContact = {
   name: string;
   email: string;
