@@ -36,8 +36,8 @@ const tooltipContent = (
       qu&apos;ils auront une réponse.
     </Text>
     <Text color="darkGray">
-      <LucidIcon name="Handshake" /> Un signal fort de leur démarche est pris au
-      sérieux
+      <LucidIcon name="Handshake" /> Un signal fort que leur démarche est prise
+      au sérieux.
     </Text>
   </StyledTooltipContent>
 );
