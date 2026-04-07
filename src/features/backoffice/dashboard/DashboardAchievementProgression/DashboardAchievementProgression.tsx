@@ -1,12 +1,16 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
-import { AchievementType } from '@/src/api/types';
-import { Card, LucidIcon, Text, Tooltip } from '@/src/components/ui';
-import { ProgressBar } from '@/src/components/ui/ProgressBar/ProgressBar';
-import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
+import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
+import { Card, LucidIcon, Text, Tooltip } from 'src/components/ui';
+import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
+import { Skeleton } from 'src/components/ui/Skeleton/Skeleton';
 import { COLORS } from 'src/constants/styles';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
+import {
+  selectAchievementProgressions,
+  selectGamificationIsInitialized,
+} from 'src/use-cases/gamification';
 import {
   StyledAchievementCard,
   StyledAchievementLeft,
@@ -16,93 +20,101 @@ import {
   StyledProgressLabel,
   StyledProgressRow,
   StyledProgressRowHeader,
-  StyledTooltipContent,
 } from './DashboardAchievementProgression.styles';
-import { useDashboardAchievementStats } from './useDashboardAchievementStats';
+import {
+  ACHIEVEMENT_SVG_ICON,
+  ACHIEVEMENT_TOOLTIP,
+  CRITERION_LUCID_ICON,
+} from './achievement.icons';
 
-const RESPONSE_RATE_THRESHOLD = 75;
-const CONVERSATION_COUNT_THRESHOLD = 3;
-const BADGE_DURATION_MONTHS = 6;
+interface CriterionRowProps {
+  criterion: CriterionStat;
+  isAtRisk: boolean;
+}
 
-const tooltipContent = (
-  <StyledTooltipContent>
-    <Text weight="semibold">Ce que ça change pour les candidats</Text>
-    <Text color="darkGray">
-      <LucidIcon name="Eye" /> Votre profil remonte en priorité quand un
-      candidat cherche un coach.
-    </Text>
-    <Text color="darkGray">
-      <LucidIcon name="Mail" /> Les candidats osent écrire, en sachant
-      qu&apos;ils auront une réponse.
-    </Text>
-    <Text color="darkGray">
-      <LucidIcon name="Handshake" /> Un signal fort de leur démarche est pris au
-      sérieux
-    </Text>
-  </StyledTooltipContent>
-);
+const CriterionRow = ({ criterion, isAtRisk }: CriterionRowProps) => {
+  const isMet = criterion.currentValue >= criterion.threshold;
+  const isRisk = isAtRisk && !isMet;
+  const iconName = CRITERION_LUCID_ICON[criterion.key] ?? 'Circle';
+  const progressPercent = Math.min(
+    (criterion.currentValue / criterion.threshold) * 100,
+    100
+  );
+  const valueLabel =
+    criterion.key === 'responseRate'
+      ? `${Math.round(criterion.currentValue)}%`
+      : `${criterion.currentValue} / ${criterion.threshold}`;
 
-const formatExpiryDate = (createdAt: string): string => {
-  const date = new Date(createdAt);
-  date.setMonth(date.getMonth() + BADGE_DURATION_MONTHS);
-  return date.toLocaleDateString('fr-FR', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
+  return (
+    <StyledProgressRow>
+      <StyledProgressRowHeader>
+        <StyledProgressLabel>
+          <LucidIcon
+            name={iconName}
+            size={16}
+            color={isRisk ? COLORS.lightRed : COLORS.black}
+          />
+          <Text size="small" color={isRisk ? 'lightRed' : 'black'}>
+            {criterion.label}
+          </Text>
+        </StyledProgressLabel>
+        <Text
+          size="small"
+          color={isRisk ? 'lightRed' : 'black'}
+          weight="semibold"
+        >
+          {valueLabel}
+        </Text>
+      </StyledProgressRowHeader>
+      <ProgressBar
+        value={progressPercent}
+        color={isRisk ? 'lightRed' : 'primaryBlue'}
+      />
+    </StyledProgressRow>
+  );
 };
 
-export const DashboardAchievementProgression = () => {
-  const user = useAuthenticatedUser();
+interface AchievementCardProps {
+  entry: AchievementProgressionEntry;
+}
+
+const AchievementCard = ({ entry }: AchievementCardProps) => {
   const isDesktop = useIsDesktop();
 
-  const superEngagedAchievement = useMemo(
-    () =>
-      user.achievements?.find(
-        (a) => a.achievementType === AchievementType.SUPER_ENGAGED_COACH
-      ) ?? null,
-    [user.achievements]
+  const allCriteriaMet = entry.criteria.every(
+    (c) => c.currentValue >= c.threshold
   );
-
-  const hasSuperEngagedBadge = superEngagedAchievement !== null;
-
-  const { stats, isLoading } = useDashboardAchievementStats();
-  const responseRate = stats.responseRate ?? 0;
-  const conversationCount = stats.totalConversationWithMirrorRoleCount ?? 0;
+  const hasProgress = entry.criteria.some((c) => c.currentValue > 0);
+  const isAtRisk = entry.hasAchievement && !allCriteriaMet;
+  const pendingCount = entry.criteria.filter(
+    (c) => c.currentValue < c.threshold
+  ).length;
 
   let badgeStatus: 'not_started' | 'in_progress' | 'obtained' = 'not_started';
-  if (hasSuperEngagedBadge) {
+  if (entry.hasAchievement) {
     badgeStatus = 'obtained';
-  } else if (responseRate > 0 || conversationCount > 0) {
+  } else if (hasProgress) {
     badgeStatus = 'in_progress';
   }
 
-  const isResponseRateMet = responseRate >= RESPONSE_RATE_THRESHOLD;
-  const isConversationMet = conversationCount >= CONVERSATION_COUNT_THRESHOLD;
-  const isResponseRateAtRisk = hasSuperEngagedBadge && !isResponseRateMet;
-  const isConversationAtRisk = hasSuperEngagedBadge && !isConversationMet;
-
-  const isAtRisk =
-    hasSuperEngagedBadge && (!isResponseRateMet || !isConversationMet);
-
-  const pendingObjectivesCount = [isResponseRateMet, isConversationMet].filter(
-    (met) => !met
-  ).length;
+  const svgIconName = ACHIEVEMENT_SVG_ICON[entry.type] ?? 'SuperCoachDiamond';
+  const tooltipContent = ACHIEVEMENT_TOOLTIP[entry.type];
 
   return (
     <Card>
-      <StyledAchievementCard className={isDesktop ? '' : 'mobile'}>
+      <StyledAchievementCard>
         <StyledAchievementLeft>
           <StyledIconCircle $status={badgeStatus}>
-            <SvgIcon name="SuperCoachDiamond" width={35} height={35} />
+            <SvgIcon name={svgIconName} width={35} height={35} />
           </StyledIconCircle>
           <StyledAchievementTitleBlock>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <Text size="normal" weight="semibold">
-                Badge &quot;Super Engagé&quot;
-                {hasSuperEngagedBadge ? ' obtenu' : ''}
+                {entry.hasAchievement
+                  ? `Badge "${entry.label}" obtenu`
+                  : `Obtenez le badge "${entry.label}"`}
               </Text>
-              {isDesktop && (
+              {isDesktop && tooltipContent && (
                 <Tooltip content={tooltipContent}>
                   <LucidIcon
                     name="CircleHelp"
@@ -112,114 +124,79 @@ export const DashboardAchievementProgression = () => {
                 </Tooltip>
               )}
             </div>
-            {!hasSuperEngagedBadge ? (
+            {!entry.hasAchievement ? (
               <Text size="small" color="darkGray">
-                Encore {pendingObjectivesCount} objectif
-                {pendingObjectivesCount > 1 ? 's' : ''} à atteindre
+                Encore {pendingCount} objectif{pendingCount > 1 ? 's' : ''} à
+                atteindre
               </Text>
             ) : (
-              <Text size="small" color="darkGray">
-                Obtenu le{' '}
-                {new Date(superEngagedAchievement.createdAt).toLocaleDateString(
-                  'fr-FR',
-                  {
+              entry.achievedAt && (
+                <Text size="small" color="darkGray">
+                  Valide jusqu&apos;au{' '}
+                  {new Date(entry.expireAt!).toLocaleDateString('fr-FR', {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric',
-                  }
-                )}
-              </Text>
+                  })}
+                </Text>
+              )
             )}
           </StyledAchievementTitleBlock>
         </StyledAchievementLeft>
 
         <StyledAchievementRight>
-          {isLoading ? (
-            <>
-              <Skeleton height="32px" />
-              <Skeleton height="32px" />
-            </>
-          ) : (
-            <>
-              <StyledProgressRow>
-                <StyledProgressRowHeader>
-                  <StyledProgressLabel>
-                    <LucidIcon
-                      name="MailCheck"
-                      size={16}
-                      color={
-                        isResponseRateAtRisk ? COLORS.lightRed : COLORS.black
-                      }
-                    />
-                    <Text
-                      size="small"
-                      color={isResponseRateAtRisk ? 'lightRed' : 'black'}
-                    >
-                      Taux de réponse
-                    </Text>
-                  </StyledProgressLabel>
-                  <Text
-                    size="small"
-                    color={isResponseRateAtRisk ? 'lightRed' : 'black'}
-                    weight="semibold"
-                  >
-                    {Math.round(responseRate)}%
-                  </Text>
-                </StyledProgressRowHeader>
-                <ProgressBar
-                  value={Math.min(
-                    (responseRate / RESPONSE_RATE_THRESHOLD) * 100,
-                    100
-                  )}
-                  color={isResponseRateAtRisk ? 'lightRed' : 'primaryBlue'}
-                />
-              </StyledProgressRow>
-
-              <StyledProgressRow>
-                <StyledProgressRowHeader>
-                  <StyledProgressLabel>
-                    <LucidIcon
-                      name="Timer"
-                      size={16}
-                      color={
-                        isConversationAtRisk ? COLORS.lightRed : COLORS.black
-                      }
-                    />
-                    <Text
-                      size="small"
-                      color={isConversationAtRisk ? 'lightRed' : 'black'}
-                    >
-                      Candidats aidés
-                    </Text>
-                  </StyledProgressLabel>
-                  <Text
-                    size="small"
-                    color={isConversationAtRisk ? 'lightRed' : 'black'}
-                    weight="semibold"
-                  >
-                    {conversationCount} / {CONVERSATION_COUNT_THRESHOLD}
-                  </Text>
-                </StyledProgressRowHeader>
-                <ProgressBar
-                  value={Math.min(
-                    (conversationCount / CONVERSATION_COUNT_THRESHOLD) * 100,
-                    100
-                  )}
-                  color={isConversationAtRisk ? 'lightRed' : 'primaryBlue'}
-                />
-              </StyledProgressRow>
-
-              {isAtRisk && superEngagedAchievement && (
-                <Text size="small" color="lightRed">
-                  Agis avant le{' '}
-                  {formatExpiryDate(superEngagedAchievement.createdAt)} pour
-                  conserver ton badge
-                </Text>
-              )}
-            </>
+          {entry.criteria.map((criterion) => (
+            <CriterionRow
+              key={criterion.key}
+              criterion={criterion}
+              isAtRisk={isAtRisk}
+            />
+          ))}
+          {isAtRisk && entry.expireAt && (
+            <Text size="small" color="lightRed">
+              Agis avant le{' '}
+              {new Date(entry.expireAt).toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              })}{' '}
+              pour conserver ton badge
+            </Text>
           )}
+          <Text size="small" color="darkGray">
+            {(() => {
+              const since = new Date();
+              since.setMonth(since.getMonth() - entry.statsWindowMonths);
+              return `Calculé depuis le ${since.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              })}`;
+            })()}
+          </Text>
         </StyledAchievementRight>
       </StyledAchievementCard>
     </Card>
+  );
+};
+
+export const DashboardAchievementProgression = () => {
+  const isInitialized = useSelector(selectGamificationIsInitialized);
+  const progressions = useSelector(selectAchievementProgressions);
+
+  if (!isInitialized) {
+    return <Skeleton height="130px" />;
+  }
+
+  if (progressions.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {progressions.map((entry) => (
+        <AchievementCard key={entry.type} entry={entry} />
+      ))}
+    </>
   );
 };

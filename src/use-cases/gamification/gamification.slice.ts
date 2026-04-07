@@ -5,11 +5,13 @@ import { SliceRootState } from 'src/store/utils';
 export interface State {
   achievementProgressions: AchievementProgressionEntry[];
   achievementProgressionToShow: AchievementProgressionEntry | null;
+  isInitialized: boolean;
 }
 
 const initialState: State = {
   achievementProgressions: [],
   achievementProgressionToShow: null,
+  isInitialized: false,
 };
 
 export const slice = createSlice({
@@ -26,6 +28,7 @@ export const slice = createSlice({
     ) {
       state.achievementProgressions = action.payload;
       state.achievementProgressionToShow = null;
+      state.isInitialized = true;
     },
 
     /**
@@ -63,6 +66,7 @@ export const slice = createSlice({
 
       state.achievementProgressions = newProgressions;
       state.achievementProgressionToShow = progressed ?? null;
+      state.isInitialized = true;
     },
 
     /** Clears the queued modal after it has been displayed. */
