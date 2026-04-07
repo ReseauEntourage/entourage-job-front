@@ -335,6 +335,20 @@ export type UserAchievement = {
   achievementType: AchievementType;
 };
 
+export type CriterionStat = {
+  key: string;
+  label: string;
+  currentValue: number;
+  threshold: number;
+};
+
+export type AchievementProgressionEntry = {
+  type: AchievementType;
+  label: string;
+  hasAchievement: boolean;
+  criteria: CriterionStat[];
+};
+
 export type StaffContact = {
   name: string;
   email: string;
