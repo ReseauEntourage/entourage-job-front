@@ -4,45 +4,42 @@ import { COLORS } from 'src/constants/styles';
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 export const StyledTooltipWrapper = styled.div`
-  position: relative;
   display: inline-flex;
   align-items: center;
   cursor: pointer;
 `;
 
-const placementStyles = (placement: TooltipPlacement) => {
+// Each placement anchors to a specific edge of the trigger via top/left,
+// then uses transform to shift the tooltip away without needing its own dimensions.
+const placementTransform = (placement: TooltipPlacement) => {
   switch (placement) {
     case 'top':
       return css`
-        bottom: calc(100% + 8px);
-        right: 0;
+        transform: translateY(-100%);
       `;
     case 'left':
       return css`
-        right: calc(100% + 8px);
-        top: 50%;
-        transform: translateY(-50%);
+        transform: translate(-100%, -50%);
       `;
     case 'right':
       return css`
-        left: calc(100% + 8px);
-        top: 50%;
         transform: translateY(-50%);
       `;
     case 'bottom':
     default:
-      return css`
-        top: calc(100% + 8px);
-        right: 0;
-      `;
+      return css``;
   }
 };
 
 export const StyledTooltipContent = styled.div<{
   width?: number;
+  top: number;
+  left: number;
   placement: TooltipPlacement;
 }>`
-  position: absolute;
+  position: fixed;
+  top: ${({ top }) => top}px;
+  left: ${({ left }) => left}px;
   width: ${({ width }) => (width ? `${width}px` : '300px')};
   padding: 14px 16px;
   background: ${COLORS.lightGray};
@@ -51,6 +48,6 @@ export const StyledTooltipContent = styled.div<{
   font-size: 13px;
   line-height: 1.5;
   color: ${COLORS.black};
-  z-index: 10;
-  ${({ placement }) => placementStyles(placement)}
+  z-index: 9999;
+  ${({ placement }) => placementTransform(placement)}
 `;

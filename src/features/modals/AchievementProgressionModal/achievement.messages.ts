@@ -31,7 +31,7 @@ const CRITERION_MODAL_MESSAGE: Record<string, CriterionMessageFn> = {
           otherPendingCount > 0
             ? `Objectif atteint ! Il vous reste encore ${otherPendingCount} critère${
                 otherPendingCount > 1 ? 's' : ''
-              } à compléter pour décrocher le badge.`
+              } à compléter pour décrocher le badge "${entry.label}".`
             : `Objectif atteint !`,
       };
     }
@@ -40,14 +40,14 @@ const CRITERION_MODAL_MESSAGE: Record<string, CriterionMessageFn> = {
       title,
       subtitle:
         remaining === 1
-          ? `Plus qu'un seul échange pour décrocher le badge !`
-          : `Plus que ${remaining} échanges pour décrocher le badge !`,
+          ? `Plus qu'un seul échange pour décrocher le badge "${entry.label}" !`
+          : `Plus que ${remaining} échanges pour décrocher le badge "${entry.label}" !`,
     };
   },
 
   responseRate: (_criterion, entry) => ({
     title: 'Continuez comme ça !',
-    subtitle: `En répondant à vos candidats, vous augmentez votre taux de réponse nécessaire pour obtenir le badge ${entry.label}.`,
+    subtitle: `En répondant à vos candidats, vous augmentez votre taux de réponse nécessaire pour obtenir le badge "${entry.label}".`,
   }),
 };
 
@@ -69,8 +69,8 @@ const FALLBACK_MESSAGE = (entry: AchievementProgressionEntry): ModalMessage => {
       pendingCount > 0
         ? `Encore ${pendingCount} objectif${
             pendingCount > 1 ? 's' : ''
-          } à atteindre pour décrocher le badge.`
-        : 'Vous êtes à un pas du badge !',
+          } à atteindre pour décrocher le badge "${entry.label}".`
+        : `Vous êtes à un pas du badge "${entry.label}" !`,
   };
 };
 

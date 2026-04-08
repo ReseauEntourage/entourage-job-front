@@ -1,9 +1,12 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
+import { COLORS } from '@/src/constants/styles';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { ACHIEVEMENT_TOOLTIP } from '../../backoffice/dashboard/DashboardAchievementProgression/achievement.icons';
 import { useModalContext } from '../Modal';
 import { PrettyModal } from '../PrettyModal/PrettyModal';
 import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
-import { LucidIcon, Text } from 'src/components/ui';
+import { LucidIcon, Text, Tooltip } from 'src/components/ui';
 import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
 import {
   StyledCriteriaList,
@@ -57,10 +60,13 @@ export const AchievementProgressionModal = ({
   entry,
   changedCriterionKey,
 }: AchievementProgressionModalProps) => {
+  const isDesktop = useIsDesktop();
   const { onClose } = useModalContext();
 
   const { title, subtitle } = getModalMessage(entry, changedCriterionKey);
   const isObtained = changedCriterionKey === null && entry.hasAchievement;
+
+  const tooltipContent = ACHIEVEMENT_TOOLTIP[entry.type];
 
   return (
     <PrettyModal
@@ -79,7 +85,12 @@ export const AchievementProgressionModal = ({
       submitBtnTxt={isObtained ? 'Super !' : "C'est noté, merci !"}
     >
       <Text weight="semibold" size="small" color="darkGray">
-        Progression vers le badge
+        Progression vers le badge "{entry.label}"{' '}
+        {isDesktop && tooltipContent && (
+          <Tooltip content={tooltipContent} placement="top" width={190}>
+            <LucidIcon name="CircleHelp" size={16} color={COLORS.mediumGray} />
+          </Tooltip>
+        )}
       </Text>
       <StyledCriteriaList>
         {entry.criteria.map((criterion) => (
