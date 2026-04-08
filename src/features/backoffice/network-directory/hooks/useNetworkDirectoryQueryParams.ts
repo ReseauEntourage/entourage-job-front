@@ -20,6 +20,7 @@ export type NetworkDirectoryQueryParams = {
   entity: NetworkDirectoryEntity;
   isAvailable?: boolean;
   sort?: NetworkDirectorySort;
+  hasSuperCoachBadge?: boolean;
 };
 
 export type NetworkDirectorySortFilters = {
@@ -55,6 +56,7 @@ export function useNetworkDirectoryQueryParams() {
       departments,
       contactTypes,
       isAvailable,
+      hasSuperCoachBadge,
     },
   } = useRouter();
 
@@ -91,6 +93,7 @@ export function useNetworkDirectoryQueryParams() {
       ? { sort: sort as NetworkDirectorySort }
       : { sort: NetworkDirectorySort.RELEVANCE }),
     ...(isAvailable === 'true' ? { isAvailable: true } : {}),
+    ...(hasSuperCoachBadge === 'true' ? { hasSuperCoachBadge: true } : {}),
   };
 
   if (search) {
