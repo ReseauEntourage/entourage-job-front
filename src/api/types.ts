@@ -637,6 +637,7 @@ export type ProfilesFilters = {
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
   isAvailable?: boolean;
   sort?: string;
+  hasSuperCoachBadge?: boolean;
 };
 
 export type EventsFilters = {
