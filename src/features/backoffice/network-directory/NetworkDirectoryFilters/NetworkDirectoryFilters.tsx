@@ -41,7 +41,7 @@ const availabilityFilters: FilterConstant<boolean>[] = [
 ];
 
 const superCoachBadgeFilters: FilterConstant<boolean>[] = [
-  { value: true, label: '💎 Coachs engagés uniquement' },
+  { value: true, label: '💎 Super engagés uniquement' },
 ];
 
 export const NetworkDirectoryFilters = () => {
