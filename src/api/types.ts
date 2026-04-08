@@ -340,6 +340,7 @@ export type CriterionStat = {
   label: string;
   currentValue: number;
   threshold: number;
+  isPercentage?: boolean;
 };
 
 export type AchievementProgressionEntry = {

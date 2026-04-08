@@ -42,7 +42,9 @@ const CriterionRow = ({ criterion }: CriterionRowProps) => {
           weight="semibold"
           color={isMet ? 'black' : 'darkGray'}
         >
-          {Math.round(criterion.currentValue)} / {criterion.threshold}
+          {criterion.isPercentage
+            ? `${Math.round(criterion.currentValue)}% / ${criterion.threshold}%`
+            : `${Math.round(criterion.currentValue)} / ${criterion.threshold}`}
         </Text>
       </StyledCriterionHeader>
       <ProgressBar value={progressPercent} color="primaryBlue" />
