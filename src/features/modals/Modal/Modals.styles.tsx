@@ -3,8 +3,8 @@ import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledCloseButton = styled.button`
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 30px;
+  right: 30px;
   background: none;
   border: none;
   cursor: pointer;

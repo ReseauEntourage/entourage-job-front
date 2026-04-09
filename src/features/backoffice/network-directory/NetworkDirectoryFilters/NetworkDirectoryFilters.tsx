@@ -40,6 +40,10 @@ const availabilityFilters: FilterConstant<boolean>[] = [
   { value: true, label: 'Uniquement les profils disponibles' },
 ];
 
+const superCoachBadgeFilters: FilterConstant<boolean>[] = [
+  { value: true, label: '💎 Super engagés uniquement' },
+];
+
 export const NetworkDirectoryFilters = () => {
   const { push } = useRouter();
   const networkDirectoryQueryParams = useNetworkDirectoryQueryParams();
@@ -74,6 +78,7 @@ export const NetworkDirectoryFilters = () => {
     contactTypes,
     isAvailable,
     sort,
+    hasSuperCoachBadge,
   } = networkDirectoryQueryParams;
 
   const selectedEntityNetworkDirectoryFilters: Filter[] = useMemo(() => {
@@ -112,6 +117,12 @@ export const NetworkDirectoryFilters = () => {
       title: 'Disponibilité',
     } as Filter;
 
+    const superCoachBadgeFilter = {
+      key: 'hasSuperCoachBadge',
+      constants: superCoachBadgeFilters,
+      title: 'Badge',
+    } as Filter;
+
     // Assigning filters based on entity
     const userFilters = [
       departmentByIdFilter,
@@ -119,6 +130,9 @@ export const NetworkDirectoryFilters = () => {
       businessSectorsFilter,
       contactTypesFilter,
       availabilityFilter,
+      ...(isRoleIncluded([UserRoles.COACH], role)
+        ? [superCoachBadgeFilter]
+        : []),
     ];
     const companyFilters = [businessSectorsFilter, departmentByIdFilter];
 
@@ -126,7 +140,13 @@ export const NetworkDirectoryFilters = () => {
     return entity === NetworkDirectoryEntity.USER
       ? userFilters
       : companyFilters;
-  }, [businessSectorsFilters, departmentsIdsFilters, entity, nudgesFilters]);
+  }, [
+    businessSectorsFilters,
+    departmentsIdsFilters,
+    entity,
+    nudgesFilters,
+    role,
+  ]);
 
   const { setFilters, setSearch, resetFilters } = useFilters(
     selectedEntityNetworkDirectoryFilters,
@@ -154,6 +174,10 @@ export const NetworkDirectoryFilters = () => {
         isAvailable !== undefined
           ? [findConstantFromValue(isAvailable, availabilityFilters)]
           : [],
+      hasSuperCoachBadge:
+        hasSuperCoachBadge !== undefined
+          ? [findConstantFromValue(hasSuperCoachBadge, superCoachBadgeFilters)]
+          : [],
       sort:
         sort !== undefined ? [findConstantFromValue(sort, sortsFilter)] : [],
     };
@@ -163,6 +187,7 @@ export const NetworkDirectoryFilters = () => {
     businessSectorIds,
     contactTypes,
     isAvailable,
+    hasSuperCoachBadge,
     sort,
     sortsFilter,
     nudgesFilters,

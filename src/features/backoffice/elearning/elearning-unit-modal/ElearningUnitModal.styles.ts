@@ -9,7 +9,7 @@ export const StyledElearningUnitModalContainer = styled.div`
 `;
 
 export const StyledElearningUnitModalHeader = styled.div`
-  padding: 16px;
+  padding: 0px 30px;
 `;
 
 export const StyledElearningUnitModalBody = styled.div`
@@ -27,7 +27,7 @@ export const StyledElearningUnitModalContent = styled.div<{
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  padding: ${(props) => (props.noPadding ? '0' : '16px')};
+  padding: ${(props) => (props.noPadding ? '0' : '30px')};
   gap: 16px;
 `;
 
@@ -39,7 +39,7 @@ export const StyledElearningUnitModalVideoFrame = styled.div<{
   min-height: 0;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 0 30px;
 
   /* Permet d'utiliser cqh (container query height units) */
   container-type: size;
@@ -95,7 +95,7 @@ export const StyledInviteToGoToQuiz = styled.div`
 export const StyledElearningUnitModalActions = styled.div`
   display: flex;
   justify-content: center;
-  padding: 16px;
+  padding: 16px 30px;
   gap: 8px;
   flex-shrink: 0;
 `;

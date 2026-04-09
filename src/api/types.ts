@@ -312,6 +312,7 @@ export type User = {
   hasExtractedCvData?: boolean;
   company: Company | null;
   invitations?: Invitation[];
+  achievements?: UserAchievement[];
 
   referredCandidates?: User[];
   averageDelayResponse?: number | null;
@@ -321,6 +322,38 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+};
+
+export enum AchievementType {
+  SUPER_ENGAGED_COACH = 'super_engaged_coach',
+}
+
+export type UserAchievement = {
+  id: string;
+  createdAt: string;
+  title: string;
+  achievementType: AchievementType;
+};
+
+export type CriterionStat = {
+  key: string;
+  label: string;
+  currentValue: number;
+  threshold: number;
+  isPercentage?: boolean;
+};
+
+export type AchievementProgressionEntry = {
+  type: AchievementType;
+  label: string;
+  hasAchievement: boolean;
+  /** ISO date string of when the badge was obtained, null if not yet obtained. */
+  achievedAt: string | null;
+  /** ISO date string of when the badge expires, null if not yet obtained. */
+  expireAt: string | null;
+  /** Rolling window (in months) over which the criteria stats are computed. */
+  statsWindowMonths: number;
+  criteria: CriterionStat[];
 };
 
 export type StaffContact = {
@@ -519,6 +552,7 @@ export type PublicProfile = {
   lastName: string;
   linkedinUrl?: string;
   role: UserRoles;
+  gender: Genders;
   department: DepartmentName;
   currentJob: string;
   description: string;
@@ -544,6 +578,7 @@ export type PublicProfile = {
   totalConversationWithMirrorRoleCount: number | null;
   createdAt: string | null;
   lastConnection: string;
+  achievements: UserAchievement[];
 };
 
 export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
@@ -603,6 +638,7 @@ export type ProfilesFilters = {
   contactTypes: ContactTypeEnum | ContactTypeEnum[];
   isAvailable?: boolean;
   sort?: string;
+  hasSuperCoachBadge?: boolean;
 };
 
 export type EventsFilters = {

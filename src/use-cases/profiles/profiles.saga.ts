@@ -56,6 +56,7 @@ function* fetchProfilesRequestedSaga(
       contactTypes,
       isAvailable,
       sort,
+      hasSuperCoachBadge,
     } = action.payload;
 
     const response = yield* call(() =>
@@ -70,6 +71,7 @@ function* fetchProfilesRequestedSaga(
         limit,
         isAvailable,
         sort,
+        hasSuperCoachBadge,
       })
     );
     yield* put(fetchProfilesSucceeded(response.data));

@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+import { Genders } from '@/src/constants/genders';
 import { UserRoles } from 'src/constants/users';
 import { store } from 'src/store/store';
 import { ProfileCard, ProfileCardProps } from '.';
@@ -28,6 +29,7 @@ export const Candidate = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.CANDIDATE,
+    gender: Genders.MALE,
     isAvailable: true,
     sectorOccupations: [
       {
@@ -45,6 +47,7 @@ export const Candidate = {
     ],
     department: 'Paris (75)',
     hasPicture: true,
+    achievements: [],
   },
 } satisfies Story;
 
@@ -54,6 +57,7 @@ export const Coach = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.COACH,
+    gender: Genders.MALE,
     isAvailable: true,
     sectorOccupations: [
       {
@@ -71,5 +75,6 @@ export const Coach = {
     ],
     department: 'Paris (75)',
     hasPicture: true,
+    achievements: [],
   },
 } satisfies Story;

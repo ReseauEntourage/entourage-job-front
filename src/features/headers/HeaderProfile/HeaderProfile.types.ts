@@ -1,4 +1,6 @@
+import { UserAchievement } from '@/src/api/types';
 import { DepartmentName } from '@/src/constants/departements';
+import { Genders } from '@/src/constants/genders';
 import { UserRoles } from '@/src/constants/users';
 
 export interface HeaderProfileProps {
@@ -8,9 +10,11 @@ export interface HeaderProfileProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
+  gender: Genders;
   department: DepartmentName;
   introduction?: string;
   hasPicture: boolean;
+  achievements: UserAchievement[];
 
   // Stats
   createdAt: string | null;

@@ -4,7 +4,6 @@ export const StyledElearningUnitCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
 `;
 
 export const StyledElearningUnitCardContentContainer = styled.div`

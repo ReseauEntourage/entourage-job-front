@@ -10,6 +10,7 @@ export enum TagVariant {
   DarkBlue = 'darkBlue',
   PrimaryBlue = 'primaryBlue',
   ExtraDarkBlue = 'extraDarkBlue',
+  LightYellow = 'lightYellow',
 }
 
 export enum TagSize {

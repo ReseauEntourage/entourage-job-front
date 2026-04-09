@@ -6,6 +6,8 @@ import { H3, H6 } from '@/src/components/ui/Headings';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
 import { RecommendationReasonBadge } from '@/src/components/ui/RecommendationReasonBadge/RecommendationReasonBadge';
 import { Text } from '@/src/components/ui/Text';
+import { Genders } from '@/src/constants/genders';
+import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
 import { Badge, BadgeVariant } from '../../../Badge';
 import { Button } from '../../../Button';
 import { EntityCard } from '../EntityCard/EntityCard';
@@ -13,6 +15,7 @@ import {
   BusinessSector,
   MatchingReason,
   Occupation,
+  UserAchievement,
   UserProfileSectorOccupation,
 } from 'src/api/types';
 import { DepartmentName } from 'src/constants/departements';
@@ -37,7 +40,7 @@ import {
   StyledProfileCardPicture,
   StyledProfileCardPictureContainer,
   StyledProfileCardProfessionalSituation,
-  StyledProfileCardRole,
+  StyledProfileCardTags,
   StyledSeparator,
 } from './ProfileCard.styles';
 import { RoleBadge } from './RoleBadge';
@@ -47,7 +50,9 @@ export interface ProfileCardProps {
   firstName: string;
   lastName: string;
   role: UserRoles;
+  gender: Genders;
   hasPicture: boolean;
+  achievements: UserAchievement[];
   sectorOccupations?: UserProfileSectorOccupation[];
   department?: DepartmentName;
   job?: string;
@@ -84,12 +89,14 @@ export function ProfileCard({
   firstName,
   lastName,
   role,
+  gender,
   department,
   sectorOccupations,
   currentJob,
   isAvailable,
   hasPicture,
   recommendationReason,
+  achievements,
 }: ProfileCardProps) {
   const { urlImg } = useImageFallback({
     userId,
@@ -150,9 +157,15 @@ export function ProfileCard({
             </StyledProfileCardDepartment>
           )}
         </StyledProfileCardInfoContainer>
-        <StyledProfileCardRole>
+        <StyledProfileCardTags>
           <RoleBadge role={role} />
-        </StyledProfileCardRole>
+          {achievements && achievements.length > 0 && (
+            <ProfileAchievementHighlighter
+              achievement={achievements?.[0]}
+              gender={gender}
+            />
+          )}
+        </StyledProfileCardTags>
       </StyledProfileCardPictureContainer>
       <StyledProfileCardContent>
         <StyledProfileCardProfessionalSituation>

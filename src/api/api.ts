@@ -7,6 +7,7 @@ import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
+  AchievementProgressionEntry,
   APIRoute,
   CandidateInscription,
   ContactCompany,
@@ -560,6 +561,16 @@ export class APIHandler {
       {},
       headers
     );
+  }
+
+  getAuthCurrentStats(): Promise<AxiosResponse> {
+    return this.get(`/auth/current/stats`);
+  }
+
+  getAchievementProgression(): Promise<
+    AxiosResponse<AchievementProgressionEntry[]>
+  > {
+    return this.get(`/gamification/achievement-progression`);
   }
 
   getStaffContactInfo(

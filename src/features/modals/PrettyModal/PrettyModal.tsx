@@ -20,6 +20,7 @@ export interface PrettyModalProps {
   submitBtnTxt?: string;
   onSubmit?: () => void;
   children?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 export const PrettyModal = ({
@@ -30,7 +31,9 @@ export const PrettyModal = ({
   submitBtnTxt = 'Envoyer',
   onSubmit,
   children,
+  icon,
 }: PrettyModalProps) => {
+  const defaultIcon = <LucidIcon name="BadgeCheck" color="white" size={48} />;
   const { onClose } = useModalContext();
 
   const handleClose = () => {
@@ -42,11 +45,13 @@ export const PrettyModal = ({
     }
   };
 
+  const displayIcon = icon || defaultIcon;
+
   return (
     <Modal id={id} size={size}>
       <StyledModalHeaderContainer>
         <StyledModalHeaderIconContainer>
-          <LucidIcon name="BadgeCheck" color="white" size={48} />
+          {displayIcon}
         </StyledModalHeaderIconContainer>
         <H3 weight="bold" title={title} />
         {subtitle && <Text color="darkGray">{subtitle}</Text>}

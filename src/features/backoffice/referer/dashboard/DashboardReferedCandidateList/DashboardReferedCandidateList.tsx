@@ -42,12 +42,14 @@ export const DashboardReferedCandidateList = () => {
           firstName={profile.firstName}
           lastName={profile.lastName}
           role={profile.role}
+          gender={profile.gender}
           department={profile.department}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
           hasPicture={profile.hasPicture}
           currentJob={profile.currentJob}
+          achievements={profile.achievements}
         />
       );
     });
