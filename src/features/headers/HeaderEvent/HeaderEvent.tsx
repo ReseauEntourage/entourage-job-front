@@ -72,6 +72,7 @@ export const HeaderEvent = ({
               meetingLink={meetingLink}
               fullAddress={fullAddress}
               registrationCount={registrationCount}
+              isParticipating={isParticipating}
             />
             {isMobile && (
               <EventParticipateButton
