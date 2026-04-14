@@ -71,8 +71,6 @@ export function EventCard({
       </StyledEventCardPictureContainer>
       <StyledEventCardContentContainer>
         <H5 title={name} />
-        {/* TODO: Add the targeted roles badges */}
-
         <EventInfoSummary
           startDate={startDate}
           mode={mode}
@@ -80,6 +78,8 @@ export function EventCard({
           fullAddress={fullAddress}
           registrationCount={registrationCount}
           displayParticipants
+          isParticipating={isParticipating}
+          compact
         />
       </StyledEventCardContentContainer>
     </EntityCard>

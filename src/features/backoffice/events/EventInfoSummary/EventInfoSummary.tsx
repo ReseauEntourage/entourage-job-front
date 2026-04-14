@@ -3,6 +3,7 @@ import 'moment/locale/fr';
 
 import React from 'react';
 import { LucidIcon, Text } from '@/src/components/ui';
+import { SimpleLink } from '@/src/components/ui/SimpleLink';
 import { EventMode } from '@/src/constants/events';
 import { Event } from 'src/api/types';
 import {
@@ -13,17 +14,26 @@ import {
 
 export type EventInfoSummaryProps = Pick<
   Event,
-  'startDate' | 'mode' | 'meetingLink' | 'fullAddress' | 'registrationCount'
+  | 'startDate'
+  | 'mode'
+  | 'meetingLink'
+  | 'fullAddress'
+  | 'registrationCount'
+  | 'isParticipating'
 > & {
   displayParticipants?: boolean;
+  compact?: boolean;
 };
 
 export const EventInfoSummary = ({
   startDate,
   mode,
+  meetingLink,
   fullAddress,
   displayParticipants = false,
   registrationCount,
+  isParticipating,
+  compact = false,
 }: EventInfoSummaryProps) => {
   return (
     <>
@@ -48,20 +58,22 @@ export const EventInfoSummary = ({
             <LucidIcon name="Laptop" size={20} />
             <Text>
               En visio
-              {/* {meetingLink && (
+              {isParticipating && meetingLink && !compact && (
                 <>
-                  {' - '}
-                  <Link
-                    href={`${
-                      meetingLink.startsWith('http') ? '' : 'https://'
-                    }${meetingLink}`}
+                  {' : '}
+                  <SimpleLink
+                    href={
+                      meetingLink.startsWith('http')
+                        ? meetingLink
+                        : `https://${meetingLink}`
+                    }
+                    isExternal
                     target="_blank"
-                    rel="noopener noreferrer"
                   >
-                    Accéder
-                  </Link>
+                    {meetingLink}
+                  </SimpleLink>
                 </>
-              )} */}
+              )}
             </Text>
           </StyledElement>
         )}
