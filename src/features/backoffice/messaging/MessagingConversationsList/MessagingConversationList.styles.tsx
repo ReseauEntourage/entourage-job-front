@@ -25,3 +25,7 @@ export const StyledConversationsContainer = styled.div`
     height: 100%;
   }
 `;
+
+export const StyledEmptyState = styled.p`
+  padding: 30px 15px;
+`;

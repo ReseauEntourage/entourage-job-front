@@ -8,11 +8,22 @@ export interface BadgeProps {
   variant: BadgeVariant;
   children: React.ReactNode;
   borderRadius?: 'small' | 'medium' | 'large';
+  onClick?: () => void;
 }
 
-export const Badge = ({ variant, children, borderRadius }: BadgeProps) => {
+export const Badge = ({
+  variant,
+  children,
+  borderRadius,
+  onClick,
+}: BadgeProps) => {
   return (
-    <StyledBadge variant={variant} $borderRadius={borderRadius}>
+    <StyledBadge
+      variant={variant}
+      $borderRadius={borderRadius}
+      $clickable={!!onClick}
+      onClick={onClick}
+    >
       {children}
     </StyledBadge>
   );
