@@ -16,7 +16,6 @@ export const nudgesIcons = {
   interview: <SvgIcon name="IlluMalette" {...iconSizeProps} />,
   cv: <SvgIcon name="IlluCV" {...iconSizeProps} />,
   network: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
-  event: <SvgIcon name="IlluReseauxSociaux" {...iconSizeProps} />,
 };
 
 export const ProfileNudges: (FilterConstant<string> & {
@@ -68,21 +67,6 @@ export const ProfileNudges: (FilterConstant<string> & {
     shortTitle: {
       [UserRoles.CANDIDATE]: 'Créer mon CV',
       [UserRoles.COACH]: 'Aider à réaliser un CV',
-    },
-  },
-  {
-    icon: (
-      <LegacyImg
-        src="/static/img/illustrations/illu-disscution.png"
-        alt="Disscution"
-        {...iconSizeProps}
-      />
-    ),
-    value: 'event',
-    label: 'Événement',
-    shortTitle: {
-      [UserRoles.CANDIDATE]: 'Rencontrer la communauté',
-      [UserRoles.COACH]: 'Rencontrer la communauté',
     },
   },
   {
@@ -165,19 +149,6 @@ export const ParametresNudgeCardContents: {
     {
       icon: (
         <LegacyImg
-          src="/static/img/illustrations/illu-disscution.png"
-          alt="Disscution"
-          {...iconSizeProps}
-        />
-      ),
-      value: 'event',
-      label: 'Se rencontrer et échanger avec les membres de la communauté',
-      description:
-        "Rejoignez notre communauté lors d'événements pour partager vos expériences, apprendre des autres et tisser des liens professionnels précieux.",
-    },
-    {
-      icon: (
-        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -229,20 +200,6 @@ export const ParametresNudgeCardContents: {
       label: 'Aider à réaliser un CV et une lettre de motivation',
       description:
         'Utilisez votre expérience pour guider les candidats dans la création de documents professionnels qui reflètent leur potentiel et leurs expériences.',
-    },
-    {
-      icon: (
-        <LegacyImg
-          src="/static/img/illustrations/illu-disscution.png"
-          alt="Disscution"
-          {...iconSizeProps}
-        />
-      ),
-      value: 'event',
-      label:
-        'Se rencontrer lors d’événements avec les membres de la communauté',
-      description:
-        "Participer à des événements qui encouragent l'entraide, le partage d'expériences et le développement de réseaux professionnels enrichissants pour les candidats.",
     },
     {
       icon: (
