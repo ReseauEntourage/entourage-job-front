@@ -15,11 +15,17 @@ export const StyledMessagingIconContainer = styled.div`
 
   .pin-notification {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 16px;
-    height: 16px;
+    top: 2px;
+    right: 2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 3px;
     background: ${COLORS.lightRed};
-    border-radius: 50%;
+    border-radius: 8px;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;

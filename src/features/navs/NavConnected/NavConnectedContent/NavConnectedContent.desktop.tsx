@@ -55,7 +55,7 @@ export const NavConnectedContentDesktop = ({
           color={COLORS.black}
         />
         {messaging.badge && badges[messaging.badge] > 0 && (
-          <div className="pin-notification" />
+          <div className="pin-notification">{badges[messaging.badge]}</div>
         )}
       </StyledMessagingIconContainer>
 
