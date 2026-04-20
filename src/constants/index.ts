@@ -652,39 +652,6 @@ export const EVENT_TYPES_FILTERS = [
   },
 ];
 
-export const ANTENNE_INFO = [
-  {
-    dpt: '93',
-    city: 'Paris',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  },
-  {
-    dpt: '75',
-    city: 'Paris',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  },
-  {
-    dpt: '92',
-    city: 'Paris',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  },
-  {
-    dpt: '35',
-    city: 'Rennes',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_RENNES,
-  },
-  {
-    dpt: '59',
-    city: 'Lille',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LILLE,
-  },
-  {
-    dpt: '69',
-    city: 'Lyon',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LYON,
-  },
-] as const;
-
 export const MEMBER_TABS = {
   CV: 'cv',
   PARAMETERS: 'parametres',
