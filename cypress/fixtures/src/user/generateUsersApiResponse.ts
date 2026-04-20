@@ -9,7 +9,6 @@ export const generateUsersApiResponse = (numbersOfUsers, roleUsers) => {
     phone: faker.phone.number(),
     address: faker.location.streetAddress(),
     role: roleUsers,
-    adminRole: null,
     zone: faker.location.city(),
     gender: faker.number.int(1),
     lastConnection: null,

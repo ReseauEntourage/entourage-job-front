@@ -78,7 +78,6 @@ export function EditMemberModal({ user, setUser }: EditMemberModalProps) {
         lastName: user.lastName,
         email: user.email,
         role: user.role,
-        adminRole: user.adminRole,
         gender: user.gender,
         phone: user.phone,
         address: user.address,

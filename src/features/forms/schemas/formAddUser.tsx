@@ -6,11 +6,7 @@ import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
-import {
-  AdminRoles,
-  getRolesWithOrganization,
-  UserRoles,
-} from 'src/constants/users';
+import { getRolesWithOrganization, UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -41,7 +37,6 @@ interface FormAddUserSchema extends FormSchemaValidation {
   zone: AdminZone;
   phone: string;
   email: string;
-  adminRole: AdminRoles;
   organizationId: FilterConstant<string>;
   nameOrganization: string;
   addressOrganization: string;
@@ -139,7 +134,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           name: 'role',
           component: 'select-simple',
           options: USER_ROLES_FILTERS,
-          fieldsToReset: ['adminRole', 'organizationId'],
+          fieldsToReset: ['organizationId'],
           isRequired: true,
         },
       ],
@@ -204,28 +199,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
             'referentLastNameOrganization',
             'referentPhoneOrganization',
             'referentMailOrganization',
-          ],
-          isRequired: true,
-        },
-      ],
-    },
-    {
-      id: 'adminRoleGroup',
-      name: 'adminRoleGroup',
-      component: 'fieldgroup',
-      hide: (getValue) => {
-        const role = getValue('role');
-        return role !== UserRoles.ADMIN;
-      },
-      fields: [
-        {
-          id: 'adminRole',
-          name: 'adminRole',
-          component: 'select-simple',
-          title: 'Responsabilité *',
-          options: [
-            { value: AdminRoles.CANDIDATES, label: AdminRoles.CANDIDATES },
-            { value: AdminRoles.COMPANIES, label: AdminRoles.COMPANIES },
           ],
           isRequired: true,
         },

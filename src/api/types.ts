@@ -11,11 +11,7 @@ import {
   WorkingExperience,
 } from 'src/constants';
 import { AdminZone, DepartmentName } from 'src/constants/departements';
-import {
-  AdminRoles,
-  RegistrableUserRoles,
-  UserRoles,
-} from 'src/constants/users';
+import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
@@ -289,7 +285,6 @@ export type User = {
   lastName: string;
   email: string;
   role: UserRoles;
-  adminRole: AdminRoles;
   password: string;
   salt: string;
   gender: Genders;
@@ -383,7 +378,6 @@ export type UserDto = {
   zone: AdminZone;
   phone: string;
   email: string;
-  adminRole?: AdminRoles;
   OrganizationId?: string;
   id?: string;
   userProfile?: UserProfile;

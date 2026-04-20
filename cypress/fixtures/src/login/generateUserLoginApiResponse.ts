@@ -9,7 +9,6 @@ export const generateUserLoginApiResponse = (roleUser) => {
     email: faker.internet.exampleEmail(),
     phone: faker.phone.number(),
     address: null,
-    adminRole: null,
     zone: 'PARIS',
     gender: 0,
     lastConnection: '',

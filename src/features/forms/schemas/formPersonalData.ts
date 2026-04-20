@@ -7,7 +7,6 @@ import {
   DepartmentName,
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
-import { AdminRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formPersonalDataAsCandidate: FormSchema<{
@@ -220,7 +219,6 @@ export const formPersonalDataAsAdmin: FormSchema<{
   gender: Genders;
   phone: string;
   zone: AdminZone;
-  adminRole: AdminRoles;
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;

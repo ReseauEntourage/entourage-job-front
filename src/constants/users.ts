@@ -58,15 +58,3 @@ export const RELATED_ROLES = {
   [UserRoles.ADMIN]: UserRoles.ADMIN,
   [UserRoles.REFERER]: UserRoles.CANDIDATE,
 } as const;
-
-// export const ADMIN_ROLES = {
-//   CANDIDATES: 'Candidats',
-//   COMPANIES: 'Entreprises',
-// } as const;
-// type AdminRole = (typeof ADMIN_ROLES)[keyof typeof ADMIN_ROLES];
-
-// What to do with that ?
-export enum AdminRoles {
-  CANDIDATES = 'Candidats',
-  COMPANIES = 'Entreprises',
-}

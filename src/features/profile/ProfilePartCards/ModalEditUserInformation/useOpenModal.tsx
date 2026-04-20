@@ -22,7 +22,6 @@ export const useOpenCorrespondingModal = (user: User) => {
           gender: user.gender,
           phone: user.phone,
           zone: user.zone,
-          adminRole: user.adminRole,
         }}
       />
     );

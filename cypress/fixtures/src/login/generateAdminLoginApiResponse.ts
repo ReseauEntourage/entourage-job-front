@@ -11,7 +11,6 @@ export const generateAdminLoginApiResponse = () => {
     address: '01 rue Acme, 75001 Paris',
     zone: 'Paris',
     role: 'Admin',
-    adminRole: 'Candidats',
     candidat: false,
     coach: false,
     lastConnection: '',

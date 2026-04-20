@@ -129,14 +129,6 @@ describe('En tant que - Administrateur', () => {
       cy.get('#form-add-user-organizationId').should('not.exist');
       cy.get('[id$=Organization]').should('not.exist');
 
-      cy.get('#form-add-user-adminRole-container button')
-        .should('be.visible')
-        .click();
-      cy.get('#form-add-user-adminRole-container')
-        .find('.option')
-        .contains('Candidats')
-        .click();
-
       cy.get('button').contains('Ajouter').should('be.visible').click();
 
       cy.wait('@postCandidate');
@@ -154,7 +146,6 @@ describe('En tant que - Administrateur', () => {
 
       // Assertion - vérifications que les champs ci-dessous ne sont pas affichés à cet instant
       cy.get('#form-add-user-organizationId').should('not.exist');
-      cy.get('#form-add-user-adminRole-container').should('not.exist');
       cy.get('[id$=Organization]').should('not.exist');
 
       submitUserForm();
