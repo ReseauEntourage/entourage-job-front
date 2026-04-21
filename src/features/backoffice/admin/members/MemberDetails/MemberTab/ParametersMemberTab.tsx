@@ -83,13 +83,7 @@ export function ParametersMemberTab({
   );
 
   const memberColumns: MemberColumn[] = useMemo(() => {
-    const columnsToShow: MemberColumn[] = [
-      'phone',
-      'gender',
-      'address',
-      'zone',
-      'cvUrl',
-    ];
+    const columnsToShow: MemberColumn[] = ['phone', 'gender', 'zone', 'cvUrl'];
 
     if (user && isRoleIncluded([UserRoles.REFERER], user.role)) {
       return [...columnsToShow, 'organization'];

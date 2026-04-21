@@ -59,15 +59,6 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       ];
     }
 
-    if (columns.includes('address')) {
-      columnsArray = [
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        ...columnsArray,
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        <Th key="memberAddress">Adresse</Th>,
-      ];
-    }
-
     if (columns.includes('organization')) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it

@@ -8,7 +8,6 @@ export const generateUserLoginApiResponse = (roleUser) => {
     lastName: faker.person.lastName(),
     email: faker.internet.exampleEmail(),
     phone: faker.phone.number(),
-    address: null,
     zone: 'PARIS',
     gender: 0,
     lastConnection: '',

@@ -5,7 +5,6 @@ export type MemberColumn =
   | 'type'
   | 'zone'
   | 'lastConnection'
-  | 'address'
   | 'gender'
   | 'phone'
   | 'cvUrl'

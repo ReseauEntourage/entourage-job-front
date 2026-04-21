@@ -289,7 +289,6 @@ export type User = {
   salt: string;
   gender: Genders;
   phone: string;
-  address: string;
   lastConnection: string;
   hashReset: string;
   saltReset: string;

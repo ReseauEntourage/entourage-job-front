@@ -8,7 +8,6 @@ export const generateAdminLoginApiResponse = () => {
     lastName: 'Doe',
     gender: 0,
     phone: faker.phone.number(),
-    address: '01 rue Acme, 75001 Paris',
     zone: 'Paris',
     role: 'Admin',
     candidat: false,

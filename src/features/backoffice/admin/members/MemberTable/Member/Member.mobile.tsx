@@ -62,11 +62,6 @@ export function MemberMobile({ member, columns, disableLink }: MemberProps) {
             <span>{member.organization?.name || '-'}</span>
           </TdMobile>
         )}
-        {columns.includes('address') && (
-          <TdMobile title="Adresse">
-            <span>{member.address || '-'}</span>
-          </TdMobile>
-        )}
         {columns.includes('zone') && (
           <TdMobile title="Zone">
             <span>
