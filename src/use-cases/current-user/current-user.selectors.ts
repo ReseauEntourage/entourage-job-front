@@ -4,6 +4,7 @@ import {
   fetchStaffContactAdapter,
   fetchUserAdapter,
   forceOnboardingAsCompletedAdapter,
+  NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
   updateOnboardingStatusAdapter,
   updateProfileAdapter,
@@ -84,7 +85,7 @@ export const selectStaffContact = (state: RootState) => {
 export const selectAuthenticatedUser = (state: RootState) => {
   const currentUser = selectCurrentUser(state);
 
-  assertIsDefined(currentUser, 'User is not authenticated');
+  assertIsDefined(currentUser, NOT_AUTHENTICATED_USER);
 
   return currentUser;
 };
@@ -97,6 +98,10 @@ export const selectCurrentUserId = (state: RootState) => {
   const currentUser = selectAuthenticatedUser(state);
 
   return currentUser.id;
+};
+
+export const selectCurrentUserStats = (state: RootState) => {
+  return state.currentUser.stats;
 };
 
 export const selectIsComplete = (state: RootState): boolean => {

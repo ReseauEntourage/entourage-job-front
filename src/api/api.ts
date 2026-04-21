@@ -33,6 +33,7 @@ import {
   CompaniesFilters,
   EventsFilters,
   User,
+  WhatsappZone,
 } from './types';
 
 export class APIHandler {
@@ -565,6 +566,10 @@ export class APIHandler {
 
   getAuthCurrentStats(): Promise<AxiosResponse> {
     return this.get(`/auth/current/stats`);
+  }
+
+  getAuthCurrentWhatsappZone(): Promise<AxiosResponse<WhatsappZone>> {
+    return this.get(`/auth/current/whatsapp-zone`);
   }
 
   getAchievementProgression(): Promise<

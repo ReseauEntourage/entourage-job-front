@@ -61,13 +61,19 @@ const {
   updateSocialSituationRequested,
   updateSocialSituationSucceeded,
   updateSocialSituationFailed,
+  fetchUserStatsRequested,
+  fetchUserStatsSucceeded,
+  fetchUserStatsFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
   try {
     const accessToken = yield* select(selectAccessToken);
 
-    assertIsDefined(accessToken, 'Access token is not set');
+    if (!accessToken) {
+      yield* put(fetchUserFailed());
+      return;
+    }
 
     const response = yield* call(() => Api.getAuthCurrent(false));
 
@@ -75,6 +81,24 @@ function* fetchUserRequestedSaga() {
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function* fetchUserStatsRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+
+    if (!accessToken) {
+      yield* put(fetchUserStatsFailed());
+      return;
+    }
+
+    const response = yield* call(() => Api.getAuthCurrentStats());
+
+    yield* put(fetchUserStatsSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchUserStatsFailed());
   }
 }
 
@@ -103,7 +127,10 @@ function* fetchStaffContactRequestedSaga() {
   try {
     const accessToken = yield* select(selectAccessToken);
 
-    assertIsDefined(accessToken, 'Access token is not set');
+    if (!accessToken) {
+      yield* put(fetchStaffContactFailed());
+      return;
+    }
     const response = yield* call(() => Api.getStaffContactInfo());
 
     yield* put(fetchStaffContactSucceeded(response.data));
@@ -117,7 +144,10 @@ function* fetchCompleteUserRequestedSaga() {
   try {
     const accessToken = yield* select(selectAccessToken);
 
-    assertIsDefined(accessToken, 'Access token is not set');
+    if (!accessToken) {
+      yield* put(fetchCompleteUserFailed());
+      return;
+    }
 
     const response = yield* call(() => Api.getAuthCurrent(true));
 
@@ -360,6 +390,7 @@ export function* saga() {
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
   yield* takeLatest(fetchUserSucceeded, fetchUserSucceededSaga);
+  yield* takeLatest(fetchUserStatsRequested, fetchUserStatsRequestedSaga);
   yield* takeLatest(
     fetchCurrentUserSocialSituationRequested,
     fetchCurrentUserSocialSituationRequestedSaga

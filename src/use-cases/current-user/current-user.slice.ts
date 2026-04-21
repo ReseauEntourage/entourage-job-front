@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StaffContact, User } from 'src/api/types';
+import { StaffContact, User, UserStats } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
@@ -7,6 +7,7 @@ import {
   fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
+  fetchUserStatsAdapter,
   forceOnboardingAsCompletedAdapter,
   NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
@@ -22,6 +23,7 @@ import {
 
 interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
+  fetchUserStats: RequestState<typeof fetchUserStatsAdapter>;
   fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;
   fetchCurrentUserSocialSituation: RequestState<
@@ -41,6 +43,7 @@ interface State {
   >;
   uploadExternalCv: RequestState<typeof uploadExternalCvAdapter>;
   user: User | null;
+  stats: UserStats | null;
   complete: boolean;
   userUpdateError: UpdateError | null; // TODO: Add error types
   userCompanyUpdateError: UpdateError | null; // TODO: Add error types
@@ -55,6 +58,7 @@ const initialState: State = {
     fetchCurrentUserSocialSituationAdapter.getInitialState(),
   fetchStaffContact: fetchStaffContactAdapter.getInitialState(),
   fetchCompleteUser: fetchCompleteUserAdapter.getInitialState(),
+  fetchUserStats: fetchUserStatsAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
   updateOnboardingStatus: updateOnboardingStatusAdapter.getInitialState(),
   forceOnboardingAsCompleted:
@@ -72,6 +76,7 @@ const initialState: State = {
   profileUpdateError: null,
   externalCv: null,
   staffContact: null,
+  stats: null,
 };
 
 export const slice = createSlice({
@@ -84,6 +89,14 @@ export const slice = createSlice({
         state.complete = false;
       },
     }),
+    ...fetchUserStatsAdapter.getReducers<State>(
+      (state) => state.fetchUserStats,
+      {
+        fetchUserStatsSucceeded(state, action) {
+          state.stats = action.payload;
+        },
+      }
+    ),
     ...fetchCurrentUserSocialSituationAdapter.getReducers<State>(
       (state) => state.fetchCurrentUserSocialSituation,
       {

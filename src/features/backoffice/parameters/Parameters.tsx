@@ -17,6 +17,7 @@ import { ProfileNotificationsPreferences } from '@/src/features/profile/ProfileP
 import { ProfileNudges } from '@/src/features/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { ProfileSkills } from '@/src/features/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserStats } from '@/src/hooks/current-user/useCurrentUserStats';
 import {
   currentUserActions,
   selectIsComplete,
@@ -43,6 +44,7 @@ export const Parameters = () => {
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
   const userIsComplete = useSelector(selectIsComplete);
+  const userStats = useCurrentUserStats();
 
   useConfirmationToaster();
 
@@ -70,14 +72,13 @@ export const Parameters = () => {
         isAvailable={user.userProfile.isAvailable}
         phone={user.phone}
         email={user.email}
-        driverLicenses={[]}
         hasPicture={user.userProfile?.hasPicture ?? false}
         isEditable
-        createdAt={user.createdAt ?? null}
-        averageDelayResponse={user.averageDelayResponse ?? null}
-        responseRate={user.responseRate ?? null}
+        createdAt={userStats?.createdAt ?? null}
+        averageDelayResponse={userStats?.averageDelayResponse ?? null}
+        responseRate={userStats?.responseRate ?? null}
         totalConversationWithMirrorRoleCount={
-          user.totalConversationWithMirrorRoleCount ?? null
+          userStats?.totalConversationWithMirrorRoleCount ?? null
         }
         lastConnection={user.lastConnection ?? null}
         achievements={user.achievements ?? []}

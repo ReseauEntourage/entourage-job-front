@@ -55,7 +55,6 @@ export const HeaderProfileMobile = ({
   introduction,
   phone,
   email,
-  driverLicenses,
   hasPicture,
   isEditable = false,
   createdAt,
@@ -183,11 +182,7 @@ export const HeaderProfileMobile = ({
 
           {ownProfile && isEditable && (
             <>
-              <ProfileContactInfos
-                phone={phone}
-                email={email}
-                driverLicenses={driverLicenses}
-              />
+              <ProfileContactInfos phone={phone} email={email} />
               <ProfileCompletion />
             </>
           )}

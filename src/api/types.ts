@@ -277,6 +277,13 @@ export type CompaniesFilters = {
   onlyWithReferent: boolean;
 };
 
+export type UserStats = {
+  createdAt: string;
+  averageDelayResponse: number | null;
+  responseRate: number | null;
+  totalConversationWithMirrorRoleCount: number | null;
+};
+
 export type User = {
   coach: User;
   id: string;
@@ -293,9 +300,6 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
-  whatsappZoneQR: string;
-  whatsappZoneName: string;
-  whatsappZoneUrl: string;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
@@ -309,13 +313,16 @@ export type User = {
   achievements?: UserAchievement[];
 
   referredCandidates?: User[];
-  averageDelayResponse?: number | null;
-  responseRate?: number | null;
-  totalConversationWithMirrorRoleCount?: number | null;
 
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+};
+
+export type WhatsappZone = {
+  name: string;
+  url: string;
+  qr: string;
 };
 
 export enum AchievementType {
@@ -555,15 +562,11 @@ export type PublicProfile = {
   occupations: Occupation[];
   cvUrl?: string;
   hasExternalCv: boolean;
-  averageDelayResponse: number | null;
   hasPicture: boolean;
   company: Company | null;
-  responseRate: number | null;
-  totalConversationWithMirrorRoleCount: number | null;
-  createdAt: string | null;
   lastConnection: string;
   achievements: UserAchievement[];
-};
+} & UserStats;
 
 export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
   userProfile: Pick<

@@ -1,4 +1,4 @@
-import { StaffContact, User, UserProfile } from 'src/api/types';
+import { StaffContact, User, UserProfile, UserStats } from 'src/api/types';
 import { DocumentNameType } from 'src/constants';
 import { createRequestAdapter } from 'src/store/utils';
 
@@ -6,6 +6,10 @@ export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   void,
   User
 >();
+
+export const fetchUserStatsAdapter = createRequestAdapter(
+  'fetchUserStats'
+).withPayloads<void, UserStats>();
 
 export const fetchStaffContactAdapter = createRequestAdapter(
   'fetchStaffContact'

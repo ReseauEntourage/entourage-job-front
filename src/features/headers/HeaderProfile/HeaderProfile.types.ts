@@ -26,5 +26,4 @@ export interface HeaderProfileProps {
   // Only for own profile
   phone?: string;
   email?: string;
-  driverLicenses?: string[];
 }
