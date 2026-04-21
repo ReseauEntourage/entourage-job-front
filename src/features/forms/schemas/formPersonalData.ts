@@ -13,7 +13,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
   firstName: string;
   lastName: string;
   phone: string;
-  address: string;
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;

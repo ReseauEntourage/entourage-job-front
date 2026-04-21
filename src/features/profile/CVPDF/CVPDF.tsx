@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import 'moment/locale/fr';
 
 import { Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
@@ -30,7 +31,6 @@ import {
   StyledCVPFSkillTag,
 } from './CVPDF.styles';
 import { CVProfilePicturePDF } from './CVProfilePicturePDF';
-import 'moment/locale/fr';
 
 const BASE_NB_ITEM_PER_PAGE = 5;
 const MAX_LINES_BY_ITEM = 9;
@@ -187,11 +187,7 @@ export const CVPDF = ({ user, page }: CVPDFProps) => {
       <StyledCVPDFContentDetailsContainer>
         <StyledLeftColumn>
           {/* use Information Container to display contat informations */}
-          <CVContactInformationPDF
-            // departments={user.userProfile.departments}
-            email={user.email}
-            phone={user.phone}
-          />
+          <CVContactInformationPDF email={user.email} phone={user.phone} />
           <StyledCVPDFContentInformations>
             <StyledCVPDFTitle>Informations</StyledCVPDFTitle>
             <ul>
@@ -321,19 +317,11 @@ export const CVPDF = ({ user, page }: CVPDFProps) => {
         <StyledCVPDFPage>
           <StyledCVPDFContentDetailsContainer>
             <StyledLeftColumn>
-              {/* use Information Container to display profile picture */}
               <StyledCVPDFContentInformations>
                 <StyledCVPDFProfilePictureContainer>
                   <CVProfilePicturePDF imgSrc={imgSrc} verticalMargin />
                 </StyledCVPDFProfilePictureContainer>
               </StyledCVPDFContentInformations>
-              {/* use Information Container to display contact information */}
-              {/* <CVContactInformationPDF
-                locations={publicCV.userProfile.locations}
-                address={publicCV.userProfile.address}
-                email={publicCV.userProfile.email}
-                phone={publicCV.userProfile.phone}
-              /> */}
             </StyledLeftColumn>
             <StyledRightColumn>
               {items.secondPageExperiences.length > 0 && (
