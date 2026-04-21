@@ -2,8 +2,6 @@ import {
   fetchCompaniesAdapter,
   fetchSelectedCompanyAdapter,
   fetchSelectedCompanyWithCollaboratorsAdapter,
-  inviteCollaboratorsAdapter,
-  updateCompanyAdapter,
   updateCompanyLogoAdapter,
 } from './company.adapters';
 import { RootState } from './company.slice';

@@ -1,6 +1,5 @@
 import { assertIsDefined } from 'src/utils/asserts';
 import {
-  fetchCompleteUserAdapter,
   fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
