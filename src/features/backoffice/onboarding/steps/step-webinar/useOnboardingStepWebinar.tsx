@@ -4,7 +4,7 @@ import { EventType } from '@/src/constants/events';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { AppDispatch } from '@/src/store/store';
 import { currentUserActions } from '@/src/use-cases/current-user';
-import { updateUserParticipationThunk } from '@/src/use-cases/events/events.thunks';
+import { updateUserParticipationThunk } from '@/src/use-cases/events';
 import {
   onboardingActions,
   selectNoDateSelected,

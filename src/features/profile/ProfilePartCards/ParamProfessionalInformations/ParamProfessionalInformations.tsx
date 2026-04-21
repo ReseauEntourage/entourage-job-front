@@ -17,7 +17,7 @@ import { formEditCoachProfessionalInformation } from 'src/features/forms/schemas
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formatCareerPathSentence } from 'src/utils';
 
-export interface ParamProfessionalInformationsProps {
+interface ParamProfessionalInformationsProps {
   isEditable?: boolean;
   sectorOccupations: UserProfileSectorOccupation[];
   smallCard?: boolean;

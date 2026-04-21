@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from '@/src/components/ui/Text';
 import { StyledCompletionStatus } from './CompletionStatus.styles';
 
-export interface CompletionStatusProps {
+interface CompletionStatusProps {
   completion: number;
 }
 

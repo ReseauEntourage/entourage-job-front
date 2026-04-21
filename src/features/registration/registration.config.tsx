@@ -18,7 +18,6 @@ import {
   CompanyRegistrationFlowForm,
   RefererRegistrationFlowForm,
   RegistrationFlowForms,
-  RegistrationLastStepContentByFlow,
   RegistrationStepAnnotation,
   RegistrationStepContent,
 } from './registration.types';
@@ -55,7 +54,7 @@ export const UserRoleByFlow: {
   [RegistrationFlow.COMPANY]: UserRoles.COACH,
 };
 
-export type RegistrationStepContentByFlow = Partial<{
+type RegistrationStepContentByFlow = Partial<{
   [RegistrationFlow.CANDIDATE]: RegistrationStepContent<CandidateRegistrationFlowForm>[];
   [RegistrationFlow.COACH]: RegistrationStepContent<CoachRegistrationFlowForm>[];
   [RegistrationFlow.REFERER]: RegistrationStepContent<RefererRegistrationFlowForm>[];
@@ -86,85 +85,6 @@ export const candidateLastStepBullets = [
     text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
   },
 ];
-export const LastStepContent: RegistrationLastStepContentByFlow = {
-  [RegistrationFlow.CANDIDATE]: {
-    bullets: candidateLastStepBullets,
-    title:
-      "Il ne vous reste plus qu'à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
-    subtitle:
-      "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
-  },
-  [RegistrationFlow.COACH]: {
-    bullets: [
-      {
-        icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
-        title: 'Discutez et échangez avec des candidat(e)s et des coachs',
-        text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
-      },
-      {
-        icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
-        title: 'Donnez des coup de pouces à des candidat(e)s',
-        text: "Faites profiter de votre expérience à des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
-      },
-      {
-        icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
-        title: 'Participez à des événements professionnels et conviviaux',
-        text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
-      },
-    ],
-    title:
-      "Il ne vous reste plus qu'à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
-    subtitle:
-      'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
-  },
-  [RegistrationFlow.REFERER]: {
-    bullets: [
-      {
-        icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
-        title:
-          'Facilitez l’inscription et le suivi des personnes que vous accompagnez',
-        text: "Consultez les profils de vos candidats et soutenez-les dans leur recherche d'emploi",
-      },
-      {
-        icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
-        title: "Découvrez le réseau d'entraide et adressez-lui vos candidats",
-        text: 'Consultez le réseau d’entraide pour orienter au mieux vos candidats vers les coachs qui peuvent leur donner un coup de pouce dans leur recherche d’emploi',
-      },
-      {
-        icon: <SvgIcon name="IlluCalendrier" {...iconSizeProps} />,
-        title: 'Participez à des événements professionnels et conviviaux',
-        text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
-      },
-    ],
-    title:
-      'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
-    subtitle:
-      'Vous pouvez désormais accéder à votre compte Entourage Pro et orienter des candidats',
-  },
-  [RegistrationFlow.COMPANY]: {
-    bullets: [
-      {
-        icon: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
-        title: 'Sensibiliser vos collaborateurs',
-        text: "Permettez à vos collaborateurs de devenir coach et de s'engager dans des actions solidaires.",
-      },
-      {
-        icon: <SvgIcon name="IlluPoigneeDeMain" {...iconSizeProps} />,
-        title: 'Inviter des collaborateurs',
-        text: 'Invitez vos collaborateurs à rejoindre le réseau et à soutenir des candidat(e)s dans leur recherche d’emploi.',
-      },
-      {
-        icon: <SvgIcon name="IlluCV" {...iconSizeProps} />,
-        title: 'Recruter des candidats',
-        text: 'Créez des alertes de recrutement et recevez les profils de candidat(e)s correspondant à vos besoins',
-      },
-    ],
-    title:
-      'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
-    subtitle:
-      'Vous pouvez accéder à votre compte Entourage Pro, engager vos collaborateurs et recruter des candidats',
-  },
-};
 
 export const RegistrationFlows: {
   [K in RegistrationFlow]: RegistrationStepContentByFlow[K];
@@ -221,5 +141,3 @@ export const RegistrationFlows: {
     },
   ],
 };
-
-export const REGISTRATION_COMPANY_FLOW_COMPANY_SELECTION_STEP = 1;

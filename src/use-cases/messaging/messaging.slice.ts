@@ -11,9 +11,9 @@ import {
   postFeedbackAdapter,
 } from './messaging.adapter';
 
-export type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
+type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
 
-export interface State {
+interface State {
   getConversations: RequestState<typeof getConversationsAdapter>;
   getUnseenConversationsCount: RequestState<
     typeof getUnseenConversationsCountAdapter

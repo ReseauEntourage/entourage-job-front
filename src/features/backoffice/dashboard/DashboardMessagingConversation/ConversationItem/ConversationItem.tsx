@@ -15,7 +15,7 @@ import {
   StyledMessagePreview,
 } from './ConversationItem.styles';
 
-export interface ConversationItemProps {
+interface ConversationItemProps {
   conversation: Conversation;
 }
 

@@ -6,7 +6,11 @@ import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
-import { getRolesWithOrganization, UserRoles } from 'src/constants/users';
+import {
+  getRolesWithOrganization,
+  USER_ROLES_FILTERS,
+  UserRoles,
+} from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -21,13 +25,6 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
     </>
   ),
 };
-
-const USER_ROLES_FILTERS: FilterConstant<UserRoles>[] = [
-  { value: UserRoles.CANDIDATE, label: UserRoles.CANDIDATE },
-  { value: UserRoles.COACH, label: UserRoles.COACH },
-  { value: UserRoles.REFERER, label: UserRoles.REFERER },
-  { value: UserRoles.ADMIN, label: UserRoles.ADMIN },
-];
 
 interface FormAddUserSchema extends FormSchemaValidation {
   firstName: string;

@@ -8,7 +8,7 @@ import {
   StyledStatTitleValue,
 } from './ProfileStats.styles';
 
-export interface ProfileStatsProps {
+interface ProfileStatsProps {
   createdAt: string | null;
   userRole: UserRoles;
   averageDelayResponse: number | null;

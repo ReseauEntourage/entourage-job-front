@@ -41,15 +41,6 @@ export interface OnboardingStepContent<
   defaultValues?: (user: User) => Partial<OnboardingFormData>;
 }
 
-// Type pour chaque étape de l'onboarding entreprise
-export type CompanyOnboardingStepContents = {
-  [K in OnboardingStep]?: OnboardingStepContent<CompanyOnboardingForm>;
-};
-
-export type OnboardingStepContentByFlow = Partial<{
-  [OnboardingFlow.COMPANY]: OnboardingStepContent<CompanyOnboardingForm>;
-}>;
-
 export interface CompanyStepData {
   description?: string;
   logo?: File[];

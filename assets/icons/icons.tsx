@@ -195,7 +195,7 @@ export const SvgIcons = {
   SuperCoachDiamond: SuperCoachDiamondSvg,
 };
 
-export interface SvgIconProps {
+interface SvgIconProps {
   name: keyof typeof SvgIcons;
   width?: number;
   height?: number;

@@ -8,7 +8,7 @@ export type SwitchItem = {
   icon?: React.ReactNode;
 };
 
-export interface CardToggleListProps {
+interface CardToggleListProps {
   items?: SwitchItem[];
   isEditable?: boolean;
   onChange?: (updatedItems: SwitchItem[]) => void;

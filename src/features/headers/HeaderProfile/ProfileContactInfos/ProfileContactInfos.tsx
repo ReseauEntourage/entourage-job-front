@@ -8,7 +8,7 @@ import {
 } from './ProfileContactInfos.styles';
 import { ProfileContactItem } from './ProfileContactItem';
 
-export interface ContactInfosProps {
+interface ContactInfosProps {
   phone?: string;
   email?: string;
   driverLicenses?: string[];

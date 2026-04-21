@@ -1,7 +1,7 @@
 import NextImage from 'next/image';
 import React from 'react';
 
-export interface ImageProps {
+interface ImageProps {
   src: string;
   alt: string;
   width?: number | `${number}`;

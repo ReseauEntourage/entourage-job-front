@@ -6,7 +6,7 @@ import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
-export interface useOnboardingStepNudgesProps {
+interface useOnboardingStepNudgesProps {
   userRole: UserRoles;
 }
 

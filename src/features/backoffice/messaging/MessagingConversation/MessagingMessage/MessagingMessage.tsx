@@ -20,7 +20,7 @@ import {
 } from './MessagingMessage.styles';
 import { MessagingMessageSuspiciousModal } from './MessagingMessageSuspiciousModal/MessagingMessageSuspiciousModal';
 
-export interface MessagingMessageProps {
+interface MessagingMessageProps {
   message: Message;
 }
 

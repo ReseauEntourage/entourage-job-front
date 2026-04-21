@@ -8,7 +8,7 @@ import {
   StyledPictureContainer,
 } from './DashboardCompanyCard.styles';
 
-export interface DashboardCompanyCardProps {
+interface DashboardCompanyCardProps {
   company: Company;
 }
 

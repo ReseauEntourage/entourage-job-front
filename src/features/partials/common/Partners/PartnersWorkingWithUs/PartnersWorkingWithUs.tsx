@@ -2,7 +2,7 @@ import React from 'react';
 import { Partners, PartnersListItem } from '../Partners';
 import { GA_TAGS } from 'src/constants/tags';
 
-export interface PartnersWorkingWithUsProps {
+interface PartnersWorkingWithUsProps {
   tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
   displayCta?: boolean;
 }

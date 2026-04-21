@@ -24,42 +24,42 @@ export const referCandidateSelectors =
     (state) => state.refering.referCandate
   );
 
-export function selectReferCandidateError(state: RootState) {
+export const selectReferCandidateError = (state: RootState) => {
   return state.refering.referCandidateError;
-}
+};
 
-export function selectIsEmptyReferingData(state: RootState) {
+export const selectIsEmptyReferingData = (state: RootState) => {
   return _.isEmpty(state.refering.data);
-}
+};
 
-export function selectReferingData(state: RootState) {
+export const selectReferingData = (state: RootState) => {
   return state.refering.data;
-}
+};
 
-export function selectReferingCurrentStep(
+export const selectReferingCurrentStep = (
   state: RootState
-): ReferingStep | null {
+): ReferingStep | null => {
   return state.refering.currentStep;
-}
+};
 
-export function selectDefinedReferingCurrentStep(state: RootState) {
+const selectDefinedReferingCurrentStep = (state: RootState) => {
   const currentStep = selectReferingCurrentStep(state);
 
   assertIsDefined(currentStep, ReferingErrorMessages.CURRENT_STEP);
 
   return currentStep;
-}
+};
 
-export function selectReferingNextStep(state: RootState): ReferingStep {
+export const selectReferingNextStep = (state: RootState): ReferingStep => {
   const currentStep = selectDefinedReferingCurrentStep(state);
   return incrementReferingStep(currentStep);
-}
+};
 
-export function selectIsFirstReferingStep(state: RootState): boolean {
+export const selectIsFirstReferingStep = (state: RootState): boolean => {
   return state.refering.currentStep === REFERING_FIRST_STEP;
-}
+};
 
-export function selectIsLastReferingStep(state: RootState): boolean {
+export const selectIsLastReferingStep = (state: RootState): boolean => {
   const nextStep = selectReferingNextStep(state);
   const isFirstStep = selectIsFirstReferingStep(state);
 
@@ -68,22 +68,22 @@ export function selectIsLastReferingStep(state: RootState): boolean {
   }
 
   return !ReferingStepContents[nextStep];
-}
+};
 
-export function selectIsReferingLoading(state: RootState) {
+export const selectIsReferingLoading = (state: RootState) => {
   return state.refering.isLoading;
-}
+};
 
-export function selectReferingCurrentStepData(
+export const selectReferingCurrentStepData = (
   state: RootState
-): ReferingFormData | null {
+): ReferingFormData | null => {
   const currentStep = selectDefinedReferingCurrentStep(state);
   return state.refering.data[currentStep] || null;
-}
+};
 
-export function selectReferingCurrentStepContent(
+export const selectReferingCurrentStepContent = (
   state: RootState
-): ReferingStepContent {
+): ReferingStepContent => {
   const currentStep = selectDefinedReferingCurrentStep(state);
 
   const stepContent = ReferingStepContents[currentStep];
@@ -91,15 +91,16 @@ export function selectReferingCurrentStepContent(
   assertIsDefined(stepContent, ReferingErrorMessages.STEP_CONTENT);
 
   return stepContent;
-}
+};
 
-export function selectReferingConfirmationStepContent(): ReferingLastStepContent {
-  return LastStepContent;
-}
+export const selectReferingConfirmationStepContent =
+  (): ReferingLastStepContent => {
+    return LastStepContent;
+  };
 
-export function selectReferingDataFromOtherStep(
+export const selectReferingDataFromOtherStep = (
   state: RootState
-): Partial<ReferingFormData> | null {
+): Partial<ReferingFormData> | null => {
   const isFirstStep = selectIsFirstReferingStep(state);
   const stepContent = selectReferingCurrentStepContent(state);
 
@@ -116,9 +117,9 @@ export function selectReferingDataFromOtherStep(
   }
 
   return null;
-}
+};
 
-export function selectReferingShouldSkipStep(state: RootState) {
+export const selectReferingShouldSkipStep = (state: RootState) => {
   const valuesFromOtherStep = selectReferingDataFromOtherStep(state);
   const stepContent = selectReferingCurrentStepContent(state);
 
@@ -151,4 +152,4 @@ export function selectReferingShouldSkipStep(state: RootState) {
     });
   }
   return skipNextStep;
-}
+};

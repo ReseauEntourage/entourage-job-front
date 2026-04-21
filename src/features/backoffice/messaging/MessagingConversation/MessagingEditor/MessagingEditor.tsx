@@ -22,7 +22,7 @@ import {
   StyledAttachementInfoContainer,
 } from './MessagingEditor.styles';
 
-export interface MessagingEditorProps {
+interface MessagingEditorProps {
   readonly?: boolean;
 }
 

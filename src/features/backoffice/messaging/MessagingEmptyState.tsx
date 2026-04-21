@@ -4,7 +4,7 @@ import { Button } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { MessagingEmptyStateContainer } from './Messaging.styles';
 
-export interface MessagingEmptyStateProps {
+interface MessagingEmptyStateProps {
   title: string;
   subtitle?: string;
   action?: string;

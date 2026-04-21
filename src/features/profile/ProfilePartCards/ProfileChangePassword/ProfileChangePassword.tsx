@@ -8,7 +8,7 @@ import { formChangePassword } from 'src/features/forms/schemas/formChangePasswor
 import { useResetForm } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
 
-export interface ProfileChangePasswordProps {
+interface ProfileChangePasswordProps {
   smallCard?: boolean;
 }
 

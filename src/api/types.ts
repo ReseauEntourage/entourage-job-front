@@ -357,8 +357,6 @@ export type StaffContact = {
   img: string;
 };
 
-export type UserProfileHasPicture = Pick<UserProfile, 'hasPicture'>;
-
 export type EventParticipant = Pick<
   User,
   'id' | 'firstName' | 'lastName' | 'role'
@@ -445,13 +443,6 @@ export type UpdateCompanyDto = {
   hiringUrl?: string | null;
   goal?: CompanyGoal;
   businessSectorIds?: string[];
-};
-
-export type CompanySectorOccupation = {
-  businessSectorId?: string;
-  businessSector?: BusinessSector;
-  occupation?: Occupation;
-  order: number;
 };
 
 export type ContactCompany = {

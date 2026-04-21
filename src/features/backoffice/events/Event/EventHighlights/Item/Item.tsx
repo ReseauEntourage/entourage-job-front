@@ -6,7 +6,7 @@ import {
   StyledItemContainer,
 } from './Item.styles';
 
-export interface ItemProps {
+interface ItemProps {
   icon?: React.ReactNode;
   title: string;
   content: string;

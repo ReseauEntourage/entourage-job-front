@@ -18,24 +18,9 @@ export const fetchSelectedCompanySelectors =
     (state) => state.company.fetchSelectedCompany
   );
 
-export const fetchSelectedCompanyWithCollaboratorsSelectors =
-  fetchSelectedCompanyWithCollaboratorsAdapter.getSelectors<RootState>(
-    (state) => state.company.fetchSelectedCompanyWithCollaborators
-  );
-
 export const updateCompanyLogoSelectors =
   updateCompanyLogoAdapter.getSelectors<RootState>(
     (state) => state.company.updateCompanyLogo
-  );
-
-export const updateCompanySelectors =
-  updateCompanyAdapter.getSelectors<RootState>(
-    (state) => state.company.updateCompany
-  );
-
-export const inviteCollaboratorsSelectors =
-  inviteCollaboratorsAdapter.getSelectors<RootState>(
-    (state) => state.company.inviteCollaborators
   );
 
 export function selectSelectedCompanyId(state: RootState) {

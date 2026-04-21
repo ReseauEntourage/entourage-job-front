@@ -9,7 +9,7 @@ import {
   SwitchItem,
 } from '../Card/CardToggleList/CardToggleList';
 
-export interface ProfileContactPreferencesProps {
+interface ProfileContactPreferencesProps {
   userRole: UserRoles;
   isEditable?: boolean;
   smallCard?: boolean;
