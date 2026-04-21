@@ -12,7 +12,7 @@ import {
   fetchSelectedProfileAdapter,
 } from './profiles.adapters';
 
-export interface State {
+interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
   fetchDashboardProfilesRecommendations: RequestState<
     typeof fetchDashboardProfilesRecommendationsAdapter

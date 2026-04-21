@@ -8,19 +8,14 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCriteria, StyledCriteriasContainer } from './WhyUseEp.styles';
 
-export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
+type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
-export interface UnderstandFormatProps {
-  innerRef?: React.RefObject<HTMLDivElement>;
-  asRole: 'Coach' | 'Candidat' | 'Referer';
-}
-
-export interface Criteria {
+interface Criteria {
   illu: React.ReactNode | null;
   text: string;
 }
 
-export interface Cta {
+interface Cta {
   text: string;
   gaTag: {
     action: string;
@@ -31,7 +26,7 @@ export interface Cta {
   href: string;
 }
 
-export interface Content {
+interface Content {
   title: string;
   img: string;
   criterias?: Criteria[];

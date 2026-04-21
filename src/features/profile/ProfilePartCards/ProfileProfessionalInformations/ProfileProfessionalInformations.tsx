@@ -8,7 +8,7 @@ import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { Company, Skill, UserProfileSectorOccupation } from 'src/api/types';
 import { StyledContentContainer } from './ProfileProfessionalInformations.styles';
 
-export interface ProfileProfessionalInformationsProps {
+interface ProfileProfessionalInformationsProps {
   userFirstName: string;
   sectorOccupations: UserProfileSectorOccupation[];
   description: string;

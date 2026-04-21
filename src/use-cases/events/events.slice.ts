@@ -10,7 +10,7 @@ import {
   updateUserParticipationAdapter,
 } from './events.adapters';
 
-export interface State {
+interface State {
   fetchEvents: RequestState<typeof fetchEventsAdapter>;
   fetchSelectedEvent: RequestState<typeof fetchSelectedEventAdapter>;
   fetchSelectedEventParticipants: RequestState<

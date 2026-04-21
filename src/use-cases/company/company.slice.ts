@@ -11,7 +11,7 @@ import {
   updateCompanyLogoAdapter,
 } from './company.adapters';
 
-export interface State {
+interface State {
   fetchCompanies: RequestState<typeof fetchCompaniesAdapter>;
   fetchSelectedCompany: RequestState<typeof fetchSelectedCompanyAdapter>;
   fetchSelectedCompanyWithCollaborators: RequestState<

@@ -3,7 +3,7 @@ import { Text } from '@/src/components/ui/Text/Text';
 import { Color } from '@/src/constants/styles';
 import { StyledRoundBadge } from './RoundBadge.styles';
 
-export interface RoundBadgeProps {
+interface RoundBadgeProps {
   size?: number;
   active?: boolean;
   borderColor?: Color;

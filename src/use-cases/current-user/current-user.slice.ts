@@ -20,7 +20,7 @@ import {
   uploadExternalCvAdapter,
 } from './current-user.adapters';
 
-export interface State {
+interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
   fetchStaffContact: RequestState<typeof fetchStaffContactAdapter>;
   fetchCompleteUser: RequestState<typeof fetchCompleteUserAdapter>;

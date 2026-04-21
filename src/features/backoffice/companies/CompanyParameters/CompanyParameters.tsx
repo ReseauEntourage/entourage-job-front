@@ -16,7 +16,7 @@ import {
   StyledCompanyRightColumn,
 } from '../CompanyProfile/CompanyProfile.styles';
 
-export interface CompanyParametersProps {
+interface CompanyParametersProps {
   company: Company;
 }
 

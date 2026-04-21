@@ -6,7 +6,7 @@ import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
-export interface ProfileNotificationsPreferencesProps {
+interface ProfileNotificationsPreferencesProps {
   userProfile: UserProfile;
   smallCard?: boolean;
 }

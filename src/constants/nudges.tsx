@@ -96,24 +96,7 @@ export const ProfileNudges: (FilterConstant<string> & {
   },
 ];
 
-export const ParametresNudgeCardTitles: {
-  [K in 'card' | 'modal']: {
-    [R in NormalUserRoles]: string;
-  };
-} = {
-  card: {
-    [UserRoles.COACH]: 'Vos propositions de coup de pouce',
-    [UserRoles.CANDIDATE]: "Vos demandes d'aide",
-  },
-  modal: {
-    [UserRoles.COACH]:
-      'Sélectionnez les coups de pouce que vous souhaitez apporter aux candidats',
-    [UserRoles.CANDIDATE]:
-      'Sélectionnez les coups de pouce que vous souhaitez avoir auprès des coachs',
-  },
-} as const;
-
-export const ParametresNudgeCardContents: {
+const ParametresNudgeCardContents: {
   [K in NormalUserRoles]: SelectOptionTitleIconDescriptionLabelType[];
 } = {
   [UserRoles.CANDIDATE]: [

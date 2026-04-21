@@ -18,7 +18,7 @@ export const EVENTS_LIMIT = 25;
 
 export const COMPANIES_LIMIT = 25;
 
-export const JNSPR = {
+const JNSPR = {
   value: 'jnspr',
   label: 'Je ne souhaite pas répondre',
 };
@@ -219,25 +219,6 @@ export const STORAGE_KEYS = {
   PINNED_COMMUNICATION_CLOSED: 'pinned-communication-closed',
 };
 
-export const SOCKETS = {
-  CHANNEL_NAMES: {
-    CV_PREVIEW: 'cv-preview-channel',
-    CV_PDF: 'cv-pdf-channel',
-  },
-  EVENTS: {
-    CV_PREVIEW_DONE: 'cv-preview-done',
-    CV_PDF_DONE: 'cv-pdf-done',
-  },
-};
-
-export const VALUES = { SHARES: 120000 + 64000 };
-
-export const CONTACT_INFO = {
-  CORPORATE_CONTACT: 'barnabe@entourage.social',
-  MAIN_PHONE_NUMBER: '01 88 24 70 70',
-  MOBILE_PHONE_NUMBER: '07 82 44 97 39',
-};
-
 export const INITIAL_NB_OF_CV_TO_DISPLAY = 9;
 
 export const HeardAbout = {
@@ -341,115 +322,6 @@ export const COMPANY_CONTACT_ZONES_FILTERS = [
   { value: 'NATIONAL', label: 'National' },
   { value: ADMIN_ZONES.HZ, label: 'Autre région' },
 ];
-
-export const CandidateHelpWith = {
-  WORK: 'work',
-  SOCIAL: 'social',
-  ACCOMMODATION: 'accommodation',
-  HEALTH: 'health',
-  RIGHTS: 'rights',
-  OTHER: 'other',
-} as const;
-
-export type CandidateHelpWithValue =
-  (typeof CandidateHelpWith)[keyof typeof CandidateHelpWith];
-
-export const CANDIDATE_HELP_WITH_FILTERS: FilterConstant<CandidateHelpWithValue>[] =
-  [
-    {
-      label: 'Emploi',
-      value: CandidateHelpWith.WORK,
-    },
-    {
-      label: 'Social',
-      value: CandidateHelpWith.SOCIAL,
-    },
-    {
-      label: 'Logement',
-      value: CandidateHelpWith.ACCOMMODATION,
-    },
-    {
-      label: 'Santé',
-      value: CandidateHelpWith.HEALTH,
-    },
-    {
-      label: 'Accès aux droits',
-      value: CandidateHelpWith.RIGHTS,
-    },
-    {
-      label: 'Autre',
-      value: CandidateHelpWith.OTHER,
-    },
-  ];
-
-export const CandidateGenders = {
-  MALE: 'male',
-  FEMALE: 'female',
-  OTHER: 'other',
-} as const;
-
-export type CandidateGender =
-  (typeof CandidateGenders)[keyof typeof CandidateGenders];
-
-export const CANDIDATE_GENDERS_FILTERS: FilterConstant<CandidateGender>[] = [
-  {
-    label: 'Homme',
-    value: CandidateGenders.MALE,
-  },
-  {
-    label: 'Femme',
-    value: CandidateGenders.FEMALE,
-  },
-  /* {
-    label: 'Autre',
-    value: CandidateGenders.OTHER,
-  }, */
-];
-
-export const CandidateAdministrativeSituations = {
-  ID_CARD_FR: 'id_card_fr',
-  PASSPORT: 'passport',
-  RESIDENCE_PERMIT: 'residence_permit',
-  RESIDENCE_PERMIT_RECEIPT: 'residence_permit_receipt',
-  RESIDENT_CARD: 'resident_card',
-  ASYLUM: 'asylum',
-  ASYLUM_DISMISSED: 'asylum_dismissed',
-} as const;
-
-export type CandidateAdministrativeSituation =
-  (typeof CandidateAdministrativeSituations)[keyof typeof CandidateAdministrativeSituations];
-
-export const CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS: FilterConstant<CandidateAdministrativeSituation>[] =
-  [
-    {
-      value: CandidateAdministrativeSituations.ID_CARD_FR,
-      label: "Carte nationale d'identité Française",
-    },
-    {
-      value: CandidateAdministrativeSituations.PASSPORT,
-      label: 'Passeport',
-    },
-    {
-      value: CandidateAdministrativeSituations.ASYLUM,
-      label: "Demande d'asile",
-    },
-    {
-      value: CandidateAdministrativeSituations.ASYLUM_DISMISSED,
-      label: "Débouté de droit d'asile",
-    },
-    {
-      value: CandidateAdministrativeSituations.RESIDENT_CARD,
-      label: 'Carte de résident',
-    },
-    {
-      value: CandidateAdministrativeSituations.RESIDENCE_PERMIT,
-      label: 'Titre de séjour',
-    },
-    {
-      value: CandidateAdministrativeSituations.RESIDENCE_PERMIT_RECEIPT,
-      label: 'Récépissé de titre de séjour',
-    },
-  ];
 
 export const CandidateAccommodations = {
   PERSONAL: 'personal',
@@ -573,22 +445,6 @@ export const CandidateYesNoNSPP = {
 export type CandidateYesNoNSPPValue =
   (typeof CandidateYesNoNSPP)[keyof typeof CandidateYesNoNSPP];
 
-export const CANDIDATE_YES_NO_NSPP_FILTERS: FilterConstant<CandidateYesNoNSPPValue>[] =
-  [
-    {
-      value: CandidateYesNo.YES,
-      label: 'Oui',
-    },
-    {
-      value: CandidateYesNo.NO,
-      label: 'Non',
-    },
-    {
-      label: 'Je ne sais pas',
-      value: CandidateYesNoNSPP.NSPP,
-    },
-  ];
-
 export const YesNoJNSPR = {
   ...CandidateYesNo,
   JNSPR: JNSPR.value,
@@ -610,80 +466,6 @@ export const YES_NO_JNSPR_FILTERS: FilterConstant<YesNoJNSPRValue>[] = [
     label: JNSPR.label,
   },
 ];
-
-export const EVENT_TYPES = {
-  CONTACT: 'contact',
-  FOLLOWUP: 'followup',
-  INTERVIEW: 'interview',
-  TRIAL: 'trial',
-  PMSMP: 'pmsmp',
-  HIRING: 'hiring',
-  END: 'end',
-};
-
-export const EVENT_TYPES_FILTERS = [
-  {
-    label: 'Contacté le',
-    value: EVENT_TYPES.CONTACT,
-  },
-  {
-    label: 'Relancé le',
-    value: EVENT_TYPES.FOLLOWUP,
-  },
-  {
-    label: 'Entretien le',
-    value: EVENT_TYPES.INTERVIEW,
-  },
-  {
-    label: "Période d'essai le",
-    value: EVENT_TYPES.TRIAL,
-  },
-  {
-    label: 'PMSMP le',
-    value: EVENT_TYPES.PMSMP,
-  },
-  {
-    label: 'Embauché le',
-    value: EVENT_TYPES.HIRING,
-  },
-  {
-    label: 'Arrêt de contrat le',
-    value: EVENT_TYPES.END,
-  },
-];
-
-export const ANTENNE_INFO = [
-  {
-    dpt: '93',
-    city: 'Paris',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  },
-  {
-    dpt: '75',
-    city: 'Paris',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  },
-  {
-    dpt: '92',
-    city: 'Paris',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS,
-  },
-  {
-    dpt: '35',
-    city: 'Rennes',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_RENNES,
-  },
-  {
-    dpt: '59',
-    city: 'Lille',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LILLE,
-  },
-  {
-    dpt: '69',
-    city: 'Lyon',
-    address: process.env.NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_LYON,
-  },
-] as const;
 
 export const MEMBER_TABS = {
   CV: 'cv',

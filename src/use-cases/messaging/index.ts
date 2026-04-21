@@ -3,12 +3,10 @@ import { Saga } from 'redux-saga';
 import { saga } from './messaging.saga';
 import { slice } from './messaging.slice';
 
-export type UseCaseConfigItem = {
+type UseCaseConfigItem = {
   slice: ReturnType<typeof createSlice>;
   saga: Saga;
 };
-
-export type UseCaseConfigType = Record<string, UseCaseConfigItem>;
 
 export * from './messaging.selectors';
 

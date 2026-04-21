@@ -43,14 +43,6 @@ export const StyledDashboardCardContentContainer = styled.div`
   gap: 12px;
 `;
 
-export const StyledDashboardCardContent = styled.div`
-  width: 100%;
-`;
-
-export const StyledDashboardCardSubtitle = styled.div`
-  text-align: center;
-`;
-
 export const StyledDashboardArticlesContainer = styled.div`
   display: grid;
   width: 100%;

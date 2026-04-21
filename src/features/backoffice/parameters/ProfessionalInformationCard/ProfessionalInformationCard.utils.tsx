@@ -1,29 +1,8 @@
 import { DefaultValues } from 'react-hook-form';
-import {
-  Company,
-  UserProfile,
-  UserProfileSectorOccupation,
-} from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
+import { Company, UserProfile } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/features/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/features/forms/schemas/formEditCoachProfessionalInformation';
-
-interface UserProfileParamsToCheck {
-  currentJob: string | null;
-  sectorOccupations: UserProfileSectorOccupation[] | null;
-  role: UserRoles;
-}
-
-export const checkData = (userProfile: UserProfileParamsToCheck): boolean => {
-  const gotOccupation = !!userProfile.sectorOccupations?.some(
-    (so) => !!so.occupation
-  );
-  const gotBusinessSector = !!userProfile.sectorOccupations?.some(
-    (so) => !!so.businessSector
-  );
-  return gotBusinessSector || gotOccupation;
-};
 
 export const getCoachDefaultProfessionalValues = (
   userProfileParam: UserProfile,

@@ -11,7 +11,7 @@ import {
   StyledFallbackContentContainer,
 } from './CompanyLinks.styles';
 
-export interface CompanyLinksProps {
+interface CompanyLinksProps {
   name: string;
   url?: string | null;
   hiringUrl?: string | null;

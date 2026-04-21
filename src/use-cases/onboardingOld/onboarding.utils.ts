@@ -31,13 +31,7 @@ export const flattenOnboardingDataByFlow = (
   }, {} as FlattenedOnboardingFormData);
 };
 
-export const increaseOnboardingStep = (
-  step: OnboardingStep
-): OnboardingStep => {
-  return (step + 1) as OnboardingStep;
-};
-
-export const shouldSkipStepOnboardingStep = (
+const shouldSkipStepOnboardingStep = (
   stepContent: OnboardingStepContent,
   user: User
 ) => {
@@ -78,7 +72,7 @@ export const findPreviousNotSkippableStep = (
   return currentStep; // if no next step, return current step
 };
 
-export const getLastOnboardingStep = (flow: OnboardingFlow): OnboardingStep => {
+const getLastOnboardingStep = (flow: OnboardingFlow): OnboardingStep => {
   const content = getOnboardingStepContent(flow);
   return Math.max(
     ...Object.keys(content).map((step) => parseInt(step, 10))

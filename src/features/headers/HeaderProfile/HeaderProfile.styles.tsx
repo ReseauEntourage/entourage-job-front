@@ -40,12 +40,6 @@ export const StyledHeaderProfilePictureContainer = styled.div`
   }
 `;
 
-export const StyledHeaderProfilePictureContainerMobile = styled(
-  StyledHeaderProfilePictureContainer
-)`
-  margin-right: 10px;
-`;
-
 export const StyledHeaderProfilePicture = styled.div<{ size: number }>`
   display: flex;
   justify-content: center;
@@ -111,20 +105,4 @@ export const StyledHeaderNameAndRole = styled.div`
 export const StyledHeaderAvailibilityAndUserActions = styled.div`
   display: flex;
   gap: 10px;
-`;
-
-export const StyledHeaderNameAndRoleMobile = styled(StyledHeaderNameAndRole)`
-  margin-bottom: 10px;
-`;
-
-export const StyledHeaderProfileDescription = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-`;
-
-export const StyledHeaderProfileCVButton = styled.div`
-  margin-top: 12px;
 `;

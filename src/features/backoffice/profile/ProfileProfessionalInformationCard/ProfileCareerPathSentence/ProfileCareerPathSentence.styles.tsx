@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
-export const StyledProfileCareerPathLi = styled.li`
-  line-height: 24px;
-`;
-
 export const StyledCareerPathSimpleSentenceTag = styled.span`
   color: ${COLORS.primaryBlue};
 `;

@@ -5,7 +5,7 @@ import { PrettyModal } from '@/src/features/modals/PrettyModal/PrettyModal';
 import { StyledOnboardingModalAlertTitleContainer } from '../onboarding.styles';
 import { useOnboarding } from '../useOnboarding';
 
-export interface ConfirmModalStepProps {
+interface ConfirmModalStepProps {
   id?: string;
   title: string;
   subtitle: string;

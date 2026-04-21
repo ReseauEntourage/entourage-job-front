@@ -4,7 +4,7 @@ import { BadgeVariant } from './Badge.types';
 
 export { BadgeVariant } from './Badge.types';
 
-export interface BadgeProps {
+interface BadgeProps {
   variant: BadgeVariant;
   children: React.ReactNode;
   borderRadius?: 'small' | 'medium' | 'large';

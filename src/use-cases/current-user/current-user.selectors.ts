@@ -1,6 +1,5 @@
 import { assertIsDefined } from 'src/utils/asserts';
 import {
-  fetchCompleteUserAdapter,
   fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
@@ -23,11 +22,6 @@ export const fetchUserSelectors = fetchUserAdapter.getSelectors<RootState>(
 export const fetchStaffContactSelectors =
   fetchStaffContactAdapter.getSelectors<RootState>(
     (state) => state.currentUser.fetchStaffContact
-  );
-
-export const fetchUserCompleteSelectors =
-  fetchCompleteUserAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.fetchCompleteUser
   );
 
 export const fetchCurrentUserSocialSituationSelectors =
@@ -79,37 +73,32 @@ export const updateSocialSituationSelectors =
     (state) => state.currentUser.updateSocialSituation
   );
 
-export function selectCurrentUser(state: RootState) {
+export const selectCurrentUser = (state: RootState) => {
   return state.currentUser.user;
-}
+};
 
-export function selectStaffContact(state: RootState) {
+export const selectStaffContact = (state: RootState) => {
   return state.currentUser.staffContact;
-}
+};
 
-export function selectAuthenticatedUser(state: RootState) {
+export const selectAuthenticatedUser = (state: RootState) => {
   const currentUser = selectCurrentUser(state);
 
   assertIsDefined(currentUser, 'User is not authenticated');
 
   return currentUser;
-}
+};
 
-export function selectExternalCv(state: RootState) {
+export const selectExternalCv = (state: RootState) => {
   return state.currentUser.externalCv;
-}
+};
 
-export function selectCurrentUserProfile(state: RootState) {
-  const currentUser = selectAuthenticatedUser(state);
-  return currentUser.userProfile;
-}
-
-export function selectCurrentUserId(state: RootState) {
+export const selectCurrentUserId = (state: RootState) => {
   const currentUser = selectAuthenticatedUser(state);
 
   return currentUser.id;
-}
+};
 
-export function selectIsComplete(state: RootState): boolean {
+export const selectIsComplete = (state: RootState): boolean => {
   return state.currentUser.complete;
-}
+};

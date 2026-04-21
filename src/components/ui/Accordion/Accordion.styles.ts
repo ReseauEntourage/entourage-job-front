@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 import { AccordionVariant } from './Accordion.types';
 
-export const AccordionVariantStyles = {
+const AccordionVariantStyles = {
   simple: {
     padding: '35px 0',
     gap: '20px',
@@ -14,14 +14,14 @@ export const AccordionVariantStyles = {
   },
 };
 
-export const AccordionHeaderVariantStyles = {
+const AccordionHeaderVariantStyles = {
   simple: {},
   default: {
     padding: '20px',
   },
 };
 
-export const AccordionHeaderOpenIconVariantStyles = {
+const AccordionHeaderOpenIconVariantStyles = {
   simple: {},
   default: {
     backgroundColor: COLORS.white,
@@ -29,7 +29,7 @@ export const AccordionHeaderOpenIconVariantStyles = {
   },
 };
 
-export const AccordionContentVariantStyles = {
+const AccordionContentVariantStyles = {
   simple: {},
   default: {
     borderTop: `1px solid ${COLORS.gray}`,

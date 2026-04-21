@@ -26,7 +26,7 @@ import {
   StyledSwiperItemContainer,
 } from './CompanyCollaboratorsPreviewList.styles';
 
-export interface CompanyCollaboratorsPreviewListProps {
+interface CompanyCollaboratorsPreviewListProps {
   companyId: string;
   isEditable?: boolean;
   smallCard?: boolean;

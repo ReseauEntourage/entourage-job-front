@@ -2,7 +2,7 @@ import React from 'react';
 import { Color } from '@/src/constants/styles';
 import { StyledDot } from './Dot.styles';
 
-export interface DotProps {
+interface DotProps {
   color: Color;
 }
 

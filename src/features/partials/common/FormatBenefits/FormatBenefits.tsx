@@ -2,15 +2,15 @@ import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { RowIconTitleText } from '../../utils/RowIconTitleText';
 
-export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
+type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
-export interface Benefit {
+interface Benefit {
   title: string;
   paragraph: string;
   illu: React.ReactNode;
 }
 
-export type Content = Benefit[];
+type Content = Benefit[];
 
 const opportunitiesIlluSizes = {
   width: 100,
@@ -91,7 +91,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
   ],
 };
 
-export interface FormatBenefitsProps {
+interface FormatBenefitsProps {
   as: DisplayAs;
   title: string;
 }

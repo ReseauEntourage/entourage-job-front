@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SliceRootState } from 'src/store/utils';
 
-export interface State {
+interface State {
   currentOnboardingIdx: number | null;
   webinarSfId: string | null;
   noDateSelected: boolean;

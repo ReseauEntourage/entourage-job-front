@@ -12,7 +12,7 @@ import {
   StyledSeparator,
 } from './EventInfoSummary.styles';
 
-export type EventInfoSummaryProps = Pick<
+type EventInfoSummaryProps = Pick<
   Event,
   | 'startDate'
   | 'mode'

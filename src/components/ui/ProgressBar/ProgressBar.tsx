@@ -1,7 +1,7 @@
 import { Color } from '@/src/constants/styles';
 import { StyledProgressBar } from './ProgressBar.styles';
 
-export interface ProgressBarProps {
+interface ProgressBarProps {
   value: number;
   color: Color;
 }

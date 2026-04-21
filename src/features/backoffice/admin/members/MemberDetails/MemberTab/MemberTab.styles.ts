@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const StyledMemberTabLoaderContainer = styled.div`
-  position: relative;
-`;
-
 export const StyledMemberActionsContainer = styled.div`
   display: flex;
   align-items: center;

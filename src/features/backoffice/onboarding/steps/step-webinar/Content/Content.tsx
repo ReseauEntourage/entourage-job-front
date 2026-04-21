@@ -14,7 +14,7 @@ import { StyledSeparator } from './Content.styles';
 
 const NO_DATE_VALUE = 'no-date';
 
-export interface ContentProps {
+interface ContentProps {
   webinarSfId: string | null;
   onChange: (value: string) => void;
   noDateSelected: boolean;
