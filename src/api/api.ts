@@ -613,12 +613,6 @@ export class APIHandler {
     return this.get(`/gamification/achievement-progression`);
   }
 
-  getStaffContactInfo(
-    headers: AxiosRequestHeaders | undefined = undefined
-  ): Promise<AxiosResponse> {
-    return this.get(`/auth/current/staff-contact`, {}, headers);
-  }
-
   /// // //////
   // contact /
   /// // //////

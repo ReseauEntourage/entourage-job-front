@@ -154,7 +154,7 @@ function* fetchStaffContactRequestedSaga() {
       yield* put(fetchStaffContactFailed());
       return;
     }
-    const response = yield* call(() => Api.getStaffContactInfo());
+    const response = yield* call(() => Api.getCurrentStaffContact());
 
     yield* put(fetchStaffContactSucceeded(response.data));
   } catch (e) {
