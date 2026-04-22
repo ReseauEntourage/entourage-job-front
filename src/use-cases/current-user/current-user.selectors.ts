@@ -131,3 +131,30 @@ export const selectCurrentUserReferredUsers = (state: RootState) =>
 
 export const selectCurrentUserReferrer = (state: RootState) =>
   state.currentUser.referrer;
+
+export const selectFetchCurrentCompanyStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentCompany.status;
+
+export const selectFetchCurrentProfileStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentProfile.status;
+
+export const selectFetchCurrentProfileCompleteStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentProfileComplete.status;
+
+export const selectFetchCurrentOrganizationStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentOrganization.status;
+
+export const selectFetchCurrentAchievementsStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentAchievements.status;
+
+export const selectFetchCurrentReadDocumentsStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentReadDocuments.status;
+
+export const selectFetchCurrentReferredUsersStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentReferredUsers.status;
+
+export const selectFetchCurrentReferrerStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentReferrer.status;
+
+export const selectFetchUserStatsStatus = (state: RootState) =>
+  state.currentUser.fetchUserStats.status;

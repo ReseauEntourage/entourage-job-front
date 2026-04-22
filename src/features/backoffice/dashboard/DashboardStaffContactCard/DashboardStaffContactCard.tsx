@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Card, LegacyImg, SimpleLink } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Text } from '@/src/components/ui/Text';
@@ -23,6 +23,7 @@ import {
 
 export const DashboardStaffContactCard = () => {
   const dispatch = useDispatch();
+  const store = useStore();
   const profile = useCurrentUserProfile();
   const staffContact = useCurrentUserStaffContact();
 
@@ -43,8 +44,14 @@ export const DashboardStaffContactCard = () => {
   }, [profile?.department]);
 
   useEffect(() => {
-    dispatch(currentUserActions.fetchStaffContactRequested());
-  }, [dispatch]);
+    if (
+      fetchStaffContactSelectors.selectIsFetchStaffContactIdle(
+        store.getState() as any
+      )
+    ) {
+      dispatch(currentUserActions.fetchStaffContactRequested());
+    }
+  }, [dispatch, store]);
 
   return (
     <Card title="Votre contact Entourage Pro" centerTitle>
