@@ -8,10 +8,13 @@ import {
   formPersonalDataAsCandidate,
   formPersonalDataAsCoach,
 } from 'src/features/forms/schemas/formPersonalData';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import { ModalEditUserInformation } from '.';
 
 export const useOpenCorrespondingModal = (user: User) => {
+  const userProfile = useCurrentUserProfile();
+
   const openPersonalDataModalAsAdmin = useCallback(() => {
     openModal(
       <ModalEditUserInformation
@@ -39,17 +42,14 @@ export const useOpenCorrespondingModal = (user: User) => {
           firstName: user.firstName,
           lastName: user.lastName,
           phone: user.phone,
-          department: user.userProfile.department
-            ? findConstantFromValue(
-                user.userProfile.department,
-                DEPARTMENTS_FILTERS
-              )
+          department: userProfile?.department
+            ? findConstantFromValue(userProfile.department, DEPARTMENTS_FILTERS)
             : undefined,
-          introduction: user.userProfile.introduction || undefined,
+          introduction: userProfile?.introduction || undefined,
         }}
       />
     );
-  }, [user]);
+  }, [user, userProfile]);
 
   const openCorrespondingModal = useCallback(() => {
     if (isRoleIncluded(getNormalUserRoles(), user.role)) {

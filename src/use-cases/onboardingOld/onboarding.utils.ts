@@ -7,7 +7,12 @@ import {
   OnboardingStepContent,
   OnboardingStepData,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
-import { User } from 'src/api/types';
+import { CurrentUserCompany, ReadDocumentItem, User } from 'src/api/types';
+
+type OnboardingSkipContext = {
+  readDocuments: ReadDocumentItem[];
+  company: CurrentUserCompany | null;
+};
 
 export const flattenOnboardingDataByFlow = (
   data: OnboardingStepData,
@@ -33,12 +38,13 @@ export const flattenOnboardingDataByFlow = (
 
 const shouldSkipStepOnboardingStep = (
   stepContent: OnboardingStepContent,
-  user: User
+  user: User,
+  context: OnboardingSkipContext
 ) => {
   if (!stepContent.skippedBy) {
     return false;
   }
-  return stepContent?.skippedBy(user);
+  return stepContent.skippedBy(user, context);
 };
 
 export const getOnboardingStepContent = (flow: OnboardingFlow) => {
@@ -53,7 +59,8 @@ export const getOnboardingStepContent = (flow: OnboardingFlow) => {
 export const findPreviousNotSkippableStep = (
   currentStep: OnboardingStep,
   user: User,
-  flow: OnboardingFlow
+  flow: OnboardingFlow,
+  context: OnboardingSkipContext = { readDocuments: [], company: null }
 ): OnboardingStep => {
   let prevStep = currentStep;
   while (prevStep > ONBOARDING_FIRST_STEP) {
@@ -64,12 +71,12 @@ export const findPreviousNotSkippableStep = (
 
     if (
       prevStepContent &&
-      !shouldSkipStepOnboardingStep(prevStepContent, user)
+      !shouldSkipStepOnboardingStep(prevStepContent, user, context)
     ) {
       return prevStep;
     }
   }
-  return currentStep; // if no next step, return current step
+  return currentStep;
 };
 
 const getLastOnboardingStep = (flow: OnboardingFlow): OnboardingStep => {
@@ -82,7 +89,8 @@ const getLastOnboardingStep = (flow: OnboardingFlow): OnboardingStep => {
 export const findNextNotSkippableStep = (
   currentStep: OnboardingStep,
   user: User,
-  flow: OnboardingFlow
+  flow: OnboardingFlow,
+  context: OnboardingSkipContext = { readDocuments: [], company: null }
 ): OnboardingStep => {
   let nextStep = currentStep;
 
@@ -96,16 +104,18 @@ export const findNextNotSkippableStep = (
 
     if (
       nextStepContent &&
-      !shouldSkipStepOnboardingStep(nextStepContent, user)
+      !shouldSkipStepOnboardingStep(nextStepContent, user, context)
     ) {
       return nextStep;
     }
   }
-  return currentStep; // if no next step, return current step
+  return currentStep;
 };
 
-export const getOnboardingFlow = (user: User): OnboardingFlow | null => {
-  if (user.company && user.company.companyUser?.isAdmin) {
+export const getOnboardingFlow = (
+  company: CurrentUserCompany | null
+): OnboardingFlow | null => {
+  if (company && company.companyUser?.isAdmin) {
     return OnboardingFlow.COMPANY;
   }
   return null;

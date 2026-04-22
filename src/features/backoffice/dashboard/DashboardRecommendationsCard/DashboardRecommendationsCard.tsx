@@ -8,6 +8,8 @@ import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { PublicProfile } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
@@ -57,14 +59,16 @@ const recommendationsLabels: {
 
 export const DashboardRecommendationsCard = () => {
   const user = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
+  const currentUserProfile = useCurrentUserProfile();
   const isCompanyAdmin = useMemo(
-    () => !!(user.company && user.company.companyUser?.isAdmin),
-    [user.company]
+    () => !!(company && company.companyUser?.isAdmin),
+    [company]
   );
   const isDesktop = useIsDesktop();
   const { recommendations, isLoading, isError } = useDashboardRecommendations();
   const query = {
-    departments: mutateToArray(user.userProfile.department),
+    departments: mutateToArray(currentUserProfile?.department),
   };
 
   const context = useMemo<recommendationsContextsType>(() => {

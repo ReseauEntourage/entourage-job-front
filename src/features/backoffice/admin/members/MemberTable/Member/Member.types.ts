@@ -1,4 +1,5 @@
-import { User } from '@/src/api/types';
+import { MemberUser } from '@/src/api/types';
+
 import { UserRoles } from 'src/constants/users';
 
 export type MemberColumn =
@@ -25,7 +26,7 @@ export const MemberTableByRole = {
 
 export interface MemberProps {
   columns: MemberColumn[];
-  member: User;
+  member: MemberUser;
   role: UserRoles | UserRoles[];
   disableLink?: boolean;
 }

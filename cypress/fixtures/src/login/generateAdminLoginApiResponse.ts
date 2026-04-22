@@ -8,12 +8,16 @@ export const generateAdminLoginApiResponse = () => {
     lastName: 'Doe',
     gender: 0,
     phone: faker.phone.number(),
-    zone: 'Paris',
+    zone: 'PARIS',
     role: 'Admin',
-    candidat: false,
-    coach: false,
+    OrganizationId: null,
+    refererId: null,
     lastConnection: '',
-    sub: faker.string.uuid(),
+    isEmailVerified: true,
+    userSocialSituation: { hasCompletedSurvey: false },
+    onboardingStatus: 'completed',
+    onboardingCompletedAt: null,
+    onboardingWebinarSkippedAt: null,
   };
 
   return JSON.stringify(loginResponse, null, 2);

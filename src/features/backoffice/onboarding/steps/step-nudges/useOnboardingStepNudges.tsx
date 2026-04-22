@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Nudge } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
@@ -14,6 +15,7 @@ export const useOnboardingStepNudges = ({
   userRole,
 }: useOnboardingStepNudgesProps) => {
   const currentUser = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
   const { updateUserProfile } = useUpdateProfile(currentUser);
 
   const [selectedNudgeIds, setSelectedNudgeIds] = useState<string[]>([]);
@@ -23,12 +25,12 @@ export const useOnboardingStepNudges = ({
     if (hasInitializedFromProfileRef.current) {
       return;
     }
-    const existingNudgeIds = currentUser.userProfile?.nudges?.map((n) => n.id);
+    const existingNudgeIds = userProfile?.nudges?.map((n) => n.id);
     if (existingNudgeIds?.length) {
       setSelectedNudgeIds(existingNudgeIds);
     }
     hasInitializedFromProfileRef.current = true;
-  }, [currentUser.userProfile?.nudges]);
+  }, [userProfile?.nudges]);
 
   const onboardingStepNudges = {
     summary: {
@@ -61,8 +63,7 @@ export const useOnboardingStepNudges = ({
     ),
     isStepCompleted: async () => {
       return (
-        selectedNudgeIds.length > 0 ||
-        (currentUser.userProfile.nudges ?? []).length > 0
+        selectedNudgeIds.length > 0 || (userProfile?.nudges ?? []).length > 0
       );
     },
     onSubmit: async () => {

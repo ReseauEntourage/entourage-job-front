@@ -1,9 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StaffContact, User, UserStats } from 'src/api/types';
+import {
+  CurrentUserCompany,
+  CurrentUserOrganization,
+  CurrentUserProfile,
+  CurrentUserProfileComplete,
+  CurrentUserReferredUser,
+  CurrentUserReferrer,
+  StaffContact,
+  User,
+  UserAchievement,
+  UserStats,
+} from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
+  fetchCurrentAchievementsAdapter,
+  fetchCurrentCompanyAdapter,
+  fetchCurrentOrganizationAdapter,
+  fetchCurrentProfileAdapter,
+  fetchCurrentProfileCompleteAdapter,
+  fetchCurrentReadDocumentsAdapter,
+  fetchCurrentReferredUsersAdapter,
+  fetchCurrentReferrerAdapter,
   fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,
   fetchUserAdapter,
@@ -42,6 +61,24 @@ interface State {
     typeof updateUserProfilePictureAdapter
   >;
   uploadExternalCv: RequestState<typeof uploadExternalCvAdapter>;
+  fetchCurrentProfile: RequestState<typeof fetchCurrentProfileAdapter>;
+  fetchCurrentProfileComplete: RequestState<
+    typeof fetchCurrentProfileCompleteAdapter
+  >;
+  fetchCurrentCompany: RequestState<typeof fetchCurrentCompanyAdapter>;
+  fetchCurrentOrganization: RequestState<
+    typeof fetchCurrentOrganizationAdapter
+  >;
+  fetchCurrentAchievements: RequestState<
+    typeof fetchCurrentAchievementsAdapter
+  >;
+  fetchCurrentReadDocuments: RequestState<
+    typeof fetchCurrentReadDocumentsAdapter
+  >;
+  fetchCurrentReferredUsers: RequestState<
+    typeof fetchCurrentReferredUsersAdapter
+  >;
+  fetchCurrentReferrer: RequestState<typeof fetchCurrentReferrerAdapter>;
   user: User | null;
   stats: UserStats | null;
   complete: boolean;
@@ -50,6 +87,15 @@ interface State {
   profileUpdateError: UpdateError | null; // TODO: Add error types
   externalCv: string | null;
   staffContact: StaffContact | null;
+  // Granular sub-entity caches (populated by /current/* routes)
+  profile: CurrentUserProfile | null;
+  profileComplete: CurrentUserProfileComplete | null;
+  company: CurrentUserCompany;
+  organization: CurrentUserOrganization;
+  achievements: UserAchievement[];
+  readDocuments: { documentName: string; createdAt: string }[];
+  referredUsers: CurrentUserReferredUser[];
+  referrer: CurrentUserReferrer | null;
 }
 
 const initialState: State = {
@@ -69,6 +115,15 @@ const initialState: State = {
   readDocument: readDocumentAdapter.getInitialState(),
   updateUserProfilePicture: updateUserProfilePictureAdapter.getInitialState(),
   uploadExternalCv: uploadExternalCvAdapter.getInitialState(),
+  fetchCurrentProfile: fetchCurrentProfileAdapter.getInitialState(),
+  fetchCurrentProfileComplete:
+    fetchCurrentProfileCompleteAdapter.getInitialState(),
+  fetchCurrentCompany: fetchCurrentCompanyAdapter.getInitialState(),
+  fetchCurrentOrganization: fetchCurrentOrganizationAdapter.getInitialState(),
+  fetchCurrentAchievements: fetchCurrentAchievementsAdapter.getInitialState(),
+  fetchCurrentReadDocuments: fetchCurrentReadDocumentsAdapter.getInitialState(),
+  fetchCurrentReferredUsers: fetchCurrentReferredUsersAdapter.getInitialState(),
+  fetchCurrentReferrer: fetchCurrentReferrerAdapter.getInitialState(),
   user: null,
   complete: false,
   userUpdateError: null,
@@ -77,6 +132,14 @@ const initialState: State = {
   externalCv: null,
   staffContact: null,
   stats: null,
+  profile: null,
+  profileComplete: null,
+  company: null,
+  organization: null,
+  achievements: [],
+  readDocuments: [],
+  referredUsers: [],
+  referrer: null,
 };
 
 export const slice = createSlice({
@@ -155,12 +218,15 @@ export const slice = createSlice({
     ),
     ...updateProfileAdapter.getReducers<State>((state) => state.updateProfile, {
       updateProfileSucceeded(state, action) {
-        assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
-
-        state.user.userProfile = {
-          ...state.user.userProfile,
-          ...action.payload.userProfile,
-        };
+        if (state.profile) {
+          state.profile = { ...state.profile, ...action.payload.userProfile };
+        }
+        if (state.profileComplete) {
+          state.profileComplete = {
+            ...state.profileComplete,
+            ...action.payload.userProfile,
+          };
+        }
       },
       updateProfileFailed(state, action) {
         state.userUpdateError = action.payload.error;
@@ -193,8 +259,11 @@ export const slice = createSlice({
       (state) => state.updateUserProfilePicture,
       {
         updateUserProfilePictureSucceeded(state) {
-          if (state.user && state.user.userProfile) {
-            state.user.userProfile.hasPicture = true;
+          if (state.profile) {
+            state.profile.hasPicture = true;
+          }
+          if (state.profileComplete) {
+            state.profileComplete.hasPicture = true;
           }
         },
       }
@@ -203,10 +272,78 @@ export const slice = createSlice({
       (state) => state.uploadExternalCv,
       {
         uploadExternalCvSucceeded(state) {
-          if (state.user && state.user.userProfile) {
-            state.user.userProfile.hasExternalCv = true;
-            state.user.hasExtractedCvData = false;
+          if (state.profile) {
+            state.profile.hasExternalCv = true;
           }
+          if (state.profileComplete) {
+            state.profileComplete.hasExternalCv = true;
+            state.profileComplete.hasExtractedCvData = false;
+          }
+        },
+      }
+    ),
+    ...fetchCurrentProfileAdapter.getReducers<State>(
+      (state) => state.fetchCurrentProfile,
+      {
+        fetchCurrentProfileSucceeded(state, action) {
+          state.profile = action.payload;
+        },
+      }
+    ),
+    ...fetchCurrentProfileCompleteAdapter.getReducers<State>(
+      (state) => state.fetchCurrentProfileComplete,
+      {
+        fetchCurrentProfileCompleteSucceeded(state, action) {
+          state.profileComplete = action.payload;
+          state.complete = true;
+        },
+      }
+    ),
+    ...fetchCurrentCompanyAdapter.getReducers<State>(
+      (state) => state.fetchCurrentCompany,
+      {
+        fetchCurrentCompanySucceeded(state, action) {
+          state.company = action.payload;
+        },
+      }
+    ),
+    ...fetchCurrentOrganizationAdapter.getReducers<State>(
+      (state) => state.fetchCurrentOrganization,
+      {
+        fetchCurrentOrganizationSucceeded(state, action) {
+          state.organization = action.payload;
+        },
+      }
+    ),
+    ...fetchCurrentAchievementsAdapter.getReducers<State>(
+      (state) => state.fetchCurrentAchievements,
+      {
+        fetchCurrentAchievementsSucceeded(state, action) {
+          state.achievements = action.payload;
+        },
+      }
+    ),
+    ...fetchCurrentReadDocumentsAdapter.getReducers<State>(
+      (state) => state.fetchCurrentReadDocuments,
+      {
+        fetchCurrentReadDocumentsSucceeded(state, action) {
+          state.readDocuments = action.payload;
+        },
+      }
+    ),
+    ...fetchCurrentReferredUsersAdapter.getReducers<State>(
+      (state) => state.fetchCurrentReferredUsers,
+      {
+        fetchCurrentReferredUsersSucceeded(state, action) {
+          state.referredUsers = action.payload.referredCandidates;
+        },
+      }
+    ),
+    ...fetchCurrentReferrerAdapter.getReducers<State>(
+      (state) => state.fetchCurrentReferrer,
+      {
+        fetchCurrentReferrerSucceeded(state, action) {
+          state.referrer = action.payload;
         },
       }
     ),
@@ -215,8 +352,11 @@ export const slice = createSlice({
     },
     deleteExternalCvRequested() {},
     deleteExternalCvSucceeded(state) {
-      if (state.user && state.user.userProfile) {
-        state.user.userProfile.hasExternalCv = false;
+      if (state.profile) {
+        state.profile.hasExternalCv = false;
+      }
+      if (state.profileComplete) {
+        state.profileComplete.hasExternalCv = false;
       }
     },
     deleteExternalCvFailed() {},
@@ -226,10 +366,8 @@ export const slice = createSlice({
     },
     getExternalCvFailed() {},
     generateProfileFromCVSucceeded(state) {
-      assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
-
-      if (state.user.userProfile) {
-        state.user.hasExtractedCvData = true;
+      if (state.profileComplete) {
+        state.profileComplete.hasExtractedCvData = true;
       }
     },
   },

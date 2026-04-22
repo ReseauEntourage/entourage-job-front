@@ -1,4 +1,4 @@
-import { adminRequests } from '../../intercept/user/admin.req';
+import { adminRequests, interceptCurrentUserSubResources } from '../../intercept/user/admin.req';
 import bootstrap from '../bootstrap';
 
 /**
@@ -39,6 +39,8 @@ describe('En tant que - Administrateur', () => {
         cy.intercept('PUT', request.path, request.data).as(request.alias);
       } else cy.intercept('PUT', request.path, request.data);
     });
+
+    interceptCurrentUserSubResources();
   });
 
   /**

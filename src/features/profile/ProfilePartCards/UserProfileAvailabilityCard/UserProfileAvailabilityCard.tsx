@@ -11,6 +11,7 @@ import {
 import { GA_TAGS } from 'src/constants/tags';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from 'src/lib/gtag';
 import { currentUserActions } from 'src/use-cases/current-user';
 
@@ -20,6 +21,7 @@ export const UserProfileAvailabilityCard = ({
   centerTitle?: boolean;
 }) => {
   const user = useAuthenticatedUser();
+  const profile = useCurrentUserProfile();
   const dispatch = useDispatch();
 
   const { updateUserProfile } = useUpdateProfile(user);
@@ -35,7 +37,7 @@ export const UserProfileAvailabilityCard = ({
       ? 'Disponibilité pour recevoir des coups de pouces'
       : 'Disponibilité pour accompagner un candidat';
 
-  const itemName = user.userProfile.isAvailable
+  const itemName = profile?.isAvailable
     ? 'Je suis disponible'
     : 'Je ne suis pas disponible';
 
@@ -54,7 +56,7 @@ export const UserProfileAvailabilityCard = ({
   return (
     <Card title={cardTitle} centerTitle={centerTitle}>
       <CardToggleList
-        items={[{ name: itemName, value: user.userProfile.isAvailable }]}
+        items={[{ name: itemName, value: profile?.isAvailable ?? false }]}
         isEditable
         onChange={onChange}
       />

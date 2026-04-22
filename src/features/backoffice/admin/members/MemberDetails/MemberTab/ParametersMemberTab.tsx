@@ -11,7 +11,7 @@ import { MemberColumn } from '@/src/features/backoffice/admin/members/MemberTabl
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
 import { Api } from 'src/api';
-import { User } from 'src/api/types';
+import { MemberUser } from 'src/api/types';
 import { RELATED_ROLES, UserRoles } from 'src/constants/users';
 import { formDeleteUser } from 'src/features/forms/schemas/formDeleteUser';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
@@ -24,8 +24,8 @@ import {
 } from './MemberTab.styles';
 
 interface ParametersMemberTabProps {
-  user: User;
-  setUser: (user: User) => void;
+  user: MemberUser;
+  setUser: (user: MemberUser) => void;
 }
 export function ParametersMemberTab({
   user,

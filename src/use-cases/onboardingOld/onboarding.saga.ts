@@ -137,7 +137,7 @@ const sendStepDataOnboardingSaga = function* () {
     const isLastStep = nextStep === currentStep; // If next step is the same as the current step, it means we are on the last step
     if (isLastStep) {
       // Refresh the user to get the updated data
-      yield* put(currentUserActions.fetchCompleteUserRequested());
+      yield* put(currentUserActions.fetchCurrentProfileCompleteRequested());
     }
   } catch {
     yield* put(

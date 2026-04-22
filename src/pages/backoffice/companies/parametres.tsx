@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen/LoadingScreen';
 import { CompanyParameters } from '@/src/features/backoffice/companies/CompanyParameters/CompanyParameters';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 
 const CompanyParametresPage = () => {
-  const currentUser = useAuthenticatedUser();
-  const company = useMemo(() => currentUser?.company, [currentUser.company]);
+  const company = useCurrentUserCompany();
 
   if (!company) {
-    return null;
+    return <LoadingScreen />;
   }
 
   return <CompanyParameters company={company} />;

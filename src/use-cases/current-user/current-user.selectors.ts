@@ -107,3 +107,27 @@ export const selectCurrentUserStats = (state: RootState) => {
 export const selectIsComplete = (state: RootState): boolean => {
   return state.currentUser.complete;
 };
+
+export const selectCurrentUserProfile = (state: RootState) =>
+  state.currentUser.profile;
+
+export const selectCurrentUserProfileComplete = (state: RootState) =>
+  state.currentUser.profileComplete;
+
+export const selectCurrentUserCompany = (state: RootState) =>
+  state.currentUser.company;
+
+export const selectCurrentUserOrganization = (state: RootState) =>
+  state.currentUser.organization;
+
+export const selectCurrentUserAchievements = (state: RootState) =>
+  state.currentUser.achievements;
+
+export const selectCurrentUserReadDocuments = (state: RootState) =>
+  state.currentUser.readDocuments;
+
+export const selectCurrentUserReferredUsers = (state: RootState) =>
+  state.currentUser.referredUsers;
+
+export const selectCurrentUserReferrer = (state: RootState) =>
+  state.currentUser.referrer;

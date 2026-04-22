@@ -18,7 +18,7 @@ export const DashboardJoinWhatsappModal = () => {
   useEffect(() => {
     const fetchWhatsappZone = async () => {
       try {
-        const response = await Api.getAuthCurrentWhatsappZone();
+        const response = await Api.getCurrentWhatsappZone();
         setWhatsappZone(response.data);
       } catch (error) {
         console.error('Error fetching Whatsapp zone:', error);

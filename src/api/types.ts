@@ -6,7 +6,6 @@ import { OnboardingStatus } from '../constants/onboarding';
 import {
   CompanyApproach,
   Contract as ContractValue,
-  DocumentNameType,
   HeardAboutValue,
   WorkingExperience,
 } from 'src/constants';
@@ -277,6 +276,11 @@ export type CompaniesFilters = {
   onlyWithReferent: boolean;
 };
 
+export type ReadDocumentItem = {
+  documentName: string;
+  createdAt: string;
+};
+
 export type UserStats = {
   createdAt: string;
   averageDelayResponse: number | null;
@@ -285,38 +289,28 @@ export type UserStats = {
 };
 
 export type User = {
-  coach: User;
   id: string;
   createdAt?: string;
   firstName: string;
   lastName: string;
   email: string;
   role: UserRoles;
-  password: string;
-  salt: string;
   gender: Genders;
   phone: string;
   lastConnection: string;
-  hashReset: string;
-  saltReset: string;
   zone: AdminZone;
-  organization: Organization;
-  deletedAt?: string;
-  userProfile: UserProfile;
-  userSocialSituation: UserSocialSituation;
   OrganizationId?: string;
-  readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;
-  hasExtractedCvData?: boolean;
-  company: Company | null;
-  invitations?: Invitation[];
-  achievements?: UserAchievement[];
-
-  referredCandidates?: User[];
-
+  userSocialSituation: UserSocialSituation;
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+};
+
+export type MemberUser = User & {
+  userProfile?: { hasPicture: boolean; currentJob?: string | null } | null;
+  organization?: { id: string; name: string } | null;
+  referredCandidates?: User[];
 };
 
 export type WhatsappZone = {
@@ -361,6 +355,91 @@ export type StaffContact = {
   name: string;
   email: string;
   img: string;
+};
+
+export type CurrentUserIdentity = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  role: UserRoles;
+  zone: AdminZone;
+  gender: Genders;
+  lastConnection: string;
+  isEmailVerified: boolean;
+  OrganizationId: string | null;
+  onboardingStatus: OnboardingStatus;
+  onboardingCompletedAt: string | null;
+  onboardingWebinarSkippedAt: string | null;
+};
+
+export type CurrentUserProfile = {
+  id: string;
+  hasPicture: boolean;
+  hasExternalCv: boolean;
+  description: string | null;
+  introduction: string | null;
+  linkedinUrl: string | null;
+  department: DepartmentName | null;
+  isAvailable: boolean;
+  currentJob: string | null;
+  optInRecommendations: boolean;
+  nudges: UserProfile['nudges'];
+  sectorOccupations: UserProfile['sectorOccupations'];
+  allowPhysicalEvents: boolean;
+  allowRemoteEvents: boolean;
+};
+
+export type CurrentUserProfileComplete = CurrentUserProfile & {
+  experiences: UserProfile['experiences'];
+  formations: UserProfile['formations'];
+  skills: UserProfile['skills'];
+  contracts: UserProfile['contracts'];
+  reviews: UserProfile['reviews'];
+  interests: UserProfile['interests'];
+  customNudges: UserProfile['customNudges'];
+  userProfileLanguages: UserProfile['userProfileLanguages'];
+  hasExtractedCvData: boolean;
+};
+
+export type CurrentUserCompany = {
+  id: string;
+  name: string;
+  description: string | null;
+  goal: CompanyGoal | null;
+  url: string | null;
+  hiringUrl: string | null;
+  linkedInUrl: string | null;
+  logoUrl: string | null;
+  businessSectors: BusinessSector[];
+  department: Department | null;
+  companyUser: {
+    isAdmin: boolean;
+    role: CompanyUserRole | null;
+  };
+} | null;
+
+export type CurrentUserOrganization = {
+  id: string;
+  name: string;
+  address: string | null;
+  zone: AdminZone;
+} | null;
+
+export type CurrentUserReferredUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: UserRoles;
+};
+
+export type CurrentUserReferrer = {
+  referer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  } | null;
 };
 
 export type EventParticipant = Pick<
@@ -505,15 +584,9 @@ export type Message = {
 
 export type ConversationParticipant = Pick<
   User,
-  | 'id'
-  | 'firstName'
-  | 'lastName'
-  | 'role'
-  | 'userProfile'
-  | 'gender'
-  | 'zone'
-  | 'email'
+  'id' | 'firstName' | 'lastName' | 'role' | 'gender' | 'zone' | 'email'
 > & {
+  userProfile: Pick<UserProfile, 'hasPicture' | 'isAvailable'> | null;
   conversationParticipant: {
     id: string;
     seenAt: string;
@@ -679,6 +752,12 @@ export type RecruitementAlertDto = {
 export type UserWithCompanyAndConversations = User & {
   conversations: Conversation[];
   companyUser: CompanyUser;
+  userProfile?: Pick<
+    UserProfile,
+    'hasPicture' | 'isAvailable' | 'currentJob' | 'sectorOccupations'
+  > | null;
+  achievements?: UserAchievement[];
+  invitations?: Invitation[];
 };
 
 export type CompanyWithUsers = Company & {

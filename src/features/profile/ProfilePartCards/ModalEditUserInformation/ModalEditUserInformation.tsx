@@ -12,6 +12,7 @@ import {
   formPersonalDataAsCoach,
 } from 'src/features/forms/schemas/formPersonalData';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 
 type PersonalDataFormSchema =
   | typeof formPersonalDataAsCandidate
@@ -30,6 +31,7 @@ export const ModalEditUserInformation = ({
   formSchema,
 }: ModalEditUserInformationProps) => {
   const user = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
 
   const { updateUser, closeModal: closeModalUser } = useUpdateUser(user);
   const { updateUserProfile, closeModal: closeModalUserProfile } =
@@ -102,14 +104,14 @@ export const ModalEditUserInformation = ({
               | typeof formPersonalDataAsCoach
             >;
 
-          if (department.value !== user.userProfile.department) {
+          if (department.value !== userProfile?.department) {
             newUserProfileData = {
               ...newUserProfileData,
               department: department.value,
             };
           }
 
-          if (introduction !== user.userProfile.introduction) {
+          if (introduction !== userProfile?.introduction) {
             newUserProfileData = {
               ...newUserProfileData,
               introduction,

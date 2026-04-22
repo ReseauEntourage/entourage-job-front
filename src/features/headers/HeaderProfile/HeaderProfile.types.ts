@@ -11,7 +11,7 @@ export interface HeaderProfileProps {
   lastName: string;
   role: UserRoles;
   gender: Genders;
-  department: DepartmentName;
+  department: DepartmentName | null;
   introduction?: string;
   hasPicture: boolean;
   achievements: UserAchievement[];

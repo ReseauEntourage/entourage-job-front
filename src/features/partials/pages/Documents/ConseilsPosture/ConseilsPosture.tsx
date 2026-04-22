@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Section } from '@/src/components/ui';
 import { H1, H4, H5 } from '@/src/components/ui/Headings';
@@ -11,10 +11,9 @@ import { isReadDocument } from '../Documents.utils';
 import { SignDocument } from '../SignDocument';
 import { DocumentNames } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
-import {
-  currentUserActions,
-  selectCurrentUser,
-} from 'src/use-cases/current-user';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserReadDocuments } from 'src/hooks/current-user/useCurrentUserReadDocuments';
+import { currentUserActions } from 'src/use-cases/current-user';
 
 const textContent = [
   {
@@ -71,12 +70,13 @@ const textContent = [
 
 export const ConseilsPosture = () => {
   const dispatch = useDispatch();
+  const user = useAuthenticatedUser();
   useEffect(() => {
     return () => {
       dispatch(currentUserActions.readDocumentReset());
     };
   }, [dispatch]);
-  const user = useSelector(selectCurrentUser);
+  const readDocuments = useCurrentUserReadDocuments();
   return (
     <Section style="custom-primary">
       <H1
@@ -120,7 +120,7 @@ export const ConseilsPosture = () => {
         color="black"
       />
       {user &&
-        !isReadDocument(user.readDocuments, DocumentNames.ConseilsPosture) && (
+        !isReadDocument(readDocuments, DocumentNames.ConseilsPosture) && (
           <SignDocument
             documentName={DocumentNames.ConseilsPosture}
             label="j’ai lu et compris les principes clés de posture et d’éthique. Je m’engage à les respecter."

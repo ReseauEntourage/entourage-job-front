@@ -11,6 +11,7 @@ import { DashboardInviteToReferCandidate } from '../referer/dashboard/DashboardI
 import { DashboardReferedCandidateList } from '../referer/dashboard/DashboardReferedCandidateList/DashboardReferedCandidateList';
 import { getNormalUserRoles, UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
 import { CompanyRecruitementAlertCard } from './CompanyRecruitementAlertCard';
@@ -33,29 +34,30 @@ import { DashboardToolboxCard } from './DashboardToolboxCard';
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
   const isCoach = useMemo(() => user.role === UserRoles.COACH, [user.role]);
 
   const isNormalUser = isRoleIncluded(getNormalUserRoles(), user.role);
   const isReferer = user.role === UserRoles.REFERER;
   const isCompanyAdmin = useMemo(
-    () => user.company && user.company.companyUser?.isAdmin,
-    [user.company]
+    () => company && company.companyUser?.isAdmin,
+    [company]
   );
 
   const isCompanyAdminWithRecruitGoal = useMemo(
-    () => isCompanyAdmin && user.company?.goal === CompanyGoal.RECRUIT,
-    [isCompanyAdmin, user.company?.goal]
+    () => isCompanyAdmin && company?.goal === CompanyGoal.RECRUIT,
+    [isCompanyAdmin, company?.goal]
   );
 
   const renderLeftColumnContent = () => {
     return (
       <>
-        {isCompanyAdmin && user.company && (
-          <DashboardCompanyCard company={user.company} />
+        {isCompanyAdmin && company && (
+          <DashboardCompanyCard company={company} />
         )}
         <DashboardProfileCard />
-        {!isCompanyAdmin && user.company && (
-          <DashboardCompanyCard company={user.company} />
+        {!isCompanyAdmin && company && (
+          <DashboardCompanyCard company={company} />
         )}
         {isNormalUser && <UserProfileAvailabilityCard centerTitle />}
         <DashboardStaffContactCard />
@@ -73,8 +75,8 @@ export const Dashboard = () => {
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             {isNormalUser && <DashboardRecommendationsCard />}
 
-            {isCompanyAdmin && user.company && (
-              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
+            {isCompanyAdmin && company && (
+              <DashboardCompanyCollaboratorsList companyId={company.id} />
             )}
             <DashboardMessagingConversation />
             {isReferer && <DashboardInviteToReferCandidate />}
@@ -88,8 +90,8 @@ export const Dashboard = () => {
               <DashboardRecommendationsCard />
             )}
             {isNormalUser && <DashboardNextSteps />}
-            {isCompanyAdmin && user.company && (
-              <DashboardCompanyCollaboratorsList companyId={user.company.id} />
+            {isCompanyAdmin && company && (
+              <DashboardCompanyCollaboratorsList companyId={company.id} />
             )}
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             <DashboardMessagingConversation />

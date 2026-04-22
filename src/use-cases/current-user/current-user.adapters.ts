@@ -1,4 +1,16 @@
-import { StaffContact, User, UserProfile, UserStats } from 'src/api/types';
+import {
+  CurrentUserCompany,
+  CurrentUserOrganization,
+  CurrentUserProfile,
+  CurrentUserProfileComplete,
+  CurrentUserReferredUser,
+  CurrentUserReferrer,
+  StaffContact,
+  User,
+  UserAchievement,
+  UserProfile,
+  UserStats,
+} from 'src/api/types';
 import { DocumentNameType } from 'src/constants';
 import { createRequestAdapter } from 'src/store/utils';
 
@@ -135,3 +147,35 @@ export const uploadExternalCvAdapter = createRequestAdapter(
     error: string;
   }
 >();
+
+export const fetchCurrentProfileAdapter = createRequestAdapter(
+  'fetchCurrentProfile'
+).withPayloads<void, CurrentUserProfile>();
+
+export const fetchCurrentProfileCompleteAdapter = createRequestAdapter(
+  'fetchCurrentProfileComplete'
+).withPayloads<void, CurrentUserProfileComplete>();
+
+export const fetchCurrentCompanyAdapter = createRequestAdapter(
+  'fetchCurrentCompany'
+).withPayloads<void, CurrentUserCompany>();
+
+export const fetchCurrentOrganizationAdapter = createRequestAdapter(
+  'fetchCurrentOrganization'
+).withPayloads<void, CurrentUserOrganization>();
+
+export const fetchCurrentAchievementsAdapter = createRequestAdapter(
+  'fetchCurrentAchievements'
+).withPayloads<void, UserAchievement[]>();
+
+export const fetchCurrentReadDocumentsAdapter = createRequestAdapter(
+  'fetchCurrentReadDocuments'
+).withPayloads<void, { documentName: string; createdAt: string }[]>();
+
+export const fetchCurrentReferredUsersAdapter = createRequestAdapter(
+  'fetchCurrentReferredUsers'
+).withPayloads<void, { referredCandidates: CurrentUserReferredUser[] }>();
+
+export const fetchCurrentReferrerAdapter = createRequestAdapter(
+  'fetchCurrentReferrer'
+).withPayloads<void, CurrentUserReferrer>();
