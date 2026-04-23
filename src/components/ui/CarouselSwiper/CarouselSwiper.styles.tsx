@@ -10,6 +10,9 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
 `;
 
 export const StyledSwiperContainer = styled.div`
+  --swiper-navigation-color: ${COLORS.primaryBlue};
+  --swiper-navigation-size: 20px; /* défaut: 44px */
+
   padding: 0 15px;
 
   background-color: ${(props) => {
