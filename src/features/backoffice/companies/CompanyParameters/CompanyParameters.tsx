@@ -1,5 +1,5 @@
 import React from 'react';
-import { Company } from '@/src/api/types';
+import { CurrentUserCompany } from '@/src/api/types';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section } from '@/src/components/ui';
 import { HeaderCompany } from '@/src/features/headers/HeaderCompany/HeaderCompany';
@@ -16,8 +16,10 @@ import {
   StyledCompanyRightColumn,
 } from '../CompanyProfile/CompanyProfile.styles';
 
+type NonNullCurrentUserCompany = NonNullable<CurrentUserCompany>;
+
 interface CompanyParametersProps {
-  company: Company;
+  company: NonNullCurrentUserCompany;
 }
 
 export const CompanyParameters = ({ company }: CompanyParametersProps) => {
@@ -28,9 +30,9 @@ export const CompanyParameters = ({ company }: CompanyParametersProps) => {
         <HeaderCompany
           id={company.id}
           name={company.name}
-          logoUrl={company.logoUrl}
+          logoUrl={company.logoUrl ?? undefined}
           businessSectors={company.businessSectors}
-          department={company.department}
+          department={company.department ?? undefined}
           isEditable
         />
         <Section className="custom-page">

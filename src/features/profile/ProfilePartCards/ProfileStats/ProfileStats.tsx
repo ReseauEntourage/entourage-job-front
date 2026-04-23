@@ -45,7 +45,7 @@ export const ProfileStats = ({
   const stats = useMemo(() => {
     const list = [] as StatItem[];
 
-    if (createdAt && !isOwnProfile) {
+    if (createdAt) {
       list.push({
         value: `Membre depuis le ${new Date(createdAt).toLocaleDateString(
           'fr-FR',

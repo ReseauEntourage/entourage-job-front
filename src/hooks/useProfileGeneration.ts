@@ -71,7 +71,7 @@ export const useProfileGeneration = ({
             })
           );
           // Refresh the user data to get the updated profile information
-          dispatch(currentUserActions.fetchCompleteUserRequested());
+          dispatch(currentUserActions.fetchCurrentProfileCompleteRequested());
         }
       }
     );

@@ -4,6 +4,7 @@ import {
   fetchStaffContactAdapter,
   fetchUserAdapter,
   forceOnboardingAsCompletedAdapter,
+  NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
   updateOnboardingStatusAdapter,
   updateProfileAdapter,
@@ -84,7 +85,7 @@ export const selectStaffContact = (state: RootState) => {
 export const selectAuthenticatedUser = (state: RootState) => {
   const currentUser = selectCurrentUser(state);
 
-  assertIsDefined(currentUser, 'User is not authenticated');
+  assertIsDefined(currentUser, NOT_AUTHENTICATED_USER);
 
   return currentUser;
 };
@@ -99,6 +100,61 @@ export const selectCurrentUserId = (state: RootState) => {
   return currentUser.id;
 };
 
+export const selectCurrentUserStats = (state: RootState) => {
+  return state.currentUser.stats;
+};
+
 export const selectIsComplete = (state: RootState): boolean => {
   return state.currentUser.complete;
 };
+
+export const selectCurrentUserProfile = (state: RootState) =>
+  state.currentUser.profile;
+
+export const selectCurrentUserProfileComplete = (state: RootState) =>
+  state.currentUser.profileComplete;
+
+export const selectCurrentUserCompany = (state: RootState) =>
+  state.currentUser.company;
+
+export const selectCurrentUserOrganization = (state: RootState) =>
+  state.currentUser.organization;
+
+export const selectCurrentUserAchievements = (state: RootState) =>
+  state.currentUser.achievements;
+
+export const selectCurrentUserReadDocuments = (state: RootState) =>
+  state.currentUser.readDocuments;
+
+export const selectCurrentUserReferredUsers = (state: RootState) =>
+  state.currentUser.referredUsers;
+
+export const selectCurrentUserReferrer = (state: RootState) =>
+  state.currentUser.referrer;
+
+export const selectFetchCurrentCompanyStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentCompany.status;
+
+export const selectFetchCurrentProfileStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentProfile.status;
+
+export const selectFetchCurrentProfileCompleteStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentProfileComplete.status;
+
+export const selectFetchCurrentOrganizationStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentOrganization.status;
+
+export const selectFetchCurrentAchievementsStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentAchievements.status;
+
+export const selectFetchCurrentReadDocumentsStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentReadDocuments.status;
+
+export const selectFetchCurrentReferredUsersStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentReferredUsers.status;
+
+export const selectFetchCurrentReferrerStatus = (state: RootState) =>
+  state.currentUser.fetchCurrentReferrer.status;
+
+export const selectFetchUserStatsStatus = (state: RootState) =>
+  state.currentUser.fetchUserStats.status;

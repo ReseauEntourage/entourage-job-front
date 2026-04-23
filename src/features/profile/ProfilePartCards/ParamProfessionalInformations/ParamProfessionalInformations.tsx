@@ -15,6 +15,8 @@ import { UserProfileSectorOccupation } from 'src/api/types';
 import { formEditCandidateProfessionalInformation } from 'src/features/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/features/forms/schemas/formEditCoachProfessionalInformation';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { formatCareerPathSentence } from 'src/utils';
 
 interface ParamProfessionalInformationsProps {
@@ -29,7 +31,9 @@ export const ParamProfessionalInformations = ({
   smallCard = false,
 }: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
-  const { userProfile, role, company } = user;
+  const { role } = user;
+  const userProfile = useCurrentUserProfile();
+  const company = useCurrentUserCompany();
 
   const isCompleted = sectorOccupations?.length > 0;
 

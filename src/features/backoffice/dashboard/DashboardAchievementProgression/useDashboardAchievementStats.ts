@@ -14,7 +14,7 @@ export function useDashboardAchievementStats() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    Api.getAuthCurrentStats().then(({ data }) => {
+    Api.getCurrentStats().then(({ data }) => {
       setStats({
         responseRate: data.responseRate,
         totalConversationWithMirrorRoleCount:

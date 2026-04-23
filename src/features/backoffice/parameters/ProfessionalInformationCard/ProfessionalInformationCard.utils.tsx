@@ -1,12 +1,17 @@
 import { DefaultValues } from 'react-hook-form';
-import { Company, UserProfile } from 'src/api/types';
+import { UserProfileSectorOccupation } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/features/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/features/forms/schemas/formEditCoachProfessionalInformation';
 
+type ProfessionalProfile = {
+  sectorOccupations?: UserProfileSectorOccupation[];
+  currentJob?: string | null;
+};
+
 export const getCoachDefaultProfessionalValues = (
-  userProfileParam: UserProfile,
-  company: Company | null
+  userProfileParam: ProfessionalProfile,
+  company: { name: string } | null
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
@@ -33,7 +38,7 @@ export const getCoachDefaultProfessionalValues = (
 };
 
 export const getCandidateDefaultProfessionalValues = (
-  userProfileParam: UserProfile
+  userProfileParam: ProfessionalProfile
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>
 > => {
@@ -51,14 +56,17 @@ export const getCandidateDefaultProfessionalValues = (
     : [];
 
   const data = {
-    ...businessSectors?.reduce((acc, businessSector, idx) => {
-      acc[`businessSectorId${idx}`] = {
-        value: businessSector?.id,
-        label: businessSector?.name,
-      };
-      return acc;
-    }, {}),
-    ...occupations?.reduce((acc, occupation, idx) => {
+    ...businessSectors?.reduce(
+      (acc: Record<string, unknown>, businessSector, idx) => {
+        acc[`businessSectorId${idx}`] = {
+          value: businessSector?.id,
+          label: businessSector?.name,
+        };
+        return acc;
+      },
+      {}
+    ),
+    ...occupations?.reduce((acc: Record<string, unknown>, occupation, idx) => {
       acc[`occupation${idx}`] = occupation?.name;
       return acc;
     }, {}),

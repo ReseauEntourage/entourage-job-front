@@ -11,14 +11,9 @@ import { ProfileContactItem } from './ProfileContactItem';
 interface ContactInfosProps {
   phone?: string;
   email?: string;
-  driverLicenses?: string[];
 }
 
-export const ProfileContactInfos = ({
-  phone,
-  email,
-  driverLicenses,
-}: ContactInfosProps) => {
+export const ProfileContactInfos = ({ phone, email }: ContactInfosProps) => {
   if (!phone && !email) {
     return null;
   }
@@ -42,12 +37,6 @@ export const ProfileContactInfos = ({
           <ProfileContactItem
             icon={<LucidIcon name="Mail" size={15} />}
             text={email}
-          />
-        )}
-        {driverLicenses && driverLicenses.length > 0 && (
-          <ProfileContactItem
-            icon={<LucidIcon name="Car" size={15} />}
-            text={`Permis ${driverLicenses.join(', ')}`}
           />
         )}
       </StyledInfosContainer>

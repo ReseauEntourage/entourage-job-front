@@ -22,6 +22,7 @@ import {
   StyledNavContainerDesktop,
 } from 'src/features/headers/Header.styles';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItem } from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
@@ -41,6 +42,7 @@ export const NavConnectedContentDesktop = ({
   messaging = NavConnectedMainItemDefaultProps,
 }: NavConnectedContentProps) => {
   const user = useAuthenticatedUser();
+  const profile = useCurrentUserProfile();
 
   const { push, asPath } = useRouter();
   const logoLink = links[user?.role][0] || null;
@@ -77,7 +79,7 @@ export const NavConnectedContentDesktop = ({
             <ImgUserProfile
               user={user}
               size={40}
-              hasPicture={user.userProfile?.hasPicture || false}
+              hasPicture={profile?.hasPicture || false}
             />
             <span className="uk-margin-small-left uk-margin-small-right">
               Bonjour {user.firstName}
