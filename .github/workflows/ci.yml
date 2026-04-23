@@ -84,7 +84,11 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           start: pnpm run dev
-          config: e2e.baseUrl=http://localhost:3000
+          config: baseUrl=http://localhost:3000
           browser: chrome
-          command: pnpm dlx cypress run --key ${{ secrets.CYPRESS_IO_KEY }} --record
           wait-on: http://localhost:3000
+          record: true
+        env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_IO_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
