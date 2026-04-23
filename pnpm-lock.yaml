@@ -196,8 +196,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       '@next/eslint-plugin-next':
-        specifier: ^12.3.4
-        version: 12.3.4
+        specifier: ^15.5.15
+        version: 15.5.15
       '@simbathesailor/use-what-changed':
         specifier: ^2.0.0
         version: 2.0.0(react@19.0.0)
@@ -1701,11 +1701,11 @@ packages:
   '@next/env@15.5.15':
     resolution: {integrity: sha512-vcmyu5/MyFzN7CdqRHO3uHO44p/QPCZkuTUXroeUmhNP8bL5PHFEhik22JUazt+CDDoD6EpBYRCaS2pISL+/hg==}
 
-  '@next/eslint-plugin-next@12.3.4':
-    resolution: {integrity: sha512-BFwj8ykJY+zc1/jWANsDprDIu2MgwPOIKxNVnrKvPs+f5TPegrVnem8uScND+1veT4B7F6VeqgaNLFW1Hzl9Og==}
-
   '@next/eslint-plugin-next@15.2.3':
     resolution: {integrity: sha512-eNSOIMJtjs+dp4Ms1tB1PPPJUQHP3uZK+OQ7iFY9qXpGO6ojT6imCL+KcUOqE/GXGidWbBZJzYdgAdPHqeCEPA==}
+
+  '@next/eslint-plugin-next@15.5.15':
+    resolution: {integrity: sha512-ExQoBfyKMjAUQ2nuF39ryQsG26H374ZfH13dlOZqf6TaE9ycRbIm+qUbUFCliU4BtQhiqtS7cnGA1yWfPMQ+jA==}
 
   '@next/swc-darwin-arm64@15.5.15':
     resolution: {integrity: sha512-6PvFO2Tzt10GFK2Ro9tAVEtacMqRmTarYMFKAnV2vYMdwWc73xzmDQyAV7SwEdMhzmiRoo7+m88DuiXlJlGeaw==}
@@ -4434,10 +4434,6 @@ packages:
   glob-to-regexp@0.4.1:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
 
-  glob@7.1.7:
-    resolution: {integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==}
-    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
-
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
@@ -5798,10 +5794,6 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
-
-  picomatch@4.0.2:
-    resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
-    engines: {node: '>=12'}
 
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
@@ -8890,11 +8882,11 @@ snapshots:
 
   '@next/env@15.5.15': {}
 
-  '@next/eslint-plugin-next@12.3.4':
-    dependencies:
-      glob: 7.1.7
-
   '@next/eslint-plugin-next@15.2.3':
+    dependencies:
+      fast-glob: 3.3.1
+
+  '@next/eslint-plugin-next@15.5.15':
     dependencies:
       fast-glob: 3.3.1
 
@@ -12094,9 +12086,9 @@ snapshots:
     dependencies:
       pend: 1.2.0
 
-  fdir@6.4.3(picomatch@4.0.2):
+  fdir@6.4.3(picomatch@4.0.3):
     optionalDependencies:
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
@@ -12316,15 +12308,6 @@ snapshots:
       is-glob: 4.0.3
 
   glob-to-regexp@0.4.1: {}
-
-  glob@7.1.7:
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 3.1.2
-      once: 1.4.0
-      path-is-absolute: 1.0.1
 
   glob@7.2.3:
     dependencies:
@@ -13886,8 +13869,6 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  picomatch@4.0.2: {}
-
   picomatch@4.0.3: {}
 
   pidtree@0.3.1: {}
@@ -15044,8 +15025,8 @@ snapshots:
 
   tinyglobby@0.2.12:
     dependencies:
-      fdir: 6.4.3(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.3(picomatch@4.0.3)
+      picomatch: 4.0.3
 
   tinyglobby@0.2.15:
     dependencies:

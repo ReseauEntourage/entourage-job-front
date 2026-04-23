@@ -99,7 +99,7 @@
     "@chromatic-com/storybook": "^3.2.6",
     "@faker-js/faker": "^8.4.1",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
-    "@next/eslint-plugin-next": "^12.3.4",
+    "@next/eslint-plugin-next": "^15.5.15",
     "@simbathesailor/use-what-changed": "^2.0.0",
     "@storybook/addon-actions": "^8.6.7",
     "@storybook/addon-essentials": "^8.6.7",

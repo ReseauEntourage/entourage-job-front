@@ -9,7 +9,6 @@ import 'react-tooltip/dist/react-tooltip.css';
 
 import { datadogRum } from '@datadog/browser-rum';
 import type { AppProps } from 'next/app';
-import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
@@ -25,8 +24,6 @@ import { DataProvider } from 'src/store/DataProvider';
 import { store } from 'src/store/store';
 import { GlobalStyle } from 'src/styles/GlobalStyle';
 import { selectCurrentUser } from 'src/use-cases/current-user';
-
-const { publicRuntimeConfig } = getConfig();
 
 /** ************
  * This component is detached because it needs Redux content to work properly
@@ -102,7 +99,7 @@ const EntourageApp = (props: AppProps) => {
       site: 'datadoghq.eu',
       service: 'entourage-pro-next',
       env: process.env.NEXT_PUBLIC_ENV,
-      version: publicRuntimeConfig.RELEASE_VERSION,
+      version: process.env.NEXT_PUBLIC_RELEASE_VERSION,
       sessionSampleRate: 100,
       sessionReplaySampleRate: 0,
       trackBfcacheViews: true,
