@@ -1,6 +1,6 @@
 import {
   fetchProfilesAdapter,
-  fetchProfilesRecommendationsAdapter,
+  fetchDashboardProfilesRecommendationsAdapter,
   fetchSelectedProfileAdapter,
 } from './profiles.adapters';
 import { RootState } from './profiles.slice';
@@ -10,9 +10,9 @@ export const fetchProfilesSelectors =
     (state) => state.profiles.fetchProfiles
   );
 
-export const fetchProfilesRecommendationsSelectors =
-  fetchProfilesRecommendationsAdapter.getSelectors<RootState>(
-    (state) => state.profiles.fetchProfilesRecommendations
+export const fetchDashboardProfilesRecommendationsSelectors =
+  fetchDashboardProfilesRecommendationsAdapter.getSelectors<RootState>(
+    (state) => state.profiles.fetchDashboardProfilesRecommendations
   );
 
 export const fetchSelectedProfileSelectors =

@@ -18,8 +18,8 @@ const reviews = [
     company: 'Les copains de Bastien',
     review: (
       <>
-        &ldquo;Bien plus qu&apos;un candidat standard, on sent qu&apos;il y a un
-        enjeu personnel et une dimension impactante&nbsp;!&ldquo;
+        &ldquo;Bien plus qu&apos;un candidat standard, on sent qu&apos;il
+        y&apos;a un enjeu personnel et une dimension impactante&nbsp;!&ldquo;
       </>
     ),
   },

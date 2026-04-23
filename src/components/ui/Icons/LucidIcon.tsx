@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 
 export type IconName = keyof typeof icons;
 
-export interface IconProps {
+interface IconProps {
   name: IconName;
   color?: string;
   size?: number;

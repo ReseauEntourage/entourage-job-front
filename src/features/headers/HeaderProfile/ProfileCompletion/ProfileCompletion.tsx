@@ -28,7 +28,7 @@ export const ProfileCompletion = () => {
     <StyledProfileCompletion>
       <StyledHeader>
         <Text size="small" color="mediumGray">
-          Votre profil
+          Complétion du profil
         </Text>
         <Text size="small" color="mediumGray">
           {`${completionRate}%`}

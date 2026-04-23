@@ -12,7 +12,7 @@ export interface PartnersListItem {
   height: number;
 }
 
-export interface PartnersProps {
+interface PartnersProps {
   title: string;
   tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
   list: PartnersListItem[];

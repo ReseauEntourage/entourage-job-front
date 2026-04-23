@@ -62,7 +62,9 @@ export const NavConnectedContentMobile = ({
                 color="white"
               />
               {messaging.badge && badges[messaging.badge] > 0 && (
-                <div className="pin-notification" />
+                <div className="pin-notification">
+                  {badges[messaging.badge]}
+                </div>
               )}
             </StyledMessagingIconContainer>
             <Hamburger
@@ -87,7 +89,7 @@ export const NavConnectedContentMobile = ({
                 index
               ) => {
                 const isActiveOrChildActive =
-                  asPath.includes(href) ||
+                  (!!href && asPath.includes(href)) ||
                   (subMenu &&
                     subMenu.some(({ href: subMenuHref }) => {
                       return asPath.includes(subMenuHref);
@@ -99,25 +101,44 @@ export const NavConnectedContentMobile = ({
                       isActiveOrChildActive ? 'active' : ''
                     }`}
                   >
-                    <a
-                      aria-hidden="true"
-                      onClick={() => {
-                        if (tag) {
-                          gaEvent(tag);
-                        }
-                        if (href) {
+                    {href ? (
+                      <a
+                        aria-hidden="true"
+                        onClick={() => {
+                          if (tag) {
+                            gaEvent(tag);
+                          }
                           push(href + (queryParams || ''));
-                        }
-                        closeOffCanvas();
-                      }}
-                    >
-                      <span>
-                        {icon && (
-                          <span className="uk-margin-small-right">{icon}</span>
-                        )}
-                        {name}
-                      </span>
-                    </a>
+                          closeOffCanvas();
+                        }}
+                      >
+                        <span>
+                          {icon && (
+                            <span className="uk-margin-small-right">
+                              {icon}
+                            </span>
+                          )}
+                          {name}
+                        </span>
+                      </a>
+                    ) : (
+                      <a
+                        onClick={() => {
+                          if (tag) {
+                            gaEvent(tag);
+                          }
+                        }}
+                      >
+                        <span>
+                          {icon && (
+                            <span className="uk-margin-small-right">
+                              {icon}
+                            </span>
+                          )}
+                          {name}
+                        </span>
+                      </a>
+                    )}
                     {badge && badges[badge] > 0 && (
                       <div>
                         &nbsp;

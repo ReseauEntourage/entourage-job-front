@@ -1,16 +1,11 @@
 import React from 'react';
-import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
-import { Directory } from '@/src/features/backoffice/directory/Directory/Directory';
-import { useDirectoryRoleRedirection } from '@/src/features/backoffice/directory/useDirectoryRoleRedirection';
+import { NetworkDirectory } from '@/src/features/backoffice/network-directory/NetworkDirectory';
+import { useNetworkDirectoryRedirection } from '@/src/features/backoffice/network-directory/hooks/useNetworkDirectoryRedirection';
 
 const Annuaire = () => {
-  useDirectoryRoleRedirection();
+  useNetworkDirectoryRedirection();
 
-  return (
-    <LayoutBackOffice title="Annuaire">
-      <Directory />
-    </LayoutBackOffice>
-  );
+  return <NetworkDirectory />;
 };
 
 export default Annuaire;

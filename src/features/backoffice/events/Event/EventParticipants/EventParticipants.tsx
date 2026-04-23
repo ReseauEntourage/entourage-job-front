@@ -12,11 +12,11 @@ import {
 } from './EventParticipants.styles';
 import { Item } from './Item';
 
-export interface EventParticipantsProps {
+const PARTICIPANTS_SUMMARY_LIMIT = 10;
+
+interface EventParticipantsProps {
   participants: EventParticipant[];
 }
-
-export const PARTICIPANTS_SUMMARY_LIMIT = 10;
 
 export const EventParticipants = ({ participants }: EventParticipantsProps) => {
   const participantsSummary = participants.slice(0, PARTICIPANTS_SUMMARY_LIMIT);

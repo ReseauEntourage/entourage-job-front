@@ -10,7 +10,7 @@ import {
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
-export interface OnboardingStepElearningProps {
+interface OnboardingStepElearningProps {
   userRole: User['role'];
 }
 
@@ -81,6 +81,7 @@ export const useOnboardingStepElearning = ({
       return true;
     },
     confirmationStep: {
+      id: 'elearning-confirmation',
       title: 'Bravo ! Formation terminée',
       subtitle: `Vous faites maintenant partie des ${userRole.toLowerCase()} Entourage Pro formés.`,
       submitBtnTxt: 'Passer à l’étape suivante',

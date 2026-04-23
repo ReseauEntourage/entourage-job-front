@@ -4,7 +4,7 @@ import { Alert } from '@/src/components/ui/Alert/Alert';
 import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { useIsDesktop } from 'src/hooks/utils';
 
-export interface MessagingPinnedInfoProps {
+interface MessagingPinnedInfoProps {
   pinnedInfo: string;
 }
 

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { CardList } from '@/src/components/ui/CardList';
-import { DirectoryEventItem } from '../../directory/DirectoryItem/DirectoryEventItem';
 import { useEventDirectory } from '../useEventDirectory';
+import { DirectoryEventItem } from './DirectoryEventItem';
 import { StyledEventDirectoryListContainer } from './EventDirectoryList.styles';
 
 export function EventDirectoryList() {

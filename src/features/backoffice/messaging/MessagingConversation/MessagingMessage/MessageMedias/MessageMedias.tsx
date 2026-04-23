@@ -4,7 +4,7 @@ import { MessageMedia } from './MessageMedia/MessageMedia';
 import { StyledMessageMedias } from './MessageMedias.styles';
 import { MessageMediasGrid } from './MessageMediasGrid';
 
-export interface MessageMediasProps {
+interface MessageMediasProps {
   medias?: Media[];
 }
 

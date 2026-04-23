@@ -5,7 +5,7 @@ export enum EventMode {
   ONLINE = 'online',
 }
 
-export const EVENT_MODES = [
+const EVENT_MODES = [
   {
     name: 'En personne',
     format: EventMode.IN_PERSON,
@@ -29,7 +29,7 @@ export enum EventType {
   WORKSHOP = 'WORKSHOP',
 }
 
-export const EVENT_TYPES = [
+const EVENT_TYPES = [
   {
     name: 'Rendez-vous de bienvenue Entourage Pro',
     type: EventType.WELCOME_SESSION,

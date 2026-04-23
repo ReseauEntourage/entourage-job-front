@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { RecruitementAlertDto } from '@/src/api/types';
 import { DepartmentName } from '@/src/constants/departements';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 import { Contract } from 'src/constants';
 import { createRecruitementAlertAction } from 'src/use-cases/recruitement-alerts';
 import {
@@ -12,7 +12,7 @@ import {
 } from './formCompanyRecruitementAlert';
 
 export const CompanyRecruitementAlertModal = () => {
-  const user = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
   const dispatch = useDispatch();
 
   const handleSubmit = useCallback(
@@ -22,12 +22,12 @@ export const CompanyRecruitementAlertModal = () => {
       setError: (msg: string) => void
     ) => {
       try {
-        if (!user?.company) {
+        if (!company) {
           setError("Votre compte n'est associé à aucune entreprise");
           return;
         }
         const recruitementAlertDto: RecruitementAlertDto = {
-          companyId: user.company.id,
+          companyId: company.id,
           name: values.name,
           jobName: values.jobName,
           department: (values.department?.value as DepartmentName) || null,
@@ -45,7 +45,7 @@ export const CompanyRecruitementAlertModal = () => {
         setError("Une erreur est survenue lors de la création de l'alerte");
       }
     },
-    [user, dispatch]
+    [company, dispatch]
   );
 
   return (

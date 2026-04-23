@@ -3,8 +3,8 @@ import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledCloseButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 30px;
+  right: 30px;
   background: none;
   border: none;
   cursor: pointer;
@@ -27,7 +27,7 @@ export const StyledHeaderModal = styled.div`
   gap: 20px;
   padding-bottom: 14px;
   // border-bottom: 1px solid ${COLORS.gray};
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 `;
 
 export const StyledHeaderModalTop = styled.div`

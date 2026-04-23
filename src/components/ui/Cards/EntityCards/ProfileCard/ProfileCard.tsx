@@ -2,17 +2,20 @@ import _ from 'lodash';
 import React, { useMemo } from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
-import { H3, H5 } from '@/src/components/ui/Headings';
+import { H3, H6 } from '@/src/components/ui/Headings';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
-import { Tag, TagVariant } from '@/src/components/ui/Tag';
+import { RecommendationReasonBadge } from '@/src/components/ui/RecommendationReasonBadge/RecommendationReasonBadge';
 import { Text } from '@/src/components/ui/Text';
-import { ProfileNudges } from '@/src/constants/nudges';
+import { Genders } from '@/src/constants/genders';
+import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
+import { Badge, BadgeVariant } from '../../../Badge';
 import { Button } from '../../../Button';
 import { EntityCard } from '../EntityCard/EntityCard';
 import {
   BusinessSector,
-  Nudge,
+  MatchingReason,
   Occupation,
+  UserAchievement,
   UserProfileSectorOccupation,
 } from 'src/api/types';
 import { DepartmentName } from 'src/constants/departements';
@@ -28,12 +31,8 @@ import {
   StyledProfileCardContent,
   StyledProfileCardDepartment,
   StyledProfileCardEmptyBusinessSectorsContainer,
-  StyledProfileCardEmptyNudgesContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
-  StyledProfileCardNudge,
-  StyledProfileCardNudgeContainer,
-  StyledProfileCardNudgeLabel,
   StyledProfileCardInfoContainer,
   StyledProfileCardJobContainer,
   StyledProfileCardLabel,
@@ -41,38 +40,39 @@ import {
   StyledProfileCardPicture,
   StyledProfileCardPictureContainer,
   StyledProfileCardProfessionalSituation,
-  StyledProfileCardRole,
+  StyledProfileCardTags,
   StyledSeparator,
-  StyledProfileCardNudges,
 } from './ProfileCard.styles';
+import { RoleBadge } from './RoleBadge';
 
 export interface ProfileCardProps {
   userId: string;
   firstName: string;
   lastName: string;
   role: UserRoles;
+  gender: Genders;
   hasPicture: boolean;
-  nudges?: Nudge[];
+  achievements: UserAchievement[];
   sectorOccupations?: UserProfileSectorOccupation[];
   department?: DepartmentName;
   job?: string;
   isAvailable: boolean;
-  displayNudges?: boolean;
   currentJob?: string;
+  recommendationReason?: MatchingReason | null;
 }
 
 const getLabelsDependingOnRole = (role: UserRoles) => {
   if (role === UserRoles.CANDIDATE) {
     return {
-      businessSectors: 'Je recherche un emploi dans\xa0:',
-      helps: "Je souhaite avoir de l'aide dans\xa0:",
+      businessSectors: 'Je recherche un emploi dans :',
+      helps: "Je souhaite avoir de l'aide dans :",
       role: 'Candidat',
     };
   }
   if (role === UserRoles.COACH) {
     return {
-      businessSectors: "J'ai du réseau dans\xa0:",
-      helps: 'Je peux aider à\xa0:',
+      businessSectors: "J'ai du réseau dans :",
+      helps: 'Je peux aider à :',
       role: 'Coach',
     };
   }
@@ -89,13 +89,14 @@ export function ProfileCard({
   firstName,
   lastName,
   role,
+  gender,
   department,
-  nudges,
   sectorOccupations,
   currentJob,
   isAvailable,
-  displayNudges,
   hasPicture,
+  recommendationReason,
+  achievements,
 }: ProfileCardProps) {
   const { urlImg } = useImageFallback({
     userId,
@@ -156,9 +157,15 @@ export function ProfileCard({
             </StyledProfileCardDepartment>
           )}
         </StyledProfileCardInfoContainer>
-        <StyledProfileCardRole>
-          <Tag variant={TagVariant.Secondary}>{labels.role}</Tag>
-        </StyledProfileCardRole>
+        <StyledProfileCardTags>
+          <RoleBadge role={role} />
+          {achievements && achievements.length > 0 && (
+            <ProfileAchievementHighlighter
+              achievement={achievements?.[0]}
+              gender={gender}
+            />
+          )}
+        </StyledProfileCardTags>
       </StyledProfileCardPictureContainer>
       <StyledProfileCardContent>
         <StyledProfileCardProfessionalSituation>
@@ -166,7 +173,7 @@ export function ProfileCard({
             <>
               {role === UserRoles.COACH && (
                 <StyledProfileCardJobContainer>
-                  <H5 color={COLORS.black} title={currentJob || EMPTY_JOB} />
+                  <H6 color={COLORS.black} title={currentJob || EMPTY_JOB} />
                 </StyledProfileCardJobContainer>
               )}
               {role === UserRoles.CANDIDATE && (
@@ -174,7 +181,7 @@ export function ProfileCard({
                   {sortedOccupations && sortedOccupations.length > 0 ? (
                     <StyledProfileCardJobContainer>
                       {sortedOccupations.map(({ name }, index) => (
-                        <H5
+                        <H6
                           key={name}
                           color={COLORS.black}
                           title={`${_.capitalize(name)}${
@@ -185,7 +192,7 @@ export function ProfileCard({
                     </StyledProfileCardJobContainer>
                   ) : (
                     <StyledProfileCardEmptyJobContainer>
-                      <H5 color={COLORS.black} title={EMPTY_JOB} />
+                      <H6 color={COLORS.black} title={EMPTY_JOB} />
                     </StyledProfileCardEmptyJobContainer>
                   )}
                 </>
@@ -199,11 +206,28 @@ export function ProfileCard({
             {sortedBusinessSectors && sortedBusinessSectors.length > 0 ? (
               <>
                 {sortedBusinessSectors.slice(0, 2).map(({ id, name }) => {
-                  return <Tag key={id}>{name}</Tag>;
+                  return (
+                    <Badge
+                      variant={BadgeVariant.HoverBlue}
+                      key={id}
+                      borderRadius="large"
+                    >
+                      <Text size="small" color="darkBlue">
+                        {name}
+                      </Text>
+                    </Badge>
+                  );
                 })}
                 {role !== UserRoles.CANDIDATE &&
                   sortedBusinessSectors.length > 2 && (
-                    <Tag>{`+${sortedBusinessSectors.length - 2}`}</Tag>
+                    <Badge
+                      variant={BadgeVariant.HoverBlue}
+                      borderRadius="large"
+                    >
+                      <Text size="small" color="darkBlue">
+                        {`+${sortedBusinessSectors.length - 2}`}
+                      </Text>
+                    </Badge>
                   )}
               </>
             ) : (
@@ -219,38 +243,8 @@ export function ProfileCard({
           </StyledProfileCardBusinessSectors>
         </StyledProfileCardProfessionalSituation>
         <StyledSeparator />
-        {displayNudges ? (
-          <StyledProfileCardNudgeContainer>
-            <StyledProfileCardLabel>
-              <Text color="darkGray">{labels.helps}</Text>
-            </StyledProfileCardLabel>
-            <StyledProfileCardNudges>
-              {nudges && nudges?.length > 0 ? (
-                nudges.map((nudge) => {
-                  const nudgeDetails = ProfileNudges.find(
-                    (n) => nudge?.value === n.value
-                  );
-                  return (
-                    <StyledProfileCardNudge key={nudgeDetails?.value}>
-                      {nudgeDetails?.icon}
-                      <StyledProfileCardNudgeLabel>
-                        {nudgeDetails?.label}
-                      </StyledProfileCardNudgeLabel>
-                    </StyledProfileCardNudge>
-                  );
-                })
-              ) : (
-                <StyledProfileCardEmptyNudgesContainer>
-                  <StyledProfileCardEmptyIcon>
-                    <SvgIcon name="IlluCoeurMainsOuvertes" {...iconSizeProps} />
-                  </StyledProfileCardEmptyIcon>
-                  <Text color="mediumGray" size="small" variant="italic">
-                    {EMPTY_INFO}
-                  </Text>
-                </StyledProfileCardEmptyNudgesContainer>
-              )}
-            </StyledProfileCardNudges>
-          </StyledProfileCardNudgeContainer>
+        {recommendationReason ? (
+          <RecommendationReasonBadge reason={recommendationReason} />
         ) : (
           <StyledCTAContainer>
             <Button variant="secondary" rounded>

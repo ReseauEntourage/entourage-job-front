@@ -12,7 +12,7 @@ interface ContractItem {
   value: boolean;
 }
 
-export interface ProfileContractsProps {
+interface ProfileContractsProps {
   isEditable?: boolean;
   smallCard?: boolean;
   contracts: Contract[];

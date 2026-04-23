@@ -14,7 +14,7 @@ import {
   StyledHeaderPictureContainer,
 } from './HeaderEvent.styles';
 
-export type HeaderEventProps = Pick<
+type HeaderEventProps = Pick<
   Event,
   | 'salesForceId'
   | 'name'
@@ -27,7 +27,7 @@ export type HeaderEventProps = Pick<
   | 'isParticipating'
 >;
 
-export const EVENT_PICTURE_SIZE = {
+const EVENT_PICTURE_SIZE = {
   desktop: {
     width: 150,
     height: 150,
@@ -72,6 +72,7 @@ export const HeaderEvent = ({
               meetingLink={meetingLink}
               fullAddress={fullAddress}
               registrationCount={registrationCount}
+              isParticipating={isParticipating}
             />
             {isMobile && (
               <EventParticipateButton

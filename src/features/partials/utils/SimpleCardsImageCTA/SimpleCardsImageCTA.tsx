@@ -18,7 +18,7 @@ interface Criteria {
   text: string;
 }
 
-export interface SimpleCardImageCTAProps {
+interface SimpleCardImageCTAProps {
   title: string;
   description: string;
   img: string;

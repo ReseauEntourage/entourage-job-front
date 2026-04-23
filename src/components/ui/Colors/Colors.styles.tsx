@@ -33,10 +33,3 @@ export const StyledColor = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-export const StyledStatusColor = styled(StyledColor)`
-  border: 1px solid
-    ${(props) => {
-      return props.borderColor;
-    }};
-`;

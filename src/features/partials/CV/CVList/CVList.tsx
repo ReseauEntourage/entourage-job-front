@@ -1,5 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { BusinessSector, Occupation, User } from '@/src/api/types';
+import {
+  BusinessSector,
+  Occupation,
+  User,
+  UserProfileSectorOccupation,
+} from '@/src/api/types';
+
+type CVUser = User & {
+  userProfile?: {
+    hasPicture: boolean;
+    sectorOccupations?: UserProfileSectorOccupation[];
+  } | null;
+};
 import { Button, Grid, SimpleLink } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
@@ -48,8 +60,8 @@ export const CVList = ({
   resetFilters = () => {},
 }: CVListProps) => {
   const defaultLimit = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
-  const [items, setItems] = useState<User[]>([]);
-  const itemsRef = React.useRef<User[]>([]);
+  const [items, setItems] = useState<CVUser[]>([]);
+  const itemsRef = React.useRef<CVUser[]>([]);
   const [offset, setOffset] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);

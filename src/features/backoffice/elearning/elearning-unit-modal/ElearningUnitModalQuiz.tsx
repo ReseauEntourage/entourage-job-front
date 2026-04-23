@@ -11,7 +11,7 @@ import {
 } from './ElearningUnitModal.styles';
 import { ElearningUnitModalQuizSuccess } from './ElearningUnitModalQuizSuccess';
 
-export interface ElearningUnitModalQuizProps {
+interface ElearningUnitModalQuizProps {
   questions: ElearningQuestion[];
   quizQuestionIndex: number;
   currentQuestion?: ElearningQuestion;

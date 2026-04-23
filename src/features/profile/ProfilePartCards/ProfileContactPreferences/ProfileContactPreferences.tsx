@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
 import {
@@ -9,7 +10,7 @@ import {
   SwitchItem,
 } from '../Card/CardToggleList/CardToggleList';
 
-export interface ProfileContactPreferencesProps {
+interface ProfileContactPreferencesProps {
   userRole: UserRoles;
   isEditable?: boolean;
   smallCard?: boolean;
@@ -26,6 +27,7 @@ export const ProfileContactPreferences = ({
   smallCard = false,
 }: ProfileContactPreferencesProps) => {
   const user = useAuthenticatedUser();
+  const profileComplete = useCurrentUserProfileComplete();
   const { updateUserProfile } = useUpdateProfile(user);
   const [items, setItems] = useState<SwitchItem[]>([]);
 
@@ -62,9 +64,12 @@ export const ProfileContactPreferences = ({
     return allContactWays.map((c) => ({
       name: c.name,
       icon: c.icon,
-      value: user.userProfile[c.key] ?? false,
+      value:
+        (profileComplete?.[c.key as keyof typeof profileComplete] as
+          | boolean
+          | undefined) ?? false,
     }));
-  }, [allContactWays, user.userProfile]);
+  }, [allContactWays, profileComplete]);
 
   useEffect(() => {
     setItems(generateItems());

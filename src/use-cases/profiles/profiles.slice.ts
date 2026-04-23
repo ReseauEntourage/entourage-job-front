@@ -1,30 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProfilesFilters, PublicProfile } from 'src/api/types';
-import { PROFILES_LIMIT } from 'src/constants';
+import {
+  ProfilesFilters,
+  PublicProfile,
+  ProfileRecommendation,
+} from 'src/api/types';
+import { PROFILES_LIMIT, ReduxRequestEvents } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
-  fetchProfilesRecommendationsAdapter,
+  fetchDashboardProfilesRecommendationsAdapter,
   fetchSelectedProfileAdapter,
 } from './profiles.adapters';
 
-export interface State {
+interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
-  fetchProfilesRecommendations: RequestState<
-    typeof fetchProfilesRecommendationsAdapter
+  fetchDashboardProfilesRecommendations: RequestState<
+    typeof fetchDashboardProfilesRecommendationsAdapter
   >;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
   profiles: PublicProfile[];
   profilesOffset: number;
   profilesHasFetchedAll: boolean;
-  profilesRecommendations: PublicProfile[];
+  profilesRecommendations: ProfileRecommendation[];
   selectedProfile: PublicProfile | null;
 }
 
 const initialState: State = {
   fetchProfiles: fetchProfilesAdapter.getInitialState(),
-  fetchProfilesRecommendations:
-    fetchProfilesRecommendationsAdapter.getInitialState(),
+  fetchDashboardProfilesRecommendations:
+    fetchDashboardProfilesRecommendationsAdapter.getInitialState(),
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
   profiles: [],
   profilesOffset: 0,
@@ -46,11 +50,14 @@ export const slice = createSlice({
         state.profilesHasFetchedAll = action.payload.length < PROFILES_LIMIT;
       },
     }),
-    ...fetchProfilesRecommendationsAdapter.getReducers<State>(
-      (state) => state.fetchProfilesRecommendations,
+    ...fetchDashboardProfilesRecommendationsAdapter.getReducers<State>(
+      (state) => state.fetchDashboardProfilesRecommendations,
       {
-        fetchProfilesRecommendationsSucceeded(state, action) {
-          state.profilesRecommendations = action.payload;
+        fetchDashboardProfilesRecommendationsSucceeded(state, action) {
+          state.profilesRecommendations = action.payload.recommendations;
+        },
+        fetchDashboardProfilesRecommendationsReset(state) {
+          state.profilesRecommendations = [];
         },
       }
     ),
@@ -72,9 +79,15 @@ export const slice = createSlice({
       _action: PayloadAction<ProfilesFilters>
     ) {},
     fetchProfilesNextPage(state, _action: PayloadAction<ProfilesFilters>) {
-      state.profilesOffset = state.profilesHasFetchedAll
-        ? state.profilesOffset
-        : state.profilesOffset + PROFILES_LIMIT;
+      // Do not increment offset if all profiles are fetched or a fetch is already in progress.
+      // Guards against the stale-closure race where a filter reset triggers fetchProfilesRequested
+      // (status → REQUESTED) before React re-renders the useIsAtBottom callback closure.
+      if (
+        !state.profilesHasFetchedAll &&
+        state.fetchProfiles.status === ReduxRequestEvents.SUCCEEDED
+      ) {
+        state.profilesOffset += PROFILES_LIMIT;
+      }
     },
   },
 });

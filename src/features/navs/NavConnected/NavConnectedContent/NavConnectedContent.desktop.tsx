@@ -22,6 +22,7 @@ import {
   StyledNavContainerDesktop,
 } from 'src/features/headers/Header.styles';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItem } from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
@@ -41,6 +42,7 @@ export const NavConnectedContentDesktop = ({
   messaging = NavConnectedMainItemDefaultProps,
 }: NavConnectedContentProps) => {
   const user = useAuthenticatedUser();
+  const profile = useCurrentUserProfile();
 
   const { push, asPath } = useRouter();
   const logoLink = links[user?.role][0] || null;
@@ -55,7 +57,7 @@ export const NavConnectedContentDesktop = ({
           color={COLORS.black}
         />
         {messaging.badge && badges[messaging.badge] > 0 && (
-          <div className="pin-notification" />
+          <div className="pin-notification">{badges[messaging.badge]}</div>
         )}
       </StyledMessagingIconContainer>
 
@@ -77,7 +79,7 @@ export const NavConnectedContentDesktop = ({
             <ImgUserProfile
               user={user}
               size={40}
-              hasPicture={user.userProfile?.hasPicture || false}
+              hasPicture={profile?.hasPicture || false}
             />
             <span className="uk-margin-small-left uk-margin-small-right">
               Bonjour {user.firstName}
@@ -144,7 +146,7 @@ export const NavConnectedContentDesktop = ({
                     return;
                   }
                   const isActiveOrChildActive =
-                    asPath.includes(href) ||
+                    (!!href && asPath.includes(href)) ||
                     (subMenu &&
                       subMenu.some(({ href: subMenuHref }) => {
                         return asPath.includes(subMenuHref);
@@ -157,35 +159,53 @@ export const NavConnectedContentDesktop = ({
                         isActiveOrChildActive ? 'active' : ''
                       }`}
                     >
-                      <SimpleLink
-                        href={href + (queryParams || '')}
-                        onClick={() => {
-                          if (tag) {
-                            gaEvent(tag);
-                          }
-                        }}
-                        isExternal={external}
-                        target={external ? '_blank' : '_self'}
-                        className="uk-flex uk-flex-middle menu-link"
-                      >
-                        {icon && (
-                          <span className="uk-margin-small-right icon-span">
-                            {icon}
-                          </span>
-                        )}
-                        <span className="name-span">{name}</span>
-                        {badge && badges[badge] > 0 && (
-                          <div>
-                            &nbsp;
-                            <Tag
-                              size={TagSize.Small}
-                              variant={TagVariant.Secondary}
-                            >
-                              {badges[badge]}
-                            </Tag>
-                          </div>
-                        )}
-                      </SimpleLink>
+                      {href ? (
+                        <SimpleLink
+                          href={href + (queryParams || '')}
+                          onClick={() => {
+                            if (tag) {
+                              gaEvent(tag);
+                            }
+                          }}
+                          isExternal={external}
+                          target={external ? '_blank' : '_self'}
+                          className="uk-flex uk-flex-middle menu-link"
+                        >
+                          {icon && (
+                            <span className="uk-margin-small-right icon-span">
+                              {icon}
+                            </span>
+                          )}
+                          <span className="name-span">{name}</span>
+                          {badge && badges[badge] > 0 && (
+                            <div>
+                              &nbsp;
+                              <Tag
+                                size={TagSize.Small}
+                                variant={TagVariant.Secondary}
+                              >
+                                {badges[badge]}
+                              </Tag>
+                            </div>
+                          )}
+                        </SimpleLink>
+                      ) : (
+                        <a
+                          className="uk-flex uk-flex-middle menu-link"
+                          onClick={() => {
+                            if (tag) {
+                              gaEvent(tag);
+                            }
+                          }}
+                        >
+                          {icon && (
+                            <span className="uk-margin-small-right icon-span">
+                              {icon}
+                            </span>
+                          )}
+                          <span className="name-span">{name}</span>
+                        </a>
+                      )}
                       {subMenu && subMenu.length > 0 && (
                         <SubMenu items={subMenu} badges={badges} />
                       )}

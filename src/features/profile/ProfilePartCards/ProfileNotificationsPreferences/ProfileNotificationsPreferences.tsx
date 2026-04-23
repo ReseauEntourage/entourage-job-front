@@ -6,8 +6,8 @@ import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
-export interface ProfileNotificationsPreferencesProps {
-  userProfile: UserProfile;
+interface ProfileNotificationsPreferencesProps {
+  userProfile: Pick<UserProfile, 'optInRecommendations'> | null;
   smallCard?: boolean;
 }
 
@@ -25,7 +25,7 @@ export const ProfileNotificationsPreferences = ({
     {
       name: notificationPreferenceName,
       key: 'optInRecommendations',
-      value: userProfile.optInRecommendations,
+      value: userProfile?.optInRecommendations ?? false,
     },
   ]);
 

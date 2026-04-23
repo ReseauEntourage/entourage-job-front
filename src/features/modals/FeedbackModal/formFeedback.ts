@@ -14,7 +14,7 @@ interface FormFeedbackSchema extends FormSchemaValidation {
   unavailabilityReason: string;
 }
 
-export const FeedbackOptions: {
+const FeedbackOptions: {
   [K in NormalUserRoles]: (FilterConstant<UnavailabilityReason> & {
     inputId: string;
   })[];

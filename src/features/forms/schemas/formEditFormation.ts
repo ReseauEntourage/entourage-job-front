@@ -19,7 +19,7 @@ export const formEditFormation: FormSchema<{
       type: 'text',
       title: 'Intitulé de la formation*',
       isRequired: true,
-      maxLength: 60,
+      maxLength: 80,
     },
     {
       id: 'description',
@@ -62,8 +62,8 @@ export const formEditFormation: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 30,
-      maxItems: 5,
+      maxChar: 80,
+      maxItems: 50,
     },
   ],
 };

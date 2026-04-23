@@ -71,6 +71,7 @@ export function useEventDirectory() {
   useEffect(() => {
     return () => {
       dispatch(eventsActions.resetEventsOffset());
+      dispatch(eventsActions.fetchEventsReset());
     };
   }, [dispatch]);
 
@@ -79,8 +80,11 @@ export function useEventDirectory() {
 
   // Manage offset and events request when scrolling to the bottom of the page
   useIsAtBottom(() => {
-    // Only fetch more events if there are more to fetch
-    if (!eventsHasFetchedAll) {
+    // Only fetch more events if there are more to fetch and no fetch is in progress
+    // Checking isEventLoading prevents dispatching fetchEventsNextPage right after a filter
+    // change resets the list (which would cause the page to become short and incorrectly
+    // trigger this callback before the first page has loaded)
+    if (!eventsHasFetchedAll && !isEventLoading) {
       dispatch(eventsActions.fetchEventsNextPage(eventDirectoryFiltersParams));
     }
   });

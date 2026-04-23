@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+import { Genders } from '@/src/constants/genders';
 import { UserRoles } from 'src/constants/users';
 import { store } from 'src/store/store';
 import { ProfileCard, ProfileCardProps } from '.';
@@ -28,17 +29,7 @@ export const Candidate = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.CANDIDATE,
-    nudges: [
-      {
-        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-        value: 'event',
-        nameRequest:
-          'Se rencontrer et échanger avec les membres de la communauté',
-        nameOffer:
-          'Se rencontrer lors d’événements avec les membres de la communauté',
-        order: 4,
-      },
-    ],
+    gender: Genders.MALE,
     isAvailable: true,
     sectorOccupations: [
       {
@@ -56,6 +47,7 @@ export const Candidate = {
     ],
     department: 'Paris (75)',
     hasPicture: true,
+    achievements: [],
   },
 } satisfies Story;
 
@@ -65,18 +57,8 @@ export const Coach = {
     firstName: 'John',
     lastName: 'Doe',
     role: UserRoles.COACH,
+    gender: Genders.MALE,
     isAvailable: true,
-    nudges: [
-      {
-        id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-        value: 'event',
-        nameRequest:
-          'Se rencontrer et échanger avec les membres de la communauté',
-        nameOffer:
-          'Se rencontrer lors d’événements avec les membres de la communauté',
-        order: 4,
-      },
-    ],
     sectorOccupations: [
       {
         id: '664a4779-06a6-4693-98a3-551a56478ed2',
@@ -93,5 +75,6 @@ export const Coach = {
     ],
     department: 'Paris (75)',
     hasPicture: true,
+    achievements: [],
   },
 } satisfies Story;

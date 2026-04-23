@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SelectInstance } from 'react-select';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
@@ -64,6 +64,43 @@ export function SelectCreatable<
   );
   const [isLoading, setIsLoading] = useState(false);
   const selectRef = useRef<SelectInstance<FilterConstant, boolean>>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeRequestIdRef = useRef(0);
+
+  const debouncedLoadOptions = useCallback(
+    (inputValue: string, callback: (options: FilterConstant[]) => void) => {
+      if (!loadOptions) {
+        callback(options || []);
+        return;
+      }
+
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+
+      setIsLoading(true);
+      const requestId = ++activeRequestIdRef.current;
+      debounceTimeoutRef.current = setTimeout(() => {
+        loadOptions((fetchedOptions) => {
+          if (requestId !== activeRequestIdRef.current) {
+            return;
+          }
+          callback(fetchedOptions);
+          setIsLoading(false);
+        }, inputValue);
+      }, 500);
+    },
+    [loadOptions, options]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      activeRequestIdRef.current += 1;
+    };
+  }, []);
 
   useEffect(() => {
     // Charger les options par défaut si loadOptions est fourni
@@ -157,17 +194,7 @@ export function SelectCreatable<
             const isEmpty = inputValue.trim().length === 0;
             return maxChar ? inputValue.length < maxChar && !isEmpty : !isEmpty;
           }}
-          loadOptions={(inputValue, callback) => {
-            if (loadOptions) {
-              loadOptions((fetchedOptions) => {
-                callback(fetchedOptions);
-              }, inputValue);
-            } else if (options) {
-              callback(options);
-            } else {
-              callback([]);
-            }
-          }}
+          loadOptions={debouncedLoadOptions}
           defaultOptions={defaultOptions}
           isLoading={isLoading}
         />

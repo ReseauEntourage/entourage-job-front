@@ -6,7 +6,7 @@ import {
   postElearningCompletionAdapter,
 } from './elearning.adapters';
 
-export interface State {
+interface State {
   fetchElearningUnits: RequestState<typeof fetchElearningUnitsAdapter>;
   postElearningCompletion: RequestState<typeof postElearningCompletionAdapter>;
   elearningUnits: ElearningUnit[];

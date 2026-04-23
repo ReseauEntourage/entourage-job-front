@@ -198,7 +198,7 @@ export const StyledLeftColumn = styled.div`
 `;
 
 export const StyledRightColumn = styled.div`
-  flex: 3;
+  flex: 2;
 `;
 
 export const StyledTitleAccordion = styled.div`
@@ -264,64 +264,4 @@ export const StyledCVPageContentExperience = styled.div`
   border-radius: 30px;
   position: relative;
   font-size: 16px;
-`;
-
-export const StyledCVPageContentCarousel = styled.div`
-  max-width: 1320px;
-  margin: 30px auto;
-  width: 100%;
-
-  span.name {
-    /* font-weight: 600; */
-    color: ${COLORS.mediumGray};
-  }
-`;
-
-export const StyledCVPageContentSlide = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  column-gap: 10px;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: center;
-  > div {
-    width: fit-content;
-  }
-  padding-top: 4px;
-  padding-bottom: 4px;
-  svg {
-    color: ${COLORS.primaryBlue};
-    width: 32px;
-    height: 32px;
-  }
-`;
-
-export const StyledRightQuoteContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  svg {
-    margin-left: 8px;
-    transform: translateY(8px);
-  }
-`;
-
-export const StyledLeftQuoteContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  svg {
-    margin-right: 8px;
-    transform: translateY(-8px);
-  }
-`;
-
-export const StyledCVMessageContainer = styled.div`
-  margin-top: 38px;
-  &.mobile {
-    button {
-      margin: auto;
-      display: flex;
-    }
-  }
 `;

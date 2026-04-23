@@ -16,7 +16,7 @@ import {
 } from './ProfileCustomNudges.styles';
 import { ProfileCustomNudgesModalEdit } from './ProfileCustomNudgesModalEdit';
 
-export interface KeySkillsProps {
+interface KeySkillsProps {
   userId: string;
   ownProfile?: boolean;
   isEditable?: boolean;

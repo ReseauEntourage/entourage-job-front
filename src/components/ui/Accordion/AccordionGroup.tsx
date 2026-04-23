@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledAccordionGroup } from './AccordionGroup.styles';
 
-export interface AccordionGroupProps {
+interface AccordionGroupProps {
   children?: React.ReactNode;
 }
 

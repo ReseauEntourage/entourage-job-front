@@ -27,7 +27,7 @@ const {
   setOnboardingCurrentStepData,
 } = slice.actions;
 
-export function* launchOnboardingSaga() {
+const launchOnboardingSaga = function* () {
   const currentUser = yield* select(selectAuthenticatedUser);
   const flow = yield* select(selectOnboardingFlow);
 
@@ -37,9 +37,9 @@ export function* launchOnboardingSaga() {
 
   const nextStep = findNextNotSkippableStep(0, currentUser, flow);
   yield* put(setOnboardingStep(nextStep));
-}
+};
 
-export function* sendStepDataOnboardingSaga() {
+const sendStepDataOnboardingSaga = function* () {
   const data = yield* select(selectOnboardingData);
   const flow = yield* select(selectOnboardingFlow);
   const currentStep = yield* select(selectOnboardingCurrentStep);
@@ -137,7 +137,7 @@ export function* sendStepDataOnboardingSaga() {
     const isLastStep = nextStep === currentStep; // If next step is the same as the current step, it means we are on the last step
     if (isLastStep) {
       // Refresh the user to get the updated data
-      yield* put(currentUserActions.fetchCompleteUserRequested());
+      yield* put(currentUserActions.fetchCurrentProfileCompleteRequested());
     }
   } catch {
     yield* put(
@@ -146,19 +146,19 @@ export function* sendStepDataOnboardingSaga() {
       })
     );
   }
-}
+};
 
-export function* setOnboardingCurrentStepDataSaga() {
+const setOnboardingCurrentStepDataSaga = function* () {
   yield* put(setOnboardingIsLoading(true));
   yield* put(sendStepDataOnboardingRequested());
-}
+};
 
-export function* setOnboardingStepSaga() {
+const setOnboardingStepSaga = function* () {
   // Necessary to force render of form on step change
   yield* put(setOnboardingIsLoading(false));
-}
+};
 
-export function* saga() {
+export const saga = function* () {
   yield* takeLatest(launchOnboarding, launchOnboardingSaga);
   yield* takeLatest(
     sendStepDataOnboardingRequested,
@@ -169,4 +169,4 @@ export function* saga() {
     setOnboardingCurrentStepDataSaga
   );
   yield* takeLatest(setOnboardingStep, setOnboardingStepSaga);
-}
+};

@@ -10,6 +10,7 @@ export enum TagVariant {
   DarkBlue = 'darkBlue',
   PrimaryBlue = 'primaryBlue',
   ExtraDarkBlue = 'extraDarkBlue',
+  LightYellow = 'lightYellow',
 }
 
 export enum TagSize {
@@ -18,7 +19,7 @@ export enum TagSize {
   Large = 'large',
 }
 
-export interface TagProps {
+interface TagProps {
   children: React.ReactNode;
   variant?: TagVariant;
   size?: TagSize;

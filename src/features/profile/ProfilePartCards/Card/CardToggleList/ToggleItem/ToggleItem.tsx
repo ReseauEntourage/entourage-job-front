@@ -6,7 +6,7 @@ import {
   StyledToggleItemContainer,
 } from './ToggleItem.styles';
 
-export interface ToggleItemProps {
+interface ToggleItemProps {
   icon?: React.ReactNode;
   name: string;
   checked: boolean;

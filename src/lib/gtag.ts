@@ -37,7 +37,7 @@ export const gaEvent = ({
   }
 };
 
-export type GaEventUserParams = {
+type GaEventUserParams = {
   zone: string;
   role: string;
   userId: string;

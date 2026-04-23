@@ -177,6 +177,7 @@ export const profileCompletionCvFields: FormFieldInput<AnyCantFix>[] = [
     showLabel: true,
     openMenuOnClick: true,
     options: [],
+    maxChar: 80,
     maxItems: 50,
     loadOptions: (callback, inputValue) =>
       loadSkillsOptions(callback, inputValue, true),
@@ -191,6 +192,7 @@ export const profileCompletionCvFields: FormFieldInput<AnyCantFix>[] = [
     showLabel: true,
     openMenuOnClick: true,
     loadOptions: loadLanguagesOptions,
+    maxItems: 10,
   },
   {
     id: 'interests',
@@ -201,8 +203,8 @@ export const profileCompletionCvFields: FormFieldInput<AnyCantFix>[] = [
     isMulti: true,
     showLabel: true,
     openMenuOnClick: true,
-    maxChar: 30,
-    maxItems: 6,
+    maxChar: 50,
+    maxItems: 10,
     options: [],
   },
 ];

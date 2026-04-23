@@ -5,7 +5,7 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { StyledButtonContent, StyledChip } from './Attachment.styles';
 
-export interface AttachmentProps {
+interface AttachmentProps {
   attachment: {
     name: string;
   };

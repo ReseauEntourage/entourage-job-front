@@ -12,6 +12,8 @@ import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { useUpdateUser } from '@/src/hooks';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import {
   currentUserActions,
@@ -29,6 +31,8 @@ import { ProfileCompletionFormValues } from './types';
 export const useOnboardingStepProfileCompletion = () => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
+  const userProfileComplete = useCurrentUserProfileComplete();
+  const company = useCurrentUserCompany();
   const { updateUserProfile } = useUpdateProfile(user);
   const { updateUserCompany } = useUpdateUser(user);
 
@@ -45,7 +49,7 @@ export const useOnboardingStepProfileCompletion = () => {
 
   const initialFormValues = useMemo<ProfileCompletionFormValues>(() => {
     const sortedSectorOccupations =
-      user.userProfile?.sectorOccupations
+      userProfileComplete?.sectorOccupations
         ?.slice()
         .sort((a, b) => a.order - b.order) ?? [];
 
@@ -62,8 +66,8 @@ export const useOnboardingStepProfileCompletion = () => {
     return {
       profileImage: null,
       profileImageObjectUrl: null,
-      introduction: user.userProfile?.introduction ?? '',
-      description: user.userProfile?.description ?? '',
+      introduction: userProfileComplete?.introduction ?? '',
+      description: userProfileComplete?.description ?? '',
 
       businessSectorId0: businessSector0Id
         ? {
@@ -84,12 +88,12 @@ export const useOnboardingStepProfileCompletion = () => {
         : null,
       occupation1: sectorOccupation1?.occupation?.name ?? '',
 
-      currentJob: user.userProfile?.currentJob ?? '',
-      companyName: user.company?.name
-        ? { value: user.company.name, label: user.company.name }
+      currentJob: userProfileComplete?.currentJob ?? '',
+      companyName: company?.name
+        ? { value: company.name, label: company.name }
         : null,
       businessSectorIds:
-        user.userProfile?.sectorOccupations
+        userProfileComplete?.sectorOccupations
           ?.slice()
           .sort((a, b) => a.order - b.order)
           ?.map((so) => {
@@ -107,21 +111,22 @@ export const useOnboardingStepProfileCompletion = () => {
           .filter((value): value is FilterConstant<string> => value !== null) ??
         [],
       skills:
-        user.userProfile?.skills?.map((skill) => ({
+        userProfileComplete?.skills?.map((skill) => ({
           value: skill.name,
           label: skill.name,
         })) ?? [],
       interests:
-        user.userProfile?.interests && user.userProfile.interests.length > 0
-          ? sortByOrder(user.userProfile.interests).map((interest) => ({
+        userProfileComplete?.interests &&
+        userProfileComplete.interests.length > 0
+          ? sortByOrder(userProfileComplete.interests).map((interest) => ({
               value: interest.name,
               label: interest.name,
             }))
           : [],
-      experiences: (user.userProfile?.experiences as Experience[]) ?? [],
-      formations: (user.userProfile?.formations as Formation[]) ?? [],
+      experiences: (userProfileComplete?.experiences as Experience[]) ?? [],
+      formations: (userProfileComplete?.formations as Formation[]) ?? [],
       languages:
-        user.userProfile?.userProfileLanguages
+        userProfileComplete?.userProfileLanguages
           ?.map((upLanguage) => {
             const languageId = upLanguage.language?.id;
             const languageName = upLanguage.language?.name;
@@ -135,20 +140,20 @@ export const useOnboardingStepProfileCompletion = () => {
           })
           .filter((value): value is FilterConstant<string> => value !== null) ??
         [],
-      linkedinUrl: user.userProfile?.linkedinUrl ?? '',
+      linkedinUrl: userProfileComplete?.linkedinUrl ?? '',
     };
   }, [
-    user.userProfile?.sectorOccupations,
-    user.userProfile?.introduction,
-    user.userProfile?.description,
-    user.userProfile?.currentJob,
-    user.userProfile?.skills,
-    user.userProfile.interests,
-    user.userProfile?.experiences,
-    user.userProfile?.formations,
-    user.userProfile?.userProfileLanguages,
-    user.userProfile?.linkedinUrl,
-    user.company?.name,
+    userProfileComplete?.sectorOccupations,
+    userProfileComplete?.introduction,
+    userProfileComplete?.description,
+    userProfileComplete?.currentJob,
+    userProfileComplete?.skills,
+    userProfileComplete?.interests,
+    userProfileComplete?.experiences,
+    userProfileComplete?.formations,
+    userProfileComplete?.userProfileLanguages,
+    userProfileComplete?.linkedinUrl,
+    company?.name,
   ]);
 
   useEffect(() => {
@@ -289,8 +294,8 @@ export const useOnboardingStepProfileCompletion = () => {
             const submittedCompanyName = values.companyName?.value
               ? String(values.companyName.value).trim()
               : null;
-            const existingCompanyName = user.company?.name
-              ? String(user.company.name).trim()
+            const existingCompanyName = company?.name
+              ? String(company.name).trim()
               : null;
             const shouldUpdateCompany =
               submittedCompanyName !== existingCompanyName;
@@ -346,6 +351,7 @@ export const useOnboardingStepProfileCompletion = () => {
           ? 'Vous êtes désormais prêt à contacter des coachs prêts à vous soutenir'
           : 'Vous êtes désormais prêt à soutenir des candidats',
       submitBtnTxt: 'Démarrer l’aventure Entourage Pro',
+      id: 'profile-completion-confirmation',
     },
   } as OnboardingStep;
 

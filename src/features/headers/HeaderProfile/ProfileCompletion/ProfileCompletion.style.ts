@@ -4,7 +4,7 @@ import { COLORS } from 'src/constants/styles';
 export const StyledProfileCompletion = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const StyledHeader = styled.div`

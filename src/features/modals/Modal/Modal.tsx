@@ -104,7 +104,7 @@ const CustomModal = ({
       },
       content: {
         width,
-        padding: '10px 0',
+        padding: '30px 0',
         display: 'flex',
         flexDirection: 'column',
         flexShrink: 0,

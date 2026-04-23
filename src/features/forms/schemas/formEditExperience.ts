@@ -18,7 +18,7 @@ export const formEditExperience: FormSchema<{
       component: 'text-input',
       title: 'Intitulé du poste*',
       isRequired: true,
-      maxLength: 60,
+      maxLength: 80,
     },
     {
       id: 'description',
@@ -59,8 +59,8 @@ export const formEditExperience: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 30,
-      maxItems: 5,
+      maxChar: 80,
+      maxItems: 50,
     },
   ],
 };

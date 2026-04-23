@@ -14,7 +14,7 @@ export const formEditSkills: FormSchema<{
       loadOptions: (callback, inputValue) =>
         loadSkillsOptions(callback, inputValue, true),
       title: 'Compétences',
-      maxChar: 50,
+      maxChar: 80,
       maxItems: 50,
       isMulti: true,
     },

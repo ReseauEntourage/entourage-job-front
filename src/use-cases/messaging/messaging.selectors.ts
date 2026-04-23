@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from './messaging.slice';
 
 export const selectNewMessage = (state: RootState) =>
@@ -5,6 +6,9 @@ export const selectNewMessage = (state: RootState) =>
 
 export const selectConversations = (state: RootState) =>
   state.messaging.conversations;
+
+export const selectGetConversationsStatus = (state: RootState) =>
+  state.messaging.getConversations.status;
 
 export const selectSelectedConversation = (state: RootState) =>
   state.messaging.selectedConversation;
@@ -41,3 +45,26 @@ export const selectShouldGiveFeedback = (state: RootState): boolean => {
   }
   return selectedConversation.shouldGiveFeedback || false;
 };
+
+const selectCurrentUserIdParam = (
+  _state: RootState,
+  currentUserId: string | null
+): string | null => currentUserId;
+
+const selectCurrentUserHasSentMessagesSelector = createSelector(
+  [selectSelectedConversation, selectCurrentUserIdParam],
+  (selectedConversation, currentUserId): boolean => {
+    if (!selectedConversation || !currentUserId) {
+      return false;
+    }
+
+    return selectedConversation.messages.some(
+      (message) => message.authorId === currentUserId
+    );
+  }
+);
+
+export const selectCurrentUserHasSentMessages =
+  (currentUserId: string | null) =>
+  (state: RootState): boolean =>
+    selectCurrentUserHasSentMessagesSelector(state, currentUserId);

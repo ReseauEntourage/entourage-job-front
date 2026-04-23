@@ -7,8 +7,8 @@ import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import {
-  AdminRoles,
   getRolesWithOrganization,
+  USER_ROLES_FILTERS,
   UserRoles,
 } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
@@ -26,13 +26,6 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   ),
 };
 
-const USER_ROLES_FILTERS: FilterConstant<UserRoles>[] = [
-  { value: UserRoles.CANDIDATE, label: UserRoles.CANDIDATE },
-  { value: UserRoles.COACH, label: UserRoles.COACH },
-  { value: UserRoles.REFERER, label: UserRoles.REFERER },
-  { value: UserRoles.ADMIN, label: UserRoles.ADMIN },
-];
-
 interface FormAddUserSchema extends FormSchemaValidation {
   firstName: string;
   lastName: string;
@@ -41,7 +34,6 @@ interface FormAddUserSchema extends FormSchemaValidation {
   zone: AdminZone;
   phone: string;
   email: string;
-  adminRole: AdminRoles;
   organizationId: FilterConstant<string>;
   nameOrganization: string;
   addressOrganization: string;
@@ -139,7 +131,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           name: 'role',
           component: 'select-simple',
           options: USER_ROLES_FILTERS,
-          fieldsToReset: ['adminRole', 'organizationId'],
+          fieldsToReset: ['organizationId'],
           isRequired: true,
         },
       ],
@@ -204,28 +196,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
             'referentLastNameOrganization',
             'referentPhoneOrganization',
             'referentMailOrganization',
-          ],
-          isRequired: true,
-        },
-      ],
-    },
-    {
-      id: 'adminRoleGroup',
-      name: 'adminRoleGroup',
-      component: 'fieldgroup',
-      hide: (getValue) => {
-        const role = getValue('role');
-        return role !== UserRoles.ADMIN;
-      },
-      fields: [
-        {
-          id: 'adminRole',
-          name: 'adminRole',
-          component: 'select-simple',
-          title: 'Responsabilité *',
-          options: [
-            { value: AdminRoles.CANDIDATES, label: AdminRoles.CANDIDATES },
-            { value: AdminRoles.COMPANIES, label: AdminRoles.COMPANIES },
           ],
           isRequired: true,
         },

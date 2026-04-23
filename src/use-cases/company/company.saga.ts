@@ -1,10 +1,11 @@
-import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { COMPANIES_LIMIT } from '@/src/constants';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { currentUserActions } from '../current-user';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import {
+  fetchCompaniesSelectors,
   selectCompaniesHasFetchedAll,
   selectCompaniesOffset,
   selectSelectedCompanyId,
@@ -178,8 +179,14 @@ function* fetchCompaniesNextPageSaga(
   action: ReturnType<typeof fetchCompaniesNextPage>
 ) {
   const hasFetchedAll = yield* select(selectCompaniesHasFetchedAll);
+  const isFetchRequested = yield* select(
+    fetchCompaniesSelectors.selectIsFetchCompaniesRequested
+  );
 
-  if (!hasFetchedAll) {
+  // Do not dispatch fetchCompaniesRequested if a fetch is already in progress.
+  // This complements the reducer-level guard and prevents cancelling an in-flight
+  // filter-change request via takeLatest(fetchCompaniesRequested).
+  if (!hasFetchedAll && !isFetchRequested) {
     yield* put(fetchCompaniesRequested(action.payload));
   }
 }
@@ -196,7 +203,9 @@ export function* saga() {
     fetchCompaniesWithFilters.type,
     fetchCompaniesWithFiltersSaga
   );
-  yield* takeLatest(fetchCompaniesNextPage.type, fetchCompaniesNextPageSaga);
+  // takeLeading: ignore new fetchCompaniesNextPage dispatches while one is already
+  // being processed, consistent with profiles and events sagas.
+  yield* takeLeading(fetchCompaniesNextPage.type, fetchCompaniesNextPageSaga);
   yield* takeLatest(fetchCompaniesRequested.type, fetchCompaniesRequestedSaga);
   yield* takeLatest(
     fetchSelectedCompanyRequested.type,

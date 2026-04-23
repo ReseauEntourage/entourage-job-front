@@ -2,9 +2,14 @@ import React from 'react';
 import { Color } from '@/src/constants/styles';
 import { AnyToFix } from 'src/utils/Types';
 
-export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'text';
+export type ButtonVariant =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'text'
+  | 'hoverBlue';
 
-export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
 
 export interface ButtonProps {
   id?: string;
@@ -25,4 +30,6 @@ export interface ButtonProps {
   style?: React.CSSProperties;
   prependIcon?: React.ReactNode;
   appendIcon?: React.ReactNode;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }

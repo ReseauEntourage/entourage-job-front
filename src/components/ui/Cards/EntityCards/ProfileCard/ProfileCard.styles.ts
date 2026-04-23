@@ -68,10 +68,13 @@ export const StyledProfileCardDepartment = styled.div`
 }
 `;
 
-export const StyledProfileCardRole = styled.div`
+export const StyledProfileCardTags = styled.div`
   position: absolute;
   left: 16px;
   bottom: -14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 export const StyledProfileCardContent = styled.div`
@@ -137,38 +140,10 @@ export const StyledProfileCardBusinessSectors = styled.div`
   gap: 8px;
 `;
 
-export const StyledProfileCardNudgeContainer = styled.div``;
-
-export const StyledProfileCardNudges = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-`;
-
-export const StyledProfileCardNudge = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const StyledProfileCardNudgeLabel = styled.div`
-  font-size: 8px;
-  color: ${COLORS.mediumGray};
-`;
-
 export const StyledProfileCardEmptyBusinessSectorsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-`;
-
-export const StyledProfileCardEmptyNudgesContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-left: 8px;
-  margin-right: 8px;
 `;
 
 export const StyledProfileCardEmptyIcon = styled.div`

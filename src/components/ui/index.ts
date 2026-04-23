@@ -1,10 +1,10 @@
+export * from './Badge';
 export * from './Background';
 export * from './Cards/Card';
 export * from './Tag';
 export * from './Grid';
 export * from './Carousel/Carousel';
 export * from './CloseButton/CloseButton';
-export * from './FiltersTabs';
 export * from './Images/Logo';
 export * from './SimpleLink';
 export * from './Containers';
@@ -21,3 +21,5 @@ export * from './Text';
 export * from './Dropdown/Dropdown';
 export * from './Icons';
 export * from './Images';
+export * from './Tooltip';
+export * from './ProgressBar';
