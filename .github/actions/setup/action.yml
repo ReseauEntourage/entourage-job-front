@@ -1,0 +1,27 @@
+name: Setup
+description: Install pnpm, Node.js and project dependencies
+
+inputs:
+  install-cypress:
+    description: Install Cypress binary
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v4
+      with:
+        run_install: false
+
+    - uses: actions/setup-node@v4
+      with:
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install
+      shell: bash
+
+    - name: Install Cypress binary
+      if: inputs.install-cypress == 'true'
+      run: pnpm exec cypress install
+      shell: bash
