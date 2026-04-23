@@ -65,6 +65,10 @@ jobs:
       - name: Run ESLint - Code Quality Test
         run: pnpm run test:eslint
 
+      # Run Build test
+      - name: Run Build - Production Build Test
+        run: pnpm run build
+
       # Run Jest test
       - name: Run Jest - Integration Test
         run: pnpm run test:integ
