@@ -36,7 +36,7 @@ export default defineConfig([
       'coverage/**',
       'src/styles/dist/**',
       '*.config.js',
-      '*.config.mjs',
+      'next.config.mjs',
       'server-next.js',
       '.lintstagedrc.js',
       '!/.storybook/**',
@@ -47,6 +47,14 @@ export default defineConfig([
      Base ESLint rules
   ================================================== */
   js.configs.recommended,
+  {
+    plugins: {
+      '@next/next': next,
+    },
+    rules: {
+      ...next.configs.recommended.rules,
+    },
+  },
 
   /* ==================================================
      Main config (JS / TS / React)
@@ -77,7 +85,6 @@ export default defineConfig([
       import: importPlugin,
       prettier,
       '@jambit/typed-redux-saga': typedReduxSaga,
-      '@next/next': next,
       'jsx-a11y': jsxA11y,
     },
 
