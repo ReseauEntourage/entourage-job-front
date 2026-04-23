@@ -11,9 +11,9 @@ export const formEditProfileDescriptionCoach: FormSchema<{
       component: 'textarea',
       title: 'Description',
       placeholder:
-        "Exemple: Passionné.e par le secteur de la logistique, je souhaite transmettre mon expérience et faire profiter les personnes en recherche d'emploi de mon réseau.",
+        "Exemple: Chef.fe de projet digital avec plus de 10 ans d'expérience, j'ai dirigé des équipes dans la création de campagnes innovantes pour des clients internationaux. Mon expertise couvre la gestion de projets, le développement de stratégies digitales et l'optimisation des processus.",
       rows: 14,
-      maxLines: { lines: 5, width: 655 },
+      maxLength: 1000,
     },
   ],
 };

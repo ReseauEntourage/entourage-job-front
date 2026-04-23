@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router';
-import { DirectoryEntity } from '@/src/constants/entity';
 
-export function useEntity() {
+export function useEntity(): string | string[] | undefined {
   const {
     query: { entity },
   } = useRouter();
 
-  return entity as DirectoryEntity;
+  return entity;
 }

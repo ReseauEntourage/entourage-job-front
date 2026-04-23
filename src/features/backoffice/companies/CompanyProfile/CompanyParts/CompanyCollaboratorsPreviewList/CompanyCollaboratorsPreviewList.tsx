@@ -26,7 +26,7 @@ import {
   StyledSwiperItemContainer,
 } from './CompanyCollaboratorsPreviewList.styles';
 
-export interface CompanyCollaboratorsPreviewListProps {
+interface CompanyCollaboratorsPreviewListProps {
   companyId: string;
   isEditable?: boolean;
   smallCard?: boolean;
@@ -157,10 +157,12 @@ export const CompanyCollaboratorsPreviewList = ({
                   firstName={user.firstName}
                   lastName={user.lastName}
                   role={user.role}
-                  hasPicture={user.userProfile.hasPicture}
-                  isAvailable={user.userProfile.isAvailable}
-                  currentJob={user.userProfile.currentJob || undefined}
-                  sectorOccupations={user.userProfile.sectorOccupations}
+                  gender={user.gender}
+                  hasPicture={user.userProfile?.hasPicture ?? false}
+                  isAvailable={user.userProfile?.isAvailable ?? false}
+                  currentJob={user.userProfile?.currentJob || undefined}
+                  sectorOccupations={user.userProfile?.sectorOccupations}
+                  achievements={user.achievements ?? []}
                 />
               </StyledSwiperItemContainer>
             </SwiperSlide>

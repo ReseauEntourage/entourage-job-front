@@ -6,7 +6,7 @@ interface ContextValue {
   userAgent: string;
 }
 
-export const SSRDataContext = createContext<ContextValue>({} as ContextValue);
+const SSRDataContext = createContext<ContextValue>({} as ContextValue);
 
 export function useSSRDataContext() {
   return useContext(SSRDataContext);

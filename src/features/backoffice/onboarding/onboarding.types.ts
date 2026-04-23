@@ -1,10 +1,5 @@
 import React from 'react';
 
-export enum OnboardingVersion {
-  LEGACY = 'legacy',
-  NEW = 'new',
-}
-
 /**
  * OnboardingStep - Interface representing a single step in the onboarding process.
  */
@@ -28,6 +23,7 @@ export interface OnboardingStep {
     title: string; // Title of the confirmation modal
     subtitle: string; // Subtitle of the confirmation modal
     submitBtnTxt: string; // Text for the submit button in the confirmation modal
+    id: string; // ID for the confirmation modal (used for testing)
   };
 }
 

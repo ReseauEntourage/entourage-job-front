@@ -7,7 +7,7 @@ import {
   StyledInvitationToActionContainer,
 } from './EventInvitationToAction.styles';
 
-export interface EventInvitationToActionProps {
+interface EventInvitationToActionProps {
   name: string;
   salesForceId: string;
   description?: string;

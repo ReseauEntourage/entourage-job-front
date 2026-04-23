@@ -4,14 +4,14 @@ import { Grid, Section } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { MemberDetails } from '@/src/features/backoffice/admin/members/MemberDetails';
 import { Api } from 'src/api';
-import { User as UserType } from 'src/api/types';
+import { MemberUser } from 'src/api/types';
 import { MEMBER_TABS } from 'src/constants';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useTab } from 'src/hooks/queryParams/useTab';
 import { usePrevious } from 'src/hooks/utils';
 
 const User = () => {
-  const [user, setUser] = useState<UserType>();
+  const [user, setUser] = useState<MemberUser>();
 
   const [loading, setLoading] = useState(true);
 

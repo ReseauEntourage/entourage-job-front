@@ -10,13 +10,13 @@ import { LucidIcon } from '../Icons/LucidIcon';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledUserActionsBtnContainer } from './UserActions.styles';
 
-export interface UserActionsProps {
+interface UserActionsProps {
   userId: string;
   userRole: UserRoles;
   openDirection?: 'left' | 'right';
 }
 
-export interface UserAction {
+interface UserAction {
   name: string;
   handler: () => void;
 }

@@ -7,6 +7,7 @@ import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
+  AchievementProgressionEntry,
   APIRoute,
   CandidateInscription,
   ContactCompany,
@@ -32,6 +33,7 @@ import {
   CompaniesFilters,
   EventsFilters,
   User,
+  WhatsappZone,
 } from './types';
 
 export class APIHandler {
@@ -245,8 +247,13 @@ export class APIHandler {
     });
   }
 
-  getProfilesRecommendations(): Promise<AxiosResponse> {
-    return this.get(`/user/profile/recommendations`);
+  getProfilesRecommendations(params: {
+    limit: number;
+    cursor?: number;
+  }): Promise<AxiosResponse> {
+    return this.get(`/user/profile/recommendations`, {
+      params,
+    });
   }
 
   // post
@@ -546,21 +553,64 @@ export class APIHandler {
   // currentUser /
   /// // //////
 
-  getAuthCurrent(
-    complete = false,
+  getCurrentIdentity(
     headers: AxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
-    return this.get(
-      `/auth/current${complete ? '?complete=true' : ''}`,
-      {},
-      headers
-    );
+    return this.get(`/current`, {}, headers);
   }
 
-  getStaffContactInfo(
+  getCurrentProfile(): Promise<AxiosResponse> {
+    return this.get(`/current/profile`);
+  }
+
+  getCurrentProfileComplete(
     headers: AxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
-    return this.get(`/auth/current/staff-contact`, {}, headers);
+    return this.get(`/current/profile/complete`, {}, headers);
+  }
+
+  getCurrentCompany(): Promise<AxiosResponse> {
+    return this.get(`/current/company`);
+  }
+
+  getCurrentOrganization(): Promise<AxiosResponse> {
+    return this.get(`/current/organization`);
+  }
+
+  getCurrentStats(): Promise<AxiosResponse> {
+    return this.get(`/current/stats`);
+  }
+
+  getCurrentWhatsappZone(): Promise<AxiosResponse<WhatsappZone>> {
+    return this.get(`/current/whatsapp-zone`);
+  }
+
+  getCurrentStaffContact(
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(`/current/staff-contact`, {}, headers);
+  }
+
+  getCurrentReferredUsers(): Promise<AxiosResponse> {
+    return this.get(`/current/referred-users`);
+  }
+
+  getCurrentReferrer(): Promise<AxiosResponse> {
+    return this.get(`/current/referrer`);
+  }
+
+  getCurrentAchievements(): Promise<AxiosResponse> {
+    return this.get(`/current/achievements`);
+  }
+
+  getCurrentReadDocuments(): Promise<AxiosResponse> {
+    return this.get(`/current/read-documents`);
+  }
+
+  getAchievementProgression(): Promise<
+    AxiosResponse<AchievementProgressionEntry[]>
+  > {
+    return this.get(`/gamification/achievement-progression`);
   }
 
   /// // //////

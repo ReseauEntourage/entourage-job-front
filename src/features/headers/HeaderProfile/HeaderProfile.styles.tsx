@@ -3,12 +3,14 @@ import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -5px;
+  right: -5px;
   border-radius: 50%;
   background-color: white;
   border: 1px solid ${COLORS.primaryBlue};
   padding: 5px;
+  width: 30px;
+  height: 30px;
 `;
 
 export const StyledHeaderProfile = styled.div`
@@ -26,7 +28,7 @@ export const StyledHeaderProfilePictureContainer = styled.div`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  margin-right: 50px;
+  margin-right: 30px;
   position: relative;
 
   .button-mock-image-input {
@@ -34,14 +36,8 @@ export const StyledHeaderProfilePictureContainer = styled.div`
   }
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
-    margin-right: 20px;
+    margin-right: 0px;
   }
-`;
-
-export const StyledHeaderProfilePictureContainerMobile = styled(
-  StyledHeaderProfilePictureContainer
-)`
-  margin-right: 10px;
 `;
 
 export const StyledHeaderProfilePicture = styled.div<{ size: number }>`
@@ -62,8 +58,10 @@ export const StyledHeaderProfilePicture = styled.div<{ size: number }>`
 export const StyledHeaderProfileContent = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   margin-top: 30px;
+  gap: 15px;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     margin-top: 10px;
@@ -73,7 +71,7 @@ export const StyledHeaderProfileContent = styled.div`
 export const StyledHeaderProfilePublicInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 15px;
 `;
 
 export const StyledHeaderProfileInfoContainer = styled.div`
@@ -91,35 +89,20 @@ export const StyledHeaderProfileNameContainer = styled.div`
   flex: 1;
 `;
 
+export const StyledHeaderProfileSubinfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 export const StyledHeaderNameAndRole = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
-
-  h1,
-  h2 {
-    margin-right: 16px;
-  }
 `;
 
 export const StyledHeaderAvailibilityAndUserActions = styled.div`
   display: flex;
   gap: 10px;
-`;
-
-export const StyledHeaderNameAndRoleMobile = styled(StyledHeaderNameAndRole)`
-  margin-bottom: 10px;
-`;
-
-export const StyledHeaderProfileDescription = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-`;
-
-export const StyledHeaderProfileCVButton = styled.div`
-  margin-top: 12px;
 `;

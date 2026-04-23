@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import { SliceRootState } from 'src/store/utils';
 
-export interface State {
+interface State {
   notifications: {
     id: string;
     type: 'danger' | 'success';

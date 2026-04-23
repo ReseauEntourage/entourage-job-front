@@ -63,11 +63,6 @@ export const StyledBadgesContainer = styled.div`
   gap: 8px;
 `;
 
-export const StyledAlertDescription = styled.p`
-  margin: 0 0 16px;
-  font-size: 14px;
-`;
-
 export const StyledCandidatesInfo = styled.div`
   display: flex;
   align-items: center;

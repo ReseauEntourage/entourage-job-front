@@ -22,7 +22,11 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
   const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
   const link = `${hostname}${router.asPath}`;
   const sharedDescription = publicCV
-    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicCV.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
+    ? `${
+        publicCV.userProfile.description
+          ? publicCV.userProfile.description + ' '
+          : ''
+      }Aidez ${publicCV.firstName} à retrouver un emploi en partageant son CV !`
     : '';
   const title = publicCV
     ? `Entourage Pro\xa0: Aidez ${publicCV.firstName} à retrouver un emploi`

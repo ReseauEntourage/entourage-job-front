@@ -11,12 +11,13 @@ import { assertIsDefined } from 'src/utils/asserts';
 import {
   selectCurrentUser,
   selectCurrentUserId,
+  selectCurrentUserProfileComplete,
 } from './current-user.selectors';
 import { slice } from './current-user.slice';
 
 const {
   fetchUserRequested,
-  setUser,
+  resetCurrentUser,
   fetchUserSucceeded,
   fetchUserFailed,
   fetchCurrentUserSocialSituationRequested,
@@ -25,8 +26,6 @@ const {
   updateUserRequested,
   updateUserCompanyRequested,
   fetchCompleteUserRequested,
-  fetchCompleteUserSucceeded,
-  fetchCompleteUserFailed,
   updateUserSucceeded,
   updateUserFailed,
   updateUserCompanySucceeded,
@@ -61,20 +60,68 @@ const {
   updateSocialSituationRequested,
   updateSocialSituationSucceeded,
   updateSocialSituationFailed,
+  fetchUserStatsRequested,
+  fetchUserStatsSucceeded,
+  fetchUserStatsFailed,
+  fetchCurrentProfileRequested,
+  fetchCurrentProfileSucceeded,
+  fetchCurrentProfileFailed,
+  fetchCurrentProfileCompleteRequested,
+  fetchCurrentProfileCompleteSucceeded,
+  fetchCurrentProfileCompleteFailed,
+  fetchCurrentCompanyRequested,
+  fetchCurrentCompanySucceeded,
+  fetchCurrentCompanyFailed,
+  fetchCurrentOrganizationRequested,
+  fetchCurrentOrganizationSucceeded,
+  fetchCurrentOrganizationFailed,
+  fetchCurrentAchievementsRequested,
+  fetchCurrentAchievementsSucceeded,
+  fetchCurrentAchievementsFailed,
+  fetchCurrentReadDocumentsRequested,
+  fetchCurrentReadDocumentsSucceeded,
+  fetchCurrentReadDocumentsFailed,
+  fetchCurrentReferredUsersRequested,
+  fetchCurrentReferredUsersSucceeded,
+  fetchCurrentReferredUsersFailed,
+  fetchCurrentReferrerRequested,
+  fetchCurrentReferrerSucceeded,
+  fetchCurrentReferrerFailed,
 } = slice.actions;
 
 function* fetchUserRequestedSaga() {
   try {
     const accessToken = yield* select(selectAccessToken);
 
-    assertIsDefined(accessToken, 'Access token is not set');
+    if (!accessToken) {
+      yield* put(fetchUserFailed());
+      return;
+    }
 
-    const response = yield* call(() => Api.getAuthCurrent(false));
+    const response = yield* call(() => Api.getCurrentIdentity());
 
     yield* put(fetchUserSucceeded(response.data));
   } catch (e) {
     console.error(e);
     yield* put(fetchUserFailed());
+  }
+}
+
+function* fetchUserStatsRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+
+    if (!accessToken) {
+      yield* put(fetchUserStatsFailed());
+      return;
+    }
+
+    const response = yield* call(() => Api.getCurrentStats());
+
+    yield* put(fetchUserStatsSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchUserStatsFailed());
   }
 }
 
@@ -103,8 +150,11 @@ function* fetchStaffContactRequestedSaga() {
   try {
     const accessToken = yield* select(selectAccessToken);
 
-    assertIsDefined(accessToken, 'Access token is not set');
-    const response = yield* call(() => Api.getStaffContactInfo());
+    if (!accessToken) {
+      yield* put(fetchStaffContactFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentStaffContact());
 
     yield* put(fetchStaffContactSucceeded(response.data));
   } catch (e) {
@@ -114,18 +164,7 @@ function* fetchStaffContactRequestedSaga() {
 }
 
 function* fetchCompleteUserRequestedSaga() {
-  try {
-    const accessToken = yield* select(selectAccessToken);
-
-    assertIsDefined(accessToken, 'Access token is not set');
-
-    const response = yield* call(() => Api.getAuthCurrent(true));
-
-    yield* put(fetchCompleteUserSucceeded(response.data));
-  } catch (e) {
-    console.error(e);
-    yield* put(fetchCompleteUserFailed());
-  }
+  yield* put(fetchCurrentProfileCompleteRequested());
 }
 
 function* updateUserRequestedSaga(
@@ -228,6 +267,11 @@ function* updateProfileRequestedSaga(
         userProfile: data,
       })
     );
+
+    const profileComplete = yield* select(selectCurrentUserProfileComplete);
+    if (profileComplete) {
+      yield* put(fetchCurrentProfileCompleteRequested());
+    }
   } catch {
     yield* put(
       updateProfileFailed({
@@ -345,14 +389,132 @@ function* getExternalCvRequestedSaga() {
   }
 }
 
-function* loginSucceededSaga(
-  action: ReturnType<typeof authenticationActions.loginSucceeded>
-) {
-  yield* put(setUser(action.payload.user));
+function* fetchCurrentProfileRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentProfileFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentProfile());
+    yield* put(fetchCurrentProfileSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentProfileFailed());
+  }
+}
+
+function* fetchCurrentProfileCompleteRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentProfileCompleteFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentProfileComplete());
+    yield* put(fetchCurrentProfileCompleteSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentProfileCompleteFailed());
+  }
+}
+
+function* fetchCurrentCompanyRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentCompanyFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentCompany());
+    yield* put(fetchCurrentCompanySucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentCompanyFailed());
+  }
+}
+
+function* fetchCurrentOrganizationRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentOrganizationFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentOrganization());
+    yield* put(fetchCurrentOrganizationSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentOrganizationFailed());
+  }
+}
+
+function* fetchCurrentAchievementsRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentAchievementsFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentAchievements());
+    yield* put(fetchCurrentAchievementsSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentAchievementsFailed());
+  }
+}
+
+function* fetchCurrentReadDocumentsRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentReadDocumentsFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentReadDocuments());
+    yield* put(fetchCurrentReadDocumentsSucceeded(response.data.readDocuments));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentReadDocumentsFailed());
+  }
+}
+
+function* fetchCurrentReferredUsersRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentReferredUsersFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentReferredUsers());
+    yield* put(fetchCurrentReferredUsersSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentReferredUsersFailed());
+  }
+}
+
+function* fetchCurrentReferrerRequestedSaga() {
+  try {
+    const accessToken = yield* select(selectAccessToken);
+    if (!accessToken) {
+      yield* put(fetchCurrentReferrerFailed());
+      return;
+    }
+    const response = yield* call(() => Api.getCurrentReferrer());
+    yield* put(fetchCurrentReferrerSucceeded(response.data));
+  } catch (e) {
+    console.error(e);
+    yield* put(fetchCurrentReferrerFailed());
+  }
+}
+
+function* loginSucceededSaga() {
+  yield* put(fetchUserRequested());
 }
 
 function* logoutSucceededSaga() {
-  yield* put(setUser(null));
+  yield* put(resetCurrentUser());
 }
 
 export function* saga() {
@@ -360,6 +522,7 @@ export function* saga() {
   yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
   yield* takeLatest(fetchUserSucceeded, fetchUserSucceededSaga);
+  yield* takeLatest(fetchUserStatsRequested, fetchUserStatsRequestedSaga);
   yield* takeLatest(
     fetchCurrentUserSocialSituationRequested,
     fetchCurrentUserSocialSituationRequestedSaga
@@ -389,4 +552,36 @@ export function* saga() {
   yield* takeLatest(uploadExternalCvRequested, uploadExternalCvRequestedSaga);
   yield* takeLatest(getExternalCvRequested, getExternalCvRequestedSaga);
   yield* takeLatest(updateUserCompanyRequested, updateUserCompanyRequestedSaga);
+  yield* takeLatest(
+    fetchCurrentProfileRequested,
+    fetchCurrentProfileRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentProfileCompleteRequested,
+    fetchCurrentProfileCompleteRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentCompanyRequested,
+    fetchCurrentCompanyRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentOrganizationRequested,
+    fetchCurrentOrganizationRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentAchievementsRequested,
+    fetchCurrentAchievementsRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentReadDocumentsRequested,
+    fetchCurrentReadDocumentsRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentReferredUsersRequested,
+    fetchCurrentReferredUsersRequestedSaga
+  );
+  yield* takeLatest(
+    fetchCurrentReferrerRequested,
+    fetchCurrentReferrerRequestedSaga
+  );
 }

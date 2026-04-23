@@ -36,3 +36,17 @@ export const MessagingSuggestionsListContainer = styled.div`
   gap: 20px;
   flex-wrap: wrap;
 `;
+
+export const MessagingQuickRepliesContainer = styled.div`
+  display: flex;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  width: 100%;
+`;
+
+export const MessagingQuickRepliesListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+`;

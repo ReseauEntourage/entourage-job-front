@@ -20,7 +20,19 @@ export const ContainerStyled = styled.div<{ isActive: boolean }>`
 `;
 
 export const ContainerAvatarStyled = styled.div`
+  position: relative;
   align-items: flex-start;
+`;
+
+export const StyledUnreadDot = styled.span`
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: ${COLORS.darkBlue};
+  border: 2px solid ${COLORS.white};
 `;
 
 export const RightColumn = styled.div<{ highlight: boolean }>`

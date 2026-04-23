@@ -20,7 +20,7 @@ const {
   setReferingStep,
 } = slice.actions;
 
-export function* referCandidateSagaRequested() {
+const referCandidateSagaRequested = function* () {
   const data = yield* select(selectReferingData);
 
   const {
@@ -65,24 +65,24 @@ export function* referCandidateSagaRequested() {
       yield* put(referCandidateFailed(null));
     }
   }
-}
+};
 
-export function* setReferingCurrentStepDataSaga() {
+const setReferingCurrentStepDataSaga = function* () {
   const isLastReferingStep = yield* select(selectIsLastReferingStep);
   if (isLastReferingStep) {
     yield* put(setReferingIsLoading(true));
     yield* put(referCandidateRequested());
   }
-}
+};
 
-export function* setReferingStepSaga() {
+const setReferingStepSaga = function* () {
   // Necessary to force render of form on step change
   yield* call(() => asyncTimeout(500));
   yield* put(setReferingIsLoading(false));
-}
+};
 
-export function* saga() {
+export const saga = function* () {
   yield* takeLatest(referCandidateRequested, referCandidateSagaRequested);
   yield* takeLatest(setReferingCurrentStepData, setReferingCurrentStepDataSaga);
   yield* takeLatest(setReferingStep, setReferingStepSaga);
-}
+};

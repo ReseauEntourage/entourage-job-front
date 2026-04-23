@@ -9,7 +9,7 @@ import {
 } from './CompanyDescription.styles';
 import { ModalEditCompanyDescription } from './ModalEditCompanyDescription/ModalEditCompanyDescription';
 
-export interface ProfileDescriptionProps {
+interface ProfileDescriptionProps {
   description: string | null;
   isEditable?: boolean;
   smallCard?: boolean;

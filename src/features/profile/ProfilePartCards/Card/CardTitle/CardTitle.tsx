@@ -3,7 +3,7 @@ import { Text } from '@/src/components/ui';
 import { IconName, LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { StyledCardTitle, StyledIconContainer } from './CardTitle.styles';
 
-export interface CardTitleProps {
+interface CardTitleProps {
   title: ReactNode;
   isCompleted?: boolean;
   isEditable?: boolean;

@@ -16,6 +16,8 @@ import {
   getOnboardingFlow,
 } from '@/src/use-cases/onboardingOld/onboarding.utils';
 import { UserRoles } from 'src/constants/users';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserReadDocuments } from 'src/hooks/current-user/useCurrentUserReadDocuments';
 import { selectAuthenticatedUser } from 'src/use-cases/current-user';
 import { OnboardingFormData } from './Onboarding.types';
 
@@ -30,6 +32,8 @@ export const useOnboarding = () => {
   const valuesFromOtherStep = useSelector(selectOnboardingDataFromOtherStep);
   const authenticatedUser = useSelector(selectAuthenticatedUser);
   const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
+  const company = useCurrentUserCompany();
+  const readDocuments = useCurrentUserReadDocuments();
 
   // Désactiver les boutons si on génère le profil ou si l'onboarding est en chargement
   const disableNavigationButtons = useMemo(
@@ -38,22 +42,25 @@ export const useOnboarding = () => {
   );
 
   const isFirstOnboardingStep = useMemo(() => {
-    // Determine onboarding flow based on user role
-    const flow = getOnboardingFlow(authenticatedUser);
+    const flow = getOnboardingFlow(company);
 
     if (!flow) {
       return false;
     }
-    const firstStep = findNextNotSkippableStep(0, authenticatedUser, flow);
+    const context = { readDocuments: readDocuments ?? [], company };
+    const firstStep = findNextNotSkippableStep(
+      0,
+      authenticatedUser,
+      flow,
+      context
+    );
     return currentStep === firstStep;
-  }, [authenticatedUser, currentStep]);
+  }, [authenticatedUser, company, currentStep, readDocuments]);
 
   useEffect(() => {
     const hasAcceptedEthicsCharter =
       authenticatedUser &&
-      authenticatedUser.readDocuments?.some(
-        (doc) => doc.documentName === 'CharteEthique'
-      );
+      readDocuments?.some((doc) => doc.documentName === 'CharteEthique');
     const userRoleHasOnboarding = authenticatedUser?.role === UserRoles.COACH;
 
     // Ne relance pas l'onboarding s'il est déjà en cours
@@ -62,7 +69,7 @@ export const useOnboarding = () => {
       userRoleHasOnboarding &&
       currentStep === 0
     ) {
-      const flow = getOnboardingFlow(authenticatedUser);
+      const flow = getOnboardingFlow(company);
 
       if (!flow) {
         return;
@@ -73,10 +80,11 @@ export const useOnboarding = () => {
     }
   }, [
     authenticatedUser,
-    authenticatedUser?.readDocuments,
+    readDocuments,
     authenticatedUser.role,
     dispatch,
     currentStep,
+    company,
   ]);
 
   const onSubmitStepForm = useCallback(
@@ -104,20 +112,22 @@ export const useOnboarding = () => {
   );
 
   const onBeforeStep = useCallback(() => {
-    const flow = getOnboardingFlow(authenticatedUser);
+    const flow = getOnboardingFlow(company);
 
     if (!flow) {
       return;
     }
+    const context = { readDocuments: readDocuments ?? [], company };
     const previousStep = findPreviousNotSkippableStep(
       currentStep,
       authenticatedUser,
-      flow
+      flow,
+      context
     );
     if (previousStep !== currentStep) {
       dispatch(onboardingActions.setOnboardingStep(previousStep));
     }
-  }, [authenticatedUser, currentStep, dispatch]);
+  }, [authenticatedUser, company, currentStep, dispatch, readDocuments]);
 
   const defaultValues = {
     ...valuesFromOtherStep,

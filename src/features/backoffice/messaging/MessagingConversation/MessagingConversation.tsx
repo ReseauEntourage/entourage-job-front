@@ -31,6 +31,7 @@ import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFi
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
+import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,34 @@ export const MessagingConversation = () => {
   const displaySuggestions = useMemo(() => {
     return selectedConversationId === 'new' && currentUser;
   }, [currentUser, selectedConversationId]);
+
+  const displayCoachQuickReplies = useMemo(() => {
+    if (!currentUser || currentUser.role !== UserRoles.COACH) {
+      return false;
+    }
+    if (!selectedConversation || selectedConversationId === 'new') {
+      return false;
+    }
+    if (selectedConversation.id !== selectedConversationId) {
+      return false;
+    }
+    if (currentUserHasSentMessages) {
+      return false;
+    }
+    const otherParticipants = selectedConversation.participants.filter(
+      (p) => p.id !== currentUserId
+    );
+    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
+      return false;
+    }
+    return selectedConversation.messages.length > 0;
+  }, [
+    currentUser,
+    currentUserId,
+    selectedConversation,
+    selectedConversationId,
+    currentUserHasSentMessages,
+  ]);
 
   const displayFirstContactBanner = useMemo(() => {
     if (!currentUser) {
@@ -115,7 +144,7 @@ export const MessagingConversation = () => {
     }, 1000);
   };
 
-  const onSuggestionClick = (suggestion) => {
+  const onSuggestionClick = (suggestion: MessagingSuggestionItem) => {
     dispatch(messagingActions.setNewMessage(suggestion.message));
   };
 
@@ -229,6 +258,20 @@ export const MessagingConversation = () => {
               <div ref={messagesEndRef} />
             </MessagingMessagesContainer>
           )}
+
+          {displayCoachQuickReplies && (
+            <MessagingSuggestions
+              onSuggestionClick={onSuggestionClick}
+              newMessage={newMessage}
+              participants={
+                selectedConversation?.participants.filter(
+                  (p) => p.id !== currentUserId
+                ) || []
+              }
+              variant="coach-quick-replies"
+            />
+          )}
+
           <MessagingEditor readonly={conversationParticipantsAreDeleted} />
         </>
       )}

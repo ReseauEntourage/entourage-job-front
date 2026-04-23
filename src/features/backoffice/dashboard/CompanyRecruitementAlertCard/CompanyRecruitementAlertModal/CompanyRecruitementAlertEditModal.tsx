@@ -5,7 +5,7 @@ import {
   DEPARTMENTS_FILTERS,
 } from '@/src/constants/departements';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
 import { FormWithValidation } from 'src/features/forms/FormWithValidation';
 import {
@@ -26,7 +26,7 @@ export const CompanyRecruitementAlertEditModal = ({
   isOpen,
   onClose,
 }: CompanyRecruitementAlertEditModalProps) => {
-  const user = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
 
   const initialValues = useMemo(
     () => ({
@@ -56,12 +56,12 @@ export const CompanyRecruitementAlertEditModal = ({
   const handleSubmit = useCallback(
     async (values: RecruitementAlertForm) => {
       try {
-        if (!user?.company) {
+        if (!company) {
           throw new Error('User has no associated companies');
         }
 
         const recruitementAlertDto: RecruitementAlertDto = {
-          companyId: user.company.id,
+          companyId: company.id,
           name: values.name,
           jobName: values.jobName,
           department: (values.department?.value as DepartmentName) || null,
@@ -81,7 +81,7 @@ export const CompanyRecruitementAlertEditModal = ({
         console.error('Error in handleSubmit:', error);
       }
     },
-    [user, onSubmit, onClose]
+    [company, onSubmit, onClose]
   );
 
   if (!isOpen) {

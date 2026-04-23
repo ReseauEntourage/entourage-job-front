@@ -6,7 +6,6 @@ export const StyledDashbardProfileCardSectionContainer = styled.div`
   flex-direction: column;
   gap: 30px;
   margin-bottom: 20px;
-  padding: 0 20px;
 `;
 
 export const StyledDashboardProfileCardPictureName = styled.div`
@@ -14,7 +13,8 @@ export const StyledDashboardProfileCardPictureName = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  margin: 20px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
   h5 {
     margin-bottom: 0;
   }
@@ -23,8 +23,18 @@ export const StyledDashboardProfileCardPictureName = styled.div`
   }
 `;
 
-export const StyledDashboardProfileCardCompletionContainer = styled.div`
-  margin: 0 20px;
+export const StyledDashboardProfileCardMainInfos = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+`;
+
+export const StyledTagList = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
 `;
 
 export const StyledDashboardProfileCardSection = styled.div`
@@ -49,18 +59,6 @@ export const StyledDashboardProfileCardIntroduction = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   white-space: normal;
-`;
-
-export const StyledDashboardProfileCardNudges = styled.div`
-  margin: 20px 20px 30px 20px;
-`;
-
-export const StyledDashboardProfileCardNudgesTitle = styled.div`
-  width: 100%;
-  padding-bottom: 15px;
-  border-bottom: 1px solid ${COLORS.hoverBlue};
-  margin-bottom: 20px;
-  font-size: 16px;
 `;
 
 export const StyledDashboardProfileCardHelpList = styled.div`

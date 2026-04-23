@@ -1,19 +1,19 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Card } from '@/src/components/ui/Cards/Card/Card';
 import { CompanyGoal } from '@/src/constants/company';
 import { UserRoles } from 'src/constants/users';
-import { selectCurrentUser } from 'src/use-cases/current-user';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
 import { stepsByContext } from './DashboardNextSteps.config';
 import { StyledStepsContainer } from './DashboardNextSteps.styles';
 import { Context } from './DashboardNextSteps.types';
 import { Step } from './Step/Step';
 
 export const DashboardNextSteps = () => {
-  const currentUser = useSelector(selectCurrentUser);
-  const currentUserIsCompanyAdmin =
-    currentUser?.company?.companyUser?.isAdmin || false;
+  const currentUser = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
+  const currentUserIsCompanyAdmin = company?.companyUser?.isAdmin || false;
 
   const context = useMemo(() => {
     if (!currentUser) {
@@ -22,7 +22,7 @@ export const DashboardNextSteps = () => {
     if (
       currentUser.role === UserRoles.COACH &&
       currentUserIsCompanyAdmin &&
-      currentUser.company?.goal === CompanyGoal.RECRUIT
+      company?.goal === CompanyGoal.RECRUIT
     ) {
       return Context.COMPANY_ADMIN_RECRUITMENT_MODE;
     }
@@ -36,18 +36,16 @@ export const DashboardNextSteps = () => {
       return Context.COACH;
     }
     return null;
-  }, [currentUser, currentUserIsCompanyAdmin]);
+  }, [currentUser, currentUserIsCompanyAdmin, company?.goal]);
 
   if (!currentUser || !currentUser.role) {
     return null;
   }
 
-  // Return null if context is not defined
   if (!context) {
     return null;
   }
 
-  // Get steps based on the current context
   const steps = stepsByContext[context] || [];
 
   return (

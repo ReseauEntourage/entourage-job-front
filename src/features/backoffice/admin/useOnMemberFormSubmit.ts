@@ -3,7 +3,6 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Api } from 'src/api';
 import { UserDto } from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
 import { Action, ActionsLabels } from 'src/constants/utils';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
 import {
@@ -80,9 +79,6 @@ export function useOnMemberFormSubmit(
           phone: fields.phone,
           role: fields.role,
           email: fields.email,
-          ...(fields.role === UserRoles.ADMIN
-            ? { adminRole: fields.adminRole }
-            : {}),
           ...(organizationId ? { OrganizationId: organizationId } : {}),
         };
 

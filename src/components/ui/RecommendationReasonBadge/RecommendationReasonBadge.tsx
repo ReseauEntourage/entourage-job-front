@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
 import { Color } from '@/src/constants/styles';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Badge, BadgeVariant } from '../Badge';
 import { IconName, LucidIcon } from '../Icons';
 import { MatchingReason } from 'src/api/types';
@@ -29,24 +30,24 @@ const REASON_CONFIG: Record<MatchingReason, ReasonConfigByRole | ReasonConfig> =
     needs: {
       [UserRoles.CANDIDATE]: {
         icon: 'Target',
-        label: 'Correspond à vos propositions',
-        subtext: 'Ses besoins matchent vos propositions',
+        label: 'Correspond à vos besoins',
+        subtext: 'Ses propositions matchent vos besoins',
         variant: BadgeVariant.ExtraLightTeal,
         accentColor: 'teal',
         textColor: 'teal',
       },
       [UserRoles.COACH]: {
         icon: 'Target',
-        label: 'Correspond à vos besoins',
-        subtext: 'Ses propositions matchent vos besoins',
+        label: 'Correspond à vos propositions',
+        subtext: 'Ses besoins matchent vos propositions',
         variant: BadgeVariant.ExtraLightTeal,
         accentColor: 'teal',
         textColor: 'teal',
       },
       default: {
         icon: 'Target',
-        label: 'Correspond à vos besoins',
-        subtext: 'Ses propositions matchent vos besoins',
+        label: 'Correspond à vos propositions',
+        subtext: 'Ses besoins matchent vos propositions',
         variant: BadgeVariant.ExtraLightTeal,
         accentColor: 'teal',
         textColor: 'teal',
@@ -81,7 +82,7 @@ const REASON_CONFIG: Record<MatchingReason, ReasonConfigByRole | ReasonConfig> =
     activity: {
       icon: 'Zap',
       label: 'Très réactif(ve)',
-      subtext: 'Répond généralement en moins de 24h',
+      subtext: 'Répond généralement rapidement',
       variant: BadgeVariant.ExtraLightGreen,
       accentColor: 'green',
       textColor: 'mediumGreen',
@@ -116,14 +117,13 @@ function getConfig(
 
 interface RecommendationReasonBadgeProps {
   reason: MatchingReason;
-  role?: UserRoles;
 }
 
 export function RecommendationReasonBadge({
   reason,
-  role,
 }: RecommendationReasonBadgeProps) {
-  const config = getConfig(reason, role);
+  const currentUser = useAuthenticatedUser();
+  const config = getConfig(reason, currentUser.role);
   if (!config) {
     return null;
   }

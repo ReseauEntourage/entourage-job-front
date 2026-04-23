@@ -5,7 +5,7 @@ import { openModal } from '@/src/features/modals/Modal';
 import { ModalConfirm } from '@/src/features/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
 import { Api } from 'src/api';
-import { User, UserDto } from 'src/api/types';
+import { MemberUser, UserDto } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { Actions } from 'src/constants/utils';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
@@ -13,8 +13,8 @@ import { formAddUser } from 'src/features/forms/schemas/formAddUser';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 interface EditMemberModalProps {
-  user: User;
-  setUser: (user: User) => void;
+  user: MemberUser;
+  setUser: (user: MemberUser) => void;
 }
 export function EditMemberModal({ user, setUser }: EditMemberModalProps) {
   const organization = useMemo(() => {
@@ -78,10 +78,8 @@ export function EditMemberModal({ user, setUser }: EditMemberModalProps) {
         lastName: user.lastName,
         email: user.email,
         role: user.role,
-        adminRole: user.adminRole,
         gender: user.gender,
         phone: user.phone,
-        address: user.address,
         zone: user.zone,
         organizationId: organization,
       },

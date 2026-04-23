@@ -1,8 +1,9 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
-import { PROFILES_LIMIT } from 'src/constants';
+import { DASHBOARD_RECOMMENDATIONS_LIMIT, PROFILES_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
 import {
+  fetchProfilesSelectors,
   selectProfilesHasFetchedAll,
   selectProfilesOffset,
 } from './profiles.selectors';
@@ -18,17 +19,23 @@ const {
   fetchProfilesNextPage,
   resetProfilesOffset,
   fetchProfilesWithFilters,
-  fetchProfilesRecommendationsRequested,
-  fetchProfilesRecommendationsSucceeded,
-  fetchProfilesRecommendationsFailed,
+  fetchDashboardProfilesRecommendationsRequested,
+  fetchDashboardProfilesRecommendationsSucceeded,
+  fetchDashboardProfilesRecommendationsFailed,
 } = slice.actions;
 
 function* fetchProfilesNextPageSaga(
   action: ReturnType<typeof fetchProfilesNextPage>
 ) {
   const hasFetchedAll = yield* select(selectProfilesHasFetchedAll);
+  const isFetchRequested = yield* select(
+    fetchProfilesSelectors.selectIsFetchProfilesRequested
+  );
 
-  if (!hasFetchedAll) {
+  // Do not dispatch fetchProfilesRequested if a fetch is already in progress.
+  // This complements the reducer-level guard and prevents cancelling an in-flight
+  // filter-change request via takeLatest(fetchProfilesRequested).
+  if (!hasFetchedAll && !isFetchRequested) {
     yield* put(fetchProfilesRequested(action.payload));
   }
 }
@@ -54,6 +61,9 @@ function* fetchProfilesRequestedSaga(
       nudgeIds,
       businessSectorIds,
       contactTypes,
+      isAvailable,
+      sort,
+      hasSuperCoachBadge,
     } = action.payload;
 
     const response = yield* call(() =>
@@ -66,6 +76,9 @@ function* fetchProfilesRequestedSaga(
         search,
         offset,
         limit,
+        isAvailable,
+        sort,
+        hasSuperCoachBadge,
       })
     );
     yield* put(fetchProfilesSucceeded(response.data));
@@ -74,12 +87,16 @@ function* fetchProfilesRequestedSaga(
   }
 }
 
-function* fetchProfilesRecommendationsRequestedSaga() {
+function* fetchDashboardProfilesRecommendationsRequestedSaga() {
   try {
-    const response = yield* call(() => Api.getProfilesRecommendations());
-    yield* put(fetchProfilesRecommendationsSucceeded(response.data));
+    const response = yield* call(() =>
+      Api.getProfilesRecommendations({
+        limit: DASHBOARD_RECOMMENDATIONS_LIMIT,
+      })
+    );
+    yield* put(fetchDashboardProfilesRecommendationsSucceeded(response.data));
   } catch {
-    yield* put(fetchProfilesRecommendationsFailed());
+    yield* put(fetchDashboardProfilesRecommendationsFailed());
   }
 }
 
@@ -102,8 +119,8 @@ export function* saga() {
   yield* takeLeading(fetchProfilesNextPage, fetchProfilesNextPageSaga);
   yield* takeLatest(fetchProfilesRequested, fetchProfilesRequestedSaga);
   yield* takeLatest(
-    fetchProfilesRecommendationsRequested,
-    fetchProfilesRecommendationsRequestedSaga
+    fetchDashboardProfilesRecommendationsRequested,
+    fetchDashboardProfilesRecommendationsRequestedSaga
   );
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
 }

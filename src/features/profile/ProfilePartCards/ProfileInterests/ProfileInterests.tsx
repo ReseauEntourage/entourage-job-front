@@ -9,7 +9,7 @@ import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { ProfileInterestsModalEdit } from './ProfileInterestsModalEdit';
 
-export interface ProfileInterestsProps {
+interface ProfileInterestsProps {
   interests?: Interest[];
   isEditable?: boolean;
   smallCard?: boolean;

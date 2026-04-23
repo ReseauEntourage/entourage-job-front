@@ -3,7 +3,13 @@ import React from 'react';
 import { Text, TextSize, TextWeight } from '@/src/components/ui';
 import { Tag } from '@/src/components/ui/Tag';
 import { UserRoles } from '@/src/constants/users';
-import { Company, UserProfileSectorOccupation } from 'src/api/types';
+import { UserProfileSectorOccupation } from 'src/api/types';
+
+type CompanyBasic = {
+  id: string;
+  name: string;
+  admin?: { firstName: string; lastName: string } | null;
+};
 import {
   StyledCareerPathSectorOccupationTagContainer,
   StyledCareerPathSimpleSentenceTag,
@@ -12,7 +18,7 @@ import {
 
 interface ProfileCareerPathSentenceProps {
   sectorOccupations: UserProfileSectorOccupation[];
-  company?: Company | null;
+  company?: CompanyBasic | null;
   asSimpleSentence?: boolean;
   size?: TextSize;
   weight?: TextWeight;

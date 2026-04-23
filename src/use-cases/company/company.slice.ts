@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CompaniesFilters, CompanyWithUsers } from '@/src/api/types';
-import { COMPANIES_LIMIT } from '@/src/constants';
+import { COMPANIES_LIMIT, ReduxRequestEvents } from '@/src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchCompaniesAdapter,
@@ -11,7 +11,7 @@ import {
   updateCompanyLogoAdapter,
 } from './company.adapters';
 
-export interface State {
+interface State {
   fetchCompanies: RequestState<typeof fetchCompaniesAdapter>;
   fetchSelectedCompany: RequestState<typeof fetchSelectedCompanyAdapter>;
   fetchSelectedCompanyWithCollaborators: RequestState<
@@ -111,9 +111,15 @@ export const slice = createSlice({
       _action: PayloadAction<CompaniesFilters>
     ) {},
     fetchCompaniesNextPage(state, _action: PayloadAction<CompaniesFilters>) {
-      state.companiesOffset = state.companiesHasFetchedAll
-        ? state.companiesOffset
-        : state.companiesOffset + COMPANIES_LIMIT;
+      // Do not increment offset if all companies are fetched or a fetch is already in progress.
+      // Guards against the stale-closure race where a filter reset triggers fetchCompaniesRequested
+      // (status → REQUESTED) before React re-renders the useIsAtBottom callback closure.
+      if (
+        !state.companiesHasFetchedAll &&
+        state.fetchCompanies.status === ReduxRequestEvents.SUCCEEDED
+      ) {
+        state.companiesOffset += COMPANIES_LIMIT;
+      }
     },
   },
 });

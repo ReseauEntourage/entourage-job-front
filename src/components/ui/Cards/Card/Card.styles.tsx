@@ -39,7 +39,7 @@ export const StyledCardTopContainer = styled.div<{
 `;
 
 export const StyledCardContent = styled.div`
-  padding: 30px 22.5px 20px 22.5px;
+  padding: 30px 22.5px 30px 22.5px;
   width: 100%;
 `;
 

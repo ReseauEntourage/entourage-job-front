@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
-const CARD_PROGRESS_EXCEEDING_Y = 20;
+const CARD_PROGRESS_EXCEEDING_Y = 30;
 const CARD_PADDING = 20;
 
 export const StyledElearningProgressTracker = styled.div`
@@ -9,14 +9,12 @@ export const StyledElearningProgressTracker = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  padding: ${CARD_PADDING}px 0px;
   margin-bottom: 25px;
 `;
 
 export const StyledElearningProgressTrackerContent = styled.div`
   display: flex;
   gap: 24px;
-  padding: 20px;
   justify-content: space-between;
   align-items: stretch;
 `;

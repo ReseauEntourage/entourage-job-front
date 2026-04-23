@@ -12,6 +12,7 @@ export const StyledImgProfileContainer = styled.div<{
   justify-content: center;
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
+  flex-shrink: 0;
 
   ${({ highlight }) => highlight && `border: 2px solid ${COLORS.primaryBlue};`}
   background-color: ${({ bgColor }) => bgColor};

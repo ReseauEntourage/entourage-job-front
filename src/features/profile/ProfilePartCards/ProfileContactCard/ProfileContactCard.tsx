@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
-import { Button, Text } from '@/src/components/ui';
+import { Button } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -12,9 +12,8 @@ import {
   StyledProfileContactForm,
 } from './ProfileContactCard.styles';
 
-export interface ProfileContactCardProps {
+interface ProfileContactCardProps {
   userId: string;
-  averageDelayResponse?: number | null;
   isAvailable: boolean;
   role: UserRoles;
   firstName: string;
@@ -22,7 +21,6 @@ export interface ProfileContactCardProps {
 
 export const ProfileContactCard = ({
   userId,
-  averageDelayResponse,
   isAvailable,
   role,
   firstName,
@@ -48,24 +46,18 @@ export const ProfileContactCard = ({
     >
       {isAvailable ? (
         <>
-          {averageDelayResponse && (
-            <Text color="darkGray">
-              Temps de réponse moyen : {averageDelayResponse} jour
-              {averageDelayResponse > 1 && 's'}
-            </Text>
-          )}
           <StyledProfileContactForm>
             <StyledConversationInviteToContact>
               <SvgIcon name="IlluConversation" width={75} height={75} />
               {isCoach ? (
                 <p>
-                  Vous souhaitez prendre contact avec {firstName} pour qu’il
-                  vous aide dans votre recherche d’emploi
+                  Vous souhaitez prendre contact avec {firstName} pour
+                  qu'il/elle vous aide dans votre recherche d'emploi
                 </p>
               ) : (
                 <p>
-                  Vous souhaitez prendre contact avec {firstName} pour
-                  l&apos;aider dans sa recherche d&apos;emploi
+                  Vous souhaitez prendre contact avec {firstName} pour l'aider
+                  dans sa recherche d'emploi
                 </p>
               )}
             </StyledConversationInviteToContact>

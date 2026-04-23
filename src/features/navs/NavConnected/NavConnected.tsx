@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { renderLinks } from '@/src/features/navs/NavConnected/NavConnectedContent/NavConnectedContent.utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
 import { useNotifBadges } from 'src/hooks/useNotifBadges';
 import { usePrevious } from 'src/hooks/utils';
 import { authenticationActions } from 'src/use-cases/authentication';
@@ -14,6 +15,7 @@ import { NavConnectedContent } from './NavConnectedContent';
 
 export const NavConnected = () => {
   const user = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
   const selectedConversation = useSelector(selectSelectedConversation);
   const conversations = useSelector(selectConversations);
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ export const NavConnected = () => {
   }, [dispatch]);
 
   const [linksConnected, setLinksConnected] = useState(
-    renderLinks(user, logout)
+    renderLinks(user, logout, company)
   );
 
   const badges = useNotifBadges();
@@ -31,9 +33,9 @@ export const NavConnected = () => {
 
   useEffect(() => {
     if (user !== prevUser) {
-      setLinksConnected(renderLinks(user, logout));
+      setLinksConnected(renderLinks(user, logout, company));
     }
-  }, [user, logout, prevUser]);
+  }, [user, logout, prevUser, company]);
 
   useEffect(() => {
     dispatch(messagingActions.getUnseenConversationsCountRequested());

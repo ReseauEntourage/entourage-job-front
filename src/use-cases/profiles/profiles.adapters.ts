@@ -1,13 +1,19 @@
-import { ProfilesFilters, Profile, ProfileRecommendation } from 'src/api/types';
+import {
+  ProfilesFilters,
+  Profile,
+  ProfileRecommendationPage,
+} from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchProfilesAdapter = createRequestAdapter(
   'fetchProfiles'
 ).withPayloads<ProfilesFilters, Profile[]>();
 
-export const fetchProfilesRecommendationsAdapter = createRequestAdapter(
-  'fetchProfilesRecommendations'
-).withPayloads<void, ProfileRecommendation[]>();
+export const fetchDashboardProfilesRecommendationsAdapter =
+  createRequestAdapter('fetchDashboardProfilesRecommendations').withPayloads<
+    void,
+    ProfileRecommendationPage
+  >();
 
 export const fetchSelectedProfileAdapter = createRequestAdapter(
   'fetchSelectedProfile'

@@ -15,11 +15,11 @@ import {
 import { ElearningUnitModalQuiz } from './ElearningUnitModalQuiz';
 import { ElearningUnitModalVideo } from './ElearningUnitModalVideo';
 
-export interface ElearningUnitModalProps {
+interface ElearningUnitModalProps {
   elearningUnit: ElearningUnit;
 }
 
-export enum ElearningUnitModalMode {
+enum ElearningUnitModalMode {
   VIDEO = 'VIDEO',
   QUIZ = 'QUIZ',
 }

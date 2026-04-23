@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { ImgUserProfile } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { User } from 'src/api/types';
+import { MemberUser } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -13,7 +13,7 @@ import {
 } from './MemberDetailsHeader.styles';
 
 interface MemberDetailsHeaderProps {
-  user: User;
+  user: MemberUser;
 }
 
 export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {

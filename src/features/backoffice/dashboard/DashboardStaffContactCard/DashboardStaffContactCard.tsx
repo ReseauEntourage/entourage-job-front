@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Card, LegacyImg, SimpleLink } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Text } from '@/src/components/ui/Text';
 import { DEPARTMENTS } from '@/src/constants/departements';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
 import {
   currentUserActions,
@@ -23,7 +23,8 @@ import {
 
 export const DashboardStaffContactCard = () => {
   const dispatch = useDispatch();
-  const user = useAuthenticatedUser();
+  const store = useStore();
+  const profile = useCurrentUserProfile();
   const staffContact = useCurrentUserStaffContact();
 
   const isFetchStaffContactIdle = useSelector(
@@ -38,13 +39,19 @@ export const DashboardStaffContactCard = () => {
 
   const staffContactRegion = useMemo(() => {
     return DEPARTMENTS.find((deptObj) => {
-      return deptObj.name === user.userProfile.department;
+      return deptObj.name === profile?.department;
     })?.region;
-  }, [user.userProfile.department]);
+  }, [profile?.department]);
 
   useEffect(() => {
-    dispatch(currentUserActions.fetchStaffContactRequested());
-  }, [dispatch]);
+    if (
+      fetchStaffContactSelectors.selectIsFetchStaffContactIdle(
+        store.getState() as any
+      )
+    ) {
+      dispatch(currentUserActions.fetchStaffContactRequested());
+    }
+  }, [dispatch, store]);
 
   return (
     <Card title="Votre contact Entourage Pro" centerTitle>

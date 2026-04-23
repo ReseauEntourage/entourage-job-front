@@ -1,16 +1,18 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Card, LucidIcon } from '@/src/components/ui';
+import React, { useMemo } from 'react';
+import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
-import { DirectoryUserItem } from '@/src/features/backoffice/directory/DirectoryItem';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { PublicProfile } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
-  StyledRecommendationsHowItWorksTooltip,
   StyledRecommendationsHowItWorksWrapper,
 } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
@@ -57,16 +59,17 @@ const recommendationsLabels: {
 
 export const DashboardRecommendationsCard = () => {
   const user = useAuthenticatedUser();
+  const company = useCurrentUserCompany();
+  const currentUserProfile = useCurrentUserProfile();
   const isCompanyAdmin = useMemo(
-    () => !!(user.company && user.company.companyUser?.isAdmin),
-    [user.company]
+    () => !!(company && company.companyUser?.isAdmin),
+    [company]
   );
+  const isDesktop = useIsDesktop();
   const { recommendations, isLoading, isError } = useDashboardRecommendations();
   const query = {
-    departments: mutateToArray(user.userProfile.department),
+    departments: mutateToArray(currentUserProfile?.department),
   };
-
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   const context = useMemo<recommendationsContextsType>(() => {
     if (isCompanyAdmin) {
@@ -91,12 +94,13 @@ export const DashboardRecommendationsCard = () => {
         (recommendation as unknown as PublicProfile);
       const reason = recommendation.reason ?? null;
       return (
-        <DirectoryUserItem
+        <NetworkDirectoryUserItem
           key={profile.id}
           id={profile.id}
           firstName={profile.firstName}
           lastName={profile.lastName}
           role={profile.role}
+          gender={profile.gender}
           department={profile.department}
           sectorOccupations={profile.sectorOccupations}
           job={profile.currentJob}
@@ -104,6 +108,7 @@ export const DashboardRecommendationsCard = () => {
           hasPicture={profile.hasPicture}
           currentJob={profile.currentJob}
           recommendationReason={reason}
+          achievements={profile.achievements}
         />
       );
     });
@@ -120,22 +125,13 @@ export const DashboardRecommendationsCard = () => {
       centerTitle
     >
       <StyledDashboardCardContentContainer>
-        {hasAiRecommendations && (
+        {hasAiRecommendations && isDesktop && (
           <StyledRecommendationsHowItWorksWrapper>
-            <Button
-              variant="hoverBlue"
-              size="small"
-              rounded
-              onMouseEnter={() => setIsTooltipOpen(true)}
-              onMouseLeave={() => setIsTooltipOpen(false)}
-            >
-              <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
-            </Button>
-            {isTooltipOpen && (
-              <StyledRecommendationsHowItWorksTooltip>
-                {recommendationsLabels[context].howItWorksText}
-              </StyledRecommendationsHowItWorksTooltip>
-            )}
+            <Tooltip content={recommendationsLabels[context].howItWorksText}>
+              <Button variant="hoverBlue" size="small" rounded>
+                <LucidIcon name="Info" /> &nbsp;Comment ça marche ?
+              </Button>
+            </Tooltip>
           </StyledRecommendationsHowItWorksWrapper>
         )}
         <StyledDashboardRecommendationsList>

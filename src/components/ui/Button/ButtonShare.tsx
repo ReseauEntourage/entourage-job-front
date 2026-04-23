@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Button } from './Button';
 import { ButtonProps } from './Button.types';
 
-export interface ButtonShareProps extends ButtonProps {
+interface ButtonShareProps extends ButtonProps {
   children: React.ReactNode;
   title?: string;
   description?: string;

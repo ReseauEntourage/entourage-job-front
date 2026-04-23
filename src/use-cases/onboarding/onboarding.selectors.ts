@@ -6,6 +6,9 @@ export const selectCurrentOnboardingIdx = (state: RootState) =>
 export const selectWebinarSfId = (state: RootState) =>
   state.onboarding.webinarSfId;
 
+export const selectNoDateSelected = (state: RootState) =>
+  state.onboarding.noDateSelected;
+
 export const selectFormErrorMessage = (state: RootState) =>
   state.onboarding.formErrorMessage;
 

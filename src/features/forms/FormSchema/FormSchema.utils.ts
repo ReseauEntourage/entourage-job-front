@@ -45,7 +45,7 @@ import {
   FormFieldReactNode,
 } from './FormSchema.types';
 
-export function mapFieldRules<
+export const mapFieldRules = <
   S extends FormSchema<AnyCantFix>,
   T extends InputComponent
 >(
@@ -59,7 +59,7 @@ export function mapFieldRules<
     >,
     ExtractFormSchemaValidation<S>
   >
-> {
+> => {
   if (fieldRules) {
     let rules = {} as Record<
       string,
@@ -89,63 +89,63 @@ export function mapFieldRules<
   }
 
   return {};
-}
+};
 
-export function isFormFieldTextInput<S extends FormSchemaValidation>(
+export const isFormFieldTextInput = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldTextInput<S> {
+): field is FormFieldTextInput<S> => {
   return TextInputComponents.includes(field.component as TextInputComponent);
-}
+};
 
-export function isFormFieldCheckbox<S extends FormSchemaValidation>(
+const isFormFieldCheckbox = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldCheckBox<S> {
+): field is FormFieldCheckBox<S> => {
   return CheckBoxComponents.includes(field.component as CheckBoxComponent);
-}
+};
 
-export function isFormFieldCheckboxAlert<S extends FormSchemaValidation>(
+const isFormFieldCheckboxAlert = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldCheckBoxAlert<S> {
+): field is FormFieldCheckBoxAlert<S> => {
   return CheckBoxAlertComponents.includes(
     field.component as CheckBoxAlertComponent
   );
-}
+};
 
-export function isFormFieldSelect<S extends FormSchemaValidation>(
+export const isFormFieldSelect = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldSelect<S> {
+): field is FormFieldSelect<S> => {
   return SelectComponents.includes(field.component as SelectComponent);
-}
+};
 
-export function isFormFieldRadio<S extends FormSchemaValidation>(
+export const isFormFieldRadio = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldRadio<S> {
+): field is FormFieldRadio<S> => {
   return RadioComponents.includes(field.component as RadioComponent);
-}
+};
 
-export function isFormFieldSelectRequest<S extends FormSchemaValidation>(
+export const isFormFieldSelectRequest = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldSelectRequest<S> {
+): field is FormFieldSelectRequest<S> => {
   return SelectRequestComponents.includes(
     field.component as SelectRequestComponent
   );
-}
+};
 
-export function isFormFieldSelectGraphic<S extends FormSchemaValidation>(
+export const isFormFieldSelectGraphic = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldSelectGraphic<S> {
+): field is FormFieldSelectGraphic<S> => {
   return SelectGraphicComponents.includes(
     field.component as SelectGraphicComponent
   );
-}
+};
 
-export function isFormFieldFile<S extends FormSchemaValidation>(
+const isFormFieldFile = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldFile<S> {
+): field is FormFieldFile<S> => {
   return field.component === 'file-input';
-}
+};
 
-export function isFormFieldInput<S extends FormSchemaValidation>(
+export const isFormFieldInput = <S extends FormSchemaValidation>(
   field: FormField<S>
 ): field is
   | FormFieldRadio<S>
@@ -155,7 +155,7 @@ export function isFormFieldInput<S extends FormSchemaValidation>(
   | FormFieldSelect<S>
   | FormFieldSelectRequest<S>
   | FormFieldSelectGraphic<S>
-  | FormFieldFile<S> {
+  | FormFieldFile<S> => {
   return (
     isFormFieldTextInput(field) ||
     isFormFieldCheckbox(field) ||
@@ -166,31 +166,31 @@ export function isFormFieldInput<S extends FormSchemaValidation>(
     isFormFieldSelectGraphic(field) ||
     isFormFieldFile(field)
   );
-}
+};
 
-export function isFormFieldText<S extends FormSchemaValidation>(
+export const isFormFieldText = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldText<S> {
+): field is FormFieldText<S> => {
   return TextComponents.includes(field.component as TextComponent);
-}
+};
 
-export function isFormFieldReactNode<S extends FormSchemaValidation>(
+export const isFormFieldReactNode = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldReactNode<S> {
+): field is FormFieldReactNode<S> => {
   return ReactNodeComponents.includes(field.component as ReactNodeComponent);
-}
+};
 
-export function isFormFieldGroup<S extends FormSchemaValidation>(
+export const isFormFieldGroup = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldGroup<S> {
+): field is FormFieldGroup<S> => {
   return GroupComponents.includes(field.component as GroupComponent);
-}
+};
 
-export function isFormFieldMultiple<S extends FormSchemaValidation>(
+export const isFormFieldMultiple = <S extends FormSchemaValidation>(
   field: FormField<S>
-): field is FormFieldMultiple<S> {
+): field is FormFieldMultiple<S> => {
   return MultipleComponents.includes(field.component as MultipleComponent);
-}
+};
 
 export class ComponentException extends Error {
   constructor(component: FormComponent, parent?: FormComponent) {

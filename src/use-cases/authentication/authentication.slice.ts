@@ -9,7 +9,7 @@ import {
   sendVerifyEmailAdapter,
 } from './authentication.adapters';
 
-export interface State {
+interface State {
   login: RequestState<typeof loginAdapter>;
   logout: RequestState<typeof logoutAdapter>;
   verifyEmailToken: RequestState<typeof verifyEmailTokenAdapter>;

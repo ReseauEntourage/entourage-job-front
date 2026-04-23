@@ -1,11 +1,14 @@
-import { RootState } from './messaging.slice';
 import { createSelector } from '@reduxjs/toolkit';
+import { RootState } from './messaging.slice';
 
 export const selectNewMessage = (state: RootState) =>
   state.messaging.newMessage;
 
 export const selectConversations = (state: RootState) =>
   state.messaging.conversations;
+
+export const selectGetConversationsStatus = (state: RootState) =>
+  state.messaging.getConversations.status;
 
 export const selectSelectedConversation = (state: RootState) =>
   state.messaging.selectedConversation;

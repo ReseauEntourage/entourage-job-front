@@ -1,3 +1,4 @@
+import { interceptCurrentUserSubResources } from '../../intercept/current-user.req';
 import { refererJourneyRequests } from 'cypress/e2e/intercept/journey/referer.req';
 import bootstrap from '../bootstrap';
 
@@ -28,9 +29,11 @@ describe('En tant que - Prescripteur', () => {
       } else cy.intercept('GET', request.path, request.data);
     });
 
-    cy.intercept('GET', '/auth/current', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-referer-res',
-    });
+    }).as('currentIdentity');
+
+    interceptCurrentUserSubResources();
 
     /**
      * Liste des URLs spécifiques à intercepter

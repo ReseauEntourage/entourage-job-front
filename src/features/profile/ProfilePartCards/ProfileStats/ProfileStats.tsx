@@ -1,8 +1,6 @@
 import React, { useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
-import { Text } from '@/src/components/ui';
-import { ProfilePartCard } from '../Card/Card/Card';
-import { COLORS } from 'src/constants/styles';
+import { LucidIcon, Text } from '@/src/components/ui';
+import { UserRoles } from '@/src/constants/users';
 import {
   StyledIconContainer,
   StyledStatItem,
@@ -10,30 +8,29 @@ import {
   StyledStatTitleValue,
 } from './ProfileStats.styles';
 
-const iconProps = {
-  width: 50,
-  height: 50,
-  color: COLORS.orangeSocial,
-};
-
-export interface ProfileStatsProps {
-  smallCard?: boolean;
+interface ProfileStatsProps {
+  createdAt: string | null;
+  userRole: UserRoles;
   averageDelayResponse: number | null;
   lastConnection: string;
   responseRate: number | null;
+  totalConversationWithMirrorRoleCount: number | null;
+  isOwnProfile: boolean;
 }
 
 interface StatItem {
-  title: string;
   value: string;
   icon: React.ReactNode;
 }
 
 export const ProfileStats = ({
-  smallCard,
+  createdAt,
+  userRole,
   averageDelayResponse,
   lastConnection,
   responseRate,
+  totalConversationWithMirrorRoleCount,
+  isOwnProfile,
 }: ProfileStatsProps) => {
   const relativeConnectionDateInDays = useMemo(() => {
     if (!lastConnection) {
@@ -47,61 +44,83 @@ export const ProfileStats = ({
 
   const stats = useMemo(() => {
     const list = [] as StatItem[];
+
+    if (createdAt) {
+      list.push({
+        value: `Membre depuis le ${new Date(createdAt).toLocaleDateString(
+          'fr-FR',
+          {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }
+        )}`,
+        icon: <LucidIcon name="Calendar" />,
+      });
+    }
+
+    if (relativeConnectionDateInDays !== null && !isOwnProfile) {
+      const relativeTimeText =
+        relativeConnectionDateInDays === 0
+          ? "aujourd'hui"
+          : `il y'a ${relativeConnectionDateInDays} jour${
+              relativeConnectionDateInDays > 1 ? 's' : ''
+            }`;
+      list.push({
+        value: `Dernière connexion ${relativeTimeText}`,
+        icon: <LucidIcon name="KeyRound" />,
+      });
+    }
+
     if (responseRate !== null) {
       list.push({
-        title: 'Taux de réponse',
-        value: `${responseRate}%`,
-        icon: <SvgIcon name="IlluDossierCandidat" {...iconProps} />,
+        value: `Répond à ${responseRate}% des messages`,
+        icon: <LucidIcon name="MailCheck" />,
       });
     }
-    if (relativeConnectionDateInDays !== null) {
-      list.push({
-        title: 'Dernière connexion',
-        value:
-          relativeConnectionDateInDays === 0
-            ? "Aujourd'hui"
-            : `Il y'a ${relativeConnectionDateInDays} jour${
-                relativeConnectionDateInDays > 1 ? 's' : ''
-              }`,
-        icon: <SvgIcon name="IlluOrdiCV" {...iconProps} />,
-      });
-    }
+
     if (averageDelayResponse !== null) {
       list.push({
-        title: 'Temps de réponse',
-        value: `Moins d${
-          averageDelayResponse > 1 ? 'e ' : "'"
-        }${averageDelayResponse} jour${averageDelayResponse > 1 ? 's' : ''}`,
-        icon: (
-          <SvgIcon
-            name="OrienterSablier"
-            {...iconProps}
-            width={25}
-            height={25}
-          />
-        ),
+        value: `Répond en moins d${averageDelayResponse > 1 ? 'e ' : "'"}${
+          averageDelayResponse === 1 ? 'un' : averageDelayResponse
+        } jour${averageDelayResponse > 1 ? 's' : ''}`,
+        icon: <LucidIcon name="Timer" />,
       });
     }
+    if (
+      totalConversationWithMirrorRoleCount &&
+      totalConversationWithMirrorRoleCount > 0
+    ) {
+      if (userRole === UserRoles.COACH) {
+        list.push({
+          value: `${totalConversationWithMirrorRoleCount} candidat${
+            totalConversationWithMirrorRoleCount > 1 ? 's' : ''
+          } soutenu${totalConversationWithMirrorRoleCount > 1 ? 's' : ''}`,
+          icon: <LucidIcon name="HandHeart" />,
+        });
+      }
+    }
     return list;
-  }, [averageDelayResponse, relativeConnectionDateInDays, responseRate]);
+  }, [
+    createdAt,
+    relativeConnectionDateInDays,
+    isOwnProfile,
+    responseRate,
+    averageDelayResponse,
+    totalConversationWithMirrorRoleCount,
+    userRole,
+  ]);
 
   return (
-    <ProfilePartCard
-      title="Informations de connexion"
-      smallCard={smallCard}
-      isCompleted
-    >
-      <StyledStatList>
-        {stats.map((stat) => (
-          <StyledStatItem key={stat.title}>
-            <StyledIconContainer>{stat.icon}</StyledIconContainer>
-            <StyledStatTitleValue>
-              <Text size="large">{stat.title}</Text>
-              <Text color="darkGray">{stat.value}</Text>
-            </StyledStatTitleValue>
-          </StyledStatItem>
-        ))}
-      </StyledStatList>
-    </ProfilePartCard>
+    <StyledStatList>
+      {stats.map((stat) => (
+        <StyledStatItem key={stat.value}>
+          <StyledIconContainer>{stat.icon}</StyledIconContainer>
+          <StyledStatTitleValue>
+            <Text size="small">{stat.value}</Text>
+          </StyledStatTitleValue>
+        </StyledStatItem>
+      ))}
+    </StyledStatList>
   );
 };

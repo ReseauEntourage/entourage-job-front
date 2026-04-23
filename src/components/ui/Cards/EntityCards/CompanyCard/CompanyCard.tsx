@@ -23,7 +23,7 @@ export type CompanyCardUser = Pick<
   User,
   'id' | 'firstName' | 'lastName' | 'role'
 > & {
-  userProfile: Pick<UserProfile, 'hasPicture'>;
+  userProfile?: Pick<UserProfile, 'hasPicture'> | null;
 };
 
 export interface CompanyCardProps {
@@ -95,10 +95,12 @@ export const CompanyCard = ({
                 {businessSectors
                   .slice(0, 2)
                   .map(({ id: sectorId, name: sectorName }) => {
-                    return <Tag key={sectorId}>{sectorName}</Tag>;
+                    return <Tag key={`${id}-${sectorId}`}>{sectorName}</Tag>;
                   })}
                 {businessSectors.length > 2 && (
-                  <Tag>+{businessSectors.length - 2}</Tag>
+                  <Tag key={`${id}-more-sectors`}>
+                    +{businessSectors.length - 2}
+                  </Tag>
                 )}
               </StyledCompanyCardSectorsContainer>
             </StyledCompanyCardSectorsSectionContainer>
@@ -115,7 +117,8 @@ export const CompanyCard = ({
                     firstName: user.firstName,
                     role: user.role,
                   }}
-                  hasPicture={user.userProfile.hasPicture}
+                  hasPicture={user.userProfile?.hasPicture ?? false}
+                  key={`${id}-img-profile-profile-${user.id}`}
                 />
               );
             })}

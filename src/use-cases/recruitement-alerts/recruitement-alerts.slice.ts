@@ -13,7 +13,7 @@ import {
   fetchRecruitementAlertMatchingAdapter,
 } from './recruitement-alerts.adapters';
 
-export interface State {
+interface State {
   fetchRecruitementAlerts: RequestState<typeof fetchRecruitementAlertsAdapter>;
   createRecruitementAlert: RequestState<typeof createRecruitementAlertAdapter>;
   deleteRecruitementAlert: RequestState<typeof deleteRecruitementAlertAdapter>;
@@ -84,9 +84,6 @@ export const slice = createSlice({
         },
       }
     ),
-    resetRecruitementAlerts(state) {
-      state.recruitementAlerts = [];
-    },
     ...fetchRecruitementAlertMatchingAdapter.getReducers<State>(
       (state) => state.fetchRecruitementAlertMatching,
       {
@@ -134,5 +131,4 @@ export const {
   deleteRecruitementAlertAction,
   updateRecruitementAlertAction,
   fetchRecruitementAlertMatchingAction,
-  resetRecruitementAlerts,
 } = slice.actions;

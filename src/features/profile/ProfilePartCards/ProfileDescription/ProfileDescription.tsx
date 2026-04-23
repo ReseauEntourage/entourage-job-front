@@ -7,7 +7,7 @@ import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticate
 import { ProfilePartCard } from '../Card/Card/Card';
 import { StyledDescriptionContainer } from './ProfileDescription.styles';
 
-export interface ProfileDescriptionProps {
+interface ProfileDescriptionProps {
   description: string | null;
   isEditable?: boolean;
   smallCard?: boolean;

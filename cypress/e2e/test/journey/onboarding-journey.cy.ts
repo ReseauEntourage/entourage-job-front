@@ -1,16 +1,9 @@
+import { interceptCurrentUserSubResources } from '../../intercept/current-user.req';
 import { onboardingJourneyRequests } from '../../intercept/journey/onboarding.req';
 import bootstrap from '../bootstrap';
 
 const interceptGenericBackofficeRequests = () => {
-  // Dashboard/background calls that can happen during onboarding redirects
-  cy.intercept('GET', '/auth/current/staff-contact', {
-    statusCode: 200,
-    body: {
-      name: 'Support Entourage Pro',
-      email: 'support@entourage.social',
-      img: '/static/img/profile-placeholder.png',
-    },
-  }).as('staffContact');
+  interceptCurrentUserSubResources();
 
   cy.intercept('GET', '/messaging/conversations/unseen-count', {
     statusCode: 200,
@@ -22,10 +15,17 @@ const interceptGenericBackofficeRequests = () => {
     body: 0,
   }).as('profileCompletion');
 
+  cy.intercept('GET', '/user/profile/recommendations?*', {
+    statusCode: 200,
+    body: {
+      recommendations: [],
+      nextCursor: null,
+    },
+  });
+
   const urlsToIntercept = [
     '/messaging/conversations',
     '/messaging/conversations/**',
-    '/user/profile/recommendations**',
   ];
 
   urlsToIntercept.forEach((url) => {
@@ -42,6 +42,12 @@ const interceptOnboardingApis = () => {
     } else {
       cy.intercept('GET', request.path, request.data);
     }
+  });
+
+  // Departments: needed when the user has a department in their profile
+  cy.intercept('GET', '/departments*', {
+    statusCode: 200,
+    body: [],
   });
 
   // Webinar: return options for the date picker, but return an empty list for
@@ -124,35 +130,35 @@ describe('Onboarding - Journey', () => {
   });
 
   it('Should redirect to onboarding when it is not completed', () => {
-    cy.intercept('GET', '/auth/current*', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-not-started-res',
-    }).as('authCurrent');
+    }).as('currentIdentity');
 
     cy.visit('/backoffice/dashboard');
-    cy.wait('@authCurrent');
+    cy.wait('@currentIdentity');
 
     cy.url().should('include', '/backoffice/onboarding');
   });
 
   it('Should not redirect to onboarding when it is already completed', () => {
-    cy.intercept('GET', '/auth/current*', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-completed-res',
-    }).as('authCurrent');
+    }).as('currentIdentity');
 
     cy.visit('/backoffice/dashboard');
-    cy.wait('@authCurrent');
+    cy.wait('@currentIdentity');
 
     cy.url().should('include', '/backoffice/dashboard');
     cy.contains('Bienvenue sur votre tableau de bord');
   });
 
   it('Should complete a light candidate onboarding flow', () => {
-    cy.intercept('GET', '/auth/current*', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-not-started-res',
-    }).as('authCurrent');
+    }).as('currentIdentity');
 
     cy.visit('/backoffice/dashboard');
-    cy.wait('@authCurrent');
+    cy.wait('@currentIdentity');
     cy.url().should('include', '/backoffice/onboarding');
 
     // Start onboarding (sets onboardingStatus=in_progress => redirect to /run)
@@ -165,7 +171,7 @@ describe('Onboarding - Journey', () => {
     cy.get('[data-testid="webinarSfId-sf-webinar-1"]').click();
     cy.get('[data-testid="onboarding-next-step-btn"]').click();
     cy.wait('@webinarParticipation');
-    cy.contains('button', 'Passer à l’étape suivante').click();
+    cy.get('[data-testid="webinar-confirmation-submit-btn"]').click();
 
     // Step 2: Elearning - already completed
     cy.wait('@elearningUnits');
@@ -175,9 +181,7 @@ describe('Onboarding - Journey', () => {
     // Step 3: Social situation - submit empty optional form
     cy.get('[data-testid="onboarding-next-step-btn"]').click();
     cy.wait('@updateSocialSituation');
-    cy.get(
-      '[data-testid="social-situation-onboarding-success-submit-btn"]'
-    ).click();
+    cy.get('[data-testid="social-situation-confirmation-submit-btn"]').click();
 
     // Step 4: Nudges - pick one nudge and submit
     cy.wait('@nudges');
