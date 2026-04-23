@@ -19,7 +19,7 @@ export enum TagSize {
   Large = 'large',
 }
 
-export interface TagProps {
+interface TagProps {
   children: React.ReactNode;
   variant?: TagVariant;
   size?: TagSize;

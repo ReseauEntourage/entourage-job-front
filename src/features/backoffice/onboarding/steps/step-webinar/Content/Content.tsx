@@ -8,13 +8,13 @@ import { SelectList } from '@/src/components/ui/Inputs/SelectList';
 import { SelectListGroup } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
 import { SelectOptionWebinarLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionWebinarLabel/SelectOptionWebinarLabel';
 import { EventMode, EventType } from '@/src/constants/events';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { WebinarSelectGroupLabel } from '../WebinarSelectGroupLabel/WebinarSelectGroupLabel';
 import { StyledSeparator } from './Content.styles';
 
 const NO_DATE_VALUE = 'no-date';
 
-export interface ContentProps {
+interface ContentProps {
   webinarSfId: string | null;
   onChange: (value: string) => void;
   noDateSelected: boolean;
@@ -30,12 +30,12 @@ export const Content = ({
   const [options, setOptions] = React.useState<SelectListGroup<string>[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isIdle, setIsIdle] = React.useState<boolean>(true);
-  const currentUser = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
 
   const fetchNextWebinarOptions = useCallback(async () => {
     const fetchUserDepartmentId = async (): Promise<string | null> => {
       const extractedDepartmentCode =
-        currentUser?.userProfile.department?.match(/\(([^)]+)\)/)?.[1] || null;
+        userProfile?.department?.match(/\(([^)]+)\)/)?.[1] || null;
 
       if (!extractedDepartmentCode) {
         return null;
@@ -99,7 +99,7 @@ export const Content = ({
     setOptions(groups);
     setIsLoading(false);
     setIsIdle(false);
-  }, [currentUser?.userProfile.department]);
+  }, [userProfile?.department]);
 
   useEffect(() => {
     if (isIdle) {

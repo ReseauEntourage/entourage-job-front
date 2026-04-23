@@ -14,7 +14,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { StyledDocumentList } from './ProfileDocuments.styles';
 import { ProfileDocumentsModalEdit } from './ProfileDocumentsModalEdit';
 
-export interface ProfileDocumentsProps {
+interface ProfileDocumentsProps {
   userId: string;
   linkedinUrl?: string | null;
   hasExternalCv?: boolean | null;

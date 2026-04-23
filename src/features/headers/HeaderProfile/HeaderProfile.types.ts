@@ -11,7 +11,7 @@ export interface HeaderProfileProps {
   lastName: string;
   role: UserRoles;
   gender: Genders;
-  department: DepartmentName;
+  department: DepartmentName | null;
   introduction?: string;
   hasPicture: boolean;
   achievements: UserAchievement[];
@@ -26,5 +26,4 @@ export interface HeaderProfileProps {
   // Only for own profile
   phone?: string;
   email?: string;
-  driverLicenses?: string[];
 }

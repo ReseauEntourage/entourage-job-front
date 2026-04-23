@@ -4,6 +4,7 @@ import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useEntity } from '@/src/hooks/queryParams/useEntity';
 import { useRole } from '@/src/hooks/queryParams/useRole';
 
@@ -27,12 +28,16 @@ const route = '/backoffice/annuaire';
  */
 export function useNetworkDirectoryRedirection() {
   const { replace, query } = useRouter();
-  const { role: userRole, userProfile } = useAuthenticatedUser();
+  const { role: userRole } = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
 
   const role = useRole();
   const entity = useEntity();
 
   useEffect(() => {
+    if (!userProfile) {
+      return;
+    }
     const contactTypes = [] as ContactTypeEnum[];
     const departments = [] as string[];
     // If userProfile allows remote events and not physical events, we filter by remote only
@@ -43,7 +48,7 @@ export function useNetworkDirectoryRedirection() {
     // and within the same department
     if (userProfile.allowPhysicalEvents && !userProfile.allowRemoteEvents) {
       contactTypes.push(ContactTypeEnum.PHYSICAL);
-      if (!userProfile.allowRemoteEvents) {
+      if (!userProfile.allowRemoteEvents && userProfile.department) {
         departments.push(userProfile.department);
       }
     }
@@ -86,9 +91,10 @@ export function useNetworkDirectoryRedirection() {
     role,
     userRole,
     query,
-    userProfile.allowRemoteEvents,
-    userProfile.allowPhysicalEvents,
-    userProfile.department,
+    userProfile?.allowRemoteEvents,
+    userProfile?.allowPhysicalEvents,
+    userProfile?.department,
     entity,
+    userProfile,
   ]);
 }

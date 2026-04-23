@@ -23,7 +23,7 @@ export type CompanyCardUser = Pick<
   User,
   'id' | 'firstName' | 'lastName' | 'role'
 > & {
-  userProfile: Pick<UserProfile, 'hasPicture'>;
+  userProfile?: Pick<UserProfile, 'hasPicture'> | null;
 };
 
 export interface CompanyCardProps {
@@ -117,7 +117,7 @@ export const CompanyCard = ({
                     firstName: user.firstName,
                     role: user.role,
                   }}
-                  hasPicture={user.userProfile.hasPicture}
+                  hasPicture={user.userProfile?.hasPicture ?? false}
                   key={`${id}-img-profile-profile-${user.id}`}
                 />
               );

@@ -1,10 +1,7 @@
-import moment from 'moment/moment';
 import React from 'react';
 import { formReferingProfessionalInformation } from '@/src/features/backoffice/referer/forms/formReferingProfessionalInformation';
 import { UserProfileSectorOccupation } from 'src/api/types';
-import { CONTRACTS } from 'src/constants';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
-import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {
   if (text) {
@@ -25,46 +22,6 @@ export function formatParagraph(text: string, condense?: boolean) {
   }
   return text;
 }
-
-export function addSpaceToPrefixIfNeeded(prefix) {
-  if (!prefix) {
-    return '';
-  }
-  return prefix.includes("'") ? prefix : `${prefix} `;
-}
-
-export function buildContractLabel(
-  contract: string,
-  endOfContract?: string | null,
-  startOfContract?: string
-) {
-  let dates = '';
-  if (startOfContract || endOfContract) {
-    dates += ` - `;
-    if (startOfContract) {
-      if (endOfContract) {
-        dates += `du ${moment(startOfContract).format('DD/MM/YYYY')} au `;
-      } else {
-        dates += `à partir du ${moment(startOfContract).format('DD/MM/YYYY')}`;
-      }
-    } else {
-      dates += `jusqu'au `;
-    }
-
-    if (endOfContract) {
-      dates += `${moment(endOfContract).format('DD/MM/YYYY')}`;
-    }
-  }
-
-  return `${findConstantFromValue(contract, CONTRACTS)?.label}${dates}`;
-}
-
-export const limitChar = (string: string, limit: number) => {
-  if (string.length > limit) {
-    return `${string.slice(0, limit)}...`;
-  }
-  return string;
-};
 
 export const formatCareerPathSentence = (
   values: Partial<

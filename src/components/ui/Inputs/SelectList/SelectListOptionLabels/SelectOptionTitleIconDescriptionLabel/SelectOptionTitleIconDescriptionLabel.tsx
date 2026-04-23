@@ -7,7 +7,7 @@ import {
   StyledTitleDescriptionContainer,
 } from './SelectOptionTitleIconDescriptionLabel.styles';
 
-export interface SelectOptionTitleIconDescriptionLabelProps {
+interface SelectOptionTitleIconDescriptionLabelProps {
   title: React.ReactNode;
   icon: React.ReactNode;
   description: string;

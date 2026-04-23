@@ -13,4 +13,8 @@ const ConseilsPosturePage = () => {
   );
 };
 
+export async function getServerSideProps() {
+  return { props: {} };
+}
+
 export default ConseilsPosturePage;

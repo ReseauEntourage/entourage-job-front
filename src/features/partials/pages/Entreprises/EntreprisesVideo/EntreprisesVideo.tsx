@@ -4,7 +4,7 @@ import { Section } from '@/src/components/ui';
 import { CompanyGoal } from '@/src/constants/company';
 import { StyledVideoContainer } from './EntreprisesVideo.styles';
 
-export interface EntreprisesVideoProps {
+interface EntreprisesVideoProps {
   context: CompanyGoal;
 }
 

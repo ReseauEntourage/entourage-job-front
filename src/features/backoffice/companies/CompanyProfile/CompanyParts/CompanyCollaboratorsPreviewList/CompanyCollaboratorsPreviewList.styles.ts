@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
-export const StyledFallbackContentContainer = styled.div`
-  display: flex;
-  gap: 15px;
-  flex-direction: column;
-`;
-
 export const StyledSwiperContainer = styled.div`
   width: 100%;
   max-width: 100%; /* limite à la largeur du parent */

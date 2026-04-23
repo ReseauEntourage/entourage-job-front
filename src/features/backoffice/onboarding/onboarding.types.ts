@@ -1,10 +1,5 @@
 import React from 'react';
 
-export enum OnboardingVersion {
-  LEGACY = 'legacy',
-  NEW = 'new',
-}
-
 /**
  * OnboardingStep - Interface representing a single step in the onboarding process.
  */

@@ -12,6 +12,7 @@ import {
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { ProfileCompletion } from '@/src/features/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
@@ -21,6 +22,9 @@ import { selectProfileCompletionRate } from '@/src/use-cases/profile-completion'
 import { useContextualRole } from '../../useContextualRole';
 import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserAchievements } from 'src/hooks/current-user/useCurrentUserAchievements';
+import { useCurrentUserOrganization } from 'src/hooks/current-user/useCurrentUserOrganization';
+import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import {
   StyledDashboardCTAContainer,
   StyledDashboardProfileCardIntroduction,
@@ -37,6 +41,9 @@ import {
 export const DashboardProfileCard = () => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
+  const organization = useCurrentUserOrganization();
+  const achievements = useCurrentUserAchievements();
   const externalCv = useCurrentUserExternalCv();
   const { contextualRole } = useContextualRole(user.role);
   const completionRate = useSelector(selectProfileCompletionRate);
@@ -54,27 +61,29 @@ export const DashboardProfileCard = () => {
     dispatch(currentUserActions.deleteExternalCvRequested());
   };
 
+  if (!user || !userProfile) {
+    return <Skeleton count={1} height="500px" />;
+  }
+
   return (
     <Card dataTestId="dashboard-profile-card">
       <StyledDashboardProfileCardPictureName>
         <ImgUserProfile
           user={user}
           size={69}
-          hasPicture={user.userProfile?.hasPicture || false}
+          hasPicture={userProfile?.hasPicture || false}
         />
         <StyledDashboardProfileCardMainInfos>
           <Text size="xlarge" weight="bold">
             {`${user.firstName} ${user.lastName.charAt(0).toUpperCase()}.`}
           </Text>
-          {user.organization && <Text>{user.organization.name}</Text>}
-          {user.userProfile.department && (
-            <Text>{user.userProfile.department}</Text>
-          )}
+          {organization && <Text>{organization.name}</Text>}
+          {userProfile?.department && <Text>{userProfile.department}</Text>}
           <StyledTagList>
-            <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
-            {user.achievements && user.achievements.length > 0 && (
+            <AvailabilityTag isAvailable={userProfile?.isAvailable ?? false} />
+            {achievements && achievements.length > 0 && (
               <ProfileAchievementHighlighter
-                achievement={user.achievements[0]}
+                achievement={achievements[0]}
                 gender={user.gender}
               />
             )}
@@ -89,14 +98,14 @@ export const DashboardProfileCard = () => {
         {/* Completion presentation */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <Dot color={user.userProfile.introduction ? 'green' : 'lightRed'} />
+            <Dot color={userProfile?.introduction ? 'green' : 'lightRed'} />
             <Text size="large" weight="semibold">
               Présentation
             </Text>
           </StyledDashboardProfileCardSectionTitle>
           <StyledDashboardProfileCardIntroduction>
-            {user.userProfile.introduction ? (
-              <Text size="small">{user.userProfile.introduction}</Text>
+            {userProfile?.introduction ? (
+              <Text size="small">{userProfile.introduction}</Text>
             ) : (
               <StyledDashboardProfileCardEmptyState>
                 <SvgIcon name="IlluBulleQuestion" height={48} width={48} />
@@ -111,16 +120,14 @@ export const DashboardProfileCard = () => {
         {/* Completion nudges */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <Dot
-              color={user.userProfile.nudges?.length ? 'green' : 'lightRed'}
-            />
+            <Dot color={userProfile?.nudges?.length ? 'green' : 'lightRed'} />
             <Text size="large" weight="semibold">
               Mes coups de pouce
             </Text>
           </StyledDashboardProfileCardSectionTitle>
-          {user.userProfile.nudges && user.userProfile.nudges.length > 0 ? (
+          {userProfile?.nudges && userProfile.nudges.length > 0 ? (
             <StyledDashboardProfileCardHelpList>
-              {user.userProfile.nudges.slice(0, 3).map((nudge, index) => {
+              {userProfile.nudges.slice(0, 3).map((nudge, index) => {
                 const nudgeDetails = ProfileNudges.find(
                   (nudgeConstant) => nudgeConstant.value === nudge?.value
                 );
@@ -134,9 +141,9 @@ export const DashboardProfileCard = () => {
                 }
                 return null;
               })}
-              {user.userProfile.nudges?.length > 3 && (
+              {(userProfile?.nudges?.length ?? 0) > 3 && (
                 <Tag size={TagSize.Small}>
-                  +{user.userProfile.nudges.length - 3}
+                  +{(userProfile?.nudges?.length ?? 0) - 3}
                 </Tag>
               )}
             </StyledDashboardProfileCardHelpList>
@@ -160,15 +167,13 @@ export const DashboardProfileCard = () => {
         {/* External CV Completion */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <Dot
-              color={user.userProfile.hasExternalCv ? 'green' : 'lightRed'}
-            />
+            <Dot color={userProfile?.hasExternalCv ? 'green' : 'lightRed'} />
             <Text size="large" weight="semibold">
               Mon CV
             </Text>
           </StyledDashboardProfileCardSectionTitle>
           <StyledDashboardProfileCardIntroduction>
-            {user.userProfile.hasExternalCv ? (
+            {userProfile?.hasExternalCv ? (
               <FilePreviewCV
                 filename="Votre CV"
                 onRemoveFile={removeExternalCvCallback}

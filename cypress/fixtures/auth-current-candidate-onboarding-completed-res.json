@@ -1,58 +1,18 @@
 {
   "id": "4d3c885c-4859-4e7b-a428-902812964f08",
-  "createdAt": "2026-02-18T15:28:42.315Z",
-  "whatsappZoneName": "Nord // Lille",
-  "whatsappZoneUrl": "https://chat.whatsapp.com/G6c5tVNbRzgGaSThtFvxrq",
-  "whatsappZoneQR": "/static/img/whatsapp-qrcode-coach/whatsapp-qrcode-lille.png",
   "OrganizationId": null,
+  "refererId": null,
   "firstName": "Gustavo",
   "lastName": "Fring",
   "email": "gustavo.fring@entourage.social",
   "phone": "+33606060606",
-  "address": null,
   "role": "Coach",
-  "adminRole": null,
   "zone": "LILLE",
   "gender": 0,
   "lastConnection": "2026-02-18T15:35:39.688Z",
   "isEmailVerified": true,
-  "refererId": null,
-  "referredCandidates": [],
-  "referer": null,
-  "readDocuments": [],
-  "userProfile": {
-    "id": "d6fd9a3e-1e6a-42b6-917a-aff37bd886af",
-    "isAvailable": true,
-    "department": "Pas-de-Calais (62)",
-    "currentJob": "Directeur de magasin",
-    "nudges": [
-      {
-        "id": "ce82de19-6cd9-46cd-a1cd-f14bd7f2b5a8",
-        "value": "event",
-        "nameRequest": "Se rencontrer et échanger avec les membres de la communauté",
-        "nameOffer": "Se rencontrer lors d’événements avec les membres de la communauté",
-        "order": 4
-      }
-    ],
-    "description": "Je suis Gustavo Fring, fondateur et CEO de Los Pollos Hermanos depuis 1989, où j’ai supervisé l’expansion de la chaîne, la logistique et les opérations quotidiennes selon des standards d’excellence. De 1990 à 2011, j’ai dirigé clandestinement le Fring Advanced Distribution Network (FADN), coordonnant des laboratoires spécialisés et assurant une distribution discrète et efficace. Formé en commerce et gestion, je maîtrise le leadership stratégique, la gestion de crise, l’organisation logistique avancée et la supervision d’opérations sensibles.",
-    "introduction": "Je suis Gustavo Fring, personnage emblématique de la série Breaking Bad !",
-    "linkedinUrl": null,
-    "hasExternalCv": true,
-    "sectorOccupations": [
-      {
-        "id": "78a0b91e-db97-4542-aaa7-04078580bd34",
-        "order": 0,
-        "businessSector": {
-          "id": "a9d228bd-9a2e-4a40-bb40-6635c3c924bd",
-          "name": "Commerce et distribution",
-          "prefixes": "le,la"
-        },
-        "occupation": null
-      }
-    ],
-    "hasPicture": true
-  },
-  "company": null,
+  "userSocialSituation": { "hasCompletedSurvey": true },
   "onboardingStatus": "completed",
-  "onboardingCompletedAt": "2026-02-18T15:35:15.899Z"
+  "onboardingCompletedAt": "2026-02-18T15:35:15.899Z",
+  "onboardingWebinarSkippedAt": null
 }

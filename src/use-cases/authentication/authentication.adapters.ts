@@ -1,4 +1,4 @@
-import { PostAuthSendVerifyEmailParams, User } from 'src/api/types';
+import { PostAuthSendVerifyEmailParams } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export type LoginError =
@@ -18,7 +18,6 @@ export const loginAdapter = createRequestAdapter('login').withPayloads<
     password: string;
   },
   {
-    user: User;
     accessToken: string;
   },
   {

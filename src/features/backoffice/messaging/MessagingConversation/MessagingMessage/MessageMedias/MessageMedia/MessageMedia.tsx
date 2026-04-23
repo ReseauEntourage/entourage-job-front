@@ -11,7 +11,7 @@ import {
 
 const FILENAME_MAX_LENGTH = 20;
 
-export interface MessageMediaProps {
+interface MessageMediaProps {
   media: Media;
   mode?: 'single' | 'multiple';
 }

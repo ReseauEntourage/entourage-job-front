@@ -33,12 +33,6 @@ export const StyledAccordionHeaderTitleContainer = styled.div`
   flex-direction: column;
 `;
 
-export const StyledButtonGenerateCVContainer = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: stretch;
-`;
-
 export const StyledPhotosAndIntroductionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,10 +51,4 @@ export const StyledPhotoInputContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-export const StyledPhotoPreviewImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;

@@ -10,19 +10,19 @@ import {
   StyledCriteriasContainer,
 } from './UnderstandFormat.styles';
 
-export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
+type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
-export interface UnderstandFormatProps {
+interface UnderstandFormatProps {
   innerRef?: React.RefObject<HTMLDivElement>;
   as: 'Coach' | 'Candidat' | 'Referer';
 }
 
-export interface Criteria {
+interface Criteria {
   illu: React.ReactNode | null;
   text: string;
 }
 
-export interface Content {
+interface Content {
   title: string;
   img: string;
   criterias?: Criteria[];

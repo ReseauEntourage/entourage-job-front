@@ -10,7 +10,7 @@ import {
   StyledStatusContainer,
 } from './EventActions.styles';
 
-export type EventActionsProps = Pick<
+type EventActionsProps = Pick<
   Event,
   'name' | 'description' | 'salesForceId' | 'isParticipating'
 >;

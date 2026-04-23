@@ -31,7 +31,7 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
   }
 
   // Generate menu item containing the <Link>
-  const menuItem = <li className="uk-flex-center">{link}</li>;
+  const menuItem = <div className="uk-flex-center">{link}</div>;
 
   if (item.childrens && item.childrens.length > 0) {
     return (
@@ -40,7 +40,7 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
           const isChildPath = child.href === asPath;
 
           return (
-            <li className="uk-flex-center" key={child.name}>
+            <div className="uk-flex-center" key={child.name}>
               <StyledNavPublicItemMobileLinkContainer
                 selected={isChildPath}
                 key={child.name}
@@ -49,7 +49,7 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
                   {child.name}
                 </Link>
               </StyledNavPublicItemMobileLinkContainer>
-            </li>
+            </div>
           );
         })}
       </>

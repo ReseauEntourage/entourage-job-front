@@ -9,6 +9,7 @@ import { Spinner } from '@/src/components/ui/Spinner';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import {
@@ -40,6 +41,7 @@ export const PersonalInfoAccordion = () => {
 
   const { setFileInputRef, requestFileUploadClick } = useFileActivator();
   const user = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
   const dispatch = useDispatch();
 
   const [imageUploading, setImageUploading] = React.useState<boolean>(false);
@@ -96,7 +98,7 @@ export const PersonalInfoAccordion = () => {
             <ImgUserProfile
               user={user}
               size={150}
-              hasPicture={user.userProfile?.hasPicture || false}
+              hasPicture={userProfile?.hasPicture || false}
             />
 
             <StyledPhotoInputContainer>
@@ -110,7 +112,7 @@ export const PersonalInfoAccordion = () => {
                   onChange={uploadProfileImage}
                 >
                   <Button variant="secondary" onClick={requestFileUploadClick}>
-                    {user.userProfile?.hasPicture
+                    {userProfile?.hasPicture
                       ? 'Modifier la photo'
                       : 'Ajouter une photo'}
                   </Button>

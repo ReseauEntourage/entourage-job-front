@@ -5,8 +5,8 @@ import {
 } from '@/src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
-export type updateCompanyLogoError = 'UPDATE_LOGO_FAILED';
-export type updateCompanyError = 'UPDATE_FAILED';
+type updateCompanyLogoError = 'UPDATE_LOGO_FAILED';
+type updateCompanyError = 'UPDATE_FAILED';
 
 export const fetchCompaniesAdapter = createRequestAdapter(
   'fetchCompanies'

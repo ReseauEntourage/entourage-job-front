@@ -1,5 +1,4 @@
 import React from 'react';
-import { Company } from '@/src/api/types';
 import { Button, Card, ImgCompanyProfile, Text } from '@/src/components/ui';
 import {
   StyledContainer,
@@ -8,8 +7,16 @@ import {
   StyledPictureContainer,
 } from './DashboardCompanyCard.styles';
 
-export interface DashboardCompanyCardProps {
-  company: Company;
+type DashboardCompany = {
+  id: string;
+  name: string;
+  logoUrl?: string | null;
+  admin?: { firstName: string; lastName: string } | null;
+  companyUser?: { isAdmin: boolean } | null;
+};
+
+interface DashboardCompanyCardProps {
+  company: DashboardCompany;
 }
 
 export const DashboardCompanyCard = ({
@@ -28,7 +35,11 @@ export const DashboardCompanyCard = ({
     >
       <StyledContainer>
         <StyledPictureContainer>
-          <ImgCompanyProfile company={company} size={110} highlight />
+          <ImgCompanyProfile
+            company={{ ...company, logoUrl: company.logoUrl ?? undefined }}
+            size={110}
+            highlight
+          />
         </StyledPictureContainer>
         <div>
           <Text size="large" color="primaryBlue" weight="bold" center>
