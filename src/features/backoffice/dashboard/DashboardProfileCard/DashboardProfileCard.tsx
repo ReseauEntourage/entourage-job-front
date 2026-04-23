@@ -12,6 +12,7 @@ import {
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { ProfileCompletion } from '@/src/features/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
@@ -59,6 +60,10 @@ export const DashboardProfileCard = () => {
   const removeExternalCvCallback = () => {
     dispatch(currentUserActions.deleteExternalCvRequested());
   };
+
+  if (!user || !userProfile) {
+    return <Skeleton count={1} height="500px" />;
+  }
 
   return (
     <Card dataTestId="dashboard-profile-card">
