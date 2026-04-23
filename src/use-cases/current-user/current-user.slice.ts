@@ -350,6 +350,9 @@ export const slice = createSlice({
     setUser(state, action: PayloadAction<User | null>) {
       state.user = action.payload;
     },
+    resetCurrentUser() {
+      return initialState;
+    },
     deleteExternalCvRequested() {},
     deleteExternalCvSucceeded(state) {
       if (state.profile) {

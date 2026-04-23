@@ -17,7 +17,7 @@ import { slice } from './current-user.slice';
 
 const {
   fetchUserRequested,
-  setUser,
+  resetCurrentUser,
   fetchUserSucceeded,
   fetchUserFailed,
   fetchCurrentUserSocialSituationRequested,
@@ -509,14 +509,12 @@ function* fetchCurrentReferrerRequestedSaga() {
   }
 }
 
-function* loginSucceededSaga(
-  action: ReturnType<typeof authenticationActions.loginSucceeded>
-) {
-  yield* put(setUser(action.payload.user));
+function* loginSucceededSaga() {
+  yield* put(fetchUserRequested());
 }
 
 function* logoutSucceededSaga() {
-  yield* put(setUser(null));
+  yield* put(resetCurrentUser());
 }
 
 export function* saga() {
