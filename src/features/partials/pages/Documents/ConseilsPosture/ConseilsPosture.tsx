@@ -7,12 +7,7 @@ import {
   StyledDocumentCenteredText,
   StyledDocumentTitleText,
 } from '../Documents.styles';
-import { isReadDocument } from '../Documents.utils';
-import { SignDocument } from '../SignDocument';
-import { DocumentNames } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserReadDocuments } from 'src/hooks/current-user/useCurrentUserReadDocuments';
 import { currentUserActions } from 'src/use-cases/current-user';
 
 const textContent = [
@@ -70,13 +65,11 @@ const textContent = [
 
 export const ConseilsPosture = () => {
   const dispatch = useDispatch();
-  const user = useAuthenticatedUser();
   useEffect(() => {
     return () => {
       dispatch(currentUserActions.readDocumentReset());
     };
   }, [dispatch]);
-  const readDocuments = useCurrentUserReadDocuments();
   return (
     <Section style="custom-primary">
       <H1
@@ -119,13 +112,6 @@ export const ConseilsPosture = () => {
         title="Vos référents Entourage Pro sont présents pour vous guider tout au long de votre implication, au rythme de vos coups de pouce."
         color="black"
       />
-      {user &&
-        !isReadDocument(readDocuments, DocumentNames.ConseilsPosture) && (
-          <SignDocument
-            documentName={DocumentNames.ConseilsPosture}
-            label="j’ai lu et compris les principes clés de posture et d’éthique. Je m’engage à les respecter."
-          />
-        )}
     </Section>
   );
 };
