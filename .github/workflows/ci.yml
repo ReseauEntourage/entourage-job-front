@@ -1,4 +1,4 @@
-name: Entourage Pro [front-end]
+name: Entourage Pro - Front CI
 
 on:
   push:
