@@ -18,7 +18,7 @@ runs:
         cache: 'pnpm'
 
     - name: Install dependencies
-      run: pnpm install
+      run: pnpm install --frozen-lockfile
       shell: bash
 
     - name: Install Cypress binary
