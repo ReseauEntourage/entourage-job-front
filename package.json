@@ -96,18 +96,13 @@
     "validator": "^13.12.0"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.6",
+    "@chromatic-com/storybook": "^5.1.2",
     "@faker-js/faker": "^8.4.1",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@next/eslint-plugin-next": "^15.5.15",
     "@simbathesailor/use-what-changed": "^2.0.0",
-    "@storybook/addon-actions": "^8.6.7",
-    "@storybook/addon-essentials": "^8.6.7",
-    "@storybook/addon-interactions": "^8.6.7",
-    "@storybook/addon-links": "^8.6.7",
-    "@storybook/nextjs": "^8.6.7",
-    "@storybook/react": "^8.6.7",
-    "@storybook/test": "^8.6.7",
+    "@storybook/addon-links": "^10.3.5",
+    "@storybook/nextjs-vite": "^10.3.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/jest": "^29.5.14",
@@ -131,7 +126,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-storybook": "^0.11.6",
+    "eslint-plugin-storybook": "^10.3.5",
     "eslint-plugin-typescript-sort-keys": "^2.3.0",
     "globals": "^16.5.0",
     "husky": "^8.0.3",
@@ -141,10 +136,10 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.3",
     "prettier": "^2.8.8",
-    "storybook": "^8.6.7",
-    "tsconfig-paths-webpack-plugin": "^4.2.0",
+    "storybook": "^10.3.5",
     "typescript": "^4.9.5",
-    "webpack": "^5.104.1"
+    "vite": "^8.0.10",
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "resolutions": {
     "jackspeak": "2.1.1"
