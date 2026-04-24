@@ -65,7 +65,7 @@ export default defineConfig([
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: ['./src/tsconfig.json', './cypress/tsconfig.json'],
+        project: ['./src/tsconfig.json', './cypress/tsconfig.json', './tsconfig.stories.json'],
         sourceType: 'module',
       },
       globals: {
