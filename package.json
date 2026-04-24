@@ -103,6 +103,7 @@
     "@simbathesailor/use-what-changed": "^2.0.0",
     "@storybook/addon-links": "^10.3.5",
     "@storybook/nextjs-vite": "^10.3.5",
+    "@storybook/react": "^10.3.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/jest": "^29.5.14",
