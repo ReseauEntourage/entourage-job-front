@@ -27,7 +27,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Publish to Chromatic
-        # `latest` est actuellement cassé (MODULE_NOT_FOUND: semver). On épingle une version stable.
         uses: chromaui/action@v13.3.5
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
