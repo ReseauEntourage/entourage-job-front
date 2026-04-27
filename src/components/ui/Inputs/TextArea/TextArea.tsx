@@ -22,6 +22,7 @@ interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   minLength?: number;
   rows?: number;
   setIsMaxLinesReached?: (isMaxLinesReached: boolean) => void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLTextAreaElement>;
 }
 
 export function TextArea({
@@ -31,6 +32,7 @@ export function TextArea({
   placeholder,
   onChange,
   onBlur,
+  onKeyDown,
   value,
   hidden = false,
   disabled = false,
@@ -108,6 +110,7 @@ export function TextArea({
           }
           disabled={disabled}
           onBlur={onBlur}
+          onKeyDown={onKeyDown}
           maxLength={!maxLines ? maxLength : null}
           value={value || ''}
         />

@@ -20,7 +20,7 @@ export const Attachment = ({ attachment, onClose }: AttachmentProps) => {
         <Text size="small">{attachment.name}</Text>
         {onClose && (
           <ButtonIcon
-            color={COLORS.white}
+            color={COLORS.primaryBlue}
             icon={<LucidIcon name="X" size={15} />}
             onClick={() => {
               onClose();

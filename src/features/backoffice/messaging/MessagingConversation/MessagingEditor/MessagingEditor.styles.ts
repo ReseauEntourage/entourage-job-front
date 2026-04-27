@@ -5,7 +5,7 @@ export const MessagingEditorContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: ${COLORS.lightGray};
-  padding: 20px 20px 30px 20px;
+  padding: 20px 20px 20px 20px;
   gap: 10px;
   box-sizing: border-box;
   &.mobile {
@@ -40,7 +40,7 @@ export const MessagingInputContainer = styled.div`
   display: flex;
   flex: 1;
   background: ${COLORS.white};
-  padding: 15px 20px;
+  padding: 13px 20px;
   box-sizing: border-box;
   width: 100%;
   border-radius: 30px;

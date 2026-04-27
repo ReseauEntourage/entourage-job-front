@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
@@ -10,6 +12,7 @@ import {
 } from 'src/use-cases/current-user';
 import {
   messagingActions,
+  selectIsAIPanelOpen,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
@@ -20,9 +23,15 @@ import {
   selectNewMessage,
   selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
+import type { MessagingPanelView } from 'src/use-cases/messaging/messaging.slice';
 import {
+  MessagingConversationAIPanel,
   MessagingConversationContainer,
+  MessagingConversationWrapper,
   MessagingMessagesContainer,
+  MessagingPanelSidebarContainer,
+  PanelSidebarButton,
+  PanelSidebarLabel,
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
@@ -32,6 +41,16 @@ import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
+
+interface PanelOption {
+  view: MessagingPanelView;
+  label: string;
+  icon: string;
+}
+
+const PANEL_OPTIONS: PanelOption[] = [
+  { view: 'ai', label: 'Assistant IA', icon: 'Sparkles' },
+];
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -48,6 +67,7 @@ export const MessagingConversation = () => {
   const currentUserHasSentMessages = useSelector(
     selectCurrentUserHasSentMessages(currentUserId)
   );
+  const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
 
   const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
@@ -98,8 +118,6 @@ export const MessagingConversation = () => {
     if (selectedConversationId === 'new') {
       return true;
     }
-    // Avoid using potentially stale messaging state while a new
-    // conversation is loading or does not match the selected id.
     if (
       !selectedConversation ||
       (selectedConversation as any).id !== selectedConversationId
@@ -164,7 +182,6 @@ export const MessagingConversation = () => {
   };
 
   useEffect(() => {
-    // Set a pinned info when the conversation is one to one and the other participant is not available
     const addressees = selectedConversation?.participants.filter(
       (participant) => participant.id !== currentUserId
     );
@@ -212,69 +229,110 @@ export const MessagingConversation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConversation?.id, selectedConversation?.messages.length]);
 
-  return (
-    <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
-      {!selectedConversationId ? (
-        <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
+  const isCoach = currentUser?.role === UserRoles.COACH;
+  const showAIPanelMobile = isMobile && isCoach && isAIPanelOpen;
+  const showPanelSidebar =
+    !isMobile && isCoach && !!selectedConversationId && !isAIPanelOpen;
+
+  const onOpenPanel = (view: MessagingPanelView) => {
+    dispatch(messagingActions.setActivePanelView(view));
+  };
+
+  const conversationContent = (
+    <>
+      <MessagingConversationHeader />
+      {pinnedInfo ? (
+        <MessagingPinnedInfo pinnedInfo={pinnedInfo} />
       ) : (
-        <>
-          <MessagingConversationHeader />
-          {pinnedInfo ? (
-            <MessagingPinnedInfo pinnedInfo={pinnedInfo} />
-          ) : (
-            displayFirstContactBanner &&
-            currentUser && (
-              <MessagingFirstContactBanner
-                key={selectedConversationId}
-                role={currentUser.role as UserRoles}
-              />
-            )
-          )}
-
-          {shouldGiveFeedback && (
-            <MessagingFeedback
-              onRatingOrClose={onRatingOrClose}
-              adressee={selectedConversation?.participants.find(
-                (participant) => participant.id !== currentUserId
-              )}
-            />
-          )}
-
-          {displaySuggestions ? (
-            <MessagingSuggestions
-              onSuggestionClick={onSuggestionClick}
-              newMessage={newMessage}
-              participants={selectedConversation?.participants || []}
-            />
-          ) : (
-            <MessagingMessagesContainer
-              blur={shouldGiveFeedback}
-              className={isMobile ? 'mobile' : ''}
-            >
-              {reversedMessages &&
-                reversedMessages.map((message) => (
-                  <MessagingMessage key={message.id} message={message} />
-                ))}
-              <div ref={messagesEndRef} />
-            </MessagingMessagesContainer>
-          )}
-
-          {displayCoachQuickReplies && (
-            <MessagingSuggestions
-              onSuggestionClick={onSuggestionClick}
-              newMessage={newMessage}
-              participants={
-                selectedConversation?.participants.filter(
-                  (p) => p.id !== currentUserId
-                ) || []
-              }
-              variant="coach-quick-replies"
-            />
-          )}
-
-          <MessagingEditor readonly={conversationParticipantsAreDeleted} />
-        </>
+        displayFirstContactBanner &&
+        currentUser && (
+          <MessagingFirstContactBanner
+            key={selectedConversationId}
+            role={currentUser.role as UserRoles}
+          />
+        )
       )}
-    </MessagingConversationContainer>
+
+      {shouldGiveFeedback && (
+        <MessagingFeedback
+          onRatingOrClose={onRatingOrClose}
+          adressee={selectedConversation?.participants.find(
+            (participant) => participant.id !== currentUserId
+          )}
+        />
+      )}
+
+      {displaySuggestions ? (
+        <MessagingSuggestions
+          onSuggestionClick={onSuggestionClick}
+          newMessage={newMessage}
+          participants={selectedConversation?.participants || []}
+        />
+      ) : (
+        <MessagingMessagesContainer
+          blur={shouldGiveFeedback}
+          className={isMobile ? 'mobile' : ''}
+        >
+          {reversedMessages &&
+            reversedMessages.map((message) => (
+              <MessagingMessage key={message.id} message={message} />
+            ))}
+          <div ref={messagesEndRef} />
+        </MessagingMessagesContainer>
+      )}
+
+      {displayCoachQuickReplies && (
+        <MessagingSuggestions
+          onSuggestionClick={onSuggestionClick}
+          newMessage={newMessage}
+          participants={
+            selectedConversation?.participants.filter(
+              (p) => p.id !== currentUserId
+            ) || []
+          }
+          variant="coach-quick-replies"
+        />
+      )}
+
+      <MessagingEditor readonly={conversationParticipantsAreDeleted} />
+    </>
+  );
+
+  if (!selectedConversationId) {
+    return (
+      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+        <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
+      </MessagingConversationContainer>
+    );
+  }
+
+  if (showAIPanelMobile) {
+    return <MessagingAIPanel />;
+  }
+
+  return (
+    <MessagingConversationWrapper>
+      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+        {conversationContent}
+      </MessagingConversationContainer>
+      {showPanelSidebar && (
+        <MessagingPanelSidebarContainer>
+          {PANEL_OPTIONS.map((option) => (
+            <PanelSidebarButton
+              key={option.view}
+              onClick={() => onOpenPanel(option.view)}
+            >
+              <LucidIcon name={option.icon as any} size={18} />
+              <PanelSidebarLabel>{option.label}</PanelSidebarLabel>
+            </PanelSidebarButton>
+          ))}
+        </MessagingPanelSidebarContainer>
+      )}
+      {!isMobile && isAIPanelOpen && (
+        <MessagingConversationAIPanel>
+          <MessagingAIPanel />
+        </MessagingConversationAIPanel>
+      )}
+    </MessagingConversationWrapper>
   );
 };

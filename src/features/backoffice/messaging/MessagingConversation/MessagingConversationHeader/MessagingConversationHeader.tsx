@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ImgUserProfile } from '@/src/components/ui';
+import { Badge, BadgeVariant, ImgUserProfile } from '@/src/components/ui';
 import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
 import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
 import { DropdownToggle } from '@/src/components/ui/Dropdown/DropdownToggle';
@@ -12,13 +12,20 @@ import {
   ConversationParticipant,
   ConversationParticipants,
 } from 'src/api/types';
+import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import {
+  selectCurrentUser,
+  selectCurrentUserId,
+} from 'src/use-cases/current-user';
 import {
   messagingActions,
+  selectActivePanelView,
+  selectIsAIPanelOpen,
   selectSelectedConversation,
   selectSelectedConversationId,
 } from 'src/use-cases/messaging';
+import type { MessagingPanelView } from 'src/use-cases/messaging/messaging.slice';
 import {
   ActionMenuIconStyled,
   AddreseeInfosContainer,
@@ -27,6 +34,16 @@ import {
   MessagingConversationHeaderContainer,
 } from './MessagingConversationHeader.styles';
 
+interface PanelOption {
+  view: MessagingPanelView;
+  label: string;
+  icon: string;
+}
+
+const PANEL_OPTIONS: PanelOption[] = [
+  { view: 'ai', label: 'Assistant IA', icon: 'Sparkles' },
+];
+
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -34,10 +51,17 @@ export const MessagingConversationHeader = () => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
+  const currentUser = useSelector(selectCurrentUser);
+  const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const activePanelView = useSelector(selectActivePanelView);
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
+
+  const isCoach = currentUser?.role === UserRoles.COACH;
+  const showMobilePanelMenu =
+    isMobile && isCoach && selectedConversationId !== null;
 
   const onClickBackBtn = () => {
     dispatch(messagingActions.selectConversation(null));
@@ -57,6 +81,14 @@ export const MessagingConversationHeader = () => {
           conversationId={selectedConversationId}
         />
       );
+    }
+  };
+
+  const onSelectPanel = (view: MessagingPanelView) => {
+    if (isAIPanelOpen && activePanelView === view) {
+      dispatch(messagingActions.setIsAIPanelOpen(false));
+    } else {
+      dispatch(messagingActions.setActivePanelView(view));
     }
   };
 
@@ -85,6 +117,29 @@ export const MessagingConversationHeader = () => {
           </AddreseeInfosContainer>
         )}
       </LeftColumn>
+      {showMobilePanelMenu && (
+        <Dropdown>
+          <DropdownToggle>
+            <Badge variant={BadgeVariant.HoverBlue} borderRadius="medium">
+              <LucidIcon name="Menu" size={20} /> Mes outils
+            </Badge>
+          </DropdownToggle>
+          <Dropdown.Menu openDirection="left">
+            {PANEL_OPTIONS.map((option) => (
+              <Dropdown.Item
+                key={option.view}
+                onClick={() => onSelectPanel(option.view)}
+              >
+                <LucidIcon name={option.icon as any} size={14} />
+                {option.label}
+                {isAIPanelOpen && activePanelView === option.view && (
+                  <LucidIcon name="Check" size={14} />
+                )}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
       {/* TODO Implement new dropdown in mobile to report a user */}
       {isMobile ? (
         <Dropdown>

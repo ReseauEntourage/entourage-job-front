@@ -38,10 +38,13 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
 
   // States
-  const [attachments, setAttachments] = useState<File[]>([]);
+  const [attachments, setAttachments] = useState<{ id: number; file: File }[]>(
+    []
+  );
 
   // Refs
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
+  const attachmentCounter = useRef(0);
 
   // Methods
   const onAttachmentAdded = (files: File | File[] | null) => {
@@ -51,11 +54,15 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
     if (!Array.isArray(files)) {
       files = [files];
     }
-    setAttachments([...attachments, ...files]);
+    const newAttachments = files.map((file) => ({
+      id: attachmentCounter.current++,
+      file,
+    }));
+    setAttachments((prev) => [...prev, ...newAttachments]);
   };
 
-  const removeAttachment = (attachment: File) => {
-    setAttachments(attachments.filter((file) => file !== attachment));
+  const removeAttachment = (id: number) => {
+    setAttachments((prev) => prev.filter((a) => a.id !== id));
   };
 
   const onRequestAttachFileClick = () => {
@@ -84,7 +91,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
     formData.append('content', newMessage);
     if (attachments) {
       if (attachments.length > 0) {
-        attachments.forEach((file) => {
+        attachments.forEach(({ file }) => {
           formData.append('files', file);
         });
       }
@@ -114,13 +121,13 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
 
   return (
     <MessagingEditorContainer>
-      {attachments && (
+      {attachments && attachments.length > 0 && (
         <StyledAttachementInfoContainer>
           {attachments.map((attachment) => (
             <Attachment
-              attachment={attachment}
-              onClose={() => removeAttachment(attachment)}
-              key={attachment.name}
+              attachment={attachment.file}
+              onClose={() => removeAttachment(attachment.id)}
+              key={attachment.id}
             />
           ))}
         </StyledAttachementInfoContainer>
