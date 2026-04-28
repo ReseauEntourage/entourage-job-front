@@ -15,5 +15,6 @@ export const StyledText = styled.div<TextProps>`
   text-decoration: ${({ variant }) => variant === 'underline' && 'underline'};
   text-align: ${({ center, textAlign }) => (center ? 'center' : textAlign)};
   text-decoration: ${({ underline }) => (underline ? 'underline' : 'none')};
+  text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'none')};
   cursor: ${({ onClick }) => (onClick ? 'pointer' : 'inherit')};
 `;

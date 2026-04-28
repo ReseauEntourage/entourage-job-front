@@ -23,7 +23,7 @@ export const MessagingMobile = () => {
         <MessagingEmptyStateContainerMobile>
           <MessagingEmptyState
             title="Aucun message dans votre messagerie"
-            subtitle="Contactez les membres de la communauté à partir du réseau d’entraide"
+            subtitle="Contactez les membres de la communauté à partir du réseau d'entraide"
             action="Accéder au réseau d'entraide"
             actionHref="/backoffice/annuaire"
           />

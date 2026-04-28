@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment/locale/fr';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';

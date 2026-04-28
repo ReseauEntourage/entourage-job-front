@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const MessagingConversationHeaderContainer = styled.div`
   display: flex;
@@ -10,6 +10,7 @@ export const MessagingConversationHeaderContainer = styled.div`
   box-sizing: border-box;
   font-size: 14px;
   align-items: center;
+  gap: 12px;
 
   a.report-link {
     color: ${COLORS.mediumGray};
@@ -17,7 +18,7 @@ export const MessagingConversationHeaderContainer = styled.div`
   &.mobile {
     background: ${COLORS.white};
     position: sticky;
-    top: ${HEIGHTS.HEADER_MOBILE}px;
+    top: 0;
     left: 0;
     right: 0;
   }

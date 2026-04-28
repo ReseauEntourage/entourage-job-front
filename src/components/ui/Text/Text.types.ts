@@ -24,4 +24,5 @@ export interface TextProps {
   textAlign?: TextAlign;
   underline?: boolean;
   onClick?: () => void;
+  uppercase?: boolean;
 }

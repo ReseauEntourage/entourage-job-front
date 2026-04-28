@@ -8,6 +8,7 @@ export function Button({
   id,
   href,
   color,
+  align = 'center',
   style,
   children,
   prependIcon,
@@ -28,12 +29,16 @@ export function Button({
 }: ButtonProps) {
   const resizedPrependIcon = prependIcon
     ? React.cloneElement(prependIcon as React.ReactElement<{ size: number }>, {
-        size: BUTTON_SIZES[size].iconSize,
+        size:
+          (prependIcon as React.ReactElement<{ size: number }>).props.size ??
+          BUTTON_SIZES[size].iconSize,
       })
     : prependIcon;
   const resizedAppendIcon = appendIcon
     ? React.cloneElement(appendIcon as React.ReactElement<{ size: number }>, {
-        size: BUTTON_SIZES[size].iconSize,
+        size:
+          (appendIcon as React.ReactElement<{ size: number }>).props.size ??
+          BUTTON_SIZES[size].iconSize,
       })
     : appendIcon;
 
@@ -51,12 +56,19 @@ export function Button({
       variant={variant}
       size={size}
       color={color}
+      align={align}
       style={style}
     >
-      {resizedPrependIcon && <>{resizedPrependIcon}&nbsp;</>}
+      {resizedPrependIcon && (
+        <span style={{ flexShrink: 0 }}>{resizedPrependIcon}</span>
+      )}
+      {resizedPrependIcon && <>&nbsp;</>}
       {/** Children */}
       {children}
-      {resizedAppendIcon && <>&nbsp;{resizedAppendIcon}</>}
+      {resizedAppendIcon && <>&nbsp;</>}
+      {resizedAppendIcon && (
+        <span style={{ flexShrink: 0 }}>{resizedAppendIcon}</span>
+      )}
     </StyledButton>
   );
 
