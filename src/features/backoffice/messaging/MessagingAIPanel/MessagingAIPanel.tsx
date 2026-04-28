@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { COLORS } from '@/src/constants/styles';
-import { ButtonIcon } from 'src/components/ui/Button/ButtonIcon';
-import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
+import { Text, ButtonIcon, LucidIcon } from 'src/components/ui';
 import {
   messagingActions,
   selectActivePanelView,
@@ -49,7 +48,7 @@ export const MessagingAIPanel = () => {
               onClick={() => onSelectTab(tab.view)}
             >
               <LucidIcon name={tab.icon as any} size={14} />
-              {tab.label}
+              <Text>{tab.label}</Text>
             </PanelTab>
           ))}
         </PanelTabBar>

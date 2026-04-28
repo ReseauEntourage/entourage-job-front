@@ -229,10 +229,21 @@ export const MessagingConversation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConversation?.id, selectedConversation?.messages.length]);
 
-  const isCoach = currentUser?.role === UserRoles.COACH;
-  const showAIPanelMobile = isMobile && isCoach && isAIPanelOpen;
+  const conversationHasCandidate =
+    selectedConversation?.participants.some(
+      (p) => p.role === UserRoles.CANDIDATE
+    ) ?? false;
+  const canUseAIAssistant =
+    currentUser?.role !== UserRoles.CANDIDATE && conversationHasCandidate;
+  const isNewConversation = selectedConversationId === 'new';
+  const showAIPanelMobile =
+    isMobile && canUseAIAssistant && isAIPanelOpen && !isNewConversation;
   const showPanelSidebar =
-    !isMobile && isCoach && !!selectedConversationId && !isAIPanelOpen;
+    !isMobile &&
+    canUseAIAssistant &&
+    !!selectedConversationId &&
+    !isAIPanelOpen &&
+    !isNewConversation;
 
   const onOpenPanel = (view: MessagingPanelView) => {
     dispatch(messagingActions.setActivePanelView(view));
@@ -328,11 +339,14 @@ export const MessagingConversation = () => {
           ))}
         </MessagingPanelSidebarContainer>
       )}
-      {!isMobile && isAIPanelOpen && (
-        <MessagingConversationAIPanel>
-          <MessagingAIPanel />
-        </MessagingConversationAIPanel>
-      )}
+      {!isMobile &&
+        isAIPanelOpen &&
+        canUseAIAssistant &&
+        !isNewConversation && (
+          <MessagingConversationAIPanel>
+            <MessagingAIPanel />
+          </MessagingConversationAIPanel>
+        )}
     </MessagingConversationWrapper>
   );
 };

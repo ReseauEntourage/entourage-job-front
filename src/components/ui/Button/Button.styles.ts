@@ -15,16 +15,18 @@ export const StyledButton = styled.button<{
   size: ButtonSize;
   rounded: ButtonProps['rounded'];
   color?: ButtonProps['color'];
+  align?: ButtonProps['align'];
 }>`
   &.button {
     align-items: center;
-    justify-content: center;
+    justify-content: ${({ align }) =>
+      align === 'left' ? 'flex-start' : 'center'};
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    text-align: center;
+    text-align: ${({ align }) => align ?? 'center'};
     line-height: ${({ size }) =>
       BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;
 

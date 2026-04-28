@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, {
   useCallback,
   useEffect,
@@ -5,77 +6,57 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Api } from 'src/api';
+import { AiAssistantMessage } from 'src/api/types';
+import { Text } from 'src/components/ui';
+import { Alert } from 'src/components/ui/Alert/Alert';
+import { AlertVariant } from 'src/components/ui/Alert/Alert.types';
 import { Button } from 'src/components/ui/Button/Button';
 import { ButtonIcon } from 'src/components/ui/Button/ButtonIcon';
 import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
-import { selectSelectedConversationId } from 'src/use-cases/messaging';
+import { TextArea } from 'src/components/ui/Inputs/TextArea';
+import {
+  messagingActions,
+  selectSelectedConversation,
+  selectSelectedConversationId,
+} from 'src/use-cases/messaging';
+import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
+import {
+  QUICK_ACTIONS,
+  getContextualQuickAction,
+  processSSEStream,
+} from './MessagingAIAssistant.utils';
+import { EscalationState } from './MessagingAIAssitant.types';
 import {
   AIChatInputContainer,
-  AIChatInputTextarea,
   AIChatInputWrapper,
   AIEmptyState,
+  AIEscalateCard,
+  AIEscalateCardActions,
   AILoadingIndicator,
   AIMessageBubble,
   AIMessagesContainer,
   AIQuickActionsContainer,
   AIQuickActionsGrid,
-  AIQuickActionsLabel,
 } from './MessagingAIPanel.styles';
 
-interface AIMessage {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-}
-
-type AIQuickActionId = 'interview' | 'cv' | 'reengage' | 'sector';
-
-const QUICK_ACTIONS: {
-  id: AIQuickActionId;
-  label: string;
-  icon: string;
-  prompt: string;
-}[] = [
-  {
-    id: 'interview',
-    label: 'Preparer un entretien',
-    icon: 'ClipboardList',
-    prompt:
-      'Aide-moi a preparer un entretien pour ce candidat. Quelles questions sont probablement posees ?',
-  },
-  {
-    id: 'cv',
-    label: 'Conseils CV',
-    icon: 'FileText',
-    prompt:
-      'Quels conseils me donnes-tu pour ameliorer le CV de ce candidat en fonction de son secteur vise ?',
-  },
-  {
-    id: 'reengage',
-    label: 'Relancer le candidat',
-    icon: 'MessageCircle',
-    prompt:
-      'Ce candidat semble decourage. Propose-moi un message bienveillant pour le relancer.',
-  },
-  {
-    id: 'sector',
-    label: 'Comprendre le secteur',
-    icon: 'BookOpen',
-    prompt:
-      'Fais-moi un brief sur le secteur vise par ce candidat : metiers, attentes recruteurs, vocabulaire cle.',
-  },
-];
-
-const MOCK_RESPONSE =
-  "Fonctionnalite en cours de developpement — la connexion a l'IA sera disponible prochainement.";
-
 export const MessagingAIAssistant = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const selectedConversationId = useSelector(selectSelectedConversationId);
+  const selectedConversation = useSelector(selectSelectedConversation);
+  const hasConversationHistory =
+    (selectedConversation?.messages?.length ?? 0) > 0;
 
-  const [messages, setMessages] = useState<AIMessage[]>([]);
+  const [messages, setMessages] = useState<AiAssistantMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [escalation, setEscalation] = useState<EscalationState | null>(null);
+  const [rateLimitRemaining, setRateLimitRemaining] = useState<number | null>(
+    null
+  );
+  const [rateLimitResetAt, setRateLimitResetAt] = useState<number | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -89,10 +70,46 @@ export const MessagingAIAssistant = () => {
   };
 
   useEffect(() => {
-    setMessages([]);
-    setIsLoading(false);
-    setInputValue('');
+    if (!selectedConversationId) {
+      setMessages([]);
+      setIsLoading(false);
+      setInputValue('');
+      return;
+    }
+
+    let cancelled = false;
+
+    Api.getAISession(selectedConversationId)
+      .then((res) => {
+        if (!cancelled && res.data?.messages) {
+          setMessages(res.data.messages);
+        }
+      })
+      .catch(() => {
+        // No session yet — start fresh
+      });
+
+    return () => {
+      cancelled = true;
+      setMessages([]);
+      setIsLoading(false);
+      setInputValue('');
+      setEscalation(null);
+    };
   }, [selectedConversationId]);
+
+  useEffect(() => {
+    if (!rateLimitResetAt) {
+      return;
+    }
+    const delay = rateLimitResetAt - Date.now();
+    if (delay <= 0) {
+      setRateLimitResetAt(null);
+      return undefined;
+    }
+    const timer = setTimeout(() => setRateLimitResetAt(null), delay);
+    return () => clearTimeout(timer);
+  }, [rateLimitResetAt]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -104,33 +121,77 @@ export const MessagingAIAssistant = () => {
 
   useLayoutEffect(adjustInputHeight, []);
 
+  const isRateLimited = rateLimitResetAt !== null;
+
   const sendMessage = useCallback(
-    (content: string) => {
-      if (!content.trim() || isLoading) {
+    async (content: string) => {
+      if (
+        !content.trim() ||
+        isLoading ||
+        !selectedConversationId ||
+        isRateLimited
+      ) {
         return;
       }
 
-      const userMessage: AIMessage = {
-        id: `user-${Date.now()}`,
-        role: 'user',
-        content: content.trim(),
-      };
+      const assistantPlaceholderId = `assistant-${Date.now()}`;
 
-      setMessages((prev) => [...prev, userMessage]);
+      setMessages((prev) => [
+        ...prev,
+        { id: `user-${Date.now()}`, role: 'user', content: content.trim() },
+        { id: assistantPlaceholderId, role: 'assistant', content: '' },
+      ]);
       setIsLoading(true);
       setInputValue('');
 
-      setTimeout(() => {
-        const assistantMessage: AIMessage = {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: MOCK_RESPONSE,
-        };
-        setMessages((prev) => [...prev, assistantMessage]);
+      const updatePlaceholder = (updater: (prev: string) => string) => {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantPlaceholderId
+              ? { ...m, content: updater(m.content) }
+              : m
+          )
+        );
+      };
+
+      try {
+        const response = await Api.streamAIMessage(
+          selectedConversationId,
+          content.trim()
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) {
+          throw new Error('ReadableStream non disponible.');
+        }
+
+        await processSSEStream(reader, {
+          onContent: (chunk) => updatePlaceholder((prev) => prev + chunk),
+          onEscalate: (state) => setEscalation(state),
+          onError: (message) => updatePlaceholder(() => message),
+          onRateLimitInfo: (remaining) => setRateLimitRemaining(remaining),
+          onRateLimit: (resetInSeconds) => {
+            setRateLimitResetAt(Date.now() + resetInSeconds * 1000);
+            setRateLimitRemaining(0);
+            updatePlaceholder(
+              () =>
+                `Limite horaire atteinte. Vous pourrez envoyer un nouveau message dans environ ${Math.ceil(
+                  resetInSeconds / 60
+                )} minute(s).`
+            );
+          },
+        });
+      } catch {
+        updatePlaceholder(() => 'Une erreur est survenue. Veuillez réessayer.');
+      } finally {
         setIsLoading(false);
-      }, 1000);
+      }
     },
-    [isLoading]
+    [isLoading, isRateLimited, selectedConversationId]
   );
 
   const onQuickAction = useCallback(
@@ -140,12 +201,47 @@ export const MessagingAIAssistant = () => {
     [sendMessage]
   );
 
+  const contextualAction = getContextualQuickAction(hasConversationHistory);
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage(inputValue);
     }
   };
+
+  const onNewConversation = useCallback(async () => {
+    if (!selectedConversationId || isLoading || messages.length === 0) {
+      return;
+    }
+    try {
+      await Api.resetAISession(selectedConversationId);
+      setMessages([]);
+      setEscalation(null);
+    } catch {
+      // Silent fail — conversation is cleared locally regardless
+      setMessages([]);
+      setEscalation(null);
+    }
+  }, [selectedConversationId, isLoading, messages.length]);
+
+  const handleUseSuggestion = useCallback(
+    (text: string) => {
+      dispatch(messagingActions.setNewMessage(text));
+    },
+    [dispatch]
+  );
+
+  const contactReferent = useCallback(
+    (referentUserId: string) => {
+      router.push(`/backoffice/messaging?userId=${referentUserId}`);
+    },
+    [router]
+  );
+
+  const rateLimitMinutesLeft = rateLimitResetAt
+    ? Math.ceil((rateLimitResetAt - Date.now()) / 60000)
+    : null;
 
   return (
     <>
@@ -159,12 +255,20 @@ export const MessagingAIAssistant = () => {
             </p>
           </AIEmptyState>
         )}
-        {messages.map((message) => (
-          <AIMessageBubble key={message.id} role={message.role}>
-            {message.content}
-          </AIMessageBubble>
-        ))}
-        {isLoading && (
+        {messages.map((message) =>
+          message.role === 'assistant' ? (
+            <AssistantMessageBubble
+              key={message.id}
+              content={message.content}
+              onUseSuggestion={handleUseSuggestion}
+            />
+          ) : (
+            <AIMessageBubble key={message.id} role="user">
+              {message.content}
+            </AIMessageBubble>
+          )
+        )}
+        {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
           <AILoadingIndicator>
             <span />
             <span />
@@ -174,16 +278,84 @@ export const MessagingAIAssistant = () => {
         <div ref={messagesEndRef} />
       </AIMessagesContainer>
 
+      {escalation && (
+        <AIEscalateCard>
+          <Text>
+            <LucidIcon name="BadgeAlert" size={14} /> Cette situation peut
+            nécessiter l&apos;intervention de{' '}
+            <strong>{escalation.referentName}</strong>, référent Entourage Pro
+          </Text>
+          <AIEscalateCardActions>
+            <Button
+              variant="primary"
+              size="small"
+              onClick={() => contactReferent(escalation.referentUserId)}
+            >
+              Contacter le référent
+            </Button>
+          </AIEscalateCardActions>
+        </AIEscalateCard>
+      )}
+
+      {isRateLimited && (
+        <Alert
+          variant={AlertVariant.Error}
+          icon={<LucidIcon name="Clock" size={14} />}
+          rounded
+        >
+          Limite horaire atteinte (10 messages/heure). Réessayez dans environ{' '}
+          {rateLimitMinutesLeft} minute{rateLimitMinutesLeft !== 1 ? 's' : ''}.
+        </Alert>
+      )}
+
+      {!isRateLimited &&
+        rateLimitRemaining !== null &&
+        rateLimitRemaining <= 2 && (
+          <Alert
+            variant={AlertVariant.Warning}
+            icon={<LucidIcon name="TriangleAlert" size={14} />}
+            rounded
+          >
+            {rateLimitRemaining === 0 ? (
+              <Text>Vous avez atteint la limite horaire.</Text>
+            ) : (
+              <Text>
+                <strong>
+                  {rateLimitRemaining} message
+                  {rateLimitRemaining !== 1 ? 's' : ''}
+                </strong>{' '}
+                restant{rateLimitRemaining === 0 ? 's' : ''} avant
+                d&apos;atteindre la limite horaire.
+              </Text>
+            )}
+          </Alert>
+        )}
+
       <AIQuickActionsContainer>
-        <AIQuickActionsLabel>Suggestions rapides</AIQuickActionsLabel>
+        <Text size="small" weight="semibold" uppercase color="mediumGray">
+          Suggestions rapides
+        </Text>
+
         <AIQuickActionsGrid>
+          <Button
+            key={contextualAction.id}
+            variant="secondary"
+            size="small"
+            onClick={() => onQuickAction(contextualAction)}
+            disabled={isLoading || isRateLimited}
+            prependIcon={
+              <LucidIcon name={contextualAction.icon as any} size={13} />
+            }
+          >
+            {contextualAction.label}
+          </Button>
           {QUICK_ACTIONS.map((action) => (
             <Button
               key={action.id}
               variant="secondary"
               size="small"
               onClick={() => onQuickAction(action)}
-              disabled={isLoading}
+              disabled={isLoading || isRateLimited}
               prependIcon={<LucidIcon name={action.icon as any} size={13} />}
             >
               {action.label}
@@ -194,22 +366,40 @@ export const MessagingAIAssistant = () => {
 
       <AIChatInputContainer>
         <AIChatInputWrapper>
-          <AIChatInputTextarea
-            ref={inputRef}
-            rows={1}
+          <TextArea
+            id="ai-chat-input"
+            name="ai-chat-input"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={setInputValue}
             onKeyDown={onKeyDown}
-            placeholder="Posez une question..."
-            disabled={isLoading}
+            placeholder={
+              isRateLimited
+                ? 'Limite horaire atteinte...'
+                : 'Posez une question...'
+            }
+            disabled={isLoading || isRateLimited}
+            rows={1}
+            inputRef={(el) => {
+              inputRef.current = el;
+            }}
+            naked
           />
         </AIChatInputWrapper>
         <ButtonIcon
+          icon={<LucidIcon name="RotateCcw" size={16} />}
+          onClick={onNewConversation}
+          disabled={isLoading || messages.length === 0}
+        />
+        <ButtonIcon
           icon={<LucidIcon name="Send" size={18} />}
           onClick={() => sendMessage(inputValue)}
-          disabled={!inputValue.trim() || isLoading}
+          disabled={!inputValue.trim() || isLoading || isRateLimited}
         />
       </AIChatInputContainer>
+      <Text size="small" color="mediumGray" center>
+        L&apos;IA peut faire des erreurs. Vérifiez toujours les informations
+        proposées.
+      </Text>
     </>
   );
 };

@@ -59,9 +59,12 @@ export const MessagingConversationHeader = () => {
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
 
-  const isCoach = currentUser?.role === UserRoles.COACH;
+  const canUseAIAssistant = currentUser?.role !== UserRoles.CANDIDATE;
   const showMobilePanelMenu =
-    isMobile && isCoach && selectedConversationId !== null;
+    isMobile &&
+    canUseAIAssistant &&
+    selectedConversationId !== null &&
+    selectedConversationId !== 'new';
 
   const onClickBackBtn = () => {
     dispatch(messagingActions.selectConversation(null));

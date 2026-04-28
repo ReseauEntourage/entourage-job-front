@@ -53,6 +53,7 @@ export const COLORS = {
 
   // Red
   lightRed: '#F1545D',
+  extraLightRed: '#FEEAEA',
   red: '#FE2929',
 
   // Blue
@@ -116,8 +117,8 @@ export const ALERT_COLORS = {
     border: COLORS.primaryBlue,
   },
   [AlertVariant.Error]: {
-    background: COLORS.lightRed,
-    text: COLORS.white,
+    background: COLORS.extraLightRed,
+    text: COLORS.red,
     border: COLORS.red,
   },
   [AlertVariant.White]: {
@@ -129,6 +130,11 @@ export const ALERT_COLORS = {
     background: COLORS.extraLightGreen,
     text: COLORS.black,
     border: COLORS.green,
+  },
+  [AlertVariant.Warning]: {
+    background: COLORS.extraLightAmber,
+    text: COLORS.amber,
+    border: COLORS.orangeLocal,
   },
 };
 

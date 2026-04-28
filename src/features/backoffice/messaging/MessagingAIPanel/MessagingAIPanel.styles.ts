@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { sizesPx } from '@/src/components/ui/Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
 
 const slideInFromRight = keyframes`
@@ -105,9 +106,8 @@ export const AIMessageBubble = styled.div<AIMessageBubbleProps>`
   max-width: 90%;
   padding: 10px 14px;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
-  white-space: pre-wrap;
   word-break: break-word;
 
   ${({ role }) =>
@@ -117,6 +117,7 @@ export const AIMessageBubble = styled.div<AIMessageBubbleProps>`
     background: ${COLORS.primaryBlue};
     color: ${COLORS.white};
     border-bottom-right-radius: 4px;
+    white-space: pre-wrap;
   `
       : `
     align-self: flex-start;
@@ -124,6 +125,65 @@ export const AIMessageBubble = styled.div<AIMessageBubbleProps>`
     color: ${COLORS.black};
     border-bottom-left-radius: 4px;
   `}
+`;
+
+export const AIMarkdownContent = styled.div<{ $device: 'mobile' | 'desktop' }>`
+  font-size: ${({ $device }) => sizesPx[$device]['normal']}px;
+  line-height: 1.6;
+
+  p {
+    margin: 0 0 8px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul,
+  ol {
+    margin: 4px 0 8px;
+    padding-left: 18px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  li {
+    margin-bottom: 2px;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+    color: ${COLORS.darkGray};
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 8px 0 4px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  code {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 14px;
+    font-family: monospace;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    margin: 8px 0;
+  }
 `;
 
 const bounce = keyframes`
@@ -163,26 +223,18 @@ export const AIQuickActionsContainer = styled.div`
   flex-shrink: 0;
 `;
 
-export const AIQuickActionsLabel = styled.p`
-  margin: 0 0 10px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: ${COLORS.mediumGray};
-`;
-
 export const AIQuickActionsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+  margin-top: 10px;
 `;
 
 export const AIChatInputContainer = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  padding: 8px 16px 12px;
+  padding: 8px 16px 4px;
   flex-shrink: 0;
 `;
 
@@ -200,22 +252,28 @@ export const AIChatInputWrapper = styled.div`
   }
 `;
 
-export const AIChatInputTextarea = styled.textarea`
-  min-height: 20px;
-  max-height: 120px;
-  width: 100%;
-  border: none;
-  resize: none;
-  outline: none;
-  font-size: 13px;
-  font-family: Poppins, sans-serif;
-  padding: 0;
-  box-sizing: border-box;
-  background: transparent;
-  color: ${COLORS.black};
-  line-height: 1.5;
+export const AIEscalateCard = styled.div`
+  margin: 0 16px;
+  padding: 12px 14px;
+  background: #fff8f0;
+  border: 1px solid #f5a623;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+`;
 
-  &::placeholder {
-    color: ${COLORS.mediumGray};
-  }
+export const AIEscalateCardActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const AISuggestionList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
