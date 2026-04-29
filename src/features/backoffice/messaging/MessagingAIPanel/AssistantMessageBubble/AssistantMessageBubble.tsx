@@ -1,4 +1,5 @@
-import * as DOMPurify from 'dompurify';
+// eslint-disable-next-line import/no-named-as-default
+import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import { useMemo } from 'react';
 import { useIsDesktop } from '@/src/hooks/utils';
