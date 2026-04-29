@@ -12,8 +12,6 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
   ],
 
-  staticDirs: ['../public'],
-
   viteFinal: async (viteConfig) => {
     viteConfig.plugins = [
       ...(viteConfig.plugins ?? []),
