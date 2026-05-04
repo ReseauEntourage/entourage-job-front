@@ -51,7 +51,7 @@ const TextSegment = ({ content }: TextSegmentProps) => {
   const device = useMemo(() => (isDesktop ? 'desktop' : 'mobile'), [isDesktop]);
 
   const html = useMemo(() => {
-    const raw = marked.parse(content, { async: false }) as string;
+    const raw = marked.parse(content) as string;
     return DOMPurify.sanitize(raw);
   }, [content]);
 
