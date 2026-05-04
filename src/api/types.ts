@@ -435,7 +435,7 @@ export type CurrentUserReferredUser = {
   email: string;
   coachesContactedCount: number;
   referredAt: string | null;
-  accountCreatedAt: string | null;
+  onboardingCompletedAt: string | null;
 };
 
 export type CurrentUserReferrer = {

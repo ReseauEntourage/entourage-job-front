@@ -4,7 +4,7 @@ export interface RefererCandidatesTableItem {
   email: string;
   coachesContactedCount: string;
   referredAt: string;
-  accountCreatedAt: string;
+  onboardingCompletedAt: string;
 }
 
 export interface RefererCandidatesTableProps {

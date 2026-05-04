@@ -12,7 +12,7 @@ export const RefererCandidatesTableDesktop = ({
         <Th key="candidateEmail">Email</Th>,
         <Th key="coachesContactedCount">Coachs contactés</Th>,
         <Th key="referredAt">Invitation envoyée</Th>,
-        <Th key="accountCreatedAt">Intégration finalisée le</Th>,
+        <Th key="onboardingCompletedAt">Intégration finalisée le</Th>,
       ]}
       dataTestId="refered-candidate-list"
       body={items.map((item) => (
@@ -23,7 +23,7 @@ export const RefererCandidatesTableDesktop = ({
           <TdDesktop>{item.email}</TdDesktop>
           <TdDesktop>{item.coachesContactedCount}</TdDesktop>
           <TdDesktop>{item.referredAt}</TdDesktop>
-          <TdDesktop>{item.accountCreatedAt}</TdDesktop>
+          <TdDesktop>{item.onboardingCompletedAt}</TdDesktop>
         </TrDesktop>
       ))}
     />

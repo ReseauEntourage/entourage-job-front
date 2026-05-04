@@ -47,16 +47,17 @@ export const RefererCandidatesTableMobile = ({
             </Text>
             <Text size="large">
               {item.referredAt}
-              {item.accountCreatedAt === '-' && " — En attente d'activation"}
+              {item.onboardingCompletedAt === '-' &&
+                " — En attente d'activation"}
             </Text>
           </StyledMobileCollaboratorItemField>
 
-          {item.accountCreatedAt !== '-' && (
+          {item.onboardingCompletedAt !== '-' && (
             <StyledMobileCollaboratorItemField>
               <Text size="large" color="mediumGray">
                 Intégration finalisée le
               </Text>
-              <Text size="large">{item.accountCreatedAt}</Text>
+              <Text size="large">{item.onboardingCompletedAt}</Text>
             </StyledMobileCollaboratorItemField>
           )}
         </StyledMobileCollaboratorItem>

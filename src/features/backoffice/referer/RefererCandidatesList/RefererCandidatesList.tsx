@@ -20,7 +20,7 @@ export const RefererCandidatesList = () => {
           candidate.coachesContactedCount > 1 ? 's' : ''
         }`,
         referredAt: candidate.referredAt ?? '-',
-        accountCreatedAt: candidate.accountCreatedAt ?? '-',
+        onboardingCompletedAt: candidate.onboardingCompletedAt ?? '-',
       })),
     [referredUsers]
   );
