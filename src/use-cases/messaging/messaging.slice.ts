@@ -13,6 +13,8 @@ import {
 
 type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
 
+export type MessagingPanelView = 'ai';
+
 interface State {
   getConversations: RequestState<typeof getConversationsAdapter>;
   getUnseenConversationsCount: RequestState<
@@ -28,6 +30,8 @@ interface State {
   query: string;
   unseenConversationCount: number;
   newMessage: string;
+  isAIPanelOpen: boolean;
+  activePanelView: MessagingPanelView;
 }
 
 const initialState: State = {
@@ -44,6 +48,8 @@ const initialState: State = {
   query: '',
   unseenConversationCount: 0,
   newMessage: '',
+  isAIPanelOpen: false,
+  activePanelView: 'ai',
 };
 
 export const slice = createSlice({
@@ -156,6 +162,13 @@ export const slice = createSlice({
     },
     setNewMessage(state, action) {
       state.newMessage = action.payload;
+    },
+    setIsAIPanelOpen(state, action) {
+      state.isAIPanelOpen = action.payload;
+    },
+    setActivePanelView(state, action) {
+      state.activePanelView = action.payload;
+      state.isAIPanelOpen = true;
     },
     ...postFeedbackAdapter.getReducers<State>((state) => state.postMessage, {
       postFeedbackSucceeded(state) {

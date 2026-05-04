@@ -764,3 +764,16 @@ export type CompanyWithUsers = Company & {
   users: UserWithCompanyAndConversations[];
   pendingInvitations: Invitation[];
 };
+
+export type AiAssistantMessageRole = 'user' | 'assistant';
+
+export type AiAssistantMessage = {
+  id: string;
+  role: AiAssistantMessageRole;
+  content: string;
+  createdAt?: string;
+};
+
+export type AiAssistantSession = {
+  messages: AiAssistantMessage[];
+};

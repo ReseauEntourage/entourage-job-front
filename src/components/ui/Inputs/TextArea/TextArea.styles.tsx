@@ -5,8 +5,15 @@ import {
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledTextAreaContainer = styled.div`
+export const StyledTextAreaContainer = styled.div<{ naked?: boolean }>`
   ${() => commonInputContainerStyles}
+  ${({ naked }) =>
+    naked &&
+    css`
+      margin-bottom: 0;
+      flex: 1;
+      min-width: 0;
+    `}
 `;
 
 export const StyledTextArea = styled.textarea<{
@@ -14,6 +21,7 @@ export const StyledTextArea = styled.textarea<{
   textAreaWidth?: number;
   width: number;
   device: 'mobile' | 'desktop';
+  naked?: boolean;
 }>`
   ${() => commonInputStyles}
   width: 100%;
@@ -32,6 +40,20 @@ export const StyledTextArea = styled.textarea<{
   :focus-visible {
     outline: none;
   }
+  ${({ naked }) =>
+    naked &&
+    css`
+      border: none;
+      padding: 0;
+      min-height: 20px;
+      max-height: 120px;
+      font-size: 13px;
+      line-height: 1.5;
+      &:focus,
+      &:hover {
+        border: none;
+      }
+    `}
 `;
 
 export const StyledTextAreaScrollContainer = styled.div`

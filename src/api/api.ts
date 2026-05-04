@@ -689,9 +689,44 @@ export class APIHandler {
     return this.post('/messaging/conversations/feedback', params);
   }
 
+  /// ////////////////
+  // AI Assistant  //
+  /// ////////////////
+
+  getAISession(conversationId: string): Promise<AxiosResponse> {
+    return this.get(`/ai-assistant/conversations/${conversationId}/session`);
+  }
+
+  streamAIMessage(conversationId: string, message: string): Promise<Response> {
+    const token =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('access-token')
+        : null;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/ai-assistant/conversations/${conversationId}/stream`,
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ message }),
+      }
+    );
+  }
+
+  resetAISession(conversationId: string): Promise<AxiosResponse> {
+    return this.delete(
+      `/ai-assistant/conversations/${conversationId}/session/messages`
+    );
+  }
+
   /// /////////////////
   // read documents //
-  /// /////////////////
+  /// ////////////////
 
   postReadDocument(
     params: { documentName: DocumentNameType },
