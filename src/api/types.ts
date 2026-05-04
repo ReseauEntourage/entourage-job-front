@@ -432,6 +432,10 @@ export type CurrentUserReferredUser = {
   firstName: string;
   lastName: string;
   role: UserRoles;
+  email: string;
+  coachesContactedCount: number;
+  referredAt: string | null;
+  onboardingCompletedAt: string | null;
 };
 
 export type CurrentUserReferrer = {
