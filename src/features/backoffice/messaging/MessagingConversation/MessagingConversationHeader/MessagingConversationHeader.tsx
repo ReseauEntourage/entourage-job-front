@@ -12,11 +12,13 @@ import {
   ConversationParticipant,
   ConversationParticipants,
 } from 'src/api/types';
+import { FeatureKey } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
+  selectHasBetaFeature,
 } from 'src/use-cases/current-user';
 import {
   messagingActions,
@@ -52,6 +54,9 @@ export const MessagingConversationHeader = () => {
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectCurrentUser);
+  const hasMessagingAIAssistant = useSelector(
+    selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
+  );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
   const activePanelView = useSelector(selectActivePanelView);
   const addresees = selectedConversation?.participants.filter(
@@ -59,7 +64,8 @@ export const MessagingConversationHeader = () => {
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
 
-  const canUseAIAssistant = currentUser?.role !== UserRoles.CANDIDATE;
+  const canUseAIAssistant =
+    currentUser?.role !== UserRoles.CANDIDATE && hasMessagingAIAssistant;
   const showMobilePanelMenu =
     isMobile &&
     canUseAIAssistant &&

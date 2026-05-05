@@ -288,6 +288,10 @@ export type UserStats = {
   totalConversationWithMirrorRoleCount: number | null;
 };
 
+export enum FeatureKey {
+  MESSAGING_AI_ASSISTANT = 'messaging_ai_assistant',
+}
+
 export type User = {
   id: string;
   createdAt?: string;
@@ -305,6 +309,7 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+  betaFeatures: Record<string, boolean>;
 };
 
 export type MemberUser = User & {
@@ -372,6 +377,7 @@ export type CurrentUserIdentity = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+  betaFeatures: Record<string, boolean>;
 };
 
 export type CurrentUserProfile = {

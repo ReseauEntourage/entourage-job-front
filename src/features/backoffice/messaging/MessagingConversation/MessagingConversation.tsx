@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { FeatureKey } from 'src/api/types';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
+  selectHasBetaFeature,
 } from 'src/use-cases/current-user';
 import {
   messagingActions,
@@ -57,6 +59,9 @@ export const MessagingConversation = () => {
   const isMobile = useIsMobile();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserId = useSelector(selectCurrentUserId);
+  const hasMessagingAIAssistant = useSelector(
+    selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
+  );
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const newMessage = useSelector(selectNewMessage);
@@ -234,7 +239,9 @@ export const MessagingConversation = () => {
       (p) => p.role === UserRoles.CANDIDATE
     ) ?? false;
   const canUseAIAssistant =
-    currentUser?.role !== UserRoles.CANDIDATE && conversationHasCandidate;
+    currentUser?.role !== UserRoles.CANDIDATE &&
+    conversationHasCandidate &&
+    hasMessagingAIAssistant;
   const isNewConversation = selectedConversationId === 'new';
   const showAIPanelMobile =
     isMobile && canUseAIAssistant && isAIPanelOpen && !isNewConversation;
