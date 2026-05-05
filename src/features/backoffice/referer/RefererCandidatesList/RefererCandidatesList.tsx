@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { Section } from '@/src/components/ui';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
@@ -8,6 +9,7 @@ import { RefererCandidatesTable } from './RefererCandidatesTable/RefererCandidat
 import { RefererCandidatesTableItem } from './RefererCandidatesTable/RefererCandidatesTable.types';
 
 export const RefererCandidatesList = () => {
+  const router = useRouter();
   const referredUsers = useCurrentUserReferredUsers();
 
   const items = useMemo<RefererCandidatesTableItem[]>(
@@ -43,6 +45,12 @@ export const RefererCandidatesList = () => {
             title="Suivi de vos candidats orientés"
             description="Retrouvez la liste de tous les candidats que vous avez orientés"
             noSeparator
+            cta={{
+              label: 'Orienter un candidat',
+              onClick: () => {
+                router.push('/backoffice/referer/orienter/step-1');
+              },
+            }}
           />
         </Section>
       </StyledBackgroundedHeaderBackoffice>
