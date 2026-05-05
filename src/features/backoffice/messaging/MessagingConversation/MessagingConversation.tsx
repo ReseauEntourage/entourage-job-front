@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { FeatureKey } from 'src/api/types';
@@ -25,15 +24,11 @@ import {
   selectNewMessage,
   selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
-import type { MessagingPanelView } from 'src/use-cases/messaging/messaging.slice';
 import {
   MessagingConversationAIPanel,
   MessagingConversationContainer,
   MessagingConversationWrapper,
   MessagingMessagesContainer,
-  MessagingPanelSidebarContainer,
-  PanelSidebarButton,
-  PanelSidebarLabel,
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
@@ -43,16 +38,6 @@ import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
-
-interface PanelOption {
-  view: MessagingPanelView;
-  label: string;
-  icon: string;
-}
-
-const PANEL_OPTIONS: PanelOption[] = [
-  { view: 'ai', label: 'Assistant IA', icon: 'Sparkles' },
-];
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -245,16 +230,6 @@ export const MessagingConversation = () => {
   const isNewConversation = selectedConversationId === 'new';
   const showAIPanelMobile =
     isMobile && canUseAIAssistant && isAIPanelOpen && !isNewConversation;
-  const showPanelSidebar =
-    !isMobile &&
-    canUseAIAssistant &&
-    !!selectedConversationId &&
-    !isAIPanelOpen &&
-    !isNewConversation;
-
-  const onOpenPanel = (view: MessagingPanelView) => {
-    dispatch(messagingActions.setActivePanelView(view));
-  };
 
   const conversationContent = (
     <>
@@ -333,19 +308,6 @@ export const MessagingConversation = () => {
       <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
         {conversationContent}
       </MessagingConversationContainer>
-      {showPanelSidebar && (
-        <MessagingPanelSidebarContainer>
-          {PANEL_OPTIONS.map((option) => (
-            <PanelSidebarButton
-              key={option.view}
-              onClick={() => onOpenPanel(option.view)}
-            >
-              <LucidIcon name={option.icon as any} size={18} />
-              <PanelSidebarLabel>{option.label}</PanelSidebarLabel>
-            </PanelSidebarButton>
-          ))}
-        </MessagingPanelSidebarContainer>
-      )}
       {!isMobile &&
         isAIPanelOpen &&
         canUseAIAssistant &&

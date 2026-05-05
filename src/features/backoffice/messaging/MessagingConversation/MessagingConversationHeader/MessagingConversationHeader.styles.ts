@@ -12,9 +12,6 @@ export const MessagingConversationHeaderContainer = styled.div`
   align-items: center;
   gap: 12px;
 
-  a.report-link {
-    color: ${COLORS.mediumGray};
-  }
   &.mobile {
     background: ${COLORS.white};
     position: sticky;
@@ -50,12 +47,8 @@ export const ConversationAddresee = styled.div`
   }
 `;
 
-export const ActionMenuIconStyled = styled.div`
+export const StyledButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
-  padding: 5px;
-  border-radius: 50%;
-  border: ${COLORS.gray} 1px solid;
-  transition: 0.3s ease-in-out;
-  color: ${COLORS.gray};
+  gap: 15px;
+  align-items: center;
 `;
