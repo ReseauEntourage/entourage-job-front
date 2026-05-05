@@ -309,7 +309,7 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
-  betaFeatures: Record<string, boolean>;
+  betaFeatures: Record<FeatureKey, boolean>;
 };
 
 export type MemberUser = User & {
@@ -377,7 +377,7 @@ export type CurrentUserIdentity = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
-  betaFeatures: Record<string, boolean>;
+  betaFeatures: Record<FeatureKey, boolean>;
 };
 
 export type CurrentUserProfile = {
