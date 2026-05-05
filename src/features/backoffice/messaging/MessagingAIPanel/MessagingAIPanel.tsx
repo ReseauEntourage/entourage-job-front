@@ -22,7 +22,7 @@ interface PanelTabConfig {
 }
 
 const PANEL_TABS: PanelTabConfig[] = [
-  { view: 'ai', label: 'Assistant IA', icon: 'Sparkles' },
+  { view: 'ai', label: 'Assistant Coach', icon: 'Sparkles' },
 ];
 
 export const MessagingAIPanel = () => {

@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Badge, BadgeVariant, ImgUserProfile } from '@/src/components/ui';
+import { Button, ImgUserProfile } from '@/src/components/ui';
 import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
-import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
-import { DropdownToggle } from '@/src/components/ui/Dropdown/DropdownToggle';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
@@ -12,11 +10,13 @@ import {
   ConversationParticipant,
   ConversationParticipants,
 } from 'src/api/types';
+import { FeatureKey } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
+  selectHasBetaFeature,
 } from 'src/use-cases/current-user';
 import {
   messagingActions,
@@ -27,22 +27,12 @@ import {
 } from 'src/use-cases/messaging';
 import type { MessagingPanelView } from 'src/use-cases/messaging/messaging.slice';
 import {
-  ActionMenuIconStyled,
   AddreseeInfosContainer,
   ConversationAddresee,
   LeftColumn,
   MessagingConversationHeaderContainer,
+  StyledButtonContainer,
 } from './MessagingConversationHeader.styles';
-
-interface PanelOption {
-  view: MessagingPanelView;
-  label: string;
-  icon: string;
-}
-
-const PANEL_OPTIONS: PanelOption[] = [
-  { view: 'ai', label: 'Assistant IA', icon: 'Sparkles' },
-];
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
@@ -52,6 +42,9 @@ export const MessagingConversationHeader = () => {
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectCurrentUser);
+  const hasMessagingAIAssistant = useSelector(
+    selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
+  );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
   const activePanelView = useSelector(selectActivePanelView);
   const addresees = selectedConversation?.participants.filter(
@@ -59,12 +52,8 @@ export const MessagingConversationHeader = () => {
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
 
-  const canUseAIAssistant = currentUser?.role !== UserRoles.CANDIDATE;
-  const showMobilePanelMenu =
-    isMobile &&
-    canUseAIAssistant &&
-    selectedConversationId !== null &&
-    selectedConversationId !== 'new';
+  const canUseAIAssistant =
+    currentUser?.role !== UserRoles.CANDIDATE && hasMessagingAIAssistant;
 
   const onClickBackBtn = () => {
     dispatch(messagingActions.selectConversation(null));
@@ -120,46 +109,23 @@ export const MessagingConversationHeader = () => {
           </AddreseeInfosContainer>
         )}
       </LeftColumn>
-      {showMobilePanelMenu && (
-        <Dropdown>
-          <DropdownToggle>
-            <Badge variant={BadgeVariant.HoverBlue} borderRadius="medium">
-              <LucidIcon name="Menu" size={20} /> Mes outils
-            </Badge>
-          </DropdownToggle>
-          <Dropdown.Menu openDirection="left">
-            {PANEL_OPTIONS.map((option) => (
-              <Dropdown.Item
-                key={option.view}
-                onClick={() => onSelectPanel(option.view)}
-              >
-                <LucidIcon name={option.icon as any} size={14} />
-                {option.label}
-                {isAIPanelOpen && activePanelView === option.view && (
-                  <LucidIcon name="Check" size={14} />
-                )}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-      )}
-      {/* TODO Implement new dropdown in mobile to report a user */}
-      {isMobile ? (
-        <Dropdown>
-          <DropdownToggle>
-            <ActionMenuIconStyled>
-              <LucidIcon name="Ellipsis" size={25} />
-            </ActionMenuIconStyled>
-          </DropdownToggle>
-          <Dropdown.Menu openDirection="left">
-            <Dropdown.Item onClick={onClickReportUser}>Signaler</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      ) : (
-        <a className="report-link" onClick={onClickReportUser}>
-          Signaler
-        </a>
-      )}
+      <StyledButtonContainer>
+        {canUseAIAssistant && (
+          <Button
+            prependIcon={<LucidIcon name="Sparkles" size={20} />}
+            onClick={() => onSelectPanel('ai')}
+            size="small"
+            variant="secondary"
+          >
+            Assitant {!isMobile && 'Coach'}
+          </Button>
+        )}
+        <ButtonIcon
+          icon={<LucidIcon name="Flag" />}
+          onClick={onClickReportUser}
+          size="small"
+        />
+      </StyledButtonContainer>
     </MessagingConversationHeaderContainer>
   );
 };

@@ -1,3 +1,4 @@
+import { FeatureKey } from 'src/api/types';
 import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchCurrentUserSocialSituationAdapter,
@@ -158,3 +159,11 @@ export const selectFetchCurrentReferrerStatus = (state: RootState) =>
 
 export const selectFetchUserStatsStatus = (state: RootState) =>
   state.currentUser.fetchUserStats.status;
+
+export const selectBetaFeatures = (state: RootState): Record<string, boolean> =>
+  state.currentUser.user?.betaFeatures ?? {};
+
+export const selectHasBetaFeature =
+  (key: FeatureKey) =>
+  (state: RootState): boolean =>
+    selectBetaFeatures(state)[key] === true;
