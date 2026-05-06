@@ -71,11 +71,6 @@ export const StyledListOptionContainer = styled.div`
   align-items: stretch;
 `;
 
-export const StyledInput = styled.input<{ radioSize?: 'small' | 'large' }>`
-  width: ${(props) => (props.radioSize === 'small' ? '16px' : '20px')};
-  height: ${(props) => (props.radioSize === 'small' ? '16px' : '20px')};
-`;
-
 export const StyledSelectListGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -83,18 +78,3 @@ export const StyledSelectListGroup = styled.div`
 `;
 
 export const StyledSelectListGroupLabel = styled.div``;
-
-export const StyledSelectListItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 16px;
-  cursor: pointer;
-  background-color: ${COLORS.white};
-
-  &:hover {
-    background-color: ${COLORS.hoverBlue};
-  }
-`;

@@ -13,7 +13,7 @@ import { Experience } from 'src/api/types';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledProfileExperiencesList } from './ProfileExperiences.styles';
 
-export interface ProfileExperiencesProps {
+interface ProfileExperiencesProps {
   userId: string;
   userFirstName: string;
   userRole: UserRoles;

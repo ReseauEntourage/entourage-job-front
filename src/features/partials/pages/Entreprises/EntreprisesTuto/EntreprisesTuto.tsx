@@ -3,7 +3,7 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { CompanyGoal } from '@/src/constants/company';
 import { RowIconTitleText } from '../../../utils/RowIconTitleText';
 
-export type EntreprisesTutoProps = {
+type EntreprisesTutoProps = {
   context: CompanyGoal;
 };
 

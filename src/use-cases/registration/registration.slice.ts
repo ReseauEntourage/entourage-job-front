@@ -9,7 +9,7 @@ import {
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
 
-export interface State {
+interface State {
   createUser: RequestState<typeof createUserAdapter>;
   createUserError: CreateUserError | null;
   currentStep: RegistrationStep;

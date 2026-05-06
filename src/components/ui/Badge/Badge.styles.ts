@@ -32,7 +32,9 @@ const badgeVariantStyles: Record<BadgeVariant, ReturnType<typeof css>> = {
 export const StyledBadge = styled.div<{
   variant: BadgeVariant;
   $borderRadius?: 'small' | 'medium' | 'large';
+  $clickable?: boolean;
 }>`
+  cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
   padding: 6px 12px;
   border-radius: ${({ $borderRadius }) => {
     switch ($borderRadius) {

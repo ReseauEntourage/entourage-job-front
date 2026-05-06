@@ -6,7 +6,7 @@ import { StyledEntityCard } from './EntityCard.styles';
 
 type Url = string | UrlObject;
 
-export interface EntityCardProps {
+interface EntityCardProps {
   borderColor?: Color;
   href: Url;
   onClick: () => void;

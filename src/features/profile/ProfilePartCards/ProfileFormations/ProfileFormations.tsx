@@ -13,7 +13,7 @@ import { Formation } from 'src/api/types';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledProfileFormationsList } from './ProfileFormations.styles';
 
-export interface ProfileFormationsProps {
+interface ProfileFormationsProps {
   userId: string;
   userFirstName: string;
   userRole: UserRoles;

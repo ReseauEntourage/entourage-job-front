@@ -20,7 +20,7 @@ const StyledImageContainer = styled.div`
   height: 200px;
 `;
 
-export interface ProfileGenerationProcessProps {
+interface ProfileGenerationProcessProps {
   title?: string;
   overwriteWarning?: boolean;
   noAction?: boolean;

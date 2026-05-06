@@ -17,7 +17,8 @@ import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention
 import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
 import { useEditableExperiencesByIndex } from '@/src/features/profile/hooks/useEditableExperiences';
 import { useEditableFormationsByIndex } from '@/src/features/profile/hooks/useEditableFormations';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useProfileGeneration } from '@/src/hooks/useProfileGeneration';
 import {
   currentUserActions,
@@ -46,7 +47,8 @@ import {
 
 export const CvCompletionAccordion = () => {
   const dispatch = useDispatch();
-  const currentUser = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
+  const userProfileComplete = useCurrentUserProfileComplete();
   const userIsComplete = useSelector(selectIsComplete);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -80,11 +82,10 @@ export const CvCompletionAccordion = () => {
     }
   }, [isProfileGenerationLoading]);
 
-  const isGenerated = hasJustGeneratedProfile || currentUser.hasExtractedCvData;
+  const isGenerated =
+    hasJustGeneratedProfile || userProfileComplete?.hasExtractedCvData;
   const shouldShowUploadButton =
-    !currentUser.userProfile.hasExternalCv &&
-    !isProfileGenerationLoading &&
-    !isGenerated;
+    !userProfile?.hasExternalCv && !isProfileGenerationLoading && !isGenerated;
 
   const {
     setValue,
@@ -108,30 +109,29 @@ export const CvCompletionAccordion = () => {
       return;
     }
 
-    // Wait for the user refetch (triggered after the pusher event) to get the generated data in currentUser.
-    if (!currentUser.hasExtractedCvData) {
+    // Wait for the user refetch (triggered after the pusher event) to get the generated data.
+    if (!userProfileComplete?.hasExtractedCvData) {
       return;
     }
 
-    const nextDescription = currentUser.userProfile?.description ?? '';
+    const nextDescription = userProfileComplete?.description ?? '';
 
     const nextSkills =
-      currentUser.userProfile?.skills?.map((skill) => ({
+      userProfileComplete?.skills?.map((skill) => ({
         value: skill.name,
         label: skill.name,
       })) ?? [];
 
     const nextInterests =
-      currentUser.userProfile?.interests &&
-      currentUser.userProfile.interests.length > 0
-        ? sortByOrder(currentUser.userProfile.interests).map((interest) => ({
+      userProfileComplete?.interests && userProfileComplete.interests.length > 0
+        ? sortByOrder(userProfileComplete.interests).map((interest) => ({
             value: interest.name,
             label: interest.name,
           }))
         : [];
 
     const nextLanguages =
-      currentUser.userProfile?.userProfileLanguages
+      userProfileComplete?.userProfileLanguages
         ?.map((upLanguage) => {
           const languageId = upLanguage.language?.id;
           const languageName = upLanguage.language?.name;
@@ -147,8 +147,8 @@ export const CvCompletionAccordion = () => {
           (value): value is { value: string; label: string } => value !== null
         ) ?? [];
 
-    const nextExperiences = currentUser.userProfile?.experiences ?? [];
-    const nextFormations = currentUser.userProfile?.formations ?? [];
+    const nextExperiences = userProfileComplete?.experiences ?? [];
+    const nextFormations = userProfileComplete?.formations ?? [];
 
     // CV accordion fields: force sync from generated values.
     setValue('description', nextDescription, { shouldValidate: true });
@@ -160,8 +160,8 @@ export const CvCompletionAccordion = () => {
 
     hasAppliedGeneratedCvValuesRef.current = true;
   }, [
-    currentUser.hasExtractedCvData,
-    currentUser.userProfile,
+    userProfileComplete?.hasExtractedCvData,
+    userProfileComplete,
     hasJustGeneratedProfile,
     setValue,
   ]);
@@ -264,14 +264,14 @@ export const CvCompletionAccordion = () => {
 
     // Explicitly wait for the upload success before starting the generation.
     // The flag prevents triggering the generation if the upload comes from elsewhere.
-    if (isUploadExternalCvSucceeded && currentUser.userProfile.hasExternalCv) {
+    if (isUploadExternalCvSucceeded && userProfile?.hasExternalCv) {
       setShouldGenerateProfileAfterUpload(false);
       void generateProfileFromCV();
     }
   }, [
     shouldGenerateProfileAfterUpload,
     isUploadExternalCvSucceeded,
-    currentUser.userProfile.hasExternalCv,
+    userProfile?.hasExternalCv,
     generateProfileFromCV,
   ]);
 

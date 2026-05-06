@@ -16,12 +16,7 @@ import {
 } from './SelectList.styles';
 import { SelectListOptions, isGroupedOptions } from './SelectList.types';
 
-export type SelectListItem = {
-  value: string;
-  content: React.ReactNode;
-};
-
-export interface SelectListProps<T extends string>
+interface SelectListProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;

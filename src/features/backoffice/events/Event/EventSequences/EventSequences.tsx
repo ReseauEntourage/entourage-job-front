@@ -3,7 +3,7 @@ import { Card } from '@/src/components/ui';
 import { StyledSequencesContainer } from './EventSequences.styles';
 import { Item } from './Item';
 
-export interface EventSequencesProps {
+interface EventSequencesProps {
   sequences?: string[];
 }
 

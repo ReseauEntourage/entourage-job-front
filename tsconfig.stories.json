@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "isolatedModules": true
+  },
+  "include": ["src/**/*.stories.ts", "src/**/*.stories.tsx", "next-env.d.ts"],
+  "exclude": ["node_modules", "cypress", ".storybook"]
+}

@@ -12,7 +12,7 @@ import {
   StyledModalSeparator,
 } from './PrettyModal.styles';
 
-export interface PrettyModalProps {
+interface PrettyModalProps {
   id: string;
   title: string;
   subtitle?: string;

@@ -4,7 +4,7 @@ import { COLORS } from '@/src/constants/styles';
 import { ElearningAnswer } from '../elearning.types';
 import { StyledElearningUnitModalQuizSuccessContainer } from './ElearningUnitModal.styles';
 
-export interface ElearningUnitModalQuizSuccessProps {
+interface ElearningUnitModalQuizSuccessProps {
   correctAnswer: ElearningAnswer;
 }
 

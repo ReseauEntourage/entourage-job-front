@@ -20,7 +20,7 @@ import {
 } from './SelectCard.styles';
 import { SelectCardType } from './SelectCard.types';
 
-export interface SelectCardProps<T extends string>
+interface SelectCardProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;

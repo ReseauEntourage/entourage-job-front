@@ -4,13 +4,17 @@ import {
   StyledOrganizationInfoNameContainer,
 } from './OrganizationInfo.styles';
 
-export interface MemberInfoProps {
+interface OrganizationInfoProps {
   name: string;
   address?: string;
   children?: React.ReactNode;
 }
 
-export function OrganizationInfo({ name, address, children }: MemberInfoProps) {
+export function OrganizationInfo({
+  name,
+  address,
+  children,
+}: OrganizationInfoProps) {
   return (
     <StyledOrganizationInfoContainer>
       {children}

@@ -22,6 +22,8 @@ interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   minLength?: number;
   rows?: number;
   setIsMaxLinesReached?: (isMaxLinesReached: boolean) => void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLTextAreaElement>;
+  naked?: boolean;
 }
 
 export function TextArea({
@@ -31,6 +33,7 @@ export function TextArea({
   placeholder,
   onChange,
   onBlur,
+  onKeyDown,
   value,
   hidden = false,
   disabled = false,
@@ -42,6 +45,7 @@ export function TextArea({
   inputRef,
   rows,
   setIsMaxLinesReached,
+  naked = false,
 }: TextAreaProps) {
   const isMobile = useIsMobile();
   const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
@@ -74,7 +78,7 @@ export function TextArea({
   const shouldShowFooter = !!error || shouldShowAnnotations;
 
   return (
-    <StyledTextAreaContainer disabled={disabled}>
+    <StyledTextAreaContainer disabled={disabled} naked={naked}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
@@ -90,11 +94,12 @@ export function TextArea({
           device={isMobile ? 'mobile' : 'desktop'}
           hasLineLimit={!!maxLines}
           width={maxLinesWidth}
-          ref={(e) => {
+          naked={naked}
+          ref={(e: HTMLTextAreaElement | null) => {
             if (inputRef) {
               inputRef(e);
             }
-            textAreaRef.current = e;
+            textAreaRef.current = e ?? undefined;
           }}
           name={name}
           id={id}
@@ -108,6 +113,7 @@ export function TextArea({
           }
           disabled={disabled}
           onBlur={onBlur}
+          onKeyDown={onKeyDown}
           maxLength={!maxLines ? maxLength : null}
           value={value || ''}
         />

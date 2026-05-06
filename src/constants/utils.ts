@@ -1,7 +1,5 @@
 import React from 'react';
 
-export const SEARCH_MAX_WIDTH = 1100;
-
 export const Actions = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',

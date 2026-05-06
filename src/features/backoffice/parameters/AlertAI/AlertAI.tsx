@@ -4,7 +4,8 @@ import { Alert, Button, Text } from '@/src/components/ui';
 import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { openModal } from '@/src/features/modals/Modal';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   currentUserActions,
@@ -23,7 +24,8 @@ import { GenerateProfileConfirmModal } from './GenerateProfileConfirmModal';
 
 export const AlertIA = () => {
   const isDesktop = useIsDesktop();
-  const user = useAuthenticatedUser();
+  const profile = useCurrentUserProfile();
+  const profileComplete = useCurrentUserProfileComplete();
   const dispatch = useDispatch();
 
   // Accès à l'état de l'upload du CV externe
@@ -60,8 +62,8 @@ export const AlertIA = () => {
     document.body.removeChild(input);
   };
 
-  if (user.userProfile.hasExternalCv) {
-    if (user.hasExtractedCvData) {
+  if (profile?.hasExternalCv) {
+    if (profileComplete?.hasExtractedCvData) {
       return null;
     }
     return (

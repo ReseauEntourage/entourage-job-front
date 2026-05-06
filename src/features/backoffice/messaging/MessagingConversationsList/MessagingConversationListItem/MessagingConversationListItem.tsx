@@ -15,6 +15,7 @@ import {
   MainInfos,
   ContainerStyled,
   RightColumn,
+  StyledUnreadDot,
 } from './MessagingConversationListItem.styles';
 
 interface MessagingConversationListItemProps {
@@ -60,6 +61,7 @@ export const MessagingConversationListItem = ({
             hasPicture={addresee.userProfile?.hasPicture || false}
           />
         )}
+        {hasUnreadMessages && <StyledUnreadDot />}
       </ContainerAvatarStyled>
       <RightColumn highlight={shouldHighlightConversation}>
         <MainInfos>

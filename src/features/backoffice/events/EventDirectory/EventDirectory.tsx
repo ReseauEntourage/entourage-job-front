@@ -14,7 +14,7 @@ import {
 } from '@/src/features/filters/MobileFilters';
 import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
 import { useFilters } from '@/src/hooks';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useIsMobile } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
 import { findConstantFromValue, mutateToArray } from '@/src/utils';
@@ -49,7 +49,7 @@ export function EventDirectory() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = React.useState(false);
 
   // Current authenticated user
-  const currentUser = useAuthenticatedUser();
+  const currentUserProfile = useCurrentUserProfile();
 
   // Define filters for the Event Directory
   const eventDirectoryFilters: Filter[] = [
@@ -137,18 +137,15 @@ export function EventDirectory() {
 
   useEffect(() => {
     // Set default department filter based on user's profile
-    if (
-      departmentsIdsFilters.length > 0 &&
-      currentUser?.userProfile?.department
-    ) {
+    if (departmentsIdsFilters.length > 0 && currentUserProfile?.department) {
       // Set default department filter only if not already set and no department filter in query params
       if (
         !isDefaultDepartmentSet && // Only set once
         (!departmentIds || departmentIds.length === 0) // No department filter in query params
       ) {
         const department = departmentsIdsFilters.find((dept) => {
-          if (dept.label && currentUser.userProfile.department) {
-            return dept.label === currentUser.userProfile.department;
+          if (dept.label && currentUserProfile?.department) {
+            return dept.label === currentUserProfile?.department;
           }
           return null;
         });
@@ -162,7 +159,7 @@ export function EventDirectory() {
     }
   }, [
     isDefaultDepartmentSet,
-    currentUser.userProfile.department,
+    currentUserProfile?.department,
     departmentsIdsFilters,
     setFilters,
     departmentIds,

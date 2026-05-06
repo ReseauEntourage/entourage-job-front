@@ -7,7 +7,7 @@ import {
   StyledItemCounterContainer,
 } from './TimeLineHorizontal.styles';
 
-export interface ItemProps {
+interface ItemProps {
   number: number;
   content: string;
   duration?: string;

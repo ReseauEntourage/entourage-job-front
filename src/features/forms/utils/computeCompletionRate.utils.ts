@@ -1,4 +1,4 @@
-export type CompletionRateOptions = {
+type CompletionRateOptions = {
   /**
    * Dot-paths to exclude from the completion computation.
    * Example: ['profileImageObjectUrl', 'some.nested.field']
@@ -10,18 +10,18 @@ export type CompletionRateOptions = {
   additionalItems?: boolean[];
 };
 
-export type CompletionField = {
+type CompletionField = {
   path: string;
   isFilled: boolean;
 };
 
 type FlattenedField = CompletionField;
 
-function isExcluded(path: string, exclude: Set<string>) {
+const isExcluded = (path: string, exclude: Set<string>) => {
   return exclude.has(path);
-}
+};
 
-function isFilledPrimitive(value: unknown): boolean {
+const isFilledPrimitive = (value: unknown): boolean => {
   if (value === null || value === undefined) {
     return false;
   }
@@ -48,14 +48,14 @@ function isFilledPrimitive(value: unknown): boolean {
   }
 
   return false;
-}
+};
 
-function flattenValues(
+const flattenValues = (
   value: unknown,
   path: string,
   out: FlattenedField[],
   exclude: Set<string>
-) {
+) => {
   if (path && isExcluded(path, exclude)) {
     return;
   }
@@ -106,38 +106,16 @@ function flattenValues(
 
   // Fallback: consider it empty
   out.push({ path, isFilled: false });
-}
+};
 
-export function listCompletionFields(
+export const listCompletionFields = (
   values: unknown,
   options: Pick<CompletionRateOptions, 'excludePaths'> = {}
-): CompletionField[] {
+): CompletionField[] => {
   const exclude = new Set(options.excludePaths ?? []);
   const flattened: FlattenedField[] = [];
 
   flattenValues(values, '', flattened, exclude);
 
   return flattened.filter((f) => f.path.length > 0);
-}
-
-export function computeCompletionRate(
-  values: unknown,
-  options: CompletionRateOptions = {}
-): number {
-  const flattened = listCompletionFields(values, {
-    excludePaths: options.excludePaths,
-  });
-
-  const additionalItems = options.additionalItems ?? [];
-
-  const total = flattened.length + additionalItems.length;
-  if (total === 0) {
-    return 0;
-  }
-
-  const done =
-    flattened.filter((f) => f.isFilled).length +
-    additionalItems.filter(Boolean).length;
-
-  return Math.round((done / total) * 100);
-}
+};

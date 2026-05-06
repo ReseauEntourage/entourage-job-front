@@ -11,7 +11,7 @@ import {
   StyledSimpleIconCTACardsTitle,
 } from './SimpleIconCTACardsGrid.styles';
 
-export interface SimpleIconCTACardProps {
+interface SimpleIconCTACardProps {
   icon: React.ReactNode;
   title: React.ReactNode;
   description: React.ReactNode;
@@ -20,7 +20,7 @@ export interface SimpleIconCTACardProps {
   href?: string;
 }
 
-export interface SimpleIconCTACardsGridProps {
+interface SimpleIconCTACardsGridProps {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   cards: SimpleIconCTACardProps[];

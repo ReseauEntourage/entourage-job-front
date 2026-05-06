@@ -4,7 +4,7 @@ import { EventParticipant } from '@/src/api/types';
 import { ImgUserProfile, Text } from '@/src/components/ui';
 import { StyledItemContainer } from './EventParticipants.styles';
 
-export interface ItemProps {
+interface ItemProps {
   participant: EventParticipant;
 }
 

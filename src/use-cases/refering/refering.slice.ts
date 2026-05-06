@@ -12,7 +12,7 @@ import {
   ReferCandidateError,
 } from './refering.adapters';
 
-export interface State {
+interface State {
   referCandate: RequestState<typeof referCandidateAdapter>;
   referCandidateError: ReferCandidateError | null;
   currentStep: ReferingStep | null;

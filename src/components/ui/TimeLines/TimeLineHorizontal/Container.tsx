@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledContainer } from './TimeLineHorizontal.styles';
 
-export interface ContainerProps {
+interface ContainerProps {
   children: React.ReactNode;
 }
 

@@ -16,7 +16,7 @@ import {
   StyledPreambleStepContainer,
 } from './CompanyInviteCollaboratorsModal.styles';
 
-export interface CompanyInviteCollaboratorsModalProps {
+interface CompanyInviteCollaboratorsModalProps {
   companyId: string;
 }
 

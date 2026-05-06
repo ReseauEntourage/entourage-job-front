@@ -13,33 +13,6 @@ function throwAssertionError(
   );
 }
 
-export function assertIsString(
-  val: AnyCantFix,
-  message = ''
-): asserts val is string {
-  if (typeof val !== 'string') {
-    throwAssertionError(val, 'string', message);
-  }
-}
-
-export function assertIsNumber(
-  val: AnyCantFix,
-  message = ''
-): asserts val is number {
-  if (typeof val !== 'number') {
-    throwAssertionError(val, 'number', message);
-  }
-}
-
-export function assertIsBoolean(
-  val: AnyCantFix,
-  message = ''
-): asserts val is boolean {
-  if (typeof val !== 'boolean') {
-    throwAssertionError(val, 'boolean', message);
-  }
-}
-
 export function assertIsDefined<T>(
   val: T,
   message = ''
@@ -56,9 +29,4 @@ export function assertCondition(
   if (!condition) {
     throwAssertionError(condition, 'condition', message);
   }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function assertUnreachable(x: never) {
-  throw new Error("Didn't expect to get here");
 }

@@ -10,7 +10,7 @@ export const StyledSectionContent = styled.div`
   gap: 30px;
 `;
 
-export interface StyledRowIconTitleTextBackgroundProps {
+interface StyledRowIconTitleTextBackgroundProps {
   backgroundColor: Color;
 }
 

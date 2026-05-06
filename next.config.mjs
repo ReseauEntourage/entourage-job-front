@@ -81,8 +81,9 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  publicRuntimeConfig: {
-    RELEASE_VERSION: process.env.HEROKU_RELEASE_VERSION || 'development',
+  env: {
+    NEXT_PUBLIC_RELEASE_VERSION:
+      process.env.HEROKU_SLUG_COMMIT || 'development',
   },
   typescript: {
     tsconfigPath: 'src/tsconfig.json',

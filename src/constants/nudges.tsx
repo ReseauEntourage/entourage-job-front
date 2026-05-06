@@ -16,7 +16,7 @@ export const nudgesIcons = {
   interview: <SvgIcon name="IlluMalette" {...iconSizeProps} />,
   cv: <SvgIcon name="IlluCV" {...iconSizeProps} />,
   network: <SvgIcon name="IlluConversation" {...iconSizeProps} />,
-  event: <SvgIcon name="IlluReseauxSociaux" {...iconSizeProps} />,
+  discovery: <SvgIcon name="IlluAmpoule" {...iconSizeProps} />,
 };
 
 export const ProfileNudges: (FilterConstant<string> & {
@@ -73,21 +73,6 @@ export const ProfileNudges: (FilterConstant<string> & {
   {
     icon: (
       <LegacyImg
-        src="/static/img/illustrations/illu-disscution.png"
-        alt="Disscution"
-        {...iconSizeProps}
-      />
-    ),
-    value: 'event',
-    label: 'Événement',
-    shortTitle: {
-      [UserRoles.CANDIDATE]: 'Rencontrer la communauté',
-      [UserRoles.COACH]: 'Rencontrer la communauté',
-    },
-  },
-  {
-    icon: (
-      <LegacyImg
         src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
@@ -100,26 +85,18 @@ export const ProfileNudges: (FilterConstant<string> & {
       [UserRoles.COACH]: 'Partager mon réseau',
     },
   },
+  {
+    icon: <SvgIcon name="IlluAmpoule" {...iconSizeProps} />,
+    value: 'discovery',
+    label: 'Découverte métier',
+    shortTitle: {
+      [UserRoles.CANDIDATE]: 'Découvrir un métier',
+      [UserRoles.COACH]: 'Faire découvrir mon métier',
+    },
+  },
 ];
 
-export const ParametresNudgeCardTitles: {
-  [K in 'card' | 'modal']: {
-    [R in NormalUserRoles]: string;
-  };
-} = {
-  card: {
-    [UserRoles.COACH]: 'Vos propositions de coup de pouce',
-    [UserRoles.CANDIDATE]: "Vos demandes d'aide",
-  },
-  modal: {
-    [UserRoles.COACH]:
-      'Sélectionnez les coups de pouce que vous souhaitez apporter aux candidats',
-    [UserRoles.CANDIDATE]:
-      'Sélectionnez les coups de pouce que vous souhaitez avoir auprès des coachs',
-  },
-} as const;
-
-export const ParametresNudgeCardContents: {
+const ParametresNudgeCardContents: {
   [K in NormalUserRoles]: SelectOptionTitleIconDescriptionLabelType[];
 } = {
   [UserRoles.CANDIDATE]: [
@@ -165,19 +142,6 @@ export const ParametresNudgeCardContents: {
     {
       icon: (
         <LegacyImg
-          src="/static/img/illustrations/illu-disscution.png"
-          alt="Disscution"
-          {...iconSizeProps}
-        />
-      ),
-      value: 'event',
-      label: 'Se rencontrer et échanger avec les membres de la communauté',
-      description:
-        "Rejoignez notre communauté lors d'événements pour partager vos expériences, apprendre des autres et tisser des liens professionnels précieux.",
-    },
-    {
-      icon: (
-        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -187,6 +151,13 @@ export const ParametresNudgeCardContents: {
       label: 'Faire grandir son réseau professionnel',
       description:
         "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
+    },
+    {
+      icon: <SvgIcon name="IlluAmpoule" {...iconSizeProps} />,
+      value: 'discovery',
+      label: 'Découvrir un métier',
+      description:
+        'Rencontrez des professionnels de la communauté pour explorer des métiers qui vous attirent et poser vos questions',
     },
   ],
 
@@ -233,20 +204,6 @@ export const ParametresNudgeCardContents: {
     {
       icon: (
         <LegacyImg
-          src="/static/img/illustrations/illu-disscution.png"
-          alt="Disscution"
-          {...iconSizeProps}
-        />
-      ),
-      value: 'event',
-      label:
-        'Se rencontrer lors d’événements avec les membres de la communauté',
-      description:
-        "Participer à des événements qui encouragent l'entraide, le partage d'expériences et le développement de réseaux professionnels enrichissants pour les candidats.",
-    },
-    {
-      icon: (
-        <LegacyImg
           src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
@@ -256,6 +213,13 @@ export const ParametresNudgeCardContents: {
       label: 'Partager mon réseau professionnel',
       description:
         'Mettez en relation les candidats avec des contacts pertinents et intégrez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
+    },
+    {
+      icon: <SvgIcon name="IlluAmpoule" {...iconSizeProps} />,
+      value: 'discovery',
+      label: 'Faire découvrir mon métier',
+      description:
+        'Partagez votre quotidien, vos défis et votre parcours pour aider les candidats à explorer un métier. Votre témoignage peut ouvrir des horizons et les aider à clarifier leur projet professionnel.',
     },
   ],
 };

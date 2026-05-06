@@ -30,14 +30,3 @@ export const StyledImageTitleCTAsContainer = styled.div`
     margin-top: 4px;
   }
 `;
-
-export const StyledDescription = styled.p`
-  line-height: 20px;
-  padding-right: 40px;
-  margin-top: 16px;
-  color: ${(props) => props.color};
-  @media (min-width: ${BREAKPOINTS.desktop}px) {
-    font-size: 20px;
-    line-height: 30px;
-  }
-`;

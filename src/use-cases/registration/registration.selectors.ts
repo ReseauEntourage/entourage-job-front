@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-  LastStepContent,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
   RegistrationFlows,
@@ -8,7 +7,6 @@ import {
 } from '@/src/features/registration/registration.config';
 import {
   RegistrationFormDataKeys,
-  RegistrationLastStepContent,
   RegistrationStep,
   RegistrationStepContent,
   SkippedByKeysUnion,
@@ -22,55 +20,51 @@ export const createUserSelectors = createUserAdapter.getSelectors<RootState>(
   (state) => state.registration.createUser
 );
 
-export function selectCreateUserError(state: RootState) {
+export const selectCreateUserError = (state: RootState) => {
   return state.registration.createUserError;
-}
+};
 
-export function selectInvitationId(state: RootState) {
+export const selectInvitationId = (state: RootState) => {
   return state.registration.invitationId;
-}
+};
 
-export function selectIsEmptyRegistrationData(state: RootState) {
-  return _.isEmpty(state.registration.data);
-}
-
-export function selectRegistrationData(state: RootState) {
+export const selectRegistrationData = (state: RootState) => {
   return state.registration.data;
-}
+};
 
-export function selectRegistrationCurrentStep(state: RootState) {
+export const selectRegistrationCurrentStep = (state: RootState) => {
   return state.registration.currentStep;
-}
+};
 
-export function selectDefinedRegistrationCurrentStep(state: RootState) {
+const selectDefinedRegistrationCurrentStep = (state: RootState) => {
   const currentStep = selectRegistrationCurrentStep(state);
 
   assertIsDefined(currentStep, RegistrationErrorMessages.CURRENT_STEP);
 
   return currentStep;
-}
+};
 
-export function selectRegistrationNextStep(state: RootState): number {
+export const selectRegistrationNextStep = (state: RootState): number => {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
   return incrementRegistrationStep(currentStep);
-}
+};
 
-export function selectRegistrationSelectedFlow(state: RootState) {
+export const selectRegistrationSelectedFlow = (state: RootState) => {
   return state.registration.selectedFlow;
-}
+};
 
-export function selectDefinedRegistrationSelectedFlow(state: RootState) {
+export const selectDefinedRegistrationSelectedFlow = (state: RootState) => {
   const selectedFlow = selectRegistrationSelectedFlow(state);
 
   // assertIsDefined(selectedFlow, RegistrationErrorMessages.SELECTED_FLOW);
   return selectedFlow;
-}
+};
 
-export function selectIsFirstRegistrationStep(state: RootState) {
+export const selectIsFirstRegistrationStep = (state: RootState) => {
   return state.registration.currentStep === REGISTRATION_FIRST_STEP;
-}
+};
 
-export function selectNextIsLastRegistrationStep(state: RootState) {
+export const selectNextIsLastRegistrationStep = (state: RootState) => {
   const nextStep = selectRegistrationNextStep(state);
 
   const selectedFlow = selectRegistrationSelectedFlow(state);
@@ -79,30 +73,19 @@ export function selectNextIsLastRegistrationStep(state: RootState) {
   }
   const lastStep = RegistrationFlows[selectedFlow]?.length as RegistrationStep;
   return nextStep >= lastStep;
-}
+};
 
-export function selectIsLastRegistrationStep(state: RootState) {
-  const nextStep = selectRegistrationNextStep(state);
-
-  const selectedFlow = selectRegistrationSelectedFlow(state);
-  if (!selectedFlow) {
-    return false;
-  }
-  const lastStep = RegistrationFlows[selectedFlow]?.length as RegistrationStep;
-  return nextStep >= lastStep;
-}
-
-export function selectRegistrationIsEnded(state: RootState) {
+export const selectRegistrationIsEnded = (state: RootState) => {
   return state.registration.isEnded;
-}
+};
 
-export function selectIsRegistrationLoading(state: RootState) {
+export const selectIsRegistrationLoading = (state: RootState) => {
   return state.registration.isLoading;
-}
+};
 
-export function selectRegistrationCurrentStepContent(
+export const selectRegistrationCurrentStepContent = (
   state: RootState
-): RegistrationStepContent {
+): RegistrationStepContent => {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
   const currentFlow = selectDefinedRegistrationSelectedFlow(state);
 
@@ -115,27 +98,9 @@ export function selectRegistrationCurrentStepContent(
   const currentStepContent = steps[currentStep];
 
   return currentStepContent ?? RegistrationStepSelectFlow;
-}
+};
 
-export function selectRegistrationConfirmationStepContent(
-  state: RootState
-): RegistrationLastStepContent {
-  const selectedFlow = selectDefinedRegistrationSelectedFlow(state);
-
-  if (!selectedFlow) {
-    throw new Error('Registration flow is not defined');
-  }
-
-  const content = LastStepContent[selectedFlow];
-
-  if (!content) {
-    throw new Error('Registration last step content is not defined');
-  }
-
-  return content;
-}
-
-export function selectRegistrationShouldSkipStep(state: RootState) {
+export const selectRegistrationShouldSkipStep = (state: RootState) => {
   const data = selectRegistrationData(state);
   const stepContent = selectRegistrationCurrentStepContent(state);
 
@@ -171,4 +136,4 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
     });
   }
   return skipNextStep;
-}
+};

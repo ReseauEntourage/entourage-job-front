@@ -1,4 +1,4 @@
-import 'src/styles/dist/css/uikit.entourage.min.css';
+import '../src/styles/dist/css/uikit.entourage.min.css';
 import 'react-phone-number-input/style.css';
 
 import { Preview } from '@storybook/react';

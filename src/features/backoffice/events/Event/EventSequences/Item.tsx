@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from '@/src/components/ui';
 import { StyledIndex, StyledItem } from './EventSequences.styles';
 
-export interface ItemProps {
+interface ItemProps {
   sequence: string;
   idx: number;
 }

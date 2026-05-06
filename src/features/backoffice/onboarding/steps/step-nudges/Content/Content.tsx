@@ -5,7 +5,7 @@ import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Input
 import { UserRoles } from '@/src/constants/users';
 import { loadNudgesOptions } from '@/src/features/forms/utils/loadOptions.utils';
 
-export interface ContentProps {
+interface ContentProps {
   userRole: UserRoles;
   nudgeIds: string[];
   onChange: (nudgeIds: string[]) => void;

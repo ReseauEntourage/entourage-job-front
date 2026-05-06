@@ -55,7 +55,6 @@ export const HeaderProfileDesktop = ({
   introduction,
   phone,
   email,
-  driverLicenses,
   hasPicture,
   isEditable = false,
   createdAt,
@@ -218,11 +217,7 @@ export const HeaderProfileDesktop = ({
                   lastConnection={lastConnection}
                   isOwnProfile={ownProfile}
                 />
-                <ProfileContactInfos
-                  phone={phone}
-                  email={email}
-                  driverLicenses={driverLicenses}
-                />
+                <ProfileContactInfos phone={phone} email={email} />
               </>
             )}
           </StyledHeaderProfileInfoContainer>

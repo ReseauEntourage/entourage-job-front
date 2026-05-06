@@ -5,8 +5,9 @@ import {
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledFileInputGroupForm = styled.div`
+export const StyledFileInputGroupForm = styled.div<{ noPadding?: boolean }>`
   ${() => commonInputContainerStyles}
+  ${({ noPadding }) => noPadding && 'margin-bottom: 0;'}
   input {
     ${() => commonInputStyles}
     &.secondary {

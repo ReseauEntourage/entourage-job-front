@@ -6,8 +6,8 @@ export const generateNudgesApiResponse = (numberOfNudges) => {
       'tips',
       'interview',
       'cv',
-      'event',
       'network',
+      'discovery',
     ]);
     return {
       id: faker.string.uuid(),

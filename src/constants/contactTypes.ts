@@ -5,12 +5,6 @@ export enum ContactTypeEnum {
   PHYSICAL = 'physical',
 }
 
-export type ContactType = {
-  value: ContactTypeEnum;
-  label: string;
-  key: string;
-};
-
 export const allContactTypes: (FilterConstant<ContactTypeEnum> & {
   key: string;
 })[] = [

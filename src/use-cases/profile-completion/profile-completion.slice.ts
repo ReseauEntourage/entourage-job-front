@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { fetchProfileCompletionAdapter } from './profile-completion.adapters';
 
-export interface State {
+interface State {
   fetchProfileCompletion: RequestState<typeof fetchProfileCompletionAdapter>;
   completionRate: number;
 }

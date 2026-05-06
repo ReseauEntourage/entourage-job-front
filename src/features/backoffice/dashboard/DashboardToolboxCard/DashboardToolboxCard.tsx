@@ -11,6 +11,7 @@ import {
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
 
 enum Context {
   COACH = 'COACH',
@@ -74,7 +75,8 @@ const companyArticles = [
 
 export const DashboardToolboxCard = () => {
   const user = useAuthenticatedUser();
-  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+  const company = useCurrentUserCompany();
+  const isCompanyAdmin = company && company.companyUser?.isAdmin;
 
   const context = useMemo(() => {
     if (user.role === UserRoles.COACH && isCompanyAdmin) {

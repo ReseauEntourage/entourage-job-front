@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Section } from '@/src/components/ui';
 import { H1, H4, H5 } from '@/src/components/ui/Headings';
@@ -7,14 +7,8 @@ import {
   StyledDocumentCenteredText,
   StyledDocumentTitleText,
 } from '../Documents.styles';
-import { isReadDocument } from '../Documents.utils';
-import { SignDocument } from '../SignDocument';
-import { DocumentNames } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
-import {
-  currentUserActions,
-  selectCurrentUser,
-} from 'src/use-cases/current-user';
+import { currentUserActions } from 'src/use-cases/current-user';
 
 const textContent = [
   {
@@ -76,7 +70,6 @@ export const ConseilsPosture = () => {
       dispatch(currentUserActions.readDocumentReset());
     };
   }, [dispatch]);
-  const user = useSelector(selectCurrentUser);
   return (
     <Section style="custom-primary">
       <H1
@@ -119,13 +112,6 @@ export const ConseilsPosture = () => {
         title="Vos référents Entourage Pro sont présents pour vous guider tout au long de votre implication, au rythme de vos coups de pouce."
         color="black"
       />
-      {user &&
-        !isReadDocument(user.readDocuments, DocumentNames.ConseilsPosture) && (
-          <SignDocument
-            documentName={DocumentNames.ConseilsPosture}
-            label="j’ai lu et compris les principes clés de posture et d’éthique. Je m’engage à les respecter."
-          />
-        )}
     </Section>
   );
 };

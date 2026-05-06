@@ -5,7 +5,7 @@ import {
   StyledIconContainer,
 } from './CardEmptyContent.styles';
 
-export interface CardEmptyContentProps {
+interface CardEmptyContentProps {
   content: React.ReactNode;
   icon: React.ReactNode;
   smallCard?: boolean;

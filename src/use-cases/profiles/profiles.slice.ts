@@ -4,7 +4,7 @@ import {
   PublicProfile,
   ProfileRecommendation,
 } from 'src/api/types';
-import { PROFILES_LIMIT } from 'src/constants';
+import { PROFILES_LIMIT, ReduxRequestEvents } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
@@ -12,7 +12,7 @@ import {
   fetchSelectedProfileAdapter,
 } from './profiles.adapters';
 
-export interface State {
+interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
   fetchDashboardProfilesRecommendations: RequestState<
     typeof fetchDashboardProfilesRecommendationsAdapter
@@ -79,9 +79,15 @@ export const slice = createSlice({
       _action: PayloadAction<ProfilesFilters>
     ) {},
     fetchProfilesNextPage(state, _action: PayloadAction<ProfilesFilters>) {
-      state.profilesOffset = state.profilesHasFetchedAll
-        ? state.profilesOffset
-        : state.profilesOffset + PROFILES_LIMIT;
+      // Do not increment offset if all profiles are fetched or a fetch is already in progress.
+      // Guards against the stale-closure race where a filter reset triggers fetchProfilesRequested
+      // (status → REQUESTED) before React re-renders the useIsAtBottom callback closure.
+      if (
+        !state.profilesHasFetchedAll &&
+        state.fetchProfiles.status === ReduxRequestEvents.SUCCEEDED
+      ) {
+        state.profilesOffset += PROFILES_LIMIT;
+      }
     },
   },
 });

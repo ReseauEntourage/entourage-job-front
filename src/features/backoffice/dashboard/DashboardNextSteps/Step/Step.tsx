@@ -9,7 +9,7 @@ import {
   StyledStepImage,
 } from './Step.style';
 
-export interface StepProps {
+interface StepProps {
   step: StepContent;
 }
 

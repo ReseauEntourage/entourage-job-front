@@ -15,22 +15,22 @@ import {
   StyledInsightsContainer,
 } from './Impact.styles';
 
-export type DisplayAs = 'Coach' | 'Candidat' | 'Referer' | 'Company';
+type DisplayAs = 'Coach' | 'Candidat' | 'Referer' | 'Company';
 
-export interface ImpactProps {
+interface ImpactProps {
   gaEventTag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
   as: DisplayAs;
   inviteToShowMore?: boolean;
   invertBgColor?: boolean;
 }
 
-export interface Insight {
+interface Insight {
   value: string;
   description: string;
   illu?: React.ReactNode;
 }
 
-export interface Content {
+interface Content {
   title: React.ReactNode;
   insights: Insight[];
 }

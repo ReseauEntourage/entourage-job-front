@@ -3,7 +3,7 @@
 import React from 'react';
 import { SwitchWrapper, HiddenCheckbox, Slider } from './ToggleSwitch.styles';
 
-export interface ToggleSwitchProps {
+interface ToggleSwitchProps {
   checked?: boolean;
   onChange?: (checked: boolean) => void;
 }

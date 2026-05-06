@@ -14,7 +14,7 @@ interface NudgeItem {
   value: boolean;
 }
 
-export interface ProfileNudgesProps {
+interface ProfileNudgesProps {
   userRole: UserRoles;
   nudges: Nudge[];
   isEditable?: boolean;

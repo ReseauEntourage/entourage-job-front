@@ -1,6 +1,6 @@
 import { createRequestAdapter } from 'src/store/utils';
 
-export type FetchProfileCompletionError = 'FETCH_FAILED';
+type FetchProfileCompletionError = 'FETCH_FAILED';
 
 export const fetchProfileCompletionAdapter = createRequestAdapter(
   'fetchProfileCompletion'

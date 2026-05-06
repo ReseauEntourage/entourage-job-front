@@ -13,7 +13,7 @@ const StyledImageContainer = styled.div`
   height: 200px;
 `;
 
-export interface ProfileGenerationLoadingIndicatorProps {
+interface ProfileGenerationLoadingIndicatorProps {
   imageSize?: number;
   text?: string;
 }

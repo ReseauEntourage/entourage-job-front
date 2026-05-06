@@ -15,7 +15,7 @@ interface UseProfileGenerationProps {
   onProfileGenerated?: () => void;
 }
 
-export interface UseProfileGenerationReturn {
+interface UseProfileGenerationReturn {
   generateProfileFromCV: () => Promise<void>;
   isLoading: boolean;
 }
@@ -71,7 +71,7 @@ export const useProfileGeneration = ({
             })
           );
           // Refresh the user data to get the updated profile information
-          dispatch(currentUserActions.fetchCompleteUserRequested());
+          dispatch(currentUserActions.fetchCurrentProfileCompleteRequested());
         }
       }
     );

@@ -31,10 +31,8 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    ".next/types/**/*.ts",
     "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts",
-    "./cypress.config.ts",
-    ".storybook/**/*"
+    "./cypress.config.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".storybook", "**/*.stories.ts", "**/*.stories.tsx"]
 }

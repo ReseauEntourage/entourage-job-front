@@ -4,6 +4,7 @@ import { Api } from 'src/api';
 import { EVENTS_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
 import {
+  fetchEventsSelectors,
   selectEventsHasFetchedAll,
   selectEventsOffset,
 } from './events.selectors';
@@ -31,8 +32,14 @@ function* fetchEventsNextPageSaga(
   action: ReturnType<typeof fetchEventsNextPage>
 ) {
   const hasFetchedAll = yield* select(selectEventsHasFetchedAll);
+  const isFetchRequested = yield* select(
+    fetchEventsSelectors.selectIsFetchEventsRequested
+  );
 
-  if (!hasFetchedAll) {
+  // Do not dispatch fetchEventsRequested if a fetch is already in progress.
+  // This complements the reducer-level guard and prevents cancelling an in-flight
+  // filter-change request via takeLatest(fetchEventsRequested).
+  if (!hasFetchedAll && !isFetchRequested) {
     yield* put(fetchEventsRequested(action.payload));
   }
 }

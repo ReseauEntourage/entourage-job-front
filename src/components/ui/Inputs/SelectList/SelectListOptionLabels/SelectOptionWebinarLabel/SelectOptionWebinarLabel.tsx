@@ -11,7 +11,7 @@ import {
   StyledSelectOptionWebinarLabelDetails,
 } from './SelectOptionWebinarLabel.styles';
 
-export type SelectOptionWebinarLabelProps =
+type SelectOptionWebinarLabelProps =
   | { event: Event; noDate?: false }
   | { event?: never; noDate: true };
 

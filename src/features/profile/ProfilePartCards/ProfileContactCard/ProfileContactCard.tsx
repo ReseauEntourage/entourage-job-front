@@ -12,7 +12,7 @@ import {
   StyledProfileContactForm,
 } from './ProfileContactCard.styles';
 
-export interface ProfileContactCardProps {
+interface ProfileContactCardProps {
   userId: string;
   isAvailable: boolean;
   role: UserRoles;

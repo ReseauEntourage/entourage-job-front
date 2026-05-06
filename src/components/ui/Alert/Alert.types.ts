@@ -8,6 +8,7 @@ export enum AlertVariant {
   White = 'white',
   Error = 'error',
   Success = 'success',
+  Warning = 'warning',
 }
 
 export interface AlertProps {

@@ -1,16 +1,9 @@
+import { interceptCurrentUserSubResources } from '../../intercept/current-user.req';
 import { onboardingJourneyRequests } from '../../intercept/journey/onboarding.req';
 import bootstrap from '../bootstrap';
 
 const interceptGenericBackofficeRequests = () => {
-  // Dashboard/background calls that can happen during onboarding redirects
-  cy.intercept('GET', '/auth/current/staff-contact', {
-    statusCode: 200,
-    body: {
-      name: 'Support Entourage Pro',
-      email: 'support@entourage.social',
-      img: '/static/img/profile-placeholder.png',
-    },
-  }).as('staffContact');
+  interceptCurrentUserSubResources();
 
   cy.intercept('GET', '/messaging/conversations/unseen-count', {
     statusCode: 200,
@@ -137,35 +130,35 @@ describe('Onboarding - Journey', () => {
   });
 
   it('Should redirect to onboarding when it is not completed', () => {
-    cy.intercept('GET', '/auth/current*', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-not-started-res',
-    }).as('authCurrent');
+    }).as('currentIdentity');
 
     cy.visit('/backoffice/dashboard');
-    cy.wait('@authCurrent');
+    cy.wait('@currentIdentity');
 
     cy.url().should('include', '/backoffice/onboarding');
   });
 
   it('Should not redirect to onboarding when it is already completed', () => {
-    cy.intercept('GET', '/auth/current*', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-completed-res',
-    }).as('authCurrent');
+    }).as('currentIdentity');
 
     cy.visit('/backoffice/dashboard');
-    cy.wait('@authCurrent');
+    cy.wait('@currentIdentity');
 
     cy.url().should('include', '/backoffice/dashboard');
     cy.contains('Bienvenue sur votre tableau de bord');
   });
 
   it('Should complete a light candidate onboarding flow', () => {
-    cy.intercept('GET', '/auth/current*', {
+    cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-not-started-res',
-    }).as('authCurrent');
+    }).as('currentIdentity');
 
     cy.visit('/backoffice/dashboard');
-    cy.wait('@authCurrent');
+    cy.wait('@currentIdentity');
     cy.url().should('include', '/backoffice/onboarding');
 
     // Start onboarding (sets onboardingStatus=in_progress => redirect to /run)

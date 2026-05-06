@@ -13,7 +13,7 @@ import {
   SendStepDataOnboardingError,
 } from './onboarding.adapters';
 
-export interface State {
+interface State {
   sendStepData: RequestState<typeof sendStepDataOnboardingAdapter>;
   sendStepDataError: SendStepDataOnboardingError | null;
   currentStep: OnboardingStep;

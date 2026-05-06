@@ -1,3 +1,5 @@
+import { interceptCurrentUserSubResources } from '../current-user.req';
+
 /**
  * Objets représentant des requêtes API pour les tests Cypress.
  *
@@ -14,9 +16,8 @@
 export const adminRequests = {
   // To read
   GET: [
-    // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
     {
-      path: '/auth/current',
+      path: '/current',
       data: { fixture: 'api/generated/admin-login' },
       alias: 'authCheck',
     },
@@ -64,3 +65,5 @@ export const adminRequests = {
     },
   ],
 };
+
+export { interceptCurrentUserSubResources };

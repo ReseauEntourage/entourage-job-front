@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AchievementProgressionEntry } from 'src/api/types';
 import { SliceRootState } from 'src/store/utils';
 
-export interface AchievementProgressionToShow {
+interface AchievementProgressionToShow {
   entry: AchievementProgressionEntry;
   /**
    * Key of the criterion whose value increased since the last check.
@@ -11,7 +11,7 @@ export interface AchievementProgressionToShow {
   changedCriterionKey: string | null;
 }
 
-export interface State {
+interface State {
   achievementProgressions: AchievementProgressionEntry[];
   achievementProgressionToShow: AchievementProgressionToShow | null;
   isInitialized: boolean;

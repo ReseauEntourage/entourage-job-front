@@ -1,8 +1,8 @@
-import { User } from 'src/api/types';
+import { ReadDocumentItem } from 'src/api/types';
 import { DocumentNameType } from 'src/constants';
 
 export const isReadDocument = (
-  userReadDocuments: User['readDocuments'],
+  userReadDocuments: ReadDocumentItem[] | undefined,
   documentName: DocumentNameType
 ) => {
   return userReadDocuments?.some(

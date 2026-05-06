@@ -4,7 +4,7 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
 import { StyledDocumentItem, TitleAndIcon } from './DocumentItem.styles';
 
-export interface DocumentItemProps {
+interface DocumentItemProps {
   name: string;
   icon: React.ReactNode;
   onRemove?: () => void;

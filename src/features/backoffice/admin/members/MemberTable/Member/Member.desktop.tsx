@@ -58,11 +58,6 @@ export function MemberDesktop({ member, columns, disableLink }: MemberProps) {
           </StyledNoWrapCellContent>
         </TdDesktop>
       )}
-      {columns.includes('address') && (
-        <TdDesktop>
-          <span>{member.address || '-'}</span>
-        </TdDesktop>
-      )}
       {columns.includes('zone') && (
         <TdDesktop>
           <StyledNoWrapCellContent>

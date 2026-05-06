@@ -5,7 +5,7 @@ import { LucidIcon } from '../Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-export interface CarouselProps {
+interface CarouselProps {
   style?: string;
   children: React.ReactNode;
   containerClasses: string;

@@ -18,7 +18,7 @@ export interface Metric {
   bubblePosition?: BubblePosition;
 }
 
-export interface MetricCardProps {
+interface MetricCardProps {
   metric: Metric;
 }
 

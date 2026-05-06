@@ -2,7 +2,7 @@
 
 Document mis à jour le 05/08/2024
 
-[![Entourage Pro [front-end]](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml/badge.svg)](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml)
+[![Entourage Pro [front-end]](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/ci.yml/badge.svg)](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/ci.yml)
 
 ## Sommaire
 

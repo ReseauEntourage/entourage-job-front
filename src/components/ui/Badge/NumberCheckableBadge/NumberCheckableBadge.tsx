@@ -1,11 +1,7 @@
 import { useMemo } from 'react';
 import { Color } from '@/src/constants/styles';
 import { LucidIcon } from '../../Icons';
-import { RoundBadge, RoundBadgeProps } from '../RoundBadge/RoundBadge';
-
-export type NumberCheckableBadgeProps = Exclude<RoundBadgeProps, 'children'> & {
-  number: number;
-};
+import { RoundBadge } from '../RoundBadge/RoundBadge';
 
 export const NumberCheckableBadge = ({
   number,

@@ -4,7 +4,7 @@ import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 export interface StyledSimpleImageTextBackgroundProps {
   backgroundColor: 'blue';
 }
-export interface StyledSimpleImageTextContainerProps {
+interface StyledSimpleImageTextContainerProps {
   reverse: boolean;
 }
 

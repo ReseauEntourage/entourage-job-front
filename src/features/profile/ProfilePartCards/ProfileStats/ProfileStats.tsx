@@ -8,7 +8,7 @@ import {
   StyledStatTitleValue,
 } from './ProfileStats.styles';
 
-export interface ProfileStatsProps {
+interface ProfileStatsProps {
   createdAt: string | null;
   userRole: UserRoles;
   averageDelayResponse: number | null;
@@ -45,7 +45,7 @@ export const ProfileStats = ({
   const stats = useMemo(() => {
     const list = [] as StatItem[];
 
-    if (createdAt && !isOwnProfile) {
+    if (createdAt) {
       list.push({
         value: `Membre depuis le ${new Date(createdAt).toLocaleDateString(
           'fr-FR',

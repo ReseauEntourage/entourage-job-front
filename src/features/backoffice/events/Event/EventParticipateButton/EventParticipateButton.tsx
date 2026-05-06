@@ -6,7 +6,7 @@ import {
   updateUserParticipationSelectors,
 } from '@/src/use-cases/events';
 
-export interface EventParticipateButtonProps extends Partial<ButtonProps> {
+interface EventParticipateButtonProps extends Partial<ButtonProps> {
   eventSalesForceId: string;
   isParticipating: boolean;
 }

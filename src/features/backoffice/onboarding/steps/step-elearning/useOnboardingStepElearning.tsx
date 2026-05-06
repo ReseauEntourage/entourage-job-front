@@ -10,7 +10,7 @@ import {
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
-export interface OnboardingStepElearningProps {
+interface OnboardingStepElearningProps {
   userRole: User['role'];
 }
 

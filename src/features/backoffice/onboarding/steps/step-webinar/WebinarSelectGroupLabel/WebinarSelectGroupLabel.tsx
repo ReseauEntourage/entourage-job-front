@@ -5,7 +5,7 @@ import {
   StyledWebinarSelectGroupLabel,
 } from './WebinarSelectGroupLabel.styles';
 
-export type WebinarSelectGroupLabelProps = {
+type WebinarSelectGroupLabelProps = {
   label: string;
   icon: IconName;
 };

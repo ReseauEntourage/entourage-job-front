@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Grid } from '@/src/components/ui';
+import { Button, Text } from '@/src/components/ui';
 import { H1 } from '@/src/components/ui/Headings';
 import { StyledHeaderBackOffice } from './HeaderBackoffice.styles';
 
@@ -7,31 +7,35 @@ interface HeaderBackofficeProps {
   title: React.ReactNode;
   description?: React.ReactNode;
   children?: React.ReactNode;
-  childrenBottom?: boolean;
   noSeparator?: boolean;
+  cta?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
 export const HeaderBackoffice = ({
   title,
   description,
   children,
-  childrenBottom = false,
+  cta,
   noSeparator = false,
 }: HeaderBackofficeProps) => {
   return (
-    <StyledHeaderBackOffice>
-      <Grid
-        gap="small"
-        column={childrenBottom}
-        eachWidths={['expand@m', 'auto@m']}
-      >
-        <div>
-          <H1 title={title} />
-          {description && <Text size="large">{description}</Text>}
-        </div>
-        <div>{children}</div>
-      </Grid>
+    <StyledHeaderBackOffice.Container>
+      <StyledHeaderBackOffice.LeftColumn>
+        <H1 title={title} />
+        {description && <Text size="large">{description}</Text>}
+      </StyledHeaderBackOffice.LeftColumn>
+      <StyledHeaderBackOffice.RightColumn>
+        {cta && (
+          <Button variant="secondary" onClick={cta.onClick}>
+            {cta.label}
+          </Button>
+        )}
+      </StyledHeaderBackOffice.RightColumn>
+      <div>{children}</div>
       {!noSeparator && <div className="simple-separator" />}
-    </StyledHeaderBackOffice>
+    </StyledHeaderBackOffice.Container>
   );
 };

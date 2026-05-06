@@ -1,6 +1,10 @@
 import React, { useCallback } from 'react';
 import { User } from '@/src/api/types';
 import { ImgUserProfile, LegacyImg, Text } from '@/src/components/ui';
+
+type CollaboratorUser = User & {
+  userProfile?: { hasPicture: boolean; currentJob?: string | null } | null;
+};
 import { useIsMobile } from '@/src/hooks/utils';
 import {
   StyledCollaboratorSmallCardContainer,
@@ -9,7 +13,7 @@ import {
 } from './CollaboratorSmallCard.styles';
 
 interface CollaboratorSmallCardProps {
-  user?: User;
+  user?: CollaboratorUser;
   email?: string;
 }
 
@@ -33,7 +37,7 @@ export const CollaboratorSmallCard = ({
         <div>
           <ImgUserProfile
             user={user}
-            hasPicture={user.userProfile.hasPicture}
+            hasPicture={user.userProfile?.hasPicture ?? false}
             size={isMobile ? 50 : 80}
           />
         </div>
@@ -53,7 +57,7 @@ export const CollaboratorSmallCard = ({
             <Text weight="semibold">
               {user.firstName} {user.lastName.charAt(0).toUpperCase()}.
             </Text>
-            {user.userProfile.currentJob && (
+            {user.userProfile?.currentJob && (
               <Text color="darkGray">{user.userProfile.currentJob} </Text>
             )}
           </>

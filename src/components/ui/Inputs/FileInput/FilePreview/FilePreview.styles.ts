@@ -19,8 +19,3 @@ export const StyledDeleteIconContainer = styled.div`
     background-color: ${COLORS.lightGray};
   }
 `;
-
-export const StyledFilename = styled.div`
-  text-decoration: underline;
-  cursor: pointer;
-`;

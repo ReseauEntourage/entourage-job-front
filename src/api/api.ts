@@ -33,6 +33,7 @@ import {
   CompaniesFilters,
   EventsFilters,
   User,
+  WhatsappZone,
 } from './types';
 
 export class APIHandler {
@@ -552,31 +553,64 @@ export class APIHandler {
   // currentUser /
   /// // //////
 
-  getAuthCurrent(
-    complete = false,
+  getCurrentIdentity(
     headers: AxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
-    return this.get(
-      `/auth/current${complete ? '?complete=true' : ''}`,
-      {},
-      headers
-    );
+    return this.get(`/current`, {}, headers);
   }
 
-  getAuthCurrentStats(): Promise<AxiosResponse> {
-    return this.get(`/auth/current/stats`);
+  getCurrentProfile(): Promise<AxiosResponse> {
+    return this.get(`/current/profile`);
+  }
+
+  getCurrentProfileComplete(
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(`/current/profile/complete`, {}, headers);
+  }
+
+  getCurrentCompany(): Promise<AxiosResponse> {
+    return this.get(`/current/company`);
+  }
+
+  getCurrentOrganization(): Promise<AxiosResponse> {
+    return this.get(`/current/organization`);
+  }
+
+  getCurrentStats(): Promise<AxiosResponse> {
+    return this.get(`/current/stats`);
+  }
+
+  getCurrentWhatsappZone(): Promise<AxiosResponse<WhatsappZone>> {
+    return this.get(`/current/whatsapp-zone`);
+  }
+
+  getCurrentStaffContact(
+    headers: AxiosRequestHeaders | undefined = undefined
+  ): Promise<AxiosResponse> {
+    return this.get(`/current/staff-contact`, {}, headers);
+  }
+
+  getCurrentReferredUsers(): Promise<AxiosResponse> {
+    return this.get(`/current/referred-users`);
+  }
+
+  getCurrentReferrer(): Promise<AxiosResponse> {
+    return this.get(`/current/referrer`);
+  }
+
+  getCurrentAchievements(): Promise<AxiosResponse> {
+    return this.get(`/current/achievements`);
+  }
+
+  getCurrentReadDocuments(): Promise<AxiosResponse> {
+    return this.get(`/current/read-documents`);
   }
 
   getAchievementProgression(): Promise<
     AxiosResponse<AchievementProgressionEntry[]>
   > {
     return this.get(`/gamification/achievement-progression`);
-  }
-
-  getStaffContactInfo(
-    headers: AxiosRequestHeaders | undefined = undefined
-  ): Promise<AxiosResponse> {
-    return this.get(`/auth/current/staff-contact`, {}, headers);
   }
 
   /// // //////
@@ -655,9 +689,44 @@ export class APIHandler {
     return this.post('/messaging/conversations/feedback', params);
   }
 
+  /// ////////////////
+  // AI Assistant  //
+  /// ////////////////
+
+  getAISession(conversationId: string): Promise<AxiosResponse> {
+    return this.get(`/ai-assistant/conversations/${conversationId}/session`);
+  }
+
+  streamAIMessage(conversationId: string, message: string): Promise<Response> {
+    const token =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('access-token')
+        : null;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/ai-assistant/conversations/${conversationId}/stream`,
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ message }),
+      }
+    );
+  }
+
+  resetAISession(conversationId: string): Promise<AxiosResponse> {
+    return this.delete(
+      `/ai-assistant/conversations/${conversationId}/session/messages`
+    );
+  }
+
   /// /////////////////
   // read documents //
-  /// /////////////////
+  /// ////////////////
 
   postReadDocument(
     params: { documentName: DocumentNameType },

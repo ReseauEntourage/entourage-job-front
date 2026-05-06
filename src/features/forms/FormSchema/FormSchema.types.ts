@@ -273,7 +273,7 @@ export interface FormFieldRadio<V extends FormSchemaValidation>
   limit?: number;
 }
 
-export interface FormFieldSelectRequestCommon<
+interface FormFieldSelectRequestCommon<
   V extends FormSchemaValidation,
   M extends boolean
 > extends FormFieldInputCommonProperties<V, SelectRequestComponent, M> {

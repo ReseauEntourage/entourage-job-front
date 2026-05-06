@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Section } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { ParamProfessionalInformations } from '@/src/features/profile/ProfilePartCards/ParamProfessionalInformations/ParamProfessionalInformations';
@@ -17,10 +16,10 @@ import { ProfileNotificationsPreferences } from '@/src/features/profile/ProfileP
 import { ProfileNudges } from '@/src/features/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { ProfileSkills } from '@/src/features/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import {
-  currentUserActions,
-  selectIsComplete,
-} from '@/src/use-cases/current-user';
+import { useCurrentUserAchievements } from '@/src/hooks/current-user/useCurrentUserAchievements';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
+import { useCurrentUserStats } from '@/src/hooks/current-user/useCurrentUserStats';
 import { ProfileDeleteAccount } from '../../profile/ProfilePartCards/ProfileDeleteAccount/ProfileDeleteAccount';
 import { UserProfileAvailabilityCard } from '../../profile/ProfilePartCards/UserProfileAvailabilityCard';
 import {
@@ -41,19 +40,14 @@ import { useConfirmationToaster } from './useConfirmationToaster';
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
-  const dispatch = useDispatch();
-  const userIsComplete = useSelector(selectIsComplete);
+  const userProfile = useCurrentUserProfile();
+  const userProfileComplete = useCurrentUserProfileComplete();
+  const achievements = useCurrentUserAchievements();
+  const userStats = useCurrentUserStats();
 
   useConfirmationToaster();
 
-  // Fetch the complete user if not already done
-  useEffect(() => {
-    if (!userIsComplete) {
-      dispatch(currentUserActions.fetchCompleteUserRequested());
-    }
-  }, [userIsComplete, dispatch]);
-
-  if (!user || !userIsComplete) {
+  if (!user || !userProfileComplete) {
     return <LoadingScreen />;
   }
 
@@ -63,24 +57,23 @@ export const Parameters = () => {
         id={user.id}
         firstName={user.firstName}
         lastName={user.lastName}
-        introduction={user.userProfile.introduction ?? ''}
+        introduction={userProfileComplete.introduction ?? ''}
         role={user.role}
         gender={user.gender}
-        department={user.userProfile.department}
-        isAvailable={user.userProfile.isAvailable}
+        department={userProfileComplete.department}
+        isAvailable={userProfileComplete.isAvailable}
         phone={user.phone}
         email={user.email}
-        driverLicenses={[]}
-        hasPicture={user.userProfile?.hasPicture ?? false}
+        hasPicture={userProfileComplete.hasPicture ?? false}
         isEditable
-        createdAt={user.createdAt ?? null}
-        averageDelayResponse={user.averageDelayResponse ?? null}
-        responseRate={user.responseRate ?? null}
+        createdAt={userStats?.createdAt ?? null}
+        averageDelayResponse={userStats?.averageDelayResponse ?? null}
+        responseRate={userStats?.responseRate ?? null}
         totalConversationWithMirrorRoleCount={
-          user.totalConversationWithMirrorRoleCount ?? null
+          userStats?.totalConversationWithMirrorRoleCount ?? null
         }
         lastConnection={user.lastConnection ?? null}
-        achievements={user.achievements ?? []}
+        achievements={achievements ?? []}
       />
       <Section className="custom-page">
         <StyledParametersSectionContent>
@@ -90,21 +83,21 @@ export const Parameters = () => {
               className={`${isDesktop ? '' : 'mobile'}`}
             >
               <ParamProfessionalInformations
-                sectorOccupations={user.userProfile.sectorOccupations ?? []}
+                sectorOccupations={userProfileComplete.sectorOccupations ?? []}
                 smallCard
                 isEditable
               />
               <ProfileDescription
                 isEditable
-                description={user.userProfile.description ?? ''}
+                description={userProfileComplete.description ?? ''}
               />
               <ProfileSkills
-                skills={user.userProfile.skills ?? []}
+                skills={userProfileComplete.skills ?? []}
                 isEditable
               />
               <ProfileCustomNudges
                 isEditable
-                customNudges={user.userProfile.customNudges ?? []}
+                customNudges={userProfileComplete.customNudges ?? []}
                 firstName={user.firstName}
                 role={user.role}
                 userId={user.id}
@@ -114,20 +107,20 @@ export const Parameters = () => {
                 userId={user.id}
                 userFirstName={user.firstName}
                 userRole={user.role}
-                experiences={user.userProfile.experiences ?? []}
+                experiences={userProfileComplete.experiences ?? []}
                 isEditable
               />
               <ProfileFormations
                 userId={user.id}
                 userFirstName={user.firstName}
                 userRole={user.role}
-                formations={user.userProfile.formations ?? []}
+                formations={userProfileComplete.formations ?? []}
                 isEditable
               />
               {/* <ProfileReviews
                 userId={user.id}
                 userFirstName={user.firstName}
-                reviews={user.userProfile.reviews ?? []}
+                reviews={userProfileComplete.reviews ?? []}
                 isEditable
               /> */}
             </StyledParametersLeftColumn>
@@ -136,24 +129,24 @@ export const Parameters = () => {
             >
               <ProfileDocuments
                 userId={user.id}
-                linkedinUrl={user.userProfile.linkedinUrl}
-                hasExternalCv={user.userProfile.hasExternalCv}
+                linkedinUrl={userProfileComplete.linkedinUrl}
+                hasExternalCv={userProfileComplete.hasExternalCv}
                 isEditable
                 smallCard
               />
               <ProfileLanguages
-                userProfileLanguages={user.userProfile.userProfileLanguages}
+                userProfileLanguages={userProfileComplete.userProfileLanguages}
                 isEditable
                 smallCard
               />
               <ProfileInterests
-                interests={user.userProfile.interests}
+                interests={userProfileComplete.interests}
                 isEditable
                 smallCard
               />
               {user.role === UserRoles.CANDIDATE && (
                 <ProfileContracts
-                  contracts={user.userProfile.contracts}
+                  contracts={userProfileComplete.contracts}
                   isEditable
                   smallCard
                 />
@@ -166,12 +159,12 @@ export const Parameters = () => {
               />
               <ProfileNudges
                 userRole={user.role}
-                nudges={user.userProfile.nudges || []}
+                nudges={userProfileComplete.nudges || []}
                 isEditable
                 smallCard
               />
               <ProfileNotificationsPreferences
-                userProfile={user.userProfile}
+                userProfile={userProfile}
                 smallCard
               />
               <ProfileChangePassword smallCard />

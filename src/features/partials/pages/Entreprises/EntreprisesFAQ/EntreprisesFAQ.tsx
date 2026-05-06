@@ -10,11 +10,11 @@ import {
   StyledTitleContainer,
 } from './EntreprisesFAQ.styles';
 
-export type EntreprisesFAQProps = {
+type EntreprisesFAQProps = {
   context: CompanyGoal;
 };
 
-export type FAQItem = {
+type FAQItem = {
   question: string;
   answer: React.ReactNode;
 };

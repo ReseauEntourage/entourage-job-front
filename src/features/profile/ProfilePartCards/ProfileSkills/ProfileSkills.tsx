@@ -9,7 +9,7 @@ import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
 import { ProfileSkillsModalEdit } from './ProfileSkillsModalEdit';
 
-export interface ProfileSkillsProps {
+interface ProfileSkillsProps {
   skills?: Skill[];
   isEditable?: boolean;
   smallCard?: boolean;

@@ -35,12 +35,10 @@ export const userProfile = () => {
         createdAt: '2025-04-14T00:00:00.000Z',
         nudge: {
           id: 'f0c6c2e7-7176-41d7-bfc7-2e4d5a543f15',
-          value: 'event',
-          nameRequest:
-            'Se rencontrer et échanger avec les membres de la communauté',
-          nameOffer:
-            'Se rencontrer lors d’événements avec les membres de la communauté',
-          order: 4,
+          value: 'network',
+          nameRequest: 'Faire grandir son réseau professionnel',
+          nameOffer: 'Partager mon réseau professionnel',
+          order: 3,
         },
       },
     ],

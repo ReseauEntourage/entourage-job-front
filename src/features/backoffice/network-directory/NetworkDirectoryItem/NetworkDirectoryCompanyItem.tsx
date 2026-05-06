@@ -1,13 +1,14 @@
 import React from 'react';
-import { BusinessSector, User } from '@/src/api/types';
+import { BusinessSector } from '@/src/api/types';
 import { CardListItem } from '@/src/components/ui/CardList';
+import { CompanyCardUser } from '@/src/components/ui/Cards/EntityCards/CompanyCard/CompanyCard';
 import { CompanyCard } from '@/src/components/ui/Cards/EntityCards/CompanyCard/CompanyCard';
 
 interface NetworkDirectoryCompanyItemProps {
   id: string;
   name: string;
   businessSectors: BusinessSector[];
-  users: User[];
+  users: CompanyCardUser[];
   logoUrl?: string;
 }
 

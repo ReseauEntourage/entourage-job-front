@@ -45,7 +45,3 @@ export const StyledItemCounterContainer = styled.div`
   align-items: center;
   gap: 4px;
 `;
-
-export const StyledItemContent = styled.div`
-  display: flex;
-`;

@@ -141,12 +141,15 @@ export function useNetworkDirectory() {
   const companiesHasFetchedAll = useSelector(selectCompaniesHasFetchedAll);
 
   // Manage offset and profiles request when scrolling to the bottom of the page
+  // Checking isProfileLoading / isCompaniesLoading prevents dispatching fetchNextPage right
+  // after a filter change resets the list (which would cause the page to become short and
+  // incorrectly trigger this callback before the first page has loaded)
   useIsAtBottom(() => {
-    if (isUserEntity && !profilesHasFetchedAll) {
+    if (isUserEntity && !profilesHasFetchedAll && !isProfileLoading) {
       dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
     }
 
-    if (isCompanyEntity && !companiesHasFetchedAll) {
+    if (isCompanyEntity && !companiesHasFetchedAll && !isCompaniesLoading) {
       dispatch(
         companyActions.fetchCompaniesNextPage({
           ...directoryFiltersParams,

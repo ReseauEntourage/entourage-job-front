@@ -8,7 +8,7 @@ import {
   StyledMemberInfoNameContainer,
 } from './MemberInfo.styles';
 
-export interface MemberInfoProps {
+interface MemberInfoProps {
   id: string;
   firstName: string;
   lastName: string;

@@ -9,7 +9,7 @@ import { StyledHeaderCompanyCollaboratorsList } from './CompanyCollaboratorsList
 import { CompanyCollaboratorsTable } from './CompanyCollaboratorsTable/CompanyCollaboratorsTable';
 import { TableItem } from './CompanyCollaboratorsTable/CompanyCollaboratorsTable.types';
 
-export interface CompanyCollaboratorsListProps {
+interface CompanyCollaboratorsListProps {
   companyWithCollaborators: CompanyWithUsers;
 }
 

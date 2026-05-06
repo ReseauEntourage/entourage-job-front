@@ -6,7 +6,7 @@ import {
   StyledEntreprisesActionItemContent,
 } from './EntreprisesActionItem.styles';
 
-export interface EntreprisesActionsItemProps {
+interface EntreprisesActionsItemProps {
   action: {
     illu: React.ReactNode;
     title: string;

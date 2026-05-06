@@ -1,6 +1,6 @@
 import { StyledSkeletonLoader } from './Skeleton.styles';
 
-export interface SkeletonProps {
+interface SkeletonProps {
   width?: string;
   height?: string;
   count?: number;

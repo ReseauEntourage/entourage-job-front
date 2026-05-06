@@ -23,7 +23,7 @@ const {
   resetRegistrationData,
 } = slice.actions;
 
-export function* createUserRequestedSaga() {
+const createUserRequestedSaga = function* () {
   const data = yield* select(selectRegistrationData);
   const selectedFlow = yield* select(selectDefinedRegistrationSelectedFlow);
   const invitationId = yield* select(selectInvitationId);
@@ -75,9 +75,9 @@ export function* createUserRequestedSaga() {
       yield* put(createUserFailed(null));
     }
   }
-}
+};
 
-export function* moveForwardInRegistrationSaga() {
+const moveForwardInRegistrationSaga = function* () {
   const RegistrationIsEnded = yield* select(selectRegistrationIsEnded);
   // Necessary to force render of form after moving forward but not on last step
   yield* put(setRegistrationIsLoading(true));
@@ -85,14 +85,14 @@ export function* moveForwardInRegistrationSaga() {
     yield* call(() => asyncTimeout(300));
     yield* put(setRegistrationIsLoading(false));
   }
-}
+};
 
-export function* resetRegistrationDataSaga() {
+const resetRegistrationDataSaga = function* () {
   // Necessary to force render of form after resetting registration data
   yield* put(setRegistrationIsLoading(true));
   yield* call(() => asyncTimeout(300));
   yield* put(setRegistrationIsLoading(false));
-}
+};
 
 export function* saga() {
   yield* takeLatest(createUserRequested, createUserRequestedSaga);

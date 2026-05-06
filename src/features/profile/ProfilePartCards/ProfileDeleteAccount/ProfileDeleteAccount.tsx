@@ -9,7 +9,7 @@ import {
   StyledIntroduction,
 } from './ProfileDeleteAccount.styles';
 
-export interface ProfileDeleteAccountProps {
+interface ProfileDeleteAccountProps {
   smallCard?: boolean;
 }
 

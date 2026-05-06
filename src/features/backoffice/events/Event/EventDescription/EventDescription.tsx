@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Text } from '@/src/components/ui';
 import { StyledDescriptionContainer } from './EventDescription.styles';
 
-export interface EventDescriptionProps {
+interface EventDescriptionProps {
   description?: string;
 }
 

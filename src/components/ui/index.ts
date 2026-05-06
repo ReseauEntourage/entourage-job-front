@@ -5,7 +5,6 @@ export * from './Tag';
 export * from './Grid';
 export * from './Carousel/Carousel';
 export * from './CloseButton/CloseButton';
-export * from './FiltersTabs';
 export * from './Images/Logo';
 export * from './SimpleLink';
 export * from './Containers';

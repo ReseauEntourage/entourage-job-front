@@ -11,7 +11,7 @@ import {
   StyledElearningUnitCardMetaContainer,
 } from './ElearningUnitCard.styles';
 
-export interface ElearningUnitCardProps {
+interface ElearningUnitCardProps {
   elearningUnit: ElearningUnit;
   idx?: number;
 }

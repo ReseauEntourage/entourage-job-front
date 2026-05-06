@@ -10,7 +10,7 @@ import { useNetworkDirectoryEntity } from './useNetworkDirectoryEntity';
 import { useNetworkDirectoryRole } from './useNetworkDirectoryRole';
 import { useNetworkDirectorySort } from './useNetworkDirectorySort';
 
-export type NetworkDirectoryQueryParams = {
+type NetworkDirectoryQueryParams = {
   role: UserRoles;
   search?: string;
   nudgeIds: string[];
@@ -21,12 +21,6 @@ export type NetworkDirectoryQueryParams = {
   isAvailable?: boolean;
   sort?: NetworkDirectorySort;
   hasSuperCoachBadge?: boolean;
-};
-
-export type NetworkDirectorySortFilters = {
-  key: 'sorts';
-  constants: { value: NetworkDirectorySort; label: string }[];
-  title: string;
 };
 
 /**

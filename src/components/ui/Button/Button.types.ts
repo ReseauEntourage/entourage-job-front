@@ -27,6 +27,7 @@ export interface ButtonProps {
   className?: string;
   dataTestId?: string;
   color?: Color;
+  align?: 'left' | 'center';
   style?: React.CSSProperties;
   prependIcon?: React.ReactNode;
   appendIcon?: React.ReactNode;

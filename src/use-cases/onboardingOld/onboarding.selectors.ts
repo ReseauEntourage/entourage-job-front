@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   FlattenedOnboardingFormData,
   OnboardingErrorMessages,
@@ -6,7 +5,6 @@ import {
   OnboardingStepContent,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
 import { assertIsDefined } from 'src/utils/asserts';
-import { sendStepDataOnboardingAdapter } from './onboarding.adapters';
 import { RootState } from './onboarding.slice';
 import {
   flattenOnboardingDataByFlow,
@@ -16,47 +14,32 @@ import {
 export const selectShouldLaunchOnboarding = (state: RootState) =>
   state.onboardingOld.shouldLaunchOnboarding;
 
-export const sendStepDataSelectors =
-  sendStepDataOnboardingAdapter.getSelectors<RootState>(
-    (state) => state.onboardingOld.sendStepData
-  );
-
-// Ce sélecteur est supprimé car userRole n'existe plus
-
 export const selectOnboardingFlow = (state: RootState) =>
   state.onboardingOld.onboardingFlow;
 
-export function selectSendStepDataError(state: RootState) {
-  return state.onboardingOld.sendStepDataError;
-}
-
-export function selectIsEmptyOnboardingData(state: RootState) {
-  return _.isEmpty(state.onboardingOld.data);
-}
-
-export function selectOnboardingData(state: RootState) {
+export const selectOnboardingData = (state: RootState) => {
   return state.onboardingOld.data;
-}
+};
 
-export function selectOnboardingCurrentStep(state: RootState) {
+export const selectOnboardingCurrentStep = (state: RootState) => {
   return state.onboardingOld.currentStep;
-}
+};
 
-export function selectDefinedOnboardingCurrentStep(state: RootState) {
+const selectDefinedOnboardingCurrentStep = (state: RootState) => {
   const currentStep = selectOnboardingCurrentStep(state);
 
   assertIsDefined(currentStep, OnboardingErrorMessages.CURRENT_STEP);
 
   return currentStep;
-}
+};
 
-export function selectIsOnboardingLoading(state: RootState) {
+export const selectIsOnboardingLoading = (state: RootState) => {
   return state.onboardingOld.isLoading;
-}
+};
 
-export function selectOnboardingCurrentStepData(
+export const selectOnboardingCurrentStepData = (
   state: RootState
-): OnboardingFormData | null {
+): OnboardingFormData | null => {
   const currentStep = selectDefinedOnboardingCurrentStep(state);
   const onboardingFlow = selectOnboardingFlow(state);
 
@@ -64,11 +47,11 @@ export function selectOnboardingCurrentStepData(
     return null;
   }
   return state.onboardingOld.data[currentStep]?.[onboardingFlow] || null;
-}
+};
 
-export function selectOnboardingCurrentStepContent(
+export const selectOnboardingCurrentStepContent = (
   state: RootState
-): OnboardingStepContent | null {
+): OnboardingStepContent | null => {
   const currentStep = selectDefinedOnboardingCurrentStep(state);
   const onboardingFlow = selectOnboardingFlow(state);
 
@@ -77,11 +60,11 @@ export function selectOnboardingCurrentStepContent(
   }
   const flowContent = getOnboardingStepContent(onboardingFlow);
   return flowContent[currentStep];
-}
+};
 
-export function selectOnboardingDataFromOtherStep(
+export const selectOnboardingDataFromOtherStep = (
   state: RootState
-): Partial<OnboardingFormData> | null {
+): Partial<OnboardingFormData> | null => {
   const stepContent = selectOnboardingCurrentStepContent(state);
 
   if (!stepContent) {
@@ -109,4 +92,4 @@ export function selectOnboardingDataFromOtherStep(
   }
 
   return null;
-}
+};

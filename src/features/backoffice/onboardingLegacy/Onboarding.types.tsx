@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../../../api/types';
+import { CurrentUserCompany, ReadDocumentItem, User } from '../../../api/types';
 import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formOnboardingCompanyGoal } from './Onboarding/forms/schemas/formOnboardingCompanyGoal';
@@ -37,18 +37,15 @@ export interface OnboardingStepContent<
   // Used to get the values of a previous step as default values in the form of the current step
   dependsOn?: OnboardingFormDataKeys[];
   // Used to skip the step if the value of a previous step matches the value in skippedBy
-  skippedBy?: (user: User) => boolean;
+  skippedBy?: (
+    user: User,
+    context: {
+      readDocuments: ReadDocumentItem[];
+      company: CurrentUserCompany | null;
+    }
+  ) => boolean;
   defaultValues?: (user: User) => Partial<OnboardingFormData>;
 }
-
-// Type pour chaque étape de l'onboarding entreprise
-export type CompanyOnboardingStepContents = {
-  [K in OnboardingStep]?: OnboardingStepContent<CompanyOnboardingForm>;
-};
-
-export type OnboardingStepContentByFlow = Partial<{
-  [OnboardingFlow.COMPANY]: OnboardingStepContent<CompanyOnboardingForm>;
-}>;
 
 export interface CompanyStepData {
   description?: string;

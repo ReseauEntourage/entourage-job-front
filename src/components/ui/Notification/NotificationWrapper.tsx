@@ -6,7 +6,7 @@ import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { Notification } from './Notification';
 import { NOTIF_WIDTH, StyledNotificationWrapper } from './Notification.styles';
 
-export interface NotificationWrapperProps {
+interface NotificationWrapperProps {
   id: string;
   type: 'success' | 'danger';
   message: string;

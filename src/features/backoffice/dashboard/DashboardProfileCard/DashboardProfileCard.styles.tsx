@@ -61,18 +61,6 @@ export const StyledDashboardProfileCardIntroduction = styled.div`
   white-space: normal;
 `;
 
-export const StyledDashboardProfileCardNudges = styled.div`
-  margin: 20px 20px 30px 20px;
-`;
-
-export const StyledDashboardProfileCardNudgesTitle = styled.div`
-  width: 100%;
-  padding-bottom: 15px;
-  border-bottom: 1px solid ${COLORS.hoverBlue};
-  margin-bottom: 20px;
-  font-size: 16px;
-`;
-
 export const StyledDashboardProfileCardHelpList = styled.div`
   > div {
     margin-right: 10px;

@@ -68,7 +68,7 @@ export function FileInput({
   }
 
   return (
-    <StyledFileInputGroupForm disabled={disabled}>
+    <StyledFileInputGroupForm disabled={disabled} noPadding={noPadding}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
@@ -101,7 +101,8 @@ export function FileInput({
             if (event.target.files) {
               const files = Array.from(event.target.files);
               setFileName(files[0]?.name || null);
-              return onChange(files);
+              onChange(files);
+              event.target.value = '';
             }
           }}
           onBlur={onBlur}

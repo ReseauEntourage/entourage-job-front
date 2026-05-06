@@ -3,7 +3,7 @@ import { Media } from 'src/api/types';
 import { MessageMedia } from './MessageMedia/MessageMedia';
 import { StyledMessageMediasGrid } from './MessageMedias.styles';
 
-export interface MessageMediasGridProps {
+interface MessageMediasGridProps {
   medias: Media[];
 }
 

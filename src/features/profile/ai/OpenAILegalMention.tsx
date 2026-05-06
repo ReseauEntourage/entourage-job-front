@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextProps } from 'src/components/ui';
 
-export type OpenAILegalMentionProps = Omit<TextProps, 'children'>;
+type OpenAILegalMentionProps = Omit<TextProps, 'children'>;
 
 export const OpenAILegalMention = ({ ...props }: OpenAILegalMentionProps) => {
   return (

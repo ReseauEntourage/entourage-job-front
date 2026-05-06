@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const MessagingConversationHeaderContainer = styled.div`
   display: flex;
@@ -10,14 +10,12 @@ export const MessagingConversationHeaderContainer = styled.div`
   box-sizing: border-box;
   font-size: 14px;
   align-items: center;
+  gap: 12px;
 
-  a.report-link {
-    color: ${COLORS.mediumGray};
-  }
   &.mobile {
     background: ${COLORS.white};
     position: sticky;
-    top: ${HEIGHTS.HEADER_MOBILE}px;
+    top: 0;
     left: 0;
     right: 0;
   }
@@ -49,12 +47,8 @@ export const ConversationAddresee = styled.div`
   }
 `;
 
-export const ActionMenuIconStyled = styled.div`
+export const StyledButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
-  padding: 5px;
-  border-radius: 50%;
-  border: ${COLORS.gray} 1px solid;
-  transition: 0.3s ease-in-out;
-  color: ${COLORS.gray};
+  gap: 15px;
+  align-items: center;
 `;

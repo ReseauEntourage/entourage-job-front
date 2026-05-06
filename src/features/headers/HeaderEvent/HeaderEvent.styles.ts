@@ -32,16 +32,3 @@ export const StyledHeaderInfoContainer = styled.div`
   flex-direction: column;
   gap: 20px;
 `;
-
-export const StyledEventInfoElementContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 8px;
-`;
-
-export const StyledEventInfoElement = styled.div`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-`;

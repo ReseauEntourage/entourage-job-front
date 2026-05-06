@@ -3,8 +3,8 @@ import React, { useCallback } from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
-  TwitterShareButton,
   WhatsappShareButton,
+  XShareButton,
 } from 'react-share';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalShareCV } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
@@ -87,8 +87,7 @@ export const CVShareButtons = ({
           openNewsletterModal();
         }}
         url={link}
-        quote={sharedDescription}
-        hashtags={hashtags}
+        hashtag="#EntouragePro"
       >
         <StyledCVShareButton>
           <svg
@@ -105,7 +104,7 @@ export const CVShareButtons = ({
           </svg>
         </StyledCVShareButton>
       </FacebookShareButton>
-      <TwitterShareButton
+      <XShareButton
         disabled={actionDisabled}
         onClick={() => {
           fbEvent(FB_TAGS.SHARE_CV_OPEN);
@@ -118,7 +117,6 @@ export const CVShareButtons = ({
         url={link}
         title={sharedDescription}
         hashtags={hashtags}
-        via="R_Entourage"
       >
         <StyledCVShareButton>
           <svg
@@ -134,7 +132,7 @@ export const CVShareButtons = ({
             />
           </svg>
         </StyledCVShareButton>
-      </TwitterShareButton>
+      </XShareButton>
       <WhatsappShareButton
         disabled={actionDisabled}
         onClick={() => {

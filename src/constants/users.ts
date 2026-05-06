@@ -14,8 +14,8 @@ export type RegistrableUserRoles =
   | UserRoles.CANDIDATE
   | UserRoles.COACH
   | UserRoles.REFERER;
-export type RolesWithOrganization = UserRoles.REFERER;
-export type RolesNotAdmin = Exclude<UserRoles, UserRoles.ADMIN>;
+type RolesWithOrganization = UserRoles.REFERER;
+type RolesNotAdmin = Exclude<UserRoles, UserRoles.ADMIN>;
 
 // Helpers
 export const getNormalUserRoles = (): UserRoles[] => {
@@ -27,15 +27,6 @@ export const getNormalUserRoles = (): UserRoles[] => {
 export const getRolesNotAdmin = (): UserRoles[] => {
   return Object.values(UserRoles).filter(
     (role): role is RolesNotAdmin => role !== UserRoles.ADMIN
-  );
-};
-
-export const getRegistrableUserRoles = (): UserRoles[] => {
-  return Object.values(UserRoles).filter(
-    (role): role is RegistrableUserRoles =>
-      role === UserRoles.CANDIDATE ||
-      role === UserRoles.COACH ||
-      role === UserRoles.REFERER
   );
 };
 
@@ -58,15 +49,3 @@ export const RELATED_ROLES = {
   [UserRoles.ADMIN]: UserRoles.ADMIN,
   [UserRoles.REFERER]: UserRoles.CANDIDATE,
 } as const;
-
-// export const ADMIN_ROLES = {
-//   CANDIDATES: 'Candidats',
-//   COMPANIES: 'Entreprises',
-// } as const;
-// type AdminRole = (typeof ADMIN_ROLES)[keyof typeof ADMIN_ROLES];
-
-// What to do with that ?
-export enum AdminRoles {
-  CANDIDATES = 'Candidats',
-  COMPANIES = 'Entreprises',
-}

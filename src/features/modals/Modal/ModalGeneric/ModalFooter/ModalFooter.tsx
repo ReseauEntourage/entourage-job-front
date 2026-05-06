@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledModalFooter } from './ModalFooter.styles';
 
-export interface ModalFooterProps {
+interface ModalFooterProps {
   children: React.ReactNode;
 }
 

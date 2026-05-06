@@ -25,7 +25,7 @@ import {
 } from './HeaderCompany.styles';
 import { useHeaderCompany } from './useHeaderCompany';
 
-export interface HeaderCompanyProps {
+interface HeaderCompanyProps {
   isEditable?: boolean;
   id: string;
   name: string;

@@ -5,7 +5,7 @@ import { CardEmptyContent } from '../CardEmptyContent/CardEmptyContent';
 import { CardTitle } from '../CardTitle/CardTitle';
 import { CardContent, StyledEditButtonContainer } from './Card.styles';
 
-export interface ProfilePartCardProps {
+interface ProfilePartCardProps {
   title: string;
   children: React.ReactNode;
   isCompleted?: boolean;

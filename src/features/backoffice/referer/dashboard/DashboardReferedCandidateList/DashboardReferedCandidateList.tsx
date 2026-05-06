@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { Card } from '@/src/components/ui/Cards/Card';
 import { StyledDashboardCardContentContainer } from '@/src/features/backoffice/dashboard/Dashboard.styles';
@@ -61,6 +62,9 @@ export const DashboardReferedCandidateList = () => {
         <StyledDashboardReferedCandidateList>
           <CardList list={referedList} isLoading={loading} condensed />
         </StyledDashboardReferedCandidateList>
+        <Button variant="secondary" href="/backoffice/referer/candidates">
+          Voir le suivi de mes candidats
+        </Button>
       </StyledDashboardCardContentContainer>
     </Card>
   );

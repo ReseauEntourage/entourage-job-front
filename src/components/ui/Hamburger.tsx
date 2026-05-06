@@ -3,7 +3,7 @@ import { ButtonIcon } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
 import { LucidIcon } from './Icons/LucidIcon';
 
-export interface HamburgerProps {
+interface HamburgerProps {
   onClick: () => void;
 }
 

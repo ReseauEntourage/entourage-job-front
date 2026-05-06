@@ -5,7 +5,7 @@ import {
   EventCardProps,
 } from '@/src/components/ui/Cards/EntityCards/EventCard/EventCard';
 
-export type DirectoryEventItemProps = EventCardProps;
+type DirectoryEventItemProps = EventCardProps;
 
 export function DirectoryEventItem({
   salesForceId,

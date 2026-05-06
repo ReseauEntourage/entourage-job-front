@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from '@/src/components/ui';
 import { StyledProfileContactItem } from './ProfileContactItem.styles';
 
-export interface ContactItemProps {
+interface ContactItemProps {
   icon: React.ReactNode;
   text: string;
 }

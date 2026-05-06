@@ -1,7 +1,7 @@
 import type { Experience, Formation, Skill } from '@/src/api/types';
 import type { FilterConstant } from '@/src/constants/utils';
 
-export type ProfileExperienceModalValues = {
+type ProfileExperienceModalValues = {
   title: string;
   location: string;
   company: string;
@@ -11,7 +11,7 @@ export type ProfileExperienceModalValues = {
   skills: FilterConstant<string>[];
 };
 
-export type ProfileFormationModalValues = {
+type ProfileFormationModalValues = {
   title: string;
   location: string;
   institution: string;
@@ -33,7 +33,7 @@ const asOptionalString = (value: string | undefined | null) => {
   return trimmed ? trimmed : undefined;
 };
 
-export const mapSkillsFromFilters = (
+const mapSkillsFromFilters = (
   skills: FilterConstant<string>[] | undefined,
   { includeId = false }: MapSkillsOptions = {}
 ): Skill[] => {

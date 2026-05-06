@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledImgProfileStackContainer } from './ImgProfileStack.styles';
 
-export interface ImgProfileStackProps {
+interface ImgProfileStackProps {
   children: React.ReactNode;
 }
 

@@ -8,7 +8,7 @@ import {
   StyledItemCounterLinker,
 } from './TimeLineVertical.styles';
 
-export interface ItemProps {
+interface ItemProps {
   number: number;
   children: React.ReactNode;
   isLast?: boolean;

@@ -3,5 +3,5 @@
   "compilerOptions": {
     "isolatedModules": true
   },
-  "exclude": ["../node_modules", "../cypress"]
+  "exclude": ["../node_modules", "../cypress", "../.storybook", "**/*.stories.ts", "**/*.stories.tsx"]
 }

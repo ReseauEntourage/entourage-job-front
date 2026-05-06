@@ -2,12 +2,12 @@ import React from 'react';
 import { Tag } from '@/src/components/ui';
 import { StyledTagList } from './CardTagList.styles';
 
-export type TagItem = {
+type TagItem = {
   id?: string;
   name: string;
 };
 
-export interface CardTagListProps {
+interface CardTagListProps {
   items?: TagItem[];
   isEditable?: boolean;
   removeCallback?: (idx: number) => void;

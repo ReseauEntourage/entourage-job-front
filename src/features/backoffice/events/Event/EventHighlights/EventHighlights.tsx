@@ -5,7 +5,7 @@ import { COLORS } from '@/src/constants/styles';
 import { StyledItemsContainer } from './EventHighlights.styles';
 import { Item } from './Item/Item';
 
-export type EventHighlightsProps = Pick<
+type EventHighlightsProps = Pick<
   Event,
   'duration' | 'format' | 'goal' | 'audience'
 >;

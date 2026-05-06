@@ -143,24 +143,6 @@ export const StyledMobileFilterOption = styled.label`
   }
 `;
 
-export const StyledMobileFilterButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border: 1px solid ${COLORS.gray['200']};
-  border-radius: 100px;
-  background-color: ${COLORS.white};
-  color: ${COLORS.black};
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 8px;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
 export const StyledMobileFilterItemActions = styled.div`
   display: flex;
   align-items: center;
@@ -183,10 +165,6 @@ export const StyledCheckboxContainer = styled.div`
   > div {
     margin-bottom: 0;
   }
-`;
-
-export const StyledMobileFilterFullWidth = styled.div`
-  width: 100%;
 `;
 
 export const StyledMobileFilterButtonsContainer = styled.div`

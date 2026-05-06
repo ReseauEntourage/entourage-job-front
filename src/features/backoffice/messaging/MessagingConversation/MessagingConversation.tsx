@@ -1,15 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { FeatureKey } from 'src/api/types';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
+  selectHasBetaFeature,
 } from 'src/use-cases/current-user';
 import {
   messagingActions,
+  selectIsAIPanelOpen,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
@@ -21,7 +25,9 @@ import {
   selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
 import {
+  MessagingConversationAIPanel,
   MessagingConversationContainer,
+  MessagingConversationWrapper,
   MessagingMessagesContainer,
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
@@ -38,6 +44,9 @@ export const MessagingConversation = () => {
   const isMobile = useIsMobile();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserId = useSelector(selectCurrentUserId);
+  const hasMessagingAIAssistant = useSelector(
+    selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
+  );
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const newMessage = useSelector(selectNewMessage);
@@ -48,6 +57,7 @@ export const MessagingConversation = () => {
   const currentUserHasSentMessages = useSelector(
     selectCurrentUserHasSentMessages(currentUserId)
   );
+  const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
 
   const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
@@ -98,8 +108,6 @@ export const MessagingConversation = () => {
     if (selectedConversationId === 'new') {
       return true;
     }
-    // Avoid using potentially stale messaging state while a new
-    // conversation is loading or does not match the selected id.
     if (
       !selectedConversation ||
       (selectedConversation as any).id !== selectedConversationId
@@ -164,7 +172,6 @@ export const MessagingConversation = () => {
   };
 
   useEffect(() => {
-    // Set a pinned info when the conversation is one to one and the other participant is not available
     const addressees = selectedConversation?.participants.filter(
       (participant) => participant.id !== currentUserId
     );
@@ -212,69 +219,103 @@ export const MessagingConversation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConversation?.id, selectedConversation?.messages.length]);
 
-  return (
-    <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
-      {!selectedConversationId ? (
-        <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
+  const conversationHasCandidate =
+    selectedConversation?.participants.some(
+      (p) => p.role === UserRoles.CANDIDATE
+    ) ?? false;
+  const canUseAIAssistant =
+    currentUser?.role !== UserRoles.CANDIDATE &&
+    conversationHasCandidate &&
+    hasMessagingAIAssistant;
+  const isNewConversation = selectedConversationId === 'new';
+  const showAIPanelMobile =
+    isMobile && canUseAIAssistant && isAIPanelOpen && !isNewConversation;
+
+  const conversationContent = (
+    <>
+      <MessagingConversationHeader />
+      {pinnedInfo ? (
+        <MessagingPinnedInfo pinnedInfo={pinnedInfo} />
       ) : (
-        <>
-          <MessagingConversationHeader />
-          {pinnedInfo ? (
-            <MessagingPinnedInfo pinnedInfo={pinnedInfo} />
-          ) : (
-            displayFirstContactBanner &&
-            currentUser && (
-              <MessagingFirstContactBanner
-                key={selectedConversationId}
-                role={currentUser.role as UserRoles}
-              />
-            )
-          )}
-
-          {shouldGiveFeedback && (
-            <MessagingFeedback
-              onRatingOrClose={onRatingOrClose}
-              adressee={selectedConversation?.participants.find(
-                (participant) => participant.id !== currentUserId
-              )}
-            />
-          )}
-
-          {displaySuggestions ? (
-            <MessagingSuggestions
-              onSuggestionClick={onSuggestionClick}
-              newMessage={newMessage}
-              participants={selectedConversation?.participants || []}
-            />
-          ) : (
-            <MessagingMessagesContainer
-              blur={shouldGiveFeedback}
-              className={isMobile ? 'mobile' : ''}
-            >
-              {reversedMessages &&
-                reversedMessages.map((message) => (
-                  <MessagingMessage key={message.id} message={message} />
-                ))}
-              <div ref={messagesEndRef} />
-            </MessagingMessagesContainer>
-          )}
-
-          {displayCoachQuickReplies && (
-            <MessagingSuggestions
-              onSuggestionClick={onSuggestionClick}
-              newMessage={newMessage}
-              participants={
-                selectedConversation?.participants.filter(
-                  (p) => p.id !== currentUserId
-                ) || []
-              }
-              variant="coach-quick-replies"
-            />
-          )}
-
-          <MessagingEditor readonly={conversationParticipantsAreDeleted} />
-        </>
+        displayFirstContactBanner &&
+        currentUser && (
+          <MessagingFirstContactBanner
+            key={selectedConversationId}
+            role={currentUser.role as UserRoles}
+          />
+        )
       )}
-    </MessagingConversationContainer>
+
+      {shouldGiveFeedback && (
+        <MessagingFeedback
+          onRatingOrClose={onRatingOrClose}
+          adressee={selectedConversation?.participants.find(
+            (participant) => participant.id !== currentUserId
+          )}
+        />
+      )}
+
+      {displaySuggestions ? (
+        <MessagingSuggestions
+          onSuggestionClick={onSuggestionClick}
+          newMessage={newMessage}
+          participants={selectedConversation?.participants || []}
+        />
+      ) : (
+        <MessagingMessagesContainer
+          blur={shouldGiveFeedback}
+          className={isMobile ? 'mobile' : ''}
+        >
+          {reversedMessages &&
+            reversedMessages.map((message) => (
+              <MessagingMessage key={message.id} message={message} />
+            ))}
+          <div ref={messagesEndRef} />
+        </MessagingMessagesContainer>
+      )}
+
+      {displayCoachQuickReplies && (
+        <MessagingSuggestions
+          onSuggestionClick={onSuggestionClick}
+          newMessage={newMessage}
+          participants={
+            selectedConversation?.participants.filter(
+              (p) => p.id !== currentUserId
+            ) || []
+          }
+          variant="coach-quick-replies"
+        />
+      )}
+
+      <MessagingEditor readonly={conversationParticipantsAreDeleted} />
+    </>
+  );
+
+  if (!selectedConversationId) {
+    return (
+      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+        <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
+      </MessagingConversationContainer>
+    );
+  }
+
+  if (showAIPanelMobile) {
+    return <MessagingAIPanel />;
+  }
+
+  return (
+    <MessagingConversationWrapper>
+      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+        {conversationContent}
+      </MessagingConversationContainer>
+      {!isMobile &&
+        isAIPanelOpen &&
+        canUseAIAssistant &&
+        !isNewConversation && (
+          <MessagingConversationAIPanel>
+            <MessagingAIPanel />
+          </MessagingConversationAIPanel>
+        )}
+    </MessagingConversationWrapper>
   );
 };

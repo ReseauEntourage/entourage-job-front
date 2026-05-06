@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '@/src/api/types';
+import { CurrentUserCompany, User } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { NavConnectedMainItem } from '../NavConnected.types';
 import { GA_TAGS } from 'src/constants/tags';
@@ -64,8 +64,11 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
   return items;
 };
 
-const renderCoachHeaderItems = (user: User): NavConnectedMainItem[] => {
-  const isCompanyAdmin = user.company && user.company.companyUser?.isAdmin;
+const renderCoachHeaderItems = (
+  user: User,
+  company: CurrentUserCompany | null
+): NavConnectedMainItem[] => {
+  const isCompanyAdmin = company && company.companyUser?.isAdmin;
   const onboardingStatus = user.onboardingStatus;
 
   let items: NavConnectedMainItem[] = [];
@@ -135,14 +138,15 @@ const renderCoachHeaderItems = (user: User): NavConnectedMainItem[] => {
 
 export const renderLinks = (
   user: User,
-  logout: () => void
+  logout: () => void,
+  company: CurrentUserCompany | null
 ): {
   links: { [K in UserRoles]: NavConnectedMainItem[] };
   messaging: NavConnectedMainItem;
   dropdown: NavConnectedMainItem[];
 } => {
   const candidateHeaderItems = renderCandidateHeaderItems(user);
-  const coachHeaderItems = renderCoachHeaderItems(user);
+  const coachHeaderItems = renderCoachHeaderItems(user, company);
 
   return {
     links: {

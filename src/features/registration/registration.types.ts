@@ -51,15 +51,8 @@ export type RegistrationFlowForms =
 export type RegistrationFlowFormWithOrganizationField =
   typeof formRegistrationRefererAccount;
 
-export type RegistrationFlowFormWithCompanyField =
-  | typeof formRegistrationCompanySelection;
-
 export type RegistrationFormData =
   ExtractFormSchemaValidation<RegistrationFlowForms>;
-
-export type FirstStepRegistrationFormData = ExtractFormSchemaValidation<
-  typeof formRegistrationFlowSelection
->;
 
 export type RegistrationFormDataKeys = UnionKeys<RegistrationFormData>;
 
@@ -89,17 +82,3 @@ export interface RegistrationStepContent<
     data: RegistrationData;
   }> | void;
 }
-
-export interface RegistrationLastStepContent {
-  title: string;
-  subtitle: string;
-  bullets: {
-    icon: React.ReactNode;
-    title: string;
-    text: string;
-  }[];
-}
-
-export type RegistrationLastStepContentByFlow = Partial<{
-  [K in RegistrationFlow]: RegistrationLastStepContent;
-}>;

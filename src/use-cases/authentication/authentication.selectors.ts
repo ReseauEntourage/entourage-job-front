@@ -1,14 +1,9 @@
 import {
-  loginAdapter,
   logoutAdapter,
   sendVerifyEmailAdapter,
   verifyEmailTokenAdapter,
 } from './authentication.adapters';
 import { RootState } from './authentication.slice';
-
-export const loginSelectors = loginAdapter.getSelectors<RootState>(
-  (state) => state.authentication.login
-);
 
 export const logoutSelectors = logoutAdapter.getSelectors<RootState>(
   (state) => state.authentication.logout

@@ -3,6 +3,7 @@ import { Api } from 'src/api';
 import { DASHBOARD_RECOMMENDATIONS_LIMIT, PROFILES_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
 import {
+  fetchProfilesSelectors,
   selectProfilesHasFetchedAll,
   selectProfilesOffset,
 } from './profiles.selectors';
@@ -27,8 +28,14 @@ function* fetchProfilesNextPageSaga(
   action: ReturnType<typeof fetchProfilesNextPage>
 ) {
   const hasFetchedAll = yield* select(selectProfilesHasFetchedAll);
+  const isFetchRequested = yield* select(
+    fetchProfilesSelectors.selectIsFetchProfilesRequested
+  );
 
-  if (!hasFetchedAll) {
+  // Do not dispatch fetchProfilesRequested if a fetch is already in progress.
+  // This complements the reducer-level guard and prevents cancelling an in-flight
+  // filter-change request via takeLatest(fetchProfilesRequested).
+  if (!hasFetchedAll && !isFetchRequested) {
     yield* put(fetchProfilesRequested(action.payload));
   }
 }

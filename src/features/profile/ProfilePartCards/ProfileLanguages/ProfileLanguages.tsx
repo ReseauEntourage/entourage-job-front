@@ -10,7 +10,7 @@ import { UserProfileLanguage } from 'src/api/types';
 import { LANGUAGES_LEVELS } from 'src/constants';
 import { ProfileLanguagesModalEdit } from './ProfileLanguagesModalEdit';
 
-export interface ProfileLanguagesProps {
+interface ProfileLanguagesProps {
   userProfileLanguages?: UserProfileLanguage[];
   isEditable?: boolean;
   smallCard?: boolean;

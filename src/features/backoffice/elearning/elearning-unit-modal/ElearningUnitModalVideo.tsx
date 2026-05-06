@@ -7,7 +7,7 @@ import {
   StyledElearningUnitModalVideoFrame,
 } from './ElearningUnitModal.styles';
 
-export interface ElearningUnitModalVideoProps {
+interface ElearningUnitModalVideoProps {
   title: string;
   videoUrl?: string | null;
 }

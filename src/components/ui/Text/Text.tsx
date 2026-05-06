@@ -13,6 +13,7 @@ export function Text({
   variant = 'normal',
   textAlign = 'left',
   underline = false,
+  uppercase = false,
   onClick,
 }: TextProps) {
   const isDesktop = useIsDesktop();
@@ -28,6 +29,7 @@ export function Text({
       mobile={!isDesktop}
       textAlign={textAlign}
       underline={underline}
+      uppercase={uppercase}
       onClick={onClick}
     >
       {children}

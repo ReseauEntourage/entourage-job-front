@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { ConversationParticipant } from '@/src/api/types';
 import { H3 } from '@/src/components/ui/Headings/H3';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { isRoleIncluded } from '@/src/utils';
-import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { Item } from './Item/Item';
 import {
@@ -18,7 +18,7 @@ import {
 } from './MessagingSuggestions.styles';
 import { MessagingSuggestionItem } from './MessagingSuggestions.types';
 
-export interface MessagingSuggestionProps {
+interface MessagingSuggestionProps {
   newMessage: string;
   onSuggestionClick: (suggestion: MessagingSuggestionItem) => void;
   participants: ConversationParticipant[];

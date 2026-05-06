@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EventDirectoryFilters } from '@/src/features/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
 import { Event, EventWithParticipants } from 'src/api/types';
-import { EVENTS_LIMIT } from 'src/constants';
+import { EVENTS_LIMIT, ReduxRequestEvents } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchEventsAdapter,
@@ -10,7 +10,7 @@ import {
   updateUserParticipationAdapter,
 } from './events.adapters';
 
-export interface State {
+interface State {
   fetchEvents: RequestState<typeof fetchEventsAdapter>;
   fetchSelectedEvent: RequestState<typeof fetchSelectedEventAdapter>;
   fetchSelectedEventParticipants: RequestState<
@@ -87,9 +87,17 @@ export const slice = createSlice({
       _action: PayloadAction<EventDirectoryFilters>
     ) {},
     fetchEventsNextPage(state, _action: PayloadAction<EventDirectoryFilters>) {
-      state.eventsOffset = state.eventsHasFetchedAll
-        ? state.eventsOffset
-        : state.eventsOffset + EVENTS_LIMIT;
+      // Do not increment offset if all events are fetched or a fetch is already in progress.
+      // Guarding against the stale-closure race where a filter reset (eventsOffset → 0,
+      // status → REQUESTED) happens before React re-renders the useIsAtBottom callback,
+      // which would otherwise increment the offset back to EVENTS_LIMIT and trigger a
+      // page-2 fetch instead of page-1.
+      if (
+        !state.eventsHasFetchedAll &&
+        state.fetchEvents.status === ReduxRequestEvents.SUCCEEDED
+      ) {
+        state.eventsOffset += EVENTS_LIMIT;
+      }
     },
   },
 });

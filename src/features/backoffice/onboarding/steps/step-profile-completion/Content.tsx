@@ -5,6 +5,7 @@ import { AccordionGroup } from '@/src/components/ui/Accordion/AccordionGroup';
 import { UserRoles } from '@/src/constants/users';
 import { listCompletionFields } from '@/src/features/forms/utils/computeCompletionRate.utils';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { CompletionStatus } from './CompletionStatus';
 import { StyledProfileSubHeader } from './Content.styles';
 import { CvCompletionAccordion } from './components/CvCompletionAccordion/CvCompletionAccordion';
@@ -15,6 +16,7 @@ import { ProfileCompletionFormValues } from './types';
 
 export const Content = () => {
   const user = useAuthenticatedUser();
+  const userProfile = useCurrentUserProfile();
   const { control, trigger, getFieldState, formState } =
     useFormContext<ProfileCompletionFormValues>();
 
@@ -31,8 +33,7 @@ export const Content = () => {
   const completion = useMemo(() => {
     // If the user already has a picture OR just selected one in the form,
     // count it as completed.
-    const donePicture =
-      !!user.userProfile?.hasPicture || !!formValues?.profileImage;
+    const donePicture = !!userProfile?.hasPicture || !!formValues?.profileImage;
 
     const excludePaths = ['profileImageObjectUrl', 'profileImage'];
     if (user.role === UserRoles.CANDIDATE) {
@@ -77,7 +78,7 @@ export const Content = () => {
     formValues,
     getFieldState,
     user.role,
-    user.userProfile?.hasPicture,
+    userProfile?.hasPicture,
   ]);
 
   return (

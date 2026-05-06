@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
+export const MessagingConversationWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`;
+
 export const MessagingConversationContainer = styled.div`
   display: flex;
   flex: 1;
@@ -11,6 +20,13 @@ export const MessagingConversationContainer = styled.div`
   border: ${COLORS.lightGray} 1px solid;
   box-sizing: border-box;
   height: 100%;
+`;
+
+export const MessagingConversationAIPanel = styled.div`
+  width: 40%;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
 `;
 
 export const MessagingMessagesContainer = styled.div<{
