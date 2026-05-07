@@ -40,8 +40,7 @@ export const MessagingConversationListItem = ({
     conversation,
     currentUserId
   );
-  const shouldHighlightConversation =
-    hasUnreadMessages || conversation.shouldGiveFeedback;
+  const shouldHighlightConversation = hasUnreadMessages;
 
   useEffect(() => {
     setIsActivated(selectedConversationId === conversation.id);

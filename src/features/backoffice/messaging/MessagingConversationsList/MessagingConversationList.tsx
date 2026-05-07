@@ -5,7 +5,11 @@ import { Text } from 'src/components/ui';
 import { SearchBar } from 'src/features/filters/SearchBar/SearchBar';
 import { useIsMobile } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
-import { messagingActions, selectConversations } from 'src/use-cases/messaging';
+import {
+  messagingActions,
+  selectConversations,
+  selectUnseenConversationCount,
+} from 'src/use-cases/messaging';
 import {
   ContainerStyled,
   StyledConversationsContainer,
@@ -30,14 +34,7 @@ export const MessagingConversationList = () => {
     dispatch(messagingActions.getConversationsRequested());
   }, [dispatch]);
 
-  const unreadCount = useMemo(() => {
-    if (!allConversations || !currentUserId) {
-      return 0;
-    }
-    return allConversations.filter((c) =>
-      conversationHasUnreadMessages(c, currentUserId)
-    ).length;
-  }, [allConversations, currentUserId]);
+  const unseenConversationCount = useSelector(selectUnseenConversationCount);
 
   const conversations = useMemo(() => {
     if (!allConversations) {
@@ -82,7 +79,7 @@ export const MessagingConversationList = () => {
     <ContainerStyled>
       <MessagingConversationTabs
         activeTab={activeTab}
-        unreadCount={unreadCount}
+        unreadCount={unseenConversationCount}
         onTabChange={setActiveTab}
       />
       {!isMobile && (
