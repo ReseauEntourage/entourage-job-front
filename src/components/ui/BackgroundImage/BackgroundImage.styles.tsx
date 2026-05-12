@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const BACKGROUND_IMAGE_HEIGHT = 240;
+const BACKGROUND_IMAGE_HEIGHT = 430;
 
 export const StyledBackground = styled.section`
   &.top-banner {

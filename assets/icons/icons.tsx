@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 
 import IlluBulleQuestionCheckSvg from './Illu-bulle-question-check.svg';
@@ -37,8 +36,11 @@ import HomeSvg from './home.svg';
 import IlluCVSvg from './illu-CV.svg';
 import IlluAmpouleSvg from './illu-ampoule.svg';
 import IlluBulleQuestionSvg from './illu-bulle-question.svg';
+import IlluBulleWebinaireSvg from './illu-bulle-webinaire.svg';
 import IlluCalendrierSvg from './illu-calendrier.svg';
 import IlluCandidatFolderSvg from './illu-candidat-folder.svg';
+import IlluCartonSvg from './illu-carton.svg';
+import IlluClefSvg from './illu-clef.svg';
 import IlluCoachEtCandidatSvg from './illu-coach-et-candidat.svg';
 import IlluCoeurMainsOuvertesBleuSvg from './illu-coeur-mains-ouvertes-bleu.svg';
 import IlluCoeurMainsOuvertesSvg from './illu-coeur-mains-ouvertes.svg';
@@ -52,6 +54,7 @@ import IlluLinkedInSvg from './illu-linked-in.svg';
 import IlluMaletteSvg from './illu-malette.svg';
 import IlluOrdiCVSvg from './illu-ordi-cv.svg';
 import IlluPoigneeDeMainSvg from './illu-poignee-de-main.svg';
+import IlluPouceSvg from './illu-pouce.svg';
 import IlluQuestionReponseOrangeSvg from './illu-question-reponse-orange.svg';
 import IlluReseauSvg from './illu-reseau.svg';
 import IlluReseauxSociauxSvg from './illu-reseaux-sociaux.svg';
@@ -153,6 +156,10 @@ export const SvgIcons = {
   IlluReseau: IlluReseauSvg,
   IlluReseauxSociaux: IlluReseauxSociauxSvg,
   IlluTeteHomme: IlluTeteHommeSvg,
+  IlluPouce: IlluPouceSvg,
+  IlluBulleWebinaire: IlluBulleWebinaireSvg,
+  IlluClef: IlluClefSvg,
+  IlluCarton: IlluCartonSvg,
   Info: InfoSvg,
   Instagram: InstagramSvg,
   Language: LanguageSvg,
@@ -199,12 +206,23 @@ interface SvgIconProps {
   name: keyof typeof SvgIcons;
   width?: number;
   height?: number;
+  color?: string;
 
   onMouseEnter?: () => void;
   onClick?: () => void;
   className?: string;
 }
 
-export const SvgIcon = ({ name, width, height = width, className, ...props }: SvgIconProps) => (
-  <Image src={SvgIcons[name]} alt={`${name} Icon`} width={width} height={height} {...props} />
-);
+export const SvgIcon = ({ name, width, height = width, color, className, ...props }: SvgIconProps) => {
+  const SvgComponent = SvgIcons[name];
+  return (
+    <SvgComponent
+      width={width}
+      height={height}
+      style={{ color }}
+      className={className}
+      aria-label={`${name} Icon`}
+      {...props}
+    />
+  );
+};

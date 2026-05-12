@@ -1,67 +1,23 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
-import { Section } from '@/src/components/ui';
 import { openModal } from '@/src/features/modals/Modal';
-import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
 import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/FormatBenefits';
-import { Impact } from '@/src/features/partials/common/Impact';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
-import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
-import { SharePartial } from '@/src/features/partials/common/SharePartial';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
-import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { STORAGE_KEYS } from '../constants';
 import { PinnedCommunicationModale } from '../features/modals/PopupModal/PinnedCommunicationModale';
+import { InviteToRegisterSection } from '../features/partials/common/InviteToRegisterSection/InviteToRegisterSection';
+import { ShareSection } from '../features/partials/common/ShareSection/ShareSection';
+import { CoachReassurance } from '../features/partials/pages/Aider/CoachReassurance/CoachReassurance';
+import { CoachRessources } from '../features/partials/pages/Aider/CoachRessources/CoachRessources';
+import { CoachingVideo } from '../features/partials/pages/Aider/CoachingVideo/CoachingVideo';
+import { WhoAreCandidates } from '../features/partials/pages/Aider/WhoAreCandidates/WhoAreCandidates';
 import { useUtm } from '../hooks/queryParams/useUTM';
 import { useMount } from '../hooks/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-
-const reviewContent = [
-  {
-    review: (
-      <>
-        &quot;Je suis ravie d&apos;avoir rencontré Lucie, on a une relation
-        vraiment humaine. C&apos;était quelqu&apos;un de timide et il fallait la
-        mettre en confiance. La première rencontre, ça fait un peu peur mais
-        j’ai découvert une personne très douce, et c&apos;est devenu fluide. Je
-        suis sûr que nous resterons en lien&quot;
-      </>
-    ),
-    author: 'Jean-Baptiste',
-    industry: 'coach de Lucie',
-    image: '',
-  },
-  {
-    review: (
-      <>
-        &quot;Maria est la troisième candidate que j’accompagne. Je sais que si
-        j’ai une question, j’aurai toujours une personne d’Entourage Pro pour
-        répondre à mes questions. L&apos;association est très mature : le
-        contact est facile et informel mais en même temps très professionnel.
-        C&apos;est vraiment positif !&quot;
-      </>
-    ),
-    author: 'Remy',
-    industry: 'coach de Maria',
-    image: '',
-  },
-  {
-    review: (
-      <>
-        &quot;C’est hyper enrichissant humainement. Chaque minute que tu passes
-        est utile au candidat, à sa progression, à la manière dont il voit les
-        choses.&quot;
-      </>
-    ),
-    author: 'Marie',
-    industry: 'coach de Léo',
-    image: '',
-  },
-];
 
 const Aider = () => {
   useUtm();
@@ -78,33 +34,56 @@ const Aider = () => {
   return (
     <Layout title="Aider - Entourage Pro">
       <ImageTitle
-        title="Avec Entourage Pro, s’engager se fait en toute flexibilité"
-        description="Devenir coach bénévole ? Une façon de concilier agenda chargé et envie de s’engager."
+        title={
+          <>
+            Devenez coach Entourage Pro
+            <br />
+            et donnez le coup de pouce qui change tout.
+          </>
+        }
+        description={
+          <>
+            Partagez votre expérience et votre réseau pour soutenir des
+            candidats en situation de précarité et isolés de l’emploi, motivés à
+            retrouver le chemin du monde professionnel. Une façon simple,
+            humaine et flexible de vous engager en faveur de l’égalité des
+            chances.
+          </>
+        }
         img="/static/img/aider-banner-desktop.jpg"
         imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
+        cta={{
+          label: 'Je deviens coach',
+          onClick: () => gaEvent(GA_TAGS.PAGE_AIDER_CTA_BANNER_CLICK),
+          href: '/inscription',
+        }}
       />
 
       <UnderstandFormat as="Coach" />
 
-      <FormatBenefits as="Coach" title="Les avantages de devenir coach" />
+      <FormatBenefits
+        as="Coach"
+        title="Concrètement, comment pouvez-vous agir ?"
+      />
+
+      <WhoAreCandidates />
+
+      <CoachingVideo />
+
+      <CoachReassurance />
+
+      <CoachRessources />
 
       <WhyUseEp as="Coach" />
 
-      <ContactUsSection
-        onClick={() => {
-          gaEvent(GA_TAGS.PAGE_AIDER_CONTACT_OPEN);
-          openModal(<ModalInterestLinkedOut />);
-        }}
+      <InviteToRegisterSection
+        as="Coach"
+        onClick={() => gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC)}
       />
 
-      <Reviews title="Nos coachs témoignent" reviews={reviewContent} />
-      <Impact as="Coach" />
-      <PartnersWorkingWithUs tag={GA_TAGS.HOME_PARTNERS_CLICK} />
       <NewsletterPartial tag={GA_TAGS.PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC} />
-      <Section style="muted">
-        <SharePartial />
-      </Section>
+      <ShareSection />
     </Layout>
   );
 };

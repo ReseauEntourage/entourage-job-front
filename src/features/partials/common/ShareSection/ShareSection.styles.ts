@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledShareButton = styled.button`
-  height: 32px;
-  width: 32px;
+  height: 48px;
+  width: 48px;
   background-color: ${COLORS.primaryBlue};
   border-radius: 90px;
   border: 1px solid ${COLORS.primaryBlue};

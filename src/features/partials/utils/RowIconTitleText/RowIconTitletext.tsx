@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section } from '@/src/components/ui';
-import { H4, H5 } from '@/src/components/ui/Headings';
+import { H2, H5 } from '@/src/components/ui/Headings';
 import { Color } from 'src/constants/styles';
 import { IconTitleTextItem } from './IconTitleTextItem';
 import {
@@ -15,8 +15,8 @@ interface RowIconTitleTextProps {
   backgroundColor?: Color;
   sectionBgColor?: Color;
   content: {
-    title: string;
-    paragraph: string;
+    title?: React.ReactNode;
+    paragraph: React.ReactNode;
     illu: React.ReactNode;
   }[];
 }
@@ -32,7 +32,9 @@ export const RowIconTitleText = ({
     <StyledRowIconTitleTextBackground backgroundColor={backgroundColor}>
       <Section>
         <StyledSectionContent bgColor={sectionBgColor}>
-          {title && <H4 title={title} color="black" center />}
+          {title && (
+            <H2 title={title} color="primaryBlue" center weight="bold" />
+          )}
           {subtitle && (
             <H5 title={subtitle} color="black" weight="normal" center />
           )}

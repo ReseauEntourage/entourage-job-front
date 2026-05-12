@@ -1,8 +1,9 @@
 import React, { Ref } from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
+import { StyledCriteriaIllu } from '@/src/features/partials/utils/SimpleCardsImageCTA/SimpleCardsImageCTA.styles';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
-import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
+import { StyledCTAsContainer } from '@/src/features/partials/utils/SimpleImageText/SimpleImageText.styles';
 
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -72,31 +73,23 @@ const contentAs: { [K in DisplayAs]: Content } = {
   },
   Coach: {
     title: 'Pourquoi devenir coach ?',
-    img: '/static/img/front-office/why/why-become-coach.jpg',
+    img: '/static/img/front-office/why/why-become-coach.png',
     content: (
       <>
-        Recréer un réseau professionnel pour les personnes en situation de
-        précarité et d’isolement est crucial dans le combat pour l’inclusion.
+        Vous aussi vous pensez que le réseau ne devrait pas être un privilège ?
+        Entourage Pro est un réseau solidaire qui rapproche des personnes. La
+        relation est horizontale, sans pression de résultat. C'est la force du
+        lien social qui remet les gens en mouvement. Pas les cases à cocher.
         <br />
         <br />
-        Pour y arriver, nous avons besoin de vous ! En devenant coach bénévole,
-        vous donnez des coups de pouce à des candidat(e)s afin qu’ils aient
-        toutes les cartes en main pour appréhender le monde professionnel et y
-        trouver leur place.
-        <br />
-        <br />
-        Un format d’engagement souple, qui s’adapte à vos disponibilités et vous
-        permet de vous engager à votre rythme.
-        <br />
-        <br />
-        Bien sûr, notre équipe ne vous laissent pas seul(e) ! Nous assurons un
-        suivi et vous orientons vers les candidats que vous pourrez le mieux
-        accompagner.
+        C'est une façon flexible de s’engager pour l’égalité des chances et de
+        donner du sens à sa vie professionnelle en étant outillé et accompagné
+        par Entourage.
       </>
     ),
     ctas: [
       {
-        text: "S'inscrire",
+        text: 'Je deviens coach',
         gaTag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
         href: '/inscription',
       },
@@ -158,13 +151,14 @@ export const WhyUseEp = ({
       innerRef={innerRef}
       title={contentAs[as].title}
       img={contentAs[as].img}
-      reverse
+      reverse={as === 'Candidat'}
+      imgCover={false}
     >
       {contentAs[as].criterias && (
         <StyledCriteriasContainer>
           {contentAs[as].criterias?.map((criteria, index) => (
             <StyledCriteria key={index}>
-              {criteria.illu}
+              <StyledCriteriaIllu>{criteria.illu}</StyledCriteriaIllu>
               <Text size="large" color="darkGray">
                 {criteria.text}
               </Text>
@@ -183,6 +177,7 @@ export const WhyUseEp = ({
               size="medium"
               onClick={() => gaEvent(cta.gaTag)}
               href={cta.href}
+              weight="bold"
             >
               {cta.text}
             </Button>

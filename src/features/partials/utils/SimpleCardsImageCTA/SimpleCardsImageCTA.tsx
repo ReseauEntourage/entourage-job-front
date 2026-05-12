@@ -6,6 +6,7 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { AnyToFix } from 'src/utils/Types';
 import {
   StyledCriteria,
+  StyledCriteriaIllu,
   StyledCriteriasContainer,
   StyledSimpleCardsImageCTACard,
   StyledSimpleCardsImageCTAContainer,
@@ -72,7 +73,9 @@ export const SimpleCardsImageCTA = ({
                     <StyledCriteriasContainer>
                       {card.criterias?.map((criteria) => (
                         <StyledCriteria>
-                          {criteria.illu}
+                          <StyledCriteriaIllu>
+                            {criteria.illu}
+                          </StyledCriteriaIllu>
                           <Text size="large" color="darkGray">
                             {criteria.text}
                           </Text>

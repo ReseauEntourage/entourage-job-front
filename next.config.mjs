@@ -81,6 +81,28 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: [{ loader: '@svgr/webpack', options: { dimensions: false } }],
+        as: '*.js',
+      },
+    },
+  },
+  webpack(config) {
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.('.svg')
+    );
+    if (fileLoaderRule) {
+      fileLoaderRule.exclude = /\.svg$/i;
+    }
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: [{ loader: '@svgr/webpack', options: { dimensions: false } }],
+    });
+    return config;
+  },
   env: {
     NEXT_PUBLIC_RELEASE_VERSION:
       process.env.HEROKU_SLUG_COMMIT || 'development',

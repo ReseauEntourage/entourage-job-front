@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { isEmail } from 'validator';
 import { Section } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
+import { H3 } from '@/src/components/ui/Headings';
 import { CheckBox } from '@/src/components/ui/Inputs/CheckBox';
 import { TextInput } from '@/src/components/ui/Inputs/TextInput';
 import { Api } from 'src/api';
@@ -86,10 +87,11 @@ export const NewsletterPartial = ({
       className={!padding ? 'uk-padding-remove-vertical' : ''}
     >
       <div className="uk-text-center">
-        <h4 className="uk-align-center uk-text-bold uk-width-1-2@m">
-          Inscrivez-vous à la newsletter pour avoir des nouvelles des candidats
-          et être informé(e) de l&apos;évolution du projet&nbsp;!
-        </h4>
+        <H3
+          title="Inscrivez-vous à la newsletter pour avoir des nouvelles des candidats
+          et être informé de l'évolution du projet&nbsp;!"
+          center
+        />
       </div>
 
       <StyledNLForm>
