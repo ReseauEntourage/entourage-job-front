@@ -34,5 +34,5 @@
     "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts",
     "./cypress.config.ts"
   ],
-  "exclude": ["node_modules", ".storybook", "**/*.stories.ts", "**/*.stories.tsx"]
+  "exclude": ["node_modules", ".storybook", "storybook-static", "**/*.stories.ts", "**/*.stories.tsx"]
 }

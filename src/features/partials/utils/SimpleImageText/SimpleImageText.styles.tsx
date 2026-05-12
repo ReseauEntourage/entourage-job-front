@@ -32,6 +32,7 @@ export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextCo
 export const StyledSimpleImageTextImageContainer = styled.div`
   width: 45%;
   position: relative;
+  min-height: 300px;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
@@ -57,6 +58,12 @@ export const StyledSimpleImageTextTextContainer = styled.div<{
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     width: 50%;
   }
+`;
+
+export const StyledTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 `;
 
 export const StyledSimpleVideoTextTextContainer = styled(
@@ -103,4 +110,5 @@ export const StyledCTAsContainer = styled.div`
   button {
     margin-top: 4px;
   }
+  margin-top: 30px;
 `;

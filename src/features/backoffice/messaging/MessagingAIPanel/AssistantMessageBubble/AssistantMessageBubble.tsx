@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-named-as-default
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import { useMemo } from 'react';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
+import { COLORS } from '@/src/constants/styles';
 import { SimpleImageText } from '../../utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -13,22 +14,23 @@ import {
 type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 interface UnderstandFormatProps {
-  innerRef?: React.RefObject<HTMLDivElement>;
   as: 'Coach' | 'Candidat' | 'Referer';
 }
 
 interface Criteria {
   illu: React.ReactNode | null;
-  text: string;
+  text: React.ReactNode;
 }
 
 interface Content {
   title: string;
+  subtitle?: string;
   img: string;
+  imgCover?: boolean;
   criterias?: Criteria[];
   content: React.ReactNode;
   cta: {
-    text: string;
+    text: React.ReactNode;
     gaTag: {
       action: string;
       label?: string;
@@ -38,6 +40,8 @@ interface Content {
     href: string;
   }[];
 }
+
+const higlightCriteriaStyle = { color: COLORS.primaryBlue, fontWeight: '600' };
 
 const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
@@ -88,41 +92,85 @@ const contentAs: { [K in DisplayAs]: Content } = {
     ],
   },
   Coach: {
-    title: 'Rejoignez notre communauté de coachs bénévoles !',
+    title: 'C’est quoi être coach Entourage Pro ?',
+    subtitle: 'Une rencontre humaine avant tout.',
     img: '/static/img/front-office/understand-format/understand-format-coach.png',
+    imgCover: false,
     criterias: [
       {
-        illu: <SvgIcon name="IlluCalendrier" width={30} height={30} />,
-        text: 'Selon vos disponibilités',
+        illu: (
+          <SvgIcon
+            name="IlluConversation"
+            width={30}
+            height={30}
+            color="white"
+          />
+        ),
+        text: (
+          <>
+            <span style={higlightCriteriaStyle}>Vivre des rencontres</span> que
+            vous n'auriez peut-être jamais faites autrement.
+          </>
+        ),
       },
       {
-        illu: <SvgIcon name="IlluMalette" width={30} height={30} />,
-        text: 'En fonction de votre expertise',
+        illu: <SvgIcon name="IlluPouce" width={30} height={30} />,
+        text: (
+          <>
+            <span style={higlightCriteriaStyle}>Donner un coup de pouce</span>{' '}
+            concret à des personnes isolées de la recherche d’emploi : un avis
+            sur un CV, un contact, une simulation d’entretien, un échange qui
+            remet quelqu'un en confiance.
+          </>
+        ),
       },
       {
-        illu: <SvgIcon name="IlluBulleQuestionCheck" width={30} height={30} />,
-        text: 'En physique ou en visio',
+        illu: <SvgIcon name="IlluPoigneeDeMain" width={30} height={30} />,
+        text: (
+          <>
+            <span style={higlightCriteriaStyle}>Avancer d'égal à égal :</span>{' '}
+            on ne fait pas à la place de, on fait avec.
+          </>
+        ),
       },
       {
-        illu: <SvgIcon name="OrienterCarteSolidaire" width={30} height={30} />,
-        text: 'Partout en France',
+        illu: <SvgIcon name="IlluReseau" width={30} height={30} />,
+        text: (
+          <>
+            <span style={higlightCriteriaStyle}>Rejoindre une communauté</span>{' '}
+            de coachs bénévoles : qui partagent la même conviction
+          </>
+        ),
+      },
+      {
+        illu: (
+          <SvgIcon
+            name="IlluCalendrier"
+            width={30}
+            height={30}
+            color={COLORS.primaryBlue}
+          />
+        ),
+        text: (
+          <>
+            <span style={higlightCriteriaStyle}>
+              S'engager selon ses disponibilités
+            </span>
+            , sans pression de durée ni de fréquence. fréquence.
+          </>
+        ),
       },
     ],
     content: (
       <>
-        Avec Entourage Pro, il n’a jamais été aussi facile d’œuvrer pour
-        l’inclusion.
-        <br />
-        Selon vos compétences et votre disponibilité, vous donnez des coups de
-        pouce à nos candidat(e)s : relayer une recherche d’emploi sur LinkedIn,
-        aider à la rédaction d’un CV ou d’une lettre de motivation, préparer un
-        entretien, partager un conseil ou un contact, etc.
+        Rejoignez une large communauté de coachs bénévoles qui agissent pour que
+        l’isolement et la précarité ne soit pas un frein à la recherche d’emploi
       </>
     ),
 
     cta: [
       {
-        text: "S'inscrire",
+        text: 'Je deviens coach',
         gaTag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
         href: '/inscription',
       },
@@ -175,22 +223,25 @@ const contentAs: { [K in DisplayAs]: Content } = {
   },
 };
 
-export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
+export const UnderstandFormat = ({ as }: UnderstandFormatProps) => {
   return (
     <SimpleImageText
-      innerRef={innerRef}
       title={contentAs[as].title}
+      subtitle={contentAs[as].subtitle}
       img={contentAs[as].img}
+      imgCover={contentAs[as].imgCover}
     >
       {contentAs[as].criterias && (
         <StyledCriteriasContainer>
           {contentAs[as].criterias?.map((criteria, index) => (
-            <StyledCriteria key={index}>
-              {criteria.illu}
+            <StyledCriteria.Container key={index}>
+              <StyledCriteria.IlluContainer>
+                {criteria.illu}
+              </StyledCriteria.IlluContainer>
               <Text size="large" color="darkGray">
                 {criteria.text}
               </Text>
-            </StyledCriteria>
+            </StyledCriteria.Container>
           ))}
         </StyledCriteriasContainer>
       )}
@@ -205,6 +256,7 @@ export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
             size="medium"
             onClick={() => gaEvent(cta.gaTag)}
             href={cta.href}
+            weight="bold"
           >
             {cta.text}
           </Button>

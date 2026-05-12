@@ -46,13 +46,9 @@ export const CompanyCard = ({
       return <Text>Aucun collaborateur</Text>;
     }
 
-    let boldPart = '';
+    const boldPart =
+      users.length === 1 ? '1 collaborateur' : `${users.length} collaborateurs`;
     const rest = 'dans la communauté';
-    if (users.length === 1) {
-      boldPart = '1 collaborateur';
-    } else {
-      boldPart = `${users.length} collaborateurs`;
-    }
     return (
       <Text size="small">
         <span style={{ fontWeight: FONT_WEIGHTS.semibold }}>{boldPart}</span>{' '}

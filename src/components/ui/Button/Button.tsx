@@ -24,6 +24,7 @@ export function Button({
   disabled = false,
   size = 'medium',
   rounded = true,
+  weight = 'normal',
   onMouseEnter,
   onMouseLeave,
 }: ButtonProps) {
@@ -58,6 +59,7 @@ export function Button({
       color={color}
       align={align}
       style={style}
+      weight={weight}
     >
       {resizedPrependIcon && (
         <span style={{ flexShrink: 0 }}>{resizedPrependIcon}</span>

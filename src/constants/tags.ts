@@ -122,6 +122,9 @@ export const GA_TAGS = {
   PAGE_AIDER_PARTAGER_CV_CLIC: {
     action: 'Page_Aider_Partager_Cv_Clic',
   },
+  PAGE_AIDER_CTA_BANNER_CLICK: {
+    action: 'Page_Aider_CTA_Banner_Click',
+  },
   PAGE_AIDER_INSCRIPTION_COACH_CLIC: {
     action: 'Page_Aider_Inscription_Coach_Clic',
   },

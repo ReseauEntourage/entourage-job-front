@@ -10,7 +10,7 @@ import {
 
 export interface CTAProps {
   onClick?: () => void;
-  label: string;
+  label: React.ReactNode;
   href?: string;
   variant?: 'default' | 'primary' | 'secondary';
   isExternal?: boolean;
@@ -66,6 +66,7 @@ export const ImageTitle = ({
             href={cta.href}
             isExternal={cta.isExternal}
             newTab={cta.newTab}
+            weight="bold"
           >
             {cta.label}
           </Button>
@@ -86,6 +87,7 @@ export const ImageTitle = ({
                     isExternal={isExternal}
                     dataTestId={dataTest}
                     newTab={newTab}
+                    weight="bold"
                   >
                     {label}
                   </Button>

@@ -16,6 +16,7 @@ export const StyledButton = styled.button<{
   rounded: ButtonProps['rounded'];
   color?: ButtonProps['color'];
   align?: ButtonProps['align'];
+  weight?: ButtonProps['weight'];
 }>`
   &.button {
     align-items: center;
@@ -25,7 +26,7 @@ export const StyledButton = styled.button<{
     cursor: pointer;
     display: flex;
     font-family: 'Poppins', sans-serif;
-    font-weight: 400;
+    font-weight: ${({ weight }) => weight};
     text-align: ${({ align }) => align ?? 'center'};
     line-height: ${({ size }) =>
       BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;
