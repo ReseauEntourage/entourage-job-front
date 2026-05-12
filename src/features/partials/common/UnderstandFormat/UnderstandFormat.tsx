@@ -156,7 +156,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
             <span style={higlightCriteriaStyle}>
               S'engager selon ses disponibilités
             </span>
-            , sans pression de durée ni de fréquence. fréquence.
+            , sans pression de durée ni de fréquence.
           </>
         ),
       },
