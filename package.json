@@ -43,7 +43,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@svgr/webpack": "^8.1.0",
     "array-move": "^2.2.2",
-    "axios": "^0.31.0",
+    "axios": "^0.31.1",
     "check-password-strength": "^2.0.10",
     "circular-dependency-plugin": "^5.2.2",
     "cookies-next": "^2.1.2",
