@@ -81,6 +81,7 @@ if (process.env.NEXT_PUBLIC_AWSS3_URL) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['react-lite-youtube-embed'],
   turbopack: {
     rules: {
       '*.svg': {
