@@ -1,7 +1,6 @@
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Section } from '@/src/components/ui';
-import { CompanyGoal } from '@/src/constants/company';
 import { StyledVideoContainer } from './CoachingVideo.styles';
 
 export const CoachingVideo = () => {
