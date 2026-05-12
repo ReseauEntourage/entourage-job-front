@@ -75,3 +75,7 @@ export const StyledCriteria = styled.div`
   align-items: center;
   gap: 20px;
 `;
+
+export const StyledCriteriaIllu = styled.div`
+  flex-shrink: 0;
+`;

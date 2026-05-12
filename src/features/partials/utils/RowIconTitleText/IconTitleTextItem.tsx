@@ -5,9 +5,9 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { StyledIconTitleTextItem } from './RowIconTitleText.styles';
 
 interface IconTitleTextItemProps {
-  title: string;
+  title?: React.ReactNode;
   illu: React.ReactNode;
-  paragraph: string;
+  paragraph: React.ReactNode;
 }
 
 export const IconTitleTextItem = ({
@@ -20,7 +20,7 @@ export const IconTitleTextItem = ({
     <StyledIconTitleTextItem className={isDesktop ? '' : 'mobile'}>
       <div className="image-container">{illu}</div>
       <div className="text-container">
-        <H6 title={title} color="black" center />
+        {title && <H6 title={title} color="black" center />}
       </div>
       <Text center>{paragraph}</Text>
     </StyledIconTitleTextItem>

@@ -28,7 +28,7 @@ export const StyledRowIconTitleTextContainer = styled.div`
 `;
 
 export const StyledIconTitleTextItem = styled.div`
-  width: 20%;
+  width: 23%;
   box-sizing: border-box;
   display: flex;
   gap: 10px;

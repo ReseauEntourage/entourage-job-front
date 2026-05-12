@@ -5,8 +5,8 @@ import { RowIconTitleText } from '../../utils/RowIconTitleText';
 type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 interface Benefit {
-  title: string;
-  paragraph: string;
+  title?: string;
+  paragraph: React.ReactNode;
   illu: React.ReactNode;
 }
 
@@ -16,6 +16,8 @@ const opportunitiesIlluSizes = {
   width: 100,
   height: 100,
 };
+
+const highlightParagraphStyle = { fontWeight: '600' };
 
 const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: [
@@ -44,25 +46,47 @@ const contentAs: { [K in DisplayAs]: Content } = {
   ],
   Coach: [
     {
-      title: 'Donner du sens à sa vie professionnelle',
-      paragraph: 'Grâce à une expérience humaine fédératrice et positive',
-      illu: <SvgIcon name="IlluMalette" {...opportunitiesIlluSizes} />,
+      paragraph: (
+        <>
+          <span style={highlightParagraphStyle}>
+            Relire un CV, simuler un entretien,
+          </span>{' '}
+          conseiller sur les plateformes de recherche ou partager votre réseau.
+        </>
+      ),
+      illu: <SvgIcon name="IlluDossierCandidat" {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Découvrir le coaching et l’associatif',
-      paragraph: 'En faisant vos premiers pas à votre rythme.',
+      paragraph: (
+        <>
+          <span style={highlightParagraphStyle}>Être une écoute active,</span>{' '}
+          prendre des nouvelles avant/après un entretien, ou simplement échanger
+          par message pour remotiver.
+        </>
+      ),
       illu: <SvgIcon name="IlluPoigneeDeMain" {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Ajouter une ligne à  votre CV',
-      paragraph:
-        'Qui a dit qu’on ne pouvait pas valoriser le fait d’aider les autres ? Pas nous.',
-      illu: <SvgIcon name="IlluCV" {...opportunitiesIlluSizes} />,
+      paragraph: (
+        <>
+          <span style={highlightParagraphStyle}>
+            Participer à une large offre d’ateliers
+          </span>{' '}
+          thématiques en ligne et en présentiel pour rencontrer la communauté.
+        </>
+      ),
+      illu: <SvgIcon name="IlluBulleWebinaire" {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Rejoindre une communauté d’experts',
-      paragraph: '... et élargir son propre réseau pro !',
-      illu: <SvgIcon name="IlluReseauxSociaux" {...opportunitiesIlluSizes} />,
+      paragraph: (
+        <>
+          <span style={highlightParagraphStyle}>
+            On vous donne même les clefs
+          </span>{' '}
+          pour proposer vos ateliers thématiques si vous le désirez
+        </>
+      ),
+      illu: <SvgIcon name="IlluClef" {...opportunitiesIlluSizes} />,
     },
   ],
   Referer: [

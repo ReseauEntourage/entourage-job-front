@@ -1,5 +1,6 @@
 import React from 'react';
 import { Color } from '@/src/constants/styles';
+import { TextWeight } from '../Text';
 import { AnyToFix } from 'src/utils/Types';
 
 export type ButtonVariant =
@@ -17,6 +18,7 @@ export interface ButtonProps {
   variant?: ButtonVariant;
   disabled?: boolean;
   size?: ButtonSize;
+  weight?: TextWeight;
   rounded?: boolean | 'circle';
   href?: string | { pathname: string; query?: AnyToFix };
   isExternal?: boolean;
