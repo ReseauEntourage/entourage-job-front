@@ -132,19 +132,19 @@ export const QUICK_ACTIONS: AIQuickAction[] = [
   {
     id: 'reengage',
     label: 'Relancer le candidat',
-    icon: 'MessageCircle',
+    icon: 'RefreshCcw',
     prompt: 'Propose-moi un message bienveillant pour le relancer.',
   },
   {
     id: 'sector',
-    label: 'Comprendre le secteur',
+    label: 'Secteur visé',
     icon: 'BookOpen',
     prompt:
       'Fais-moi un brief sur le secteur visé par ce candidat : métiers, attentes recruteurs, vocabulaire clé.',
   },
   {
     id: 'summarize',
-    label: 'Résumer la conversation',
+    label: 'Résumer les échanges',
     icon: 'FileText',
     prompt:
       "Fais-moi un résumé de la conversation que j'ai eue avec ce candidat. Quels sont ses besoins, ses attentes, son état d'esprit ?",
