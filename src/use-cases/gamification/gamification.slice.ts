@@ -68,7 +68,11 @@ export const slice = createSlice({
           break;
         }
 
-        // Cas 2 — a specific criterion value increased
+        // Cas 2 — a specific criterion value increased (only when badge not yet obtained)
+        if (newEntry.hasAchievement) {
+          continue;
+        }
+
         const changedCriterion = newEntry.criteria.find((newCrit) => {
           const prevCrit = prev.criteria.find((c) => c.key === newCrit.key);
           return (
