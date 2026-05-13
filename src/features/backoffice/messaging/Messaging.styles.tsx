@@ -28,6 +28,7 @@ export const StyledMessagingLeftPanel = styled.div`
   flex-direction: column;
   flex: 1;
   min-width: 320px;
+  max-width: 500px;
   border-right: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
     ${COLORS.lightGray};
 `;
