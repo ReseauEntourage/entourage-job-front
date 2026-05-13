@@ -53,6 +53,7 @@ export const StyledTextArea = styled.textarea<{
       &:hover {
         border: none;
       }
+      border-radius: 0;
     `}
 `;
 

@@ -62,6 +62,7 @@ export const MainInfos = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+  gap: 5px;
 `;
 
 export const ConversationAddresee = styled.div`

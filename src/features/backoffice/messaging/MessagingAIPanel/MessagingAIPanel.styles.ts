@@ -217,10 +217,26 @@ export const AILoadingIndicator = styled.div`
   }
 `;
 
+export const AIChatEditor = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: ${COLORS.lightGray};
+  padding-bottom: 5px;
+`;
+
 export const AIQuickActionsContainer = styled.div`
   padding: 12px 16px;
-  border-top: 1px solid ${COLORS.lightGray};
+  border-top: 1px solid ${COLORS.gray};
   flex-shrink: 0;
+`;
+
+export const AIQuickActionsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const AIQuickActionsGrid = styled.div`
@@ -231,25 +247,35 @@ export const AIQuickActionsGrid = styled.div`
 `;
 
 export const AIChatInputContainer = styled.div`
+  --separator-color: ${COLORS.gray};
   display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  padding: 8px 16px 4px;
+  flex-direction: column;
   flex-shrink: 0;
+  border: 1px solid ${COLORS.gray};
+  border-radius: 8px;
+  margin: 0 16px;
+  overflow: hidden;
+  background: ${COLORS.white};
+
+  &:focus-within {
+    border-color: ${COLORS.primaryBlue};
+    --separator-color: ${COLORS.primaryBlue};
+    box-shadow: 0 0 0 5px ${COLORS.primaryBlue}12;
+  }
 `;
 
 export const AIChatInputWrapper = styled.div`
   display: flex;
-  flex: 1;
-  background: ${COLORS.white};
-  padding: 10px 14px;
+  padding: 10px 14px 8px;
   box-sizing: border-box;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 8px;
+`;
 
-  &:focus-within {
-    border-color: ${COLORS.primaryBlue};
-  }
+export const AIChatActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 8px 8px 4px;
+  border-top: 1px solid var(--separator-color);
 `;
 
 export const AIEscalateCard = styled.div`
