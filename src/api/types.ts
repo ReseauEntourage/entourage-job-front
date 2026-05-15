@@ -440,6 +440,7 @@ export type CurrentUserReferredUser = {
   role: UserRoles;
   email: string;
   coachesContactedCount: number;
+  eventsParticipatedCount: number;
   referredAt: string | null;
   onboardingCompletedAt: string | null;
 };

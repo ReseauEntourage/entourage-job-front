@@ -21,6 +21,9 @@ export const RefererCandidatesList = () => {
         coachesContactedCount: `${candidate.coachesContactedCount} coach${
           candidate.coachesContactedCount > 1 ? 's' : ''
         }`,
+        eventsParticipatedCount: `${
+          candidate.eventsParticipatedCount
+        } événement${candidate.eventsParticipatedCount > 1 ? 's' : ''}`,
         referredAt: candidate.referredAt
           ? new Date(candidate.referredAt).toLocaleDateString('fr-FR')
           : '-',

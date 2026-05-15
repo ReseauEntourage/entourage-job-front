@@ -11,6 +11,7 @@ export const RefererCandidatesTableDesktop = ({
         <Th key="candidateName">Candidat</Th>,
         <Th key="candidateEmail">Email</Th>,
         <Th key="coachesContactedCount">Coachs contactés</Th>,
+        <Th key="eventsParticipatedCount">Événements</Th>,
         <Th key="referredAt">Invitation envoyée</Th>,
         <Th key="onboardingCompletedAt">Intégration finalisée le</Th>,
       ]}
@@ -22,6 +23,7 @@ export const RefererCandidatesTableDesktop = ({
           </TdDesktop>
           <TdDesktop>{item.email}</TdDesktop>
           <TdDesktop>{item.coachesContactedCount}</TdDesktop>
+          <TdDesktop>{item.eventsParticipatedCount}</TdDesktop>
           <TdDesktop>{item.referredAt}</TdDesktop>
           <TdDesktop>{item.onboardingCompletedAt}</TdDesktop>
         </TrDesktop>
