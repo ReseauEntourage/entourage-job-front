@@ -43,6 +43,15 @@ export const RefererCandidatesTableMobile = ({
 
           <StyledMobileCollaboratorItemField>
             <Text size="large" color="mediumGray">
+              Événements
+            </Text>
+            <Text size="large" weight="bold">
+              {item.eventsParticipatedCount}
+            </Text>
+          </StyledMobileCollaboratorItemField>
+
+          <StyledMobileCollaboratorItemField>
+            <Text size="large" color="mediumGray">
               Invitation envoyée
             </Text>
             <Text size="large">

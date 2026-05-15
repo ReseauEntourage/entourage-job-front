@@ -3,6 +3,7 @@ export interface RefererCandidatesTableItem {
   name: string;
   email: string;
   coachesContactedCount: string;
+  eventsParticipatedCount: string;
   referredAt: string;
   onboardingCompletedAt: string;
 }
