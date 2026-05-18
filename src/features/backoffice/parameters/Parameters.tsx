@@ -1,4 +1,6 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Section } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { ParamProfessionalInformations } from '@/src/features/profile/ProfilePartCards/ParamProfessionalInformations/ParamProfessionalInformations';
@@ -21,14 +23,18 @@ import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserPr
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useCurrentUserStats } from '@/src/hooks/current-user/useCurrentUserStats';
 import { ProfileDeleteAccount } from '../../profile/ProfilePartCards/ProfileDeleteAccount/ProfileDeleteAccount';
+import { ProfileLinkedInConnect } from '../../profile/ProfilePartCards/ProfileLinkedInConnect/ProfileLinkedInConnect';
 import { UserProfileAvailabilityCard } from '../../profile/ProfilePartCards/UserProfileAvailabilityCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
 import { LoadingScreen } from '../LoadingScreen';
+import { Api } from 'src/api';
 import { HeaderProfile } from 'src/features/headers/HeaderProfile/HeaderProfile';
 import { useIsDesktop } from 'src/hooks/utils';
+import { currentUserActions } from 'src/use-cases/current-user';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { AlertIA } from './AlertAI/AlertAI';
 import {
   StyledParametersLeftColumn,
@@ -39,6 +45,8 @@ import { useConfirmationToaster } from './useConfirmationToaster';
 
 export const Parameters = () => {
   const isDesktop = useIsDesktop();
+  const router = useRouter();
+  const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const userProfile = useCurrentUserProfile();
   const userProfileComplete = useCurrentUserProfileComplete();
@@ -46,6 +54,53 @@ export const Parameters = () => {
   const userStats = useCurrentUserStats();
 
   useConfirmationToaster();
+
+  useEffect(() => {
+    const { linkedin, pendingShare } = router.query;
+    if (!linkedin) {
+      return;
+    }
+
+    if (linkedin === 'connected') {
+      dispatch(currentUserActions.fetchUserRequested());
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: 'Compte LinkedIn lié avec succès !',
+        })
+      );
+      if (pendingShare && typeof pendingShare === 'string') {
+        Api.postLinkedinShare(pendingShare)
+          .then(() => {
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'success',
+                message: 'Profil partagé sur LinkedIn avec succès !',
+              })
+            );
+          })
+          .catch(() => {
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'danger',
+                message:
+                  'Erreur lors du partage LinkedIn. Veuillez réessayer depuis le profil.',
+              })
+            );
+          });
+      }
+    } else if (linkedin === 'error') {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: 'Erreur lors de la liaison LinkedIn. Veuillez réessayer.',
+        })
+      );
+    }
+
+    router.replace('/backoffice/parametres', undefined, { shallow: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!user || !userProfileComplete) {
     return <LoadingScreen />;
@@ -134,6 +189,7 @@ export const Parameters = () => {
                 isEditable
                 smallCard
               />
+              <ProfileLinkedInConnect smallCard />
               <ProfileLanguages
                 userProfileLanguages={userProfileComplete.userProfileLanguages}
                 isEditable

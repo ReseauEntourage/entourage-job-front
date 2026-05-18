@@ -301,6 +301,36 @@ export class APIHandler {
     return this.put(`/user/company`, { companyName });
   }
 
+  getLinkedinOAuthUrl(
+    redirectAfterShare?: string
+  ): Promise<AxiosResponse<{ url: string }>> {
+    const params = redirectAfterShare
+      ? `?redirectAfterShare=${redirectAfterShare}`
+      : '';
+    return this.get(`/auth/linkedin/url${params}`);
+  }
+
+  deleteLinkedinLink(): Promise<AxiosResponse> {
+    return this.delete(`/auth/linkedin`);
+  }
+
+  postLinkedinShare(profileUserId: string): Promise<AxiosResponse> {
+    return this.post(`/linkedin/share/${profileUserId}`, {});
+  }
+
+  getProfileShareText(
+    profileUserId: string
+  ): Promise<AxiosResponse<{ text: string }>> {
+    return this.get(`/user/profile/${profileUserId}/share-text`);
+  }
+
+  exchangeLinkedInCode(
+    code: string,
+    state: string
+  ): Promise<AxiosResponse<{ pendingShare?: string }>> {
+    return this.post('/auth/linkedin/exchange', { code, state });
+  }
+
   postProfileUserAbuse(
     userId: string,
     userReportDto: UserReportDto
