@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
@@ -8,6 +9,7 @@ import { openModal } from '@/src/features/modals/Modal/openModal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Api } from 'src/api';
+import { currentUserActions } from 'src/use-cases/current-user';
 import { notificationsActions } from 'src/use-cases/notifications';
 
 interface ProfileShareNetworkProps {
@@ -19,9 +21,33 @@ interface ProfileShareNetworkProps {
 
 export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const user = useAuthenticatedUser();
   const [isLinkedinLoading, setIsLinkedinLoading] = useState(false);
   const [isWhatsappLoading, setIsWhatsappLoading] = useState(false);
+
+  useEffect(() => {
+    if (!router.isReady || !router.query.linkedinJustConnected) {
+      return;
+    }
+
+    dispatch(currentUserActions.fetchUserRequested());
+    dispatch(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: 'Compte LinkedIn lié avec succès !',
+      })
+    );
+    openModal(
+      <LinkedInSharePreviewModal
+        profileId={profile.id}
+        firstName={profile.firstName}
+      />
+    );
+    router.replace(`/backoffice/profile/${profile.id}`, undefined, {
+      shallow: true,
+    });
+  }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleWhatsappShare = useCallback(async () => {
     setIsWhatsappLoading(true);

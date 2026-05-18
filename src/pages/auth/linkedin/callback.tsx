@@ -20,7 +20,7 @@ const LinkedInCallback = () => {
     Api.exchangeLinkedInCode(code as string, state as string)
       .then(({ data }) => {
         const url = data.pendingShare
-          ? `/backoffice/parametres?linkedin=connected&pendingShare=${data.pendingShare}`
+          ? `/backoffice/profile/${data.pendingShare}?linkedinJustConnected=true`
           : '/backoffice/parametres?linkedin=connected';
         router.replace(url);
       })

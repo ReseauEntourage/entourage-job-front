@@ -30,7 +30,6 @@ import {
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
 import { LoadingScreen } from '../LoadingScreen';
-import { Api } from 'src/api';
 import { HeaderProfile } from 'src/features/headers/HeaderProfile/HeaderProfile';
 import { useIsDesktop } from 'src/hooks/utils';
 import { currentUserActions } from 'src/use-cases/current-user';
@@ -56,7 +55,7 @@ export const Parameters = () => {
   useConfirmationToaster();
 
   useEffect(() => {
-    const { linkedin, pendingShare } = router.query;
+    const { linkedin } = router.query;
     if (!linkedin) {
       return;
     }
@@ -69,26 +68,6 @@ export const Parameters = () => {
           message: 'Compte LinkedIn lié avec succès !',
         })
       );
-      if (pendingShare && typeof pendingShare === 'string') {
-        Api.postLinkedinShare(pendingShare)
-          .then(() => {
-            dispatch(
-              notificationsActions.addNotification({
-                type: 'success',
-                message: 'Profil partagé sur LinkedIn avec succès !',
-              })
-            );
-          })
-          .catch(() => {
-            dispatch(
-              notificationsActions.addNotification({
-                type: 'danger',
-                message:
-                  'Erreur lors du partage LinkedIn. Veuillez réessayer depuis le profil.',
-              })
-            );
-          });
-      }
     } else if (linkedin === 'error') {
       dispatch(
         notificationsActions.addNotification({
