@@ -151,12 +151,6 @@ export const Parameters = () => {
                 formations={userProfileComplete.formations ?? []}
                 isEditable
               />
-              {/* <ProfileReviews
-                userId={user.id}
-                userFirstName={user.firstName}
-                reviews={userProfileComplete.reviews ?? []}
-                isEditable
-              /> */}
             </StyledParametersLeftColumn>
             <StyledParametersRightColumn
               className={`${isDesktop ? '' : 'mobile'}`}

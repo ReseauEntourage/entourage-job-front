@@ -94,22 +94,17 @@ export const Profile = () => {
                 formations={selectedProfile.formations}
               />
             )}
-            {/* <ProfileReviews
-              userId={selectedProfile.id}
-              userFirstName={selectedProfile.firstName}
-              reviews={selectedProfile.reviews ?? []}
-            /> */}
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
-            {selectedProfile.role === UserRoles.CANDIDATE && (
-              <ProfileShareNetwork profile={selectedProfile} />
-            )}
             <ProfileContactCard
               userId={selectedProfile.id}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
               isAvailable={selectedProfile.isAvailable}
             />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileShareNetwork profile={selectedProfile} />
+            )}
             {selectedProfile.role === UserRoles.CANDIDATE && (
               <ProfileContracts
                 contracts={selectedProfile.contracts}
