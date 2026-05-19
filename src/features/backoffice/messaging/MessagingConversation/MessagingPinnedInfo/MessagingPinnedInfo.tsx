@@ -1,5 +1,6 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
+import { Text } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert/Alert';
 import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -34,7 +35,7 @@ export const MessagingPinnedInfo = ({
       onClose={() => setVisible(false)}
       closable
     >
-      {pinnedInfosText[pinnedInfo]}
+      <Text>{pinnedInfosText[pinnedInfo]}</Text>
     </Alert>
   );
 };

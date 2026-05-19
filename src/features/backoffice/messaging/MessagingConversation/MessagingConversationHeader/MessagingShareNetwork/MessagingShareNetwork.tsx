@@ -1,9 +1,10 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
-import { ButtonIcon } from '@/src/components/ui';
+import { Text, Button, Dropdown } from '@/src/components/ui';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { useProfileShare } from '@/src/hooks/useProfileShare';
-import { MessagingShareNetworkContainer } from './MessagingShareNetwork.styles';
+import { useIsDesktop } from '@/src/hooks/utils';
 
 interface MessagingShareNetworkProps {
   profileId: string;
@@ -14,32 +15,46 @@ export const MessagingShareNetwork = ({
   profileId,
   firstName,
 }: MessagingShareNetworkProps) => {
+  const isDesktop = useIsDesktop();
   const { handleWhatsappShare, handleLinkedinShare, isWhatsappLoading } =
     useProfileShare({ profileId, firstName });
 
   return (
-    <MessagingShareNetworkContainer>
-      <span>Partager son profil :</span>
-      <ButtonIcon
-        icon={
-          <SvgIcon
-            name="LinkedIn"
-            width={18}
-            height={18}
-            color={COLORS.linkedInBlue}
-          />
-        }
-        color={COLORS.linkedInBlue}
-        onClick={handleLinkedinShare}
-        aria-label="Partager sur LinkedIn"
-      />
-      <ButtonIcon
-        icon={<SvgIcon name="Whatsapp" width={18} height={18} />}
-        color={COLORS.whatsAppGreen}
-        onClick={handleWhatsappShare}
-        disabled={isWhatsappLoading}
-        aria-label="Partager sur WhatsApp"
-      />
-    </MessagingShareNetworkContainer>
+    <Dropdown>
+      <Dropdown.Toggle>
+        <Button
+          size="small"
+          prependIcon={<LucidIcon name="Share" />}
+          disabled={isWhatsappLoading}
+          rounded={false}
+        >
+          Partager le CV
+        </Button>
+      </Dropdown.Toggle>
+      <Dropdown.Menu size="large">
+        <Dropdown.Item onClick={handleLinkedinShare}>
+          <Text size="small">
+            <SvgIcon
+              name="LinkedIn"
+              width={14}
+              height={14}
+              color={COLORS.primaryBlue}
+            />{' '}
+            Partager sur LinkedIn
+          </Text>
+        </Dropdown.Item>
+        <Dropdown.Item onClick={handleWhatsappShare}>
+          <Text size="small">
+            <SvgIcon
+              name="Whatsapp"
+              width={14}
+              height={14}
+              color={COLORS.primaryBlue}
+            />{' '}
+            Partager sur WhatsApp
+          </Text>
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };

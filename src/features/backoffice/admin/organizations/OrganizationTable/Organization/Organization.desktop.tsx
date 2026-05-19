@@ -56,6 +56,7 @@ export function OrganizationDesktop({
                 />
               );
             }}
+            variant="text"
           />
         </span>
       </TdDesktop>

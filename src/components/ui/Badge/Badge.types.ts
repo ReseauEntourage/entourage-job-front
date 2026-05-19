@@ -6,3 +6,5 @@ export enum BadgeVariant {
   ExtraLightAmber = 'extraLightAmber',
   ExtraLightPurple = 'extraLightPurple',
 }
+
+export type BadgeSize = 'small' | 'medium' | 'large';

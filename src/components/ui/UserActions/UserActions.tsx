@@ -62,6 +62,7 @@ export function UserActions({
             <ButtonIcon
               icon={<LucidIcon name="Ellipsis" />}
               onClick={() => {}}
+              variant="text"
             />
           </StyledUserActionsBtnContainer>
         </Dropdown.Toggle>

@@ -116,6 +116,7 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
                       remove(index);
                     }
                   }}
+                  variant="text"
                 />
               )}
             </StyledTrashButtonContainer>
