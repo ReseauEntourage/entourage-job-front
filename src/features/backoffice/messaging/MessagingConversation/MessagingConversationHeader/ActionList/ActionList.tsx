@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Conversation,
   ConversationParticipant,
   ConversationParticipants,
   FeatureKey,
 } from '@/src/api/types';
 import { Button, LucidIcon } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
-import { useIsDesktop, useIsMobile } from '@/src/hooks/utils';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -28,7 +27,6 @@ export const ActionList = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-  const isDesktop = useIsDesktop();
   const hasMessagingAIAssistant = useSelector(
     selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
   );

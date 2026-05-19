@@ -1,13 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Badge,
-  BadgeVariant,
-  Button,
-  ImgUserProfile,
-  Text,
-} from '@/src/components/ui';
+import { Badge, BadgeVariant, ImgUserProfile, Text } from '@/src/components/ui';
 import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';

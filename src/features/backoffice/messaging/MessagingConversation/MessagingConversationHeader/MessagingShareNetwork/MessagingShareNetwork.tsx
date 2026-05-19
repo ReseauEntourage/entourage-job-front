@@ -4,7 +4,6 @@ import { Text, Button, Dropdown } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { useProfileShare } from '@/src/hooks/useProfileShare';
-import { useIsDesktop } from '@/src/hooks/utils';
 
 interface MessagingShareNetworkProps {
   profileId: string;
@@ -15,7 +14,6 @@ export const MessagingShareNetwork = ({
   profileId,
   firstName,
 }: MessagingShareNetworkProps) => {
-  const isDesktop = useIsDesktop();
   const { handleWhatsappShare, handleLinkedinShare, isWhatsappLoading } =
     useProfileShare({ profileId, firstName });
 
