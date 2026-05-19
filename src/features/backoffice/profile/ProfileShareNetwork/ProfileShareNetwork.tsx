@@ -5,6 +5,8 @@ import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
+import { LinkedInPostWhatsAppInviteModal } from '@/src/features/modals/LinkedInPostWhatsAppInviteModal/LinkedInPostWhatsAppInviteModal';
+import { openModal } from '@/src/features/modals/Modal/openModal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useProfileShare } from '@/src/hooks/useProfileShare';
@@ -23,8 +25,12 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useAuthenticatedUser();
-  const { handleWhatsappShare, handleLinkedinShare, isWhatsappLoading } =
-    useProfileShare({ profileId: profile.id, firstName: profile.firstName });
+  const {
+    handleWhatsappShare,
+    handleLinkedinShare,
+    hasSharedWhatsapp,
+    isWhatsappLoading,
+  } = useProfileShare({ profileId: profile.id, firstName: profile.firstName });
 
   useEffect(() => {
     if (!router.isReady || !router.query.linkedinJustConnected) {
@@ -39,13 +45,21 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
       })
     );
     Api.postLinkedinShare(profile.id)
-      .then(() => {
+      .then(({ data }) => {
         dispatch(
           notificationsActions.addNotification({
             type: 'success',
             message: 'Profil partagé sur LinkedIn avec succès !',
           })
         );
+        if (!hasSharedWhatsapp && data.linkedinPostUrl) {
+          openModal(
+            <LinkedInPostWhatsAppInviteModal
+              firstName={profile.firstName}
+              linkedinPostUrl={data.linkedinPostUrl}
+            />
+          );
+        }
       })
       .catch(() => {
         dispatch(

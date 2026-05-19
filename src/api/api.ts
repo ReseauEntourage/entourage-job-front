@@ -314,7 +314,9 @@ export class APIHandler {
     return this.delete(`/auth/linkedin`);
   }
 
-  postLinkedinShare(profileUserId: string): Promise<AxiosResponse> {
+  postLinkedinShare(
+    profileUserId: string
+  ): Promise<AxiosResponse<{ success: boolean; linkedinPostUrl: string }>> {
     return this.post(`/linkedin/share/${profileUserId}`, {});
   }
 

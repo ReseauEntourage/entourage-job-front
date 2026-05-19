@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import { isLinkedinShareDuplicateError } from '@/src/api/axiosErrors';
 import { Alert, Button, Text } from '@/src/components/ui';
 import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { LinkedInPostWhatsAppInviteModal } from '@/src/features/modals/LinkedInPostWhatsAppInviteModal/LinkedInPostWhatsAppInviteModal';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { ModalFooter } from '@/src/features/modals/Modal/ModalGeneric/ModalFooter/ModalFooter';
+import { openModal } from '@/src/features/modals/Modal/openModal';
 import { Api } from 'src/api';
 import { notificationsActions } from 'src/use-cases/notifications';
 import { StyledContentContainer } from './LinkedInSharePreviewModal.styles';
@@ -15,6 +17,7 @@ interface LinkedInSharePreviewModalProps {
   firstName: string;
   hasLinkedinLinked?: boolean;
   onTriggerOAuth?: () => Promise<void>;
+  hasAlreadySharedWhatsapp?: boolean;
 }
 
 export const LinkedInSharePreviewModal = ({
@@ -22,6 +25,7 @@ export const LinkedInSharePreviewModal = ({
   firstName,
   hasLinkedinLinked = true,
   onTriggerOAuth,
+  hasAlreadySharedWhatsapp = false,
 }: LinkedInSharePreviewModalProps) => {
   const dispatch = useDispatch();
   const { onClose } = useModalContext();
@@ -53,14 +57,24 @@ export const LinkedInSharePreviewModal = ({
         await onTriggerOAuth();
         return;
       }
-      await Api.postLinkedinShare(profileId);
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'success',
-          message: `Merci pour ce coup de pouce ! Votre partage peut changer la donne pour ${firstName}.`,
-        })
-      );
+      const { data } = await Api.postLinkedinShare(profileId);
+
       onClose?.();
+      if (!hasAlreadySharedWhatsapp && data.linkedinPostUrl) {
+        openModal(
+          <LinkedInPostWhatsAppInviteModal
+            firstName={firstName}
+            linkedinPostUrl={data.linkedinPostUrl}
+          />
+        );
+      } else {
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: `Merci pour ce coup de pouce ! Votre partage peut changer la donne pour ${firstName}.`,
+          })
+        );
+      }
     } catch (error) {
       setShareError(
         isLinkedinShareDuplicateError(error)
@@ -73,6 +87,7 @@ export const LinkedInSharePreviewModal = ({
   }, [
     dispatch,
     firstName,
+    hasAlreadySharedWhatsapp,
     hasLinkedinLinked,
     onClose,
     onTriggerOAuth,

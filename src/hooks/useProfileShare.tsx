@@ -18,6 +18,7 @@ export const useProfileShare = ({
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const [isWhatsappLoading, setIsWhatsappLoading] = useState(false);
+  const [hasSharedWhatsapp, setHasSharedWhatsapp] = useState(false);
 
   const handleWhatsappShare = useCallback(async () => {
     setIsWhatsappLoading(true);
@@ -25,6 +26,7 @@ export const useProfileShare = ({
       const { data } = await Api.getProfileShareText(profileId);
       const url = `https://wa.me/?text=${encodeURIComponent(data.text)}`;
       window.open(url, '_blank', 'noopener,noreferrer');
+      setHasSharedWhatsapp(true);
     } catch {
       dispatch(
         notificationsActions.addNotification({
@@ -49,13 +51,21 @@ export const useProfileShare = ({
         firstName={firstName}
         hasLinkedinLinked={user.hasLinkedinLinked}
         onTriggerOAuth={handleTriggerOAuth}
+        hasAlreadySharedWhatsapp={hasSharedWhatsapp}
       />
     );
-  }, [profileId, firstName, user.hasLinkedinLinked, handleTriggerOAuth]);
+  }, [
+    profileId,
+    firstName,
+    user.hasLinkedinLinked,
+    handleTriggerOAuth,
+    hasSharedWhatsapp,
+  ]);
 
   return {
     handleWhatsappShare,
     handleLinkedinShare,
+    hasSharedWhatsapp,
     isWhatsappLoading,
   };
 };
