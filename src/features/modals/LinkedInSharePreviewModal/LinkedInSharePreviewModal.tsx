@@ -57,7 +57,7 @@ export const LinkedInSharePreviewModal = ({
       dispatch(
         notificationsActions.addNotification({
           type: 'success',
-          message: 'Profil partagé sur LinkedIn avec succès !',
+          message: `Merci pour ce coup de pouce ! Votre partage peut changer la donne pour ${firstName}.`,
         })
       );
       onClose?.();
@@ -70,7 +70,14 @@ export const LinkedInSharePreviewModal = ({
     } finally {
       setIsSharing(false);
     }
-  }, [dispatch, hasLinkedinLinked, onClose, onTriggerOAuth, profileId]);
+  }, [
+    dispatch,
+    firstName,
+    hasLinkedinLinked,
+    onClose,
+    onTriggerOAuth,
+    profileId,
+  ]);
 
   return (
     <ModalGeneric
