@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button } from '@/src/components/ui';
+import { Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
-import { ProfilePartCard } from '../Card/Card/Card';
+import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledContactMessage,
-  StyledConversationInviteToContact,
   StyledProfileContactForm,
 } from './ProfileContactCard.styles';
 
@@ -47,20 +46,17 @@ export const ProfileContactCard = ({
       {isAvailable ? (
         <>
           <StyledProfileContactForm>
-            <StyledConversationInviteToContact>
-              <SvgIcon name="IlluConversation" width={75} height={75} />
-              {isCoach ? (
-                <p>
-                  Vous souhaitez prendre contact avec {firstName} pour
-                  qu'il/elle vous aide dans votre recherche d'emploi
-                </p>
-              ) : (
-                <p>
-                  Vous souhaitez prendre contact avec {firstName} pour l'aider
-                  dans sa recherche d'emploi
-                </p>
-              )}
-            </StyledConversationInviteToContact>
+            {isCoach ? (
+              <Text>
+                Vous souhaitez prendre contact avec {firstName} pour qu'il/elle
+                vous aide dans votre recherche d'emploi
+              </Text>
+            ) : (
+              <Text>
+                Vous souhaitez prendre contact avec {firstName} pour l'aider
+                dans sa recherche d'emploi
+              </Text>
+            )}
             <Button onClick={openConversation}>Envoyer un message</Button>
           </StyledProfileContactForm>
         </>

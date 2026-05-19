@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Text } from '@/src/components/ui';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { ProfilePartCard } from '../Card/Card/Card';
@@ -57,6 +58,10 @@ export const ProfileLinkedInConnect = ({
       setIsLoading(false);
     }
   }, [dispatch]);
+
+  if (user.role === UserRoles.CANDIDATE) {
+    return null;
+  }
 
   return (
     <ProfilePartCard

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, ImgUserProfile } from '@/src/components/ui';
+import { Button, ImgUserProfile, Text } from '@/src/components/ui';
 import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { openModal } from '@/src/features/modals/Modal';
@@ -28,11 +28,13 @@ import {
 import type { MessagingPanelView } from 'src/use-cases/messaging/messaging.slice';
 import {
   AddreseeInfosContainer,
+  AddreseeSection,
   ConversationAddresee,
   LeftColumn,
   MessagingConversationHeaderContainer,
   StyledButtonContainer,
 } from './MessagingConversationHeader.styles';
+import { MessagingShareNetwork } from './MessagingShareNetwork/MessagingShareNetwork';
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
@@ -54,6 +56,11 @@ export const MessagingConversationHeader = () => {
 
   const canUseAIAssistant =
     currentUser?.role !== UserRoles.CANDIDATE && hasMessagingAIAssistant;
+
+  const isOneToOneConversation =
+    selectedConversation?.participants.length === 2;
+  const canShareNetwork =
+    isOneToOneConversation && addresee?.role === UserRoles.CANDIDATE;
 
   const onClickBackBtn = () => {
     dispatch(messagingActions.selectConversation(null));
@@ -94,19 +101,29 @@ export const MessagingConversationHeader = () => {
           />
         )}
         {addresee && (
-          <AddreseeInfosContainer onClick={onClickAddresseeInfos}>
-            <ImgUserProfile
-              user={addresee}
-              size={35}
-              hasPicture={addresee.userProfile?.hasPicture || false}
-            />
-            <ConversationAddresee>
-              <p className="addresee-name">
-                {addresee.firstName} {addresee.lastName}
-              </p>
-              <p>{addresee.role}</p>
-            </ConversationAddresee>
-          </AddreseeInfosContainer>
+          <AddreseeSection>
+            <AddreseeInfosContainer onClick={onClickAddresseeInfos}>
+              <ImgUserProfile
+                user={addresee}
+                size={35}
+                hasPicture={addresee.userProfile?.hasPicture || false}
+              />
+              <ConversationAddresee>
+                <Text weight="bold" size="large">
+                  {addresee.firstName} {addresee.lastName}
+                </Text>
+                <Text>{addresee.role}</Text>
+                {canShareNetwork && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MessagingShareNetwork
+                      profileId={addresee.id}
+                      firstName={addresee.firstName}
+                    />
+                  </div>
+                )}
+              </ConversationAddresee>
+            </AddreseeInfosContainer>
+          </AddreseeSection>
         )}
       </LeftColumn>
       <StyledButtonContainer>

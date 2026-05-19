@@ -31,6 +31,11 @@ export const LeftColumn = styled.div`
   }
 `;
 
+export const AddreseeSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const AddreseeInfosContainer = styled.div`
   display: flex;
   gap: 10px;
@@ -41,10 +46,6 @@ export const ConversationAddresee = styled.div`
   display: flex;
   flex: auto;
   flex-direction: column;
-  .addresee-name {
-    font-weight: 700;
-    font-size: 16px;
-  }
 `;
 
 export const StyledButtonContainer = styled.div`

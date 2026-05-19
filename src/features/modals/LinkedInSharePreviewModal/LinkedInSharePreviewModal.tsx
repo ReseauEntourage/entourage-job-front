@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Text } from '@/src/components/ui';
+import { isLinkedinShareDuplicateError } from '@/src/api/axiosErrors';
+import { Alert, Button, Text } from '@/src/components/ui';
+import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { ModalFooter } from '@/src/features/modals/Modal/ModalGeneric/ModalFooter/ModalFooter';
 import { Api } from 'src/api';
 import { notificationsActions } from 'src/use-cases/notifications';
+import { StyledContentContainer } from './LinkedInSharePreviewModal.styles';
 
 interface LinkedInSharePreviewModalProps {
   profileId: string;
@@ -25,6 +28,7 @@ export const LinkedInSharePreviewModal = ({
   const [shareText, setShareText] = useState<string | null>(null);
   const [isLoadingText, setIsLoadingText] = useState(true);
   const [isSharing, setIsSharing] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
 
   useEffect(() => {
     Api.getProfileShareText(profileId)
@@ -42,6 +46,7 @@ export const LinkedInSharePreviewModal = ({
   }, [dispatch, onClose, profileId]);
 
   const handleShare = useCallback(async () => {
+    setShareError(null);
     setIsSharing(true);
     try {
       if (!hasLinkedinLinked && onTriggerOAuth) {
@@ -56,12 +61,11 @@ export const LinkedInSharePreviewModal = ({
         })
       );
       onClose?.();
-    } catch {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'danger',
-          message: 'Erreur lors du partage LinkedIn. Veuillez réessayer.',
-        })
+    } catch (error) {
+      setShareError(
+        isLinkedinShareDuplicateError(error)
+          ? 'Ce profil a déjà été partagé récemment sur LinkedIn. LinkedIn peut limiter la fréquence de partage du même contenu. Veuillez réessayer plus tard.'
+          : 'Erreur lors du partage LinkedIn. Veuillez réessayer.'
       );
     } finally {
       setIsSharing(false);
@@ -74,24 +78,31 @@ export const LinkedInSharePreviewModal = ({
       description="Vérifiez le message qui sera publié sur votre profil LinkedIn."
       size="large"
     >
-      {isLoadingText ? (
-        <Text>Chargement du message…</Text>
-      ) : (
-        <div
-          style={{
-            whiteSpace: 'pre-wrap',
-            background: '#f3f6f9',
-            borderRadius: 8,
-            padding: '16px',
-            maxHeight: 320,
-            overflowY: 'auto',
-            fontSize: 14,
-            lineHeight: 1.6,
-          }}
-        >
-          {shareText}
-        </div>
-      )}
+      <StyledContentContainer>
+        {isLoadingText ? (
+          <Text>Chargement du message…</Text>
+        ) : (
+          <div
+            style={{
+              whiteSpace: 'pre-wrap',
+              background: '#f3f6f9',
+              borderRadius: 8,
+              padding: '16px',
+              maxHeight: 320,
+              overflowY: 'auto',
+              fontSize: 14,
+              lineHeight: 1.6,
+            }}
+          >
+            {shareText}
+          </div>
+        )}
+        {shareError && (
+          <Alert variant={AlertVariant.Error} icon={null}>
+            {shareError}
+          </Alert>
+        )}
+      </StyledContentContainer>
       <ModalFooter>
         <Button
           variant="default"
