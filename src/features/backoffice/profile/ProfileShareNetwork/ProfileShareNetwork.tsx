@@ -23,7 +23,6 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useAuthenticatedUser();
-  const [isLinkedinLoading, setIsLinkedinLoading] = useState(false);
   const [isWhatsappLoading, setIsWhatsappLoading] = useState(false);
 
   useEffect(() => {
@@ -38,12 +37,23 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
         message: 'Compte LinkedIn lié avec succès !',
       })
     );
-    openModal(
-      <LinkedInSharePreviewModal
-        profileId={profile.id}
-        firstName={profile.firstName}
-      />
-    );
+    Api.postLinkedinShare(profile.id)
+      .then(() => {
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: 'Profil partagé sur LinkedIn avec succès !',
+          })
+        );
+      })
+      .catch(() => {
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: 'Erreur lors du partage LinkedIn. Veuillez réessayer.',
+          })
+        );
+      });
     router.replace(`/backoffice/profile/${profile.id}`, undefined, {
       shallow: true,
     });
@@ -67,31 +77,26 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
     }
   }, [dispatch, profile.id]);
 
-  const handleLinkedinShare = useCallback(async () => {
-    if (!user.hasLinkedinLinked) {
-      setIsLinkedinLoading(true);
-      try {
-        const { data } = await Api.getLinkedinOAuthUrl(profile.id);
-        window.location.href = data.url;
-      } catch {
-        dispatch(
-          notificationsActions.addNotification({
-            type: 'danger',
-            message: 'Une erreur est survenue. Veuillez réessayer.',
-          })
-        );
-        setIsLinkedinLoading(false);
-      }
-      return;
-    }
+  const handleTriggerOAuth = useCallback(async () => {
+    const { data } = await Api.getLinkedinOAuthUrl(profile.id);
+    window.location.href = data.url;
+  }, [profile.id]);
 
+  const handleLinkedinShare = useCallback(() => {
     openModal(
       <LinkedInSharePreviewModal
         profileId={profile.id}
         firstName={profile.firstName}
+        hasLinkedinLinked={user.hasLinkedinLinked}
+        onTriggerOAuth={handleTriggerOAuth}
       />
     );
-  }, [dispatch, profile.id, profile.firstName, user.hasLinkedinLinked]);
+  }, [
+    profile.id,
+    profile.firstName,
+    user.hasLinkedinLinked,
+    handleTriggerOAuth,
+  ]);
 
   return (
     <ProfilePartCard
@@ -107,7 +112,6 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
         variant="secondary"
         size="medium"
         onClick={handleLinkedinShare}
-        disabled={isLinkedinLoading}
         prependIcon={
           <SvgIcon
             name="LinkedIn"

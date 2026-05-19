@@ -10,11 +10,15 @@ import { notificationsActions } from 'src/use-cases/notifications';
 interface LinkedInSharePreviewModalProps {
   profileId: string;
   firstName: string;
+  hasLinkedinLinked?: boolean;
+  onTriggerOAuth?: () => Promise<void>;
 }
 
 export const LinkedInSharePreviewModal = ({
   profileId,
   firstName,
+  hasLinkedinLinked = true,
+  onTriggerOAuth,
 }: LinkedInSharePreviewModalProps) => {
   const dispatch = useDispatch();
   const { onClose } = useModalContext();
@@ -40,6 +44,10 @@ export const LinkedInSharePreviewModal = ({
   const handleShare = useCallback(async () => {
     setIsSharing(true);
     try {
+      if (!hasLinkedinLinked && onTriggerOAuth) {
+        await onTriggerOAuth();
+        return;
+      }
       await Api.postLinkedinShare(profileId);
       dispatch(
         notificationsActions.addNotification({
@@ -58,7 +66,7 @@ export const LinkedInSharePreviewModal = ({
     } finally {
       setIsSharing(false);
     }
-  }, [dispatch, onClose, profileId]);
+  }, [dispatch, hasLinkedinLinked, onClose, onTriggerOAuth, profileId]);
 
   return (
     <ModalGeneric
