@@ -26,7 +26,7 @@ export const MessagingShareNetwork = ({
           disabled={isWhatsappLoading}
           rounded={false}
         >
-          Partager le CV
+          Partager le profil
         </Button>
       </Dropdown.Toggle>
       <Dropdown.Menu size="large">
