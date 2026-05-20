@@ -1,6 +1,7 @@
 import { EventMode } from 'src/constants/events';
 
 interface ICSEventData {
+  id?: string;
   title: string;
   description: string;
   startDate: string;
@@ -35,6 +36,11 @@ export function generateICSContent(event: ICSEventData): string {
       ? event.meetingLink ?? ''
       : event.fullAddress ?? '';
 
+  const uid = event.id
+    ? `${event.id}@entouragepro.fr`
+    : `${event.title.replace(/\s+/g, '-')}-${event.startDate}@entouragepro.fr`;
+  const dtstamp = formatICSDate(new Date().toISOString());
+
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -42,6 +48,8 @@ export function generateICSContent(event: ICSEventData): string {
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
+    `UID:${uid}`,
+    `DTSTAMP:${dtstamp}`,
     `DTSTART:${formatICSDate(event.startDate)}`,
     `DTEND:${formatICSDate(event.endDate)}`,
     `SUMMARY:${escapeICS(event.title)}`,

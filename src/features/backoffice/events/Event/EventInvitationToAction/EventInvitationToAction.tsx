@@ -45,6 +45,7 @@ export const EventInvitationToAction = ({
           />
           {isParticipating && (
             <ButtonAddToCalendar
+              id={salesForceId}
               title={name}
               description={description ?? ''}
               startDate={startDate}

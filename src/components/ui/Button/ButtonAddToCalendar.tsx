@@ -5,6 +5,7 @@ import { Button } from './Button';
 import { ButtonProps } from './Button.types';
 
 interface ButtonAddToCalendarProps extends Omit<ButtonProps, 'onClick'> {
+  id?: string;
   title: string;
   description: string;
   startDate: string;
@@ -15,6 +16,7 @@ interface ButtonAddToCalendarProps extends Omit<ButtonProps, 'onClick'> {
 }
 
 export const ButtonAddToCalendar = ({
+  id,
   title,
   description,
   startDate,
@@ -27,6 +29,7 @@ export const ButtonAddToCalendar = ({
 }: ButtonAddToCalendarProps) => {
   const handleClick = useCallback(() => {
     const content = generateICSContent({
+      id,
       title,
       description,
       startDate,
@@ -35,9 +38,23 @@ export const ButtonAddToCalendar = ({
       meetingLink,
       fullAddress,
     });
-    const safeFilename = title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    const safeFilename =
+      title
+        .replace(/[^a-z0-9]/gi, '-')
+        .toLowerCase()
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '') || 'event';
     downloadICS(content, `${safeFilename}.ics`);
-  }, [title, description, startDate, endDate, mode, meetingLink, fullAddress]);
+  }, [
+    id,
+    title,
+    description,
+    startDate,
+    endDate,
+    mode,
+    meetingLink,
+    fullAddress,
+  ]);
 
   return (
     <Button onClick={handleClick} {...props}>
