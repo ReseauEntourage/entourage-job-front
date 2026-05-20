@@ -36,7 +36,7 @@ export const MessagingShareNetwork = ({
               name="LinkedIn"
               width={14}
               height={14}
-              color={COLORS.primaryBlue}
+              color={COLORS.linkedInBlue}
             />{' '}
             Partager sur LinkedIn
           </Text>
@@ -47,7 +47,7 @@ export const MessagingShareNetwork = ({
               name="Whatsapp"
               width={14}
               height={14}
-              color={COLORS.primaryBlue}
+              color={COLORS.whatsAppGreen}
             />{' '}
             Partager sur WhatsApp
           </Text>

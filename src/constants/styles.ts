@@ -88,7 +88,7 @@ export const COLORS = {
   overlayWhite: '#FFFFFFCC',
 
   // Brand
-  linkedInBlue: '#0077B5',
+  linkedInBlue: '#0077B7',
   whatsAppGreen: '#25D366',
 };
 
