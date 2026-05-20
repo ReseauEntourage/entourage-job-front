@@ -132,8 +132,8 @@ export const LinkedInSharePreviewModal = ({
         ) : null}
         {hasParensError && (
           <Alert variant={AlertVariant.Error} icon={null}>
-            Le message ne peut pas contenir de parenthèses en dehors des
-            mentions. Veuillez les supprimer avant de partager.
+            Le message ne peut pas contenir de parenthèses. Veuillez les
+            supprimer avant de partager.
           </Alert>
         )}
         {shareError && (
