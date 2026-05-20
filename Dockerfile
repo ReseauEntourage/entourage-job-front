@@ -1,6 +1,6 @@
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:16.17-alpine AS dev
+FROM node:24-alpine AS dev
 # Set the working directory to /src inside the container
 RUN mkdir -p /app
 WORKDIR /app

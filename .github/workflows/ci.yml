@@ -73,7 +73,7 @@ jobs:
     needs: [ts-check, lint, build, test]
     environment: 'entourage-job-front'
     container:
-      image: cypress/browsers:node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1
+      image: cypress/browsers:node-24.15.0-chrome-148.0.7778.96-1-ff-150.0.3-edge-148.0.3967.54-1
       options: --user 1001
     steps:
       - uses: actions/checkout@v6
