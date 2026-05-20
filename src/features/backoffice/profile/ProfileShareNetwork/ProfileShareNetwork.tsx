@@ -44,7 +44,10 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
         message: 'Compte LinkedIn lié avec succès !',
       })
     );
-    Api.postLinkedinShare(profile.id)
+    const pendingTextKey = `pendingLinkedinText_${profile.id}`;
+    const customText = localStorage.getItem(pendingTextKey) ?? undefined;
+    localStorage.removeItem(pendingTextKey);
+    Api.postLinkedinShare(profile.id, customText)
       .then(({ data }) => {
         dispatch(
           notificationsActions.addNotification({

@@ -315,15 +315,18 @@ export class APIHandler {
   }
 
   postLinkedinShare(
-    profileUserId: string
+    profileUserId: string,
+    customText?: string
   ): Promise<AxiosResponse<{ success: boolean; linkedinPostUrl: string }>> {
-    return this.post(`/linkedin/share/${profileUserId}`, {});
+    return this.post(`/linkedin/share/${profileUserId}`, { customText });
   }
 
   getProfileShareText(
-    profileUserId: string
+    profileUserId: string,
+    channel?: 'linkedin' | 'default'
   ): Promise<AxiosResponse<{ text: string }>> {
-    return this.get(`/user/profile/${profileUserId}/share-text`);
+    const params = channel ? `?channel=${channel}` : '';
+    return this.get(`/user/profile/${profileUserId}/share-text${params}`);
   }
 
   exchangeLinkedInCode(

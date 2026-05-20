@@ -10,7 +10,15 @@ import { ModalFooter } from '@/src/features/modals/Modal/ModalGeneric/ModalFoote
 import { openModal } from '@/src/features/modals/Modal/openModal';
 import { Api } from 'src/api';
 import { notificationsActions } from 'src/use-cases/notifications';
+import { LinkedInMentionEditor } from './LinkedInMentionEditor';
 import { StyledContentContainer } from './LinkedInSharePreviewModal.styles';
+
+const MENTION_REGEX = /@\[[^\]]+\]\([^)]+\)/g;
+
+function hasInvalidParentheses(text: string): boolean {
+  const withoutMentions = text.replace(MENTION_REGEX, '');
+  return /[()]/.test(withoutMentions);
+}
 
 interface LinkedInSharePreviewModalProps {
   profileId: string;
@@ -30,13 +38,17 @@ export const LinkedInSharePreviewModal = ({
   const dispatch = useDispatch();
   const { onClose } = useModalContext();
   const [shareText, setShareText] = useState<string | null>(null);
+  const [editedText, setEditedText] = useState<string | null>(null);
   const [isLoadingText, setIsLoadingText] = useState(true);
   const [isSharing, setIsSharing] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
 
   useEffect(() => {
-    Api.getProfileShareText(profileId)
-      .then(({ data }) => setShareText(data.text))
+    Api.getProfileShareText(profileId, 'linkedin')
+      .then(({ data }) => {
+        setShareText(data.text);
+        setEditedText(data.text);
+      })
       .catch(() => {
         dispatch(
           notificationsActions.addNotification({
@@ -49,15 +61,23 @@ export const LinkedInSharePreviewModal = ({
       .finally(() => setIsLoadingText(false));
   }, [dispatch, onClose, profileId]);
 
+  const hasParensError = editedText ? hasInvalidParentheses(editedText) : false;
+
   const handleShare = useCallback(async () => {
     setShareError(null);
     setIsSharing(true);
     try {
       if (!hasLinkedinLinked && onTriggerOAuth) {
+        if (editedText) {
+          localStorage.setItem(`pendingLinkedinText_${profileId}`, editedText);
+        }
         await onTriggerOAuth();
         return;
       }
-      const { data } = await Api.postLinkedinShare(profileId);
+      const { data } = await Api.postLinkedinShare(
+        profileId,
+        editedText ?? undefined
+      );
 
       onClose?.();
       if (!hasAlreadySharedWhatsapp && data.linkedinPostUrl) {
@@ -86,6 +106,7 @@ export const LinkedInSharePreviewModal = ({
     }
   }, [
     dispatch,
+    editedText,
     firstName,
     hasAlreadySharedWhatsapp,
     hasLinkedinLinked,
@@ -103,21 +124,17 @@ export const LinkedInSharePreviewModal = ({
       <StyledContentContainer>
         {isLoadingText ? (
           <Text>Chargement du message…</Text>
-        ) : (
-          <div
-            style={{
-              whiteSpace: 'pre-wrap',
-              background: '#f3f6f9',
-              borderRadius: 8,
-              padding: '16px',
-              maxHeight: 320,
-              overflowY: 'auto',
-              fontSize: 14,
-              lineHeight: 1.6,
-            }}
-          >
-            {shareText}
-          </div>
+        ) : shareText ? (
+          <LinkedInMentionEditor
+            initialText={shareText}
+            onChange={setEditedText}
+          />
+        ) : null}
+        {hasParensError && (
+          <Alert variant={AlertVariant.Error} icon={null}>
+            Le message ne peut pas contenir de parenthèses en dehors des
+            mentions. Veuillez les supprimer avant de partager.
+          </Alert>
         )}
         {shareError && (
           <Alert variant={AlertVariant.Error} icon={null}>
@@ -137,7 +154,7 @@ export const LinkedInSharePreviewModal = ({
         <Button
           variant="primary"
           onClick={handleShare}
-          disabled={isLoadingText || isSharing}
+          disabled={isLoadingText || isSharing || hasParensError}
           dataTestId="linkedin-share-confirm"
         >
           Partager
