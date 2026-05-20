@@ -97,7 +97,7 @@ export const LinkedInSharePreviewModal = ({
   return (
     <ModalGeneric
       title={`Partager le profil de ${firstName} sur LinkedIn`}
-      description="Vérifiez le message qui sera publié sur votre profil LinkedIn."
+      description="Voici un message pré-rempli pour vous faire gagner du temps. Modifiez-le librement avant de publier sur votre profil LinkedIn."
       size="large"
     >
       <StyledContentContainer>
