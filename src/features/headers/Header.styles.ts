@@ -11,15 +11,13 @@ export const StyledNavContainerMobile = styled.header`
 
 export const StyledMessagingIconContainer = styled.div`
   position: relative;
-  margin-right: 10px;
 
   .pin-notification {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    min-width: 18px;
+    top: 8px;
+    right: 8px;
+    width: 18px;
     height: 18px;
-    padding: 0 3px;
     background: ${COLORS.lightRed};
     border-radius: 8px;
     color: white;

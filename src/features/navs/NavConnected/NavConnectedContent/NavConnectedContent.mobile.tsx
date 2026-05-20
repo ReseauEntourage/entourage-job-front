@@ -61,7 +61,7 @@ export const NavConnectedContentMobile = ({
                 href={messaging.href}
                 color="white"
                 variant="text"
-                size="xlarge"
+                size="xxlarge"
               />
               {messaging.badge && badges[messaging.badge] > 0 && (
                 <div className="pin-notification">

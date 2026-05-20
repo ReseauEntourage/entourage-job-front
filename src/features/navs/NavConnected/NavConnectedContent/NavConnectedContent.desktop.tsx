@@ -56,7 +56,7 @@ export const NavConnectedContentDesktop = ({
           href={messaging.href}
           color={COLORS.black}
           variant="text"
-          size="xlarge"
+          size="xxlarge"
         />
         {messaging.badge && badges[messaging.badge] > 0 && (
           <div className="pin-notification">{badges[messaging.badge]}</div>

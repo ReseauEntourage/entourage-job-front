@@ -10,7 +10,7 @@ export type ButtonVariant =
   | 'text'
   | 'hoverBlue';
 
-export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
+export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
 
 export interface ButtonProps {
   id?: string;
