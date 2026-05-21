@@ -12,6 +12,7 @@ export const Hamburger = ({ onClick }: HamburgerProps) => {
     <ButtonIcon
       onClick={onClick}
       icon={<LucidIcon name="Menu" size={30} color={COLORS.white} />}
+      variant="text"
     />
   );
 };

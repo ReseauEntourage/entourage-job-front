@@ -5,21 +5,8 @@ export const StyledProfileContactForm = styled.div`
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 30px;
-`;
-export const StyledConversationInviteToContact = styled.div`
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  justify-content: flex-start;
-  p {
-    flex: auto;
-    margin: 0;
-  }
-  svg {
-    flex: none;
-  }
 `;
 
 export const StyledContactMessage = styled.div`

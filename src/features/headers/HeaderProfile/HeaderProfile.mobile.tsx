@@ -111,6 +111,7 @@ export const HeaderProfileMobile = ({
                     <ButtonIcon
                       icon={<LucidIcon name="Pencil" size={14} />}
                       onClick={requestFileUploadClick}
+                      variant="text"
                     />
                   </ImageInput>
                 </StyledEditPictureIconContainer>

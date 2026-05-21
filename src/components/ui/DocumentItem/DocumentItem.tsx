@@ -29,6 +29,7 @@ export const DocumentItem = ({
             icon={<LucidIcon name="X" />}
             color={COLORS.darkGray}
             onClick={onRemove}
+            variant="text"
           />
         )}
       </TitleAndIcon>

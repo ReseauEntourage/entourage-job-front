@@ -25,6 +25,12 @@ export const BUTTON_SIZES = {
     paddingCircle: '12px',
     iconSize: 28,
   },
+  xxlarge: {
+    fontSize: 20,
+    padding: '24px 48px',
+    paddingCircle: '15px',
+    iconSize: 32,
+  },
 } as const;
 
 export const BUTTON_ROUNDED_RADIUS = '20px';

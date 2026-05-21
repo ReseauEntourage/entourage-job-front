@@ -5,11 +5,15 @@ import { ButtonIcon, ButtonIconProps } from './ButtonIcon';
 
 const meta = {
   component: ButtonIcon,
-  render: ({ href }: ButtonIconProps) => {
+  render: ({ href, variant }: ButtonIconProps) => {
     return (
       <>
         Bouton vers : {href}
-        <ButtonIcon icon={<SvgIcon name="IlluConversation" />} href={href} />
+        <ButtonIcon
+          icon={<SvgIcon name="IlluConversation" />}
+          href={href}
+          variant={variant}
+        />
       </>
     );
   },
@@ -18,8 +22,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof ButtonIcon>;
 
+export const Text: Story = {
+  args: {
+    href: 'https://www.entourage.social/',
+    variant: 'text',
+  },
+};
+
 export const Default: Story = {
   args: {
     href: 'https://www.entourage.social/',
+    variant: 'default',
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    href: 'https://www.entourage.social/',
+    variant: 'secondary',
   },
 };

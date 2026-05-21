@@ -34,6 +34,7 @@ export function FilePreviewLogo({
         <ButtonIcon
           icon={<LucidIcon name="X" size={15} />}
           dataTestId={`${dataTestId}-logo-delete`}
+          variant="text"
         />
       </StyledDeleteIconContainer>
     </StyledFileInfosContainer>

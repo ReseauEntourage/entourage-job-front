@@ -1,8 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@/src/components/ui';
+import { Button, ButtonIcon } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { FileInput } from '@/src/components/ui/Inputs';
+import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsMobile } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -168,14 +169,14 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
           />
         </MessagingInputContainer>
         {isMobile ? (
-          <Button
-            variant="primary"
+          <ButtonIcon
+            icon={<LucidIcon name="Send" />}
+            size="large"
             onClick={sendNewMessage}
             disabled={readonly}
-            rounded
-          >
-            <LucidIcon name="Send" size={25} />
-          </Button>
+            color={COLORS.white}
+            variant="primary"
+          />
         ) : (
           <Button onClick={sendNewMessage} disabled={readonly}>
             Envoyer

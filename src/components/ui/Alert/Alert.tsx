@@ -60,6 +60,7 @@ export const Alert = ({
               />
             }
             onClick={onClose}
+            variant="text"
           />
         </div>
       )}

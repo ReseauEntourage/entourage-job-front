@@ -39,6 +39,7 @@ export const Tag = ({
         <ButtonIcon
           icon={<LucidIcon name="X" size={13} color="black" />}
           onClick={removeCallback}
+          variant="text"
         />
       )}
     </StyledTag>

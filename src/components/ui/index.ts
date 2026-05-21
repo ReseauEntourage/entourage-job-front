@@ -23,3 +23,4 @@ export * from './Icons';
 export * from './Images';
 export * from './Tooltip';
 export * from './ProgressBar';
+export * from './CopyInput';

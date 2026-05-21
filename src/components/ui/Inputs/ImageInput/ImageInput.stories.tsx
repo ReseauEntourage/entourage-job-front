@@ -58,7 +58,7 @@ export const Default = {
 export const Icon = {
   render: Template,
   args: {
-    children: <ButtonIcon icon={<LucidIcon name="Pencil" />} />,
+    children: <ButtonIcon icon={<LucidIcon name="Pencil" />} variant="text" />,
   },
 };
 

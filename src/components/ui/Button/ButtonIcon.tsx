@@ -1,7 +1,10 @@
 import React from 'react';
 import { COLORS } from '@/src/constants/styles';
 import { Button } from './Button';
-import { ButtonSize } from './Button.types';
+import { ButtonSize, ButtonVariant } from './Button.types';
+import { BUTTON_SIZES } from './button.constants';
+
+export type ButtonIconVariant = 'text' | 'default' | 'secondary' | 'primary';
 
 export interface ButtonIconProps {
   icon: React.ReactNode;
@@ -12,7 +15,15 @@ export interface ButtonIconProps {
   disabled?: boolean;
   color?: string;
   size?: ButtonSize;
+  variant?: ButtonIconVariant;
 }
+
+const BUTTON_ICON_VARIANT_MAP: Record<ButtonIconVariant, ButtonVariant> = {
+  text: 'text',
+  default: 'default',
+  secondary: 'secondary',
+  primary: 'primary',
+};
 
 export const ButtonIcon = ({
   icon,
@@ -21,14 +32,19 @@ export const ButtonIcon = ({
   href,
   dataTestId,
   newTab,
-  size,
+  size = 'medium',
   disabled = false,
+  variant = 'default',
 }: ButtonIconProps) => {
+  const iconSize = BUTTON_SIZES[size].iconSize;
   const formattedIcon = React.cloneElement(
-    icon as React.ReactElement<{ color: string }>,
-    {
-      color,
-    }
+    icon as React.ReactElement<{
+      color: string;
+      size: number;
+      width: number;
+      height: number;
+    }>,
+    { color, size: iconSize, width: iconSize, height: iconSize }
   );
   return (
     <Button
@@ -38,7 +54,7 @@ export const ButtonIcon = ({
       dataTestId={dataTestId}
       newTab={newTab}
       disabled={disabled}
-      variant="text"
+      variant={BUTTON_ICON_VARIANT_MAP[variant]}
       size={size}
     >
       {formattedIcon}

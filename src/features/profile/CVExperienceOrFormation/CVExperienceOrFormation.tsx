@@ -114,11 +114,13 @@ export function CVExperienceOrFormation({
               icon={<LucidIcon name="Pencil" />}
               onClick={handleEdit}
               color={COLORS.darkGray}
+              variant="text"
             />
             <ButtonIcon
               icon={<LucidIcon name="Trash" />}
               onClick={handleDelete}
               color={COLORS.darkGray}
+              variant="text"
             />
           </StyledEditToolsContainerCard>
         )}
@@ -158,10 +160,15 @@ export function CVExperienceOrFormation({
       </StyledCVExperienceDescription>
       {isEditable && (
         <StyledEditToolsContainer>
-          <ButtonIcon icon={<LucidIcon name="Pencil" />} onClick={handleEdit} />
+          <ButtonIcon
+            icon={<LucidIcon name="Pencil" />}
+            onClick={handleEdit}
+            variant="text"
+          />
           <ButtonIcon
             icon={<LucidIcon name="Trash" />}
             onClick={handleDelete}
+            variant="text"
           />
         </StyledEditToolsContainer>
       )}

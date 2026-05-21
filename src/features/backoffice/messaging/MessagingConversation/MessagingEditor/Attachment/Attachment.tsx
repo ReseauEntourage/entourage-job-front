@@ -25,6 +25,7 @@ export const Attachment = ({ attachment, onClose }: AttachmentProps) => {
             onClick={() => {
               onClose();
             }}
+            variant="text"
           />
         )}
       </StyledButtonContent>
