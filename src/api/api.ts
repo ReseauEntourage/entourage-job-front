@@ -321,6 +321,17 @@ export class APIHandler {
     return this.post(`/linkedin/share/${profileUserId}`, { customText });
   }
 
+  postProfileShare(
+    profileUserId: string,
+    channel: 'linkedin' | 'whatsapp',
+    postUrl?: string
+  ): Promise<AxiosResponse<{ success: boolean; shareId: string }>> {
+    return this.post(`/user/profile/${profileUserId}/shares`, {
+      channel,
+      postUrl,
+    });
+  }
+
   getProfileShareText(
     profileUserId: string,
     channel?: 'linkedin' | 'default'

@@ -27,6 +27,7 @@ export const useProfileShare = ({
       const url = `https://wa.me/?text=${encodeURIComponent(data.text)}`;
       window.open(url, '_blank', 'noopener,noreferrer');
       setHasSharedWhatsapp(true);
+      Api.postProfileShare(profileId, 'whatsapp').catch(() => {});
     } catch {
       dispatch(
         notificationsActions.addNotification({
