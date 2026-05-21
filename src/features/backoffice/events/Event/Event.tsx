@@ -49,6 +49,11 @@ export const Event = () => {
                 salesForceId={selectedEvent.salesForceId}
                 description={selectedEvent.description}
                 isParticipating={selectedEvent.isParticipating}
+                startDate={selectedEvent.startDate}
+                endDate={selectedEvent.endDate}
+                mode={selectedEvent.mode}
+                meetingLink={selectedEvent.meetingLink}
+                fullAddress={selectedEvent.fullAddress}
               />
             )}
           </StyledLeftColumn>
@@ -58,6 +63,11 @@ export const Event = () => {
               description={selectedEvent.description}
               salesForceId={selectedEvent.salesForceId}
               isParticipating={selectedEvent.isParticipating}
+              startDate={selectedEvent.startDate}
+              endDate={selectedEvent.endDate}
+              mode={selectedEvent.mode}
+              meetingLink={selectedEvent.meetingLink}
+              fullAddress={selectedEvent.fullAddress}
             />
             <EventParticipants participants={selectedEvent.participants} />
           </StyledRightColumn>
