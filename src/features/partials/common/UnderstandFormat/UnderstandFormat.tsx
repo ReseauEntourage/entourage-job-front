@@ -164,7 +164,8 @@ const contentAs: { [K in DisplayAs]: Content } = {
     content: (
       <>
         Rejoignez une large communauté de coachs bénévoles qui agissent pour que
-        l’isolement et la précarité ne soit pas un frein à la recherche d’emploi
+        l’isolement et la précarité ne soient pas un frein à la recherche
+        d’emploi
       </>
     ),
 
