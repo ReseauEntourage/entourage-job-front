@@ -30,6 +30,7 @@ export function OrganizationMobile({
                 />
               );
             }}
+            variant="text"
           />
         </TdMobile>
       </div>

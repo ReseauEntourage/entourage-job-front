@@ -13,7 +13,6 @@ import { Text } from 'src/components/ui';
 import { Alert } from 'src/components/ui/Alert/Alert';
 import { AlertVariant } from 'src/components/ui/Alert/Alert.types';
 import { Button } from 'src/components/ui/Button/Button';
-import { ButtonIcon } from 'src/components/ui/Button/ButtonIcon';
 import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
 import { TextArea } from 'src/components/ui/Inputs/TextArea';
 import {
@@ -29,6 +28,8 @@ import {
 } from './MessagingAIAssistant.utils';
 import { EscalationState } from './MessagingAIAssitant.types';
 import {
+  AIChatActions,
+  AIChatEditor,
   AIChatInputContainer,
   AIChatInputWrapper,
   AIEmptyState,
@@ -39,6 +40,7 @@ import {
   AIMessagesContainer,
   AIQuickActionsContainer,
   AIQuickActionsGrid,
+  AIQuickActionsHeader,
 } from './MessagingAIPanel.styles';
 
 export const MessagingAIAssistant = () => {
@@ -53,6 +55,7 @@ export const MessagingAIAssistant = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [escalation, setEscalation] = useState<EscalationState | null>(null);
+  const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true);
   const [rateLimitRemaining, setRateLimitRemaining] = useState<number | null>(
     null
   );
@@ -331,75 +334,99 @@ export const MessagingAIAssistant = () => {
           </Alert>
         )}
 
-      <AIQuickActionsContainer>
-        <Text size="small" weight="semibold" uppercase color="mediumGray">
-          Suggestions rapides
-        </Text>
-
-        <AIQuickActionsGrid>
-          <Button
-            key={contextualAction.id}
-            variant="secondary"
-            size="small"
-            onClick={() => onQuickAction(contextualAction)}
-            disabled={isLoading || isRateLimited}
-            prependIcon={
-              <LucidIcon name={contextualAction.icon as any} size={13} />
-            }
+      <AIChatEditor>
+        <AIQuickActionsContainer>
+          <AIQuickActionsHeader
+            onClick={() => setIsQuickActionsOpen((prev) => !prev)}
           >
-            {contextualAction.label}
-          </Button>
-          {QUICK_ACTIONS.map((action) => (
+            <Text size="small" weight="semibold" uppercase color="mediumGray">
+              Suggestions rapides
+            </Text>
+            <LucidIcon
+              name={isQuickActionsOpen ? 'ChevronDown' : 'ChevronUp'}
+              size={14}
+            />
+          </AIQuickActionsHeader>
+
+          {isQuickActionsOpen && (
+            <AIQuickActionsGrid>
+              <Button
+                key={contextualAction.id}
+                variant="secondary"
+                size="small"
+                onClick={() => onQuickAction(contextualAction)}
+                disabled={isLoading || isRateLimited}
+                prependIcon={
+                  <LucidIcon name={contextualAction.icon as any} size={13} />
+                }
+              >
+                {contextualAction.label}
+              </Button>
+              {QUICK_ACTIONS.map((action) => (
+                <Button
+                  key={action.id}
+                  variant="secondary"
+                  size="small"
+                  onClick={() => onQuickAction(action)}
+                  disabled={isLoading || isRateLimited}
+                  prependIcon={
+                    <LucidIcon name={action.icon as any} size={13} />
+                  }
+                >
+                  {action.label}
+                </Button>
+              ))}
+            </AIQuickActionsGrid>
+          )}
+        </AIQuickActionsContainer>
+
+        <AIChatInputContainer>
+          <AIChatInputWrapper>
+            <TextArea
+              id="ai-chat-input"
+              name="ai-chat-input"
+              value={inputValue}
+              onChange={setInputValue}
+              onKeyDown={onKeyDown}
+              placeholder={
+                isRateLimited
+                  ? 'Limite horaire atteinte...'
+                  : 'Posez une question...'
+              }
+              disabled={isLoading || isRateLimited}
+              rows={1}
+              inputRef={(el) => {
+                inputRef.current = el;
+              }}
+              naked
+            />
+          </AIChatInputWrapper>
+          <AIChatActions>
             <Button
-              key={action.id}
               variant="secondary"
               size="small"
-              onClick={() => onQuickAction(action)}
-              disabled={isLoading || isRateLimited}
-              prependIcon={<LucidIcon name={action.icon as any} size={13} />}
+              onClick={onNewConversation}
+              disabled={isLoading || messages.length === 0}
+              rounded={false}
             >
-              {action.label}
+              <LucidIcon name="RotateCcw" size={16} />
             </Button>
-          ))}
-        </AIQuickActionsGrid>
-      </AIQuickActionsContainer>
-
-      <AIChatInputContainer>
-        <AIChatInputWrapper>
-          <TextArea
-            id="ai-chat-input"
-            name="ai-chat-input"
-            value={inputValue}
-            onChange={setInputValue}
-            onKeyDown={onKeyDown}
-            placeholder={
-              isRateLimited
-                ? 'Limite horaire atteinte...'
-                : 'Posez une question...'
-            }
-            disabled={isLoading || isRateLimited}
-            rows={1}
-            inputRef={(el) => {
-              inputRef.current = el;
-            }}
-            naked
-          />
-        </AIChatInputWrapper>
-        <ButtonIcon
-          icon={<LucidIcon name="RotateCcw" size={16} />}
-          onClick={onNewConversation}
-          disabled={isLoading || messages.length === 0}
-        />
-        <ButtonIcon
-          icon={<LucidIcon name="Send" size={18} />}
-          onClick={() => sendMessage(inputValue)}
-          disabled={!inputValue.trim() || isLoading || isRateLimited}
-        />
-      </AIChatInputContainer>
-      <Text size="small" color="mediumGray" center>
-        L&apos;IA peut faire des erreurs. Vérifiez toujours les informations
-        proposées.
-      </Text>
+            <Button
+              variant="primary"
+              size="small"
+              onClick={() => sendMessage(inputValue)}
+              disabled={!inputValue.trim() || isLoading || isRateLimited}
+              rounded={false}
+            >
+              <LucidIcon name="Send" size={18} />
+            </Button>
+          </AIChatActions>
+        </AIChatInputContainer>
+        <Text size="small" color="mediumGray" center>
+          L&apos;IA peut faire des erreurs. Vérifiez toujours les informations
+          proposées.
+        </Text>
+      </AIChatEditor>
     </>
   );
 };

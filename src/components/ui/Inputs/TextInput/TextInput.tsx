@@ -80,11 +80,13 @@ export function TextInput({
               <ButtonIcon
                 icon={<LucidIcon name="EyeOff" size={15} />}
                 onClick={toggleContextType}
+                variant="text"
               />
             ) : (
               <ButtonIcon
                 icon={<LucidIcon name="Eye" size={15} />}
                 onClick={toggleContextType}
+                variant="text"
               />
             )}
           </StyledEyeIconWrapper>

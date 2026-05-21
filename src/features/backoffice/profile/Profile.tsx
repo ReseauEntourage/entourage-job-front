@@ -22,6 +22,7 @@ import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
 } from './Profile.styles';
+import { ProfileShareNetwork } from './ProfileShareNetwork/ProfileShareNetwork';
 import { useSelectSelectedProfile } from './useSelectedProfile';
 
 export const Profile = () => {
@@ -93,11 +94,6 @@ export const Profile = () => {
                 formations={selectedProfile.formations}
               />
             )}
-            {/* <ProfileReviews
-              userId={selectedProfile.id}
-              userFirstName={selectedProfile.firstName}
-              reviews={selectedProfile.reviews ?? []}
-            /> */}
           </StyledProfileLeftColumn>
           <StyledProfileRightColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <ProfileContactCard
@@ -106,6 +102,9 @@ export const Profile = () => {
               role={selectedProfile.role}
               isAvailable={selectedProfile.isAvailable}
             />
+            {selectedProfile.role === UserRoles.CANDIDATE && (
+              <ProfileShareNetwork profile={selectedProfile} />
+            )}
             {selectedProfile.role === UserRoles.CANDIDATE && (
               <ProfileContracts
                 contracts={selectedProfile.contracts}

@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { DocumentItem } from '@/src/components/ui/DocumentItem/DocumentItem';
+import { COLORS } from '@/src/constants/styles';
 import { openModal } from '@/src/features/modals/Modal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { useUpdateCompany } from '@/src/hooks/useUpdateCompany';
@@ -88,7 +89,14 @@ export const CompanyLinks = ({
         {linkedInUrl && (
           <DocumentItem
             name="LinkedIn"
-            icon={<SvgIcon name="IlluLinkedIn" width={38} height={38} />}
+            icon={
+              <SvgIcon
+                name="LinkedIn"
+                width={38}
+                height={38}
+                color={COLORS.linkedInBlue}
+              />
+            }
             onClick={() => {
               window.open(normalizedUrl(linkedInUrl), '_blank');
             }}

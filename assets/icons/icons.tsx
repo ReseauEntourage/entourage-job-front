@@ -50,7 +50,6 @@ import IlluConversationSvg from './illu-conversation.svg';
 import IlluDesktopSvg from './illu-desktop.svg';
 import IlluDiscussionBancSvg from './illu-discussion-banc.svg';
 import IlluDossierCandidatSvg from './illu-dossier-candidat.svg';
-import IlluLinkedInSvg from './illu-linked-in.svg';
 import IlluMaletteSvg from './illu-malette.svg';
 import IlluOrdiCVSvg from './illu-ordi-cv.svg';
 import IlluPoigneeDeMainSvg from './illu-poignee-de-main.svg';
@@ -148,7 +147,6 @@ export const SvgIcons = {
   IlluDesktop: IlluDesktopSvg,
   IlluDiscussionBanc: IlluDiscussionBancSvg,
   IlluDossierCandidat: IlluDossierCandidatSvg,
-  IlluLinkedIn: IlluLinkedInSvg,
   IlluMalette: IlluMaletteSvg,
   IlluOrdiCV: IlluOrdiCVSvg,
   IlluPoigneeDeMain: IlluPoigneeDeMainSvg,

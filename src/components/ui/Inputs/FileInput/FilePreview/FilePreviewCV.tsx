@@ -36,6 +36,7 @@ export function FilePreviewCV({
           icon={<LucidIcon name="X" size={15} />}
           size="small"
           dataTestId={`${dataTestId}-cv-delete`}
+          variant="text"
         />
       </StyledDeleteIconContainer>
     </StyledFileInfosContainer>

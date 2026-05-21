@@ -86,6 +86,10 @@ export const COLORS = {
 
   cardShadow: '#0000000D',
   overlayWhite: '#FFFFFFCC',
+
+  // Brand
+  linkedInBlue: '#0077B7',
+  whatsAppGreen: '#25D366',
 };
 
 export type Color = keyof typeof COLORS;

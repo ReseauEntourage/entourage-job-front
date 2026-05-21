@@ -56,6 +56,7 @@ export const MessagingAIPanel = () => {
           icon={<LucidIcon name="X" size={18} />}
           onClick={onClose}
           color={COLORS.mediumGray}
+          variant="text"
         />
       </AIPanelHeader>
 

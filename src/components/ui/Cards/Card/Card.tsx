@@ -83,6 +83,7 @@ export const Card = ({
             {isClosable && (
               <StyledChevronContainer>
                 <ButtonIcon
+                  variant="text"
                   icon={
                     isOpen ? (
                       <LucidIcon name="ChevronUp" color="black" />

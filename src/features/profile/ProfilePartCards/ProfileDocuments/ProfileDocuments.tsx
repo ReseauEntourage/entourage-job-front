@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { DocumentItem } from '@/src/components/ui/DocumentItem/DocumentItem';
+import { COLORS } from '@/src/constants/styles';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
@@ -92,7 +93,14 @@ export const ProfileDocuments = ({
         {linkedinUrl && (
           <DocumentItem
             name="Mon profil LinkedIn"
-            icon={<SvgIcon name="IlluLinkedIn" width={38} height={38} />}
+            icon={
+              <SvgIcon
+                name="LinkedIn"
+                width={38}
+                height={38}
+                color={COLORS.linkedInBlue}
+              />
+            }
             onRemove={isEditable ? removeLinkedinUrl : undefined}
             onClick={() => {
               window.open(linkedinUrl, '_blank');

@@ -33,6 +33,7 @@ export const APIRoutes = {
   COMPANIES: 'companies',
   RECRUITEMENT_ALERTS: 'recruitement-alerts',
   ELEARNING: 'elearning',
+  LINKEDIN: 'linkedin',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -310,6 +311,7 @@ export type User = {
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
+  hasLinkedinLinked: boolean;
 };
 
 export type MemberUser = User & {
@@ -378,6 +380,7 @@ export type CurrentUserIdentity = {
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
+  hasLinkedinLinked: boolean;
 };
 
 export type CurrentUserProfile = {
@@ -440,6 +443,7 @@ export type CurrentUserReferredUser = {
   role: UserRoles;
   email: string;
   coachesContactedCount: number;
+  eventsParticipatedCount: number;
   referredAt: string | null;
   onboardingCompletedAt: string | null;
 };

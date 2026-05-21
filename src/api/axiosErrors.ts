@@ -54,3 +54,7 @@ export function isInvalidTokenError(error: unknown) {
     (error.response?.data as { message?: string })?.message === 'INVALID_TOKEN'
   );
 }
+
+export function isLinkedinShareDuplicateError(error: unknown) {
+  return isAxiosError(error) && error.response?.status === 422;
+}
