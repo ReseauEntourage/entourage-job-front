@@ -7,10 +7,6 @@ export const StyledCardEmptyContent = styled.div`
   gap: 20px;
 `;
 
-export const StyledIconContainer = styled.div`
-  flex-shrink: 0;
-`;
-
 export const StyledContentContainer = styled.div`
   flex-direction: column;
   gap: 10px;

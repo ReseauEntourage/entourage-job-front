@@ -2,7 +2,7 @@ import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert/Alert';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { useIsDesktop } from 'src/hooks/utils';
 
 interface MessagingPinnedInfoProps {
@@ -25,7 +25,7 @@ export const MessagingPinnedInfo = ({
   return (
     <Alert
       visible={visible}
-      variant={AlertVariant.LightGray}
+      type={AlertType.Neutral}
       rounded={false}
       icon={
         isDesktop ? (

@@ -22,13 +22,11 @@ import { formatCareerPathSentence } from 'src/utils';
 interface ParamProfessionalInformationsProps {
   isEditable?: boolean;
   sectorOccupations: UserProfileSectorOccupation[];
-  smallCard?: boolean;
 }
 
 export const ParamProfessionalInformations = ({
   sectorOccupations,
   isEditable = false,
-  smallCard = false,
 }: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
   const { role } = user;
@@ -88,7 +86,6 @@ export const ParamProfessionalInformations = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       ctaCallback={editModal}
-      smallCard={smallCard}
       fallback={{
         content: (
           <>

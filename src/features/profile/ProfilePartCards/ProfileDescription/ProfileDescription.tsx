@@ -10,13 +10,11 @@ import { StyledDescriptionContainer } from './ProfileDescription.styles';
 interface ProfileDescriptionProps {
   description: string | null;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileDescription = ({
   description,
   isEditable = false,
-  smallCard = false,
 }: ProfileDescriptionProps) => {
   const user = useAuthenticatedUser();
   const isCompleted = !!description;
@@ -36,7 +34,6 @@ export const ProfileDescription = ({
         content: <Text>Vous n’avez pas encore rédigé de présentation</Text>,
         icon: <SvgIcon name="IlluCV" width={90} height={90} />,
       }}
-      smallCard={smallCard}
     >
       {description && (
         <StyledDescriptionContainer>

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Api } from '@/src/api';
 import { Event } from '@/src/api/types';
 import { Alert } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { H4 } from '@/src/components/ui/Headings';
 import { SelectList } from '@/src/components/ui/Inputs/SelectList';
 import { SelectListGroup } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
@@ -138,7 +138,7 @@ export const Content = ({
         estimatedOptionLength={6}
       />
       {noDateSelected && (
-        <Alert variant={AlertVariant.Info}>
+        <Alert type={AlertType.Info}>
           Pas de souci&nbsp;! Vous retrouverez les prochaines sessions
           disponibles directement dans votre espace. Nous vous enverrons un
           rappel par e-mail dès qu&apos;une nouvelle date sera ouverte.

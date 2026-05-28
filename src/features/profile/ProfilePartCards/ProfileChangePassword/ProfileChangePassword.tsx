@@ -8,20 +8,13 @@ import { formChangePassword } from 'src/features/forms/schemas/formChangePasswor
 import { useResetForm } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
 
-interface ProfileChangePasswordProps {
-  smallCard?: boolean;
-}
-
-export const ProfileChangePassword = ({
-  smallCard,
-}: ProfileChangePasswordProps) => {
+export const ProfileChangePassword = () => {
   const [form, resetForm] = useResetForm();
 
   const dispatch = useDispatch();
   return (
     <ProfilePartCard
       title="Votre mot de passe"
-      smallCard={smallCard}
       isCompleted
       isDefaultOpen={false}
     >

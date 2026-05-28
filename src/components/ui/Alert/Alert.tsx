@@ -1,17 +1,23 @@
 import React from 'react';
 import { SvgIcon } from '@/assets/icons/icons';
-import { ALERT_COLORS } from '@/src/constants/styles';
+import { Text } from '@/src/components/ui';
+import { COLORS } from '@/src/constants/styles';
 import { ButtonIcon } from '../Button';
 import { LucidIcon } from '../Icons/LucidIcon';
-import { StyledAlert, StyledAlertContainer } from './Alert.styles';
-import { AlertProps, AlertVariant } from './Alert.types';
+import {
+  ALERT_COLORS,
+  StyledAlert,
+  StyledAlertContainer,
+  StyledIconContainer,
+} from './Alert.styles';
+import { AlertProps, AlertType } from './Alert.types';
 
 interface AlertIconProps {
-  variant: AlertVariant;
+  type: AlertType;
 }
 
-const DefaultAlertIcon = ({ variant }: AlertIconProps) => {
-  if (variant === 'info') {
+const DefaultAlertIcon = ({ type }: AlertIconProps) => {
+  if (type === AlertType.Info) {
     return <SvgIcon name="IlluBulleQuestion" width={35} height={30} />;
   }
 
@@ -19,15 +25,18 @@ const DefaultAlertIcon = ({ variant }: AlertIconProps) => {
 };
 
 export const Alert = ({
-  children,
   rounded = true,
-  variant = AlertVariant.Info,
+  variant = 'filled',
+  type = AlertType.Info,
   closable = false,
   visible = true,
   onClose = () => {},
-  icon = <DefaultAlertIcon variant={variant} />,
+  icon = <DefaultAlertIcon type={type} />,
   clickable = false,
   onClick,
+  title,
+  children,
+  iconInContainer = false,
 }: AlertProps) => {
   const handleClick = () => {
     if (clickable && onClick) {
@@ -35,16 +44,45 @@ export const Alert = ({
     }
   };
 
+  const resizedIcon = React.isValidElement(icon)
+    ? React.cloneElement(
+        icon as React.ReactElement<{
+          width?: number;
+          height?: number;
+          color?: string;
+        }>,
+        {
+          width: 30,
+          height: 30,
+          color: COLORS.extraDarkGray,
+        }
+      )
+    : icon;
+
   return (
     <StyledAlert
-      variant={variant}
-      visible={visible}
-      rounded={rounded}
-      clickable={clickable && !!onClick}
+      $variant={variant}
+      $type={type}
+      $visible={visible}
+      $rounded={rounded}
+      $clickable={clickable && !!onClick}
       onClick={handleClick}
     >
-      {icon}
-      <StyledAlertContainer>{children}</StyledAlertContainer>
+      <StyledIconContainer $iconInContainer={iconInContainer}>
+        {resizedIcon}
+      </StyledIconContainer>
+
+      <StyledAlertContainer>
+        {title && (
+          <Text
+            weight="semibold"
+            color={COLORS[ALERT_COLORS[type]?.title || 'black']}
+          >
+            {title}
+          </Text>
+        )}
+        {children}
+      </StyledAlertContainer>
       {closable && (
         <div
           onClick={(e) => {
@@ -54,10 +92,7 @@ export const Alert = ({
         >
           <ButtonIcon
             icon={
-              <LucidIcon
-                name="X"
-                color={ALERT_COLORS[variant]?.text || 'black'}
-              />
+              <LucidIcon name="X" color={ALERT_COLORS[type]?.text || 'black'} />
             }
             onClick={onClose}
             variant="text"

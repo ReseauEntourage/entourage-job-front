@@ -20,7 +20,6 @@ interface ProfileDocumentsProps {
   linkedinUrl?: string | null;
   hasExternalCv?: boolean | null;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileDocuments = ({
@@ -28,7 +27,6 @@ export const ProfileDocuments = ({
   userId,
   linkedinUrl,
   hasExternalCv,
-  smallCard = false,
 }: ProfileDocumentsProps) => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
@@ -78,7 +76,6 @@ export const ProfileDocuments = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       ctaCallback={isEditable ? openEditModal : undefined}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>

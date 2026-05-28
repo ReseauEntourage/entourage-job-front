@@ -18,7 +18,6 @@ interface CompanyLinksProps {
   hiringUrl?: string | null;
   linkedInUrl?: string | null;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const CompanyLinks = ({
@@ -27,7 +26,6 @@ export const CompanyLinks = ({
   hiringUrl,
   linkedInUrl,
   isEditable = false,
-  smallCard = false,
 }: CompanyLinksProps) => {
   const isCompleted = !!linkedInUrl || !!url || !!hiringUrl;
 
@@ -83,7 +81,6 @@ export const CompanyLinks = ({
       ctaTitle={ctaTitle}
       ctaCallback={openEditCompanyLinks}
       fallback={fallback}
-      smallCard={smallCard}
     >
       <StyledDocumentList>
         {linkedInUrl && (

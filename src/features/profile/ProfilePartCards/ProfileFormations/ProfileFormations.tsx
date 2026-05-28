@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
-import { Text } from '@/src/components/ui';
+import { LucidIcon, Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { useEditableFormationsById } from '@/src/features/profile/hooks/useEditableFormations';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -19,7 +18,6 @@ interface ProfileFormationsProps {
   userRole: UserRoles;
   formations?: Formation[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileFormations = ({
@@ -28,7 +26,6 @@ export const ProfileFormations = ({
   userRole,
   formations = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileFormationsProps) => {
   const user = useAuthenticatedUser();
   const currentUserId = useSelector(selectCurrentUserId);
@@ -42,11 +39,18 @@ export const ProfileFormations = ({
     const content = isEditable ? (
       <Text>Vous n’avez pas encore renseigné vos formations</Text>
     ) : (
-      <Text>{`${userFirstName} n'a pas encore renseigné ses formations`}</Text>
+      <>
+        <Text weight="bold">{`${userFirstName} n'a pas encore renseigné ses formations`}</Text>
+        <Text>
+          Certains candidats n&apos;ont pas les codes ou ne savent pas par où
+          commencer pour remplir cette section. Votre coup de pouce peut tout
+          débloquer.
+        </Text>
+      </>
     );
     return {
       content,
-      icon: <SvgIcon name="IlluMalette" />,
+      icon: <LucidIcon name="MessageSquare" />,
     };
   }, [isEditable, userFirstName]);
 
@@ -75,7 +79,7 @@ export const ProfileFormations = ({
 
   const ctaTitle = useMemo(() => {
     if (!isOwnProfile && !isCompleted && userRole === UserRoles.CANDIDATE) {
-      return `Accompagner ${userFirstName} dans la valorisation de ses formations`;
+      return `Échanger avec ${userFirstName}`;
     }
     if (isOwnProfile && isEditable) {
       return 'Ajouter';
@@ -89,7 +93,6 @@ export const ProfileFormations = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       // iaGenerated
-      smallCard={smallCard}
       fallback={fallback}
       ctaTitle={ctaTitle}
       ctaCallback={ctaCallback}

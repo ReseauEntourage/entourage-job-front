@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { SvgIcon } from '@/assets/icons/icons';
 import { Alert } from '@/src/components/ui/Alert/Alert';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { StarRating } from '@/src/components/ui/StarRating/StarRating';
 import { ConversationParticipant } from 'src/api/types';
 import { UserRoles } from 'src/constants/users';
@@ -58,7 +58,7 @@ export const MessagingFeedback = ({
   return (
     <Alert
       visible={visible}
-      variant={AlertVariant.DarkBlue}
+      type={AlertType.Info2}
       rounded={false}
       icon={
         isDesktop ? (

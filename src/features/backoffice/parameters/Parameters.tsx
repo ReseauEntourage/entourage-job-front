@@ -118,7 +118,6 @@ export const Parameters = () => {
             >
               <ParamProfessionalInformations
                 sectorOccupations={userProfileComplete.sectorOccupations ?? []}
-                smallCard
                 isEditable
               />
               <ProfileDescription
@@ -160,44 +159,32 @@ export const Parameters = () => {
                 linkedinUrl={userProfileComplete.linkedinUrl}
                 hasExternalCv={userProfileComplete.hasExternalCv}
                 isEditable
-                smallCard
               />
-              <ProfileLinkedInConnect smallCard />
+              <ProfileLinkedInConnect />
               <ProfileLanguages
                 userProfileLanguages={userProfileComplete.userProfileLanguages}
                 isEditable
-                smallCard
               />
               <ProfileInterests
                 interests={userProfileComplete.interests}
                 isEditable
-                smallCard
               />
               {user.role === UserRoles.CANDIDATE && (
                 <ProfileContracts
                   contracts={userProfileComplete.contracts}
                   isEditable
-                  smallCard
                 />
               )}
               <UserProfileAvailabilityCard />
-              <ProfileContactPreferences
-                userRole={user.role}
-                isEditable
-                smallCard
-              />
+              <ProfileContactPreferences userRole={user.role} isEditable />
               <ProfileNudges
                 userRole={user.role}
                 nudges={userProfileComplete.nudges || []}
                 isEditable
-                smallCard
               />
-              <ProfileNotificationsPreferences
-                userProfile={userProfile}
-                smallCard
-              />
-              <ProfileChangePassword smallCard />
-              <ProfileDeleteAccount smallCard />
+              <ProfileNotificationsPreferences userProfile={userProfile} />
+              <ProfileChangePassword />
+              <ProfileDeleteAccount />
             </StyledParametersRightColumn>
           </StyledBackofficeGrid>
         </StyledParametersSectionContent>

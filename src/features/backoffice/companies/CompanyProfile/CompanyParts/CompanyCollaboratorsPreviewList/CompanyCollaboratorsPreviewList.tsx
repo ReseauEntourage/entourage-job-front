@@ -29,13 +29,11 @@ import {
 interface CompanyCollaboratorsPreviewListProps {
   companyId: string;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const CompanyCollaboratorsPreviewList = ({
   companyId,
   isEditable = false,
-  smallCard = false,
 }: CompanyCollaboratorsPreviewListProps) => {
   const router = useRouter();
   const isMobile = useIsMobile();
@@ -128,7 +126,6 @@ export const CompanyCollaboratorsPreviewList = ({
       ctaCallback={ctaCallback}
       ctaTitle={ctaTitle}
       fallback={fallback}
-      smallCard={smallCard}
     >
       <StyledSwiperContainer>
         <Swiper

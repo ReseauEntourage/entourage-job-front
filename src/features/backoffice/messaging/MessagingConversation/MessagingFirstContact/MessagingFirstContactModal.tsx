@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert/Alert';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { UserRoles } from '@/src/constants/users';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { StyledMessagingFirstContactModalContent } from './MessagingFirstContactModal.styles';
@@ -16,7 +16,7 @@ interface SectionProps {
 }
 
 const Section = ({ title, children }: SectionProps) => (
-  <Alert variant={AlertVariant.LightBlue} icon={null}>
+  <Alert type={AlertType.Info} icon={null}>
     <Text weight="semibold" size="large">
       {title}
     </Text>

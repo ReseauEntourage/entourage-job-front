@@ -12,13 +12,11 @@ import { ProfileInterestsModalEdit } from './ProfileInterestsModalEdit';
 interface ProfileInterestsProps {
   interests?: Interest[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileInterests = ({
   interests = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileInterestsProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
@@ -51,7 +49,6 @@ export const ProfileInterests = ({
       ctaCallback={isEditable ? openEditModal : undefined}
       // iaGenerated
       isEditable={isEditable}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>

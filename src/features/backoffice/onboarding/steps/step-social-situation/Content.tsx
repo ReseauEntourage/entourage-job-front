@@ -1,5 +1,5 @@
 import { Alert, Card } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { StyledCardList } from './Content.styles';
 import {
   personnalSocialSituationFormFields,
@@ -11,7 +11,7 @@ import { SocialSituationSchemaField } from './SocialSituationSchemaField';
 export const Content = () => {
   return (
     <StyledCardList>
-      <Alert variant={AlertVariant.Info}>
+      <Alert type={AlertType.Info}>
         Ces informations ne sont pas obligatoires, et ne seront pas
         communiquées.
       </Alert>

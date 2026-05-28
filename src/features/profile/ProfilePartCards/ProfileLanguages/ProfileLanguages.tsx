@@ -13,13 +13,11 @@ import { ProfileLanguagesModalEdit } from './ProfileLanguagesModalEdit';
 interface ProfileLanguagesProps {
   userProfileLanguages?: UserProfileLanguage[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileLanguages = ({
   userProfileLanguages = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileLanguagesProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
@@ -51,7 +49,6 @@ export const ProfileLanguages = ({
       ctaCallback={isEditable ? openEditModal : undefined}
       //      iaGenerated
       isEditable={isEditable}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>Vous n’avez pas encore renseigné vos langues parlées</Text>

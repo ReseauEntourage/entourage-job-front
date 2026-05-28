@@ -84,7 +84,6 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
   return (
     <ProfilePartCard
       title="Mobiliser mon réseau"
-      smallCard={false}
       isCompleted={false}
       isEmpty={false}
     >

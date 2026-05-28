@@ -9,13 +9,7 @@ import {
   StyledIntroduction,
 } from './ProfileDeleteAccount.styles';
 
-interface ProfileDeleteAccountProps {
-  smallCard?: boolean;
-}
-
-export const ProfileDeleteAccount = ({
-  smallCard,
-}: ProfileDeleteAccountProps) => {
+export const ProfileDeleteAccount = () => {
   const requestDeleteAccount = () => {
     openModal(<DeleteAccountModal />);
   };
@@ -23,7 +17,6 @@ export const ProfileDeleteAccount = ({
   return (
     <ProfilePartCard
       title="Supprimer mon compte"
-      smallCard={smallCard}
       isCompleted
       isDefaultOpen={false}
     >

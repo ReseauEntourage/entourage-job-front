@@ -1,5 +1,5 @@
 import { Alert, Tag, TagSize, TagVariant, Text } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { H5 } from '@/src/components/ui/Headings';
 import { PrettyModal } from '@/src/features/modals/PrettyModal/PrettyModal';
 import { StyledOnboardingModalAlertTitleContainer } from '../onboarding.styles';
@@ -31,7 +31,7 @@ export const ConfirmModalStep = ({
       onSubmit={onSubmit}
     >
       {nextOnboardingStep && (
-        <Alert variant={AlertVariant.Info} icon={null}>
+        <Alert type={AlertType.Info} icon={null}>
           <StyledOnboardingModalAlertTitleContainer>
             <H5
               title={`Prochaine étape : ${nextOnboardingStep?.smallTitle}`}

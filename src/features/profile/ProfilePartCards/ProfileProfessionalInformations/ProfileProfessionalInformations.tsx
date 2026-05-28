@@ -16,7 +16,6 @@ interface ProfileProfessionalInformationsProps {
   role: UserRoles;
   currentJob?: string;
   company: Company | null;
-  smallCard?: boolean;
 }
 
 export const ProfileProfessionalInformations = ({
@@ -27,13 +26,11 @@ export const ProfileProfessionalInformations = ({
   role,
   currentJob,
   company,
-  smallCard = false,
 }: ProfileProfessionalInformationsProps) => {
   const isEmpty = !sectorOccupations.length && !description && !skills.length;
   return (
     <ProfilePartCard
       title="Informations professionnelles"
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>

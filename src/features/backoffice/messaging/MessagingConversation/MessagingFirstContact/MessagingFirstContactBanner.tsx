@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Text, Alert } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
 import { StyledMessagingFirstContactBannerContent } from './MessagingFirstContactBanner.styles';
@@ -18,7 +18,7 @@ export const MessagingFirstContactBanner = ({
   return (
     <Alert
       visible={visible}
-      variant={AlertVariant.Info}
+      type={AlertType.Info}
       rounded={false}
       onClose={() => setVisible(false)}
       closable

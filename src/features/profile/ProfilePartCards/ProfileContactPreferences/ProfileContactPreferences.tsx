@@ -13,7 +13,6 @@ import {
 interface ProfileContactPreferencesProps {
   userRole: UserRoles;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 const illuProps = {
@@ -24,7 +23,6 @@ const illuProps = {
 export const ProfileContactPreferences = ({
   userRole,
   isEditable = false,
-  smallCard = false,
 }: ProfileContactPreferencesProps) => {
   const user = useAuthenticatedUser();
   const profileComplete = useCurrentUserProfileComplete();
@@ -99,7 +97,6 @@ export const ProfileContactPreferences = ({
       isEditable={isEditable}
       isCompleted={isCompleted}
       isEmpty={false}
-      smallCard={smallCard}
     >
       <CardToggleList
         items={items}

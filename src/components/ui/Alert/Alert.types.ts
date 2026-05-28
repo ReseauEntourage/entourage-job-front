@@ -1,19 +1,22 @@
 import React from 'react';
 
-export enum AlertVariant {
+export enum AlertType {
   Info = 'info',
-  LightGray = 'lightGray',
-  DarkBlue = 'darkBlue',
-  LightBlue = 'lightBlue',
-  White = 'white',
+  Info2 = 'info2',
+  Neutral = 'neutral',
+  NeutralWhite = 'neutralWhite',
   Error = 'error',
   Success = 'success',
   Warning = 'warning',
 }
 
+export type AlertVariant = 'outlined' | 'filled';
+
 export interface AlertProps {
   children: React.ReactNode;
+  title?: string;
   variant?: AlertVariant;
+  type?: AlertType;
   closable?: boolean;
   visible?: boolean;
   onClose?: () => void;
@@ -21,4 +24,5 @@ export interface AlertProps {
   rounded?: boolean;
   clickable?: boolean;
   onClick?: () => void;
+  iconInContainer?: boolean;
 }

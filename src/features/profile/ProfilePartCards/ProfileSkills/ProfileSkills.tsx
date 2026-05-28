@@ -12,13 +12,11 @@ import { ProfileSkillsModalEdit } from './ProfileSkillsModalEdit';
 interface ProfileSkillsProps {
   skills?: Skill[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileSkills = ({
   skills = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileSkillsProps) => {
   const isCompleted = skills.length > 0;
   const user = useAuthenticatedUser();
@@ -48,7 +46,6 @@ export const ProfileSkills = ({
       ctaCallback={openEditModal}
       // iaGenerated
       isEditable={isEditable}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>Vous n&apos;avez pas encore renseigné vos compétences</Text>

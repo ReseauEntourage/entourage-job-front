@@ -1,5 +1,3 @@
-import { AlertVariant } from '../components/ui/Alert/Alert.types';
-
 export const BREAKPOINTS = {
   desktop: 960,
 };
@@ -24,8 +22,8 @@ export const COLORS = {
   gray: '#D9D9D9',
   mediumGray: '#A0A0A0',
   darkGray: '#6D6C6C',
+  extraDarkGray: '#222222',
   black: '#363636',
-  navBlack: '#222222',
 
   // Brown
   lightBrownGray: '#918080',
@@ -97,49 +95,6 @@ export type Color = keyof typeof COLORS;
 export const STATUS_COLORS = {
   success: COLORS.green,
   error: COLORS.lightRed,
-};
-
-export const ALERT_COLORS = {
-  [AlertVariant.Info]: {
-    background: COLORS.hoverBlue,
-    text: COLORS.black,
-    border: COLORS.primaryBlue,
-  },
-  [AlertVariant.LightGray]: {
-    background: COLORS.lightGray,
-    text: COLORS.black,
-    border: COLORS.gray,
-  },
-  [AlertVariant.DarkBlue]: {
-    background: COLORS.darkBlue,
-    text: COLORS.white,
-    border: COLORS.blue,
-  },
-  [AlertVariant.LightBlue]: {
-    background: COLORS.hoverBlue,
-    text: COLORS.black,
-    border: COLORS.primaryBlue,
-  },
-  [AlertVariant.Error]: {
-    background: COLORS.extraLightRed,
-    text: COLORS.red,
-    border: COLORS.red,
-  },
-  [AlertVariant.White]: {
-    background: COLORS.white,
-    text: COLORS.black,
-    border: COLORS.gray,
-  },
-  [AlertVariant.Success]: {
-    background: COLORS.extraLightGreen,
-    text: COLORS.black,
-    border: COLORS.green,
-  },
-  [AlertVariant.Warning]: {
-    background: COLORS.extraLightAmber,
-    text: COLORS.amber,
-    border: COLORS.orangeLocal,
-  },
 };
 
 export const FONT_WEIGHTS = {

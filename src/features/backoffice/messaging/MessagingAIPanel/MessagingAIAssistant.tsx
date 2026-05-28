@@ -11,7 +11,7 @@ import { Api } from 'src/api';
 import { AiAssistantMessage } from 'src/api/types';
 import { Text } from 'src/components/ui';
 import { Alert } from 'src/components/ui/Alert/Alert';
-import { AlertVariant } from 'src/components/ui/Alert/Alert.types';
+import { AlertType } from 'src/components/ui/Alert/Alert.types';
 import { Button } from 'src/components/ui/Button/Button';
 import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
 import { TextArea } from 'src/components/ui/Inputs/TextArea';
@@ -302,7 +302,7 @@ export const MessagingAIAssistant = () => {
 
       {isRateLimited && (
         <Alert
-          variant={AlertVariant.Error}
+          type={AlertType.Error}
           icon={<LucidIcon name="Clock" size={14} />}
           rounded
         >
@@ -315,7 +315,7 @@ export const MessagingAIAssistant = () => {
         rateLimitRemaining !== null &&
         rateLimitRemaining <= 2 && (
           <Alert
-            variant={AlertVariant.Warning}
+            type={AlertType.Warning}
             icon={<LucidIcon name="TriangleAlert" size={14} />}
             rounded
           >

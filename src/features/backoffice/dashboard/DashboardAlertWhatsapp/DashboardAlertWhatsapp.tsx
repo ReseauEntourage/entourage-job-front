@@ -23,6 +23,7 @@ export const DashboardAlertWhatsapp = () => {
       onClose={() => {
         setAlertVisible(false);
       }}
+      variant="outlined"
     >
       <StyledAlertContent>
         Pour recevoir des actualités et échanger avec les{' '}
