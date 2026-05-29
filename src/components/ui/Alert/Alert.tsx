@@ -86,7 +86,7 @@ export const Alert = ({
         {title && (
           <Text
             weight="semibold"
-            color={COLORS[ALERT_COLORS[type]?.title || 'black']}
+            color={ALERT_COLORS[type]?.title || 'black'}
           >
             {title}
           </Text>
