@@ -55,12 +55,12 @@ export const Alert = ({
         const nextProps =
           iconElement.type === LucidIcon
             ? {
-                size: iconElement.props.size ?? 30,
+                size: iconElement.props.size ?? 15,
                 color: iconElement.props.color ?? COLORS.extraDarkGray,
               }
             : {
-                width: iconElement.props.width ?? 30,
-                height: iconElement.props.height ?? 30,
+                width: iconElement.props.width ?? 15,
+                height: iconElement.props.height ?? 15,
                 color: iconElement.props.color ?? COLORS.extraDarkGray,
               };
 

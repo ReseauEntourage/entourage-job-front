@@ -1,10 +1,7 @@
 import React from 'react';
 import { Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
-import {
-  StyledCardEmptyContent,
-  StyledContentContainer,
-} from './CardEmptyContent.styles';
+import { StyledContentContainer } from './CardEmptyContent.styles';
 
 interface CardEmptyContentProps {
   title?: string;
@@ -25,10 +22,7 @@ export const CardEmptyContent = ({
       title={title}
       iconInContainer
     >
-      <StyledCardEmptyContent>
-        {/* Display icon with correct props */}
-        <StyledContentContainer>{content}</StyledContentContainer>
-      </StyledCardEmptyContent>
+      <StyledContentContainer>{content}</StyledContentContainer>
     </Alert>
   );
 };
