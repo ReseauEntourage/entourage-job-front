@@ -1,6 +1,6 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Card } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CardEmptyContent } from '../CardEmptyContent/CardEmptyContent';
 import { CardTitle } from '../CardTitle/CardTitle';
 import { CardContent, StyledEditButtonContainer } from './Card.styles';

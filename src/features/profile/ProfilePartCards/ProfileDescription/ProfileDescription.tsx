@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { ModalEditProfileDescription } from '@/src/features/headers/HeaderProfile/ProfileIntroduction/ModalEditProfileIntroduction';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';

@@ -3,12 +3,8 @@ import React from 'react';
 import { Alert } from './Alert';
 import { AlertProps, AlertType } from './Alert.types';
 
-const AlertWithContent = ({ variant, closable }: AlertProps) => {
-  return (
-    <Alert variant={variant} closable={closable}>
-      This is an information
-    </Alert>
-  );
+const AlertWithContent = ({ ...props }: AlertProps) => {
+  return <Alert {...props}>This is an information</Alert>;
 };
 
 const meta = {
@@ -36,8 +32,10 @@ type Story = StoryObj<typeof Alert>;
 
 export const Info: Story = {
   args: {
-    variant: 'filled',
+    variant: 'outlined',
     type: AlertType.Info,
     closable: true,
+    icon: undefined,
+    iconInContainer: true,
   },
 };

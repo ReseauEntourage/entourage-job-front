@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { SimpleIconCTACardsGrid } from '@/src/features/partials/utils/SimpleIconCTACardsGrid';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 
 interface NavbarLogoProps {
   href: string;

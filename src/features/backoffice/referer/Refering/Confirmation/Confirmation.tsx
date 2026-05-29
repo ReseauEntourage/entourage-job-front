@@ -1,7 +1,7 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Card } from '@/src/components/ui';
 import { H6 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
 import {
   StyledReferingButtonContainer,

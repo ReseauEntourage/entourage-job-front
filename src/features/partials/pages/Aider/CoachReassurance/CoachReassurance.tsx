@@ -1,5 +1,5 @@
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text, Button } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import {

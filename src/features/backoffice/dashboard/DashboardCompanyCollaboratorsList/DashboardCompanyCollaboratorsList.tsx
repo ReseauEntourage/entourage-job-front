@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Api } from '@/src/api';
 import { CompanyWithUsers } from '@/src/api/types';
 import { Button, Card, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CollaboratorSmallCard } from '@/src/features/companies/CollaboratorSmallCard/CollaboratorSmallCard';
 import { CompanyInviteCollaboratorsModal } from '@/src/features/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
 import { openModal } from '@/src/features/modals/Modal';

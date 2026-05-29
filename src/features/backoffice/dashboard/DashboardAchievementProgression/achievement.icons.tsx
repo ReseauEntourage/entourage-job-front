@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcons } from '@/assets/icons/icons';
+import { SvgIcons } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { AchievementType } from 'src/api/types';
 import { IconName, LucidIcon, Text } from 'src/components/ui';
 import { StyledTooltipContent } from './DashboardAchievementProgression.styles';

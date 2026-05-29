@@ -1,6 +1,6 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { SimpleImageText } from '../../utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';

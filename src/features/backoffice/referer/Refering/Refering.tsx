@@ -1,7 +1,7 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Card, Text } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { FormWithValidation } from 'src/features/forms/FormWithValidation';
 import {
   StyledReferingContainer,

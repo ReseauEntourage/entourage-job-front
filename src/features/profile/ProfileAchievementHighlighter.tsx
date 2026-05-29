@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { UserAchievement } from '@/src/api/types';
 import { Tag, TagSize, TagVariant, Tooltip, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Genders } from '@/src/constants/genders';
 import { useIsMobile } from '@/src/hooks/utils';
 

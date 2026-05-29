@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';

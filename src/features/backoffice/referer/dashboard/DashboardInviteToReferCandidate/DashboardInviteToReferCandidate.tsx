@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
 import { Card } from '@/src/components/ui/Cards/Card';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import {
   StyledContainer,
   StyledDescriptionContainer,

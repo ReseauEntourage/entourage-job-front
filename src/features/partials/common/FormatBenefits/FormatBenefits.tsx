@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { RowIconTitleText } from '../../utils/RowIconTitleText';
 
 type DisplayAs = 'Coach' | 'Candidat' | 'Referer';

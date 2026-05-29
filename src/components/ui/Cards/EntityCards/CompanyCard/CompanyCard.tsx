@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { BusinessSector, User, UserProfile } from '@/src/api/types';
 import { Button, Image, ImgUserProfile, Tag, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { FONT_WEIGHTS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { gaEvent } from '@/src/lib/gtag';

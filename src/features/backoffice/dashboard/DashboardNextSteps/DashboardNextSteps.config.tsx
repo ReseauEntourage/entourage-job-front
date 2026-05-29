@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyInviteCollaboratorsModal } from '@/src/features/modals/CompanyInviteCollaboratorsModal/CompanyInviteCollaboratorsModal';
 import { openModal } from '@/src/features/modals/Modal';
 import { CompanyRecruitementAlertModal } from '../CompanyRecruitementAlertCard/CompanyRecruitementAlertModal';

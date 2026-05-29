@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { ACHIEVEMENT_TOOLTIP } from '../../backoffice/dashboard/DashboardAchievementProgression/achievement.icons';
