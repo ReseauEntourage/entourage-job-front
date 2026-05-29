@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
-import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { ButtonIcon } from '../Button';
 import { LucidIcon } from '../Icons/LucidIcon';
@@ -86,7 +85,7 @@ export const Alert = ({
         {title && (
           <Text
             weight="semibold"
-            color={ALERT_COLORS[type]?.title || 'black'}
+            color={COLORS[ALERT_COLORS[type]?.title] || 'black'}
           >
             {title}
           </Text>
@@ -102,7 +101,10 @@ export const Alert = ({
         >
           <ButtonIcon
             icon={
-              <LucidIcon name="X" color={ALERT_COLORS[type]?.text || 'black'} />
+              <LucidIcon
+                name="X"
+                color={COLORS[ALERT_COLORS[type]?.text] || 'black'}
+              />
             }
             onClick={onClose}
             variant="text"
