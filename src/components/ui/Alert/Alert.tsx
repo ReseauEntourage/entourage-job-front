@@ -45,18 +45,28 @@ export const Alert = ({
   };
 
   const resizedIcon = React.isValidElement(icon)
-    ? React.cloneElement(
-        icon as React.ReactElement<{
+    ? (() => {
+        const iconElement = icon as React.ReactElement<{
           width?: number;
           height?: number;
+          size?: number;
           color?: string;
-        }>,
-        {
-          width: 30,
-          height: 30,
-          color: COLORS.extraDarkGray,
-        }
-      )
+        }>;
+
+        const nextProps =
+          iconElement.type === LucidIcon
+            ? {
+                size: iconElement.props.size ?? 30,
+                color: iconElement.props.color ?? COLORS.extraDarkGray,
+              }
+            : {
+                width: iconElement.props.width ?? 30,
+                height: iconElement.props.height ?? 30,
+                color: iconElement.props.color ?? COLORS.extraDarkGray,
+              };
+
+        return React.cloneElement(iconElement, nextProps);
+      })()
     : icon;
 
   return (
@@ -76,7 +86,7 @@ export const Alert = ({
         {title && (
           <Text
             weight="semibold"
-            color={COLORS[ALERT_COLORS[type]?.title || 'black']}
+            color={ALERT_COLORS[type]?.title || 'black'}
           >
             {title}
           </Text>
