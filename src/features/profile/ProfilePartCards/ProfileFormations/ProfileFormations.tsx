@@ -50,7 +50,7 @@ export const ProfileFormations = ({
     );
     return {
       content,
-      icon: <LucidIcon name="MessageSquare" />,
+      icon: !isEditable ? <LucidIcon name="MessageSquare" /> : null,
     };
   }, [isEditable, userFirstName]);
 

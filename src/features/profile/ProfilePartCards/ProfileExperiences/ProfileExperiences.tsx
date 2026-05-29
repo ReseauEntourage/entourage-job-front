@@ -64,9 +64,11 @@ export const ProfileExperiences = ({
       </Text>
     );
     return {
-      title: `${userFirstName} n'a pas encore renseigné ses expériences`,
+      title: !isEditable
+        ? `${userFirstName} n'a pas encore renseigné ses expériences`
+        : undefined,
       content,
-      icon: <LucidIcon name="MessageSquare" />,
+      icon: !isEditable ? <LucidIcon name="MessageSquare" /> : null,
     };
   }, [editableFallback, isEditable, userFirstName]);
 

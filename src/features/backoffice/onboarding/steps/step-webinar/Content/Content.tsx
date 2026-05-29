@@ -138,7 +138,7 @@ export const Content = ({
         estimatedOptionLength={6}
       />
       {noDateSelected && (
-        <Alert type={AlertType.Info}>
+        <Alert type={AlertType.Info} variant="outlined">
           Pas de souci&nbsp;! Vous retrouverez les prochaines sessions
           disponibles directement dans votre espace. Nous vous enverrons un
           rappel par e-mail dès qu&apos;une nouvelle date sera ouverte.

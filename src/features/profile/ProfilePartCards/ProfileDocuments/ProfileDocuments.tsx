@@ -83,7 +83,7 @@ export const ProfileDocuments = ({
             autres documents
           </Text>
         ),
-        icon: <SvgIcon name="IlluCandidatFolder" width={38} height={38} />,
+        icon: <SvgIcon name="IlluCandidatFolder" />,
       }}
     >
       <StyledDocumentList>

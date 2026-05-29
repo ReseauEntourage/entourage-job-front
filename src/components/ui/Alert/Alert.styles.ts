@@ -40,8 +40,8 @@ export const ALERT_COLORS = {
     text: 'black',
   },
   [AlertType.Warning]: {
-    mainColor: 'extraLightAmber',
-    lightColor: 'orangeLocal',
+    mainColor: 'orangeLocal',
+    lightColor: 'extraLightAmber',
     title: 'black',
     text: 'amber',
   },

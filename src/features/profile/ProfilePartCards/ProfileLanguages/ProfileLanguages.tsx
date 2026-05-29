@@ -47,13 +47,12 @@ export const ProfileLanguages = ({
       title="Langues parlées"
       isCompleted={isCompleted}
       ctaCallback={isEditable ? openEditModal : undefined}
-      //      iaGenerated
       isEditable={isEditable}
       fallback={{
         content: (
           <Text>Vous n’avez pas encore renseigné vos langues parlées</Text>
         ),
-        icon: <SvgIcon name="IlluBulleQuestionCheck" width={80} height={80} />,
+        icon: <SvgIcon name="IlluBulleQuestionCheck" />,
       }}
     >
       <CardTagList

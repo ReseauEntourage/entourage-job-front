@@ -12,7 +12,7 @@ export const ElearningUnitModalQuizSuccess = ({
   correctAnswer,
 }: ElearningUnitModalQuizSuccessProps) => {
   return (
-    <Alert type={AlertType.Info} icon={null}>
+    <Alert type={AlertType.Info} icon={null} variant="outlined">
       <StyledElearningUnitModalQuizSuccessContainer>
         <Text center>
           <LucidIcon name="BadgeCheck" color={COLORS.darkBlue} size={72} />

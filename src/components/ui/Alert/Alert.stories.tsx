@@ -18,17 +18,37 @@ const meta = {
     type: {
       options: [
         AlertType.Info,
+        AlertType.Info2,
+        AlertType.Neutral,
+        AlertType.NeutralWhite,
         AlertType.Success,
         AlertType.Error,
         AlertType.Warning,
       ],
       control: { type: 'radio' },
     },
+    rounded: { control: { type: 'boolean' } },
+    closable: { control: { type: 'boolean' } },
+    clickable: { control: { type: 'boolean' } },
+    iconInContainer: { control: { type: 'boolean' } },
+    title: { control: { type: 'text' } },
   },
 } satisfies Meta<typeof Alert>;
 
 export default meta;
 type Story = StoryObj<typeof Alert>;
+
+export const Playground: Story = {
+  args: {
+    variant: 'filled',
+    type: AlertType.Info,
+    closable: false,
+    rounded: true,
+    clickable: false,
+    iconInContainer: false,
+    title: 'Alert title',
+  },
+};
 
 export const Info: Story = {
   args: {

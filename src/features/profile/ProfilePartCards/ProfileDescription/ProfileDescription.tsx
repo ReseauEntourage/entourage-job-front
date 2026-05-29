@@ -32,7 +32,7 @@ export const ProfileDescription = ({
       //     iaGenerated
       fallback={{
         content: <Text>Vous n’avez pas encore rédigé de présentation</Text>,
-        icon: <SvgIcon name="IlluCV" width={90} height={90} />,
+        icon: <SvgIcon name="IlluCV" />,
       }}
     >
       {description && (

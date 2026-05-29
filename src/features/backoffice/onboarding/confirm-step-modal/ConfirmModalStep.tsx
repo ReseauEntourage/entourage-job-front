@@ -31,7 +31,7 @@ export const ConfirmModalStep = ({
       onSubmit={onSubmit}
     >
       {nextOnboardingStep && (
-        <Alert type={AlertType.Info} icon={null}>
+        <Alert type={AlertType.Info} icon={null} variant="outlined">
           <StyledOnboardingModalAlertTitleContainer>
             <H5
               title={`Prochaine étape : ${nextOnboardingStep?.smallTitle}`}

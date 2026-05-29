@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
 import { ButtonIcon } from '../Button';
@@ -55,18 +55,18 @@ export const Alert = ({
         const nextProps =
           iconElement.type === LucidIcon
             ? {
-                size: iconElement.props.size ?? 15,
+                size: iconElement.props.size ?? 25,
                 color: iconElement.props.color ?? COLORS.extraDarkGray,
               }
             : {
-                width: iconElement.props.width ?? 15,
-                height: iconElement.props.height ?? 15,
+                width: iconElement.props.width ?? 25,
+                height: iconElement.props.height ?? 25,
                 color: iconElement.props.color ?? COLORS.extraDarkGray,
               };
 
         return React.cloneElement(iconElement, nextProps);
       })()
-    : icon;
+    : null;
 
   return (
     <StyledAlert
@@ -77,9 +77,11 @@ export const Alert = ({
       $clickable={clickable && !!onClick}
       onClick={handleClick}
     >
-      <StyledIconContainer $iconInContainer={iconInContainer}>
-        {resizedIcon}
-      </StyledIconContainer>
+      {resizedIcon && (
+        <StyledIconContainer $iconInContainer={iconInContainer}>
+          {resizedIcon}
+        </StyledIconContainer>
+      )}
 
       <StyledAlertContainer>
         {title && (

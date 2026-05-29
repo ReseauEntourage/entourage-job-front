@@ -17,7 +17,7 @@ export const DashboardAlertWhatsapp = () => {
 
   return (
     <Alert
-      icon={<SvgIcon name="IlluBulleQuestionCheck" width={35} height={30} />}
+      icon={<SvgIcon name="IlluBulleQuestionCheck" />}
       closable
       visible={alertVisible}
       onClose={() => {
