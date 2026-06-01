@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Text } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
 import { ButtonIcon } from '../Button';
