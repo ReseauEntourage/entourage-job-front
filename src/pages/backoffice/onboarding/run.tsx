@@ -1,7 +1,7 @@
 import React from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section, Button, Alert } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { OnboardingLoading } from '@/src/features/backoffice/onboarding/onboarding-loading/OnboardingLoading';
 import { StyledOnboardingActions } from '@/src/features/backoffice/onboarding/onboarding.styles';
@@ -45,7 +45,7 @@ const OnboardingRun = () => {
               )}
               {formErrorMessage && (
                 <>
-                  <Alert variant={AlertVariant.Error}>{formErrorMessage}</Alert>
+                  <Alert type={AlertType.Error}>{formErrorMessage}</Alert>
                   <br />
                 </>
               )}

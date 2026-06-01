@@ -1,9 +1,9 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text, Section } from '@/src/components/ui';
 import { Accordion } from '@/src/components/ui/Accordion/Accordion';
 import { AccordionGroup } from '@/src/components/ui/Accordion/AccordionGroup';
 import { H3, H5 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyGoal } from '@/src/constants/company';
 import {
   StyledEntrepriseFAQContainer,

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { H6 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { UserRoles } from '@/src/constants/users';
 import { ModalEditProfessionalInformation } from '@/src/features/backoffice/parameters/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
@@ -22,13 +22,11 @@ import { formatCareerPathSentence } from 'src/utils';
 interface ParamProfessionalInformationsProps {
   isEditable?: boolean;
   sectorOccupations: UserProfileSectorOccupation[];
-  smallCard?: boolean;
 }
 
 export const ParamProfessionalInformations = ({
   sectorOccupations,
   isEditable = false,
-  smallCard = false,
 }: ParamProfessionalInformationsProps) => {
   const user = useAuthenticatedUser();
   const { role } = user;
@@ -88,7 +86,6 @@ export const ParamProfessionalInformations = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       ctaCallback={editModal}
-      smallCard={smallCard}
       fallback={{
         content: (
           <>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { StyledStarRating } from './StarRating.styles';
 
 interface StarRatingProps {

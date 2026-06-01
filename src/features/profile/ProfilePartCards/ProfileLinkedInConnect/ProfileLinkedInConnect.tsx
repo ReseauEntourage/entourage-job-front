@@ -8,13 +8,7 @@ import { ProfilePartCard } from '../Card/Card/Card';
 import { Api } from 'src/api';
 import { notificationsActions } from 'src/use-cases/notifications';
 
-interface ProfileLinkedInConnectProps {
-  smallCard?: boolean;
-}
-
-export const ProfileLinkedInConnect = ({
-  smallCard,
-}: ProfileLinkedInConnectProps) => {
+export const ProfileLinkedInConnect = () => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +60,6 @@ export const ProfileLinkedInConnect = ({
   return (
     <ProfilePartCard
       title="Liez votre compte LinkedIn"
-      smallCard={smallCard}
       isCompleted={hasLinkedinLinked}
       isEmpty={false}
     >

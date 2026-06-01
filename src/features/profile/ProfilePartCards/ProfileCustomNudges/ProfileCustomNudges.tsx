@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { UserProfileNudge } from '@/src/api/types';
 import { Button, Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
@@ -23,7 +22,6 @@ interface KeySkillsProps {
   firstName: string;
   role: UserRoles;
   customNudges: UserProfileNudge[];
-  smallCard?: boolean;
 }
 
 export const ProfileCustomNudges = ({
@@ -33,7 +31,6 @@ export const ProfileCustomNudges = ({
   customNudges,
   ownProfile = false,
   isEditable = false,
-  smallCard = false,
 }: KeySkillsProps) => {
   const router = useRouter();
   const user = useAuthenticatedUser();
@@ -97,7 +94,6 @@ export const ProfileCustomNudges = ({
       title={title}
       isCompleted={isCompleted}
       isEditable={isEditable}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>
@@ -106,7 +102,7 @@ export const ProfileCustomNudges = ({
               : 'Détaillez les coups de pouce que vous pouvez offrir aux candidats.'}
           </Text>
         ),
-        icon: <SvgIcon name="IlluBulleQuestionCheck" width={80} height={80} />,
+        icon: <LucidIcon name="MessageSquare" />,
       }}
       ctaCallback={isEditable ? () => openEditModal() : undefined}
       ctaTitle="Ajouter"

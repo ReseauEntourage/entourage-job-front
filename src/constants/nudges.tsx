@@ -1,7 +1,7 @@
 import React, { type JSX } from 'react';
 
-import { SvgIcon } from '@/assets/icons/icons';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import {
   SelectListType,
   SelectOptionTitleIconDescriptionLabelType,

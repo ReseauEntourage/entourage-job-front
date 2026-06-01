@@ -1,13 +1,17 @@
 import React from 'react';
 import { Alert, Text } from '@/src/components/ui';
-import { AlertVariant } from './Alert.types';
+import { AlertType } from './Alert.types';
 import { StyledProgramEligibilityAlertContainer } from './ProgramEligibilityAlert.styles';
 
 export const ProgramEligibilityAlert = () => {
   return (
     <StyledProgramEligibilityAlertContainer>
-      <Alert variant={AlertVariant.LightBlue}>
-        <Text weight="bold">Rappel des critères</Text>
+      <Alert
+        type={AlertType.Info}
+        variant="outlined"
+        icon={null}
+        title="Rappel des critères"
+      >
         <br />
         <Text color="black">
           Entourage Pro s&apos;adresse aux personnes qui rencontrent des

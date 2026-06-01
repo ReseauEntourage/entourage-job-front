@@ -1,5 +1,5 @@
 import { Text, Alert, LucidIcon } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { COLORS } from '@/src/constants/styles';
 import { ElearningAnswer } from '../elearning.types';
 import { StyledElearningUnitModalQuizSuccessContainer } from './ElearningUnitModal.styles';
@@ -12,7 +12,7 @@ export const ElearningUnitModalQuizSuccess = ({
   correctAnswer,
 }: ElearningUnitModalQuizSuccessProps) => {
   return (
-    <Alert variant={AlertVariant.Info} icon={null}>
+    <Alert type={AlertType.Info} icon={null} variant="outlined">
       <StyledElearningUnitModalQuizSuccessContainer>
         <Text center>
           <LucidIcon name="BadgeCheck" color={COLORS.darkBlue} size={72} />
@@ -20,7 +20,7 @@ export const ElearningUnitModalQuizSuccess = ({
         <Text weight="semibold" size="large" center>
           Bonne réponse !
         </Text>
-        <Alert variant={AlertVariant.White} icon={null}>
+        <Alert type={AlertType.NeutralWhite} icon={null}>
           {correctAnswer.explanation && (
             <>
               <Text weight="semibold">Explication :</Text>

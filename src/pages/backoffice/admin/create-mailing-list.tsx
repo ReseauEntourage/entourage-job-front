@@ -2,7 +2,7 @@ import React from 'react';
 import { Api } from '@/src/api';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section, Alert, Text } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { StyledHeaderContainer } from '@/src/features/backoffice/alertCandidates/AlertCandidates.styles';
 import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { formAdminCreateMailingList } from '@/src/features/forms/schemas/fromAdminCreateMailingList';
@@ -50,11 +50,9 @@ const CreateMailingListPage = () => {
         </StyledHeaderContainer>
       </Section>
       <Section className="custom-page">
-        {errorMessage && (
-          <Alert variant={AlertVariant.Error}>{errorMessage}</Alert>
-        )}
+        {errorMessage && <Alert type={AlertType.Error}>{errorMessage}</Alert>}
         {succeeded && (
-          <Alert variant={AlertVariant.Success}>
+          <Alert type={AlertType.Success}>
             La mailing list a été créée avec succès. Vérifiez les envois dans le
             BullBoard au besoin. : {`${process.env.NEXT_PUBLIC_API_URL}/queues`}
           </Alert>

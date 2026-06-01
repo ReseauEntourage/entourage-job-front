@@ -1,4 +1,3 @@
-import { createHash } from 'crypto';
 import { AnyCantFix } from 'src/utils/Types';
 
 declare global {
@@ -44,13 +43,17 @@ type GaEventUserParams = {
 };
 export const gaEventWithUser = (action: string, user: GaEventUserParams) => {
   if (window.gtag && user.userId) {
-    const hash = createHash('sha256');
-    hash.update(user.userId);
-    const userHashId = hash.digest('hex');
-    window.gtag('event', action, {
-      zone: user.zone,
-      role: user.role,
-      user_hash_id: userHashId,
+    const encoder = new TextEncoder();
+    const data = encoder.encode(user.userId);
+    void crypto.subtle.digest('SHA-256', data).then((hashBuffer) => {
+      const userHashId = Array.from(new Uint8Array(hashBuffer))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
+      window.gtag('event', action, {
+        zone: user.zone,
+        role: user.role,
+        user_hash_id: userHashId,
+      });
     });
   }
 };

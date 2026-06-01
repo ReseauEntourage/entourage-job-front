@@ -1,14 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Alert } from './Alert';
-import { AlertProps, AlertVariant } from './Alert.types';
+import { AlertProps, AlertType } from './Alert.types';
 
-const AlertWithContent = ({ variant, closable }: AlertProps) => {
-  return (
-    <Alert variant={variant} closable={closable}>
-      This is an information
-    </Alert>
-  );
+const AlertWithContent = ({ ...props }: AlertProps) => {
+  return <Alert {...props}>This is an information</Alert>;
 };
 
 const meta = {
@@ -16,18 +12,50 @@ const meta = {
   render: AlertWithContent,
   argTypes: {
     variant: {
-      options: Object.values(AlertVariant),
+      options: ['outlined', 'filled'],
       control: { type: 'radio' },
     },
+    type: {
+      options: [
+        AlertType.Info,
+        AlertType.Info2,
+        AlertType.Neutral,
+        AlertType.NeutralWhite,
+        AlertType.Success,
+        AlertType.Error,
+        AlertType.Warning,
+      ],
+      control: { type: 'radio' },
+    },
+    rounded: { control: { type: 'boolean' } },
+    closable: { control: { type: 'boolean' } },
+    clickable: { control: { type: 'boolean' } },
+    iconInContainer: { control: { type: 'boolean' } },
+    title: { control: { type: 'text' } },
   },
 } satisfies Meta<typeof Alert>;
 
 export default meta;
 type Story = StoryObj<typeof Alert>;
 
+export const Playground: Story = {
+  args: {
+    variant: 'filled',
+    type: AlertType.Info,
+    closable: false,
+    rounded: true,
+    clickable: false,
+    iconInContainer: false,
+    title: 'Alert title',
+  },
+};
+
 export const Info: Story = {
   args: {
-    variant: AlertVariant.Info,
+    variant: 'outlined',
+    type: AlertType.Info,
     closable: true,
+    icon: undefined,
+    iconInContainer: true,
   },
 };

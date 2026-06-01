@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { DocumentItem } from '@/src/components/ui/DocumentItem/DocumentItem';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { openModal } from '@/src/features/modals/Modal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
@@ -18,7 +18,6 @@ interface CompanyLinksProps {
   hiringUrl?: string | null;
   linkedInUrl?: string | null;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const CompanyLinks = ({
@@ -27,7 +26,6 @@ export const CompanyLinks = ({
   hiringUrl,
   linkedInUrl,
   isEditable = false,
-  smallCard = false,
 }: CompanyLinksProps) => {
   const isCompleted = !!linkedInUrl || !!url || !!hiringUrl;
 
@@ -83,7 +81,6 @@ export const CompanyLinks = ({
       ctaTitle={ctaTitle}
       ctaCallback={openEditCompanyLinks}
       fallback={fallback}
-      smallCard={smallCard}
     >
       <StyledDocumentList>
         {linkedInUrl && (

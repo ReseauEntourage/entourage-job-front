@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
-import { Text } from '@/src/components/ui';
+import { LucidIcon, Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { useEditableExperiencesById } from '@/src/features/profile/hooks/useEditableExperiences';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -19,7 +18,6 @@ interface ProfileExperiencesProps {
   userRole: UserRoles;
   experiences?: Experience[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileExperiences = ({
@@ -28,7 +26,6 @@ export const ProfileExperiences = ({
   userRole,
   experiences = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileExperiencesProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
   const user = useAuthenticatedUser();
@@ -60,11 +57,18 @@ export const ProfileExperiences = ({
     const content = isEditable ? (
       editableFallback
     ) : (
-      <Text>{`${userFirstName} n’a pas encore renseigné ses expériences professionnelles`}</Text>
+      <Text>
+        Beaucoup de candidats ont un parcours riche mais ont besoin d&apos;un
+        coup de pouce pour le formuler. Le regard extérieur d&apos;un coach
+        suffit souvent.
+      </Text>
     );
     return {
+      title: !isEditable
+        ? `${userFirstName} n'a pas encore renseigné ses expériences`
+        : undefined,
       content,
-      icon: <SvgIcon name="IlluMalette" />,
+      icon: !isEditable ? <LucidIcon name="MessageSquare" /> : null,
     };
   }, [editableFallback, isEditable, userFirstName]);
 
@@ -93,7 +97,7 @@ export const ProfileExperiences = ({
 
   const ctaTitle = useMemo(() => {
     if (!isOwnProfile && !isCompleted && userRole === UserRoles.CANDIDATE) {
-      return `Accompagner ${userFirstName} dans la valorisation de ses expériences`;
+      return `Échanger avec ${userFirstName}`;
     }
     if (isOwnProfile && isEditable) {
       return 'Ajouter';
@@ -107,7 +111,6 @@ export const ProfileExperiences = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       // iaGenerated
-      smallCard={smallCard}
       fallback={fallback}
       ctaTitle={ctaTitle}
       ctaCallback={ctaCallback}

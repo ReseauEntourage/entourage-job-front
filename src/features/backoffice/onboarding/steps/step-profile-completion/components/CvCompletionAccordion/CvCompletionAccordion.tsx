@@ -9,7 +9,7 @@ import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Button, LucidIcon, Text } from '@/src/components/ui';
 import { Accordion } from '@/src/components/ui/Accordion/Accordion';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { H4, H5 } from '@/src/components/ui/Headings';
 import { COLORS } from '@/src/constants/styles';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
@@ -303,7 +303,7 @@ export const CvCompletionAccordion = () => {
       onOpenChange={setIsOpen}
     >
       <Alert
-        variant={isGenerated ? AlertVariant.Success : AlertVariant.Info}
+        type={isGenerated ? AlertType.Success : AlertType.Info}
         icon={
           isGenerated ? (
             <LucidIcon name="Check" color={COLORS.black} size={25} />

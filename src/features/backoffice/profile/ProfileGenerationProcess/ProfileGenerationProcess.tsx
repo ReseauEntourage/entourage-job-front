@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import styled from 'styled-components';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button } from '@/src/components/ui/Button/Button';
 import { StyledCenteredButtonContainer } from '@/src/components/ui/Button/Button.styles';
 import { ContainerWithTextCentered } from '@/src/components/ui/Containers/ContainerWithTextCentered';
 import { StyledContainerMarginY } from '@/src/components/ui/Containers/Containers.styles';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
 import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
 import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';

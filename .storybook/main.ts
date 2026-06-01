@@ -7,15 +7,16 @@ const config: StorybookConfig = {
 
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
-  addons: [
-    '@storybook/addon-links',
-    '@chromatic-com/storybook',
-  ],
+  addons: ['@storybook/addon-links', '@chromatic-com/storybook'],
 
   viteFinal: async (viteConfig) => {
     viteConfig.plugins = [
       ...(viteConfig.plugins ?? []),
-      tsconfigPaths({ projects: [fileURLToPath(new URL('../tsconfig.base.json', import.meta.url))] }),
+      tsconfigPaths({
+        projects: [
+          fileURLToPath(new URL('../tsconfig.base.json', import.meta.url)),
+        ],
+      }),
     ];
     return viteConfig;
   },

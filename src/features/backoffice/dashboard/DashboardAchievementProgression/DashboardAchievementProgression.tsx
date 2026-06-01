@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
 import { Card, LucidIcon, Text, Tooltip } from 'src/components/ui';
 import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';

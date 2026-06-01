@@ -1,7 +1,7 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { SelectListType } from '@/src/components/ui/Inputs/SelectList';
 import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyGoal } from '@/src/constants/company';
 import { FormSchema } from '@/src/features/forms/FormSchema';
 
