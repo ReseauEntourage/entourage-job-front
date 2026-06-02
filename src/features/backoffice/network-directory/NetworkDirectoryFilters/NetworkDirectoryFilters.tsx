@@ -155,6 +155,32 @@ export const NetworkDirectoryFilters = () => {
     GA_TAGS.PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC
   );
 
+  const handleSetSearch = useCallback(
+    (updatedSearch?: string) => {
+      const isSearching = !!updatedSearch;
+      const sortOverride =
+        isSearching && sort === NetworkDirectorySort.RELEVANCE
+          ? { sort: NetworkDirectorySort.LAST_CONNECTION }
+          : {};
+
+      push(
+        {
+          pathname: route,
+          query: {
+            ...networkDirectoryQueryParams,
+            ...(updatedSearch
+              ? { search: updatedSearch }
+              : { search: undefined }),
+            ...sortOverride,
+          },
+        },
+        undefined,
+        { shallow: true, scroll: false }
+      );
+    },
+    [networkDirectoryQueryParams, push, sort]
+  );
+
   const filters = useMemo(() => {
     return {
       departments: mutateToArray(departments).map((department) =>
@@ -311,7 +337,7 @@ export const NetworkDirectoryFilters = () => {
             resetFilters();
           }}
           search={search}
-          setSearch={setSearch}
+          setSearch={handleSetSearch}
           setFilters={setFilters}
           placeholder="Rechercher par prénom, nom ou métier"
           additionalButtons={additionalButtons}
@@ -341,6 +367,7 @@ export const NetworkDirectoryFilters = () => {
     selectedEntityNetworkDirectoryFilters,
     filters,
     search,
+    handleSetSearch,
     setSearch,
     setFilters,
     additionalButtons,
