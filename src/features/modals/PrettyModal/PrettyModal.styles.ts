@@ -33,7 +33,7 @@ export const StyledModalContentContainer = styled.div`
 export const StyledModalFooterContainer = styled.div`
   margin-top: 24px;
   display: flex;
-  // All elements centered horizontally and take as much space as needed
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 8px;
 `;

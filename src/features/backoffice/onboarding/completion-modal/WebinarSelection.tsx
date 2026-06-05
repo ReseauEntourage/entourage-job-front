@@ -1,30 +1,22 @@
 import React, { useCallback, useEffect } from 'react';
 import { Api } from '@/src/api';
 import { Event } from '@/src/api/types';
-import { Alert } from '@/src/components/ui';
-import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { SelectList } from '@/src/components/ui/Inputs/SelectList';
 import { SelectListGroup } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
 import { SelectOptionWebinarLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionWebinarLabel/SelectOptionWebinarLabel';
 import { EventMode, EventType } from '@/src/constants/events';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
-import { WebinarSelectGroupLabel } from '../../../completion-modal/WebinarSelectGroupLabel';
+import { WebinarSelectGroupLabel } from './WebinarSelectGroupLabel';
 
-const NO_DATE_VALUE = 'no-date';
-
-interface ContentProps {
+interface WebinarSelectionProps {
   webinarSfId: string | null;
   onChange: (value: string) => void;
-  noDateSelected: boolean;
-  onNoDateChange: (value: boolean) => void;
 }
 
-export const Content = ({
+export const WebinarSelection = ({
   webinarSfId,
   onChange,
-  noDateSelected,
-  onNoDateChange,
-}: ContentProps) => {
+}: WebinarSelectionProps) => {
   const [options, setOptions] = React.useState<SelectListGroup<string>[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isIdle, setIsIdle] = React.useState<boolean>(true);
@@ -90,41 +82,19 @@ export const Content = ({
     }
   }, [fetchNextWebinarOptions, isIdle]);
 
-  const selectedValues = noDateSelected
-    ? [NO_DATE_VALUE]
-    : webinarSfId
-    ? [webinarSfId]
-    : [];
-
   return (
-    <>
-      <SelectList
-        id="webinarSfId"
-        name="webinarSfId"
-        title="Sélectionnez la date qui vous convient le mieux"
-        options={options}
-        value={selectedValues}
-        onChange={(value) => {
-          const selected = value[0];
-          if (selected === NO_DATE_VALUE) {
-            onNoDateChange(true);
-            onChange('');
-          } else {
-            onNoDateChange(false);
-            onChange(selected ?? '');
-          }
-        }}
-        isMulti={false}
-        isLoading={isLoading}
-        estimatedOptionLength={6}
-      />
-      {noDateSelected && (
-        <Alert type={AlertType.Info} variant="outlined">
-          Pas de souci&nbsp;! Vous retrouverez les prochaines sessions
-          disponibles directement dans votre espace. Nous vous enverrons un
-          rappel par e-mail dès qu&apos;une nouvelle date sera ouverte.
-        </Alert>
-      )}
-    </>
+    <SelectList
+      id="webinarSfId"
+      name="webinarSfId"
+      title="Sélectionnez la date qui vous convient le mieux"
+      options={options}
+      value={webinarSfId ? [webinarSfId] : []}
+      onChange={(value) => {
+        onChange(value[0] ?? '');
+      }}
+      isMulti={false}
+      isLoading={isLoading}
+      estimatedOptionLength={6}
+    />
   );
 };

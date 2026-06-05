@@ -19,6 +19,7 @@ import {
   selectIsLoading,
 } from '../../../use-cases/onboarding/onboarding.selectors';
 import { openModal } from '../../modals/Modal/openModal';
+import { OnboardingCompletionModal } from './completion-modal/OnboardingCompletionModal';
 import { ConfirmModalStep } from './confirm-step-modal/ConfirmModalStep';
 import { OnboardingStep, UseOnboardingReturn } from './onboarding.types';
 import {
@@ -29,7 +30,6 @@ import { useOnboardingStepElearning } from './steps/step-elearning/useOnboarding
 import { useOnboardingStepNudges } from './steps/step-nudges/useOnboardingStepNudges';
 import { useOnboardingStepProfileCompletion } from './steps/step-profile-completion/useOnboardingStepProfileCompletion';
 import { useOnboardingStepSocialSituation } from './steps/step-social-situation/useOnboardingStepSocialSituation';
-import { useOnboardingStepWebinar } from './steps/step-webinar/useOnboardingStepWebinar';
 
 /**
  * useOnboarding - Custom hook to manage onboarding state and actions.
@@ -48,7 +48,6 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const forceOnboardingAsCompletedStatus = useSelector(
     selectForceOnboardingAsCompletedSelectors.selectForceOnboardingAsCompletedStatus
   );
-  const { onboardingStepWebinar } = useOnboardingStepWebinar();
   const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation();
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: user.role,
@@ -92,7 +91,6 @@ export const useOnboarding = (): UseOnboardingReturn => {
   // onboardingSteps - Memoized array of onboarding steps based on user role.
   const onboardingSteps: OnboardingStep[] = useMemo(() => {
     return [
-      onboardingStepWebinar,
       onboardingStepElearning,
       ...(user.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
       onboardingStepNudges,
@@ -100,7 +98,6 @@ export const useOnboarding = (): UseOnboardingReturn => {
     ];
   }, [
     user.role,
-    onboardingStepWebinar,
     onboardingStepElearning,
     onboardingStepNudges,
     onboardingStepSocialSituation,
@@ -180,7 +177,10 @@ export const useOnboarding = (): UseOnboardingReturn => {
   }, [onboardingSteps, currentOnboardingIdx]);
 
   // onOnboardingComplete - Callback when onboarding is complete.
-  const onOnboardingCompleted = useCallback(() => {
+  const onOnboardingCompleted = useCallback(async () => {
+    await new Promise<void>((resolve) => {
+      openModal(<OnboardingCompletionModal onDone={() => resolve()} />);
+    });
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({
         onboardingStatus: OnboardingStatus.COMPLETED,
@@ -229,7 +229,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
       typeof onboardingSteps.length !== 'number' ||
       currentOnboardingIdx + 1 >= onboardingSteps.length
     ) {
-      onOnboardingCompleted();
+      await onOnboardingCompleted();
       return;
     }
     dispatch(
