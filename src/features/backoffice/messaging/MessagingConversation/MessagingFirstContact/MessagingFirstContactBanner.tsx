@@ -19,6 +19,7 @@ export const MessagingFirstContactBanner = ({
     <Alert
       visible={visible}
       type={AlertType.Info}
+      variant="outlined"
       rounded={false}
       onClose={() => setVisible(false)}
       closable
