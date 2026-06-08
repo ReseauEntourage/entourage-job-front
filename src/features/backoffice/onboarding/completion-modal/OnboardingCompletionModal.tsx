@@ -69,6 +69,7 @@ export const OnboardingCompletionModal = ({
       title={`Bravo ${currentUser.firstName}, votre profil est prêt !`}
       subtitle="Avant de vous lancer, on aimerait vous accueillir."
       submitBtnTxt="Je réserve ma place"
+      submitDisabled={!webinarSfId}
       icon={<LucidIcon name="PartyPopper" color="white" size={48} />}
       onSubmit={handleSubmit}
       size="medium"

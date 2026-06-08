@@ -18,6 +18,7 @@ interface PrettyModalProps {
   subtitle?: string;
   size?: ModalSize;
   submitBtnTxt?: string;
+  submitDisabled?: boolean;
   onSubmit?: () => void | Promise<void>;
   children?: React.ReactNode;
   icon?: React.ReactNode;
@@ -30,6 +31,7 @@ export const PrettyModal = ({
   subtitle,
   size = 'medium',
   submitBtnTxt = 'Envoyer',
+  submitDisabled = false,
   onSubmit,
   children,
   icon,
@@ -74,7 +76,7 @@ export const PrettyModal = ({
         <Button
           size="large"
           onClick={handleClose}
-          disabled={isSubmitting}
+          disabled={isSubmitting || submitDisabled}
           dataTestId={`${id}-submit-btn`}
         >
           {submitBtnTxt}
