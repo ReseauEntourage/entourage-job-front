@@ -44,31 +44,23 @@ const interceptOnboardingApis = () => {
     }
   });
 
-  // Departments: needed when the user has a department in their profile
+  // Departments: needed by WebinarSelection in the completion modal
   cy.intercept('GET', '/departments*', {
     statusCode: 200,
     body: [],
   });
 
-  // Webinar: return options for the date picker, but return an empty list for
-  // the “already registered” check (isParticipating=true).
-  const webinarEvent = {
-    salesForceId: 'sf-webinar-1',
-    startDate: '2030-01-15T10:00:00.000Z',
-    duration: 60,
-    mode: 'online',
-  };
-
-  cy.intercept('GET', '/events*', (req) => {
-    const url = new URL(req.url);
-    const isParticipating = url.searchParams.get('isParticipating');
-
-    if (isParticipating === 'true') {
-      req.reply({ statusCode: 200, body: [] });
-      return;
-    }
-
-    req.reply({ statusCode: 200, body: [webinarEvent] });
+  // Events: loaded in the completion modal's WebinarSelection component
+  cy.intercept('GET', '/events*', {
+    statusCode: 200,
+    body: [
+      {
+        salesForceId: 'sf-webinar-1',
+        startDate: '2030-01-15T10:00:00.000Z',
+        duration: 60,
+        mode: 'online',
+      },
+    ],
   }).as('events');
 
   cy.intercept('PUT', '/events/**/participation', {
@@ -76,7 +68,7 @@ const interceptOnboardingApis = () => {
     body: {},
   }).as('webinarParticipation');
 
-  // Elearning units: make them “already completed” so the step is unblocked.
+  // Elearning units: make them "already completed" so the step is unblocked.
   cy.intercept('GET', '/elearning/units*', {
     statusCode: 200,
     body: [
@@ -108,11 +100,65 @@ const interceptOnboardingApis = () => {
     body: {},
   }).as('updateProfile');
 
-  // Onboarding status updates
+  // Onboarding status updates + webinar skip
   cy.intercept('PUT', '/user/*', {
     statusCode: 200,
     body: {},
   }).as('updateUser');
+};
+
+// Goes through all visible onboarding steps and lands on the completion modal.
+// Elearning is automatically skipped by determineStartingStep (units already completed).
+// Must be called after visiting /backoffice/dashboard and waiting for the redirect.
+const completeOnboardingSteps = () => {
+  // Start onboarding (sets onboardingStatus=in_progress => redirect to /run)
+  cy.contains('button', 'Commencer le parcours').click();
+  cy.wait('@updateUser');
+  cy.url().should('include', '/backoffice/onboarding/run');
+
+  // Elearning is automatically skipped (units already completed in fixture).
+  // The fetch is still triggered in the background by determineStartingStep.
+  cy.wait('@elearningUnits');
+
+  // Step 1: Social situation - submit empty optional form (first visible step)
+  cy.get('[data-testid="onboarding-next-step-btn"]').click();
+  cy.wait('@updateSocialSituation');
+  cy.get('[data-testid="social-situation-confirmation-submit-btn"]').click();
+
+  // Step 2: Nudges - pick one nudge and submit
+  cy.wait('@nudges');
+  cy.get('[data-testid^="nudgeIds-"]').first().click();
+  cy.get('[data-testid="onboarding-next-step-btn"]').click();
+  cy.wait('@updateProfile');
+  cy.get('[data-testid="nudges-confirmation-submit-btn"]').click();
+
+  // Step 3: Profile completion - fill required fields
+  cy.get(
+    '[data-testid="form-onboarding-profile-completion-introduction"]'
+  ).type(
+    "Je suis en recherche d'emploi et je souhaite être accompagné(e) pour clarifier mon projet professionnel et améliorer mes candidatures."
+  );
+
+  // Open accordion and fill the fields
+  cy.get('[data-testid="professional-info-accordion-header"]').click();
+
+  // Open the business sector select
+  cy.get('#form-onboarding-profile-completion-businessSectorId0').click();
+
+  // Wait for the options to be loaded
+  cy.wait('@businessSectors');
+
+  // Select the first option
+  cy.get('#form-onboarding-profile-completion-businessSectorId0')
+    .find('.Select__menu')
+    .should('be.visible')
+    .find('.Select__option')
+    .first()
+    .click();
+
+  cy.get('[data-testid="onboarding-next-step-btn"]').click();
+  cy.wait('@updateProfile');
+  // The completion modal now opens
 };
 
 describe('Onboarding - Journey', () => {
@@ -152,7 +198,7 @@ describe('Onboarding - Journey', () => {
     cy.contains('Bienvenue sur votre tableau de bord');
   });
 
-  it('Should complete a light candidate onboarding flow', () => {
+  it('Should complete a light candidate onboarding flow and reserve a webinar', () => {
     cy.intercept('GET', '/current', {
       fixture: 'auth-current-candidate-onboarding-not-started-res',
     }).as('currentIdentity');
@@ -161,64 +207,35 @@ describe('Onboarding - Journey', () => {
     cy.wait('@currentIdentity');
     cy.url().should('include', '/backoffice/onboarding');
 
-    // Start onboarding (sets onboardingStatus=in_progress => redirect to /run)
-    cy.contains('button', 'Commencer le parcours').click();
-    cy.wait('@updateUser');
-    cy.url().should('include', '/backoffice/onboarding/run');
+    completeOnboardingSteps();
 
-    // Step 1: Webinar - select the only option and submit
+    // Completion modal: select a webinar date and reserve
     cy.wait('@events');
     cy.get('[data-testid="webinarSfId-sf-webinar-1"]').click();
-    cy.get('[data-testid="onboarding-next-step-btn"]').click();
+    cy.get('[data-testid="onboarding-completion-submit-btn"]').click();
     cy.wait('@webinarParticipation');
-    cy.get('[data-testid="webinar-confirmation-submit-btn"]').click();
-
-    // Step 2: Elearning - already completed
-    cy.wait('@elearningUnits');
-    cy.get('[data-testid="onboarding-next-step-btn"]').click();
-    cy.contains('button', 'Passer à l’étape suivante').click();
-
-    // Step 3: Social situation - submit empty optional form
-    cy.get('[data-testid="onboarding-next-step-btn"]').click();
-    cy.wait('@updateSocialSituation');
-    cy.get('[data-testid="social-situation-confirmation-submit-btn"]').click();
-
-    // Step 4: Nudges - pick one nudge and submit
-    cy.wait('@nudges');
-    cy.get('[data-testid^="nudgeIds-"]').first().click();
-    cy.get('[data-testid="onboarding-next-step-btn"]').click();
-    cy.wait('@updateProfile');
-    cy.contains('button', 'Passer à l’étape suivante').click();
-
-    // Step 5: Profile completion - fill required fields
-    cy.get(
-      '[data-testid="form-onboarding-profile-completion-introduction"]'
-    ).type(
-      'Je suis en recherche d’emploi et je souhaite être accompagné(e) pour clarifier mon projet professionnel et améliorer mes candidatures.'
-    );
-
-    // Open accordion and fill the fields
-    cy.get('[data-testid="professional-info-accordion-header"]').click();
-
-    // Open the business sector select
-    cy.get('#form-onboarding-profile-completion-businessSectorId0').click();
-
-    // Wait the options to be loaded
-    cy.wait('@businessSectors');
-
-    // Select the first option
-    cy.get('#form-onboarding-profile-completion-businessSectorId0')
-      .find('.Select__menu')
-      .should('be.visible')
-      .find('.Select__option')
-      .first()
-      .click();
-
-    cy.get('[data-testid="onboarding-next-step-btn"]').click();
-    cy.wait('@updateProfile');
-
-    cy.contains('button', 'Démarrer l’aventure Entourage Pro').click();
     cy.wait('@updateUser');
+
+    cy.url().should('include', '/backoffice/dashboard');
+    cy.contains('Bienvenue sur votre tableau de bord');
+  });
+
+  it('Should complete a light candidate onboarding flow and skip the webinar', () => {
+    cy.intercept('GET', '/current', {
+      fixture: 'auth-current-candidate-onboarding-not-started-res',
+    }).as('currentIdentity');
+
+    cy.visit('/backoffice/dashboard');
+    cy.wait('@currentIdentity');
+    cy.url().should('include', '/backoffice/onboarding');
+
+    completeOnboardingSteps();
+
+    // Completion modal: skip the webinar
+    cy.wait('@events');
+    cy.contains('button', 'Plus tard, depuis mon espace').click();
+    cy.wait('@updateUser'); // PUT /user/{id} with onboardingWebinarSkippedAt
+    cy.wait('@updateUser'); // onboarding status = COMPLETED
 
     cy.url().should('include', '/backoffice/dashboard');
     cy.contains('Bienvenue sur votre tableau de bord');
