@@ -31,6 +31,7 @@ export const Event = () => {
         fullAddress={selectedEvent.fullAddress}
         registrationCount={selectedEvent.registrationCount}
         isParticipating={selectedEvent.isParticipating}
+        publicSensibilise={selectedEvent.publicSensibilise}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>

@@ -1,6 +1,12 @@
 import React, { useMemo } from 'react';
-import { LucidIcon, Text } from '@/src/components/ui';
-import { EVENT_IMAGES } from '@/src/constants/events';
+import {
+  Badge,
+  BadgeVariant,
+  LucidIcon,
+  Text,
+  Tooltip,
+} from '@/src/components/ui';
+import { EVENT_IMAGES, PublicSensibilise } from '@/src/constants/events';
 import { EventInfoSummary } from '@/src/features/backoffice/events/EventInfoSummary/EventInfoSummary';
 import { H5 } from '../../../Headings';
 import { LegacyImg } from '../../../Images';
@@ -10,7 +16,7 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import {
   StyledEventCardContentContainer,
-  StyledEventCardParticipation,
+  StyledEventCardOverlay,
   StyledEventCardPicture,
   StyledEventCardPictureContainer,
 } from './EventCard.styles';
@@ -26,6 +32,7 @@ export type EventCardProps = Pick<
   | 'fullAddress'
   | 'registrationCount'
   | 'isParticipating'
+  | 'publicSensibilise'
 >;
 
 export function EventCard({
@@ -38,6 +45,7 @@ export function EventCard({
   fullAddress,
   registrationCount,
   isParticipating,
+  publicSensibilise,
 }: EventCardProps) {
   // Compute image based on event type
   const image = useMemo(() => {
@@ -62,12 +70,24 @@ export function EventCard({
         </StyledEventCardPicture>
 
         {/* Participation status */}
-        {isParticipating && (
-          <StyledEventCardParticipation>
-            <LucidIcon name="Check" size={16} color="white" />
-            <Text color="white">Inscrit</Text>
-          </StyledEventCardParticipation>
-        )}
+
+        <StyledEventCardOverlay>
+          {isParticipating && (
+            <Tooltip content="Vous êtes inscrit à cet événement">
+              <Badge variant={BadgeVariant.Primary} borderRadius="large">
+                <LucidIcon name="Check" size={16} color="white" />
+                <Text color="white">Inscrit</Text>
+              </Badge>
+            </Tooltip>
+          )}
+          {publicSensibilise?.includes(PublicSensibilise.YOUNG_PUBLIC) && (
+            <Tooltip content="Événement destiné aux jeunes">
+              <Badge variant={BadgeVariant.Orange} borderRadius="large">
+                100% jeunes
+              </Badge>
+            </Tooltip>
+          )}
+        </StyledEventCardOverlay>
       </StyledEventCardPictureContainer>
       <StyledEventCardContentContainer>
         <H5 title={name} />

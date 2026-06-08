@@ -1,9 +1,10 @@
 import React from 'react';
 import { Event } from '@/src/api/types';
-import { Section } from '@/src/components/ui';
+import { Badge, BadgeVariant, Section } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { H3 } from '@/src/components/ui/Headings';
 import { ImgEvent } from '@/src/components/ui/Images/ImgEvent/ImgEvent';
+import { PublicSensibilise } from '@/src/constants/events';
 import { EventParticipateButton } from '@/src/features/backoffice/events/Event/EventParticipateButton/EventParticipateButton';
 import { EventInfoSummary } from '@/src/features/backoffice/events/EventInfoSummary/EventInfoSummary';
 import { useIsMobile } from '@/src/hooks/utils';
@@ -12,6 +13,7 @@ import {
   StyledHeaderContent,
   StyledHeaderInfoContainer,
   StyledHeaderPictureContainer,
+  StyledTitleAndBadges,
 } from './HeaderEvent.styles';
 
 type HeaderEventProps = Pick<
@@ -25,6 +27,7 @@ type HeaderEventProps = Pick<
   | 'fullAddress'
   | 'registrationCount'
   | 'isParticipating'
+  | 'publicSensibilise'
 >;
 
 const EVENT_PICTURE_SIZE = {
@@ -48,6 +51,7 @@ export const HeaderEvent = ({
   fullAddress,
   registrationCount,
   isParticipating,
+  publicSensibilise,
 }: HeaderEventProps) => {
   const isMobile = useIsMobile();
   const imageSize = EVENT_PICTURE_SIZE[isMobile ? 'mobile' : 'desktop'];
@@ -65,7 +69,17 @@ export const HeaderEvent = ({
             />
           </StyledHeaderPictureContainer>
           <StyledHeaderInfoContainer>
-            <H3 title={name} />
+            <StyledTitleAndBadges>
+              <H3 title={name} />
+              {publicSensibilise?.includes(PublicSensibilise.YOUNG_PUBLIC) && (
+                <Badge
+                  variant={BadgeVariant.ExtraLightPurple}
+                  borderRadius="large"
+                >
+                  100% jeunes
+                </Badge>
+              )}
+            </StyledTitleAndBadges>
             <EventInfoSummary
               startDate={startDate}
               mode={mode}

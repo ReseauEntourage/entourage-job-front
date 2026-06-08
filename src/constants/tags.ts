@@ -431,6 +431,9 @@ export const GA_TAGS = {
   PAGE_EVENTS_FILTRE_DEPARTMENT_CLIC: {
     action: 'Page_Events_Filtre_Department_Clic',
   },
+  PAGE_EVENTS_FILTRE_PUBLIC_SENSIBILISE_CLIC: {
+    action: 'Page_Events_Filtre_Public_Sensibilise_Clic',
+  },
   PAGE_EVENTS_CARTE_CLIC: {
     action: 'Page_Events_Carte_Clic',
   },
