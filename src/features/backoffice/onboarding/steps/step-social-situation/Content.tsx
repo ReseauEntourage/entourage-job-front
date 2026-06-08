@@ -11,7 +11,7 @@ import { SocialSituationSchemaField } from './SocialSituationSchemaField';
 export const Content = () => {
   return (
     <StyledCardList>
-      <Alert type={AlertType.Info}>
+      <Alert type={AlertType.Info} variant="outlined">
         Ces informations ne sont pas obligatoires, et ne seront pas
         communiquées.
       </Alert>
