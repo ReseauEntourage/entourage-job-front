@@ -83,7 +83,7 @@ export const EVENT_IMAGES: {
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
 
-export enum CampaignPublic {
+export enum PublicSensibilise {
   GENERAL_PUBLIC = 'Grand public',
   COMPANIES = 'Entreprises',
   ORGANIZATIONS = 'Associations',
@@ -108,4 +108,8 @@ export const EVENT_TYPES_FILTERS: FilterConstant<string>[] = [
       label: name,
     };
   }),
+];
+
+export const EVENT_PUBLIC_SENSIBILISE_FILTERS: FilterConstant<string>[] = [
+  { value: PublicSensibilise.YOUNG_PUBLIC, label: 'Réservé aux jeunes' },
 ];

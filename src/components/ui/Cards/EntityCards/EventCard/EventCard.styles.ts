@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
 
 export const StyledEventCardPictureContainer = styled.div`
   position: relative;
@@ -12,16 +11,15 @@ export const StyledEventCardPicture = styled.div`
   height: 175px;
 `;
 
-export const StyledEventCardParticipation = styled.div`
+export const StyledEventCardOverlay = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: ${COLORS.primaryBlue};
-  padding: 4px 8px;
-  border-radius: 20px;
+  width: calc(100% - 20px);
 `;
 
 export const StyledEventCardContentContainer = styled.div`

@@ -58,13 +58,15 @@ function* fetchEventsRequestedSaga(
     const offset = yield* select(selectEventsOffset);
     const limit = EVENTS_LIMIT;
 
-    const { departmentIds, search, modes, eventTypes } = action.payload;
+    const { departmentIds, search, modes, eventTypes, publicSensibilise } =
+      action.payload;
 
     const response = yield* call(() =>
       Api.getAllEvents({
         departmentIds: mutateToArray(departmentIds),
         modes: mutateToArray(modes) as EventMode[],
         eventTypes: mutateToArray(eventTypes) as EventType[],
+        publicSensibilise: mutateToArray(publicSensibilise),
         search,
         offset,
         limit,
