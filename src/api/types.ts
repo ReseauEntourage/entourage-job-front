@@ -723,7 +723,7 @@ export type EventsFilters = {
   modes?: EventMode | EventMode[];
   isParticipating?: boolean;
   includePastEvents?: boolean;
-  publicSensibilise?: string | string[];
+  publicSensibilise?: PublicSensibilise | PublicSensibilise[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

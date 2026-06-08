@@ -1,5 +1,9 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
-import { EventMode, EventType } from '@/src/constants/events';
+import {
+  EventMode,
+  EventType,
+  PublicSensibilise,
+} from '@/src/constants/events';
 import { Api } from 'src/api';
 import { EVENTS_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
@@ -66,7 +70,9 @@ function* fetchEventsRequestedSaga(
         departmentIds: mutateToArray(departmentIds),
         modes: mutateToArray(modes) as EventMode[],
         eventTypes: mutateToArray(eventTypes) as EventType[],
-        publicSensibilise: mutateToArray(publicSensibilise),
+        publicSensibilise: mutateToArray(
+          publicSensibilise
+        ) as PublicSensibilise[],
         search,
         offset,
         limit,
