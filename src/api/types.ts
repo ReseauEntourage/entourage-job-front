@@ -1,6 +1,6 @@
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
-import { EventMode, EventType } from '../constants/events';
+import { CampaignPublic, EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
 import { OnboardingStatus } from '../constants/onboarding';
 import {
@@ -219,6 +219,7 @@ export type Event = {
   audience: string;
   sequences?: string[];
   isParticipating: boolean;
+  publicSensibilise: CampaignPublic[] | null;
 };
 
 export type UserReportDto = {
