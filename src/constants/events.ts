@@ -110,6 +110,5 @@ export const EVENT_TYPES_FILTERS: FilterConstant<string>[] = [
   }),
 ];
 
-export const EVENT_PUBLIC_SENSIBILISE_FILTERS: FilterConstant<PublicSensibilise>[] = [
-  { value: PublicSensibilise.YOUNG_PUBLIC, label: 'Réservé aux jeunes' },
-];
+export const EVENT_PUBLIC_SENSIBILISE_FILTERS: FilterConstant<PublicSensibilise>[] =
+  [{ value: PublicSensibilise.YOUNG_PUBLIC, label: 'Réservé aux jeunes' }];
