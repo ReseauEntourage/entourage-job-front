@@ -42,12 +42,21 @@ const CoachCertificationPage = ({
 };
 
 CoachCertificationPage.getInitialProps = async ({ query }) => {
-  return Api.getPublicAchievementById(query.achievementId as string)
+  const achievementId = Array.isArray(query.achievementId)
+    ? query.achievementId[0]
+    : query.achievementId;
+
+  if (!achievementId) {
+    return { achievement: null };
+  }
+
+  return Api.getPublicAchievementById(achievementId)
     .then(({ data }) => ({ achievement: data }))
     .catch((err) => {
       console.error(err);
       return { achievement: null };
     });
+};
 };
 
 export default CoachCertificationPage;
