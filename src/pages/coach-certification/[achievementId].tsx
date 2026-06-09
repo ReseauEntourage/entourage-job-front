@@ -57,6 +57,5 @@ CoachCertificationPage.getInitialProps = async ({ query }) => {
       return { achievement: null };
     });
 };
-};
 
 export default CoachCertificationPage;
