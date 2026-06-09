@@ -1,11 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
-import { Card, LucidIcon, Text, Tooltip } from 'src/components/ui';
+import {
+  AchievementProgressionEntry,
+  AchievementType,
+  CriterionStat,
+  UserAchievement,
+} from 'src/api/types';
+import { Button, Card, LucidIcon, Text, Tooltip } from 'src/components/ui';
 import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
 import { Skeleton } from 'src/components/ui/Skeleton/Skeleton';
 import { COLORS } from 'src/constants/styles';
+import { useCurrentUserAchievements } from 'src/hooks/current-user/useCurrentUserAchievements';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   selectAchievementProgressions,
@@ -26,6 +32,23 @@ import {
   ACHIEVEMENT_TOOLTIP,
   CRITERION_LUCID_ICON,
 } from './achievement.icons';
+
+function buildLinkedInCertificationUrl(
+  achievementId: string,
+  achievedAt: string
+): string {
+  const issueDate = new Date(achievedAt);
+  const certUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/coach-certification/${achievementId}`;
+  const params = new URLSearchParams({
+    startTask: 'CERTIFICATION_NAME',
+    name: 'Coach Entourage Pro',
+    organizationId: '42693016',
+    issueYear: String(issueDate.getFullYear()),
+    issueMonth: String(issueDate.getMonth() + 1),
+    certUrl,
+  });
+  return `https://www.linkedin.com/profile/add?${params.toString()}`;
+}
 
 interface CriterionRowProps {
   criterion: CriterionStat;
@@ -76,9 +99,10 @@ const CriterionRow = ({ criterion, isAtRisk }: CriterionRowProps) => {
 
 interface AchievementCardProps {
   entry: AchievementProgressionEntry;
+  userAchievement?: UserAchievement;
 }
 
-const AchievementCard = ({ entry }: AchievementCardProps) => {
+const AchievementCard = ({ entry, userAchievement }: AchievementCardProps) => {
   const isDesktop = useIsDesktop();
 
   const allCriteriaMet = entry.criteria.every(
@@ -130,16 +154,34 @@ const AchievementCard = ({ entry }: AchievementCardProps) => {
                 atteindre
               </Text>
             ) : (
-              entry.achievedAt && (
-                <Text size="small" color="darkGray">
-                  Valide jusqu&apos;au{' '}
-                  {new Date(entry.expireAt!).toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </Text>
-              )
+              <>
+                {entry.achievedAt && (
+                  <Text size="small" color="darkGray">
+                    Valide jusqu&apos;au{' '}
+                    {new Date(entry.expireAt!).toLocaleDateString('fr-FR', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </Text>
+                )}
+                {entry.type === AchievementType.SUPER_ENGAGED_COACH &&
+                  userAchievement &&
+                  entry.achievedAt && (
+                    <Button
+                      href={buildLinkedInCertificationUrl(
+                        userAchievement.id,
+                        entry.achievedAt
+                      )}
+                      isExternal
+                      newTab
+                      variant="secondary"
+                      size="small"
+                    >
+                      Ajouter à mon profil LinkedIn
+                    </Button>
+                  )}
+              </>
             )}
           </StyledAchievementTitleBlock>
         </StyledAchievementLeft>
@@ -183,6 +225,10 @@ const AchievementCard = ({ entry }: AchievementCardProps) => {
 export const DashboardAchievementProgression = () => {
   const isInitialized = useSelector(selectGamificationIsInitialized);
   const progressions = useSelector(selectAchievementProgressions);
+  const rawAchievements = useCurrentUserAchievements();
+  const userAchievements = Array.isArray(rawAchievements)
+    ? rawAchievements
+    : [];
 
   if (!isInitialized) {
     return <Skeleton height="130px" />;
@@ -195,7 +241,13 @@ export const DashboardAchievementProgression = () => {
   return (
     <>
       {progressions.map((entry) => (
-        <AchievementCard key={entry.type} entry={entry} />
+        <AchievementCard
+          key={entry.type}
+          entry={entry}
+          userAchievement={userAchievements.find(
+            (ua) => ua.achievementType === entry.type
+          )}
+        />
       ))}
     </>
   );
