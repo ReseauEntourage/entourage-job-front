@@ -338,6 +338,15 @@ export type UserAchievement = {
   achievementType: AchievementType;
 };
 
+export type PublicAchievement = {
+  firstName: string;
+  lastName: string;
+  gender: Genders;
+  achievedAt: string;
+  title: string;
+  achievementType: AchievementType;
+};
+
 export type CriterionStat = {
   key: string;
   label: string;

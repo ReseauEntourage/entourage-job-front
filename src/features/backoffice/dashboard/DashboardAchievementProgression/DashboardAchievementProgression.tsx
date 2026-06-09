@@ -38,7 +38,7 @@ function buildLinkedInCertificationUrl(
   achievedAt: string
 ): string {
   const issueDate = new Date(achievedAt);
-  const certUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/coach_certification/${achievementId}`;
+  const certUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/coach-certification/${achievementId}`;
   const params = new URLSearchParams({
     startTask: 'CERTIFICATION_NAME',
     name: 'Coach Entourage Pro',
