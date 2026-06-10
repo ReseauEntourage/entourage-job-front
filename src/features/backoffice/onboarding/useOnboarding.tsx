@@ -91,9 +91,9 @@ export const useOnboarding = (): UseOnboardingReturn => {
   // onboardingSteps - Memoized array of onboarding steps based on user role.
   const onboardingSteps: OnboardingStep[] = useMemo(() => {
     return [
+      onboardingStepNudges,
       onboardingStepElearning,
       ...(user.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
-      onboardingStepNudges,
       onboardingStepProfileCompletion,
     ];
   }, [
