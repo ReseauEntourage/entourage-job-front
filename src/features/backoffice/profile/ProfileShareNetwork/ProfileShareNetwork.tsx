@@ -77,6 +77,16 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
     });
   }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!router.isReady || !router.query.openLinkedInSharer) {
+      return;
+    }
+    handleLinkedinShare();
+    router.replace(`/backoffice/profile/${profile.id}`, undefined, {
+      shallow: true,
+    });
+  }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (user.role === UserRoles.CANDIDATE) {
     return null;
   }
