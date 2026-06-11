@@ -108,7 +108,7 @@ const interceptOnboardingApis = () => {
 };
 
 // Goes through all visible onboarding steps and lands on the completion modal.
-// Elearning is automatically skipped by determineStartingStep (units already completed).
+// Step order: nudges → elearning (skipped, units already completed) → social situation → profile completion.
 // Must be called after visiting /backoffice/dashboard and waiting for the redirect.
 const completeOnboardingSteps = () => {
   // Start onboarding (sets onboardingStatus=in_progress => redirect to /run)
@@ -116,23 +116,24 @@ const completeOnboardingSteps = () => {
   cy.wait('@updateUser');
   cy.url().should('include', '/backoffice/onboarding/run');
 
-  // Elearning is automatically skipped (units already completed in fixture).
-  // The fetch is still triggered in the background by determineStartingStep.
-  cy.wait('@elearningUnits');
-
-  // Step 1: Social situation - submit empty optional form (first visible step)
-  cy.get('[data-testid="onboarding-next-step-btn"]').click();
-  cy.wait('@updateSocialSituation');
-  cy.get('[data-testid="social-situation-confirmation-submit-btn"]').click();
-
-  // Step 2: Nudges - pick one nudge and submit
+  // Step 1: Nudges - first visible step, pick one nudge and submit
   cy.wait('@nudges');
   cy.get('[data-testid^="nudgeIds-"]').first().click();
   cy.get('[data-testid="onboarding-next-step-btn"]').click();
   cy.wait('@updateProfile');
   cy.get('[data-testid="nudges-confirmation-submit-btn"]').click();
 
-  // Step 3: Profile completion - fill required fields
+  // Step 2: Elearning - units already completed in fixture so Next is enabled immediately
+  cy.wait('@elearningUnits');
+  cy.get('[data-testid="onboarding-next-step-btn"]').click();
+  cy.get('[data-testid="elearning-confirmation-submit-btn"]').click();
+
+  // Step 3: Social situation - submit empty optional form
+  cy.get('[data-testid="onboarding-next-step-btn"]').click();
+  cy.wait('@updateSocialSituation');
+  cy.get('[data-testid="social-situation-confirmation-submit-btn"]').click();
+
+  // Step 4: Profile completion - fill required fields
   cy.get(
     '[data-testid="form-onboarding-profile-completion-introduction"]'
   ).type(

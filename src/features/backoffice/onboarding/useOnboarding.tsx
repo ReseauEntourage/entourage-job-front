@@ -8,6 +8,7 @@ import { OnboardingStatus } from '@/src/constants/onboarding';
 import { store, type AppDispatch } from '@/src/store/store';
 import {
   currentUserActions,
+  selectFetchCurrentProfileStatus,
   selectForceOnboardingAsCompletedSelectors,
   selectUpdateOnboardingStatusSelectors,
 } from '@/src/use-cases/current-user';
@@ -40,6 +41,10 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const user = useAuthenticatedUser();
   const router = useRouter();
   const currentOnboardingIdx = useSelector(selectCurrentOnboardingIdx);
+  const fetchProfileStatus = useSelector(selectFetchCurrentProfileStatus);
+  const isProfileLoaded =
+    fetchProfileStatus === ReduxRequestEvents.SUCCEEDED ||
+    fetchProfileStatus === ReduxRequestEvents.FAILED;
   const formErrorMessage = useSelector(selectFormErrorMessage);
   const isLoading = useSelector(selectIsLoading);
   const updateOnboardingStatus = useSelector(
@@ -253,14 +258,14 @@ export const useOnboarding = (): UseOnboardingReturn => {
 
   // useEffect - Initialize current onboarding step on mount.
   useEffect(() => {
-    // Only set starting step if not already set
-    if (currentOnboardingIdx !== null) {
+    // Only set starting step if not already set, and wait for profile data
+    if (currentOnboardingIdx !== null || !isProfileLoaded) {
       return;
     }
     determineStartingStep(onboardingSteps).then((stepToLoad) => {
       dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
     });
-  }, [currentOnboardingIdx, dispatch, onboardingSteps]);
+  }, [currentOnboardingIdx, dispatch, isProfileLoaded, onboardingSteps]);
 
   // Return values from the useOnboarding hook.
   return {
