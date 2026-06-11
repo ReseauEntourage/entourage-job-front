@@ -106,30 +106,21 @@ export const Profile = () => {
               <ProfileShareNetwork profile={selectedProfile} />
             )}
             {selectedProfile.role === UserRoles.CANDIDATE && (
-              <ProfileContracts
-                contracts={selectedProfile.contracts}
-                smallCard
-              />
+              <ProfileContracts contracts={selectedProfile.contracts} />
             )}
-            <ProfileInterests interests={selectedProfile.interests} smallCard />
+            <ProfileInterests interests={selectedProfile.interests} />
             <ProfileLanguages
               userProfileLanguages={selectedProfile.userProfileLanguages}
-              smallCard
             />
             <ProfileDocuments
               userId={selectedProfile.id}
               linkedinUrl={selectedProfile.linkedinUrl}
               hasExternalCv={selectedProfile.hasExternalCv}
-              smallCard
             />
-            <ProfileContactPreferences
-              userRole={selectedProfile.role}
-              smallCard
-            />
+            <ProfileContactPreferences userRole={selectedProfile.role} />
             <ProfileNudges
               userRole={selectedProfile.role}
               nudges={selectedProfile.nudges}
-              smallCard
             />
           </StyledProfileRightColumn>
         </StyledBackofficeGrid>

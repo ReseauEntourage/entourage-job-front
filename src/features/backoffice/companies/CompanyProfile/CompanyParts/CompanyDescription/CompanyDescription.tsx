@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import {
@@ -12,13 +12,11 @@ import { ModalEditCompanyDescription } from './ModalEditCompanyDescription/Modal
 interface ProfileDescriptionProps {
   description: string | null;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const CompanyDescription = ({
   description,
   isEditable = false,
-  smallCard = false,
 }: ProfileDescriptionProps) => {
   const isCompleted = !!description;
 
@@ -58,7 +56,6 @@ export const CompanyDescription = ({
         ),
         icon: <SvgIcon name="IlluBulleQuestion" />,
       }}
-      smallCard={smallCard}
     >
       {description && (
         <StyledDescriptionContainer>

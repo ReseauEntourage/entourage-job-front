@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, LucidIcon } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { Text } from '@/src/components/ui/Text/Text';
@@ -18,9 +18,11 @@ interface PrettyModalProps {
   subtitle?: string;
   size?: ModalSize;
   submitBtnTxt?: string;
-  onSubmit?: () => void;
+  submitDisabled?: boolean;
+  onSubmit?: () => void | Promise<void>;
   children?: React.ReactNode;
   icon?: React.ReactNode;
+  secondaryAction?: React.ReactNode;
 }
 
 export const PrettyModal = ({
@@ -29,19 +31,27 @@ export const PrettyModal = ({
   subtitle,
   size = 'medium',
   submitBtnTxt = 'Envoyer',
+  submitDisabled = false,
   onSubmit,
   children,
   icon,
+  secondaryAction,
 }: PrettyModalProps) => {
   const defaultIcon = <LucidIcon name="BadgeCheck" color="white" size={48} />;
   const { onClose } = useModalContext();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleClose = () => {
-    if (onSubmit) {
-      onSubmit();
-    }
-    if (onClose) {
-      onClose();
+  const handleClose = async () => {
+    setIsSubmitting(true);
+    try {
+      if (onSubmit) {
+        await onSubmit();
+      }
+      if (onClose) {
+        onClose();
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -66,10 +76,12 @@ export const PrettyModal = ({
         <Button
           size="large"
           onClick={handleClose}
+          disabled={isSubmitting || submitDisabled}
           dataTestId={`${id}-submit-btn`}
         >
           {submitBtnTxt}
         </Button>
+        {secondaryAction}
       </StyledModalFooterContainer>
     </Modal>
   );

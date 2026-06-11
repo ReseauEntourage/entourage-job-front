@@ -1,7 +1,7 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text, TextSize } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { ButtonIcon } from '../../../Button';
 import {
   StyledDeleteIconContainer,

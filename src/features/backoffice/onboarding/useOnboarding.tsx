@@ -8,6 +8,7 @@ import { OnboardingStatus } from '@/src/constants/onboarding';
 import { store, type AppDispatch } from '@/src/store/store';
 import {
   currentUserActions,
+  selectFetchCurrentProfileStatus,
   selectForceOnboardingAsCompletedSelectors,
   selectUpdateOnboardingStatusSelectors,
 } from '@/src/use-cases/current-user';
@@ -19,6 +20,7 @@ import {
   selectIsLoading,
 } from '../../../use-cases/onboarding/onboarding.selectors';
 import { openModal } from '../../modals/Modal/openModal';
+import { OnboardingCompletionModal } from './completion-modal/OnboardingCompletionModal';
 import { ConfirmModalStep } from './confirm-step-modal/ConfirmModalStep';
 import { OnboardingStep, UseOnboardingReturn } from './onboarding.types';
 import {
@@ -29,7 +31,6 @@ import { useOnboardingStepElearning } from './steps/step-elearning/useOnboarding
 import { useOnboardingStepNudges } from './steps/step-nudges/useOnboardingStepNudges';
 import { useOnboardingStepProfileCompletion } from './steps/step-profile-completion/useOnboardingStepProfileCompletion';
 import { useOnboardingStepSocialSituation } from './steps/step-social-situation/useOnboardingStepSocialSituation';
-import { useOnboardingStepWebinar } from './steps/step-webinar/useOnboardingStepWebinar';
 
 /**
  * useOnboarding - Custom hook to manage onboarding state and actions.
@@ -40,6 +41,10 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const user = useAuthenticatedUser();
   const router = useRouter();
   const currentOnboardingIdx = useSelector(selectCurrentOnboardingIdx);
+  const fetchProfileStatus = useSelector(selectFetchCurrentProfileStatus);
+  const isProfileLoaded =
+    fetchProfileStatus === ReduxRequestEvents.SUCCEEDED ||
+    fetchProfileStatus === ReduxRequestEvents.FAILED;
   const formErrorMessage = useSelector(selectFormErrorMessage);
   const isLoading = useSelector(selectIsLoading);
   const updateOnboardingStatus = useSelector(
@@ -48,7 +53,6 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const forceOnboardingAsCompletedStatus = useSelector(
     selectForceOnboardingAsCompletedSelectors.selectForceOnboardingAsCompletedStatus
   );
-  const { onboardingStepWebinar } = useOnboardingStepWebinar();
   const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation();
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: user.role,
@@ -92,15 +96,13 @@ export const useOnboarding = (): UseOnboardingReturn => {
   // onboardingSteps - Memoized array of onboarding steps based on user role.
   const onboardingSteps: OnboardingStep[] = useMemo(() => {
     return [
-      onboardingStepWebinar,
+      onboardingStepNudges,
       onboardingStepElearning,
       ...(user.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
-      onboardingStepNudges,
       onboardingStepProfileCompletion,
     ];
   }, [
     user.role,
-    onboardingStepWebinar,
     onboardingStepElearning,
     onboardingStepNudges,
     onboardingStepSocialSituation,
@@ -180,7 +182,10 @@ export const useOnboarding = (): UseOnboardingReturn => {
   }, [onboardingSteps, currentOnboardingIdx]);
 
   // onOnboardingComplete - Callback when onboarding is complete.
-  const onOnboardingCompleted = useCallback(() => {
+  const onOnboardingCompleted = useCallback(async () => {
+    await new Promise<void>((resolve) => {
+      openModal(<OnboardingCompletionModal onDone={() => resolve()} />);
+    });
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({
         onboardingStatus: OnboardingStatus.COMPLETED,
@@ -229,7 +234,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
       typeof onboardingSteps.length !== 'number' ||
       currentOnboardingIdx + 1 >= onboardingSteps.length
     ) {
-      onOnboardingCompleted();
+      await onOnboardingCompleted();
       return;
     }
     dispatch(
@@ -253,14 +258,14 @@ export const useOnboarding = (): UseOnboardingReturn => {
 
   // useEffect - Initialize current onboarding step on mount.
   useEffect(() => {
-    // Only set starting step if not already set
-    if (currentOnboardingIdx !== null) {
+    // Only set starting step if not already set, and wait for profile data
+    if (currentOnboardingIdx !== null || !isProfileLoaded) {
       return;
     }
     determineStartingStep(onboardingSteps).then((stepToLoad) => {
       dispatch(onboardingActions.setCurrentOnboardingIdx(stepToLoad));
     });
-  }, [currentOnboardingIdx, dispatch, onboardingSteps]);
+  }, [currentOnboardingIdx, dispatch, isProfileLoaded, onboardingSteps]);
 
   // Return values from the useOnboarding hook.
   return {

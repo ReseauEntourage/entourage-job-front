@@ -457,7 +457,7 @@ function* fetchCurrentAchievementsRequestedSaga() {
       return;
     }
     const response = yield* call(() => Api.getCurrentAchievements());
-    yield* put(fetchCurrentAchievementsSucceeded(response.data));
+    yield* put(fetchCurrentAchievementsSucceeded(response.data.achievements));
   } catch (e) {
     console.error(e);
     yield* put(fetchCurrentAchievementsFailed());

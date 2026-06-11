@@ -1,6 +1,6 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { UserRoles } from '@/src/constants/users';
 import { ProfileCareerPathSentence } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { ProfilePartCard } from '../Card/Card/Card';
@@ -16,7 +16,6 @@ interface ProfileProfessionalInformationsProps {
   role: UserRoles;
   currentJob?: string;
   company: Company | null;
-  smallCard?: boolean;
 }
 
 export const ProfileProfessionalInformations = ({
@@ -27,13 +26,11 @@ export const ProfileProfessionalInformations = ({
   role,
   currentJob,
   company,
-  smallCard = false,
 }: ProfileProfessionalInformationsProps) => {
   const isEmpty = !sectorOccupations.length && !description && !skills.length;
   return (
     <ProfilePartCard
       title="Informations professionnelles"
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>

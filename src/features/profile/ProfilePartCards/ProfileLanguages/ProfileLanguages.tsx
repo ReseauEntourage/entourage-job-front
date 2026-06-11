@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
@@ -13,13 +13,11 @@ import { ProfileLanguagesModalEdit } from './ProfileLanguagesModalEdit';
 interface ProfileLanguagesProps {
   userProfileLanguages?: UserProfileLanguage[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileLanguages = ({
   userProfileLanguages = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileLanguagesProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
@@ -49,14 +47,12 @@ export const ProfileLanguages = ({
       title="Langues parlées"
       isCompleted={isCompleted}
       ctaCallback={isEditable ? openEditModal : undefined}
-      //      iaGenerated
       isEditable={isEditable}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>Vous n’avez pas encore renseigné vos langues parlées</Text>
         ),
-        icon: <SvgIcon name="IlluBulleQuestionCheck" width={80} height={80} />,
+        icon: <SvgIcon name="IlluBulleQuestionCheck" />,
       }}
     >
       <CardTagList

@@ -8,12 +8,10 @@ import { CardToggleList } from '../Card/CardToggleList/CardToggleList';
 
 interface ProfileNotificationsPreferencesProps {
   userProfile: Pick<UserProfile, 'optInRecommendations'> | null;
-  smallCard?: boolean;
 }
 
 export const ProfileNotificationsPreferences = ({
   userProfile,
-  smallCard = false,
 }: ProfileNotificationsPreferencesProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
@@ -39,12 +37,7 @@ export const ProfileNotificationsPreferences = ({
   };
 
   return (
-    <ProfilePartCard
-      title="Notifications email"
-      smallCard={smallCard}
-      isEmpty={false}
-      isEditable
-    >
+    <ProfilePartCard title="Notifications email" isEmpty={false} isEditable>
       <CardToggleList items={items} onChange={onChange} isEditable />
     </ProfilePartCard>
   );

@@ -17,6 +17,7 @@ export function DirectoryEventItem({
   fullAddress,
   registrationCount,
   isParticipating,
+  publicSensibilise,
 }: DirectoryEventItemProps) {
   return (
     <CardListItem dataTestId={salesForceId}>
@@ -30,6 +31,7 @@ export function DirectoryEventItem({
         fullAddress={fullAddress}
         registrationCount={registrationCount}
         isParticipating={isParticipating}
+        publicSensibilise={publicSensibilise}
       />
     </CardListItem>
   );

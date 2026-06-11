@@ -12,7 +12,7 @@ export const StyledOffCanvas = styled.div<{
   ${(props) => (props.position === 'left' ? 'left: 0;' : 'right: 0;')}
   z-index: 1040;
   width: 270px;
-  background-color: ${COLORS.navBlack};
+  background-color: ${COLORS.extraDarkGray};
   padding: 20px;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {

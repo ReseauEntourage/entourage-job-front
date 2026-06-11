@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyUserRole } from '@/src/constants/company';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { ExtractFormSchemaValidation } from '../forms/FormSchema';

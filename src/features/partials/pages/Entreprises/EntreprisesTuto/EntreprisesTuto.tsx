@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyGoal } from '@/src/constants/company';
 import { RowIconTitleText } from '../../../utils/RowIconTitleText';
 

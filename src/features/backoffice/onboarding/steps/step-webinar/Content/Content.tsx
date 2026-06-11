@@ -2,15 +2,13 @@ import React, { useCallback, useEffect } from 'react';
 import { Api } from '@/src/api';
 import { Event } from '@/src/api/types';
 import { Alert } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
-import { H4 } from '@/src/components/ui/Headings';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { SelectList } from '@/src/components/ui/Inputs/SelectList';
 import { SelectListGroup } from '@/src/components/ui/Inputs/SelectList/SelectList.types';
 import { SelectOptionWebinarLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionWebinarLabel/SelectOptionWebinarLabel';
 import { EventMode, EventType } from '@/src/constants/events';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
-import { WebinarSelectGroupLabel } from '../WebinarSelectGroupLabel/WebinarSelectGroupLabel';
-import { StyledSeparator } from './Content.styles';
+import { WebinarSelectGroupLabel } from '../../../completion-modal/WebinarSelectGroupLabel';
 
 const NO_DATE_VALUE = 'no-date';
 
@@ -81,21 +79,6 @@ export const Content = ({
         options: inPersonEvents.map(toOption),
       });
     }
-    groups.push({
-      label: (
-        <StyledSeparator>
-          <hr />
-          <span>ou</span>
-          <hr />
-        </StyledSeparator>
-      ),
-      options: [
-        {
-          value: NO_DATE_VALUE,
-          label: <SelectOptionWebinarLabel noDate />,
-        },
-      ],
-    });
     setOptions(groups);
     setIsLoading(false);
     setIsIdle(false);
@@ -115,8 +98,6 @@ export const Content = ({
 
   return (
     <>
-      <H4 title="Séléctionnez la date qui vous convient le mieux" />
-      <br />
       <SelectList
         id="webinarSfId"
         name="webinarSfId"
@@ -138,7 +119,7 @@ export const Content = ({
         estimatedOptionLength={6}
       />
       {noDateSelected && (
-        <Alert variant={AlertVariant.Info}>
+        <Alert type={AlertType.Info} variant="outlined">
           Pas de souci&nbsp;! Vous retrouverez les prochaines sessions
           disponibles directement dans votre espace. Nous vous enverrons un
           rappel par e-mail dès qu&apos;une nouvelle date sera ouverte.

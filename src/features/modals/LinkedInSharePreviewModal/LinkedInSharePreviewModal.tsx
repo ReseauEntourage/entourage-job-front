@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { isLinkedinShareDuplicateError } from '@/src/api/axiosErrors';
 import { Alert, Button, Text } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { LinkedInPostWhatsAppInviteModal } from '@/src/features/modals/LinkedInPostWhatsAppInviteModal/LinkedInPostWhatsAppInviteModal';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
@@ -131,13 +131,13 @@ export const LinkedInSharePreviewModal = ({
           />
         ) : null}
         {hasParensError && (
-          <Alert variant={AlertVariant.Error} icon={null}>
+          <Alert type={AlertType.Error} icon={null}>
             Le message ne peut pas contenir de parenthèses. Veuillez les
             supprimer avant de partager.
           </Alert>
         )}
         {shareError && (
-          <Alert variant={AlertVariant.Error} icon={null}>
+          <Alert type={AlertType.Error} icon={null}>
             {shareError}
           </Alert>
         )}

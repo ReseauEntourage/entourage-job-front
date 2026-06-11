@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Grid, Section } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';

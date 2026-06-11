@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
 import { updateCompanyLogoSelectors } from '@/src/use-cases/company';

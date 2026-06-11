@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Button } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { CheckBox } from '@/src/components/ui/Inputs';
 import { DocumentNameType, ReduxRequestEvents } from 'src/constants';
 import {
@@ -59,7 +59,7 @@ export const SignDocument = ({ documentName, label }: SignDocumentProps) => {
 
   return (
     <StyledSignDocument>
-      <Alert variant={AlertVariant.Info} icon={null}>
+      <Alert type={AlertType.Info} icon={null}>
         <CheckBox
           title={label}
           value={isChecked}

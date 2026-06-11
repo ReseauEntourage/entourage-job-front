@@ -18,14 +18,12 @@ interface ProfileNudgesProps {
   userRole: UserRoles;
   nudges: Nudge[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileNudges = ({
   userRole,
   nudges,
   isEditable = false,
-  smallCard = false,
 }: ProfileNudgesProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
@@ -101,7 +99,6 @@ export const ProfileNudges = ({
       isEditable={isEditable}
       isCompleted={isCompleted}
       isEmpty={false}
-      smallCard={smallCard}
     >
       {isEditable ? (
         <CardToggleList

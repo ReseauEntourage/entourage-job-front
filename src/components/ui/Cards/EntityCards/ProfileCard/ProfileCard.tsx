@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, { useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { H3, H6 } from '@/src/components/ui/Headings';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
 import { RecommendationReasonBadge } from '@/src/components/ui/RecommendationReasonBadge/RecommendationReasonBadge';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
 import { Genders } from '@/src/constants/genders';
 import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';

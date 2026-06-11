@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, LucidIcon, Text } from '@/src/components/ui';
+import { ButtonAddToCalendar } from '@/src/components/ui/Button/ButtonAddToCalendar';
 import { ButtonShare } from '@/src/components/ui/Button/ButtonShare';
 import { EventParticipateButton } from '../EventParticipateButton/EventParticipateButton';
 import { Event } from 'src/api/types';
@@ -12,7 +13,15 @@ import {
 
 type EventActionsProps = Pick<
   Event,
-  'name' | 'description' | 'salesForceId' | 'isParticipating'
+  | 'name'
+  | 'description'
+  | 'salesForceId'
+  | 'isParticipating'
+  | 'startDate'
+  | 'endDate'
+  | 'mode'
+  | 'meetingLink'
+  | 'fullAddress'
 >;
 
 export const EventActions = ({
@@ -20,6 +29,11 @@ export const EventActions = ({
   description,
   salesForceId,
   isParticipating,
+  startDate,
+  endDate,
+  mode,
+  meetingLink,
+  fullAddress,
 }: EventActionsProps) => {
   return (
     <Card title="Inscription">
@@ -35,6 +49,22 @@ export const EventActions = ({
             eventSalesForceId={salesForceId}
             isParticipating={isParticipating}
           />
+          {isParticipating && (
+            <ButtonAddToCalendar
+              id={salesForceId}
+              title={name}
+              description={description}
+              startDate={startDate}
+              endDate={endDate}
+              mode={mode}
+              meetingLink={meetingLink}
+              fullAddress={fullAddress}
+              variant="default"
+            >
+              <LucidIcon name="CalendarPlus" />
+              &nbsp;Ajouter à mon agenda
+            </ButtonAddToCalendar>
+          )}
           <ButtonShare
             url={`${window.location.origin}/backoffice/events/${salesForceId}`}
             title={name}

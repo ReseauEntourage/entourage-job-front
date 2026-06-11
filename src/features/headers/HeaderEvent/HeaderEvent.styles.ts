@@ -32,3 +32,9 @@ export const StyledHeaderInfoContainer = styled.div`
   flex-direction: column;
   gap: 20px;
 `;
+
+export const StyledTitleAndBadges = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;

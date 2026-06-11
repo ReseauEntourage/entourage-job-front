@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Text } from '@/src/components/ui';
 import { DocumentItem } from '@/src/components/ui/DocumentItem/DocumentItem';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
@@ -20,7 +20,6 @@ interface ProfileDocumentsProps {
   linkedinUrl?: string | null;
   hasExternalCv?: boolean | null;
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileDocuments = ({
@@ -28,7 +27,6 @@ export const ProfileDocuments = ({
   userId,
   linkedinUrl,
   hasExternalCv,
-  smallCard = false,
 }: ProfileDocumentsProps) => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
@@ -78,7 +76,6 @@ export const ProfileDocuments = ({
       isCompleted={isCompleted}
       isEditable={isEditable}
       ctaCallback={isEditable ? openEditModal : undefined}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>
@@ -86,7 +83,7 @@ export const ProfileDocuments = ({
             autres documents
           </Text>
         ),
-        icon: <SvgIcon name="IlluCandidatFolder" width={38} height={38} />,
+        icon: <SvgIcon name="IlluCandidatFolder" />,
       }}
     >
       <StyledDocumentList>

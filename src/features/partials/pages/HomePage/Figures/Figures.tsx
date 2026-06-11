@@ -1,5 +1,4 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import {
   Button,
   Section,
@@ -7,6 +6,7 @@ import {
   StyledCenteredButtonContainer,
 } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';

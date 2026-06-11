@@ -83,6 +83,15 @@ export const EVENT_IMAGES: {
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
 
+export enum PublicSensibilise {
+  GENERAL_PUBLIC = 'Grand public',
+  COMPANIES = 'Entreprises',
+  ORGANIZATIONS = 'Associations',
+  SCHOLARS = 'Scolaire',
+  AUTHORITIES = 'Collectivité',
+  YOUNG_PUBLIC = 'Jeunes',
+}
+
 export const EVENT_MODES_FILTERS: FilterConstant<EventMode>[] = [
   ...EVENT_MODES.map(({ name, format }) => {
     return {
@@ -100,3 +109,6 @@ export const EVENT_TYPES_FILTERS: FilterConstant<string>[] = [
     };
   }),
 ];
+
+export const EVENT_PUBLIC_SENSIBILISE_FILTERS: FilterConstant<PublicSensibilise>[] =
+  [{ value: PublicSensibilise.YOUNG_PUBLIC, label: 'Réservé aux jeunes' }];

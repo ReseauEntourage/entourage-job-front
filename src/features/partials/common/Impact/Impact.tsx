@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import {
   Button,
   StyledCenteredButtonContainer,
   Section,
 } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';

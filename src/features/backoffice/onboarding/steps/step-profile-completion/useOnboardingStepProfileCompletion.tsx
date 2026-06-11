@@ -344,15 +344,6 @@ export const useOnboardingStepProfileCompletion = () => {
         )();
       });
     },
-    confirmationStep: {
-      title: 'Félicitations ! Vous avez complété votre profil',
-      subtitle:
-        user.role === UserRoles.CANDIDATE
-          ? 'Vous êtes désormais prêt à contacter des coachs prêts à vous soutenir'
-          : 'Vous êtes désormais prêt à soutenir des candidats',
-      submitBtnTxt: 'Démarrer l’aventure Entourage Pro',
-      id: 'profile-completion-confirmation',
-    },
   } as OnboardingStep;
 
   return { onboardingStepProfileCompletion };

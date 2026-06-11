@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { ALERT_COLORS, COLORS } from 'src/constants/styles';
+import { ALERT_COLORS } from '../Alert/Alert.styles';
+import { COLORS } from 'src/constants/styles';
+
 import {
   StyledColor,
   StyledColorContainer,
@@ -50,23 +52,32 @@ const ColorsTemplate = () => {
       </StyledColorsContainer>
       <h4>Alert Colors</h4>
       <StyledColorsContainer>
-        {Object.keys(ALERT_COLORS).map((colorKey) => {
-          return (
-            <StyledColorContainer
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  ALERT_COLORS[colorKey].background
-                );
-                alert(`Copied: ${ALERT_COLORS[colorKey].background}`);
-              }}
-            >
-              <StyledColor color={ALERT_COLORS[colorKey].background}>
-                {ALERT_COLORS[colorKey].background}
-              </StyledColor>
-              <div>{colorKey}</div>
-            </StyledColorContainer>
-          );
-        })}
+        {(Object.keys(ALERT_COLORS) as (keyof typeof ALERT_COLORS)[]).map(
+          (colorKey) => {
+            return (
+              <StyledColorContainer
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    ALERT_COLORS[colorKey].mainColor
+                  );
+                  alert(`Copied: ${ALERT_COLORS[colorKey].mainColor}`);
+                }}
+              >
+                <StyledColor color={COLORS[ALERT_COLORS[colorKey].mainColor]}>
+                  <div style={{ color: COLORS[ALERT_COLORS[colorKey].text] }}>
+                    {ALERT_COLORS[colorKey].mainColor}
+                    <br />
+                    Text {ALERT_COLORS[colorKey].text}
+                  </div>
+                </StyledColor>
+                <StyledColor color={COLORS[ALERT_COLORS[colorKey].lightColor]}>
+                  {ALERT_COLORS[colorKey].lightColor}
+                </StyledColor>
+                <div>{colorKey}</div>
+              </StyledColorContainer>
+            );
+          }
+        )}
       </StyledColorsContainer>
     </div>
   );

@@ -14,13 +14,11 @@ interface ContractItem {
 
 interface ProfileContractsProps {
   isEditable?: boolean;
-  smallCard?: boolean;
   contracts: Contract[];
 }
 
 export const ProfileContracts = ({
   isEditable = false,
-  smallCard = false,
   contracts = [],
 }: ProfileContractsProps) => {
   const user = useAuthenticatedUser();
@@ -79,7 +77,6 @@ export const ProfileContracts = ({
       isEditable={isEditable}
       isCompleted={isCompleted}
       isEmpty={false}
-      smallCard={smallCard}
     >
       {isEditable ? (
         <CardToggleList

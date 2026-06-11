@@ -3,10 +3,10 @@ import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledNavbar = styled.nav`
   background-color: ${({ backgroundColor }) => {
-    return COLORS[backgroundColor] || COLORS.navBlack;
+    return COLORS[backgroundColor] || COLORS.extraDarkGray;
   }};
   color: ${({ color }) => {
-    return COLORS[color] || COLORS.navBlack;
+    return COLORS[color] || COLORS.extraDarkGray;
   }};
   position: ${({ sticky }) => {
     return sticky ? 'fixed' : 'inherit';

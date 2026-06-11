@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
 import {
   Button,
   Card,
@@ -13,6 +12,7 @@ import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { ProfileNudges } from '@/src/constants/nudges';
 import { ProfileCompletion } from '@/src/features/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';

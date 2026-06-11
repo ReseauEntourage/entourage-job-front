@@ -28,6 +28,10 @@ const badgeVariantStyles: Record<BadgeVariant, ReturnType<typeof css>> = {
     background-color: ${COLORS.extraLightAmber};
     color: ${COLORS.amber};
   `,
+  [BadgeVariant.Orange]: css`
+    background-color: ${COLORS.lightOrange};
+    color: ${COLORS.orangeSocial};
+  `,
 };
 
 export const StyledBadge = styled.div<{
@@ -36,6 +40,10 @@ export const StyledBadge = styled.div<{
   $borderRadius?: 'small' | 'medium' | 'large';
   $clickable?: boolean;
 }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
   padding: ${({ $size }) => BADGE_SIZES[$size].padding};
   font-size: ${({ $size }) => BADGE_SIZES[$size].fontSize}px;
@@ -51,5 +59,6 @@ export const StyledBadge = styled.div<{
         return '6px';
     }
   }};
-  ${({ variant }) => badgeVariantStyles[variant]}
+  ${({ variant }) => badgeVariantStyles[variant]};
+  flex-shrink: 0;
 `;

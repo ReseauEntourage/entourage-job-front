@@ -38,11 +38,7 @@ export const ProfileContactCard = ({
   }
 
   return (
-    <ProfilePartCard
-      title={`Contacter ${firstName}`}
-      smallCard={false}
-      isCompleted
-    >
+    <ProfilePartCard title={`Contacter ${firstName}`} isCompleted>
       {isAvailable ? (
         <>
           <StyledProfileContactForm>

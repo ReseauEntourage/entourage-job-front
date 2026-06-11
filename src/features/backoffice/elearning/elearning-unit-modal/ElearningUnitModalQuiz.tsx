@@ -1,5 +1,5 @@
 import { Text, Alert, LucidIcon } from '@/src/components/ui';
-import { AlertVariant } from '@/src/components/ui/Alert/Alert.types';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { H5 } from '@/src/components/ui/Headings';
 import { Radio } from '@/src/components/ui/Inputs';
 import { ProgressBar } from '@/src/components/ui/ProgressBar/ProgressBar';
@@ -72,7 +72,8 @@ export const ElearningUnitModalQuiz = ({
 
       {hasError && (
         <Alert
-          variant={AlertVariant.Error}
+          type={AlertType.Error}
+          variant="filled"
           icon={<LucidIcon name="MessageCircleWarning" size={24} />}
         >
           <Text color="white" weight="semibold">

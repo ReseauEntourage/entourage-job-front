@@ -1,6 +1,6 @@
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
-import { EventMode, EventType } from '../constants/events';
+import { PublicSensibilise, EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
 import { OnboardingStatus } from '../constants/onboarding';
 import {
@@ -219,6 +219,7 @@ export type Event = {
   audience: string;
   sequences?: string[];
   isParticipating: boolean;
+  publicSensibilise: PublicSensibilise[] | null;
 };
 
 export type UserReportDto = {
@@ -333,6 +334,15 @@ export enum AchievementType {
 export type UserAchievement = {
   id: string;
   createdAt: string;
+  title: string;
+  achievementType: AchievementType;
+};
+
+export type PublicAchievement = {
+  firstName: string;
+  lastName: string;
+  gender: Genders;
+  achievedAt: string;
   title: string;
   achievementType: AchievementType;
 };
@@ -722,6 +732,7 @@ export type EventsFilters = {
   modes?: EventMode | EventMode[];
   isParticipating?: boolean;
   includePastEvents?: boolean;
+  publicSensibilise?: PublicSensibilise | PublicSensibilise[];
 };
 
 export type PostAuthSendVerifyEmailParams = {

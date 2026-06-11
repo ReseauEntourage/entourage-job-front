@@ -1,6 +1,6 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { SimpleImageText } from '../../utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
@@ -164,7 +164,8 @@ const contentAs: { [K in DisplayAs]: Content } = {
     content: (
       <>
         Rejoignez une large communauté de coachs bénévoles qui agissent pour que
-        l’isolement et la précarité ne soit pas un frein à la recherche d’emploi
+        l’isolement et la précarité ne soient pas un frein à la recherche
+        d’emploi
       </>
     ),
 

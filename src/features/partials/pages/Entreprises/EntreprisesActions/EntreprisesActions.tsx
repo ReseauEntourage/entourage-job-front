@@ -1,7 +1,7 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { LegacyImg, Section } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { EntreprisesActionsItem } from './EntreprisesActionItem/EntreprisesActionItem';
 import {

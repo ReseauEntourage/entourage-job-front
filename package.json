@@ -1,10 +1,10 @@
 {
   "name": "entourage-pro-front",
-  "version": "2.22.17",
+  "version": "2.22.18",
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev --turbopack",

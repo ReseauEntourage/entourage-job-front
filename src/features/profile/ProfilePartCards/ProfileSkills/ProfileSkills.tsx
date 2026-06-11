@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Skill } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
@@ -12,13 +12,11 @@ import { ProfileSkillsModalEdit } from './ProfileSkillsModalEdit';
 interface ProfileSkillsProps {
   skills?: Skill[];
   isEditable?: boolean;
-  smallCard?: boolean;
 }
 
 export const ProfileSkills = ({
   skills = [],
   isEditable = false,
-  smallCard = false,
 }: ProfileSkillsProps) => {
   const isCompleted = skills.length > 0;
   const user = useAuthenticatedUser();
@@ -48,7 +46,6 @@ export const ProfileSkills = ({
       ctaCallback={openEditModal}
       // iaGenerated
       isEditable={isEditable}
-      smallCard={smallCard}
       fallback={{
         content: (
           <Text>Vous n&apos;avez pas encore renseigné vos compétences</Text>

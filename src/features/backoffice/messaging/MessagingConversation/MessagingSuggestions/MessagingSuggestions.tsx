@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
 import { ConversationParticipant } from '@/src/api/types';
 import { H3 } from '@/src/components/ui/Headings/H3';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { isRoleIncluded } from '@/src/utils';

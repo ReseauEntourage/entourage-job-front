@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Card, Text } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import {
   fetchRecruitementAlertsAction,

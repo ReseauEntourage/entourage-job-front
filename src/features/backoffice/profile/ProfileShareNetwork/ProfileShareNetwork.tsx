@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { LinkedInPostWhatsAppInviteModal } from '@/src/features/modals/LinkedInPostWhatsAppInviteModal/LinkedInPostWhatsAppInviteModal';
@@ -77,6 +77,16 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
     });
   }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!router.isReady || !router.query.openLinkedInSharer) {
+      return;
+    }
+    handleLinkedinShare();
+    router.replace(`/backoffice/profile/${profile.id}`, undefined, {
+      shallow: true,
+    });
+  }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (user.role === UserRoles.CANDIDATE) {
     return null;
   }
@@ -84,7 +94,6 @@ export const ProfileShareNetwork = ({ profile }: ProfileShareNetworkProps) => {
   return (
     <ProfilePartCard
       title="Mobiliser mon réseau"
-      smallCard={false}
       isCompleted={false}
       isEmpty={false}
     >

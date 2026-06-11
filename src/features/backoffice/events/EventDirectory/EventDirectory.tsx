@@ -5,6 +5,7 @@ import { Section } from '@/src/components/ui';
 import {
   EVENT_MODES_FILTERS,
   EVENT_TYPES_FILTERS,
+  EVENT_PUBLIC_SENSIBILISE_FILTERS,
 } from '@/src/constants/events';
 import { GA_TAGS } from '@/src/constants/tags';
 import { Filter, FilterConstant } from '@/src/constants/utils';
@@ -37,7 +38,7 @@ export function EventDirectory() {
     React.useState(false);
 
   // Query params for filters
-  const { modes, search, departmentIds, eventTypes } =
+  const { modes, search, departmentIds, eventTypes, publicSensibilise } =
     useEventDirectoryQueryParams();
 
   // Departments for the department filter
@@ -70,6 +71,12 @@ export function EventDirectory() {
       constants: departmentsIdsFilters,
       title: 'Département',
       tag: GA_TAGS.PAGE_EVENTS_FILTRE_DEPARTMENT_CLIC,
+    } as Filter,
+    {
+      key: 'publicSensibilise',
+      constants: EVENT_PUBLIC_SENSIBILISE_FILTERS,
+      title: 'Thème',
+      tag: GA_TAGS.PAGE_EVENTS_FILTRE_PUBLIC_SENSIBILISE_CLIC,
     } as Filter,
   ];
 
@@ -107,8 +114,17 @@ export function EventDirectory() {
       departmentIds: mutateToArray(departmentIds).map((department) =>
         findConstantFromValue(department, departmentsIdsFilters)
       ),
+      publicSensibilise: mutateToArray(publicSensibilise).map((value) =>
+        findConstantFromValue(value, EVENT_PUBLIC_SENSIBILISE_FILTERS)
+      ),
     };
-  }, [modes, eventTypes, departmentIds, departmentsIdsFilters]);
+  }, [
+    modes,
+    eventTypes,
+    departmentIds,
+    departmentsIdsFilters,
+    publicSensibilise,
+  ]);
 
   // Compute total number of applied filters
   const totalFiltersCount = useMemo(() => {

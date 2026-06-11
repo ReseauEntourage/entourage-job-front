@@ -1,6 +1,6 @@
 import React, { Ref } from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Text } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { StyledCriteriaIllu } from '@/src/features/partials/utils/SimpleCardsImageCTA/SimpleCardsImageCTA.styles';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
 import { StyledCTAsContainer } from '@/src/features/partials/utils/SimpleImageText/SimpleImageText.styles';

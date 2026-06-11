@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { RowIconTitleText } from '../../utils/RowIconTitleText';
 
 type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
@@ -83,7 +83,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
           <span style={highlightParagraphStyle}>
             On vous donne même les clefs
           </span>{' '}
-          pour proposer vos ateliers thématiques si vous le désirez
+          pour proposer vos ateliers thématiques si vous le désirez.
         </>
       ),
       illu: <SvgIcon name="IlluClef" {...opportunitiesIlluSizes} />,

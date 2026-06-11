@@ -34,6 +34,7 @@ import {
   EventsFilters,
   User,
   WhatsappZone,
+  PublicAchievement,
 } from './types';
 
 export class APIHandler {
@@ -123,6 +124,12 @@ export class APIHandler {
 
   getPublicCVByUserId(userId: string, headers?): Promise<AxiosResponse> {
     return this.get(`/users/public-cvs/${userId}`, {}, headers);
+  }
+
+  getPublicAchievementById(
+    achievementId: string
+  ): Promise<AxiosResponse<PublicAchievement>> {
+    return this.get(`/gamification/achievements/${achievementId}/public`);
   }
 
   /// //////

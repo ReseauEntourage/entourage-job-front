@@ -1,6 +1,6 @@
 import React from 'react';
-import { SvgIcon } from '@/assets/icons/icons';
 import { Button, Card } from '@/src/components/ui';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CardEmptyContent } from '../CardEmptyContent/CardEmptyContent';
 import { CardTitle } from '../CardTitle/CardTitle';
 import { CardContent, StyledEditButtonContainer } from './Card.styles';
@@ -15,10 +15,10 @@ interface ProfilePartCardProps {
   iaGenerated?: boolean;
   isEmpty?: boolean;
   fallback?: {
+    title?: string;
     content: React.ReactNode;
     icon: React.ReactNode;
   };
-  smallCard;
   isDefaultOpen?: boolean;
 }
 
@@ -35,7 +35,6 @@ export const ProfilePartCard = ({
     content: 'Commencez par renseigner cette partie',
     icon: <SvgIcon name="IlluBulleQuestion" width={35} height={30} />,
   },
-  smallCard = false,
   isDefaultOpen = true,
 }: ProfilePartCardProps) => {
   return (
@@ -56,9 +55,9 @@ export const ProfilePartCard = ({
         <CardContent>
           {isEmpty ? (
             <CardEmptyContent
+              title={fallback?.title}
               content={fallback.content}
               icon={fallback.icon}
-              smallCard={smallCard}
             />
           ) : (
             children
