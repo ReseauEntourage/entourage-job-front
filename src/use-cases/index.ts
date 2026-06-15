@@ -1,4 +1,5 @@
 import { authenticationConfig } from './authentication';
+import { wizardConfig } from './wizard';
 import { companyConfig } from './company';
 import { currentUserConfig } from './current-user';
 import { elearningConfig } from './elearning';
@@ -17,6 +18,7 @@ import { UseCaseConfigType } from './types';
 
 export const useCasesConfig: UseCaseConfigType = {
   authenticationConfig,
+  wizardConfig,
   currentUserConfig,
   profilesConfig,
   recruitementAlertsConfig,

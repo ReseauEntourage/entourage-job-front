@@ -278,6 +278,21 @@ export class APIHandler {
     return this.post('/user/refering', params);
   }
 
+  async postUserSendOtp(params: { userId: string }): Promise<AxiosResponse> {
+    return this.post('/user/send-otp', params);
+  }
+
+  async postUserVerifyOtp(params: {
+    userId: string;
+    code: string;
+  }): Promise<AxiosResponse> {
+    return this.post('/user/verify-otp', params);
+  }
+
+  async getUserWizardState(): Promise<AxiosResponse> {
+    return this.get('/user/wizard-state');
+  }
+
   postProfileImage(profileImage: FormData): Promise<AxiosResponse> {
     return this.post(`/user/profile/upload-image`, profileImage, {
       'Content-Type': 'multipart/form-data',

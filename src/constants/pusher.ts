@@ -2,10 +2,12 @@ import Pusher from 'pusher-js';
 
 export const PUSHER_CHANNELS = {
   PROFILE_GENERATION: 'profile-generation-channel',
+  WIZARD_SUGGESTIONS: 'wizard-suggestions-channel',
 };
 
 export const PUSHER_EVENTS = {
   PROFILE_GENERATION_COMPLETE: 'profile-generation-complete',
+  WIZARD_SUGGESTIONS_READY: 'wizard-suggestions-ready',
 };
 
 // Configuration de Pusher
