@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from 'src/components/ui';
-import { Alert } from 'src/components/ui';
-import { AlertType } from 'src/components/ui/Alert/Alert.types';
-import { OtpInput } from 'src/components/ui/OtpInput';
-import { OtpError } from 'src/use-cases/wizard/wizard.types';
 import styled from 'styled-components';
+import { Alert, Button } from 'src/components/ui';
+import { AlertType } from 'src/components/ui/Alert/Alert.types';
+import { H2 } from 'src/components/ui/Headings';
+import { OtpInput } from 'src/components/ui/OtpInput';
 import { COLORS } from 'src/constants/styles';
+import { OtpError } from 'src/use-cases/wizard/wizard.types';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -18,6 +18,10 @@ const StyledContainer = styled.div`
 const StyledEmailHint = styled.p`
   font-size: 14px;
   color: ${COLORS.darkGray};
+`;
+
+const StyledEmailBold = styled.span`
+  font-weight: bold;
 `;
 
 const StyledActions = styled.div`
@@ -47,8 +51,7 @@ const StyledResend = styled.button`
 const OTP_ERROR_MESSAGES: Record<OtpError, string> = {
   INVALID_CODE: 'Code incorrect. Veuillez réessayer.',
   EXPIRED: 'Ce code a expiré. Demandez un nouveau code.',
-  MAX_ATTEMPTS:
-    'Trop de tentatives. Demandez un nouveau code pour continuer.',
+  MAX_ATTEMPTS: 'Trop de tentatives. Demandez un nouveau code pour continuer.',
 };
 
 interface Step15OtpProps {
@@ -81,16 +84,15 @@ export const Step15Otp = ({
 
   return (
     <StyledContainer>
-      <h2>Vérifiez votre adresse e-mail</h2>
+      <H2 title="Vérifiez votre adresse e-mail" />
       <StyledEmailHint>
-        Nous avons envoyé un code à 6 chiffres à <strong>{email}</strong>.
-        Entrez-le ci-dessous pour confirmer votre adresse.
+        Nous avons envoyé un code à 6 chiffres à{' '}
+        <StyledEmailBold>{email}</StyledEmailBold>. Entrez-le ci-dessous pour
+        confirmer votre adresse.
       </StyledEmailHint>
 
       {otpError && (
-        <Alert type={AlertType.Error}>
-          {OTP_ERROR_MESSAGES[otpError]}
-        </Alert>
+        <Alert type={AlertType.Error}>{OTP_ERROR_MESSAGES[otpError]}</Alert>
       )}
 
       <OtpInput
@@ -113,7 +115,7 @@ export const Step15Otp = ({
             ? 'Envoi en cours…'
             : isExpired || isBlocked
             ? 'Renvoyer un nouveau code'
-            : 'Je n'ai pas reçu le code'}
+            : "Je n'ai pas reçu le code"}
         </StyledResend>
       </StyledActions>
     </StyledContainer>

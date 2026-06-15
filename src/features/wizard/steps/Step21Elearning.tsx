@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button } from 'src/components/ui';
+import { Alert, Button, Text } from 'src/components/ui';
 import { AlertType } from 'src/components/ui/Alert/Alert.types';
+import { H2 } from 'src/components/ui/Headings';
+import {
+  StyledOnboardingActions,
+  StyledOnboardingStepContainer,
+} from 'src/features/backoffice/onboarding/onboarding.styles';
 import { Content } from 'src/features/backoffice/onboarding/steps/step-elearning/Content/Content';
 import { PanelState } from 'src/use-cases/wizard/wizard.types';
 
@@ -9,8 +14,13 @@ interface Step21ElearningProps {
   onNext: () => void;
 }
 
-export const Step21Elearning = ({ panelState, onNext }: Step21ElearningProps) => {
-  const [suggestionsReady, setSuggestionsReady] = useState(panelState === 'results');
+export const Step21Elearning = ({
+  panelState,
+  onNext,
+}: Step21ElearningProps) => {
+  const [suggestionsReady, setSuggestionsReady] = useState(
+    panelState === 'results'
+  );
 
   useEffect(() => {
     if (panelState === 'results') {
@@ -19,12 +29,12 @@ export const Step21Elearning = ({ panelState, onNext }: Step21ElearningProps) =>
   }, [panelState]);
 
   return (
-    <div>
-      <h2>Modules e-learning</h2>
-      <p>
+    <StyledOnboardingStepContainer>
+      <H2 title="Modules e-learning" />
+      <Text>
         Complétez des modules pour renforcer vos compétences et améliorer votre
         profil.
-      </p>
+      </Text>
 
       {panelState === 'loading' && !suggestionsReady && (
         <Alert type={AlertType.Info}>
@@ -41,9 +51,11 @@ export const Step21Elearning = ({ panelState, onNext }: Step21ElearningProps) =>
 
       <Content />
 
-      <div style={{ marginTop: 24 }}>
-        <Button onClick={onNext}>Continuer</Button>
-      </div>
-    </div>
+      <StyledOnboardingActions>
+        <Button onClick={onNext} size="large">
+          Étape suivante
+        </Button>
+      </StyledOnboardingActions>
+    </StyledOnboardingStepContainer>
   );
 };

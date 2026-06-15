@@ -1,37 +1,5 @@
 import styled from 'styled-components';
-import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
-
-export const StyledWizardPage = styled.div`
-  min-height: 100vh;
-  background-color: ${COLORS.lightGray};
-  display: flex;
-  flex-direction: column;
-`;
-
-export const StyledWizardHeader = styled.header`
-  height: ${HEIGHTS.HEADER}px;
-  background-color: ${COLORS.white};
-  border-bottom: 1px solid ${COLORS.gray};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  flex-shrink: 0;
-
-  @media (max-width: ${BREAKPOINTS.desktop - 1}px) {
-    padding: 0 16px;
-  }
-`;
-
-export const StyledWizardHeaderLogo = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-  color: ${COLORS.primaryBlue};
-`;
-
-export const StyledWizardHeaderLink = styled.span`
-  font-size: 14px;
-`;
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledWizardBody = styled.div`
   flex: 1;
@@ -60,6 +28,10 @@ export const StyledWizardMain = styled.main`
     padding: 24px 16px;
     border-radius: 8px;
   }
+`;
+
+export const StyledWizardBreadcrumbSpacer = styled.div`
+  margin-top: 12px;
 `;
 
 export const StyledWizardPanel = styled.aside`

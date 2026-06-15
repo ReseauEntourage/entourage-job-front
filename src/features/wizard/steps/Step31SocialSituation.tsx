@@ -1,15 +1,22 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Button } from 'src/components/ui';
-import { Content } from 'src/features/backoffice/onboarding/steps/step-social-situation/Content';
 import { useDispatch } from 'react-redux';
+import { Button, Text } from 'src/components/ui';
+import { H2 } from 'src/components/ui/Headings';
+import {
+  StyledOnboardingActions,
+  StyledOnboardingStepContainer,
+} from 'src/features/backoffice/onboarding/onboarding.styles';
+import { Content } from 'src/features/backoffice/onboarding/steps/step-social-situation/Content';
 import { currentUserActions } from 'src/use-cases/current-user';
 
 interface Step31SocialSituationProps {
   onNext: () => void;
 }
 
-export const Step31SocialSituation = ({ onNext }: Step31SocialSituationProps) => {
+export const Step31SocialSituation = ({
+  onNext,
+}: Step31SocialSituationProps) => {
   const dispatch = useDispatch();
   const formMethods = useForm({
     defaultValues: {},
@@ -24,20 +31,22 @@ export const Step31SocialSituation = ({ onNext }: Step31SocialSituationProps) =>
   });
 
   return (
-    <div>
-      <h2>Votre situation sociale</h2>
-      <p>
+    <StyledOnboardingStepContainer>
+      <H2 title="Votre situation sociale" />
+      <Text>
         Ces informations restent confidentielles et nous permettent de mieux
         comprendre les besoins de nos bénéficiaires.
-      </p>
+      </Text>
       <FormProvider {...formMethods}>
         <form onSubmit={handleSubmit}>
           <Content />
-          <div style={{ marginTop: 24 }}>
-            <Button type="submit">Continuer</Button>
-          </div>
+          <StyledOnboardingActions>
+            <Button onClick={() => handleSubmit()} size="large">
+              Étape suivante
+            </Button>
+          </StyledOnboardingActions>
         </form>
       </FormProvider>
-    </div>
+    </StyledOnboardingStepContainer>
   );
 };

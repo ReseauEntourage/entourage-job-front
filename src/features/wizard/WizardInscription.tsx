@@ -1,12 +1,21 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { UserProfileSectorOccupation } from 'src/api/types';
+import { Button } from 'src/components/ui';
+import { SelectList } from 'src/components/ui/Inputs/SelectList/SelectList';
+import { SelectOptionTitleIconDescriptionLabel } from 'src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
+import { SvgIcon } from 'src/components/ui/SvgIcon/SvgIcon';
 import { UserRoles } from 'src/constants/users';
-import { authenticationActions, selectAccessToken } from 'src/use-cases/authentication';
+import { RegistrationFlow } from 'src/features/registration/flows/flows.types';
+import { useWizardSuggestions } from 'src/hooks/useWizardSuggestions';
+import {
+  authenticationActions,
+  selectAccessToken,
+} from 'src/use-cases/authentication';
 import { currentUserActions } from 'src/use-cases/current-user';
 import {
   selectWizardCreateAccountError,
-  selectWizardCurrentMajorStep,
   selectWizardCurrentSubStep,
   selectWizardData,
   selectWizardIsLoading,
@@ -18,10 +27,9 @@ import {
   selectWizardUserId,
   wizardActions,
 } from 'src/use-cases/wizard';
-import { useWizardSuggestions } from 'src/hooks/useWizardSuggestions';
-import { WizardLayout } from './WizardLayout';
 import { PanelSuggestions } from './PanelSuggestions';
 import { WizardDone } from './WizardDone';
+import { WizardLayout } from './WizardLayout';
 import { Step11Nudges } from './steps/Step11Nudges';
 import { Step12MetiersSecteurs } from './steps/Step12MetiersSecteurs';
 import { Step13PersonalInfo } from './steps/Step13PersonalInfo';
@@ -29,60 +37,57 @@ import { Step14Account } from './steps/Step14Account';
 import { Step15Otp } from './steps/Step15Otp';
 import { Step21Elearning } from './steps/Step21Elearning';
 import { Step31SocialSituation } from './steps/Step31SocialSituation';
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
-import { Button } from 'src/components/ui';
 
 const StyledFlowSelection = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 24px;
-  padding: 40px 24px;
-  text-align: center;
+  padding: 8px 0;
 `;
 
-const StyledFlowButtons = styled.div`
+const StyledFlowActions = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  max-width: 320px;
+  justify-content: flex-end;
+  margin-top: 8px;
 `;
 
-const StyledFlowButton = styled.button`
-  padding: 16px 24px;
-  border: 2px solid ${COLORS.gray};
-  border-radius: 8px;
-  background: ${COLORS.white};
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
-
-  &:hover {
-    border-color: ${COLORS.primaryBlue};
-    background-color: #f0f8fa;
-  }
-`;
-
-const ROLE_LABELS: Partial<Record<UserRoles, { title: string; description: string }>> = {
-  [UserRoles.CANDIDATE]: {
-    title: 'Je cherche un emploi',
-    description: 'Je suis candidat en recherche d'un accompagnement',
+const FLOW_OPTIONS = [
+  {
+    value: RegistrationFlow.CANDIDATE,
+    label: 'Nous rejoindre en tant que candidat(e)',
+    icon: <SvgIcon name="IlluCV" width={50} height={50} />,
+    description: "J'ai besoin d'aide dans ma recherche",
+    role: UserRoles.CANDIDATE,
   },
-  [UserRoles.COACH]: {
-    title: 'Je veux accompagner',
-    description: 'Je suis coach / bénévole souhaitant aider',
+  {
+    value: RegistrationFlow.COACH,
+    label: 'Nous rejoindre en tant que coach',
+    icon: <SvgIcon name="IlluCoachEtCandidat" width={50} height={50} />,
+    description: 'Je souhaite accompagner des candidats dans leur recherche',
+    role: UserRoles.COACH,
   },
-};
+  {
+    value: RegistrationFlow.REFERER,
+    label: "Nous rejoindre en tant qu'association ou travailleur social",
+    icon: <SvgIcon name="IlluCandidatFolder" width={50} height={50} />,
+    description: 'Je souhaite orienter des candidats de ma structure',
+    role: UserRoles.REFERER,
+  },
+  {
+    value: RegistrationFlow.COMPANY,
+    label: "Nous rejoindre en tant qu'entreprise",
+    icon: <SvgIcon name="IlluPoigneeDeMain" width={50} height={50} />,
+    description:
+      'Je souhaite inscrire mon entreprise dans une démarche RSE ou de recrutement inclusif',
+    role: UserRoles.COACH,
+  },
+];
 
 export const WizardInscription = () => {
   const dispatch = useDispatch();
+  const [selectedFlows, setSelectedFlows] = useState<RegistrationFlow[]>([]);
 
   const currentSubStep = useSelector(selectWizardCurrentSubStep);
-  const currentMajorStep = useSelector(selectWizardCurrentMajorStep);
   const wizardData = useSelector(selectWizardData);
   const wizardUserId = useSelector(selectWizardUserId);
   const isLoading = useSelector(selectWizardIsLoading);
@@ -113,7 +118,13 @@ export const WizardInscription = () => {
         })
       );
     }
-  }, [otpVerifyStatus, accessToken, wizardData.email, wizardData.password, dispatch]);
+  }, [
+    otpVerifyStatus,
+    accessToken,
+    wizardData.email,
+    wizardData.password,
+    dispatch,
+  ]);
 
   // Save nudges after login succeeds (nudges stored in Redux during step 1.1)
   useEffect(() => {
@@ -148,8 +159,16 @@ export const WizardInscription = () => {
     [dispatch]
   );
 
-  const handleSelectRole = (selectedRole: UserRoles) => {
-    mergeData({ role: selectedRole });
+  const handleConfirmFlow = () => {
+    const flowValue = selectedFlows[0];
+    if (!flowValue) {
+      return;
+    }
+    const option = FLOW_OPTIONS.find((o) => o.value === flowValue);
+    if (!option) {
+      return;
+    }
+    mergeData({ role: option.role, flow: flowValue });
     dispatch(wizardActions.moveToSubStep('1.1-nudges'));
   };
 
@@ -158,7 +177,9 @@ export const WizardInscription = () => {
     dispatch(wizardActions.moveToSubStep('1.2-metiers-secteurs'));
   };
 
-  const handleSectorsNext = (sectorOccupations: UserProfileSectorOccupation[]) => {
+  const handleSectorsNext = (
+    sectorOccupations: UserProfileSectorOccupation[]
+  ) => {
     mergeData({ sectorOccupations });
     dispatch(wizardActions.moveToSubStep('1.3-personal-info'));
   };
@@ -218,24 +239,35 @@ export const WizardInscription = () => {
   };
 
   const renderStep = () => {
-    // No role selected yet — show flow selection
+    // No flow selected yet — show flow selection
     if (!role) {
       return (
         <StyledFlowSelection>
-          <h2>Bienvenue sur Entourage Pro</h2>
-          <p>Quel est votre profil ?</p>
-          <StyledFlowButtons>
-            {Object.entries(ROLE_LABELS).map(([roleKey, { title, description }]) => (
-              <StyledFlowButton
-                key={roleKey}
-                onClick={() => handleSelectRole(roleKey as UserRoles)}
-              >
-                <strong>{title}</strong>
-                <br />
-                <small style={{ color: '#6D6C6C' }}>{description}</small>
-              </StyledFlowButton>
-            ))}
-          </StyledFlowButtons>
+          <SelectList
+            id="wizard-flow-selection"
+            name="flow"
+            options={FLOW_OPTIONS.map((opt) => ({
+              value: opt.value,
+              label: (
+                <SelectOptionTitleIconDescriptionLabel
+                  title={opt.label}
+                  icon={opt.icon}
+                  description={opt.description}
+                />
+              ),
+            }))}
+            value={selectedFlows}
+            onChange={(val) => setSelectedFlows(val as RegistrationFlow[])}
+            isMulti={false}
+          />
+          <StyledFlowActions>
+            <Button
+              onClick={handleConfirmFlow}
+              disabled={selectedFlows.length === 0}
+            >
+              Suivant
+            </Button>
+          </StyledFlowActions>
         </StyledFlowSelection>
       );
     }
@@ -324,7 +356,6 @@ export const WizardInscription = () => {
 
   return (
     <WizardLayout
-      currentMajorStep={currentMajorStep}
       currentSubStep={currentSubStep}
       role={role}
       panelState={panelState}

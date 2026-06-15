@@ -1,51 +1,72 @@
 import React from 'react';
+import { TimeLineHorizontal } from 'src/components/ui/TimeLines/TimeLineHorizontal';
 import { UserRoles } from 'src/constants/users';
-import {
-  StyledBreadcrumb,
-  StyledDivider,
-  StyledStep,
-  StyledStepDot,
-} from './WizardBreadcrumb.styles';
+import { WizardSubStep } from 'src/use-cases/wizard/wizard.types';
+
+interface WizardStep {
+  smallTitle: string;
+  duration: string;
+  majorIndex: number;
+}
+
+const SUBSTEP_TO_MAJOR: Partial<Record<WizardSubStep, number>> = {
+  '1.1-nudges': 0,
+  '1.2-metiers-secteurs': 0,
+  '1.3-personal-info': 0,
+  '1.4-account': 0,
+  '1.5-otp': 0,
+  '2.1-elearning': 1,
+  '3.1-social-situation': 2,
+};
+
+const WIZARD_STEPS_BASE: WizardStep[] = [
+  { smallTitle: 'Inscription', duration: '~15 min', majorIndex: 0 },
+  { smallTitle: 'E-learning', duration: '~10 min', majorIndex: 1 },
+];
+
+const STEP_SOCIAL: WizardStep = {
+  smallTitle: 'Ma situation',
+  duration: '~5 min',
+  majorIndex: 2,
+};
 
 interface WizardBreadcrumbProps {
-  currentMajorStep: 1 | 2 | 3;
+  currentSubStep: WizardSubStep;
   role?: UserRoles;
 }
 
 export const WizardBreadcrumb = ({
-  currentMajorStep,
+  currentSubStep,
   role,
 }: WizardBreadcrumbProps) => {
-  const steps = [
-    { index: 1, label: 'Inscription' },
-    { index: 2, label: 'E-learning' },
-    ...(role === UserRoles.CANDIDATE
-      ? [{ index: 3, label: 'Situation sociale' }]
-      : []),
-  ];
+  const steps =
+    role === UserRoles.CANDIDATE
+      ? [...WIZARD_STEPS_BASE, STEP_SOCIAL]
+      : WIZARD_STEPS_BASE;
 
-  const getStatus = (stepIndex: number): 'active' | 'done' | 'future' => {
-    if (stepIndex < currentMajorStep) return 'done';
-    if (stepIndex === currentMajorStep) return 'active';
-    return 'future';
-  };
+  const currentMajor = SUBSTEP_TO_MAJOR[currentSubStep];
+  if (currentMajor === undefined) {
+    return null;
+  }
+
+  const BADGE_SIZE = 50;
 
   return (
-    <StyledBreadcrumb aria-label="Progression du wizard">
-      {steps.map((step, i) => {
-        const status = getStatus(step.index);
-        return (
-          <React.Fragment key={step.index}>
-            <StyledStep status={status}>
-              <StyledStepDot status={status}>
-                {status === 'done' ? '✓' : step.index}
-              </StyledStepDot>
-              {step.label}
-            </StyledStep>
-            {i < steps.length - 1 && <StyledDivider />}
-          </React.Fragment>
-        );
-      })}
-    </StyledBreadcrumb>
+    <TimeLineHorizontal.Container>
+      <TimeLineHorizontal.Line badgeSize={BADGE_SIZE} />
+      <TimeLineHorizontal.ItemGroup>
+        {steps.map((step, index) => (
+          <TimeLineHorizontal.Item
+            key={index}
+            number={index + 1}
+            isLast={index === steps.length - 1}
+            active={currentMajor > index}
+            content={step.smallTitle}
+            badgeSize={BADGE_SIZE}
+            duration={step.duration}
+          />
+        ))}
+      </TimeLineHorizontal.ItemGroup>
+    </TimeLineHorizontal.Container>
   );
 };

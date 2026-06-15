@@ -1,62 +1,28 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Button } from 'src/components/ui';
-import { Alert } from 'src/components/ui';
-import { AlertType } from 'src/components/ui/Alert/Alert.types';
-import { GENDERS_FILTERS } from 'src/constants/genders';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { UserRoles } from 'src/constants/users';
+import { Controller, FieldError, useForm } from 'react-hook-form';
+import type { Value as PhoneValue } from 'react-phone-number-input';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
-import Select from 'react-select';
+import { Button } from 'src/components/ui';
+import { H2 } from 'src/components/ui/Headings';
+import {
+  DatePicker,
+  PhoneInput,
+  Radio,
+  Select,
+  TextInput,
+} from 'src/components/ui/Inputs';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { GENDERS_FILTERS } from 'src/constants/genders';
+import { UserRoles } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
+import {
+  StyledOnboardingActions,
+  StyledOnboardingStepContainer,
+} from 'src/features/backoffice/onboarding/onboarding.styles';
 
 const StyledField = styled.div`
   margin-bottom: 16px;
-`;
-
-const StyledLabel = styled.label`
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 4px;
-  color: ${COLORS.black};
-`;
-
-const StyledInput = styled.input<{ hasError?: boolean }>`
-  width: 100%;
-  height: 40px;
-  padding: 0 12px;
-  border: 1px solid ${({ hasError }) => (hasError ? COLORS.orangeSocial : COLORS.gray)};
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
-
-  &:focus {
-    border-color: ${COLORS.primaryBlue};
-  }
-`;
-
-const StyledError = styled.span`
-  font-size: 12px;
-  color: ${COLORS.orangeSocial};
-  margin-top: 4px;
-  display: block;
-`;
-
-const StyledRadioGroup = styled.div`
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-`;
-
-const StyledRadioLabel = styled.label`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  cursor: pointer;
 `;
 
 interface PersonalInfoValues {
@@ -83,10 +49,8 @@ export const Step13PersonalInfo = ({
   onBack,
 }: Step13PersonalInfoProps) => {
   const {
-    register,
+    control,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm<PersonalInfoValues>({
     defaultValues: {
@@ -100,163 +64,219 @@ export const Step13PersonalInfo = ({
     },
   });
 
-  const genderValue = watch('gender');
-  const workingRight = watch('workingRight');
-  const department = watch('department');
-
   const isCandidate = role === UserRoles.CANDIDATE;
+
+  const maxBirthDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 18)
+  )
+    .toISOString()
+    .split('T')[0];
 
   const onSubmit = handleSubmit((values) => {
     onNext(values);
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2>Vos informations personnelles</h2>
-
-      <StyledField>
-        <StyledLabel htmlFor="firstName">Prénom *</StyledLabel>
-        <StyledInput
-          id="firstName"
-          hasError={!!errors.firstName}
-          {...register('firstName', { required: 'Prénom obligatoire' })}
-        />
-        {errors.firstName && (
-          <StyledError>{errors.firstName.message}</StyledError>
-        )}
-      </StyledField>
-
-      <StyledField>
-        <StyledLabel htmlFor="lastName">Nom *</StyledLabel>
-        <StyledInput
-          id="lastName"
-          hasError={!!errors.lastName}
-          {...register('lastName', { required: 'Nom obligatoire' })}
-        />
-        {errors.lastName && (
-          <StyledError>{errors.lastName.message}</StyledError>
-        )}
-      </StyledField>
-
-      <StyledField>
-        <StyledLabel>Genre *</StyledLabel>
-        <StyledRadioGroup>
-          {GENDERS_FILTERS.map((g) => (
-            <StyledRadioLabel key={String(g.value)}>
-              <input
-                type="radio"
-                value={String(g.value)}
-                checked={genderValue === String(g.value)}
-                onChange={() => setValue('gender', String(g.value))}
-              />
-              {g.label}
-            </StyledRadioLabel>
-          ))}
-        </StyledRadioGroup>
-        {errors.gender && <StyledError>{errors.gender.message}</StyledError>}
-      </StyledField>
-
-      <StyledField>
-        <StyledLabel htmlFor="phone">Téléphone *</StyledLabel>
-        <StyledInput
-          id="phone"
-          type="tel"
-          hasError={!!errors.phone}
-          {...register('phone', {
-            required: 'Téléphone obligatoire',
-            validate: (v) =>
-              isValidPhoneNumber(v, 'FR') || 'Numéro de téléphone invalide',
-          })}
-        />
-        {errors.phone && <StyledError>{errors.phone.message}</StyledError>}
-      </StyledField>
-
-      {isCandidate && (
-        <>
-          <StyledField>
-            <StyledLabel htmlFor="birthDate">Date de naissance *</StyledLabel>
-            <StyledInput
-              id="birthDate"
-              type="date"
-              hasError={!!errors.birthDate}
-              {...register('birthDate', {
-                required: 'Date de naissance obligatoire',
-                validate: (v) => {
-                  const minDate = new Date();
-                  minDate.setFullYear(minDate.getFullYear() - 18);
-                  return (
-                    new Date(v) <= minDate ||
-                    'Vous devez avoir au moins 18 ans'
-                  );
-                },
-              })}
-            />
-            {errors.birthDate && (
-              <StyledError>{errors.birthDate.message}</StyledError>
-            )}
-          </StyledField>
-
-          <StyledField>
-            <StyledLabel>Dans quel département habitez-vous ? *</StyledLabel>
-            <Select
-              placeholder="Sélectionnez votre département"
-              options={DEPARTMENTS_FILTERS}
-              value={department}
-              onChange={(v) =>
-                setValue('department', v as PersonalInfoValues['department'])
-              }
-            />
-            {errors.department && (
-              <StyledError>Département obligatoire</StyledError>
-            )}
-          </StyledField>
-
-          <StyledField>
-            <StyledLabel>Avez-vous le droit de travailler en France ? *</StyledLabel>
-            <StyledRadioGroup>
-              {[
-                { value: 'yes', label: 'Oui' },
-                { value: 'no', label: 'Non' },
-                { value: 'nspp', label: 'Ne sait pas' },
-              ].map((opt) => (
-                <StyledRadioLabel key={opt.value}>
-                  <input
-                    type="radio"
-                    value={opt.value}
-                    checked={workingRight === opt.value}
-                    onChange={() => setValue('workingRight', opt.value)}
-                  />
-                  {opt.label}
-                </StyledRadioLabel>
-              ))}
-            </StyledRadioGroup>
-          </StyledField>
-        </>
-      )}
-
-      {!isCandidate && (
+    <StyledOnboardingStepContainer>
+      <H2 title="Vos informations personnelles" />
+      <form onSubmit={onSubmit}>
         <StyledField>
-          <StyledLabel>Dans quel département habitez-vous ? *</StyledLabel>
-          <Select
-            placeholder="Sélectionnez votre département"
-            options={DEPARTMENTS_FILTERS}
-            value={department}
-            onChange={(v) =>
-              setValue('department', v as PersonalInfoValues['department'])
-            }
+          <Controller
+            control={control}
+            name="firstName"
+            rules={{ required: 'Prénom obligatoire' }}
+            render={({ field }) => (
+              <TextInput
+                id="firstName"
+                name="firstName"
+                title="Prénom *"
+                value={field.value}
+                onChange={field.onChange}
+                showLabel
+                error={errors.firstName}
+              />
+            )}
           />
-          {errors.department && (
-            <StyledError>Département obligatoire</StyledError>
-          )}
         </StyledField>
-      )}
 
-      <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-        <Button onClick={onBack} variant="secondary">
-          Retour
-        </Button>
-        <Button type="submit">Continuer</Button>
-      </div>
-    </form>
+        <StyledField>
+          <Controller
+            control={control}
+            name="lastName"
+            rules={{ required: 'Nom obligatoire' }}
+            render={({ field }) => (
+              <TextInput
+                id="lastName"
+                name="lastName"
+                title="Nom *"
+                value={field.value}
+                onChange={field.onChange}
+                showLabel
+                error={errors.lastName}
+              />
+            )}
+          />
+        </StyledField>
+
+        <StyledField>
+          <Controller
+            control={control}
+            name="gender"
+            rules={{ required: 'Genre obligatoire' }}
+            render={({ field }) => (
+              <Radio
+                id="gender"
+                name="gender"
+                title="Genre *"
+                options={GENDERS_FILTERS.map((g) => ({
+                  inputId: `gender-${String(g.value)}`,
+                  value: String(g.value),
+                  label: String(g.label),
+                }))}
+                value={field.value}
+                onChange={field.onChange}
+                error={errors.gender}
+              />
+            )}
+          />
+        </StyledField>
+
+        <StyledField>
+          <Controller
+            control={control}
+            name="phone"
+            rules={{
+              required: 'Téléphone obligatoire',
+              validate: (v) =>
+                isValidPhoneNumber(v || '', 'FR') ||
+                'Numéro de téléphone invalide',
+            }}
+            render={({ field }) => (
+              <PhoneInput
+                id="phone"
+                name="phone"
+                title="Téléphone *"
+                value={field.value as unknown as PhoneValue}
+                onChange={(v) => field.onChange(v ?? '')}
+                showLabel
+                error={errors.phone}
+              />
+            )}
+          />
+        </StyledField>
+
+        {isCandidate && (
+          <>
+            <StyledField>
+              <Controller
+                control={control}
+                name="birthDate"
+                rules={{
+                  required: 'Date de naissance obligatoire',
+                  validate: (v) =>
+                    new Date(v) <= new Date(maxBirthDate) ||
+                    'Vous devez avoir au moins 18 ans',
+                }}
+                render={({ field }) => (
+                  <DatePicker
+                    id="birthDate"
+                    name="birthDate"
+                    title="Date de naissance *"
+                    value={field.value}
+                    onChange={field.onChange}
+                    max={maxBirthDate}
+                    error={errors.birthDate}
+                  />
+                )}
+              />
+            </StyledField>
+
+            <StyledField>
+              <Controller
+                control={control}
+                name="department"
+                rules={{ required: 'Département obligatoire' }}
+                render={({ field }) => (
+                  <Select
+                    id="department-candidate"
+                    name="department"
+                    title="Dans quel département habitez-vous ? *"
+                    options={DEPARTMENTS_FILTERS}
+                    value={field.value as FilterConstant}
+                    onChange={(v) =>
+                      field.onChange(v as PersonalInfoValues['department'])
+                    }
+                    showLabel
+                    error={errors.department as FieldError | undefined}
+                  />
+                )}
+              />
+            </StyledField>
+
+            <StyledField>
+              <Controller
+                control={control}
+                name="workingRight"
+                render={({ field }) => (
+                  <Radio
+                    id="workingRight"
+                    name="workingRight"
+                    title="Avez-vous le droit de travailler en France ? *"
+                    options={[
+                      {
+                        inputId: 'workingRight-yes',
+                        value: 'yes',
+                        label: 'Oui',
+                      },
+                      { inputId: 'workingRight-no', value: 'no', label: 'Non' },
+                      {
+                        inputId: 'workingRight-nspp',
+                        value: 'nspp',
+                        label: 'Ne sait pas',
+                      },
+                    ]}
+                    value={field.value ?? ''}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+            </StyledField>
+          </>
+        )}
+
+        {!isCandidate && (
+          <StyledField>
+            <Controller
+              control={control}
+              name="department"
+              rules={{ required: 'Département obligatoire' }}
+              render={({ field }) => (
+                <Select
+                  id="department-other"
+                  name="department"
+                  title="Dans quel département habitez-vous ? *"
+                  options={DEPARTMENTS_FILTERS}
+                  value={field.value as FilterConstant}
+                  onChange={(v) =>
+                    field.onChange(v as PersonalInfoValues['department'])
+                  }
+                  showLabel
+                  error={errors.department as FieldError | undefined}
+                />
+              )}
+            />
+          </StyledField>
+        )}
+
+        <StyledOnboardingActions>
+          <Button onClick={onBack} size="large" variant="secondary">
+            Retour
+          </Button>
+          <Button onClick={() => onSubmit()} size="large">
+            Étape suivante
+          </Button>
+        </StyledOnboardingActions>
+      </form>
+    </StyledOnboardingStepContainer>
   );
 };

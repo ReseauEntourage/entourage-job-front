@@ -24,7 +24,9 @@ export const useWizardSuggestions = (userId: string | null) => {
   const suggestions = useSelector(selectWizardSuggestions);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
 
     const pusher = getPusher();
     const channel = pusher.subscribe(
@@ -47,7 +49,7 @@ export const useWizardSuggestions = (userId: string | null) => {
     if (panelState === 'loading') {
       fallbackTimer = setTimeout(async () => {
         try {
-          const response = await Api.getUserProfileRecommendations({});
+          const response = await Api.getProfilesRecommendations({ limit: 5 });
           const profiles: SuggestedProfile[] = (
             (response.data?.recommendations ?? []) as ProfileRecommendation[]
           )
@@ -71,8 +73,13 @@ export const useWizardSuggestions = (userId: string | null) => {
     }
 
     return () => {
-      if (fallbackTimer) clearTimeout(fallbackTimer);
-      channel.unbind(PUSHER_EVENTS.WIZARD_SUGGESTIONS_READY, onSuggestionsReady);
+      if (fallbackTimer) {
+        clearTimeout(fallbackTimer);
+      }
+      channel.unbind(
+        PUSHER_EVENTS.WIZARD_SUGGESTIONS_READY,
+        onSuggestionsReady
+      );
       pusher.unsubscribe(`${PUSHER_CHANNELS.WIZARD_SUGGESTIONS}-${userId}`);
     };
   }, [userId, panelState, dispatch]);
