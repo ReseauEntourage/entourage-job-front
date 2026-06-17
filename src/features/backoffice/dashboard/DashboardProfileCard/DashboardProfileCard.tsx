@@ -8,7 +8,7 @@ import {
   TagSize,
   Text,
 } from '@/src/components/ui';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import { AvailabilityTagEditable } from '@/src/components/ui/AvailabilityTag';
 import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
@@ -80,7 +80,10 @@ export const DashboardProfileCard = () => {
           {organization && <Text>{organization.name}</Text>}
           {userProfile?.department && <Text>{userProfile.department}</Text>}
           <StyledTagList>
-            <AvailabilityTag isAvailable={userProfile?.isAvailable ?? false} />
+            <AvailabilityTagEditable
+              isAvailable={userProfile?.isAvailable ?? false}
+              user={user}
+            />
             {achievements && achievements.length > 0 && (
               <ProfileAchievementHighlighter
                 achievement={achievements[0]}

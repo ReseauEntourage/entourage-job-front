@@ -11,7 +11,10 @@ import {
   TagVariant,
   Text,
 } from '@/src/components/ui';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import {
+  AvailabilityTag,
+  AvailabilityTagEditable,
+} from '@/src/components/ui/AvailabilityTag';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ImageInput } from '@/src/components/ui/Inputs';
@@ -22,7 +25,10 @@ import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementH
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import {
+  selectAuthenticatedUser,
+  selectCurrentUserId,
+} from 'src/use-cases/current-user';
 import {
   StyledEditPictureIconContainer,
   StyledHeaderAvailibilityAndUserActions,
@@ -74,6 +80,7 @@ export const HeaderProfileMobile = ({
 
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
+  const currentUser = useSelector(selectAuthenticatedUser);
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
@@ -159,9 +166,15 @@ export const HeaderProfileMobile = ({
                 gender={gender}
               />
             )}
-            {shouldShowAllProfile && (
-              <AvailabilityTag isAvailable={isAvailable} />
-            )}
+            {shouldShowAllProfile &&
+              (ownProfile && isEditable ? (
+                <AvailabilityTagEditable
+                  isAvailable={isAvailable}
+                  user={currentUser}
+                />
+              ) : (
+                <AvailabilityTag isAvailable={isAvailable} />
+              ))}
             <UserActions userId={id} userRole={role} openDirection="right" />
           </StyledHeaderAvailibilityAndUserActions>
 
