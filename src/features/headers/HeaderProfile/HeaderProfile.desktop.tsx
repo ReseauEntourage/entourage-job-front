@@ -10,7 +10,10 @@ import {
   TagVariant,
   Text,
 } from '@/src/components/ui';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import {
+  AvailabilityTag,
+  AvailabilityTagEditable,
+} from '@/src/components/ui/AvailabilityTag';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
@@ -147,9 +150,15 @@ export const HeaderProfileDesktop = ({
                     )}
                   </StyledHeaderNameAndRole>
                   <StyledHeaderAvailibilityAndUserActions>
-                    {shouldShowAllProfile && (
-                      <AvailabilityTag isAvailable={isAvailable} />
-                    )}
+                    {shouldShowAllProfile &&
+                      (ownProfile && isEditable ? (
+                        <AvailabilityTagEditable
+                          isAvailable={isAvailable}
+                          user={currentUser}
+                        />
+                      ) : (
+                        <AvailabilityTag isAvailable={isAvailable} />
+                      ))}
                     <UserActions userId={id} userRole={role} />
                   </StyledHeaderAvailibilityAndUserActions>
                 </StyledHeaderProfileNameContainer>

@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { Section } from '@/src/components/ui';
 import { H1 } from '@/src/components/ui/Headings';
 import { CompanyGoal } from '@/src/constants/company';
-import { UserProfileAvailabilityCard } from '../../profile/ProfilePartCards/UserProfileAvailabilityCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
@@ -59,7 +58,6 @@ export const Dashboard = () => {
         {!isCompanyAdmin && company && (
           <DashboardCompanyCard company={company} />
         )}
-        {isNormalUser && <UserProfileAvailabilityCard centerTitle />}
         <DashboardStaffContactCard />
       </>
     );

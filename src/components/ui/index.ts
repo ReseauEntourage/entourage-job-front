@@ -22,5 +22,6 @@ export * from './Dropdown/Dropdown';
 export * from './Icons';
 export * from './Images';
 export * from './Tooltip';
+export * from './Popover';
 export * from './ProgressBar';
 export * from './CopyInput';

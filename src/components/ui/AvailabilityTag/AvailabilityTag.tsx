@@ -6,13 +6,20 @@ import {
 
 interface AvailabilityTagProps {
   isAvailable: boolean;
+  onClick?: () => void;
 }
 
-export function AvailabilityTag({ isAvailable }: AvailabilityTagProps) {
+export const AvailabilityTag = ({
+  isAvailable,
+  onClick,
+}: AvailabilityTagProps) => {
   return (
-    <StyledAvailabilityTagContainer>
+    <StyledAvailabilityTagContainer
+      onClick={onClick}
+      style={onClick ? { cursor: 'pointer' } : undefined}
+    >
       <StyledAvailabilityTagDot isAvailable={isAvailable} />
       {isAvailable ? 'Disponible' : 'Indisponible'}
     </StyledAvailabilityTagContainer>
   );
-}
+};
