@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { notificationsActions } from '../notifications';
-import { Conversation } from 'src/api/types';
+import { Conversation, ConversationType } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   getSelectedConversationAdapter,
@@ -78,7 +78,7 @@ export const slice = createSlice({
         bindNewConversationSucceeded(state, action) {
           const conversation = state.conversations?.find(
             (conv) =>
-              conv.participants.length === 2 && // Only 1-1 conversations
+              conv.type === 'direct' &&
               conv.participants.find((p) => p.id === action.payload[0].id) // The required user is in the conversation
           );
 
@@ -87,6 +87,10 @@ export const slice = createSlice({
           } else {
             const newConversation: Conversation = {
               id: '',
+              type:
+                action.payload.length > 1
+                  ? ConversationType.GROUP
+                  : ConversationType.DIRECT,
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
               messages: [],

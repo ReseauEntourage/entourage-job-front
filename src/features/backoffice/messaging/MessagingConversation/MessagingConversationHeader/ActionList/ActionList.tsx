@@ -39,8 +39,7 @@ export const ActionList = () => {
   const canUseAIAssistant =
     currentUser?.role !== UserRoles.CANDIDATE && hasMessagingAIAssistant;
 
-  const isOneToOneConversation =
-    selectedConversation?.participants.length === 2;
+  const isOneToOneConversation = selectedConversation?.type === 'direct';
   const canShareNetwork =
     isOneToOneConversation && addresee?.role === UserRoles.CANDIDATE;
 
