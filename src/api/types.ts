@@ -620,8 +620,14 @@ export type ConversationParticipant = Pick<
 };
 export type ConversationParticipants = ConversationParticipant[];
 
+export enum ConversationType {
+  DIRECT = 'direct',
+  GROUP = 'group',
+}
+
 export type Conversation = {
   id: string;
+  type: ConversationType;
   createdAt?: string;
   updatedAt?: string;
   messages: Message[];
