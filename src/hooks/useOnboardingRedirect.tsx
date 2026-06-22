@@ -14,7 +14,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     null
   );
 
-  const onboardingPath = '/backoffice/onboarding';
+  const onboardingPath = '/wizard/run';
 
   const isFetchUserSucceeded = useSelector(
     fetchUserSelectors.selectIsFetchUserSucceeded

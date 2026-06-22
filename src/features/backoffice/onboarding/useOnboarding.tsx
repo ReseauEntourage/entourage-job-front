@@ -53,16 +53,15 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const forceOnboardingAsCompletedStatus = useSelector(
     selectForceOnboardingAsCompletedSelectors.selectForceOnboardingAsCompletedStatus
   );
-  const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation();
+  const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation({
+    user,
+  });
   const { onboardingStepElearning } = useOnboardingStepElearning({
-    userRole: user.role,
+    userRole: user?.role,
   });
-  const { onboardingStepNudges } = useOnboardingStepNudges({
-    userRole: user.role,
-  });
-
+  const { onboardingStepNudges } = useOnboardingStepNudges({ user });
   const { onboardingStepProfileCompletion } =
-    useOnboardingStepProfileCompletion();
+    useOnboardingStepProfileCompletion({ user });
 
   // incrementationIsAllowed - State boolean indicating if moving to the next step is allowed.
   const [incrementationIsAllowed, setIncrementationIsAllowed] =
@@ -98,11 +97,11 @@ export const useOnboarding = (): UseOnboardingReturn => {
     return [
       onboardingStepNudges,
       onboardingStepElearning,
-      ...(user.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
+      ...(user?.role === 'Candidat' ? [onboardingStepSocialSituation] : []),
       onboardingStepProfileCompletion,
     ];
   }, [
-    user.role,
+    user?.role,
     onboardingStepElearning,
     onboardingStepNudges,
     onboardingStepSocialSituation,

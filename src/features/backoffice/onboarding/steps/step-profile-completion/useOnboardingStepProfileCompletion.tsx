@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Experience,
   Formation,
+  User,
   UserProfileLanguage,
   UserProfileSectorOccupation,
 } from '@/src/api/types';
@@ -11,7 +12,6 @@ import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { useUpdateUser } from '@/src/hooks';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
@@ -28,13 +28,20 @@ import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content';
 import { ProfileCompletionFormValues } from './types';
 
-export const useOnboardingStepProfileCompletion = () => {
+const NULL_USER = { id: '' } as unknown as User;
+
+interface UseOnboardingStepProfileCompletionProps {
+  user: User | null;
+}
+
+export const useOnboardingStepProfileCompletion = ({
+  user,
+}: UseOnboardingStepProfileCompletionProps) => {
   const dispatch = useDispatch();
-  const user = useAuthenticatedUser();
   const userProfileComplete = useCurrentUserProfileComplete();
   const company = useCurrentUserCompany();
-  const { updateUserProfile } = useUpdateProfile(user);
-  const { updateUserCompany } = useUpdateUser(user);
+  const { updateUserProfile } = useUpdateProfile(user ?? NULL_USER);
+  const { updateUserCompany } = useUpdateUser(user ?? NULL_USER);
 
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
@@ -246,6 +253,9 @@ export const useOnboardingStepProfileCompletion = () => {
       </StyledOnboardingStepContainer>
     ),
     onSubmit: async () => {
+      if (!user) {
+        return false;
+      }
       dispatch(onboardingActions.setFormErrorMessage(null));
 
       return await new Promise<boolean>((resolve) => {

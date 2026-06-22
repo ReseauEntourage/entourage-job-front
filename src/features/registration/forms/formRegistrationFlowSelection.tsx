@@ -5,7 +5,7 @@ import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { RegistrationFlow } from '../flows/flows.types';
 import { FormSchema } from 'src/features/forms/FormSchema';
 
-const FlowOptions: SelectOptionTitleIconDescriptionLabelType<RegistrationFlow>[] =
+export const FlowOptions: SelectOptionTitleIconDescriptionLabelType<RegistrationFlow>[] =
   [
     {
       value: RegistrationFlow.CANDIDATE,

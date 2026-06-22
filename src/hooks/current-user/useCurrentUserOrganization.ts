@@ -10,7 +10,6 @@ import {
 export function useCurrentUserOrganization() {
   const dispatch = useDispatch();
   const store = useStore();
-  const status = useSelector(selectFetchCurrentOrganizationStatus);
 
   useEffect(() => {
     const currentStatus = selectFetchCurrentOrganizationStatus(
@@ -22,7 +21,7 @@ export function useCurrentUserOrganization() {
     ) {
       dispatch(currentUserActions.fetchCurrentOrganizationRequested());
     }
-  }, [dispatch, store, status]);
+  }, [dispatch, store]);
 
   return useSelector(selectCurrentUserOrganization);
 }

@@ -1,7 +1,8 @@
 import { useRef } from 'react';
+import { FormWithValidationRef } from '@/src/features/forms/FormWithValidation';
 
 export function useResetForm() {
-  const form = useRef<{ resetForm: () => void }>(null);
+  const form = useRef<FormWithValidationRef>(null);
 
   const resetForm = () => {
     if (form.current) {

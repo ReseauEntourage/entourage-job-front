@@ -10,7 +10,6 @@ import {
 export function useCurrentUserAchievements() {
   const dispatch = useDispatch();
   const store = useStore();
-  const status = useSelector(selectFetchCurrentAchievementsStatus);
 
   useEffect(() => {
     const currentStatus = selectFetchCurrentAchievementsStatus(
@@ -22,7 +21,7 @@ export function useCurrentUserAchievements() {
     ) {
       dispatch(currentUserActions.fetchCurrentAchievementsRequested());
     }
-  }, [dispatch, store, status]);
+  }, [dispatch, store]);
 
   return useSelector(selectCurrentUserAchievements);
 }

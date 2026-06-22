@@ -56,7 +56,7 @@ const Aider = () => {
         cta={{
           label: 'Je deviens coach',
           onClick: () => gaEvent(GA_TAGS.PAGE_AIDER_CTA_BANNER_CLICK),
-          href: '/inscription',
+          href: '/wizard',
         }}
       />
 

@@ -11,7 +11,7 @@ import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
 interface OnboardingStepElearningProps {
-  userRole: User['role'];
+  userRole: User['role'] | undefined;
 }
 
 export const useOnboardingStepElearning = ({
@@ -55,7 +55,7 @@ export const useOnboardingStepElearning = ({
   const ensureAndComputeHasCompleteAllUnits = async (): Promise<boolean> => {
     const status = selectFetchElearningUnitsState(getState()).status;
 
-    if (status === ReduxRequestEvents.IDLE) {
+    if (status === ReduxRequestEvents.IDLE && userRole) {
       dispatch(elearningActions.fetchElearningUnitsRequested(userRole));
     }
 
@@ -72,7 +72,9 @@ export const useOnboardingStepElearning = ({
     hideGenericStepHeader: true,
     title: `Votre parcours de formation`,
     smallTitle: 'Suivre la formation',
-    description: `Suivez ces modules pour rejoindre notre communauté de ${userRole.toLowerCase()}s bienveillants Entourage Pro.`,
+    description: `Suivez ces modules pour rejoindre notre communauté de ${
+      userRole?.toLowerCase() ?? ''
+    }s bienveillants Entourage Pro.`,
     content: <Content />,
     isStepCompleted: async () => {
       return ensureAndComputeHasCompleteAllUnits();
@@ -83,7 +85,9 @@ export const useOnboardingStepElearning = ({
     confirmationStep: {
       id: 'elearning-confirmation',
       title: 'Bravo ! Formation terminée',
-      subtitle: `Vous faites maintenant partie des ${userRole.toLowerCase()} Entourage Pro formés.`,
+      subtitle: `Vous faites maintenant partie des ${
+        userRole?.toLowerCase() ?? ''
+      } Entourage Pro formés.`,
       submitBtnTxt: 'Passer à l’étape suivante',
     },
     incrementationIsAllowed: async () => {

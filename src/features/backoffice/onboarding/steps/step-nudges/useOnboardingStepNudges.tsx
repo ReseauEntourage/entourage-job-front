@@ -1,22 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { Nudge } from '@/src/api/types';
+import { Nudge, User } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
+const NULL_USER = { id: '' } as unknown as User;
+
 interface useOnboardingStepNudgesProps {
-  userRole: UserRoles;
+  user: User | null;
 }
 
 export const useOnboardingStepNudges = ({
-  userRole,
+  user,
 }: useOnboardingStepNudgesProps) => {
-  const currentUser = useAuthenticatedUser();
+  const userRole = user?.role as UserRoles | undefined;
   const userProfile = useCurrentUserProfile();
-  const { updateUserProfile } = useUpdateProfile(currentUser);
+  const { updateUserProfile } = useUpdateProfile(user ?? NULL_USER);
 
   const [selectedNudgeIds, setSelectedNudgeIds] = useState<string[]>([]);
   const hasInitializedFromProfileRef = useRef(false);
@@ -56,7 +57,7 @@ export const useOnboardingStepNudges = ({
         : "Afin de vous recommander les candidats que vous seriez susceptibles d'aider",
     content: (
       <Content
-        userRole={userRole}
+        userRole={userRole as UserRoles}
         nudgeIds={selectedNudgeIds}
         onChange={setSelectedNudgeIds}
       />

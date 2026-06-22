@@ -26,6 +26,11 @@ import {
 import { StyledForm } from './Forms.styles';
 import { GenericField } from './fields/GenericField';
 
+export type FormWithValidationRef = {
+  resetForm: () => void;
+  submit: () => Promise<boolean>;
+};
+
 interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   formSchema: S;
   defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
@@ -39,10 +44,11 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   submitBtnVariant?: 'primary' | 'secondary';
   cancelText?: string;
   enterToSubmit?: boolean;
-  innerRef?: Ref<{ resetForm: () => void }>;
+  innerRef?: Ref<FormWithValidationRef>;
   error?: ReactNode;
   noCompulsory?: boolean;
   disabled?: boolean;
+  noFooter?: boolean;
 }
 
 export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
@@ -59,6 +65,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   error: externalError,
   noCompulsory = false,
   disabled = false,
+  noFooter = false,
 }: FormWithValidationProps<S>) {
   const { id: formId, fields } = formSchema;
 
@@ -80,11 +87,21 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
       shouldUnregister: true,
     });
 
-  useImperativeHandle(innerRef, () => {
-    return {
-      resetForm: () => reset({} as ExtractFormSchemaValidation<S>),
-    };
-  });
+  useImperativeHandle(innerRef, () => ({
+    resetForm: () => reset({} as ExtractFormSchemaValidation<S>),
+    submit: () =>
+      new Promise<boolean>((resolve) => {
+        handleSubmit(
+          async (values) => {
+            await onValidForm(values);
+            resolve(true);
+          },
+          () => {
+            resolve(false);
+          }
+        )();
+      }),
+  }));
 
   const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
     useCallback(
@@ -280,24 +297,26 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
           })}
         </fieldset>
       </StyledForm>
-      <FormFooter
-        error={error ?? externalError}
-        submitText={submitText}
-        submitBtnVariant={submitBtnVariant}
-        cancelText={cancelText}
-        isLoadingOverride={isLoading || disabled}
-        noCompulsory={noCompulsory}
-        onSubmit={handleSubmit(onValidForm, onErrorForm)}
-        formId={formId}
-        onCancel={
-          onCancel &&
-          (() => {
-            reset();
-            onCancel();
-          })
-        }
-        disabled={disabled}
-      />
+      {!noFooter && (
+        <FormFooter
+          error={error ?? externalError}
+          submitText={submitText}
+          submitBtnVariant={submitBtnVariant}
+          cancelText={cancelText}
+          isLoadingOverride={isLoading || disabled}
+          noCompulsory={noCompulsory}
+          onSubmit={handleSubmit(onValidForm, onErrorForm)}
+          formId={formId}
+          onCancel={
+            onCancel &&
+            (() => {
+              reset();
+              onCancel();
+            })
+          }
+          disabled={disabled}
+        />
+      )}
     </>
   );
 }

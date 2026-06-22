@@ -16,7 +16,7 @@ const actions = [
     description:
       'Relecture de CV, préparation aux entretiens... En quelques clics, vos collaborateurs  peuvent devenir coachs bénévoles et donnner des coups de pouce à nos candidat.e.s.',
     cta: {
-      href: `/inscription?flow=${RegistrationFlow.COMPANY}`,
+      href: `/wizard?flow=${RegistrationFlow.COMPANY}`,
       label: "S'inscrire",
     },
   },

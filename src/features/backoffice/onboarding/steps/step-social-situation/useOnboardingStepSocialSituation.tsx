@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useDispatch, useSelector } from 'react-redux';
+import { User } from '@/src/api/types';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { updateSocialSituationSelectors } from '@/src/use-cases/current-user';
 import { fetchCurrentUserSocialSituationSelectors } from '@/src/use-cases/current-user';
@@ -12,9 +11,14 @@ import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content';
 import type { SocialSituationFormValues } from './types';
 
-export const useOnboardingStepSocialSituation = () => {
+interface UseOnboardingStepSocialSituationProps {
+  user: User | null;
+}
+
+export const useOnboardingStepSocialSituation = ({
+  user,
+}: UseOnboardingStepSocialSituationProps) => {
   const dispatch = useDispatch();
-  const user = useAuthenticatedUser();
   const userRef = useRef(user);
 
   useEffect(() => {
@@ -65,7 +69,7 @@ export const useOnboardingStepSocialSituation = () => {
 
   const waitForSocialSituationFetch = useCallback(() => {
     const hasCompletedSurvey =
-      userRef.current.userSocialSituation?.hasCompletedSurvey;
+      userRef.current?.userSocialSituation?.hasCompletedSurvey;
     if (typeof hasCompletedSurvey === 'boolean') {
       return Promise.resolve(true);
     }
@@ -184,7 +188,7 @@ export const useOnboardingStepSocialSituation = () => {
       if (!ok) {
         return false;
       }
-      return !!userRef.current.userSocialSituation?.hasCompletedSurvey;
+      return !!userRef.current?.userSocialSituation?.hasCompletedSurvey;
     },
   } as OnboardingStep;
 
