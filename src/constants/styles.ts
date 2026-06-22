@@ -63,7 +63,7 @@ export const COLORS = {
   lightBlueGreen: '#C1E9DF',
   blue: '#8FC4E2',
   darkBlue: '#2D7FA6',
-  extraDarkBlue: '#2A4C72',
+  extraDarkBlue: '#1A5670',
   extraLightTeal: '#e8f6f8',
   teal: '#1a7a94',
 

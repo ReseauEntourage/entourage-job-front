@@ -25,13 +25,17 @@ import { useWizardStepCandidateInfo } from './steps/useWizardStepCandidateInfo';
 import { useWizardStepCoachInfo } from './steps/useWizardStepCoachInfo';
 import { useWizardStepCompanyRole } from './steps/useWizardStepCompanyRole';
 import { useWizardStepCompanySelection } from './steps/useWizardStepCompanySelection';
+import { useWizardStepNudges } from './steps/useWizardStepNudges';
 import { useWizardStepRefererAccount } from './steps/useWizardStepRefererAccount';
+import { useWizardStepSectorsJobs } from './steps/useWizardStepSectorsJobs';
 
 export interface UseRegistrationWizardReturn {
   wizardSteps: WizardStep[];
   currentWizardIdx: number;
   currentWizardStep: WizardStep | null;
   incrementStep: () => Promise<void>;
+  decrementStep: () => void;
+  canGoBack: boolean;
   isLoading: boolean;
 }
 
@@ -59,6 +63,8 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   const { step: companySelectionStep } = useWizardStepCompanySelection();
   const { step: accountStep } = useWizardStepAccount();
   const { step: refererAccountStep } = useWizardStepRefererAccount();
+  const { step: nudgesStep } = useWizardStepNudges();
+  const { step: sectorsJobsStep } = useWizardStepSectorsJobs();
 
   // Quand selectedFlow est null (utilisateur déjà connecté en onboarding),
   // on déduit le flow depuis son rôle pour afficher les étapes passées dans le stepper
@@ -88,15 +94,23 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   const wizardSteps: WizardStep[] = useMemo(() => {
     switch (effectiveFlow) {
       case RegistrationFlow.CANDIDATE:
-        return [candidateInfoStep, candidateEligibilityStep, accountStep];
+        return [
+          nudgesStep,
+          sectorsJobsStep,
+          candidateInfoStep,
+          candidateEligibilityStep,
+          accountStep,
+        ];
       case RegistrationFlow.COACH:
-        return [coachInfoStep, accountStep];
+        return [nudgesStep, sectorsJobsStep, coachInfoStep, accountStep];
       case RegistrationFlow.REFERER:
         return [refererAccountStep];
       case RegistrationFlow.COMPANY:
         return [
           companyRoleStep,
           companySelectionStep,
+          nudgesStep,
+          sectorsJobsStep,
           coachInfoStep,
           accountStep,
         ];
@@ -112,6 +126,8 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     companySelectionStep,
     accountStep,
     refererAccountStep,
+    nudgesStep,
+    sectorsJobsStep,
   ]);
 
   // currentStep starts at 0 (REGISTRATION_FIRST_STEP) after flow selection
@@ -164,11 +180,19 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     // Step advancement is driven by Redux state changes (no explicit dispatch needed)
   }, [currentWizardStep]);
 
+  const decrementStep = useCallback(() => {
+    dispatch(registrationActions.moveBackwardInRegistration());
+  }, [dispatch]);
+
+  const canGoBack = currentWizardIdx > 0;
+
   return {
     wizardSteps,
     currentWizardIdx,
     currentWizardStep,
     incrementStep,
+    decrementStep,
+    canGoBack,
     isLoading,
   };
 }

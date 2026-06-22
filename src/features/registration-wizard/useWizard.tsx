@@ -10,17 +10,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { OnboardingStatus } from '@/src/constants/onboarding';
 import { UserRoles } from '@/src/constants/users';
-import { OnboardingCompletionModal } from '@/src/features/backoffice/onboarding/completion-modal/OnboardingCompletionModal';
-import { ConfirmModalStep } from '@/src/features/backoffice/onboarding/confirm-step-modal/ConfirmModalStep';
-import { determineStartingStep } from '@/src/features/backoffice/onboarding/onboarding.utils';
-import { useOnboardingStepElearning } from '@/src/features/backoffice/onboarding/steps/step-elearning/useOnboardingStepElearning';
-import { useOnboardingStepNudges } from '@/src/features/backoffice/onboarding/steps/step-nudges/useOnboardingStepNudges';
-import { useOnboardingStepProfileCompletion } from '@/src/features/backoffice/onboarding/steps/step-profile-completion/useOnboardingStepProfileCompletion';
-import { useOnboardingStepSocialSituation } from '@/src/features/backoffice/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
 import { openModal } from '@/src/features/modals/Modal/openModal';
+import { OnboardingCompletionModal } from '@/src/features/registration-wizard/onboarding/completion-modal/OnboardingCompletionModal';
+import { ConfirmModalStep } from '@/src/features/registration-wizard/onboarding/confirm-step-modal/ConfirmModalStep';
+import { determineStartingStep } from '@/src/features/registration-wizard/onboarding/onboarding.utils';
+import { useOnboardingStepElearning } from '@/src/features/registration-wizard/onboarding/steps/step-elearning/useOnboardingStepElearning';
+import { useOnboardingStepProfileCompletion } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/useOnboardingStepProfileCompletion';
+import { useOnboardingStepSocialSituation } from '@/src/features/registration-wizard/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
 import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 import { authenticationActions } from '@/src/use-cases/authentication';
-import { verifyOtpSelectors } from '@/src/use-cases/authentication/authentication.selectors';
+import {
+  logoutSelectors,
+  verifyOtpSelectors,
+} from '@/src/use-cases/authentication/authentication.selectors';
 import {
   currentUserActions,
   selectFetchCurrentProfileStatus,
@@ -46,6 +48,7 @@ const EMAIL_CONFIRMATION_STEP: WizardStep = {
   },
   hideGenericStepHeader: undefined,
   content: null,
+  section: 'inscription',
 };
 
 function useWizardStepEmailConfirmation(): WizardStep {
@@ -93,6 +96,11 @@ export interface WizardState {
   isInitializing: boolean;
   buttonLabel: string;
   onNext: () => Promise<void>;
+  onBack: () => void;
+  canGoBack: boolean;
+  sidePanelContent: React.ReactNode;
+  isOnboardingPhase: boolean;
+  skipOnboarding: () => void;
 }
 
 export const useWizard = (): WizardState => {
@@ -107,6 +115,9 @@ export const useWizard = (): WizardState => {
   const updateOnboardingStatus = useSelector(
     selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
   );
+  const isLogoutSucceeded = useSelector(
+    logoutSelectors.selectIsLogoutSucceeded
+  );
 
   // Registration steps
   const {
@@ -114,6 +125,8 @@ export const useWizard = (): WizardState => {
     currentWizardIdx,
     currentWizardStep: currentRegistrationStep,
     incrementStep: registrationIncrementStep,
+    decrementStep: registrationDecrementStep,
+    canGoBack: registrationCanGoBack,
     isLoading: registrationIsLoading,
   } = useRegistrationWizard();
 
@@ -124,10 +137,14 @@ export const useWizard = (): WizardState => {
     }
   }, [currentUser, registrationSteps.length, router]);
 
+  // Redirection vers /login après déconnexion depuis le wizard
+  useEffect(() => {
+    if (isLogoutSucceeded) {
+      router.push('/login');
+    }
+  }, [isLogoutSucceeded, router]);
+
   // Onboarding step hooks — called unconditionally with null-safe user
-  const { onboardingStepNudges } = useOnboardingStepNudges({
-    user: currentUser,
-  });
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: currentUser?.role as UserRoles | undefined,
   });
@@ -140,15 +157,15 @@ export const useWizard = (): WizardState => {
     });
 
   const onboardingSteps = useMemo(() => {
-    const steps = [onboardingStepNudges, onboardingStepElearning];
+    const steps: (typeof onboardingStepProfileCompletion)[] = [];
     if (currentUser?.role === UserRoles.CANDIDATE) {
       steps.push(onboardingStepSocialSituation);
     }
     steps.push(onboardingStepProfileCompletion);
+    steps.push(onboardingStepElearning);
     return steps as unknown as WizardStep[];
   }, [
     currentUser?.role,
-    onboardingStepNudges,
     onboardingStepElearning,
     onboardingStepSocialSituation,
     onboardingStepProfileCompletion,
@@ -175,8 +192,19 @@ export const useWizard = (): WizardState => {
     }
     determineStartingStep(
       onboardingSteps as unknown as Parameters<typeof determineStartingStep>[0]
-    ).then(setOnboardingIdx);
-  }, [currentUser, onboardingIdx, isProfileLoaded, onboardingSteps]);
+    ).then((startIdx) => {
+      if (startIdx === null && onboardingSteps.length > 0) {
+        // Toutes les étapes sont déjà complètes — finaliser l'onboarding sans repasser par l'UI
+        dispatch(
+          currentUserActions.updateOnboardingStatusRequested({
+            onboardingStatus: OnboardingStatus.COMPLETED,
+          })
+        );
+      } else {
+        setOnboardingIdx(startIdx ?? 0);
+      }
+    });
+  }, [currentUser, onboardingIdx, isProfileLoaded, onboardingSteps, dispatch]);
 
   // Redirect to dashboard after onboarding completion
   useEffect(() => {
@@ -275,6 +303,10 @@ export const useWizard = (): WizardState => {
 
         if (step.confirmationStep) {
           const { title, subtitle, submitBtnTxt, id } = step.confirmationStep;
+          const nextStep =
+            onboardingIdx !== null
+              ? onboardingSteps[onboardingIdx + 1] ?? null
+              : null;
           await new Promise<void>((resolve) => {
             openModal(
               <ConfirmModalStep
@@ -283,6 +315,7 @@ export const useWizard = (): WizardState => {
                 subtitle={subtitle}
                 submitBtnTxt={submitBtnTxt}
                 onSubmit={() => resolve()}
+                nextStep={nextStep}
               />
             );
           });
@@ -311,12 +344,12 @@ export const useWizard = (): WizardState => {
   }, [
     isOnboardingPhase,
     isEmailConfirmationPhase,
-    currentStep,
-    emailConfirmationStep,
-    onboardingIdx,
-    onboardingSteps.length,
     registrationIncrementStep,
+    currentStep,
+    onboardingIdx,
+    onboardingSteps,
     onOnboardingCompleted,
+    emailConfirmationStep,
   ]);
 
   const isLastOnboardingStep =
@@ -334,6 +367,29 @@ export const useWizard = (): WizardState => {
     ? 'Créer mon compte'
     : 'Étape suivante';
 
+  const canGoBack = isOnboardingPhase
+    ? onboardingIdx !== null && onboardingIdx > 0
+    : !isEmailConfirmationPhase && registrationCanGoBack;
+
+  const onBack = useCallback(() => {
+    if (!canGoBack) {
+      return;
+    }
+    if (isOnboardingPhase) {
+      setOnboardingIdx((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
+      return;
+    }
+    registrationDecrementStep();
+  }, [canGoBack, isOnboardingPhase, registrationDecrementStep]);
+
+  const skipOnboarding = useCallback(() => {
+    dispatch(
+      currentUserActions.updateOnboardingStatusRequested({
+        onboardingStatus: OnboardingStatus.COMPLETED,
+      })
+    );
+  }, [dispatch]);
+
   return {
     allSteps,
     currentStepIdx,
@@ -342,5 +398,10 @@ export const useWizard = (): WizardState => {
     isInitializing,
     buttonLabel,
     onNext,
+    onBack,
+    canGoBack,
+    sidePanelContent: currentStep?.sidePanelContent,
+    isOnboardingPhase,
+    skipOnboarding,
   };
 };

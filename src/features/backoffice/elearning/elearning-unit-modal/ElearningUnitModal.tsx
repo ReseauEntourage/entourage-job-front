@@ -33,8 +33,8 @@ export const ElearningUnitModal = ({
   const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [quizSelectedAnswerByQuestionId, setQuizSelectedAnswerByQuestionId] =
     useState<Record<string, string>>({});
-  const [quizCorrectQuestionIds, setQuizCorrectQuestionIds] = useState<
-    Record<string, true>
+  const [quizAnsweredQuestions, setQuizAnsweredQuestions] = useState<
+    Record<string, boolean>
   >({});
   const [quizError, setQuizError] = useState<string | null>(null);
 
@@ -51,8 +51,11 @@ export const ElearningUnitModal = ({
   );
   const isLastQuestion =
     questions.length > 0 && quizQuestionIndex === questions.length - 1;
-  const isCurrentQuestionValidatedCorrect = currentQuestion
-    ? !!quizCorrectQuestionIds[currentQuestion.id]
+  const isCurrentQuestionAnswered = currentQuestion
+    ? currentQuestion.id in quizAnsweredQuestions
+    : false;
+  const isCurrentAnswerCorrect = currentQuestion
+    ? !!quizAnsweredQuestions[currentQuestion.id]
     : false;
 
   const closeModal = () => {
@@ -63,7 +66,7 @@ export const ElearningUnitModal = ({
     setMode(ElearningUnitModalMode.QUIZ);
     setQuizQuestionIndex(0);
     setQuizSelectedAnswerByQuestionId({});
-    setQuizCorrectQuestionIds({});
+    setQuizAnsweredQuestions({});
     setQuizError(null);
   };
 
@@ -83,22 +86,17 @@ export const ElearningUnitModal = ({
         return;
       }
 
-      // Étape 1 : valider la réponse de la question courante
-      if (!isCurrentQuestionValidatedCorrect) {
+      // Étape 1 : révéler l'explication pour la question courante
+      if (!isCurrentQuestionAnswered) {
         if (!currentSelectedAnswerId) {
           setQuizError('Sélectionne une réponse pour valider.');
           return;
         }
 
-        if (!currentSelectedAnswer?.isCorrect) {
-          setQuizError("Ce n'est pas la bonne réponse. Essaie encore.");
-          return;
-        }
-
         setQuizError(null);
-        setQuizCorrectQuestionIds((prev) => ({
+        setQuizAnsweredQuestions((prev) => ({
           ...prev,
-          [currentQuestion.id]: true,
+          [currentQuestion.id]: !!currentSelectedAnswer?.isCorrect,
         }));
         return;
       }
@@ -123,17 +121,12 @@ export const ElearningUnitModal = ({
       return 'Confirmer';
     }
 
-    if (!isCurrentQuestionValidatedCorrect) {
+    if (!isCurrentQuestionAnswered) {
       return 'Valider';
     }
 
     return isLastQuestion ? 'Terminer' : 'Question suivante';
-  }, [
-    mode,
-    questions.length,
-    isLastQuestion,
-    isCurrentQuestionValidatedCorrect,
-  ]);
+  }, [mode, questions.length, isLastQuestion, isCurrentQuestionAnswered]);
 
   const onQuizAnswerChange = (answerId: string) => {
     if (!currentQuestion) {
@@ -165,9 +158,8 @@ export const ElearningUnitModal = ({
               quizQuestionIndex={quizQuestionIndex}
               currentQuestion={currentQuestion}
               currentSelectedAnswerId={currentSelectedAnswerId}
-              isCurrentQuestionValidatedCorrect={
-                isCurrentQuestionValidatedCorrect
-              }
+              isCurrentQuestionAnswered={isCurrentQuestionAnswered}
+              isCurrentAnswerCorrect={isCurrentAnswerCorrect}
               hasError={!!quizError}
               onAnswerChange={onQuizAnswerChange}
             />

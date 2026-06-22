@@ -30,7 +30,6 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     currentUser?.role as UserRoles
   );
   const isInBackoffice = asPath.startsWith('/backoffice');
-  // On considère toute page /backoffice/onboarding ou ses sous-pages
   const isOnOnboardingPage =
     asPath === onboardingPath || asPath.startsWith(`${onboardingPath}/`);
 

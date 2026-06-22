@@ -6,28 +6,36 @@ import { StyledElearningUnitModalQuizSuccessContainer } from './ElearningUnitMod
 
 interface ElearningUnitModalQuizSuccessProps {
   correctAnswer: ElearningAnswer;
+  isCorrect: boolean;
 }
 
 export const ElearningUnitModalQuizSuccess = ({
   correctAnswer,
+  isCorrect,
 }: ElearningUnitModalQuizSuccessProps) => {
   return (
-    <Alert type={AlertType.Info} icon={null} variant="outlined">
+    <Alert
+      type={isCorrect ? AlertType.Info : AlertType.Error}
+      icon={null}
+      variant="outlined"
+    >
       <StyledElearningUnitModalQuizSuccessContainer>
         <Text center>
-          <LucidIcon name="BadgeCheck" color={COLORS.darkBlue} size={72} />
+          <LucidIcon
+            name={isCorrect ? 'BadgeCheck' : 'BadgeAlert'}
+            color={isCorrect ? COLORS.darkBlue : COLORS.lightRed}
+            size={72}
+          />
         </Text>
         <Text weight="semibold" size="large" center>
-          Bonne réponse !
+          {isCorrect ? 'Bonne réponse !' : "Ce n'est pas la bonne réponse."}
         </Text>
-        <Alert type={AlertType.NeutralWhite} icon={null}>
-          {correctAnswer.explanation && (
-            <>
-              <Text weight="semibold">Explication :</Text>
-              <Text size="large">{correctAnswer.explanation}</Text>
-            </>
-          )}
-        </Alert>
+        {correctAnswer.explanation && (
+          <Alert type={AlertType.NeutralWhite} icon={null}>
+            <Text weight="semibold">Explication :</Text>
+            <Text size="large">{correctAnswer.explanation}</Text>
+          </Alert>
+        )}
       </StyledElearningUnitModalQuizSuccessContainer>
     </Alert>
   );

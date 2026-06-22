@@ -3,10 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
-import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
-import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
-import { WizardFlowStepsSummary } from '@/src/features/registration-wizard/WizardFlowStepsSummary';
+import { WizardRoleSelectionSidePanel } from '@/src/features/registration-wizard/WizardRoleSelectionSidePanel';
 import { WizardSummary } from '@/src/features/registration-wizard/WizardSummary/WizardSummary';
 import { WizardContentLayout } from '@/src/features/wizard-shell/WizardContentLayout';
 import { selectCurrentUser } from '@/src/use-cases/current-user';
@@ -42,18 +40,10 @@ const WizardHome = () => {
   const selectedFlow = selectedFlows[0] ?? null;
 
   return (
-    <Layout title="Inscription — Entourage Pro" noFooter>
+    <Layout title="Inscription — Entourage Pro" noFooter noHeader>
       <WizardContentLayout
-        sidePanel={<WizardFlowStepsSummary flow={selectedFlow} />}
+        sidePanel={<WizardRoleSelectionSidePanel flow={selectedFlow} />}
       >
-        <StyledBackgroundedHeaderBackoffice>
-          <Section className="custom-page">
-            <HeaderBackoffice
-              title="Rejoignez la communauté Entourage Pro"
-              noSeparator
-            />
-          </Section>
-        </StyledBackgroundedHeaderBackoffice>
         <Section className="custom-page">
           <WizardSummary value={selectedFlows} onChange={setSelectedFlows} />
         </Section>

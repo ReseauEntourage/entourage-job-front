@@ -47,6 +47,7 @@ export function useWizardStepCompanySelection() {
       const success = await formRef.current?.submit();
       return success === false ? false : undefined;
     },
+    section: 'inscription',
   };
 
   return { step };

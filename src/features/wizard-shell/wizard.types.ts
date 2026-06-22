@@ -1,5 +1,18 @@
 import React from 'react';
 
+export type WizardSectionId = 'inscription' | 'profil' | 'formation';
+
+export interface WizardSection {
+  id: WizardSectionId;
+  label: string;
+}
+
+export const WIZARD_SECTIONS: WizardSection[] = [
+  { id: 'inscription', label: 'Inscription' },
+  { id: 'profil', label: 'Profil' },
+  { id: 'formation', label: 'Formation' },
+];
+
 export interface WizardStep {
   summary: {
     title: string;
@@ -11,6 +24,8 @@ export interface WizardStep {
   smallTitle: string;
   description: React.ReactNode;
   content: React.ReactNode;
+  sidePanelContent?: React.ReactNode;
+  isNextEnabled?: boolean;
   isStepCompleted?: () => Promise<boolean>;
   incrementationIsAllowed?: () => Promise<boolean>;
   onSubmit?: () => Promise<boolean | void>;
@@ -20,4 +35,5 @@ export interface WizardStep {
     submitBtnTxt: string;
     id: string;
   };
+  section?: WizardSectionId;
 }

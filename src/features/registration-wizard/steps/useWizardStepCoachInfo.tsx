@@ -50,6 +50,7 @@ export function useWizardStepCoachInfo() {
       const success = await formRef.current?.submit();
       return success === false ? false : undefined;
     },
+    section: 'inscription',
   };
 
   return { step };

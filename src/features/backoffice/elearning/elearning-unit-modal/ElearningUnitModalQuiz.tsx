@@ -16,7 +16,8 @@ interface ElearningUnitModalQuizProps {
   quizQuestionIndex: number;
   currentQuestion?: ElearningQuestion;
   currentSelectedAnswerId?: string;
-  isCurrentQuestionValidatedCorrect: boolean;
+  isCurrentQuestionAnswered: boolean;
+  isCurrentAnswerCorrect: boolean;
   hasError: boolean;
   onAnswerChange: (answerId: string) => void;
 }
@@ -26,7 +27,8 @@ export const ElearningUnitModalQuiz = ({
   quizQuestionIndex,
   currentQuestion,
   currentSelectedAnswerId,
-  isCurrentQuestionValidatedCorrect,
+  isCurrentQuestionAnswered,
+  isCurrentAnswerCorrect,
   hasError,
   onAnswerChange,
 }: ElearningUnitModalQuizProps) => {
@@ -49,7 +51,7 @@ export const ElearningUnitModalQuiz = ({
 
       <ProgressBar value={progressValue} color="darkBlue" />
 
-      {!isCurrentQuestionValidatedCorrect && (
+      {!isCurrentQuestionAnswered && (
         <StyledElearningQuestionCard>
           <Text size="large" weight="semibold">
             {currentQuestion?.label}
@@ -77,14 +79,16 @@ export const ElearningUnitModalQuiz = ({
           icon={<LucidIcon name="MessageCircleWarning" size={24} />}
         >
           <Text color="white" weight="semibold">
-            Réponse incorrecte
+            Sélectionne une réponse pour valider.
           </Text>
-          <Text color="white">Veuillez réessayer avec une autre réponse</Text>
         </Alert>
       )}
 
-      {correctAnswer && isCurrentQuestionValidatedCorrect && (
-        <ElearningUnitModalQuizSuccess correctAnswer={correctAnswer} />
+      {correctAnswer && isCurrentQuestionAnswered && (
+        <ElearningUnitModalQuizSuccess
+          correctAnswer={correctAnswer}
+          isCorrect={isCurrentAnswerCorrect}
+        />
       )}
     </StyledElearningUnitModalContent>
   );

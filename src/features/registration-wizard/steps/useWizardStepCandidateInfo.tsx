@@ -8,12 +8,14 @@ import { formRegistrationCandidateInfo } from '@/src/features/registration/forms
 import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 import {
   registrationActions,
+  selectRegistrationCurrentStep,
   selectRegistrationData,
 } from '@/src/use-cases/registration';
 
 export function useWizardStepCandidateInfo() {
   const dispatch = useDispatch();
   const data = useSelector(selectRegistrationData);
+  const currentStep = useSelector(selectRegistrationCurrentStep);
   const formRef = useRef<FormWithValidationRef>(null);
 
   const handleFormSubmit = useCallback(
@@ -21,11 +23,11 @@ export function useWizardStepCandidateInfo() {
       dispatch(
         registrationActions.moveForwardInRegistration({
           data: fields as any,
-          step: 1,
+          step: currentStep + 1,
         })
       );
     },
-    [dispatch]
+    [dispatch, currentStep]
   );
 
   const step: WizardStep = {
@@ -48,6 +50,7 @@ export function useWizardStepCandidateInfo() {
       const success = await formRef.current?.submit();
       return success === false ? false : undefined;
     },
+    section: 'inscription',
   };
 
   return { step };

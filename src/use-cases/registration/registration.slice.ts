@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { REGISTRATION_FIRST_STEP } from '@/src/features/registration/registration.config';
 import {
@@ -9,6 +10,11 @@ import {
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
 
+export interface PreRegistrationPreferences {
+  nudgeIds: string[];
+  sectorOccupations: UserProfileSectorOccupation[];
+}
+
 interface State {
   createUser: RequestState<typeof createUserAdapter>;
   createUserError: CreateUserError | null;
@@ -18,6 +24,7 @@ interface State {
   isLoading: boolean;
   isEnded?: boolean;
   invitationId?: string;
+  preRegistrationPreferences: PreRegistrationPreferences | null;
 }
 
 const initialState: State = {
@@ -29,6 +36,7 @@ const initialState: State = {
   isLoading: false,
   isEnded: false,
   invitationId: undefined,
+  preRegistrationPreferences: null,
 };
 
 export const slice = createSlice({
@@ -85,11 +93,32 @@ export const slice = createSlice({
     setRegistrationIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
+    moveBackwardInRegistration(state) {
+      if (state.currentStep > REGISTRATION_FIRST_STEP) {
+        state.currentStep = state.currentStep - 1;
+      }
+    },
+    setPreRegistrationPreferences(
+      state,
+      action: PayloadAction<Partial<PreRegistrationPreferences>>
+    ) {
+      state.preRegistrationPreferences = {
+        nudgeIds:
+          action.payload.nudgeIds ??
+          state.preRegistrationPreferences?.nudgeIds ??
+          [],
+        sectorOccupations:
+          action.payload.sectorOccupations ??
+          state.preRegistrationPreferences?.sectorOccupations ??
+          [],
+      };
+    },
     resetRegistrationData(state) {
       state.selectedFlow = null;
       state.currentStep = -1; // Reset to no step selected
       state.data = null;
       state.isEnded = false;
+      state.preRegistrationPreferences = null;
     },
     setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
       state.isEnded = action.payload;

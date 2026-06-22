@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { StyledOnboardingActions } from '@/src/features/backoffice/onboarding/onboarding.styles';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
+import { StyledOnboardingActions } from '@/src/features/registration-wizard/onboarding/onboarding.styles';
 import { WizardContentLayout } from '@/src/features/wizard-shell/WizardContentLayout';
 import { StyledWizardStepHeader } from '@/src/features/wizard-shell/WizardContentLayout.styles';
-import { WizardIndicator } from '@/src/features/wizard-shell/WizardIndicator';
 import { WizardProgressBar } from '@/src/features/wizard-shell/WizardProgressBar';
-import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
+import { WizardSubProgressBar } from '@/src/features/wizard-shell/WizardSubProgressBar';
+import {
+  WIZARD_SECTIONS,
+  WizardStep,
+} from '@/src/features/wizard-shell/wizard.types';
+import { useIsDev } from '@/src/hooks/useIsDev';
 
 interface WizardRunShellProps {
   wizardSteps: WizardStep[];
@@ -17,7 +21,11 @@ interface WizardRunShellProps {
   isLoading: boolean;
   buttonLabel: string;
   onNext: () => Promise<void>;
+  onBack?: () => void;
+  canGoBack?: boolean;
   isInitializing?: boolean;
+  sidePanelContent?: React.ReactNode;
+  onSkip?: () => void;
 }
 
 export const WizardRunShell = ({
@@ -27,24 +35,56 @@ export const WizardRunShell = ({
   isLoading,
   buttonLabel,
   onNext,
+  onBack,
+  canGoBack = false,
   isInitializing = false,
+  sidePanelContent,
+  onSkip,
 }: WizardRunShellProps) => {
+  const isDev = useIsDev();
+
+  const subProgress = useMemo(() => {
+    const currentSectionId = wizardSteps[currentWizardIdx]?.section;
+    if (!currentSectionId) {
+      return null;
+    }
+    const section = WIZARD_SECTIONS.find((s) => s.id === currentSectionId);
+    if (!section) {
+      return null;
+    }
+    const sectionSteps = wizardSteps.filter(
+      (s) => s.section === currentSectionId
+    );
+    const posInSection = sectionSteps.findIndex(
+      (s) => s === wizardSteps[currentWizardIdx]
+    );
+    return {
+      sectionLabel: section.label,
+      currentInSection: posInSection,
+      totalInSection: sectionSteps.length,
+    };
+  }, [wizardSteps, currentWizardIdx]);
+
   return (
-    <WizardContentLayout sidePanel={null}>
+    <WizardContentLayout sidePanel={sidePanelContent ?? null}>
       <StyledWizardStepHeader>
         <Section className="custom-page">
           <WizardProgressBar
             steps={wizardSteps}
             currentIdx={currentWizardIdx}
+            sections={WIZARD_SECTIONS}
           />
         </Section>
       </StyledWizardStepHeader>
       <StyledWizardStepHeader>
         <Section className="custom-page">
-          <WizardIndicator
-            totalSteps={wizardSteps.length}
-            currentIdx={currentWizardIdx}
-          />
+          {subProgress && (
+            <WizardSubProgressBar
+              sectionLabel={subProgress.sectionLabel}
+              currentInSection={subProgress.currentInSection}
+              totalInSection={subProgress.totalInSection}
+            />
+          )}
           {currentStep && !currentStep.hideGenericStepHeader && (
             <>
               <br />
@@ -65,9 +105,20 @@ export const WizardRunShell = ({
               {currentStep.content}
             </React.Fragment>
             <StyledOnboardingActions>
+              {canGoBack && onBack && (
+                <Button
+                  variant="secondary"
+                  onClick={onBack}
+                  disabled={isLoading}
+                  size="large"
+                  dataTestId="wizard-back-step-btn"
+                >
+                  Retour
+                </Button>
+              )}
               <Button
                 onClick={onNext}
-                disabled={isLoading}
+                disabled={isLoading || currentStep?.isNextEnabled === false}
                 size="large"
                 dataTestId="wizard-next-step-btn"
               >
@@ -79,6 +130,16 @@ export const WizardRunShell = ({
                 )}
                 {!isLoading && buttonLabel}
               </Button>
+              {isDev && onSkip && (
+                <Button
+                  variant="secondary"
+                  onClick={onSkip}
+                  disabled={isLoading}
+                  dataTestId="wizard-skip-onboarding-btn"
+                >
+                  ⚙️ Dev only - Passer l&apos;onboarding
+                </Button>
+              )}
             </StyledOnboardingActions>
           </>
         ) : (

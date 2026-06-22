@@ -236,8 +236,8 @@ export function EmailOtpInput({ onCodeChange }: EmailOtpInputProps) {
       {hasError && (
         <StyledError>
           {otpError === VerifyOtpErrorType.EXPIRED
-            ? 'Ce code a expiré. Veuillez en demander un nouveau.'
-            : 'Code invalide. Vérifiez et réessayez.'}
+            ? 'Ce code a expiré. Demandez un nouveau code pour continuer.'
+            : "Ce code n'est pas valide. Vérifiez les 6 chiffres, ou demandez un nouveau code."}
         </StyledError>
       )}
 

@@ -12,10 +12,15 @@ const WizardRun = () => {
     isInitializing,
     buttonLabel,
     onNext,
+    onBack,
+    canGoBack,
+    sidePanelContent,
+    isOnboardingPhase,
+    skipOnboarding,
   } = useWizard();
 
   return (
-    <Layout title="Inscription — Entourage Pro" noFooter>
+    <Layout title="Inscription — Entourage Pro" noFooter noHeader>
       <WizardRunShell
         wizardSteps={allSteps}
         currentWizardIdx={currentStepIdx}
@@ -24,6 +29,10 @@ const WizardRun = () => {
         isInitializing={isInitializing}
         buttonLabel={buttonLabel}
         onNext={onNext}
+        onBack={onBack}
+        canGoBack={canGoBack}
+        sidePanelContent={sidePanelContent}
+        onSkip={isOnboardingPhase ? skipOnboarding : undefined}
       />
     </Layout>
   );
