@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { ReduxRequestEvents } from '@/src/constants';
 import { OnboardingStatus } from '@/src/constants/onboarding';
-import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { OnboardingCompletionModal } from '@/src/features/backoffice/onboarding/completion-modal/OnboardingCompletionModal';
 import { ConfirmModalStep } from '@/src/features/backoffice/onboarding/confirm-step-modal/ConfirmModalStep';
@@ -15,60 +19,71 @@ import { useOnboardingStepProfileCompletion } from '@/src/features/backoffice/on
 import { useOnboardingStepSocialSituation } from '@/src/features/backoffice/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
 import { openModal } from '@/src/features/modals/Modal/openModal';
 import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
+import { authenticationActions } from '@/src/use-cases/authentication';
+import { verifyOtpSelectors } from '@/src/use-cases/authentication/authentication.selectors';
 import {
   currentUserActions,
   selectFetchCurrentProfileStatus,
   selectUpdateOnboardingStatusSelectors,
 } from '@/src/use-cases/current-user';
 import { selectCurrentUser } from '@/src/use-cases/current-user';
-import { createUserSelectors } from '@/src/use-cases/registration';
+import {
+  createUserSelectors,
+  selectRegistrationData,
+} from '@/src/use-cases/registration';
+import { EmailOtpInput } from './EmailOtpInput/EmailOtpInput';
 import { useRegistrationWizard } from './useRegistrationWizard';
 
-const StyledEmailConfirmationContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 8px 0;
-  max-width: 560px;
-`;
-
-const StyledEmailConfirmationIcon = styled.div`
-  font-size: 48px;
-  line-height: 1;
-`;
-
-const StyledEmailConfirmationText = styled.p`
-  font-family: Poppins, sans-serif;
-  font-size: 15px;
-  color: ${COLORS.darkGray};
-  line-height: 1.6;
-  margin: 0;
-`;
-
-const EmailConfirmationContent = () => (
-  <StyledEmailConfirmationContent>
-    <StyledEmailConfirmationIcon>📧</StyledEmailConfirmationIcon>
-    <StyledEmailConfirmationText>
-      Nous vous avons envoyé un email de confirmation. Cliquez sur le lien dans
-      cet email pour activer votre compte, puis revenez ici pour continuer.
-    </StyledEmailConfirmationText>
-    <StyledEmailConfirmationText>
-      Si vous ne trouvez pas l'email, pensez à vérifier vos spams.
-    </StyledEmailConfirmationText>
-  </StyledEmailConfirmationContent>
-);
+const OTP_LENGTH = 6;
 
 const EMAIL_CONFIRMATION_STEP: WizardStep = {
   smallTitle: 'Confirmation email',
   title: 'Confirmez votre adresse email',
-  description: 'Activez votre compte avant de continuer',
+  description: 'Saisissez le code reçu par email',
   summary: {
     title: 'Confirmation email',
     duration: '~1 minute',
   },
   hideGenericStepHeader: undefined,
-  content: <EmailConfirmationContent />,
+  content: null,
 };
+
+function useWizardStepEmailConfirmation(): WizardStep {
+  const dispatch = useDispatch();
+  const registrationData = useSelector(selectRegistrationData) as any;
+  const email = registrationData?.email as string | undefined;
+  const [code, setCode] = useState('');
+  const codeRef = useRef('');
+
+  const handleCodeChange = useCallback((newCode: string) => {
+    codeRef.current = newCode;
+    setCode(newCode);
+  }, []);
+
+  // Auto-submit when all 6 digits are entered
+  useEffect(() => {
+    if (code.length === OTP_LENGTH && email) {
+      dispatch(authenticationActions.verifyOtpRequested({ email, code }));
+    }
+  }, [code, email, dispatch]);
+
+  return useMemo<WizardStep>(
+    () => ({
+      ...EMAIL_CONFIRMATION_STEP,
+      content: <EmailOtpInput onCodeChange={handleCodeChange} />,
+      onSubmit: async () => {
+        const currentCode = codeRef.current;
+        if (currentCode.length !== OTP_LENGTH || !email) {
+          return false;
+        }
+        dispatch(
+          authenticationActions.verifyOtpRequested({ email, code: currentCode })
+        );
+      },
+    }),
+    [handleCodeChange, email, dispatch]
+  );
+}
 
 export interface WizardState {
   allSteps: WizardStep[];
@@ -146,6 +161,13 @@ export const useWizard = (): WizardState => {
     fetchProfileStatus === ReduxRequestEvents.SUCCEEDED ||
     fetchProfileStatus === ReduxRequestEvents.FAILED;
 
+  // Ensure profile is fetched when entering onboarding (handles direct navigation to /wizard/run)
+  useEffect(() => {
+    if (currentUser && fetchProfileStatus === ReduxRequestEvents.IDLE) {
+      dispatch(currentUserActions.fetchCurrentProfileRequested());
+    }
+  }, [currentUser, fetchProfileStatus, dispatch]);
+
   // Determine starting onboarding step (handles resume after window close)
   useEffect(() => {
     if (!currentUser || onboardingIdx !== null || !isProfileLoaded) {
@@ -167,6 +189,9 @@ export const useWizard = (): WizardState => {
   const accountJustCreated = createUserStatus === ReduxRequestEvents.SUCCEEDED;
   const isOnboardingPhase = !!currentUser;
   const isEmailConfirmationPhase = accountJustCreated && !currentUser;
+
+  const emailConfirmationStep = useWizardStepEmailConfirmation();
+
   // Unified step list for the progress bar — toutes les phases toujours visibles
   const allSteps = useMemo(() => {
     return [...registrationSteps, EMAIL_CONFIRMATION_STEP, ...onboardingSteps];
@@ -186,11 +211,15 @@ export const useWizard = (): WizardState => {
       ? onboardingSteps[onboardingIdx] ?? null
       : null
     : isEmailConfirmationPhase
-    ? EMAIL_CONFIRMATION_STEP
+    ? emailConfirmationStep
     : currentRegistrationStep;
 
+  const verifyOtpIsLoading = useSelector(
+    verifyOtpSelectors.selectIsVerifyOtpRequested
+  );
+
   const emailConfirmationIsLoading =
-    fetchProfileStatus === ReduxRequestEvents.REQUESTED;
+    fetchProfileStatus === ReduxRequestEvents.REQUESTED || verifyOtpIsLoading;
 
   const isLoading = isOnboardingPhase
     ? onboardingIsLoading
@@ -271,7 +300,10 @@ export const useWizard = (): WizardState => {
     }
 
     if (isEmailConfirmationPhase) {
-      dispatch(currentUserActions.fetchCurrentProfileRequested());
+      const result = await emailConfirmationStep.onSubmit?.();
+      if (result === false) {
+        return;
+      }
       return;
     }
 
@@ -280,9 +312,9 @@ export const useWizard = (): WizardState => {
     isOnboardingPhase,
     isEmailConfirmationPhase,
     currentStep,
+    emailConfirmationStep,
     onboardingIdx,
     onboardingSteps.length,
-    dispatch,
     registrationIncrementStep,
     onOnboardingCompleted,
   ]);
@@ -297,7 +329,7 @@ export const useWizard = (): WizardState => {
       ? 'Terminer'
       : 'Étape suivante'
     : isEmailConfirmationPhase
-    ? 'Accéder à mon espace'
+    ? 'Valider le code'
     : currentWizardIdx === registrationSteps.length - 1
     ? 'Créer mon compte'
     : 'Étape suivante';

@@ -7,6 +7,8 @@ import {
   verifyEmailTokenAdapter,
   VerifyEmailTokenErrorType,
   sendVerifyEmailAdapter,
+  verifyOtpAdapter,
+  VerifyOtpErrorType,
 } from './authentication.adapters';
 
 interface State {
@@ -14,9 +16,11 @@ interface State {
   logout: RequestState<typeof logoutAdapter>;
   verifyEmailToken: RequestState<typeof verifyEmailTokenAdapter>;
   sendVerifyEmail: RequestState<typeof verifyEmailTokenAdapter>;
+  verifyOtp: RequestState<typeof verifyOtpAdapter>;
   accessToken: string | null;
   loginError: LoginError | null;
   verifyEmailTokenError: VerifyEmailTokenErrorType | null;
+  verifyOtpError: VerifyOtpErrorType | null;
 }
 
 const initialState: State = {
@@ -24,9 +28,11 @@ const initialState: State = {
   login: loginAdapter.getInitialState(),
   verifyEmailToken: verifyEmailTokenAdapter.getInitialState(),
   sendVerifyEmail: verifyEmailTokenAdapter.getInitialState(),
+  verifyOtp: verifyOtpAdapter.getInitialState(),
   accessToken: null,
   loginError: null,
   verifyEmailTokenError: null,
+  verifyOtpError: null,
 };
 
 export const slice = createSlice({
@@ -59,6 +65,14 @@ export const slice = createSlice({
       (state) => state.sendVerifyEmail,
       {}
     ),
+    ...verifyOtpAdapter.getReducers<State>((state) => state.verifyOtp, {
+      verifyOtpFailed(state, action) {
+        state.verifyOtpError = action.payload.error;
+      },
+      verifyOtpSucceeded(state) {
+        state.verifyOtpError = null;
+      },
+    }),
     setAccessToken(state, action: PayloadAction<string | null>) {
       state.accessToken = action.payload;
     },

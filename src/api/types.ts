@@ -746,6 +746,11 @@ export type PostAuthSendVerifyEmailParams = {
   email?: string;
 };
 
+export type PostAuthVerifyOtpParams = {
+  email: string;
+  code: string;
+};
+
 export type PostAuthFinalizeReferedUserParams = {
   token: string;
   password: string;

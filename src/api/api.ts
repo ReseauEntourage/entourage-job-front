@@ -20,6 +20,7 @@ import {
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
+  PostAuthVerifyOtpParams,
   ProfilesFilters,
   RecruitementAlertDto,
   Route,
@@ -577,6 +578,12 @@ export class APIHandler {
     params: PostAuthSendVerifyEmailParams
   ): Promise<AxiosResponse> {
     return this.post('/auth/send-verify-email', params);
+  }
+
+  postAuthVerifyOtp(
+    params: PostAuthVerifyOtpParams
+  ): Promise<AxiosResponse<{ token: string }>> {
+    return this.post('/auth/verify-otp', params);
   }
 
   postAuthFinalizeReferedUser(
