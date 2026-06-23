@@ -2,17 +2,22 @@ import React, { useEffect, useMemo } from 'react';
 import { useWatch, useFormContext } from 'react-hook-form';
 import { Text } from '@/src/components/ui';
 import { AccordionGroup } from '@/src/components/ui/Accordion/AccordionGroup';
+import { UserRoles } from '@/src/constants/users';
 import { listCompletionFields } from '@/src/features/forms/utils/computeCompletionRate.utils';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { CompletionStatus } from './CompletionStatus';
 import { StyledProfileSubHeader } from './Content.styles';
 import { CvCompletionAccordion } from './components/CvCompletionAccordion/CvCompletionAccordion';
 import { PersonalInfoAccordion } from './components/PersonalInfoAccordion';
-import { ProfessionalInfoAccordion } from './components/ProfessionalInfoAccordion/ProfessionalInfoAccordion';
+import { ProfessionalInfoAccordionCandidate } from './components/ProfessionalInfoAccordion/ProfessionalInfoAccordionCandidate';
+import { ProfessionalInfoAccordionCoach } from './components/ProfessionalInfoAccordion/ProfessionalInfoAccordionCoach';
 import { ProfileCompletionFormValues } from './types';
 
 export const Content = () => {
+  const user = useAuthenticatedUser();
   const userProfile = useCurrentUserProfile();
+  const isCandidate = user.role === UserRoles.CANDIDATE;
   const { control, trigger, getFieldState, formState } =
     useFormContext<ProfileCompletionFormValues>();
 
@@ -79,7 +84,11 @@ export const Content = () => {
       <br />
       <AccordionGroup>
         <PersonalInfoAccordion />
-        <ProfessionalInfoAccordion />
+        {isCandidate ? (
+          <ProfessionalInfoAccordionCandidate />
+        ) : (
+          <ProfessionalInfoAccordionCoach />
+        )}
         <CvCompletionAccordion />
       </AccordionGroup>
     </>

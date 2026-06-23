@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
@@ -7,6 +8,7 @@ import {
   selectElearningUnits,
   selectFetchElearningUnitsState,
 } from '@/src/use-cases/elearning';
+import { WizardRecommendationsSidePanel } from '../../../WizardRecommendationsSidePanel';
 import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
@@ -90,6 +92,7 @@ export const useOnboardingStepElearning = ({
       userRole?.toLowerCase() ?? ''
     }s bienveillants Entourage Pro.`,
     content: <Content />,
+    sidePanelContent: <WizardRecommendationsSidePanel />,
     isStepCompleted: async () => {
       return ensureAndComputeHasCompleteAllUnits();
     },
