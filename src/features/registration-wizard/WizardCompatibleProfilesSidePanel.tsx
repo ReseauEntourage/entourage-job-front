@@ -54,6 +54,7 @@ export const WizardCompatibleProfilesSidePanel = ({
 
   const [profiles, setProfiles] = useState<PublicProfile[]>([]);
   const [count, setCount] = useState(0);
+  const [broadened, setBroadened] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -71,6 +72,7 @@ export const WizardCompatibleProfilesSidePanel = ({
     if (!latest.nudgeIds.length && !latest.businessSectorIds.length) {
       setProfiles([]);
       setCount(0);
+      setBroadened(false);
       return;
     }
 
@@ -96,12 +98,14 @@ export const WizardCompatibleProfilesSidePanel = ({
           if (!cancelled) {
             setProfiles(data.profiles);
             setCount(data.count);
+            setBroadened(data.broadened ?? false);
           }
         })
         .catch(() => {
           if (!cancelled) {
             setProfiles([]);
             setCount(0);
+            setBroadened(false);
           }
         })
         .finally(() => {
@@ -159,6 +163,11 @@ export const WizardCompatibleProfilesSidePanel = ({
           <Text color="white">{countLabel}</Text>
         </StyledCountRow>
         <StyledSubtitle>{SUBTITLE[subtitleContext]}</StyledSubtitle>
+        {broadened && (
+          <Text color="white" size={12}>
+            {'On a élargi à votre secteur pour vous montrer plus de coachs.'}
+          </Text>
+        )}
       </StyledHeader>
       <StyledLockBanner>
         <LucidIcon name="Lock" size={14} color="darkGray" />

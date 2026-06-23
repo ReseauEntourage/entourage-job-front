@@ -720,6 +720,7 @@ export type PrivateProfile = PublicProfile & {
 export type PreRegistrationCompatibleProfilesResponse = {
   count: number;
   profiles: PublicProfile[];
+  broadened?: boolean;
 };
 
 export type Profile = PublicProfile | PrivateProfile;
