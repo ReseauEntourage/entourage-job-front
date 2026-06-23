@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfileSectorOccupation } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
+import { WizardCompatibleProfilesSidePanel } from '@/src/features/registration-wizard/WizardCompatibleProfilesSidePanel';
 import { StyledTwoColumns } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/components/ProfessionalInfoAccordion/ProfesionalInfoAccordion.styles';
 import { ProfileCompletionSchemaField } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/components/ProfileCompletionSchemaField';
 import {
@@ -76,6 +77,52 @@ export function useWizardStepSectorsJobs() {
     mode: 'onChange',
   });
 
+  useEffect(() => {
+    const subscription = formMethods.watch((values) => {
+      let sectorOccupations: UserProfileSectorOccupation[];
+      let businessSectorIds: string[];
+
+      if (isCandidate) {
+        sectorOccupations = formatCareerPathSentence({
+          businessSectorId0: values.businessSectorId0 as
+            | FilterConstant<string>
+            | undefined,
+          occupation0: values.occupation0 ?? '',
+          businessSectorId1: values.businessSectorId1 as
+            | FilterConstant<string>
+            | undefined,
+          occupation1: values.occupation1 ?? '',
+        });
+        businessSectorIds = [
+          values.businessSectorId0?.value,
+          values.businessSectorId1?.value,
+        ].filter((id): id is string => Boolean(id));
+      } else {
+        const sectors = (values.businessSectorIds ??
+          []) as FilterConstant<string>[];
+        sectorOccupations = sectors.map(
+          (s, idx) =>
+            ({
+              businessSectorId: s.value,
+              order: idx,
+            } as UserProfileSectorOccupation)
+        );
+        businessSectorIds = sectors
+          .map((s) => s.value)
+          .filter((id): id is string => Boolean(id));
+      }
+
+      dispatch(
+        registrationActions.setPreRegistrationPreferences({
+          sectorOccupations,
+          businessSectorIds,
+        })
+      );
+    });
+    return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCandidate]);
+
   const content = useMemo(
     () => (
       <FormProvider {...formMethods}>
@@ -105,10 +152,14 @@ export function useWizardStepSectorsJobs() {
       ? 'Ces informations nous permettront de vous proposer des coachs dans votre domaine'
       : 'Ces informations nous permettront de vous mettre en relation avec les bons candidats',
     content,
+    sidePanelContent: (
+      <WizardCompatibleProfilesSidePanel subtitleContext="sectors" />
+    ),
     isNextEnabled: formMethods.formState.isValid,
     onSubmit: async () => {
       const values = formMethods.getValues();
       let sectorOccupations: UserProfileSectorOccupation[];
+      let businessSectorIds: string[];
 
       if (isCandidate) {
         sectorOccupations = formatCareerPathSentence({
@@ -117,20 +168,29 @@ export function useWizardStepSectorsJobs() {
           businessSectorId1: values.businessSectorId1 ?? undefined,
           occupation1: values.occupation1,
         });
+        businessSectorIds = [
+          values.businessSectorId0?.value,
+          values.businessSectorId1?.value,
+        ].filter((id): id is string => Boolean(id));
       } else {
-        sectorOccupations = (
-          values.businessSectorIds as FilterConstant<string>[]
-        ).map(
+        const sectors = values.businessSectorIds as FilterConstant<string>[];
+        sectorOccupations = sectors.map(
           (s, idx) =>
             ({
               businessSectorId: s.value,
               order: idx,
             } as UserProfileSectorOccupation)
         );
+        businessSectorIds = sectors
+          .map((s) => s.value)
+          .filter((id): id is string => Boolean(id));
       }
 
       dispatch(
-        registrationActions.setPreRegistrationPreferences({ sectorOccupations })
+        registrationActions.setPreRegistrationPreferences({
+          sectorOccupations,
+          businessSectorIds,
+        })
       );
       dispatch(
         registrationActions.moveForwardInRegistration({ step: currentStep + 1 })

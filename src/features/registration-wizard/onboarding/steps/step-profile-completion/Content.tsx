@@ -8,6 +8,7 @@ import { CompletionStatus } from './CompletionStatus';
 import { StyledProfileSubHeader } from './Content.styles';
 import { CvCompletionAccordion } from './components/CvCompletionAccordion/CvCompletionAccordion';
 import { PersonalInfoAccordion } from './components/PersonalInfoAccordion';
+import { ProfessionalInfoAccordion } from './components/ProfessionalInfoAccordion/ProfessionalInfoAccordion';
 import { ProfileCompletionFormValues } from './types';
 
 export const Content = () => {
@@ -78,6 +79,7 @@ export const Content = () => {
       <br />
       <AccordionGroup>
         <PersonalInfoAccordion />
+        <ProfessionalInfoAccordion />
         <CvCompletionAccordion />
       </AccordionGroup>
     </>

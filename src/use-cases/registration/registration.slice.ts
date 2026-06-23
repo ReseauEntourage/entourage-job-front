@@ -13,6 +13,7 @@ import { createUserAdapter, CreateUserError } from './registration.adapters';
 export interface PreRegistrationPreferences {
   nudgeIds: string[];
   sectorOccupations: UserProfileSectorOccupation[];
+  businessSectorIds: string[];
 }
 
 interface State {
@@ -110,6 +111,10 @@ export const slice = createSlice({
         sectorOccupations:
           action.payload.sectorOccupations ??
           state.preRegistrationPreferences?.sectorOccupations ??
+          [],
+        businessSectorIds:
+          action.payload.businessSectorIds ??
+          state.preRegistrationPreferences?.businessSectorIds ??
           [],
       };
     },

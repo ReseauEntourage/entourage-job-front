@@ -56,8 +56,11 @@ export const WizardRoleSelectionSidePanel = ({
 
   return (
     <StyledContainer>
-      <H3 title="Un monde où chacun a des gens sur qui compter." />
-      <Text>
+      <H3
+        title="Un monde où chacun a des gens sur qui compter."
+        color="white"
+      />
+      <Text color="white">
         Entourage Pro relie celles et ceux qui cherchent un emploi à des
         personnes prêtes à leur donner un coup de pouce. Quelle que soit votre
         place, vous avez un rôle à jouer.
@@ -82,7 +85,7 @@ export const WizardRoleSelectionSidePanel = ({
             <StyledStackAvatar key={i} src={src} alt="" />
           ))}
         </ImgProfileStack>
-        <Text>
+        <Text color="white">
           <strong>1 700 candidats</strong> et <strong>1 300 coachs</strong> se
           soutiennent déjà ici.
         </Text>

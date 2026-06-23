@@ -140,9 +140,10 @@ export const useWizard = (): WizardState => {
   // Redirection vers /login après déconnexion depuis le wizard
   useEffect(() => {
     if (isLogoutSucceeded) {
+      dispatch(authenticationActions.logoutReset());
       router.push('/login');
     }
-  }, [isLogoutSucceeded, router]);
+  }, [isLogoutSucceeded, router, dispatch]);
 
   // Onboarding step hooks — called unconditionally with null-safe user
   const { onboardingStepElearning } = useOnboardingStepElearning({
@@ -363,9 +364,10 @@ export const useWizard = (): WizardState => {
       : 'Étape suivante'
     : isEmailConfirmationPhase
     ? 'Valider le code'
-    : currentWizardIdx === registrationSteps.length - 1
-    ? 'Créer mon compte'
-    : 'Étape suivante';
+    : (currentStep as WizardStep | null)?.buttonLabel ??
+      (currentWizardIdx === registrationSteps.length - 1
+        ? 'Créer mon compte'
+        : 'Étape suivante');
 
   const canGoBack = isOnboardingPhase
     ? onboardingIdx !== null && onboardingIdx > 0

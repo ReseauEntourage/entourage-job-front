@@ -5,6 +5,7 @@ import axios, {
 } from 'axios';
 import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
+import { UserRoles } from 'src/constants/users';
 import { addAxiosInterceptors } from './interceptor';
 import {
   AchievementProgressionEntry,
@@ -21,6 +22,7 @@ import {
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   PostAuthVerifyOtpParams,
+  PreRegistrationCompatibleProfilesResponse,
   ProfilesFilters,
   RecruitementAlertDto,
   Route,
@@ -273,6 +275,14 @@ export class APIHandler {
     params: UserRegistrationDto
   ): Promise<AxiosResponse> {
     return this.post('/user/registration', params);
+  }
+
+  async getPreRegistrationCompatibleProfiles(params: {
+    role: UserRoles;
+    nudgeIds?: string[];
+    businessSectorIds?: string[];
+  }): Promise<AxiosResponse<PreRegistrationCompatibleProfilesResponse>> {
+    return this.get('/user/registration/compatible-profiles', { params });
   }
 
   async postUserRefering(params: UserReferingDto): Promise<AxiosResponse> {

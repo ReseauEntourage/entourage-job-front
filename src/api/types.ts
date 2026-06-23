@@ -717,6 +717,11 @@ export type PrivateProfile = PublicProfile & {
   phone: string;
 };
 
+export type PreRegistrationCompatibleProfilesResponse = {
+  count: number;
+  profiles: PublicProfile[];
+};
+
 export type Profile = PublicProfile | PrivateProfile;
 
 export type ProfilesFilters = {

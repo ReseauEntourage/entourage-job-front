@@ -26,6 +26,7 @@ export interface WizardStep {
   content: React.ReactNode;
   sidePanelContent?: React.ReactNode;
   isNextEnabled?: boolean;
+  buttonLabel?: string;
   isStepCompleted?: () => Promise<boolean>;
   incrementationIsAllowed?: () => Promise<boolean>;
   onSubmit?: () => Promise<boolean | void>;

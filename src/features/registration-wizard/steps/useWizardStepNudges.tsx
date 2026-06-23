@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
+import { WizardCompatibleProfilesSidePanel } from '@/src/features/registration-wizard/WizardCompatibleProfilesSidePanel';
 import { Content } from '@/src/features/registration-wizard/onboarding/steps/step-nudges/Content/Content';
 import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 import {
@@ -19,6 +20,14 @@ export function useWizardStepNudges() {
     : UserRoles.CANDIDATE;
 
   const [selectedNudgeIds, setSelectedNudgeIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    dispatch(
+      registrationActions.setPreRegistrationPreferences({
+        nudgeIds: selectedNudgeIds,
+      })
+    );
+  }, [selectedNudgeIds, dispatch]);
 
   const step: WizardStep = {
     smallTitle:
@@ -49,6 +58,9 @@ export function useWizardStepNudges() {
         nudgeIds={selectedNudgeIds}
         onChange={setSelectedNudgeIds}
       />
+    ),
+    sidePanelContent: (
+      <WizardCompatibleProfilesSidePanel subtitleContext="nudges" />
     ),
     onSubmit: async () => {
       dispatch(

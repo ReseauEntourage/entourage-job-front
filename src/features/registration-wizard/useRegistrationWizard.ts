@@ -25,6 +25,7 @@ import { useWizardStepCandidateInfo } from './steps/useWizardStepCandidateInfo';
 import { useWizardStepCoachInfo } from './steps/useWizardStepCoachInfo';
 import { useWizardStepCompanyRole } from './steps/useWizardStepCompanyRole';
 import { useWizardStepCompanySelection } from './steps/useWizardStepCompanySelection';
+import { useWizardStepNetworkPreview } from './steps/useWizardStepNetworkPreview';
 import { useWizardStepNudges } from './steps/useWizardStepNudges';
 import { useWizardStepRefererAccount } from './steps/useWizardStepRefererAccount';
 import { useWizardStepSectorsJobs } from './steps/useWizardStepSectorsJobs';
@@ -65,6 +66,7 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   const { step: refererAccountStep } = useWizardStepRefererAccount();
   const { step: nudgesStep } = useWizardStepNudges();
   const { step: sectorsJobsStep } = useWizardStepSectorsJobs();
+  const { step: networkPreviewStep } = useWizardStepNetworkPreview();
 
   // Quand selectedFlow est null (utilisateur déjà connecté en onboarding),
   // on déduit le flow depuis son rôle pour afficher les étapes passées dans le stepper
@@ -97,12 +99,19 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
         return [
           nudgesStep,
           sectorsJobsStep,
+          networkPreviewStep,
           candidateInfoStep,
           candidateEligibilityStep,
           accountStep,
         ];
       case RegistrationFlow.COACH:
-        return [nudgesStep, sectorsJobsStep, coachInfoStep, accountStep];
+        return [
+          nudgesStep,
+          sectorsJobsStep,
+          networkPreviewStep,
+          coachInfoStep,
+          accountStep,
+        ];
       case RegistrationFlow.REFERER:
         return [refererAccountStep];
       case RegistrationFlow.COMPANY:
@@ -112,6 +121,7 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
           nudgesStep,
           sectorsJobsStep,
           coachInfoStep,
+          networkPreviewStep,
           accountStep,
         ];
       default:
@@ -128,6 +138,7 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     refererAccountStep,
     nudgesStep,
     sectorsJobsStep,
+    networkPreviewStep,
   ]);
 
   // currentStep starts at 0 (REGISTRATION_FIRST_STEP) after flow selection

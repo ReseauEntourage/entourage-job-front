@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
-const SIDE_PANEL_WIDTH = `min(30vw, 480px)`;
+const SIDE_PANEL_WIDTH = `max(35vw, 480px)`;
 
 export const StyledWizardPageContent = styled.div<{ $hasSidePanel: boolean }>`
   width: ${({ $hasSidePanel }) =>
@@ -63,15 +63,6 @@ export const StyledWizardSidePanel = styled.aside`
   box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
   color: ${COLORS.white};
   z-index: 10;
-
-  && * {
-    color: ${COLORS.white};
-  }
-
-  && svg {
-    color: ${COLORS.white};
-    fill: ${COLORS.white};
-  }
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     display: none;
