@@ -13,6 +13,13 @@ import {
 
 const RECOMMENDATIONS_LIMIT = 3;
 const SKELETON_COUNT = 3;
+// The profile update (PUT) triggers an async embedding job on the backend.
+// Recommendations computed before the job finishes
+// would be based on a stale embedding. A fixed delay is a pragmatic stopgap;
+// the proper fix is a GET /user/profile/embedding-status polling endpoint that
+// returns { isEmbeddingPending: boolean } so the panel fetches only once the
+// new embedding is ready.
+const EMBEDDING_DELAY_MS = 15_000;
 
 export const WizardRecommendationsSidePanel = () => {
   const [recommendations, setRecommendations] = useState<
@@ -23,25 +30,28 @@ export const WizardRecommendationsSidePanel = () => {
   useEffect(() => {
     let cancelled = false;
 
-    Api.getProfilesRecommendations({ limit: RECOMMENDATIONS_LIMIT })
-      .then(({ data }) => {
-        if (!cancelled) {
-          setRecommendations(data.recommendations ?? []);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setRecommendations([]);
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      });
+    const timeout = setTimeout(() => {
+      Api.getProfilesRecommendations({ limit: RECOMMENDATIONS_LIMIT })
+        .then(({ data }) => {
+          if (!cancelled) {
+            setRecommendations(data.recommendations ?? []);
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            setRecommendations([]);
+          }
+        })
+        .finally(() => {
+          if (!cancelled) {
+            setIsLoading(false);
+          }
+        });
+    }, EMBEDDING_DELAY_MS);
 
     return () => {
       cancelled = true;
+      clearTimeout(timeout);
     };
   }, []);
 
