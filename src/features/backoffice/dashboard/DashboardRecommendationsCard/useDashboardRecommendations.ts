@@ -6,6 +6,7 @@ import {
   fetchDashboardProfilesRecommendationsSelectors,
   fetchProfilesSelectors,
   profilesActions,
+  selectIsEmbeddingPending,
   selectProfilesRecommendations,
 } from 'src/use-cases/profiles';
 
@@ -19,6 +20,7 @@ export function useDashboardRecommendations() {
   const dispatch = useDispatch();
 
   const recommendations = useSelector(selectProfilesRecommendations);
+  const isEmbeddingPending = useSelector(selectIsEmbeddingPending);
 
   const isFetchDashboardProfilesRecommendationsIdle = useSelector(
     fetchDashboardProfilesRecommendationsSelectors.selectIsFetchDashboardProfilesRecommendationsIdle
@@ -86,5 +88,5 @@ export function useDashboardRecommendations() {
     };
   }, [dispatch]);
 
-  return { recommendations, isLoading, isError };
+  return { recommendations, isLoading, isError, isEmbeddingPending };
 }

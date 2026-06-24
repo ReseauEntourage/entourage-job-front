@@ -1,6 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
+import { Text } from '@/src/components/ui/Text';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
@@ -10,6 +13,8 @@ import { UserRoles } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
 import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
+import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
+import { profilesActions } from 'src/use-cases/profiles';
 import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
@@ -66,7 +71,11 @@ export const DashboardRecommendationsCard = () => {
     [company]
   );
   const isDesktop = useIsDesktop();
-  const { recommendations, isLoading, isError } = useDashboardRecommendations();
+  const dispatch = useDispatch();
+  const { recommendations, isLoading, isError, isEmbeddingPending } =
+    useDashboardRecommendations();
+  const [isComputingReco, setIsComputingReco] = useState(false);
+
   const query = {
     departments: mutateToArray(currentUserProfile?.department),
   };
@@ -80,6 +89,23 @@ export const DashboardRecommendationsCard = () => {
     }
     return UserRoles.CANDIDATE;
   }, [isCompanyAdmin, user.role]);
+
+  const handleEmbeddingReady = useCallback(() => {
+    dispatch(profilesActions.embeddingPendingChanged(false));
+    setIsComputingReco(true);
+    dispatch(profilesActions.fetchDashboardProfilesRecommendationsRequested());
+  }, [dispatch]);
+
+  useEmbeddingStatus({
+    onReady: handleEmbeddingReady,
+    enabled: isEmbeddingPending,
+  });
+
+  useEffect(() => {
+    if (!isLoading && isComputingReco) {
+      setIsComputingReco(false);
+    }
+  }, [isLoading, isComputingReco]);
 
   const hasAiRecommendations = useMemo(
     () => recommendations.some((r) => r.reason !== null),
@@ -113,6 +139,44 @@ export const DashboardRecommendationsCard = () => {
       );
     });
   }, [recommendations]);
+
+  if (isEmbeddingPending && !isComputingReco) {
+    return (
+      <Card
+        title={recommendationsLabels[context].title}
+        subtitle={recommendationsLabels[context].subtitle}
+        centerTitle
+      >
+        <StyledDashboardCardContentContainer>
+          <Skeleton count={1} width="100%" height="50px" inverted />
+
+          <Text size="small" center variant="italic">
+            Nous analysons les modifications récentes de votre profil afin de
+            vous proposer les profils les plus susceptibles de vous intéresser
+          </Text>
+        </StyledDashboardCardContentContainer>
+      </Card>
+    );
+  }
+
+  if (isComputingReco) {
+    return (
+      <Card
+        title={recommendationsLabels[context].title}
+        subtitle={recommendationsLabels[context].subtitle}
+        centerTitle
+      >
+        <StyledDashboardCardContentContainer>
+          <Skeleton count={1} width="100%" height="50px" inverted />
+          <Text center>
+            Votre profil est prêt ! Nous analysons les profils de la communauté
+            afin de vous proposer les profils les plus susceptibles de vous
+            intéresser
+          </Text>
+        </StyledDashboardCardContentContainer>
+      </Card>
+    );
+  }
 
   if ((recommendations.length === 0 && !isLoading) || isError) {
     return <DashboardNetworkDiscoveryCard />;

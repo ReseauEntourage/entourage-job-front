@@ -70,7 +70,9 @@ export const SelectList = <T extends string>({
         </StyledInputLabel>
       )}
       <StyledSelectList data-testid={id} $asGrid={asGrid}>
-        {isLoading && <Skeleton height="90px" count={estimatedOptionLength} />}
+        {isLoading && (
+          <Skeleton height="90px" count={estimatedOptionLength} inverted />
+        )}
         {isGroupedOptions(options)
           ? options.map((group, groupIndex) => (
               <StyledSelectListGroup key={groupIndex}>

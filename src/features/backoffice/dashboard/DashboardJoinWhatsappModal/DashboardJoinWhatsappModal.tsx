@@ -38,7 +38,7 @@ export const DashboardJoinWhatsappModal = () => {
       {user.role === UserRoles.COACH ? 'coachs' : 'candidats'} de votre région,
       scannez le QR code
       <StyledImageContainer>
-        {loading && <Skeleton height="250px" width="250px" />}
+        {loading && <Skeleton height="250px" width="250px" inverted />}
         {!loading && whatsappZone && (
           <>
             <SimpleLink href={whatsappZone.url} target="_blank">

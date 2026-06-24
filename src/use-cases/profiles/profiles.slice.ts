@@ -22,6 +22,7 @@ interface State {
   profilesOffset: number;
   profilesHasFetchedAll: boolean;
   profilesRecommendations: ProfileRecommendation[];
+  isEmbeddingPending: boolean;
   selectedProfile: PublicProfile | null;
 }
 
@@ -34,6 +35,7 @@ const initialState: State = {
   profilesOffset: 0,
   profilesHasFetchedAll: false,
   profilesRecommendations: [],
+  isEmbeddingPending: false,
   selectedProfile: null,
 };
 
@@ -58,6 +60,7 @@ export const slice = createSlice({
         },
         fetchDashboardProfilesRecommendationsReset(state) {
           state.profilesRecommendations = [];
+          state.isEmbeddingPending = false;
         },
       }
     ),
@@ -69,6 +72,9 @@ export const slice = createSlice({
         },
       }
     ),
+    embeddingPendingChanged(state, action: PayloadAction<boolean>) {
+      state.isEmbeddingPending = action.payload;
+    },
     resetProfilesOffset(state) {
       state.profilesOffset = 0;
       state.profilesHasFetchedAll = false;

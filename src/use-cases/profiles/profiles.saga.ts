@@ -22,6 +22,7 @@ const {
   fetchDashboardProfilesRecommendationsRequested,
   fetchDashboardProfilesRecommendationsSucceeded,
   fetchDashboardProfilesRecommendationsFailed,
+  embeddingPendingChanged,
 } = slice.actions;
 
 function* fetchProfilesNextPageSaga(
@@ -94,7 +95,18 @@ function* fetchDashboardProfilesRecommendationsRequestedSaga() {
         limit: DASHBOARD_RECOMMENDATIONS_LIMIT,
       })
     );
-    yield* put(fetchDashboardProfilesRecommendationsSucceeded(response.data));
+    if (response.data.embeddingPending) {
+      yield* put(embeddingPendingChanged(true));
+      yield* put(
+        fetchDashboardProfilesRecommendationsSucceeded({
+          embeddingPending: true,
+          recommendations: [],
+          nextCursor: null,
+        })
+      );
+    } else {
+      yield* put(fetchDashboardProfilesRecommendationsSucceeded(response.data));
+    }
   } catch {
     yield* put(fetchDashboardProfilesRecommendationsFailed());
   }

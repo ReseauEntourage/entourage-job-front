@@ -79,8 +79,10 @@ export const COLORS = {
   purple: '#4c2ea0',
 
   // Skeleton
-  skeletonLight: '#EDEDED',
-  skeletonDark: '#F7F7F7',
+  skeletonDark: '#36363636',
+  skeletonDarkShimmer: '#4D4D4D36',
+  skeletonLight: '#EDEDED36',
+  skeletonLightShimmer: '#F7F7F736',
 
   cardShadow: '#0000000D',
   overlayWhite: '#FFFFFFCC',

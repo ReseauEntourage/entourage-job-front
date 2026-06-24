@@ -708,6 +708,7 @@ export type ProfileRecommendation = {
 };
 
 export type ProfileRecommendationPage = {
+  embeddingPending: boolean;
   recommendations: ProfileRecommendation[];
   nextCursor: number | null;
 };

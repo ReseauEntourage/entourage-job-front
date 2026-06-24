@@ -1,84 +1,97 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ProfileRecommendation } from '@/src/api/types';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
+import { Text } from '@/src/components/ui/Text';
 import { Api } from 'src/api';
+import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
 import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
 import {
   StyledContainer,
   StyledHeader,
-  StyledLabel,
-  StyledLoadingMessage,
   StyledProfileList,
-  StyledSkeletonCard,
 } from './WizardRecommendationsSidePanel.styles';
 
 const RECOMMENDATIONS_LIMIT = 3;
 const SKELETON_COUNT = 3;
-// The profile update (PUT) triggers an async embedding job on the backend.
-// Recommendations computed before the job finishes
-// would be based on a stale embedding. A fixed delay is a pragmatic stopgap;
-// the proper fix is a GET /user/profile/embedding-status polling endpoint that
-// returns { isEmbeddingPending: boolean } so the panel fetches only once the
-// new embedding is ready.
-const EMBEDDING_DELAY_MS = 15_000;
+
+type PanelState = 'LOADING' | 'EMBEDDING_PENDING' | 'COMPUTING_RECO' | 'READY';
 
 export const WizardRecommendationsSidePanel = () => {
+  const [panelState, setPanelState] = useState<PanelState>('LOADING');
   const [recommendations, setRecommendations] = useState<
     ProfileRecommendation[]
   >([]);
-  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchReco = useCallback(async () => {
+    try {
+      const { data } = await Api.getProfilesRecommendations({
+        limit: RECOMMENDATIONS_LIMIT,
+      });
+      if (data.embeddingPending) {
+        setPanelState('EMBEDDING_PENDING');
+      } else {
+        setRecommendations(data.recommendations ?? []);
+        setPanelState('READY');
+      }
+    } catch {
+      setRecommendations([]);
+      setPanelState('READY');
+    }
+  }, []);
+
+  const handleEmbeddingReady = useCallback(() => {
+    setPanelState('COMPUTING_RECO');
+    fetchReco();
+  }, [fetchReco]);
+
+  useEmbeddingStatus({
+    onReady: handleEmbeddingReady,
+    enabled: panelState === 'EMBEDDING_PENDING',
+  });
 
   useEffect(() => {
-    let cancelled = false;
+    fetchReco();
+  }, [fetchReco]);
 
-    const timeout = setTimeout(() => {
-      Api.getProfilesRecommendations({ limit: RECOMMENDATIONS_LIMIT })
-        .then(({ data }) => {
-          if (!cancelled) {
-            setRecommendations(data.recommendations ?? []);
-          }
-        })
-        .catch(() => {
-          if (!cancelled) {
-            setRecommendations([]);
-          }
-        })
-        .finally(() => {
-          if (!cancelled) {
-            setIsLoading(false);
-          }
-        });
-    }, EMBEDDING_DELAY_MS);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timeout);
-    };
-  }, []);
+  const isLoading = panelState === 'LOADING' || panelState === 'COMPUTING_RECO';
 
   return (
     <StyledContainer>
       <StyledHeader>
-        <StyledLabel>Votre sélection personnalisée</StyledLabel>
-        {isLoading && (
-          <StyledLoadingMessage>
-            Nous analysons votre profil pour vous proposer une sélection de
-            coachs qui vous correspondent. Continuez votre formation, les
-            résultats apparaîtront ici.
-          </StyledLoadingMessage>
+        <Text color="white" uppercase weight="semibold">
+          Votre sélection personnalisée
+        </Text>
+        {panelState === 'EMBEDDING_PENDING' && (
+          <Text color="white">
+            Nous analysons les modifications récentes de votre profil afin de
+            vous proposer les profils les plus susceptibles de vous intéresser
+          </Text>
+        )}
+        {panelState === 'COMPUTING_RECO' && (
+          <Text color="white">
+            Votre profil est prêt ! Nous analysons les profils de la communauté
+            afin de vous proposer les profils les plus susceptibles de vous
+            intéresser
+          </Text>
         )}
       </StyledHeader>
       <StyledProfileList>
-        {isLoading
-          ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-              <StyledSkeletonCard key={i} />
-            ))
-          : recommendations.map((rec) => (
-              <WizardCompatibleProfileCard
-                key={rec.id}
-                profile={rec.publicProfile}
-                subtitleContext="sectors"
-              />
-            ))}
+        {isLoading || panelState === 'EMBEDDING_PENDING' ? (
+          <Skeleton
+            count={SKELETON_COUNT}
+            width="100%"
+            height="50px"
+            inverted
+          />
+        ) : (
+          recommendations.map((rec) => (
+            <WizardCompatibleProfileCard
+              key={rec.id}
+              profile={rec.publicProfile}
+              subtitleContext="sectors"
+            />
+          ))
+        )}
       </StyledProfileList>
     </StyledContainer>
   );

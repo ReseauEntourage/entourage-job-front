@@ -39,3 +39,7 @@ export function selectProfilesHasFetchedAll(state: RootState) {
 export function selectSelectedProfile(state: RootState) {
   return state.profiles.selectedProfile;
 }
+
+export function selectIsEmbeddingPending(state: RootState) {
+  return state.profiles.isEmbeddingPending;
+}

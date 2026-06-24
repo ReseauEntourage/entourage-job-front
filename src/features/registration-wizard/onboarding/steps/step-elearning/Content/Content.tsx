@@ -12,7 +12,9 @@ export const Content = () => {
     <StyledOnboardingStepContainer>
       <ElearningProgressTracker />
       <StyledOnboardingElearningUnitCardList>
-        {isLoading && <Skeleton height="130px" width="100%" count={4} />}
+        {isLoading && (
+          <Skeleton height="130px" width="100%" count={4} inverted />
+        )}
         {!isLoading &&
           elearningUnits &&
           elearningUnits.map((unit, idx) => (
