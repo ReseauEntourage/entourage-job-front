@@ -20,6 +20,7 @@ export interface OnboardingStep {
   isStepCompleted?: () => Promise<boolean>; // Function to check if the step is completed, so the step can be skipped
   incrementationIsAllowed?: () => Promise<boolean>; // Function to check if moving to the next step is allowed
   onSubmit?: () => Promise<boolean | void>; // Function to handle step submission; returns false to prevent moving to next step
+  onSkip?: () => Promise<void>; // Optional secondary skip action (e.g. "Passer la formation")
   // Optional confirmation modal configuration before moving to the next step
   confirmationStep?: {
     title: string; // Title of the confirmation modal

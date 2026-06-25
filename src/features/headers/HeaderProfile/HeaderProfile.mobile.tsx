@@ -20,6 +20,8 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
+import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
+import { openModal } from '@/src/features/modals/Modal';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
@@ -86,6 +88,10 @@ export const HeaderProfileMobile = ({
     shouldShowAllProfile && isAvailable && !ownProfile;
 
   const openConversation = () => {
+    if (!currentUser.elearningCompletedAt) {
+      openModal(<ElearningGateModal />);
+      return;
+    }
     router.push(`/backoffice/messaging?userId=${id}`);
   };
 

@@ -30,6 +30,7 @@ export interface WizardStep {
   isStepCompleted?: () => Promise<boolean>;
   incrementationIsAllowed?: () => Promise<boolean>;
   onSubmit?: () => Promise<boolean | void>;
+  onSkip?: () => Promise<void>;
   confirmationStep?: {
     title: string;
     subtitle: string;

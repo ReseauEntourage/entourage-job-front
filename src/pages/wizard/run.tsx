@@ -15,8 +15,6 @@ const WizardRun = () => {
     onBack,
     canGoBack,
     sidePanelContent,
-    isOnboardingPhase,
-    skipOnboarding,
   } = useWizard();
 
   return (
@@ -32,7 +30,6 @@ const WizardRun = () => {
         onBack={onBack}
         canGoBack={canGoBack}
         sidePanelContent={sidePanelContent}
-        onSkip={isOnboardingPhase ? skipOnboarding : undefined}
       />
     </Layout>
   );

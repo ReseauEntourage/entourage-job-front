@@ -2,8 +2,12 @@ import React, { useMemo } from 'react';
 import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
+import { Text } from '@/src/components/ui/Text';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
-import { StyledOnboardingActions } from '@/src/features/registration-wizard/onboarding/onboarding.styles';
+import {
+  StyledOnboardingActions,
+  StyledOnboardingSubActions,
+} from '@/src/features/registration-wizard/onboarding/onboarding.styles';
 import { WizardContentLayout } from '@/src/features/wizard-shell/WizardContentLayout';
 import { StyledWizardStepHeader } from '@/src/features/wizard-shell/WizardContentLayout.styles';
 import { WizardProgressBar } from '@/src/features/wizard-shell/WizardProgressBar';
@@ -12,7 +16,6 @@ import {
   WIZARD_SECTIONS,
   WizardStep,
 } from '@/src/features/wizard-shell/wizard.types';
-import { useIsDev } from '@/src/hooks/useIsDev';
 
 interface WizardRunShellProps {
   wizardSteps: WizardStep[];
@@ -25,7 +28,6 @@ interface WizardRunShellProps {
   canGoBack?: boolean;
   isInitializing?: boolean;
   sidePanelContent?: React.ReactNode;
-  onSkip?: () => void;
 }
 
 export const WizardRunShell = ({
@@ -39,10 +41,7 @@ export const WizardRunShell = ({
   canGoBack = false,
   isInitializing = false,
   sidePanelContent,
-  onSkip,
 }: WizardRunShellProps) => {
-  const isDev = useIsDev();
-
   const subProgress = useMemo(() => {
     const currentSectionId = wizardSteps[currentWizardIdx]?.section;
     if (!currentSectionId) {
@@ -130,17 +129,21 @@ export const WizardRunShell = ({
                 )}
                 {!isLoading && buttonLabel}
               </Button>
-              {isDev && onSkip && (
-                <Button
-                  variant="secondary"
-                  onClick={onSkip}
-                  disabled={isLoading}
-                  dataTestId="wizard-skip-onboarding-btn"
-                >
-                  ⚙️ Dev only - Passer l&apos;onboarding
-                </Button>
-              )}
             </StyledOnboardingActions>
+
+            {currentStep?.onSkip && (
+              <StyledOnboardingSubActions>
+                <Text>ou</Text>
+                <Button
+                  variant="text"
+                  onClick={currentStep.onSkip}
+                  disabled={isLoading}
+                  dataTestId="wizard-skip-step-btn"
+                >
+                  <Text underline>Passer la formation</Text>
+                </Button>
+              </StyledOnboardingSubActions>
+            )}
           </>
         ) : (
           <Alert type={AlertType.Error}>

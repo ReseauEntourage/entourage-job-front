@@ -2,7 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
+import { OnboardingStatus } from '@/src/constants/onboarding';
 import { store } from '@/src/store/store';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   elearningActions,
   selectElearningUnits,
@@ -78,6 +80,14 @@ export const useOnboardingStepElearning = ({
     return computeHasCompleteAllUnitsFromStore();
   };
 
+  const skipElearning = async (): Promise<void> => {
+    dispatch(
+      currentUserActions.updateOnboardingStatusRequested({
+        onboardingStatus: OnboardingStatus.COMPLETED,
+      })
+    );
+  };
+
   const onboardingStepElearning = {
     isNextEnabled: hasCompletedAllUnits,
     summary: {
@@ -110,6 +120,7 @@ export const useOnboardingStepElearning = ({
     incrementationIsAllowed: async () => {
       return ensureAndComputeHasCompleteAllUnits();
     },
+    onSkip: skipElearning,
     section: 'formation',
   } as OnboardingStep;
 
