@@ -43,6 +43,7 @@ const WizardHome = () => {
     <Layout title="Inscription — Entourage Pro" noFooter noHeader>
       <WizardContentLayout
         sidePanel={<WizardRoleSelectionSidePanel flow={selectedFlow} />}
+        sidePanelSide="left"
       >
         <Section className="custom-page">
           <WizardSummary value={selectedFlows} onChange={setSelectedFlows} />

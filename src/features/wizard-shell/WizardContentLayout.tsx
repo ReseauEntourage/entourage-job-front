@@ -13,32 +13,40 @@ import {
 interface WizardContentLayoutProps {
   children: React.ReactNode;
   sidePanel?: React.ReactNode;
+  sidePanelSide?: 'left' | 'right';
 }
 
 export const WizardContentLayout = ({
   children,
   sidePanel,
+  sidePanelSide = 'right',
 }: WizardContentLayoutProps) => {
   const hasSidePanel = Boolean(sidePanel);
+  const showLogoInTopBar = !hasSidePanel || sidePanelSide === 'right';
 
   return (
     <>
-      <StyledWizardPageContent $hasSidePanel={hasSidePanel}>
+      <StyledWizardPageContent
+        $hasSidePanel={hasSidePanel}
+        $side={sidePanelSide}
+      >
         <StyledWizardMobileHeader>
           <NavbarLogo href="/" type="secondary" />
           <WizardAuthSection />
         </StyledWizardMobileHeader>
-        <StyledWizardContentTopBar $hasLogo={!hasSidePanel}>
-          {!hasSidePanel && <NavbarLogo href="/" type="primary" />}
+        <StyledWizardContentTopBar $hasLogo={showLogoInTopBar}>
+          {showLogoInTopBar && <NavbarLogo href="/" type="primary" />}
           <WizardAuthSection onDark={false} />
         </StyledWizardContentTopBar>
         {children}
       </StyledWizardPageContent>
       {hasSidePanel && (
-        <StyledWizardSidePanel>
-          <StyledWizardSidePanelLogo>
-            <NavbarLogo href="/" type="secondary" />
-          </StyledWizardSidePanelLogo>
+        <StyledWizardSidePanel $side={sidePanelSide}>
+          {sidePanelSide === 'left' && (
+            <StyledWizardSidePanelLogo>
+              <NavbarLogo href="/" type="secondary" />
+            </StyledWizardSidePanelLogo>
+          )}
           <StyledWizardSidePanelBody>{sidePanel}</StyledWizardSidePanelBody>
         </StyledWizardSidePanel>
       )}

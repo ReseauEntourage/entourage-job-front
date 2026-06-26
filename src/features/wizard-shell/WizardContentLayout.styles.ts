@@ -3,11 +3,16 @@ import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 const SIDE_PANEL_WIDTH = `max(35vw, 480px)`;
 
-export const StyledWizardPageContent = styled.div<{ $hasSidePanel: boolean }>`
+export const StyledWizardPageContent = styled.div<{
+  $hasSidePanel: boolean;
+  $side: 'left' | 'right';
+}>`
   width: ${({ $hasSidePanel }) =>
     $hasSidePanel ? `calc(100% - ${SIDE_PANEL_WIDTH})` : '100%'};
-  margin-left: ${({ $hasSidePanel }) =>
-    $hasSidePanel ? SIDE_PANEL_WIDTH : '0'};
+  margin-left: ${({ $hasSidePanel, $side }) =>
+    $hasSidePanel && $side === 'left' ? SIDE_PANEL_WIDTH : '0'};
+  margin-right: ${({ $hasSidePanel, $side }) =>
+    $hasSidePanel && $side === 'right' ? SIDE_PANEL_WIDTH : '0'};
   min-height: 100vh;
   background-color: ${COLORS.lightGray};
 
@@ -33,6 +38,7 @@ export const StyledWizardPageContent = styled.div<{ $hasSidePanel: boolean }>`
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
     margin-left: 0;
+    margin-right: 0;
 
     .section-container {
       max-width: unset;
@@ -49,9 +55,9 @@ export const StyledWizardStepHeader = styled.div`
   }
 `;
 
-export const StyledWizardSidePanel = styled.aside`
+export const StyledWizardSidePanel = styled.aside<{ $side: 'left' | 'right' }>`
   position: fixed;
-  left: 0;
+  ${({ $side }) => ($side === 'left' ? 'left: 0;' : 'right: 0;')}
   top: 0;
   width: ${SIDE_PANEL_WIDTH};
   height: 100vh;
@@ -60,7 +66,10 @@ export const StyledWizardSidePanel = styled.aside`
     ${COLORS.extraDarkBlue},
     ${COLORS.darkBlue}
   );
-  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ $side }) =>
+    $side === 'left'
+      ? '4px 0 12px rgba(0, 0, 0, 0.1)'
+      : '-4px 0 12px rgba(0, 0, 0, 0.1)'};
   color: ${COLORS.white};
   z-index: 10;
 
