@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ProfileRecommendation } from '@/src/api/types';
-import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { Text } from '@/src/components/ui/Text';
 import { Api } from 'src/api';
 import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
@@ -10,9 +9,12 @@ import {
   StyledHeader,
   StyledProfileList,
 } from './WizardRecommendationsSidePanel.styles';
+import {
+  SEARCHING_LOADER_VARIANTS,
+  WizardSearchingLoader,
+} from './WizardSearchingLoader';
 
 const RECOMMENDATIONS_LIMIT = 3;
-const SKELETON_COUNT = 3;
 
 type PanelState = 'LOADING' | 'EMBEDDING_PENDING' | 'COMPUTING_RECO' | 'READY';
 
@@ -53,35 +55,21 @@ export const WizardRecommendationsSidePanel = () => {
     fetchReco();
   }, [fetchReco]);
 
-  const isLoading = panelState === 'LOADING' || panelState === 'COMPUTING_RECO';
-
   return (
     <StyledContainer>
       <StyledHeader>
         <Text color="white" uppercase weight="semibold">
           Votre sélection personnalisée
         </Text>
-        {panelState === 'EMBEDDING_PENDING' && (
-          <Text color="white">
-            Nous analysons les modifications récentes de votre profil afin de
-            vous proposer les profils les plus susceptibles de vous intéresser
-          </Text>
-        )}
-        {panelState === 'COMPUTING_RECO' && (
-          <Text color="white">
-            Votre profil est prêt ! Nous analysons les profils de la communauté
-            afin de vous proposer les profils les plus susceptibles de vous
-            intéresser
-          </Text>
-        )}
       </StyledHeader>
       <StyledProfileList>
-        {isLoading || panelState === 'EMBEDDING_PENDING' ? (
-          <Skeleton
-            count={SKELETON_COUNT}
-            width="100%"
-            height="50px"
-            inverted
+        {panelState !== 'READY' ? (
+          <WizardSearchingLoader
+            {...SEARCHING_LOADER_VARIANTS[
+              panelState === 'EMBEDDING_PENDING'
+                ? 'embeddingPending'
+                : 'computingReco'
+            ]}
           />
         ) : (
           recommendations.map((rec) => (

@@ -19,9 +19,12 @@ import {
   StyledHeader,
   StyledLockBanner,
   StyledProfileList,
-  StyledSkeletonCard,
   StyledSubtitle,
 } from './WizardCompatibleProfilesSidePanel.styles';
+import {
+  SEARCHING_LOADER_VARIANTS,
+  WizardSearchingLoader,
+} from './WizardSearchingLoader';
 
 interface WizardCompatibleProfilesSidePanelProps {
   subtitleContext: 'nudges' | 'sectors';
@@ -174,17 +177,23 @@ export const WizardCompatibleProfilesSidePanel = ({
         <Text color="darkGray">{lockBannerText}</Text>
       </StyledLockBanner>
       <StyledProfileList>
-        {isLoading
-          ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-              <StyledSkeletonCard key={i} />
-            ))
-          : profiles.map((profile) => (
-              <WizardCompatibleProfileCard
-                key={profile.id}
-                profile={profile}
-                subtitleContext={subtitleContext}
-              />
-            ))}
+        {isLoading ? (
+          <WizardSearchingLoader
+            {...SEARCHING_LOADER_VARIANTS[
+              subtitleContext === 'nudges'
+                ? 'preRegistrationCriteria'
+                : 'preRegistrationSectors'
+            ]}
+          />
+        ) : (
+          profiles.map((profile) => (
+            <WizardCompatibleProfileCard
+              key={profile.id}
+              profile={profile}
+              subtitleContext={subtitleContext}
+            />
+          ))
+        )}
       </StyledProfileList>
     </StyledContainer>
   );
