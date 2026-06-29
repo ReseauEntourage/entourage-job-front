@@ -42,7 +42,7 @@ export const formEditCoachProfessionalInformation: FormSchema<FormEditCoachProfe
         component: 'select-async',
         isRequired: true,
         loadOptions: loadBusinessSectorsOptions,
-        placeholder: "Les secteurs dans lesquels j'ai du réseau*",
+        placeholder: 'Les secteurs où vous avez du réseau*',
         isMulti: true,
         showLabel: true,
       },

@@ -1,14 +1,17 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Text } from '@/src/components/ui';
-import { H4 } from '@/src/components/ui/Headings';
+import { Button, LucidIcon, Text } from '@/src/components/ui';
+import { H1 } from '@/src/components/ui/Headings';
 import { SelectList } from '@/src/components/ui/Inputs/SelectList';
 import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
+import { COLORS } from '@/src/constants/styles';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { FlowOptions } from '@/src/features/registration/forms/formRegistrationFlowSelection';
 import { registrationActions } from '@/src/use-cases/registration';
 import {
+  StyledWizardReassuranceItem,
   StyledWizardSummaryActions,
   StyledWizardSummaryContainer,
 } from './WizardSummary.styles';
@@ -54,8 +57,8 @@ export const WizardSummary = ({ value, onChange }: WizardSummaryProps) => {
 
   return (
     <StyledWizardSummaryContainer>
-      <H4 title="Créer mon compte Entourage Pro en 5 minutes" />
-      <Text>Faisons connaissance : quelle est votre situation actuelle ?</Text>
+      <H1 title="Qu’est-ce qui vous amène ?" />
+      <Text>Choisissez ce qui vous correspond le mieux pour commencer.</Text>
 
       <br />
 
@@ -66,7 +69,6 @@ export const WizardSummary = ({ value, onChange }: WizardSummaryProps) => {
         value={value}
         onChange={onChange}
         isMulti={false}
-        asGrid
       />
 
       <StyledWizardSummaryActions>
@@ -74,6 +76,22 @@ export const WizardSummary = ({ value, onChange }: WizardSummaryProps) => {
           Commencer l'inscription
         </Button>
       </StyledWizardSummaryActions>
+
+      <StyledWizardSummaryActions>
+        <StyledWizardReassuranceItem>
+          <LucidIcon name="Check" color={COLORS.green} size={20} />
+          <Text color="darkGray">Gratuit</Text>
+        </StyledWizardReassuranceItem>
+
+        <StyledWizardReassuranceItem>
+          <LucidIcon name="Check" color={COLORS.green} size={20} />
+          <Text color="darkGray">Sans engagement</Text>
+        </StyledWizardReassuranceItem>
+      </StyledWizardSummaryActions>
+
+      <Text center>
+        Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
+      </Text>
     </StyledWizardSummaryContainer>
   );
 };

@@ -18,90 +18,82 @@ export const StyledButton = styled.button<{
   align?: ButtonProps['align'];
   weight?: ButtonProps['weight'];
 }>`
-  &.button {
-    align-items: center;
-    justify-content: ${({ align }) =>
-      align === 'left' ? 'flex-start' : 'center'};
-    box-sizing: border-box;
-    cursor: pointer;
-    display: flex;
-    font-family: 'Poppins', sans-serif;
-    font-weight: ${({ weight }) => weight};
-    text-align: ${({ align }) => align ?? 'center'};
-    line-height: ${({ size }) =>
-      BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;
+  align-items: center;
+  justify-content: ${({ align }) =>
+    align === 'left' ? 'flex-start' : 'center'};
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  font-weight: ${({ weight }) => weight};
+  text-align: ${({ align }) => align ?? 'center'};
+  line-height: ${({ size }) =>
+    BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;
 
-    border: ${(props) => {
-        return BUTTON_STYLES.border[props.variant || 'default'] || COLORS.white;
-      }}
-      solid
-      ${(props) => {
-        return BUTTON_STYLES.borderSize[props.variant || 'default'] || '1px';
-      }};
+  border: ${(props) => {
+      return BUTTON_STYLES.border[props.variant || 'default'] || COLORS.white;
+    }}
+    solid
+    ${(props) => {
+      return BUTTON_STYLES.borderSize[props.variant || 'default'] || '1px';
+    }};
+
+  background-color: ${({ variant }) => {
+    return BUTTON_STYLES.backgroundColor[variant || 'default'] || COLORS.white;
+  }};
+
+  color: ${({ color, variant }) => {
+    if (color) {
+      return COLORS[color];
+    }
+    return BUTTON_STYLES.color[variant || 'default'] || COLORS.white;
+  }};
+
+  border-radius: ${({ rounded }) => {
+    if (rounded === 'circle') {
+      return BUTTON_CIRCLE_RADIUS;
+    }
+    return rounded ? BUTTON_ROUNDED_RADIUS : BUTTON_DEFAULT_RADIUS;
+  }};
+
+  padding: ${({ rounded, variant, size }) => {
+    if (rounded === 'circle') {
+      return BUTTON_SIZES[size].paddingCircle;
+    }
+    if (variant === 'text') {
+      return `0px`;
+    }
+    return BUTTON_SIZES[size].padding;
+  }};
+
+  font-size: ${({ size }) => {
+    return `${BUTTON_SIZES[size].fontSize}px`;
+  }};
+
+  &:hover {
+    transition: 0.2s ease-in-out;
 
     background-color: ${({ variant }) => {
       return (
-        BUTTON_STYLES.backgroundColor[variant || 'default'] || COLORS.white
+        BUTTON_STYLES.hoverBackgroundColor[variant || 'default'] || COLORS.white
       );
     }};
 
-    color: ${({ color, variant }) => {
-      if (color) {
-        return COLORS[color];
-      }
-      return BUTTON_STYLES.color[variant || 'default'] || COLORS.white;
+    border: ${({ variant }) => {
+        return BUTTON_STYLES.hoverBorder[variant || 'default'] || COLORS.white;
+      }}
+      solid 1px;
+
+    color: ${({ variant }) => {
+      return BUTTON_STYLES.hoverColor[variant || 'default'] || COLORS.white;
     }};
+  }
 
-    border-radius: ${({ rounded }) => {
-      if (rounded === 'circle') {
-        return BUTTON_CIRCLE_RADIUS;
-      }
-      return rounded ? BUTTON_ROUNDED_RADIUS : BUTTON_DEFAULT_RADIUS;
-    }};
-
-    padding: ${({ rounded, variant, size }) => {
-      if (rounded === 'circle') {
-        return BUTTON_SIZES[size].paddingCircle;
-      }
-      if (variant === 'text') {
-        return `0px`;
-      }
-      return BUTTON_SIZES[size].padding;
-    }};
-
-    font-size: ${({ size }) => {
-      return `${BUTTON_SIZES[size].fontSize}px`;
-    }};
-
-    &:hover {
-      transition: 0.2s ease-in-out;
-
-      background-color: ${({ variant }) => {
-        return (
-          BUTTON_STYLES.hoverBackgroundColor[variant || 'default'] ||
-          COLORS.white
-        );
-      }};
-
-      border: ${({ variant }) => {
-          return (
-            BUTTON_STYLES.hoverBorder[variant || 'default'] || COLORS.white
-          );
-        }}
-        solid 1px;
-
-      color: ${({ variant }) => {
-        return BUTTON_STYLES.hoverColor[variant || 'default'] || COLORS.white;
-      }};
-    }
-
-    &:disabled {
-      background-color: ${COLORS.gray};
-      color: ${COLORS.darkGray};
-      border: ${COLORS.gray} solid 1px;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
+  &:disabled {
+    background-color: ${COLORS.gray};
+    color: ${COLORS.darkGray};
+    border: ${COLORS.gray} solid 1px;
+    cursor: not-allowed;
   }
 `;
 

@@ -46,12 +46,12 @@ export function useWizardStepNudges() {
     hideGenericStepHeader: undefined,
     title:
       userRole === UserRoles.CANDIDATE
-        ? "Partagez vos besoins d'aide"
-        : 'Précisez les coups de pouce que vous souhaitez apporter',
+        ? 'Pour commencer : sur quoi aimeriez-vous un coup de pouce ?'
+        : 'Pour commencer : comment aimeriez-vous aider ?',
     description:
       userRole === UserRoles.CANDIDATE
-        ? 'Afin de vous recommander les coachs qui seraient susceptibles de vous aider'
-        : "Afin de vous recommander les candidats que vous seriez susceptibles d'aider",
+        ? 'Ça nous permet de trouver tout de suite les coachs qui peuvent vous soutenir.'
+        : 'Ça nous permet de trouver tout de suite les personnes que vous pourriez soutenir.',
     content: (
       <Content
         userRole={userRole}

@@ -7,19 +7,23 @@ export const StyledContainer = styled.div`
   height: 100%;
 `;
 
-export const StyledVerbatimCard = styled.div`
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 24px;
+export const StyledTopSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: auto;
+  gap: 16px;
 `;
 
-export const StyledQuote = styled.p`
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.45;
-  color: ${COLORS.white};
-  margin: 0 0 16px;
+export const StyledVerbatimCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  gap: 16px;
+  margin: 24px 0;
 `;
 
 export const StyledPersonRow = styled.div`

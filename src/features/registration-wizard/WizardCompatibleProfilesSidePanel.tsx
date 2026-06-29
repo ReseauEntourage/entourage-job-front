@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { PublicProfile } from '@/src/api/types';
+import { H3, H5 } from '@/src/components/ui/Headings';
 import { LucidIcon } from '@/src/components/ui/Icons';
+import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
 import {
@@ -34,8 +36,6 @@ const SUBTITLE: Record<'nudges' | 'sectors', string> = {
   nudges: 'Selon les coups de pouce que vous avez choisis',
   sectors: 'Selon les secteurs que vous avez choisis',
 };
-
-const SKELETON_COUNT = 3;
 
 export const WizardCompatibleProfilesSidePanel = ({
   subtitleContext,
@@ -137,16 +137,20 @@ export const WizardCompatibleProfilesSidePanel = ({
     : 'candidat qui a besoin de vous';
 
   const lockBannerText = isCandidate
-    ? 'Vous pourrez contacter ces coachs une fois votre compte créé'
-    : 'Vous pourrez contacter ces candidats une fois votre compte créé';
+    ? 'Finaliser votre inscription pour contacter ces coachs'
+    : 'Finaliser votre inscription pour soutenir ces personnes';
 
   const emptyStateText = isCandidate
-    ? 'Sélectionnez un coup de pouce pour découvrir les coachs compatibles avec votre profil'
-    : 'Sélectionnez un coup de pouce pour découvrir les candidats que vous pouvez aider';
+    ? 'Des coachs qui connaissent votre métier, prêts à vous donner un coup de pouce dans votre recherche.'
+    : 'Des personnes qui cherchent un coup de pouce dans vos domaines.';
 
   if (!hasAnyCriteria) {
     return (
       <StyledContainer>
+        <H5
+          title="Répondez à la première question pour voir vos coachs"
+          color="white"
+        />
         <StyledEmptyState>
           <LucidIcon name="Users" size={40} />
           <StyledEmptyStateText>{emptyStateText}</StyledEmptyStateText>
@@ -165,7 +169,7 @@ export const WizardCompatibleProfilesSidePanel = ({
           </Text>
           <Text color="white">{countLabel}</Text>
         </StyledCountRow>
-        <StyledSubtitle>{SUBTITLE[subtitleContext]}</StyledSubtitle>
+        <Text color="gray">{SUBTITLE[subtitleContext]}</Text>
         {broadened && (
           <Text color="white" size={12}>
             {'On a élargi à votre secteur pour vous montrer plus de coachs.'}
@@ -173,8 +177,15 @@ export const WizardCompatibleProfilesSidePanel = ({
         )}
       </StyledHeader>
       <StyledLockBanner>
-        <LucidIcon name="Lock" size={14} color="darkGray" />
-        <Text color="darkGray">{lockBannerText}</Text>
+        <LucidIcon
+          name="Lock"
+          size={14}
+          color={COLORS.darkBlue}
+          stroke="bold"
+        />
+        <Text color="darkBlue" weight="semibold">
+          {lockBannerText}
+        </Text>
       </StyledLockBanner>
       <StyledProfileList>
         {isLoading ? (

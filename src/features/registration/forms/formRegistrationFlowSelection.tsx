@@ -1,7 +1,9 @@
 import React from 'react';
+import { LucidIcon } from '@/src/components/ui';
 import { SelectOptionTitleIconDescriptionLabelType } from '@/src/components/ui/Inputs/SelectList';
 import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { COLORS } from '@/src/constants/styles';
 import { RegistrationFlow } from '../flows/flows.types';
 import { FormSchema } from 'src/features/forms/FormSchema';
 
@@ -9,28 +11,27 @@ export const FlowOptions: SelectOptionTitleIconDescriptionLabelType<Registration
   [
     {
       value: RegistrationFlow.CANDIDATE,
-      label: 'Nous rejoindre en tant que candidat(e)',
-      icon: <SvgIcon name="IlluCV" width={50} height={50} />,
-      description: "J'ai besoin d'aide dans ma recherche",
+      label: 'Je cherche un emploi',
+      icon: <LucidIcon name="Search" color={COLORS.primaryBlue} />,
+      description: 'J’aimerais un coup de pouce dans ma recherche',
     },
     {
       value: RegistrationFlow.COACH,
-      label: 'Nous rejoindre en tant que coach',
-      icon: <SvgIcon name="IlluCoachEtCandidat" width={50} height={50} />,
-      description: 'Je souhaite accompagner des candidats dans leur recherche',
+      label: 'Je veux soutenir un candidat',
+      icon: <LucidIcon name="Heart" color={COLORS.primaryBlue} />,
+      description: 'Devenir coach : du temps, du réseau, de l’écoute',
     },
     {
       value: RegistrationFlow.REFERER,
-      label: 'Nous rejoindre en tant qu’association ou travailleur social',
-      icon: <SvgIcon name="IlluCandidatFolder" width={50} height={50} />,
-      description: 'Je souhaite orienter des candidats de ma structure',
+      label: 'J’oriente des personnes',
+      icon: <LucidIcon name="Users" color={COLORS.primaryBlue} />,
+      description: 'Association ou travailleur social d’une structure',
     },
     {
       value: RegistrationFlow.COMPANY,
-      label: 'Nous rejoindre en tant qu’entreprise',
-      icon: <SvgIcon name="IlluPoigneeDeMain" width={50} height={50} />,
-      description:
-        'Je souhaite inscrire mon entreprise dans une démarche RSE ou de recrutement inclusif',
+      label: 'Je représente une entreprise',
+      icon: <LucidIcon name="Building2" color={COLORS.primaryBlue} />,
+      description: 'Recrutement inclusif ou démarche RSE',
     },
   ];
 

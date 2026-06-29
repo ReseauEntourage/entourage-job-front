@@ -64,6 +64,8 @@ export const COLORS = {
   blue: '#8FC4E2',
   darkBlue: '#2D7FA6',
   extraDarkBlue: '#1A5670',
+  shadowDarkBlue1: '#277690',
+  shadowDarkBlue2: '#1A5670',
   extraLightTeal: '#e8f6f8',
   teal: '#1a7a94',
 

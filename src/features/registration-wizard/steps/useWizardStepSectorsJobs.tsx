@@ -146,11 +146,11 @@ export function useWizardStepSectorsJobs() {
     },
     hideGenericStepHeader: undefined,
     title: isCandidate
-      ? 'Quels secteurs et métiers vous intéressent ?'
-      : 'Dans quels secteurs avez-vous du réseau ?',
+      ? 'Quel métier(s) et secteur(s) visez-vous ?'
+      : 'Quel est votre métier, et dans quels secteurs avez-vous du réseau ?',
     description: isCandidate
-      ? 'Ces informations nous permettront de vous proposer des coachs dans votre domaine'
-      : 'Ces informations nous permettront de vous mettre en relation avec les bons candidats',
+      ? 'Pour trouver des coachs qui connaissent votre domaine.'
+      : 'Pour vous montrer des personnes qui cherchent justement dans votre domaine.',
     content,
     sidePanelContent: (
       <WizardCompatibleProfilesSidePanel subtitleContext="sectors" />

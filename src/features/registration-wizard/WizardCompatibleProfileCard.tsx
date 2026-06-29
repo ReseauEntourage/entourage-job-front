@@ -1,4 +1,5 @@
 import { PublicProfile } from '@/src/api/types';
+import { Button } from '@/src/components/ui';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Badge, BadgeVariant } from '@/src/components/ui/Badge';
 import { LucidIcon } from '@/src/components/ui/Icons';
@@ -12,7 +13,6 @@ import {
   StyledCardName,
   StyledCardTags,
   StyledCardTop,
-  StyledLockedButton,
 } from './WizardCompatibleProfileCard.styles';
 
 interface WizardCompatibleProfileCardProps {
@@ -96,10 +96,10 @@ export const WizardCompatibleProfileCard = ({
       </StyledCardTop>
       <StyledCardBottom>
         <AvailabilityTag isAvailable={profile.isAvailable} />
-        <StyledLockedButton disabled>
+        <Button disabled>
           <LucidIcon name="Lock" size={12} />
-          Contacter
-        </StyledLockedButton>
+          &nbsp; Contacter
+        </Button>
       </StyledCardBottom>
     </StyledCard>
   );

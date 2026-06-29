@@ -39,7 +39,7 @@ export const StyledLockBanner = styled.div`
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
-  background: #e8f5f7;
+  background: ${COLORS.hoverBlue};
   border-radius: 8px;
 `;
 
@@ -47,12 +47,6 @@ export const StyledProfileList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-`;
-
-export const StyledSkeletonCard = styled.div`
-  height: 100px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.12);
 `;
 
 export const StyledEmptyState = styled.div`

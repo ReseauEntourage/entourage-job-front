@@ -9,5 +9,14 @@ export const StyledWizardSummaryActions = styled.div`
   display: flex;
   gap: 16px;
   align-items: center;
-  margin-top: 32px;
+  justify-content: center;
+  margin: 32px 0;
+  flex: 1;
+`;
+
+export const StyledWizardReassuranceItem = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
 `;

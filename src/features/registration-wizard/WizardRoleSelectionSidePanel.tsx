@@ -10,8 +10,8 @@ import {
   StyledPersonDescription,
   StyledPersonName,
   StyledPersonRow,
-  StyledQuote,
   StyledStackAvatar,
+  StyledTopSection,
   StyledVerbatimCard,
 } from './WizardRoleSelectionSidePanel.styles';
 
@@ -56,30 +56,34 @@ export const WizardRoleSelectionSidePanel = ({
 
   return (
     <StyledContainer>
-      <H3
-        title="Un monde où chacun a des gens sur qui compter."
-        color="white"
-      />
-      <Text color="white">
-        Entourage Pro relie celles et ceux qui cherchent un emploi à des
-        personnes prêtes à leur donner un coup de pouce. Quelle que soit votre
-        place, vous avez un rôle à jouer.
-      </Text>
-      {verbatim && (
-        <StyledVerbatimCard>
-          <StyledQuote>«&nbsp;{verbatim.quote}&nbsp;»</StyledQuote>
-          <StyledPersonRow>
-            <StyledPersonAvatar src={verbatim.imageSrc} alt={verbatim.name} />
-            <div>
-              <StyledPersonName>{verbatim.name}</StyledPersonName>
-              <StyledPersonDescription>
-                {verbatim.description}
-              </StyledPersonDescription>
-            </div>
-          </StyledPersonRow>
-        </StyledVerbatimCard>
-      )}
+      <StyledTopSection>
+        <Text color="white" size={34}>
+          Un monde où chacun a des gens sur qui compter.
+        </Text>
+        <Text color="white">
+          Entourage Pro relie celles et ceux qui cherchent un emploi à des
+          personnes prêtes à leur donner un coup de pouce. Quelle que soit votre
+          place, vous avez un rôle à jouer.
+        </Text>
+      </StyledTopSection>
+
       <StyledBottomSection>
+        {verbatim && (
+          <StyledVerbatimCard>
+            <Text color="white" size="xlarge">
+              «&nbsp;{verbatim.quote}&nbsp;»
+            </Text>
+            <StyledPersonRow>
+              <StyledPersonAvatar src={verbatim.imageSrc} alt={verbatim.name} />
+              <div>
+                <StyledPersonName>{verbatim.name}</StyledPersonName>
+                <StyledPersonDescription>
+                  {verbatim.description}
+                </StyledPersonDescription>
+              </div>
+            </StyledPersonRow>
+          </StyledVerbatimCard>
+        )}
         <ImgProfileStack>
           {STACK_IMAGES.map((src, i) => (
             <StyledStackAvatar key={i} src={src} alt="" />

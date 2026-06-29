@@ -63,8 +63,8 @@ export const StyledWizardSidePanel = styled.aside<{ $side: 'left' | 'right' }>`
   height: 100vh;
   background: linear-gradient(
     135deg,
-    ${COLORS.extraDarkBlue},
-    ${COLORS.darkBlue}
+    ${COLORS.shadowDarkBlue1},
+    ${COLORS.shadowDarkBlue2}
   );
   box-shadow: ${({ $side }) =>
     $side === 'left'

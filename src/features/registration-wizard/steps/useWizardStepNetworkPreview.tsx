@@ -67,8 +67,8 @@ export function useWizardStepNetworkPreview() {
     },
     hideGenericStepHeader: undefined,
     title: isCandidate
-      ? 'Voici les coachs qui peuvent vous aider'
-      : 'Voici les candidats qui ont besoin de vous',
+      ? 'C’est tout pour cette première partie 🙌 Créez votre compte pour contacter les coachs'
+      : 'C’est tout pour cette première partie 🙌 Créez votre compte pour soutenir des candidats',
     description: isCandidate
       ? 'Ces coachs correspondent à votre profil et sont disponibles pour vous accompagner'
       : 'Ces candidats correspondent à vos critères et attendent votre aide',
