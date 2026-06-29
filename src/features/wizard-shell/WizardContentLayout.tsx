@@ -8,18 +8,28 @@ import {
   StyledWizardSidePanel,
   StyledWizardSidePanelBody,
   StyledWizardSidePanelLogo,
+  StyledWizardTopBarProgressFill,
+  StyledWizardTopBarProgressStrip,
 } from './WizardContentLayout.styles';
 
 interface WizardContentLayoutProps {
   children: React.ReactNode;
   sidePanel?: React.ReactNode;
   sidePanelSide?: 'left' | 'right';
+  sideBarVariant?: WizardSideBarVariant;
+  stepper?: React.ReactNode;
+  sectionProgress?: number | null;
 }
+
+export type WizardSideBarVariant = 'default' | 'blue-gradient';
 
 export const WizardContentLayout = ({
   children,
   sidePanel,
   sidePanelSide = 'right',
+  sideBarVariant = 'default',
+  stepper,
+  sectionProgress,
 }: WizardContentLayoutProps) => {
   const hasSidePanel = Boolean(sidePanel);
   const showLogoInTopBar = !hasSidePanel || sidePanelSide === 'right';
@@ -34,20 +44,35 @@ export const WizardContentLayout = ({
           <NavbarLogo href="/" type="secondary" />
           <WizardAuthSection />
         </StyledWizardMobileHeader>
-        <StyledWizardContentTopBar $hasLogo={showLogoInTopBar}>
+        <StyledWizardContentTopBar
+          $hasLogo={showLogoInTopBar}
+          $hasSidePanel={hasSidePanel}
+          $side={sidePanelSide}
+        >
           {showLogoInTopBar && <NavbarLogo href="/" type="primary" />}
+          {stepper}
           <WizardAuthSection onDark={false} />
         </StyledWizardContentTopBar>
+        {sectionProgress != null && (
+          <StyledWizardTopBarProgressStrip
+            $hasSidePanel={hasSidePanel}
+            $side={sidePanelSide}
+          >
+            <StyledWizardTopBarProgressFill $percent={sectionProgress} />
+          </StyledWizardTopBarProgressStrip>
+        )}
         {children}
       </StyledWizardPageContent>
       {hasSidePanel && (
-        <StyledWizardSidePanel $side={sidePanelSide}>
+        <StyledWizardSidePanel $side={sidePanelSide} $variant={sideBarVariant}>
           {sidePanelSide === 'left' && (
             <StyledWizardSidePanelLogo>
               <NavbarLogo href="/" type="secondary" />
             </StyledWizardSidePanelLogo>
           )}
-          <StyledWizardSidePanelBody>{sidePanel}</StyledWizardSidePanelBody>
+          <StyledWizardSidePanelBody $side={sidePanelSide}>
+            {sidePanel}
+          </StyledWizardSidePanelBody>
         </StyledWizardSidePanel>
       )}
     </>

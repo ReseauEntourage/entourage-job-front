@@ -5,6 +5,7 @@ export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 0 32px;
 `;
 
 export const StyledTopSection = styled.div`
@@ -54,11 +55,11 @@ export const StyledPersonDescription = styled.p`
 `;
 
 export const StyledBottomSection = styled.div`
-  margin-top: auto;
   padding-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 24px;
 `;
 
 export const StyledStackAvatar = styled.img`

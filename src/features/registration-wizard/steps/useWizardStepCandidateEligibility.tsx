@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Card } from '@/src/components/ui';
 import {
   FormWithValidation,
   FormWithValidationRef,
@@ -34,17 +35,19 @@ export function useWizardStepCandidateEligibility() {
     smallTitle: 'Votre situation',
     summary: { title: 'Votre situation', duration: '~1 minute' },
     hideGenericStepHeader: undefined,
-    title: 'Votre situation',
-    description:
-      'Ces informations nous permettent de vérifier votre éligibilité au programme.',
+    title:
+      'Entourage Pro soutient les personnes isolées ou en situation de précarité dans leur recherche d’emploi. Deux dernières questions :',
+    description: null,
     content: (
-      <FormWithValidation
-        formSchema={formRegistrationCandidateEconomicSocialInformation}
-        defaultValues={(data as any) || {}}
-        onSubmit={handleFormSubmit}
-        noFooter
-        innerRef={formRef}
-      />
+      <Card>
+        <FormWithValidation
+          formSchema={formRegistrationCandidateEconomicSocialInformation}
+          defaultValues={(data as any) || {}}
+          onSubmit={handleFormSubmit}
+          noFooter
+          innerRef={formRef}
+        />
+      </Card>
     ),
     onSubmit: async () => {
       const success = await formRef.current?.submit();

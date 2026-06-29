@@ -25,8 +25,7 @@ export const ProfessionalInfoAccordionCoach = () => {
   useEffect(() => {
     if (
       submitCount > 0 &&
-      (!!errors.currentJob ||
-        !!errors.companyName ||
+      (!!errors.companyName ||
         !!errors.businessSectorIds ||
         !!errors.linkedinUrl)
     ) {
@@ -35,7 +34,6 @@ export const ProfessionalInfoAccordionCoach = () => {
   }, [
     errors.businessSectorIds,
     errors.companyName,
-    errors.currentJob,
     errors.linkedinUrl,
     submitCount,
   ]);

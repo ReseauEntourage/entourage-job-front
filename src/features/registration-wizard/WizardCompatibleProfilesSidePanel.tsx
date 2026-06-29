@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { PublicProfile } from '@/src/api/types';
-import { H3, H5 } from '@/src/components/ui/Headings';
 import { LucidIcon } from '@/src/components/ui/Icons';
+import { WizardSidePanel } from '@/src/components/ui/WizardSidePanel';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
@@ -14,14 +14,12 @@ import { Api } from 'src/api';
 import { Text } from 'src/components/ui/Text';
 import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
 import {
-  StyledContainer,
   StyledCountRow,
   StyledEmptyState,
   StyledEmptyStateText,
-  StyledHeader,
   StyledLockBanner,
+  StyledPanelContent,
   StyledProfileList,
-  StyledSubtitle,
 } from './WizardCompatibleProfilesSidePanel.styles';
 import {
   SEARCHING_LOADER_VARIANTS,
@@ -146,66 +144,72 @@ export const WizardCompatibleProfilesSidePanel = ({
 
   if (!hasAnyCriteria) {
     return (
-      <StyledContainer>
-        <H5
-          title="Répondez à la première question pour voir vos coachs"
-          color="white"
-        />
+      <WizardSidePanel
+        title={panelLabel}
+        subtitle={
+          <Text size="xlarge">
+            Répondez à la première question pour voir vos coachs
+          </Text>
+        }
+      >
         <StyledEmptyState>
           <LucidIcon name="Users" size={40} />
           <StyledEmptyStateText>{emptyStateText}</StyledEmptyStateText>
         </StyledEmptyState>
-      </StyledContainer>
+      </WizardSidePanel>
     );
   }
 
   return (
-    <StyledContainer>
-      <StyledHeader>
-        <Text color="white">{panelLabel}</Text>
-        <StyledCountRow>
-          <Text size={35} color="white">
-            {isLoading ? '...' : count}
-          </Text>
-          <Text color="white">{countLabel}</Text>
-        </StyledCountRow>
-        <Text color="gray">{SUBTITLE[subtitleContext]}</Text>
-        {broadened && (
-          <Text color="white" size={12}>
-            {'On a élargi à votre secteur pour vous montrer plus de coachs.'}
-          </Text>
-        )}
-      </StyledHeader>
-      <StyledLockBanner>
-        <LucidIcon
-          name="Lock"
-          size={14}
-          color={COLORS.darkBlue}
-          stroke="bold"
-        />
-        <Text color="darkBlue" weight="semibold">
-          {lockBannerText}
-        </Text>
-      </StyledLockBanner>
-      <StyledProfileList>
-        {isLoading ? (
-          <WizardSearchingLoader
-            {...SEARCHING_LOADER_VARIANTS[
-              subtitleContext === 'nudges'
-                ? 'preRegistrationCriteria'
-                : 'preRegistrationSectors'
-            ]}
+    <WizardSidePanel
+      title={panelLabel}
+      subtitle={
+        <>
+          <StyledCountRow>
+            <Text size={35}>{isLoading ? '...' : count}</Text>
+            <Text size="large">{countLabel}</Text>
+          </StyledCountRow>
+          <Text color="mediumGray">{SUBTITLE[subtitleContext]}</Text>
+          {broadened && (
+            <Text size={12}>
+              {'On a élargi à votre secteur pour vous montrer plus de coachs.'}
+            </Text>
+          )}
+        </>
+      }
+    >
+      <StyledPanelContent>
+        <StyledLockBanner>
+          <LucidIcon
+            name="Lock"
+            size={14}
+            color={COLORS.darkBlue}
+            stroke="bold"
           />
-        ) : (
-          profiles.map((profile) => (
-            <WizardCompatibleProfileCard
-              key={profile.id}
-              profile={profile}
-              subtitleContext={subtitleContext}
+          <Text color="darkBlue" weight="semibold">
+            {lockBannerText}
+          </Text>
+        </StyledLockBanner>
+        <StyledProfileList>
+          {isLoading ? (
+            <WizardSearchingLoader
+              {...SEARCHING_LOADER_VARIANTS[
+                subtitleContext === 'nudges'
+                  ? 'preRegistrationCriteria'
+                  : 'preRegistrationSectors'
+              ]}
             />
-          ))
-        )}
-      </StyledProfileList>
-    </StyledContainer>
+          ) : (
+            profiles.map((profile) => (
+              <WizardCompatibleProfileCard
+                key={profile.id}
+                profile={profile}
+                subtitleContext={subtitleContext}
+              />
+            ))
+          )}
+        </StyledProfileList>
+      </StyledPanelContent>
+    </WizardSidePanel>
   );
 };

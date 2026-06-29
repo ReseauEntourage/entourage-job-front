@@ -1,5 +1,5 @@
 import { PublicProfile } from '@/src/api/types';
-import { Button } from '@/src/components/ui';
+import { Button, Tooltip } from '@/src/components/ui';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Badge, BadgeVariant } from '@/src/components/ui/Badge';
 import { LucidIcon } from '@/src/components/ui/Icons';
@@ -96,10 +96,20 @@ export const WizardCompatibleProfileCard = ({
       </StyledCardTop>
       <StyledCardBottom>
         <AvailabilityTag isAvailable={profile.isAvailable} />
-        <Button disabled>
-          <LucidIcon name="Lock" size={12} />
-          &nbsp; Contacter
-        </Button>
+        <Tooltip
+          content={
+            <>
+              <LucidIcon name="Lock" size={12} />
+              &nbsp; Finalisez votre inscription pour voir le profil
+            </>
+          }
+          placement="top"
+        >
+          <Button disabled>
+            <LucidIcon name="Lock" size={12} />
+            &nbsp; Contacter
+          </Button>
+        </Tooltip>
       </StyledCardBottom>
     </StyledCard>
   );

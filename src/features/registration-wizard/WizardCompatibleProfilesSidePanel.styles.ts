@@ -1,37 +1,10 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 8px 0;
-`;
-
-export const StyledHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-export const StyledLabel = styled.span`
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-`;
-
 export const StyledCountRow = styled.div`
   display: flex;
   align-items: baseline;
   gap: 8px;
-`;
-
-export const StyledSubtitle = styled.p`
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
 `;
 
 export const StyledLockBanner = styled.div`
@@ -41,6 +14,12 @@ export const StyledLockBanner = styled.div`
   padding: 10px 12px;
   background: ${COLORS.hoverBlue};
   border-radius: 8px;
+`;
+
+export const StyledPanelContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 export const StyledProfileList = styled.div`

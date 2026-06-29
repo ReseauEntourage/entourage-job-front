@@ -1,16 +1,14 @@
 import React from 'react';
 import { PublicProfile } from '@/src/api/types';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
+import { Text } from '@/src/components/ui/Text';
 import { UserRoles } from '@/src/constants/users';
 import {
   StyledAvatarItem,
   StyledAvatarRow,
   StyledAvatarSkeleton,
   StyledContainer,
-  StyledCount,
-  StyledEmoji,
   StyledSubtitle,
-  StyledTitle,
 } from './NetworkPreviewStep.styles';
 
 interface NetworkPreviewStepProps {
@@ -47,11 +45,13 @@ export const NetworkPreviewStep = ({
 
   return (
     <StyledContainer>
-      <StyledEmoji>🎉</StyledEmoji>
-      <StyledCount>{isLoading ? '...' : count}</StyledCount>
-      <StyledTitle>
+      <Text size={40}>🎉</Text>
+      <Text size={36} weight="semibold" color="primaryBlue">
+        {isLoading ? '...' : count}
+      </Text>
+      <Text size="xxlarge" weight="semibold">
         {profileLabel} {actionLabel}
-      </StyledTitle>
+      </Text>
       <StyledAvatarRow>
         {isLoading
           ? Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
@@ -68,9 +68,7 @@ export const NetworkPreviewStep = ({
             ))}
       </StyledAvatarRow>
       <StyledSubtitle>
-        {`Créez votre compte pour pouvoir ${
-          isPlural ? 'les' : 'le'
-        } contacter, ça prend 30 secondes.`}
+        {`Créez votre compte pour pouvoir ${isPlural ? 'les' : 'le'} contacter`}
       </StyledSubtitle>
     </StyledContainer>
   );

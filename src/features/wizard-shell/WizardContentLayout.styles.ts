@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
+import { WizardSideBarVariant } from './WizardContentLayout';
 
 const SIDE_PANEL_WIDTH = `max(35vw, 480px)`;
 
@@ -47,29 +48,28 @@ export const StyledWizardPageContent = styled.div<{
 `;
 
 export const StyledWizardStepHeader = styled.div`
-  background-color: ${COLORS.white};
-
   .custom-page {
     padding-top: 16px;
     padding-bottom: 16px;
   }
 `;
 
-export const StyledWizardSidePanel = styled.aside<{ $side: 'left' | 'right' }>`
+export const StyledWizardSidePanel = styled.aside<{
+  $side: 'left' | 'right';
+  $variant: WizardSideBarVariant;
+}>`
   position: fixed;
   ${({ $side }) => ($side === 'left' ? 'left: 0;' : 'right: 0;')}
-  top: 0;
+  top: ${({ $side }) => ($side === 'right' ? `${HEIGHTS.HEADER + 1}px` : '0')};
   width: ${SIDE_PANEL_WIDTH};
-  height: 100vh;
-  background: linear-gradient(
-    135deg,
-    ${COLORS.shadowDarkBlue1},
-    ${COLORS.shadowDarkBlue2}
-  );
-  box-shadow: ${({ $side }) =>
-    $side === 'left'
-      ? '4px 0 12px rgba(0, 0, 0, 0.1)'
-      : '-4px 0 12px rgba(0, 0, 0, 0.1)'};
+  height: ${({ $side }) =>
+    $side === 'right' ? `calc(100vh - ${HEIGHTS.HEADER + 1}px)` : '100vh'};
+  display: flex;
+  flex-direction: column;
+  background: ${({ $variant }) =>
+    $variant === 'blue-gradient'
+      ? `linear-gradient(135deg, ${COLORS.shadowDarkBlue1}, ${COLORS.shadowDarkBlue2})`
+      : COLORS.white};
   color: ${COLORS.white};
   z-index: 10;
 
@@ -107,13 +107,44 @@ export const StyledWizardMobileHeader = styled.div`
   }
 `;
 
-export const StyledWizardSidePanelBody = styled.div`
-  padding: ${HEIGHTS.DEFAULT_SECTION_PADDING}px 32px;
+export const StyledWizardSidePanelBody = styled.div<{
+  $side: 'left' | 'right';
+}>`
   overflow-y: auto;
-  height: calc(100vh - 84px);
+  flex: 1;
+  min-height: 0;
 `;
 
-export const StyledWizardContentTopBar = styled.div<{ $hasLogo: boolean }>`
+export const StyledWizardTopBarProgressStrip = styled.div<{
+  $hasSidePanel: boolean;
+  $side: 'left' | 'right';
+}>`
+  height: 4px;
+  width: ${({ $hasSidePanel, $side }) =>
+    $hasSidePanel && $side === 'right'
+      ? `calc(100% + ${SIDE_PANEL_WIDTH})`
+      : '100%'};
+  background-color: ${COLORS.gray};
+  overflow: hidden;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    display: none;
+  }
+`;
+
+export const StyledWizardTopBarProgressFill = styled.div<{ $percent: number }>`
+  height: 100%;
+  width: ${({ $percent }) => $percent}%;
+  background-color: ${COLORS.primaryBlue};
+  transition: width 0.3s ease;
+`;
+
+export const StyledWizardContentTopBar = styled.div<{
+  $hasLogo: boolean;
+  $hasSidePanel: boolean;
+  $side: 'left' | 'right';
+}>`
+  position: relative;
   display: flex;
   justify-content: ${({ $hasLogo }) =>
     $hasLogo ? 'space-between' : 'flex-end'};
@@ -122,8 +153,13 @@ export const StyledWizardContentTopBar = styled.div<{ $hasLogo: boolean }>`
   padding: 0 15px;
   background-color: ${COLORS.white};
   border-bottom: 1px solid ${COLORS.lightGray};
+  width: ${({ $hasSidePanel, $side }) =>
+    $hasSidePanel && $side === 'right'
+      ? `calc(100% + ${SIDE_PANEL_WIDTH})`
+      : '100%'};
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     display: none;
+    width: 100%;
   }
 `;

@@ -7,26 +7,10 @@ export const StyledContainer = styled.div`
   align-items: center;
   text-align: center;
   padding: 40px 24px;
-  gap: 16px;
-`;
-
-export const StyledEmoji = styled.span`
-  font-size: 48px;
-  line-height: 1;
-`;
-
-export const StyledCount = styled.span`
-  font-size: 56px;
-  font-weight: 700;
-  line-height: 1;
-  color: ${COLORS.primaryBlue};
-`;
-
-export const StyledTitle = styled.p`
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0;
-  max-width: 340px;
+  gap: 5px;
+  background: ${COLORS.hoverBlue};
+  border: 3px solid ${COLORS.primaryBlue};
+  border-radius: 16px;
 `;
 
 export const StyledAvatarRow = styled.div`

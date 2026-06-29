@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Card } from '@/src/components/ui';
 import {
   FormWithValidation,
   FormWithValidationRef,
@@ -34,17 +35,19 @@ export function useWizardStepCoachInfo() {
     smallTitle: 'Vos informations',
     summary: { title: 'Vos informations', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
-    title: 'Parlez-nous de vous',
+    title: 'Avant de créer votre compte, deux informations vous concernant.',
     description:
       'Ces informations nous permettent de vous mettre en relation avec des candidats à proximité.',
     content: (
-      <FormWithValidation
-        formSchema={formRegistrationCoachInfo}
-        defaultValues={(data as any) || {}}
-        onSubmit={handleFormSubmit}
-        noFooter
-        innerRef={formRef}
-      />
+      <Card title="Vous concernant">
+        <FormWithValidation
+          formSchema={formRegistrationCoachInfo}
+          defaultValues={(data as any) || {}}
+          onSubmit={handleFormSubmit}
+          noFooter
+          innerRef={formRef}
+        />
+      </Card>
     ),
     onSubmit: async () => {
       const success = await formRef.current?.submit();

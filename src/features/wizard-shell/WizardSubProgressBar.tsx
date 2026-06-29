@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  StyledSubProgressBarContainer,
-  StyledSubProgressBarFill,
-  StyledSubProgressBarLabel,
-  StyledSubProgressBarTrack,
-} from './WizardSubProgressBar.styles';
+import { Badge, BadgeVariant } from '@/src/components/ui';
 
 interface WizardSubProgressBarProps {
   currentInSection: number;
@@ -21,16 +16,9 @@ export const WizardSubProgressBar = ({
     return null;
   }
 
-  const percent = Math.round(((currentInSection + 1) / totalInSection) * 100);
-
   return (
-    <StyledSubProgressBarContainer>
-      <StyledSubProgressBarLabel>
-        {sectionLabel} — étape {currentInSection + 1}/{totalInSection}
-      </StyledSubProgressBarLabel>
-      <StyledSubProgressBarTrack>
-        <StyledSubProgressBarFill $percent={percent} />
-      </StyledSubProgressBarTrack>
-    </StyledSubProgressBarContainer>
+    <Badge variant={BadgeVariant.ExtraLightTeal}>
+      {sectionLabel} — étape {currentInSection + 1}/{totalInSection}
+    </Badge>
   );
 };

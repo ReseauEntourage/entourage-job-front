@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Text, LucidIcon, Card } from '@/src/components/ui';
 import {
   FormWithValidation,
   FormWithValidationRef,
@@ -11,6 +12,7 @@ import {
   selectRegistrationCurrentStep,
   selectRegistrationData,
 } from '@/src/use-cases/registration';
+import { StyledDescriptionContainer } from './StepInfo.styles';
 
 export function useWizardStepCandidateInfo() {
   const dispatch = useDispatch();
@@ -34,17 +36,23 @@ export function useWizardStepCandidateInfo() {
     smallTitle: 'Vos informations',
     summary: { title: 'Vos informations', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
-    title: 'Parlez-nous de vous',
-    description:
-      'Ces informations nous permettent de vous proposer des coachs à proximité.',
+    title: 'Quelques infos pour vérifier que le programme vous correspond.',
+    description: (
+      <StyledDescriptionContainer>
+        <LucidIcon name="Lock" size={13} color="darkGray" />
+        <Text color="darkGray">Vos informations sont sécurisées</Text>
+      </StyledDescriptionContainer>
+    ),
     content: (
-      <FormWithValidation
-        formSchema={formRegistrationCandidateInfo}
-        defaultValues={(data as any) || {}}
-        onSubmit={handleFormSubmit}
-        noFooter
-        innerRef={formRef}
-      />
+      <Card title="Vous concernant">
+        <FormWithValidation
+          formSchema={formRegistrationCandidateInfo}
+          defaultValues={(data as any) || {}}
+          onSubmit={handleFormSubmit}
+          noFooter
+          innerRef={formRef}
+        />
+      </Card>
     ),
     onSubmit: async () => {
       const success = await formRef.current?.submit();

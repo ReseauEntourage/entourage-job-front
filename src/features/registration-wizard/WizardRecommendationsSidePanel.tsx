@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ProfileRecommendation } from '@/src/api/types';
-import { Text } from '@/src/components/ui/Text';
+import { WizardSidePanel } from '@/src/components/ui/WizardSidePanel';
 import { Api } from 'src/api';
 import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
 import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
-import {
-  StyledContainer,
-  StyledHeader,
-  StyledProfileList,
-} from './WizardRecommendationsSidePanel.styles';
+import { StyledProfileList } from './WizardRecommendationsSidePanel.styles';
 import {
   SEARCHING_LOADER_VARIANTS,
   WizardSearchingLoader,
@@ -56,12 +52,7 @@ export const WizardRecommendationsSidePanel = () => {
   }, [fetchReco]);
 
   return (
-    <StyledContainer>
-      <StyledHeader>
-        <Text color="white" uppercase weight="semibold">
-          Votre sélection personnalisée
-        </Text>
-      </StyledHeader>
+    <WizardSidePanel title="VOTRE SÉLECTION PERSONNALISÉE">
       <StyledProfileList>
         {panelState !== 'READY' ? (
           <WizardSearchingLoader
@@ -81,6 +72,6 @@ export const WizardRecommendationsSidePanel = () => {
           ))
         )}
       </StyledProfileList>
-    </StyledContainer>
+    </WizardSidePanel>
   );
 };

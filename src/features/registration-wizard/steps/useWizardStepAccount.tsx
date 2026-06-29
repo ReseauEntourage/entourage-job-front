@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Card } from '@/src/components/ui';
 import {
   FormWithValidation,
   FormWithValidationRef,
@@ -42,13 +43,15 @@ export function useWizardStepAccount() {
     title: 'Créez votre compte Entourage Pro',
     description: 'Renseignez vos coordonnées pour finaliser votre inscription.',
     content: (
-      <FormWithValidation
-        formSchema={formRegistrationAccount}
-        defaultValues={(data as any) || {}}
-        onSubmit={handleFormSubmit}
-        noFooter
-        innerRef={formRef}
-      />
+      <Card title="Vos informations">
+        <FormWithValidation
+          formSchema={formRegistrationAccount}
+          defaultValues={(data as any) || {}}
+          onSubmit={handleFormSubmit}
+          noFooter
+          innerRef={formRef}
+        />
+      </Card>
     ),
     onSubmit: async () => {
       const success = await formRef.current?.submit();

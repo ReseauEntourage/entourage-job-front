@@ -4,6 +4,7 @@ import {
   StyledWizardStep,
   StyledWizardStepBadge,
   StyledWizardStepConnector,
+  StyledWizardStepDuration,
   StyledWizardStepText,
   StyledWizardStepTitle,
 } from './WizardProgressBar.styles';
@@ -36,18 +37,29 @@ export const WizardProgressBar = ({
               : -1;
 
           const isCompleted = maxIdx !== -1 && currentIdx > maxIdx;
-          const isActive = currentSectionId === section.id;
+          const isCurrent = currentSectionId === section.id;
 
           return (
             <React.Fragment key={section.id}>
               <StyledWizardStep>
-                <StyledWizardStepBadge $active={isActive || isCompleted}>
+                <StyledWizardStepBadge
+                  $completed={isCompleted}
+                  $current={isCurrent}
+                >
                   {index + 1}
                 </StyledWizardStepBadge>
                 <StyledWizardStepText>
-                  <StyledWizardStepTitle $active={isActive || isCompleted}>
+                  <StyledWizardStepTitle
+                    $completed={isCompleted}
+                    $current={isCurrent}
+                  >
                     {section.label}
                   </StyledWizardStepTitle>
+                  {section.duration && (
+                    <StyledWizardStepDuration>
+                      {section.duration}
+                    </StyledWizardStepDuration>
+                  )}
                 </StyledWizardStepText>
               </StyledWizardStep>
               {index < sections.length - 1 && <StyledWizardStepConnector />}
@@ -60,21 +72,37 @@ export const WizardProgressBar = ({
 
   return (
     <StyledWizardProgressBar>
-      {steps.map((step, index) => (
-        <React.Fragment key={index}>
-          <StyledWizardStep>
-            <StyledWizardStepBadge $active={currentIdx >= index}>
-              {index + 1}
-            </StyledWizardStepBadge>
-            <StyledWizardStepText>
-              <StyledWizardStepTitle $active={currentIdx >= index}>
-                {step.smallTitle}
-              </StyledWizardStepTitle>
-            </StyledWizardStepText>
-          </StyledWizardStep>
-          {index < steps.length - 1 && <StyledWizardStepConnector />}
-        </React.Fragment>
-      ))}
+      {steps.map((step, index) => {
+        const isCompleted = currentIdx > index;
+        const isCurrent = currentIdx === index;
+
+        return (
+          <React.Fragment key={index}>
+            <StyledWizardStep>
+              <StyledWizardStepBadge
+                $completed={isCompleted}
+                $current={isCurrent}
+              >
+                {index + 1}
+              </StyledWizardStepBadge>
+              <StyledWizardStepText>
+                <StyledWizardStepTitle
+                  $completed={isCompleted}
+                  $current={isCurrent}
+                >
+                  {step.smallTitle}
+                </StyledWizardStepTitle>
+                {step.summary.duration && (
+                  <StyledWizardStepDuration>
+                    {step.summary.duration}
+                  </StyledWizardStepDuration>
+                )}
+              </StyledWizardStepText>
+            </StyledWizardStep>
+            {index < steps.length - 1 && <StyledWizardStepConnector />}
+          </React.Fragment>
+        );
+      })}
     </StyledWizardProgressBar>
   );
 };

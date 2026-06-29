@@ -14,6 +14,7 @@ export interface PreRegistrationPreferences {
   nudgeIds: string[];
   sectorOccupations: UserProfileSectorOccupation[];
   businessSectorIds: string[];
+  currentJob?: string;
 }
 
 interface State {
@@ -116,6 +117,9 @@ export const slice = createSlice({
           action.payload.businessSectorIds ??
           state.preRegistrationPreferences?.businessSectorIds ??
           [],
+        currentJob:
+          action.payload.currentJob ??
+          state.preRegistrationPreferences?.currentJob,
       };
     },
     resetRegistrationData(state) {

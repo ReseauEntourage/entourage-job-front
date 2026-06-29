@@ -510,6 +510,7 @@ export type UserRegistrationDto = {
   birthDate: string;
   occupations?: Occupation[];
   sectorOccupations?: UserProfileSectorOccupation[];
+  currentJob?: string;
   materialInsecurity?: string;
   networkInsecurity?: string;
   utmSource?: string;

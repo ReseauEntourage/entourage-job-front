@@ -3,7 +3,6 @@ import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Text } from '@/src/components/ui/Text';
-import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import {
   StyledOnboardingActions,
   StyledOnboardingSubActions,
@@ -11,11 +10,11 @@ import {
 import { WizardContentLayout } from '@/src/features/wizard-shell/WizardContentLayout';
 import { StyledWizardStepHeader } from '@/src/features/wizard-shell/WizardContentLayout.styles';
 import { WizardProgressBar } from '@/src/features/wizard-shell/WizardProgressBar';
-import { WizardSubProgressBar } from '@/src/features/wizard-shell/WizardSubProgressBar';
 import {
   WIZARD_SECTIONS,
   WizardStep,
 } from '@/src/features/wizard-shell/wizard.types';
+import { HeaderWizardStep } from './HeaderWizardStep/HeaderWizardStep';
 
 interface WizardRunShellProps {
   wizardSteps: WizardStep[];
@@ -64,30 +63,33 @@ export const WizardRunShell = ({
     };
   }, [wizardSteps, currentWizardIdx]);
 
+  const sectionProgress = useMemo(() => {
+    if (!subProgress || subProgress.totalInSection <= 1) {
+      return null;
+    }
+    return Math.round(
+      ((subProgress.currentInSection + 1) / subProgress.totalInSection) * 100
+    );
+  }, [subProgress]);
+
   return (
-    <WizardContentLayout sidePanel={sidePanelContent ?? null}>
+    <WizardContentLayout
+      sidePanel={sidePanelContent ?? null}
+      sectionProgress={sectionProgress}
+      stepper={
+        <WizardProgressBar
+          steps={wizardSteps}
+          currentIdx={currentWizardIdx}
+          sections={WIZARD_SECTIONS}
+        />
+      }
+    >
       <StyledWizardStepHeader>
         <Section className="custom-page">
-          <WizardProgressBar
-            steps={wizardSteps}
-            currentIdx={currentWizardIdx}
-            sections={WIZARD_SECTIONS}
-          />
-        </Section>
-      </StyledWizardStepHeader>
-      <StyledWizardStepHeader>
-        <Section className="custom-page">
-          {subProgress && (
-            <WizardSubProgressBar
-              sectionLabel={subProgress.sectionLabel}
-              currentInSection={subProgress.currentInSection}
-              totalInSection={subProgress.totalInSection}
-            />
-          )}
           {currentStep && !currentStep.hideGenericStepHeader && (
             <>
-              <br />
-              <HeaderBackoffice
+              <HeaderWizardStep
+                subProgress={subProgress}
                 title={currentStep.title}
                 description={currentStep.description}
               />
@@ -95,7 +97,7 @@ export const WizardRunShell = ({
           )}
         </Section>
       </StyledWizardStepHeader>
-      <Section className="custom-page">
+      <Section className="custom-header">
         {isInitializing ? (
           <Spinner />
         ) : currentStep ? (

@@ -2,13 +2,14 @@ import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfileSectorOccupation } from '@/src/api/types';
+import { Card } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
 import { WizardCompatibleProfilesSidePanel } from '@/src/features/registration-wizard/WizardCompatibleProfilesSidePanel';
-import { StyledTwoColumns } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/components/ProfessionalInfoAccordion/ProfesionalInfoAccordion.styles';
 import { ProfileCompletionSchemaField } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/components/ProfileCompletionSchemaField';
 import {
+  coachCurrentJobField,
   profileCompletionFormSchema,
   profileCompletionProfessionalInfoCandidateRows,
   profileCompletionProfessionalInfoCoachFields,
@@ -30,29 +31,34 @@ const businessSectorIdsField =
 function CandidateContent() {
   return (
     <>
-      {profileCompletionProfessionalInfoCandidateRows.map((row) => (
-        <StyledTwoColumns key={row.rowIndex}>
-          {row.fields.map((field) => (
-            <ProfileCompletionSchemaField
-              key={String(field.name)}
-              formSchema={profileCompletionFormSchema}
-              field={field}
-              showError={false}
-            />
-          ))}
-        </StyledTwoColumns>
-      ))}
+      {profileCompletionProfessionalInfoCandidateRows.map((row) =>
+        row.fields.map((field) => (
+          <ProfileCompletionSchemaField
+            key={String(field.name)}
+            formSchema={profileCompletionFormSchema}
+            field={field}
+            showError={false}
+          />
+        ))
+      )}
     </>
   );
 }
 
 function CoachContent() {
   return (
-    <ProfileCompletionSchemaField
-      formSchema={profileCompletionFormSchema}
-      field={businessSectorIdsField}
-      showError={false}
-    />
+    <>
+      <ProfileCompletionSchemaField
+        formSchema={profileCompletionFormSchema}
+        field={coachCurrentJobField}
+        showError={false}
+      />
+      <ProfileCompletionSchemaField
+        formSchema={profileCompletionFormSchema}
+        field={businessSectorIdsField}
+        showError={false}
+      />
+    </>
   );
 }
 
@@ -73,6 +79,7 @@ export function useWizardStepSectorsJobs() {
       businessSectorId1: null,
       occupation1: '',
       businessSectorIds: [],
+      currentJob: '',
     },
     mode: 'onChange',
   });
@@ -116,6 +123,7 @@ export function useWizardStepSectorsJobs() {
         registrationActions.setPreRegistrationPreferences({
           sectorOccupations,
           businessSectorIds,
+          ...(!isCandidate && { currentJob: values.currentJob ?? '' }),
         })
       );
     });
@@ -151,7 +159,7 @@ export function useWizardStepSectorsJobs() {
     description: isCandidate
       ? 'Pour trouver des coachs qui connaissent votre domaine.'
       : 'Pour vous montrer des personnes qui cherchent justement dans votre domaine.',
-    content,
+    content: <Card title="Ce que vous recherchez">{content}</Card>,
     sidePanelContent: (
       <WizardCompatibleProfilesSidePanel subtitleContext="sectors" />
     ),
@@ -190,6 +198,7 @@ export function useWizardStepSectorsJobs() {
         registrationActions.setPreRegistrationPreferences({
           sectorOccupations,
           businessSectorIds,
+          ...(!isCandidate && { currentJob: values.currentJob ?? '' }),
         })
       );
       dispatch(

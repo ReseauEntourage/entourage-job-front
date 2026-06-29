@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
+import { SearchingLoader } from '@/src/components/ui/SearchingLoader';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { Text } from '@/src/components/ui/Text';
-import { useIsDesktop } from '@/src/hooks/utils';
+import { useIsDesktop, useIsMobile } from '@/src/hooks/utils';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
@@ -63,6 +64,7 @@ const recommendationsLabels: {
 };
 
 export const DashboardRecommendationsCard = () => {
+  const isMobile = useIsMobile();
   const user = useAuthenticatedUser();
   const company = useCurrentUserCompany();
   const currentUserProfile = useCurrentUserProfile();
@@ -148,12 +150,13 @@ export const DashboardRecommendationsCard = () => {
         centerTitle
       >
         <StyledDashboardCardContentContainer>
-          <Skeleton count={1} width="100%" height="50px" inverted />
-
-          <Text size="small" center variant="italic">
-            Nous analysons les modifications récentes de votre profil afin de
-            vous proposer les profils les plus susceptibles de vous intéresser
-          </Text>
+          <SearchingLoader
+            title="On analyse votre profil"
+            subtitle="Nous analysons les modifications récentes de votre profil afin de vous proposer les profils les plus susceptibles de vous intéresser"
+            theme="light"
+            cols={isMobile ? 4 : 8}
+            rows={1}
+          />
         </StyledDashboardCardContentContainer>
       </Card>
     );

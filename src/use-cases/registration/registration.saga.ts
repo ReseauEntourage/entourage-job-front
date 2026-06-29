@@ -74,6 +74,9 @@ const createUserRequestedSaga = function* () {
       ...(preRegistrationPreferences?.sectorOccupations?.length
         ? { sectorOccupations: preRegistrationPreferences.sectorOccupations }
         : {}),
+      ...(preRegistrationPreferences?.currentJob
+        ? { currentJob: preRegistrationPreferences.currentJob }
+        : {}),
     };
     yield* call(() => Api.postUserRegistration(userData));
 

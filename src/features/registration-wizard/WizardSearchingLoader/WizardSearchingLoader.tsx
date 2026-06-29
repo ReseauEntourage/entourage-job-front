@@ -1,17 +1,5 @@
 import React from 'react';
-import { LucidIcon } from '@/src/components/ui/Icons';
-import {
-  StyledCard,
-  StyledCardGrid,
-  StyledContainer,
-  StyledLens,
-  StyledSubtitle,
-  StyledTitle,
-  StyledTitles,
-} from './WizardSearchingLoader.styles';
-
-const TOTAL_CARDS = 8;
-const MATRIX_FLICKER_INDICES = new Set([2, 5]);
+import { SearchingLoader } from '@/src/components/ui/SearchingLoader';
 
 export interface WizardSearchingLoaderVariant {
   title: string;
@@ -46,24 +34,5 @@ export const WizardSearchingLoader = ({
   title,
   subtitle,
 }: WizardSearchingLoaderProps) => (
-  <StyledContainer>
-    <StyledCardGrid>
-      {Array.from({ length: TOTAL_CARDS }).map((_, idx) => (
-        <StyledCard
-          key={idx}
-          $delay={idx * 0.5}
-          $hasFlicker={MATRIX_FLICKER_INDICES.has(idx)}
-        >
-          <LucidIcon name="User" size={16} color="currentColor" stroke="thin" />
-        </StyledCard>
-      ))}
-      <StyledLens>
-        <LucidIcon name="Search" size={18} color="white" stroke="thin" />
-      </StyledLens>
-    </StyledCardGrid>
-    <StyledTitles>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledSubtitle>{subtitle}</StyledSubtitle>
-    </StyledTitles>
-  </StyledContainer>
+  <SearchingLoader title={title} subtitle={subtitle} theme="light" />
 );

@@ -8,8 +8,9 @@ export const StyledCard = styled.div`
   padding: 12px;
   background: white;
   border-radius: 8px;
-  border: 1px solid ${COLORS.lightGray};
+  border: 1px solid ${COLORS.gray};
   color: ${COLORS.extraDarkGray};
+  box-shadow: 0px 8px 24px 0px ${COLORS.darkBlue}1A;
 `;
 
 export const StyledCardTop = styled.div`

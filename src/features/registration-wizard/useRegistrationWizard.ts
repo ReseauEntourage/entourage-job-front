@@ -19,10 +19,10 @@ import {
   selectRegistrationShouldSkipStep,
 } from '@/src/use-cases/registration';
 import { notificationsActions } from 'src/use-cases/notifications';
+import { useWizardStepCandidateInfo } from './steps/StepInfos/useWizardStepCandidateInfo';
+import { useWizardStepCoachInfo } from './steps/StepInfos/useWizardStepCoachInfo';
 import { useWizardStepAccount } from './steps/useWizardStepAccount';
 import { useWizardStepCandidateEligibility } from './steps/useWizardStepCandidateEligibility';
-import { useWizardStepCandidateInfo } from './steps/useWizardStepCandidateInfo';
-import { useWizardStepCoachInfo } from './steps/useWizardStepCoachInfo';
 import { useWizardStepCompanyRole } from './steps/useWizardStepCompanyRole';
 import { useWizardStepCompanySelection } from './steps/useWizardStepCompanySelection';
 import { useWizardStepNetworkPreview } from './steps/useWizardStepNetworkPreview';

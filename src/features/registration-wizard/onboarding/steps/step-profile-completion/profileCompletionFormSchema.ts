@@ -30,18 +30,19 @@ export const buildIntroductionField = (
   rows: 3,
 });
 
+export const coachCurrentJobField: FormFieldInput<AnyCantFix> = {
+  id: 'currentJob',
+  name: 'currentJob',
+  component: 'text-input',
+  title: 'Votre métier *',
+  placeholder: 'Écrivez votre métier',
+  isRequired: true,
+  showLabel: true,
+  maxLength: 50,
+};
+
 export const profileCompletionProfessionalInfoCoachFields: FormFieldInput<AnyCantFix>[] =
   [
-    {
-      id: 'currentJob',
-      name: 'currentJob',
-      component: 'text-input',
-      title: 'Mon métier *',
-      placeholder: 'Ecrivez votre métier',
-      isRequired: true,
-      showLabel: true,
-      maxLength: 50,
-    },
     {
       id: 'companyName',
       name: 'companyName',
@@ -103,8 +104,8 @@ export const profileCompletionProfessionalInfoCandidateRows: {
         id: 'businessSectorId0',
         name: 'businessSectorId0',
         component: 'select-async',
-        title: 'Secteur(s) recherché(s)',
-        placeholder: 'Secteur 1*',
+        title: 'Secteur recherché',
+        placeholder: 'Séléctionnez un secteur',
         isMulti: false,
         isRequired: true,
         showLabel: true,
@@ -115,8 +116,8 @@ export const profileCompletionProfessionalInfoCandidateRows: {
         id: 'occupation0',
         name: 'occupation0',
         component: 'text-input',
-        title: 'Métier(s) recherché(s)',
-        placeholder: 'Métier 1',
+        title: 'Métier recherché',
+        placeholder: 'Saisir un métier',
         showLabel: true,
         maxLength: 50,
       },
@@ -129,7 +130,8 @@ export const profileCompletionProfessionalInfoCandidateRows: {
         id: 'businessSectorId1',
         name: 'businessSectorId1',
         component: 'select-async',
-        placeholder: 'Secteur 2',
+        placeholder: 'Séléctionnez un autre secteur',
+        title: 'Autre secteur',
         isMulti: false,
         showLabel: true,
         openMenuOnClick: true,
@@ -147,7 +149,8 @@ export const profileCompletionProfessionalInfoCandidateRows: {
         id: 'occupation1',
         name: 'occupation1',
         component: 'text-input',
-        placeholder: 'Métier 2',
+        placeholder: 'Saisir un métier',
+        title: 'Autre métier',
         showLabel: true,
         maxLength: 50,
       },

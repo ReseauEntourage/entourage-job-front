@@ -69,9 +69,7 @@ export function useWizardStepNetworkPreview() {
     title: isCandidate
       ? 'C’est tout pour cette première partie 🙌 Créez votre compte pour contacter les coachs'
       : 'C’est tout pour cette première partie 🙌 Créez votre compte pour soutenir des candidats',
-    description: isCandidate
-      ? 'Ces coachs correspondent à votre profil et sont disponibles pour vous accompagner'
-      : 'Ces candidats correspondent à vos critères et attendent votre aide',
+    description: null,
     content: (
       <NetworkPreviewStep
         userRole={userRole}

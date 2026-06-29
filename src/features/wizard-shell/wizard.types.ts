@@ -5,12 +5,13 @@ export type WizardSectionId = 'inscription' | 'profil' | 'formation';
 export interface WizardSection {
   id: WizardSectionId;
   label: string;
+  duration?: string;
 }
 
 export const WIZARD_SECTIONS: WizardSection[] = [
-  { id: 'inscription', label: 'Inscription' },
-  { id: 'profil', label: 'Profil' },
-  { id: 'formation', label: 'Formation' },
+  { id: 'inscription', label: 'Inscription', duration: '2 minutes' },
+  { id: 'profil', label: 'Profil', duration: '3 minutes' },
+  { id: 'formation', label: 'Formation', duration: '10 minutes' },
 ];
 
 export interface WizardStep {
