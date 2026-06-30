@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { currentUserActions } from '../use-cases/current-user';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  currentUserActions,
+  selectCurrentUser,
+} from '../use-cases/current-user';
 import { notificationsActions } from '../use-cases/notifications';
 import { Api } from 'src/api';
 import { getPusher, PUSHER_CHANNELS, PUSHER_EVENTS } from 'src/constants';
-import { useAuthenticatedUser } from './authentication/useAuthenticatedUser';
 
 interface PusherResponse {
   success: boolean;
@@ -25,8 +27,8 @@ export const useProfileGeneration = ({
 }: UseProfileGenerationProps = {}): UseProfileGenerationReturn => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const user = useAuthenticatedUser();
-  const userId = user.id;
+  const user = useSelector(selectCurrentUser);
+  const userId = user?.id;
 
   const dispatchErrorNotification = useCallback(() => {
     dispatch(

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { OnboardingStatus } from '@/src/constants/onboarding';
+import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 import { store } from '@/src/store/store';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import {
@@ -11,16 +12,15 @@ import {
   selectFetchElearningUnitsState,
 } from '@/src/use-cases/elearning';
 import { WizardRecommendationsSidePanel } from '../../../WizardRecommendationsSidePanel';
-import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content/Content';
 
-interface OnboardingStepElearningProps {
+interface WizardStepElearningProps {
   userRole: User['role'] | undefined;
 }
 
 export const useOnboardingStepElearning = ({
   userRole,
-}: OnboardingStepElearningProps) => {
+}: WizardStepElearningProps) => {
   const getState = () => store.getState() as any;
   const dispatch = useDispatch();
 
@@ -127,7 +127,7 @@ export const useOnboardingStepElearning = ({
     },
     onSkip: skipElearning,
     section: 'formation',
-  } as OnboardingStep;
+  } as WizardStep;
 
   return { onboardingStepElearning };
 };

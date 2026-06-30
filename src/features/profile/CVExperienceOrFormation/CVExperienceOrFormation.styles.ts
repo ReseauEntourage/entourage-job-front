@@ -18,6 +18,7 @@ export const StyledCVExperienceCard = styled.div`
   border: 1px solid ${COLORS.gray};
   border-radius: 10px;
   padding: 16px;
+  background-color: ${COLORS.white};
 `;
 
 export const StyledCVExperienceCardMain = styled.div`

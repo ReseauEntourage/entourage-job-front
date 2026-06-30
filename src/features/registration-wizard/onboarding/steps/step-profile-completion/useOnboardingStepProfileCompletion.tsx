@@ -11,6 +11,7 @@ import {
 import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
+import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 import { useUpdateUser } from '@/src/hooks';
 import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
@@ -24,7 +25,6 @@ import { onboardingActions } from '@/src/use-cases/onboarding';
 import { sortByOrder } from '@/src/utils';
 import { formatCareerPathSentence } from '@/src/utils/Formatting';
 import { StyledOnboardingStepContainer } from '../../onboarding.styles';
-import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content';
 import { ProfileCompletionFormValues } from './types';
 
@@ -361,7 +361,7 @@ export const useOnboardingStepProfileCompletion = ({
       });
     },
     section: 'profil',
-  } as OnboardingStep;
+  } as WizardStep;
 
   return { onboardingStepProfileCompletion };
 };

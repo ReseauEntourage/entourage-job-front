@@ -1,8 +1,8 @@
-import { OnboardingStep } from './onboarding.types';
+import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 
 // determineStartingStep - Determines the starting onboarding step based on user data.
 export const determineStartingStep = async (
-  onboardingSteps: OnboardingStep[]
+  onboardingSteps: WizardStep[]
 ): Promise<number | null> => {
   for (let i = 0; i < onboardingSteps.length; i++) {
     const step = onboardingSteps[i];
@@ -20,7 +20,7 @@ export const determineStartingStep = async (
 };
 
 // computeTotalDuration - Computes the total duration of all onboarding steps.
-export const computeTotalDuration = (onboardingSteps: OnboardingStep[]) => {
+export const computeTotalDuration = (onboardingSteps: WizardStep[]) => {
   return onboardingSteps
     .reduce((total, step) => {
       const durationMatch = step.summary.duration.match(

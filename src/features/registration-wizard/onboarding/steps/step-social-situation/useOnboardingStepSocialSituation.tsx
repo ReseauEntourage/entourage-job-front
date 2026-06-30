@@ -3,21 +3,21 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
+import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { updateSocialSituationSelectors } from '@/src/use-cases/current-user';
 import { fetchCurrentUserSocialSituationSelectors } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
-import { OnboardingStep } from '../../onboarding.types';
 import { Content } from './Content';
 import type { SocialSituationFormValues } from './types';
 
-interface UseOnboardingStepSocialSituationProps {
+interface UseWizardStepSocialSituationProps {
   user: User | null;
 }
 
 export const useOnboardingStepSocialSituation = ({
   user,
-}: UseOnboardingStepSocialSituationProps) => {
+}: UseWizardStepSocialSituationProps) => {
   const dispatch = useDispatch();
   const userRef = useRef(user);
 
@@ -191,7 +191,7 @@ export const useOnboardingStepSocialSituation = ({
       return !!userRef.current?.userSocialSituation?.hasCompletedSurvey;
     },
     section: 'profil',
-  } as OnboardingStep;
+  } as WizardStep;
 
   return { onboardingStepSocialSituation };
 };

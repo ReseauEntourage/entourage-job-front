@@ -61,9 +61,9 @@ export const WizardCompatibleProfileCard = ({
           )}
           {subtitleContext === 'sectors' && sectorNames.length > 0 && (
             <StyledCardTags>
-              {sectorNames.map((name) => (
+              {sectorNames.map((name, i) => (
                 <Badge
-                  key={name}
+                  key={`${name}-${i}`}
                   variant={BadgeVariant.HoverBlue}
                   borderRadius="large"
                 >

@@ -1,5 +1,11 @@
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { OnboardingStatus } from '@/src/constants/onboarding';
@@ -9,9 +15,18 @@ import { OnboardingCompletionModal } from '@/src/features/registration-wizard/on
 import { ConfirmModalStep } from '@/src/features/registration-wizard/onboarding/confirm-step-modal/ConfirmModalStep';
 import { determineStartingStep } from '@/src/features/registration-wizard/onboarding/onboarding.utils';
 import { useOnboardingStepElearning } from '@/src/features/registration-wizard/onboarding/steps/step-elearning/useOnboardingStepElearning';
-import { useOnboardingStepProfileCompletion } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/useOnboardingStepProfileCompletion';
+import { ProfileMode } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/types';
+import { useStepCvChoice } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvChoice';
+import { useStepCvLoading } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvLoading';
+import { useStepCvRecap } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvRecap';
+import { useStepExperiences } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepExperiences';
+import { useStepFormations } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepFormations';
+import { useStepPhoto } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepPhoto';
+import { useStepSkills } from '@/src/features/registration-wizard/onboarding/steps/step-profile-completion/profile-steps/useStepSkills';
 import { useOnboardingStepSocialSituation } from '@/src/features/registration-wizard/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
 import { WizardStep } from '@/src/features/wizard-shell/wizard.types';
+import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
+import { useProfileGeneration } from '@/src/hooks/useProfileGeneration';
 import { authenticationActions } from '@/src/use-cases/authentication';
 import {
   logoutSelectors,
@@ -19,10 +34,12 @@ import {
 } from '@/src/use-cases/authentication/authentication.selectors';
 import {
   currentUserActions,
+  selectCurrentUser,
+  selectFetchCurrentProfileCompleteStatus,
   selectFetchCurrentProfileStatus,
   selectUpdateOnboardingStatusSelectors,
+  uploadExternalCvSelectors,
 } from '@/src/use-cases/current-user';
-import { selectCurrentUser } from '@/src/use-cases/current-user';
 import { createUserSelectors } from '@/src/use-cases/registration';
 import {
   EMAIL_CONFIRMATION_STEP,
@@ -55,6 +72,9 @@ export const useWizard = (): WizardState => {
     createUserSelectors.selectCreateUserStatus
   );
   const fetchProfileStatus = useSelector(selectFetchCurrentProfileStatus);
+  const fetchProfileCompleteStatus = useSelector(
+    selectFetchCurrentProfileCompleteStatus
+  );
   const updateOnboardingStatus = useSelector(
     selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
   );
@@ -88,39 +108,111 @@ export const useWizard = (): WizardState => {
     }
   }, [isLogoutSucceeded, router, dispatch]);
 
-  // Onboarding step hooks — called unconditionally with null-safe user
+  // ─── Profile mode ────────────────────────────────────────────────────────────
+
+  const [profileMode, setProfileMode] = useState<ProfileMode>('pending');
+  const [onboardingIdx, setOnboardingIdx] = useState<number | null>(null);
+  const [onboardingIsLoading, setOnboardingIsLoading] = useState(false);
+
+  const profileComplete = useCurrentUserProfileComplete();
+  const { generateProfileFromCV } = useProfileGeneration();
+  const hasTriggeredGenerationRef = useRef(false);
+
+  // Task 2.2 – Initialise profileMode depuis les données serveur au chargement
+  const [isProfileModeInitialized, setIsProfileModeInitialized] =
+    useState(false);
+  useEffect(() => {
+    if (isProfileModeInitialized) {
+      return;
+    }
+    if (!profileComplete) {
+      return;
+    }
+
+    setIsProfileModeInitialized(true);
+
+    if (profileComplete.hasExternalCv) {
+      setProfileMode('cv');
+    } else if (
+      (profileComplete.experiences?.length ?? 0) > 0 ||
+      (profileComplete.formations?.length ?? 0) > 0
+    ) {
+      setProfileMode('manual');
+    }
+    // else remains 'pending' — user hasn't started any path yet
+  }, [profileComplete, isProfileModeInitialized]);
+
+  // ─── Trigger advance helper ───────────────────────────────────────────────────
+  const triggerAdvance = useCallback(() => {
+    setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
+  }, []);
+
+  // ─── Onboarding step hooks — called unconditionally ──────────────────────────
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: currentUser?.role as UserRoles | undefined,
   });
   const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation({
     user: currentUser,
   });
-  const { onboardingStepProfileCompletion } =
-    useOnboardingStepProfileCompletion({
-      user: currentUser,
-    });
+  const { onboardingStepPhoto } = useStepPhoto({ user: currentUser });
+  const { onboardingStepCvChoice } = useStepCvChoice({
+    user: currentUser,
+    setProfileMode,
+    triggerAdvance,
+  });
+  const { onboardingStepCvLoading } = useStepCvLoading();
+  const { onboardingStepCvRecap } = useStepCvRecap({ user: currentUser });
+  const { onboardingStepExperiences } = useStepExperiences({
+    user: currentUser,
+  });
+  const { onboardingStepFormations } = useStepFormations({ user: currentUser });
+  const { onboardingStepSkills } = useStepSkills({ user: currentUser });
 
+  // Task 2.3 – onboardingSteps dynamique selon profileMode
   const onboardingSteps = useMemo(() => {
-    const steps: (typeof onboardingStepProfileCompletion)[] = [];
+    const steps: WizardStep[] = [];
+
     if (currentUser?.role === UserRoles.CANDIDATE) {
       steps.push(onboardingStepSocialSituation);
     }
-    steps.push(onboardingStepProfileCompletion);
+
+    // Profile steps always start with photo + cv-choice
+    steps.push(onboardingStepPhoto);
+    steps.push(onboardingStepCvChoice);
+
+    // Dynamic path steps
+    if (profileMode === 'cv') {
+      steps.push(onboardingStepCvLoading);
+      steps.push(onboardingStepCvRecap);
+    } else if (profileMode === 'manual') {
+      steps.push(onboardingStepExperiences);
+      steps.push(onboardingStepFormations);
+      steps.push(onboardingStepSkills);
+    }
+
     steps.push(onboardingStepElearning);
-    return steps as unknown as WizardStep[];
+    return steps;
   }, [
     currentUser?.role,
-    onboardingStepElearning,
+    profileMode,
     onboardingStepSocialSituation,
-    onboardingStepProfileCompletion,
+    onboardingStepPhoto,
+    onboardingStepCvChoice,
+    onboardingStepCvLoading,
+    onboardingStepCvRecap,
+    onboardingStepExperiences,
+    onboardingStepFormations,
+    onboardingStepSkills,
+    onboardingStepElearning,
   ]);
-
-  const [onboardingIdx, setOnboardingIdx] = useState<number | null>(null);
-  const [onboardingIsLoading, setOnboardingIsLoading] = useState(false);
 
   const isProfileLoaded =
     fetchProfileStatus === ReduxRequestEvents.SUCCEEDED ||
     fetchProfileStatus === ReduxRequestEvents.FAILED;
+
+  // profileMode is ready once initialization has completed (profileComplete arrived
+  // and we decided which mode to use — even if it stayed 'pending').
+  const isProfileModeReady = isProfileModeInitialized || !profileComplete;
 
   // Ensure profile is fetched when entering onboarding (handles direct navigation to /wizard/run)
   useEffect(() => {
@@ -131,7 +223,12 @@ export const useWizard = (): WizardState => {
 
   // Determine starting onboarding step (handles resume after window close)
   useEffect(() => {
-    if (!currentUser || onboardingIdx !== null || !isProfileLoaded) {
+    if (
+      !currentUser ||
+      onboardingIdx !== null ||
+      !isProfileLoaded ||
+      !isProfileModeReady
+    ) {
       return;
     }
     determineStartingStep(
@@ -148,7 +245,14 @@ export const useWizard = (): WizardState => {
         setOnboardingIdx(startIdx ?? 0);
       }
     });
-  }, [currentUser, onboardingIdx, isProfileLoaded, onboardingSteps, dispatch]);
+  }, [
+    currentUser,
+    onboardingIdx,
+    isProfileLoaded,
+    isProfileModeReady,
+    onboardingSteps,
+    dispatch,
+  ]);
 
   // Redirect to dashboard after onboarding completion
   useEffect(() => {
@@ -156,6 +260,60 @@ export const useWizard = (): WizardState => {
       router.push('/backoffice/dashboard');
     }
   }, [updateOnboardingStatus, router]);
+
+  // Task 2.4 – Auto-avance du step cv-loading
+  const isUploadCvSucceeded = useSelector(
+    uploadExternalCvSelectors.selectIsUploadExternalCvSucceeded
+  );
+  const isUploadCvFailed = useSelector(
+    uploadExternalCvSelectors.selectIsUploadExternalCvFailed
+  );
+  const hasExtractedCvData = profileComplete?.hasExtractedCvData ?? false;
+
+  // Compute position-based indices (structure is deterministic based on role + profileMode)
+  const candidateOffset = currentUser?.role === UserRoles.CANDIDATE ? 1 : 0;
+  const cvChoiceStepIndex = candidateOffset + 1; // photo is at +0, cv-choice at +1
+  const cvLoadingStepIndex = profileMode === 'cv' ? candidateOffset + 2 : -1; // cv-loading is right after cv-choice
+
+  useEffect(() => {
+    if (profileMode !== 'cv') {
+      return;
+    }
+    if (onboardingIdx === null) {
+      return;
+    }
+    if (onboardingIdx !== cvLoadingStepIndex) {
+      return;
+    }
+
+    if (isUploadCvSucceeded && hasExtractedCvData) {
+      setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
+    } else if (isUploadCvSucceeded && !hasTriggeredGenerationRef.current) {
+      hasTriggeredGenerationRef.current = true;
+      void generateProfileFromCV();
+    }
+  }, [
+    profileMode,
+    isUploadCvSucceeded,
+    hasExtractedCvData,
+    onboardingIdx,
+    cvLoadingStepIndex,
+    generateProfileFromCV,
+  ]);
+
+  // Task 2.5 – Gestion erreur upload CV
+  useEffect(() => {
+    if (profileMode !== 'cv') {
+      return;
+    }
+    if (!isUploadCvFailed) {
+      return;
+    }
+
+    hasTriggeredGenerationRef.current = false;
+    setProfileMode('pending');
+    setOnboardingIdx(cvChoiceStepIndex);
+  }, [profileMode, isUploadCvFailed, cvChoiceStepIndex]);
 
   // Phase flags
   const accountJustCreated = createUserStatus === ReduxRequestEvents.SUCCEEDED;
@@ -301,10 +459,14 @@ export const useWizard = (): WizardState => {
     onboardingIdx !== null &&
     onboardingIdx === onboardingSteps.length - 1;
 
+  // Task 6.4 – buttonLabel resolution: check step-level buttonLabel first
+  const currentStepButtonLabel = (
+    currentStep as unknown as { buttonLabel?: string } | null
+  )?.buttonLabel;
+
   const buttonLabel = isOnboardingPhase
-    ? isLastOnboardingStep
-      ? 'Terminer'
-      : 'Étape suivante'
+    ? currentStepButtonLabel ??
+      (isLastOnboardingStep ? 'Terminer' : 'Étape suivante')
     : isEmailConfirmationPhase
     ? 'Valider le code'
     : (currentStep as WizardStep | null)?.buttonLabel ??
@@ -316,16 +478,33 @@ export const useWizard = (): WizardState => {
     ? onboardingIdx !== null && onboardingIdx > 0
     : !isEmailConfirmationPhase && registrationCanGoBack;
 
+  // Task 2.6 – Reset profileMode when going back to cv-choice step (index computed above)
   const onBack = useCallback(() => {
     if (!canGoBack) {
       return;
     }
     if (isOnboardingPhase) {
+      const nextIdx =
+        onboardingIdx !== null && onboardingIdx > 0
+          ? onboardingIdx - 1
+          : onboardingIdx;
+
+      // If going back to cv-choice, reset profileMode
+      if (nextIdx === cvChoiceStepIndex) {
+        setProfileMode('pending');
+      }
+
       setOnboardingIdx((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
       return;
     }
     registrationDecrementStep();
-  }, [canGoBack, isOnboardingPhase, registrationDecrementStep]);
+  }, [
+    canGoBack,
+    isOnboardingPhase,
+    onboardingIdx,
+    cvChoiceStepIndex,
+    registrationDecrementStep,
+  ]);
 
   const skipOnboarding = useCallback(() => {
     dispatch(

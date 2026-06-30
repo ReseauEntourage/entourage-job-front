@@ -124,6 +124,9 @@ export const StyledWizardTopBarProgressStrip = styled.div<{
   $hasSidePanel: boolean;
   $side: 'left' | 'right';
 }>`
+  position: sticky;
+  top: ${HEIGHTS.HEADER}px;
+  z-index: 10;
   height: 4px;
   width: ${({ $hasSidePanel, $side }) =>
     $hasSidePanel && $side === 'right'
@@ -149,7 +152,9 @@ export const StyledWizardContentTopBar = styled.div<{
   $hasSidePanel: boolean;
   $side: 'left' | 'right';
 }>`
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   justify-content: ${({ $hasLogo }) =>
     $hasLogo ? 'space-between' : 'flex-end'};
