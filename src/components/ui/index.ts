@@ -25,4 +25,3 @@ export * from './Tooltip';
 export * from './Popover';
 export * from './ProgressBar';
 export * from './CopyInput';
-export * from './SearchingLoader';

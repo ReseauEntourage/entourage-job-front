@@ -1,5 +1,7 @@
 import React from 'react';
-import { SearchingLoader } from '@/src/components/ui/SearchingLoader';
+import { Text } from '@/src/components/ui';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
+import { StyledSkeletonsContainer } from './WizardSearchingLoader.styles';
 
 export interface WizardSearchingLoaderVariant {
   title: string;
@@ -8,19 +10,19 @@ export interface WizardSearchingLoaderVariant {
 
 export const SEARCHING_LOADER_VARIANTS = {
   preRegistrationCriteria: {
-    title: 'On recherche des profils compatibles',
+    title: 'Nous recherchons des profils compatibles',
     subtitle: 'Selon les critères que vous avez choisis',
   },
   preRegistrationSectors: {
-    title: 'On recherche des profils compatibles',
+    title: 'Nous recherchons des profils compatibles',
     subtitle: 'Selon les secteurs que vous avez choisis',
   },
   embeddingPending: {
-    title: 'On analyse votre profil',
+    title: 'Nous analysons les modifications récentes de votre profil',
     subtitle: 'Encore quelques instants...',
   },
   computingReco: {
-    title: 'On recherche des profils compatibles',
+    title: 'Nous recherchons des profils compatibles',
     subtitle: 'Selon votre profil',
   },
 } satisfies Record<string, WizardSearchingLoaderVariant>;
@@ -34,5 +36,15 @@ export const WizardSearchingLoader = ({
   title,
   subtitle,
 }: WizardSearchingLoaderProps) => (
-  <SearchingLoader title={title} subtitle={subtitle} theme="light" />
+  <>
+    <Text size="large" weight="semibold" color="darkGray" center>
+      {title}
+    </Text>
+    <Text color="darkGray" center>
+      {subtitle}
+    </Text>
+    <StyledSkeletonsContainer>
+      <Skeleton count={3} width="100%" height="150px" inverted />
+    </StyledSkeletonsContainer>
+  </>
 );

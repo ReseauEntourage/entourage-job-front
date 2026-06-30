@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
-import { SearchingLoader } from '@/src/components/ui/SearchingLoader';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { Text } from '@/src/components/ui/Text';
 import { useIsDesktop, useIsMobile } from '@/src/hooks/utils';
@@ -150,13 +149,7 @@ export const DashboardRecommendationsCard = () => {
         centerTitle
       >
         <StyledDashboardCardContentContainer>
-          <SearchingLoader
-            title="On analyse votre profil"
-            subtitle="Nous analysons les modifications récentes de votre profil afin de vous proposer les profils les plus susceptibles de vous intéresser"
-            theme="light"
-            cols={isMobile ? 4 : 8}
-            rows={1}
-          />
+          <Skeleton count={3} width="33%" height="150px" inverted />
         </StyledDashboardCardContentContainer>
       </Card>
     );
