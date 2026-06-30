@@ -38,3 +38,9 @@ export const StyledEyeIconWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const StyledLabelRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;

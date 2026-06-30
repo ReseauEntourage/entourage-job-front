@@ -1,11 +1,5 @@
 import { useRouter } from 'next/router';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { OnboardingStatus } from '@/src/constants/onboarding';
@@ -29,64 +23,12 @@ import {
   selectUpdateOnboardingStatusSelectors,
 } from '@/src/use-cases/current-user';
 import { selectCurrentUser } from '@/src/use-cases/current-user';
+import { createUserSelectors } from '@/src/use-cases/registration';
 import {
-  createUserSelectors,
-  selectRegistrationData,
-} from '@/src/use-cases/registration';
-import { EmailOtpInput } from './EmailOtpInput/EmailOtpInput';
+  EMAIL_CONFIRMATION_STEP,
+  useWizardStepEmailConfirmation,
+} from './steps/useWizardStepEmailConfirmation';
 import { useRegistrationWizard } from './useRegistrationWizard';
-
-const OTP_LENGTH = 6;
-
-const EMAIL_CONFIRMATION_STEP: WizardStep = {
-  smallTitle: 'Confirmation email',
-  title: 'Confirmez votre adresse email',
-  description: 'Saisissez le code reçu par email',
-  summary: {
-    title: 'Confirmation email',
-    duration: '~1 minute',
-  },
-  hideGenericStepHeader: undefined,
-  content: null,
-  section: 'inscription',
-};
-
-function useWizardStepEmailConfirmation(): WizardStep {
-  const dispatch = useDispatch();
-  const registrationData = useSelector(selectRegistrationData) as any;
-  const email = registrationData?.email as string | undefined;
-  const [code, setCode] = useState('');
-  const codeRef = useRef('');
-
-  const handleCodeChange = useCallback((newCode: string) => {
-    codeRef.current = newCode;
-    setCode(newCode);
-  }, []);
-
-  // Auto-submit when all 6 digits are entered
-  useEffect(() => {
-    if (code.length === OTP_LENGTH && email) {
-      dispatch(authenticationActions.verifyOtpRequested({ email, code }));
-    }
-  }, [code, email, dispatch]);
-
-  return useMemo<WizardStep>(
-    () => ({
-      ...EMAIL_CONFIRMATION_STEP,
-      content: <EmailOtpInput onCodeChange={handleCodeChange} />,
-      onSubmit: async () => {
-        const currentCode = codeRef.current;
-        if (currentCode.length !== OTP_LENGTH || !email) {
-          return false;
-        }
-        dispatch(
-          authenticationActions.verifyOtpRequested({ email, code: currentCode })
-        );
-      },
-    }),
-    [handleCodeChange, email, dispatch]
-  );
-}
 
 export interface WizardState {
   allSteps: WizardStep[];

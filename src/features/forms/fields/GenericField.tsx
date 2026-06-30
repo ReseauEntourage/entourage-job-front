@@ -192,6 +192,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           : field.placeholder,
       showLabel: field.showLabel,
       showOptional: field.showOptional,
+      labelTooltip: field.labelTooltip,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

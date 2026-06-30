@@ -198,6 +198,7 @@ interface FormFieldInputCommonProperties<
   placeholder?: ((getValue: GetValueType<V>) => string) | string;
   showLabel?: boolean;
   showOptional?: boolean;
+  labelTooltip?: React.ReactNode;
 }
 
 export interface FormFieldTextInput<V extends FormSchemaValidation>

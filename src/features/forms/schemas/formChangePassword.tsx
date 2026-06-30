@@ -1,4 +1,6 @@
 import { passwordStrength } from 'check-password-strength';
+import React from 'react';
+import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { FormSchema } from '../FormSchema';
 
 export const formChangePassword: FormSchema<{
@@ -14,7 +16,9 @@ export const formChangePassword: FormSchema<{
       type: 'password',
       component: 'text-input',
       title: 'Ancien mot de passe*',
+      placeholder: 'Entrez votre ancien mot de passe',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'newPassword',
@@ -22,7 +26,10 @@ export const formChangePassword: FormSchema<{
       type: 'password',
       component: 'text-input',
       title: 'Nouveau mot de passe*',
+      placeholder: 'Entrez votre nouveau mot de passe',
       isRequired: true,
+      showLabel: true,
+      labelTooltip: <PasswordCriterias bare />,
       rules: [
         {
           method: (fieldValue, fieldValues) =>
@@ -32,7 +39,7 @@ export const formChangePassword: FormSchema<{
         },
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-          message: 'Doit répondre aux critères ci-dessus',
+          message: 'Doit répondre aux critères de sécurité',
         },
       ],
     },
@@ -42,11 +49,13 @@ export const formChangePassword: FormSchema<{
       type: 'password',
       component: 'text-input',
       title: 'Confirmation du mot de passe*',
+      placeholder: 'Confirmez votre nouveau mot de passe',
       isRequired: true,
+      showLabel: true,
       rules: [
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-          message: 'Doit répondre aux critères ci-dessus',
+          message: 'Doit répondre aux critères de sécurité',
         },
         {
           method: (fieldValue, fieldValues) =>

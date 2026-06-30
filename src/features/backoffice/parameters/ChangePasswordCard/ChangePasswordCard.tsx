@@ -7,8 +7,6 @@ import { FormWithValidation } from 'src/features/forms/FormWithValidation';
 import { formChangePassword } from 'src/features/forms/schemas/formChangePassword';
 import { useResetForm } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
-import { PasswordCriterias } from './PasswordCriterias';
-
 export const ChangePasswordCard = () => {
   const [form, resetForm] = useResetForm();
 
@@ -20,7 +18,6 @@ export const ChangePasswordCard = () => {
       isLoading={loadingPassword}
       isMobileClosable
     >
-      <PasswordCriterias />
       <FormWithValidation
         innerRef={form}
         submitText="Modifier"

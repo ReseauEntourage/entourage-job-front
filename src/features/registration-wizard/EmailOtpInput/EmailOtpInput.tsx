@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { Button, Text } from '@/src/components/ui';
 import { authenticationActions } from '@/src/use-cases/authentication';
 import { VerifyOtpErrorType } from '@/src/use-cases/authentication/authentication.adapters';
 import {
@@ -10,102 +9,15 @@ import {
   selectVerifyOtpError,
 } from '@/src/use-cases/authentication/authentication.selectors';
 import { selectRegistrationData } from '@/src/use-cases/registration';
+import {
+  StyledContainer,
+  StyledDigitBox,
+  StyledDigitsRow,
+  StyledResendRow,
+} from './EmailOtpInput.styles';
 
 interface EmailOtpInputProps {
   onCodeChange: (code: string) => void;
-}
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 420px;
-`;
-
-const StyledHint = styled.p`
-  font-family: Poppins, sans-serif;
-  font-size: 15px;
-  color: ${COLORS.darkGray};
-  line-height: 1.6;
-  margin: 0;
-`;
-
-const StyledDigitsRow = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const StyledDigitBox = styled.input<{ hasError: boolean }>`
-  width: 48px;
-  height: 56px;
-  border: 2px solid
-    ${({ hasError }) => (hasError ? COLORS.lightRed : COLORS.primaryBlue)};
-  border-radius: 8px;
-  text-align: center;
-  font-family: Poppins, sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: ${COLORS.darkGray};
-  outline: none;
-  background: ${COLORS.white};
-
-  &:focus {
-    border-color: ${({ hasError }) =>
-      hasError ? COLORS.lightRed : COLORS.primaryBlue};
-    box-shadow: 0 0 0 3px
-      ${({ hasError }) =>
-        hasError ? `${COLORS.lightRed}33` : `${COLORS.primaryBlue}33`};
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`;
-
-const StyledError = styled.p`
-  font-family: Poppins, sans-serif;
-  font-size: 13px;
-  color: ${COLORS.lightRed};
-  margin: 0;
-`;
-
-const StyledResendRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: Poppins, sans-serif;
-  font-size: 14px;
-  color: ${COLORS.darkGray};
-`;
-
-const StyledResendButton = styled.button`
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: Poppins, sans-serif;
-  font-size: 14px;
-  color: ${COLORS.primaryBlue};
-  cursor: pointer;
-  text-decoration: underline;
-
-  &:disabled {
-    color: ${COLORS.darkGray};
-    cursor: not-allowed;
-    text-decoration: none;
-  }
-`;
-
-function maskEmail(email: string): string {
-  const [local, domain] = email.split('@');
-  if (!local || !domain) {
-    return email;
-  }
-  const masked =
-    local.length <= 2
-      ? local[0] + '***'
-      : local[0] + '***' + local[local.length - 1];
-  return `${masked}@${domain}`;
 }
 
 const OTP_LENGTH = 6;
@@ -206,11 +118,11 @@ export function EmailOtpInput({ onCodeChange }: EmailOtpInputProps) {
 
   return (
     <StyledContainer>
-      <StyledHint>
-        Nous avons envoyé un code à 6 chiffres à{' '}
-        <strong>{email ? maskEmail(email) : 'votre adresse email'}</strong>.
+      <Text color="mediumGray">Nous avons envoyé un code à 6 chiffres à </Text>
+      <Text weight="semibold">{email ? email : 'votre adresse email'}.</Text>
+      <Text color="mediumGray">
         Saisissez-le ci-dessous pour confirmer votre compte.
-      </StyledHint>
+      </Text>
 
       <StyledDigitsRow onPaste={handlePaste}>
         {digits.map((digit, idx) => (
@@ -234,28 +146,29 @@ export function EmailOtpInput({ onCodeChange }: EmailOtpInputProps) {
       </StyledDigitsRow>
 
       {hasError && (
-        <StyledError>
+        <Text color="lightRed">
           {otpError === VerifyOtpErrorType.EXPIRED
             ? 'Ce code a expiré. Demandez un nouveau code pour continuer.'
             : "Ce code n'est pas valide. Vérifiez les 6 chiffres, ou demandez un nouveau code."}
-        </StyledError>
+        </Text>
       )}
 
       <StyledResendRow>
-        <span>Vous n'avez pas reçu de code ?</span>
-        <StyledResendButton
-          type="button"
+        <Text color="mediumGray">Vous n'avez pas reçu de code ?</Text>
+        <Button
           onClick={handleResend}
           disabled={cooldown > 0 || isSending}
+          variant="text"
+          color="primaryBlue"
         >
           {cooldown > 0 ? `Renvoyer (${cooldown}s)` : 'Renvoyer le code'}
-        </StyledResendButton>
+        </Button>
       </StyledResendRow>
 
-      <StyledHint>
+      <Text color="mediumGray">
         Vous pouvez aussi cliquer sur le lien dans l'email pour confirmer votre
         compte.
-      </StyledHint>
+      </Text>
     </StyledContainer>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PublicProfile } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons';
 import { WizardSidePanel } from '@/src/components/ui/WizardSidePanel';
@@ -7,6 +7,7 @@ import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
 import {
+  registrationActions,
   selectPreRegistrationPreferences,
   selectRegistrationSelectedFlow,
 } from '@/src/use-cases/registration';
@@ -41,6 +42,7 @@ export const WizardCompatibleProfilesSidePanel = ({
   subtitleContext,
   mode = 'full',
 }: WizardCompatibleProfilesSidePanelProps) => {
+  const dispatch = useDispatch();
   const selectedFlow = useSelector(selectRegistrationSelectedFlow);
   const preRegistrationPreferences = useSelector(
     selectPreRegistrationPreferences
@@ -103,6 +105,9 @@ export const WizardCompatibleProfilesSidePanel = ({
             setProfiles(data.profiles);
             setCount(data.count);
             setBroadened(data.broadened ?? false);
+            dispatch(
+              registrationActions.setCompatibleProfilesCount(data.count)
+            );
           }
         })
         .catch(() => {
@@ -125,7 +130,7 @@ export const WizardCompatibleProfilesSidePanel = ({
         clearTimeout(debounceRef.current);
       }
     };
-  }, [userRole, nudgeIdsKey, businessSectorIdsKey]);
+  }, [userRole, nudgeIdsKey, businessSectorIdsKey, dispatch]);
 
   const isPlural = count !== 1;
   const panelLabel = isCandidate ? 'VOS COACHS' : 'VOS CANDIDATS';

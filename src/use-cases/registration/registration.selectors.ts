@@ -87,6 +87,10 @@ export const selectIsRegistrationLoading = (state: RootState) => {
   return state.registration.isLoading;
 };
 
+export const selectCompatibleProfilesCount = (state: RootState) => {
+  return state.registration.compatibleProfilesCount;
+};
+
 export const selectRegistrationCurrentStepContent = (
   state: RootState
 ): RegistrationStepContent => {

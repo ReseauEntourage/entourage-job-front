@@ -27,6 +27,7 @@ interface State {
   isEnded?: boolean;
   invitationId?: string;
   preRegistrationPreferences: PreRegistrationPreferences | null;
+  compatibleProfilesCount: number | null;
 }
 
 const initialState: State = {
@@ -39,6 +40,7 @@ const initialState: State = {
   isEnded: false,
   invitationId: undefined,
   preRegistrationPreferences: null,
+  compatibleProfilesCount: null,
 };
 
 export const slice = createSlice({
@@ -121,6 +123,9 @@ export const slice = createSlice({
           action.payload.currentJob ??
           state.preRegistrationPreferences?.currentJob,
       };
+    },
+    setCompatibleProfilesCount(state, action: PayloadAction<number>) {
+      state.compatibleProfilesCount = action.payload;
     },
     resetRegistrationData(state) {
       state.selectedFlow = null;

@@ -1,4 +1,6 @@
 import { passwordStrength } from 'check-password-strength';
+import React from 'react';
+import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { FormSchema } from '../FormSchema';
 
 export const formFinalizeReferedUser: FormSchema<{
@@ -16,10 +18,11 @@ export const formFinalizeReferedUser: FormSchema<{
       placeholder: 'Entrez votre mot de passe',
       isRequired: true,
       showLabel: true,
+      labelTooltip: <PasswordCriterias bare />,
       rules: [
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-          message: 'Doit répondre aux critères ci-dessus',
+          message: 'Doit répondre aux critères de sécurité',
         },
       ],
     },
@@ -35,7 +38,7 @@ export const formFinalizeReferedUser: FormSchema<{
       rules: [
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-          message: 'Doit répondre aux critères ci-dessus',
+          message: 'Doit répondre aux critères de sécurité',
         },
         {
           method: (fieldValue, fieldValues) =>
