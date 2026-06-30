@@ -26,7 +26,8 @@ interface WizardRunShellProps {
   onBack?: () => void;
   canGoBack?: boolean;
   isInitializing?: boolean;
-  sidePanelContent?: React.ReactNode;
+  sidePanelContent?: (mode: 'compact' | 'full') => React.ReactNode;
+  mobileBottomSheet?: boolean;
 }
 
 export const WizardRunShell = ({
@@ -40,6 +41,7 @@ export const WizardRunShell = ({
   canGoBack = false,
   isInitializing = false,
   sidePanelContent,
+  mobileBottomSheet = false,
 }: WizardRunShellProps) => {
   const subProgress = useMemo(() => {
     const currentSectionId = wizardSteps[currentWizardIdx]?.section;
@@ -75,6 +77,7 @@ export const WizardRunShell = ({
   return (
     <WizardContentLayout
       sidePanel={sidePanelContent ?? null}
+      mobileBottomSheet={mobileBottomSheet}
       sectionProgress={sectionProgress}
       stepper={
         <WizardProgressBar

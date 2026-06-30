@@ -98,7 +98,8 @@ export interface WizardState {
   onNext: () => Promise<void>;
   onBack: () => void;
   canGoBack: boolean;
-  sidePanelContent: React.ReactNode;
+  sidePanelContent: ((mode: 'compact' | 'full') => React.ReactNode) | undefined;
+  mobileBottomSheet: boolean;
   isOnboardingPhase: boolean;
   skipOnboarding: () => void;
 }
@@ -403,6 +404,7 @@ export const useWizard = (): WizardState => {
     onBack,
     canGoBack,
     sidePanelContent: currentStep?.sidePanelContent,
+    mobileBottomSheet: currentStep?.mobileBottomSheet ?? false,
     isOnboardingPhase,
     skipOnboarding,
   };

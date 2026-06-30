@@ -44,3 +44,7 @@ export const StyledEmptyStateText = styled.p`
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
 `;
+
+export const StyledCompactContent = styled.div`
+  padding: 12px 16px;
+`;

@@ -15,6 +15,7 @@ const WizardRun = () => {
     onBack,
     canGoBack,
     sidePanelContent,
+    mobileBottomSheet,
   } = useWizard();
 
   return (
@@ -30,6 +31,7 @@ const WizardRun = () => {
         onBack={onBack}
         canGoBack={canGoBack}
         sidePanelContent={sidePanelContent}
+        mobileBottomSheet={mobileBottomSheet}
       />
     </Layout>
   );

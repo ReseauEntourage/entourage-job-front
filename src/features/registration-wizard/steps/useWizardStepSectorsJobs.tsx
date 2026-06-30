@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfileSectorOccupation } from '@/src/api/types';
@@ -71,6 +71,16 @@ export function useWizardStepSectorsJobs() {
     : UserRoles.CANDIDATE;
 
   const isCandidate = userRole === UserRoles.CANDIDATE;
+
+  const sidePanelContent = useCallback(
+    (mode: 'compact' | 'full') => (
+      <WizardCompatibleProfilesSidePanel
+        mode={mode}
+        subtitleContext="sectors"
+      />
+    ),
+    []
+  );
 
   const formMethods = useForm<ProfileCompletionFormValues>({
     defaultValues: {
@@ -160,9 +170,8 @@ export function useWizardStepSectorsJobs() {
       ? 'Pour trouver des coachs qui connaissent votre domaine.'
       : 'Pour vous montrer des personnes qui cherchent justement dans votre domaine.',
     content: <Card title="Ce que vous recherchez">{content}</Card>,
-    sidePanelContent: (
-      <WizardCompatibleProfilesSidePanel subtitleContext="sectors" />
-    ),
+    sidePanelContent,
+    mobileBottomSheet: true,
     isNextEnabled: formMethods.formState.isValid,
     onSubmit: async () => {
       const values = formMethods.getValues();

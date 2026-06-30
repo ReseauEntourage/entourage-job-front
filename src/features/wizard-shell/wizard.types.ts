@@ -25,7 +25,9 @@ export interface WizardStep {
   smallTitle: string;
   description: React.ReactNode;
   content: React.ReactNode;
-  sidePanelContent?: React.ReactNode;
+  sidePanelContent?: (mode: 'compact' | 'full') => React.ReactNode;
+  mobileBottomSheet?: boolean;
+
   isNextEnabled?: boolean;
   buttonLabel?: string;
   isStepCompleted?: () => Promise<boolean>;

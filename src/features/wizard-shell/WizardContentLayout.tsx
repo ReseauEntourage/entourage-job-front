@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavbarLogo } from '@/src/components/ui/Navbar/NavbarLogo';
+import { WizardBottomSheet } from '@/src/components/ui/WizardBottomSheet';
 import { WizardAuthSection } from './WizardAuthSection';
 import {
   StyledWizardContentTopBar,
@@ -12,13 +13,16 @@ import {
   StyledWizardTopBarProgressStrip,
 } from './WizardContentLayout.styles';
 
+type SidePanelRenderFn = (mode: 'compact' | 'full') => React.ReactNode;
+
 interface WizardContentLayoutProps {
   children: React.ReactNode;
-  sidePanel?: React.ReactNode;
+  sidePanel?: SidePanelRenderFn | null;
   sidePanelSide?: 'left' | 'right';
   sideBarVariant?: WizardSideBarVariant;
   stepper?: React.ReactNode;
   sectionProgress?: number | null;
+  mobileBottomSheet?: boolean;
 }
 
 export type WizardSideBarVariant = 'default' | 'blue-gradient';
@@ -30,15 +34,18 @@ export const WizardContentLayout = ({
   sideBarVariant = 'default',
   stepper,
   sectionProgress,
+  mobileBottomSheet = false,
 }: WizardContentLayoutProps) => {
   const hasSidePanel = Boolean(sidePanel);
   const showLogoInTopBar = !hasSidePanel || sidePanelSide === 'right';
+  const showMobileBottomSheet = mobileBottomSheet && Boolean(sidePanel);
 
   return (
     <>
       <StyledWizardPageContent
         $hasSidePanel={hasSidePanel}
         $side={sidePanelSide}
+        $mobileBottomSheet={showMobileBottomSheet}
       >
         <StyledWizardMobileHeader>
           <NavbarLogo href="/" type="secondary" />
@@ -71,9 +78,12 @@ export const WizardContentLayout = ({
             </StyledWizardSidePanelLogo>
           )}
           <StyledWizardSidePanelBody $side={sidePanelSide}>
-            {sidePanel}
+            {sidePanel!('full')}
           </StyledWizardSidePanelBody>
         </StyledWizardSidePanel>
+      )}
+      {showMobileBottomSheet && (
+        <WizardBottomSheet>{sidePanel!}</WizardBottomSheet>
       )}
     </>
   );

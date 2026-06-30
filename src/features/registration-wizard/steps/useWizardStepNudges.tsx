@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
@@ -20,6 +20,13 @@ export function useWizardStepNudges() {
     : UserRoles.CANDIDATE;
 
   const [selectedNudgeIds, setSelectedNudgeIds] = useState<string[]>([]);
+
+  const sidePanelContent = useCallback(
+    (mode: 'compact' | 'full') => (
+      <WizardCompatibleProfilesSidePanel mode={mode} subtitleContext="nudges" />
+    ),
+    []
+  );
 
   useEffect(() => {
     dispatch(
@@ -59,9 +66,8 @@ export function useWizardStepNudges() {
         onChange={setSelectedNudgeIds}
       />
     ),
-    sidePanelContent: (
-      <WizardCompatibleProfilesSidePanel subtitleContext="nudges" />
-    ),
+    sidePanelContent,
+    mobileBottomSheet: true,
     onSubmit: async () => {
       dispatch(
         registrationActions.setPreRegistrationPreferences({

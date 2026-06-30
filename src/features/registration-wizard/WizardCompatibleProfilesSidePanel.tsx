@@ -14,6 +14,7 @@ import { Api } from 'src/api';
 import { Text } from 'src/components/ui/Text';
 import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
 import {
+  StyledCompactContent,
   StyledCountRow,
   StyledEmptyState,
   StyledEmptyStateText,
@@ -28,6 +29,7 @@ import {
 
 interface WizardCompatibleProfilesSidePanelProps {
   subtitleContext: 'nudges' | 'sectors';
+  mode?: 'compact' | 'full';
 }
 
 const SUBTITLE: Record<'nudges' | 'sectors', string> = {
@@ -37,6 +39,7 @@ const SUBTITLE: Record<'nudges' | 'sectors', string> = {
 
 export const WizardCompatibleProfilesSidePanel = ({
   subtitleContext,
+  mode = 'full',
 }: WizardCompatibleProfilesSidePanelProps) => {
   const selectedFlow = useSelector(selectRegistrationSelectedFlow);
   const preRegistrationPreferences = useSelector(
@@ -141,6 +144,32 @@ export const WizardCompatibleProfilesSidePanel = ({
   const emptyStateText = isCandidate
     ? 'Des coachs qui connaissent votre métier, prêts à vous donner un coup de pouce dans votre recherche.'
     : 'Des personnes qui cherchent un coup de pouce dans vos domaines.';
+
+  if (mode === 'compact') {
+    if (!hasAnyCriteria) {
+      return (
+        <StyledCompactContent>
+          <StyledCountRow>
+            <LucidIcon name="Users" size={20} />
+            <Text size="large">
+              {isCandidate
+                ? 'Répondez pour voir vos coachs'
+                : 'Répondez pour voir vos candidats'}
+            </Text>
+          </StyledCountRow>
+        </StyledCompactContent>
+      );
+    }
+
+    return (
+      <StyledCompactContent>
+        <StyledCountRow>
+          <Text size={35}>{isLoading ? '...' : count}</Text>
+          <Text size="large">{countLabel}</Text>
+        </StyledCountRow>
+      </StyledCompactContent>
+    );
+  }
 
   if (!hasAnyCriteria) {
     return (

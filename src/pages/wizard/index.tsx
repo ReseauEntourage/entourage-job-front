@@ -42,7 +42,7 @@ const WizardHome = () => {
   return (
     <Layout title="Inscription — Entourage Pro" noFooter noHeader>
       <WizardContentLayout
-        sidePanel={<WizardRoleSelectionSidePanel flow={selectedFlow} />}
+        sidePanel={() => <WizardRoleSelectionSidePanel flow={selectedFlow} />}
         sidePanelSide="left"
         sideBarVariant="blue-gradient"
       >

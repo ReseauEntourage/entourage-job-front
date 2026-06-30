@@ -7,6 +7,7 @@ const SIDE_PANEL_WIDTH = `max(35vw, 480px)`;
 export const StyledWizardPageContent = styled.div<{
   $hasSidePanel: boolean;
   $side: 'left' | 'right';
+  $mobileBottomSheet?: boolean;
 }>`
   width: ${({ $hasSidePanel }) =>
     $hasSidePanel ? `calc(100% - ${SIDE_PANEL_WIDTH})` : '100%'};
@@ -40,6 +41,10 @@ export const StyledWizardPageContent = styled.div<{
     width: 100%;
     margin-left: 0;
     margin-right: 0;
+    padding-bottom: ${({ $mobileBottomSheet }) =>
+      $mobileBottomSheet
+        ? 'var(--wizard-bottom-sheet-collapsed-height, 80px)'
+        : '0'};
 
     .section-container {
       max-width: unset;

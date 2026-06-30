@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
@@ -88,6 +88,11 @@ export const useOnboardingStepElearning = ({
     );
   };
 
+  const sidePanelContent = useCallback(
+    () => <WizardRecommendationsSidePanel />,
+    []
+  );
+
   const onboardingStepElearning = {
     isNextEnabled: hasCompletedAllUnits,
     summary: {
@@ -102,7 +107,7 @@ export const useOnboardingStepElearning = ({
       userRole?.toLowerCase() ?? ''
     }s bienveillants Entourage Pro.`,
     content: <Content />,
-    sidePanelContent: <WizardRecommendationsSidePanel />,
+    sidePanelContent,
     isStepCompleted: async () => {
       return ensureAndComputeHasCompleteAllUnits();
     },

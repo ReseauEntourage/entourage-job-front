@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ProfileRecommendation } from '@/src/api/types';
+import { Text } from '@/src/components/ui/Text';
 import { WizardSidePanel } from '@/src/components/ui/WizardSidePanel';
 import { Api } from 'src/api';
 import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
@@ -14,7 +15,13 @@ const RECOMMENDATIONS_LIMIT = 3;
 
 type PanelState = 'LOADING' | 'EMBEDDING_PENDING' | 'COMPUTING_RECO' | 'READY';
 
-export const WizardRecommendationsSidePanel = () => {
+interface WizardRecommendationsSidePanelProps {
+  mode?: 'compact' | 'full';
+}
+
+export const WizardRecommendationsSidePanel = ({
+  mode = 'full',
+}: WizardRecommendationsSidePanelProps) => {
   const [panelState, setPanelState] = useState<PanelState>('LOADING');
   const [recommendations, setRecommendations] = useState<
     ProfileRecommendation[]
@@ -50,6 +57,24 @@ export const WizardRecommendationsSidePanel = () => {
   useEffect(() => {
     fetchReco();
   }, [fetchReco]);
+
+  const count = recommendations.length;
+
+  if (mode === 'compact') {
+    if (panelState !== 'READY') {
+      return <Text size="large">{'Chargement de vos recommandations...'}</Text>;
+    }
+
+    return (
+      <Text size="large">
+        {count > 0
+          ? `${count} profil${count !== 1 ? 's' : ''} sélectionné${
+              count !== 1 ? 's' : ''
+            } pour vous`
+          : 'Votre sélection personnalisée'}
+      </Text>
+    );
+  }
 
   return (
     <WizardSidePanel title="VOTRE SÉLECTION PERSONNALISÉE">
