@@ -19,6 +19,7 @@ import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
   StyledRecommendationsHowItWorksWrapper,
+  StyledSkeletonWrapper,
 } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
@@ -141,7 +142,7 @@ export const DashboardRecommendationsCard = () => {
     });
   }, [recommendations]);
 
-  if (isEmbeddingPending && !isComputingReco) {
+  if (isEmbeddingPending || isComputingReco) {
     return (
       <Card
         title={recommendationsLabels[context].title}
@@ -149,25 +150,12 @@ export const DashboardRecommendationsCard = () => {
         centerTitle
       >
         <StyledDashboardCardContentContainer>
-          <Skeleton count={3} width="33%" height="150px" inverted />
-        </StyledDashboardCardContentContainer>
-      </Card>
-    );
-  }
-
-  if (isComputingReco) {
-    return (
-      <Card
-        title={recommendationsLabels[context].title}
-        subtitle={recommendationsLabels[context].subtitle}
-        centerTitle
-      >
-        <StyledDashboardCardContentContainer>
-          <Skeleton count={1} width="100%" height="50px" inverted />
-          <Text center>
-            Votre profil est prêt ! Nous analysons les profils de la communauté
-            afin de vous proposer les profils les plus susceptibles de vous
-            intéresser
+          <StyledSkeletonWrapper>
+            <Skeleton count={3} width="100%" height="150px" inverted />
+          </StyledSkeletonWrapper>
+          <Text size="small" color="darkGray" variant="italic" center>
+            Nous analysons actuellement les profils de la communauté afin de
+            vous proposer les plus susceptibles de vous intéresser
           </Text>
         </StyledDashboardCardContentContainer>
       </Card>
