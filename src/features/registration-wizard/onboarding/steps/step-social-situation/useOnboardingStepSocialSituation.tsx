@@ -150,10 +150,10 @@ export const useOnboardingStepSocialSituation = ({
       description:
         'Décrivez-nous votre situation personnelle et professionnelle',
     },
-    title: 'Indiquer votre situation sociale et économique',
+    title:
+      'Quelques infos pour vous proposer le bon soutien, tout est facultatif.',
     smallTitle: 'Votre situation',
-    description:
-      'Pour nous permettre de mieux vous connaître et de mieux vous accompagner.',
+    description: null,
     onSubmit: async () => {
       return await new Promise<boolean>((resolve) => {
         formMethods.handleSubmit(
