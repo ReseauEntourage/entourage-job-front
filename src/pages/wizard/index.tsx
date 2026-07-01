@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
-import { WizardRoleSelectionSidePanel } from '@/src/features/registration-wizard/WizardRoleSelectionSidePanel';
-import { WizardSummary } from '@/src/features/registration-wizard/WizardSummary/WizardSummary';
-import { WizardContentLayout } from '@/src/features/wizard-shell/WizardContentLayout';
+import { WizardSummary } from '@/src/features/wizard/components/WizardSummary/WizardSummary';
+import { WizardContentLayout } from '@/src/features/wizard/shell/WizardContentLayout';
+import { WizardRoleSelectionSidePanel } from '@/src/features/wizard/sidepanels/WizardRoleSelectionSidePanel';
 import { selectCurrentUser } from '@/src/use-cases/current-user';
 import { registrationActions } from '@/src/use-cases/registration';
 

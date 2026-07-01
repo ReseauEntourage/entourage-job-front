@@ -1,8 +1,8 @@
+import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { PublicSensibilise, EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
-import { OnboardingStatus } from '../constants/onboarding';
 import {
   CompanyApproach,
   Contract as ContractValue,

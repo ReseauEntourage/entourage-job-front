@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
-import { WizardRunShell } from '@/src/features/registration-wizard/WizardRunShell';
-import { useWizard } from '@/src/features/registration-wizard/useWizard';
+import { WizardRunShell } from '@/src/features/wizard/WizardRunShell';
+import { useWizard } from '@/src/features/wizard/useWizard';
 
 const WizardRun = () => {
   const {
