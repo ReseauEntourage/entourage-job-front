@@ -2,24 +2,24 @@ import { Text, Alert, LucidIcon } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { COLORS } from '@/src/constants/styles';
 import { ElearningAnswer } from '../elearning.types';
-import { StyledElearningUnitModalQuizSuccessContainer } from './ElearningUnitModal.styles';
+import { StyledElearningUnitQuizSuccessContainer } from './ElearningUnit.styles';
 
-interface ElearningUnitModalQuizSuccessProps {
+interface ElearningUnitQuizSuccessProps {
   correctAnswer: ElearningAnswer;
   isCorrect: boolean;
 }
 
-export const ElearningUnitModalQuizSuccess = ({
+export const ElearningUnitQuizSuccess = ({
   correctAnswer,
   isCorrect,
-}: ElearningUnitModalQuizSuccessProps) => {
+}: ElearningUnitQuizSuccessProps) => {
   return (
     <Alert
       type={isCorrect ? AlertType.Info : AlertType.Error}
       icon={null}
       variant="outlined"
     >
-      <StyledElearningUnitModalQuizSuccessContainer>
+      <StyledElearningUnitQuizSuccessContainer>
         <Text center>
           <LucidIcon
             name={isCorrect ? 'BadgeCheck' : 'BadgeAlert'}
@@ -36,7 +36,7 @@ export const ElearningUnitModalQuizSuccess = ({
             <Text size="large">{correctAnswer.explanation}</Text>
           </Alert>
         )}
-      </StyledElearningUnitModalQuizSuccessContainer>
+      </StyledElearningUnitQuizSuccessContainer>
     </Alert>
   );
 };

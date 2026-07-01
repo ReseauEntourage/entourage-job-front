@@ -5,7 +5,8 @@ import { ElearningProgressTracker } from '@/src/features/backoffice/elearning/el
 import { ElearningUnitCard } from '@/src/features/backoffice/elearning/elearning-unit-card/ElearningUnitCard';
 import { useElearning } from '@/src/features/backoffice/elearning/useElearning';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
-import { StyledBackofficeBackground } from '../Backoffice.styles';
+import { StyledBackofficeBackground } from '../../Backoffice.styles';
+import { StyledElearningUnitsContainer } from './formations.styles';
 
 export const Formations = () => {
   const { isLoading, elearningUnits } = useElearning();
@@ -25,11 +26,17 @@ export const Formations = () => {
           {isLoading && (
             <Skeleton height="130px" width="100%" count={4} inverted />
           )}
-          {!isLoading &&
-            elearningUnits &&
-            elearningUnits.map((unit, idx) => (
-              <ElearningUnitCard key={unit.id} idx={idx} elearningUnit={unit} />
-            ))}
+          <StyledElearningUnitsContainer>
+            {!isLoading &&
+              elearningUnits &&
+              elearningUnits.map((unit, idx) => (
+                <ElearningUnitCard
+                  key={unit.id}
+                  idx={idx}
+                  elearningUnit={unit}
+                />
+              ))}
+          </StyledElearningUnitsContainer>
         </Section>
       </StyledBackofficeBackground>
     </>

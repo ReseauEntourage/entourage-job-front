@@ -1,26 +1,84 @@
-import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
-import { ElearningProgressTracker } from '@/src/features/backoffice/elearning/elearning-progress-tracker/ElearningProgressTracker';
-import { ElearningUnitCard } from '@/src/features/backoffice/elearning/elearning-unit-card/ElearningUnitCard';
-import { useElearning } from '@/src/features/backoffice/elearning/useElearning';
+import { Button } from '@/src/components/ui';
+import { Spinner } from '@/src/components/ui/Spinner';
+import { ElearningUnitQuiz } from '@/src/features/backoffice/elearning/elearning-unit/ElearningUnitQuiz';
+import { ElearningUnitVideo } from '@/src/features/backoffice/elearning/elearning-unit/ElearningUnitVideo';
+import { useElearningQuiz } from '@/src/features/backoffice/elearning/elearning-unit/useElearningQuiz';
+import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
-import { StyledOnboardingElearningUnitCardList } from './Content.styles';
+import {
+  StyledElearningStepMobileVideo,
+  StyledElearningStepModuleActions,
+  StyledElearningStepModuleContainer,
+} from './Content.styles';
+import { ElearningStepIntro } from './ElearningStepIntro';
 
-export const Content = () => {
-  const { isLoading, elearningUnits } = useElearning();
+export type ElearningStepPhase = 'intro' | 'module' | 'done';
+
+interface ContentProps {
+  phase: ElearningStepPhase;
+  currentUnit: ElearningUnit | undefined;
+  quiz: ReturnType<typeof useElearningQuiz>;
+  isDesktop: boolean;
+  onStart: () => void;
+  onSkip: () => void;
+}
+
+export const Content = ({
+  phase,
+  currentUnit,
+  quiz,
+  isDesktop,
+  onStart,
+  onSkip,
+}: ContentProps) => {
+  if (phase === 'intro') {
+    return (
+      <StyledOnboardingStepContainer>
+        <ElearningStepIntro onStart={onStart} onSkip={onSkip} />
+      </StyledOnboardingStepContainer>
+    );
+  }
+
+  if (phase === 'done') {
+    return null;
+  }
+
+  if (!currentUnit) {
+    return (
+      <StyledOnboardingStepContainer>
+        <Spinner />
+      </StyledOnboardingStepContainer>
+    );
+  }
 
   return (
     <StyledOnboardingStepContainer>
-      <ElearningProgressTracker />
-      <StyledOnboardingElearningUnitCardList>
-        {isLoading && (
-          <Skeleton height="130px" width="100%" count={4} inverted />
+      <StyledElearningStepModuleContainer>
+        {!isDesktop && (
+          <StyledElearningStepMobileVideo>
+            <ElearningUnitVideo
+              title={currentUnit.title}
+              videoUrl={currentUnit.videoUrl}
+            />
+          </StyledElearningStepMobileVideo>
         )}
-        {!isLoading &&
-          elearningUnits &&
-          elearningUnits.map((unit, idx) => (
-            <ElearningUnitCard key={unit.id} idx={idx} elearningUnit={unit} />
-          ))}
-      </StyledOnboardingElearningUnitCardList>
+
+        <ElearningUnitQuiz
+          questions={quiz.questions}
+          quizQuestionIndex={quiz.quizQuestionIndex}
+          currentQuestion={quiz.currentQuestion}
+          currentSelectedAnswerId={quiz.currentSelectedAnswerId}
+          isCurrentQuestionAnswered={quiz.isCurrentQuestionAnswered}
+          isCurrentAnswerCorrect={quiz.isCurrentAnswerCorrect}
+          hasError={quiz.hasError}
+          onAnswerChange={quiz.onAnswerChange}
+        />
+        <StyledElearningStepModuleActions>
+          <Button onClick={quiz.confirm} variant="primary">
+            {quiz.buttonText}
+          </Button>
+        </StyledElearningStepModuleActions>
+      </StyledElearningStepModuleContainer>
     </StyledOnboardingStepContainer>
   );
 };

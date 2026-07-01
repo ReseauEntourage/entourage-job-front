@@ -1,19 +1,19 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { Button, Text } from '@/src/components/ui';
 import { H3, H5 } from '@/src/components/ui/Headings';
 import { Modal, useModalContext } from '@/src/features/modals/Modal';
+import { ElearningUnitQuiz } from '../elearning-unit/ElearningUnitQuiz';
+import { ElearningUnitVideo } from '../elearning-unit/ElearningUnitVideo';
+import { useElearningQuiz } from '../elearning-unit/useElearningQuiz';
 import { ElearningUnit } from '../elearning.types';
 import { useElearning } from '../useElearning';
 import {
   StyledElearningUnitModalActions,
   StyledElearningUnitModalContainer,
   StyledElearningUnitModalBody,
-  StyledElearningUnitModalHeader,
   StyledInviteToGoToQuiz,
 } from './ElearningUnitModal.styles';
-import { ElearningUnitModalQuiz } from './ElearningUnitModalQuiz';
-import { ElearningUnitModalVideo } from './ElearningUnitModalVideo';
 
 interface ElearningUnitModalProps {
   elearningUnit: ElearningUnit;
@@ -30,115 +30,37 @@ export const ElearningUnitModal = ({
   const [mode, setMode] = useState<ElearningUnitModalMode>(
     ElearningUnitModalMode.VIDEO
   );
-  const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
-  const [quizSelectedAnswerByQuestionId, setQuizSelectedAnswerByQuestionId] =
-    useState<Record<string, string>>({});
-  const [quizAnsweredQuestions, setQuizAnsweredQuestions] = useState<
-    Record<string, boolean>
-  >({});
-  const [quizError, setQuizError] = useState<string | null>(null);
 
   const { completeUnit } = useElearning();
   const modal = useModalContext();
-
-  const questions = elearningUnit.questions ?? [];
-  const currentQuestion = questions[quizQuestionIndex];
-  const currentSelectedAnswerId = currentQuestion
-    ? quizSelectedAnswerByQuestionId[currentQuestion.id]
-    : undefined;
-  const currentSelectedAnswer = currentQuestion?.answers?.find(
-    (answer) => answer.id === currentSelectedAnswerId
-  );
-  const isLastQuestion =
-    questions.length > 0 && quizQuestionIndex === questions.length - 1;
-  const isCurrentQuestionAnswered = currentQuestion
-    ? currentQuestion.id in quizAnsweredQuestions
-    : false;
-  const isCurrentAnswerCorrect = currentQuestion
-    ? !!quizAnsweredQuestions[currentQuestion.id]
-    : false;
 
   const closeModal = () => {
     modal.onClose?.();
   };
 
+  const quiz = useElearningQuiz({
+    questions: elearningUnit.questions ?? [],
+    onComplete: () => {
+      completeUnit(elearningUnit.id);
+      closeModal();
+    },
+  });
+
   const startQuiz = () => {
     setMode(ElearningUnitModalMode.QUIZ);
-    setQuizQuestionIndex(0);
-    setQuizSelectedAnswerByQuestionId({});
-    setQuizAnsweredQuestions({});
-    setQuizError(null);
+    quiz.reset();
   };
 
   const onConfirm = () => {
     if (mode === ElearningUnitModalMode.VIDEO) {
       startQuiz();
-    }
-    if (mode === ElearningUnitModalMode.QUIZ) {
-      if (questions.length === 0) {
-        completeUnit(elearningUnit.id);
-        closeModal();
-        return;
-      }
-
-      if (!currentQuestion) {
-        setQuizError("Impossible d'afficher cette question.");
-        return;
-      }
-
-      // Étape 1 : révéler l'explication pour la question courante
-      if (!isCurrentQuestionAnswered) {
-        if (!currentSelectedAnswerId) {
-          setQuizError('Sélectionne une réponse pour valider.');
-          return;
-        }
-
-        setQuizError(null);
-        setQuizAnsweredQuestions((prev) => ({
-          ...prev,
-          [currentQuestion.id]: !!currentSelectedAnswer?.isCorrect,
-        }));
-        return;
-      }
-
-      // Étape 2 : question validée -> passer à la suivante ou terminer
-      if (!isLastQuestion) {
-        setQuizQuestionIndex((prev) => prev + 1);
-        return;
-      }
-
-      completeUnit(elearningUnit.id);
-      closeModal();
-    }
-  };
-
-  const buttonText = useMemo(() => {
-    if (mode === ElearningUnitModalMode.VIDEO) {
-      return 'Passer au quiz';
-    }
-
-    if (questions.length === 0) {
-      return 'Confirmer';
-    }
-
-    if (!isCurrentQuestionAnswered) {
-      return 'Valider';
-    }
-
-    return isLastQuestion ? 'Terminer' : 'Question suivante';
-  }, [mode, questions.length, isLastQuestion, isCurrentQuestionAnswered]);
-
-  const onQuizAnswerChange = (answerId: string) => {
-    if (!currentQuestion) {
       return;
     }
-
-    setQuizError(null);
-    setQuizSelectedAnswerByQuestionId((prev) => ({
-      ...prev,
-      [currentQuestion.id]: answerId,
-    }));
+    quiz.confirm();
   };
+
+  const buttonText =
+    mode === ElearningUnitModalMode.VIDEO ? 'Passer au quiz' : quiz.buttonText;
 
   return (
     <Modal
@@ -148,24 +70,22 @@ export const ElearningUnitModal = ({
       fillHeight={mode === ElearningUnitModalMode.VIDEO}
     >
       <StyledElearningUnitModalContainer>
-        <StyledElearningUnitModalHeader>
-          <H3 title={elearningUnit.title} />
-        </StyledElearningUnitModalHeader>
+        <H3 title={elearningUnit.title} />
         <StyledElearningUnitModalBody>
           {mode === ElearningUnitModalMode.QUIZ && (
-            <ElearningUnitModalQuiz
-              questions={questions}
-              quizQuestionIndex={quizQuestionIndex}
-              currentQuestion={currentQuestion}
-              currentSelectedAnswerId={currentSelectedAnswerId}
-              isCurrentQuestionAnswered={isCurrentQuestionAnswered}
-              isCurrentAnswerCorrect={isCurrentAnswerCorrect}
-              hasError={!!quizError}
-              onAnswerChange={onQuizAnswerChange}
+            <ElearningUnitQuiz
+              questions={quiz.questions}
+              quizQuestionIndex={quiz.quizQuestionIndex}
+              currentQuestion={quiz.currentQuestion}
+              currentSelectedAnswerId={quiz.currentSelectedAnswerId}
+              isCurrentQuestionAnswered={quiz.isCurrentQuestionAnswered}
+              isCurrentAnswerCorrect={quiz.isCurrentAnswerCorrect}
+              hasError={quiz.hasError}
+              onAnswerChange={quiz.onAnswerChange}
             />
           )}
           {mode === ElearningUnitModalMode.VIDEO && (
-            <ElearningUnitModalVideo
+            <ElearningUnitVideo
               title={elearningUnit.title}
               videoUrl={elearningUnit.videoUrl}
             />

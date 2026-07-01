@@ -3,19 +3,19 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Text } from '@/src/components/ui';
 
 import {
-  StyledElearningUnitModalContent,
-  StyledElearningUnitModalVideoFrame,
-} from './ElearningUnitModal.styles';
+  StyledElearningUnitContent,
+  StyledElearningUnitVideoFrame,
+} from './ElearningUnit.styles';
 
-interface ElearningUnitModalVideoProps {
+interface ElearningUnitVideoProps {
   title: string;
   videoUrl?: string | null;
 }
 
-export const ElearningUnitModalVideo = ({
+export const ElearningUnitVideo = ({
   title,
   videoUrl,
-}: ElearningUnitModalVideoProps) => {
+}: ElearningUnitVideoProps) => {
   const isShortsUrl = useMemo(() => {
     if (!videoUrl) {
       return false;
@@ -41,7 +41,7 @@ export const ElearningUnitModalVideo = ({
   }, [videoUrl]);
 
   const { aspectWidth, aspectHeight } = useMemo(() => {
-    // Shorts (9:16) sont beaucoup plus hauts : on conserve le ratio mais on limite la hauteur via CSS.
+    // Shorts (9:16) sont beaucoup plus hauts : on conserve le ratio mais on limite la largeur via CSS.
     if (isShortsUrl) {
       return { aspectWidth: 9, aspectHeight: 16 };
     }
@@ -49,15 +49,10 @@ export const ElearningUnitModalVideo = ({
     return { aspectWidth: 16, aspectHeight: 9 };
   }, [isShortsUrl]);
 
-  const maxWidthRatio = useMemo(
-    () => aspectWidth / aspectHeight,
-    [aspectWidth, aspectHeight]
-  );
-
   return (
-    <StyledElearningUnitModalContent noPadding>
+    <StyledElearningUnitContent noPadding>
       {youtubeVideoId ? (
-        <StyledElearningUnitModalVideoFrame maxWidthRatio={maxWidthRatio}>
+        <StyledElearningUnitVideoFrame isShorts={isShortsUrl}>
           <div className="video-inner">
             <LiteYouTubeEmbed
               id={youtubeVideoId}
@@ -70,10 +65,10 @@ export const ElearningUnitModalVideo = ({
               }}
             />
           </div>
-        </StyledElearningUnitModalVideoFrame>
+        </StyledElearningUnitVideoFrame>
       ) : (
         <Text>Vidéo non disponible</Text>
       )}
-    </StyledElearningUnitModalContent>
+    </StyledElearningUnitContent>
   );
 };

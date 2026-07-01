@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
-import { Formations } from '@/src/features/backoffice/ressources/Formations';
+import { Formations } from '@/src/features/backoffice/ressources/formations/Formations';
 
 const FormationsPage = () => {
   return (

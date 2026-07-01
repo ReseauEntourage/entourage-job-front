@@ -18,13 +18,6 @@ export const StyledOnboardingActions = styled.div`
   margin-top: 40px;
 `;
 
-export const StyledOnboardingSubActions = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 15px;
-`;
-
 export const StyledOnboardingPresentationContainer = styled.div`
   display: flex;
   flex-direction: row;

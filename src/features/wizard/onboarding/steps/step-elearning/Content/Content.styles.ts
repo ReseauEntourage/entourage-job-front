@@ -1,19 +1,24 @@
 import styled from 'styled-components';
-import { BREAKPOINTS } from '@/src/constants/styles';
 
-const LIST_GAP = 25;
-const MIN_CARD_WIDTH = '500px';
-const MAX_CARD_WIDTH = '1fr';
+export const StyledElearningStepIntroActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+`;
 
-export const StyledOnboardingElearningUnitCardList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(${MIN_CARD_WIDTH}, ${MAX_CARD_WIDTH})
-  );
-  gap: ${LIST_GAP}px;
+export const StyledElearningStepModuleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
-    grid-template-columns: 1fr;
-  }
+export const StyledElearningStepMobileVideo = styled.div`
+  margin-bottom: 8px;
+`;
+
+export const StyledElearningStepModuleActions = styled.div`
+  display: flex;
+  justify-content: center;
 `;

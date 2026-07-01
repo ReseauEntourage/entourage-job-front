@@ -2,11 +2,7 @@ import React, { useMemo } from 'react';
 import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { Text } from '@/src/components/ui/Text';
-import {
-  StyledOnboardingActions,
-  StyledOnboardingSubActions,
-} from '@/src/features/wizard/onboarding/onboarding.styles';
+import { StyledOnboardingActions } from '@/src/features/wizard/onboarding/onboarding.styles';
 import { WizardContentLayout } from '@/src/features/wizard/shell/WizardContentLayout';
 import { StyledWizardStepHeader } from '@/src/features/wizard/shell/WizardContentLayout.styles';
 import { WizardProgressBar } from '@/src/features/wizard/shell/WizardProgressBar';
@@ -108,46 +104,34 @@ export const WizardRunShell = ({
             <React.Fragment key={currentWizardIdx}>
               {currentStep.content}
             </React.Fragment>
-            <StyledOnboardingActions>
-              {canGoBack && onBack && (
-                <Button
-                  variant="secondary"
-                  onClick={onBack}
-                  disabled={isLoading}
-                  size="large"
-                  dataTestId="wizard-back-step-btn"
-                >
-                  Retour
-                </Button>
-              )}
-              <Button
-                onClick={onNext}
-                disabled={isLoading || currentStep?.isNextEnabled === false}
-                size="large"
-                dataTestId="wizard-next-step-btn"
-              >
-                {isLoading && (
-                  <>
-                    <Spinner size={16} color="white" />
-                    &nbsp;&nbsp;Chargement...
-                  </>
+            {!currentStep.hideGenericStepFooter && (
+              <StyledOnboardingActions>
+                {canGoBack && onBack && (
+                  <Button
+                    variant="secondary"
+                    onClick={onBack}
+                    disabled={isLoading}
+                    size="large"
+                    dataTestId="wizard-back-step-btn"
+                  >
+                    Retour
+                  </Button>
                 )}
-                {!isLoading && buttonLabel}
-              </Button>
-            </StyledOnboardingActions>
-
-            {currentStep?.onSkip && (
-              <StyledOnboardingSubActions>
-                <Text>ou</Text>
                 <Button
-                  variant="text"
-                  onClick={currentStep.onSkip}
-                  disabled={isLoading}
-                  dataTestId="wizard-skip-step-btn"
+                  onClick={onNext}
+                  disabled={isLoading || currentStep?.isNextEnabled === false}
+                  size="large"
+                  dataTestId="wizard-next-step-btn"
                 >
-                  <Text underline>Passer la formation</Text>
+                  {isLoading && (
+                    <>
+                      <Spinner size={16} color="white" />
+                      &nbsp;&nbsp;Chargement...
+                    </>
+                  )}
+                  {!isLoading && buttonLabel}
                 </Button>
-              </StyledOnboardingSubActions>
+              </StyledOnboardingActions>
             )}
           </>
         ) : (

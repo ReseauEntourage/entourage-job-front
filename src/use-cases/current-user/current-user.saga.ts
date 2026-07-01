@@ -358,12 +358,6 @@ function* uploadExternalCvRequestedSaga(
   try {
     yield* call(() => Api.postExternalCv(formData));
     yield* put(uploadExternalCvSucceeded());
-    yield* put(
-      notificationsActions.addNotification({
-        type: 'success',
-        message: 'Votre CV a bien été importé',
-      })
-    );
   } catch {
     yield* put(
       uploadExternalCvFailed({

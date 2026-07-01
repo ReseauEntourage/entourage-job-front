@@ -21,6 +21,7 @@ export interface WizardStep {
     duration: string;
   };
   hideGenericStepHeader: undefined | true;
+  hideGenericStepFooter?: boolean;
   title: React.ReactNode;
   smallTitle: string;
   description: React.ReactNode;
@@ -33,7 +34,6 @@ export interface WizardStep {
   isStepCompleted?: () => Promise<boolean>;
   incrementationIsAllowed?: () => Promise<boolean>;
   onSubmit?: () => Promise<boolean | void>;
-  onSkip?: () => Promise<void>;
   confirmationStep?: {
     title: string;
     subtitle: string;

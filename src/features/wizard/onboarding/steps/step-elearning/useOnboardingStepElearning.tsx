@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
+import { useElearningQuiz } from '@/src/features/backoffice/elearning/elearning-unit/useElearningQuiz';
+import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
-import { WizardRecommendationsSidePanel } from '@/src/features/wizard/sidepanels/WizardRecommendationsSidePanel';
+import { useIsDesktop } from '@/src/hooks/utils/usePlatforms';
 import { store } from '@/src/store/store';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import {
@@ -12,7 +14,8 @@ import {
   selectElearningUnits,
   selectFetchElearningUnitsState,
 } from '@/src/use-cases/elearning';
-import { Content } from './Content/Content';
+import { Content, ElearningStepPhase } from './Content/Content';
+import { ElearningSidePanel } from './SidePanel/ElearningSidePanel';
 
 interface WizardStepElearningProps {
   userRole: User['role'] | undefined;
@@ -23,13 +26,20 @@ export const useOnboardingStepElearning = ({
 }: WizardStepElearningProps) => {
   const getState = () => store.getState() as any;
   const dispatch = useDispatch();
+  const isDesktop = useIsDesktop();
 
   const elearningFetchStatus = useSelector(
     (state: any) => selectFetchElearningUnitsState(state).status
   );
   const elearningUnits = useSelector((state: any) =>
     selectElearningUnits(state)
-  ) as { userCompletions: unknown[] }[] | null;
+  ) as ElearningUnit[] | null;
+
+  useEffect(() => {
+    if (elearningFetchStatus === ReduxRequestEvents.IDLE && userRole) {
+      dispatch(elearningActions.fetchElearningUnitsRequested(userRole));
+    }
+  }, [elearningFetchStatus, userRole, dispatch]);
 
   const hasCompletedAllUnits =
     elearningFetchStatus === ReduxRequestEvents.SUCCEEDED &&
@@ -80,17 +90,82 @@ export const useOnboardingStepElearning = ({
     return computeHasCompleteAllUnitsFromStore();
   };
 
-  const skipElearning = async (): Promise<void> => {
+  const skipElearning = useCallback(async (): Promise<void> => {
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({
         onboardingStatus: OnboardingStatus.COMPLETED,
       })
     );
-  };
+  }, [dispatch]);
+
+  // ─── Parcours séquentiel des modules ──────────────────────────────────────
+  const [phase, setPhase] = useState<ElearningStepPhase>('intro');
+  const [currentUnitIndex, setCurrentUnitIndex] = useState(0);
+  const hasInitializedIndexRef = useRef(false);
+
+  // Reprend au premier module non complété (résiste à un retour ultérieur sur l'étape)
+  useEffect(() => {
+    if (
+      hasInitializedIndexRef.current ||
+      elearningFetchStatus !== ReduxRequestEvents.SUCCEEDED ||
+      !elearningUnits
+    ) {
+      return;
+    }
+    hasInitializedIndexRef.current = true;
+
+    const firstIncompleteIdx = elearningUnits.findIndex(
+      (unit) => unit.userCompletions.length === 0
+    );
+    setCurrentUnitIndex(
+      firstIncompleteIdx === -1 ? elearningUnits.length : firstIncompleteIdx
+    );
+    setPhase(firstIncompleteIdx === -1 ? 'done' : 'intro');
+  }, [elearningUnits, elearningFetchStatus]);
+
+  const currentUnit = elearningUnits?.[currentUnitIndex];
+
+  const handleModuleComplete = useCallback(() => {
+    if (!currentUnit) {
+      return;
+    }
+
+    dispatch(
+      elearningActions.postElearningCompletionRequested({
+        unitId: currentUnit.id,
+      })
+    );
+
+    const nextIndex = currentUnitIndex + 1;
+    const hasNextUnit = !!elearningUnits && nextIndex < elearningUnits.length;
+    setCurrentUnitIndex(hasNextUnit ? nextIndex : currentUnitIndex);
+    setPhase(hasNextUnit ? 'module' : 'done');
+  }, [currentUnit, currentUnitIndex, elearningUnits, dispatch]);
+
+  const quiz = useElearningQuiz({
+    questions: currentUnit?.questions ?? [],
+    onComplete: handleModuleComplete,
+  });
+
+  // Repart de la première question à chaque changement de module
+  useEffect(() => {
+    quiz.reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUnitIndex]);
+
+  const handleStartTraining = useCallback(() => {
+    setPhase('module');
+  }, []);
 
   const sidePanelContent = useCallback(
-    () => <WizardRecommendationsSidePanel />,
-    []
+    () => (
+      <ElearningSidePanel
+        phase={phase}
+        currentUnit={currentUnit}
+        isDesktop={isDesktop}
+      />
+    ),
+    [phase, currentUnit, isDesktop]
   );
 
   const onboardingStepElearning = {
@@ -100,13 +175,23 @@ export const useOnboardingStepElearning = ({
       description: 'Des modules vidéos avec des cas concrets pour être prêt',
       duration: '~10 minutes',
     },
-    hideGenericStepHeader: true,
+    hideGenericStepHeader: undefined,
+    hideGenericStepFooter: phase !== 'done',
     title: `Votre parcours de formation`,
     smallTitle: 'Suivre la formation',
     description: `Suivez ces modules pour rejoindre notre communauté de ${
       userRole?.toLowerCase() ?? ''
     }s bienveillants Entourage Pro.`,
-    content: <Content />,
+    content: (
+      <Content
+        phase={phase}
+        currentUnit={currentUnit}
+        quiz={quiz}
+        isDesktop={isDesktop}
+        onStart={handleStartTraining}
+        onSkip={skipElearning}
+      />
+    ),
     sidePanelContent,
     isStepCompleted: async () => {
       return ensureAndComputeHasCompleteAllUnits();
@@ -125,7 +210,6 @@ export const useOnboardingStepElearning = ({
     incrementationIsAllowed: async () => {
       return ensureAndComputeHasCompleteAllUnits();
     },
-    onSkip: skipElearning,
     section: 'formation',
   } as WizardStep;
 

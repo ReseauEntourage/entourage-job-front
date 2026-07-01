@@ -1,17 +1,15 @@
 import { Text, Alert, LucidIcon } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
-import { H5 } from '@/src/components/ui/Headings';
 import { Radio } from '@/src/components/ui/Inputs';
 import { ProgressBar } from '@/src/components/ui/ProgressBar/ProgressBar';
 import { ElearningQuestion } from '../elearning.types';
 import {
   StyledElearningQuestionCard,
-  StyledElearningUnitModalContent,
-  StyledQuestionHeader,
-} from './ElearningUnitModal.styles';
-import { ElearningUnitModalQuizSuccess } from './ElearningUnitModalQuizSuccess';
+  StyledElearningUnitContent,
+} from './ElearningUnit.styles';
+import { ElearningUnitQuizSuccess } from './ElearningUnitQuizSuccess';
 
-interface ElearningUnitModalQuizProps {
+interface ElearningUnitQuizProps {
   questions: ElearningQuestion[];
   quizQuestionIndex: number;
   currentQuestion?: ElearningQuestion;
@@ -22,7 +20,7 @@ interface ElearningUnitModalQuizProps {
   onAnswerChange: (answerId: string) => void;
 }
 
-export const ElearningUnitModalQuiz = ({
+export const ElearningUnitQuiz = ({
   questions,
   quizQuestionIndex,
   currentQuestion,
@@ -31,7 +29,7 @@ export const ElearningUnitModalQuiz = ({
   isCurrentAnswerCorrect,
   hasError,
   onAnswerChange,
-}: ElearningUnitModalQuizProps) => {
+}: ElearningUnitQuizProps) => {
   const progressValue = Math.round(
     (quizQuestionIndex / questions.length) * 100
   );
@@ -41,18 +39,13 @@ export const ElearningUnitModalQuiz = ({
   );
 
   return (
-    <StyledElearningUnitModalContent>
-      <StyledQuestionHeader>
-        <H5 title="Quiz de validation" />
-        <Text color="darkGray">
-          Question {quizQuestionIndex + 1} / {questions.length}
-        </Text>
-      </StyledQuestionHeader>
-
-      <ProgressBar value={progressValue} color="darkBlue" />
-
+    <StyledElearningUnitContent noPadding>
       {!isCurrentQuestionAnswered && (
         <StyledElearningQuestionCard>
+          <ProgressBar value={progressValue} color="darkBlue" />
+          <Text color="darkBlue" weight="semibold">
+            Question {quizQuestionIndex + 1} / {questions.length}
+          </Text>
           <Text size="large" weight="semibold">
             {currentQuestion?.label}
           </Text>
@@ -85,11 +78,11 @@ export const ElearningUnitModalQuiz = ({
       )}
 
       {correctAnswer && isCurrentQuestionAnswered && (
-        <ElearningUnitModalQuizSuccess
+        <ElearningUnitQuizSuccess
           correctAnswer={correctAnswer}
           isCorrect={isCurrentAnswerCorrect}
         />
       )}
-    </StyledElearningUnitModalContent>
+    </StyledElearningUnitContent>
   );
 };
