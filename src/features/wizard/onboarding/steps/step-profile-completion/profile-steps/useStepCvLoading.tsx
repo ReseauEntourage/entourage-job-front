@@ -15,7 +15,7 @@ export const useStepCvLoading = () => {
     description: '',
     content: <CvLoadingAnimation />,
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     isNextEnabled: false,
     isStepCompleted: async () => true,
     section: 'profil',

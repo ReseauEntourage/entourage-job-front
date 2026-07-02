@@ -60,7 +60,7 @@ export const useStepCvChoice = ({
       </StyledOnboardingStepContainer>
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     isNextEnabled: false,
     isStepCompleted: async () => {
       return (

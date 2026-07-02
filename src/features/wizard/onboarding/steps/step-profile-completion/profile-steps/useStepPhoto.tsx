@@ -48,7 +48,7 @@ export const useStepPhoto = ({ user }: UseStepPhotoProps) => {
       </StyledOnboardingStepContainer>
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     isNextEnabled: true,
     isStepCompleted: async () => true,
     onSubmit: async () => {

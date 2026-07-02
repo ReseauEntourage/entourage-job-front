@@ -44,7 +44,6 @@ const WizardHome = () => {
       <WizardContentLayout
         sidePanel={() => <WizardRoleSelectionSidePanel flow={selectedFlow} />}
         sidePanelSide="left"
-        sideBarVariant="blue-gradient"
       >
         <Section className="custom-page">
           <WizardSummary value={selectedFlows} onChange={setSelectedFlows} />

@@ -5,7 +5,6 @@ export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  background: #ffffff;
   overflow: hidden;
 `;
 
@@ -27,7 +26,6 @@ export const StyledImgProfileAndName = styled.div`
 export const StyledBlocks = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${COLORS.white};
   gap: 15px;
   margin-top: 16px;
 `;
@@ -36,6 +34,7 @@ export const StyledBlock = styled.div`
   padding: 12px 16px;
   border: 1px solid ${COLORS.gray};
   border-radius: 8px;
+  background: ${COLORS.white};
 `;
 
 export const StyledBlockTitle = styled.div`

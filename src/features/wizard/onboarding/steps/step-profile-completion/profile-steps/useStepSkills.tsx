@@ -126,7 +126,7 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
       </StyledOnboardingStepContainer>
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     buttonLabel: 'Terminer mon profil',
     isNextEnabled: skills.length > 0 || languages.length > 0,
     isStepCompleted: async () => {

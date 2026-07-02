@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
-import { WizardSideBarVariant } from './WizardContentLayout';
 
 const SIDE_PANEL_WIDTH = `max(35vw, 480px)`;
 
@@ -61,7 +60,6 @@ export const StyledWizardStepHeader = styled.div`
 
 export const StyledWizardSidePanel = styled.aside<{
   $side: 'left' | 'right';
-  $variant: WizardSideBarVariant;
 }>`
   position: fixed;
   ${({ $side }) => ($side === 'left' ? 'left: 0;' : 'right: 0;')}
@@ -71,23 +69,14 @@ export const StyledWizardSidePanel = styled.aside<{
     $side === 'right' ? `calc(100vh - ${HEIGHTS.HEADER + 1}px)` : '100vh'};
   display: flex;
   flex-direction: column;
-  background: ${({ $variant }) =>
-    $variant === 'blue-gradient'
-      ? `linear-gradient(135deg, ${COLORS.shadowDarkBlue1}, ${COLORS.shadowDarkBlue2})`
-      : COLORS.white};
-  color: ${COLORS.white};
   z-index: 10;
+  border-${({ $side }) => ($side === 'left' ? 'right' : 'left')}: 1px solid ${
+  COLORS.gray
+};
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     display: none;
   }
-`;
-
-export const StyledWizardSidePanelLogo = styled.div`
-  padding: 24px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 export const StyledWizardMobileHeader = styled.div`

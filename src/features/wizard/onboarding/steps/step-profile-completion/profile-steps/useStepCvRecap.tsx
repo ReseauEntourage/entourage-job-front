@@ -179,7 +179,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
       </StyledOnboardingStepContainer>
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     isNextEnabled: formState.isValid,
     isStepCompleted: async () => {
       return (

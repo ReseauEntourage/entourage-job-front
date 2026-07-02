@@ -1,11 +1,29 @@
 import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { Color, COLORS } from '@/src/constants/styles';
 
-export const StyledRoot = styled.div`
+export type SidePanelVariant = 'white' | 'lightGray' | 'blue-gradient';
+
+export const VARIANT_STYLES: Record<
+  SidePanelVariant,
+  { background: string; titleColor: Color }
+> = {
+  white: { background: COLORS.white, titleColor: 'black' },
+  lightGray: { background: COLORS.lightGray, titleColor: 'black' },
+  'blue-gradient': {
+    background: `linear-gradient(135deg, ${COLORS.shadowDarkBlue1}, ${COLORS.shadowDarkBlue2})`,
+    titleColor: 'white',
+  },
+};
+
+export const StyledRoot = styled.div<{
+  $background: string;
+  $hasHeader: boolean;
+}>`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px 0;
+  padding: ${({ $hasHeader }) => ($hasHeader ? '24px 0' : '0')};
+  background: ${({ $background }) => $background};
 `;
 
 export const StyledHeader = styled.div`
@@ -23,12 +41,15 @@ export const StyledSeparator = styled.hr`
   flex-shrink: 0;
 `;
 
-export const StyledContent = styled.div<{ $align: 'start' | 'center' }>`
+export const StyledContent = styled.div<{
+  $align: 'start' | 'center';
+  $hasHeader: boolean;
+}>`
   display: flex;
   flex-direction: column;
   justify-content: ${({ $align }) =>
     $align === 'center' ? 'center' : 'flex-start'};
   flex: 1;
   min-height: 0;
-  padding: 0 24px;
+  padding: ${({ $hasHeader }) => ($hasHeader ? '0 24px' : '0')};
 `;

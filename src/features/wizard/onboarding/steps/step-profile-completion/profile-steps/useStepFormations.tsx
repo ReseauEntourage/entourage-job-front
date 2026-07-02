@@ -81,7 +81,7 @@ export const useStepFormations = ({ user }: UseStepFormationsProps) => {
       </StyledOnboardingStepContainer>
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     isNextEnabled: true,
     isStepCompleted: async () => {
       return (profileComplete?.formations?.length ?? 0) > 0;

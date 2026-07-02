@@ -20,7 +20,7 @@ export const ElearningSidePanel = ({
   }
 
   return (
-    <SidePanel title="Formation - Vidéo">
+    <SidePanel variant="white" title="Formation - Vidéo">
       <ElearningUnitVideo
         title={currentUnit.title}
         videoUrl={currentUnit.videoUrl}

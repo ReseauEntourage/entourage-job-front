@@ -77,7 +77,7 @@ export const WizardRecommendationsSidePanel = ({
   }
 
   return (
-    <SidePanel title="VOTRE SÉLECTION PERSONNALISÉE">
+    <SidePanel variant="white" title="VOTRE SÉLECTION PERSONNALISÉE">
       <StyledProfileList>
         {panelState !== 'READY' ? (
           <WizardSearchingLoader

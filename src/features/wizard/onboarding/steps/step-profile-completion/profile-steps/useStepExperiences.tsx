@@ -82,7 +82,7 @@ export const useStepExperiences = ({ user }: UseStepExperiencesProps) => {
       </StyledOnboardingStepContainer>
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
-    mobileBottomSheet: true,
+    mobileBottomSheet: false,
     isNextEnabled: true,
     isStepCompleted: async () => {
       return (profileComplete?.experiences?.length ?? 0) > 0;

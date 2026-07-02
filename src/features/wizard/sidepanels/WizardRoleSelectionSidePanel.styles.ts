@@ -1,10 +1,19 @@
 import styled from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
+export const StyledLogoRow = styled.div`
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+`;
+
 export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   padding: 0 32px;
 `;
 

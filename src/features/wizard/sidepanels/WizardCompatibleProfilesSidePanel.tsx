@@ -179,6 +179,7 @@ export const WizardCompatibleProfilesSidePanel = ({
   if (!hasAnyCriteria) {
     return (
       <SidePanel
+        variant="white"
         title={panelLabel}
         subtitle={
           <Text size="xlarge">
@@ -196,6 +197,7 @@ export const WizardCompatibleProfilesSidePanel = ({
 
   return (
     <SidePanel
+      variant="white"
       title={panelLabel}
       subtitle={
         <>

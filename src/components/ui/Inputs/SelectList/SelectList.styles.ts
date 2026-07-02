@@ -50,14 +50,14 @@ export const StyledButton = styled.button<{ $selected?: boolean }>`
   width: 100%;
   display: flex;
   position: relative;
-  border: 1px solid ${COLORS.gray};
+  border: 2px solid ${COLORS.gray};
   background-color: ${COLORS.white};
   border-radius: 20px;
   padding: 0;
   ${({ $selected }) =>
     $selected &&
     `
-    border: 1px solid ${COLORS.primaryBlue};
+    border: 2px solid ${COLORS.primaryBlue};
     background-color: ${COLORS.hoverBlue};
   `}
 

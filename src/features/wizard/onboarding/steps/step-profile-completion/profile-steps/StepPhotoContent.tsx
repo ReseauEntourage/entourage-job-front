@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Button, LucidIcon, Text } from '@/src/components/ui';
@@ -17,12 +18,12 @@ const StyledRoundBadge = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 2px dashed ${COLORS.gray};
+  border: 2px dashed ${COLORS.darkBlue};
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: ${COLORS.lightGray};
+  background: ${COLORS.hoverBlue};
   flex-shrink: 0;
 
   img {
@@ -86,11 +87,17 @@ export const StepPhotoContent = ({
     <StyledContainer>
       <StyledRoundBadge>
         {photoObjectUrl ? (
-          <img src={photoObjectUrl} alt="Photo de profil" />
+          <Image
+            src={photoObjectUrl}
+            alt="Photo de profil"
+            width={120}
+            height={120}
+            unoptimized
+          />
         ) : existingUser && hasPicture ? (
           <ImgUserProfile user={existingUser} hasPicture size={120} />
         ) : (
-          <LucidIcon name="User" size={48} color={COLORS.gray} />
+          <LucidIcon name="User" size={48} color={COLORS.darkBlue} />
         )}
       </StyledRoundBadge>
 

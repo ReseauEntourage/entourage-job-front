@@ -8,7 +8,6 @@ import {
   StyledWizardPageContent,
   StyledWizardSidePanel,
   StyledWizardSidePanelBody,
-  StyledWizardSidePanelLogo,
   StyledWizardTopBarProgressFill,
   StyledWizardTopBarProgressStrip,
 } from './WizardContentLayout.styles';
@@ -19,19 +18,15 @@ interface WizardContentLayoutProps {
   children: React.ReactNode;
   sidePanel?: SidePanelRenderFn | null;
   sidePanelSide?: 'left' | 'right';
-  sideBarVariant?: WizardSideBarVariant;
   stepper?: React.ReactNode;
   sectionProgress?: number | null;
   mobileBottomSheet?: boolean;
 }
 
-export type WizardSideBarVariant = 'default' | 'blue-gradient';
-
 export const WizardContentLayout = ({
   children,
   sidePanel,
   sidePanelSide = 'right',
-  sideBarVariant = 'default',
   stepper,
   sectionProgress,
   mobileBottomSheet = false,
@@ -71,12 +66,7 @@ export const WizardContentLayout = ({
         {children}
       </StyledWizardPageContent>
       {hasSidePanel && (
-        <StyledWizardSidePanel $side={sidePanelSide} $variant={sideBarVariant}>
-          {sidePanelSide === 'left' && (
-            <StyledWizardSidePanelLogo>
-              <NavbarLogo href="/" type="secondary" />
-            </StyledWizardSidePanelLogo>
-          )}
+        <StyledWizardSidePanel $side={sidePanelSide}>
           <StyledWizardSidePanelBody $side={sidePanelSide}>
             {sidePanel!('full')}
           </StyledWizardSidePanelBody>
