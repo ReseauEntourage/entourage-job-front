@@ -1,6 +1,5 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { useIsDesktop } from 'src/hooks/utils';
 import { StyledInputsContainer } from './InputsContainer.styles';
 
 const uuidValue = uuid();
@@ -14,10 +13,8 @@ export const InputsContainer = ({ fields }: InputsContainerProps) => {
     return !!field;
   });
 
-  const isDesktop = useIsDesktop();
-
   return (
-    <StyledInputsContainer isDesktop={isDesktop}>
+    <StyledInputsContainer>
       {fields.map((field, index) => {
         if (index < firstFieldNotHiddenIndex) {
           return null;
