@@ -55,6 +55,7 @@ export const ElearningUnitVideo = ({
         <StyledElearningUnitVideoFrame isShorts={isShortsUrl}>
           <div className="video-inner">
             <LiteYouTubeEmbed
+              key={youtubeVideoId}
               id={youtubeVideoId}
               title={title}
               aspectWidth={aspectWidth}

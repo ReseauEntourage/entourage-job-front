@@ -83,9 +83,9 @@ export const WizardRunShell = ({
         />
       }
     >
-      <StyledWizardStepHeader>
-        <Section className="custom-page">
-          {currentStep && !currentStep.hideGenericStepHeader && (
+      {currentStep && !currentStep.hideGenericStepHeader && (
+        <StyledWizardStepHeader>
+          <Section className="custom-page">
             <>
               <HeaderWizardStep
                 subProgress={subProgress}
@@ -93,9 +93,9 @@ export const WizardRunShell = ({
                 description={currentStep.description}
               />
             </>
-          )}
-        </Section>
-      </StyledWizardStepHeader>
+          </Section>
+        </StyledWizardStepHeader>
+      )}
       <Section className="custom-header">
         {isInitializing ? (
           <Spinner />

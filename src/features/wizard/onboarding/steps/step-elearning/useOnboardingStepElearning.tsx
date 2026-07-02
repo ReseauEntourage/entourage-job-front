@@ -175,7 +175,7 @@ export const useOnboardingStepElearning = ({
       description: 'Des modules vidéos avec des cas concrets pour être prêt',
       duration: '~10 minutes',
     },
-    hideGenericStepHeader: undefined,
+    hideGenericStepHeader: true,
     hideGenericStepFooter: phase !== 'done',
     title: `Votre parcours de formation`,
     smallTitle: 'Suivre la formation',

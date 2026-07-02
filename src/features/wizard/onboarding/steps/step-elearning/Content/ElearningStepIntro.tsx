@@ -1,6 +1,6 @@
 import { Button } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
-import { StyledElearningStepIntroActions } from './Content.styles';
+import { StyledActionsContainer } from './ElearningStepIntro.styles';
 
 interface ElearningStepIntroProps {
   onStart: () => void;
@@ -12,15 +12,16 @@ export const ElearningStepIntro = ({
   onSkip,
 }: ElearningStepIntroProps) => {
   return (
-    <div>
-      <StyledElearningStepIntroActions>
+    <>
+      <H2 title="Dernière étape avant de découvrir qui soutenir : une courte formation en vidéos et quelques questions. C’est rapide, et ça compte pour bien démarrer 🙂" />
+      <StyledActionsContainer>
         <Button onClick={onStart} variant="primary" size="large">
           Commencer la formation
         </Button>
         <Button onClick={onSkip} variant="text">
           Plus tard
         </Button>
-      </StyledElearningStepIntroActions>
-    </div>
+      </StyledActionsContainer>
+    </>
   );
 };

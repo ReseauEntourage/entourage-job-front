@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-export const StyledElearningStepIntroActions = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 32px;
-`;
-
 export const StyledElearningStepModuleContainer = styled.div`
   display: flex;
   flex-direction: column;
