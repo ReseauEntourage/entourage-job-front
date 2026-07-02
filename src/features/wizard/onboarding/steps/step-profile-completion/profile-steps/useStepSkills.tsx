@@ -104,10 +104,6 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
     }
   }, [initialValues, formMethods]);
 
-  const { watch } = formMethods;
-  const skills = watch('skills') ?? [];
-  const languages = watch('languages') ?? [];
-
   const onboardingStepSkills: WizardStep = {
     summary: {
       title: 'Compétences et intérêts',
@@ -128,13 +124,8 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
     sidePanelContent: () => <ProfileLivePreviewPanel />,
     mobileBottomSheet: false,
     buttonLabel: 'Terminer mon profil',
-    isNextEnabled: skills.length > 0 || languages.length > 0,
-    isStepCompleted: async () => {
-      return (
-        (profileComplete?.skills?.length ?? 0) > 0 ||
-        (profileComplete?.userProfileLanguages?.length ?? 0) > 0
-      );
-    },
+    isNextEnabled: true,
+    isStepCompleted: async () => true,
     onSubmit: async () => {
       if (!user) {
         return false;
