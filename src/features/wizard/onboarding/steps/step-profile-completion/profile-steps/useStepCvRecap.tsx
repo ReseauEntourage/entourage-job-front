@@ -7,7 +7,10 @@ import {
   User,
   UserProfileLanguage,
 } from '@/src/api/types';
+import { Text, Alert, LucidIcon } from '@/src/components/ui';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { ReduxRequestEvents } from '@/src/constants';
+import { COLORS } from '@/src/constants/styles';
 import { FilterConstant } from '@/src/constants/utils';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
@@ -152,10 +155,19 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
     hideGenericStepHeader: undefined,
     title: 'Vérifiez et complétez votre profil',
     smallTitle: 'Récap',
-    description:
-      'Votre profil a été pré-rempli à partir de votre CV. Vérifiez et corrigez les informations si nécessaire.',
+    description: null,
     content: (
       <StyledOnboardingStepContainer>
+        <Alert
+          variant="outlined"
+          type={AlertType.Info}
+          icon={<LucidIcon name="Sparkles" color={COLORS.primaryBlue} />}
+        >
+          <Text color="darkBlue" size="small">
+            Pré-rempli depuis votre CV. Vérifiez et corrigez si besoin : tout
+            est modifiable, éditez, supprimez ou ajoutez.
+          </Text>
+        </Alert>
         <FormProvider {...formMethods}>
           <StepCvRecapContent
             experiences={experiences}

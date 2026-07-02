@@ -17,7 +17,6 @@ export const StyledTextInputGroupForm = styled.div`
       line-height: normal;
     }
     &::placeholder {
-      font-style: italic;
       color: ${COLORS.mediumGray};
     }
     &:focus-visible {

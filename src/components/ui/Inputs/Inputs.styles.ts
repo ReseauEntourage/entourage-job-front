@@ -33,7 +33,7 @@ export const commonInputStyles = css`
   font-size: ${sizesPx.desktop.normal}px;
   width: 100%;
   background-color: transparent;
-  border: 1px solid ${COLORS.gray};
+  border: 2px solid ${COLORS.gray};
   color: ${COLORS.black};
   border-radius: 8px;
   text-align: left;
@@ -42,13 +42,13 @@ export const commonInputStyles = css`
   min-height: 30px;
   box-sizing: border-box;
 
-  :focus {
-    outline: none;
-    border: 1px solid ${COLORS.primaryBlue};
+  :hover {
+    border: 2px solid ${COLORS.darkGray};
   }
 
-  :hover {
-    border: 1px solid ${COLORS.darkGray};
+  :focus {
+    outline: none;
+    border: 2px solid ${COLORS.primaryBlue};
   }
 `;
 
@@ -59,6 +59,8 @@ export const StyledInputLabel = styled.label`
   box-sizing: border-box;
   font-family: Poppins, sans-serif;
   display: inline-block;
+  color: ${COLORS.black};
+  font-weight: 500;
 `;
 
 export const StyledInputLabelOptional = styled.span`

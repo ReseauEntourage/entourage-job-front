@@ -51,9 +51,6 @@ export const StepCvRecapContent = ({
   return (
     <StyledContainer>
       <StyledSection>
-        <StyledSectionTitle>
-          <Text weight="semibold">Résumé de votre profil</Text>
-        </StyledSectionTitle>
         <ProfileCompletionSchemaField
           formSchema={profileCompletionFormSchema}
           field={introductionField}

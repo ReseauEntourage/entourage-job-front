@@ -15,7 +15,7 @@ export const StyledCVExperienceCard = styled.div`
   gap: 16px;
   flex: 1;
   white-space: pre-line;
-  border: 1px solid ${COLORS.gray};
+  border: 2px solid ${COLORS.gray};
   border-radius: 10px;
   padding: 16px;
   background-color: ${COLORS.white};
