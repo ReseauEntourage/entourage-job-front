@@ -92,7 +92,9 @@ export const WizardRecommendationsSidePanel = ({
             <WizardCompatibleProfileCard
               key={rec.id}
               profile={rec.publicProfile}
+              variant="compact"
               subtitleContext="sectors"
+              locked
             />
           ))
         )}

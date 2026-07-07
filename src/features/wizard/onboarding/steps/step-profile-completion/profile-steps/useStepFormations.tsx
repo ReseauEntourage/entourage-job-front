@@ -59,9 +59,15 @@ export const useStepFormations = ({ user }: UseStepFormationsProps) => {
     }
   }, [dispatch, updateProfileStatus]);
 
-  const handleChange = useCallback((next: Formation[]) => {
-    setFormations(next);
-  }, []);
+  const handleChange = useCallback(
+    (next: Formation[]) => {
+      setFormations(next);
+      dispatch(
+        currentUserActions.profileCompleteDraftUpdated({ formations: next })
+      );
+    },
+    [dispatch]
+  );
 
   const onboardingStepFormations: WizardStep = {
     summary: {

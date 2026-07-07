@@ -104,6 +104,44 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
     }
   }, [initialValues, formMethods]);
 
+  useEffect(() => {
+    const subscription = formMethods.watch((formValues, { name }) => {
+      if (name === 'skills') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            skills: (formValues.skills ?? [])
+              .filter((s): s is FilterConstant<string> => !!s)
+              .map((s) => ({ name: s.value })),
+          })
+        );
+      } else if (name === 'languages') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            userProfileLanguages: (formValues.languages ?? [])
+              .filter((l): l is FilterConstant<string> => !!l)
+              .map((l) => ({
+                languageId: l.value,
+                language: {
+                  id: l.value,
+                  name: String(l.label),
+                  value: l.value,
+                },
+              })),
+          })
+        );
+      } else if (name === 'interests') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            interests: (formValues.interests ?? [])
+              .filter((int): int is FilterConstant<string> => !!int)
+              .map((int, order) => ({ name: int.value, order })),
+          })
+        );
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [dispatch, formMethods]);
+
   const onboardingStepSkills: WizardStep = {
     summary: {
       title: 'Compétences et intérêts',

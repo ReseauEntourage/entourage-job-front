@@ -59,9 +59,15 @@ export const useStepExperiences = ({ user }: UseStepExperiencesProps) => {
     }
   }, [dispatch, updateProfileStatus]);
 
-  const handleChange = useCallback((next: Experience[]) => {
-    setExperiences(next);
-  }, []);
+  const handleChange = useCallback(
+    (next: Experience[]) => {
+      setExperiences(next);
+      dispatch(
+        currentUserActions.profileCompleteDraftUpdated({ experiences: next })
+      );
+    },
+    [dispatch]
+  );
 
   const onboardingStepExperiences: WizardStep = {
     summary: {

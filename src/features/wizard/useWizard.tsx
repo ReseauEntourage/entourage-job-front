@@ -15,6 +15,7 @@ import { ConfirmModalStep } from '@/src/features/wizard/onboarding/confirm-step-
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { determineStartingStep } from '@/src/features/wizard/onboarding/onboarding.utils';
 import { useOnboardingStepElearning } from '@/src/features/wizard/onboarding/steps/step-elearning/useOnboardingStepElearning';
+import { useOnboardingStepMatchRecap } from '@/src/features/wizard/onboarding/steps/step-match-recap/useOnboardingStepMatchRecap';
 import { ProfileMode } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/types';
 import { useStepCvChoice } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvChoice';
 import { useStepCvLoading } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvLoading';
@@ -143,9 +144,40 @@ export const useWizard = (): WizardState => {
     setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
   }, []);
 
+  // Onboarding completion
+  const onOnboardingCompleted = useCallback(async () => {
+    await new Promise<void>((resolve) => {
+      openModal(<OnboardingCompletionModal onDone={() => resolve()} />);
+    });
+    dispatch(
+      currentUserActions.updateOnboardingStatusRequested({
+        onboardingStatus: OnboardingStatus.COMPLETED,
+      })
+    );
+  }, [dispatch]);
+
+  // Complétion "silencieuse" (clic CTA de l'étape récap) : le composant appelant
+  // gère lui-même la navigation (messagerie/annuaire), donc on n'ouvre pas la
+  // modale webinaire et on n'applique pas la redirection dashboard générique.
+  const skipDashboardRedirectRef = useRef(false);
+  const completeOnboardingSilently = useCallback(() => {
+    skipDashboardRedirectRef.current = true;
+    dispatch(
+      currentUserActions.updateOnboardingStatusRequested({
+        onboardingStatus: OnboardingStatus.COMPLETED,
+      })
+    );
+  }, [dispatch]);
+
   // ─── Onboarding step hooks — called unconditionally ──────────────────────────
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: currentUser?.role as UserRoles | undefined,
+    triggerAdvance,
+  });
+  const { onboardingStepMatchRecap } = useOnboardingStepMatchRecap({
+    userRole: currentUser?.role as UserRoles | undefined,
+    onOnboardingCompleted,
+    completeOnboardingSilently,
   });
   const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation({
     user: currentUser,
@@ -187,6 +219,7 @@ export const useWizard = (): WizardState => {
     }
 
     steps.push(onboardingStepElearning);
+    steps.push(onboardingStepMatchRecap);
     return steps;
   }, [
     currentUser?.role,
@@ -200,6 +233,7 @@ export const useWizard = (): WizardState => {
     onboardingStepFormations,
     onboardingStepSkills,
     onboardingStepElearning,
+    onboardingStepMatchRecap,
   ]);
 
   const isProfileLoaded =
@@ -253,6 +287,10 @@ export const useWizard = (): WizardState => {
   // Redirect to dashboard after onboarding completion
   useEffect(() => {
     if (updateOnboardingStatus === ReduxRequestEvents.SUCCEEDED) {
+      if (skipDashboardRedirectRef.current) {
+        skipDashboardRedirectRef.current = false;
+        return;
+      }
       router.push('/backoffice/dashboard');
     }
   }, [updateOnboardingStatus, router]);
@@ -354,18 +392,6 @@ export const useWizard = (): WizardState => {
     : registrationIsLoading;
 
   const isInitializing = isOnboardingPhase && onboardingIdx === null;
-
-  // Onboarding completion
-  const onOnboardingCompleted = useCallback(async () => {
-    await new Promise<void>((resolve) => {
-      openModal(<OnboardingCompletionModal onDone={() => resolve()} />);
-    });
-    dispatch(
-      currentUserActions.updateOnboardingStatusRequested({
-        onboardingStatus: OnboardingStatus.COMPLETED,
-      })
-    );
-  }, [dispatch]);
 
   const onNext = useCallback(async () => {
     if (isOnboardingPhase) {

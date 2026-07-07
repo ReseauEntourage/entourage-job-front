@@ -32,6 +32,10 @@ const badgeVariantStyles: Record<BadgeVariant, ReturnType<typeof css>> = {
     background-color: ${COLORS.lightOrange};
     color: ${COLORS.orangeSocial};
   `,
+  [BadgeVariant.Highlight]: css`
+    background-color: ${COLORS.amber};
+    color: ${COLORS.white};
+  `,
 };
 
 export const StyledBadge = styled.div<{

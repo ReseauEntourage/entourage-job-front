@@ -96,6 +96,36 @@ export const StyledSkillTag = styled.div`
   font-weight: 400;
 `;
 
+export const StyledCVExperienceSummary = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+export const StyledCVExperienceSummaryDate = styled.div`
+  flex-shrink: 0;
+  width: 130px;
+  color: ${COLORS.darkGray};
+  font-size: 13px;
+`;
+
+export const StyledCVExperienceSummaryContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+`;
+
+export const StyledCVExperienceSummaryTitle = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${COLORS.black};
+`;
+
+export const StyledCVExperienceSummaryStructure = styled.div`
+  font-size: 13px;
+  color: ${COLORS.darkGray};
+`;
+
 export const StyledEditToolsContainer = styled.div`
   display: flex;
   flex-direction: column;

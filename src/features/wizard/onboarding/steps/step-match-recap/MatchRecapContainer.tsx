@@ -1,0 +1,146 @@
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ProfileRecommendation } from '@/src/api/types';
+import { UserRoles } from '@/src/constants/users';
+import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
+import { openModal } from '@/src/features/modals/Modal/openModal';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { Api } from 'src/api';
+import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
+import { Content, MatchRecapPanelState } from './Content/Content';
+
+interface MatchRecapContainerProps {
+  userRole: UserRoles | undefined;
+  onOnboardingCompleted: () => Promise<void>;
+  completeOnboardingSilently: () => void;
+}
+
+// Ce composant n'est monté que lorsque le wizard atteint réellement l'étape
+// récap : l'utilisateur est donc déjà authentifié (contrairement au hook de
+// step, appelé sans condition à chaque rendu de useWizard).
+export const MatchRecapContainer = ({
+  userRole,
+  onOnboardingCompleted,
+  completeOnboardingSilently,
+}: MatchRecapContainerProps) => {
+  const router = useRouter();
+  const currentUser = useAuthenticatedUser();
+
+  const [panelState, setPanelState] = useState<MatchRecapPanelState>('LOADING');
+  const [recommendation, setRecommendation] =
+    useState<ProfileRecommendation | null>(null);
+  const hasCompletedRef = useRef(false);
+
+  const fetchReco = useCallback(async () => {
+    try {
+      const { data } = await Api.getProfilesRecommendations({ limit: 1 });
+      if (data.embeddingPending) {
+        setPanelState('EMBEDDING_PENDING');
+        return;
+      }
+
+      const topRecommendation: ProfileRecommendation | null =
+        data.recommendations?.[0] ?? null;
+
+      if (!topRecommendation) {
+        setRecommendation(null);
+        setPanelState('READY');
+        return;
+      }
+
+      // La liste de recommandations n'expose pas experiences/formations :
+      // on les récupère via le profil complet pour le seul profil mis en avant.
+      try {
+        const { data: fullProfile } = await Api.getPublicUserProfile(
+          topRecommendation.publicProfile.id
+        );
+        setRecommendation({
+          ...topRecommendation,
+          publicProfile: {
+            ...topRecommendation.publicProfile,
+            experiences: fullProfile.experiences ?? [],
+            formations: fullProfile.formations ?? [],
+          },
+        });
+      } catch {
+        setRecommendation(topRecommendation);
+      }
+      setPanelState('READY');
+    } catch {
+      setRecommendation(null);
+      setPanelState('READY');
+    }
+  }, []);
+
+  const handleEmbeddingReady = useCallback(() => {
+    setPanelState('COMPUTING_RECO');
+    fetchReco();
+  }, [fetchReco]);
+
+  useEmbeddingStatus({
+    onReady: handleEmbeddingReady,
+    enabled: panelState === 'EMBEDDING_PENDING',
+  });
+
+  useEffect(() => {
+    fetchReco();
+  }, [fetchReco]);
+
+  // Passer l'attente / résultat vide : complète l'onboarding via la modale webinaire
+  const completeWithModal = useCallback(() => {
+    if (hasCompletedRef.current) {
+      return;
+    }
+    hasCompletedRef.current = true;
+    void onOnboardingCompleted();
+  }, [onOnboardingCompleted]);
+
+  useEffect(() => {
+    if (panelState === 'READY' && !recommendation) {
+      completeWithModal();
+    }
+  }, [panelState, recommendation, completeWithModal]);
+
+  // Clic sur un CTA quand un match est affiché : complète l'onboarding sans modale
+  const completeSilently = useCallback(() => {
+    if (hasCompletedRef.current) {
+      return;
+    }
+    hasCompletedRef.current = true;
+    completeOnboardingSilently();
+  }, [completeOnboardingSilently]);
+
+  const handlePrimaryCta = useCallback(() => {
+    if (!recommendation) {
+      return;
+    }
+    completeSilently();
+    if (!currentUser.elearningCompletedAt) {
+      openModal(<ElearningGateModal />);
+      return;
+    }
+    router.push(
+      `/backoffice/messaging?userId=${recommendation.publicProfile.id}`
+    );
+  }, [recommendation, completeSilently, currentUser, router]);
+
+  const handleSecondaryCta = useCallback(() => {
+    completeSilently();
+    const oppositeRole =
+      userRole === UserRoles.CANDIDATE ? UserRoles.COACH : UserRoles.CANDIDATE;
+    router.push(
+      `/backoffice/annuaire?entity=user&sort=relevance&role=${oppositeRole}`
+    );
+  }, [completeSilently, userRole, router]);
+
+  return (
+    <Content
+      panelState={panelState}
+      recommendation={recommendation}
+      userRole={userRole}
+      onSkipWait={completeWithModal}
+      onPrimaryCta={handlePrimaryCta}
+      onSecondaryCta={handleSecondaryCta}
+    />
+  );
+};

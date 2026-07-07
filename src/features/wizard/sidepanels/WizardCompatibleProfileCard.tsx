@@ -1,11 +1,13 @@
 import { PublicProfile } from '@/src/api/types';
-import { Button, Tooltip } from '@/src/components/ui';
+import { Button, Card, Tooltip } from '@/src/components/ui';
 import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
 import { Badge, BadgeVariant } from '@/src/components/ui/Badge';
+import { StyledSeparator } from '@/src/components/ui/Cards/EntityCards/ProfileCard/ProfileCard.styles';
 import { LucidIcon } from '@/src/components/ui/Icons';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
 import { Text } from '@/src/components/ui/Text';
 import { UserRoles } from '@/src/constants/users';
+import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import {
   StyledCard,
   StyledCardBottom,
@@ -13,21 +15,63 @@ import {
   StyledCardName,
   StyledCardTags,
   StyledCardTop,
+  StyledFullCard,
+  StyledFullCTAWrapper,
+  StyledFullSection,
+  StyledFullSectorLine,
 } from './WizardCompatibleProfileCard.styles';
 
-interface WizardCompatibleProfileCardProps {
+const EXPERIENCES_LIMIT = 2;
+const FORMATIONS_LIMIT = 1;
+
+interface WizardCompatibleProfileCardBaseProps {
   profile: PublicProfile;
-  subtitleContext: 'nudges' | 'sectors';
+  locked?: boolean;
 }
 
-export const WizardCompatibleProfileCard = ({
-  profile,
-  subtitleContext,
-}: WizardCompatibleProfileCardProps) => {
+type WizardCompatibleProfileCardProps = WizardCompatibleProfileCardBaseProps &
+  (
+    | { variant: 'compact'; subtitleContext: 'nudges' | 'sectors' }
+    | { variant: 'full'; badgeLabel: string }
+  );
+
+const LockedCTA = () => (
+  <Tooltip
+    content={
+      <>
+        <LucidIcon name="Lock" size={12} />
+        &nbsp; Finalisez votre inscription pour voir le profil
+      </>
+    }
+    placement="top"
+  >
+    <Button disabled>
+      <LucidIcon name="Lock" size={12} />
+      &nbsp; Contacter
+    </Button>
+  </Tooltip>
+);
+
+function useWizardCompatibleProfileData(profile: PublicProfile) {
   const isCandidate = profile.role === UserRoles.CANDIDATE;
   const displayName = `${profile.firstName} ${profile.lastName.charAt(0)}.`;
 
   const sectorOccupations = profile.sectorOccupations ?? [];
+
+  const sectorNames = sectorOccupations
+    .map((so) => so.businessSector?.name)
+    .filter((name): name is string => Boolean(name));
+
+  const sectorOccupationLines = sectorOccupations
+    .map((so) => {
+      const sector = so.businessSector?.name;
+      const occupation = so.occupation?.name;
+      if (sector && occupation) {
+        return `${sector} - ${occupation}`;
+      }
+      return sector ?? occupation ?? null;
+    })
+    .filter((line): line is string => Boolean(line));
 
   const occupationNames = sectorOccupations
     .map((so) => so.occupation?.name)
@@ -38,11 +82,45 @@ export const WizardCompatibleProfileCard = ({
       ? occupationNames.join(', ')
       : profile.currentJob ?? null;
 
-  const sectorNames = sectorOccupations
-    .map((so) => so.businessSector?.name)
-    .filter((name): name is string => Boolean(name));
+  const nudges = (profile.nudges ?? []).map((nudge) => ({
+    id: nudge.id,
+    label: isCandidate ? nudge.nameRequest : nudge.nameOffer,
+  }));
 
-  const nudges = profile.nudges ?? [];
+  const experiences = (profile.experiences ?? []).slice(0, EXPERIENCES_LIMIT);
+  const formations = (profile.formations ?? []).slice(0, FORMATIONS_LIMIT);
+
+  return {
+    displayName,
+    sectorNames,
+    sectorOccupationLines,
+    metierText,
+    nudges,
+    experiences,
+    formations,
+  };
+}
+
+type WizardCompatibleProfileData = ReturnType<
+  typeof useWizardCompatibleProfileData
+>;
+
+interface CompactProfileCardProps {
+  profile: PublicProfile;
+  locked: boolean;
+  subtitleContext: 'nudges' | 'sectors';
+  data: WizardCompatibleProfileData;
+}
+
+const CompactProfileCard = ({
+  profile,
+  locked,
+  subtitleContext,
+  data,
+}: CompactProfileCardProps) => {
+  const { displayName, metierText, sectorNames, nudges } = data;
+  const showSectors = subtitleContext === 'sectors';
+  const showNudges = subtitleContext === 'nudges';
 
   return (
     <StyledCard>
@@ -59,7 +137,7 @@ export const WizardCompatibleProfileCard = ({
               {metierText}
             </Text>
           )}
-          {subtitleContext === 'sectors' && sectorNames.length > 0 && (
+          {showSectors && sectorNames.length > 0 && (
             <StyledCardTags>
               {sectorNames.map((name, i) => (
                 <Badge
@@ -74,43 +152,152 @@ export const WizardCompatibleProfileCard = ({
               ))}
             </StyledCardTags>
           )}
-          {subtitleContext === 'nudges' && nudges.length > 0 && (
+          {showNudges && nudges.length > 0 && (
             <StyledCardTags>
-              {nudges.map((nudge) => {
-                const label = isCandidate ? nudge.nameRequest : nudge.nameOffer;
-                return (
-                  <Badge
-                    key={nudge.id}
-                    variant={BadgeVariant.HoverBlue}
-                    borderRadius="large"
-                  >
-                    <Text size="small" color="darkBlue">
-                      {label}
-                    </Text>
-                  </Badge>
-                );
-              })}
+              {nudges.map((nudge) => (
+                <Badge
+                  key={nudge.id}
+                  variant={BadgeVariant.HoverBlue}
+                  borderRadius="large"
+                >
+                  <Text size="small" color="darkBlue">
+                    {nudge.label}
+                  </Text>
+                </Badge>
+              ))}
             </StyledCardTags>
           )}
         </StyledCardInfo>
       </StyledCardTop>
       <StyledCardBottom>
         <AvailabilityTag isAvailable={profile.isAvailable} />
-        <Tooltip
-          content={
-            <>
-              <LucidIcon name="Lock" size={12} />
-              &nbsp; Finalisez votre inscription pour voir le profil
-            </>
-          }
-          placement="top"
-        >
-          <Button disabled>
-            <LucidIcon name="Lock" size={12} />
-            &nbsp; Contacter
-          </Button>
-        </Tooltip>
+        {locked && <LockedCTA />}
       </StyledCardBottom>
     </StyledCard>
+  );
+};
+
+interface FullProfileCardProps {
+  profile: PublicProfile;
+  locked: boolean;
+  badgeLabel: string;
+  data: WizardCompatibleProfileData;
+}
+
+const FullProfileCard = ({
+  profile,
+  locked,
+  badgeLabel,
+  data,
+}: FullProfileCardProps) => {
+  const {
+    displayName,
+    sectorOccupationLines,
+    nudges,
+    experiences,
+    formations,
+  } = data;
+
+  return (
+    <Card>
+      <StyledFullCard>
+        <ImgUserProfile
+          user={profile}
+          hasPicture={profile.hasPicture}
+          size={176}
+        />
+        <Badge variant={BadgeVariant.Primary} borderRadius="large">
+          {badgeLabel}
+        </Badge>
+        <StyledCardName>{displayName}</StyledCardName>
+        {sectorOccupationLines.map((line, i) => (
+          <StyledFullSectorLine key={`${line}-${i}`}>
+            {line}
+          </StyledFullSectorLine>
+        ))}
+        {nudges.length > 0 && (
+          <StyledCardTags>
+            {nudges.map((nudge) => (
+              <Badge
+                key={nudge.id}
+                variant={BadgeVariant.HoverBlue}
+                borderRadius="large"
+              >
+                <Text size="small" color="darkBlue">
+                  {nudge.label}
+                </Text>
+              </Badge>
+            ))}
+          </StyledCardTags>
+        )}
+        <AvailabilityTag isAvailable={profile.isAvailable} />
+      </StyledFullCard>
+      {experiences.length > 0 && (
+        <StyledFullSection>
+          <StyledSeparator />
+          {experiences.map((experience) => (
+            <CVExperienceOrFormation
+              key={experience.id}
+              title={experience.title}
+              startDate={experience.startDate}
+              endDate={experience.endDate}
+              structure={experience.company}
+              location={experience.location}
+              skills={experience.skills}
+              variant="summary"
+            />
+          ))}
+        </StyledFullSection>
+      )}
+      {formations.length > 0 && (
+        <StyledFullSection>
+          <StyledSeparator />
+          {formations.map((formation) => (
+            <CVExperienceOrFormation
+              key={formation.id}
+              title={formation.title}
+              startDate={formation.startDate}
+              endDate={formation.endDate}
+              structure={formation.institution}
+              location={formation.location}
+              skills={formation.skills}
+              variant="summary"
+            />
+          ))}
+        </StyledFullSection>
+      )}
+      {locked && (
+        <StyledFullCTAWrapper>
+          <LockedCTA />
+        </StyledFullCTAWrapper>
+      )}
+    </Card>
+  );
+};
+
+export const WizardCompatibleProfileCard = (
+  props: WizardCompatibleProfileCardProps
+) => {
+  const { profile, locked = false } = props;
+  const data = useWizardCompatibleProfileData(profile);
+
+  if (props.variant === 'compact') {
+    return (
+      <CompactProfileCard
+        profile={profile}
+        locked={locked}
+        subtitleContext={props.subtitleContext}
+        data={data}
+      />
+    );
+  }
+
+  return (
+    <FullProfileCard
+      profile={profile}
+      locked={locked}
+      badgeLabel={props.badgeLabel}
+      data={data}
+    />
   );
 };

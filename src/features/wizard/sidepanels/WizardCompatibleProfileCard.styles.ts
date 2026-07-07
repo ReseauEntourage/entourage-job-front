@@ -57,6 +57,30 @@ export const StyledCardBottom = styled.div`
   gap: 8px;
 `;
 
+export const StyledFullCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+`;
+
+export const StyledFullSectorLine = styled.span`
+  font-size: 13px;
+  color: ${COLORS.darkGray};
+`;
+
+export const StyledFullSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const StyledFullCTAWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const StyledLockedButton = styled.button`
   display: flex;
   align-items: center;

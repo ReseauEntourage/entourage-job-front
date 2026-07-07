@@ -4,11 +4,9 @@ import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { useElearningQuiz } from '@/src/features/backoffice/elearning/elearning-unit/useElearningQuiz';
 import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
-import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { useIsDesktop } from '@/src/hooks/utils/usePlatforms';
 import { store } from '@/src/store/store';
-import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   elearningActions,
   selectElearningUnits,
@@ -19,10 +17,12 @@ import { ElearningSidePanel } from './SidePanel/ElearningSidePanel';
 
 interface WizardStepElearningProps {
   userRole: User['role'] | undefined;
+  triggerAdvance: () => void;
 }
 
 export const useOnboardingStepElearning = ({
   userRole,
+  triggerAdvance,
 }: WizardStepElearningProps) => {
   const getState = () => store.getState() as any;
   const dispatch = useDispatch();
@@ -91,12 +91,8 @@ export const useOnboardingStepElearning = ({
   };
 
   const skipElearning = useCallback(async (): Promise<void> => {
-    dispatch(
-      currentUserActions.updateOnboardingStatusRequested({
-        onboardingStatus: OnboardingStatus.COMPLETED,
-      })
-    );
-  }, [dispatch]);
+    triggerAdvance();
+  }, [triggerAdvance]);
 
   // ─── Parcours séquentiel des modules ──────────────────────────────────────
   const [phase, setPhase] = useState<ElearningStepPhase>('intro');

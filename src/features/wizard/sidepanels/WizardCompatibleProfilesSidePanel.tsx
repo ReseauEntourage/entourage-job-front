@@ -240,7 +240,9 @@ export const WizardCompatibleProfilesSidePanel = ({
               <WizardCompatibleProfileCard
                 key={profile.id}
                 profile={profile}
+                variant="compact"
                 subtitleContext={subtitleContext}
+                locked
               />
             ))
           )}
