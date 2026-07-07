@@ -5,14 +5,12 @@ import { MatchRecapContainer } from './MatchRecapContainer';
 
 interface UseOnboardingStepMatchRecapProps {
   userRole: UserRoles | undefined;
-  onOnboardingCompleted: () => Promise<void>;
-  completeOnboardingSilently: () => void;
+  onOnboardingCompleted: (skipDashboardRedirect?: boolean) => Promise<void>;
 }
 
 export const useOnboardingStepMatchRecap = ({
   userRole,
   onOnboardingCompleted,
-  completeOnboardingSilently,
 }: UseOnboardingStepMatchRecapProps) => {
   const onboardingStepMatchRecap = {
     summary: {
@@ -29,7 +27,6 @@ export const useOnboardingStepMatchRecap = ({
       <MatchRecapContainer
         userRole={userRole}
         onOnboardingCompleted={onOnboardingCompleted}
-        completeOnboardingSilently={completeOnboardingSilently}
       />
     ),
     section: 'formation',

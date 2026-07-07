@@ -29,7 +29,7 @@ const StyledSectionTitle = styled.div`
 `;
 
 const introductionField = buildIntroductionField(
-  'En quelques lignes, présentez votre parcours et vos objectifs.'
+  'Cette présentation sera visible par les autres membres du réseau d’entraide. En quelques lignes, parlez de votre parcours et de ce que vous recherchez.'
 );
 
 const [descriptionField, skillsField, languagesField, interestsField] =

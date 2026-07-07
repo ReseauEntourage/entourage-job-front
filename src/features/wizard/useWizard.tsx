@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal/openModal';
-import { OnboardingCompletionModal } from '@/src/features/wizard/onboarding/completion-modal/OnboardingCompletionModal';
 import { ConfirmModalStep } from '@/src/features/wizard/onboarding/confirm-step-modal/ConfirmModalStep';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { determineStartingStep } from '@/src/features/wizard/onboarding/onboarding.utils';
@@ -23,8 +22,10 @@ import { useStepCvRecap } from '@/src/features/wizard/onboarding/steps/step-prof
 import { useStepExperiences } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepExperiences';
 import { useStepFormations } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepFormations';
 import { useStepPhoto } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepPhoto';
+import { useStepPresentation } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepPresentation';
 import { useStepSkills } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepSkills';
 import { useOnboardingStepSocialSituation } from '@/src/features/wizard/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
+import { useOnboardingStepWebinar } from '@/src/features/wizard/onboarding/steps/step-webinar/useOnboardingStepWebinar';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useProfileGeneration } from '@/src/hooks/useProfileGeneration';
@@ -144,40 +145,36 @@ export const useWizard = (): WizardState => {
     setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
   }, []);
 
-  // Onboarding completion
-  const onOnboardingCompleted = useCallback(async () => {
-    await new Promise<void>((resolve) => {
-      openModal(<OnboardingCompletionModal onDone={() => resolve()} />);
-    });
-    dispatch(
-      currentUserActions.updateOnboardingStatusRequested({
-        onboardingStatus: OnboardingStatus.COMPLETED,
-      })
-    );
-  }, [dispatch]);
-
-  // Complétion "silencieuse" (clic CTA de l'étape récap) : le composant appelant
-  // gère lui-même la navigation (messagerie/annuaire), donc on n'ouvre pas la
-  // modale webinaire et on n'applique pas la redirection dashboard générique.
+  // Onboarding completion. skipDashboardRedirect est utilisé par l'étape récap
+  // quand le composant appelant gère lui-même la navigation (messagerie/annuaire
+  // suite à un clic CTA) : on n'applique alors pas la redirection dashboard générique.
   const skipDashboardRedirectRef = useRef(false);
-  const completeOnboardingSilently = useCallback(() => {
-    skipDashboardRedirectRef.current = true;
-    dispatch(
-      currentUserActions.updateOnboardingStatusRequested({
-        onboardingStatus: OnboardingStatus.COMPLETED,
-      })
-    );
-  }, [dispatch]);
+  const onOnboardingCompleted = useCallback(
+    async (skipDashboardRedirect = false) => {
+      if (skipDashboardRedirect) {
+        skipDashboardRedirectRef.current = true;
+      }
+      dispatch(
+        currentUserActions.updateOnboardingStatusRequested({
+          onboardingStatus: OnboardingStatus.COMPLETED,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   // ─── Onboarding step hooks — called unconditionally ──────────────────────────
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: currentUser?.role as UserRoles | undefined,
     triggerAdvance,
   });
+  const { onboardingStepWebinar } = useOnboardingStepWebinar({
+    userRole: currentUser?.role as UserRoles | undefined,
+    triggerAdvance,
+  });
   const { onboardingStepMatchRecap } = useOnboardingStepMatchRecap({
     userRole: currentUser?.role as UserRoles | undefined,
     onOnboardingCompleted,
-    completeOnboardingSilently,
   });
   const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation({
     user: currentUser,
@@ -190,6 +187,9 @@ export const useWizard = (): WizardState => {
   });
   const { onboardingStepCvLoading } = useStepCvLoading();
   const { onboardingStepCvRecap } = useStepCvRecap({ user: currentUser });
+  const { onboardingStepPresentation } = useStepPresentation({
+    user: currentUser,
+  });
   const { onboardingStepExperiences } = useStepExperiences({
     user: currentUser,
   });
@@ -213,12 +213,14 @@ export const useWizard = (): WizardState => {
       steps.push(onboardingStepCvLoading);
       steps.push(onboardingStepCvRecap);
     } else if (profileMode === 'manual') {
+      steps.push(onboardingStepPresentation);
       steps.push(onboardingStepExperiences);
       steps.push(onboardingStepFormations);
       steps.push(onboardingStepSkills);
     }
 
     steps.push(onboardingStepElearning);
+    steps.push(onboardingStepWebinar);
     steps.push(onboardingStepMatchRecap);
     return steps;
   }, [
@@ -229,10 +231,12 @@ export const useWizard = (): WizardState => {
     onboardingStepCvChoice,
     onboardingStepCvLoading,
     onboardingStepCvRecap,
+    onboardingStepPresentation,
     onboardingStepExperiences,
     onboardingStepFormations,
     onboardingStepSkills,
     onboardingStepElearning,
+    onboardingStepWebinar,
     onboardingStepMatchRecap,
   ]);
 

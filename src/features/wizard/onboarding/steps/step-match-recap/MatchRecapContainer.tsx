@@ -11,8 +11,7 @@ import { Content, MatchRecapPanelState } from './Content/Content';
 
 interface MatchRecapContainerProps {
   userRole: UserRoles | undefined;
-  onOnboardingCompleted: () => Promise<void>;
-  completeOnboardingSilently: () => void;
+  onOnboardingCompleted: (skipDashboardRedirect?: boolean) => Promise<void>;
 }
 
 // Ce composant n'est monté que lorsque le wizard atteint réellement l'étape
@@ -21,7 +20,6 @@ interface MatchRecapContainerProps {
 export const MatchRecapContainer = ({
   userRole,
   onOnboardingCompleted,
-  completeOnboardingSilently,
 }: MatchRecapContainerProps) => {
   const router = useRouter();
   const currentUser = useAuthenticatedUser();
@@ -86,35 +84,31 @@ export const MatchRecapContainer = ({
     fetchReco();
   }, [fetchReco]);
 
-  // Passer l'attente / résultat vide : complète l'onboarding via la modale webinaire
-  const completeWithModal = useCallback(() => {
-    if (hasCompletedRef.current) {
-      return;
-    }
-    hasCompletedRef.current = true;
-    void onOnboardingCompleted();
-  }, [onOnboardingCompleted]);
+  // Complète l'onboarding une seule fois. skipDashboardRedirect est utilisé
+  // lorsque ce composant gère lui-même la navigation suivante (CTA messagerie/annuaire),
+  // pour éviter que la redirection dashboard générique ne l'écrase.
+  const completeOnboarding = useCallback(
+    (skipDashboardRedirect = false) => {
+      if (hasCompletedRef.current) {
+        return;
+      }
+      hasCompletedRef.current = true;
+      void onOnboardingCompleted(skipDashboardRedirect);
+    },
+    [onOnboardingCompleted]
+  );
 
   useEffect(() => {
     if (panelState === 'READY' && !recommendation) {
-      completeWithModal();
+      completeOnboarding();
     }
-  }, [panelState, recommendation, completeWithModal]);
-
-  // Clic sur un CTA quand un match est affiché : complète l'onboarding sans modale
-  const completeSilently = useCallback(() => {
-    if (hasCompletedRef.current) {
-      return;
-    }
-    hasCompletedRef.current = true;
-    completeOnboardingSilently();
-  }, [completeOnboardingSilently]);
+  }, [panelState, recommendation, completeOnboarding]);
 
   const handlePrimaryCta = useCallback(() => {
     if (!recommendation) {
       return;
     }
-    completeSilently();
+    completeOnboarding(true);
     if (!currentUser.elearningCompletedAt) {
       openModal(<ElearningGateModal />);
       return;
@@ -122,23 +116,23 @@ export const MatchRecapContainer = ({
     router.push(
       `/backoffice/messaging?userId=${recommendation.publicProfile.id}`
     );
-  }, [recommendation, completeSilently, currentUser, router]);
+  }, [recommendation, completeOnboarding, currentUser, router]);
 
   const handleSecondaryCta = useCallback(() => {
-    completeSilently();
+    completeOnboarding(true);
     const oppositeRole =
       userRole === UserRoles.CANDIDATE ? UserRoles.COACH : UserRoles.CANDIDATE;
     router.push(
       `/backoffice/annuaire?entity=user&sort=relevance&role=${oppositeRole}`
     );
-  }, [completeSilently, userRole, router]);
+  }, [completeOnboarding, userRole, router]);
 
   return (
     <Content
       panelState={panelState}
       recommendation={recommendation}
       userRole={userRole}
-      onSkipWait={completeWithModal}
+      onSkipWait={() => completeOnboarding()}
       onPrimaryCta={handlePrimaryCta}
       onSecondaryCta={handleSecondaryCta}
     />
