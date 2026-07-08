@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
@@ -10,6 +11,7 @@ import {
   WIZARD_SECTIONS,
   WizardStep,
 } from '@/src/features/wizard/shell/wizard.types';
+import { selectFormErrorMessage } from '@/src/use-cases/onboarding';
 import { HeaderWizardStep } from './components/HeaderWizardStep/HeaderWizardStep';
 
 interface WizardRunShellProps {
@@ -39,6 +41,10 @@ export const WizardRunShell = ({
   sidePanelContent,
   mobileBottomSheet = false,
 }: WizardRunShellProps) => {
+  // Message d'erreur posé par les étapes (échec de sauvegarde, champs manquants) ;
+  // réinitialisé par useWizard à chaque changement d'étape et à chaque soumission.
+  const stepErrorMessage = useSelector(selectFormErrorMessage);
+
   // Task 3.1 – ne montrer que les sections réellement présentes dans le flow courant,
   // plutôt qu'une liste fixe commune à tous les flows (ex. Entreprise n'a que "Inscription").
   const sections = useMemo(() => {
@@ -121,6 +127,11 @@ export const WizardRunShell = ({
             <React.Fragment key={currentWizardIdx}>
               {currentStep.content}
             </React.Fragment>
+            {stepErrorMessage && (
+              <div data-testid="wizard-step-error">
+                <Alert type={AlertType.Error}>{stepErrorMessage}</Alert>
+              </div>
+            )}
             {!currentStep.hideGenericStepFooter && (
               <StyledOnboardingActions>
                 {canGoBack && onBack && (

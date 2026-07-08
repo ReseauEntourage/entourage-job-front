@@ -41,6 +41,7 @@ import {
   selectUpdateOnboardingStatusSelectors,
   uploadExternalCvSelectors,
 } from '@/src/use-cases/current-user';
+import { onboardingActions } from '@/src/use-cases/onboarding';
 import { createUserSelectors } from '@/src/use-cases/registration';
 import {
   EMAIL_CONFIRMATION_STEP,
@@ -455,6 +456,11 @@ export const useWizard = (): WizardState => {
     ? emailConfirmationOffset
     : currentWizardIdx;
 
+  // Le message d'erreur d'étape ne doit pas survivre à un changement d'étape
+  useEffect(() => {
+    dispatch(onboardingActions.setFormErrorMessage(null));
+  }, [currentStepIdx, dispatch]);
+
   const currentStep = isOnboardingPhase
     ? onboardingIdx !== null
       ? onboardingSteps[onboardingIdx] ?? null
@@ -502,6 +508,7 @@ export const useWizard = (): WizardState => {
       }
 
       if (step.onSubmit) {
+        dispatch(onboardingActions.setFormErrorMessage(null));
         setOnboardingIsLoading(true);
         const result = await step.onSubmit();
         setOnboardingIsLoading(false);
@@ -538,6 +545,7 @@ export const useWizard = (): WizardState => {
     onboardingSteps,
     onOnboardingCompleted,
     emailConfirmationStep,
+    dispatch,
   ]);
 
   const isLastOnboardingStep =

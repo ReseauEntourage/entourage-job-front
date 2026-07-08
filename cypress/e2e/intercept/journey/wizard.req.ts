@@ -38,5 +38,15 @@ export const wizardJourneyRequests = {
       data: { statusCode: 200, body: [] },
       alias: 'elearningUnits',
     },
+    {
+      path: '/organization?**',
+      data: { fixture: 'api/generated/organizations' },
+      alias: 'organizationSearch',
+    },
+    {
+      path: '/companies*',
+      data: { statusCode: 200, body: [] },
+      alias: 'companiesSearch',
+    },
   ] as RequestConfig[],
 };
