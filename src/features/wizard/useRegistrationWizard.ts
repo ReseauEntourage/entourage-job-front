@@ -38,6 +38,7 @@ export interface UseRegistrationWizardReturn {
   decrementStep: () => void;
   canGoBack: boolean;
   isLoading: boolean;
+  effectiveFlow: RegistrationFlow | null;
 }
 
 export function useRegistrationWizard(): UseRegistrationWizardReturn {
@@ -205,5 +206,6 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     decrementStep,
     canGoBack,
     isLoading,
+    effectiveFlow,
   };
 }

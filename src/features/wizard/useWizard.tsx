@@ -9,6 +9,7 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
+import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { determineStartingStep } from '@/src/features/wizard/onboarding/onboarding.utils';
 import { useOnboardingStepElearning } from '@/src/features/wizard/onboarding/steps/step-elearning/useOnboardingStepElearning';
@@ -87,6 +88,7 @@ export const useWizard = (): WizardState => {
     decrementStep: registrationDecrementStep,
     canGoBack: registrationCanGoBack,
     isLoading: registrationIsLoading,
+    effectiveFlow: registrationFlow,
   } = useRegistrationWizard();
 
   // Retour à la sélection si pas de flow valide (null ou valeur non reconnue)
@@ -204,8 +206,29 @@ export const useWizard = (): WizardState => {
   const { onboardingStepFormations } = useStepFormations({ user: currentUser });
   const { onboardingStepSkills } = useStepSkills({ user: currentUser });
 
+  // Le backend positionne onboardingStatus === COMPLETED dès la création du compte
+  // pour Association et Entreprise-admin : ces rôles n'ont pas d'onboarding candidat/coach.
+  const isOnboardingAlreadyCompleted =
+    currentUser?.onboardingStatus === OnboardingStatus.COMPLETED;
+
+  // Avant la création du compte (currentUser encore null), le flow d'inscription
+  // sélectionné suffit déjà à savoir que l'onboarding sera skippé (Association/Entreprise) :
+  // évite que les steps par défaut (photo/elearning/webinar, tagués profil/formation)
+  // fassent apparaître ces sections dans le stepper pendant l'inscription.
+  const isEarlyOnboardingCompletionFlow =
+    registrationFlow === RegistrationFlow.REFERER ||
+    registrationFlow === RegistrationFlow.COMPANY;
+
+  const shouldSkipOnboardingSteps =
+    isOnboardingAlreadyCompleted ||
+    (!currentUser && isEarlyOnboardingCompletionFlow);
+
   // Task 2.3 – onboardingSteps dynamique selon profileMode
   const onboardingSteps = useMemo(() => {
+    if (shouldSkipOnboardingSteps) {
+      return [];
+    }
+
     const steps: WizardStep[] = [];
 
     if (currentUser?.role === UserRoles.CANDIDATE) {
@@ -232,6 +255,7 @@ export const useWizard = (): WizardState => {
     steps.push(onboardingStepMatchRecap);
     return steps;
   }, [
+    shouldSkipOnboardingSteps,
     currentUser?.role,
     profileMode,
     onboardingStepSocialSituation,
@@ -267,6 +291,7 @@ export const useWizard = (): WizardState => {
   useEffect(() => {
     if (
       !currentUser ||
+      isOnboardingAlreadyCompleted ||
       onboardingIdx !== null ||
       !isProfileLoaded ||
       !isProfileModeReady
@@ -289,6 +314,7 @@ export const useWizard = (): WizardState => {
     });
   }, [
     currentUser,
+    isOnboardingAlreadyCompleted,
     onboardingIdx,
     isProfileLoaded,
     isProfileModeReady,
@@ -306,6 +332,15 @@ export const useWizard = (): WizardState => {
       router.push('/backoffice/dashboard');
     }
   }, [updateOnboardingStatus, router]);
+
+  // Onboarding déjà terminé côté serveur (Association, Entreprise-admin) : redirection
+  // directe sans jamais construire/afficher onboardingSteps, ni redéclencher la requête
+  // de mise à jour du statut (déjà COMPLETED en base).
+  useEffect(() => {
+    if (isOnboardingAlreadyCompleted) {
+      router.push('/backoffice/dashboard');
+    }
+  }, [isOnboardingAlreadyCompleted, router]);
 
   // Task 2.4 – Auto-avance du step cv-loading
   const isUploadCvSucceeded = useSelector(

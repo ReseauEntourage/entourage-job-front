@@ -39,6 +39,21 @@ export const WizardRunShell = ({
   sidePanelContent,
   mobileBottomSheet = false,
 }: WizardRunShellProps) => {
+  // Task 3.1 – ne montrer que les sections réellement présentes dans le flow courant,
+  // plutôt qu'une liste fixe commune à tous les flows (ex. Entreprise n'a que "Inscription").
+  const sections = useMemo(() => {
+    const presentSectionIds = new Set(
+      wizardSteps.map((step) => step.section).filter(Boolean)
+    );
+    return WIZARD_SECTIONS.filter((section) =>
+      presentSectionIds.has(section.id)
+    );
+  }, [wizardSteps]);
+
+  // Un flow qui ne traverse qu'une seule section (ex. Association, Entreprise
+  // une fois l'onboarding candidat/coach exclu) n'a pas besoin de stepper.
+  const hideStepper = sections.length <= 1;
+
   const subProgress = useMemo(() => {
     const currentSectionId = wizardSteps[currentWizardIdx]?.section;
     if (!currentSectionId) {
@@ -76,11 +91,13 @@ export const WizardRunShell = ({
       mobileBottomSheet={mobileBottomSheet}
       sectionProgress={sectionProgress}
       stepper={
-        <WizardProgressBar
-          steps={wizardSteps}
-          currentIdx={currentWizardIdx}
-          sections={WIZARD_SECTIONS}
-        />
+        hideStepper ? undefined : (
+          <WizardProgressBar
+            steps={wizardSteps}
+            currentIdx={currentWizardIdx}
+            sections={sections}
+          />
+        )
       }
     >
       {currentStep && !currentStep.hideGenericStepHeader && (
