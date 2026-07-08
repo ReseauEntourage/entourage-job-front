@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 const SIDE_PANEL_WIDTH = `max(35vw, 480px)`;
+const PROGRESS_STRIP_HEIGHT = 4;
 
 export const StyledWizardPageContent = styled.div<{
   $hasSidePanel: boolean;
@@ -63,10 +64,13 @@ export const StyledWizardSidePanel = styled.aside<{
 }>`
   position: fixed;
   ${({ $side }) => ($side === 'left' ? 'left: 0;' : 'right: 0;')}
-  top: ${({ $side }) => ($side === 'right' ? `${HEIGHTS.HEADER + 1}px` : '0')};
+  top: ${({ $side }) =>
+    $side === 'right' ? `${HEIGHTS.HEADER + PROGRESS_STRIP_HEIGHT}px` : '0'};
   width: ${SIDE_PANEL_WIDTH};
   height: ${({ $side }) =>
-    $side === 'right' ? `calc(100vh - ${HEIGHTS.HEADER + 1}px)` : '100vh'};
+    $side === 'right'
+      ? `calc(100vh - ${HEIGHTS.HEADER + PROGRESS_STRIP_HEIGHT}px)`
+      : '100vh'};
   display: flex;
   flex-direction: column;
   z-index: 10;
@@ -116,7 +120,7 @@ export const StyledWizardTopBarProgressStrip = styled.div<{
   position: sticky;
   top: ${HEIGHTS.HEADER}px;
   z-index: 10;
-  height: 4px;
+  height: ${PROGRESS_STRIP_HEIGHT}px;
   width: ${({ $hasSidePanel, $side }) =>
     $hasSidePanel && $side === 'right'
       ? `calc(100% + ${SIDE_PANEL_WIDTH})`
