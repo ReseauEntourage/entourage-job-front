@@ -5,6 +5,7 @@ import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
+import { useIsMobile } from '@/src/hooks/utils';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -56,10 +57,11 @@ export const StepPhotoContent = ({
 }: StepPhotoContentProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const isMobile = useIsMobile();
   const [hasCameraDevice, setHasCameraDevice] = useState(false);
 
   useEffect(() => {
-    if (!navigator.mediaDevices?.enumerateDevices) {
+    if (!isMobile || !navigator.mediaDevices?.enumerateDevices) {
       return;
     }
     navigator.mediaDevices
@@ -68,7 +70,7 @@ export const StepPhotoContent = ({
         setHasCameraDevice(devices.some((d) => d.kind === 'videoinput'));
       })
       .catch(() => {});
-  }, []);
+  }, [isMobile]);
 
   const handleFileChange = useCallback(
     (inputEl: HTMLInputElement) => {

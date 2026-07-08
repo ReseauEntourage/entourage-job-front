@@ -50,7 +50,7 @@ export const useStepPhoto = ({ user }: UseStepPhotoProps) => {
     sidePanelContent: () => <ProfileLivePreviewPanel />,
     mobileBottomSheet: false,
     isNextEnabled: true,
-    isStepCompleted: async () => true,
+    isStepCompleted: async () => profileComplete?.hasPicture ?? false,
     onSubmit: async () => {
       if (selectedPhoto) {
         dispatch(
