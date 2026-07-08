@@ -11,6 +11,7 @@ export const useStepCvLoading = ({
   onManualFallback,
 }: UseStepCvLoadingProps) => {
   const onboardingStepCvLoading: WizardStep = {
+    id: 'cv-loading',
     summary: {
       title: 'Analyse du CV',
       duration: '~30 secondes',

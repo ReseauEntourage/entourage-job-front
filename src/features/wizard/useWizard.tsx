@@ -35,6 +35,7 @@ import {
 } from '@/src/use-cases/authentication/authentication.selectors';
 import {
   currentUserActions,
+  fetchUserSelectors,
   selectCurrentUser,
   selectFetchCurrentProfileStatus,
   selectUpdateOnboardingStatusSelectors,
@@ -91,12 +92,23 @@ export const useWizard = (): WizardState => {
     effectiveFlow: registrationFlow,
   } = useRegistrationWizard();
 
-  // Retour à la sélection si pas de flow valide (null ou valeur non reconnue)
+  const isFetchUserSucceeded = useSelector(
+    fetchUserSelectors.selectIsFetchUserSucceeded
+  );
+  const isFetchUserFailed = useSelector(
+    fetchUserSelectors.selectIsFetchUserFailed
+  );
+  const isFetchUserFinished = isFetchUserSucceeded || isFetchUserFailed;
+
+  // Retour à la sélection si pas de flow valide (null ou valeur non reconnue).
+  // On attend la fin du fetch de l'utilisateur courant : au rechargement direct de
+  // /wizard/run, la page monte avant que /current ne réponde et un utilisateur en
+  // cours d'onboarding serait sinon renvoyé vers /wizard puis le dashboard.
   useEffect(() => {
-    if (!currentUser && registrationSteps.length === 0) {
+    if (!currentUser && isFetchUserFinished && registrationSteps.length === 0) {
       router.replace('/wizard');
     }
-  }, [currentUser, registrationSteps.length, router]);
+  }, [currentUser, isFetchUserFinished, registrationSteps.length, router]);
 
   // Redirection vers /login après déconnexion depuis le wizard
   useEffect(() => {
@@ -153,6 +165,25 @@ export const useWizard = (): WizardState => {
     setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
   }, []);
 
+  // Le hook eLearning déclenche une avance automatique quand toutes les unités
+  // sont complétées (ou qu'aucune n'est assignée au rôle), dès que leur fetch
+  // résout — y compris quand l'étape affichée n'est pas l'eLearning. On ne
+  // laisse passer cette avance que si l'étape courante est bien l'eLearning,
+  // sinon elle décalerait l'index (ou court-circuiterait determineStartingStep).
+  const onboardingStepsRef = useRef<WizardStep[]>([]);
+  const advanceIfOnStep = useCallback((stepId: string) => {
+    setOnboardingIdx((prev) => {
+      if (prev === null) {
+        return prev;
+      }
+      return onboardingStepsRef.current[prev]?.id === stepId ? prev + 1 : prev;
+    });
+  }, []);
+  const advanceFromElearningStep = useCallback(
+    () => advanceIfOnStep('elearning'),
+    [advanceIfOnStep]
+  );
+
   // Onboarding completion. skipDashboardRedirect est utilisé par l'étape récap
   // quand le composant appelant gère lui-même la navigation (messagerie/annuaire
   // suite à un clic CTA) : on n'applique alors pas la redirection dashboard générique.
@@ -174,7 +205,7 @@ export const useWizard = (): WizardState => {
   // ─── Onboarding step hooks — called unconditionally ──────────────────────────
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: currentUser?.role as UserRoles | undefined,
-    triggerAdvance,
+    triggerAdvance: advanceFromElearningStep,
   });
   const { onboardingStepWebinar } = useOnboardingStepWebinar({
     userRole: currentUser?.role as UserRoles | undefined,
@@ -272,6 +303,10 @@ export const useWizard = (): WizardState => {
     onboardingStepMatchRecap,
   ]);
 
+  useEffect(() => {
+    onboardingStepsRef.current = onboardingSteps;
+  }, [onboardingSteps]);
+
   const isProfileLoaded =
     fetchProfileStatus === ReduxRequestEvents.SUCCEEDED ||
     fetchProfileStatus === ReduxRequestEvents.FAILED;
@@ -351,10 +386,13 @@ export const useWizard = (): WizardState => {
   );
   const hasExtractedCvData = profileComplete?.hasExtractedCvData ?? false;
 
-  // Compute position-based indices (structure is deterministic based on role + profileMode)
-  const candidateOffset = currentUser?.role === UserRoles.CANDIDATE ? 1 : 0;
-  const cvChoiceStepIndex = candidateOffset + 1; // photo is at +0, cv-choice at +1
-  const cvLoadingStepIndex = profileMode === 'cv' ? candidateOffset + 2 : -1; // cv-loading is right after cv-choice
+  // Indices résolus par id de step (-1 si absent du flow courant)
+  const cvChoiceStepIndex = onboardingSteps.findIndex(
+    (step) => step.id === 'cv-choice'
+  );
+  const cvLoadingStepIndex = onboardingSteps.findIndex(
+    (step) => step.id === 'cv-loading'
+  );
 
   useEffect(() => {
     if (profileMode !== 'cv') {
@@ -438,7 +476,12 @@ export const useWizard = (): WizardState => {
     ? emailConfirmationIsLoading
     : registrationIsLoading;
 
-  const isInitializing = isOnboardingPhase && onboardingIdx === null;
+  // Initialisation : détermination du step de reprise, ou résolution de
+  // l'utilisateur courant au rechargement direct (évite le flash de l'alerte
+  // d'erreur tant que /current n'a pas répondu)
+  const isInitializing =
+    (isOnboardingPhase && onboardingIdx === null) ||
+    (!currentUser && !isFetchUserFinished && registrationSteps.length === 0);
 
   const onNext = useCallback(async () => {
     if (isOnboardingPhase) {

@@ -174,6 +174,7 @@ export const useOnboardingStepElearning = ({
   );
 
   const onboardingStepElearning = {
+    id: 'elearning',
     isNextEnabled: hasCompletedAllUnits,
     summary: {
       title: `Comprendre le rôle et les missions du ${userRole} Entourage Pro`,

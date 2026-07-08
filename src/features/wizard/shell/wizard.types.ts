@@ -15,6 +15,8 @@ export const WIZARD_SECTIONS: WizardSection[] = [
 ];
 
 export interface WizardStep {
+  /** Identifiant stable permettant de retrouver un step sans dépendre de sa position */
+  id?: string;
   summary: {
     title: string;
     description?: string;

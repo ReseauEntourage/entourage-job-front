@@ -41,6 +41,7 @@ export const useStepCvChoice = ({
   const isCandidate = user?.role === UserRoles.CANDIDATE;
 
   const onboardingStepCvChoice: WizardStep = {
+    id: 'cv-choice',
     summary: {
       title: 'Construction du profil',
       duration: '~3 minutes',
