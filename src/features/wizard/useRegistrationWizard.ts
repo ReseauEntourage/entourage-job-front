@@ -119,10 +119,7 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
         return [
           companyRoleStep,
           companySelectionStep,
-          nudgesStep,
-          sectorsJobsStep,
           coachInfoStep,
-          networkPreviewStep,
           accountStep,
         ];
       default:
