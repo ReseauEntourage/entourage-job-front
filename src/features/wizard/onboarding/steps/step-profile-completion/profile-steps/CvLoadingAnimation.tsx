@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { Button, LucidIcon, Text } from '@/src/components/ui';
-import { COLORS } from '@/src/constants/styles';
-import { CV_GENERATION_TIMEOUT_MS } from './cvLoading.constants';
+import styled from 'styled-components';
+import { Button, Text } from '@/src/components/ui';
+import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
+import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
+import {
+  CV_GENERATION_ESTIMATED_DURATION_MS,
+  CV_GENERATION_TIMEOUT_MS,
+} from './cvLoading.constants';
 
 const MESSAGES = [
   'Analyse de votre CV…',
@@ -11,10 +15,8 @@ const MESSAGES = [
   'Identification de vos langues…',
 ];
 
-const pulse = keyframes`
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.7; }
-`;
+const MESSAGE_INTERVAL_MS =
+  CV_GENERATION_ESTIMATED_DURATION_MS / MESSAGES.length;
 
 const StyledContainer = styled.div`
   display: flex;
@@ -24,10 +26,6 @@ const StyledContainer = styled.div`
   gap: 24px;
   padding: 48px 24px;
   text-align: center;
-`;
-
-const StyledIconWrapper = styled.div`
-  animation: ${pulse} 1.5s ease-in-out infinite;
 `;
 
 interface CvLoadingAnimationProps {
@@ -42,8 +40,14 @@ export const CvLoadingAnimation = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setMessageIndex((prev) => (prev + 1) % MESSAGES.length);
-    }, 2000);
+      setMessageIndex((prev) => {
+        if (prev >= MESSAGES.length - 1) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, MESSAGE_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
@@ -56,10 +60,7 @@ export const CvLoadingAnimation = ({
 
   return (
     <StyledContainer>
-      <StyledIconWrapper>
-        <LucidIcon name="Sparkles" size={64} color={COLORS.primaryBlue} />
-      </StyledIconWrapper>
-      <Text weight="semibold">{MESSAGES[messageIndex]}</Text>
+      <ProfileGenerationLoadingIndicator text={MESSAGES[messageIndex]} />
       <Text size="small" color="darkGray">
         Votre profil est en cours de génération. Cela prend environ 30 secondes.
       </Text>
@@ -74,6 +75,7 @@ export const CvLoadingAnimation = ({
           </Button>
         </>
       )}
+      <OpenAILegalMention />
     </StyledContainer>
   );
 };
