@@ -9,8 +9,6 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
-import { openModal } from '@/src/features/modals/Modal/openModal';
-import { ConfirmModalStep } from '@/src/features/wizard/onboarding/confirm-step-modal/ConfirmModalStep';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { determineStartingStep } from '@/src/features/wizard/onboarding/onboarding.utils';
 import { useOnboardingStepElearning } from '@/src/features/wizard/onboarding/steps/step-elearning/useOnboardingStepElearning';
@@ -406,12 +404,6 @@ export const useWizard = (): WizardState => {
       const step = currentStep as unknown as {
         incrementationIsAllowed?: () => Promise<boolean>;
         onSubmit?: () => Promise<boolean>;
-        confirmationStep?: {
-          title: string;
-          subtitle: string;
-          submitBtnTxt: string;
-          id: string;
-        };
       };
 
       if (step.incrementationIsAllowed) {
@@ -427,26 +419,6 @@ export const useWizard = (): WizardState => {
         setOnboardingIsLoading(false);
         if (result === false) {
           return;
-        }
-
-        if (step.confirmationStep) {
-          const { title, subtitle, submitBtnTxt, id } = step.confirmationStep;
-          const nextStep =
-            onboardingIdx !== null
-              ? onboardingSteps[onboardingIdx + 1] ?? null
-              : null;
-          await new Promise<void>((resolve) => {
-            openModal(
-              <ConfirmModalStep
-                id={id}
-                title={title}
-                subtitle={subtitle}
-                submitBtnTxt={submitBtnTxt}
-                onSubmit={() => resolve()}
-                nextStep={nextStep}
-              />
-            );
-          });
         }
       }
 

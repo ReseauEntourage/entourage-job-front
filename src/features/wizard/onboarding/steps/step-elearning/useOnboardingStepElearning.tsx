@@ -113,11 +113,15 @@ export const useOnboardingStepElearning = ({
     const firstIncompleteIdx = elearningUnits.findIndex(
       (unit) => unit.userCompletions.length === 0
     );
-    setCurrentUnitIndex(
-      firstIncompleteIdx === -1 ? elearningUnits.length : firstIncompleteIdx
-    );
-    setPhase(firstIncompleteIdx === -1 ? 'done' : 'intro');
-  }, [elearningUnits, elearningFetchStatus]);
+
+    if (firstIncompleteIdx === -1) {
+      triggerAdvance();
+      return;
+    }
+
+    setCurrentUnitIndex(firstIncompleteIdx);
+    setPhase('intro');
+  }, [elearningUnits, elearningFetchStatus, triggerAdvance]);
 
   const currentUnit = elearningUnits?.[currentUnitIndex];
 
@@ -134,9 +138,14 @@ export const useOnboardingStepElearning = ({
 
     const nextIndex = currentUnitIndex + 1;
     const hasNextUnit = !!elearningUnits && nextIndex < elearningUnits.length;
-    setCurrentUnitIndex(hasNextUnit ? nextIndex : currentUnitIndex);
-    setPhase(hasNextUnit ? 'module' : 'done');
-  }, [currentUnit, currentUnitIndex, elearningUnits, dispatch]);
+
+    if (hasNextUnit) {
+      setCurrentUnitIndex(nextIndex);
+      setPhase('module');
+    } else {
+      triggerAdvance();
+    }
+  }, [currentUnit, currentUnitIndex, elearningUnits, dispatch, triggerAdvance]);
 
   const quiz = useElearningQuiz({
     questions: currentUnit?.questions ?? [],
@@ -172,7 +181,7 @@ export const useOnboardingStepElearning = ({
       duration: '~10 minutes',
     },
     hideGenericStepHeader: true,
-    hideGenericStepFooter: phase !== 'done',
+    hideGenericStepFooter: true,
     title: `Votre parcours de formation`,
     smallTitle: 'Suivre la formation',
     description: `Suivez ces modules pour rejoindre notre communauté de ${
@@ -194,14 +203,6 @@ export const useOnboardingStepElearning = ({
     },
     onSubmit: async () => {
       return true;
-    },
-    confirmationStep: {
-      id: 'elearning-confirmation',
-      title: 'Bravo ! Formation terminée',
-      subtitle: `Vous faites maintenant partie des ${
-        userRole?.toLowerCase() ?? ''
-      } Entourage Pro formés.`,
-      submitBtnTxt: 'Passer à l’étape suivante',
     },
     incrementationIsAllowed: async () => {
       return ensureAndComputeHasCompleteAllUnits();

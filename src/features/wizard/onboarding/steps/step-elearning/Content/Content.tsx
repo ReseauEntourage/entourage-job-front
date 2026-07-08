@@ -12,7 +12,7 @@ import {
 } from './Content.styles';
 import { ElearningStepIntro } from './ElearningStepIntro';
 
-export type ElearningStepPhase = 'intro' | 'module' | 'done';
+export type ElearningStepPhase = 'intro' | 'module';
 
 interface ContentProps {
   phase: ElearningStepPhase;
@@ -37,10 +37,6 @@ export const Content = ({
         <ElearningStepIntro onStart={onStart} onSkip={onSkip} />
       </StyledOnboardingStepContainer>
     );
-  }
-
-  if (phase === 'done') {
-    return null;
   }
 
   if (!currentUnit) {

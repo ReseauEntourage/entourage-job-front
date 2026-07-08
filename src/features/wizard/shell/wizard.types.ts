@@ -34,11 +34,5 @@ export interface WizardStep {
   isStepCompleted?: () => Promise<boolean>;
   incrementationIsAllowed?: () => Promise<boolean>;
   onSubmit?: () => Promise<boolean | void>;
-  confirmationStep?: {
-    title: string;
-    subtitle: string;
-    submitBtnTxt: string;
-    id: string;
-  };
   section?: WizardSectionId;
 }
