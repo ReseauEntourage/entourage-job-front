@@ -3,7 +3,13 @@ import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { ProfileLivePreviewPanel } from '../ProfileLivePreview/ProfileLivePreviewPanel';
 import { CvLoadingAnimation } from './CvLoadingAnimation';
 
-export const useStepCvLoading = () => {
+interface UseStepCvLoadingProps {
+  onManualFallback: () => void;
+}
+
+export const useStepCvLoading = ({
+  onManualFallback,
+}: UseStepCvLoadingProps) => {
   const onboardingStepCvLoading: WizardStep = {
     summary: {
       title: 'Analyse du CV',
@@ -13,7 +19,7 @@ export const useStepCvLoading = () => {
     title: '',
     smallTitle: 'Analyse',
     description: '',
-    content: <CvLoadingAnimation />,
+    content: <CvLoadingAnimation onManualFallback={onManualFallback} />,
     sidePanelContent: () => <ProfileLivePreviewPanel />,
     mobileBottomSheet: false,
     isNextEnabled: false,

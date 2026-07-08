@@ -111,8 +111,16 @@ export const useWizard = (): WizardState => {
   const [onboardingIsLoading, setOnboardingIsLoading] = useState(false);
 
   const profileComplete = useCurrentUserProfileComplete();
-  const { generateProfileFromCV } = useProfileGeneration();
+  const { generateProfileFromCV, cancelProfileGeneration } =
+    useProfileGeneration();
   const hasTriggeredGenerationRef = useRef(false);
+
+  // Bascule vers la saisie manuelle depuis cv-loading après le délai
+  // d'attente : annule le job de génération en cours avant d'avancer.
+  const handleCvGenerationManualFallback = useCallback(() => {
+    void cancelProfileGeneration();
+    setProfileMode('manual');
+  }, [cancelProfileGeneration]);
 
   // Task 2.2 – Initialise profileMode depuis les données serveur au chargement
   const [isProfileModeInitialized, setIsProfileModeInitialized] =
@@ -183,7 +191,9 @@ export const useWizard = (): WizardState => {
     setProfileMode,
     triggerAdvance,
   });
-  const { onboardingStepCvLoading } = useStepCvLoading();
+  const { onboardingStepCvLoading } = useStepCvLoading({
+    onManualFallback: handleCvGenerationManualFallback,
+  });
   const { onboardingStepCvRecap } = useStepCvRecap({ user: currentUser });
   const { onboardingStepPresentation } = useStepPresentation({
     user: currentUser,

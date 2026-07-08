@@ -4,7 +4,7 @@ import { ProfileLivePreview } from './ProfileLivePreview';
 
 export const ProfileLivePreviewPanel = () => {
   return (
-    <SidePanel variant="lightGray" title="Aperçu de votre profil public">
+    <SidePanel variant="lightGray" title="Aperçu de votre profil">
       <ProfileLivePreview />
     </SidePanel>
   );

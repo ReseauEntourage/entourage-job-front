@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   currentUserActions,
@@ -11,6 +11,7 @@ import { getPusher, PUSHER_CHANNELS, PUSHER_EVENTS } from 'src/constants';
 interface PusherResponse {
   success: boolean;
   error?: string;
+  reason?: 'cancelled' | 'error';
 }
 
 interface UseProfileGenerationProps {
@@ -19,6 +20,7 @@ interface UseProfileGenerationProps {
 
 interface UseProfileGenerationReturn {
   generateProfileFromCV: () => Promise<void>;
+  cancelProfileGeneration: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -29,6 +31,8 @@ export const useProfileGeneration = ({
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   const userId = user?.id;
+  const jobIdRef = useRef<string | undefined>(undefined);
+  const hasCancelledRef = useRef(false);
 
   const dispatchErrorNotification = useCallback(() => {
     dispatch(
@@ -56,6 +60,12 @@ export const useProfileGeneration = ({
       PUSHER_EVENTS.PROFILE_GENERATION_COMPLETE,
       (response: PusherResponse) => {
         setIsLoading(false);
+
+        // Notification tardive suite à une annulation (volontaire ou déjà
+        // basculée en manuel côté front) : ignorée silencieusement.
+        if (hasCancelledRef.current || response.reason === 'cancelled') {
+          return;
+        }
 
         // Erreur
         if (response.error) {
@@ -89,19 +99,41 @@ export const useProfileGeneration = ({
   const generateProfileFromCV = async (): Promise<void> => {
     try {
       setIsLoading(true);
+      hasCancelledRef.current = false;
 
       const response = await Api.getGenerateProfileFromCV();
 
       if (!response || response.status !== 200) {
         dispatchErrorNotification();
+        return;
       }
+
+      jobIdRef.current = response.data?.jobId;
     } catch {
       dispatchErrorNotification();
     }
   };
 
+  // Fonction pour annuler la génération de profil en cours
+  const cancelProfileGeneration = useCallback(async (): Promise<void> => {
+    hasCancelledRef.current = true;
+    setIsLoading(false);
+
+    const jobId = jobIdRef.current;
+    if (!jobId) {
+      return;
+    }
+
+    try {
+      await Api.cancelGenerateProfileFromCV(jobId);
+    } catch {
+      // Best-effort : l'utilisateur bascule en saisie manuelle dans tous les cas
+    }
+  }, []);
+
   return {
     generateProfileFromCV,
+    cancelProfileGeneration,
     isLoading,
   };
 };

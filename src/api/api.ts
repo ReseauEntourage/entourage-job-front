@@ -174,6 +174,10 @@ export class APIHandler {
     return this.get('/profile-generation/generate-profile-from-cv');
   }
 
+  cancelGenerateProfileFromCV(jobId: string): Promise<AxiosResponse> {
+    return this.post(`/profile-generation/${jobId}/cancel`, {});
+  }
+
   // post
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { LucidIcon, Text } from '@/src/components/ui';
+import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
+import { CV_GENERATION_TIMEOUT_MS } from './cvLoading.constants';
 
 const MESSAGES = [
   'Analyse de votre CV…',
@@ -29,14 +30,28 @@ const StyledIconWrapper = styled.div`
   animation: ${pulse} 1.5s ease-in-out infinite;
 `;
 
-export const CvLoadingAnimation = () => {
+interface CvLoadingAnimationProps {
+  onManualFallback: () => void;
+}
+
+export const CvLoadingAnimation = ({
+  onManualFallback,
+}: CvLoadingAnimationProps) => {
   const [messageIndex, setMessageIndex] = useState(0);
+  const [isTimeoutReached, setIsTimeoutReached] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % MESSAGES.length);
     }, 2000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTimeoutReached(true);
+    }, CV_GENERATION_TIMEOUT_MS);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -48,6 +63,17 @@ export const CvLoadingAnimation = () => {
       <Text size="small" color="darkGray">
         Votre profil est en cours de génération. Cela prend environ 30 secondes.
       </Text>
+      {isTimeoutReached && (
+        <>
+          <Text size="small" color="darkGray">
+            Cela prend plus de temps que prévu. Vous pouvez continuer à attendre
+            ou remplir votre profil vous-même.
+          </Text>
+          <Button variant="secondary" onClick={onManualFallback}>
+            Remplir mon profil moi-même
+          </Button>
+        </>
+      )}
     </StyledContainer>
   );
 };

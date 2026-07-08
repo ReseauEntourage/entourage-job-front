@@ -34,6 +34,7 @@ export const APIRoutes = {
   RECRUITEMENT_ALERTS: 'recruitement-alerts',
   ELEARNING: 'elearning',
   LINKEDIN: 'linkedin',
+  PROFILE_GENERATION: 'profile-generation',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
