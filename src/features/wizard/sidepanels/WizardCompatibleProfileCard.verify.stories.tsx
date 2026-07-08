@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { UserRoles } from '@/src/constants/users';
 import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
 

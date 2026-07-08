@@ -36,14 +36,6 @@ export const StyledCardName = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const StyledCardJob = styled.span`
-  font-size: 12px;
-  color: ${COLORS.darkGray};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
 export const StyledCardTags = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -79,19 +71,4 @@ export const StyledFullSection = styled.div`
 export const StyledFullCTAWrapper = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-export const StyledLockedButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  color: ${COLORS.darkGray};
-  background: ${COLORS.lightGray};
-  border: 1px solid ${COLORS.gray};
-  border-radius: 20px;
-  cursor: not-allowed;
-  white-space: nowrap;
 `;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type WizardSectionId = 'inscription' | 'profil' | 'formation';
+type WizardSectionId = 'inscription' | 'profil' | 'formation';
 
 export interface WizardSection {
   id: WizardSectionId;

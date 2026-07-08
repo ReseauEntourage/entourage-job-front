@@ -18,20 +18,3 @@ export const determineStartingStep = async (
   // null = toutes les étapes sont déjà complètes
   return null;
 };
-
-// computeTotalDuration - Computes the total duration of all onboarding steps.
-export const computeTotalDuration = (onboardingSteps: WizardStep[]) => {
-  return onboardingSteps
-    .reduce((total, step) => {
-      const durationMatch = step.summary.duration.match(
-        /~(\d+)(-(\d+))? minute/
-      );
-      if (durationMatch) {
-        const min = parseInt(durationMatch[1], 10);
-        const max = durationMatch[3] ? parseInt(durationMatch[3], 10) : min;
-        return total + (min + max) / 2;
-      }
-      return total;
-    }, 0)
-    .toFixed(0);
-};

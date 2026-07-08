@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import type { Experience } from '@/src/api/types';
 import { Button, Text } from '@/src/components/ui';
