@@ -17,24 +17,17 @@ const StyledContainer = styled.div`
   gap: 8px;
 `;
 
-const PILL_WIDTHS = ['100%', '90%', '80%', '70%', '60%', '55%'];
+const PILL_WIDTHS = ['80%', '50%', '95%', '25%', '70%', '50%', '80%', '55%'];
 
 interface PillsSkeletonProps {
   count?: number;
 }
 
 export const PillsSkeleton = ({ count = 3 }: PillsSkeletonProps) => {
-  const randomPillWidths = Array.from(
-    { length: count },
-    () => PILL_WIDTHS[Math.floor(Math.random() * PILL_WIDTHS.length)]
-  );
   return (
     <StyledContainer>
       {Array.from({ length: count }).map((_, i) => (
-        <StyledPill
-          key={i}
-          $width={randomPillWidths[i % randomPillWidths.length]}
-        />
+        <StyledPill key={i} $width={PILL_WIDTHS[i % PILL_WIDTHS.length]} />
       ))}
     </StyledContainer>
   );

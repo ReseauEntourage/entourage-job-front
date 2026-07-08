@@ -80,6 +80,17 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
 
   const { formState } = formMethods;
 
+  useEffect(() => {
+    const subscription = formMethods.watch((formValues) => {
+      dispatch(
+        currentUserActions.profileCompleteDraftUpdated({
+          introduction: formValues.introduction,
+        })
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [dispatch, formMethods]);
+
   const onboardingStepPresentation: WizardStep = {
     summary: {
       title: 'Présentation',

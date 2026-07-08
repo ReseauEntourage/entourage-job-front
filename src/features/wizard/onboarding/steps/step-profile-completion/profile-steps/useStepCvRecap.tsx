@@ -137,14 +137,73 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
   const experiences = watch('experiences') ?? [];
   const formations = watch('formations') ?? [];
 
+  useEffect(() => {
+    const subscription = formMethods.watch((formValues, { name }) => {
+      if (name === 'introduction') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            introduction: formValues.introduction,
+          })
+        );
+      } else if (name === 'description') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            description: formValues.description?.trim() || null,
+          })
+        );
+      } else if (name === 'skills') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            skills: (formValues.skills ?? [])
+              .filter((s): s is FilterConstant<string> => !!s)
+              .map((s) => ({ name: s.value })),
+          })
+        );
+      } else if (name === 'languages') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            userProfileLanguages: (formValues.languages ?? [])
+              .filter((l): l is FilterConstant<string> => !!l)
+              .map((l) => ({
+                languageId: l.value,
+                language: {
+                  id: l.value,
+                  name: String(l.label),
+                  value: l.value,
+                },
+              })),
+          })
+        );
+      } else if (name === 'interests') {
+        dispatch(
+          currentUserActions.profileCompleteDraftUpdated({
+            interests: (formValues.interests ?? [])
+              .filter((int): int is FilterConstant<string> => !!int)
+              .map((int, order) => ({ name: int.value, order })),
+          })
+        );
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [dispatch, formMethods]);
+
   const handleExperiencesChange = useCallback(
-    (next: Experience[]) =>
-      setValue('experiences', next, { shouldDirty: true }),
-    [setValue]
+    (next: Experience[]) => {
+      setValue('experiences', next, { shouldDirty: true });
+      dispatch(
+        currentUserActions.profileCompleteDraftUpdated({ experiences: next })
+      );
+    },
+    [dispatch, setValue]
   );
   const handleFormationsChange = useCallback(
-    (next: Formation[]) => setValue('formations', next, { shouldDirty: true }),
-    [setValue]
+    (next: Formation[]) => {
+      setValue('formations', next, { shouldDirty: true });
+      dispatch(
+        currentUserActions.profileCompleteDraftUpdated({ formations: next })
+      );
+    },
+    [dispatch, setValue]
   );
 
   const onboardingStepCvRecap: WizardStep = {
