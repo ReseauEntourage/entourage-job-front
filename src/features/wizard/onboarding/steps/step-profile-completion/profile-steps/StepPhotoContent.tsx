@@ -1,46 +1,15 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { useIsMobile } from '@/src/hooks/utils';
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding: 24px 0;
-`;
-
-const StyledRoundBadge = styled.div`
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px dashed ${COLORS.darkBlue};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: ${COLORS.hoverBlue};
-  flex-shrink: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const StyledButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  max-width: 320px;
-`;
+import {
+  StyledButtonsContainer,
+  StyledContainer,
+  StyledRoundBadge,
+} from './StepPhotoContent.styles';
 
 interface StepPhotoContentProps {
   photoObjectUrl: string | null;

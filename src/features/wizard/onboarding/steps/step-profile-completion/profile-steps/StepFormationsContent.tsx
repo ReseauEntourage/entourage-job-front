@@ -1,27 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import type { Formation } from '@/src/api/types';
 import { Button, Text } from '@/src/components/ui';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useEditableFormationsByIndex } from '@/src/features/profile/hooks/useEditableFormations';
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const StyledHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const StyledList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
+import {
+  StyledContainer,
+  StyledHeader,
+  StyledList,
+} from './StepFormationsContent.styles';
 
 interface StepFormationsContentProps {
   formations: Formation[];

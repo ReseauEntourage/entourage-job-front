@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Button, Text } from '@/src/components/ui';
 import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
 import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
+import { StyledContainer } from './CvLoadingAnimation.styles';
 import {
   CV_GENERATION_ESTIMATED_DURATION_MS,
   CV_GENERATION_TIMEOUT_MS,
@@ -17,16 +17,6 @@ const MESSAGES = [
 
 const MESSAGE_INTERVAL_MS =
   CV_GENERATION_ESTIMATED_DURATION_MS / MESSAGES.length;
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 48px 24px;
-  text-align: center;
-`;
 
 interface CvLoadingAnimationProps {
   onManualFallback: () => void;

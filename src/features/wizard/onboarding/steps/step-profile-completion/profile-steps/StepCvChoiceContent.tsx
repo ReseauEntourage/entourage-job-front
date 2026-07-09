@@ -1,38 +1,12 @@
 import React, { useCallback, useRef } from 'react';
-import styled from 'styled-components';
 import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const StyledDropZone = styled.div<{ $isDragOver: boolean }>`
-  border: 2px dashed
-    ${({ $isDragOver }) => ($isDragOver ? COLORS.primaryBlue : COLORS.gray)};
-  border-radius: 8px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  background: ${({ $isDragOver }) =>
-    $isDragOver ? `${COLORS.primaryBlue}15` : 'transparent'};
-  transition: background 0.15s, border-color 0.15s;
-`;
-
-const StyledButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const StyledHelpText = styled.div`
-  text-align: center;
-`;
+import {
+  StyledButtonsContainer,
+  StyledContainer,
+  StyledDropZone,
+  StyledHelpText,
+} from './StepCvChoiceContent.styles';
 
 interface StepCvChoiceContentProps {
   onCvSelected: (formData: FormData) => void;

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import type { Experience, Formation } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { ProfileCompletionSchemaField } from '../components/ProfileCompletionSchemaField';
@@ -8,25 +7,13 @@ import {
   profileCompletionCvFields,
   buildIntroductionField,
 } from '../profileCompletionFormSchema';
+import {
+  StyledContainer,
+  StyledSection,
+  StyledSectionTitle,
+} from './StepCvRecapContent.styles';
 import { StepExperiencesContent } from './StepExperiencesContent';
 import { StepFormationsContent } from './StepFormationsContent';
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-`;
-
-const StyledSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const StyledSectionTitle = styled.div`
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e5e5e5;
-`;
 
 const introductionField = buildIntroductionField(
   'Cette présentation sera visible par les autres membres du réseau d’entraide. En quelques lignes, parlez de votre parcours et de ce que vous recherchez.'

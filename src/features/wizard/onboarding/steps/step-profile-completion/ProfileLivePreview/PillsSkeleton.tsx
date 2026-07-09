@@ -1,21 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
-
-const StyledPill = styled.div<{ $width: string }>`
-  height: 10px;
-  width: ${({ $width }) => $width};
-  border-radius: 12px;
-  background: ${COLORS.extraLightGray};
-  background-size: 200px 100%;
-`;
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
+import { StyledContainer, StyledPill } from './PillsSkeleton.styles';
 
 const PILL_WIDTHS = ['80%', '50%', '95%', '25%', '70%', '50%', '80%', '55%'];
 
