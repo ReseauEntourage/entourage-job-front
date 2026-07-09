@@ -1,7 +1,16 @@
 // eslint-disable-next-line import/no-named-as-default
 import expect from 'expect';
 import { UserRoles } from '@/src/constants/users';
-import { buildOnboardingStepOrder } from './onboarding.utils';
+import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import {
+  buildOnboardingStepOrder,
+  determineStartingStep,
+} from './onboarding.utils';
+
+const stepWithCompletion = (
+  id: WizardStep['id'],
+  isStepCompleted?: () => Promise<boolean>
+): WizardStep => ({ id, isStepCompleted } as unknown as WizardStep);
 
 describe('buildOnboardingStepOrder', () => {
   it('returns no steps when shouldSkip is true, regardless of role/profileMode', () => {
@@ -75,5 +84,52 @@ describe('buildOnboardingStepOrder', () => {
       'webinar',
       'match-recap',
     ]);
+  });
+});
+
+describe('determineStartingStep', () => {
+  it('returns null when the steps array is empty', async () => {
+    expect(await determineStartingStep([])).toBeNull();
+  });
+
+  it('returns the id of the first step when it has no isStepCompleted guard', async () => {
+    const steps = [
+      stepWithCompletion('photo'),
+      stepWithCompletion('cv-choice'),
+    ];
+
+    expect(await determineStartingStep(steps)).toEqual('photo');
+  });
+
+  it('returns the id of the first incomplete step, skipping completed ones', async () => {
+    const steps = [
+      stepWithCompletion('photo', async () => true),
+      stepWithCompletion('cv-choice', async () => false),
+      stepWithCompletion('elearning', async () => false),
+    ];
+
+    expect(await determineStartingStep(steps)).toEqual('cv-choice');
+  });
+
+  it('returns null when every step reports itself as completed', async () => {
+    const steps = [
+      stepWithCompletion('photo', async () => true),
+      stepWithCompletion('cv-choice', async () => true),
+      stepWithCompletion('match-recap', async () => true),
+    ];
+
+    expect(await determineStartingStep(steps)).toBeNull();
+  });
+
+  it('returns the id of a step with no completion guard even if earlier steps are complete', () => {
+    const steps = [
+      stepWithCompletion('photo', async () => true),
+      stepWithCompletion('presentation'),
+      stepWithCompletion('experiences', async () => false),
+    ];
+
+    return expect(determineStartingStep(steps)).resolves.toEqual(
+      'presentation'
+    );
   });
 });
