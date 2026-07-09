@@ -4,7 +4,7 @@ import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { Text } from '@/src/components/ui/Text';
-import { useIsDesktop, useIsMobile } from '@/src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
