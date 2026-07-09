@@ -64,7 +64,6 @@ const recommendationsLabels: {
 };
 
 export const DashboardRecommendationsCard = () => {
-  const isMobile = useIsMobile();
   const user = useAuthenticatedUser();
   const company = useCurrentUserCompany();
   const currentUserProfile = useCurrentUserProfile();

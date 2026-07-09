@@ -2,7 +2,6 @@ import React from 'react';
 import { LucidIcon } from '@/src/components/ui';
 import { SelectOptionTitleIconDescriptionLabelType } from '@/src/components/ui/Inputs/SelectList';
 import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
-import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { RegistrationFlow } from '../flows/flows.types';
 import { FormSchema } from 'src/features/forms/FormSchema';
