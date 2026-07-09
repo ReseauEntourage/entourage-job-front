@@ -79,7 +79,7 @@ const RecruterInclusif = () => {
         gaEvent(GA_TAGS.PAGE_ENTREPRISES_REGISTER);
         fbEvent(FB_TAGS.COMPANY_REGISTRATION_OPEN);
       },
-      href: `/inscription?flow=${RegistrationFlow.COMPANY}`,
+      href: `/wizard?flow=${RegistrationFlow.COMPANY}`,
       variant: 'primary',
       label: 'Créer mon espace entreprise',
     } as CTAProps;

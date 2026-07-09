@@ -3,6 +3,7 @@ export type RequestConfig = {
   data: {
     statusCode?: number;
     fixture?: string;
+    body?: object;
   };
   alias: string;
 };

@@ -2,10 +2,12 @@ import Pusher from 'pusher-js';
 
 export const PUSHER_CHANNELS = {
   PROFILE_GENERATION: 'profile-generation-channel',
+  EMBEDDING: 'embedding-channel',
 };
 
 export const PUSHER_EVENTS = {
   PROFILE_GENERATION_COMPLETE: 'profile-generation-complete',
+  EMBEDDING_READY: 'embedding-ready',
 };
 
 // Configuration de Pusher

@@ -32,7 +32,6 @@ export const StyledTextArea = styled.textarea<{
     return hasLineLimit ? `${width}px` : '100%';
   }};
   &::placeholder {
-    font-style: italic;
     color: ${COLORS.mediumGray};
     background-color: transparent;
     font-family: Poppins, sans-serif;

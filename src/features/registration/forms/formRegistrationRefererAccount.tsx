@@ -163,18 +163,13 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
         placeholder: 'Entrez votre mot de passe',
         isRequired: true,
         showLabel: true,
+        labelTooltip: <PasswordCriterias bare />,
         rules: [
           {
             method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-            message: 'Doit répondre aux critères ci-dessous',
+            message: 'Doit répondre aux critères de sécurité',
           },
         ],
-      },
-      {
-        id: 'passwordCriteria',
-        name: 'passwordCriteria',
-        component: 'react-node',
-        reactNode: <PasswordCriterias removeMargin />,
       },
       {
         id: 'confirmPassword',

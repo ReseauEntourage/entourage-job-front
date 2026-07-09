@@ -58,3 +58,11 @@ export function isInvalidTokenError(error: unknown) {
 export function isLinkedinShareDuplicateError(error: unknown) {
   return isAxiosError(error) && error.response?.status === 422;
 }
+
+export function isOtpExpiredError(error: unknown) {
+  return (
+    isAxiosError(error) &&
+    error.response?.status === 400 &&
+    (error.response?.data as { message?: string })?.message === 'OTP_EXPIRED'
+  );
+}

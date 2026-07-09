@@ -2,6 +2,7 @@ import {
   logoutAdapter,
   sendVerifyEmailAdapter,
   verifyEmailTokenAdapter,
+  verifyOtpAdapter,
 } from './authentication.adapters';
 import { RootState } from './authentication.slice';
 
@@ -29,4 +30,12 @@ export const sendVerifyEmailSelectors =
 
 export function selectVerifyEmailTokenError(state: RootState) {
   return state.authentication.verifyEmailTokenError;
+}
+
+export const verifyOtpSelectors = verifyOtpAdapter.getSelectors<RootState>(
+  (state) => state.authentication.verifyOtp
+);
+
+export function selectVerifyOtpError(state: RootState) {
+  return state.authentication.verifyOtpError;
 }

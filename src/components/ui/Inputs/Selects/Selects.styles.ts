@@ -22,7 +22,7 @@ export const StyledSelect = styled.div`
   & .Select__control--is-focused {
     background-color: transparent !important;
     box-shadow: none !important;
-    border: 1px solid ${COLORS.primaryBlue} !important;
+    border: 2px solid ${COLORS.primaryBlue} !important;
     box-sizing: border-box;
   }
 
@@ -135,7 +135,7 @@ export const StyledSelect = styled.div`
 
   & .Select__multi-value {
     background-color: ${COLORS.white};
-    border: 1px solid ${COLORS.gray};
+    border: 2px solid ${COLORS.gray};
     border-radius: 50px;
     padding: 0 8px !important;
   }

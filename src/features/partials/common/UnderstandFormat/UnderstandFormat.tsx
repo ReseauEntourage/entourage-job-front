@@ -87,7 +87,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
       {
         text: "S'inscrire",
         gaTag: GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK,
-        href: '/inscription',
+        href: '/wizard',
       },
     ],
   },
@@ -173,7 +173,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
       {
         text: 'Je deviens coach',
         gaTag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
-        href: '/inscription',
+        href: '/wizard',
       },
     ],
   },
@@ -218,7 +218,7 @@ const contentAs: { [K in DisplayAs]: Content } = {
       {
         text: 'Orienter un(e) candidat(e)',
         gaTag: GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC,
-        href: '/inscription',
+        href: '/wizard',
       },
     ],
   },

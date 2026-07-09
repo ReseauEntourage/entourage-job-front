@@ -56,6 +56,10 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
             name: "Structures de l'inclusion",
             tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
           },
+          {
+            href: '/backoffice/ressources/formations',
+            name: 'Formations',
+          },
         ],
       },
     ];
@@ -127,6 +131,10 @@ const renderCoachHeaderItems = (
             href: '/backoffice/ressources/aides-locales',
             name: "Structures de l'inclusion",
             tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
+          },
+          {
+            href: '/backoffice/ressources/formations',
+            name: 'Formations',
           },
         ],
       },

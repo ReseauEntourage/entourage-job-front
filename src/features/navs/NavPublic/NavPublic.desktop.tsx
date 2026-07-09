@@ -26,7 +26,7 @@ export const NavPublicDesktop = () => {
     </div>,
     <div>
       <Button
-        href="/inscription"
+        href="/wizard"
         variant="primary"
         rounded
         onClick={() => {

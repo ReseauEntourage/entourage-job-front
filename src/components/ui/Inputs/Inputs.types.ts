@@ -1,4 +1,4 @@
-import { Component, RefCallback, type JSX } from 'react';
+import { Component, RefCallback, type JSX, ReactNode } from 'react';
 import { FieldError } from 'react-hook-form';
 import { AnyCantFix } from 'src/utils/Types';
 
@@ -17,6 +17,7 @@ export interface CommonInputProps<
   hidden?: boolean;
   showLabel?: boolean;
   showOptional?: boolean;
+  labelTooltip?: ReactNode;
   placeholder?: string;
   inputRef?: RefCallback<K>;
 }

@@ -21,10 +21,9 @@ export const SelectOptionTitleIconDescriptionLabel = ({
   flexDirection = 'row',
 }: SelectOptionTitleIconDescriptionLabelProps) => {
   const formattedIcon = React.cloneElement(
-    icon as React.ReactElement<{ width: number; height: number }>,
+    icon as React.ReactElement<{ size: number }>,
     {
-      width: 55,
-      height: 55,
+      size: 35,
     }
   );
 
@@ -32,8 +31,8 @@ export const SelectOptionTitleIconDescriptionLabel = ({
     <StyledSelectOptionTitleIconDescriptionLabel $flexDirection={flexDirection}>
       <StyledIconContainer>{formattedIcon}</StyledIconContainer>
       <StyledTitleDescriptionContainer>
-        <H6 title={title} color="primaryBlue" />
-        <Text>{description}</Text>
+        <H6 title={title} color="black" noMarginBottom />
+        <Text color="darkGray">{description}</Text>
       </StyledTitleDescriptionContainer>
     </StyledSelectOptionTitleIconDescriptionLabel>
   );

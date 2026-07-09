@@ -91,7 +91,7 @@ export const NavPublicMobile = () => {
           </li>
           <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
-              href="/inscription"
+              href="/wizard"
               variant="primary"
               rounded
               size="small"

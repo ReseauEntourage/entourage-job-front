@@ -1,4 +1,7 @@
-import { PostAuthSendVerifyEmailParams } from 'src/api/types';
+import {
+  PostAuthSendVerifyEmailParams,
+  PostAuthVerifyOtpParams,
+} from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export type LoginError =
@@ -42,3 +45,14 @@ export const verifyEmailTokenAdapter = createRequestAdapter(
 export const sendVerifyEmailAdapter = createRequestAdapter(
   'sendVerifyEmail'
 ).withPayloads<PostAuthSendVerifyEmailParams, void>();
+
+export enum VerifyOtpErrorType {
+  EXPIRED = 'EXPIRED',
+  INVALID = 'INVALID',
+}
+
+export const verifyOtpAdapter = createRequestAdapter('verifyOtp').withPayloads<
+  PostAuthVerifyOtpParams,
+  void,
+  { error: VerifyOtpErrorType }
+>();

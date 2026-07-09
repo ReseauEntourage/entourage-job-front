@@ -11,7 +11,7 @@ export const NavbarLogo = ({ href, type }: NavbarLogoProps) => {
   return (
     <Link
       href={href}
-      className="uk-margin-small-left uk-margin-small-right uk-flex-center uk-flex"
+      className="uk-margin-small-left uk-margin-small-right uk-flex"
     >
       {type === 'primary' ? (
         <SvgIcon name="EntourageProLogoPrimary" width={180} height={60} />

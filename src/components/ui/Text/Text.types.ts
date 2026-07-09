@@ -16,7 +16,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 
 export interface TextProps {
   children: React.ReactNode;
-  size?: TextSize;
+  size?: TextSize | number;
   weight?: TextWeight;
   color?: Color;
   variant?: TextVariant;

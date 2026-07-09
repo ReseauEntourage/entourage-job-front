@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { STORAGE_KEYS } from '@/src/constants';
-import { OnboardingStatus } from '@/src/constants/onboarding';
+import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import {
@@ -358,12 +358,6 @@ function* uploadExternalCvRequestedSaga(
   try {
     yield* call(() => Api.postExternalCv(formData));
     yield* put(uploadExternalCvSucceeded());
-    yield* put(
-      notificationsActions.addNotification({
-        type: 'success',
-        message: 'Votre CV a bien été importé',
-      })
-    );
   } catch {
     yield* put(
       uploadExternalCvFailed({

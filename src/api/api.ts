@@ -5,6 +5,7 @@ import axios, {
 } from 'axios';
 import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
+import { UserRoles } from 'src/constants/users';
 import { addAxiosInterceptors } from './interceptor';
 import {
   AchievementProgressionEntry,
@@ -20,6 +21,8 @@ import {
   OrganizationDto,
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
+  PostAuthVerifyOtpParams,
+  PreRegistrationCompatibleProfilesResponse,
   ProfilesFilters,
   RecruitementAlertDto,
   Route,
@@ -171,6 +174,10 @@ export class APIHandler {
     return this.get('/profile-generation/generate-profile-from-cv');
   }
 
+  cancelGenerateProfileFromCV(jobId: string): Promise<AxiosResponse> {
+    return this.post(`/profile-generation/${jobId}/cancel`, {});
+  }
+
   // post
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });
@@ -272,6 +279,14 @@ export class APIHandler {
     params: UserRegistrationDto
   ): Promise<AxiosResponse> {
     return this.post('/user/registration', params);
+  }
+
+  async getPreRegistrationCompatibleProfiles(params: {
+    role: UserRoles;
+    nudgeIds?: string[];
+    businessSectorIds?: string[];
+  }): Promise<AxiosResponse<PreRegistrationCompatibleProfilesResponse>> {
+    return this.get('/user/registration/compatible-profiles', { params });
   }
 
   async postUserRefering(params: UserReferingDto): Promise<AxiosResponse> {
@@ -577,6 +592,12 @@ export class APIHandler {
     params: PostAuthSendVerifyEmailParams
   ): Promise<AxiosResponse> {
     return this.post('/auth/send-verify-email', params);
+  }
+
+  postAuthVerifyOtp(
+    params: PostAuthVerifyOtpParams
+  ): Promise<AxiosResponse<{ token: string }>> {
+    return this.post('/auth/verify-otp', params);
   }
 
   postAuthFinalizeReferedUser(

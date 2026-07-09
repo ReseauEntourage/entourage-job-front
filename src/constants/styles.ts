@@ -18,6 +18,7 @@ export const COLORS = {
   transparent: 'transparent',
   white: '#FFFFFF',
   hoverWhite: '#f2f2f2',
+  extraLightGray: '#F2F2F2',
   lightGray: '#F5F5F5',
   gray: '#D9D9D9',
   mediumGray: '#A0A0A0',
@@ -63,7 +64,9 @@ export const COLORS = {
   lightBlueGreen: '#C1E9DF',
   blue: '#8FC4E2',
   darkBlue: '#2D7FA6',
-  extraDarkBlue: '#2A4C72',
+  extraDarkBlue: '#1A5670',
+  shadowDarkBlue1: '#277690',
+  shadowDarkBlue2: '#1A5670',
   extraLightTeal: '#e8f6f8',
   teal: '#1a7a94',
 
@@ -79,8 +82,10 @@ export const COLORS = {
   purple: '#4c2ea0',
 
   // Skeleton
-  skeletonLight: '#EDEDED',
-  skeletonDark: '#F7F7F7',
+  skeletonDark: '#36363636',
+  skeletonDarkShimmer: '#4D4D4D36',
+  skeletonLight: '#EDEDED36',
+  skeletonLightShimmer: '#F7F7F736',
 
   cardShadow: '#0000000D',
   overlayWhite: '#FFFFFFCC',

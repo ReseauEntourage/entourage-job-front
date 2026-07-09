@@ -13,8 +13,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 
+import { useOnboardingRedirect } from '@/src/features/wizard/onboarding/useOnboardingRedirect';
 import { ModalsListener } from '../features/modals/Modal';
-import { useOnboardingRedirect } from '../hooks/useOnboardingRedirect';
 import { GA_TAGS } from 'src/constants/tags';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';

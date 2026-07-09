@@ -17,16 +17,11 @@ export const StyledIconContainer = styled.div`
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  > svg {
-    height: 55px;
-    width: 55px;
-  }
 `;
 
 export const StyledTitleDescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
   text-align: left;
 `;

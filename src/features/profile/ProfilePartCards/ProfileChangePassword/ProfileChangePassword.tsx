@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/features/forms/FormWithValidation';
@@ -18,7 +17,6 @@ export const ProfileChangePassword = () => {
       isCompleted
       isDefaultOpen={false}
     >
-      <PasswordCriterias />
       <FormWithValidation
         innerRef={form}
         submitText="Modifier"

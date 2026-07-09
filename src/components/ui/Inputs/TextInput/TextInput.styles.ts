@@ -17,7 +17,6 @@ export const StyledTextInputGroupForm = styled.div`
       line-height: normal;
     }
     &::placeholder {
-      font-style: italic;
       color: ${COLORS.mediumGray};
     }
     &:focus-visible {
@@ -37,4 +36,10 @@ export const StyledEyeIconWrapper = styled.div`
   transform: translateY(-50%);
   display: flex;
   align-items: center;
+`;
+
+export const StyledLabelRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;

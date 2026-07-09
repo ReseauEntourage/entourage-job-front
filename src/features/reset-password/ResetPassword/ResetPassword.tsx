@@ -4,7 +4,6 @@ import { Layout } from '@/src/components/layouts/Layout';
 import { Button, Section, Text } from '@/src/components/ui';
 import { Card } from '@/src/components/ui/Cards/Card';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { Api } from 'src/api';
 import { COLORS } from 'src/constants/styles';
 import { FormWithValidation } from 'src/features/forms/FormWithValidation';
@@ -42,7 +41,6 @@ export const ResetPassword = ({
                 isCreation ? 'Création' : 'Réinitialisation'
               } de mot de passe`}
             >
-              <PasswordCriterias />
               <FormWithValidation
                 formSchema={formResetPassword}
                 onSubmit={async (

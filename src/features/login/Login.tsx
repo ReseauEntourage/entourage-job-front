@@ -82,7 +82,7 @@ export function Login() {
         </Text>
         <Text size="small">
           Vous n&apos;avez pas de compte&nbsp;?{' '}
-          <Link href="/inscription">Inscrivez-vous</Link>
+          <Link href="/wizard">Inscrivez-vous</Link>
         </Text>
       </StyledLoginFooter>
     </Card>

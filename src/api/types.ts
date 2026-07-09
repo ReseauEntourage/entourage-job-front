@@ -1,8 +1,8 @@
+import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { PublicSensibilise, EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
-import { OnboardingStatus } from '../constants/onboarding';
 import {
   CompanyApproach,
   Contract as ContractValue,
@@ -34,6 +34,7 @@ export const APIRoutes = {
   RECRUITEMENT_ALERTS: 'recruitement-alerts',
   ELEARNING: 'elearning',
   LINKEDIN: 'linkedin',
+  PROFILE_GENERATION: 'profile-generation',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -311,6 +312,7 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+  elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
 };
@@ -389,6 +391,7 @@ export type CurrentUserIdentity = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+  elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
 };
@@ -508,6 +511,7 @@ export type UserRegistrationDto = {
   birthDate: string;
   occupations?: Occupation[];
   sectorOccupations?: UserProfileSectorOccupation[];
+  currentJob?: string;
   materialInsecurity?: string;
   networkInsecurity?: string;
   utmSource?: string;
@@ -708,6 +712,7 @@ export type ProfileRecommendation = {
 };
 
 export type ProfileRecommendationPage = {
+  embeddingPending: boolean;
   recommendations: ProfileRecommendation[];
   nextCursor: number | null;
 };
@@ -715,6 +720,12 @@ export type ProfileRecommendationPage = {
 export type PrivateProfile = PublicProfile & {
   email: string;
   phone: string;
+};
+
+export type PreRegistrationCompatibleProfilesResponse = {
+  count: number;
+  profiles: PublicProfile[];
+  broadened?: boolean;
 };
 
 export type Profile = PublicProfile | PrivateProfile;
@@ -744,6 +755,11 @@ export type EventsFilters = {
 export type PostAuthSendVerifyEmailParams = {
   token?: string;
   email?: string;
+};
+
+export type PostAuthVerifyOtpParams = {
+  email: string;
+  code: string;
 };
 
 export type PostAuthFinalizeReferedUserParams = {

@@ -62,7 +62,7 @@ export const DashboardProfileCard = () => {
   };
 
   if (!user || !userProfile) {
-    return <Skeleton count={1} height="500px" />;
+    return <Skeleton count={1} height="500px" inverted />;
   }
 
   return (

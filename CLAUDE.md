@@ -57,6 +57,7 @@ ComponentName/
 - Design tokens come from `src/constants/styles` (`COLORS`, `FONT_WEIGHTS`, etc.) — never hardcode hex values
 - Conditional styles use `${({ prop }) => ...}` functions, not className toggling
 - Hover / disabled states go in the styled component via `&:hover`, `&:disabled`
+- **Never define `styled(...)` calls inline in a `.tsx` file next to the component**, even for components that aren't in their own `ComponentName/` folder (e.g. flat `steps/` or `profile-steps/` directories). Always create a sibling `ComponentName.styles.ts` and import the styled components from it — same rule, folder-per-component or not.
 
 ### When building new UI
 
