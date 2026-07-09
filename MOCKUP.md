@@ -26,8 +26,8 @@ Always read these before generating a mockup:
 | Network directory (annuaire)                  | `src/features/backoffice/network-directory/NetworkDirectory.tsx`                  |
 | Messaging (split panel)                       | `src/features/backoffice/messaging/Messaging.tsx`                                 |
 | Profile (header + editable sections)          | `src/features/backoffice/profile/Profile.tsx`                                     |
-| Wizard layout (content + side panel)          | `src/features/wizard-shell/WizardContentLayout.tsx`                               |
-| Wizard layout styles                          | `src/features/wizard-shell/WizardContentLayout.styles.ts`                         |
+| Wizard layout (content + side panel)          | `src/features/wizard/shell/WizardContentLayout.tsx`                               |
+| Wizard layout styles                          | `src/features/wizard/shell/WizardContentLayout.styles.ts`                         |
 
 ---
 
