@@ -32,8 +32,13 @@ const WizardHome = () => {
     router.replace('/wizard/run');
   }, [flow, companyName, invitationId, dispatch, router]);
 
+  useEffect(() => {
+    if (currentUser) {
+      router.replace('/backoffice/dashboard');
+    }
+  }, [currentUser, router]);
+
   if (currentUser) {
-    router.replace('/backoffice/dashboard');
     return null;
   }
 
