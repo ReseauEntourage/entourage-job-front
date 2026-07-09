@@ -27,6 +27,7 @@ export const useStepPhoto = ({ user }: UseStepPhotoProps) => {
   const isCandidate = user?.role === UserRoles.CANDIDATE;
 
   const onboardingStepPhoto: WizardStep = {
+    id: 'photo',
     summary: {
       title: 'Photo de profil',
       duration: '~1 minute',

@@ -12,7 +12,8 @@ export const useOnboardingStepMatchRecap = ({
   userRole,
   onOnboardingCompleted,
 }: UseOnboardingStepMatchRecapProps) => {
-  const onboardingStepMatchRecap = {
+  const onboardingStepMatchRecap: WizardStep = {
+    id: 'match-recap',
     summary: {
       title: 'Votre premier match',
       description: 'Découvrez un profil compatible pour bien démarrer',
@@ -30,7 +31,7 @@ export const useOnboardingStepMatchRecap = ({
       />
     ),
     section: 'formation',
-  } as WizardStep;
+  };
 
   return { onboardingStepMatchRecap };
 };

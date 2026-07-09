@@ -57,6 +57,7 @@ export function useWizardStepNetworkPreview() {
   }, [userRole, nudgeIdsKey, businessSectorIdsKey]);
 
   const step: WizardStep = {
+    id: 'network-preview',
     smallTitle: 'Le réseau',
     summary: {
       title: 'Découvrez le réseau',

@@ -96,11 +96,11 @@ describe('En tant que - Visiteur', () => {
   /**
    * Je vais sur la page inscription
    */
-  it("J'accède à la page - /inscription", () => {
+  it("J'accède à la page - /wizard", () => {
     cy.get('header').within(() => {
       cy.get('button').contains('Inscription').click({ force: true });
       cy.wait(1000);
-      cy.url().should('include', 'inscription');
+      cy.url().should('include', 'wizard');
     });
   });
 });

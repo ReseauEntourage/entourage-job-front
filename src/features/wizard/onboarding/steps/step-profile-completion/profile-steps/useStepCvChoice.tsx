@@ -2,7 +2,10 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { User } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
-import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import {
+  WizardStep,
+  WizardStepId,
+} from '@/src/features/wizard/shell/wizard.types';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
@@ -12,14 +15,15 @@ import { ProfileMode } from './types';
 
 interface UseStepCvChoiceProps {
   user: User | null;
-  setProfileMode: (mode: ProfileMode) => void;
-  triggerAdvance: () => void;
+  requestAdvanceWithProfileMode: (
+    stepId: WizardStepId,
+    nextMode: ProfileMode
+  ) => void;
 }
 
 export const useStepCvChoice = ({
   user,
-  setProfileMode,
-  triggerAdvance,
+  requestAdvanceWithProfileMode,
 }: UseStepCvChoiceProps) => {
   const dispatch = useDispatch();
   const profileComplete = useCurrentUserProfileComplete();
@@ -27,16 +31,14 @@ export const useStepCvChoice = ({
   const handleCvSelected = useCallback(
     (formData: FormData) => {
       dispatch(currentUserActions.uploadExternalCvRequested({ formData }));
-      setProfileMode('cv');
-      triggerAdvance();
+      requestAdvanceWithProfileMode('cv-choice', 'cv');
     },
-    [dispatch, setProfileMode, triggerAdvance]
+    [dispatch, requestAdvanceWithProfileMode]
   );
 
   const handleManualChoice = useCallback(() => {
-    setProfileMode('manual');
-    triggerAdvance();
-  }, [setProfileMode, triggerAdvance]);
+    requestAdvanceWithProfileMode('cv-choice', 'manual');
+  }, [requestAdvanceWithProfileMode]);
 
   const isCandidate = user?.role === UserRoles.CANDIDATE;
 

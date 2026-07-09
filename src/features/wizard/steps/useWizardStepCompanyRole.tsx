@@ -9,6 +9,7 @@ import {
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { formRegistrationCompanyRole } from '@/src/features/registration/forms/formRegistrationCompanyRole';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectRegistrationData,
@@ -45,6 +46,7 @@ export function useWizardStepCompanyRole() {
   );
 
   const step: WizardStep = {
+    id: 'company-role',
     smallTitle: 'Votre rôle',
     summary: { title: 'Votre rôle', duration: '~1 minute' },
     hideGenericStepHeader: undefined,
@@ -59,10 +61,7 @@ export function useWizardStepCompanyRole() {
         innerRef={formRef}
       />
     ),
-    onSubmit: async () => {
-      const success = await formRef.current?.submit();
-      return success === false ? false : undefined;
-    },
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

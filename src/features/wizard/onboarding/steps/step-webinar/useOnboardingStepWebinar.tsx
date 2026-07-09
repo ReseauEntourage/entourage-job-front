@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@/src/api';
 import { EventType } from '@/src/constants/events';
 import { UserRoles } from '@/src/constants/users';
-import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
-import { AppDispatch, store } from '@/src/store/store';
+import {
+  WizardStep,
+  WizardStepId,
+} from '@/src/features/wizard/shell/wizard.types';
+import { AppDispatch } from '@/src/store/store';
 import {
   currentUserActions,
   selectCurrentUser,
@@ -18,20 +21,19 @@ import { Content } from './Content';
 
 interface UseOnboardingStepWebinarProps {
   userRole: UserRoles | undefined;
-  triggerAdvance: () => void;
+  requestAdvance: (stepId: WizardStepId) => void;
 }
 
 export const useOnboardingStepWebinar = ({
   userRole,
-  triggerAdvance,
+  requestAdvance,
 }: UseOnboardingStepWebinarProps) => {
-  const getState = () => store.getState() as any;
   const dispatch = useDispatch<AppDispatch>();
   const webinarSfId = useSelector(selectWebinarSfId);
+  const currentUser = useSelector(selectCurrentUser);
   const [isSkipping, setIsSkipping] = useState(false);
 
   const skipWebinar = useCallback(async () => {
-    const currentUser = selectCurrentUser(getState());
     if (!currentUser) {
       return;
     }
@@ -46,18 +48,20 @@ export const useOnboardingStepWebinar = ({
           user: { onboardingWebinarSkippedAt: skippedAt },
         })
       );
-      triggerAdvance();
+      requestAdvance('webinar');
     } finally {
       setIsSkipping(false);
     }
-  }, [dispatch, triggerAdvance]);
+  }, [currentUser, dispatch, requestAdvance]);
 
   const isCandidate = userRole === UserRoles.CANDIDATE;
   const title = isCandidate
     ? "Dernière chose avant de découvrir vos coachs : on vous invite à la réunion de bienvenue (visio 1h). Vous y rencontrez l'équipe et d'autres candidats."
     : "Dernière chose avant de découvrir vos candidats : on vous invite à la réunion de bienvenue (visio 1h). Vous y rencontrez l'équipe et d'autres coachs.";
 
-  const onboardingStepWebinar = {
+  const onboardingStepWebinar: WizardStep = {
+    id: 'webinar',
+    hideGenericStepHeader: undefined,
     summary: {
       title: 'Réunion de bienvenue',
       description: 'Choisissez votre créneau pour la réunion de bienvenue',
@@ -79,11 +83,10 @@ export const useOnboardingStepWebinar = ({
       />
     ),
     onSubmit: async () => {
-      const sfId = selectWebinarSfId(getState());
-      if (sfId) {
+      if (webinarSfId) {
         await dispatch(
           updateUserParticipationThunk({
-            eventSalesForceId: sfId,
+            eventSalesForceId: webinarSfId,
             isParticipating: true,
           })
         ).unwrap();
@@ -91,7 +94,6 @@ export const useOnboardingStepWebinar = ({
       return true;
     },
     isStepCompleted: async () => {
-      const currentUser = selectCurrentUser(getState());
       if (currentUser?.onboardingWebinarSkippedAt) {
         return true;
       }
@@ -105,7 +107,7 @@ export const useOnboardingStepWebinar = ({
       return response.data.length > 0;
     },
     section: 'formation',
-  } as WizardStep;
+  };
 
   return { onboardingStepWebinar };
 };

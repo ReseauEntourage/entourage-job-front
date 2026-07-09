@@ -14,9 +14,37 @@ export const WIZARD_SECTIONS: WizardSection[] = [
   { id: 'formation', label: 'Formation', duration: '10 minutes' },
 ];
 
+export type WizardStepId =
+  // Inscription
+  | 'nudges'
+  | 'sectors-jobs'
+  | 'network-preview'
+  | 'candidate-info'
+  | 'candidate-eligibility'
+  | 'coach-info'
+  | 'company-role'
+  | 'company-selection'
+  | 'referer-account'
+  | 'account'
+  // Confirmation email
+  | 'email-confirmation'
+  // Onboarding
+  | 'social-situation'
+  | 'photo'
+  | 'cv-choice'
+  | 'cv-loading'
+  | 'cv-recap'
+  | 'presentation'
+  | 'experiences'
+  | 'formations'
+  | 'skills'
+  | 'elearning'
+  | 'webinar'
+  | 'match-recap';
+
 export interface WizardStep {
   /** Identifiant stable permettant de retrouver un step sans dépendre de sa position */
-  id?: string;
+  id: WizardStepId;
   summary: {
     title: string;
     description?: string;
@@ -34,6 +62,8 @@ export interface WizardStep {
   isNextEnabled?: boolean;
   buttonLabel?: string;
   isStepCompleted?: () => Promise<boolean>;
+  /** Évaluée par le moteur à l'arrivée sur l'étape : si true, l'étape est sautée sans interaction utilisateur */
+  isAutoSkippable?: () => Promise<boolean>;
   incrementationIsAllowed?: () => Promise<boolean>;
   onSubmit?: () => Promise<boolean | void>;
   section?: WizardSectionId;

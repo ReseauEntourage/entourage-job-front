@@ -7,6 +7,7 @@ import {
 } from '@/src/features/forms/FormWithValidation';
 import { formRegistrationCoachInfo } from '@/src/features/registration/forms/formRegistrationCoachInfo';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectRegistrationData,
@@ -32,6 +33,7 @@ export function useWizardStepCoachInfo() {
   );
 
   const step: WizardStep = {
+    id: 'coach-info',
     smallTitle: 'Vos informations',
     summary: { title: 'Vos informations', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
@@ -49,10 +51,7 @@ export function useWizardStepCoachInfo() {
         />
       </Card>
     ),
-    onSubmit: async () => {
-      const success = await formRef.current?.submit();
-      return success === false ? false : undefined;
-    },
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

@@ -5,7 +5,12 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  DefaultValues,
+  SubmitHandler,
+  useForm,
+  UseFormWatch,
+} from 'react-hook-form';
 import { Heading } from '@/src/components/ui/Inputs';
 import { Text } from '@/src/components/ui/Inputs/Text';
 import { FormFooter } from 'src/features/forms/FormFooter/FormFooter';
@@ -29,6 +34,7 @@ import { GenericField } from './fields/GenericField';
 export type FormWithValidationRef = {
   resetForm: () => void;
   submit: () => Promise<boolean>;
+  watch: UseFormWatch<AnyCantFix>;
 };
 
 interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
@@ -101,6 +107,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
           }
         )();
       }),
+    watch,
   }));
 
   const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =

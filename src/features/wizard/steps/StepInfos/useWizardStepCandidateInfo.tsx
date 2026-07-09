@@ -7,6 +7,7 @@ import {
 } from '@/src/features/forms/FormWithValidation';
 import { formRegistrationCandidateInfo } from '@/src/features/registration/forms/formRegistrationCandidateInfo';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectRegistrationCurrentStep,
@@ -33,6 +34,7 @@ export function useWizardStepCandidateInfo() {
   );
 
   const step: WizardStep = {
+    id: 'candidate-info',
     smallTitle: 'Vos informations',
     summary: { title: 'Vos informations', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
@@ -54,10 +56,7 @@ export function useWizardStepCandidateInfo() {
         />
       </Card>
     ),
-    onSubmit: async () => {
-      const success = await formRef.current?.submit();
-      return success === false ? false : undefined;
-    },
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

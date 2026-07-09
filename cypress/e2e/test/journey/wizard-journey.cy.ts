@@ -405,6 +405,174 @@ describe('Wizard', () => {
       cy.contains('Commençons par une photo de vous');
     });
 
+    it('should resume mid-way through the manual profile path on the formations step', () => {
+      cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
+        (user) => {
+          cy.intercept('GET', '/current', {
+            statusCode: 200,
+            body: {
+              ...user,
+              onboardingStatus: 'in_progress',
+              userSocialSituation: { hasCompletedSurvey: true },
+            },
+          }).as('currentIdentity');
+        }
+      );
+
+      // Reprise en plein milieu du chemin manuel : situation sociale, photo,
+      // cv-choice, présentation et expériences déjà complétées, formations pas
+      // encore renseignées — la reprise doit s'arrêter précisément là, sans
+      // sauter à l'étape suivante ni revenir en arrière.
+      cy.intercept('GET', '/current/profile/complete', {
+        statusCode: 200,
+        body: {
+          id: '00000000-0000-0000-0000-000000000001',
+          hasPicture: true,
+          hasExternalCv: false,
+          description: null,
+          introduction: 'Je cherche un poste dans la vente.',
+          linkedinUrl: null,
+          department: null,
+          isAvailable: true,
+          currentJob: null,
+          optInRecommendations: false,
+          nudges: [],
+          sectorOccupations: [],
+          allowPhysicalEvents: true,
+          allowRemoteEvents: true,
+          experiences: [{ title: 'Vendeur', skills: [] }],
+          formations: [],
+          skills: [],
+          contracts: [],
+          reviews: [],
+          interests: [],
+          customNudges: [],
+          userProfileLanguages: [],
+          hasExtractedCvData: false,
+        },
+      }).as('currentProfileComplete');
+
+      cy.visit('/wizard/run');
+
+      cy.contains('Vos formations');
+    });
+
+    it('should advance to the presentation step when choosing to fill the profile manually from cv-choice', () => {
+      cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
+        (user) => {
+          cy.intercept('GET', '/current', {
+            statusCode: 200,
+            body: {
+              ...user,
+              onboardingStatus: 'in_progress',
+              userSocialSituation: { hasCompletedSurvey: true },
+            },
+          }).as('currentIdentity');
+        }
+      );
+
+      // Situation sociale et photo déjà complétées, profil pas encore commencé :
+      // arrivée directe sur cv-choice, sans état stubé à mi-parcours.
+      cy.intercept('GET', '/current/profile/complete', {
+        statusCode: 200,
+        body: {
+          id: '00000000-0000-0000-0000-000000000001',
+          hasPicture: true,
+          hasExternalCv: false,
+          description: null,
+          introduction: null,
+          linkedinUrl: null,
+          department: null,
+          isAvailable: true,
+          currentJob: null,
+          optInRecommendations: false,
+          nudges: [],
+          sectorOccupations: [],
+          allowPhysicalEvents: true,
+          allowRemoteEvents: true,
+          experiences: [],
+          formations: [],
+          skills: [],
+          contracts: [],
+          reviews: [],
+          interests: [],
+          customNudges: [],
+          userProfileLanguages: [],
+          hasExtractedCvData: false,
+        },
+      }).as('currentProfileComplete');
+
+      cy.visit('/wizard/run');
+
+      cy.contains('Deux façons de faire');
+      cy.contains('button', 'Le remplir moi-même').click();
+
+      cy.contains('Présentez-vous en quelques lignes');
+    });
+
+    it('should advance to the cv-loading step when uploading a CV from cv-choice', () => {
+      cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
+        (user) => {
+          cy.intercept('GET', '/current', {
+            statusCode: 200,
+            body: {
+              ...user,
+              onboardingStatus: 'in_progress',
+              userSocialSituation: { hasCompletedSurvey: true },
+            },
+          }).as('currentIdentity');
+        }
+      );
+
+      cy.intercept('GET', '/current/profile/complete', {
+        statusCode: 200,
+        body: {
+          id: '00000000-0000-0000-0000-000000000001',
+          hasPicture: true,
+          hasExternalCv: false,
+          description: null,
+          introduction: null,
+          linkedinUrl: null,
+          department: null,
+          isAvailable: true,
+          currentJob: null,
+          optInRecommendations: false,
+          nudges: [],
+          sectorOccupations: [],
+          allowPhysicalEvents: true,
+          allowRemoteEvents: true,
+          experiences: [],
+          formations: [],
+          skills: [],
+          contracts: [],
+          reviews: [],
+          interests: [],
+          customNudges: [],
+          userProfileLanguages: [],
+          hasExtractedCvData: false,
+        },
+      }).as('currentProfileComplete');
+
+      cy.intercept('POST', '/external-cv', { statusCode: 201, body: {} }).as(
+        'postExternalCv'
+      );
+
+      cy.visit('/wizard/run');
+
+      cy.contains('Deux façons de faire');
+      cy.get('input[type="file"]').selectFile(
+        {
+          contents: Cypress.Buffer.from('%PDF-1.4 fake cv content'),
+          fileName: 'cv.pdf',
+          mimeType: 'application/pdf',
+        },
+        { force: true }
+      );
+      cy.wait('@postExternalCv');
+
+      cy.contains('Votre profil est en cours de génération');
+    });
+
     it('should display an error message when the social situation save fails', () => {
       cy.intercept('GET', '/current', {
         fixture: 'auth-current-candidate-onboarding-not-started-res',

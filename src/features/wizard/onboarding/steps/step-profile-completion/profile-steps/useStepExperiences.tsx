@@ -70,6 +70,7 @@ export const useStepExperiences = ({ user }: UseStepExperiencesProps) => {
   );
 
   const onboardingStepExperiences: WizardStep = {
+    id: 'experiences',
     summary: {
       title: 'Expériences professionnelles',
       duration: '~2 minutes',

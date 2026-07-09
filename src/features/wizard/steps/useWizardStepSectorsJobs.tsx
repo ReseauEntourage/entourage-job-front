@@ -1,21 +1,28 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfileSectorOccupation } from '@/src/api/types';
 import { Card } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
+import { FormWithValidationRef } from '@/src/features/forms/FormWithValidation';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
-import { ProfileCompletionSchemaField } from '@/src/features/wizard/onboarding/steps/step-profile-completion/components/ProfileCompletionSchemaField';
+import { FormWithValidationSync } from '@/src/features/wizard/FormWithValidationSync';
 import {
   coachCurrentJobField,
-  profileCompletionFormSchema,
+  PROFILE_COMPLETION_FORM_ID,
   profileCompletionProfessionalInfoCandidateRows,
   profileCompletionProfessionalInfoCoachFields,
 } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profileCompletionFormSchema';
 import { ProfileCompletionFormValues } from '@/src/features/wizard/onboarding/steps/step-profile-completion/types';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { WizardCompatibleProfilesSidePanel } from '@/src/features/wizard/sidepanels/WizardCompatibleProfilesSidePanel';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectRegistrationCurrentStep,
@@ -28,39 +35,60 @@ const businessSectorIdsField =
     (f) => f.id === 'businessSectorIds'
   )!;
 
-function CandidateContent() {
-  return (
-    <>
-      {profileCompletionProfessionalInfoCandidateRows.map((row) =>
-        row.fields.map((field) => (
-          <ProfileCompletionSchemaField
-            key={String(field.name)}
-            formSchema={profileCompletionFormSchema}
-            field={field}
-            showError={false}
-          />
-        ))
-      )}
-    </>
-  );
-}
+const candidateFields = profileCompletionProfessionalInfoCandidateRows.flatMap(
+  (row) => row.fields
+);
+const coachFields = [coachCurrentJobField, businessSectorIdsField];
 
-function CoachContent() {
-  return (
-    <>
-      <ProfileCompletionSchemaField
-        formSchema={profileCompletionFormSchema}
-        field={coachCurrentJobField}
-        showError={false}
-      />
-      <ProfileCompletionSchemaField
-        formSchema={profileCompletionFormSchema}
-        field={businessSectorIdsField}
-        showError={false}
-      />
-    </>
-  );
-}
+type SectorsJobsValues = Partial<ProfileCompletionFormValues>;
+
+const isCandidateFormValid = (values: SectorsJobsValues) =>
+  !!values.businessSectorId0 &&
+  (!!values.businessSectorId1 || !values.occupation1);
+
+const isCoachFormValid = (values: SectorsJobsValues) => {
+  const sectors = values.businessSectorIds as
+    | FilterConstant<string>[]
+    | undefined;
+  return !!values.currentJob && Array.isArray(sectors) && sectors.length > 0;
+};
+
+const buildPreferences = (isCandidate: boolean, values: SectorsJobsValues) => {
+  let sectorOccupations: UserProfileSectorOccupation[];
+  let businessSectorIds: string[];
+
+  if (isCandidate) {
+    sectorOccupations = formatCareerPathSentence({
+      businessSectorId0: values.businessSectorId0 ?? undefined,
+      occupation0: values.occupation0 ?? '',
+      businessSectorId1: values.businessSectorId1 ?? undefined,
+      occupation1: values.occupation1 ?? '',
+    });
+    businessSectorIds = [
+      values.businessSectorId0?.value,
+      values.businessSectorId1?.value,
+    ].filter((id): id is string => Boolean(id));
+  } else {
+    const sectors = (values.businessSectorIds ??
+      []) as FilterConstant<string>[];
+    sectorOccupations = sectors.map(
+      (s, idx) =>
+        ({
+          businessSectorId: s.value,
+          order: idx,
+        } as UserProfileSectorOccupation)
+    );
+    businessSectorIds = sectors
+      .map((s) => s.value)
+      .filter((id): id is string => Boolean(id));
+  }
+
+  return {
+    sectorOccupations,
+    businessSectorIds,
+    ...(!isCandidate && { currentJob: values.currentJob ?? '' }),
+  };
+};
 
 export function useWizardStepSectorsJobs() {
   const dispatch = useDispatch();
@@ -71,6 +99,14 @@ export function useWizardStepSectorsJobs() {
     : UserRoles.CANDIDATE;
 
   const isCandidate = userRole === UserRoles.CANDIDATE;
+  const formRef = useRef<FormWithValidationRef>(null);
+  const [isNextEnabled, setIsNextEnabled] = useState(false);
+
+  // Le formulaire remonte (key candidate/coach) au changement de rôle : la valeur
+  // précédente ne doit pas rester affichée pendant le remontage.
+  useEffect(() => {
+    setIsNextEnabled(false);
+  }, [isCandidate]);
 
   const sidePanelContent = useCallback(
     (mode: 'compact' | 'full') => (
@@ -82,76 +118,60 @@ export function useWizardStepSectorsJobs() {
     []
   );
 
-  const formMethods = useForm<ProfileCompletionFormValues>({
-    defaultValues: {
+  const sectorsJobsFormSchema = useMemo(
+    () => ({
+      id: PROFILE_COMPLETION_FORM_ID,
+      fields: isCandidate ? candidateFields : coachFields,
+    }),
+    [isCandidate]
+  );
+
+  const defaultValues = useMemo<SectorsJobsValues>(
+    () => ({
       businessSectorId0: null,
       occupation0: '',
       businessSectorId1: null,
       occupation1: '',
       businessSectorIds: [],
       currentJob: '',
-    },
-    mode: 'onChange',
-  });
+    }),
+    []
+  );
 
-  useEffect(() => {
-    const subscription = formMethods.watch((values) => {
-      let sectorOccupations: UserProfileSectorOccupation[];
-      let businessSectorIds: string[];
-
-      if (isCandidate) {
-        sectorOccupations = formatCareerPathSentence({
-          businessSectorId0: values.businessSectorId0 as
-            | FilterConstant<string>
-            | undefined,
-          occupation0: values.occupation0 ?? '',
-          businessSectorId1: values.businessSectorId1 as
-            | FilterConstant<string>
-            | undefined,
-          occupation1: values.occupation1 ?? '',
-        });
-        businessSectorIds = [
-          values.businessSectorId0?.value,
-          values.businessSectorId1?.value,
-        ].filter((id): id is string => Boolean(id));
-      } else {
-        const sectors = (values.businessSectorIds ??
-          []) as FilterConstant<string>[];
-        sectorOccupations = sectors.map(
-          (s, idx) =>
-            ({
-              businessSectorId: s.value,
-              order: idx,
-            } as UserProfileSectorOccupation)
-        );
-        businessSectorIds = sectors
-          .map((s) => s.value)
-          .filter((id): id is string => Boolean(id));
-      }
-
+  // Pousse chaque changement vers les préférences d'inscription pour alimenter
+  // le side panel de profils compatibles en direct, et recalcule isNextEnabled.
+  const handleWatch = useCallback(
+    (values: SectorsJobsValues) => {
       dispatch(
-        registrationActions.setPreRegistrationPreferences({
-          sectorOccupations,
-          businessSectorIds,
-          ...(!isCandidate && { currentJob: values.currentJob ?? '' }),
+        registrationActions.setPreRegistrationPreferences(
+          buildPreferences(isCandidate, values)
+        )
+      );
+      setIsNextEnabled(
+        isCandidate ? isCandidateFormValid(values) : isCoachFormValid(values)
+      );
+    },
+    [dispatch, isCandidate]
+  );
+
+  const handleFormWithValidationSubmit = useCallback(
+    (values: SectorsJobsValues) => {
+      dispatch(
+        registrationActions.setPreRegistrationPreferences(
+          buildPreferences(isCandidate, values)
+        )
+      );
+      dispatch(
+        registrationActions.moveForwardInRegistration({
+          step: currentStep + 1,
         })
       );
-    });
-    return () => subscription.unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCandidate]);
-
-  const content = useMemo(
-    () => (
-      <FormProvider {...formMethods}>
-        {isCandidate ? <CandidateContent /> : <CoachContent />}
-      </FormProvider>
-    ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isCandidate]
+    },
+    [dispatch, isCandidate, currentStep]
   );
 
   const step: WizardStep = {
+    id: 'sectors-jobs',
     smallTitle: isCandidate ? 'Secteurs recherchés' : 'Vos secteurs',
     summary: {
       title: isCandidate
@@ -169,51 +189,22 @@ export function useWizardStepSectorsJobs() {
     description: isCandidate
       ? 'Pour trouver des coachs qui connaissent votre domaine.'
       : 'Pour vous montrer des personnes qui cherchent justement dans votre domaine.',
-    content: <Card title="Ce que vous recherchez">{content}</Card>,
+    content: (
+      <Card title="Ce que vous recherchez">
+        <FormWithValidationSync
+          key={isCandidate ? 'candidate' : 'coach'}
+          formSchema={sectorsJobsFormSchema}
+          defaultValues={defaultValues}
+          onSubmit={handleFormWithValidationSubmit}
+          onWatch={handleWatch}
+          formRef={formRef}
+        />
+      </Card>
+    ),
     sidePanelContent,
     mobileBottomSheet: true,
-    isNextEnabled: formMethods.formState.isValid,
-    onSubmit: async () => {
-      const values = formMethods.getValues();
-      let sectorOccupations: UserProfileSectorOccupation[];
-      let businessSectorIds: string[];
-
-      if (isCandidate) {
-        sectorOccupations = formatCareerPathSentence({
-          businessSectorId0: values.businessSectorId0 ?? undefined,
-          occupation0: values.occupation0,
-          businessSectorId1: values.businessSectorId1 ?? undefined,
-          occupation1: values.occupation1,
-        });
-        businessSectorIds = [
-          values.businessSectorId0?.value,
-          values.businessSectorId1?.value,
-        ].filter((id): id is string => Boolean(id));
-      } else {
-        const sectors = values.businessSectorIds as FilterConstant<string>[];
-        sectorOccupations = sectors.map(
-          (s, idx) =>
-            ({
-              businessSectorId: s.value,
-              order: idx,
-            } as UserProfileSectorOccupation)
-        );
-        businessSectorIds = sectors
-          .map((s) => s.value)
-          .filter((id): id is string => Boolean(id));
-      }
-
-      dispatch(
-        registrationActions.setPreRegistrationPreferences({
-          sectorOccupations,
-          businessSectorIds,
-          ...(!isCandidate && { currentJob: values.currentJob ?? '' }),
-        })
-      );
-      dispatch(
-        registrationActions.moveForwardInRegistration({ step: currentStep + 1 })
-      );
-    },
+    isNextEnabled,
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

@@ -207,6 +207,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
   );
 
   const onboardingStepCvRecap: WizardStep = {
+    id: 'cv-recap',
     summary: {
       title: 'Récapitulatif du profil',
       duration: '~3 minutes',

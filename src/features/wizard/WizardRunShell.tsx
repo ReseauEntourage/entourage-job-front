@@ -45,7 +45,7 @@ export const WizardRunShell = ({
   // réinitialisé par useWizard à chaque changement d'étape et à chaque soumission.
   const stepErrorMessage = useSelector(selectFormErrorMessage);
 
-  // Task 3.1 – ne montrer que les sections réellement présentes dans le flow courant,
+  // Ne montrer que les sections réellement présentes dans le flow courant,
   // plutôt qu'une liste fixe commune à tous les flows (ex. Entreprise n'a que "Inscription").
   const sections = useMemo(() => {
     const presentSectionIds = new Set(

@@ -1,34 +1,14 @@
 import {
   CANDIDATE_ACCOMMODATIONS_FILTERS,
   CANDIDATE_RESOURCES_FILTERS,
-  CandidateAccommodation,
-  CandidateResource,
   JOB_SEARCH_DURATIONS_FILTERS,
-  JobSearchDuration,
   NATIONALITIES_FILTERS,
-  Nationality,
   STUDIES_LEVELS_FILTERS,
-  StudiesLevel,
   WORKING_EXPERIENCE_FILTERS,
-  WorkingExperience,
   YES_NO_JNSPR_FILTERS,
-  YesNoJNSPRValue,
 } from '@/src/constants';
 import { FormFieldInput, FormSchema } from '@/src/features/forms/FormSchema';
 import { AnyCantFix } from '@/src/utils/Types';
-
-export const socialSituationFormSchema: FormSchema<{
-  nationality: Nationality;
-  accommodation: CandidateAccommodation;
-  hasSocialWorker: YesNoJNSPRValue;
-  resources: CandidateResource;
-  jobSearchDuration: JobSearchDuration;
-  studiesLevel: StudiesLevel;
-  workingExperience: WorkingExperience;
-}> = {
-  id: 'form-onboarding-profile-completion',
-  fields: [],
-};
 
 export const personnalSocialSituationFormFields: FormFieldInput<AnyCantFix>[] =
   [
@@ -100,3 +80,23 @@ export const professionnalSocialSituationFormFields: FormFieldInput<AnyCantFix>[
       showOptional: true,
     },
   ];
+
+export const socialSituationFormSchema: FormSchema<AnyCantFix> = {
+  id: 'form-onboarding-profile-completion',
+  fields: [
+    {
+      id: 'personalInfoHeading',
+      name: 'personalInfoHeading',
+      title: 'Informations personnelles',
+      component: 'heading',
+    },
+    ...personnalSocialSituationFormFields,
+    {
+      id: 'professionalInfoHeading',
+      name: 'professionalInfoHeading',
+      title: 'Informations professionnelles',
+      component: 'heading',
+    },
+    ...professionnalSocialSituationFormFields,
+  ],
+};

@@ -1,14 +1,20 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
+import { Alert } from '@/src/components/ui';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
+import {
+  FormWithValidation,
+  FormWithValidationRef,
+} from '@/src/features/forms/FormWithValidation';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { updateSocialSituationSelectors } from '@/src/use-cases/current-user';
 import { fetchCurrentUserSocialSituationSelectors } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
-import { Content } from './Content';
+import { StyledCardList } from './Content.styles';
+import { socialSituationFormSchema } from './SocialSituationFormSchema';
 import type { SocialSituationFormValues } from './types';
 
 interface UseWizardStepSocialSituationProps {
@@ -20,6 +26,7 @@ export const useOnboardingStepSocialSituation = ({
 }: UseWizardStepSocialSituationProps) => {
   const dispatch = useDispatch();
   const userRef = useRef(user);
+  const formRef = useRef<FormWithValidationRef>(null);
 
   useEffect(() => {
     userRef.current = user;
@@ -43,17 +50,11 @@ export const useOnboardingStepSocialSituation = ({
   );
 
   const submitResolveRef = useRef<((value: boolean) => void) | null>(null);
+  const lastSubmitFailedRef = useRef(false);
   const fetchSocialSituationDeferredRef = useRef<{
     promise: Promise<boolean>;
     resolve: (value: boolean) => void;
   } | null>(null);
-
-  const formMethods = useForm<SocialSituationFormValues>({
-    defaultValues: {},
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
-    shouldUnregister: false,
-  });
 
   const waitForSocialSituationUpdate = useCallback(
     (values: SocialSituationFormValues) => {
@@ -143,7 +144,26 @@ export const useOnboardingStepSocialSituation = ({
     };
   }, []);
 
-  const onboardingStepSocialSituation = {
+  const handleFormWithValidationSubmit = useCallback(
+    async (values: SocialSituationFormValues) => {
+      const success = await waitForSocialSituationUpdate(values);
+      lastSubmitFailedRef.current = !success;
+    },
+    [waitForSocialSituationUpdate]
+  );
+
+  const submitViaForm = useStepFormSubmit(formRef);
+  const onSubmit = useCallback(async () => {
+    const validated = await submitViaForm();
+    if (validated === false) {
+      return false;
+    }
+    return lastSubmitFailedRef.current ? false : undefined;
+  }, [submitViaForm]);
+
+  const onboardingStepSocialSituation: WizardStep = {
+    id: 'social-situation',
+    hideGenericStepHeader: undefined,
     summary: {
       title: 'Dites-nous en plus sur vous',
       duration: '~1-2 minutes',
@@ -154,28 +174,22 @@ export const useOnboardingStepSocialSituation = ({
       'Quelques infos pour vous proposer le bon soutien, tout est facultatif.',
     smallTitle: 'Votre situation',
     description: null,
-    onSubmit: async () => {
-      return await new Promise<boolean>((resolve) => {
-        formMethods.handleSubmit(
-          async (values) => {
-            resolve(await waitForSocialSituationUpdate(values));
-          },
-          async () => {
-            dispatch(
-              onboardingActions.setFormErrorMessage(
-                'Veuillez compléter les champs obligatoires avant de passer à l’étape suivante.'
-              )
-            );
-            resolve(false);
-          }
-        )();
-      });
-    },
     content: (
-      <FormProvider {...formMethods}>
-        <Content />
-      </FormProvider>
+      <StyledCardList>
+        <Alert type={AlertType.Info} variant="outlined">
+          Ces informations ne sont pas obligatoires, et ne seront pas
+          communiquées.
+        </Alert>
+        <FormWithValidation
+          formSchema={socialSituationFormSchema}
+          defaultValues={{}}
+          onSubmit={handleFormWithValidationSubmit}
+          noFooter
+          innerRef={formRef}
+        />
+      </StyledCardList>
     ),
+    onSubmit,
     isStepCompleted: async () => {
       const ok = await waitForSocialSituationFetch();
       if (!ok) {
@@ -184,7 +198,7 @@ export const useOnboardingStepSocialSituation = ({
       return !!userRef.current?.userSocialSituation?.hasCompletedSurvey;
     },
     section: 'profil',
-  } as WizardStep;
+  };
 
   return { onboardingStepSocialSituation };
 };

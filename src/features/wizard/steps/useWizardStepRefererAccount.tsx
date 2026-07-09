@@ -9,6 +9,7 @@ import {
   CREATE_NEW_ORGANIZATION_VALUE,
 } from '@/src/features/registration/forms/formRegistrationRefererAccount';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectRegistrationData,
@@ -91,6 +92,7 @@ export function useWizardStepRefererAccount() {
   );
 
   const step: WizardStep = {
+    id: 'referer-account',
     smallTitle: 'Mon compte',
     summary: { title: 'Mon compte', duration: '~3 minutes' },
     hideGenericStepHeader: undefined,
@@ -106,10 +108,7 @@ export function useWizardStepRefererAccount() {
         innerRef={formRef}
       />
     ),
-    onSubmit: async () => {
-      const success = await formRef.current?.submit();
-      return success === false ? false : undefined;
-    },
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

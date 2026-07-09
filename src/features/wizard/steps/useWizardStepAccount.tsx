@@ -8,6 +8,7 @@ import {
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { formRegistrationAccount } from '@/src/features/registration/forms/formRegistrationAccount';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectCompatibleProfilesCount,
@@ -65,6 +66,7 @@ export function useWizardStepAccount() {
   );
 
   const step: WizardStep = {
+    id: 'account',
     smallTitle: 'Mon compte',
     summary: { title: 'Mon compte', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
@@ -81,10 +83,7 @@ export function useWizardStepAccount() {
         />
       </Card>
     ),
-    onSubmit: async () => {
-      const success = await formRef.current?.submit();
-      return success === false ? false : undefined;
-    },
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

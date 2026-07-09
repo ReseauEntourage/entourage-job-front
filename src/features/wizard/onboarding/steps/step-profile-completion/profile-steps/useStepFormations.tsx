@@ -70,6 +70,7 @@ export const useStepFormations = ({ user }: UseStepFormationsProps) => {
   );
 
   const onboardingStepFormations: WizardStep = {
+    id: 'formations',
     summary: {
       title: 'Formations',
       duration: '~1 minute',

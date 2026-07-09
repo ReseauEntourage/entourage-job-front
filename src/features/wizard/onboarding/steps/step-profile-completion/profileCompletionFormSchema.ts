@@ -10,8 +10,10 @@ import {
 } from '@/src/features/forms/utils/loadOptions.utils';
 import type { AnyCantFix } from '@/src/utils/Types';
 
+export const PROFILE_COMPLETION_FORM_ID = 'form-onboarding-profile-completion';
+
 export const profileCompletionFormSchema: FormSchema<AnyCantFix> = {
-  id: 'form-onboarding-profile-completion',
+  id: PROFILE_COMPLETION_FORM_ID,
   fields: [],
 };
 

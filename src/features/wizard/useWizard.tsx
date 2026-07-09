@@ -1,52 +1,18 @@
-import { useRouter } from 'next/router';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from '@/src/constants';
-import { UserRoles } from '@/src/constants/users';
-import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
-import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
-import { determineStartingStep } from '@/src/features/wizard/onboarding/onboarding.utils';
-import { useOnboardingStepElearning } from '@/src/features/wizard/onboarding/steps/step-elearning/useOnboardingStepElearning';
-import { useOnboardingStepMatchRecap } from '@/src/features/wizard/onboarding/steps/step-match-recap/useOnboardingStepMatchRecap';
-import { ProfileMode } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/types';
-import { useStepCvChoice } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvChoice';
-import { useStepCvLoading } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvLoading';
-import { useStepCvRecap } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepCvRecap';
-import { useStepExperiences } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepExperiences';
-import { useStepFormations } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepFormations';
-import { useStepPhoto } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepPhoto';
-import { useStepPresentation } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepPresentation';
-import { useStepSkills } from '@/src/features/wizard/onboarding/steps/step-profile-completion/profile-steps/useStepSkills';
-import { useOnboardingStepSocialSituation } from '@/src/features/wizard/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
-import { useOnboardingStepWebinar } from '@/src/features/wizard/onboarding/steps/step-webinar/useOnboardingStepWebinar';
+import { useOnboardingPhase } from '@/src/features/wizard/onboarding/useOnboardingPhase';
+import { resolveWizardPhase } from '@/src/features/wizard/resolveWizardPhase';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
-import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
-import { useProfileGeneration } from '@/src/hooks/useProfileGeneration';
-import { authenticationActions } from '@/src/use-cases/authentication';
+import { useEmailConfirmationPhase } from '@/src/features/wizard/useEmailConfirmationPhase';
+import { useWizardRedirects } from '@/src/features/wizard/useWizardRedirects';
+import { logoutSelectors } from '@/src/use-cases/authentication/authentication.selectors';
 import {
-  logoutSelectors,
-  verifyOtpSelectors,
-} from '@/src/use-cases/authentication/authentication.selectors';
-import {
-  currentUserActions,
   fetchUserSelectors,
   selectCurrentUser,
-  selectFetchCurrentProfileStatus,
-  selectUpdateOnboardingStatusSelectors,
-  uploadExternalCvSelectors,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { createUserSelectors } from '@/src/use-cases/registration';
-import {
-  EMAIL_CONFIRMATION_STEP,
-  useWizardStepEmailConfirmation,
-} from './steps/useWizardStepEmailConfirmation';
+import { EMAIL_CONFIRMATION_STEP } from './steps/useWizardStepEmailConfirmation';
 import { useRegistrationWizard } from './useRegistrationWizard';
 
 export interface WizardState {
@@ -67,21 +33,16 @@ export interface WizardState {
 
 export const useWizard = (): WizardState => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const currentUser = useSelector(selectCurrentUser);
   const createUserStatus = useSelector(
     createUserSelectors.selectCreateUserStatus
   );
-  const fetchProfileStatus = useSelector(selectFetchCurrentProfileStatus);
-  const updateOnboardingStatus = useSelector(
-    selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
-  );
   const isLogoutSucceeded = useSelector(
     logoutSelectors.selectIsLogoutSucceeded
   );
 
-  // Registration steps
+  // Registration phase
   const {
     wizardSteps: registrationSteps,
     currentWizardIdx,
@@ -101,357 +62,33 @@ export const useWizard = (): WizardState => {
   );
   const isFetchUserFinished = isFetchUserSucceeded || isFetchUserFailed;
 
-  // Retour à la sélection si pas de flow valide (null ou valeur non reconnue).
-  // On attend la fin du fetch de l'utilisateur courant : au rechargement direct de
-  // /wizard/run, la page monte avant que /current ne réponde et un utilisateur en
-  // cours d'onboarding serait sinon renvoyé vers /wizard puis le dashboard.
-  useEffect(() => {
-    if (!currentUser && isFetchUserFinished && registrationSteps.length === 0) {
-      router.replace('/wizard');
-    }
-  }, [currentUser, isFetchUserFinished, registrationSteps.length, router]);
+  const onboarding = useOnboardingPhase({ currentUser, registrationFlow });
+  const emailConfirmation = useEmailConfirmationPhase();
 
-  // Redirection vers /login après déconnexion depuis le wizard
-  useEffect(() => {
-    if (isLogoutSucceeded) {
-      dispatch(authenticationActions.logoutReset());
-      router.push('/login');
-    }
-  }, [isLogoutSucceeded, router, dispatch]);
+  const phase = resolveWizardPhase(currentUser, createUserStatus);
+  const isOnboardingPhase = phase === 'onboarding';
+  const isEmailConfirmationPhase = phase === 'email-confirmation';
 
-  // ─── Profile mode ────────────────────────────────────────────────────────────
-
-  const [profileMode, setProfileMode] = useState<ProfileMode>('pending');
-  const [onboardingIdx, setOnboardingIdx] = useState<number | null>(null);
-  const [onboardingIsLoading, setOnboardingIsLoading] = useState(false);
-
-  const profileComplete = useCurrentUserProfileComplete();
-  const { generateProfileFromCV, cancelProfileGeneration } =
-    useProfileGeneration();
-  const hasTriggeredGenerationRef = useRef(false);
-
-  // Bascule vers la saisie manuelle depuis cv-loading après le délai
-  // d'attente : annule le job de génération en cours avant d'avancer.
-  const handleCvGenerationManualFallback = useCallback(() => {
-    void cancelProfileGeneration();
-    setProfileMode('manual');
-  }, [cancelProfileGeneration]);
-
-  // Task 2.2 – Initialise profileMode depuis les données serveur au chargement
-  const [isProfileModeInitialized, setIsProfileModeInitialized] =
-    useState(false);
-  useEffect(() => {
-    if (isProfileModeInitialized) {
-      return;
-    }
-    if (!profileComplete) {
-      return;
-    }
-
-    setIsProfileModeInitialized(true);
-
-    if (profileComplete.hasExternalCv) {
-      setProfileMode('cv');
-    } else if (
-      (profileComplete.experiences?.length ?? 0) > 0 ||
-      (profileComplete.formations?.length ?? 0) > 0
-    ) {
-      setProfileMode('manual');
-    }
-    // else remains 'pending' — user hasn't started any path yet
-  }, [profileComplete, isProfileModeInitialized]);
-
-  // ─── Trigger advance helper ───────────────────────────────────────────────────
-  const triggerAdvance = useCallback(() => {
-    setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
-  }, []);
-
-  // Le hook eLearning déclenche une avance automatique quand toutes les unités
-  // sont complétées (ou qu'aucune n'est assignée au rôle), dès que leur fetch
-  // résout — y compris quand l'étape affichée n'est pas l'eLearning. On ne
-  // laisse passer cette avance que si l'étape courante est bien l'eLearning,
-  // sinon elle décalerait l'index (ou court-circuiterait determineStartingStep).
-  const onboardingStepsRef = useRef<WizardStep[]>([]);
-  const advanceIfOnStep = useCallback((stepId: string) => {
-    setOnboardingIdx((prev) => {
-      if (prev === null) {
-        return prev;
-      }
-      return onboardingStepsRef.current[prev]?.id === stepId ? prev + 1 : prev;
-    });
-  }, []);
-  const advanceFromElearningStep = useCallback(
-    () => advanceIfOnStep('elearning'),
-    [advanceIfOnStep]
-  );
-
-  // Onboarding completion. skipDashboardRedirect est utilisé par l'étape récap
-  // quand le composant appelant gère lui-même la navigation (messagerie/annuaire
-  // suite à un clic CTA) : on n'applique alors pas la redirection dashboard générique.
-  const skipDashboardRedirectRef = useRef(false);
-  const onOnboardingCompleted = useCallback(
-    async (skipDashboardRedirect = false) => {
-      if (skipDashboardRedirect) {
-        skipDashboardRedirectRef.current = true;
-      }
-      dispatch(
-        currentUserActions.updateOnboardingStatusRequested({
-          onboardingStatus: OnboardingStatus.COMPLETED,
-        })
-      );
-    },
-    [dispatch]
-  );
-
-  // ─── Onboarding step hooks — called unconditionally ──────────────────────────
-  const { onboardingStepElearning } = useOnboardingStepElearning({
-    userRole: currentUser?.role as UserRoles | undefined,
-    triggerAdvance: advanceFromElearningStep,
-  });
-  const { onboardingStepWebinar } = useOnboardingStepWebinar({
-    userRole: currentUser?.role as UserRoles | undefined,
-    triggerAdvance,
-  });
-  const { onboardingStepMatchRecap } = useOnboardingStepMatchRecap({
-    userRole: currentUser?.role as UserRoles | undefined,
-    onOnboardingCompleted,
-  });
-  const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation({
-    user: currentUser,
-  });
-  const { onboardingStepPhoto } = useStepPhoto({ user: currentUser });
-  const { onboardingStepCvChoice } = useStepCvChoice({
-    user: currentUser,
-    setProfileMode,
-    triggerAdvance,
-  });
-  const { onboardingStepCvLoading } = useStepCvLoading({
-    onManualFallback: handleCvGenerationManualFallback,
-  });
-  const { onboardingStepCvRecap } = useStepCvRecap({ user: currentUser });
-  const { onboardingStepPresentation } = useStepPresentation({
-    user: currentUser,
-  });
-  const { onboardingStepExperiences } = useStepExperiences({
-    user: currentUser,
-  });
-  const { onboardingStepFormations } = useStepFormations({ user: currentUser });
-  const { onboardingStepSkills } = useStepSkills({ user: currentUser });
-
-  // Le backend positionne onboardingStatus === COMPLETED dès la création du compte
-  // pour Association et Entreprise-admin : ces rôles n'ont pas d'onboarding candidat/coach.
-  const isOnboardingAlreadyCompleted =
-    currentUser?.onboardingStatus === OnboardingStatus.COMPLETED;
-
-  // Avant la création du compte (currentUser encore null), le flow d'inscription
-  // sélectionné suffit déjà à savoir que l'onboarding sera skippé (Association/Entreprise) :
-  // évite que les steps par défaut (photo/elearning/webinar, tagués profil/formation)
-  // fassent apparaître ces sections dans le stepper pendant l'inscription.
-  const isEarlyOnboardingCompletionFlow =
-    registrationFlow === RegistrationFlow.REFERER ||
-    registrationFlow === RegistrationFlow.COMPANY;
-
-  const shouldSkipOnboardingSteps =
-    isOnboardingAlreadyCompleted ||
-    (!currentUser && isEarlyOnboardingCompletionFlow);
-
-  // Task 2.3 – onboardingSteps dynamique selon profileMode
-  const onboardingSteps = useMemo(() => {
-    if (shouldSkipOnboardingSteps) {
-      return [];
-    }
-
-    const steps: WizardStep[] = [];
-
-    if (currentUser?.role === UserRoles.CANDIDATE) {
-      steps.push(onboardingStepSocialSituation);
-    }
-
-    // Profile steps always start with photo + cv-choice
-    steps.push(onboardingStepPhoto);
-    steps.push(onboardingStepCvChoice);
-
-    // Dynamic path steps
-    if (profileMode === 'cv') {
-      steps.push(onboardingStepCvLoading);
-      steps.push(onboardingStepCvRecap);
-    } else if (profileMode === 'manual') {
-      steps.push(onboardingStepPresentation);
-      steps.push(onboardingStepExperiences);
-      steps.push(onboardingStepFormations);
-      steps.push(onboardingStepSkills);
-    }
-
-    steps.push(onboardingStepElearning);
-    steps.push(onboardingStepWebinar);
-    steps.push(onboardingStepMatchRecap);
-    return steps;
-  }, [
-    shouldSkipOnboardingSteps,
-    currentUser?.role,
-    profileMode,
-    onboardingStepSocialSituation,
-    onboardingStepPhoto,
-    onboardingStepCvChoice,
-    onboardingStepCvLoading,
-    onboardingStepCvRecap,
-    onboardingStepPresentation,
-    onboardingStepExperiences,
-    onboardingStepFormations,
-    onboardingStepSkills,
-    onboardingStepElearning,
-    onboardingStepWebinar,
-    onboardingStepMatchRecap,
-  ]);
-
-  useEffect(() => {
-    onboardingStepsRef.current = onboardingSteps;
-  }, [onboardingSteps]);
-
-  const isProfileLoaded =
-    fetchProfileStatus === ReduxRequestEvents.SUCCEEDED ||
-    fetchProfileStatus === ReduxRequestEvents.FAILED;
-
-  // profileMode is ready once initialization has completed (profileComplete arrived
-  // and we decided which mode to use — even if it stayed 'pending').
-  const isProfileModeReady = isProfileModeInitialized || !profileComplete;
-
-  // Ensure profile is fetched when entering onboarding (handles direct navigation to /wizard/run)
-  useEffect(() => {
-    if (currentUser && fetchProfileStatus === ReduxRequestEvents.IDLE) {
-      dispatch(currentUserActions.fetchCurrentProfileRequested());
-    }
-  }, [currentUser, fetchProfileStatus, dispatch]);
-
-  // Determine starting onboarding step (handles resume after window close)
-  useEffect(() => {
-    if (
-      !currentUser ||
-      isOnboardingAlreadyCompleted ||
-      onboardingIdx !== null ||
-      !isProfileLoaded ||
-      !isProfileModeReady
-    ) {
-      return;
-    }
-    determineStartingStep(
-      onboardingSteps as unknown as Parameters<typeof determineStartingStep>[0]
-    ).then((startIdx) => {
-      if (startIdx === null && onboardingSteps.length > 0) {
-        // Toutes les étapes sont déjà complètes — finaliser l'onboarding sans repasser par l'UI
-        dispatch(
-          currentUserActions.updateOnboardingStatusRequested({
-            onboardingStatus: OnboardingStatus.COMPLETED,
-          })
-        );
-      } else {
-        setOnboardingIdx(startIdx ?? 0);
-      }
-    });
-  }, [
+  useWizardRedirects({
     currentUser,
-    isOnboardingAlreadyCompleted,
-    onboardingIdx,
-    isProfileLoaded,
-    isProfileModeReady,
-    onboardingSteps,
-    dispatch,
-  ]);
-
-  // Redirect to dashboard after onboarding completion
-  useEffect(() => {
-    if (updateOnboardingStatus === ReduxRequestEvents.SUCCEEDED) {
-      if (skipDashboardRedirectRef.current) {
-        skipDashboardRedirectRef.current = false;
-        return;
-      }
-      router.push('/backoffice/dashboard');
-    }
-  }, [updateOnboardingStatus, router]);
-
-  // Onboarding déjà terminé côté serveur (Association, Entreprise-admin) : redirection
-  // directe sans jamais construire/afficher onboardingSteps, ni redéclencher la requête
-  // de mise à jour du statut (déjà COMPLETED en base).
-  useEffect(() => {
-    if (isOnboardingAlreadyCompleted) {
-      router.push('/backoffice/dashboard');
-    }
-  }, [isOnboardingAlreadyCompleted, router]);
-
-  // Task 2.4 – Auto-avance du step cv-loading
-  const isUploadCvSucceeded = useSelector(
-    uploadExternalCvSelectors.selectIsUploadExternalCvSucceeded
-  );
-  const isUploadCvFailed = useSelector(
-    uploadExternalCvSelectors.selectIsUploadExternalCvFailed
-  );
-  const hasExtractedCvData = profileComplete?.hasExtractedCvData ?? false;
-
-  // Indices résolus par id de step (-1 si absent du flow courant)
-  const cvChoiceStepIndex = onboardingSteps.findIndex(
-    (step) => step.id === 'cv-choice'
-  );
-  const cvLoadingStepIndex = onboardingSteps.findIndex(
-    (step) => step.id === 'cv-loading'
-  );
-
-  useEffect(() => {
-    if (profileMode !== 'cv') {
-      return;
-    }
-    if (onboardingIdx === null) {
-      return;
-    }
-    if (onboardingIdx !== cvLoadingStepIndex) {
-      return;
-    }
-
-    if (isUploadCvSucceeded && hasExtractedCvData) {
-      setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
-    } else if (isUploadCvSucceeded && !hasTriggeredGenerationRef.current) {
-      hasTriggeredGenerationRef.current = true;
-      void generateProfileFromCV();
-    }
-  }, [
-    profileMode,
-    isUploadCvSucceeded,
-    hasExtractedCvData,
-    onboardingIdx,
-    cvLoadingStepIndex,
-    generateProfileFromCV,
-  ]);
-
-  // Task 2.5 – Gestion erreur upload CV
-  useEffect(() => {
-    if (profileMode !== 'cv') {
-      return;
-    }
-    if (!isUploadCvFailed) {
-      return;
-    }
-
-    hasTriggeredGenerationRef.current = false;
-    setProfileMode('pending');
-    setOnboardingIdx(cvChoiceStepIndex);
-  }, [profileMode, isUploadCvFailed, cvChoiceStepIndex]);
-
-  // Phase flags
-  const accountJustCreated = createUserStatus === ReduxRequestEvents.SUCCEEDED;
-  const isOnboardingPhase = !!currentUser;
-  const isEmailConfirmationPhase = accountJustCreated && !currentUser;
-
-  const emailConfirmationStep = useWizardStepEmailConfirmation();
+    isFetchUserFinished,
+    registrationStepsLength: registrationSteps.length,
+    isLogoutSucceeded,
+    isOnboardingAlreadyCompleted: onboarding.isAlreadyCompleted,
+    updateOnboardingStatus: onboarding.updateOnboardingStatus,
+    skipDashboardRedirectRef: onboarding.skipDashboardRedirectRef,
+  });
 
   // Unified step list for the progress bar — toutes les phases toujours visibles
   const allSteps = useMemo(() => {
-    return [...registrationSteps, EMAIL_CONFIRMATION_STEP, ...onboardingSteps];
-  }, [registrationSteps, onboardingSteps]);
+    return [...registrationSteps, EMAIL_CONFIRMATION_STEP, ...onboarding.steps];
+  }, [registrationSteps, onboarding.steps]);
 
   const emailConfirmationOffset = registrationSteps.length;
   const onboardingOffset = registrationSteps.length + 1;
 
   const currentStepIdx = isOnboardingPhase
-    ? onboardingOffset + (onboardingIdx ?? 0)
+    ? onboardingOffset + (onboarding.currentStepIdx ?? 0)
     : isEmailConfirmationPhase
     ? emailConfirmationOffset
     : currentWizardIdx;
@@ -462,76 +99,32 @@ export const useWizard = (): WizardState => {
   }, [currentStepIdx, dispatch]);
 
   const currentStep = isOnboardingPhase
-    ? onboardingIdx !== null
-      ? onboardingSteps[onboardingIdx] ?? null
-      : null
+    ? onboarding.currentStep
     : isEmailConfirmationPhase
-    ? emailConfirmationStep
+    ? emailConfirmation.step
     : currentRegistrationStep;
 
-  const verifyOtpIsLoading = useSelector(
-    verifyOtpSelectors.selectIsVerifyOtpRequested
-  );
-
-  const emailConfirmationIsLoading =
-    fetchProfileStatus === ReduxRequestEvents.REQUESTED || verifyOtpIsLoading;
-
   const isLoading = isOnboardingPhase
-    ? onboardingIsLoading
+    ? onboarding.isLoading
     : isEmailConfirmationPhase
-    ? emailConfirmationIsLoading
+    ? emailConfirmation.isLoading
     : registrationIsLoading;
 
   // Initialisation : détermination du step de reprise, ou résolution de
   // l'utilisateur courant au rechargement direct (évite le flash de l'alerte
   // d'erreur tant que /current n'a pas répondu)
   const isInitializing =
-    (isOnboardingPhase && onboardingIdx === null) ||
+    (isOnboardingPhase && onboarding.isInitializing) ||
     (!currentUser && !isFetchUserFinished && registrationSteps.length === 0);
 
   const onNext = useCallback(async () => {
     if (isOnboardingPhase) {
-      if (!currentStep || onboardingIdx === null) {
-        return;
-      }
-
-      const step = currentStep as unknown as {
-        incrementationIsAllowed?: () => Promise<boolean>;
-        onSubmit?: () => Promise<boolean>;
-      };
-
-      if (step.incrementationIsAllowed) {
-        const isAllowed = await step.incrementationIsAllowed();
-        if (!isAllowed) {
-          return;
-        }
-      }
-
-      if (step.onSubmit) {
-        dispatch(onboardingActions.setFormErrorMessage(null));
-        setOnboardingIsLoading(true);
-        const result = await step.onSubmit();
-        setOnboardingIsLoading(false);
-        if (result === false) {
-          return;
-        }
-      }
-
-      const isLastOnboardingStep = onboardingIdx === onboardingSteps.length - 1;
-      if (isLastOnboardingStep) {
-        await onOnboardingCompleted();
-        return;
-      }
-
-      setOnboardingIdx((prev) => (prev !== null ? prev + 1 : 0));
+      await onboarding.onNext();
       return;
     }
 
     if (isEmailConfirmationPhase) {
-      const result = await emailConfirmationStep.onSubmit?.();
-      if (result === false) {
-        return;
-      }
+      await emailConfirmation.onNext();
       return;
     }
 
@@ -539,28 +132,13 @@ export const useWizard = (): WizardState => {
   }, [
     isOnboardingPhase,
     isEmailConfirmationPhase,
+    onboarding,
+    emailConfirmation,
     registrationIncrementStep,
-    currentStep,
-    onboardingIdx,
-    onboardingSteps,
-    onOnboardingCompleted,
-    emailConfirmationStep,
-    dispatch,
   ]);
 
-  const isLastOnboardingStep =
-    isOnboardingPhase &&
-    onboardingIdx !== null &&
-    onboardingIdx === onboardingSteps.length - 1;
-
-  // Task 6.4 – buttonLabel resolution: check step-level buttonLabel first
-  const currentStepButtonLabel = (
-    currentStep as unknown as { buttonLabel?: string } | null
-  )?.buttonLabel;
-
   const buttonLabel = isOnboardingPhase
-    ? currentStepButtonLabel ??
-      (isLastOnboardingStep ? 'Terminer' : 'Étape suivante')
+    ? onboarding.buttonLabel
     : isEmailConfirmationPhase
     ? 'Valider le code'
     : (currentStep as WizardStep | null)?.buttonLabel ??
@@ -569,44 +147,19 @@ export const useWizard = (): WizardState => {
         : 'Étape suivante');
 
   const canGoBack = isOnboardingPhase
-    ? onboardingIdx !== null && onboardingIdx > 0
+    ? onboarding.canGoBack
     : !isEmailConfirmationPhase && registrationCanGoBack;
 
-  // Task 2.6 – Reset profileMode when going back to cv-choice step (index computed above)
   const onBack = useCallback(() => {
     if (!canGoBack) {
       return;
     }
     if (isOnboardingPhase) {
-      const nextIdx =
-        onboardingIdx !== null && onboardingIdx > 0
-          ? onboardingIdx - 1
-          : onboardingIdx;
-
-      // If going back to cv-choice, reset profileMode
-      if (nextIdx === cvChoiceStepIndex) {
-        setProfileMode('pending');
-      }
-
-      setOnboardingIdx((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
+      onboarding.onBack();
       return;
     }
     registrationDecrementStep();
-  }, [
-    canGoBack,
-    isOnboardingPhase,
-    onboardingIdx,
-    cvChoiceStepIndex,
-    registrationDecrementStep,
-  ]);
-
-  const skipOnboarding = useCallback(() => {
-    dispatch(
-      currentUserActions.updateOnboardingStatusRequested({
-        onboardingStatus: OnboardingStatus.COMPLETED,
-      })
-    );
-  }, [dispatch]);
+  }, [canGoBack, isOnboardingPhase, onboarding, registrationDecrementStep]);
 
   return {
     allSteps,
@@ -621,6 +174,6 @@ export const useWizard = (): WizardState => {
     sidePanelContent: currentStep?.sidePanelContent,
     mobileBottomSheet: currentStep?.mobileBottomSheet ?? false,
     isOnboardingPhase,
-    skipOnboarding,
+    skipOnboarding: onboarding.skipOnboarding,
   };
 };

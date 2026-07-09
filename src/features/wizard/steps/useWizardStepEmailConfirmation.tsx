@@ -17,6 +17,7 @@ import { EmailOtpInput } from '../components/EmailOtpInput/EmailOtpInput';
 const OTP_LENGTH = 6;
 
 export const EMAIL_CONFIRMATION_STEP: WizardStep = {
+  id: 'email-confirmation',
   smallTitle: 'Confirmation email',
   title: null,
   description: null,

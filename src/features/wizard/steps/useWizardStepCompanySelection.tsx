@@ -6,6 +6,7 @@ import {
 } from '@/src/features/forms/FormWithValidation';
 import { formRegistrationCompanySelection } from '@/src/features/registration/forms/formRegistrationCompanySelection';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
   registrationActions,
   selectRegistrationData,
@@ -29,6 +30,7 @@ export function useWizardStepCompanySelection() {
   );
 
   const step: WizardStep = {
+    id: 'company-selection',
     smallTitle: 'Votre entreprise',
     summary: { title: 'Votre entreprise', duration: '~1 minute' },
     hideGenericStepHeader: undefined,
@@ -43,10 +45,7 @@ export function useWizardStepCompanySelection() {
         innerRef={formRef}
       />
     ),
-    onSubmit: async () => {
-      const success = await formRef.current?.submit();
-      return success === false ? false : undefined;
-    },
+    onSubmit: useStepFormSubmit(formRef),
     section: 'inscription',
   };
 

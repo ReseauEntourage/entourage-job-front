@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { useElearningQuiz } from '@/src/features/backoffice/elearning/elearning-unit/useElearningQuiz';
 import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
-import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import {
+  WizardStep,
+  WizardStepId,
+} from '@/src/features/wizard/shell/wizard.types';
+import { useAwaitRequestStatus } from '@/src/features/wizard/useAwaitRequestStatus';
 import { useIsDesktop } from '@/src/hooks/utils/usePlatforms';
-import { store } from '@/src/store/store';
 import {
   elearningActions,
   selectElearningUnits,
@@ -17,13 +20,14 @@ import { ElearningSidePanel } from './SidePanel/ElearningSidePanel';
 
 interface WizardStepElearningProps {
   userRole: User['role'] | undefined;
-  triggerAdvance: () => void;
+  requestAdvance: (stepId: WizardStepId) => void;
 }
 
 export const useOnboardingStepElearning = ({
   userRole,
-  triggerAdvance,
+  requestAdvance,
 }: WizardStepElearningProps) => {
+  const store = useStore();
   const getState = () => store.getState() as any;
   const dispatch = useDispatch();
   const isDesktop = useIsDesktop();
@@ -47,29 +51,9 @@ export const useOnboardingStepElearning = ({
     elearningUnits.length > 0 &&
     elearningUnits.every((unit) => unit.userCompletions.length > 0);
 
-  const waitForElearningUnitsFetchToSettle = async (): Promise<void> => {
-    const currentStatus = selectFetchElearningUnitsState(getState()).status;
-
-    if (
-      currentStatus === ReduxRequestEvents.SUCCEEDED ||
-      currentStatus === ReduxRequestEvents.FAILED
-    ) {
-      return;
-    }
-
-    await new Promise<void>((resolve) => {
-      const unsubscribe = store.subscribe(() => {
-        const status = selectFetchElearningUnitsState(getState()).status;
-        if (
-          status === ReduxRequestEvents.SUCCEEDED ||
-          status === ReduxRequestEvents.FAILED
-        ) {
-          unsubscribe();
-          resolve();
-        }
-      });
-    });
-  };
+  const awaitElearningUnitsSettled = useAwaitRequestStatus(
+    (state: any) => selectFetchElearningUnitsState(state).status
+  );
 
   const computeHasCompleteAllUnitsFromStore = (): boolean => {
     const units = selectElearningUnits(getState());
@@ -86,13 +70,13 @@ export const useOnboardingStepElearning = ({
       dispatch(elearningActions.fetchElearningUnitsRequested(userRole));
     }
 
-    await waitForElearningUnitsFetchToSettle();
+    await awaitElearningUnitsSettled();
     return computeHasCompleteAllUnitsFromStore();
   };
 
   const skipElearning = useCallback(async (): Promise<void> => {
-    triggerAdvance();
-  }, [triggerAdvance]);
+    requestAdvance('elearning');
+  }, [requestAdvance]);
 
   // ─── Parcours séquentiel des modules ──────────────────────────────────────
   const [phase, setPhase] = useState<ElearningStepPhase>('intro');
@@ -115,13 +99,14 @@ export const useOnboardingStepElearning = ({
     );
 
     if (firstIncompleteIdx === -1) {
-      triggerAdvance();
+      // Toutes les unités sont déjà complétées (ou aucune n'est assignée au
+      // rôle) : isAutoSkippable fera sauter cette étape côté moteur.
       return;
     }
 
     setCurrentUnitIndex(firstIncompleteIdx);
     setPhase('intro');
-  }, [elearningUnits, elearningFetchStatus, triggerAdvance]);
+  }, [elearningUnits, elearningFetchStatus]);
 
   const currentUnit = elearningUnits?.[currentUnitIndex];
 
@@ -143,9 +128,9 @@ export const useOnboardingStepElearning = ({
       setCurrentUnitIndex(nextIndex);
       setPhase('module');
     } else {
-      triggerAdvance();
+      requestAdvance('elearning');
     }
-  }, [currentUnit, currentUnitIndex, elearningUnits, dispatch, triggerAdvance]);
+  }, [currentUnit, currentUnitIndex, elearningUnits, dispatch, requestAdvance]);
 
   const quiz = useElearningQuiz({
     questions: currentUnit?.questions ?? [],
@@ -173,7 +158,7 @@ export const useOnboardingStepElearning = ({
     [phase, currentUnit, isDesktop]
   );
 
-  const onboardingStepElearning = {
+  const onboardingStepElearning: WizardStep = {
     id: 'elearning',
     isNextEnabled: hasCompletedAllUnits,
     summary: {
@@ -202,6 +187,14 @@ export const useOnboardingStepElearning = ({
     isStepCompleted: async () => {
       return ensureAndComputeHasCompleteAllUnits();
     },
+    isAutoSkippable: async () => {
+      const hasCompletedAll = await ensureAndComputeHasCompleteAllUnits();
+      if (hasCompletedAll) {
+        return true;
+      }
+      const units = selectElearningUnits(getState());
+      return !units || units.length === 0;
+    },
     onSubmit: async () => {
       return true;
     },
@@ -209,7 +202,7 @@ export const useOnboardingStepElearning = ({
       return ensureAndComputeHasCompleteAllUnits();
     },
     section: 'formation',
-  } as WizardStep;
+  };
 
   return { onboardingStepElearning };
 };
