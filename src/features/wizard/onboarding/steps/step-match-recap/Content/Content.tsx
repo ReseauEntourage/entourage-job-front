@@ -80,10 +80,19 @@ export const Content = ({
         }
       />
       <StyledMatchRecapActions>
-        <Button onClick={onPrimaryCta} variant="primary" size="large">
+        <Button
+          dataTestId="wizard-match-recap-primary-cta"
+          onClick={onPrimaryCta}
+          variant="primary"
+          size="large"
+        >
           Écrire à {profile.firstName}
         </Button>
-        <Button onClick={onSecondaryCta} variant="text">
+        <Button
+          dataTestId="wizard-match-recap-secondary-cta"
+          onClick={onSecondaryCta}
+          variant="text"
+        >
           {isCandidate ? 'Voir les autres coachs' : 'Voir les autres candidats'}
         </Button>
       </StyledMatchRecapActions>

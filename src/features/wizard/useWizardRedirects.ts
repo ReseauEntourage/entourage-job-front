@@ -47,23 +47,27 @@ export const useWizardRedirects = ({
     }
   }, [isLogoutSucceeded, router, dispatch]);
 
-  // Redirect to dashboard after onboarding completion
+  // Redirect to dashboard after onboarding completion (mise à jour explicite
+  // via le wizard, ou onboarding déjà COMPLETED côté serveur pour Association
+  // / Entreprise-admin). skipDashboardRedirectRef permet à l'étape récap de
+  // gérer elle-même la navigation suivante (CTA messagerie/annuaire) sans que
+  // cette redirection générique ne l'écrase : les deux déclencheurs doivent
+  // partager le même effect, sinon ils se ré-exécutent dans le même commit et
+  // l'un des deux consommerait le flag avant que l'autre ne puisse le lire.
   useEffect(() => {
-    if (updateOnboardingStatus === ReduxRequestEvents.SUCCEEDED) {
+    const onboardingJustCompleted =
+      updateOnboardingStatus === ReduxRequestEvents.SUCCEEDED;
+    if (onboardingJustCompleted || isOnboardingAlreadyCompleted) {
       if (skipDashboardRedirectRef.current) {
         skipDashboardRedirectRef.current = false;
         return;
       }
       router.push('/backoffice/dashboard');
     }
-  }, [updateOnboardingStatus, router, skipDashboardRedirectRef]);
-
-  // Onboarding déjà terminé côté serveur (Association, Entreprise-admin) : redirection
-  // directe sans jamais construire/afficher onboardingSteps, ni redéclencher la requête
-  // de mise à jour du statut (déjà COMPLETED en base).
-  useEffect(() => {
-    if (isOnboardingAlreadyCompleted) {
-      router.push('/backoffice/dashboard');
-    }
-  }, [isOnboardingAlreadyCompleted, router]);
+  }, [
+    updateOnboardingStatus,
+    isOnboardingAlreadyCompleted,
+    router,
+    skipDashboardRedirectRef,
+  ]);
 };

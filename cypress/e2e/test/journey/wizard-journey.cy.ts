@@ -605,5 +605,124 @@ describe('Wizard', () => {
 
       cy.url().should('include', '/backoffice/dashboard');
     });
+
+    describe('Etant donné que je suis arrivé sur le récapitulatif de match', () => {
+      beforeEach(() => {
+        // Toutes les étapes précédentes doivent être complétées pour que
+        // determineStartingStep résolve directement sur "match-recap".
+        cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
+          (user) => {
+            cy.intercept('GET', '/current', {
+              statusCode: 200,
+              body: {
+                ...user,
+                onboardingStatus: 'in_progress',
+                userSocialSituation: { hasCompletedSurvey: true },
+                // Évite d'avoir à stubber /events* pour l'étape "webinar"
+                onboardingWebinarSkippedAt: '2026-01-01T00:00:00.000Z',
+              },
+            }).as('currentIdentity');
+          }
+        );
+
+        cy.intercept('GET', '/current/profile/complete', {
+          statusCode: 200,
+          body: {
+            id: '00000000-0000-0000-0000-000000000001',
+            hasPicture: true,
+            hasExternalCv: true,
+            description: null,
+            introduction: 'Je cherche un poste dans la vente.',
+            linkedinUrl: null,
+            department: null,
+            isAvailable: true,
+            currentJob: null,
+            optInRecommendations: false,
+            nudges: [],
+            sectorOccupations: [],
+            allowPhysicalEvents: true,
+            allowRemoteEvents: true,
+            experiences: [],
+            formations: [],
+            skills: [],
+            contracts: [],
+            reviews: [],
+            interests: [],
+            customNudges: [],
+            userProfileLanguages: [],
+            hasExtractedCvData: false,
+          },
+        }).as('currentProfileComplete');
+
+        // Le stub par défaut de wizardJourneyRequests renvoie une liste vide,
+        // ce qui laisserait l'étape "elearning" incomplète.
+        cy.intercept('GET', '/elearning/units*', {
+          statusCode: 200,
+          body: [
+            {
+              id: 'elearning-unit-1',
+              createdAt: '2026-01-01T00:00:00.000Z',
+              updatedAt: '2026-01-01T00:00:00.000Z',
+              title: 'Unité complétée',
+              description: '',
+              durationMinutes: 5,
+              videoUrl: '',
+              questions: [],
+              roles: [],
+              userCompletions: [
+                {
+                  id: 'elearning-completion-1',
+                  userId: '4d3c885c-4859-4e7b-a428-902812964f08',
+                  unitId: 'elearning-unit-1',
+                  validatedAt: '2026-01-01T00:00:00.000Z',
+                },
+              ],
+            },
+          ],
+        }).as('elearningUnits');
+
+        cy.fixture('public-profile-res').then((profile) => {
+          cy.intercept('GET', '/user/profile/recommendations*', {
+            statusCode: 200,
+            body: {
+              embeddingPending: false,
+              nextCursor: null,
+              recommendations: [
+                {
+                  id: 'reco-1',
+                  publicProfile: { ...profile, role: 'Coach' },
+                  reason: null,
+                },
+              ],
+            },
+          }).as('profilesRecommendations');
+
+          cy.intercept('GET', `/user/profile/${profile.id}`, {
+            statusCode: 200,
+            body: { ...profile, role: 'Coach' },
+          }).as('publicUserProfile');
+        });
+
+        cy.intercept('PUT', '/user/*', { statusCode: 200 }).as(
+          'putUserOnboardingStatus'
+        );
+
+        cy.visit('/wizard/run');
+        cy.contains(
+          'Félicitations ! Vous pouvez dès à présent contacter des coachs'
+        );
+      });
+
+      it('should redirect to the filtered network directory when clicking "Voir les autres coachs"', () => {
+        cy.get('[data-testid="wizard-match-recap-secondary-cta"]').click();
+
+        cy.wait('@putUserOnboardingStatus');
+
+        cy.url().should('include', '/backoffice/annuaire');
+        cy.url().should('include', 'entity=user');
+        cy.url().should('include', 'role=Coach');
+        cy.url().should('not.include', '/backoffice/dashboard');
+      });
+    });
   });
 });
