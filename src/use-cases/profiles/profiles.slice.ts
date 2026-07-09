@@ -57,6 +57,7 @@ export const slice = createSlice({
       {
         fetchDashboardProfilesRecommendationsSucceeded(state, action) {
           state.profilesRecommendations = action.payload.recommendations;
+          state.isEmbeddingPending = action.payload.embeddingPending;
         },
         fetchDashboardProfilesRecommendationsReset(state) {
           state.profilesRecommendations = [];

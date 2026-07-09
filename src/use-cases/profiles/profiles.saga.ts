@@ -22,7 +22,6 @@ const {
   fetchDashboardProfilesRecommendationsRequested,
   fetchDashboardProfilesRecommendationsSucceeded,
   fetchDashboardProfilesRecommendationsFailed,
-  embeddingPendingChanged,
 } = slice.actions;
 
 function* fetchProfilesNextPageSaga(
@@ -96,7 +95,6 @@ function* fetchDashboardProfilesRecommendationsRequestedSaga() {
       })
     );
     if (response.data.embeddingPending) {
-      yield* put(embeddingPendingChanged(true));
       yield* put(
         fetchDashboardProfilesRecommendationsSucceeded({
           embeddingPending: true,
