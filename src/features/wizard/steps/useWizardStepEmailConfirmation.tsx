@@ -36,18 +36,35 @@ export const useWizardStepEmailConfirmation = (): WizardStep => {
   const email = registrationData?.email as string | undefined;
   const [code, setCode] = useState('');
   const codeRef = useRef('');
+  const submittedCodeRef = useRef<string | null>(null);
 
   const handleCodeChange = useCallback((newCode: string) => {
     codeRef.current = newCode;
     setCode(newCode);
   }, []);
 
+  const submitCode = useCallback(
+    (codeToSubmit: string) => {
+      if (codeToSubmit.length !== OTP_LENGTH || !email) {
+        return false;
+      }
+      // Avoid dispatching the same code twice (auto-submit + manual "Valider" click)
+      if (submittedCodeRef.current === codeToSubmit) {
+        return true;
+      }
+      submittedCodeRef.current = codeToSubmit;
+      dispatch(
+        authenticationActions.verifyOtpRequested({ email, code: codeToSubmit })
+      );
+      return true;
+    },
+    [dispatch, email]
+  );
+
   // Auto-submit when all 6 digits are entered
   useEffect(() => {
-    if (code.length === OTP_LENGTH && email) {
-      dispatch(authenticationActions.verifyOtpRequested({ email, code }));
-    }
-  }, [code, email, dispatch]);
+    submitCode(code);
+  }, [code, submitCode]);
 
   return useMemo<WizardStep>(
     () => ({
@@ -64,15 +81,11 @@ export const useWizardStepEmailConfirmation = (): WizardStep => {
         </Card>
       ),
       onSubmit: async () => {
-        const currentCode = codeRef.current;
-        if (currentCode.length !== OTP_LENGTH || !email) {
+        if (!submitCode(codeRef.current)) {
           return false;
         }
-        dispatch(
-          authenticationActions.verifyOtpRequested({ email, code: currentCode })
-        );
       },
     }),
-    [handleCodeChange, email, dispatch]
+    [handleCodeChange, submitCode]
   );
 };
