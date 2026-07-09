@@ -7,7 +7,9 @@ import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 import { ModalSize } from './Modal.types';
 import { StyledCloseButton } from './Modals.styles';
 
-ReactModal.setAppElement('#__next');
+if (typeof document !== 'undefined' && document.querySelector('#__next')) {
+  ReactModal.setAppElement('#__next');
+}
 
 interface CustomModalProps {
   id: string;
