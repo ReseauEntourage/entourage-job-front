@@ -134,7 +134,7 @@ export const slice = createSlice({
       state.isEnded = false;
       state.preRegistrationPreferences = null;
       state.compatibleProfilesCount = null;
-    }
+    },
     setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
       state.isEnded = action.payload;
     },
