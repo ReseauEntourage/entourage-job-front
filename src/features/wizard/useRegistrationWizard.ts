@@ -201,9 +201,14 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
       dispatch(registrationActions.moveBackwardInRegistration());
       return;
     }
-    // Sur la première étape, "Retour" ramène à la sélection du flow
-    dispatch(registrationActions.resetRegistrationData());
-    router.push('/wizard');
+    // Sur la première étape, "Retour" ramène à la sélection du flow.
+    // On reset le state Redux seulement une fois la navigation terminée :
+    // sinon selectedFlow/currentStep passent à null pendant qu'on est encore
+    // sur /wizard/run, et WizardRunShell affiche brièvement son Alert
+    // d'erreur générique (currentStep devenu null) avant que la page change.
+    router.push('/wizard').then(() => {
+      dispatch(registrationActions.resetRegistrationData());
+    });
   }, [dispatch, currentWizardIdx, router]);
 
   const goToLastStep = useCallback(() => {
