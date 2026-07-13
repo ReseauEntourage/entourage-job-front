@@ -45,7 +45,7 @@ export const useOpenCorrespondingModal = (user: User) => {
           department: userProfile?.department
             ? findConstantFromValue(userProfile.department, DEPARTMENTS_FILTERS)
             : undefined,
-          introduction: userProfile?.introduction || undefined,
+          description: userProfile?.description || undefined,
         }}
       />
     );

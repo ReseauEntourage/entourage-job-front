@@ -47,7 +47,6 @@ import {
 import { HeaderProfileProps } from './HeaderProfile.types';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
-import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 64;
@@ -60,7 +59,6 @@ export const HeaderProfileMobile = ({
   role,
   gender,
   department,
-  introduction,
   phone,
   email,
   hasPicture,
@@ -183,10 +181,6 @@ export const HeaderProfileMobile = ({
               ))}
             <UserActions userId={id} userRole={role} openDirection="right" />
           </StyledHeaderAvailibilityAndUserActions>
-
-          {shouldShowAllProfile && introduction && (
-            <ProfileIntroduction introduction={introduction} />
-          )}
 
           <ProfileStats
             createdAt={createdAt}

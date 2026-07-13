@@ -20,8 +20,8 @@ export const profileCompletionFormSchema: FormSchema<AnyCantFix> = {
 export const buildIntroductionField = (
   introductionPlaceholder: string
 ): FormFieldInput<AnyCantFix> => ({
-  id: 'introduction',
-  name: 'introduction',
+  id: 'description',
+  name: 'description',
   component: 'textarea',
   title: 'Présentation *',
   placeholder: introductionPlaceholder,
@@ -161,18 +161,6 @@ export const profileCompletionProfessionalInfoCandidateRows: {
 ];
 
 export const profileCompletionCvFields: FormFieldInput<AnyCantFix>[] = [
-  {
-    id: 'description',
-    name: 'description',
-    component: 'textarea',
-    title: 'Résumé de votre profil',
-
-    placeholder:
-      'En quelques lignes, présentez votre profil, vos objectifs et ce que vous recherchez.\n\nEx. : J’ai travaillé pendant 6 ans comme agent polyvalent en restauration collective. J’ai également une expérience en manutention et en préparation de commandes.',
-    showLabel: true,
-    maxLength: 1000,
-    rows: 4,
-  },
   {
     id: 'skills',
     name: 'skills',

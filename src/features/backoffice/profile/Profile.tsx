@@ -44,7 +44,6 @@ export const Profile = () => {
         lastName={selectedProfile.lastName}
         role={selectedProfile.role}
         department={selectedProfile.department}
-        introduction={selectedProfile.introduction}
         hasPicture={selectedProfile.hasPicture}
         createdAt={selectedProfile.createdAt ?? null}
         averageDelayResponse={selectedProfile.averageDelayResponse ?? null}

@@ -23,7 +23,7 @@ import {
 const NULL_USER = { id: '' } as unknown as User;
 
 interface PresentationFormValues {
-  introduction: string;
+  description: string;
 }
 
 const introductionField = buildIntroductionField(
@@ -35,10 +35,10 @@ const presentationFormSchema = {
   fields: [introductionField],
 };
 
-// Reflète les contraintes du champ introduction (isRequired, minLength: 50,
+// Reflète les contraintes du champ description (isRequired, minLength: 50,
 // maxLength: 500) pour piloter isNextEnabled sans attendre une soumission.
-const isIntroductionValid = (introduction: string | null | undefined) => {
-  const length = introduction?.trim().length ?? 0;
+const isIntroductionValid = (description: string | null | undefined) => {
+  const length = description?.trim().length ?? 0;
   return length >= 50 && length <= 500;
 };
 
@@ -52,7 +52,7 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
   const { updateUserProfile } = useUpdateProfile(user ?? NULL_USER);
   const formRef = useRef<FormWithValidationRef>(null);
   const [isNextEnabled, setIsNextEnabled] = useState(() =>
-    isIntroductionValid(profileComplete?.introduction)
+    isIntroductionValid(profileComplete?.description)
   );
 
   const updateProfileStatus = useSelector(
@@ -90,10 +90,10 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
     (formValues: PresentationFormValues) => {
       dispatch(
         currentUserActions.profileCompleteDraftUpdated({
-          introduction: formValues.introduction,
+          description: formValues.description,
         })
       );
-      setIsNextEnabled(isIntroductionValid(formValues.introduction));
+      setIsNextEnabled(isIntroductionValid(formValues.description));
     },
     [dispatch]
   );
@@ -103,7 +103,7 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
       new Promise<void>((resolve) => {
         dispatch(currentUserActions.updateProfileReset());
         pendingResolveRef.current = resolve;
-        updateUserProfile({ introduction: values.introduction });
+        updateUserProfile({ description: values.description });
       }),
     [dispatch, updateUserProfile]
   );
@@ -139,7 +139,7 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
           // texte existant au lieu de le laisser vide.
           key={profileComplete ? 'loaded' : 'pending'}
           formSchema={presentationFormSchema}
-          defaultValues={{ introduction: profileComplete?.introduction ?? '' }}
+          defaultValues={{ description: profileComplete?.description ?? '' }}
           onSubmit={handleFormWithValidationSubmit}
           onWatch={handleWatch}
           formRef={formRef}
@@ -150,7 +150,7 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
     mobileBottomSheet: false,
     isNextEnabled,
     isStepCompleted: async () => {
-      return !!profileComplete?.introduction?.trim();
+      return !!profileComplete?.description?.trim();
     },
     onSubmit,
     section: 'profil',

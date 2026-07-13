@@ -19,8 +19,7 @@ const introductionField = buildIntroductionField(
   'Cette présentation sera visible par les autres membres du réseau d’entraide. En quelques lignes, parlez de votre parcours et de ce que vous recherchez.'
 );
 
-const [descriptionField, skillsField, languagesField, interestsField] =
-  profileCompletionCvFields;
+const [skillsField, languagesField, interestsField] = profileCompletionCvFields;
 
 interface StepCvRecapContentProps {
   experiences: Experience[];
@@ -41,11 +40,6 @@ export const StepCvRecapContent = ({
         <ProfileCompletionSchemaField
           formSchema={profileCompletionFormSchema}
           field={introductionField}
-          showError={false}
-        />
-        <ProfileCompletionSchemaField
-          formSchema={profileCompletionFormSchema}
-          field={descriptionField}
           showError={false}
         />
       </StyledSection>

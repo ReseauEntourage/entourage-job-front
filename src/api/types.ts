@@ -178,7 +178,6 @@ export type Contract = {
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
-  introduction: string | null;
   department: DepartmentName;
   isAvailable: boolean;
   unavailabilityReason: string | null;
@@ -401,7 +400,6 @@ export type CurrentUserProfile = {
   hasPicture: boolean;
   hasExternalCv: boolean;
   description: string | null;
-  introduction: string | null;
   linkedinUrl: string | null;
   department: DepartmentName | null;
   isAvailable: boolean;
@@ -654,7 +652,6 @@ export type PublicProfile = {
   department: DepartmentName;
   currentJob: string;
   description: string;
-  introduction: string;
   isAvailable: boolean;
   customNudges: UserProfileNudge[];
   nudges: Nudge[];
@@ -681,7 +678,6 @@ export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
     // Attributes
     | 'department'
     | 'description'
-    | 'introduction'
     | 'linkedinUrl'
     | 'hasPicture'
 

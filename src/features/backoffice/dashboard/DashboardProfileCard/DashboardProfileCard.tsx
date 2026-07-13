@@ -101,14 +101,14 @@ export const DashboardProfileCard = () => {
         {/* Completion presentation */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <Dot color={userProfile?.introduction ? 'green' : 'lightRed'} />
+            <Dot color={userProfile?.description ? 'green' : 'lightRed'} />
             <Text size="large" weight="semibold">
               Présentation
             </Text>
           </StyledDashboardProfileCardSectionTitle>
           <StyledDashboardProfileCardIntroduction>
-            {userProfile?.introduction ? (
-              <Text size="small">{userProfile.introduction}</Text>
+            {userProfile?.description ? (
+              <Text size="small">{userProfile.description}</Text>
             ) : (
               <StyledDashboardProfileCardEmptyState>
                 <SvgIcon name="IlluBulleQuestion" height={48} width={48} />

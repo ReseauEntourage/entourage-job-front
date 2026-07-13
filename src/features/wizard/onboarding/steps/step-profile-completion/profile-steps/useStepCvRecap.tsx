@@ -28,7 +28,6 @@ import { StepCvRecapContent } from './StepCvRecapContent';
 const NULL_USER = { id: '' } as unknown as User;
 
 interface CvRecapFormValues {
-  introduction: string;
   description: string;
   experiences: Experience[];
   formations: Formation[];
@@ -72,7 +71,6 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
 
   const initialValues = useMemo<CvRecapFormValues>(
     () => ({
-      introduction: profileComplete?.introduction ?? '',
       description: profileComplete?.description ?? '',
       experiences: (profileComplete?.experiences as Experience[]) ?? [],
       formations: (profileComplete?.formations as Formation[]) ?? [],
@@ -101,7 +99,6 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
           : [],
     }),
     [
-      profileComplete?.introduction,
       profileComplete?.description,
       profileComplete?.experiences,
       profileComplete?.formations,
@@ -122,7 +119,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
       return;
     }
     const hasData =
-      !!initialValues.introduction ||
+      !!initialValues.description ||
       initialValues.experiences.length > 0 ||
       initialValues.skills.length > 0 ||
       initialValues.languages.length > 0;
@@ -139,16 +136,10 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
 
   useEffect(() => {
     const subscription = formMethods.watch((formValues, { name }) => {
-      if (name === 'introduction') {
+      if (name === 'description') {
         dispatch(
           currentUserActions.profileCompleteDraftUpdated({
-            introduction: formValues.introduction,
-          })
-        );
-      } else if (name === 'description') {
-        dispatch(
-          currentUserActions.profileCompleteDraftUpdated({
-            description: formValues.description?.trim() || null,
+            description: formValues.description,
           })
         );
       } else if (name === 'skills') {
@@ -244,7 +235,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
     isStepCompleted: async () => {
       return (
         !!profileComplete?.hasExternalCv &&
-        !!profileComplete?.introduction?.trim()
+        !!profileComplete?.description?.trim()
       );
     },
     onSubmit: async () => {
@@ -259,8 +250,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
             pendingResolveRef.current = resolve;
 
             updateUserProfile({
-              introduction: values.introduction,
-              description: values.description?.trim() || null,
+              description: values.description,
               experiences: values.experiences,
               formations: values.formations,
               skills: values.skills.map((s) => ({ name: s.value })),

@@ -4,7 +4,6 @@ import { FilterConstant } from '@/src/constants/utils';
 export interface ProfileCompletionFormValues {
   profileImage: Blob | null;
   profileImageObjectUrl: string | null;
-  introduction: string;
   description: string;
 
   // Candidate professional information

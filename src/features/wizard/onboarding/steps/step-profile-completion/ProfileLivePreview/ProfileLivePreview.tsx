@@ -55,8 +55,8 @@ export const ProfileLivePreview = () => {
         {/* Présentation */}
         <StyledBlock>
           <StyledBlockTitle>Présentation</StyledBlockTitle>
-          {profileComplete?.introduction ? (
-            <Text size="small">{profileComplete.introduction}</Text>
+          {profileComplete?.description ? (
+            <Text size="small">{profileComplete.description}</Text>
           ) : (
             <PillsSkeleton count={3} />
           )}

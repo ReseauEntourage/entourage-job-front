@@ -30,9 +30,6 @@ describe('Wizard', () => {
     cy.get('[data-testid="form-registration-account-password"]').type(
       'Azerty123!'
     );
-    cy.get('[data-testid="form-registration-account-confirmPassword"]').type(
-      'Azerty123!'
-    );
     cy.get('input[id="form-registration-account-acceptCGU"]').click({
       force: true,
     });
@@ -227,9 +224,6 @@ describe('Wizard', () => {
           cy.get('[data-testid="form-registration-account-password"]').type(
             'Azerty123!'
           );
-          cy.get(
-            '[data-testid="form-registration-account-confirmPassword"]'
-          ).type('Azerty123!');
           cy.get('input[id="form-registration-account-acceptCGU"]').click({
             force: true,
           });
@@ -523,8 +517,7 @@ describe('Wizard', () => {
           id: '00000000-0000-0000-0000-000000000001',
           hasPicture: true,
           hasExternalCv: false,
-          description: null,
-          introduction: 'Je cherche un poste dans la vente.',
+          description: 'Je cherche un poste dans la vente.',
           linkedinUrl: null,
           department: null,
           isAvailable: true,
@@ -574,7 +567,6 @@ describe('Wizard', () => {
           hasPicture: true,
           hasExternalCv: false,
           description: null,
-          introduction: null,
           linkedinUrl: null,
           department: null,
           isAvailable: true,
@@ -625,7 +617,6 @@ describe('Wizard', () => {
           hasPicture: true,
           hasExternalCv: false,
           description: null,
-          introduction: null,
           linkedinUrl: null,
           department: null,
           isAvailable: true,
@@ -725,8 +716,7 @@ describe('Wizard', () => {
             id: '00000000-0000-0000-0000-000000000001',
             hasPicture: true,
             hasExternalCv: true,
-            description: null,
-            introduction: 'Je cherche un poste dans la vente.',
+            description: 'Je cherche un poste dans la vente.',
             linkedinUrl: null,
             department: null,
             isAvailable: true,

@@ -44,7 +44,6 @@ import {
 import { HeaderProfileProps } from './HeaderProfile.types';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
-import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 160;
@@ -57,7 +56,6 @@ export const HeaderProfileDesktop = ({
   gender,
   role,
   department,
-  introduction,
   phone,
   email,
   hasPicture,
@@ -83,7 +81,6 @@ export const HeaderProfileDesktop = ({
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
-  const { openCorrespondingModal } = useHeaderProfile(currentUser.role);
 
   const openConversation = () => {
     if (!currentUser.elearningCompletedAt) {
@@ -174,21 +171,6 @@ export const HeaderProfileDesktop = ({
                       <Text color="black" weight="medium" size="large">
                         {department}
                       </Text>
-                    )}
-                    {introduction && (
-                      <>
-                        <ProfileIntroduction introduction={introduction} />
-                        {isEditable && (
-                          <Text
-                            color="mediumGray"
-                            size="small"
-                            underline
-                            onClick={() => openCorrespondingModal()}
-                          >
-                            Modifier l&apos;introduction
-                          </Text>
-                        )}
-                      </>
                     )}
                     {!isEditable && (
                       <ProfileStats

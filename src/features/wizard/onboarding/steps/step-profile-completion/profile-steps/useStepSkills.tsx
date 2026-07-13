@@ -30,9 +30,7 @@ interface SkillsFormValues {
   interests: FilterConstant<string>[];
 }
 
-// skills = index 1, languages = index 2, interests = index 3
-const [, skillsField, languagesField, interestsField] =
-  profileCompletionCvFields;
+const [skillsField, languagesField, interestsField] = profileCompletionCvFields;
 
 const skillsFormSchema = {
   id: PROFILE_COMPLETION_FORM_ID,
