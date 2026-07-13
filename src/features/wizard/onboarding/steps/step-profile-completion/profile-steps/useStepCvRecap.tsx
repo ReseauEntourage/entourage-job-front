@@ -233,10 +233,9 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
     mobileBottomSheet: false,
     isNextEnabled: formState.isValid,
     isStepCompleted: async () => {
-      return (
-        !!profileComplete?.hasExternalCv &&
-        !!profileComplete?.description?.trim()
-      );
+      // La description est facultative : seule la présence d'un CV externe
+      // conditionne le fait que cette étape soit considérée franchie.
+      return !!profileComplete?.hasExternalCv;
     },
     onSubmit: async () => {
       if (!user) {

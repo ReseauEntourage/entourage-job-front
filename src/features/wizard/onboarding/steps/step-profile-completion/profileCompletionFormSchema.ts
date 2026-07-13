@@ -23,11 +23,9 @@ export const buildIntroductionField = (
   id: 'description',
   name: 'description',
   component: 'textarea',
-  title: 'Présentation *',
+  title: 'Présentation',
   placeholder: introductionPlaceholder,
-  isRequired: true,
   showLabel: true,
-  minLength: 50,
   maxLength: 500,
   rows: 3,
 });

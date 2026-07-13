@@ -35,11 +35,11 @@ const presentationFormSchema = {
   fields: [introductionField],
 };
 
-// Reflète les contraintes du champ description (isRequired, minLength: 50,
-// maxLength: 500) pour piloter isNextEnabled sans attendre une soumission.
+// Reflète les contraintes du champ description (facultatif, maxLength: 500)
+// pour piloter isNextEnabled sans attendre une soumission.
 const isIntroductionValid = (description: string | null | undefined) => {
   const length = description?.trim().length ?? 0;
-  return length >= 50 && length <= 500;
+  return length <= 500;
 };
 
 interface UseStepPresentationProps {
@@ -85,7 +85,7 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
   }, [dispatch, updateProfileStatus]);
 
   // Pousse chaque frappe vers le draft pour alimenter l'aperçu de profil en direct,
-  // et recalcule isNextEnabled (le champ est requis, 50 à 500 caractères).
+  // et recalcule isNextEnabled (le champ est facultatif, jusqu'à 500 caractères).
   const handleWatch = useCallback(
     (formValues: PresentationFormValues) => {
       dispatch(
@@ -150,7 +150,9 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
     mobileBottomSheet: false,
     isNextEnabled,
     isStepCompleted: async () => {
-      return !!profileComplete?.description?.trim();
+      // Le champ description est facultatif : l'étape est considérée
+      // franchie dès que le profil a été chargé, qu'elle soit remplie ou non.
+      return !!profileComplete;
     },
     onSubmit,
     section: 'profil',
