@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
@@ -48,6 +49,7 @@ export interface UseRegistrationWizardReturn {
 
 export function useRegistrationWizard(): UseRegistrationWizardReturn {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const selectedFlow = useSelector(selectRegistrationSelectedFlow);
   const currentUser = useSelector(selectCurrentUser);
@@ -195,8 +197,14 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   }, [currentWizardStep]);
 
   const decrementStep = useCallback(() => {
-    dispatch(registrationActions.moveBackwardInRegistration());
-  }, [dispatch]);
+    if (currentWizardIdx > 0) {
+      dispatch(registrationActions.moveBackwardInRegistration());
+      return;
+    }
+    // Sur la première étape, "Retour" ramène à la sélection du flow
+    dispatch(registrationActions.resetRegistrationData());
+    router.push('/wizard');
+  }, [dispatch, currentWizardIdx, router]);
 
   const goToLastStep = useCallback(() => {
     dispatch(
@@ -217,7 +225,8 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     [dispatch, wizardSteps]
   );
 
-  const canGoBack = currentWizardIdx > 0;
+  // Toujours vrai : à la première étape, "Retour" ramène à la sélection du flow
+  const canGoBack = true;
 
   return {
     wizardSteps,
