@@ -26,17 +26,18 @@ interface Verbatim {
 
 const VERBATIMS: Partial<Record<RegistrationFlow, Verbatim>> = {
   [RegistrationFlow.CANDIDATE]: {
-    quote: "Ici, j'ai retrouvé confiance avant même de retrouver un emploi.",
-    name: 'Mariam',
-    description: 'soutenue par 2 coachs',
-    imageSrc: '/static/img/temoignage-candidat-miah.jpg',
+    quote:
+      "C'est le premier réseau où je trouve autant de qualité d'échange, je me sens tellement moins seule dans ma recherche",
+    name: 'Valérie',
+    description: 'soutenue par 11 coachs',
+    imageSrc: '/static/img/temoignage-candidat-valerie.jpg',
   },
   [RegistrationFlow.COACH]: {
     quote:
-      'Ici, j’ai pu aider quelqu’un à retrouver confiance et à se sentir soutenu.',
-    name: 'Guillaume',
-    description: 'a soutenu 2 candidats',
-    imageSrc: '/static/img/temoignage-candidat-miah.jpg',
+      "Le simple fait d'avoir quelqu'un qui les écoute permet aux candidats de rallumer une flamme qui s'était éteinte.",
+    name: 'Murielle',
+    description: 'a soutenu 39 candidats',
+    imageSrc: '/static/img/temoignage-coach-murielle.jpg',
   },
 };
 
