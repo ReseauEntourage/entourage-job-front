@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Text } from '@/src/components/ui';
-import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
 import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
 import { StyledContainer } from './CvLoadingAnimation.styles';
 import {
@@ -65,7 +64,6 @@ export const CvLoadingAnimation = ({
           </Button>
         </>
       )}
-      <OpenAILegalMention />
     </StyledContainer>
   );
 };

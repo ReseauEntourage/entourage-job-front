@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
+import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
 import {
   StyledButtonsContainer,
   StyledContainer,
@@ -98,6 +99,8 @@ export const StepCvChoiceContent = ({
           }
         </Text>
       </StyledHelpText>
+
+      <OpenAILegalMention />
     </StyledContainer>
   );
 };
