@@ -72,3 +72,32 @@ export const StyledFullCTAWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const StyledSkeletonAvatar = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: ${COLORS.extraLightGray};
+`;
+
+export const StyledSkeletonLine = styled.div<{ width?: string }>`
+  width: ${({ width }) => width ?? '100%'};
+  height: 10px;
+  border-radius: 4px;
+  background: ${COLORS.extraLightGray};
+`;
+
+export const StyledSkeletonTag = styled.div<{ width?: string }>`
+  width: ${({ width }) => width ?? '56px'};
+  height: 20px;
+  border-radius: 10px;
+  background: ${COLORS.extraLightGray};
+`;
+
+export const StyledSkeletonCTA = styled.div`
+  width: 96px;
+  height: 28px;
+  border-radius: 8px;
+  background: ${COLORS.lightGray};
+`;

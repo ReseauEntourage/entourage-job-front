@@ -17,16 +17,19 @@ import {
 } from '../components/WizardSearchingLoader';
 import { Api } from 'src/api';
 import { Text } from 'src/components/ui/Text';
-import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
+import {
+  WizardCompatibleProfileCard,
+  WizardCompatibleProfileCardSkeleton,
+} from './WizardCompatibleProfileCard';
 import {
   StyledCompactContent,
   StyledCountRow,
-  StyledEmptyState,
-  StyledEmptyStateText,
   StyledLockBanner,
   StyledPanelContent,
   StyledProfileList,
 } from './WizardCompatibleProfilesSidePanel.styles';
+
+const EMPTY_STATE_SKELETON_CARDS = [0, 1, 2];
 
 interface WizardCompatibleProfilesSidePanelProps {
   subtitleContext: 'nudges' | 'sectors';
@@ -146,10 +149,6 @@ export const WizardCompatibleProfilesSidePanel = ({
     ? 'Finaliser votre inscription pour contacter ces coachs'
     : 'Finaliser votre inscription pour soutenir ces personnes';
 
-  const emptyStateText = isCandidate
-    ? 'Des coachs qui connaissent votre métier, prêts à vous donner un coup de pouce dans votre recherche.'
-    : 'Des personnes qui cherchent un coup de pouce dans vos domaines.';
-
   if (mode === 'compact') {
     if (!hasAnyCriteria) {
       return (
@@ -187,10 +186,13 @@ export const WizardCompatibleProfilesSidePanel = ({
           </Text>
         }
       >
-        <StyledEmptyState>
-          <LucidIcon name="Users" size={40} />
-          <StyledEmptyStateText>{emptyStateText}</StyledEmptyStateText>
-        </StyledEmptyState>
+        <StyledPanelContent>
+          <StyledProfileList>
+            {EMPTY_STATE_SKELETON_CARDS.map((key) => (
+              <WizardCompatibleProfileCardSkeleton key={key} />
+            ))}
+          </StyledProfileList>
+        </StyledPanelContent>
       </SidePanel>
     );
   }

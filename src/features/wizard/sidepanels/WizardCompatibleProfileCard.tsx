@@ -19,6 +19,10 @@ import {
   StyledFullCTAWrapper,
   StyledFullSection,
   StyledFullSectorLine,
+  StyledSkeletonAvatar,
+  StyledSkeletonCTA,
+  StyledSkeletonLine,
+  StyledSkeletonTag,
 } from './WizardCompatibleProfileCard.styles';
 
 const EXPERIENCES_LIMIT = 2;
@@ -274,6 +278,26 @@ const FullProfileCard = ({
     </Card>
   );
 };
+
+export const WizardCompatibleProfileCardSkeleton = () => (
+  <StyledCard>
+    <StyledCardTop>
+      <StyledSkeletonAvatar />
+      <StyledCardInfo>
+        <StyledSkeletonLine width="70%" />
+        <StyledSkeletonLine width="45%" />
+        <StyledCardTags>
+          <StyledSkeletonTag width="64px" />
+          <StyledSkeletonTag width="48px" />
+        </StyledCardTags>
+      </StyledCardInfo>
+    </StyledCardTop>
+    <StyledCardBottom>
+      <StyledSkeletonTag width="80px" />
+      <StyledSkeletonCTA />
+    </StyledCardBottom>
+  </StyledCard>
+);
 
 export const WizardCompatibleProfileCard = (
   props: WizardCompatibleProfileCardProps
