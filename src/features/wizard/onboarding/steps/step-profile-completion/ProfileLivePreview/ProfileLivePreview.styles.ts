@@ -51,9 +51,3 @@ export const StyledPillsRow = styled.div`
   flex-wrap: wrap;
   gap: 6px;
 `;
-
-export const StyledExperienceItem = styled.div`
-  font-size: 13px;
-  color: #333;
-  padding: 2px 0;
-`;

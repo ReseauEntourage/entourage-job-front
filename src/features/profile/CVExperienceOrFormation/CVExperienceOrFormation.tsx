@@ -24,6 +24,7 @@ import {
   StyledCVExperienceSummaryContent,
   StyledCVExperienceSummaryTitle,
   StyledCVExperienceSummaryStructure,
+  StyledCVExperienceSummaryDescription,
 } from './CVExperienceOrFormation.styles';
 
 interface ExperienceOrFormationProps {
@@ -37,7 +38,7 @@ interface ExperienceOrFormationProps {
   isEditable?: boolean;
   editItem?: () => void;
   deleteItem?: () => void;
-  variant?: 'card' | 'timeline' | 'summary';
+  variant?: 'card' | 'timeline' | 'summary' | 'summary-detailed';
 }
 
 export function CVExperienceOrFormation({
@@ -108,6 +109,40 @@ export function CVExperienceOrFormation({
             <StyledCVExperienceSummaryStructure>
               {structure}
             </StyledCVExperienceSummaryStructure>
+          )}
+        </StyledCVExperienceSummaryContent>
+      </StyledCVExperienceSummary>
+    );
+  }
+
+  if (variant === 'summary-detailed') {
+    return (
+      <StyledCVExperienceSummary>
+        <StyledCVExperienceSummaryDate>
+          {summaryDateRangeLine}
+        </StyledCVExperienceSummaryDate>
+        <StyledCVExperienceSummaryContent>
+          {title && (
+            <StyledCVExperienceSummaryTitle>
+              {title}
+            </StyledCVExperienceSummaryTitle>
+          )}
+          {structureLocationLine && (
+            <StyledCVExperienceSummaryStructure>
+              {structureLocationLine}
+            </StyledCVExperienceSummaryStructure>
+          )}
+          {description && (
+            <StyledCVExperienceSummaryDescription>
+              {description}
+            </StyledCVExperienceSummaryDescription>
+          )}
+          {skills?.length > 0 && (
+            <StyledCVSkillTagContainer>
+              {skills.map(({ name, id: skillId }) => {
+                return <StyledSkillTag key={skillId}>{name}</StyledSkillTag>;
+              })}
+            </StyledCVSkillTagContainer>
           )}
         </StyledCVExperienceSummaryContent>
       </StyledCVExperienceSummary>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, BadgeVariant, ImgUserProfile, Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { useContextualRole } from '@/src/features/backoffice/useContextualRole';
+import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
@@ -11,7 +12,6 @@ import {
   StyledBlocks,
   StyledBlockTitle,
   StyledContainer,
-  StyledExperienceItem,
   StyledIdentityBlock,
   StyledImgProfileAndName,
   StyledPillsRow,
@@ -86,11 +86,18 @@ export const ProfileLivePreview = () => {
         <StyledBlock>
           <StyledBlockTitle>Expériences</StyledBlockTitle>
           {profileComplete?.experiences?.length ? (
-            profileComplete.experiences.slice(0, 3).map((exp, i) => (
-              <StyledExperienceItem key={exp.id ?? i}>
-                {exp.title}
-                {exp.company ? ` — ${exp.company}` : ''}
-              </StyledExperienceItem>
+            profileComplete.experiences.map((exp, i) => (
+              <CVExperienceOrFormation
+                key={exp.id ?? i}
+                variant="summary-detailed"
+                title={exp.title}
+                description={exp.description}
+                startDate={exp.startDate}
+                endDate={exp.endDate}
+                location={exp.location}
+                structure={exp.company}
+                skills={exp.skills || []}
+              />
             ))
           ) : (
             <PillsSkeleton count={2} />
@@ -101,11 +108,18 @@ export const ProfileLivePreview = () => {
         <StyledBlock>
           <StyledBlockTitle>Formations</StyledBlockTitle>
           {profileComplete?.formations?.length ? (
-            profileComplete.formations.slice(0, 2).map((f, i) => (
-              <StyledExperienceItem key={f.id ?? i}>
-                {f.title}
-                {f.institution ? ` — ${f.institution}` : ''}
-              </StyledExperienceItem>
+            profileComplete.formations.map((f, i) => (
+              <CVExperienceOrFormation
+                key={f.id ?? i}
+                variant="summary-detailed"
+                title={f.title}
+                description={f.description}
+                startDate={f.startDate}
+                endDate={f.endDate}
+                location={f.location}
+                structure={f.institution}
+                skills={f.skills || []}
+              />
             ))
           ) : (
             <PillsSkeleton count={1} />

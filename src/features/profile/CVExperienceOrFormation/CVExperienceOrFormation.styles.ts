@@ -126,6 +126,12 @@ export const StyledCVExperienceSummaryStructure = styled.div`
   color: ${COLORS.darkGray};
 `;
 
+export const StyledCVExperienceSummaryDescription = styled.div`
+  font-size: 13px;
+  color: ${COLORS.darkGray};
+  white-space: pre-line;
+`;
+
 export const StyledEditToolsContainer = styled.div`
   display: flex;
   flex-direction: column;
