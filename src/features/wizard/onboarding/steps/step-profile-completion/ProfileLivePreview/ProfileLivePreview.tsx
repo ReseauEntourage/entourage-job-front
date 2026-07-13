@@ -114,7 +114,9 @@ export const ProfileLivePreview = () => {
 
         {/* Compétences */}
         <StyledBlock>
-          <StyledBlockTitle>Compétences</StyledBlockTitle>
+          <StyledBlockTitle>
+            Compétences, langues, centres d'intérêt
+          </StyledBlockTitle>
           {profileComplete?.skills?.length ||
           profileComplete?.userProfileLanguages?.length ||
           profileComplete?.interests?.length ? (
