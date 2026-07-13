@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
-import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import {
+  WizardStep,
+  WizardStepId,
+} from '@/src/features/wizard/shell/wizard.types';
 import {
   selectCurrentUser,
   selectCurrentUserCompany,
@@ -36,6 +39,8 @@ export interface UseRegistrationWizardReturn {
   currentWizardStep: WizardStep | null;
   incrementStep: () => Promise<void>;
   decrementStep: () => void;
+  goToLastStep: () => void;
+  goToStepById: (id: WizardStepId) => void;
   canGoBack: boolean;
   isLoading: boolean;
   effectiveFlow: RegistrationFlow | null;
@@ -193,6 +198,25 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     dispatch(registrationActions.moveBackwardInRegistration());
   }, [dispatch]);
 
+  const goToLastStep = useCallback(() => {
+    dispatch(
+      registrationActions.moveForwardInRegistration({
+        step: wizardSteps.length - 1,
+      })
+    );
+  }, [dispatch, wizardSteps]);
+
+  const goToStepById = useCallback(
+    (id: WizardStepId) => {
+      const idx = wizardSteps.findIndex((step) => step.id === id);
+      if (idx === -1) {
+        return;
+      }
+      dispatch(registrationActions.moveForwardInRegistration({ step: idx }));
+    },
+    [dispatch, wizardSteps]
+  );
+
   const canGoBack = currentWizardIdx > 0;
 
   return {
@@ -201,6 +225,8 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
     currentWizardStep,
     incrementStep,
     decrementStep,
+    goToLastStep,
+    goToStepById,
     canGoBack,
     isLoading,
     effectiveFlow,

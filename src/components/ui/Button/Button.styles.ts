@@ -90,9 +90,22 @@ export const StyledButton = styled.button<{
   }
 
   &:disabled {
-    background-color: ${COLORS.gray};
-    color: ${COLORS.darkGray};
-    border: ${COLORS.gray} solid 1px;
+    ${({ variant }) => {
+      if (variant === 'text') {
+        return `
+          background-color: transparent;
+          color: ${COLORS.mediumGray};
+          border: none;
+          
+        `;
+      }
+      return `
+        background-color: ${COLORS.gray};
+        color: ${COLORS.darkGray};
+        border: ${COLORS.gray} solid 1px;
+    
+    `;
+    }}
     cursor: not-allowed;
   }
 `;

@@ -18,18 +18,22 @@ import {
 
 interface EmailOtpInputProps {
   onCodeChange: (code: string) => void;
+  onEditEmail: () => void;
 }
 
 const OTP_LENGTH = 6;
 const RESEND_COOLDOWN_SECONDS = 60;
 
-export function EmailOtpInput({ onCodeChange }: EmailOtpInputProps) {
+export function EmailOtpInput({
+  onCodeChange,
+  onEditEmail,
+}: EmailOtpInputProps) {
   const dispatch = useDispatch();
   const registrationData = useSelector(selectRegistrationData) as any;
   const email = registrationData?.email as string | undefined;
 
   const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(''));
-  const [cooldown, setCooldown] = useState(0);
+  const [cooldown, setCooldown] = useState(RESEND_COOLDOWN_SECONDS);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const isVerifying = useSelector(
@@ -162,6 +166,10 @@ export function EmailOtpInput({ onCodeChange }: EmailOtpInputProps) {
           color="primaryBlue"
         >
           {cooldown > 0 ? `Renvoyer (${cooldown}s)` : 'Renvoyer le code'}
+        </Button>
+        <Text color="mediumGray">·</Text>
+        <Button onClick={onEditEmail} variant="text" color="primaryBlue">
+          Modifier l'email
         </Button>
       </StyledResendRow>
 

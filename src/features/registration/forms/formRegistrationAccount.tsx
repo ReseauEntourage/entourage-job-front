@@ -115,27 +115,6 @@ export const formRegistrationAccount: FormSchema<{
       ],
     },
     {
-      id: 'confirmPassword',
-      name: 'confirmPassword',
-      type: 'password',
-      component: 'text-input',
-      title: 'Confirmation du mot de passe*',
-      placeholder: 'Confirmez le mot de passe',
-      isRequired: true,
-      showLabel: true,
-      rules: [
-        {
-          method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-          message: 'Doit répondre aux critères ci-dessus',
-        },
-        {
-          method: (fieldValue, fieldValues) =>
-            fieldValues.password === fieldValue,
-          message: 'Les deux mots de passe ne correspondent pas',
-        },
-      ],
-    },
-    {
       id: 'optInNewsletter',
       name: 'optInNewsletter',
       component: 'checkbox',

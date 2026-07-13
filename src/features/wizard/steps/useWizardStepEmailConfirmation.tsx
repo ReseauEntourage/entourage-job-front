@@ -30,7 +30,9 @@ export const EMAIL_CONFIRMATION_STEP: WizardStep = {
   section: 'inscription',
 };
 
-export const useWizardStepEmailConfirmation = (): WizardStep => {
+export const useWizardStepEmailConfirmation = (
+  onEditEmail: () => void
+): WizardStep => {
   const dispatch = useDispatch();
   const registrationData = useSelector(selectRegistrationData) as any;
   const email = registrationData?.email as string | undefined;
@@ -77,7 +79,10 @@ export const useWizardStepEmailConfirmation = (): WizardStep => {
           <br />
           <H2 title="Vérifiez votre email" />
           <br />
-          <EmailOtpInput onCodeChange={handleCodeChange} />
+          <EmailOtpInput
+            onCodeChange={handleCodeChange}
+            onEditEmail={onEditEmail}
+          />
         </Card>
       ),
       onSubmit: async () => {
@@ -86,6 +91,6 @@ export const useWizardStepEmailConfirmation = (): WizardStep => {
         }
       },
     }),
-    [handleCodeChange, submitCode]
+    [handleCodeChange, submitCode, onEditEmail]
   );
 };

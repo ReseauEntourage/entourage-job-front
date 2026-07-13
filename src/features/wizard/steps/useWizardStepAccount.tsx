@@ -23,6 +23,17 @@ export function useWizardStepAccount() {
   const compatibleProfilesCount = useSelector(selectCompatibleProfilesCount);
   const formRef = useRef<FormWithValidationRef>(null);
 
+  // password reste dans state.data (nécessaire à registration.saga.ts pour
+  // POST /user/registration) mais ne doit pas repeupler le champ visible du
+  // formulaire au retour sur cette étape.
+  const prefillableData = useMemo(() => {
+    if (!data) {
+      return {};
+    }
+    const { password, ...rest } = data as Record<string, unknown>;
+    return rest;
+  }, [data]);
+
   const description = useMemo(() => {
     if (compatibleProfilesCount !== null && compatibleProfilesCount > 0) {
       if (selectedFlow === RegistrationFlow.CANDIDATE) {
@@ -76,7 +87,7 @@ export function useWizardStepAccount() {
       <Card title="Vos informations">
         <FormWithValidation
           formSchema={formRegistrationAccount}
-          defaultValues={(data as any) || {}}
+          defaultValues={prefillableData as any}
           onSubmit={handleFormSubmit}
           noFooter
           innerRef={formRef}

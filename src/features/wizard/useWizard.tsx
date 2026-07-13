@@ -49,6 +49,8 @@ export const useWizard = (): WizardState => {
     currentWizardStep: currentRegistrationStep,
     incrementStep: registrationIncrementStep,
     decrementStep: registrationDecrementStep,
+    goToLastStep,
+    goToStepById,
     canGoBack: registrationCanGoBack,
     isLoading: registrationIsLoading,
     effectiveFlow: registrationFlow,
@@ -63,7 +65,10 @@ export const useWizard = (): WizardState => {
   const isFetchUserFinished = isFetchUserSucceeded || isFetchUserFailed;
 
   const onboarding = useOnboardingPhase({ currentUser, registrationFlow });
-  const emailConfirmation = useEmailConfirmationPhase();
+  const emailConfirmation = useEmailConfirmationPhase({
+    goToLastStep,
+    goToStepById,
+  });
 
   const phase = resolveWizardPhase(currentUser, createUserStatus);
   const isOnboardingPhase = phase === 'onboarding';
@@ -148,7 +153,9 @@ export const useWizard = (): WizardState => {
 
   const canGoBack = isOnboardingPhase
     ? onboarding.canGoBack
-    : !isEmailConfirmationPhase && registrationCanGoBack;
+    : isEmailConfirmationPhase
+    ? emailConfirmation.canGoBack
+    : registrationCanGoBack;
 
   const onBack = useCallback(() => {
     if (!canGoBack) {
@@ -158,8 +165,19 @@ export const useWizard = (): WizardState => {
       onboarding.onBack();
       return;
     }
+    if (isEmailConfirmationPhase) {
+      emailConfirmation.onBack();
+      return;
+    }
     registrationDecrementStep();
-  }, [canGoBack, isOnboardingPhase, onboarding, registrationDecrementStep]);
+  }, [
+    canGoBack,
+    isOnboardingPhase,
+    isEmailConfirmationPhase,
+    onboarding,
+    emailConfirmation,
+    registrationDecrementStep,
+  ]);
 
   return {
     allSteps,

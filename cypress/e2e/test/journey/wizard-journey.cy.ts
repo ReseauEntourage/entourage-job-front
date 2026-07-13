@@ -18,14 +18,14 @@ describe('Wizard', () => {
     });
   };
 
-  const fillAccountForm = () => {
+  const fillAccountForm = (email = 'johndoe@gmail.com') => {
     cy.get('[data-testid="form-registration-account-firstName"]').type('John');
     cy.get('[data-testid="form-registration-account-lastName"]').type('Doe');
     cy.get('[data-testid="form-registration-account-gender"]')
       .click()
       .get('[data-testid="select-option-0"]')
       .click();
-    cy.get('#form-registration-account-email').type('johndoe@gmail.com');
+    cy.get('#form-registration-account-email').type(email);
     cy.get('#form-registration-account-phone').type('0698754321');
     cy.get('[data-testid="form-registration-account-password"]').type(
       'Azerty123!'
@@ -158,6 +158,100 @@ describe('Wizard', () => {
           cy.wait('@verifyOtp');
 
           // Phase onboarding — le candidat démarre sur la situation sociale
+          cy.contains('Quelques infos pour vous proposer le bon soutien');
+
+          // Une fois l'OTP validé, l'étape de confirmation email n'est plus
+          // accessible : ni bouton "Modifier l'email", ni input de code.
+          cy.contains("Modifier l'email").should('not.exist');
+          cy.get('input[inputmode="numeric"]').should('not.exist');
+        });
+
+        it('should let the user edit the email from the OTP step, resubmit, and complete registration with the corrected email', () => {
+          // Étape 1 — Coups de pouce (nudges)
+          cy.wait('@nudges');
+          cy.get('[data-testid^="nudgeIds-"]').first().click();
+          cy.get('[data-testid="wizard-next-step-btn"]').click();
+
+          // Étape 2 — Secteurs et métiers recherchés
+          cy.get('#form-onboarding-profile-completion-businessSectorId0')
+            .should('be.visible')
+            .click();
+          cy.get('#form-onboarding-profile-completion-businessSectorId0')
+            .find('.Select__option')
+            .first()
+            .click();
+          cy.get('[data-testid="wizard-next-step-btn"]')
+            .should('not.be.disabled')
+            .click();
+
+          // Étape 3 — Aperçu du réseau
+          cy.wait('@compatibleProfiles');
+          cy.get('[data-testid="wizard-next-step-btn"]').click();
+
+          // Étape 4 — Informations candidat
+          cy.get(
+            '[data-testid="form-registration-candidate-info-birthDate"]'
+          ).type('1990-01-01');
+          cy.get('#form-registration-candidate-info-department')
+            .click()
+            .find('.Select__option')
+            .contains('Paris')
+            .click();
+          cy.get('[data-testid="working-right-yes"]').click();
+          cy.get('[data-testid="wizard-next-step-btn"]').click();
+
+          // Étape 5 — Éligibilité
+          cy.get('[data-testid="material-insecurity-yes"]').click();
+          cy.get('[data-testid="network-insecurity-no"]').click();
+          cy.get('[data-testid="wizard-next-step-btn"]').click();
+
+          // Étape 6 — Création du compte avec un email erroné
+          fillAccountForm('typo@gmail.com');
+          cy.get('[data-testid="wizard-next-step-btn"]').click();
+          cy.wait('@postRegistration');
+
+          // Étape 7 — Confirmation email (OTP) : clic sur "Modifier l'email"
+          cy.get('input[inputmode="numeric"]').should('have.length', 6);
+          cy.contains('button', "Modifier l'email").click();
+
+          // Retour sur "Mon compte" : les champs saisis sont conservés (hors
+          // mot de passe), l'email erroné est éditable
+          cy.get('[data-testid="form-registration-account-firstName"]').should(
+            'have.value',
+            'John'
+          );
+          cy.get('#form-registration-account-email')
+            .should('have.value', 'typo@gmail.com')
+            .clear()
+            .type('johndoe.fixed@gmail.com');
+          cy.get('[data-testid="form-registration-account-password"]').type(
+            'Azerty123!'
+          );
+          cy.get(
+            '[data-testid="form-registration-account-confirmPassword"]'
+          ).type('Azerty123!');
+          cy.get('input[id="form-registration-account-acceptCGU"]').click({
+            force: true,
+          });
+          cy.get('[data-testid="wizard-next-step-btn"]').click();
+
+          // Un nouveau cycle d'inscription démarre avec l'email corrigé
+          cy.wait('@postRegistration')
+            .its('request.body')
+            .should((body) => {
+              expect(body.email).to.equal('johndoe.fixed@gmail.com');
+            });
+
+          // Nouveau cycle OTP indépendant : un nouveau code peut être saisi
+          cy.get('input[inputmode="numeric"]').should('have.length', 6);
+
+          cy.intercept('GET', '/current', {
+            fixture: 'auth-current-candidate-onboarding-not-started-res',
+          }).as('currentIdentity');
+
+          cy.get('input[inputmode="numeric"]').first().type('123456');
+          cy.wait('@verifyOtp');
+
           cy.contains('Quelques infos pour vous proposer le bon soutien');
         });
       });
