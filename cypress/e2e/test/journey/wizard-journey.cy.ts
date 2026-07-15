@@ -829,11 +829,11 @@ describe('Wizard', () => {
         cy.visit('/wizard/run');
 
         cy.contains(
-          'Terminez votre formation pour pouvoir contacter des coachs'
+          'Félicitations ! Vous pouvez dès à présent consulter le profil de votre coach'
         );
 
         cy.get('[data-testid="wizard-match-recap-primary-cta"]')
-          .should('contain', 'Voir le profil de Gustavo')
+          .should('contain', 'Voir le profil de Aurélien')
           .click();
 
         cy.wait('@putUserOnboardingStatus');
