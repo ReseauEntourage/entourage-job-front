@@ -57,7 +57,7 @@ export const StyledAlert = styled.div<{
   display: ${(props) => {
     return props.$visible ? 'flex' : 'none';
   }};
-  border: 1px solid
+  border: 1px ${(props) => (props.$variant === 'dashed' ? 'dashed' : 'solid')}
     ${(props) => {
       return props.$variant === 'filled'
         ? COLORS.transparent

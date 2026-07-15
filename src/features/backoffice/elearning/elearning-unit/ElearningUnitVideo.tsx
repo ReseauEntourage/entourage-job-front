@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Text } from '@/src/components/ui';
 
@@ -10,12 +10,16 @@ import {
 interface ElearningUnitVideoProps {
   title: string;
   videoUrl?: string | null;
+  onPlay?: () => void;
 }
 
 export const ElearningUnitVideo = ({
   title,
   videoUrl,
+  onPlay = () => {},
 }: ElearningUnitVideoProps) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   const isShortsUrl = useMemo(() => {
     if (!videoUrl) {
       return false;
@@ -55,12 +59,15 @@ export const ElearningUnitVideo = ({
         <StyledElearningUnitVideoFrame isShorts={isShortsUrl}>
           <div className="video-inner">
             <LiteYouTubeEmbed
+              ref={iframeRef}
               key={youtubeVideoId}
               id={youtubeVideoId}
               title={title}
               aspectWidth={aspectWidth}
               aspectHeight={aspectHeight}
               poster="maxresdefault"
+              enableJsApi={true}
+              onPlay={onPlay}
               style={{
                 aspectRatio: `${aspectWidth} / ${aspectHeight}`,
               }}

@@ -10,7 +10,7 @@ export enum AlertType {
   Warning = 'warning',
 }
 
-export type AlertVariant = 'outlined' | 'filled';
+export type AlertVariant = 'outlined' | 'filled' | 'dashed';
 
 export interface AlertProps {
   children: React.ReactNode;

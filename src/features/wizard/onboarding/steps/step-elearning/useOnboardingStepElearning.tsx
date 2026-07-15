@@ -134,17 +134,28 @@ export const useOnboardingStepElearning = ({
     onComplete: handleModuleComplete,
   });
 
-  // Repart de la première question à chaque changement de module
+  const [hasStartedCurrentVideo, setHasStartedCurrentVideo] = useState(false);
+
+  // Repart de la première question et de l'état verrouillé à chaque changement de module
   useEffect(() => {
     quiz.reset();
+    setHasStartedCurrentVideo(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUnitIndex]);
 
+  const onVideoPlay = useCallback(() => {
+    setHasStartedCurrentVideo(true);
+  }, []);
+
   const sidePanelContent = useCallback(
     () => (
-      <ElearningSidePanel currentUnit={currentUnit} isDesktop={isDesktop} />
+      <ElearningSidePanel
+        currentUnit={currentUnit}
+        isDesktop={isDesktop}
+        onVideoPlay={onVideoPlay}
+      />
     ),
-    [currentUnit, isDesktop]
+    [currentUnit, isDesktop, onVideoPlay]
   );
 
   const onboardingStepElearning: WizardStep = {
@@ -169,6 +180,8 @@ export const useOnboardingStepElearning = ({
         isDesktop={isDesktop}
         userRole={userRole}
         onSkip={skipElearning}
+        hasStartedCurrentVideo={hasStartedCurrentVideo}
+        onVideoPlay={onVideoPlay}
       />
     ),
     sidePanelContent,

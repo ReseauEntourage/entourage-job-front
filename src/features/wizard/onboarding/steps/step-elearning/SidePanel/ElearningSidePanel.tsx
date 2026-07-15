@@ -6,11 +6,13 @@ import { WizardRecommendationsSidePanel } from '@/src/features/wizard/sidepanels
 interface ElearningSidePanelProps {
   currentUnit: ElearningUnit | undefined;
   isDesktop: boolean;
+  onVideoPlay: () => void;
 }
 
 export const ElearningSidePanel = ({
   currentUnit,
   isDesktop,
+  onVideoPlay,
 }: ElearningSidePanelProps) => {
   if (!currentUnit || !isDesktop) {
     return <WizardRecommendationsSidePanel />;
@@ -21,6 +23,7 @@ export const ElearningSidePanel = ({
       <ElearningUnitVideo
         title={currentUnit.title}
         videoUrl={currentUnit.videoUrl}
+        onPlay={onVideoPlay}
       />
     </SidePanel>
   );

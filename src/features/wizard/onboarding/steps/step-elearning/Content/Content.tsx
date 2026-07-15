@@ -1,4 +1,4 @@
-import { Button } from '@/src/components/ui';
+import { Alert, Button } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserRoles } from '@/src/constants/users';
 import { ElearningUnitQuiz } from '@/src/features/backoffice/elearning/elearning-unit/ElearningUnitQuiz';
@@ -21,6 +21,8 @@ interface ContentProps {
   isDesktop: boolean;
   userRole: UserRoles | undefined;
   onSkip: () => void;
+  hasStartedCurrentVideo: boolean;
+  onVideoPlay: () => void;
 }
 
 export const Content = ({
@@ -29,6 +31,8 @@ export const Content = ({
   isDesktop,
   userRole,
   onSkip,
+  hasStartedCurrentVideo,
+  onVideoPlay,
 }: ContentProps) => {
   if (!currentUnit) {
     return (
@@ -55,25 +59,36 @@ export const Content = ({
             <ElearningUnitVideo
               title={currentUnit.title}
               videoUrl={currentUnit.videoUrl}
+              onPlay={onVideoPlay}
             />
           </StyledElearningStepMobileVideo>
         )}
 
-        <ElearningUnitQuiz
-          questions={quiz.questions}
-          quizQuestionIndex={quiz.quizQuestionIndex}
-          currentQuestion={quiz.currentQuestion}
-          currentSelectedAnswerId={quiz.currentSelectedAnswerId}
-          isCurrentQuestionAnswered={quiz.isCurrentQuestionAnswered}
-          isCurrentAnswerCorrect={quiz.isCurrentAnswerCorrect}
-          hasError={quiz.hasError}
-          onAnswerChange={quiz.onAnswerChange}
-        />
-        <StyledElearningStepModuleActions>
-          <Button onClick={quiz.confirm} variant="primary">
-            {quiz.buttonText}
-          </Button>
-        </StyledElearningStepModuleActions>
+        {hasStartedCurrentVideo ? (
+          <ElearningUnitQuiz
+            questions={quiz.questions}
+            quizQuestionIndex={quiz.quizQuestionIndex}
+            currentQuestion={quiz.currentQuestion}
+            currentSelectedAnswerId={quiz.currentSelectedAnswerId}
+            isCurrentQuestionAnswered={quiz.isCurrentQuestionAnswered}
+            isCurrentAnswerCorrect={quiz.isCurrentAnswerCorrect}
+            hasError={quiz.hasError}
+            onAnswerChange={quiz.onAnswerChange}
+          />
+        ) : (
+          <Alert variant="dashed">
+            {isDesktop
+              ? "Regardez la vidéo à droite. Les questions s'afficheront ici juste après."
+              : "Regardez la vidéo ci-dessus. Les questions s'afficheront ici juste après."}
+          </Alert>
+        )}
+        {hasStartedCurrentVideo && (
+          <StyledElearningStepModuleActions>
+            <Button onClick={quiz.confirm} variant="primary">
+              {quiz.buttonText}
+            </Button>
+          </StyledElearningStepModuleActions>
+        )}
         {!quiz.currentSelectedAnswerId && (
           <StyledElearningStepSkipContainer>
             <Button onClick={handleSkipClick} variant="text">
