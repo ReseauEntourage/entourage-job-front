@@ -20,6 +20,7 @@ interface ContentProps {
   panelState: MatchRecapPanelState;
   recommendation: ProfileRecommendation | null;
   userRole: UserRoles | undefined;
+  isEligibleToContact: boolean;
   onSkipWait: () => void;
   onPrimaryCta: () => void;
   onSecondaryCta: () => void;
@@ -29,6 +30,7 @@ export const Content = ({
   panelState,
   recommendation,
   userRole,
+  isEligibleToContact,
   onSkipWait,
   onPrimaryCta,
   onSecondaryCta,
@@ -64,9 +66,13 @@ export const Content = ({
     <StyledOnboardingStepContainer>
       <H2
         title={
-          isCandidate
-            ? 'Félicitations ! Vous pouvez dès à présent contacter des coachs'
-            : 'Félicitations ! Vous pouvez dès à présent contacter des candidats'
+          isEligibleToContact
+            ? isCandidate
+              ? 'Félicitations ! Vous pouvez dès à présent contacter des coachs'
+              : 'Félicitations ! Vous pouvez dès à présent contacter des candidats'
+            : isCandidate
+            ? 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre coach'
+            : 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre candidat'
         }
         center
       />
@@ -86,7 +92,9 @@ export const Content = ({
           variant="primary"
           size="large"
         >
-          Écrire à {profile.firstName}
+          {isEligibleToContact
+            ? `Écrire à ${profile.firstName}`
+            : `Voir le profil de ${profile.firstName}`}
         </Button>
         <Button
           dataTestId="wizard-match-recap-secondary-cta"

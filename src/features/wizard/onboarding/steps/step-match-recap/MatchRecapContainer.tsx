@@ -2,8 +2,6 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ProfileRecommendation } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
-import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
-import { openModal } from '@/src/features/modals/Modal/openModal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Api } from 'src/api';
 import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
@@ -23,6 +21,7 @@ export const MatchRecapContainer = ({
 }: MatchRecapContainerProps) => {
   const router = useRouter();
   const currentUser = useAuthenticatedUser();
+  const isEligibleToContact = Boolean(currentUser.elearningCompletedAt);
 
   const [panelState, setPanelState] = useState<MatchRecapPanelState>('LOADING');
   const [recommendation, setRecommendation] =
@@ -109,14 +108,14 @@ export const MatchRecapContainer = ({
       return;
     }
     completeOnboarding(true);
-    if (!currentUser.elearningCompletedAt) {
-      openModal(<ElearningGateModal />);
+    if (isEligibleToContact) {
+      router.push(
+        `/backoffice/messaging?userId=${recommendation.publicProfile.id}`
+      );
       return;
     }
-    router.push(
-      `/backoffice/messaging?userId=${recommendation.publicProfile.id}`
-    );
-  }, [recommendation, completeOnboarding, currentUser, router]);
+    router.push(`/backoffice/profile/${recommendation.publicProfile.id}`);
+  }, [recommendation, completeOnboarding, isEligibleToContact, router]);
 
   const handleSecondaryCta = useCallback(() => {
     completeOnboarding(true);
@@ -132,6 +131,7 @@ export const MatchRecapContainer = ({
       panelState={panelState}
       recommendation={recommendation}
       userRole={userRole}
+      isEligibleToContact={isEligibleToContact}
       onSkipWait={() => completeOnboarding()}
       onPrimaryCta={handlePrimaryCta}
       onSecondaryCta={handleSecondaryCta}

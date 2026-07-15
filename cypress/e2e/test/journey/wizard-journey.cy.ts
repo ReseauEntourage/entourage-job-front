@@ -705,6 +705,8 @@ describe('Wizard', () => {
                 userSocialSituation: { hasCompletedSurvey: true },
                 // Évite d'avoir à stubber /events* pour l'étape "webinar"
                 onboardingWebinarSkippedAt: '2026-01-01T00:00:00.000Z',
+                // Scénario par défaut : eLearning complété
+                elearningCompletedAt: '2026-01-01T00:00:00.000Z',
               },
             }).as('currentIdentity');
           }
@@ -806,6 +808,38 @@ describe('Wizard', () => {
         cy.url().should('include', 'entity=user');
         cy.url().should('include', 'role=Coach');
         cy.url().should('not.include', '/backoffice/dashboard');
+      });
+
+      it('should show the incentive copy and redirect to the profile page instead of messaging when elearning is not completed', () => {
+        cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
+          (user) => {
+            cy.intercept('GET', '/current', {
+              statusCode: 200,
+              body: {
+                ...user,
+                onboardingStatus: 'in_progress',
+                userSocialSituation: { hasCompletedSurvey: true },
+                onboardingWebinarSkippedAt: '2026-01-01T00:00:00.000Z',
+                elearningCompletedAt: null,
+              },
+            }).as('currentIdentityNotEligible');
+          }
+        );
+
+        cy.visit('/wizard/run');
+
+        cy.contains(
+          'Terminez votre formation pour pouvoir contacter des coachs'
+        );
+
+        cy.get('[data-testid="wizard-match-recap-primary-cta"]')
+          .should('contain', 'Voir le profil de Gustavo')
+          .click();
+
+        cy.wait('@putUserOnboardingStatus');
+
+        cy.url().should('include', '/backoffice/profile/');
+        cy.url().should('not.include', '/backoffice/messaging');
       });
     });
   });

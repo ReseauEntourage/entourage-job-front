@@ -86,6 +86,13 @@ function useWizardCompatibleProfileData(profile: PublicProfile) {
       ? occupationNames.join(', ')
       : profile.currentJob ?? null;
 
+  const metierSource: 'occupation' | 'currentJob' | null =
+    occupationNames.length > 0
+      ? 'occupation'
+      : profile.currentJob
+      ? 'currentJob'
+      : null;
+
   const nudges = (profile.nudges ?? []).map((nudge) => ({
     id: nudge.id,
     label: isCandidate ? nudge.nameRequest : nudge.nameOffer,
@@ -99,6 +106,7 @@ function useWizardCompatibleProfileData(profile: PublicProfile) {
     sectorNames,
     sectorOccupationLines,
     metierText,
+    metierSource,
     nudges,
     experiences,
     formations,
@@ -197,6 +205,8 @@ const FullProfileCard = ({
   const {
     displayName,
     sectorOccupationLines,
+    metierText,
+    metierSource,
     nudges,
     experiences,
     formations,
@@ -214,6 +224,10 @@ const FullProfileCard = ({
           {badgeLabel}
         </Badge>
         <StyledCardName>{displayName}</StyledCardName>
+        <AvailabilityTag isAvailable={profile.isAvailable} />
+        {metierSource === 'currentJob' && (
+          <StyledFullSectorLine>{metierText}</StyledFullSectorLine>
+        )}
         {sectorOccupationLines.map((line, i) => (
           <StyledFullSectorLine key={`${line}-${i}`}>
             {line}
@@ -234,7 +248,6 @@ const FullProfileCard = ({
             ))}
           </StyledCardTags>
         )}
-        <AvailabilityTag isAvailable={profile.isAvailable} />
       </StyledFullCard>
       {experiences.length > 0 && (
         <StyledFullSection>
