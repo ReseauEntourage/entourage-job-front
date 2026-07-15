@@ -70,6 +70,12 @@ export const COLORS = {
   shadowDarkBlue2: '#1A5670',
   extraLightTeal: '#e8f6f8',
   teal: '#1a7a94',
+  photoGradientBlue1: '#2A7286',
+  photoGradientBlue2: '#1C5468',
+  photoGradientBlue3: '#164A5E',
+  photoOverlayBlue1: 'rgba(20, 62, 76, 0.32)',
+  photoOverlayBlue2: 'rgba(24, 72, 90, 0.62)',
+  photoOverlayBlue3: '#184C60',
 
   // Green
   lightGreen: '#A7DB9F',

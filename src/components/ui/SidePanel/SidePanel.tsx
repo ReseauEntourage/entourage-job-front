@@ -2,9 +2,12 @@ import React from 'react';
 import { Text } from '@/src/components/ui';
 import { useIsDesktop } from '@/src/hooks/utils';
 import {
+  PHOTO_BASE_GRADIENT,
   SidePanelVariant,
   StyledContent,
   StyledHeader,
+  StyledPhotoLayer,
+  StyledPhotoOverlay,
   StyledRoot,
   StyledSeparator,
   VARIANT_STYLES,
@@ -15,6 +18,7 @@ interface SidePanelProps {
   title?: string;
   subtitle?: React.ReactNode;
   contentAlign?: 'start' | 'center';
+  backgroundPhoto?: { src: string; position?: string };
   children: React.ReactNode;
 }
 
@@ -23,15 +27,30 @@ export const SidePanel = ({
   title,
   subtitle,
   contentAlign = 'start',
+  backgroundPhoto,
   children,
 }: SidePanelProps) => {
   const isDesktop = useIsDesktop();
-  const { background, titleColor } =
-    VARIANT_STYLES[isDesktop ? variant : 'white'];
+  const effectiveVariant = isDesktop ? variant : 'white';
+  const hasPhoto =
+    effectiveVariant === 'blue-gradient' && Boolean(backgroundPhoto);
+  const { background, titleColor } = VARIANT_STYLES[effectiveVariant];
   const hasHeader = Boolean(title);
 
   return (
-    <StyledRoot $background={background} $hasHeader={hasHeader}>
+    <StyledRoot
+      $background={hasPhoto ? PHOTO_BASE_GRADIENT : background}
+      $hasHeader={hasHeader}
+    >
+      {hasPhoto && backgroundPhoto && (
+        <>
+          <StyledPhotoLayer
+            $src={backgroundPhoto.src}
+            $position={backgroundPhoto.position ?? 'center'}
+          />
+          <StyledPhotoOverlay />
+        </>
+      )}
       {hasHeader && (
         <>
           <StyledHeader>

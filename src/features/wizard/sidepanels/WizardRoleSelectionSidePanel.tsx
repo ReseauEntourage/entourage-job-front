@@ -48,6 +48,8 @@ const STACK_IMAGES = [
   '/static/img/temoignage-candidat-danny.jpg',
 ];
 
+const BACKGROUND_PHOTO_SRC = '/static/img/wizard-role-selection.jpg';
+
 interface WizardRoleSelectionSidePanelProps {
   flow: RegistrationFlow | null;
 }
@@ -58,13 +60,16 @@ export const WizardRoleSelectionSidePanel = ({
   const verbatim = flow ? VERBATIMS[flow] ?? null : null;
 
   return (
-    <SidePanel variant="blue-gradient">
+    <SidePanel
+      variant="blue-gradient"
+      backgroundPhoto={{ src: BACKGROUND_PHOTO_SRC, position: 'center 22%' }}
+    >
       <StyledLogoRow>
         <NavbarLogo href="/" type="secondary" />
       </StyledLogoRow>
       <StyledContainer>
         <StyledTopSection>
-          <Text color="white" size={34}>
+          <Text color="white" size={41} weight="bold">
             Un monde où chacun a des gens sur qui compter.
           </Text>
           <Text color="white">

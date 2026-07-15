@@ -15,10 +15,17 @@ export const VARIANT_STYLES: Record<
   },
 };
 
+// Base gradient shown behind a backgroundPhoto (loading/failure fallback) — distinct from
+// VARIANT_STYLES['blue-gradient'].background, which stays unchanged for the no-photo case.
+export const PHOTO_BASE_GRADIENT = `linear-gradient(155deg, ${COLORS.photoGradientBlue1} 0%, ${COLORS.photoGradientBlue2} 45%, ${COLORS.photoGradientBlue3} 100%)`;
+
+const PHOTO_OVERLAY_GRADIENT = `linear-gradient(180deg, ${COLORS.photoOverlayBlue1} 0%, ${COLORS.photoOverlayBlue2} 38%, ${COLORS.photoOverlayBlue3} 72%, ${COLORS.photoGradientBlue3} 100%)`;
+
 export const StyledRoot = styled.div<{
   $background: string;
   $hasHeader: boolean;
 }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -26,7 +33,23 @@ export const StyledRoot = styled.div<{
   background: ${({ $background }) => $background};
 `;
 
+export const StyledPhotoLayer = styled.div<{ $src: string; $position: string }>`
+  position: absolute;
+  inset: 0;
+  background-image: url(${({ $src }) => $src});
+  background-size: cover;
+  background-position: ${({ $position }) => $position};
+`;
+
+export const StyledPhotoOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: ${PHOTO_OVERLAY_GRADIENT};
+`;
+
 export const StyledHeader = styled.div`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -45,6 +68,8 @@ export const StyledContent = styled.div<{
   $align: 'start' | 'center';
   $hasHeader: boolean;
 }>`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: ${({ $align }) =>
