@@ -205,7 +205,6 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
     },
     hideGenericStepHeader: undefined,
     title: 'Vérifiez et complétez votre profil',
-    smallTitle: 'Récap',
     description: null,
     content: (
       <StyledOnboardingStepContainer>

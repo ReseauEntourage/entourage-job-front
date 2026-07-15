@@ -86,12 +86,7 @@ export const WizardProgressBar = ({
                 {index + 1}
               </StyledWizardStepBadge>
               <StyledWizardStepText>
-                <StyledWizardStepTitle
-                  $completed={isCompleted}
-                  $current={isCurrent}
-                >
-                  {step.smallTitle}
-                </StyledWizardStepTitle>
+                Text
                 {step.summary.duration && (
                   <StyledWizardStepDuration>
                     {step.summary.duration}

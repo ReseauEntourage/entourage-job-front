@@ -53,7 +53,14 @@ export interface WizardStep {
   hideGenericStepHeader: undefined | true;
   hideGenericStepFooter?: boolean;
   title: React.ReactNode;
-  smallTitle: string;
+  /** Pill label in the desktop stepper (`WizardProgressBar`); also used as the compact title in `WizardMobileStepHeader` (mobile) */
+  /**
+   * Fully custom mobile header content, bypassing the generic section badge +
+   * title + progress bar rendering in `WizardMobileStepHeader`. Use when
+   * a step's own progress (e.g. eLearning's video count) doesn't map to the
+   * wizard step count `subProgress`/`sectionProgress` are derived from.
+   */
+  mobileHeaderContent?: React.ReactNode;
   description: React.ReactNode;
   content: React.ReactNode;
   sidePanelContent?: (mode: 'compact' | 'full') => React.ReactNode;

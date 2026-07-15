@@ -68,7 +68,6 @@ export const useOnboardingStepWebinar = ({
       duration: '~1 minute',
     },
     title,
-    smallTitle: 'Webinaire',
     description: null,
     buttonLabel: 'Je réserve ma place',
     isNextEnabled: !!webinarSfId,

@@ -128,7 +128,6 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
     },
     hideGenericStepHeader: undefined,
     title: 'Présentez-vous en quelques lignes',
-    smallTitle: 'Présentation',
     description:
       'Ce texte apparaîtra en tête de votre profil auprès des personnes qui le consulteront.',
     content: (

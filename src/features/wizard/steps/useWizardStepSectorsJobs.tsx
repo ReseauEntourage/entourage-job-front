@@ -172,7 +172,6 @@ export function useWizardStepSectorsJobs() {
 
   const step: WizardStep = {
     id: 'sectors-jobs',
-    smallTitle: isCandidate ? 'Secteurs recherchés' : 'Vos secteurs',
     summary: {
       title: isCandidate
         ? 'Vos secteurs et métiers recherchés'

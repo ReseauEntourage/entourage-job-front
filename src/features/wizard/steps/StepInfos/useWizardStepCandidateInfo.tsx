@@ -35,7 +35,6 @@ export function useWizardStepCandidateInfo() {
 
   const step: WizardStep = {
     id: 'candidate-info',
-    smallTitle: 'Vos informations',
     summary: { title: 'Vos informations', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
     title: 'Quelques infos pour vérifier que le programme vous correspond.',

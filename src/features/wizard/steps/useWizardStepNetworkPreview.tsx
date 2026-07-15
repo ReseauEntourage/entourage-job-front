@@ -58,7 +58,6 @@ export function useWizardStepNetworkPreview() {
 
   const step: WizardStep = {
     id: 'network-preview',
-    smallTitle: 'Le réseau',
     summary: {
       title: 'Découvrez le réseau',
       description: isCandidate

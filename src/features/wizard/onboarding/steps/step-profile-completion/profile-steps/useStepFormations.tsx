@@ -77,7 +77,6 @@ export const useStepFormations = ({ user }: UseStepFormationsProps) => {
     },
     hideGenericStepHeader: undefined,
     title: 'Vos formations',
-    smallTitle: 'Formations',
     description: 'Ajoutez vos formations pour compléter votre profil.',
     content: (
       <StyledOnboardingStepContainer>

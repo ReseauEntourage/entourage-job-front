@@ -38,8 +38,6 @@ export function useWizardStepNudges() {
 
   const step: WizardStep = {
     id: 'nudges',
-    smallTitle:
-      userRole === UserRoles.CANDIDATE ? 'Vos besoins' : 'Vos coups de pouce',
     summary: {
       title:
         userRole === UserRoles.CANDIDATE

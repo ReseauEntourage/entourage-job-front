@@ -1,8 +1,11 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
 import { H4 } from '@/src/components/ui/Headings';
-import { WizardSubProgressBar } from '@/src/features/wizard/shell/WizardSubProgressBar';
-import { StyledContainer } from './HeaderWizardStep.styles';
+import { WizardSubProgressBar } from '../../shell/WizardSubProgressBar';
+import {
+  StyledContainer,
+  StyledDesktopSubProgress,
+} from './HeaderWizardStep.styles';
 
 interface HeaderWizardStepProps {
   title: React.ReactNode;
@@ -22,11 +25,13 @@ export const HeaderWizardStep = ({
   return (
     <StyledContainer>
       {subProgress && (
-        <WizardSubProgressBar
-          sectionLabel={subProgress.sectionLabel}
-          currentInSection={subProgress.currentInSection}
-          totalInSection={subProgress.totalInSection}
-        />
+        <StyledDesktopSubProgress>
+          <WizardSubProgressBar
+            sectionLabel={subProgress.sectionLabel}
+            currentInSection={subProgress.currentInSection}
+            totalInSection={subProgress.totalInSection}
+          />
+        </StyledDesktopSubProgress>
       )}
       <H4 title={title} />
       {description && <Text size="large">{description}</Text>}

@@ -203,7 +203,6 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
     },
     hideGenericStepHeader: undefined,
     title: "Vos compétences et centres d'intérêt",
-    smallTitle: 'Compétences',
     description:
       "Partagez vos compétences, langues parlées et centres d'intérêt.",
     content: (

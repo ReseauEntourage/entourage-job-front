@@ -18,7 +18,7 @@ export const WizardSubProgressBar = ({
 
   return (
     <Badge variant={BadgeVariant.ExtraLightTeal}>
-      {sectionLabel} — étape {currentInSection + 1}/{totalInSection}
+      {sectionLabel} — Étape {currentInSection + 1}/{totalInSection}
     </Badge>
   );
 };

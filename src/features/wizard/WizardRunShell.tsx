@@ -96,6 +96,8 @@ export const WizardRunShell = ({
       sidePanel={sidePanelContent ?? null}
       mobileBottomSheet={mobileBottomSheet}
       sectionProgress={sectionProgress}
+      subProgress={subProgress}
+      mobileHeaderContent={currentStep?.mobileHeaderContent}
       stepper={
         hideStepper ? undefined : (
           <WizardProgressBar
@@ -111,9 +113,9 @@ export const WizardRunShell = ({
           <Section className="custom-page">
             <>
               <HeaderWizardStep
-                subProgress={subProgress}
                 title={currentStep.title}
                 description={currentStep.description}
+                subProgress={subProgress}
               />
             </>
           </Section>

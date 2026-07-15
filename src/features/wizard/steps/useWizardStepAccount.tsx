@@ -78,7 +78,6 @@ export function useWizardStepAccount() {
 
   const step: WizardStep = {
     id: 'account',
-    smallTitle: 'Mon compte',
     summary: { title: 'Mon compte', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
     title: 'Créez votre compte Entourage Pro',

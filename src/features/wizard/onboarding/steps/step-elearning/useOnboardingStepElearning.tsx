@@ -1,9 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { User } from '@/src/api/types';
+import { Badge, BadgeVariant } from '@/src/components/ui';
 import { ReduxRequestEvents } from '@/src/constants';
 import { useElearningQuiz } from '@/src/features/backoffice/elearning/elearning-unit/useElearningQuiz';
 import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
+import {
+  StyledWizardMobileStepHeaderProgressFill,
+  StyledWizardMobileStepHeaderProgressStrip,
+} from '@/src/features/wizard/shell/WizardMobileStepHeader.styles';
 import {
   WizardStep,
   WizardStepId,
@@ -147,15 +152,37 @@ export const useOnboardingStepElearning = ({
     setHasStartedCurrentVideo(true);
   }, []);
 
+  const totalUnits = elearningUnits?.length ?? 0;
+  const currentUnitPosition = currentUnitIndex + 1;
+
+  // Bypasses the generic WizardMobileStepHeader (wizard step count within the
+  // section) — this step's own progress is the video count, a different metric.
+  const mobileHeaderContent = (
+    <>
+      <Badge variant={BadgeVariant.ExtraLightTeal}>
+        Formation - Vidéo {currentUnitPosition}/{totalUnits}
+      </Badge>
+      <StyledWizardMobileStepHeaderProgressStrip>
+        <StyledWizardMobileStepHeaderProgressFill
+          $percent={
+            totalUnits > 0 ? (currentUnitPosition / totalUnits) * 100 : 0
+          }
+        />
+      </StyledWizardMobileStepHeaderProgressStrip>
+    </>
+  );
+
   const sidePanelContent = useCallback(
     () => (
       <ElearningSidePanel
         currentUnit={currentUnit}
         isDesktop={isDesktop}
         onVideoPlay={onVideoPlay}
+        currentUnitPosition={currentUnitPosition}
+        totalUnits={totalUnits}
       />
     ),
-    [currentUnit, isDesktop, onVideoPlay]
+    [currentUnit, isDesktop, onVideoPlay, currentUnitPosition, totalUnits]
   );
 
   const onboardingStepElearning: WizardStep = {
@@ -169,7 +196,7 @@ export const useOnboardingStepElearning = ({
     hideGenericStepHeader: true,
     hideGenericStepFooter: true,
     title: `Votre parcours de formation`,
-    smallTitle: 'Suivre la formation',
+    mobileHeaderContent,
     description: `Suivez ces modules pour rejoindre notre communauté de ${
       userRole?.toLowerCase() ?? ''
     }s bienveillants Entourage Pro.`,

@@ -52,7 +52,6 @@ export const useStepCvChoice = ({
     title: isCandidate
       ? "Construisons votre profil : c'est ce que verront les coachs. Deux façons de faire."
       : "Construisons votre profil : c'est ce que verront les personnes que vous soutenez. Deux façons de faire.",
-    smallTitle: 'Profil',
     description: '',
     content: (
       <StyledOnboardingStepContainer>

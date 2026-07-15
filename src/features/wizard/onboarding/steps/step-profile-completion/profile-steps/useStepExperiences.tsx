@@ -77,7 +77,6 @@ export const useStepExperiences = ({ user }: UseStepExperiencesProps) => {
     },
     hideGenericStepHeader: undefined,
     title: 'Vos expériences professionnelles',
-    smallTitle: 'Expériences',
     description:
       'Ajoutez vos expériences professionnelles pour compléter votre profil.',
     content: (

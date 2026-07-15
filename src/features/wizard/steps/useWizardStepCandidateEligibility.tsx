@@ -34,7 +34,6 @@ export function useWizardStepCandidateEligibility() {
 
   const step: WizardStep = {
     id: 'candidate-eligibility',
-    smallTitle: 'Votre situation',
     summary: { title: 'Votre situation', duration: '~1 minute' },
     hideGenericStepHeader: undefined,
     title:

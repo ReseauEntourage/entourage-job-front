@@ -7,19 +7,26 @@ interface ElearningSidePanelProps {
   currentUnit: ElearningUnit | undefined;
   isDesktop: boolean;
   onVideoPlay: () => void;
+  currentUnitPosition: number;
+  totalUnits: number;
 }
 
 export const ElearningSidePanel = ({
   currentUnit,
   isDesktop,
   onVideoPlay,
+  currentUnitPosition,
+  totalUnits,
 }: ElearningSidePanelProps) => {
   if (!currentUnit || !isDesktop) {
     return <WizardRecommendationsSidePanel />;
   }
 
   return (
-    <SidePanel variant="white" title="Formation - Vidéo">
+    <SidePanel
+      variant="white"
+      title={`Formation - Vidéo ${currentUnitPosition}/${totalUnits}`}
+    >
       <ElearningUnitVideo
         title={currentUnit.title}
         videoUrl={currentUnit.videoUrl}

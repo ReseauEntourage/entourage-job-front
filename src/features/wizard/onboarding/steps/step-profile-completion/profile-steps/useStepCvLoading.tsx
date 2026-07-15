@@ -18,7 +18,6 @@ export const useStepCvLoading = ({
     },
     hideGenericStepHeader: true,
     title: '',
-    smallTitle: 'Analyse',
     description: '',
     content: <CvLoadingAnimation onManualFallback={onManualFallback} />,
     sidePanelContent: () => <ProfileLivePreviewPanel />,

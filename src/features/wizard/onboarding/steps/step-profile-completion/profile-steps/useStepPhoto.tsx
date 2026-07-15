@@ -34,7 +34,6 @@ export const useStepPhoto = ({ user }: UseStepPhotoProps) => {
     },
     hideGenericStepHeader: undefined,
     title: 'Commençons par une photo de vous',
-    smallTitle: 'Photo',
     description: isCandidate
       ? "Une photo aide les coachs à mettre un visage sur votre profil. C'est la première chose qu'ils verront."
       : "Une photo aide les personnes que vous soutenez à mettre un visage sur votre profil. C'est la première chose qu'elles verront.",

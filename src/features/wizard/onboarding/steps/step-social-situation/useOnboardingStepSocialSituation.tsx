@@ -172,7 +172,6 @@ export const useOnboardingStepSocialSituation = ({
     },
     title:
       'Quelques infos pour vous proposer le bon soutien, tout est facultatif.',
-    smallTitle: 'Votre situation',
     description: null,
     content: (
       <StyledCardList>

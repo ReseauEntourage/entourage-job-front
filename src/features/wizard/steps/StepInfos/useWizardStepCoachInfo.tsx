@@ -34,7 +34,6 @@ export function useWizardStepCoachInfo() {
 
   const step: WizardStep = {
     id: 'coach-info',
-    smallTitle: 'Vos informations',
     summary: { title: 'Vos informations', duration: '~2 minutes' },
     hideGenericStepHeader: undefined,
     title: 'Avant de créer votre compte, deux informations vous concernant.',

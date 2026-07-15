@@ -47,7 +47,6 @@ export function useWizardStepCompanyRole() {
 
   const step: WizardStep = {
     id: 'company-role',
-    smallTitle: 'Votre rôle',
     summary: { title: 'Votre rôle', duration: '~1 minute' },
     hideGenericStepHeader: undefined,
     title: "Votre rôle au sein de l'entreprise",

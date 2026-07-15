@@ -22,7 +22,6 @@ export const useOnboardingStepMatchRecap = ({
     hideGenericStepHeader: true,
     hideGenericStepFooter: true,
     title: '',
-    smallTitle: 'Récapitulatif',
     description: '',
     content: (
       <MatchRecapContainer

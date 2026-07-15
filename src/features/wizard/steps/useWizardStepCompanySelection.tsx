@@ -31,7 +31,6 @@ export function useWizardStepCompanySelection() {
 
   const step: WizardStep = {
     id: 'company-selection',
-    smallTitle: 'Votre entreprise',
     summary: { title: 'Votre entreprise', duration: '~1 minute' },
     hideGenericStepHeader: undefined,
     title: 'Votre entreprise',
