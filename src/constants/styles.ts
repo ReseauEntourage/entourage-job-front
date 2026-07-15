@@ -42,6 +42,7 @@ export const COLORS = {
   orangeLocal: '#FF9739',
   orangeSocial: '#F55F24',
   darkOrange: '#D53F00',
+  warning: '#D53F00',
 
   // Yellow
   lightYellow: '#FFF2D7',

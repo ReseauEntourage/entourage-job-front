@@ -14,3 +14,9 @@ export const StyledElearningStepModuleActions = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const StyledElearningStepSkipContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+`;

@@ -44,3 +44,17 @@ export const StyledCheckIconContainer = styled.div`
   border-radius: 14px;
   left: 0;
 `;
+
+export const StyledWarningIconContainer = styled.div`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  padding: 2px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${COLORS.extraLightOrange};
+  color: white;
+  position: absolute;
+  border-radius: 14px;
+  left: 0;
+`;

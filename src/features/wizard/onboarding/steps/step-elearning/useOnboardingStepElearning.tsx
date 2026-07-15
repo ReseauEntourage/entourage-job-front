@@ -15,7 +15,7 @@ import {
   selectElearningUnits,
   selectFetchElearningUnitsState,
 } from '@/src/use-cases/elearning';
-import { Content, ElearningStepPhase } from './Content/Content';
+import { Content } from './Content/Content';
 import { ElearningSidePanel } from './SidePanel/ElearningSidePanel';
 
 interface WizardStepElearningProps {
@@ -79,7 +79,6 @@ export const useOnboardingStepElearning = ({
   }, [requestAdvance]);
 
   // ─── Parcours séquentiel des modules ──────────────────────────────────────
-  const [phase, setPhase] = useState<ElearningStepPhase>('intro');
   const [currentUnitIndex, setCurrentUnitIndex] = useState(0);
   const hasInitializedIndexRef = useRef(false);
 
@@ -105,7 +104,6 @@ export const useOnboardingStepElearning = ({
     }
 
     setCurrentUnitIndex(firstIncompleteIdx);
-    setPhase('intro');
   }, [elearningUnits, elearningFetchStatus]);
 
   const currentUnit = elearningUnits?.[currentUnitIndex];
@@ -126,7 +124,6 @@ export const useOnboardingStepElearning = ({
 
     if (hasNextUnit) {
       setCurrentUnitIndex(nextIndex);
-      setPhase('module');
     } else {
       requestAdvance('elearning');
     }
@@ -143,19 +140,11 @@ export const useOnboardingStepElearning = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUnitIndex]);
 
-  const handleStartTraining = useCallback(() => {
-    setPhase('module');
-  }, []);
-
   const sidePanelContent = useCallback(
     () => (
-      <ElearningSidePanel
-        phase={phase}
-        currentUnit={currentUnit}
-        isDesktop={isDesktop}
-      />
+      <ElearningSidePanel currentUnit={currentUnit} isDesktop={isDesktop} />
     ),
-    [phase, currentUnit, isDesktop]
+    [currentUnit, isDesktop]
   );
 
   const onboardingStepElearning: WizardStep = {
@@ -175,11 +164,10 @@ export const useOnboardingStepElearning = ({
     }s bienveillants Entourage Pro.`,
     content: (
       <Content
-        phase={phase}
         currentUnit={currentUnit}
         quiz={quiz}
         isDesktop={isDesktop}
-        onStart={handleStartTraining}
+        userRole={userRole}
         onSkip={skipElearning}
       />
     ),
