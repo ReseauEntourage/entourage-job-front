@@ -46,7 +46,7 @@ export function Button({
   const buttonComponent = (
     <StyledButton
       id={id}
-      className={`button ${className}`}
+      className={`${className}`}
       rounded={rounded}
       disabled={disabled}
       type="button"

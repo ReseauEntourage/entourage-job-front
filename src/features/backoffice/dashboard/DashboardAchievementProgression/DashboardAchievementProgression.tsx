@@ -231,7 +231,7 @@ export const DashboardAchievementProgression = () => {
     : [];
 
   if (!isInitialized) {
-    return <Skeleton height="130px" />;
+    return <Skeleton height="130px" inverted />;
   }
 
   if (progressions.length === 0) {

@@ -79,8 +79,16 @@ export const selectRegistrationIsEnded = (state: RootState) => {
   return state.registration.isEnded;
 };
 
+export const selectPreRegistrationPreferences = (state: RootState) => {
+  return state.registration.preRegistrationPreferences;
+};
+
 export const selectIsRegistrationLoading = (state: RootState) => {
   return state.registration.isLoading;
+};
+
+export const selectCompatibleProfilesCount = (state: RootState) => {
+  return state.registration.compatibleProfilesCount;
 };
 
 export const selectRegistrationCurrentStepContent = (

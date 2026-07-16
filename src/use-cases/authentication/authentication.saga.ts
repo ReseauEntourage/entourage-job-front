@@ -3,11 +3,16 @@ import { Api } from 'src/api';
 import {
   isEmailAlreadyVerifiedError,
   isEmailUnverifiedError,
+  isOtpExpiredError,
   isTokenExpiredError,
   isTooManyRequests,
 } from 'src/api/axiosErrors';
 import { STORAGE_KEYS } from 'src/constants';
-import { VerifyEmailTokenErrorType } from './authentication.adapters';
+import { currentUserActions } from 'src/use-cases/current-user';
+import {
+  VerifyEmailTokenErrorType,
+  VerifyOtpErrorType,
+} from './authentication.adapters';
 import { slice } from './authentication.slice';
 
 const {
@@ -24,6 +29,9 @@ const {
   sendVerifyEmailRequested,
   sendVerifyEmailSucceeded,
   sendVerifyEmailFailed,
+  verifyOtpRequested,
+  verifyOtpSucceeded,
+  verifyOtpFailed,
 } = slice.actions;
 
 function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
@@ -122,6 +130,23 @@ function* sendVerifyEmailSaga(
   }
 }
 
+function* verifyOtpSaga(action: ReturnType<typeof verifyOtpRequested>) {
+  try {
+    const response = yield* call(() => Api.postAuthVerifyOtp(action.payload));
+    yield* put(loginSucceeded({ accessToken: response.data.token }));
+    yield* put(verifyOtpSucceeded());
+    yield* put(currentUserActions.fetchCurrentProfileRequested());
+  } catch (error) {
+    yield* put(
+      verifyOtpFailed({
+        error: isOtpExpiredError(error)
+          ? VerifyOtpErrorType.EXPIRED
+          : VerifyOtpErrorType.INVALID,
+      })
+    );
+  }
+}
+
 function* initSaga() {
   const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) || null;
 
@@ -136,4 +161,5 @@ export function* saga() {
   yield* takeLatest(logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(verifyEmailTokenRequested, verifyEmailTokenSaga);
   yield* takeLatest(sendVerifyEmailRequested, sendVerifyEmailSaga);
+  yield* takeLatest(verifyOtpRequested, verifyOtpSaga);
 }

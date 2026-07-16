@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { REGISTRATION_FIRST_STEP } from '@/src/features/registration/registration.config';
 import {
@@ -9,6 +10,13 @@ import {
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
 
+export interface PreRegistrationPreferences {
+  nudgeIds: string[];
+  sectorOccupations: UserProfileSectorOccupation[];
+  businessSectorIds: string[];
+  currentJob?: string;
+}
+
 interface State {
   createUser: RequestState<typeof createUserAdapter>;
   createUserError: CreateUserError | null;
@@ -18,6 +26,8 @@ interface State {
   isLoading: boolean;
   isEnded?: boolean;
   invitationId?: string;
+  preRegistrationPreferences: PreRegistrationPreferences | null;
+  compatibleProfilesCount: number | null;
 }
 
 const initialState: State = {
@@ -29,6 +39,8 @@ const initialState: State = {
   isLoading: false,
   isEnded: false,
   invitationId: undefined,
+  preRegistrationPreferences: null,
+  compatibleProfilesCount: null,
 };
 
 export const slice = createSlice({
@@ -85,11 +97,43 @@ export const slice = createSlice({
     setRegistrationIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
+    moveBackwardInRegistration(state) {
+      if (state.currentStep > REGISTRATION_FIRST_STEP) {
+        state.currentStep = state.currentStep - 1;
+      }
+    },
+    setPreRegistrationPreferences(
+      state,
+      action: PayloadAction<Partial<PreRegistrationPreferences>>
+    ) {
+      state.preRegistrationPreferences = {
+        nudgeIds:
+          action.payload.nudgeIds ??
+          state.preRegistrationPreferences?.nudgeIds ??
+          [],
+        sectorOccupations:
+          action.payload.sectorOccupations ??
+          state.preRegistrationPreferences?.sectorOccupations ??
+          [],
+        businessSectorIds:
+          action.payload.businessSectorIds ??
+          state.preRegistrationPreferences?.businessSectorIds ??
+          [],
+        currentJob:
+          action.payload.currentJob ??
+          state.preRegistrationPreferences?.currentJob,
+      };
+    },
+    setCompatibleProfilesCount(state, action: PayloadAction<number>) {
+      state.compatibleProfilesCount = action.payload;
+    },
     resetRegistrationData(state) {
       state.selectedFlow = null;
       state.currentStep = -1; // Reset to no step selected
       state.data = null;
       state.isEnded = false;
+      state.preRegistrationPreferences = null;
+      state.compatibleProfilesCount = null;
     },
     setRegistrationIsEnded(state, action: PayloadAction<boolean>) {
       state.isEnded = action.payload;

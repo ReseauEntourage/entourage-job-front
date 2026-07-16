@@ -10,7 +10,6 @@ import {
 export function useCurrentUserProfileComplete() {
   const dispatch = useDispatch();
   const store = useStore();
-  const status = useSelector(selectFetchCurrentProfileCompleteStatus);
 
   useEffect(() => {
     const currentStatus = selectFetchCurrentProfileCompleteStatus(
@@ -22,7 +21,7 @@ export function useCurrentUserProfileComplete() {
     ) {
       dispatch(currentUserActions.fetchCurrentProfileCompleteRequested());
     }
-  }, [dispatch, store, status]);
+  }, [dispatch, store]);
 
   return useSelector(selectCurrentUserProfileComplete);
 }

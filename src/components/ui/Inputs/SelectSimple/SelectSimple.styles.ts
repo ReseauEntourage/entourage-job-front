@@ -26,7 +26,6 @@ export const StyledSelectContainer = styled.div`
     }
     .placeholder {
       color: ${COLORS.mediumGray};
-      font-style: italic;
       font-family: Poppins, sans-serif !important;
       label {
         &:hover {

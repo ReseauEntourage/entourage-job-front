@@ -11,18 +11,26 @@ import {
   TagVariant,
   Text,
 } from '@/src/components/ui';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import {
+  AvailabilityTag,
+  AvailabilityTagEditable,
+} from '@/src/components/ui/AvailabilityTag';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
+import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
+import { openModal } from '@/src/features/modals/Modal';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import { COLORS } from 'src/constants/styles';
 import { UserRoles } from 'src/constants/users';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import {
+  selectAuthenticatedUser,
+  selectCurrentUserId,
+} from 'src/use-cases/current-user';
 import {
   StyledEditPictureIconContainer,
   StyledHeaderAvailibilityAndUserActions,
@@ -39,7 +47,6 @@ import {
 import { HeaderProfileProps } from './HeaderProfile.types';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
-import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 64;
@@ -52,7 +59,6 @@ export const HeaderProfileMobile = ({
   role,
   gender,
   department,
-  introduction,
   phone,
   email,
   hasPicture,
@@ -74,11 +80,16 @@ export const HeaderProfileMobile = ({
 
   const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
+  const currentUser = useSelector(selectAuthenticatedUser);
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
 
   const openConversation = () => {
+    if (!currentUser.elearningCompletedAt) {
+      openModal(<ElearningGateModal />);
+      return;
+    }
     router.push(`/backoffice/messaging?userId=${id}`);
   };
 
@@ -159,15 +170,17 @@ export const HeaderProfileMobile = ({
                 gender={gender}
               />
             )}
-            {shouldShowAllProfile && (
-              <AvailabilityTag isAvailable={isAvailable} />
-            )}
+            {shouldShowAllProfile &&
+              (ownProfile && isEditable ? (
+                <AvailabilityTagEditable
+                  isAvailable={isAvailable}
+                  user={currentUser}
+                />
+              ) : (
+                <AvailabilityTag isAvailable={isAvailable} />
+              ))}
             <UserActions userId={id} userRole={role} openDirection="right" />
           </StyledHeaderAvailibilityAndUserActions>
-
-          {shouldShowAllProfile && introduction && (
-            <ProfileIntroduction introduction={introduction} />
-          )}
 
           <ProfileStats
             createdAt={createdAt}

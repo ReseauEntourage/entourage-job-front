@@ -373,6 +373,17 @@ export const slice = createSlice({
         state.profileComplete.hasExtractedCvData = true;
       }
     },
+    profileCompleteDraftUpdated(
+      state,
+      action: PayloadAction<Partial<CurrentUserProfileComplete>>
+    ) {
+      if (state.profileComplete) {
+        state.profileComplete = {
+          ...state.profileComplete,
+          ...action.payload,
+        };
+      }
+    },
   },
 });
 

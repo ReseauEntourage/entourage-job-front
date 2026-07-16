@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutSelectors } from 'src/use-cases/authentication';
+import {
+  authenticationActions,
+  logoutSelectors,
+} from 'src/use-cases/authentication';
 
 import {
   currentUserActions,
@@ -78,11 +81,15 @@ export function useAuthentication() {
               }
             : '/login'
         );
+        if (isLogoutSucceeded) {
+          dispatch(authenticationActions.logoutReset());
+        }
       }
     }
   }, [
     asPath,
     currentUserRole,
+    dispatch,
     isAuthenticationPending,
     isLogoutSucceeded,
     isUserAuthenticated,

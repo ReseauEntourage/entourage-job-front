@@ -9,7 +9,6 @@ export const interceptCurrentUserSubResources = () => {
     hasPicture: false,
     hasExternalCv: false,
     description: null,
-    introduction: null,
     linkedinUrl: null,
     department: null,
     isAvailable: true,

@@ -1,27 +1,45 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 import { commonInputContainerStyles } from '../Inputs.styles';
+import { SelectListVariant } from './SelectList';
 
 export const StyledSelectListContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
 `;
 
-export const StyledSelectList = styled.div<{ $asGrid?: boolean }>`
-  ${({ $asGrid }) =>
-    $asGrid
-      ? `
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+const getSelectListVariantStyles = (variant?: SelectListVariant) => {
+  switch (variant) {
+    case 'inline':
+      return `
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
 
-      @media (max-width: ${BREAKPOINTS.desktop}px) {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-      `
-      : `
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      `}
+        > button {
+          width: auto;
+        }
+      `;
+    case 'grid':
+      return `
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+        @media (max-width: ${BREAKPOINTS.desktop}px) {
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+      `;
+    default:
+      return `
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      `;
+  }
+};
+
+export const StyledSelectList = styled.div<{ $variant?: SelectListVariant }>`
+  ${(props) => getSelectListVariantStyles(props.$variant)}
 
   padding: 0;
   margin-bottom: 8px;
@@ -32,14 +50,14 @@ export const StyledButton = styled.button<{ $selected?: boolean }>`
   width: 100%;
   display: flex;
   position: relative;
-  border: 1px solid ${COLORS.gray};
+  border: 2px solid ${COLORS.gray};
   background-color: ${COLORS.white};
   border-radius: 20px;
   padding: 0;
   ${({ $selected }) =>
     $selected &&
     `
-    border: 1px solid ${COLORS.primaryBlue};
+    border: 2px solid ${COLORS.primaryBlue};
     background-color: ${COLORS.hoverBlue};
   `}
 

@@ -4,7 +4,7 @@ import {
   configureStore,
   ThunkDispatch,
 } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware, { Saga } from 'redux-saga';
 import { all, spawn, call } from 'typed-redux-saga';
 import { useCasesConfig } from 'src/use-cases';
 import { UseCaseConfigItem } from 'src/use-cases/types';
@@ -35,7 +35,10 @@ export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
 function* rootSaga() {
   yield* all(
     useCasesList
-      .filter((useCase) => !!useCase.saga)
+      .filter(
+        (useCase): useCase is UseCaseConfigItem & { saga: Saga } =>
+          !!useCase.saga
+      )
       .map((useCase) =>
         spawn(function* () {
           while (true) {

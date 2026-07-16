@@ -1,0 +1,58 @@
+import React, { useCallback, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Card } from '@/src/components/ui';
+import {
+  FormWithValidation,
+  FormWithValidationRef,
+} from '@/src/features/forms/FormWithValidation';
+import { formRegistrationCoachInfo } from '@/src/features/registration/forms/formRegistrationCoachInfo';
+import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
+import {
+  registrationActions,
+  selectRegistrationData,
+  selectRegistrationCurrentStep,
+} from '@/src/use-cases/registration';
+
+export function useWizardStepCoachInfo() {
+  const dispatch = useDispatch();
+  const data = useSelector(selectRegistrationData);
+  const currentStep = useSelector(selectRegistrationCurrentStep);
+  const formRef = useRef<FormWithValidationRef>(null);
+
+  const handleFormSubmit = useCallback(
+    async (fields: Record<string, unknown>) => {
+      dispatch(
+        registrationActions.moveForwardInRegistration({
+          data: fields as any,
+          step: currentStep + 1,
+        })
+      );
+    },
+    [dispatch, currentStep]
+  );
+
+  const step: WizardStep = {
+    id: 'coach-info',
+    summary: { title: 'Vos informations', duration: '~2 minutes' },
+    hideGenericStepHeader: undefined,
+    title: 'Avant de créer votre compte, deux informations vous concernant.',
+    description:
+      'Ces informations nous permettent de vous mettre en relation avec des candidats à proximité.',
+    content: (
+      <Card title="Vous concernant">
+        <FormWithValidation
+          formSchema={formRegistrationCoachInfo}
+          defaultValues={(data as any) || {}}
+          onSubmit={handleFormSubmit}
+          noFooter
+          innerRef={formRef}
+        />
+      </Card>
+    ),
+    onSubmit: useStepFormSubmit(formRef),
+    section: 'inscription',
+  };
+
+  return { step };
+}

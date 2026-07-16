@@ -19,6 +19,12 @@ import {
   StyledEditToolsContainerCard,
   StyledSkillTag,
   StyledCVExperienceOrFormationDescriptionContainer,
+  StyledCVExperienceSummary,
+  StyledCVExperienceSummaryDate,
+  StyledCVExperienceSummaryContent,
+  StyledCVExperienceSummaryTitle,
+  StyledCVExperienceSummaryStructure,
+  StyledCVExperienceSummaryDescription,
 } from './CVExperienceOrFormation.styles';
 
 interface ExperienceOrFormationProps {
@@ -32,7 +38,7 @@ interface ExperienceOrFormationProps {
   isEditable?: boolean;
   editItem?: () => void;
   deleteItem?: () => void;
-  variant?: 'card' | 'timeline';
+  variant?: 'card' | 'timeline' | 'summary' | 'summary-detailed';
 }
 
 export function CVExperienceOrFormation({
@@ -76,6 +82,72 @@ export function CVExperienceOrFormation({
     const end = endDate ? formatDate(endDate) : "Aujourd'hui";
     return `${start} - ${end}`;
   }, [endDate, startDate]);
+
+  const summaryDateRangeLine = useMemo(() => {
+    if (!startDate) {
+      return null;
+    }
+
+    const start = formatDate(startDate);
+    const end = endDate ? formatDate(endDate) : "Aujourd'hui";
+    return `${start} à ${end}`;
+  }, [endDate, startDate]);
+
+  if (variant === 'summary') {
+    return (
+      <StyledCVExperienceSummary>
+        <StyledCVExperienceSummaryDate>
+          {summaryDateRangeLine}
+        </StyledCVExperienceSummaryDate>
+        <StyledCVExperienceSummaryContent>
+          {title && (
+            <StyledCVExperienceSummaryTitle>
+              {title}
+            </StyledCVExperienceSummaryTitle>
+          )}
+          {structure && (
+            <StyledCVExperienceSummaryStructure>
+              {structure}
+            </StyledCVExperienceSummaryStructure>
+          )}
+        </StyledCVExperienceSummaryContent>
+      </StyledCVExperienceSummary>
+    );
+  }
+
+  if (variant === 'summary-detailed') {
+    return (
+      <StyledCVExperienceSummary>
+        <StyledCVExperienceSummaryDate>
+          {summaryDateRangeLine}
+        </StyledCVExperienceSummaryDate>
+        <StyledCVExperienceSummaryContent>
+          {title && (
+            <StyledCVExperienceSummaryTitle>
+              {title}
+            </StyledCVExperienceSummaryTitle>
+          )}
+          {structureLocationLine && (
+            <StyledCVExperienceSummaryStructure>
+              {structureLocationLine}
+            </StyledCVExperienceSummaryStructure>
+          )}
+          {description && (
+            <StyledCVExperienceSummaryDescription>
+              {description}
+            </StyledCVExperienceSummaryDescription>
+          )}
+          {skills?.length > 0 && (
+            <StyledCVSkillTagContainer>
+              {skills.map(({ name, id: skillId }) => {
+                return <StyledSkillTag key={skillId}>{name}</StyledSkillTag>;
+              })}
+            </StyledCVSkillTagContainer>
+          )}
+        </StyledCVExperienceSummaryContent>
+      </StyledCVExperienceSummary>
+    );
+  }
 
   if (variant === 'card') {
     return (

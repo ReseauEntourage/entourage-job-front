@@ -15,9 +15,10 @@ export const StyledCVExperienceCard = styled.div`
   gap: 16px;
   flex: 1;
   white-space: pre-line;
-  border: 1px solid ${COLORS.gray};
+  border: 2px solid ${COLORS.gray};
   border-radius: 10px;
   padding: 16px;
+  background-color: ${COLORS.white};
 `;
 
 export const StyledCVExperienceCardMain = styled.div`
@@ -93,6 +94,42 @@ export const StyledSkillTag = styled.div`
   color: ${COLORS.primaryBlue};
   font-size: 14px;
   font-weight: 400;
+`;
+
+export const StyledCVExperienceSummary = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+export const StyledCVExperienceSummaryDate = styled.div`
+  flex-shrink: 0;
+  width: 130px;
+  color: ${COLORS.darkGray};
+  font-size: 13px;
+`;
+
+export const StyledCVExperienceSummaryContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+`;
+
+export const StyledCVExperienceSummaryTitle = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${COLORS.black};
+`;
+
+export const StyledCVExperienceSummaryStructure = styled.div`
+  font-size: 13px;
+  color: ${COLORS.darkGray};
+`;
+
+export const StyledCVExperienceSummaryDescription = styled.div`
+  font-size: 13px;
+  color: ${COLORS.darkGray};
+  white-space: pre-line;
 `;
 
 export const StyledEditToolsContainer = styled.div`

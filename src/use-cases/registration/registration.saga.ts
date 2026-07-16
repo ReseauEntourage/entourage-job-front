@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Nudge } from '@/src/api/types';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
 import { getUtmFromLocalStorage } from '@/src/features/registration/registration.utils';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
@@ -9,6 +10,7 @@ import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedFlow,
   selectInvitationId,
+  selectPreRegistrationPreferences,
   selectRegistrationData,
   selectRegistrationIsEnded,
 } from './registration.selectors';
@@ -27,6 +29,9 @@ const createUserRequestedSaga = function* () {
   const data = yield* select(selectRegistrationData);
   const selectedFlow = yield* select(selectDefinedRegistrationSelectedFlow);
   const invitationId = yield* select(selectInvitationId);
+  const preRegistrationPreferences = yield* select(
+    selectPreRegistrationPreferences
+  );
 
   assertIsDefined(selectedFlow, 'Selected flow must be defined');
   if (!data) {
@@ -59,6 +64,19 @@ const createUserRequestedSaga = function* () {
       utmContent: utmParameters[UtmParameters.UTM_CONTENT] ?? undefined,
       utmId: utmParameters[UtmParameters.UTM_ID] ?? undefined,
       invitationId, // Optional, only if the user is registering via an invitation
+      ...(preRegistrationPreferences?.nudgeIds?.length
+        ? {
+            nudges: preRegistrationPreferences.nudgeIds.map(
+              (id) => ({ id } as Nudge)
+            ),
+          }
+        : {}),
+      ...(preRegistrationPreferences?.sectorOccupations?.length
+        ? { sectorOccupations: preRegistrationPreferences.sectorOccupations }
+        : {}),
+      ...(preRegistrationPreferences?.currentJob
+        ? { currentJob: preRegistrationPreferences.currentJob }
+        : {}),
     };
     yield* call(() => Api.postUserRegistration(userData));
 

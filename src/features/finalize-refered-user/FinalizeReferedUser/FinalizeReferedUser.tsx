@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { Api } from 'src/api';
 import {
   isEmailAlreadyVerifiedError,
@@ -39,7 +38,6 @@ export const FinalizeReferedUser = () => {
 
   return (
     <>
-      <PasswordCriterias />
       <FormWithValidation
         submitText="Se connecter"
         formSchema={formFinalizeReferedUser}

@@ -17,7 +17,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
   newEmail0: string;
   newEmail1: string;
   department: FilterConstant<DepartmentName>;
-  introduction: string;
 }> = {
   id: 'form-personal-data',
   fields: [
@@ -91,14 +90,6 @@ export const formPersonalDataAsCandidate: FormSchema<{
       isRequired: true,
       isMulti: false,
     },
-    {
-      id: 'introduction',
-      name: 'introduction',
-      component: 'textarea',
-      title: 'Tapez votre courte présentation',
-      minLength: 50,
-      maxLength: 500,
-    },
   ],
 };
 
@@ -110,7 +101,6 @@ export const formPersonalDataAsCoach: FormSchema<{
   newEmail0: string;
   newEmail1: string;
   department: FilterConstant<DepartmentName>;
-  introduction: string;
 }> = {
   id: 'form-personal-data',
   fields: [
@@ -201,14 +191,6 @@ export const formPersonalDataAsCoach: FormSchema<{
       isRequired: true,
       isMulti: false,
     },
-    {
-      id: 'introduction',
-      name: 'introduction',
-      component: 'textarea',
-      title: 'Tapez votre courte présentation',
-      minLength: 50,
-      maxLength: 500,
-    },
   ],
 };
 
@@ -221,7 +203,7 @@ export const formPersonalDataAsAdmin: FormSchema<{
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
-  introduction: string;
+  description: string;
 }> = {
   id: 'form-personal-data',
   fields: [
@@ -314,8 +296,8 @@ export const formPersonalDataAsAdmin: FormSchema<{
       ],
     },
     {
-      id: 'introduction',
-      name: 'introduction',
+      id: 'description',
+      name: 'description',
       component: 'textarea',
       title: 'Tapez votre courte présentation',
       minLength: 50,

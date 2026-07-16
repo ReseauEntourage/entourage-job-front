@@ -1,5 +1,4 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
-import styled from 'styled-components';
 import { Button } from '@/src/components/ui/Button/Button';
 import { StyledCenteredButtonContainer } from '@/src/components/ui/Button/Button.styles';
 import { ContainerWithTextCentered } from '@/src/components/ui/Containers/ContainerWithTextCentered';
@@ -10,15 +9,7 @@ import { Text } from '@/src/components/ui/Text';
 import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
 import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
 import { useProfileGeneration } from '@/src/hooks';
-
-const StyledImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 30px 0;
-  height: 200px;
-`;
+import { StyledImageContainer } from './ProfileGenerationProcess.styles';
 
 interface ProfileGenerationProcessProps {
   title?: string;

@@ -16,6 +16,8 @@ import {
 } from './SelectList.styles';
 import { SelectListOptions, isGroupedOptions } from './SelectList.types';
 
+export type SelectListVariant = 'default' | 'inline' | 'grid';
+
 interface SelectListProps<T extends string>
   extends CommonInputProps<T[], HTMLElement> {
   id: string;
@@ -23,7 +25,7 @@ interface SelectListProps<T extends string>
   options: SelectListOptions<T>;
   estimatedOptionLength?: number;
   isLoading?: boolean;
-  asGrid?: boolean;
+  variant?: SelectListVariant;
 }
 
 export const SelectList = <T extends string>({
@@ -42,7 +44,7 @@ export const SelectList = <T extends string>({
   inputRef,
   estimatedOptionLength = 3,
   isLoading = false,
-  asGrid = false,
+  variant = 'default',
 }: SelectListProps<T>) => {
   const handleSelect = useCallback(
     (value: T) => {
@@ -69,8 +71,10 @@ export const SelectList = <T extends string>({
           {title}
         </StyledInputLabel>
       )}
-      <StyledSelectList data-testid={id} $asGrid={asGrid}>
-        {isLoading && <Skeleton height="90px" count={estimatedOptionLength} />}
+      <StyledSelectList data-testid={id} $variant={variant}>
+        {isLoading && (
+          <Skeleton height="90px" count={estimatedOptionLength} inverted />
+        )}
         {isGroupedOptions(options)
           ? options.map((group, groupIndex) => (
               <StyledSelectListGroup key={groupIndex}>

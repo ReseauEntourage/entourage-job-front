@@ -31,6 +31,7 @@ export const StyledRadioContainer = styled.div`
       }
 
       input[type='radio'] {
+        flex-shrink: 0;
         margin: 0 8px 0 6px;
         height: 14px;
         width: 14px;

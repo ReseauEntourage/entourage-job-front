@@ -55,7 +55,25 @@ export const Parameters = () => {
   useConfirmationToaster();
 
   useEffect(() => {
-    const { linkedin } = router.query;
+    const { linkedin, reactivate } = router.query;
+
+    if (reactivate === 'true' && user?.id) {
+      dispatch(
+        currentUserActions.updateProfileRequested({
+          userId: user.id,
+          userProfile: { isAvailable: true, unavailabilityReason: null },
+        })
+      );
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: 'Votre profil est de nouveau disponible !',
+        })
+      );
+      router.replace('/backoffice/parametres', undefined, { shallow: true });
+      return;
+    }
+
     if (!linkedin) {
       return;
     }
@@ -91,7 +109,6 @@ export const Parameters = () => {
         id={user.id}
         firstName={user.firstName}
         lastName={user.lastName}
-        introduction={userProfileComplete.introduction ?? ''}
         role={user.role}
         gender={user.gender}
         department={userProfileComplete.department}

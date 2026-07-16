@@ -4,8 +4,13 @@ import { useSelector } from 'react-redux';
 import { Button } from '@/src/components/ui';
 import { Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
+import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
+import { openModal } from '@/src/features/modals/Modal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import {
+  selectAuthenticatedUser,
+  selectCurrentUserId,
+} from 'src/use-cases/current-user';
 import {
   StyledContactMessage,
   StyledProfileContactForm,
@@ -25,10 +30,15 @@ export const ProfileContactCard = ({
   firstName,
 }: ProfileContactCardProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
+  const currentUser = useSelector(selectAuthenticatedUser);
   const isOwnProfile = userId === currentUserId;
   const router = useRouter();
 
   const openConversation = () => {
+    if (!currentUser.elearningCompletedAt) {
+      openModal(<ElearningGateModal />);
+      return;
+    }
     router.push(`/backoffice/messaging?userId=${userId}`);
   };
   const isCoach = role === 'Coach';

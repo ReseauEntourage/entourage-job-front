@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'typed-redux-saga';
 import { Api } from '@/src/api';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import { slice } from './elearning.slice';
 
 const {
@@ -37,6 +38,7 @@ function* postElearningCompletionRequestedSaga(
   try {
     const { data } = yield* call(() => Api.postElearningCompletion(unitId));
     yield* put(postElearningCompletionSucceeded(data));
+    yield* put(currentUserActions.fetchUserRequested());
   } catch (error) {
     console.error('Error posting elearning completion:', error);
     yield* put(postElearningCompletionFailed());

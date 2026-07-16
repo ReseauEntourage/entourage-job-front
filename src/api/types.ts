@@ -1,8 +1,8 @@
+import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { PublicSensibilise, EventMode, EventType } from '../constants/events';
 import { Genders } from '../constants/genders';
-import { OnboardingStatus } from '../constants/onboarding';
 import {
   CompanyApproach,
   Contract as ContractValue,
@@ -34,6 +34,7 @@ export const APIRoutes = {
   RECRUITEMENT_ALERTS: 'recruitement-alerts',
   ELEARNING: 'elearning',
   LINKEDIN: 'linkedin',
+  PROFILE_GENERATION: 'profile-generation',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -177,7 +178,6 @@ export type Contract = {
 export type UserProfile = {
   currentJob: string | null;
   description: string | null;
-  introduction: string | null;
   department: DepartmentName;
   isAvailable: boolean;
   unavailabilityReason: string | null;
@@ -311,6 +311,7 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+  elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
 };
@@ -389,6 +390,7 @@ export type CurrentUserIdentity = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
+  elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
 };
@@ -398,7 +400,6 @@ export type CurrentUserProfile = {
   hasPicture: boolean;
   hasExternalCv: boolean;
   description: string | null;
-  introduction: string | null;
   linkedinUrl: string | null;
   department: DepartmentName | null;
   isAvailable: boolean;
@@ -508,6 +509,7 @@ export type UserRegistrationDto = {
   birthDate: string;
   occupations?: Occupation[];
   sectorOccupations?: UserProfileSectorOccupation[];
+  currentJob?: string;
   materialInsecurity?: string;
   networkInsecurity?: string;
   utmSource?: string;
@@ -620,8 +622,14 @@ export type ConversationParticipant = Pick<
 };
 export type ConversationParticipants = ConversationParticipant[];
 
+export enum ConversationType {
+  DIRECT = 'direct',
+  GROUP = 'group',
+}
+
 export type Conversation = {
   id: string;
+  type: ConversationType;
   createdAt?: string;
   updatedAt?: string;
   messages: Message[];
@@ -644,7 +652,6 @@ export type PublicProfile = {
   department: DepartmentName;
   currentJob: string;
   description: string;
-  introduction: string;
   isAvailable: boolean;
   customNudges: UserProfileNudge[];
   nudges: Nudge[];
@@ -671,7 +678,6 @@ export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
     // Attributes
     | 'department'
     | 'description'
-    | 'introduction'
     | 'linkedinUrl'
     | 'hasPicture'
 
@@ -702,6 +708,7 @@ export type ProfileRecommendation = {
 };
 
 export type ProfileRecommendationPage = {
+  embeddingPending: boolean;
   recommendations: ProfileRecommendation[];
   nextCursor: number | null;
 };
@@ -709,6 +716,12 @@ export type ProfileRecommendationPage = {
 export type PrivateProfile = PublicProfile & {
   email: string;
   phone: string;
+};
+
+export type PreRegistrationCompatibleProfilesResponse = {
+  count: number;
+  profiles: PublicProfile[];
+  broadened?: boolean;
 };
 
 export type Profile = PublicProfile | PrivateProfile;
@@ -738,6 +751,11 @@ export type EventsFilters = {
 export type PostAuthSendVerifyEmailParams = {
   token?: string;
   email?: string;
+};
+
+export type PostAuthVerifyOtpParams = {
+  email: string;
+  code: string;
 };
 
 export type PostAuthFinalizeReferedUserParams = {

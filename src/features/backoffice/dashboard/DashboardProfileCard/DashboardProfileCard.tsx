@@ -8,7 +8,7 @@ import {
   TagSize,
   Text,
 } from '@/src/components/ui';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import { AvailabilityTagEditable } from '@/src/components/ui/AvailabilityTag';
 import { Dot } from '@/src/components/ui/Dot/Dot';
 import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
@@ -62,7 +62,7 @@ export const DashboardProfileCard = () => {
   };
 
   if (!user || !userProfile) {
-    return <Skeleton count={1} height="500px" />;
+    return <Skeleton count={1} height="500px" inverted />;
   }
 
   return (
@@ -80,7 +80,10 @@ export const DashboardProfileCard = () => {
           {organization && <Text>{organization.name}</Text>}
           {userProfile?.department && <Text>{userProfile.department}</Text>}
           <StyledTagList>
-            <AvailabilityTag isAvailable={userProfile?.isAvailable ?? false} />
+            <AvailabilityTagEditable
+              isAvailable={userProfile?.isAvailable ?? false}
+              user={user}
+            />
             {achievements && achievements.length > 0 && (
               <ProfileAchievementHighlighter
                 achievement={achievements[0]}
@@ -98,14 +101,14 @@ export const DashboardProfileCard = () => {
         {/* Completion presentation */}
         <StyledDashboardProfileCardSection>
           <StyledDashboardProfileCardSectionTitle>
-            <Dot color={userProfile?.introduction ? 'green' : 'lightRed'} />
+            <Dot color={userProfile?.description ? 'green' : 'lightRed'} />
             <Text size="large" weight="semibold">
               Présentation
             </Text>
           </StyledDashboardProfileCardSectionTitle>
           <StyledDashboardProfileCardIntroduction>
-            {userProfile?.introduction ? (
-              <Text size="small">{userProfile.introduction}</Text>
+            {userProfile?.description ? (
+              <Text size="small">{userProfile.description}</Text>
             ) : (
               <StyledDashboardProfileCardEmptyState>
                 <SvgIcon name="IlluBulleQuestion" height={48} width={48} />

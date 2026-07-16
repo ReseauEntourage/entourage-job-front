@@ -98,23 +98,14 @@ export const ModalEditUserInformation = ({
           user.role === UserRoles.CANDIDATE ||
           user.role === UserRoles.COACH
         ) {
-          const { department, introduction } =
-            values as ExtractFormSchemaValidation<
-              | typeof formPersonalDataAsCandidate
-              | typeof formPersonalDataAsCoach
-            >;
+          const { department } = values as ExtractFormSchemaValidation<
+            typeof formPersonalDataAsCandidate | typeof formPersonalDataAsCoach
+          >;
 
           if (department.value !== userProfile?.department) {
             newUserProfileData = {
               ...newUserProfileData,
               department: department.value,
-            };
-          }
-
-          if (introduction !== userProfile?.introduction) {
-            newUserProfileData = {
-              ...newUserProfileData,
-              introduction,
             };
           }
         }

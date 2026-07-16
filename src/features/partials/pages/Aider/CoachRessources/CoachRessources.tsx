@@ -85,7 +85,7 @@ export const CoachRessources = () => {
           rounded
           size="medium"
           onClick={() => gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC)}
-          href="/inscription"
+          href="/wizard"
           weight="bold"
         >
           Je deviens coach

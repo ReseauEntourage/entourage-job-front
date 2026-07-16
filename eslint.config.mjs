@@ -281,7 +281,7 @@ export default defineConfig([
   // E2E tests
   {
     // update this to match your test files
-    files: ['**/*.spec.ts', '**/*.test.js'],
+    files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.test.js', '**/*.test.tsx'],
     plugins: { jest: pluginJest },
     languageOptions: {
       globals: pluginJest.environments.globals.globals,

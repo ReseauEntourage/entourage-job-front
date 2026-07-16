@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { ButtonIcon } from '../../Button';
 import { LucidIcon } from '../../Icons/LucidIcon';
+import { Tooltip } from '../../Tooltip';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -14,6 +15,7 @@ import {
   StyledTextInputGroupForm,
   StyledTextInputWrapper,
   StyledEyeIconWrapper,
+  StyledLabelRow,
 } from './TextInput.styles';
 
 interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
@@ -36,6 +38,7 @@ export function TextInput({
   showLabel = false,
   hidden = false,
   disabled = false,
+  labelTooltip,
   inputRef,
   error,
 }: TextInputProps) {
@@ -53,7 +56,17 @@ export function TextInput({
 
   return (
     <StyledTextInputGroupForm disabled={disabled}>
-      {showLabel && <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>}
+      {showLabel &&
+        (labelTooltip ? (
+          <StyledLabelRow>
+            <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>
+            <Tooltip content={labelTooltip} placement="right" width={300}>
+              <LucidIcon name="CircleHelp" size={14} />
+            </Tooltip>
+          </StyledLabelRow>
+        ) : (
+          <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>
+        ))}
       <StyledTextInputWrapper>
         <input
           ref={inputRef}

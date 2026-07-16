@@ -10,11 +10,16 @@ import {
   TagVariant,
   Text,
 } from '@/src/components/ui';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import {
+  AvailabilityTag,
+  AvailabilityTagEditable,
+} from '@/src/components/ui/AvailabilityTag';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
+import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
+import { openModal } from '@/src/features/modals/Modal';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
@@ -39,7 +44,6 @@ import {
 import { HeaderProfileProps } from './HeaderProfile.types';
 import { ProfileCompletion } from './ProfileCompletion/ProfileCompletion';
 import { ProfileContactInfos } from './ProfileContactInfos/ProfileContactInfos';
-import { ProfileIntroduction } from './ProfileIntroduction';
 import { useHeaderProfile } from './useHeaderProfile';
 
 const PROFILE_PICTURE_SIZE = 160;
@@ -52,7 +56,6 @@ export const HeaderProfileDesktop = ({
   gender,
   role,
   department,
-  introduction,
   phone,
   email,
   hasPicture,
@@ -78,9 +81,12 @@ export const HeaderProfileDesktop = ({
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
-  const { openCorrespondingModal } = useHeaderProfile(currentUser.role);
 
   const openConversation = () => {
+    if (!currentUser.elearningCompletedAt) {
+      openModal(<ElearningGateModal />);
+      return;
+    }
     router.push(`/backoffice/messaging?userId=${id}`);
   };
 
@@ -147,9 +153,15 @@ export const HeaderProfileDesktop = ({
                     )}
                   </StyledHeaderNameAndRole>
                   <StyledHeaderAvailibilityAndUserActions>
-                    {shouldShowAllProfile && (
-                      <AvailabilityTag isAvailable={isAvailable} />
-                    )}
+                    {shouldShowAllProfile &&
+                      (ownProfile && isEditable ? (
+                        <AvailabilityTagEditable
+                          isAvailable={isAvailable}
+                          user={currentUser}
+                        />
+                      ) : (
+                        <AvailabilityTag isAvailable={isAvailable} />
+                      ))}
                     <UserActions userId={id} userRole={role} />
                   </StyledHeaderAvailibilityAndUserActions>
                 </StyledHeaderProfileNameContainer>
@@ -159,21 +171,6 @@ export const HeaderProfileDesktop = ({
                       <Text color="black" weight="medium" size="large">
                         {department}
                       </Text>
-                    )}
-                    {introduction && (
-                      <>
-                        <ProfileIntroduction introduction={introduction} />
-                        {isEditable && (
-                          <Text
-                            color="mediumGray"
-                            size="small"
-                            underline
-                            onClick={() => openCorrespondingModal()}
-                          >
-                            Modifier l&apos;introduction
-                          </Text>
-                        )}
-                      </>
                     )}
                     {!isEditable && (
                       <ProfileStats
