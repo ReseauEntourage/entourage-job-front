@@ -5,7 +5,7 @@ export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  overflow: hidden;
+  padding-bottom: 24px;
 `;
 
 export const StyledIdentityBlock = styled.div`

@@ -220,6 +220,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
         </Alert>
         <FormProvider {...formMethods}>
           <StepCvRecapContent
+            userRole={user?.role}
             experiences={experiences}
             formations={formations}
             onExperiencesChange={handleExperiencesChange}

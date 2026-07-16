@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { Experience, Formation } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
+import { UserRoles } from '@/src/constants/users';
 import { ProfileCompletionSchemaField } from '../components/ProfileCompletionSchemaField';
 import {
   profileCompletionFormSchema,
@@ -15,13 +16,10 @@ import {
 import { StepExperiencesContent } from './StepExperiencesContent';
 import { StepFormationsContent } from './StepFormationsContent';
 
-const introductionField = buildIntroductionField(
-  'Cette présentation sera visible par les autres membres du réseau d’entraide. En quelques lignes, parlez de votre parcours et de ce que vous recherchez.'
-);
-
 const [skillsField, languagesField, interestsField] = profileCompletionCvFields;
 
 interface StepCvRecapContentProps {
+  userRole: UserRoles | undefined;
   experiences: Experience[];
   formations: Formation[];
   onExperiencesChange: (next: Experience[]) => void;
@@ -29,11 +27,17 @@ interface StepCvRecapContentProps {
 }
 
 export const StepCvRecapContent = ({
+  userRole,
   experiences,
   formations,
   onExperiencesChange,
   onFormationsChange,
 }: StepCvRecapContentProps) => {
+  const introductionField = useMemo(
+    () => buildIntroductionField(userRole),
+    [userRole]
+  );
+
   return (
     <StyledContainer>
       <StyledSection>

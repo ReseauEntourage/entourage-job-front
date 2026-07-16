@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
@@ -26,15 +32,6 @@ interface PresentationFormValues {
   description: string;
 }
 
-const introductionField = buildIntroductionField(
-  'Ce texte apparaîtra en tête de votre profil auprès des personnes qui le consulteront.'
-);
-
-const presentationFormSchema = {
-  id: PROFILE_COMPLETION_FORM_ID,
-  fields: [introductionField],
-};
-
 // Reflète les contraintes du champ description (facultatif, maxLength: 500)
 // pour piloter isNextEnabled sans attendre une soumission.
 const isIntroductionValid = (description: string | null | undefined) => {
@@ -51,6 +48,13 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
   const profileComplete = useCurrentUserProfileComplete();
   const { updateUserProfile } = useUpdateProfile(user ?? NULL_USER);
   const formRef = useRef<FormWithValidationRef>(null);
+  const presentationFormSchema = useMemo(
+    () => ({
+      id: PROFILE_COMPLETION_FORM_ID,
+      fields: [buildIntroductionField(user?.role)],
+    }),
+    [user?.role]
+  );
   const [isNextEnabled, setIsNextEnabled] = useState(() =>
     isIntroductionValid(profileComplete?.description)
   );
@@ -129,7 +133,7 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
     hideGenericStepHeader: undefined,
     title: 'Présentez-vous en quelques lignes',
     description:
-      'Ce texte apparaîtra en tête de votre profil auprès des personnes qui le consulteront.',
+      'Ce texte facultatif apparaîtra en tête de votre profil auprès des personnes qui le consulteront.',
     content: (
       <StyledOnboardingStepContainer>
         <FormWithValidationSync

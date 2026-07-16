@@ -439,7 +439,7 @@ export const useOnboardingPhase = ({
 
     const isLastOnboardingStep = onboardingIdx === onboardingSteps.length - 1;
     if (isLastOnboardingStep) {
-      await onOnboardingCompleted();
+      await onOnboardingCompleted(true);
       return;
     }
 

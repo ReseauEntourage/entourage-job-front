@@ -92,7 +92,7 @@ export const Content = ({
         {!quiz.currentSelectedAnswerId && (
           <StyledElearningStepSkipContainer>
             <Button onClick={handleSkipClick} variant="text">
-              Passer la formation
+              Suivre la formation plus tard
             </Button>
           </StyledElearningStepSkipContainer>
         )}

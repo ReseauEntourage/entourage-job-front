@@ -1,3 +1,4 @@
+import { UserRoles } from '@/src/constants/users';
 import type {
   FormSchema,
   FormFieldInput,
@@ -17,16 +18,25 @@ export const profileCompletionFormSchema: FormSchema<AnyCantFix> = {
   fields: [],
 };
 
+const INTRODUCTION_PLACEHOLDER_CANDIDATE =
+  "Exemple : Je m'appelle Adèle. Après plusieurs années comme aide à domicile, je cherche à me reconvertir dans la petite enfance. Je connais peu de monde dans ce secteur, j'aimerais échanger avec des personnes qui y travaillent, avoir des conseils pour mon CV et reprendre confiance avant mes entretiens.";
+
+const INTRODUCTION_PLACEHOLDER_DEFAULT =
+  "Exemple : Je m'appelle Karim, je travaille dans la logistique depuis 12 ans. J'ai rejoint Entourage Pro pour partager mon expérience et rencontrer des personnes motivées. Je peux vous donner un coup de pouce sur votre CV, préparer un entretien ou vous ouvrir mon réseau. Écrivez-moi, on en parle simplement.";
+
 export const buildIntroductionField = (
-  introductionPlaceholder: string
+  role: UserRoles | undefined
 ): FormFieldInput<AnyCantFix> => ({
   id: 'description',
   name: 'description',
   component: 'textarea',
   title: 'Présentation',
-  placeholder: introductionPlaceholder,
+  placeholder:
+    role === UserRoles.CANDIDATE
+      ? INTRODUCTION_PLACEHOLDER_CANDIDATE
+      : INTRODUCTION_PLACEHOLDER_DEFAULT,
   showLabel: true,
-  maxLength: 500,
+  maxLength: 1000,
   rows: 3,
 });
 

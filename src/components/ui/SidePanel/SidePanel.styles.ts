@@ -28,7 +28,7 @@ export const StyledRoot = styled.div<{
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   padding: ${({ $hasHeader }) => ($hasHeader ? '24px 0' : '0')};
   background: ${({ $background }) => $background};
 `;
