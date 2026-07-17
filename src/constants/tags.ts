@@ -539,6 +539,9 @@ export const GA_TAGS = {
   PAGE_AIDER_REJOINDRE_INSCRIPTION_CLICK: {
     action: 'Page_Aider_Rejoindre_Inscription_Click',
   },
+  INSCRIPTION_COMPTE_CREE: {
+    action: 'Inscription_Compte_Cree',
+  },
 } as const;
 
 export const GA_TAGS_FACTORY = {

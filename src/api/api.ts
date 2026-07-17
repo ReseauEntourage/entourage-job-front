@@ -277,7 +277,7 @@ export class APIHandler {
 
   async postUserRegistration(
     params: UserRegistrationDto
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<User>> {
     return this.post('/user/registration', params);
   }
 
