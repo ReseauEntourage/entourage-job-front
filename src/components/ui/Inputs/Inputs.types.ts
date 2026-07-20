@@ -13,6 +13,7 @@ export interface CommonInputProps<
   onChange: (value: T) => void;
   onBlur?: () => void;
   error?: FieldError;
+  errorContent?: ReactNode;
   disabled?: boolean;
   hidden?: boolean;
   showLabel?: boolean;

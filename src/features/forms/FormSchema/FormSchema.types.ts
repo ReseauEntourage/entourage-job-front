@@ -1,5 +1,5 @@
 import React, { type JSX } from 'react';
-import { ArrayPath, Path, UseFormGetValues } from 'react-hook-form';
+import { ArrayPath, FieldError, Path, UseFormGetValues } from 'react-hook-form';
 import { RadioTypes } from '@/src/components/ui/Inputs/Radio/Radio.types';
 import { SelectListType } from '@/src/components/ui/Inputs/SelectList';
 import { FilterConstant } from 'src/constants/utils';
@@ -211,6 +211,7 @@ export interface FormFieldTextInput<V extends FormSchemaValidation>
   minLength?: number;
   min?: string;
   max?: string;
+  renderErrorContent?: (error?: FieldError) => React.ReactNode;
 }
 
 export interface FormFieldCheckBox<V extends FormSchemaValidation>

@@ -6,6 +6,8 @@ import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEventWithUser } from 'src/lib/gtag';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedFlow,
@@ -78,7 +80,15 @@ const createUserRequestedSaga = function* () {
         ? { currentJob: preRegistrationPreferences.currentJob }
         : {}),
     };
-    yield* call(() => Api.postUserRegistration(userData));
+    const { data: createdUser } = yield* call(() =>
+      Api.postUserRegistration(userData)
+    );
+
+    gaEventWithUser(GA_TAGS.INSCRIPTION_COMPTE_CREE.action, {
+      userId: createdUser.id,
+      zone: createdUser.zone,
+      role: createdUser.role,
+    });
 
     yield* put(createUserSucceeded());
   } catch (err) {

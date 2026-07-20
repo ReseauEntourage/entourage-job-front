@@ -164,15 +164,16 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   }, [nextStep, shouldSkipStep, dispatch]);
 
   // Show error notification on failed account creation
+  // (DUPLICATE_EMAIL est affiché inline sous le champ email, voir useWizardStepAccount)
   useEffect(() => {
-    if (createUserStatus === ReduxRequestEvents.FAILED) {
+    if (
+      createUserStatus === ReduxRequestEvents.FAILED &&
+      createUserError !== 'DUPLICATE_EMAIL'
+    ) {
       dispatch(
         notificationsActions.addNotification({
           type: 'danger',
-          message:
-            createUserError === 'DUPLICATE_EMAIL'
-              ? 'Cette adresse email est déjà utilisée'
-              : "Une erreur est survenue lors de l'inscription",
+          message: "Une erreur est survenue lors de l'inscription",
         })
       );
     }

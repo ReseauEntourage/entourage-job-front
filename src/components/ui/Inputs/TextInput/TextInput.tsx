@@ -41,6 +41,7 @@ export function TextInput({
   labelTooltip,
   inputRef,
   error,
+  errorContent,
 }: TextInputProps) {
   const [contextType, setContextType] = useState(type);
   const isPasswordContextType = contextType === 'password';
@@ -107,7 +108,11 @@ export function TextInput({
       </StyledTextInputWrapper>
       {shouldShowFooter && (
         <StyledAnnotations>
-          {error && <StyledAnnotationsErrorMessage error={error} />}
+          {error && (
+            <StyledAnnotationsErrorMessage error={error}>
+              {errorContent}
+            </StyledAnnotationsErrorMessage>
+          )}
           {maxLength && (
             <StyledLimitContainer>
               <StyledLimit>
