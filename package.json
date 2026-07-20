@@ -48,7 +48,7 @@
     "circular-dependency-plugin": "^5.2.2",
     "cookies-next": "^2.1.2",
     "cors": "^2.8.5",
-    "dd-trace": "^5.76.0",
+    "dd-trace": "^5.100.0",
     "dompurify": "^3.4.1",
     "dotenv": "^16.4.7",
     "expect": "^29.7.0",
