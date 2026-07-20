@@ -5,6 +5,7 @@ import { isEmail } from 'validator';
 import { SimpleLink } from '@/src/components/ui';
 import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
 import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
+import { EmailAlreadyUsedInlineLink } from '@/src/features/registration/forms/EmailAlreadyUsedHint';
 import { FormSchema } from 'src/features/forms/FormSchema';
 
 export const formRegistrationAccount: FormSchema<{
@@ -96,6 +97,8 @@ export const formRegistrationAccount: FormSchema<{
           message: 'Adresse e-mail invalide',
         },
       ],
+      renderErrorContent: (error) =>
+        error?.type === 'manual' ? <EmailAlreadyUsedInlineLink /> : undefined,
     },
     {
       id: 'password',

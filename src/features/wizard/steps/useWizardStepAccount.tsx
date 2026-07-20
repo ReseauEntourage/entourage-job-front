@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from '@/src/components/ui';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   FormWithValidation,
   FormWithValidationRef,
@@ -10,8 +11,10 @@ import { formRegistrationAccount } from '@/src/features/registration/forms/formR
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import {
+  createUserSelectors,
   registrationActions,
   selectCompatibleProfilesCount,
+  selectCreateUserError,
   selectRegistrationData,
   selectRegistrationSelectedFlow,
 } from '@/src/use-cases/registration';
@@ -21,7 +24,23 @@ export function useWizardStepAccount() {
   const data = useSelector(selectRegistrationData);
   const selectedFlow = useSelector(selectRegistrationSelectedFlow);
   const compatibleProfilesCount = useSelector(selectCompatibleProfilesCount);
+  const createUserStatus = useSelector(
+    createUserSelectors.selectCreateUserStatus
+  );
+  const createUserError = useSelector(selectCreateUserError);
   const formRef = useRef<FormWithValidationRef>(null);
+
+  useEffect(() => {
+    if (
+      createUserStatus === ReduxRequestEvents.FAILED &&
+      createUserError === 'DUPLICATE_EMAIL'
+    ) {
+      formRef.current?.setFieldError(
+        'email',
+        'Cette adresse email est déjà utilisée,'
+      );
+    }
+  }, [createUserStatus, createUserError]);
 
   // password reste dans state.data (nécessaire à registration.saga.ts pour
   // POST /user/registration) mais ne doit pas repeupler le champ visible du

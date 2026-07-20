@@ -181,6 +181,10 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         typeof field.title === 'function' ? field.title(getValue) : field.title,
       value,
       error: showError ? error : undefined,
+      errorContent:
+        showError && isFormFieldTextInput(field) && field.renderErrorContent
+          ? field.renderErrorContent(error)
+          : undefined,
       onChange: onChangeCustom,
       onBlur,
       disabled: field.disable ? field.disable(getValue) : field.disabled,
