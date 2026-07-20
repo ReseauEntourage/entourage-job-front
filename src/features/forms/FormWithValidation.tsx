@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import {
   DefaultValues,
+  Path,
   SubmitHandler,
   useForm,
   UseFormWatch,
@@ -35,6 +36,7 @@ export type FormWithValidationRef = {
   resetForm: () => void;
   submit: () => Promise<boolean>;
   watch: UseFormWatch<AnyCantFix>;
+  setFieldError: (name: Path<AnyCantFix>, message: string) => void;
 };
 
 interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
@@ -87,11 +89,18 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
     [fieldOptions]
   );
 
-  const { handleSubmit, control, reset, getValues, resetField, watch } =
-    useForm<ExtractFormSchemaValidation<S>>({
-      defaultValues,
-      shouldUnregister: true,
-    });
+  const {
+    handleSubmit,
+    control,
+    reset,
+    getValues,
+    resetField,
+    watch,
+    setError: setRHFFieldError,
+  } = useForm<ExtractFormSchemaValidation<S>>({
+    defaultValues,
+    shouldUnregister: true,
+  });
 
   useImperativeHandle(innerRef, () => ({
     resetForm: () => reset({} as ExtractFormSchemaValidation<S>),
@@ -108,6 +117,11 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         )();
       }),
     watch,
+    setFieldError: (name, message) =>
+      setRHFFieldError(name as Path<ExtractFormSchemaValidation<S>>, {
+        type: 'manual',
+        message,
+      }),
   }));
 
   const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
