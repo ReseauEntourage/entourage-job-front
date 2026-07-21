@@ -11,9 +11,9 @@ import { MessagingProps } from './Messaging.types';
 export const Messaging: React.FC<MessagingProps> = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectAuthenticatedUser);
-  const requiredConvUserId = new URLSearchParams(window.location.search).get(
-    'userId'
-  );
+  const searchParams = new URLSearchParams(window.location.search);
+  const requiredConvUserId = searchParams.get('userId');
+  const requiredConversationId = searchParams.get('conversationId');
 
   /**
    * Fetch the conversations when the component is mounted.
@@ -26,6 +26,15 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
       );
     }
   }, [dispatch, requiredConvUserId, currentUser.elearningCompletedAt]);
+
+  // Directly selects a conversation already known (e.g. just created
+  // elsewhere, like the wizard's inline compose), without going through the
+  // "find or create a conversation with this user" resolution flow.
+  useEffect(() => {
+    if (requiredConversationId) {
+      dispatch(messagingActions.selectConversation(requiredConversationId));
+    }
+  }, [dispatch, requiredConversationId]);
 
   const Component = platform({
     Desktop: MessagingDesktop,

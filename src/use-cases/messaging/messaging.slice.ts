@@ -108,6 +108,11 @@ export const slice = createSlice({
         const { isNewConversation } = action.payload;
 
         if (isNewConversation) {
+          // Always select the newly created conversation, even if
+          // `conversations` hasn't loaded yet (e.g. sending from the wizard,
+          // which never mounts the messaging page beforehand).
+          state.selectedConversationId = message.conversation.id;
+
           // Append the new conversation to the conversation list at the top
           if (state.conversations) {
             const newConversation = {
@@ -115,7 +120,6 @@ export const slice = createSlice({
               messages: [message],
             };
             state.conversations.unshift(newConversation);
-            state.selectedConversationId = message.conversation.id;
           }
         } else if (state.conversations) {
           // Append the new message to the conversation list

@@ -8,6 +8,7 @@ import {
 } from '@/src/features/wizard/components/WizardSearchingLoader';
 import { WizardCompatibleProfileCard } from '@/src/features/wizard/sidepanels/WizardCompatibleProfileCard';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
+import { RecapSuggestedMessage } from 'src/features/backoffice/messaging/RecapSuggestedMessage/RecapSuggestedMessage';
 import { StyledMatchRecapActions } from './Content.styles';
 
 export type MatchRecapPanelState =
@@ -23,6 +24,7 @@ interface ContentProps {
   isEligibleToContact: boolean;
   onSkipWait: () => void;
   onPrimaryCta: () => void;
+  onSendSuggestedMessage: () => void;
   onSecondaryCta: () => void;
 }
 
@@ -33,6 +35,7 @@ export const Content = ({
   isEligibleToContact,
   onSkipWait,
   onPrimaryCta,
+  onSendSuggestedMessage,
   onSecondaryCta,
 }: ContentProps) => {
   const isCandidate = userRole === UserRoles.CANDIDATE;
@@ -86,16 +89,21 @@ export const Content = ({
         }
       />
       <StyledMatchRecapActions>
-        <Button
-          dataTestId="wizard-match-recap-primary-cta"
-          onClick={onPrimaryCta}
-          variant="primary"
-          size="large"
-        >
-          {isEligibleToContact
-            ? `Écrire à ${profile.firstName}`
-            : `Voir le profil de ${profile.firstName}`}
-        </Button>
+        {isEligibleToContact ? (
+          <RecapSuggestedMessage
+            recommendation={recommendation}
+            onSend={onSendSuggestedMessage}
+          />
+        ) : (
+          <Button
+            dataTestId="wizard-match-recap-primary-cta"
+            onClick={onPrimaryCta}
+            variant="primary"
+            size="large"
+          >
+            {`Voir le profil de ${profile.firstName}`}
+          </Button>
+        )}
         <Button
           dataTestId="wizard-match-recap-secondary-cta"
           onClick={onSecondaryCta}

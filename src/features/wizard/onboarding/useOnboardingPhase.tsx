@@ -62,6 +62,7 @@ export interface OnboardingPhaseState {
     typeof selectUpdateOnboardingStatusSelectors.selectUpdateOnboardingStatusStatus
   >;
   skipDashboardRedirectRef: React.MutableRefObject<boolean>;
+  pendingSuggestedMessageRedirectRef: React.MutableRefObject<boolean>;
   skipOnboarding: () => void;
 }
 
@@ -88,14 +89,14 @@ export const useOnboardingPhase = ({
     useProfileGeneration();
   const hasTriggeredGenerationRef = useRef(false);
 
-  // Bascule vers la saisie manuelle depuis cv-loading après le délai
-  // d'attente : annule le job de génération en cours avant d'avancer.
+  // Switches to manual entry from cv-loading after the wait delay: cancels
+  // the in-progress generation job before advancing.
   const handleCvGenerationManualFallback = useCallback(() => {
     void cancelProfileGeneration();
     setProfileMode('manual');
   }, [cancelProfileGeneration]);
 
-  // Initialise profileMode depuis les données serveur au chargement
+  // Initializes profileMode from server data on load
   const [isProfileModeInitialized, setIsProfileModeInitialized] =
     useState(false);
   useEffect(() => {
@@ -119,15 +120,17 @@ export const useOnboardingPhase = ({
     // else remains 'pending' — user hasn't started any path yet
   }, [profileComplete, isProfileModeInitialized]);
 
-  // Le backend positionne onboardingStatus === COMPLETED dès la création du compte
-  // pour Association et Entreprise-admin : ces rôles n'ont pas d'onboarding candidat/coach.
+  // The backend sets onboardingStatus === COMPLETED as soon as the account is
+  // created for Association and Entreprise-admin: these roles have no
+  // candidate/coach onboarding.
   const isOnboardingAlreadyCompleted =
     currentUser?.onboardingStatus === OnboardingStatus.COMPLETED;
 
-  // Avant la création du compte (currentUser encore null), le flow d'inscription
-  // sélectionné suffit déjà à savoir que l'onboarding sera skippé (Association/Entreprise) :
-  // évite que les steps par défaut (photo/elearning/webinar, tagués profil/formation)
-  // fassent apparaître ces sections dans le stepper pendant l'inscription.
+  // Before the account is created (currentUser still null), the selected
+  // registration flow is already enough to know onboarding will be skipped
+  // (Association/Entreprise): prevents the default steps (photo/elearning/
+  // webinar, tagged profile/formation) from making these sections appear in
+  // the stepper during registration.
   const isEarlyOnboardingCompletionFlow =
     registrationFlow === RegistrationFlow.REFERER ||
     registrationFlow === RegistrationFlow.COMPANY;
@@ -136,11 +139,11 @@ export const useOnboardingPhase = ({
     isOnboardingAlreadyCompleted ||
     (!currentUser && isEarlyOnboardingCompletionFlow);
 
-  // ─── Avancement centralisé ────────────────────────────────────────────────────
-  // requestAdvance est le seul point d'avancement pour les étapes d'onboarding :
-  // une étape ne peut faire avancer le moteur que depuis elle-même (stepId doit
-  // être l'étape courante), ce qui évite qu'une avance différée (ex. fetch qui
-  // résout après un changement d'étape) ne décale l'étape affichée.
+  // ─── Centralized advancement ──────────────────────────────────────────────────
+  // requestAdvance is the single advancement point for onboarding steps: a
+  // step can only move the engine forward from itself (stepId must be the
+  // current step), which prevents a delayed advance (e.g. a fetch resolving
+  // after a step change) from shifting the displayed step.
   const onboardingStepsRef = useRef<WizardStep[]>([]);
   const requestAdvance = useCallback((stepId: WizardStepId) => {
     setCurrentOnboardingStepId((prev) => {
@@ -156,12 +159,12 @@ export const useOnboardingPhase = ({
     });
   }, []);
 
-  // requestAdvanceWithProfileMode : second point d'entrée du moteur pour les
-  // call sites qui changent profileMode ET demandent une avance dans le même
-  // geste. onboardingStepsRef reflète encore l'ancien profileMode au moment où
-  // React résout cet updater (ordre des hooks), donc l'étape suivante est
-  // recalculée via buildOnboardingStepOrder avec nextMode passé explicitement,
-  // plutôt que lue depuis le ref.
+  // requestAdvanceWithProfileMode: second entry point into the engine for
+  // call sites that change profileMode AND request an advance in the same
+  // gesture. onboardingStepsRef still reflects the old profileMode by the
+  // time React resolves this updater (hook ordering), so the next step is
+  // recomputed via buildOnboardingStepOrder with nextMode passed explicitly,
+  // rather than read from the ref.
   const requestAdvanceWithProfileMode = useCallback(
     (stepId: WizardStepId, nextMode: ProfileMode) => {
       setProfileMode(nextMode);
@@ -184,9 +187,10 @@ export const useOnboardingPhase = ({
     [currentUser?.role, shouldSkipOnboardingSteps]
   );
 
-  // Onboarding completion. skipDashboardRedirect est utilisé par l'étape récap
-  // quand le composant appelant gère lui-même la navigation (messagerie/annuaire
-  // suite à un clic CTA) : on n'applique alors pas la redirection dashboard générique.
+  // Onboarding completion. skipDashboardRedirect is used by the recap step
+  // when the calling component handles the navigation itself (messaging/
+  // directory following a CTA click): the generic dashboard redirect is then
+  // not applied.
   const skipDashboardRedirectRef = useRef(false);
   const onOnboardingCompleted = useCallback(
     async (skipDashboardRedirect = false) => {
@@ -202,6 +206,18 @@ export const useOnboardingPhase = ({
     [dispatch]
   );
 
+  // The recap step's inline compose marks onboarding completed as soon as
+  // "Send" is clicked (cf. onOnboardingCompleted above), which immediately
+  // empties onboardingSteps (shouldSkipOnboardingSteps becomes true) and
+  // unmounts RecapSuggestedMessage before the message send has had time to
+  // resolve. The post-send redirect must therefore be carried by a hook that
+  // survives this unmount — useWizardRedirects — rather than by a local
+  // effect on the component, which would never run.
+  const pendingSuggestedMessageRedirectRef = useRef(false);
+  const armSuggestedMessageRedirect = useCallback(() => {
+    pendingSuggestedMessageRedirectRef.current = true;
+  }, []);
+
   // ─── Onboarding step hooks — called unconditionally ──────────────────────────
   const { onboardingStepElearning } = useOnboardingStepElearning({
     userRole: currentUser?.role as UserRoles | undefined,
@@ -214,6 +230,7 @@ export const useOnboardingPhase = ({
   const { onboardingStepMatchRecap } = useOnboardingStepMatchRecap({
     userRole: currentUser?.role as UserRoles | undefined,
     onOnboardingCompleted,
+    onSuggestedMessageSent: armSuggestedMessageRedirect,
   });
   const { onboardingStepSocialSituation } = useOnboardingStepSocialSituation({
     user: currentUser,
@@ -281,8 +298,8 @@ export const useOnboardingPhase = ({
     onboardingStepsRef.current = onboardingSteps;
   }, [onboardingSteps]);
 
-  // L'index n'est qu'une dérivation d'affichage (stepper) — l'état d'avancement
-  // réel est currentOnboardingStepId.
+  // The index is only a display derivation (stepper) — the actual
+  // advancement state is currentOnboardingStepId.
   const onboardingIdx = useMemo(() => {
     if (currentOnboardingStepId === null) {
       return null;
@@ -293,8 +310,8 @@ export const useOnboardingPhase = ({
     return idx === -1 ? null : idx;
   }, [onboardingSteps, currentOnboardingStepId]);
 
-  // Auto-saut : à l'arrivée sur une étape, le moteur lui demande si elle peut
-  // être sautée sans interaction utilisateur (ex. eLearning sans unité restante).
+  // Auto-skip: upon arriving on a step, the engine asks it whether it can be
+  // skipped without user interaction (e.g. eLearning with no remaining unit).
   useEffect(() => {
     if (currentOnboardingStepId === null) {
       return;
@@ -344,7 +361,7 @@ export const useOnboardingPhase = ({
     }
     determineStartingStep(onboardingSteps).then((startId) => {
       if (startId === null && onboardingSteps.length > 0) {
-        // Toutes les étapes sont déjà complètes — finaliser l'onboarding sans repasser par l'UI
+        // All steps are already complete — finalize onboarding without going back through the UI
         dispatch(
           currentUserActions.updateOnboardingStatusRequested({
             onboardingStatus: OnboardingStatus.COMPLETED,
@@ -364,7 +381,7 @@ export const useOnboardingPhase = ({
     dispatch,
   ]);
 
-  // Auto-avance du step cv-loading
+  // Auto-advance of the cv-loading step
   const isUploadCvSucceeded = useSelector(
     uploadExternalCvSelectors.selectIsUploadExternalCvSucceeded
   );
@@ -396,7 +413,7 @@ export const useOnboardingPhase = ({
     generateProfileFromCV,
   ]);
 
-  // Gestion erreur upload CV : retour à cv-choice
+  // CV upload error handling: back to cv-choice
   useEffect(() => {
     if (profileMode !== 'cv') {
       return;
@@ -497,6 +514,7 @@ export const useOnboardingPhase = ({
     isAlreadyCompleted: isOnboardingAlreadyCompleted,
     updateOnboardingStatus,
     skipDashboardRedirectRef,
+    pendingSuggestedMessageRedirectRef,
     skipOnboarding,
   };
 };

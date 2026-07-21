@@ -10,14 +10,16 @@ import { Content, MatchRecapPanelState } from './Content/Content';
 interface MatchRecapContainerProps {
   userRole: UserRoles | undefined;
   onOnboardingCompleted: (skipDashboardRedirect?: boolean) => Promise<void>;
+  onSuggestedMessageSent: () => void;
 }
 
-// Ce composant n'est monté que lorsque le wizard atteint réellement l'étape
-// récap : l'utilisateur est donc déjà authentifié (contrairement au hook de
-// step, appelé sans condition à chaque rendu de useWizard).
+// This component is only mounted once the wizard actually reaches the recap
+// step: the user is therefore already authenticated (unlike the step hook,
+// called unconditionally on every render of useWizard).
 export const MatchRecapContainer = ({
   userRole,
   onOnboardingCompleted,
+  onSuggestedMessageSent,
 }: MatchRecapContainerProps) => {
   const router = useRouter();
   const currentUser = useAuthenticatedUser();
@@ -45,8 +47,8 @@ export const MatchRecapContainer = ({
         return;
       }
 
-      // La liste de recommandations n'expose pas experiences/formations :
-      // on les récupère via le profil complet pour le seul profil mis en avant.
+      // The recommendations list doesn't expose experiences/formations:
+      // fetch them via the full profile, only for the single featured profile.
       try {
         const { data: fullProfile } = await Api.getPublicUserProfile(
           topRecommendation.publicProfile.id
@@ -83,9 +85,9 @@ export const MatchRecapContainer = ({
     fetchReco();
   }, [fetchReco]);
 
-  // Complète l'onboarding une seule fois. skipDashboardRedirect est utilisé
-  // lorsque ce composant gère lui-même la navigation suivante (CTA messagerie/annuaire),
-  // pour éviter que la redirection dashboard générique ne l'écrase.
+  // Completes onboarding only once. skipDashboardRedirect is used when this
+  // component handles the next navigation itself (messaging/directory CTA),
+  // to prevent the generic dashboard redirect from overriding it.
   const completeOnboarding = useCallback(
     (skipDashboardRedirect = false) => {
       if (hasCompletedRef.current) {
@@ -103,19 +105,23 @@ export const MatchRecapContainer = ({
     }
   }, [panelState, recommendation, completeOnboarding]);
 
+  // Non-eligible case only: the eligible case shows the inline compose
+  // (cf. RecapSuggestedMessage), which handles the send and redirect itself.
   const handlePrimaryCta = useCallback(() => {
     if (!recommendation) {
       return;
     }
     completeOnboarding(true);
-    if (isEligibleToContact) {
-      router.push(
-        `/backoffice/messaging?userId=${recommendation.publicProfile.id}`
-      );
-      return;
-    }
     router.push(`/backoffice/profile/${recommendation.publicProfile.id}`);
-  }, [recommendation, completeOnboarding, isEligibleToContact, router]);
+  }, [recommendation, completeOnboarding, router]);
+
+  const handleSendSuggestedMessage = useCallback(() => {
+    completeOnboarding(true);
+    // Arms the post-send redirect carried by useWizardRedirects: this
+    // component will be unmounted before the send resolves (cf. comment
+    // on pendingSuggestedMessageRedirectRef in useOnboardingPhase).
+    onSuggestedMessageSent();
+  }, [completeOnboarding, onSuggestedMessageSent]);
 
   const handleSecondaryCta = useCallback(() => {
     completeOnboarding(true);
@@ -134,6 +140,7 @@ export const MatchRecapContainer = ({
       isEligibleToContact={isEligibleToContact}
       onSkipWait={() => completeOnboarding()}
       onPrimaryCta={handlePrimaryCta}
+      onSendSuggestedMessage={handleSendSuggestedMessage}
       onSecondaryCta={handleSecondaryCta}
     />
   );
