@@ -1021,9 +1021,9 @@ describe('Wizard', () => {
         answerAndConfirm('answer-1b-good', 'Terminer');
         cy.wait('@postElearningCompletion');
 
-        // Enchaînement automatique sur le module suivant, à nouveau verrouillé
-        // (le titre du module n'est pas affiché en texte brut ; la position
-        // "Vidéo 2/2" dans le panneau latéral est le seul indicateur visible)
+        // Automatic transition to the next module, locked again
+        // (the module title is not displayed as plain text; the position
+        // "Vidéo 2/2" in the side panel is the only visible indicator)
         cy.contains('Formation - Vidéo 2/2');
         cy.contains('Regardez la vidéo');
         cy.get('[data-testid^="test-elearning-quiz-question-"]').should(
@@ -1033,10 +1033,10 @@ describe('Wizard', () => {
 
       it('should complete the last module and advance the wizard past the eLearning step', () => {
         interceptElearningUnits([unitTwo]);
-        // L'avancée synchrone vers l'étape "webinar" monte WebinarSelection,
-        // qui appelle /events* immédiatement : sans stub, la requête part avec
-        // le faux token de test et échoue en 401 (erreur non interceptée par
-        // l'app, qui ferait échouer le test).
+        // The synchronous advance to the "webinar" step mounts WebinarSelection,
+        // which calls /events* immediately: without a stub, the request goes out
+        // with the fake test token and fails with a 401 (an error not intercepted
+        // by the app, which would make the test fail).
         cy.intercept('GET', '/events*', { statusCode: 200, body: [] }).as(
           'events'
         );
@@ -1048,7 +1048,7 @@ describe('Wizard', () => {
         answerAndConfirm('answer-2a-good', 'Terminer');
         cy.wait('@postElearningCompletion');
 
-        // Étape suivante : webinaire (dernière étape après l'eLearning pour un candidat)
+        // Next step: webinar (last step after eLearning for a candidate)
         cy.contains('réunion de bienvenue');
       });
     });

@@ -1,10 +1,10 @@
 import { RequestConfig } from './request.types';
 
 /**
- * Objets représentant des requêtes API pour les tests Cypress de la page Formations.
+ * Objects representing API requests for the Formations page Cypress tests.
  *
- * Chaque objet contient les détails d'une requête API HTTP, y compris le chemin,
- * les données de réponse simulées et un alias facultatif pour une utilisation ultérieure dans Cypress.
+ * Each object contains the details of an HTTP API request, including the path,
+ * the mocked response data, and an optional alias for later use in Cypress.
  */
 export const formationsJourneyRequests = {
   GET: [
