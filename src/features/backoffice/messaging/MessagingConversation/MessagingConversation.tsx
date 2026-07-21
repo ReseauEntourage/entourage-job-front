@@ -67,8 +67,12 @@ export const MessagingConversation = () => {
     return selectedConversationId === 'new' && currentUser;
   }, [currentUser, selectedConversationId]);
 
-  const displayCoachQuickReplies = useMemo(() => {
-    if (!currentUser || currentUser.role !== UserRoles.COACH) {
+  const displayQuickReplies = useMemo(() => {
+    if (
+      !currentUser ||
+      (currentUser.role !== UserRoles.COACH &&
+        currentUser.role !== UserRoles.CANDIDATE)
+    ) {
       return false;
     }
     if (!selectedConversation || selectedConversationId === 'new') {
@@ -83,7 +87,11 @@ export const MessagingConversation = () => {
     const otherParticipants = selectedConversation.participants.filter(
       (p) => p.id !== currentUserId
     );
-    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
+    const oppositeRole =
+      currentUser.role === UserRoles.COACH
+        ? UserRoles.CANDIDATE
+        : UserRoles.COACH;
+    if (!otherParticipants.every((p) => p.role === oppositeRole)) {
       return false;
     }
     return selectedConversation.messages.length > 0;
@@ -274,7 +282,7 @@ export const MessagingConversation = () => {
         </MessagingMessagesContainer>
       )}
 
-      {displayCoachQuickReplies && (
+      {displayQuickReplies && (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
           newMessage={newMessage}
@@ -283,7 +291,7 @@ export const MessagingConversation = () => {
               (p) => p.id !== currentUserId
             ) || []
           }
-          variant="coach-quick-replies"
+          variant="quick-replies"
         />
       )}
 
