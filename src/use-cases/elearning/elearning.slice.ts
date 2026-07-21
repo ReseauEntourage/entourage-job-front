@@ -36,14 +36,20 @@ export const slice = createSlice({
       (state) => state.postElearningCompletion,
       {
         postElearningCompletionSucceeded(state, action) {
-          // Add the new completion to the corresponding elearning unit
+          // Replace (rather than append) so a replay never yields more than
+          // one completion per unit in the store
           const updatedCompletion = action.payload;
           const unitIndex = state.elearningUnits.findIndex(
             (unit) => unit.id === updatedCompletion.unitId
           );
           if (unitIndex !== -1) {
             const unit = state.elearningUnits[unitIndex];
-            unit.userCompletions = [...unit.userCompletions, updatedCompletion];
+            unit.userCompletions = [
+              ...unit.userCompletions.filter(
+                (completion) => completion.unitId !== updatedCompletion.unitId
+              ),
+              updatedCompletion,
+            ];
             state.elearningUnits[unitIndex] = unit;
           }
         },
