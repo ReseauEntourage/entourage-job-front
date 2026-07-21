@@ -7,7 +7,11 @@ import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { isRoleIncluded } from '@/src/utils';
-import { selectCurrentUser } from 'src/use-cases/current-user';
+import { getSectorOccupationLabels } from 'src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
+import {
+  selectCurrentUser,
+  selectCurrentUserProfile,
+} from 'src/use-cases/current-user';
 import { Item } from './Item/Item';
 import {
   MessagingQuickRepliesContainer,
@@ -22,7 +26,7 @@ interface MessagingSuggestionProps {
   newMessage: string;
   onSuggestionClick: (suggestion: MessagingSuggestionItem) => void;
   participants: ConversationParticipant[];
-  variant?: 'default' | 'coach-quick-replies';
+  variant?: 'default' | 'quick-replies';
 }
 
 export const MessagingSuggestions = ({
@@ -32,6 +36,7 @@ export const MessagingSuggestions = ({
   variant = 'default',
 }: MessagingSuggestionProps) => {
   const currentUser = useSelector(selectCurrentUser);
+  const currentUserProfile = useSelector(selectCurrentUserProfile);
 
   const suggestions: MessagingSuggestionItem[] = useMemo(() => {
     const participantsFirstNames = participants
@@ -41,21 +46,51 @@ export const MessagingSuggestions = ({
       return [];
     }
 
-    if (variant === 'coach-quick-replies') {
-      return [
-        {
-          name: "Proposer de l'aide",
-          message: `Bonjour ${participantsFirstNames},\nMerci pour votre message.\nJe suis disponible pour échanger avec vous.\n\nPouvez-vous me préciser votre objectif actuel afin que nous organisions un premier échange ?`,
-        },
-        {
-          name: 'Je ne suis pas disponible',
-          message: `Bonjour ${participantsFirstNames},\nMerci pour votre message.\nJe ne suis pas disponible actuellement pour m'impliquer dans un nouvel échange.\nJe vous invite à contacter d'autres membres du réseau afin de poursuivre vos démarches.\nTous mes encouragements pour la suite.`,
-        },
-        {
-          name: "Mon domaine d'activité est différent",
-          message: `Bonjour ${participantsFirstNames},\nMerci pour votre message. Votre recherche ne correspond pas directement à mon domaine d'activité, ce qui limite ma capacité à vous aider efficacement.\n\nJe vous invite à contacter d'autres membres plus proches de votre secteur.\n\nBonne continuation dans vos démarches.`,
-        },
-      ];
+    if (variant === 'quick-replies') {
+      if (currentUser.role === UserRoles.COACH) {
+        return [
+          {
+            name: "🤝 Proposer de l'aide",
+            message: `Bonjour ${participantsFirstNames},\nMerci pour votre message.\nJe suis disponible pour échanger avec vous.\n\nPouvez-vous me préciser votre objectif actuel afin que nous organisions un premier échange ?`,
+          },
+          {
+            name: '🙅 Je ne suis pas disponible',
+            message: `Bonjour ${participantsFirstNames},\nMerci pour votre message.\nJe ne suis pas disponible actuellement pour m'impliquer dans un nouvel échange.\nJe vous invite à contacter d'autres membres du réseau afin de poursuivre vos démarches.\nTous mes encouragements pour la suite.`,
+          },
+          {
+            name: "🔀 Mon domaine d'activité est différent",
+            message: `Bonjour ${participantsFirstNames},\nMerci pour votre message. Votre recherche ne correspond pas directement à mon domaine d'activité, ce qui limite ma capacité à vous aider efficacement.\n\nJe vous invite à contacter d'autres membres plus proches de votre secteur.\n\nBonne continuation dans vos démarches.`,
+          },
+        ];
+      }
+
+      if (currentUser.role === UserRoles.CANDIDATE) {
+        const { occupation, sector } = getSectorOccupationLabels(
+          currentUserProfile?.sectorOccupations
+        );
+        return [
+          {
+            name: '👌 Oui, avec plaisir',
+            message: `Bonjour ${participantsFirstNames},\nMerci pour votre message. Oui, avec plaisir !`,
+          },
+          {
+            name: '🗓️ Proposer un créneau',
+            message: `Bonjour ${participantsFirstNames},\nAvec plaisir ! Je suis disponible le [...] à [...]. C'est bon pour vous ?`,
+          },
+          {
+            name: '💬 Dire ce que je cherche',
+            message: `Bonjour ${participantsFirstNames},\nMerci de votre message ! En ce moment, je recherche un poste de ${
+              occupation ?? '[...]'
+            } dans le secteur ${sector ?? '[...]'}.`,
+          },
+          {
+            name: '🙅 Je ne suis plus disponible',
+            message: `Bonjour ${participantsFirstNames},\nMerci beaucoup pour votre message. Je ne suis plus disponible pour le moment, mais j'apprécie votre proposition. Belle journée !`,
+          },
+        ];
+      }
+
+      return [];
     }
 
     if (currentUser.role === UserRoles.CANDIDATE) {
@@ -109,13 +144,13 @@ export const MessagingSuggestions = ({
     }
 
     return [];
-  }, [currentUser, participants, variant]);
+  }, [currentUser, currentUserProfile, participants, variant]);
 
   if (suggestions.length === 0) {
     return null;
   }
 
-  if (variant === 'coach-quick-replies') {
+  if (variant === 'quick-replies') {
     if (newMessage.length > 0) {
       return null;
     }
