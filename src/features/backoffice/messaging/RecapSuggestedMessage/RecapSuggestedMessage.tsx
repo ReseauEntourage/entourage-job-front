@@ -93,6 +93,7 @@ export const RecapSuggestedMessage = ({
     formData.append('content', newMessage);
     formData.append('participantIds[]', recommendedProfile.id);
     dispatch(messagingActions.postMessageRequested(formData));
+    dispatch(messagingActions.setNewMessage(''));
     setIsSending(true);
     onSend();
   };
