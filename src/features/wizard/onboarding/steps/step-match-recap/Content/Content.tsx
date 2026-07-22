@@ -8,7 +8,7 @@ import {
 } from '@/src/features/wizard/components/WizardSearchingLoader';
 import { WizardCompatibleProfileCard } from '@/src/features/wizard/sidepanels/WizardCompatibleProfileCard';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
-import { RecapSuggestedMessage } from 'src/features/backoffice/messaging/RecapSuggestedMessage/RecapSuggestedMessage';
+import { RecapSuggestedMessage } from '@/src/features/backoffice/messaging/RecapSuggestedMessage/RecapSuggestedMessage';
 import { StyledMatchRecapActions } from './Content.styles';
 
 export type MatchRecapPanelState =
