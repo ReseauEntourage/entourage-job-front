@@ -6,7 +6,7 @@ export const StyledLi = styled.li`
   position: relative;
   padding-left: 32px;
   &:not(:last-child) {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   p {
     margin: 0;
