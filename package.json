@@ -14,7 +14,7 @@
     "test": "run-s test:*",
     "test:ts-check": "tsc -p tsconfig.base.json --noEmit && echo 'TypeScript type checking passed.'",
     "test:eslint": "npx eslint 'src/**/*.{js,jsx,ts,tsx}' --ext js,jsx,ts,tsx --fix --max-warnings=0",
-    "test:integ": "jest",
+    "test:unit": "jest",
     "test:e2e": "pnpm run cypress:io",
     "build": "next build",
     "prepare": "husky install",
