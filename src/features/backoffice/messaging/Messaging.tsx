@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,10 +11,14 @@ import { MessagingProps } from './Messaging.types';
 
 export const Messaging: React.FC<MessagingProps> = (props) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const currentUser = useSelector(selectAuthenticatedUser);
-  const requiredConvUserId = new URLSearchParams(window.location.search).get(
-    'userId'
-  );
+  const requiredConvUserId =
+    typeof router.query.userId === 'string' ? router.query.userId : null;
+  const requiredConversationId =
+    typeof router.query.conversationId === 'string'
+      ? router.query.conversationId
+      : null;
 
   /**
    * Fetch the conversations when the component is mounted.
@@ -26,6 +31,15 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
       );
     }
   }, [dispatch, requiredConvUserId, currentUser.elearningCompletedAt]);
+
+  // Directly selects a conversation already known (e.g. just created
+  // elsewhere, like the wizard's inline compose), without going through the
+  // "find or create a conversation with this user" resolution flow.
+  useEffect(() => {
+    if (requiredConversationId) {
+      dispatch(messagingActions.selectConversation(requiredConversationId));
+    }
+  }, [dispatch, requiredConversationId]);
 
   const Component = platform({
     Desktop: MessagingDesktop,

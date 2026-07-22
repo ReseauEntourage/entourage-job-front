@@ -4,6 +4,9 @@ import { RootState } from './messaging.slice';
 export const selectNewMessage = (state: RootState) =>
   state.messaging.newMessage;
 
+export const selectPostMessageStatus = (state: RootState) =>
+  state.messaging.postMessage.status;
+
 export const selectIsAIPanelOpen = (state: RootState) =>
   state.messaging.isAIPanelOpen;
 
