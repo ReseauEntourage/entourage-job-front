@@ -25,4 +25,5 @@ export interface AlertProps {
   clickable?: boolean;
   onClick?: () => void;
   iconInContainer?: boolean;
+  center?: boolean;
 }

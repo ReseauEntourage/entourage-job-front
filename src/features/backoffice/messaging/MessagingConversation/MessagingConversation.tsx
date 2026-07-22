@@ -64,7 +64,11 @@ export const MessagingConversation = () => {
     'instant' as ScrollBehavior
   );
   const displaySuggestions = useMemo(() => {
-    return selectedConversationId === 'new' && currentUser;
+    return (
+      selectedConversationId === 'new' &&
+      !!currentUser &&
+      currentUser.role !== UserRoles.ADMIN
+    );
   }, [currentUser, selectedConversationId]);
 
   const displayQuickReplies = useMemo(() => {

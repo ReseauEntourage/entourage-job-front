@@ -1,5 +1,7 @@
 import React from 'react';
-import { Section } from '@/src/components/ui';
+import { useSelector } from 'react-redux';
+import { Alert, LucidIcon, Section, Text } from '@/src/components/ui';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { UserRoles } from '@/src/constants/users';
 import { ProfileContactPreferences } from '@/src/features/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
 import { ProfileContracts } from '@/src/features/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
@@ -11,6 +13,7 @@ import { ProfileInterests } from '@/src/features/profile/ProfilePartCards/Profil
 import { ProfileLanguages } from '@/src/features/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNudges } from '@/src/features/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { ProfileProfessionalInformations } from '@/src/features/profile/ProfilePartCards/ProfileProfessionalInformations/ProfileProfessionalInformations';
+import { selectAuthenticatedUser } from '@/src/use-cases/current-user';
 import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
@@ -28,6 +31,10 @@ import { useSelectSelectedProfile } from './useSelectedProfile';
 export const Profile = () => {
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
+  const currentUser = useSelector(selectAuthenticatedUser);
+  const showAdminExemptionBanner =
+    currentUser.role === UserRoles.ADMIN &&
+    !selectedProfile.elearningCompletedAt;
   const showProfileExperiences =
     selectedProfile.role === UserRoles.CANDIDATE ||
     (selectedProfile.experiences && selectedProfile.experiences.length > 0);
@@ -55,6 +62,21 @@ export const Profile = () => {
         achievements={selectedProfile.achievements ?? []}
         gender={selectedProfile.gender}
       />
+      {showAdminExemptionBanner && (
+        <Alert
+          type={AlertType.Neutral}
+          variant="outlined"
+          center
+          rounded={false}
+          icon={<LucidIcon name="EyeOff" size={11} />}
+        >
+          <Text size="small">
+            Ce profil n&apos;a pas finalisé son parcours de formation, il vous
+            est présenté à titre indicatif car vous êtes un administrateur
+            Entourage. Il n&apos;est pas visible par les autres utilisateurs.
+          </Text>
+        </Alert>
+      )}
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
