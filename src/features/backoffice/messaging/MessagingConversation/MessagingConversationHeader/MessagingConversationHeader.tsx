@@ -39,6 +39,9 @@ import {
   MessagingConversationHeaderMainInfos,
 } from './MessagingConversationHeader.styles';
 
+const ADMIN_EXEMPTION_INDICATOR_LABEL =
+  "Formation eLearning non terminée — profil visible uniquement pour vous en tant qu'administrateur Entourage.";
+
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -111,7 +114,10 @@ export const MessagingConversationHeader = () => {
                       {addresee.role}
                     </Badge>
                     {showAdminExemptionIndicator && (
-                      <Tooltip content="Formation eLearning non terminée — profil visible uniquement pour vous en tant qu'administrateur Entourage.">
+                      <Tooltip
+                        content={ADMIN_EXEMPTION_INDICATOR_LABEL}
+                        ariaLabel={ADMIN_EXEMPTION_INDICATOR_LABEL}
+                      >
                         <Badge
                           size="small"
                           variant={BadgeVariant.ExtraLightAmber}

@@ -85,7 +85,7 @@ export const Alert = ({
         </StyledIconContainer>
       )}
 
-      <StyledAlertContainer>
+      <StyledAlertContainer $center={center}>
         {title && (
           <Text
             weight="semibold"
