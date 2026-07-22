@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthenticatedUser } from 'src/use-cases/current-user';
+import { useDispatch } from 'react-redux';
+import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { messagingActions } from 'src/use-cases/messaging';
 import { platform } from 'src/utils/Device';
 import { MessagingDesktop } from './Messaging.desktop';
@@ -10,7 +10,7 @@ import { MessagingProps } from './Messaging.types';
 
 export const Messaging: React.FC<MessagingProps> = (props) => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(selectAuthenticatedUser);
+  const { isEligibleToContact } = useContactEligibility();
   const searchParams = new URLSearchParams(window.location.search);
   const requiredConvUserId = searchParams.get('userId');
   const requiredConversationId = searchParams.get('conversationId');
@@ -20,12 +20,12 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
    * The userId param is ignored if the current user has not completed elearning.
    */
   useEffect(() => {
-    if (requiredConvUserId && currentUser.elearningCompletedAt) {
+    if (requiredConvUserId && isEligibleToContact) {
       dispatch(
         messagingActions.bindNewConversationRequested(requiredConvUserId)
       );
     }
-  }, [dispatch, requiredConvUserId, currentUser.elearningCompletedAt]);
+  }, [dispatch, requiredConvUserId, isEligibleToContact]);
 
   // Directly selects a conversation already known (e.g. just created
   // elsewhere, like the wizard's inline compose), without going through the
