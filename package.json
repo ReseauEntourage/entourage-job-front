@@ -13,7 +13,7 @@
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",
     "test": "run-s test:*",
     "test:ts-check": "tsc -p tsconfig.base.json --noEmit && echo 'TypeScript type checking passed.'",
-    "test:eslint": "pnpm eslint 'src/**/*.{js,jsx,ts,tsx}' --ext js,jsx,ts,tsx --fix --max-warnings=0",
+    "test:eslint": "pnpm exec eslint 'src/**/*.{js,jsx,ts,tsx}' --ext js,jsx,ts,tsx --fix --max-warnings=0",
     "test:unit": "jest",
     "test:e2e": "pnpm run cypress:io",
     "build": "next build",
@@ -21,8 +21,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "cypress:io": "pnpm cypress run --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
-    "cypress:local": "pnpm cypress open",
+    "cypress:io": "pnpm exec cypress run --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
+    "cypress:local": "pnpm exec cypress open",
     "add-icons": "node ./assets/icons/export-script.js"
   },
   "repository": {

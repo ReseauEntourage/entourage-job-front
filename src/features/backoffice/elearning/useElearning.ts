@@ -22,18 +22,6 @@ export const useElearning = () => {
     }
   }, [elearningUnits, user.role, dispatch, fetchElearningUnitsState.status]);
 
-  const completionRate = useMemo(() => {
-    const totalUnits = elearningUnits?.length ?? 0;
-    if (totalUnits === 0) {
-      return 0;
-    }
-
-    const completedUnits = elearningUnits.filter(
-      (unit) => unit.userCompletions.length > 0
-    ).length;
-    return Math.round((completedUnits / totalUnits) * 100);
-  }, [elearningUnits]);
-
   const nbUnitsCompleted = useMemo(() => {
     return elearningUnits.filter((unit) => unit.userCompletions.length > 0)
       .length;
@@ -42,6 +30,13 @@ export const useElearning = () => {
   const nbUnitsTotal = useMemo(() => {
     return elearningUnits.length;
   }, [elearningUnits]);
+
+  const completionRate = useMemo(() => {
+    if (nbUnitsTotal === 0) {
+      return 0;
+    }
+    return Math.round((nbUnitsCompleted / nbUnitsTotal) * 100);
+  }, [nbUnitsCompleted, nbUnitsTotal]);
 
   const completeUnit = useCallback(
     (unitId: string) => {
