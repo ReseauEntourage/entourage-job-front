@@ -105,6 +105,8 @@ export const RecapSuggestedMessage = ({
         <MessagingInput
           rows={1}
           ref={messageInputRef}
+          placeholder="Écrivez votre message"
+          aria-label="Message à envoyer"
           value={newMessage}
           onChange={(e) => {
             dispatch(messagingActions.setNewMessage(e.target.value));
