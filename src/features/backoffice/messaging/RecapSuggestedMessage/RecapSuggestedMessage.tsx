@@ -4,10 +4,10 @@ import { ProfileRecommendation } from '@/src/api/types';
 import { Button } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings/H3';
 import { UserRoles } from '@/src/constants/users';
+import { MessagingInput } from '@/src/features/backoffice/messaging/MessagingConversation/MessagingEditor/MessagingEditor.styles';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { MessagingInput } from 'src/features/backoffice/messaging/MessagingConversation/MessagingEditor/MessagingEditor.styles';
-import { selectCurrentUserProfile } from 'src/use-cases/current-user';
-import { messagingActions, selectNewMessage } from 'src/use-cases/messaging';
+import { selectCurrentUserProfile } from '@/src/use-cases/current-user';
+import { messagingActions, selectNewMessage } from '@/src/use-cases/messaging';
 import {
   StyledRecapSuggestedMessage,
   StyledRecapSuggestedMessageInputContainer,
@@ -93,6 +93,7 @@ export const RecapSuggestedMessage = ({
     formData.append('content', newMessage);
     formData.append('participantIds[]', recommendedProfile.id);
     dispatch(messagingActions.postMessageRequested(formData));
+    dispatch(messagingActions.setNewMessage(''));
     setIsSending(true);
     onSend();
   };
@@ -104,6 +105,8 @@ export const RecapSuggestedMessage = ({
         <MessagingInput
           rows={1}
           ref={messageInputRef}
+          placeholder="Écrivez votre message"
+          aria-label="Message à envoyer"
           value={newMessage}
           onChange={(e) => {
             dispatch(messagingActions.setNewMessage(e.target.value));

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
@@ -11,9 +12,14 @@ import { MessagingProps } from './Messaging.types';
 export const Messaging: React.FC<MessagingProps> = (props) => {
   const dispatch = useDispatch();
   const { isEligibleToContact } = useContactEligibility();
-  const searchParams = new URLSearchParams(window.location.search);
-  const requiredConvUserId = searchParams.get('userId');
-  const requiredConversationId = searchParams.get('conversationId');
+
+  const router = useRouter();
+  const requiredConvUserId =
+    typeof router.query.userId === 'string' ? router.query.userId : null;
+  const requiredConversationId =
+    typeof router.query.conversationId === 'string'
+      ? router.query.conversationId
+      : null;
 
   /**
    * Fetch the conversations when the component is mounted.
