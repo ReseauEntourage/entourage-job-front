@@ -34,6 +34,15 @@ export const useElearning = () => {
     return Math.round((completedUnits / totalUnits) * 100);
   }, [elearningUnits]);
 
+  const nbUnitsCompleted = useMemo(() => {
+    return elearningUnits.filter((unit) => unit.userCompletions.length > 0)
+      .length;
+  }, [elearningUnits]);
+
+  const nbUnitsTotal = useMemo(() => {
+    return elearningUnits.length;
+  }, [elearningUnits]);
+
   const completeUnit = useCallback(
     (unitId: string) => {
       dispatch(elearningActions.postElearningCompletionRequested({ unitId }));
@@ -55,5 +64,7 @@ export const useElearning = () => {
     isLoading,
     elearningUnits,
     completeUnit,
+    nbUnitsCompleted,
+    nbUnitsTotal,
   };
 };
