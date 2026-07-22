@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react';
 // eslint-disable-next-line import/no-named-as-default
 import expect from 'expect';
 import { useRouter } from 'next/router';
+import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useContactEligibility } from './useContactEligibility';
@@ -51,6 +52,20 @@ describe('useContactEligibility', () => {
       const { result } = renderHook(() => useContactEligibility());
 
       expect(result.current.isEligibleToContact).toBe(false);
+    });
+
+    it('is true for an Admin account, which always has elearningCompletedAt set', () => {
+      // Documents a product assumption (admin-bypass-elearning-gate change):
+      // an Admin account always has `elearningCompletedAt` defined, so this
+      // hook needs no role-specific branch to already be permissive for admins.
+      mockUseAuthenticatedUser.mockReturnValue({
+        role: UserRoles.ADMIN,
+        elearningCompletedAt: '2026-01-01T00:00:00.000Z',
+      });
+
+      const { result } = renderHook(() => useContactEligibility());
+
+      expect(result.current.isEligibleToContact).toBe(true);
     });
   });
 

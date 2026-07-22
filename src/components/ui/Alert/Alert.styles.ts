@@ -53,6 +53,7 @@ export const StyledAlert = styled.div<{
   $visible: boolean;
   $rounded: boolean;
   $clickable?: boolean;
+  $center: boolean;
 }>`
   display: ${(props) => {
     return props.$visible ? 'flex' : 'none';
@@ -82,6 +83,7 @@ export const StyledAlert = styled.div<{
 
   cursor: ${(props) => (props.$clickable ? 'pointer' : 'default')};
   transition: ${(props) => (props.$clickable ? 'filter 0.2s' : 'none')};
+  justify-content: ${(props) => (props.$center ? 'center' : 'flex-start')};
 
   &:hover {
     filter: ${(props) => (props.$clickable ? 'brightness(0.95)' : 'none')};
@@ -92,9 +94,7 @@ export const StyledAlert = styled.div<{
   }
 `;
 
-export const StyledAlertContainer = styled.div`
-  flex: 1;
-`;
+export const StyledAlertContainer = styled.div``;
 
 export const StyledIconContainer = styled.div<{
   $iconInContainer: boolean;

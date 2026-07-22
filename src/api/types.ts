@@ -610,7 +610,14 @@ export type Message = {
 
 export type ConversationParticipant = Pick<
   User,
-  'id' | 'firstName' | 'lastName' | 'role' | 'gender' | 'zone' | 'email'
+  | 'id'
+  | 'firstName'
+  | 'lastName'
+  | 'role'
+  | 'gender'
+  | 'zone'
+  | 'email'
+  | 'elearningCompletedAt'
 > & {
   userProfile: Pick<UserProfile, 'hasPicture' | 'isAvailable'> | null;
   conversationParticipant: {
@@ -652,6 +659,7 @@ export type PublicProfile = {
   department: DepartmentName;
   currentJob: string;
   description: string;
+  elearningCompletedAt: string | null;
   isAvailable: boolean;
   customNudges: UserProfileNudge[];
   nudges: Nudge[];
