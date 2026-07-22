@@ -2,13 +2,13 @@ import { ProfileRecommendation } from '@/src/api/types';
 import { Button } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
 import { UserRoles } from '@/src/constants/users';
+import { RecapSuggestedMessage } from '@/src/features/backoffice/messaging/RecapSuggestedMessage/RecapSuggestedMessage';
 import {
   SEARCHING_LOADER_VARIANTS,
   WizardSearchingLoader,
 } from '@/src/features/wizard/components/WizardSearchingLoader';
 import { WizardCompatibleProfileCard } from '@/src/features/wizard/sidepanels/WizardCompatibleProfileCard';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
-import { RecapSuggestedMessage } from '@/src/features/backoffice/messaging/RecapSuggestedMessage/RecapSuggestedMessage';
 import { StyledMatchRecapActions } from './Content.styles';
 
 export type MatchRecapPanelState =

@@ -4,8 +4,8 @@ import { ProfileRecommendation } from '@/src/api/types';
 import { Button } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings/H3';
 import { UserRoles } from '@/src/constants/users';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { MessagingInput } from '@/src/features/backoffice/messaging/MessagingConversation/MessagingEditor/MessagingEditor.styles';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { selectCurrentUserProfile } from '@/src/use-cases/current-user';
 import { messagingActions, selectNewMessage } from '@/src/use-cases/messaging';
 import {
