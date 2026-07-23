@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, Text } from '@/src/components/ui';
+import { Alert, Button, ButtonIcon, Text } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
