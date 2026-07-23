@@ -119,6 +119,9 @@ export const MessagingConversation = () => {
     if (selectedConversation.id !== selectedConversationId) {
       return false;
     }
+    if (conversationParticipantsAreDeleted) {
+      return false;
+    }
     if (selectedConversation.type !== ConversationType.DIRECT) {
       return false;
     }
@@ -126,9 +129,9 @@ export const MessagingConversation = () => {
   }, [
     selectedConversation,
     selectedConversationId,
+    conversationParticipantsAreDeleted,
     otherParticipantHasNotReplied,
   ]);
-
   const displayFirstContactBanner = useMemo(() => {
     if (!currentUser) {
       return false;
