@@ -46,6 +46,6 @@ export const USER_ROLES_FILTERS: FilterConstant<UserRoles>[] = [
 export const RELATED_ROLES = {
   [UserRoles.CANDIDATE]: UserRoles.COACH,
   [UserRoles.COACH]: UserRoles.CANDIDATE,
-  [UserRoles.ADMIN]: UserRoles.ADMIN,
+  [UserRoles.ADMIN]: UserRoles.CANDIDATE,
   [UserRoles.REFERER]: UserRoles.CANDIDATE,
 } as const;
