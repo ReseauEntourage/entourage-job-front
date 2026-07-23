@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
-import { FeatureKey } from 'src/api/types';
+import { ConversationType, FeatureKey } from 'src/api/types';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
@@ -22,6 +22,7 @@ import {
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
+  selectOtherParticipantHasNotReplied,
   selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
 import {
@@ -38,6 +39,7 @@ import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
+import { MessagingWaitingReplyBanner } from './MessagingWaitingReplyBanner/MessagingWaitingReplyBanner';
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -56,6 +58,9 @@ export const MessagingConversation = () => {
   const pinnedInfo = useSelector(selectPinnedInfo);
   const currentUserHasSentMessages = useSelector(
     selectCurrentUserHasSentMessages(currentUserId)
+  );
+  const otherParticipantHasNotReplied = useSelector(
+    selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
 
@@ -107,6 +112,23 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
   ]);
 
+  const displayWaitingReplyBanner = useMemo(() => {
+    if (!selectedConversation || selectedConversationId === 'new') {
+      return false;
+    }
+    if (selectedConversation.id !== selectedConversationId) {
+      return false;
+    }
+    if (selectedConversation.type !== ConversationType.DIRECT) {
+      return false;
+    }
+    return otherParticipantHasNotReplied;
+  }, [
+    selectedConversation,
+    selectedConversationId,
+    otherParticipantHasNotReplied,
+  ]);
+
   const displayFirstContactBanner = useMemo(() => {
     if (!currentUser) {
       return false;
@@ -142,6 +164,12 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
     currentUserId,
   ]);
+
+  const otherParticipant = useMemo(() => {
+    return selectedConversation?.participants.find(
+      (p) => p.id !== currentUserId
+    );
+  }, [selectedConversation, currentUserId]);
 
   const reversedMessages = useMemo(() => {
     if (!selectedConversation || !selectedConversation.messages) {
@@ -296,6 +324,13 @@ export const MessagingConversation = () => {
             ) || []
           }
           variant="quick-replies"
+        />
+      )}
+
+      {displayWaitingReplyBanner && currentUser && otherParticipant && (
+        <MessagingWaitingReplyBanner
+          recipientFirstName={otherParticipant.firstName}
+          currentUserRole={currentUser.role as UserRoles}
         />
       )}
 
