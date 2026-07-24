@@ -97,7 +97,7 @@ describe('Formations', () => {
     interceptCurrentUserSubResources();
   });
 
-  describe("Etant donné que je suis un utilisateur authentifié sur la page Formations", () => {
+  describe('Etant donné que je suis un utilisateur authentifié sur la page Formations', () => {
     it('should complete a not-yet-started module: open it, watch the video, pass the quiz, and see it marked as done', () => {
       const moduleOne = unit({
         id: 'elearning-unit-1',

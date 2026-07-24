@@ -1,4 +1,4 @@
-/* eslint import/no-unresolved: "off" */
+/* eslint import-x/no-unresolved: "off" */
 import React from 'react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Swiper } from 'swiper/react';

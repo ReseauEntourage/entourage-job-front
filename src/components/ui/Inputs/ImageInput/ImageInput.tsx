@@ -4,17 +4,16 @@ import { CommonInputProps } from '../Inputs.types';
 import { useUploadImage } from 'src/hooks/useUploadImage';
 import { StyledImageInputContainer } from './ImageInput.styles';
 
-interface ImageInputProps
-  extends Omit<
-    CommonInputProps<
-      {
-        profileImage: Blob;
-        profileImageObjectUrl: string;
-      },
-      HTMLInputElement
-    >,
-    'title' | 'value'
-  > {
+interface ImageInputProps extends Omit<
+  CommonInputProps<
+    {
+      profileImage: Blob;
+      profileImageObjectUrl: string;
+    },
+    HTMLInputElement
+  >,
+  'title' | 'value'
+> {
   onChange: ({
     profileImage,
     profileImageObjectUrl,

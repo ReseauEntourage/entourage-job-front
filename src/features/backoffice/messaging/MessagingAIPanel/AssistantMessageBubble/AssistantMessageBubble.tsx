@@ -7,8 +7,7 @@ import { Button } from 'src/components/ui/Button/Button';
 import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
 
 type ContentSegment =
-  | { type: 'text'; content: string }
-  | { type: 'suggestion'; content: string };
+  { type: 'text'; content: string } | { type: 'suggestion'; content: string };
 
 function parseSegments(content: string): ContentSegment[] {
   const segments: ContentSegment[] = [];

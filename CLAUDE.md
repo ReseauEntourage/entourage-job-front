@@ -5,6 +5,7 @@
 Next.js + Redux + TypeScript frontend for the Entourage Pro platform — a network connecting job seekers, coaches, and companies.
 
 **Related repos:**
+
 - `entourage-job-back` — NestJS REST API (always update in parallel when touching API contracts)
 - `entourage-landing-pages`, `entourage-tasks`, `sql-tools` — secondary repos
 
@@ -30,10 +31,10 @@ pnpm install            # restore dependencies
 
 ### Two layers
 
-| Layer | Location | Purpose |
-|---|---|---|
-| UI primitives | `src/components/ui/` | Generic, reusable — Button, Text, Input, Card, Spinner… |
-| Business components | `src/components/` | App-specific — compose primitives + add domain logic |
+| Layer               | Location             | Purpose                                                 |
+| ------------------- | -------------------- | ------------------------------------------------------- |
+| UI primitives       | `src/components/ui/` | Generic, reusable — Button, Text, Input, Card, Spinner… |
+| Business components | `src/components/`    | App-specific — compose primitives + add domain logic    |
 
 ### Primitives available (non-exhaustive)
 
@@ -69,18 +70,22 @@ ComponentName/
 ## Architecture notes
 
 ### State management
+
 Redux with sagas. API calls flow: component → action → saga → `Api.*` → store.
 
 ### Network Directory feature (EN-9019)
+
 The `NetworkDirectorySort` enum (`LAST_CONNECTION | RELEVANCE`) lives in `src/constants/network-directory.ts`. The `sort` parameter is threaded from URL → saga → `Api.getAllUsersProfiles` → backend query param.
 
 For `RELEVANCE` sort the backend runs `findBySimilarity(annPoolSize=500, poolSize=500)` — expect higher latency than `LAST_CONNECTION`.
 
 ### Recommendation / embeddings
+
 Profile similarity is computed server-side (pgvector + VoyageAI `voyage-4-lite`, 1024 dims). The front only passes filter params; scoring is entirely backend responsibility.
 
 ## Cross-repo workflow
 
 When a change touches an API endpoint, update both repos in the same session:
+
 1. Update the backend controller/service in `entourage-job-back`
 2. Update the API type in `src/api/types.ts` and the consuming saga/hook in the front

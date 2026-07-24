@@ -7,8 +7,9 @@ import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/F
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
-interface SelectSimpleProps<T extends string | number | boolean>
-  extends CommonInputProps<T, HTMLInputElement> {
+interface SelectSimpleProps<
+  T extends string | number | boolean,
+> extends CommonInputProps<T, HTMLInputElement> {
   options: FilterConstant<T>[];
 }
 

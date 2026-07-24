@@ -75,8 +75,8 @@ export const StyledWizardSidePanel = styled.aside<{
   flex-direction: column;
   z-index: 10;
   border-${({ $side }) => ($side === 'left' ? 'right' : 'left')}: 1px solid ${
-  COLORS.gray
-};
+    COLORS.gray
+  };
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     display: none;

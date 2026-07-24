@@ -57,7 +57,7 @@ interface WizardRoleSelectionSidePanelProps {
 export const WizardRoleSelectionSidePanel = ({
   flow,
 }: WizardRoleSelectionSidePanelProps) => {
-  const verbatim = flow ? VERBATIMS[flow] ?? null : null;
+  const verbatim = flow ? (VERBATIMS[flow] ?? null) : null;
 
   return (
     <SidePanel

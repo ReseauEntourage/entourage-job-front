@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-named-as-default
+// eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { Conversation, ConversationType } from 'src/api/types';
 import { selectOtherParticipantHasNotReplied } from './messaging.selectors';
@@ -7,13 +7,13 @@ import { RootState } from './messaging.slice';
 const buildState = (selectedConversation: Conversation | null): RootState =>
   ({
     messaging: { selectedConversation },
-  } as unknown as RootState);
+  }) as unknown as RootState;
 
 const buildMessage = (authorId: string) =>
   ({
     id: `msg-${authorId}-${Math.random()}`,
     authorId,
-  } as Conversation['messages'][number]);
+  }) as Conversation['messages'][number];
 
 const buildConversation = (overrides: Partial<Conversation>): Conversation =>
   ({
@@ -22,7 +22,7 @@ const buildConversation = (overrides: Partial<Conversation>): Conversation =>
     messages: [],
     participants: [],
     ...overrides,
-  } as Conversation);
+  }) as Conversation;
 
 describe('selectOtherParticipantHasNotReplied', () => {
   const currentUserId = 'user-me';

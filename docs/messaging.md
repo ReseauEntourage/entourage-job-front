@@ -53,33 +53,33 @@ src/
 
 #### Composants principaux
 
-| Composant | Rôle |
-|-----------|------|
-| `Messaging.tsx` | Point d'entrée. Détecte la plateforme et rend la version desktop ou mobile. Gère le paramètre URL `userId` pour initier une nouvelle conversation. |
-| `Messaging.desktop.tsx` | Affiche la liste des conversations à gauche et la conversation sélectionnée à droite. |
-| `Messaging.mobile.tsx` | Affiche soit la liste soit la conversation (navigation entre vues). |
-| `MessagingEmptyState.tsx` | Affiché quand l'utilisateur n'a aucune conversation. Invite à contacter un membre du réseau. |
+| Composant                 | Rôle                                                                                                                                               |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Messaging.tsx`           | Point d'entrée. Détecte la plateforme et rend la version desktop ou mobile. Gère le paramètre URL `userId` pour initier une nouvelle conversation. |
+| `Messaging.desktop.tsx`   | Affiche la liste des conversations à gauche et la conversation sélectionnée à droite.                                                              |
+| `Messaging.mobile.tsx`    | Affiche soit la liste soit la conversation (navigation entre vues).                                                                                |
+| `MessagingEmptyState.tsx` | Affiché quand l'utilisateur n'a aucune conversation. Invite à contacter un membre du réseau.                                                       |
 
 #### Liste des conversations
 
-| Composant | Rôle |
-|-----------|------|
-| `MessagingConversationList` | Affiche la liste de toutes les conversations. Permet la recherche par nom de participant. Indique les conversations non lues et celles en attente de feedback. |
-| `MessagingConversationListItem` | Affiche un élément de la liste : avatar, nom, aperçu du dernier message, date, badges (non lu / feedback). |
+| Composant                       | Rôle                                                                                                                                                           |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `MessagingConversationList`     | Affiche la liste de toutes les conversations. Permet la recherche par nom de participant. Indique les conversations non lues et celles en attente de feedback. |
+| `MessagingConversationListItem` | Affiche un élément de la liste : avatar, nom, aperçu du dernier message, date, badges (non lu / feedback).                                                     |
 
 #### Vue conversation
 
-| Composant | Rôle |
-|-----------|------|
-| `MessagingConversation` | Composant central. Charge la conversation, gère le polling (30s), l'auto-scroll, l'affichage des suggestions, du feedback, et des alertes épinglées. |
-| `MessagingConversationHeader` | Affiche les informations de l'interlocuteur et le bouton de signalement. |
-| `MessagingMessage` | Affiche un message individuel. Sanitize le HTML, détecte les liens suspects, propose de signaler. |
-| `MessageMedias` | Affiche les pièces jointes d'un message (images ou fichiers). |
-| `MessagingEditor` | Zone de saisie de message. Gère la mise en forme auto du textarea, l'upload de fichier, la prévisualisation des pièces jointes, et l'envoi. |
-| `MessagingPinnedInfo` | Bandeau d'alerte épinglé en haut de la conversation (`ADDRESSEE_UNAVAILABLE` ou `ADDRESSEE_DELETED`). |
-| `MessagingFeedback` | Note en étoiles (1-5) affichée quand `shouldGiveFeedback === true`. Différents textes selon le rôle de l'utilisateur. |
-| `MessagingConversationReport` | Modale de signalement : raison + commentaire libre. |
-| `MessagingSuggestions` | Suggestions de messages pré-écrits pour initier une nouvelle conversation (voir section dédiée). |
+| Composant                     | Rôle                                                                                                                                                 |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `MessagingConversation`       | Composant central. Charge la conversation, gère le polling (30s), l'auto-scroll, l'affichage des suggestions, du feedback, et des alertes épinglées. |
+| `MessagingConversationHeader` | Affiche les informations de l'interlocuteur et le bouton de signalement.                                                                             |
+| `MessagingMessage`            | Affiche un message individuel. Sanitize le HTML, détecte les liens suspects, propose de signaler.                                                    |
+| `MessageMedias`               | Affiche les pièces jointes d'un message (images ou fichiers).                                                                                        |
+| `MessagingEditor`             | Zone de saisie de message. Gère la mise en forme auto du textarea, l'upload de fichier, la prévisualisation des pièces jointes, et l'envoi.          |
+| `MessagingPinnedInfo`         | Bandeau d'alerte épinglé en haut de la conversation (`ADDRESSEE_UNAVAILABLE` ou `ADDRESSEE_DELETED`).                                                |
+| `MessagingFeedback`           | Note en étoiles (1-5) affichée quand `shouldGiveFeedback === true`. Différents textes selon le rôle de l'utilisateur.                                |
+| `MessagingConversationReport` | Modale de signalement : raison + commentaire libre.                                                                                                  |
+| `MessagingSuggestions`        | Suggestions de messages pré-écrits pour initier une nouvelle conversation (voir section dédiée).                                                     |
 
 ---
 
@@ -131,11 +131,11 @@ Affichées uniquement lors de l'initiation d'une **nouvelle conversation** (tant
 
 Les suggestions sont adaptées au rôle de l'utilisateur connecté :
 
-| Rôle | Nombre | Thèmes |
-|------|--------|--------|
-| Candidat | 6 | Aide au projet, création de CV, relecture de CV, préparation entretien, activation réseau, partage d'expérience |
-| Coach / Bénévole | 4 | Proposer un échange, clarifier le projet, activer le réseau, partager une expérience |
-| Admin | 0 | Pas de suggestions |
+| Rôle             | Nombre | Thèmes                                                                                                          |
+| ---------------- | ------ | --------------------------------------------------------------------------------------------------------------- |
+| Candidat         | 6      | Aide au projet, création de CV, relecture de CV, préparation entretien, activation réseau, partage d'expérience |
+| Coach / Bénévole | 4      | Proposer un échange, clarifier le projet, activer le réseau, partager une expérience                            |
+| Admin            | 0      | Pas de suggestions                                                                                              |
 
 Quand l'utilisateur clique sur une suggestion, le texte pré-écrit remplit l'éditeur. Il peut le modifier avant d'envoyer.
 
@@ -168,17 +168,17 @@ Quand l'utilisateur clique sur une suggestion, le texte pré-écrit remplit l'é
 
 **Sélecteurs principaux** :
 
-| Sélecteur | Retourne |
-|-----------|----------|
-| `selectConversations` | Liste de toutes les conversations |
-| `selectSelectedConversation` | Conversation actuellement affichée |
-| `selectSelectedConversationId` | ID de la conversation sélectionnée |
-| `selectNewMessage` | Texte en cours de saisie |
-| `selectPinnedInfo` | Alerte épinglée à afficher |
-| `selectUnseenConversationCount` | Nombre de conversations non vues (badge nav) |
-| `selectShouldGiveFeedback` | Booléen : afficher le composant feedback |
-| `selectConversationParticipantsAreDeleted` | Booléen : conversation en lecture seule |
-| `selectHasMessages` | Booléen : la conversation contient des messages |
+| Sélecteur                                  | Retourne                                        |
+| ------------------------------------------ | ----------------------------------------------- |
+| `selectConversations`                      | Liste de toutes les conversations               |
+| `selectSelectedConversation`               | Conversation actuellement affichée              |
+| `selectSelectedConversationId`             | ID de la conversation sélectionnée              |
+| `selectNewMessage`                         | Texte en cours de saisie                        |
+| `selectPinnedInfo`                         | Alerte épinglée à afficher                      |
+| `selectUnseenConversationCount`            | Nombre de conversations non vues (badge nav)    |
+| `selectShouldGiveFeedback`                 | Booléen : afficher le composant feedback        |
+| `selectConversationParticipantsAreDeleted` | Booléen : conversation en lecture seule         |
+| `selectHasMessages`                        | Booléen : la conversation contient des messages |
 
 ---
 
@@ -186,15 +186,15 @@ Quand l'utilisateur clique sur une suggestion, le texte pré-écrit remplit l'é
 
 **Base path** : `/messaging`
 
-| Méthode | Endpoint | Action |
-|---------|----------|--------|
-| GET | `/messaging/conversations` | Lister toutes les conversations de l'utilisateur |
-| GET | `/messaging/conversations/:id` | Récupérer une conversation avec ses messages |
-| POST | `/messaging/messages` | Envoyer un message (FormData) |
-| GET | `/messaging/conversations/:id/medias` | Lister les médias d'une conversation |
-| GET | `/messaging/conversations/unseen-count` | Nombre de conversations non vues |
-| POST | `/messaging/conversations/:id/report` | Signaler une conversation |
-| POST | `/messaging/conversations/feedback` | Soumettre une note de satisfaction |
+| Méthode | Endpoint                                | Action                                           |
+| ------- | --------------------------------------- | ------------------------------------------------ |
+| GET     | `/messaging/conversations`              | Lister toutes les conversations de l'utilisateur |
+| GET     | `/messaging/conversations/:id`          | Récupérer une conversation avec ses messages     |
+| POST    | `/messaging/messages`                   | Envoyer un message (FormData)                    |
+| GET     | `/messaging/conversations/:id/medias`   | Lister les médias d'une conversation             |
+| GET     | `/messaging/conversations/unseen-count` | Nombre de conversations non vues                 |
+| POST    | `/messaging/conversations/:id/report`   | Signaler une conversation                        |
+| POST    | `/messaging/conversations/feedback`     | Soumettre une note de satisfaction               |
 
 ---
 
@@ -233,6 +233,7 @@ L'utilisateur peut signaler une conversation via le bouton dans le header. La mo
 ### Feedback de qualité
 
 Quand le back-end passe `shouldGiveFeedback: true` sur une conversation :
+
 - Le composant `MessagingFeedback` s'affiche au-dessus de l'éditeur
 - L'utilisateur note la conversation de 1 à 5 étoiles
 - Fermer sans noter ou noter déclenche `postFeedbackRequested({ conversationParticipantId, rating })`

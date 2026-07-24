@@ -16,8 +16,9 @@ import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FilterConstant } from 'src/constants/utils';
 import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 
-interface SelectProps<T extends FilterConstant | FilterConstant[]>
-  extends CommonInputProps<T, HTMLSelectElement> {
+interface SelectProps<
+  T extends FilterConstant | FilterConstant[],
+> extends CommonInputProps<T, HTMLSelectElement> {
   isMulti?: boolean;
   options: FilterConstant[];
   openMenuOnClick?: boolean;

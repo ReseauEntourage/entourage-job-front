@@ -33,8 +33,8 @@ function escapeICS(text: string | null | undefined): string {
 export function generateICSContent(event: ICSEventData): string {
   const location =
     event.mode === EventMode.ONLINE
-      ? event.meetingLink ?? ''
-      : event.fullAddress ?? '';
+      ? (event.meetingLink ?? '')
+      : (event.fullAddress ?? '');
 
   const uid = event.id
     ? `${event.id}@entouragepro.fr`

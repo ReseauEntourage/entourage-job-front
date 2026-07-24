@@ -25,8 +25,7 @@ export type CandidateRegistrationFlowForm =
   | typeof formRegistrationAccount;
 
 export type CoachRegistrationFlowForm =
-  | typeof formRegistrationCoachInfo
-  | typeof formRegistrationAccount;
+  typeof formRegistrationCoachInfo | typeof formRegistrationAccount;
 
 export type RefererRegistrationFlowForm = typeof formRegistrationRefererAccount;
 
@@ -66,7 +65,7 @@ export type SkippedByKeys = Partial<RegistrationData>;
 export type SkippedByKeysUnion = UnionKeys<SkippedByKeys>;
 
 export interface RegistrationStepContent<
-  T extends RegistrationFlowForms = RegistrationFlowForms
+  T extends RegistrationFlowForms = RegistrationFlowForms,
 > {
   subtitle?: React.ReactNode;
   annotation?: RegistrationStepAnnotation;
