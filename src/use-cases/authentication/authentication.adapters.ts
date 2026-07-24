@@ -5,9 +5,7 @@ import {
 import { createRequestAdapter } from 'src/store/utils';
 
 export type LoginError =
-  | 'RATE_LIMIT'
-  | 'INVALID_CREDENTIALS'
-  | 'UNVERIFIED_EMAIL';
+  'RATE_LIMIT' | 'INVALID_CREDENTIALS' | 'UNVERIFIED_EMAIL';
 
 export enum VerifyEmailTokenErrorType {
   TOKEN_EXPIRED,

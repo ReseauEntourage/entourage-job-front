@@ -1,4 +1,7 @@
-import { adminRequests, interceptCurrentUserSubResources } from '../../intercept/user/admin.req';
+import {
+  adminRequests,
+  interceptCurrentUserSubResources,
+} from '../../intercept/user/admin.req';
 import bootstrap from '../bootstrap';
 
 /**

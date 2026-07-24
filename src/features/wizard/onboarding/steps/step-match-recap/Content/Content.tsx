@@ -12,10 +12,7 @@ import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
 import { StyledMatchRecapActions } from './Content.styles';
 
 export type MatchRecapPanelState =
-  | 'LOADING'
-  | 'EMBEDDING_PENDING'
-  | 'COMPUTING_RECO'
-  | 'READY';
+  'LOADING' | 'EMBEDDING_PENDING' | 'COMPUTING_RECO' | 'READY';
 
 interface ContentProps {
   panelState: MatchRecapPanelState;
@@ -74,8 +71,8 @@ export const Content = ({
               ? 'Félicitations ! Vous pouvez dès à présent contacter des coachs'
               : 'Félicitations ! Vous pouvez dès à présent contacter des candidats'
             : isCandidate
-            ? 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre coach'
-            : 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre candidat'
+              ? 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre coach'
+              : 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre candidat'
         }
         center
       />

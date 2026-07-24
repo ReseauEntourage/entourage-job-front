@@ -11,9 +11,7 @@ export enum UserRoles {
 // User groupements
 export type NormalUserRoles = UserRoles.CANDIDATE | UserRoles.COACH;
 export type RegistrableUserRoles =
-  | UserRoles.CANDIDATE
-  | UserRoles.COACH
-  | UserRoles.REFERER;
+  UserRoles.CANDIDATE | UserRoles.COACH | UserRoles.REFERER;
 type RolesWithOrganization = UserRoles.REFERER;
 type RolesNotAdmin = Exclude<UserRoles, UserRoles.ADMIN>;
 

@@ -9,8 +9,7 @@ import {
 } from '../utils/loadOptions.utils';
 import { FilterConstant } from 'src/constants/utils';
 
-interface FormEditCoachProfessionalInformationFormSchema
-  extends FormSchemaValidation {
+interface FormEditCoachProfessionalInformationFormSchema extends FormSchemaValidation {
   currentJob: string;
   companyName: FilterConstant<string>;
   businessSectorIds: FilterConstant<string>[];

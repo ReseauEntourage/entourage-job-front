@@ -97,8 +97,8 @@ export const useWizard = (): WizardState => {
   const currentStepIdx = isOnboardingPhase
     ? onboardingOffset + (onboarding.currentStepIdx ?? 0)
     : isEmailConfirmationPhase
-    ? emailConfirmationOffset
-    : currentWizardIdx;
+      ? emailConfirmationOffset
+      : currentWizardIdx;
 
   // The step error message must not survive a step change
   useEffect(() => {
@@ -108,14 +108,14 @@ export const useWizard = (): WizardState => {
   const currentStep = isOnboardingPhase
     ? onboarding.currentStep
     : isEmailConfirmationPhase
-    ? emailConfirmation.step
-    : currentRegistrationStep;
+      ? emailConfirmation.step
+      : currentRegistrationStep;
 
   const isLoading = isOnboardingPhase
     ? onboarding.isLoading
     : isEmailConfirmationPhase
-    ? emailConfirmation.isLoading
-    : registrationIsLoading;
+      ? emailConfirmation.isLoading
+      : registrationIsLoading;
 
   // Initialization: determining the resume step, or resolving the current
   // user on a direct reload (avoids the error alert flashing while /current
@@ -147,17 +147,17 @@ export const useWizard = (): WizardState => {
   const buttonLabel = isOnboardingPhase
     ? onboarding.buttonLabel
     : isEmailConfirmationPhase
-    ? 'Valider le code'
-    : (currentStep as WizardStep | null)?.buttonLabel ??
-      (currentWizardIdx === registrationSteps.length - 1
-        ? 'Créer mon compte'
-        : 'Étape suivante');
+      ? 'Valider le code'
+      : ((currentStep as WizardStep | null)?.buttonLabel ??
+        (currentWizardIdx === registrationSteps.length - 1
+          ? 'Créer mon compte'
+          : 'Étape suivante'));
 
   const canGoBack = isOnboardingPhase
     ? onboarding.canGoBack
     : isEmailConfirmationPhase
-    ? emailConfirmation.canGoBack
-    : registrationCanGoBack;
+      ? emailConfirmation.canGoBack
+      : registrationCanGoBack;
 
   const onBack = useCallback(() => {
     if (!canGoBack) {

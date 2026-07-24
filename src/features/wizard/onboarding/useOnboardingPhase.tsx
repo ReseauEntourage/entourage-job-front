@@ -428,7 +428,7 @@ export const useOnboardingPhase = ({
   }, [profileMode, isUploadCvFailed]);
 
   const currentStep =
-    onboardingIdx !== null ? onboardingSteps[onboardingIdx] ?? null : null;
+    onboardingIdx !== null ? (onboardingSteps[onboardingIdx] ?? null) : null;
 
   const isInitializing = onboardingIdx === null;
 

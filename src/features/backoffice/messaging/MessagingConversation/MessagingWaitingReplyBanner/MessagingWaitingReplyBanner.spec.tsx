@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-// eslint-disable-next-line import/no-named-as-default
+// eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
 import '@testing-library/jest-dom';

@@ -14,11 +14,7 @@ import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
-  | 'facebook'
-  | 'linkedin'
-  | 'twitter'
-  | 'whatsapp'
-  | 'other';
+  'facebook' | 'linkedin' | 'twitter' | 'whatsapp' | 'other';
 
 export const APIRoutes = {
   USERS: 'user',
@@ -704,10 +700,7 @@ export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
 };
 
 export type MatchingReason =
-  | 'profile'
-  | 'needs'
-  | 'activity'
-  | 'locationCompatibility';
+  'profile' | 'needs' | 'activity' | 'locationCompatibility';
 
 export type ProfileRecommendation = {
   id: string;

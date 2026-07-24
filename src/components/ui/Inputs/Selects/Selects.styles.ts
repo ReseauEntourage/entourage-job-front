@@ -168,8 +168,9 @@ export const StyledSelect = styled.div`
 
   & .Select__input > input {
     font-size: ${sizesPx.desktop.normal}px !important;
-    line-height: ${LINE_HEIGHT_MULTIPLIER *
-    sizesPx.desktop.normal}px !important;
+    line-height: ${
+      LINE_HEIGHT_MULTIPLIER * sizesPx.desktop.normal
+    }px !important;
     font-family: Poppins, sans-serif !important;
   }
 `;

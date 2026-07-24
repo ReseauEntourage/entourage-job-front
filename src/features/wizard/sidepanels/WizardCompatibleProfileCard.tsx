@@ -84,14 +84,14 @@ function useWizardCompatibleProfileData(profile: PublicProfile) {
   const metierText =
     occupationNames.length > 0
       ? occupationNames.join(', ')
-      : profile.currentJob ?? null;
+      : (profile.currentJob ?? null);
 
   const metierSource: 'occupation' | 'currentJob' | null =
     occupationNames.length > 0
       ? 'occupation'
       : profile.currentJob
-      ? 'currentJob'
-      : null;
+        ? 'currentJob'
+        : null;
 
   const nudges = (profile.nudges ?? []).map((nudge) => ({
     id: nudge.id,

@@ -64,8 +64,7 @@ export const ProfileContactPreferences = ({
       icon: c.icon,
       value:
         (profileComplete?.[c.key as keyof typeof profileComplete] as
-          | boolean
-          | undefined) ?? false,
+          boolean | undefined) ?? false,
     }));
   }, [allContactWays, profileComplete]);
 

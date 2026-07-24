@@ -1,5 +1,5 @@
 import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
-// eslint-disable-next-line import/no-named-as-default
+// eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { SliceRootState } from '../types';
 import { ReduxRequestEvents } from 'src/constants';

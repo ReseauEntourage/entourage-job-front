@@ -142,8 +142,8 @@ export const WizardCompatibleProfilesSidePanel = ({
       ? 'coachs prêts à vous soutenir'
       : 'coach prêt à vous soutenir'
     : isPlural
-    ? 'candidats qui ont besoin de vous'
-    : 'candidat qui a besoin de vous';
+      ? 'candidats qui ont besoin de vous'
+      : 'candidat qui a besoin de vous';
 
   const lockBannerText = isCandidate
     ? 'Finaliser votre inscription pour contacter ces coachs'

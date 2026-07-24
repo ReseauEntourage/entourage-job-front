@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-// eslint-disable-next-line import/no-named-as-default
+// eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { useSelector } from 'react-redux';
 import { EmailOtpInput } from './EmailOtpInput';
