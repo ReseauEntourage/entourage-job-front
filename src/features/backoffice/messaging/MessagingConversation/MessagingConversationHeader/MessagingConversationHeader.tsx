@@ -40,7 +40,7 @@ import {
 } from './MessagingConversationHeader.styles';
 
 const ADMIN_EXEMPTION_INDICATOR_LABEL =
-  "Formation eLearning non terminée — profil visible uniquement pour vous en tant qu'administrateur Entourage.";
+  'Formation non terminée - visible uniquement par les administrateurs.';
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();

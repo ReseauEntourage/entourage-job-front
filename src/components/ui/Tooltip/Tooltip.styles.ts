@@ -42,12 +42,13 @@ export const StyledTooltipContent = styled.div<{
   left: ${({ left }) => left}px;
   width: ${({ width }) => (width ? `${width}px` : '300px')};
   padding: 14px 16px;
-  background: ${COLORS.black};
+  background: ${COLORS.white};
+  border: 1px solid ${COLORS.gray};
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.24);
   font-size: 13px;
   line-height: 1.5;
-  color: ${COLORS.white};
+  color: ${COLORS.black};
   z-index: 9999;
   ${({ placement }) => placementTransform(placement)}
 `;
