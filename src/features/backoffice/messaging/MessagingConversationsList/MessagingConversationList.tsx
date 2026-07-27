@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { conversationHasUnreadMessages } from '../messaging.utils';
-import { Text } from 'src/components/ui';
-import { SearchBar } from 'src/features/filters/SearchBar/SearchBar';
-import { useIsMobile } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { Text } from '@/src/components/ui';
+import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
+import { useIsMobile } from '@/src/hooks/utils';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectConversations,
   selectUnseenConversationCount,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
+import { conversationHasUnreadMessages } from '../messaging.utils';
 import {
   ContainerStyled,
   StyledConversationsContainer,

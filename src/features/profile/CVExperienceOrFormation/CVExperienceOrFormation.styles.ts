@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledCVExperience = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ export const StyledCVExperienceDescription = styled.div`
   padding-left: 20px;
   padding-bottom: 30px;
 
-  ::before {
+  &::before {
     content: '';
     height: 9px;
     width: 9px;
@@ -148,7 +148,7 @@ export const StyledEditToolsContainerCard = styled.div`
   > * {
     padding: 8px;
     border-radius: 8px;
-    :hover {
+    &:hover {
       background-color: ${COLORS.lightGray};
     }
   }

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const ContainerStyled = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export const StyledConversationsContainer = styled.div`
   > *:not(:last-child) {
     border-bottom: 1px solid #e0e0e0;
   }
-  :not(.mobile) {
+  &:not(.mobile) {
     height: 100%;
   }
 `;

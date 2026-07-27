@@ -7,19 +7,19 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Api } from 'src/api';
-import { AiAssistantMessage } from 'src/api/types';
-import { Text } from 'src/components/ui';
-import { Alert } from 'src/components/ui/Alert/Alert';
-import { AlertType } from 'src/components/ui/Alert/Alert.types';
-import { Button } from 'src/components/ui/Button/Button';
-import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
-import { TextArea } from 'src/components/ui/Inputs/TextArea';
+import { Api } from '@/src/api';
+import { AiAssistantMessage } from '@/src/api/types';
+import { Text } from '@/src/components/ui';
+import { Alert } from '@/src/components/ui/Alert/Alert';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
+import { Button } from '@/src/components/ui/Button/Button';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { TextArea } from '@/src/components/ui/Inputs/TextArea';
 import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
 import {
   QUICK_ACTIONS,

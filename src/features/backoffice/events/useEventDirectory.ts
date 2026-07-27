@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useIsAtBottom } from '@/src/hooks/useIsAtBottom';
+import { usePrevious } from '@/src/hooks/utils';
 import { eventsActions } from '@/src/use-cases/events';
 import {
   fetchEventsSelectors,
   selectEvents,
   selectEventsHasFetchedAll,
 } from '@/src/use-cases/events/events.selectors';
-import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
-import { usePrevious } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { useEventDirectoryQueryParams } from './EventDirectory/useEventDirectoryQueryParams';
 
 // Manage directory requests and filters

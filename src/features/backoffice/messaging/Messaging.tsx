@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { useContactEligibility } from '@/src/hooks/useContactEligibility';
-import { messagingActions } from 'src/use-cases/messaging';
-import { platform } from 'src/utils/Device';
+import { messagingActions } from '@/src/use-cases/messaging';
+import { platform } from '@/src/utils/Device';
 import { MessagingDesktop } from './Messaging.desktop';
 import { MessagingMobile } from './Messaging.mobile';
 import { MessagingProps } from './Messaging.types';

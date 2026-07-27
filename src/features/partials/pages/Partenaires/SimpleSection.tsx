@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Section } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { UIKIT_STYLES } from 'src/components/variables';
+import { UIKIT_STYLES } from '@/src/components/variables';
 
 interface SimpleSectionProps {
   id: string;

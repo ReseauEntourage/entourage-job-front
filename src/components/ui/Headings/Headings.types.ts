@@ -1,5 +1,5 @@
 import React from 'react';
-import { FONT_WEIGHTS } from 'src/constants/styles';
+import { FONT_WEIGHTS } from '@/src/constants/styles';
 
 type WeightProps = (typeof FONT_WEIGHTS)[keyof typeof FONT_WEIGHTS];
 
@@ -15,7 +15,10 @@ export interface HeadingComponentProps extends HeadingBasicProps {
   noMarginBottom?: boolean;
 }
 
-export interface StyledHeadingProps extends HeadingBasicProps {
-  mobile?: boolean;
-  noMarginBottom?: boolean;
+export interface StyledHeadingProps {
+  color?: string;
+  $center?: boolean;
+  $weight?: WeightProps;
+  $mobile?: boolean;
+  $noMarginBottom?: boolean;
 }

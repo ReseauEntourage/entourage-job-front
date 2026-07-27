@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getPusher, PUSHER_CHANNELS, PUSHER_EVENTS } from 'src/constants';
+import { getPusher, PUSHER_CHANNELS, PUSHER_EVENTS } from '@/src/constants';
 import { useAuthenticatedUser } from './authentication/useAuthenticatedUser';
 
 interface UseEmbeddingStatusProps {

@@ -2,8 +2,8 @@ import React, { type JSX } from 'react';
 import { ArrayPath, FieldError, Path, UseFormGetValues } from 'react-hook-form';
 import { RadioTypes } from '@/src/components/ui/Inputs/Radio/Radio.types';
 import { SelectListType } from '@/src/components/ui/Inputs/SelectList';
-import { FilterConstant } from 'src/constants/utils';
-import { AnyCantFix, StrictUnion } from 'src/utils/Types';
+import { FilterConstant } from '@/src/constants/utils';
+import { AnyCantFix, StrictUnion } from '@/src/utils/Types';
 
 export const FormComponents = {
   DATEPICKER: 'datepicker',
@@ -18,7 +18,6 @@ export const FormComponents = {
   SELECT_ASYNC: 'select-async',
   SELECT_LIST: 'select-list',
   SELECT_LIST_ASYNC: 'select-list-async',
-  SELECT_CARD: 'select-card',
   RADIO: 'radio',
   RADIO_ASYNC: 'radio-async',
   HEADING: 'heading',
@@ -65,7 +64,6 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.SELECT_ASYNC]: MultiFilterConstant<M>;
   [FormComponents.SELECT_LIST]: string[];
   [FormComponents.SELECT_LIST_ASYNC]: string[];
-  [FormComponents.SELECT_CARD]: string[];
   [FormComponents.RADIO]: string | number;
   [FormComponents.RADIO_ASYNC]: string | number;
   [FormComponents.HEADING]: never;
@@ -119,7 +117,6 @@ export type SelectComponent = (typeof SelectComponents)[number];
 
 export const SelectGraphicComponents = [
   FormComponents.SELECT_LIST,
-  FormComponents.SELECT_CARD,
   FormComponents.SELECT_LIST_ASYNC,
 ] as const;
 

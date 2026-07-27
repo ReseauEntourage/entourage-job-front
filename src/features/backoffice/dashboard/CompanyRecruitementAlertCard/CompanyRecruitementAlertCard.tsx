@@ -9,7 +9,7 @@ import {
   fetchRecruitementAlertsAction,
   selectRecruitementAlerts,
   selectFetchRecruitementAlertsLoading,
-} from 'src/use-cases/recruitement-alerts';
+} from '@/src/use-cases/recruitement-alerts';
 
 import { CompanyRecruitementAlertContent } from './CompanyRecruitementAlertContent';
 import {

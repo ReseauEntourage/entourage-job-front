@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
+import { GA_TAGS } from '@/src/constants/tags';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
-import { GA_TAGS } from 'src/constants/tags';
 
 const Custom404 = () => {
   return (

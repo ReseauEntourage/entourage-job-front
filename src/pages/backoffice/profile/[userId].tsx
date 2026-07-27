@@ -4,7 +4,7 @@ import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { Profile } from '@/src/features/backoffice/profile';
 import { useSelectedProfile } from '@/src/features/backoffice/profile/useSelectedProfile';
-import { fetchSelectedProfileSelectors } from 'src/use-cases/profiles';
+import { fetchSelectedProfileSelectors } from '@/src/use-cases/profiles';
 
 const PageProfile = () => {
   const { selectedProfile } = useSelectedProfile();

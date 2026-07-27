@@ -1,7 +1,7 @@
 import React from 'react';
+import { GA_TAGS } from '@/src/constants/tags';
 import { SimpleCardsImageCTA } from '@/src/features/partials/utils/SimpleCardsImageCTA';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from '@/src/lib/gtag';
 
 export const Rejoindre = () => {
   return (

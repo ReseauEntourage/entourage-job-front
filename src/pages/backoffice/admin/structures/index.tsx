@@ -2,13 +2,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section } from '@/src/components/ui';
+import { ORGANIZATION_FILTERS_DATA } from '@/src/constants';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { OrganizationList } from '@/src/features/backoffice/admin/organizations/OrganizationList';
-import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useZone } from 'src/hooks/queryParams/useZone';
-import { useFilters } from 'src/hooks/useFilters';
-import { usePrevious } from 'src/hooks/utils';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useZone } from '@/src/hooks/queryParams/useZone';
+import { useFilters } from '@/src/hooks/useFilters';
+import { usePrevious } from '@/src/hooks/utils';
 
 const OrganizationsAdmin = () => {
   const { replace, query } = useRouter();

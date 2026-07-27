@@ -1,29 +1,29 @@
 import _ from 'lodash';
 import React, { useMemo } from 'react';
-import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
-import { H3, H6 } from '@/src/components/ui/Headings';
-import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
-import { RecommendationReasonBadge } from '@/src/components/ui/RecommendationReasonBadge/RecommendationReasonBadge';
-import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { Text } from '@/src/components/ui/Text';
-import { Genders } from '@/src/constants/genders';
-import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
-import { Badge, BadgeVariant } from '../../../Badge';
-import { Button } from '../../../Button';
-import { EntityCard } from '../EntityCard/EntityCard';
 import {
   BusinessSector,
   MatchingReason,
   Occupation,
   UserAchievement,
   UserProfileSectorOccupation,
-} from 'src/api/types';
-import { DepartmentName } from 'src/constants/departements';
-import { COLORS } from 'src/constants/styles';
-import { GA_TAGS } from 'src/constants/tags';
-import { UserRoles } from 'src/constants/users';
-import { useImageFallback } from 'src/hooks/useImageFallback';
-import { gaEvent } from 'src/lib/gtag';
+} from '@/src/api/types';
+import { AvailabilityTag } from '@/src/components/ui/AvailabilityTag';
+import { H3, H6 } from '@/src/components/ui/Headings';
+import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
+import { RecommendationReasonBadge } from '@/src/components/ui/RecommendationReasonBadge/RecommendationReasonBadge';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { Text } from '@/src/components/ui/Text';
+import { DepartmentName } from '@/src/constants/departements';
+import { Genders } from '@/src/constants/genders';
+import { COLORS } from '@/src/constants/styles';
+import { GA_TAGS } from '@/src/constants/tags';
+import { UserRoles } from '@/src/constants/users';
+import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
+import { useImageFallback } from '@/src/hooks/useImageFallback';
+import { gaEvent } from '@/src/lib/gtag';
+import { Badge, BadgeVariant } from '../../../Badge';
+import { Button } from '../../../Button';
+import { EntityCard } from '../EntityCard/EntityCard';
 import {
   StyledCTAContainer,
   StyledProfileCardAvailability,

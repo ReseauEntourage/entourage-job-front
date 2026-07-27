@@ -1,8 +1,8 @@
 import React from 'react';
+import { RecruitementAlert } from '@/src/api/types';
 import { Button, ImgUserProfile, LucidIcon } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { CompanyRecruitementAlertEditModal } from '../CompanyRecruitementAlertModal/CompanyRecruitementAlertEditModal';
-import { RecruitementAlert } from 'src/api/types';
 import {
   StyledAlertHeader,
   StyledBadgesContainer,

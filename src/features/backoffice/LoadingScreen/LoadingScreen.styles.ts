@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { HEIGHTS } from 'src/constants/styles';
+import { HEIGHTS } from '@/src/constants/styles';
 
 export const StyledLoadingScreen = styled.div`
   width: 100%;

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Api } from '@/src/api';
 import { PublicProfile } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons';
 import { SidePanel } from '@/src/components/ui/SidePanel';
+import { Text } from '@/src/components/ui/Text';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
@@ -15,8 +17,6 @@ import {
   SEARCHING_LOADER_VARIANTS,
   WizardSearchingLoader,
 } from '../components/WizardSearchingLoader';
-import { Api } from 'src/api';
-import { Text } from 'src/components/ui/Text';
 import {
   WizardCompatibleProfileCard,
   WizardCompatibleProfileCardSkeleton,

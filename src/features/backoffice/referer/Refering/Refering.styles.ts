@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledReferingPage = styled.div`
   background: ${COLORS.lightGray};
@@ -42,7 +42,7 @@ export const StyledReferingListItem = styled.div`
   display: flex;
   align-items: center;
 
-  :not(:last-child) {
+  &:not(:last-child) {
     margin-bottom: 32px;
   }
 `;

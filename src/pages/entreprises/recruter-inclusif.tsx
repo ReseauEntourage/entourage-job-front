@@ -3,6 +3,7 @@ import { Layout } from '@/src/components/layouts/Layout';
 import { Button, Text } from '@/src/components/ui';
 import { CheckListElement, List } from '@/src/components/ui/Lists';
 import { CompanyGoal } from '@/src/constants/company';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from '@/src/constants/tags';
 import { Impact } from '@/src/features/partials/common/Impact';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
@@ -17,10 +18,9 @@ import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
-import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
-import { linkEvent } from 'src/lib/lintrk';
+import { fbEvent } from '@/src/lib/fb';
+import { gaEvent } from '@/src/lib/gtag';
+import { linkEvent } from '@/src/lib/lintrk';
 
 const reviews = [
   {

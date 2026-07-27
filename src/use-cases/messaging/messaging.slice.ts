@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Conversation, ConversationType } from '@/src/api/types';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import { notificationsActions } from '../notifications';
-import { Conversation, ConversationType } from 'src/api/types';
-import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   getSelectedConversationAdapter,
   getConversationsAdapter,

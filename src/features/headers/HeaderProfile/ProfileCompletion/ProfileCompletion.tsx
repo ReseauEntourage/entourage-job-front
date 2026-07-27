@@ -5,7 +5,7 @@ import { selectOnboardingCurrentStep } from '@/src/use-cases/onboardingOld';
 import {
   profileCompletionActions,
   selectProfileCompletionRate,
-} from 'src/use-cases/profile-completion';
+} from '@/src/use-cases/profile-completion';
 import {
   StyledHeader,
   StyledProfileCompletion,
@@ -35,7 +35,7 @@ export const ProfileCompletion = () => {
         </Text>
       </StyledHeader>
       <StyledProgressionContainer>
-        <StyledProgression completionRate={completionRate} />
+        <StyledProgression $completionRate={completionRate} />
       </StyledProgressionContainer>
     </StyledProfileCompletion>
   );

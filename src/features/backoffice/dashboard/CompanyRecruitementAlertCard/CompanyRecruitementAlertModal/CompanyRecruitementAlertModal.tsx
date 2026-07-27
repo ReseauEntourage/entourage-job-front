@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { RecruitementAlertDto } from '@/src/api/types';
+import { Contract } from '@/src/constants';
 import { DepartmentName } from '@/src/constants/departements';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
 import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
-import { Contract } from 'src/constants';
-import { createRecruitementAlertAction } from 'src/use-cases/recruitement-alerts';
+import { createRecruitementAlertAction } from '@/src/use-cases/recruitement-alerts';
 import {
   formSchema,
   RecruitementAlertForm,

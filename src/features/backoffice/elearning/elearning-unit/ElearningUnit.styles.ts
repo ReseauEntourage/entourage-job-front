@@ -2,18 +2,18 @@ import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
 export const StyledElearningUnitContent = styled.div<{
-  noPadding?: boolean;
+  $noPadding?: boolean;
 }>`
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  padding: ${(props) => (props.noPadding ? '0' : '30px')};
+  padding: ${(props) => (props.$noPadding ? '0' : '30px')};
   gap: 16px;
 `;
 
 export const StyledElearningUnitVideoFrame = styled.div<{
-  isShorts: boolean;
+  $isShorts: boolean;
 }>`
   display: flex;
   justify-content: center;
@@ -28,7 +28,7 @@ export const StyledElearningUnitVideoFrame = styled.div<{
   */
   .video-inner {
     width: 100%;
-    max-width: ${(props) => (props.isShorts ? '360px' : '640px')};
+    max-width: ${(props) => (props.$isShorts ? '360px' : '640px')};
   }
 `;
 

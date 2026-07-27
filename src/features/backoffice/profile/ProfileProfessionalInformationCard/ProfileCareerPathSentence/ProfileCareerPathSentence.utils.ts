@@ -1,4 +1,4 @@
-import { UserProfileSectorOccupation } from 'src/api/types';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 
 export const getSectorOccupationLabels = (
   sectorOccupations?: UserProfileSectorOccupation[]

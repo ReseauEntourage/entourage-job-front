@@ -5,9 +5,9 @@ import Script from 'next/script';
 import React from 'react';
 import { NotificationsContainer } from '@/src/components/ui/Notification';
 import { Footer } from '@/src/features/partials/Footer';
+import { addPrefix } from '@/src/utils';
 import { NavConnected } from '../../features/navs/NavConnected';
 import { NavPublic } from '../../features/navs/NavPublic';
-import { addPrefix } from 'src/utils';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;

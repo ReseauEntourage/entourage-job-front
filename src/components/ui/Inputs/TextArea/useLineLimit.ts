@@ -1,6 +1,6 @@
 import { useWindowWidth } from '@react-hook/window-size';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { usePrevious } from 'src/hooks/utils';
+import { usePrevious } from '@/src/hooks/utils';
 
 export function useLineLimit(
   value: string,

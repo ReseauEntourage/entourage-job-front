@@ -10,10 +10,9 @@
     "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "baseUrl": "./",
     "types": ["cypress", "jest", "node"],
     "noImplicitAny": false,
     "plugins": [

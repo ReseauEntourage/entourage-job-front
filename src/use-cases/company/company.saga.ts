@@ -1,9 +1,9 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
+import { Api } from '@/src/api';
 import { COMPANIES_LIMIT } from '@/src/constants';
 import { assertIsDefined } from '@/src/utils/asserts';
 import { currentUserActions } from '../current-user';
 import { notificationsActions } from '../notifications';
-import { Api } from 'src/api';
 import {
   fetchCompaniesSelectors,
   selectCompaniesHasFetchedAll,

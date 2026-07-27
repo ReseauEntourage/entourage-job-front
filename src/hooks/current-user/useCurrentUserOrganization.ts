@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   currentUserActions,
   selectCurrentUserOrganization,
   selectFetchCurrentOrganizationStatus,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 
 export function useCurrentUserOrganization() {
   const dispatch = useDispatch();

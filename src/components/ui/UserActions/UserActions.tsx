@@ -4,10 +4,10 @@ import { UserRoles } from '@/src/constants/users';
 import { ProfileReportUserModal } from '@/src/features/backoffice/profile/ProfileReportUserModal/ProfileReportUserModal';
 import { useHeaderProfile } from '@/src/features/headers/HeaderProfile/useHeaderProfile';
 import { openModal } from '@/src/features/modals/Modal';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import { ButtonIcon } from '../Button';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { LucidIcon } from '../Icons/LucidIcon';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledUserActionsBtnContainer } from './UserActions.styles';
 
 interface UserActionsProps {

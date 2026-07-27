@@ -1,13 +1,17 @@
 import React, { useCallback, useMemo } from 'react';
 import { RecruitementAlert, RecruitementAlertDto } from '@/src/api/types';
 import {
+  Contract,
+  CONTRACTS,
+  WORKING_EXPERIENCE_FILTERS,
+} from '@/src/constants';
+import {
   DepartmentName,
   DEPARTMENTS_FILTERS,
 } from '@/src/constants/departements';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
-import { Contract, CONTRACTS, WORKING_EXPERIENCE_FILTERS } from 'src/constants';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
 import {
   formSchema,
   RecruitementAlertForm,

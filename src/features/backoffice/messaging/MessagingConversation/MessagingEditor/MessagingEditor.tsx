@@ -4,16 +4,16 @@ import { Button, ButtonIcon } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { FileInput } from '@/src/components/ui/Inputs';
 import { COLORS } from '@/src/constants/styles';
-import { GA_TAGS } from 'src/constants/tags';
-import { useIsMobile } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from '@/src/constants/tags';
+import { useIsMobile } from '@/src/hooks/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   messagingActions,
   selectNewMessage,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectShouldGiveFeedback,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import { Attachment } from './Attachment/Attachment';
 import {
   MessagingEditorContainer,
@@ -134,7 +134,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
         </StyledAttachementInfoContainer>
       )}
       <MessagingMessageForm
-        blur={shouldGiveFeedback}
+        $blur={shouldGiveFeedback}
         className={isMobile ? 'mobile' : ''}
       >
         <FileInput

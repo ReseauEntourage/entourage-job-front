@@ -1,4 +1,3 @@
-import { FormSchema } from '@/src/features/forms/FormSchema';
 import {
   CandidateAccommodation,
   CandidateResource,
@@ -14,7 +13,8 @@ import {
   WORKING_EXPERIENCE_FILTERS,
   YesNoJNSPRValue,
   YES_NO_JNSPR_FILTERS,
-} from 'src/constants';
+} from '@/src/constants';
+import { FormSchema } from '@/src/features/forms/FormSchema';
 
 export const formReferingSocialSituation: FormSchema<{
   nationality: Nationality;

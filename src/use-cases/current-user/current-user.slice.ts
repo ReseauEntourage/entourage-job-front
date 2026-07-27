@@ -10,9 +10,9 @@ import {
   User,
   UserAchievement,
   UserStats,
-} from 'src/api/types';
-import { RequestState, SliceRootState } from 'src/store/utils';
-import { assertIsDefined } from 'src/utils/asserts';
+} from '@/src/api/types';
+import { RequestState, SliceRootState } from '@/src/store/utils';
+import { assertIsDefined } from '@/src/utils/asserts';
 import {
   fetchCompleteUserAdapter,
   fetchCurrentAchievementsAdapter,

@@ -3,9 +3,9 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from 'axios';
-import { DocumentNameType } from 'src/constants';
-import { AdminZone } from 'src/constants/departements';
-import { UserRoles } from 'src/constants/users';
+import { DocumentNameType } from '@/src/constants';
+import { AdminZone } from '@/src/constants/departements';
+import { UserRoles } from '@/src/constants/users';
 import { addAxiosInterceptors } from './interceptor';
 import {
   AchievementProgressionEntry,

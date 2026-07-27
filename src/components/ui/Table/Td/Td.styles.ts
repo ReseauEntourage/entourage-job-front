@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledTd = styled.td`
   border-top: 1px solid ${COLORS.lightGray};

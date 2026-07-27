@@ -70,13 +70,13 @@ export function FileInput({
   }
 
   return (
-    <StyledFileInputGroupForm disabled={disabled} noPadding={noPadding}>
+    <StyledFileInputGroupForm disabled={disabled} $noPadding={noPadding}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
         </StyledInputLabel>
       )}
-      <StyledFileInputWrapper noPadding={noPadding}>
+      <StyledFileInputWrapper $noPadding={noPadding}>
         {activator || defaultActivator}
         {!noPreview && value && (
           <>

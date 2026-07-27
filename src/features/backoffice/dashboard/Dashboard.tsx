@@ -2,17 +2,17 @@ import React, { useMemo } from 'react';
 import { Section } from '@/src/components/ui';
 import { H1 } from '@/src/components/ui/Headings';
 import { CompanyGoal } from '@/src/constants/company';
+import { getNormalUserRoles, UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { isRoleIncluded } from '@/src/utils';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
 import { DashboardInviteToReferCandidate } from '../referer/dashboard/DashboardInviteToReferCandidate/DashboardInviteToReferCandidate';
 import { DashboardReferedCandidateList } from '../referer/dashboard/DashboardReferedCandidateList/DashboardReferedCandidateList';
-import { getNormalUserRoles, UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
-import { useIsDesktop } from 'src/hooks/utils';
-import { isRoleIncluded } from 'src/utils';
 import { CompanyRecruitementAlertCard } from './CompanyRecruitementAlertCard';
 import {
   StyledDashboardLeftColumn,

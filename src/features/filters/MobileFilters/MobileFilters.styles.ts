@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 interface StyledMobileFilterDrawerProps {
-  isOpen: boolean;
+  $isOpen: boolean;
 }
 
 export const StyledMobileFilters = styled.div`
@@ -33,7 +33,7 @@ export const StyledMobileFilterDrawer = styled.div<StyledMobileFilterDrawerProps
   width: 100vw;
   background-color: ${COLORS.white};
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
+  transform: translateX(${({ $isOpen }) => ($isOpen ? '0' : '-100%')});
   transition: transform 0.3s ease-in-out;
   z-index: 1050;
   display: flex;
@@ -49,8 +49,8 @@ export const StyledMobileFilterOverlay = styled.div<StyledMobileFilterDrawerProp
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1040;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   transition:
     opacity 0.3s ease-in-out,
     visibility 0.3s ease-in-out;

@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import { TextSize } from '../Text';
 import { sizesPx } from '../Text/Text.utils';
-import { COLORS } from 'src/constants/styles';
 
 export const StyledDropdown = styled.div`
   position: relative;
@@ -9,7 +9,7 @@ export const StyledDropdown = styled.div`
 `;
 
 export const StyledDropdownMenu = styled.div<{
-  openDirection: 'left' | 'right';
+  $openDirection: 'left' | 'right';
   size?: 'small' | 'large';
 }>`
   display: flex;
@@ -24,22 +24,22 @@ export const StyledDropdownMenu = styled.div<{
   min-width: ${({ size }) => {
     return size === 'large' ? '250px' : '200px';
   }};
-  ${({ openDirection }) => {
-    return openDirection === 'right' ? 'left: 0;' : '';
+  ${({ $openDirection }) => {
+    return $openDirection === 'right' ? 'left: 0;' : '';
   }}
-  ${({ openDirection }) => {
-    return openDirection === 'left' ? 'right: 0;' : '';
+  ${({ $openDirection }) => {
+    return $openDirection === 'left' ? 'right: 0;' : '';
   }}
   overflow: hidden;
 `;
 
 export const StyledDropdownMenuItem = styled.div<{
-  device: 'desktop' | 'mobile';
+  $device: 'desktop' | 'mobile';
   size?: TextSize;
 }>`
   color: ${COLORS.black};
-  font-size: ${({ device, size }) =>
-    (size ? sizesPx[device][size] : undefined) || sizesPx[device].normal}px;
+  font-size: ${({ $device, size }) =>
+    (size ? sizesPx[$device][size] : undefined) || sizesPx[$device].normal}px;
   cursor: pointer;
   padding: 15px 20px;
   &:hover {

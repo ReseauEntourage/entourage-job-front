@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS } from 'src/constants/styles';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledAlertContent = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section } from '@/src/components/ui';
 import { H2, H5 } from '@/src/components/ui/Headings';
-import { Color } from 'src/constants/styles';
+import { Color } from '@/src/constants/styles';
 import { IconTitleTextItem } from './IconTitleTextItem';
 import {
   StyledSectionContent,
@@ -29,9 +29,9 @@ export const RowIconTitleText = ({
   sectionBgColor,
 }: RowIconTitleTextProps) => {
   return (
-    <StyledRowIconTitleTextBackground backgroundColor={backgroundColor}>
+    <StyledRowIconTitleTextBackground $backgroundColor={backgroundColor}>
       <Section>
-        <StyledSectionContent bgColor={sectionBgColor}>
+        <StyledSectionContent $bgColor={sectionBgColor}>
           {title && (
             <H2 title={title} color="primaryBlue" center weight="bold" />
           )}

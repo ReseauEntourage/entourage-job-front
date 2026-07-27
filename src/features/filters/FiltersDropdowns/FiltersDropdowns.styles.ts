@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
 
 export const StyledDropdownContainer = styled.div<{
-  smallSelectors?: boolean;
+  $smallSelectors?: boolean;
   disabled?: boolean;
-  showSeparator?: boolean;
+  $showSeparator?: boolean;
 }>`
   display: inline;
 
@@ -18,7 +18,7 @@ export const StyledDropdownContainer = styled.div<{
 
   /* smallSelectors */
   ${(props) =>
-    props.smallSelectors &&
+    props.$smallSelectors &&
     `
       padding: 0;
     `}
@@ -31,7 +31,7 @@ export const StyledDropdownContainer = styled.div<{
       `}
 
       ${(props) =>
-        props.showSeparator &&
+        props.$showSeparator &&
         `
       border-left: 1px solid #e0e0e0;
       `}

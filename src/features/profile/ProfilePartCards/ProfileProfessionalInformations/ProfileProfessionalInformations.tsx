@@ -1,11 +1,11 @@
 import React from 'react';
+import { Company, Skill, UserProfileSectorOccupation } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { UserRoles } from '@/src/constants/users';
 import { ProfileCareerPathSentence } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
-import { Company, Skill, UserProfileSectorOccupation } from 'src/api/types';
 import { StyledContentContainer } from './ProfileProfessionalInformations.styles';
 
 interface ProfileProfessionalInformationsProps {

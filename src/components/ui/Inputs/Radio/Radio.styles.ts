@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledRadioContainer = styled.div<{ disabled?: boolean }>`
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import { commonInputContainerStyles } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
 export const StyledCheckbox = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}

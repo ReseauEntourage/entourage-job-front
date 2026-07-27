@@ -6,9 +6,9 @@ import {
   Value,
 } from 'react-phone-number-input';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
+import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
 
 interface PhoneInputProps extends CommonInputProps<

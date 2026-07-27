@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { UserRoles } from '@/src/constants/users';
-import { fetchUserSelectors } from 'src/use-cases/current-user';
+import { fetchUserSelectors } from '@/src/use-cases/current-user';
 import {
   OnboardingStatus,
   onboardingExcludedRoles,

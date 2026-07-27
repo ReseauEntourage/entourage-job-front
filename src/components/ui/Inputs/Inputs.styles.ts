@@ -1,7 +1,7 @@
 import { styled, css } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
+import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { LINE_HEIGHT_MULTIPLIER, sizesPx } from '../Text/Text.utils';
-import { COLORS } from 'src/constants/styles';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 
 export const commonMenuOptionStyles = css`
   width: 100%;
@@ -42,11 +42,11 @@ export const commonInputStyles = css`
   min-height: 30px;
   box-sizing: border-box;
 
-  :hover {
+  &:hover {
     border: 2px solid ${COLORS.darkGray};
   }
 
-  :focus {
+  &:focus {
     outline: none;
     border: 2px solid ${COLORS.primaryBlue};
   }

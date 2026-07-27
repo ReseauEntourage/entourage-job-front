@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS } from 'src/constants/styles';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledInputsContainer = styled.div`
   flex: 1;
@@ -10,7 +10,7 @@ export const StyledInputsContainer = styled.div`
   .field-container {
     flex: 1;
     width: 100%;
-    :not(:last-child) {
+    &:not(:last-child) {
       margin-bottom: 18px;
     }
   }
@@ -21,7 +21,7 @@ export const StyledInputsContainer = styled.div`
     flex-direction: row;
     .field-container {
       width: auto;
-      :not(:last-child) {
+      &:not(:last-child) {
         margin-bottom: 0;
         margin-right: 36px;
       }

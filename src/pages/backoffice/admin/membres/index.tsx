@@ -2,15 +2,15 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Section } from '@/src/components/ui';
+import { UserRoles } from '@/src/constants/users';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { MemberList } from '@/src/features/backoffice/admin/members/MemberList';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useRoles } from 'src/hooks/queryParams/useRoles';
-import { useFilters } from 'src/hooks/useFilters';
-import { usePrevious } from 'src/hooks/utils';
-import { mutateTypeFilterDependingOnRole } from 'src/utils/Filters';
-import { isRoleIncluded } from 'src/utils/Finding';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useRoles } from '@/src/hooks/queryParams/useRoles';
+import { useFilters } from '@/src/hooks/useFilters';
+import { usePrevious } from '@/src/hooks/utils';
+import { mutateTypeFilterDependingOnRole } from '@/src/utils/Filters';
+import { isRoleIncluded } from '@/src/utils/Finding';
 
 const MembersAdmin = () => {
   const { replace, query } = useRouter();

@@ -1,5 +1,5 @@
 import { styled, css } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import { TagSize, TagVariant } from './Tag';
 
 const styleVariants = {
@@ -57,7 +57,7 @@ const sizeVariants = {
 
 export const StyledTag = styled.div<{
   size: TagSize;
-  variant: TagVariant;
+  $variant: TagVariant;
 }>`
   display: inline-flex;
   align-items: center;
@@ -67,6 +67,6 @@ export const StyledTag = styled.div<{
   border: 1px solid;
   font-weight: 400;
   overflow-wrap: normal;
-  ${({ variant }) => styleVariants[variant]}
+  ${({ $variant }) => styleVariants[$variant]}
   ${({ size }) => sizeVariants[size]}
 `;

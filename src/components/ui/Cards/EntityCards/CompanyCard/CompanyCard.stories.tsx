@@ -2,8 +2,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import { UserRoles } from 'src/constants/users';
-import { store } from 'src/store/store';
+import { UserRoles } from '@/src/constants/users';
+import { store } from '@/src/store/store';
 import { CompanyCard, CompanyCardProps } from './CompanyCard';
 
 const Component = (props: CompanyCardProps) => {

@@ -6,12 +6,12 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
-import { isRoleIncluded } from '@/src/utils';
-import { getSectorOccupationLabels } from 'src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
+import { getSectorOccupationLabels } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import {
   selectCurrentUser,
   selectCurrentUserProfile,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
+import { isRoleIncluded } from '@/src/utils';
 import { Item } from './Item/Item';
 import {
   MessagingQuickRepliesContainer,

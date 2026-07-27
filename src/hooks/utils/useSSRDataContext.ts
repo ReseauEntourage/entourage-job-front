@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyToFix } from '@/src/utils/Types';
 
 interface ContextValue {
   me?: AnyToFix;

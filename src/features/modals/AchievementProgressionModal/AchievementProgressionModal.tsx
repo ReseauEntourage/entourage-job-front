@@ -1,13 +1,13 @@
 import React from 'react';
+import { AchievementProgressionEntry, CriterionStat } from '@/src/api/types';
+import { LucidIcon, Text, Tooltip } from '@/src/components/ui';
+import { ProgressBar } from '@/src/components/ui/ProgressBar/ProgressBar';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { ACHIEVEMENT_TOOLTIP } from '../../backoffice/dashboard/DashboardAchievementProgression/achievement.icons';
 import { useModalContext } from '../Modal';
 import { PrettyModal } from '../PrettyModal/PrettyModal';
-import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
-import { LucidIcon, Text, Tooltip } from 'src/components/ui';
-import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
 import {
   StyledCriteriaList,
   StyledCriterionHeader,

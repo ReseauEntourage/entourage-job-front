@@ -1,5 +1,5 @@
-import { FeatureKey } from 'src/api/types';
-import { assertIsDefined } from 'src/utils/asserts';
+import { FeatureKey } from '@/src/api/types';
+import { assertIsDefined } from '@/src/utils/asserts';
 import {
   fetchCurrentUserSocialSituationAdapter,
   fetchStaffContactAdapter,

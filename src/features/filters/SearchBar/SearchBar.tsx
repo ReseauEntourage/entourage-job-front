@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { Filter, FilterConstant, FilterObject } from '@/src/constants/utils';
+import { FiltersCheckboxes } from '@/src/features/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from '@/src/features/filters/FiltersDropdowns/FiltersDropdowns';
-import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
-import { FiltersCheckboxes } from 'src/features/filters/FiltersCheckboxes';
-import { FiltersOptions } from 'src/features/filters/FiltersOptions';
-import { gaEvent } from 'src/lib/gtag';
+import { FiltersOptions } from '@/src/features/filters/FiltersOptions';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledSearchBar,
   StyledSearchBarClearButton,
@@ -99,7 +99,7 @@ export const SearchBar = ({
 
   return (
     <StyledSearchBarContainer>
-      <StyledSearchBar light={light}>
+      <StyledSearchBar $light={light}>
         <form className="uk-width-expand">
           <StyledSearchBarInputContainer>
             <StyledSearchBarInput

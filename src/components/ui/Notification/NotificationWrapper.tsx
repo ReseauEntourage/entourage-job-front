@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Transition } from 'react-transition-group';
-import { notificationsActions } from 'src/use-cases/notifications';
-import { asyncTimeout } from 'src/utils/asyncTimeout';
+import { notificationsActions } from '@/src/use-cases/notifications';
+import { asyncTimeout } from '@/src/utils/asyncTimeout';
 import { Notification } from './Notification';
 import { NOTIF_WIDTH, StyledNotificationWrapper } from './Notification.styles';
 

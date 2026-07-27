@@ -8,7 +8,7 @@ interface SubtitleProps extends TextProps {
 
 export const Subtitle = ({ children, center, ...restProps }: SubtitleProps) => {
   return (
-    <StyledSubtitle center={center}>
+    <StyledSubtitle $center={center}>
       <Text {...restProps} center={center}>
         {children}
       </Text>

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS, STATUS_COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, STATUS_COLORS } from '@/src/constants/styles';
 
 export const NOTIF_WIDTH = '450px';
 

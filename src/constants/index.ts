@@ -3,8 +3,8 @@ import {
   ADMIN_ZONES,
   ADMIN_ZONES_FILTERS,
   REGIONS_FILTERS,
-} from 'src/constants/departements';
-import { GA_TAGS } from 'src/constants/tags';
+} from '@/src/constants/departements';
+import { GA_TAGS } from '@/src/constants/tags';
 import { GENDERS_FILTERS } from './genders';
 import { Filter, FilterConstant } from './utils';
 

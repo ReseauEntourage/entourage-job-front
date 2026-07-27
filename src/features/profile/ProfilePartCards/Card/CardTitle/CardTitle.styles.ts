@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
-export const StyledIconContainer = styled.div<{ isCompleted: boolean }>`
+export const StyledIconContainer = styled.div<{ $isCompleted: boolean }>`
   display: flex;
-  background: ${({ isCompleted }) =>
-    isCompleted ? COLORS.green : COLORS.lightRed};
+  background: ${({ $isCompleted }) =>
+    $isCompleted ? COLORS.green : COLORS.lightRed};
   border-radius: 50%;
   width: 20px;
   height: 20px;

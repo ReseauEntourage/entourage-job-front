@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/src/components/ui/Button';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { Filter, FilterObject } from 'src/constants/utils';
+import { Filter, FilterObject } from '@/src/constants/utils';
 import { MobileFilterList } from './MobileFilterList';
 import { MobileFilterOptions } from './MobileFilterOptions';
 import {
@@ -68,8 +68,8 @@ export const MobileFilterDrawer = ({
 
   return (
     <StyledMobileFilters>
-      <StyledMobileFilterOverlay isOpen={isOpen} onClick={onClose} />
-      <StyledMobileFilterDrawer isOpen={isOpen}>
+      <StyledMobileFilterOverlay $isOpen={isOpen} onClick={onClose} />
+      <StyledMobileFilterDrawer $isOpen={isOpen}>
         <StyledMobileFilterHeader>
           <Button
             size="small"

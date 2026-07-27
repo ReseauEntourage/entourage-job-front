@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   referingActions,
   selectReferingConfirmationStepContent,
-} from 'src/use-cases/refering';
+} from '@/src/use-cases/refering';
 
 export function useConfirmation() {
   const dispatch = useDispatch();

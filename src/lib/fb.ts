@@ -1,4 +1,4 @@
-import { AnyCantFix } from 'src/utils/Types';
+import { AnyCantFix } from '@/src/utils/Types';
 
 declare global {
   interface Window {

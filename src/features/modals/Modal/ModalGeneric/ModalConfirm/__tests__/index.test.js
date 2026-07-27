@@ -5,9 +5,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 
+import { BREAKPOINTS } from '@/src/constants/styles';
 import { ModalsListener, openModal } from '@/src/features/modals/Modal';
 import { ModalConfirm } from '../ModalConfirm';
-import { BREAKPOINTS } from 'src/constants/styles';
 
 jest.mock('@react-hook/window-size', () => {
   return {
@@ -17,8 +17,8 @@ jest.mock('@react-hook/window-size', () => {
 
 jest.mock('react-modal');
 
-jest.mock('src/features/modals/Modal', () => {
-  const modalModule = jest.requireActual('src/features/modals/Modal');
+jest.mock('@/src/features/modals/Modal', () => {
+  const modalModule = jest.requireActual('@/src/features/modals/Modal');
   return {
     ...modalModule,
     Modal: ({ children, id }) => {

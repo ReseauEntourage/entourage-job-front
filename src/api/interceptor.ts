@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { STORAGE_KEYS } from 'src/constants';
+import { STORAGE_KEYS } from '@/src/constants';
 
 const isServer = typeof window === 'undefined';
 

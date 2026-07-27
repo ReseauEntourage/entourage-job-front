@@ -1,17 +1,17 @@
-import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
-import { CompanyGoal, CompanyUserRole } from '../constants/company';
-import { ContactTypeEnum } from '../constants/contactTypes';
-import { PublicSensibilise, EventMode, EventType } from '../constants/events';
-import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
   Contract as ContractValue,
   HeardAboutValue,
   WorkingExperience,
-} from 'src/constants';
-import { AdminZone, DepartmentName } from 'src/constants/departements';
-import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
-import { FilterConstant } from 'src/constants/utils';
+} from '@/src/constants';
+import { AdminZone, DepartmentName } from '@/src/constants/departements';
+import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
+import { FilterConstant } from '@/src/constants/utils';
+import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
+import { CompanyGoal, CompanyUserRole } from '../constants/company';
+import { ContactTypeEnum } from '../constants/contactTypes';
+import { PublicSensibilise, EventMode, EventType } from '../constants/events';
+import { Genders } from '../constants/genders';
 
 export type SocialMedia =
   'facebook' | 'linkedin' | 'twitter' | 'whatsapp' | 'other';

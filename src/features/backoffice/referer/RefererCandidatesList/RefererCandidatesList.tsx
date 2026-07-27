@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { Section } from '@/src/components/ui';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
+import { useCurrentUserReferredUsers } from '@/src/hooks/current-user/useCurrentUserReferredUsers';
 import { LoadingScreen } from '../../LoadingScreen';
-import { useCurrentUserReferredUsers } from 'src/hooks/current-user/useCurrentUserReferredUsers';
 import { RefererCandidatesTable } from './RefererCandidatesTable/RefererCandidatesTable';
 import { RefererCandidatesTableItem } from './RefererCandidatesTable/RefererCandidatesTable.types';
 

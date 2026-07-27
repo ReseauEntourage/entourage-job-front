@@ -1,13 +1,13 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
-export const ContainerStyled = styled.div<{ isActive: boolean }>`
+export const ContainerStyled = styled.div<{ $isActive: boolean }>`
   display: flex;
   gap: 10px;
   padding: 20px 15px;
   cursor: pointer;
   background: ${(props) => {
-    return props.isActive ? COLORS.hoverBlue : COLORS.white;
+    return props.$isActive ? COLORS.hoverBlue : COLORS.white;
   }};
 
   &:hover {
@@ -35,7 +35,7 @@ export const StyledUnreadDot = styled.span`
   border: 2px solid ${COLORS.white};
 `;
 
-export const RightColumn = styled.div<{ highlight: boolean }>`
+export const RightColumn = styled.div<{ $highlight: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ export const RightColumn = styled.div<{ highlight: boolean }>`
 
   p.preview-last-message {
     color: ${(props) => {
-      return props.highlight ? COLORS.black : COLORS.mediumGray;
+      return props.$highlight ? COLORS.black : COLORS.mediumGray;
     }};
     font-size: 12px;
     text-overflow: ellipsis;
@@ -52,7 +52,7 @@ export const RightColumn = styled.div<{ highlight: boolean }>`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     font-weight: ${(props) => {
-      return props.highlight ? '700' : '400';
+      return props.$highlight ? '700' : '400';
     }};
   }
 `;

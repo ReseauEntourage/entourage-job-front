@@ -3,15 +3,15 @@ import { useDispatch } from 'react-redux';
 
 import { v4 as uuid } from 'uuid';
 import { isEmail } from 'validator';
+import { Api } from '@/src/api';
 import { Section } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
 import { H3 } from '@/src/components/ui/Headings';
 import { CheckBox } from '@/src/components/ui/Inputs/CheckBox';
 import { TextInput } from '@/src/components/ui/Inputs/TextInput';
-import { Api } from 'src/api';
-import { NEWSLETTER_TAGS } from 'src/constants';
-import { gaEvent } from 'src/lib/gtag';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { NEWSLETTER_TAGS } from '@/src/constants';
+import { gaEvent } from '@/src/lib/gtag';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { StyledNLForm } from './NewsletterPartial.styles';
 
 const uuidValue = uuid();

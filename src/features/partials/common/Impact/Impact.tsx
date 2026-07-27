@@ -7,8 +7,8 @@ import {
 import { H3 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from '@/src/constants/tags';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledImpactContainer,
   StyledInsight,
@@ -161,9 +161,9 @@ export const Impact = ({
       <H3 title={contentAs[as].title} center />
       <StyledImpactContainer>
         <StyledInsightsContainer
-          withIllu={withIllu}
-          invertBgColor={invertBgColor}
-          nbColumns={contentAs[as].insights.length}
+          $withIllu={withIllu}
+          $invertBgColor={invertBgColor}
+          $nbColumns={contentAs[as].insights.length}
         >
           {contentAs[as].insights.map((insight, index) => (
             <StyledInsight key={index}>

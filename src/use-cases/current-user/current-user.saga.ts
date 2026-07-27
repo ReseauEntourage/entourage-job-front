@@ -1,13 +1,13 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Api } from '@/src/api';
 import { STORAGE_KEYS } from '@/src/constants';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
-import { notificationsActions } from '../notifications';
-import { Api } from 'src/api';
 import {
   authenticationActions,
   selectAccessToken,
-} from 'src/use-cases/authentication';
-import { assertIsDefined } from 'src/utils/asserts';
+} from '@/src/use-cases/authentication';
+import { assertIsDefined } from '@/src/utils/asserts';
+import { notificationsActions } from '../notifications';
 import {
   selectCurrentUser,
   selectCurrentUserId,

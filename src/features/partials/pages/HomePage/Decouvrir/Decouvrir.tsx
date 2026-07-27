@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Text } from '@/src/components/ui';
+import { GA_TAGS } from '@/src/constants/tags';
 import { SimpleVideoText } from '@/src/features/partials/utils/SimpleImageText';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from '@/src/lib/gtag';
 
 export const Decouvrir = () => {
   return (

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledBackofficeBackground = styled.div`
   background-color: ${COLORS.lightGray};

@@ -18,7 +18,7 @@ export const DropdownMenu = ({
   return (
     <>
       {isOpen && (
-        <StyledDropdownMenu openDirection={openDirection} size={size}>
+        <StyledDropdownMenu $openDirection={openDirection} size={size}>
           {children}
         </StyledDropdownMenu>
       )}

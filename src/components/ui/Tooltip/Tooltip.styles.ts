@@ -1,5 +1,5 @@
 import { styled, css } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
@@ -33,13 +33,13 @@ const placementTransform = (placement: TooltipPlacement) => {
 
 export const StyledTooltipContent = styled.div<{
   width?: number;
-  top: number;
-  left: number;
-  placement: TooltipPlacement;
+  $top: number;
+  $left: number;
+  $placement: TooltipPlacement;
 }>`
   position: fixed;
-  top: ${({ top }) => top}px;
-  left: ${({ left }) => left}px;
+  top: ${({ $top }) => $top}px;
+  left: ${({ $left }) => $left}px;
   width: ${({ width }) => (width ? `${width}px` : '300px')};
   padding: 14px 16px;
   background: ${COLORS.white};
@@ -50,5 +50,5 @@ export const StyledTooltipContent = styled.div<{
   line-height: 1.5;
   color: ${COLORS.black};
   z-index: 9999;
-  ${({ placement }) => placementTransform(placement)}
+  ${({ $placement }) => placementTransform($placement)}
 `;

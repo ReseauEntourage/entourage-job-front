@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
-import { updateUserProfilePictureSelectors } from 'src/use-cases/current-user';
+import { ReduxRequestEvents } from '@/src/constants';
+import { updateUserProfilePictureSelectors } from '@/src/use-cases/current-user';
 
 export function useImageFallback({
   userId,

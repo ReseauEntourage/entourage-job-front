@@ -3,6 +3,8 @@ import { v4 as uuid } from 'uuid';
 import { Button, Card, LegacyImg } from '@/src/components/ui';
 import { H6 } from '@/src/components/ui/Headings';
 import { UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 import {
   StyledDashboardArticle,
   StyledDashboardArticleImage,
@@ -10,8 +12,6 @@ import {
   StyledDashboardCardContentContainer,
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
 
 enum Context {
   COACH = 'COACH',

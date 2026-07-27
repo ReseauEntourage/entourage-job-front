@@ -4,7 +4,7 @@ import {
   OnboardingFormData,
   OnboardingStepContent,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
-import { assertIsDefined } from 'src/utils/asserts';
+import { assertIsDefined } from '@/src/utils/asserts';
 import { RootState } from './onboarding.slice';
 import {
   flattenOnboardingDataByFlow,

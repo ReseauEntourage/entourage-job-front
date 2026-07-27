@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 const WIDTH = 45;
 const HEIGHT = 25;
@@ -43,14 +43,14 @@ export const StyledToggle = styled.div`
   }
 `;
 
-export const StyledSlider = styled.div<{ isToggled: boolean }>`
+export const StyledSlider = styled.div<{ $isToggled: boolean }>`
   flex-shrink: 0;
   position: relative;
   cursor: pointer;
   width: ${WIDTH}px;
   height: ${HEIGHT}px;
-  background-color: ${({ isToggled }) =>
-    isToggled ? COLORS.primaryBlue : COLORS.darkGray};
+  background-color: ${({ $isToggled }) =>
+    $isToggled ? COLORS.primaryBlue : COLORS.darkGray};
   border-radius: ${HEIGHT_ROUNDED}px;
   transition: background-color 0.4s;
 
@@ -64,8 +64,8 @@ export const StyledSlider = styled.div<{ isToggled: boolean }>`
     background-color: white;
     border-radius: 50%;
     transition: transform 0.4s;
-    transform: ${({ isToggled }) =>
-      isToggled ? `translateX(${TRANSLATE_X_CHECKED}px)` : 'none'};
+    transform: ${({ $isToggled }) =>
+      $isToggled ? `translateX(${TRANSLATE_X_CHECKED}px)` : 'none'};
   }
 `;
 

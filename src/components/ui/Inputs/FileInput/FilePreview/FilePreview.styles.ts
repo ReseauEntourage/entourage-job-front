@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledFileInfosContainer = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const StyledDeleteIconContainer = styled.div`
   border: ${COLORS.primaryBlue} 1px solid;
   transition: 0.3s ease-in-out;
   cursor: pointer;
-  :hover {
+  &:hover {
     background-color: ${COLORS.lightGray};
   }
 `;

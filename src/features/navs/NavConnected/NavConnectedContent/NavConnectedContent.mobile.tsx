@@ -8,15 +8,15 @@ import {
   OffCanvasRef,
 } from '@/src/components/ui/OffCanvas/OffCanvas';
 import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
-import { useOffCanvas } from '@/src/hooks/useOffCanvas';
-import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import {
   StyledMessagingIconContainer,
   StyledNavContainerMobile,
-} from 'src/features/headers/Header.styles';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { gaEvent } from 'src/lib/gtag';
+} from '@/src/features/headers/Header.styles';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useOffCanvas } from '@/src/hooks/useOffCanvas';
+import { gaEvent } from '@/src/lib/gtag';
+import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import { StyledConnectedItemMobile } from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
 import { SubMenu } from './SubMenu';

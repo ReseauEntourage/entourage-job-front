@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
+import { Api } from '@/src/api';
+import { Organization, OrganizationDto } from '@/src/api/types';
+import { Actions } from '@/src/constants/utils';
 import { useOnOrganizationFormSubmit } from '@/src/features/backoffice/admin/useOnOrganizationFormSubmit';
+import { formAddOrganization } from '@/src/features/forms/schemas/formAddOrganization';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { Api } from 'src/api';
-import { Organization, OrganizationDto } from 'src/api/types';
-import { Actions } from 'src/constants/utils';
-import { formAddOrganization } from 'src/features/forms/schemas/formAddOrganization';
 
 interface EditOrganizationModalProps {
   organization: Organization;

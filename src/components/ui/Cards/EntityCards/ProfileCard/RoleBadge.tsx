@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, BadgeVariant } from '@/src/components/ui/Badge';
 import { Text } from '@/src/components/ui/Text';
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 
 const ROLE_LABELS: Partial<Record<UserRoles, string>> = {
   [UserRoles.CANDIDATE]: 'Candidat',

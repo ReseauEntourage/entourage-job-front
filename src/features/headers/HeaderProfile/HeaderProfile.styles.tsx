@@ -1,5 +1,5 @@
 import { styled, css } from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;

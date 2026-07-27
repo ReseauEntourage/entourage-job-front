@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid } from '@/src/components/ui';
-import { addPrefix } from 'src/utils';
+import { addPrefix } from '@/src/utils';
 
 interface CarouselItemProps {
   index: number;

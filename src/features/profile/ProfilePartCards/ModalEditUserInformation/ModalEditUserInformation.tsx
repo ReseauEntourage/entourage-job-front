@@ -1,18 +1,18 @@
 import React, { useCallback } from 'react';
 import { DefaultValues } from 'react-hook-form';
+import { User, UserProfile } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
-import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { useUpdateUser } from '@/src/hooks/useUpdateUser';
-import { User, UserProfile } from 'src/api/types';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
 import {
   formPersonalDataAsAdmin,
   formPersonalDataAsCandidate,
   formPersonalDataAsCoach,
-} from 'src/features/forms/schemas/formPersonalData';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
+} from '@/src/features/forms/schemas/formPersonalData';
+import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
+import { useUpdateUser } from '@/src/hooks/useUpdateUser';
 
 type PersonalDataFormSchema =
   | typeof formPersonalDataAsCandidate

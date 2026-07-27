@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { LegacyImg, Section, SimpleLink, Grid } from '@/src/components/ui';
+import { PARTNERS } from '@/src/constants/partners';
+import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { SimpleSection } from '@/src/features/partials/pages/Partenaires/SimpleSection';
 import { LogoList } from '@/src/features/partials/utils/LogoList';
-import { PARTNERS } from 'src/constants/partners';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
-import { addPrefix, formatParagraph } from 'src/utils';
+import { gaEvent } from '@/src/lib/gtag';
+import { addPrefix, formatParagraph } from '@/src/utils';
 
 const viewportHeightWithoutHeader = 'calc(100vh - 80px)';
 const viewportHeightWithoutHeaderAndPadding = 'calc(100vh - 220px)';

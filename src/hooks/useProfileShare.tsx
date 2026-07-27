@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { LinkedInSharePreviewModal } from '@/src/features/modals/LinkedInSharePreviewModal/LinkedInSharePreviewModal';
 import { openModal } from '@/src/features/modals/Modal/openModal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { Api } from 'src/api';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 interface UseProfileShareOptions {
   profileId: string;

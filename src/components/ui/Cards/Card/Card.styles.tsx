@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { Color, COLORS } from 'src/constants/styles';
+import { Color, COLORS } from '@/src/constants/styles';
 
 export const StyledCard = styled.div<{
   $borderColor?: string;
@@ -22,16 +22,16 @@ export const StyledCard = styled.div<{
 `;
 
 export const StyledCardTopContainer = styled.div<{
-  isOpen: boolean;
-  isCentered?: boolean;
+  $isOpen: boolean;
+  $isCentered?: boolean;
 }>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 20px 22.5px;
-  ${({ isOpen }) =>
-    isOpen
+  ${({ $isOpen }) =>
+    $isOpen
       ? `
       border-bottom: ${COLORS.gray} solid 1px;
       `

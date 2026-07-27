@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage';
 import { LucidIcon } from '../../Icons';
 import { Text } from '../../Text';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage';
 import {
   StyledRadioContainer,
   StyledRadioDisabledOverlay,

@@ -1,6 +1,6 @@
 import { call, put, takeEvery, takeLatest } from 'typed-redux-saga';
-import { Api } from 'src/api';
-import { slice as messagingSlice } from 'src/use-cases/messaging/messaging.slice';
+import { Api } from '@/src/api';
+import { slice as messagingSlice } from '@/src/use-cases/messaging/messaging.slice';
 import { slice } from './gamification.slice';
 
 const {

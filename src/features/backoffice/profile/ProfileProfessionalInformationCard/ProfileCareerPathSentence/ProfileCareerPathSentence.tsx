@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 import { Text, TextSize, TextWeight } from '@/src/components/ui';
 import { Tag } from '@/src/components/ui/Tag';
 import { UserRoles } from '@/src/constants/users';
-import { UserProfileSectorOccupation } from 'src/api/types';
 
 type CompanyBasic = {
   id: string;
@@ -62,7 +62,7 @@ export const ProfileCareerPathSentence = ({
     sectorOccupations[1].occupation;
   const linkToCompany = company?.admin ? (
     <Link href={`/backoffice/companies/${company.id}`}>
-      <StyledCompanyName withLink>{company.name}</StyledCompanyName>
+      <StyledCompanyName $withLink>{company.name}</StyledCompanyName>
     </Link>
   ) : (
     <StyledCompanyName>{company?.name}</StyledCompanyName>

@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Api } from '@/src/api';
+import { Profile } from '@/src/api/types';
 import { Button } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { Card } from '@/src/components/ui/Cards/Card';
 import { StyledDashboardCardContentContainer } from '@/src/features/backoffice/dashboard/Dashboard.styles';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { NetworkDirectoryUserItem } from '../../../network-directory/NetworkDirectoryItem';
-import { Api } from 'src/api';
-import { Profile } from 'src/api/types';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledDashboardReferedCandidateList } from './DashboardReferedCandidateList.styles';
 
 export const DashboardReferedCandidateList = () => {

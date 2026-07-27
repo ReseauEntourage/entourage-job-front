@@ -63,13 +63,13 @@ export const ProfileGenerationProcess = forwardRef<
               {title}
             </Text>
           )}
-          <StyledContainerMarginY margin="20px" />
+          <StyledContainerMarginY $margin="20px" />
           {overwriteWarning && (
             <Text size="large" color="darkGray" center>
               Les informations déjà présentes sur votre profil seront écrasées.
             </Text>
           )}
-          <StyledContainerMarginY margin="20px" />
+          <StyledContainerMarginY $margin="20px" />
           <Text size="large" color="darkGray" center>
             Cette fonctionnalité vous permet de récupérer les informations de
             votre CV et les ajouter directement à votre profil. Ex: vos
@@ -96,7 +96,7 @@ export const ProfileGenerationProcess = forwardRef<
               </Button>
             </StyledCenteredButtonContainer>
           )}
-          <StyledContainerMarginY margin="20px" />
+          <StyledContainerMarginY $margin="20px" />
           <OpenAILegalMention />
         </ContainerWithTextCentered>
       </>

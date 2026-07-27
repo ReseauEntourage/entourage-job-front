@@ -14,10 +14,10 @@ import {
 } from 'react-hook-form';
 import { Heading } from '@/src/components/ui/Inputs';
 import { Text } from '@/src/components/ui/Inputs/Text';
-import { FormFooter } from 'src/features/forms/FormFooter/FormFooter';
-import { InputsContainer } from 'src/features/forms/fields/InputsContainer';
-import { MultipleFields } from 'src/features/forms/fields/MultipleFields/MultipleFields';
-import { AnyCantFix } from 'src/utils/Types';
+import { FormFooter } from '@/src/features/forms/FormFooter/FormFooter';
+import { InputsContainer } from '@/src/features/forms/fields/InputsContainer';
+import { MultipleFields } from '@/src/features/forms/fields/MultipleFields/MultipleFields';
+import { AnyCantFix } from '@/src/utils/Types';
 import {
   ComponentException,
   ExtractFormSchemaValidation,

@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const MessagingEditorContainer = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export const StyledAttachementInfoContainer = styled.div`
 `;
 
 export const MessagingMessageForm = styled.form<{
-  blur?: boolean;
+  $blur?: boolean;
 }>`
   display: flex;
   align-items: flex-end;
@@ -32,8 +32,8 @@ export const MessagingMessageForm = styled.form<{
     position: sticky;
     bottom: 0;
   }
-  filter: ${(props) => (props.blur ? 'blur(2px)' : 'none')};
-  pointer-events: ${(props) => (props.blur ? 'none' : 'auto')};
+  filter: ${(props) => (props.$blur ? 'blur(2px)' : 'none')};
+  pointer-events: ${(props) => (props.$blur ? 'none' : 'auto')};
 `;
 
 export const MessagingInputContainer = styled.div`

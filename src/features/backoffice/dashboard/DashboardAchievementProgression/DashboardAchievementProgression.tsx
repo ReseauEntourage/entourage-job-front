@@ -1,22 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import {
   AchievementProgressionEntry,
   AchievementType,
   CriterionStat,
   UserAchievement,
-} from 'src/api/types';
-import { Button, Card, LucidIcon, Text, Tooltip } from 'src/components/ui';
-import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
-import { Skeleton } from 'src/components/ui/Skeleton/Skeleton';
-import { COLORS } from 'src/constants/styles';
-import { useCurrentUserAchievements } from 'src/hooks/current-user/useCurrentUserAchievements';
-import { useIsDesktop } from 'src/hooks/utils';
+} from '@/src/api/types';
+import { Button, Card, LucidIcon, Text, Tooltip } from '@/src/components/ui';
+import { ProgressBar } from '@/src/components/ui/ProgressBar/ProgressBar';
+import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { COLORS } from '@/src/constants/styles';
+import { useCurrentUserAchievements } from '@/src/hooks/current-user/useCurrentUserAchievements';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   selectAchievementProgressions,
   selectGamificationIsInitialized,
-} from 'src/use-cases/gamification';
+} from '@/src/use-cases/gamification';
 import {
   StyledAchievementCard,
   StyledAchievementLeft,

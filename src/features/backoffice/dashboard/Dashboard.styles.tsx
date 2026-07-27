@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledDashboardLeftColumn = styled.div`
   display: flex;

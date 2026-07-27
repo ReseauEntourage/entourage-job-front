@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CompaniesFilters, CompanyWithUsers } from '@/src/api/types';
 import { COMPANIES_LIMIT, ReduxRequestEvents } from '@/src/constants';
-import { RequestState, SliceRootState } from 'src/store/utils';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import {
   fetchCompaniesAdapter,
   fetchSelectedCompanyAdapter,

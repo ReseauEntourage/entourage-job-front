@@ -2,8 +2,8 @@ import {
   PublicProfile,
   RecruitementAlert,
   RecruitementAlertDto,
-} from 'src/api/types';
-import { createRequestAdapter } from 'src/store/utils';
+} from '@/src/api/types';
+import { createRequestAdapter } from '@/src/store/utils';
 
 export const fetchRecruitementAlertsAdapter = createRequestAdapter(
   'fetchRecruitementAlerts'

@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import {
   commonInputContainerStyles,
   commonInputStyles,
 } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
 export const StyledDatePickerContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}

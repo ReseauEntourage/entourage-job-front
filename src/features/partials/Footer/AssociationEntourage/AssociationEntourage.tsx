@@ -9,10 +9,10 @@ import {
 } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { EXTERNAL_LINKS } from 'src/constants';
-import { COLORS } from 'src/constants/styles';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { EXTERNAL_LINKS } from '@/src/constants';
+import { COLORS } from '@/src/constants/styles';
+import { GA_TAGS } from '@/src/constants/tags';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledAssociationEntourageImageContainer,
   StyledAssociationEntourageButtonContainer,

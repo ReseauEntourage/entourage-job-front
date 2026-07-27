@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { Card, SimpleLink, Text } from '@/src/components/ui';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { formLogin } from '@/src/features/forms/schemas/formLogin';
+import { formLostPwd } from '@/src/features/forms/schemas/formLostPwd';
 import { openModal } from '@/src/features/modals/Modal';
 import { StepperModal } from '@/src/features/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from '@/src/features/modals/SuccessModalContent';
-import { Api } from 'src/api';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { formLogin } from 'src/features/forms/schemas/formLogin';
-import { formLostPwd } from 'src/features/forms/schemas/formLostPwd';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { authenticationActions } from '@/src/use-cases/authentication';
 import { StyledLoginFooter } from './Login.styles';
 import { useLogin } from './useLogin';
 

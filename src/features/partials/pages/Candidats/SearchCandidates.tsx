@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, ContainerWithTextCentered, Section } from '@/src/components/ui';
 import { H1 } from '@/src/components/ui/Headings';
+import { CV_FILTERS_DATA } from '@/src/constants';
 import { CVList } from '@/src/features/partials/CV/CVList';
-import { CV_FILTERS_DATA } from 'src/constants';
-import { useFilters } from 'src/hooks/useFilters';
+import { useFilters } from '@/src/hooks/useFilters';
 import { StyledCandidatsHeaderContainer } from './Candidats.styles';
 
 const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);

@@ -1,7 +1,7 @@
 import { StaticImageData } from 'next/image';
 import Image from 'next/legacy/image';
 import React from 'react';
-import { addPrefix } from 'src/utils/Prefixing';
+import { addPrefix } from '@/src/utils/Prefixing';
 
 interface LegacyImgProps {
   src: string | StaticImageData;

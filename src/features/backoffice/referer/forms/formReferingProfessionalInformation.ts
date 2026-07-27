@@ -1,6 +1,6 @@
+import { FilterConstant } from '@/src/constants/utils';
 import { FormSchema } from '@/src/features/forms/FormSchema';
 import { loadBusinessSectorsOptions } from '@/src/features/forms/utils/loadOptions.utils';
-import { FilterConstant } from 'src/constants/utils';
 
 export const formReferingProfessionalInformation: FormSchema<{
   businessSectorId0: FilterConstant<string>;

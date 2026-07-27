@@ -28,7 +28,7 @@ export const NavPublicItemDesktop = ({ item }: NavPublicItemProps) => {
         gaEvent(item.tag);
       }}
       selected={isExactPath || isChildPath}
-      isMenu={!!(item.childrens && item.childrens.length > 0)}
+      $isMenu={!!(item.childrens && item.childrens.length > 0)}
     >
       {link}
     </StyledPublicItem>

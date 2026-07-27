@@ -1,13 +1,13 @@
 import { styled } from 'styled-components';
 import { COLORS, Color } from '@/src/constants/styles';
 
-export const StyledEntityCard = styled.div<{ borderColor?: Color }>`
+export const StyledEntityCard = styled.div<{ $borderColor?: Color }>`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  border: 1px solid ${(props) => COLORS[props.borderColor ?? 'gray']};
+  border: 1px solid ${(props) => COLORS[props.$borderColor ?? 'gray']};
   cursor: pointer;
   transition: box-shadow 0.2s ease-in-out;
   box-sizing: border-box;

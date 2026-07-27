@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import { COLORS } from '@/src/constants/styles';
 import { LucidIcon } from '../Icons';
-import { COLORS } from 'src/constants/styles';
 import {
   StyledCopyButton,
   StyledInput,

@@ -2,6 +2,8 @@ import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
+import { PARTNERS } from '@/src/constants/partners';
+import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
@@ -13,11 +15,9 @@ import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
 import { LogoList } from '@/src/features/partials/utils/LogoList';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import { useUtm } from '../hooks/queryParams/useUTM';
-import { PARTNERS } from 'src/constants/partners';
-import { GA_TAGS } from 'src/constants/tags';
-import { useIsDesktop } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
 
 const reviews = [
   {

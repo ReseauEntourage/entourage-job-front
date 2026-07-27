@@ -12,11 +12,11 @@ export const StyledDigitsRow = styled.div`
   gap: 10px;
 `;
 
-export const StyledDigitBox = styled.input<{ hasError: boolean }>`
+export const StyledDigitBox = styled.input<{ $hasError: boolean }>`
   width: 48px;
   height: 56px;
   border: 2px solid
-    ${({ hasError }) => (hasError ? COLORS.lightRed : COLORS.primaryBlue)};
+    ${({ $hasError }) => ($hasError ? COLORS.lightRed : COLORS.primaryBlue)};
   border-radius: 8px;
   text-align: center;
   font-family: Poppins, sans-serif;
@@ -27,11 +27,11 @@ export const StyledDigitBox = styled.input<{ hasError: boolean }>`
   background: ${COLORS.white};
 
   &:focus {
-    border-color: ${({ hasError }) =>
-      hasError ? COLORS.lightRed : COLORS.primaryBlue};
+    border-color: ${({ $hasError }) =>
+      $hasError ? COLORS.lightRed : COLORS.primaryBlue};
     box-shadow: 0 0 0 3px
-      ${({ hasError }) =>
-        hasError ? `${COLORS.lightRed}33` : `${COLORS.primaryBlue}33`};
+      ${({ $hasError }) =>
+        $hasError ? `${COLORS.lightRed}33` : `${COLORS.primaryBlue}33`};
   }
 
   &:disabled {

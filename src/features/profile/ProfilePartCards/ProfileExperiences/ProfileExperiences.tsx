@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Experience } from '@/src/api/types';
 import { LucidIcon, Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { useEditableExperiencesById } from '@/src/features/profile/hooks/useEditableExperiences';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import { CVExperienceOrFormation } from '../../CVExperienceOrFormation/CVExperienceOrFormation';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { Experience } from 'src/api/types';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { StyledProfileExperiencesList } from './ProfileExperiences.styles';
 
 interface ProfileExperiencesProps {

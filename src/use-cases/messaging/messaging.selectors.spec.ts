@@ -1,6 +1,6 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
-import { Conversation, ConversationType } from 'src/api/types';
+import { Conversation, ConversationType } from '@/src/api/types';
 import { selectOtherParticipantHasNotReplied } from './messaging.selectors';
 import { RootState } from './messaging.slice';
 

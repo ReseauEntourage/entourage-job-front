@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export type PopoverPlacement = 'top' | 'bottom';
 export type PopoverAlign = 'left' | 'right';
@@ -11,13 +11,13 @@ export const StyledPopoverWrapper = styled.div`
 `;
 
 export const StyledPopoverContent = styled.div<{
-  placement: PopoverPlacement;
-  align: PopoverAlign;
+  $placement: PopoverPlacement;
+  $align: PopoverAlign;
 }>`
   position: absolute;
-  ${({ placement }) =>
-    placement === 'bottom' ? 'top: 100%;' : 'bottom: 100%;'}
-  ${({ align }) => (align === 'right' ? 'right: 0;' : 'left: 0;')}
+  ${({ $placement }) =>
+    $placement === 'bottom' ? 'top: 100%;' : 'bottom: 100%;'}
+  ${({ $align }) => ($align === 'right' ? 'right: 0;' : 'left: 0;')}
   background: ${COLORS.white};
   border: 1px solid ${COLORS.gray};
   border-radius: 10px;

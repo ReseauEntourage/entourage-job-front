@@ -8,8 +8,8 @@ import {
 
 import React from 'react';
 import '@testing-library/jest-dom';
+import { BREAKPOINTS } from '@/src/constants/styles';
 import { NewsletterPartial } from '../NewsletterPartial';
-import { BREAKPOINTS } from 'src/constants/styles';
 
 jest.mock('react-modal');
 jest.mock('react-redux', () => {
@@ -24,8 +24,8 @@ jest.mock('@react-hook/window-size', () => {
     useWindowWidth: () => BREAKPOINTS.desktop,
   };
 });
-jest.mock('src/features/modals/Modal', () => {
-  const modalModule = jest.requireActual('src/features/modals/Modal');
+jest.mock('@/src/features/modals/Modal', () => {
+  const modalModule = jest.requireActual('@/src/features/modals/Modal');
   return {
     ...modalModule,
     // eslint-disable-next-line react/prop-types
@@ -35,8 +35,8 @@ jest.mock('src/features/modals/Modal', () => {
   };
 });
 
-jest.mock('src/hooks', () => {
-  const hooks = jest.requireActual('src/hooks');
+jest.mock('@/src/hooks', () => {
+  const hooks = jest.requireActual('@/src/hooks');
   return {
     ...hooks,
     useNewsletterTracking: () => {
@@ -47,16 +47,16 @@ jest.mock('src/hooks', () => {
   };
 });
 
-jest.mock('src/lib/gtag', () => {
-  const gtag = jest.requireActual('src/lib/gtag');
+jest.mock('@/src/lib/gtag', () => {
+  const gtag = jest.requireActual('@/src/lib/gtag');
   return {
     ...gtag,
     gaEvent: () => {},
   };
 });
 
-jest.mock('src/api/index', () => {
-  const ActualApi = jest.requireActual('src/api/index');
+jest.mock('@/src/api/index', () => {
+  const ActualApi = jest.requireActual('@/src/api/index');
   return {
     Api: {
       ...ActualApi.Api,

@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 const BACKGROUND_IMAGE_HEIGHT = 430;
 
-export const StyledBackground = styled.section<{ mobileHeight?: number }>`
+export const StyledBackground = styled.section<{ $mobileHeight?: number }>`
   &.top-banner {
     .banner-container {
       max-height: ${BACKGROUND_IMAGE_HEIGHT}px;
@@ -52,17 +52,17 @@ export const StyledBackground = styled.section<{ mobileHeight?: number }>`
     }
     &.mobile-banner-container {
       height: ${(props) => {
-        return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+        return props.$mobileHeight ? `${props.$mobileHeight}px` : '199px';
       }};
       max-height: ${(props) => {
-        return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+        return props.$mobileHeight ? `${props.$mobileHeight}px` : '199px';
       }};
       .banner {
         height: ${(props) => {
-          return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+          return props.$mobileHeight ? `${props.$mobileHeight}px` : '199px';
         }};
         max-height: ${(props) => {
-          return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+          return props.$mobileHeight ? `${props.$mobileHeight}px` : '199px';
         }};
       }
     }

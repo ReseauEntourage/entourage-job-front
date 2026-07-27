@@ -2,8 +2,8 @@ import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import { SimpleLink } from '@/src/components/ui';
+import { HEARD_ABOUT_FILTERS, HeardAboutValue } from '@/src/constants';
 import { FormSchema } from '../FormSchema';
-import { HEARD_ABOUT_FILTERS, HeardAboutValue } from 'src/constants';
 
 export const formInterestLinkedOut: FormSchema<{
   lastName: string;

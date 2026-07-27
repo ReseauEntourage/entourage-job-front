@@ -21,7 +21,7 @@ export const ProfileGenerationLoadingIndicator = ({
         height={imageSize}
         alt="Chargement en cours"
       />
-      <StyledContainerMarginY margin="20px" />
+      <StyledContainerMarginY $margin="20px" />
       <Text weight="bold" size="normal" center>
         {text}
       </Text>

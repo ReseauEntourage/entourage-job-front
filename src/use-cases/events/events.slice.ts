@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Event, EventWithParticipants } from '@/src/api/types';
+import { EVENTS_LIMIT, ReduxRequestEvents } from '@/src/constants';
 import { EventDirectoryFilters } from '@/src/features/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
-import { Event, EventWithParticipants } from 'src/api/types';
-import { EVENTS_LIMIT, ReduxRequestEvents } from 'src/constants';
-import { RequestState, SliceRootState } from 'src/store/utils';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import {
   fetchEventsAdapter,
   fetchSelectedEventAdapter,

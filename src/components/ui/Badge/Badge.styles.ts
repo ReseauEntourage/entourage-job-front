@@ -1,5 +1,5 @@
 import { styled, css } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import { BadgeSize, BadgeVariant } from './Badge.types';
 import { BADGE_SIZES } from './badge.constants';
 
@@ -39,7 +39,7 @@ const badgeVariantStyles: Record<BadgeVariant, ReturnType<typeof css>> = {
 };
 
 export const StyledBadge = styled.div<{
-  variant: BadgeVariant;
+  $variant: BadgeVariant;
   $size: BadgeSize;
   $borderRadius?: 'small' | 'medium' | 'large';
   $clickable?: boolean;
@@ -63,6 +63,6 @@ export const StyledBadge = styled.div<{
         return '6px';
     }
   }};
-  ${({ variant }) => badgeVariantStyles[variant]};
+  ${({ $variant }) => badgeVariantStyles[$variant]};
   flex-shrink: 0;
 `;

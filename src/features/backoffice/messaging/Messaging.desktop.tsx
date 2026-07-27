@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectHasMessages } from 'src/use-cases/messaging';
+import { selectHasMessages } from '@/src/use-cases/messaging';
 import {
   MessagingEmptyStateContainerDesktop,
   StyledMessagingGridDesktop,

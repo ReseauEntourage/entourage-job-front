@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { Api } from 'src/api';
+import { Api } from '@/src/api';
 
 const LinkedInCallback = () => {
   const router = useRouter();

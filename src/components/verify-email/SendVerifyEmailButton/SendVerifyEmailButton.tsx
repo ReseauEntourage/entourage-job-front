@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '@/src/components/ui';
+import { ReduxRequestEvents } from '@/src/constants';
+import { sendVerifyEmailSelectors } from '@/src/use-cases/authentication';
 import { useSendVerifyEmail } from '../useSendVerifyEmail';
-import { ReduxRequestEvents } from 'src/constants';
-import { sendVerifyEmailSelectors } from 'src/use-cases/authentication';
 import { StyledSendEmailButtonContainer } from './SendVerifyEmailButton.styles';
 
 interface SendVerifyEmailProps {

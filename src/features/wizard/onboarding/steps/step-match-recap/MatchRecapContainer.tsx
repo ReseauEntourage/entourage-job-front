@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Api } from '@/src/api';
 import { ProfileRecommendation } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
 import { useContactEligibility } from '@/src/hooks/useContactEligibility';
-import { Api } from 'src/api';
-import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
+import { useEmbeddingStatus } from '@/src/hooks/useEmbeddingStatus';
 import { Content, MatchRecapPanelState } from './Content/Content';
 
 interface MatchRecapContainerProps {

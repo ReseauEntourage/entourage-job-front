@@ -1,7 +1,7 @@
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useWindowHeight } from '@react-hook/window-size';
 import { useEffect, useState } from 'react';
-import { usePrevious } from 'src/hooks/utils';
+import { usePrevious } from '@/src/hooks/utils';
 
 export const useIsAtBottom = (
   setOffset?: (offset: ((prevOffset: number) => number) | number) => void

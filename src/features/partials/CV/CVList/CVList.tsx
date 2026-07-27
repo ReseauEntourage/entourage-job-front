@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Api } from '@/src/api';
 import {
   BusinessSector,
   Occupation,
@@ -14,13 +15,12 @@ type CVUser = User & {
 };
 import { Button, Grid, SimpleLink } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from '@/src/constants';
+import { COLORS } from '@/src/constants/styles';
+import { FilterObject } from '@/src/constants/utils';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { CandidatCard } from '@/src/features/candidat-card';
-import { Api } from 'src/api';
-import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
-import { COLORS } from 'src/constants/styles';
-import { FilterObject } from 'src/constants/utils';
-import { SearchBar } from 'src/features/filters/SearchBar/SearchBar';
+import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
 
 const NoCVInThisArea = () => {
   return (

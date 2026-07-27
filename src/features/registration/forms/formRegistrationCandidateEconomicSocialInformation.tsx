@@ -1,11 +1,11 @@
 import React from 'react';
-import { ProgramEligibilityAlert } from '../../../components/ui/Alert/ProgramEligibilityAlert';
 import {
   CANDIDATE_YES_NO_FILTERS,
   CandidateYesNo,
   CandidateYesNoValue,
-} from 'src/constants';
-import { FormSchema } from 'src/features/forms/FormSchema';
+} from '@/src/constants';
+import { FormSchema } from '@/src/features/forms/FormSchema';
+import { ProgramEligibilityAlert } from '../../../components/ui/Alert/ProgramEligibilityAlert';
 
 export const formRegistrationCandidateEconomicSocialInformation: FormSchema<{
   materialInsecurity: CandidateYesNoValue;

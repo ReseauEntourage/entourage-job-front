@@ -1,6 +1,6 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 import { upperFirst } from 'lodash';
-import { ReduxRequestEvents } from 'src/constants';
+import { ReduxRequestEvents } from '@/src/constants';
 
 function toCapitalize<T extends string>(value: T) {
   return upperFirst(value) as Capitalize<T>;

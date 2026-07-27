@@ -1,14 +1,14 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { useModalContext } from '@/src/features/modals/Modal';
-import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import {
   ExtractFormSchemaValidation,
   FormSchema,
-} from 'src/features/forms/FormSchema';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
+} from '@/src/features/forms/FormSchema';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { useModalContext } from '@/src/features/modals/Modal';
+import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 
-import { AnyCantFix } from 'src/utils/Types';
+import { AnyCantFix } from '@/src/utils/Types';
 
 interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
   title: React.ReactNode;

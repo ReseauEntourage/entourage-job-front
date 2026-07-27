@@ -1,7 +1,7 @@
 import React from 'react';
 import { SimpleLink } from '@/src/components/ui/SimpleLink';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from '@/src/constants/tags';
+import { gaEvent } from '@/src/lib/gtag';
 import { LegacyImg } from './LegacyImg';
 
 interface LogoProps {

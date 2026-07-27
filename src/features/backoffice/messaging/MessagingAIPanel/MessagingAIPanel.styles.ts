@@ -1,6 +1,6 @@
 import { styled, keyframes } from 'styled-components';
 import { sizesPx } from '@/src/components/ui/Text/Text.utils';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 const slideInFromRight = keyframes`
   from {
@@ -43,7 +43,7 @@ export const PanelTabBar = styled.div`
 `;
 
 interface PanelTabProps {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
 export const PanelTab = styled.button<PanelTabProps>`
@@ -54,11 +54,11 @@ export const PanelTab = styled.button<PanelTabProps>`
   background: none;
   border: none;
   border-bottom: 2px solid
-    ${({ isActive }) => (isActive ? COLORS.primaryBlue : 'transparent')};
-  color: ${({ isActive }) =>
-    isActive ? COLORS.primaryBlue : COLORS.mediumGray};
+    ${({ $isActive }) => ($isActive ? COLORS.primaryBlue : 'transparent')};
+  color: ${({ $isActive }) =>
+    $isActive ? COLORS.primaryBlue : COLORS.mediumGray};
   font-size: 13px;
-  font-weight: ${({ isActive }) => (isActive ? '600' : '400')};
+  font-weight: ${({ $isActive }) => ($isActive ? '600' : '400')};
   cursor: pointer;
   white-space: nowrap;
   transition:

@@ -13,12 +13,12 @@ export const StyledStatusContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const StyledStatusBadge = styled.div<{ enabled?: boolean }>`
+export const StyledStatusBadge = styled.div<{ $enabled?: boolean }>`
   padding: 4px 12px;
   border-radius: 12px;
-  background-color: ${({ enabled }) =>
-    enabled ? COLORS.primaryBlue : COLORS.lightGray};
-  color: ${({ enabled }) => (enabled ? COLORS.white : COLORS.darkGray)};
+  background-color: ${({ $enabled }) =>
+    $enabled ? COLORS.primaryBlue : COLORS.lightGray};
+  color: ${({ $enabled }) => ($enabled ? COLORS.white : COLORS.darkGray)};
 `;
 
 export const StyledButtonsContainer = styled.div`

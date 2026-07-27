@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
-import { Color, COLORS } from 'src/constants/styles';
+import { Color, COLORS } from '@/src/constants/styles';
 
-export const StyledSectionContent = styled.div<{ bgColor?: Color }>`
-  background: ${({ bgColor }) => (bgColor ? COLORS[bgColor] : undefined)};
+export const StyledSectionContent = styled.div<{ $bgColor?: Color }>`
+  background: ${({ $bgColor }) => ($bgColor ? COLORS[$bgColor] : undefined)};
   border-radius: 30px;
   padding: 30px;
   display: flex;
@@ -11,12 +11,12 @@ export const StyledSectionContent = styled.div<{ bgColor?: Color }>`
 `;
 
 interface StyledRowIconTitleTextBackgroundProps {
-  backgroundColor?: Color;
+  $backgroundColor?: Color;
 }
 
 export const StyledRowIconTitleTextBackground = styled.div<StyledRowIconTitleTextBackgroundProps>`
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? COLORS[backgroundColor] : undefined};
+  background-color: ${({ $backgroundColor }) =>
+    $backgroundColor ? COLORS[$backgroundColor] : undefined};
 `;
 
 export const StyledRowIconTitleTextContainer = styled.div`

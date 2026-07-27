@@ -24,6 +24,11 @@ import typedReduxSaga from '@jambit/eslint-plugin-typed-redux-saga';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginJest from 'eslint-plugin-jest';
 
+/* =======================
+   Local custom rules
+======================= */
+import noUntransientStyledProps from './eslint-rules/no-untransient-styled-props.mjs';
+
 export default defineConfig([
   /* ==================================================
      Global ignores (ex .eslintignore)
@@ -86,6 +91,7 @@ export default defineConfig([
       prettier,
       '@jambit/typed-redux-saga': typedReduxSaga,
       'jsx-a11y': jsxA11y,
+      local: { rules: { 'no-untransient-styled-props': noUntransientStyledProps } },
     },
 
     settings: {
@@ -186,6 +192,11 @@ export default defineConfig([
       '@typescript-eslint/no-empty-interface': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
+
+      /* =======================
+         Local custom rules
+      ======================= */
+      'local/no-untransient-styled-props': 'error',
 
       /* =======================
          Imports

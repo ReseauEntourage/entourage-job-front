@@ -1,13 +1,13 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
-import { FormSchema } from '../FormSchema';
 import {
   ADMIN_ZONES_FILTERS,
   AdminZone,
   DepartmentName,
   DEPARTMENTS_FILTERS,
-} from 'src/constants/departements';
-import { FilterConstant } from 'src/constants/utils';
+} from '@/src/constants/departements';
+import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
+import { FilterConstant } from '@/src/constants/utils';
+import { FormSchema } from '../FormSchema';
 
 export const formPersonalDataAsCandidate: FormSchema<{
   firstName: string;

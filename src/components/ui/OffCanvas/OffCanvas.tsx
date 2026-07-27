@@ -60,7 +60,7 @@ export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
     }, [isOpen, closeOffCanvas]);
 
     return (
-      <StyledOffCanvas position={position} isOpen={isOpen} ref={offCanvasRef}>
+      <StyledOffCanvas $position={position} $isOpen={isOpen} ref={offCanvasRef}>
         <StyledCloseButtonContainer>
           <CloseButton
             onClick={closeOffCanvas}

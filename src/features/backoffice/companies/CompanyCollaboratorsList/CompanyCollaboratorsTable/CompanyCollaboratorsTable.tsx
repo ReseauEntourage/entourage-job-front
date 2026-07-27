@@ -1,4 +1,4 @@
-import { platform } from 'src/utils/Device';
+import { platform } from '@/src/utils/Device';
 import { CompanyCollaboratorsTableDesktop } from './CompanyCollaboratorsTable.desktop';
 import { CompanyCollaboratorsTableMobile } from './CompanyCollaboratorsTable.mobile';
 

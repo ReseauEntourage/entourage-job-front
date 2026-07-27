@@ -17,7 +17,7 @@ export const StyledLoginFooter = styled.div`
   justify-content: space-between;
 
   > * {
-    :first-child {
+    &:first-child {
       margin-bottom: 8px;
     }
   }

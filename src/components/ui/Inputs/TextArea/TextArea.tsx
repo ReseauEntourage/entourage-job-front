@@ -1,4 +1,6 @@
 import React, { ChangeEvent, useEffect } from 'react';
+import { Text } from '@/src/components/ui';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -7,8 +9,6 @@ import {
   StyledLimitContainer,
 } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { Text } from 'src/components/ui';
-import { useIsMobile } from 'src/hooks/utils';
 import {
   StyledTextArea,
   StyledTextAreaContainer,
@@ -78,22 +78,22 @@ export function TextArea({
   const shouldShowFooter = !!error || shouldShowAnnotations;
 
   return (
-    <StyledTextAreaContainer disabled={disabled} naked={naked}>
+    <StyledTextAreaContainer disabled={disabled} $naked={naked}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
         </StyledInputLabel>
       )}
       <StyledTextAreaScrollContainer
-        textAreaWidth={textAreaWidth}
-        hasLineLimit={!!maxLines}
+        $textAreaWidth={textAreaWidth}
+        $hasLineLimit={!!maxLines}
         width={maxLinesWidth}
       >
         <StyledTextArea
-          device={isMobile ? 'mobile' : 'desktop'}
-          hasLineLimit={!!maxLines}
+          $device={isMobile ? 'mobile' : 'desktop'}
+          $hasLineLimit={!!maxLines}
           width={maxLinesWidth}
-          naked={naked}
+          $naked={naked}
           ref={(e: HTMLTextAreaElement | null) => {
             if (inputRef) {
               inputRef(e);

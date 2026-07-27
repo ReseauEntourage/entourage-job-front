@@ -6,7 +6,7 @@ import {
   NavConnectedItem,
   NotifBadges,
 } from '@/src/features/navs/NavConnected/NavConnected.types';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from '@/src/lib/gtag';
 import { StyledSubMenu } from './SubMenu.styles';
 
 const uuidValue = uuid();

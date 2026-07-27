@@ -1,10 +1,10 @@
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import { useMemo } from 'react';
+import { Button } from '@/src/components/ui/Button/Button';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { AIMarkdownContent, AIMessageBubble } from '../MessagingAIPanel.styles';
-import { Button } from 'src/components/ui/Button/Button';
-import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
 
 type ContentSegment =
   { type: 'text'; content: string } | { type: 'suggestion'; content: string };

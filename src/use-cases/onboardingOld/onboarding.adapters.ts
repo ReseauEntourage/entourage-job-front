@@ -1,4 +1,4 @@
-import { createRequestAdapter } from 'src/store/utils';
+import { createRequestAdapter } from '@/src/store/utils';
 
 export type SendStepDataOnboardingError = 'NOT_SAVE_DATA';
 

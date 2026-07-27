@@ -51,19 +51,19 @@ export function Button({
     <StyledButton
       id={id}
       className={`${className}`}
-      rounded={rounded}
+      $rounded={rounded}
       disabled={disabled}
       type="button"
       onClick={handleClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       data-testid={dataTestId}
-      variant={variant}
+      $variant={variant}
       size={size}
       color={color}
-      align={align}
+      $align={align}
       style={style}
-      weight={weight}
+      $weight={weight}
     >
       {resizedPrependIcon && (
         <span style={{ flexShrink: 0 }}>{resizedPrependIcon}</span>

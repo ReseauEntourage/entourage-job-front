@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'typed-redux-saga';
+import { Api } from '@/src/api';
 import { currentUserActions } from '../current-user';
-import { Api } from 'src/api';
 import { slice } from './profile-completion.slice';
 
 const {
