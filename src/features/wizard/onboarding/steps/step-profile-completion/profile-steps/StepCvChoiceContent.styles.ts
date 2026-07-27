@@ -19,7 +19,9 @@ export const StyledDropZone = styled.div<{ $isDragOver: boolean }>`
   cursor: pointer;
   background: ${({ $isDragOver }) =>
     $isDragOver ? `${COLORS.primaryBlue}15` : 'transparent'};
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 `;
 
 export const StyledButtonsContainer = styled.div`

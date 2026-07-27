@@ -48,8 +48,7 @@ const isCandidateFormValid = (values: SectorsJobsValues) =>
 
 const isCoachFormValid = (values: SectorsJobsValues) => {
   const sectors = values.businessSectorIds as
-    | FilterConstant<string>[]
-    | undefined;
+    FilterConstant<string>[] | undefined;
   return !!values.currentJob && Array.isArray(sectors) && sectors.length > 0;
 };
 
@@ -76,7 +75,7 @@ const buildPreferences = (isCandidate: boolean, values: SectorsJobsValues) => {
         ({
           businessSectorId: s.value,
           order: idx,
-        } as UserProfileSectorOccupation)
+        }) as UserProfileSectorOccupation
     );
     businessSectorIds = sectors
       .map((s) => s.value)

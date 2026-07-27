@@ -82,9 +82,11 @@ export const useWizard = (): WizardState => {
     isOnboardingAlreadyCompleted: onboarding.isAlreadyCompleted,
     updateOnboardingStatus: onboarding.updateOnboardingStatus,
     skipDashboardRedirectRef: onboarding.skipDashboardRedirectRef,
+    pendingSuggestedMessageRedirectRef:
+      onboarding.pendingSuggestedMessageRedirectRef,
   });
 
-  // Unified step list for the progress bar — toutes les phases toujours visibles
+  // Unified step list for the progress bar — all phases always visible
   const allSteps = useMemo(() => {
     return [...registrationSteps, EMAIL_CONFIRMATION_STEP, ...onboarding.steps];
   }, [registrationSteps, onboarding.steps]);
@@ -95,10 +97,10 @@ export const useWizard = (): WizardState => {
   const currentStepIdx = isOnboardingPhase
     ? onboardingOffset + (onboarding.currentStepIdx ?? 0)
     : isEmailConfirmationPhase
-    ? emailConfirmationOffset
-    : currentWizardIdx;
+      ? emailConfirmationOffset
+      : currentWizardIdx;
 
-  // Le message d'erreur d'étape ne doit pas survivre à un changement d'étape
+  // The step error message must not survive a step change
   useEffect(() => {
     dispatch(onboardingActions.setFormErrorMessage(null));
   }, [currentStepIdx, dispatch]);
@@ -106,18 +108,18 @@ export const useWizard = (): WizardState => {
   const currentStep = isOnboardingPhase
     ? onboarding.currentStep
     : isEmailConfirmationPhase
-    ? emailConfirmation.step
-    : currentRegistrationStep;
+      ? emailConfirmation.step
+      : currentRegistrationStep;
 
   const isLoading = isOnboardingPhase
     ? onboarding.isLoading
     : isEmailConfirmationPhase
-    ? emailConfirmation.isLoading
-    : registrationIsLoading;
+      ? emailConfirmation.isLoading
+      : registrationIsLoading;
 
-  // Initialisation : détermination du step de reprise, ou résolution de
-  // l'utilisateur courant au rechargement direct (évite le flash de l'alerte
-  // d'erreur tant que /current n'a pas répondu)
+  // Initialization: determining the resume step, or resolving the current
+  // user on a direct reload (avoids the error alert flashing while /current
+  // hasn't responded yet)
   const isInitializing =
     (isOnboardingPhase && onboarding.isInitializing) ||
     (!currentUser && !isFetchUserFinished && registrationSteps.length === 0);
@@ -145,17 +147,17 @@ export const useWizard = (): WizardState => {
   const buttonLabel = isOnboardingPhase
     ? onboarding.buttonLabel
     : isEmailConfirmationPhase
-    ? 'Valider le code'
-    : (currentStep as WizardStep | null)?.buttonLabel ??
-      (currentWizardIdx === registrationSteps.length - 1
-        ? 'Créer mon compte'
-        : 'Étape suivante');
+      ? 'Valider le code'
+      : ((currentStep as WizardStep | null)?.buttonLabel ??
+        (currentWizardIdx === registrationSteps.length - 1
+          ? 'Créer mon compte'
+          : 'Étape suivante'));
 
   const canGoBack = isOnboardingPhase
     ? onboarding.canGoBack
     : isEmailConfirmationPhase
-    ? emailConfirmation.canGoBack
-    : registrationCanGoBack;
+      ? emailConfirmation.canGoBack
+      : registrationCanGoBack;
 
   const onBack = useCallback(() => {
     if (!canGoBack) {

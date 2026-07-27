@@ -69,7 +69,7 @@ const createUserRequestedSaga = function* () {
       ...(preRegistrationPreferences?.nudgeIds?.length
         ? {
             nudges: preRegistrationPreferences.nudgeIds.map(
-              (id) => ({ id } as Nudge)
+              (id) => ({ id }) as Nudge
             ),
           }
         : {}),

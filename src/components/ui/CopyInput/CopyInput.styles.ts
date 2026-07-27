@@ -40,7 +40,9 @@ export const StyledCopyButton = styled.button<{ $copied: boolean }>`
   font-family: Poppins, sans-serif;
   font-size: 13px;
   color: ${({ $copied }) => ($copied ? 'white' : COLORS.black)};
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   &:hover {
     background: ${({ $copied }) => ($copied ? COLORS.primaryBlue : '#e8edf2')};
   }

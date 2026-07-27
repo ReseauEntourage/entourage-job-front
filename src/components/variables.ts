@@ -1,11 +1,7 @@
 export type UIKIT_SCREENS = 's' | 'm' | 'l' | 'xl';
 
 export type UIKIT_SECTION_SIZES =
-  | 'xsmall'
-  | 'small'
-  | 'medium'
-  | 'large'
-  | 'xlarge';
+  'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 export type UIKIT_STYLES =
   | 'default'

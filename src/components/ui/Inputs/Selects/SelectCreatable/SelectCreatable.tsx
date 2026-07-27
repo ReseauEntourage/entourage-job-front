@@ -20,7 +20,7 @@ import { Text } from 'src/components/ui';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectCreatableProps<
-  T extends FilterConstant | FilterConstant[] | null
+  T extends FilterConstant | FilterConstant[] | null,
 > extends CommonInputProps<T, HTMLSelectElement> {
   options: FilterConstant[];
   isMulti?: boolean;
@@ -35,7 +35,7 @@ interface SelectCreatableProps<
 }
 
 export function SelectCreatable<
-  T extends FilterConstant | FilterConstant[] | null
+  T extends FilterConstant | FilterConstant[] | null,
 >({
   id,
   name,

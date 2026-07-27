@@ -1,8 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { ConversationType } from 'src/api/types';
 import { RootState } from './messaging.slice';
 
 export const selectNewMessage = (state: RootState) =>
   state.messaging.newMessage;
+
+export const selectPostMessageStatus = (state: RootState) =>
+  state.messaging.postMessage.status;
 
 export const selectIsAIPanelOpen = (state: RootState) =>
   state.messaging.isAIPanelOpen;
@@ -74,3 +78,27 @@ export const selectCurrentUserHasSentMessages =
   (currentUserId: string | null) =>
   (state: RootState): boolean =>
     selectCurrentUserHasSentMessagesSelector(state, currentUserId);
+
+const selectOtherParticipantHasNotRepliedSelector = createSelector(
+  [selectSelectedConversation, selectCurrentUserIdParam],
+  (selectedConversation, currentUserId): boolean => {
+    if (!selectedConversation || !currentUserId) {
+      return false;
+    }
+    if (selectedConversation.type !== ConversationType.DIRECT) {
+      return false;
+    }
+    if (selectedConversation.messages.length === 0) {
+      return false;
+    }
+
+    return selectedConversation.messages.every(
+      (message) => message.authorId === currentUserId
+    );
+  }
+);
+
+export const selectOtherParticipantHasNotReplied =
+  (currentUserId: string | null) =>
+  (state: RootState): boolean =>
+    selectOtherParticipantHasNotRepliedSelector(state, currentUserId);

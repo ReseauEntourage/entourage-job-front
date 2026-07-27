@@ -1,4 +1,4 @@
-/* eslint import/no-unresolved: "off" */
+/* eslint import-x/no-unresolved: "off" */
 import styled from 'styled-components';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';

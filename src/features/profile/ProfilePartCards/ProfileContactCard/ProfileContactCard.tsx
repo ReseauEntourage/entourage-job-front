@@ -1,16 +1,11 @@
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '@/src/components/ui';
 import { Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
-import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
-import { openModal } from '@/src/features/modals/Modal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
-import {
-  selectAuthenticatedUser,
-  selectCurrentUserId,
-} from 'src/use-cases/current-user';
+import { useContactEligibility } from '@/src/hooks/useContactEligibility';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledContactMessage,
   StyledProfileContactForm,
@@ -30,17 +25,10 @@ export const ProfileContactCard = ({
   firstName,
 }: ProfileContactCardProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
-  const currentUser = useSelector(selectAuthenticatedUser);
   const isOwnProfile = userId === currentUserId;
-  const router = useRouter();
+  const { openConversationOrGate } = useContactEligibility();
 
-  const openConversation = () => {
-    if (!currentUser.elearningCompletedAt) {
-      openModal(<ElearningGateModal />);
-      return;
-    }
-    router.push(`/backoffice/messaging?userId=${userId}`);
-  };
+  const openConversation = () => openConversationOrGate(userId);
   const isCoach = role === 'Coach';
 
   if (isOwnProfile) {

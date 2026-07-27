@@ -9,8 +9,7 @@ export type SelectListGroup<T extends string = string> = {
 };
 
 export type SelectListOptions<T extends string = string> =
-  | SelectListType<T>[]
-  | SelectListGroup<T>[];
+  SelectListType<T>[] | SelectListGroup<T>[];
 
 export function isGroupedOptions<T extends string>(
   options: SelectListOptions<T>
@@ -19,7 +18,7 @@ export function isGroupedOptions<T extends string>(
 }
 
 export type SelectOptionTitleIconDescriptionLabelType<
-  T extends string = string
+  T extends string = string,
 > = SelectListType<T> & {
   icon: React.ReactNode;
   description: string;

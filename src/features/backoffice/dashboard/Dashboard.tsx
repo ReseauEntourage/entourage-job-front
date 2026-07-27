@@ -23,6 +23,7 @@ import { DashboardAchievementProgression } from './DashboardAchievementProgressi
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
 import { DashboardCompanyCollaboratorsList } from './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList';
+import { DashboardElearningNudge } from './DashboardElearningNudge/DashboardElearningNudge';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
@@ -83,7 +84,15 @@ export const Dashboard = () => {
           </>
         ) : (
           <>
-            {isCoach && !isCompanyAdmin && <DashboardAchievementProgression />}
+            {isCoach && !isCompanyAdmin ? (
+              user.elearningCompletedAt ? (
+                <DashboardAchievementProgression />
+              ) : (
+                <DashboardElearningNudge />
+              )
+            ) : (
+              !isCompanyAdmin && <DashboardElearningNudge />
+            )}
             {isNormalUser && !isCompanyAdmin && (
               <DashboardRecommendationsCard />
             )}

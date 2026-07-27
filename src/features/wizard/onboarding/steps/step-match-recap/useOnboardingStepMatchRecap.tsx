@@ -6,11 +6,13 @@ import { MatchRecapContainer } from './MatchRecapContainer';
 interface UseOnboardingStepMatchRecapProps {
   userRole: UserRoles | undefined;
   onOnboardingCompleted: (skipDashboardRedirect?: boolean) => Promise<void>;
+  onSuggestedMessageSent: () => void;
 }
 
 export const useOnboardingStepMatchRecap = ({
   userRole,
   onOnboardingCompleted,
+  onSuggestedMessageSent,
 }: UseOnboardingStepMatchRecapProps) => {
   const onboardingStepMatchRecap: WizardStep = {
     id: 'match-recap',
@@ -27,6 +29,7 @@ export const useOnboardingStepMatchRecap = ({
       <MatchRecapContainer
         userRole={userRole}
         onOnboardingCompleted={onOnboardingCompleted}
+        onSuggestedMessageSent={onSuggestedMessageSent}
       />
     ),
     section: 'formation',

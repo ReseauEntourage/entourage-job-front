@@ -92,7 +92,7 @@ export async function processSSEStream(
     buffer += done ? decoder.decode() : decoder.decode(value, { stream: true });
 
     const lines = buffer.split('\n');
-    buffer = done ? '' : lines.pop() ?? '';
+    buffer = done ? '' : (lines.pop() ?? '');
 
     for (const line of lines) {
       if (processLine(line)) {

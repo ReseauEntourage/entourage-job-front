@@ -14,11 +14,7 @@ import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
-  | 'facebook'
-  | 'linkedin'
-  | 'twitter'
-  | 'whatsapp'
-  | 'other';
+  'facebook' | 'linkedin' | 'twitter' | 'whatsapp' | 'other';
 
 export const APIRoutes = {
   USERS: 'user',
@@ -610,7 +606,14 @@ export type Message = {
 
 export type ConversationParticipant = Pick<
   User,
-  'id' | 'firstName' | 'lastName' | 'role' | 'gender' | 'zone' | 'email'
+  | 'id'
+  | 'firstName'
+  | 'lastName'
+  | 'role'
+  | 'gender'
+  | 'zone'
+  | 'email'
+  | 'elearningCompletedAt'
 > & {
   userProfile: Pick<UserProfile, 'hasPicture' | 'isAvailable'> | null;
   conversationParticipant: {
@@ -652,6 +655,7 @@ export type PublicProfile = {
   department: DepartmentName;
   currentJob: string;
   description: string;
+  elearningCompletedAt: string | null;
   isAvailable: boolean;
   customNudges: UserProfileNudge[];
   nudges: Nudge[];
@@ -696,10 +700,7 @@ export type PublicCV = Pick<User, 'id' | 'firstName' | 'lastName' | 'role'> & {
 };
 
 export type MatchingReason =
-  | 'profile'
-  | 'needs'
-  | 'activity'
-  | 'locationCompatibility';
+  'profile' | 'needs' | 'activity' | 'locationCompatibility';
 
 export type ProfileRecommendation = {
   id: string;

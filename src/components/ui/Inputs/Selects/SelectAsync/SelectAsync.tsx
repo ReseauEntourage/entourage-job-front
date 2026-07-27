@@ -12,8 +12,9 @@ import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FilterConstant } from 'src/constants/utils';
 import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 
-interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
-  extends CommonInputProps<T, HTMLSelectElement> {
+interface SelectAsyncProps<
+  T extends FilterConstant | FilterConstant[],
+> extends CommonInputProps<T, HTMLSelectElement> {
   loadOptions: (
     callback: (options: FilterConstant[]) => void,
     inputValue: string

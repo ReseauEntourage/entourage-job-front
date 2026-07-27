@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CommonInputProps } from '../Inputs.types';
 import { SelectList, SelectListOptions } from '.';
 
-interface SelectListAsyncProps<T extends string>
-  extends CommonInputProps<T[], HTMLElement> {
+interface SelectListAsyncProps<T extends string> extends CommonInputProps<
+  T[],
+  HTMLElement
+> {
   id: string;
   isMulti?: boolean;
   loadOptions: (

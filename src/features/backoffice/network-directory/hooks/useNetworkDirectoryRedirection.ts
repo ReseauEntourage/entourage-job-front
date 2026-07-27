@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ContactTypeEnum } from '@/src/constants/contactTypes';
 import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
 import { UserRoles } from '@/src/constants/users';
@@ -12,7 +12,8 @@ const route = '/backoffice/annuaire';
 
 /**
  * Handles the initial redirection to the network directory page with the mandatory
- * `role` and `entity` query params when they are missing from the URL.
+ * `role` and `entity` query params when they are missing from the URL, and defaults
+ * the `isAvailable` filter to checked on first load.
  *
  * On mount, if neither `role` nor `entity` is present in the URL, performs a
  * shallow replace so that:
@@ -24,6 +25,12 @@ const route = '/backoffice/annuaire';
  * - Remote-only users get `contactTypes=REMOTE`.
  * - Physical-only users get `contactTypes=PHYSICAL` and their department pre-selected.
  *
+ * Separately, if `isAvailable` isn't present in the URL the first time this hook
+ * gets to act, it's defaulted to `true`. This only happens once per mount (tracked via
+ * a ref) so that a user unchecking the "available only" filter — which removes
+ * `isAvailable` from the URL rather than setting it to `false` — doesn't get
+ * silently reverted by this effect re-running.
+ *
  * This hook produces no output and is intended to be called once at the page level.
  */
 export function useNetworkDirectoryRedirection() {
@@ -33,6 +40,8 @@ export function useNetworkDirectoryRedirection() {
 
   const role = useRole();
   const entity = useEntity();
+
+  const hasSetDefaultIsAvailable = useRef(false);
 
   useEffect(() => {
     if (!userProfile) {
@@ -53,39 +62,39 @@ export function useNetworkDirectoryRedirection() {
       }
     }
 
-    if (!role && !entity) {
-      if (userRole === UserRoles.CANDIDATE) {
-        replace(
-          {
-            pathname: route,
-            query: {
-              ...query,
-              entity: NetworkDirectoryEntity.USER,
-              role: UserRoles.COACH,
-              contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
-              departments: departments.length > 0 ? departments : undefined,
-            },
-          },
-          undefined,
-          { shallow: true }
-        );
-      } else {
-        replace(
-          {
-            pathname: route,
-            query: {
-              ...query,
-              entity: NetworkDirectoryEntity.USER,
-              role: UserRoles.CANDIDATE,
-              contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
-              departments: departments.length > 0 ? departments : undefined,
-            },
-          },
-          undefined,
-          { shallow: true }
-        );
-      }
+    const needsRoleAndEntityDefaults = !role && !entity;
+    const needsIsAvailableDefault =
+      !hasSetDefaultIsAvailable.current && query.isAvailable === undefined;
+    hasSetDefaultIsAvailable.current = true;
+
+    if (!needsRoleAndEntityDefaults && !needsIsAvailableDefault) {
+      return;
     }
+
+    const roleAndEntityDefaults = needsRoleAndEntityDefaults
+      ? {
+          entity: NetworkDirectoryEntity.USER,
+          role:
+            userRole === UserRoles.CANDIDATE
+              ? UserRoles.COACH
+              : UserRoles.CANDIDATE,
+          contactTypes: contactTypes.length > 0 ? contactTypes : undefined,
+          departments: departments.length > 0 ? departments : undefined,
+        }
+      : {};
+
+    replace(
+      {
+        pathname: route,
+        query: {
+          ...query,
+          ...roleAndEntityDefaults,
+          ...(needsIsAvailableDefault ? { isAvailable: true } : {}),
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
   }, [
     replace,
     role,

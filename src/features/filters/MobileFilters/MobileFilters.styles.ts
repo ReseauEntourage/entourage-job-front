@@ -51,7 +51,9 @@ export const StyledMobileFilterOverlay = styled.div<StyledMobileFilterDrawerProp
   z-index: 1040;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
 `;
 
 export const StyledMobileFilterHeader = styled.div`

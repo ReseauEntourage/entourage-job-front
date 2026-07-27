@@ -18,6 +18,16 @@ describe('Wizard', () => {
     });
   };
 
+  const interceptWizardPostRequests = () => {
+    wizardJourneyRequests.POST.forEach((request) => {
+      if (request.alias) {
+        cy.intercept('POST', request.path, request.data).as(request.alias);
+      } else {
+        cy.intercept('POST', request.path, request.data);
+      }
+    });
+  };
+
   const fillAccountForm = (email = 'johndoe@gmail.com') => {
     cy.get('[data-testid="form-registration-account-firstName"]').type('John');
     cy.get('[data-testid="form-registration-account-lastName"]').type('Doe');
@@ -840,6 +850,206 @@ describe('Wizard', () => {
 
         cy.url().should('include', '/backoffice/profile/');
         cy.url().should('not.include', '/backoffice/messaging');
+      });
+    });
+
+    describe("Etant donné que je suis arrivé sur l'étape eLearning du wizard", () => {
+      const answer = (
+        id: string,
+        label: string,
+        isCorrect: boolean,
+        questionId: string
+      ) => ({ id, questionId, label, isCorrect, explanation: null });
+
+      const question = (id: string, unitId: string, answers: unknown[]) => ({
+        id,
+        unitId,
+        label: `Quelle est la bonne réponse pour ${id} ?`,
+        answers,
+      });
+
+      const unit = (id: string, title: string, questions: unknown[]) => ({
+        id,
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+        title,
+        description: '',
+        durationMinutes: 5,
+        videoUrl: `https://www.youtube.com/watch?v=${id}`,
+        questions,
+        roles: [],
+        userCompletions: [],
+      });
+
+      const unitOne = unit('elearning-unit-1', 'Module 1', [
+        question('question-1a', 'elearning-unit-1', [
+          answer('answer-1a-good', 'Bonne réponse 1', true, 'question-1a'),
+          answer('answer-1a-bad', 'Mauvaise réponse 1', false, 'question-1a'),
+        ]),
+        question('question-1b', 'elearning-unit-1', [
+          answer('answer-1b-good', 'Bonne réponse 2', true, 'question-1b'),
+          answer('answer-1b-bad', 'Mauvaise réponse 2', false, 'question-1b'),
+        ]),
+      ]);
+
+      const unitTwo = unit('elearning-unit-2', 'Module 2', [
+        question('question-2a', 'elearning-unit-2', [
+          answer('answer-2a-good', 'Bonne réponse 3', true, 'question-2a'),
+          answer('answer-2a-bad', 'Mauvaise réponse 3', false, 'question-2a'),
+        ]),
+      ]);
+
+      const interceptElearningUnits = (units: unknown[]) => {
+        cy.intercept('GET', '/elearning/units*', {
+          statusCode: 200,
+          body: units,
+        }).as('elearningUnits');
+      };
+
+      const playVideo = () => {
+        cy.get('.yt-lite .lty-playbtn').click();
+        cy.get('.yt-lite').should('have.class', 'lyt-activated');
+        cy.window().then((win) => {
+          win.dispatchEvent(
+            new MessageEvent('message', {
+              data: JSON.stringify({
+                event: 'onStateChange',
+                info: { playerState: 1 },
+              }),
+              origin: 'https://www.youtube.com',
+            })
+          );
+        });
+      };
+
+      const answerAndConfirm = (answerId: string, nextButtonText: string) => {
+        cy.get(`[data-testid="elearning-quiz-answer-${answerId}"]`).click({
+          force: true,
+        });
+        cy.contains('button', 'Valider').click();
+        cy.contains('button', nextButtonText).click();
+      };
+
+      beforeEach(() => {
+        window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+        window.localStorage.setItem('access-token', '1234');
+
+        interceptWizardGetRequests();
+        interceptWizardPostRequests();
+        interceptCurrentUserSubResources();
+
+        cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
+          (user) => {
+            cy.intercept('GET', '/current', {
+              statusCode: 200,
+              body: {
+                ...user,
+                onboardingStatus: 'in_progress',
+                userSocialSituation: { hasCompletedSurvey: true },
+              },
+            }).as('currentIdentity');
+          }
+        );
+
+        cy.intercept('GET', '/current/profile/complete', {
+          statusCode: 200,
+          body: {
+            id: '00000000-0000-0000-0000-000000000001',
+            hasPicture: true,
+            hasExternalCv: true,
+            description: null,
+            linkedinUrl: null,
+            department: null,
+            isAvailable: true,
+            currentJob: null,
+            optInRecommendations: false,
+            nudges: [],
+            sectorOccupations: [],
+            allowPhysicalEvents: true,
+            allowRemoteEvents: true,
+            experiences: [],
+            formations: [],
+            skills: [],
+            contracts: [],
+            reviews: [],
+            interests: [],
+            customNudges: [],
+            userProfileLanguages: [],
+            hasExtractedCvData: false,
+          },
+        }).as('currentProfileComplete');
+      });
+
+      it('should arrive on the first module locked, with the questionnaire hidden until the video starts', () => {
+        interceptElearningUnits([unitOne, unitTwo]);
+
+        cy.visit('/wizard/run');
+        cy.wait('@elearningUnits');
+
+        cy.contains('Regardez la vidéo');
+        cy.get('[data-testid^="test-elearning-quiz-question-"]').should(
+          'not.exist'
+        );
+      });
+
+      it('should unlock the questionnaire and show the first question once the video starts', () => {
+        interceptElearningUnits([unitOne, unitTwo]);
+
+        cy.visit('/wizard/run');
+        cy.wait('@elearningUnits');
+
+        playVideo();
+
+        cy.contains('Regardez la vidéo').should('not.exist');
+        cy.contains('Question 1 / 2');
+        cy.get(
+          '[data-testid="test-elearning-quiz-question-question-1a"]'
+        ).should('be.visible');
+      });
+
+      it('should progress sequentially through a module questions then move to the next module in a locked state', () => {
+        interceptElearningUnits([unitOne, unitTwo]);
+
+        cy.visit('/wizard/run');
+        cy.wait('@elearningUnits');
+
+        playVideo();
+
+        answerAndConfirm('answer-1a-good', 'Question suivante');
+        cy.contains('Question 2 / 2');
+
+        answerAndConfirm('answer-1b-good', 'Terminer');
+        cy.wait('@postElearningCompletion');
+
+        // Automatic transition to the next module, locked again
+        // (the module title is not displayed as plain text; the position
+        // "Vidéo 2/2" in the side panel is the only visible indicator)
+        cy.contains('Formation - Vidéo 2/2');
+        cy.contains('Regardez la vidéo');
+        cy.get('[data-testid^="test-elearning-quiz-question-"]').should(
+          'not.exist'
+        );
+      });
+
+      it('should complete the last module and advance the wizard past the eLearning step', () => {
+        interceptElearningUnits([unitTwo]);
+        // The synchronous advance to the "webinar" step mounts WebinarSelection,
+        // which calls /events* immediately: without a stub, the request goes out
+        // with the fake test token and fails with a 401 (an error not intercepted
+        // by the app, which would make the test fail).
+        cy.intercept('GET', '/events*', { statusCode: 200, body: [] }).as(
+          'events'
+        );
+
+        cy.visit('/wizard/run');
+        cy.wait('@elearningUnits');
+
+        playVideo();
+        answerAndConfirm('answer-2a-good', 'Terminer');
+        cy.wait('@postElearningCompletion');
+
+        // Next step: webinar (last step after eLearning for a candidate)
+        cy.contains('réunion de bienvenue');
       });
     });
   });

@@ -26,9 +26,7 @@ import { useDashboardRecommendations } from './useDashboardRecommendations';
 const contextCompanyAdmin = 'CompanyAdmin';
 
 type recommendationsContextsType =
-  | UserRoles.CANDIDATE
-  | UserRoles.COACH
-  | typeof contextCompanyAdmin;
+  UserRoles.CANDIDATE | UserRoles.COACH | typeof contextCompanyAdmin;
 
 const recommendationsLabels: {
   [K in recommendationsContextsType]: {

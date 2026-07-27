@@ -28,7 +28,7 @@ export type FlattenedOnboardingFormData =
   UnionToIntersection<OnboardingFormData>;
 
 export interface OnboardingStepContent<
-  T extends OnboardingForms = OnboardingForms
+  T extends OnboardingForms = OnboardingForms,
 > {
   title: string;
   subtitle?: React.ReactNode;

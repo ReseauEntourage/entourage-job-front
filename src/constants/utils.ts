@@ -13,11 +13,11 @@ export const ActionsLabels = {
 } as const;
 
 export type FilterConstant<
-  T extends string | number | boolean = string | number | boolean
+  T extends string | number | boolean = string | number | boolean,
 > = { value: T; label: string | React.ReactNode };
 
 export interface Filter<
-  T extends string | number | boolean = string | number | boolean
+  T extends string | number | boolean = string | number | boolean,
 > {
   key: string;
   constants: FilterConstant<T>[];

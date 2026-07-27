@@ -14,20 +14,20 @@ frontendPath: .
 
 Always read these before generating a mockup:
 
-| Purpose                                       | Path                                                                              |
-| --------------------------------------------- | --------------------------------------------------------------------------------- |
-| Colors, breakpoints, font weights, heights    | `src/constants/styles.ts`                                                         |
-| Button sizes and variants                     | `src/components/ui/Button/button.constants.ts`                                    |
-| Section/container spacing                     | `src/components/ui/Section/Section.styles.ts`                                     |
-| Standard layout (public + backoffice)         | `src/components/layouts/Layout.tsx`                                               |
-| Backoffice layout wrapper                     | `src/components/layouts/LayoutBackOffice.tsx`                                     |
-| Connected nav links (per role)                | `src/features/navs/NavConnected/NavConnectedContent/NavConnectedContent.utils.tsx` |
-| Dashboard (cards, two-column grid)            | `src/features/backoffice/dashboard/Dashboard.tsx`                                 |
-| Network directory (annuaire)                  | `src/features/backoffice/network-directory/NetworkDirectory.tsx`                  |
-| Messaging (split panel)                       | `src/features/backoffice/messaging/Messaging.tsx`                                 |
-| Profile (header + editable sections)          | `src/features/backoffice/profile/Profile.tsx`                                     |
-| Wizard layout (content + side panel)          | `src/features/wizard/shell/WizardContentLayout.tsx`                               |
-| Wizard layout styles                          | `src/features/wizard/shell/WizardContentLayout.styles.ts`                         |
+| Purpose                                    | Path                                                                               |
+| ------------------------------------------ | ---------------------------------------------------------------------------------- |
+| Colors, breakpoints, font weights, heights | `src/constants/styles.ts`                                                          |
+| Button sizes and variants                  | `src/components/ui/Button/button.constants.ts`                                     |
+| Section/container spacing                  | `src/components/ui/Section/Section.styles.ts`                                      |
+| Standard layout (public + backoffice)      | `src/components/layouts/Layout.tsx`                                                |
+| Backoffice layout wrapper                  | `src/components/layouts/LayoutBackOffice.tsx`                                      |
+| Connected nav links (per role)             | `src/features/navs/NavConnected/NavConnectedContent/NavConnectedContent.utils.tsx` |
+| Dashboard (cards, two-column grid)         | `src/features/backoffice/dashboard/Dashboard.tsx`                                  |
+| Network directory (annuaire)               | `src/features/backoffice/network-directory/NetworkDirectory.tsx`                   |
+| Messaging (split panel)                    | `src/features/backoffice/messaging/Messaging.tsx`                                  |
+| Profile (header + editable sections)       | `src/features/backoffice/profile/Profile.tsx`                                      |
+| Wizard layout (content + side panel)       | `src/features/wizard/shell/WizardContentLayout.tsx`                                |
+| Wizard layout styles                       | `src/features/wizard/shell/WizardContentLayout.styles.ts`                          |
 
 ---
 
@@ -181,14 +181,15 @@ Menu that opens on click of a trigger. Used in nav (user menu) and filter select
 
 The application has four roles with different nav items and accessible pages:
 
-| Role        | Description                           | Main nav items                                                                      |
-| ----------- | ------------------------------------- | ----------------------------------------------------------------------------------- |
-| `CANDIDATE` | Job seeker                            | Tableau de bord, Mon profil, Réseau d'entraide, Événements, Ressources              |
-| `COACH`     | Network volunteer / company member    | Tableau de bord, Mon profil, (Mon entreprise if admin), Réseau d'entraide, Événements, Ressources |
-| `REFERER`   | Prescribers (social workers)          | Tableau de bord, Mon profil, Réseau d'entraide, Événements, Ressources              |
-| `ADMIN`     | Entourage staff                       | Les membres (Candidats / Coachs / Prescripteurs), Les structures partenaires, Mon profil, Réseau d'entraide, Événements |
+| Role        | Description                        | Main nav items                                                                                                          |
+| ----------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `CANDIDATE` | Job seeker                         | Tableau de bord, Mon profil, Réseau d'entraide, Événements, Ressources                                                  |
+| `COACH`     | Network volunteer / company member | Tableau de bord, Mon profil, (Mon entreprise if admin), Réseau d'entraide, Événements, Ressources                       |
+| `REFERER`   | Prescribers (social workers)       | Tableau de bord, Mon profil, Réseau d'entraide, Événements, Ressources                                                  |
+| `ADMIN`     | Entourage staff                    | Les membres (Candidats / Coachs / Prescripteurs), Les structures partenaires, Mon profil, Réseau d'entraide, Événements |
 
 All authenticated users have access to:
+
 - **Messages** (dedicated icon in the nav, with unread-count badge)
 - **Se déconnecter** (user avatar dropdown)
 
@@ -387,64 +388,64 @@ Routes: `/backoffice/admin/membres`, `/backoffice/admin/structures`
 
 ### Public pages (NavPublic + Footer)
 
-| Route                              | Description                                              |
-| ---------------------------------- | -------------------------------------------------------- |
-| `/`                                | Home — hero, value props, CTAs for candidates and coaches |
-| `/candidats`                       | Landing for job seekers                                  |
-| `/aider`                           | Landing for coaches / volunteers                         |
-| `/orienter`                        | Landing for referers / prescribers                       |
-| `/entreprises/s-engager`           | Companies engagement landing                             |
-| `/entreprises/recruter-inclusif`   | Inclusive hiring landing                                 |
-| `/partenaires`                     | Partner organizations                                    |
-| `/login`                           | Login form (email + password, LinkedIn OAuth)            |
-| `/contact`                         | Contact form                                             |
-| `/conseils-posture`                | Coaching posture advice content                          |
-| `/cgu`                             | Terms of use                                             |
-| `/cookies`                         | Cookie policy                                            |
-| `/data-privacy`                    | Privacy policy                                           |
-| `/legal-notice`                    | Legal notice                                             |
+| Route                            | Description                                               |
+| -------------------------------- | --------------------------------------------------------- |
+| `/`                              | Home — hero, value props, CTAs for candidates and coaches |
+| `/candidats`                     | Landing for job seekers                                   |
+| `/aider`                         | Landing for coaches / volunteers                          |
+| `/orienter`                      | Landing for referers / prescribers                        |
+| `/entreprises/s-engager`         | Companies engagement landing                              |
+| `/entreprises/recruter-inclusif` | Inclusive hiring landing                                  |
+| `/partenaires`                   | Partner organizations                                     |
+| `/login`                         | Login form (email + password, LinkedIn OAuth)             |
+| `/contact`                       | Contact form                                              |
+| `/conseils-posture`              | Coaching posture advice content                           |
+| `/cgu`                           | Terms of use                                              |
+| `/cookies`                       | Cookie policy                                             |
+| `/data-privacy`                  | Privacy policy                                            |
+| `/legal-notice`                  | Legal notice                                              |
 
 ### Authentication & onboarding flows
 
-| Route                              | Layout             | Description                                  |
-| ---------------------------------- | ------------------ | -------------------------------------------- |
-| `/wizard`                          | WizardContentLayout | Registration entry — role selection          |
-| `/wizard/run`                      | WizardContentLayout | Multi-step registration wizard               |
-| `/reset/[id]/[token]`              | Simple             | Password reset form                          |
-| `/reset/success`                   | Simple             | Reset success confirmation                   |
-| `/verification-email`              | Simple             | Email verification prompt                    |
-| `/auth/linkedin/callback`          | —                  | LinkedIn OAuth callback (redirect only)      |
-| `/finaliser-compte-oriente`        | Simple             | Finalize account for users referred by a coach |
-| `/coach-certification/[id]`        | Simple             | Coach certification achievement page         |
-| `/merci` / `/merci/[type]`         | Simple             | Thank-you / post-registration confirmation   |
+| Route                       | Layout              | Description                                    |
+| --------------------------- | ------------------- | ---------------------------------------------- |
+| `/wizard`                   | WizardContentLayout | Registration entry — role selection            |
+| `/wizard/run`               | WizardContentLayout | Multi-step registration wizard                 |
+| `/reset/[id]/[token]`       | Simple              | Password reset form                            |
+| `/reset/success`            | Simple              | Reset success confirmation                     |
+| `/verification-email`       | Simple              | Email verification prompt                      |
+| `/auth/linkedin/callback`   | —                   | LinkedIn OAuth callback (redirect only)        |
+| `/finaliser-compte-oriente` | Simple              | Finalize account for users referred by a coach |
+| `/coach-certification/[id]` | Simple              | Coach certification achievement page           |
+| `/merci` / `/merci/[type]`  | Simple              | Thank-you / post-registration confirmation     |
 
 ### Authenticated backoffice (NavConnected, no Footer)
 
-| Route                                       | Role access            | Description                              |
-| ------------------------------------------- | ---------------------- | ---------------------------------------- |
-| `/backoffice/dashboard`                     | All                    | Personalized dashboard                   |
-| `/backoffice/parametres`                    | All                    | User profile settings (editable)         |
-| `/backoffice/profile/[userId]`              | All                    | Public profile view                      |
-| `/backoffice/annuaire`                      | All                    | Network directory                        |
-| `/backoffice/messaging`                     | All                    | Messaging (conversation list + thread)   |
-| `/backoffice/events`                        | All                    | Events listing                           |
-| `/backoffice/events/[eventId]`              | All                    | Event detail                             |
-| `/backoffice/ressources/aides-locales`      | Candidate/Coach/Referer | Local support structures               |
-| `/backoffice/ressources/formations`         | Candidate/Coach        | E-learning / training page               |
-| `/backoffice/candidat/[id]`                 | Coach / Admin          | Candidate detail (coach view)            |
-| `/backoffice/referer`                       | Referer                | Referer dashboard                        |
-| `/backoffice/referer/candidates`            | Referer                | List of referred candidates              |
-| `/backoffice/referer/orienter/[step]`       | Referer                | Referral wizard (multi-step)             |
-| `/backoffice/referer/orienter/confirmation` | Referer                | Referral confirmation                    |
-| `/backoffice/alerte-candidats/[alertId]`    | Coach                  | Recruitment alert detail                 |
-| `/backoffice/companies/[id]`                | Coach (admin)          | Company profile                          |
-| `/backoffice/companies/[id]/collaborators`  | Coach (admin)          | Company collaborators management         |
-| `/backoffice/companies/parametres`          | Coach (admin)          | Company settings                         |
-| `/backoffice/admin`                         | Admin                  | Admin home                               |
-| `/backoffice/admin/membres`                 | Admin                  | Members list (filterable by role + zone) |
-| `/backoffice/admin/membres/[id]`            | Admin                  | Member detail + edit                     |
-| `/backoffice/admin/structures`              | Admin                  | Partner organizations list               |
-| `/backoffice/admin/create-mailing-list`     | Admin                  | Mailing list generation tool             |
+| Route                                       | Role access             | Description                              |
+| ------------------------------------------- | ----------------------- | ---------------------------------------- |
+| `/backoffice/dashboard`                     | All                     | Personalized dashboard                   |
+| `/backoffice/parametres`                    | All                     | User profile settings (editable)         |
+| `/backoffice/profile/[userId]`              | All                     | Public profile view                      |
+| `/backoffice/annuaire`                      | All                     | Network directory                        |
+| `/backoffice/messaging`                     | All                     | Messaging (conversation list + thread)   |
+| `/backoffice/events`                        | All                     | Events listing                           |
+| `/backoffice/events/[eventId]`              | All                     | Event detail                             |
+| `/backoffice/ressources/aides-locales`      | Candidate/Coach/Referer | Local support structures                 |
+| `/backoffice/ressources/formations`         | Candidate/Coach         | E-learning / training page               |
+| `/backoffice/candidat/[id]`                 | Coach / Admin           | Candidate detail (coach view)            |
+| `/backoffice/referer`                       | Referer                 | Referer dashboard                        |
+| `/backoffice/referer/candidates`            | Referer                 | List of referred candidates              |
+| `/backoffice/referer/orienter/[step]`       | Referer                 | Referral wizard (multi-step)             |
+| `/backoffice/referer/orienter/confirmation` | Referer                 | Referral confirmation                    |
+| `/backoffice/alerte-candidats/[alertId]`    | Coach                   | Recruitment alert detail                 |
+| `/backoffice/companies/[id]`                | Coach (admin)           | Company profile                          |
+| `/backoffice/companies/[id]/collaborators`  | Coach (admin)           | Company collaborators management         |
+| `/backoffice/companies/parametres`          | Coach (admin)           | Company settings                         |
+| `/backoffice/admin`                         | Admin                   | Admin home                               |
+| `/backoffice/admin/membres`                 | Admin                   | Members list (filterable by role + zone) |
+| `/backoffice/admin/membres/[id]`            | Admin                   | Member detail + edit                     |
+| `/backoffice/admin/structures`              | Admin                   | Partner organizations list               |
+| `/backoffice/admin/create-mailing-list`     | Admin                   | Mailing list generation tool             |
 
 ---
 

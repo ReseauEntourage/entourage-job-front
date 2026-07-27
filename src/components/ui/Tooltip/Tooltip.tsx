@@ -11,6 +11,12 @@ interface TooltipProps {
   children: React.ReactNode;
   width?: number;
   placement?: TooltipPlacement;
+  /**
+   * Accessible name for icon-only / non-text triggers. When set, the trigger
+   * becomes keyboard-focusable and opens the tooltip on focus, so the
+   * information isn't only reachable by mouse hover.
+   */
+  ariaLabel?: string;
 }
 
 const GAP = 8;
@@ -52,6 +58,7 @@ export const Tooltip = ({
   children,
   width,
   placement = 'bottom',
+  ariaLabel,
 }: TooltipProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [effectivePlacement, setEffectivePlacement] =
@@ -109,6 +116,13 @@ export const Tooltip = ({
       ref={wrapperRef}
       onMouseEnter={handleOpen}
       onMouseLeave={() => setIsOpen(false)}
+      {...(ariaLabel && {
+        tabIndex: 0,
+        role: 'img',
+        'aria-label': ariaLabel,
+        onFocus: handleOpen,
+        onBlur: () => setIsOpen(false),
+      })}
     >
       {children}
       {isOpen &&

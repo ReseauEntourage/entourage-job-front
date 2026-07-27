@@ -31,8 +31,8 @@ export const StyledButton = styled.button<{
     BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;
 
   border: ${(props) => {
-      return BUTTON_STYLES.border[props.variant || 'default'] || COLORS.white;
-    }}
+    return BUTTON_STYLES.border[props.variant || 'default'] || COLORS.white;
+  }}
     solid
     ${(props) => {
       return BUTTON_STYLES.borderSize[props.variant || 'default'] || '1px';
@@ -80,8 +80,8 @@ export const StyledButton = styled.button<{
     }};
 
     border: ${({ variant }) => {
-        return BUTTON_STYLES.hoverBorder[variant || 'default'] || COLORS.white;
-      }}
+      return BUTTON_STYLES.hoverBorder[variant || 'default'] || COLORS.white;
+    }}
       solid 1px;
 
     color: ${({ variant }) => {

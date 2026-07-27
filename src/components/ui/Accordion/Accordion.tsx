@@ -41,9 +41,8 @@ export const Accordion = ({
   keepContentMounted = false,
 }: AccordionProps) => {
   const isControlled = typeof controlledIsOpen === 'boolean';
-  const [uncontrolledIsOpen, setUncontrolledIsOpen] = React.useState(
-    !!defaultOpen
-  );
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] =
+    React.useState(!!defaultOpen);
   const isOpen = isControlled ? controlledIsOpen : uncontrolledIsOpen;
 
   const setIsOpen = (nextIsOpen: boolean) => {

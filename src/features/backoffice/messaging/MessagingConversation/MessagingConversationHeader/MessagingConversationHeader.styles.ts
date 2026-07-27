@@ -62,6 +62,12 @@ export const ConversationAddresee = styled.div`
   flex-direction: column;
 `;
 
+export const AddreseeBadges = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
 export const StyledButtonContainer = styled.div`
   display: flex;
   gap: 15px;

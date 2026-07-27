@@ -58,7 +58,7 @@ export const ParamProfessionalInformations = ({
                   ({
                     businessSectorId: businessSector.value,
                     order: idx,
-                  } as UserProfileSectorOccupation)
+                  }) as UserProfileSectorOccupation
               ),
               companyName: values.companyName?.value || null,
             };

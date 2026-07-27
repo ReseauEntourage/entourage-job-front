@@ -8,16 +8,20 @@ export interface RadioTypes extends FilterConstant<string> {
   filterData?: string;
 }
 
-export interface RadioAsyncComponentProps
-  extends CommonInputProps<string, HTMLInputElement> {
+export interface RadioAsyncComponentProps extends CommonInputProps<
+  string,
+  HTMLInputElement
+> {
   loadOptions: (callback: (options: RadioTypes[]) => void) => void;
   filter?: string;
   errorMessage?: string;
   limit?: number;
 }
 
-export interface RadioComponentProps
-  extends CommonInputProps<string, HTMLInputElement> {
+export interface RadioComponentProps extends CommonInputProps<
+  string,
+  HTMLInputElement
+> {
   options: RadioTypes[];
   optionsToDisable?: { message: React.ReactNode; option: string }[];
   subtitle?: string;

@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-named-as-default
+// eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { UserRoles } from '@/src/constants/users';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
@@ -10,7 +10,7 @@ import {
 const stepWithCompletion = (
   id: WizardStep['id'],
   isStepCompleted?: () => Promise<boolean>
-): WizardStep => ({ id, isStepCompleted } as unknown as WizardStep);
+): WizardStep => ({ id, isStepCompleted }) as unknown as WizardStep;
 
 describe('buildOnboardingStepOrder', () => {
   it('returns no steps when shouldSkip is true, regardless of role/profileMode', () => {

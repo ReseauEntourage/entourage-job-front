@@ -16,9 +16,7 @@ export const StyledSkeletonLoader = styled.div<{
     ${(props) => (props.inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
       25%,
     ${(props) =>
-        props.inverted
-          ? COLORS.skeletonLightShimmer
-          : COLORS.skeletonDarkShimmer}
+      props.inverted ? COLORS.skeletonLightShimmer : COLORS.skeletonDarkShimmer}
       50%,
     ${(props) => (props.inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
       75%

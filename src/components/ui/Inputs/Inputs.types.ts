@@ -4,7 +4,7 @@ import { AnyCantFix } from 'src/utils/Types';
 
 export interface CommonInputProps<
   T,
-  K extends HTMLElement | Component = AnyCantFix
+  K extends HTMLElement | Component = AnyCantFix,
 > {
   id: string;
   name: string;

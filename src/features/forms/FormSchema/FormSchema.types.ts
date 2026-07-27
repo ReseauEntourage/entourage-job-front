@@ -165,7 +165,7 @@ export type GetValueType<V extends FormSchemaValidation> = UseFormGetValues<V>;
 
 interface FormFieldCommonProperties<
   V extends FormSchemaValidation,
-  N extends Path<V> | ArrayPath<V | string> = Path<V>
+  N extends Path<V> | ArrayPath<V | string> = Path<V>,
 > {
   id: N;
   name: N;
@@ -179,7 +179,7 @@ interface FormFieldCommonProperties<
 export interface Rule<
   V extends FormSchemaValidation,
   T extends InputComponent,
-  M extends boolean
+  M extends boolean,
 > {
   method: (fieldValue: FormComponentValues<M>[T], fieldValues: V) => boolean;
   message: string;
@@ -188,7 +188,7 @@ export interface Rule<
 interface FormFieldInputCommonProperties<
   V extends FormSchemaValidation,
   T extends InputComponent,
-  M extends boolean = boolean
+  M extends boolean = boolean,
 > extends FormFieldCommonProperties<V, Path<V>> {
   isRequired?: boolean;
   rules?: Rule<V, T, M>[];
@@ -201,8 +201,9 @@ interface FormFieldInputCommonProperties<
   labelTooltip?: React.ReactNode;
 }
 
-export interface FormFieldTextInput<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, TextInputComponent> {
+export interface FormFieldTextInput<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, TextInputComponent> {
   component: TextInputComponent;
   type?: 'text' | 'email' | 'password';
   rows?: number;
@@ -214,25 +215,29 @@ export interface FormFieldTextInput<V extends FormSchemaValidation>
   renderErrorContent?: (error?: FieldError) => React.ReactNode;
 }
 
-export interface FormFieldCheckBox<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, CheckBoxComponent> {
+export interface FormFieldCheckBox<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, CheckBoxComponent> {
   component: CheckBoxComponent;
 }
 
-export interface FormFieldFile<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, FileInputComponent> {
+export interface FormFieldFile<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, FileInputComponent> {
   component: FileInputComponent;
   fileType: FileType;
   accept: string;
 }
 
-export interface FormFieldCheckBoxAlert<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, CheckBoxAlertComponent> {
+export interface FormFieldCheckBoxAlert<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, CheckBoxAlertComponent> {
   component: CheckBoxAlertComponent;
 }
 
-export interface FormFieldSelect<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, SelectComponent> {
+export interface FormFieldSelect<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, SelectComponent> {
   component: SelectComponent;
   fieldsToReset?: Path<V>[];
   options: (FilterConstant & {
@@ -240,13 +245,13 @@ export interface FormFieldSelect<V extends FormSchemaValidation>
   })[];
 }
 
-export interface FormFieldSelectGraphic<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, SelectGraphicComponent> {
+export interface FormFieldSelectGraphic<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, SelectGraphicComponent> {
   component: SelectGraphicComponent;
   isMulti: boolean;
   options?:
-    | FilterConstant[]
-    | ((getValue: GetValueType<V>) => FilterConstant[]);
+    FilterConstant[] | ((getValue: GetValueType<V>) => FilterConstant[]);
   loadOptions?: (
     callback: (options: SelectListType[]) => void
   ) => Promise<void> | void;
@@ -256,8 +261,9 @@ export interface FormFieldSelectGraphic<V extends FormSchemaValidation>
   }[];
 }
 
-export interface FormFieldRadio<V extends FormSchemaValidation>
-  extends FormFieldInputCommonProperties<V, RadioComponent> {
+export interface FormFieldRadio<
+  V extends FormSchemaValidation,
+> extends FormFieldInputCommonProperties<V, RadioComponent> {
   component: RadioComponent;
   dynamicFilter?: (getValue: GetValueType<V>) => string | undefined;
   options?: RadioTypes[];
@@ -277,15 +283,14 @@ export interface FormFieldRadio<V extends FormSchemaValidation>
 
 interface FormFieldSelectRequestCommon<
   V extends FormSchemaValidation,
-  M extends boolean
+  M extends boolean,
 > extends FormFieldInputCommonProperties<V, SelectRequestComponent, M> {
   component: SelectRequestComponent;
   maxChar?: number;
   maxItems?: number;
   fieldsToReset?: Path<V>[];
   options?:
-    | FilterConstant[]
-    | ((getValue: GetValueType<V>) => FilterConstant[]);
+    FilterConstant[] | ((getValue: GetValueType<V>) => FilterConstant[]);
   loadOptions?: (
     callback: (options: FilterConstant[]) => void,
     inputValue?: string,
@@ -295,18 +300,21 @@ interface FormFieldSelectRequestCommon<
   isMulti: ((getValue: GetValueType<V>) => boolean) | boolean;
 }
 
-interface FormFieldSelectRequestMulti<V extends FormSchemaValidation>
-  extends FormFieldSelectRequestCommon<V, true> {
+interface FormFieldSelectRequestMulti<
+  V extends FormSchemaValidation,
+> extends FormFieldSelectRequestCommon<V, true> {
   isMulti: true;
 }
 
-interface FormFieldSelectRequestSingle<V extends FormSchemaValidation>
-  extends FormFieldSelectRequestCommon<V, false> {
+interface FormFieldSelectRequestSingle<
+  V extends FormSchemaValidation,
+> extends FormFieldSelectRequestCommon<V, false> {
   isMulti: false;
 }
 
-interface FormFieldSelectRequestMethod<V extends FormSchemaValidation>
-  extends FormFieldSelectRequestCommon<V, boolean> {
+interface FormFieldSelectRequestMethod<
+  V extends FormSchemaValidation,
+> extends FormFieldSelectRequestCommon<V, boolean> {
   isMulti: (getValue: GetValueType<V>) => boolean;
 }
 
@@ -328,27 +336,31 @@ export type FormFieldInput<V extends FormSchemaValidation> = StrictUnion<
   | FormFieldFile<V>
 >;
 
-export interface FormFieldText<V extends FormSchemaValidation>
-  extends FormFieldCommonProperties<V, string> {
+export interface FormFieldText<
+  V extends FormSchemaValidation,
+> extends FormFieldCommonProperties<V, string> {
   title: string | JSX.Element | ((getValue: GetValueType<V>) => string);
   component: TextComponent;
 }
 
-export interface FormFieldReactNode<V extends FormSchemaValidation>
-  extends FormFieldCommonProperties<V, string> {
+export interface FormFieldReactNode<
+  V extends FormSchemaValidation,
+> extends FormFieldCommonProperties<V, string> {
   component: ReactNodeComponent;
   reactNode: JSX.Element;
 }
 
-export interface FormFieldMultiple<V extends FormSchemaValidation>
-  extends FormFieldCommonProperties<V, ArrayPath<V>> {
+export interface FormFieldMultiple<
+  V extends FormSchemaValidation,
+> extends FormFieldCommonProperties<V, ArrayPath<V>> {
   action: string;
   component: MultipleComponent;
   fields: FormFieldInput<V>[];
 }
 
-export interface FormFieldGroup<V extends FormSchemaValidation>
-  extends FormFieldCommonProperties<V, string> {
+export interface FormFieldGroup<
+  V extends FormSchemaValidation,
+> extends FormFieldCommonProperties<V, string> {
   component: GroupComponent;
   fields: (FormFieldInput<V> | FormFieldText<V> | FormFieldReactNode<V>)[];
 }
@@ -360,8 +372,7 @@ type FormFieldNonInput<V extends FormSchemaValidation> =
   | FormFieldReactNode<V>;
 
 export type FormField<V extends FormSchemaValidation> =
-  | FormFieldInput<V>
-  | FormFieldNonInput<V>;
+  FormFieldInput<V> | FormFieldNonInput<V>;
 
 export interface FormSchema<V extends FormSchemaValidation> {
   id: string;

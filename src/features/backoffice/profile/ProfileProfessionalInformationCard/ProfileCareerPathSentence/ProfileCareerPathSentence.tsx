@@ -149,7 +149,9 @@ export const ProfileCareerPathSentence = ({
             {asSimpleSentence &&
               sectorOccupations[1].businessSector?.prefixes && (
                 <span>
-                  {sectorOccupations[1].businessSector?.prefixes.split(',')[0]}{' '}
+                  {
+                    sectorOccupations[1].businessSector?.prefixes.split(',')[0]
+                  }{' '}
                 </span>
               )}
             {asSimpleSentence ? (

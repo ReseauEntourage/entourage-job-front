@@ -36,7 +36,7 @@ pnpm start
 
 # Testing
 pnpm run test              # ts-check + eslint + jest
-pnpm run test:integ
+pnpm run test:unit
 pnpm run test:ts-check
 pnpm run test:eslint
 pnpm run test:e2e          # Cypress cloud (cypress:io)

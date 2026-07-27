@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -18,8 +17,7 @@ import { BackLink } from '@/src/components/ui/BackLink';
 import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
-import { ElearningGateModal } from '@/src/features/modals/ElearningGateModal/ElearningGateModal';
-import { openModal } from '@/src/features/modals/Modal';
+import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
 import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
 import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
@@ -75,20 +73,14 @@ export const HeaderProfileDesktop = ({
   } = useHeaderProfile(role);
   const { setFileInputRef, requestFileUploadClick } = useFileActivator();
 
-  const router = useRouter();
   const currentUserId = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectAuthenticatedUser);
   const ownProfile = currentUserId === id;
   const displayMessageButton =
     shouldShowAllProfile && isAvailable && !ownProfile;
+  const { openConversationOrGate } = useContactEligibility();
 
-  const openConversation = () => {
-    if (!currentUser.elearningCompletedAt) {
-      openModal(<ElearningGateModal />);
-      return;
-    }
-    router.push(`/backoffice/messaging?userId=${id}`);
-  };
+  const openConversation = () => openConversationOrGate(id);
 
   return (
     <StyledHeaderProfile>

@@ -53,6 +53,7 @@ export const StyledAlert = styled.div<{
   $visible: boolean;
   $rounded: boolean;
   $clickable?: boolean;
+  $center?: boolean;
 }>`
   display: ${(props) => {
     return props.$visible ? 'flex' : 'none';
@@ -82,6 +83,7 @@ export const StyledAlert = styled.div<{
 
   cursor: ${(props) => (props.$clickable ? 'pointer' : 'default')};
   transition: ${(props) => (props.$clickable ? 'filter 0.2s' : 'none')};
+  justify-content: ${(props) => (props.$center ? 'center' : 'flex-start')};
 
   &:hover {
     filter: ${(props) => (props.$clickable ? 'brightness(0.95)' : 'none')};
@@ -92,8 +94,23 @@ export const StyledAlert = styled.div<{
   }
 `;
 
-export const StyledAlertContainer = styled.div`
-  flex: 1;
+export const StyledAlertContainer = styled.div<{
+  $center?: boolean;
+}>`
+  /* Kept at flex: 1 by default so the container fills the row and pushes a
+     closable alert's close button to the far edge. When centering, it must
+     NOT grow — otherwise it eats all the row's free space and the outer
+     row's justify-content: center has nothing left to center against,
+     leaving the icon pinned to the left of a centered text block. */
+  flex: ${(props) => (props.$center ? '0 1 auto' : '1')};
+  ${(props) =>
+    props.$center &&
+    `
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    `}
 `;
 
 export const StyledIconContainer = styled.div<{

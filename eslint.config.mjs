@@ -18,7 +18,7 @@ import next from '@next/eslint-plugin-next';
 /* =======================
    Tooling
 ======================= */
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import prettier from 'eslint-plugin-prettier';
 import typedReduxSaga from '@jambit/eslint-plugin-typed-redux-saga';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
@@ -82,7 +82,7 @@ export default defineConfig([
       '@typescript-eslint': tsPlugin,
       react,
       'react-hooks': reactHooks,
-      import: importPlugin,
+      'import-x': importPlugin,
       prettier,
       '@jambit/typed-redux-saga': typedReduxSaga,
       'jsx-a11y': jsxA11y,
@@ -92,10 +92,10 @@ export default defineConfig([
       react: {
         version: 'detect',
       },
-      'import/parsers': {
+      'import-x/parsers': {
         '@typescript-eslint/parser': ['.ts', '.tsx'],
       },
-      'import/resolver': {
+      'import-x/resolver': {
         typescript: {
           project: './tsconfig.base.json',
         },
@@ -190,7 +190,7 @@ export default defineConfig([
       /* =======================
          Imports
       ======================= */
-      'import/extensions': [
+      'import-x/extensions': [
         'error',
         'ignorePackages',
         {
@@ -200,10 +200,10 @@ export default defineConfig([
           jsx: 'never',
         },
       ],
-      'import/prefer-default-export': 'off',
-      'import/no-default-export': 'error',
-      'import/no-named-as-default': 'error',
-      'import/no-extraneous-dependencies': [
+      'import-x/prefer-default-export': 'off',
+      'import-x/no-default-export': 'error',
+      'import-x/no-named-as-default': 'error',
+      'import-x/no-extraneous-dependencies': [
         'error',
         {
           devDependencies: [
@@ -216,7 +216,7 @@ export default defineConfig([
           ],
         },
       ],
-      'import/order': [
+      'import-x/order': [
         'warn',
         {
           groups: [
@@ -245,7 +245,7 @@ export default defineConfig([
   {
     files: ['src/**/*.stories.tsx', '.storybook/**/*'],
     rules: {
-      'import/no-default-export': 'off',
+      'import-x/no-default-export': 'off',
     },
   },
 
@@ -263,8 +263,8 @@ export default defineConfig([
   {
     files: ['src/pages/**'],
     rules: {
-      'import/no-default-export': 'off',
-      'import/prefer-default-export': 'error',
+      'import-x/no-default-export': 'off',
+      'import-x/prefer-default-export': 'error',
     },
   },
 

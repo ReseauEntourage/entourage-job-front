@@ -36,6 +36,7 @@ export const Alert = ({
   title,
   children,
   iconInContainer = false,
+  center = false,
 }: AlertProps) => {
   const handleClick = () => {
     if (clickable && onClick) {
@@ -75,6 +76,7 @@ export const Alert = ({
       $visible={visible}
       $rounded={rounded}
       $clickable={clickable && !!onClick}
+      $center={center}
       onClick={handleClick}
     >
       {resizedIcon && (
@@ -83,7 +85,7 @@ export const Alert = ({
         </StyledIconContainer>
       )}
 
-      <StyledAlertContainer>
+      <StyledAlertContainer $center={center}>
         {title && (
           <Text
             weight="semibold"

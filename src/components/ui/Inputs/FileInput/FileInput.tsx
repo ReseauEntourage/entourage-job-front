@@ -12,8 +12,10 @@ import {
 import { FilePreviewCV } from './FilePreview';
 import { FilePreviewLogo } from './FilePreview/FilePreviewLogo';
 
-export interface FileInputProps
-  extends CommonInputProps<File | File[] | null, HTMLInputElement> {
+export interface FileInputProps extends CommonInputProps<
+  File | File[] | null,
+  HTMLInputElement
+> {
   accept: string;
   fileType?: FileType;
   noPreview?: boolean;

@@ -2,6 +2,7 @@ import { ProfileRecommendation } from '@/src/api/types';
 import { Button } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
 import { UserRoles } from '@/src/constants/users';
+import { RecapSuggestedMessage } from '@/src/features/backoffice/messaging/RecapSuggestedMessage/RecapSuggestedMessage';
 import {
   SEARCHING_LOADER_VARIANTS,
   WizardSearchingLoader,
@@ -11,10 +12,7 @@ import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
 import { StyledMatchRecapActions } from './Content.styles';
 
 export type MatchRecapPanelState =
-  | 'LOADING'
-  | 'EMBEDDING_PENDING'
-  | 'COMPUTING_RECO'
-  | 'READY';
+  'LOADING' | 'EMBEDDING_PENDING' | 'COMPUTING_RECO' | 'READY';
 
 interface ContentProps {
   panelState: MatchRecapPanelState;
@@ -23,6 +21,7 @@ interface ContentProps {
   isEligibleToContact: boolean;
   onSkipWait: () => void;
   onPrimaryCta: () => void;
+  onSendSuggestedMessage: () => void;
   onSecondaryCta: () => void;
 }
 
@@ -33,6 +32,7 @@ export const Content = ({
   isEligibleToContact,
   onSkipWait,
   onPrimaryCta,
+  onSendSuggestedMessage,
   onSecondaryCta,
 }: ContentProps) => {
   const isCandidate = userRole === UserRoles.CANDIDATE;
@@ -71,8 +71,8 @@ export const Content = ({
               ? 'Félicitations ! Vous pouvez dès à présent contacter des coachs'
               : 'Félicitations ! Vous pouvez dès à présent contacter des candidats'
             : isCandidate
-            ? 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre coach'
-            : 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre candidat'
+              ? 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre coach'
+              : 'Félicitations ! Vous pouvez dès à présent consulter le profil de votre candidat'
         }
         center
       />
@@ -86,16 +86,21 @@ export const Content = ({
         }
       />
       <StyledMatchRecapActions>
-        <Button
-          dataTestId="wizard-match-recap-primary-cta"
-          onClick={onPrimaryCta}
-          variant="primary"
-          size="large"
-        >
-          {isEligibleToContact
-            ? `Écrire à ${profile.firstName}`
-            : `Voir le profil de ${profile.firstName}`}
-        </Button>
+        {isEligibleToContact ? (
+          <RecapSuggestedMessage
+            recommendation={recommendation}
+            onSend={onSendSuggestedMessage}
+          />
+        ) : (
+          <Button
+            dataTestId="wizard-match-recap-primary-cta"
+            onClick={onPrimaryCta}
+            variant="primary"
+            size="large"
+          >
+            {`Voir le profil de ${profile.firstName}`}
+          </Button>
+        )}
         <Button
           dataTestId="wizard-match-recap-secondary-cta"
           onClick={onSecondaryCta}

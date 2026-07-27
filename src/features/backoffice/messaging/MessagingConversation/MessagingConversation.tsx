@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
-import { FeatureKey } from 'src/api/types';
+import { ConversationType, FeatureKey } from 'src/api/types';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import { UserRoles } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
@@ -22,6 +22,7 @@ import {
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
+  selectOtherParticipantHasNotReplied,
   selectShouldGiveFeedback,
 } from 'src/use-cases/messaging/messaging.selectors';
 import {
@@ -38,6 +39,7 @@ import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
+import { MessagingWaitingReplyBanner } from './MessagingWaitingReplyBanner/MessagingWaitingReplyBanner';
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -57,6 +59,9 @@ export const MessagingConversation = () => {
   const currentUserHasSentMessages = useSelector(
     selectCurrentUserHasSentMessages(currentUserId)
   );
+  const otherParticipantHasNotReplied = useSelector(
+    selectOtherParticipantHasNotReplied(currentUserId)
+  );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
 
   const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
@@ -64,11 +69,19 @@ export const MessagingConversation = () => {
     'instant' as ScrollBehavior
   );
   const displaySuggestions = useMemo(() => {
-    return selectedConversationId === 'new' && currentUser;
+    return (
+      selectedConversationId === 'new' &&
+      !!currentUser &&
+      currentUser.role !== UserRoles.ADMIN
+    );
   }, [currentUser, selectedConversationId]);
 
-  const displayCoachQuickReplies = useMemo(() => {
-    if (!currentUser || currentUser.role !== UserRoles.COACH) {
+  const displayQuickReplies = useMemo(() => {
+    if (
+      !currentUser ||
+      (currentUser.role !== UserRoles.COACH &&
+        currentUser.role !== UserRoles.CANDIDATE)
+    ) {
       return false;
     }
     if (!selectedConversation || selectedConversationId === 'new') {
@@ -83,7 +96,11 @@ export const MessagingConversation = () => {
     const otherParticipants = selectedConversation.participants.filter(
       (p) => p.id !== currentUserId
     );
-    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
+    const oppositeRole =
+      currentUser.role === UserRoles.COACH
+        ? UserRoles.CANDIDATE
+        : UserRoles.COACH;
+    if (!otherParticipants.every((p) => p.role === oppositeRole)) {
       return false;
     }
     return selectedConversation.messages.length > 0;
@@ -95,6 +112,26 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
   ]);
 
+  const displayWaitingReplyBanner = useMemo(() => {
+    if (!selectedConversation || selectedConversationId === 'new') {
+      return false;
+    }
+    if (selectedConversation.id !== selectedConversationId) {
+      return false;
+    }
+    if (conversationParticipantsAreDeleted) {
+      return false;
+    }
+    if (selectedConversation.type !== ConversationType.DIRECT) {
+      return false;
+    }
+    return otherParticipantHasNotReplied;
+  }, [
+    selectedConversation,
+    selectedConversationId,
+    conversationParticipantsAreDeleted,
+    otherParticipantHasNotReplied,
+  ]);
   const displayFirstContactBanner = useMemo(() => {
     if (!currentUser) {
       return false;
@@ -130,6 +167,12 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
     currentUserId,
   ]);
+
+  const otherParticipant = useMemo(() => {
+    return selectedConversation?.participants.find(
+      (p) => p.id !== currentUserId
+    );
+  }, [selectedConversation, currentUserId]);
 
   const reversedMessages = useMemo(() => {
     if (!selectedConversation || !selectedConversation.messages) {
@@ -274,7 +317,7 @@ export const MessagingConversation = () => {
         </MessagingMessagesContainer>
       )}
 
-      {displayCoachQuickReplies && (
+      {displayQuickReplies && (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
           newMessage={newMessage}
@@ -283,7 +326,14 @@ export const MessagingConversation = () => {
               (p) => p.id !== currentUserId
             ) || []
           }
-          variant="coach-quick-replies"
+          variant="quick-replies"
+        />
+      )}
+
+      {displayWaitingReplyBanner && currentUser && otherParticipant && (
+        <MessagingWaitingReplyBanner
+          recipientFirstName={otherParticipant.firstName}
+          currentUserRole={currentUser.role as UserRoles}
         />
       )}
 

@@ -18,8 +18,10 @@ import { SelectListOptions, isGroupedOptions } from './SelectList.types';
 
 export type SelectListVariant = 'default' | 'inline' | 'grid';
 
-interface SelectListProps<T extends string>
-  extends CommonInputProps<T[], HTMLElement> {
+interface SelectListProps<T extends string> extends CommonInputProps<
+  T[],
+  HTMLElement
+> {
   id: string;
   isMulti?: boolean;
   options: SelectListOptions<T>;

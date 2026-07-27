@@ -11,9 +11,7 @@ export enum UserRoles {
 // User groupements
 export type NormalUserRoles = UserRoles.CANDIDATE | UserRoles.COACH;
 export type RegistrableUserRoles =
-  | UserRoles.CANDIDATE
-  | UserRoles.COACH
-  | UserRoles.REFERER;
+  UserRoles.CANDIDATE | UserRoles.COACH | UserRoles.REFERER;
 type RolesWithOrganization = UserRoles.REFERER;
 type RolesNotAdmin = Exclude<UserRoles, UserRoles.ADMIN>;
 
@@ -46,6 +44,6 @@ export const USER_ROLES_FILTERS: FilterConstant<UserRoles>[] = [
 export const RELATED_ROLES = {
   [UserRoles.CANDIDATE]: UserRoles.COACH,
   [UserRoles.COACH]: UserRoles.CANDIDATE,
-  [UserRoles.ADMIN]: UserRoles.ADMIN,
+  [UserRoles.ADMIN]: UserRoles.CANDIDATE,
   [UserRoles.REFERER]: UserRoles.CANDIDATE,
 } as const;

@@ -61,7 +61,9 @@ export const PanelTab = styled.button<PanelTabProps>`
   font-weight: ${({ isActive }) => (isActive ? '600' : '400')};
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
   margin-bottom: -1px;
 
   &:hover {

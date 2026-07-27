@@ -1,4 +1,4 @@
-/* eslint import/no-unresolved: "off" */
+/* eslint import-x/no-unresolved: "off" */
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';

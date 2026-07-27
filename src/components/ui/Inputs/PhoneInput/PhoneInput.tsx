@@ -11,14 +11,13 @@ import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
 
-interface PhoneInputProps
-  extends CommonInputProps<
-    Value,
-    Component<
-      Props<DefaultInputComponentProps>,
-      State<Props<DefaultInputComponentProps>>
-    >
-  > {}
+interface PhoneInputProps extends CommonInputProps<
+  Value,
+  Component<
+    Props<DefaultInputComponentProps>,
+    State<Props<DefaultInputComponentProps>>
+  >
+> {}
 
 export function PhoneInput({
   id,

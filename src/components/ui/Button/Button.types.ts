@@ -4,11 +4,7 @@ import { TextWeight } from '../Text';
 import { AnyToFix } from 'src/utils/Types';
 
 export type ButtonVariant =
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'text'
-  | 'hoverBlue';
+  'default' | 'primary' | 'secondary' | 'text' | 'hoverBlue';
 
 export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
 

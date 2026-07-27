@@ -33,15 +33,15 @@ export const NetworkPreviewStep = ({
       ? 'coachs'
       : 'coach'
     : isPlural
-    ? 'candidats'
-    : 'candidat';
+      ? 'candidats'
+      : 'candidat';
   const actionLabel = isCandidate
     ? isPlural
       ? 'peuvent vous donner un coup de pouce'
       : 'peut vous donner un coup de pouce'
     : isPlural
-    ? 'ont besoin de vous'
-    : 'a besoin de vous';
+      ? 'ont besoin de vous'
+      : 'a besoin de vous';
 
   return (
     <StyledContainer>

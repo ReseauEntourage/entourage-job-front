@@ -20,8 +20,10 @@ import {
 } from './SelectCard.styles';
 import { SelectCardType } from './SelectCard.types';
 
-interface SelectCardProps<T extends string>
-  extends CommonInputProps<T[], HTMLElement> {
+interface SelectCardProps<T extends string> extends CommonInputProps<
+  T[],
+  HTMLElement
+> {
   id: string;
   isMulti?: boolean;
   options: SelectCardType<T>[];

@@ -9,9 +9,9 @@ interface StyledSimpleImageTextContainerProps {
 }
 
 const backgroundColors: {
-  [K in NonNullable<
-    StyledSimpleImageTextBackgroundProps['backgroundColor']
-  >]: string;
+  [
+    K in NonNullable<StyledSimpleImageTextBackgroundProps['backgroundColor']>
+  ]: string;
 } = {
   blue: COLORS.hoverBlue,
 };
