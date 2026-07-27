@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'typed-redux-saga';
 import { Api } from '@/src/api';
 import { currentUserActions } from '@/src/use-cases/current-user';
+import { authenticationActions } from 'src/use-cases/authentication';
 import { slice } from './elearning.slice';
 
 const {
@@ -10,6 +11,7 @@ const {
   postElearningCompletionRequested,
   postElearningCompletionSucceeded,
   postElearningCompletionFailed,
+  resetElearning,
 } = slice.actions;
 
 function* fetchElearningUnitsRequestedSaga(
@@ -45,6 +47,10 @@ function* postElearningCompletionRequestedSaga(
   }
 }
 
+function* logoutSucceededSaga() {
+  yield* put(resetElearning());
+}
+
 export function* saga() {
   yield* takeLatest(
     fetchElearningUnitsRequested,
@@ -54,4 +60,5 @@ export function* saga() {
     postElearningCompletionRequested,
     postElearningCompletionRequestedSaga
   );
+  yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
 }

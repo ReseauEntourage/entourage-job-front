@@ -58,6 +58,9 @@ export const slice = createSlice({
     setIsLoading(state, action: { payload: boolean }) {
       state.isLoading = action.payload;
     },
+    resetElearning() {
+      return initialState;
+    },
   },
 });
 
