@@ -5,8 +5,6 @@ import {
 } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
 
-const FALLBACK = '[...]';
-
 const VOWEL_SOUND_PATTERN = /^[aeiouyàâäéèêëîïôöùûü]/;
 
 const lowerFirst = (word: string): string =>
@@ -16,9 +14,9 @@ const lowerFirst = (word: string): string =>
 
 // "un poste de [occupation]" → elision to "d'" before a vowel sound
 // (e.g. "un poste d'éleveur"), there's no dedicated field on Occupation for this.
-const formatOccupationClause = (occupationName?: string): string => {
+const formatOccupationClause = (occupationName?: string): string | null => {
   if (!occupationName) {
-    return `de ${FALLBACK}`;
+    return null;
   }
   const label = lowerFirst(occupationName);
   return VOWEL_SOUND_PATTERN.test(label) ? `d'${label}` : `de ${label}`;
@@ -28,9 +26,9 @@ const formatOccupationClause = (occupationName?: string): string => {
 // word of the sector name split on " et " (e.g. "la,l'" for
 // "Restauration et hôtellerie" → "la restauration et l'hôtellerie").
 // They're reapplied one by one rather than guessing a global agreement.
-const formatSectorClause = (businessSector?: BusinessSector): string => {
+const formatSectorClause = (businessSector?: BusinessSector): string | null => {
   if (!businessSector?.name) {
-    return FALLBACK;
+    return null;
   }
   const nameParts = businessSector.name.split(' et ');
   const prefixes = businessSector.prefixes
@@ -47,6 +45,24 @@ const formatSectorClause = (businessSector?: BusinessSector): string => {
       return prefix.endsWith("'") ? `${prefix}${label}` : `${prefix} ${label}`;
     })
     .join(' et ');
+};
+
+// Omit whichever part (occupation, sector) is missing rather than showing a
+// placeholder: a "[...]" conveys no information and reads as broken copy.
+const formatPositionPhrase = (
+  occupationClause: string | null,
+  sectorClause: string | null
+): string => {
+  if (occupationClause && sectorClause) {
+    return `un poste ${occupationClause} dans ${sectorClause}`;
+  }
+  if (occupationClause) {
+    return `un poste ${occupationClause}`;
+  }
+  if (sectorClause) {
+    return `un poste dans ${sectorClause}`;
+  }
+  return 'un poste';
 };
 
 export interface RecapCandidateProfileSource {
@@ -86,7 +102,7 @@ const getCommonNudgeLabels = (
   const coachNudgeIds = new Set((coachNudges ?? []).map((nudge) => nudge.id));
   return (candidateNudges ?? [])
     .filter((nudge) => coachNudgeIds.has(nudge.id))
-    .map((nudge) => nudge.nameRequest);
+    .map((nudge) => lowerFirst(nudge.nameRequest));
 };
 
 export const getRecapSuggestedMessage = ({
@@ -104,6 +120,7 @@ export const getRecapSuggestedMessage = ({
   const sectorClause = formatSectorClause(
     firstSectorOccupation?.businessSector
   );
+  const positionPhrase = formatPositionPhrase(occupationClause, sectorClause);
   const commonNudgeLabels = getCommonNudgeLabels(candidateNudges, coachNudges);
   const nudgeText =
     commonNudgeLabels.length > 0 ? joinWithAnd(commonNudgeLabels) : null;
@@ -112,11 +129,11 @@ export const getRecapSuggestedMessage = ({
     const nudgeClause = nudgeText
       ? ` et j'aimerais un coup de pouce pour ${nudgeText}`
       : '';
-    return `Bonjour ${recipientFirstName},\nJe recherche un poste ${occupationClause} dans ${sectorClause}${nudgeClause}. Votre expérience m'aiderait beaucoup. Seriez-vous d'accord pour échanger ?\n${senderFirstName}`;
+    return `Bonjour ${recipientFirstName},\nJe recherche ${positionPhrase}${nudgeClause}. Votre expérience m'aiderait beaucoup. Seriez-vous d'accord pour échanger ?\n${senderFirstName}`;
   }
 
   const nudgeSentence = nudgeText
     ? ` Je serais ravi de vous donner un coup de pouce pour ${nudgeText}.`
     : '';
-  return `Bonjour ${recipientFirstName},\nJe vois que vous recherchez un poste ${occupationClause} dans ${sectorClause}.${nudgeSentence} Dites-moi où vous en êtes, on en parle quand vous voulez.\n${senderFirstName}`;
+  return `Bonjour ${recipientFirstName},\nJe vois que vous recherchez ${positionPhrase}.${nudgeSentence} Dites-moi où vous en êtes, on en parle quand vous voulez.\n${senderFirstName}`;
 };

@@ -43,7 +43,7 @@ const candidateProfileWithVowelSectorOccupation: RecapCandidateProfileSource = {
 const cvNudge = {
   id: 'nudge-cv',
   value: 'cv',
-  nameRequest: 'Réaliser son CV et ses lettres de motivation',
+  nameRequest: 'Réaliser un CV et des lettres de motivation',
   nameOffer: 'Aider à réaliser un CV et une lettre de motivation',
   order: 0,
 };
@@ -74,7 +74,7 @@ describe('getRecapSuggestedMessage', () => {
     });
 
     expect(message).toContain('Bonjour Karim,');
-    expect(message).toContain('Je recherche un poste de');
+    expect(message).toContain('Je recherche un poste.');
     expect(message.endsWith('Sofia')).toBe(true);
   });
 
@@ -87,7 +87,7 @@ describe('getRecapSuggestedMessage', () => {
     });
 
     expect(message).toContain('Bonjour Sofia,');
-    expect(message).toContain('Je vois que vous recherchez un poste de');
+    expect(message).toContain('Je vois que vous recherchez un poste.');
     expect(message.endsWith('Karim')).toBe(true);
   });
 
@@ -117,7 +117,7 @@ describe('getRecapSuggestedMessage', () => {
     );
   });
 
-  it('utilise le repli [...] pour métier/secteur quand sectorOccupations est absent', () => {
+  it('omet la clause métier/secteur (sans repli [...]) quand sectorOccupations est absent', () => {
     const message = getRecapSuggestedMessage({
       senderRole: UserRoles.CANDIDATE,
       senderFirstName: 'Sofia',
@@ -125,7 +125,54 @@ describe('getRecapSuggestedMessage', () => {
       candidateProfile: emptyCandidateProfile,
     });
 
-    expect(message).toContain('Je recherche un poste de [...] dans [...]');
+    expect(message).toContain('Je recherche un poste. Votre expérience');
+    expect(message).not.toContain('[...]');
+  });
+
+  it("n'affiche que le métier quand le secteur est absent", () => {
+    const message = getRecapSuggestedMessage({
+      senderRole: UserRoles.COACH,
+      senderFirstName: 'Karim',
+      recipientFirstName: 'Sofia',
+      candidateProfile: {
+        sectorOccupations: [
+          {
+            id: 'so-3',
+            order: 0,
+            occupation: { id: 'occ-3', name: 'Serveur' },
+          },
+        ],
+      },
+    });
+
+    expect(message).toContain(
+      'Je vois que vous recherchez un poste de serveur. Dites-moi'
+    );
+  });
+
+  it("n'affiche que le secteur quand le métier est absent", () => {
+    const message = getRecapSuggestedMessage({
+      senderRole: UserRoles.COACH,
+      senderFirstName: 'Karim',
+      recipientFirstName: 'Sofia',
+      candidateProfile: {
+        sectorOccupations: [
+          {
+            id: 'so-4',
+            order: 0,
+            businessSector: {
+              id: 'sector-1',
+              name: 'Restauration et hôtellerie',
+              prefixes: "la,l'",
+            },
+          },
+        ],
+      },
+    });
+
+    expect(message).toContain(
+      "Je vois que vous recherchez un poste dans la restauration et l'hôtellerie. Dites-moi"
+    );
   });
 
   it("insère un seul coup de pouce commun avec le connecteur 'pour'", () => {
@@ -139,7 +186,7 @@ describe('getRecapSuggestedMessage', () => {
     });
 
     expect(message).toContain(
-      "j'aimerais un coup de pouce pour Réaliser son CV et ses lettres de motivation."
+      "j'aimerais un coup de pouce pour réaliser un CV et des lettres de motivation."
     );
   });
 
@@ -154,7 +201,7 @@ describe('getRecapSuggestedMessage', () => {
     });
 
     expect(message).toContain(
-      "Je serais ravi de vous donner un coup de pouce pour Réaliser son CV et ses lettres de motivation, Se préparer aux entretiens d'embauche et Faire grandir son réseau professionnel."
+      "Je serais ravi de vous donner un coup de pouce pour réaliser un CV et des lettres de motivation, se préparer aux entretiens d'embauche et faire grandir son réseau professionnel."
     );
   });
 
@@ -169,7 +216,7 @@ describe('getRecapSuggestedMessage', () => {
     });
 
     expect(message).toContain(
-      "j'aimerais un coup de pouce pour Se préparer aux entretiens d'embauche."
+      "j'aimerais un coup de pouce pour se préparer aux entretiens d'embauche."
     );
     expect(message).not.toContain('CV');
     expect(message).not.toContain('réseau');
@@ -185,9 +232,7 @@ describe('getRecapSuggestedMessage', () => {
       coachNudges: [networkNudge],
     });
 
-    expect(message).toContain(
-      'Je recherche un poste de [...] dans [...]. Votre expérience'
-    );
+    expect(message).toContain('Je recherche un poste. Votre expérience');
     expect(message).not.toContain('coup de pouce');
   });
 
@@ -200,7 +245,7 @@ describe('getRecapSuggestedMessage', () => {
     });
 
     expect(message).toContain(
-      'Je vois que vous recherchez un poste de [...] dans [...]. Dites-moi où vous en êtes'
+      'Je vois que vous recherchez un poste. Dites-moi où vous en êtes'
     );
     expect(message).not.toContain('coup de pouce');
   });
