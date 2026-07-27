@@ -69,7 +69,7 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 
 - **Framework / rendering**: Next.js 15.5.15, React 19.0.0, React-DOM 19, Webpack 5.
 - **State**: `@reduxjs/toolkit` 1.9.7, `react-redux` 8.1.3, `redux-saga` 1.3.0, `typed-redux-saga` 1.5.0, `rxjs` 7.8.2.
-- **Styling**: UIKit 3.6.22 (legacy, being phased out), `styled-components` 5.3.11, SVGR.
+- **Styling**: UIKit 3.6.22 (legacy, being phased out), `styled-components` 6.4.4, SVGR.
 - **Forms / input**: `react-hook-form` 7.54.2, `react-phone-number-input` 3.4.12, `react-select` 5.10.1.
 - **HTTP / utils**: `axios` 0.31.0, `check-password-strength` 2.0.10.
 - **Real-time**: `pusher-js` 7.6.0.
