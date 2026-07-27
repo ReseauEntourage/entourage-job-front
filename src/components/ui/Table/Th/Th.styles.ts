@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 
-export const StyledTh = styled.th`
+export const StyledTh = styled.th<{ isMobile: boolean }>`
   white-space: nowrap;
   position: sticky;
   top: 0;

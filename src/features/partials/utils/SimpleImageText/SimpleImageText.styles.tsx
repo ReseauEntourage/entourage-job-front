@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export interface StyledSimpleImageTextBackgroundProps {
-  backgroundColor: 'blue';
+  backgroundColor?: 'blue';
 }
 interface StyledSimpleImageTextContainerProps {
   reverse: boolean;
@@ -18,7 +18,7 @@ const backgroundColors: {
 
 export const StyledSimpleImageTextBackground = styled.div<StyledSimpleImageTextBackgroundProps>`
   background-color: ${({ backgroundColor }) =>
-    backgroundColors[backgroundColor]};
+    backgroundColor ? backgroundColors[backgroundColor] : undefined};
 `;
 
 export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextContainerProps>`
@@ -46,7 +46,7 @@ export const StyledSimpleImageTextImageContainer = styled.div`
 `;
 
 export const StyledSimpleImageTextTextContainer = styled.div<{
-  contentPaddingY: number;
+  contentPaddingY?: number;
 }>`
   display: flex;
   flex-direction: column;
@@ -103,7 +103,6 @@ export const StyledCTAsContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: ${(props) => (props.marginTop ? '60px' : '0')};
   button:first-child {
     margin-right: 20px;
   }

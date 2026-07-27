@@ -27,7 +27,7 @@ export const Item = ({
   badgeSize = 50,
 }: ItemProps) => {
   return (
-    <StyledItem isLast={isLast} active={active}>
+    <StyledItem isLast={isLast}>
       {/* Counter */}
       <StyledItemCounterContainer>
         <NumberCheckableBadge

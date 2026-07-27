@@ -10,8 +10,9 @@ import { NavPublicItemProps } from './NavPublicItem.types';
 export const NavPublicItemDesktop = ({ item }: NavPublicItemProps) => {
   const { asPath, push } = useRouter();
   const isExactPath = asPath === item.href;
-  const isChildPath =
-    item.childrens && item.childrens.some((child) => child.href === asPath);
+  const isChildPath = !!(
+    item.childrens && item.childrens.some((child) => child.href === asPath)
+  );
 
   // Generate <Link> or simple text if not necessary
   let link: React.ReactNode = item.name;

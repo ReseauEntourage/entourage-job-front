@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledContainer = styled.div`
@@ -30,7 +30,7 @@ export const StyledConversationParticipants = styled.div`
   }
 `;
 
-export const StyledMessagePreview = styled.div<{ hasSeen: boolean }>`
+export const StyledMessagePreview = styled.div<{ hasSeen?: boolean }>`
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;

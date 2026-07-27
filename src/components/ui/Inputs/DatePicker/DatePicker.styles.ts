@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import {
   commonInputContainerStyles,
   commonInputStyles,
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledDatePickerContainer = styled.div`
+export const StyledDatePickerContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
   input {
     ${() => commonInputStyles}

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { TdDesktop, TdMobile, TrMobile } from '@/src/components/ui/Table';
 import { COLORS } from 'src/constants/styles';
 

@@ -1,13 +1,14 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS, FONT_WEIGHTS } from 'src/constants/styles';
 import { StyledHeadingProps } from './Headings.types';
 
 export const StyledH1 = styled.h1<StyledHeadingProps>`
   font-size: ${(props) => (props.mobile ? '24px' : '32px')};
   line-height: 1.5;
-  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
+  font-weight: ${(props) =>
+    props.weight ? FONT_WEIGHTS[props.weight] : FONT_WEIGHTS.normal};
   color: ${(props) => {
-    if (COLORS[props.color]) {
+    if (props.color && COLORS[props.color]) {
       return COLORS[props.color];
     }
     if (props.color) {
@@ -23,9 +24,10 @@ export const StyledH1 = styled.h1<StyledHeadingProps>`
 export const StyledH2 = styled.h2<StyledHeadingProps>`
   font-size: ${(props) => (props.mobile ? '20px' : '28px')};
   line-height: 1.5;
-  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
+  font-weight: ${(props) =>
+    props.weight ? FONT_WEIGHTS[props.weight] : FONT_WEIGHTS.normal};
   color: ${(props) => {
-    if (COLORS[props.color]) {
+    if (props.color && COLORS[props.color]) {
       return COLORS[props.color];
     }
     if (props.color) {
@@ -42,11 +44,12 @@ export const StyledH2 = styled.h2<StyledHeadingProps>`
 `;
 
 export const StyledH3 = styled.h3<StyledHeadingProps>`
-  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
+  font-weight: ${(props) =>
+    props.weight ? FONT_WEIGHTS[props.weight] : FONT_WEIGHTS.normal};
   line-height: 1.5;
   color: black;
   color: ${(props) => {
-    if (COLORS[props.color]) {
+    if (props.color && COLORS[props.color]) {
       return COLORS[props.color];
     }
     if (props.color) {
@@ -61,10 +64,11 @@ export const StyledH3 = styled.h3<StyledHeadingProps>`
 `;
 
 export const StyledH4 = styled.h4<StyledHeadingProps>`
-  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
+  font-weight: ${(props) =>
+    props.weight ? FONT_WEIGHTS[props.weight] : FONT_WEIGHTS.normal};
   line-height: 1.5;
   color: ${(props) => {
-    if (COLORS[props.color]) {
+    if (props.color && COLORS[props.color]) {
       return COLORS[props.color];
     }
     if (props.color) {
@@ -79,11 +83,12 @@ export const StyledH4 = styled.h4<StyledHeadingProps>`
 `;
 
 export const StyledH5 = styled.h5<StyledHeadingProps>`
-  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
+  font-weight: ${(props) =>
+    props.weight ? FONT_WEIGHTS[props.weight] : FONT_WEIGHTS.normal};
   line-height: 1.5;
   margin-top: 0;
   color: ${(props) => {
-    if (COLORS[props.color]) {
+    if (props.color && COLORS[props.color]) {
       return COLORS[props.color];
     }
     if (props.color) {
@@ -99,10 +104,11 @@ export const StyledH5 = styled.h5<StyledHeadingProps>`
 
 export const StyledH6 = styled.h6<StyledHeadingProps>`
   font-size: 14px;
-  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
+  font-weight: ${(props) =>
+    props.weight ? FONT_WEIGHTS[props.weight] : FONT_WEIGHTS.normal};
   line-height: 1.5;
   color: ${(props) => {
-    if (COLORS[props.color]) {
+    if (props.color && COLORS[props.color]) {
       return COLORS[props.color];
     }
     if (props.color) {

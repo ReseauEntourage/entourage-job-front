@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledChip = styled.div`
+export const StyledChip = styled.div<{ size: string; disabled: boolean }>`
   display: flex;
   align-items: center;
   gap: 5px;

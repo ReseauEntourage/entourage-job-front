@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const BACKGROUND_IMAGE_HEIGHT = 430;
 
-export const StyledBackground = styled.section`
+export const StyledBackground = styled.section<{ mobileHeight?: number }>`
   &.top-banner {
     .banner-container {
       max-height: ${BACKGROUND_IMAGE_HEIGHT}px;

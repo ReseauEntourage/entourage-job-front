@@ -12,7 +12,6 @@ import { NewsletterPartial } from '../NewsletterPartial';
 import { BREAKPOINTS } from 'src/constants/styles';
 
 jest.mock('react-modal');
-jest.mock('cookies-next');
 jest.mock('react-redux', () => {
   return {
     useSelector: jest.fn(),

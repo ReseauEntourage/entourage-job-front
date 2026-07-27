@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledColorsContainer = styled.div`
@@ -20,7 +20,10 @@ export const StyledColorContainer = styled.div`
   }
 `;
 
-export const StyledColor = styled.div`
+export const StyledColor = styled.div<{
+  color: string;
+  isDarkColor?: boolean;
+}>`
   background-color: ${(props) => {
     return props.color;
   }};

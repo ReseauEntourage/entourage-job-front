@@ -18,15 +18,16 @@ export function Text({
 }: TextProps) {
   const isDesktop = useIsDesktop();
   const device = isDesktop ? 'desktop' : 'mobile';
+  const resolvedSize: number =
+    typeof size === 'number' ? size : sizesPx[device][size];
 
   return (
     <StyledText
-      size={sizesPx[device][size] || size}
+      size={resolvedSize}
       weight={weight}
       color={color}
       center={center}
       variant={variant}
-      mobile={!isDesktop}
       textAlign={textAlign}
       underline={underline}
       uppercase={uppercase}

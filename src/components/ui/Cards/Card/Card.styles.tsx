@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Color, COLORS } from 'src/constants/styles';
 
 export const StyledCard = styled.div<{
-  $borderColor?: Color;
+  $borderColor?: string;
   $bgColor: Color;
   $shadow: boolean;
 }>`

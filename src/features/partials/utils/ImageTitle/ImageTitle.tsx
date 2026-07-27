@@ -48,7 +48,7 @@ export const ImageTitle = ({
       isHero
       hasCta={!!cta}
     >
-      <StyledImageTitle textColor={textColor || 'white'}>
+      <StyledImageTitle>
         <H1 title={title} color={textColor || 'white'} />
         {description && (
           <Text

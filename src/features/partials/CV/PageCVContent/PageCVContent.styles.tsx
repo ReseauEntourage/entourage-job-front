@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCVPage = styled.div`
@@ -116,7 +116,7 @@ export const StyledCVProfilePictureContainer = styled.div`
   }
 `;
 
-export const StyledCVProfilePicture = styled.div`
+export const StyledCVProfilePicture = styled.div<{ imgSrc: string }>`
   height: 340px;
   width: 340px;
   position: relative;

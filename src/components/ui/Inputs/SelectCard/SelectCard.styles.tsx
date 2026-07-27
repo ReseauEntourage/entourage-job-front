@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { commonInputContainerStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledSelectCardContainer = styled.div`
+export const StyledSelectCardContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
 `;
 export const StyledSelectCard = styled.ul`

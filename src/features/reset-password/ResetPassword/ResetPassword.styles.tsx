@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledResetPasswordContainer = styled.div`
   display: flex;

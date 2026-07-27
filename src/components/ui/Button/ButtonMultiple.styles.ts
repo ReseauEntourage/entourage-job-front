@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
-export const StyledButtonMenu = styled.div`
+export const StyledButtonMenu = styled.div<{
+  align?: 'left' | 'right';
+  isOpen: boolean;
+}>`
   flex-direction: column;
   position: absolute;
   z-index: 100;

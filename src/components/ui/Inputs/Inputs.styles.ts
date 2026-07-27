@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 import { LINE_HEIGHT_MULTIPLIER, sizesPx } from '../Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
 import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
@@ -18,7 +18,7 @@ export const commonMenuOptionStyles = css`
   align-items: center;
 `;
 
-export const commonInputContainerStyles = css`
+export const commonInputContainerStyles = css<{ disabled?: boolean }>`
   font-family: Poppins, sans-serif !important;
   max-width: 100%;
   background-color: transparent;

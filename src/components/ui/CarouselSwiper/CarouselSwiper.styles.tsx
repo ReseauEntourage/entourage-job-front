@@ -1,5 +1,5 @@
 /* eslint import-x/no-unresolved: "off" */
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -9,7 +9,7 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
   padding-bottom: 50px;
 `;
 
-export const StyledSwiperContainer = styled.div`
+export const StyledSwiperContainer = styled.div<{ backgroundColor?: string }>`
   --swiper-navigation-color: ${COLORS.primaryBlue};
   --swiper-navigation-size: 20px; /* défaut: 44px */
 

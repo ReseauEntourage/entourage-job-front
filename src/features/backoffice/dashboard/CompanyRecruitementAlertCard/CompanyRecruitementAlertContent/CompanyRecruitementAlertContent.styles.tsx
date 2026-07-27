@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
 // Main container for both types

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledNavContainerDesktop = styled.header`

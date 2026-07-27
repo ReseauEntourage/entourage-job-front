@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { SimpleLink } from 'src/components/ui';
 import { COLORS } from 'src/constants/styles';
 

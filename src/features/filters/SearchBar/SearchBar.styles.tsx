@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSearchBarContainer = styled.div`
@@ -6,7 +6,7 @@ export const StyledSearchBarContainer = styled.div`
   flex-direction: column;
 `;
 
-export const StyledSearchBar = styled.div`
+export const StyledSearchBar = styled.div<{ light: boolean }>`
   border-radius: 23px;
   display: flex;
   justify-content: center;

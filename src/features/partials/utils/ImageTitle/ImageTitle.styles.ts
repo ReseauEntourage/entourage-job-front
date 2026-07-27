@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS } from 'src/constants/styles';
 
 export const StyledImageTitle = styled.section`
@@ -18,7 +18,9 @@ export const StyledImageTitle = styled.section`
   }
 `;
 
-export const StyledImageTitleCTAsContainer = styled.div`
+export const StyledImageTitleCTAsContainer = styled.div<{
+  marginTop: boolean;
+}>`
   display: flex;
   align-items: center;
   flex-wrap: wrap;

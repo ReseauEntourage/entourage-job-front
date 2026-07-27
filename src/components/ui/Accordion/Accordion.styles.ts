@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 import { AccordionVariant } from './Accordion.types';
 

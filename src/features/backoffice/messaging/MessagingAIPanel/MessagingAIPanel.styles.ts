@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 import { sizesPx } from '@/src/components/ui/Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
 

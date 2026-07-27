@@ -48,13 +48,13 @@ export const NotificationWrapper = ({
     exited: { transform: `translateX(${NOTIF_WIDTH})`, opacity: 0 },
   };
 
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   return (
     <Transition in={inProp} nodeRef={nodeRef} timeout={duration}>
       {(state) => (
         <StyledNotificationWrapper
-          nodeRef={nodeRef}
+          ref={nodeRef}
           style={{
             ...defaultStyle,
             ...transitionStyles[state],

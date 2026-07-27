@@ -1,12 +1,16 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS, HEIGHTS } from 'src/constants/styles';
 
-export const StyledNavbar = styled.nav`
+export const StyledNavbar = styled.nav<{
+  backgroundColor?: string;
+  color?: string;
+  sticky?: boolean;
+}>`
   background-color: ${({ backgroundColor }) => {
-    return COLORS[backgroundColor] || COLORS.extraDarkGray;
+    return (backgroundColor && COLORS[backgroundColor]) || COLORS.extraDarkGray;
   }};
   color: ${({ color }) => {
-    return COLORS[color] || COLORS.extraDarkGray;
+    return (color && COLORS[color]) || COLORS.extraDarkGray;
   }};
   position: ${({ sticky }) => {
     return sticky ? 'fixed' : 'inherit';

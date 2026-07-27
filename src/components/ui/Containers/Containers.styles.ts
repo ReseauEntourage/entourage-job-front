@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledContainerWithTextCentered = styled.div`
   display: flex;
@@ -8,6 +8,6 @@ export const StyledContainerWithTextCentered = styled.div`
   text-align: center;
 `;
 
-export const StyledContainerMarginY = styled.div<{ marginTop?: string }>`
+export const StyledContainerMarginY = styled.div<{ margin?: string }>`
   margin-top: ${({ margin }) => margin || '40px'};
 `;

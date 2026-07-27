@@ -1,11 +1,14 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 import {
   commonInputContainerStyles,
   commonInputStyles,
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledTextAreaContainer = styled.div<{ naked?: boolean }>`
+export const StyledTextAreaContainer = styled.div<{
+  disabled?: boolean;
+  naked?: boolean;
+}>`
   ${() => commonInputContainerStyles}
   ${({ naked }) =>
     naked &&
@@ -56,7 +59,11 @@ export const StyledTextArea = styled.textarea<{
     `}
 `;
 
-export const StyledTextAreaScrollContainer = styled.div`
+export const StyledTextAreaScrollContainer = styled.div<{
+  hasLineLimit: boolean;
+  textAreaWidth?: number;
+  width: number;
+}>`
   overflow-x: auto;
   ${({ hasLineLimit, textAreaWidth, width }) => {
     return hasLineLimit

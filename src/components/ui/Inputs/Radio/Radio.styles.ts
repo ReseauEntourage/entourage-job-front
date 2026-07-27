@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledRadioContainer = styled.div`
+export const StyledRadioContainer = styled.div<{ disabled?: boolean }>`
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 
   font-family: Poppins, sans-serif;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 type BadgeStatus = 'not_started' | 'in_progress' | 'obtained';

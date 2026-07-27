@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import {
   commonInputContainerStyles,
   commonInputStyles,
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledPhoneInput = styled.div`
+export const StyledPhoneInput = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
 
   .PhoneInput {

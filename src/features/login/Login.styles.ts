@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledLoginContainer = styled.div`

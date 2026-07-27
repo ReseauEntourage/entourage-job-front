@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { LINE_HEIGHT_MULTIPLIER, sizesPx } from '../../Text/Text.utils';
 import {
   commonInputContainerStyles,
@@ -7,10 +7,13 @@ import {
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledSelectContainer = styled.div`
+export const StyledSelectContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
 `;
-export const StyledSelect = styled.div`
+export const StyledSelect = styled.div<{
+  value?: unknown;
+  maxSelectedItems?: number;
+}>`
   & .Select__control--is-disabled {
     background-color: ${COLORS.lightGray} !important;
 
@@ -174,3 +177,14 @@ export const StyledSelect = styled.div`
     font-family: Poppins, sans-serif !important;
   }
 `;
+
+// No ThemeProvider sets a styled-components theme anywhere in this app, so
+// `theme.textColor` (used above for `.Select__loading-indicator`) always
+// resolves to `undefined` at runtime today. Declaring it here (optional, to
+// match that reality) fixes the DefaultTheme typing without fabricating a
+// theming system or changing this pre-existing behavior.
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    textColor?: string;
+  }
+}

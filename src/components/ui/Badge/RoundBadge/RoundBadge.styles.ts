@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Color, COLORS } from '@/src/constants/styles';
 
 export const StyledRoundBadge = styled.div<{

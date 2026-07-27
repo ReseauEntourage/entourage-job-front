@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { LINE_HEIGHT_MULTIPLIER } from '../Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
 import { ButtonProps, ButtonSize } from './Button.types';

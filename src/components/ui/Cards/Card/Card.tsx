@@ -75,7 +75,6 @@ export const Card = ({
                   setIsOpen(!isOpen);
                 }
               }}
-              centerTitle={centerTitle}
             >
               <H5 title={title} center={centerTitle} />
               {subtitle && <Text center={centerTitle}>{subtitle}</Text>}

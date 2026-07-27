@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { HEIGHTS } from 'src/constants/styles';
 
 export const StyledLoadingScreen = styled.div`

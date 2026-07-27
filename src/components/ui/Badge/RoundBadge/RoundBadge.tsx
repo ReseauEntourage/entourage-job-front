@@ -35,7 +35,6 @@ export const RoundBadge = ({
       borderColor={borderColor}
       bgColor={bgColor}
       size={size}
-      textColor={computedTextColor}
       borderSize={borderSize}
     >
       <Text

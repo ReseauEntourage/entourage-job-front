@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledDropdownContainer = styled.div<{
-  smallSelectors: boolean;
-  disabled: boolean;
-  showSeparator: boolean;
+  smallSelectors?: boolean;
+  disabled?: boolean;
+  showSeparator?: boolean;
 }>`
   display: inline;
 

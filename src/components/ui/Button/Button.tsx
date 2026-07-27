@@ -43,6 +43,10 @@ export function Button({
       })
     : appendIcon;
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    return onClick(e.nativeEvent);
+  };
+
   const buttonComponent = (
     <StyledButton
       id={id}
@@ -50,7 +54,7 @@ export function Button({
       rounded={rounded}
       disabled={disabled}
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       data-testid={dataTestId}

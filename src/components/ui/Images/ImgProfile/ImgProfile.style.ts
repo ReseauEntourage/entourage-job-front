@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledImgProfileContainer = styled.div<{
-  size: NumberConstructor;
+  size: number;
   highlight: boolean;
   bgColor: string;
 }>`

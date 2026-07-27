@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledEditPictureIconContainer = styled.div`

@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Color } from '@/src/constants/styles';
 
 export const StyledImgContainer = styled.div<{
   width: number;
   height: number;
-  bgColor: Color;
+  bgColor?: Color;
 }>`
   display: flex;
   flex-direction: column;

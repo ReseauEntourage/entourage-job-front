@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { TextSize } from '../Text';
 import { sizesPx } from '../Text/Text.utils';
 import { COLORS } from 'src/constants/styles';
@@ -39,7 +39,7 @@ export const StyledDropdownMenuItem = styled.div<{
 }>`
   color: ${COLORS.black};
   font-size: ${({ device, size }) =>
-    sizesPx[device][size] || sizesPx[device].normal}px;
+    (size ? sizesPx[device][size] : undefined) || sizesPx[device].normal}px;
   cursor: pointer;
   padding: 15px 20px;
   &:hover {

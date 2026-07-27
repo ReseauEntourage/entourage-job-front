@@ -86,7 +86,6 @@ export function TextArea({
       )}
       <StyledTextAreaScrollContainer
         textAreaWidth={textAreaWidth}
-        isMobile={isMobile}
         hasLineLimit={!!maxLines}
         width={maxLinesWidth}
       >
@@ -106,7 +105,8 @@ export function TextArea({
           data-testid={id}
           rows={rows || 5}
           placeholder={
-            (showLabel ? placeholder : placeholder || title) || 'Écrivez'
+            (showLabel ? placeholder : placeholder || (title as string)) ||
+            'Écrivez'
           }
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event.target.value)
@@ -114,7 +114,7 @@ export function TextArea({
           disabled={disabled}
           onBlur={onBlur}
           onKeyDown={onKeyDown}
-          maxLength={!maxLines ? maxLength : null}
+          maxLength={!maxLines ? maxLength : undefined}
           value={value || ''}
         />
       </StyledTextAreaScrollContainer>

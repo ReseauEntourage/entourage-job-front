@@ -8,10 +8,16 @@ interface ToggleSwitchProps {
   onChange?: (checked: boolean) => void;
 }
 
-export const ToggleSwitch = ({ checked, onChange }: ToggleSwitchProps) => {
+export const ToggleSwitch = ({
+  checked = false,
+  onChange,
+}: ToggleSwitchProps) => {
   return (
     <SwitchWrapper>
-      <HiddenCheckbox checked={checked} onChange={onChange} />
+      <HiddenCheckbox
+        checked={checked}
+        onChange={(event) => onChange?.(event.target.checked)}
+      />
       <Slider checked={checked} />
     </SwitchWrapper>
   );

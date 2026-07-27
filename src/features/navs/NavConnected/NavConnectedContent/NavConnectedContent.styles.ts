@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { Color, COLORS } from 'src/constants/styles';
 
-export const StyledConnectedItem = styled.li`
+export const StyledConnectedItem = styled.li<{ color: Color }>`
   display: list-item;
   position: relative;
   text-align: center;

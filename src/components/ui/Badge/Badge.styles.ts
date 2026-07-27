@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 import { BadgeSize, BadgeVariant } from './Badge.types';
 import { BADGE_SIZES } from './badge.constants';

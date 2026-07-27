@@ -14,7 +14,7 @@ The PRO product frontend. Next.js 15 (App Router) + React 19 + Redux Toolkit + R
   - Datadog APM via `dd-trace` 5.76 for SSR.
 - **Content / CDN**: AWS S3 + CloudFront via `NEXT_PUBLIC_AWSS3_CDN_URL` / `NEXT_PUBLIC_CDN_URL` (images, CVs).
 - **Social / consent**: Facebook Pixel (`NEXT_PUBLIC_FB_APP_ID`, `NEXT_PUBLIC_FB_DOMAIN_VERIFICATION`), Tarte au Citron cookie banner (`NEXT_PUBLIC_TARTEAUCITRON_UUID`), `react-share` social buttons.
-- **Maps / video**: `google-maps-react` for coaching zones, `react-lite-youtube-embed` for video embeds.
+- **Video**: `react-lite-youtube-embed` for video embeds.
 - **External APIs**: data-inclusion.gouv.fr (`NEXT_PUBLIC_DATA_INCLUSION_TOKEN`), Mailjet contact form (`NEXT_PUBLIC_MAILJET_CONTACT_EMAIL`).
 - **Configurable URLs**: `NEXT_PUBLIC_TOOLBOX_*_URL`, `NEXT_PUBLIC_URL_COACH_COMPANY_KIT`, `NEXT_PUBLIC_URL_MESURE_D_IMPACT`, `NEXT_PUBLIC_DONATION_LINK`.
 - **Tests**: Cypress.io cloud (`CYPRESS_IO_KEY`, `CYPRESS_IO_PROJECT_ID = 5t68y6`).
@@ -67,13 +67,13 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 
 ## External libraries
 
-- **Framework / rendering**: Next.js 15.5.15, React 19.0.0, React-DOM 19, Webpack 5, `next-with-less` 3.0.1.
+- **Framework / rendering**: Next.js 15.5.15, React 19.0.0, React-DOM 19, Webpack 5.
 - **State**: `@reduxjs/toolkit` 1.9.7, `react-redux` 8.1.3, `redux-saga` 1.3.0, `typed-redux-saga` 1.5.0, `rxjs` 7.8.2.
-- **Styling**: UIKit 3.6.22 (legacy, being phased out), `styled-components` 5.3.11, Less 4.2.2, SVGR.
+- **Styling**: UIKit 3.6.22 (legacy, being phased out), `styled-components` 5.3.11, SVGR.
 - **Forms / input**: `react-hook-form` 7.54.2, `react-phone-number-input` 3.4.12, `react-select` 5.10.1.
 - **HTTP / utils**: `axios` 0.31.0, `check-password-strength` 2.0.10.
 - **Real-time**: `pusher-js` 7.6.0.
-- **Components**: `react-transition-group` 4.4.5, `react-spinners` 0.13.8, `react-tooltip` 5.28.0, `react-countup` 4.4.0, `react-visibility-sensor` 5.1.1, `react-lite-youtube-embed` 3.3.3, `react-share` 5.3.0, `react-modal` 3.16.3, `swiper` 12.1.2, `mobile-detect` 1.4.5, `google-maps-react` 2.0.6.
+- **Components**: `react-transition-group` 4.4.5, `react-spinners` 0.13.8, `react-tooltip` 5.28.0, `react-countup` 4.4.0, `react-visibility-sensor` 5.1.1, `react-lite-youtube-embed` 3.3.3, `react-share` 5.3.0, `react-modal` 3.16.3, `swiper` 12.1.2, `mobile-detect` 1.4.5.
 - **Content**: `marked` 4 + `dompurify` 3.4.1.
 - **Monitoring**: `@datadog/browser-rum` 6.24.0, `dd-trace` 5.76 (SSR).
 - **Test**: Cypress 14.2.0, Jest 30.4.2, `@testing-library/react` 16.2.0, `@testing-library/jest-dom` 6.6.3, Storybook 10.3.5, Chromatic 6.24.1.
@@ -84,7 +84,7 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 - **Runtime**: Node.js 22.x (per `package.json` engines), 20.x supported.
 - **Framework**: Next.js 15 (App Router) + React 19.
 - **State**: Redux Toolkit + Redux-Saga.
-- **Styling**: CSS Modules + LESS + styled-components.
+- **Styling**: CSS Modules + styled-components.
 - **Real-time**: Pusher WebSocket.
 - **CI/CD**: GitHub Actions.
 - **Deployment**: Heroku, Docker.

@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledTr = styled.tr`
+export const StyledTr = styled.tr<{ selected?: boolean }>`
   height: 70px;
   box-sizing: border-box;
   &:nth-child(odd) {
@@ -24,7 +24,7 @@ export const StyledTr = styled.tr`
   }}
 `;
 
-export const StyledTrMobile = styled.tr`
+export const StyledTrMobile = styled.tr<{ selected?: boolean }>`
   font-size: 14px;
 
   .bold {

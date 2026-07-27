@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
-export const StyledMemberActionsContainer = styled.div`
+export const StyledMemberActionsContainer = styled.div<{
+  isMobile: boolean;
+}>`
   display: flex;
   align-items: center;
   justify-content: flex-end;

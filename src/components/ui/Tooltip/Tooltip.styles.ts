@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
