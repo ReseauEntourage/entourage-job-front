@@ -1,6 +1,6 @@
 import axios, {
   AxiosInstance,
-  AxiosRequestHeaders,
+  RawAxiosRequestHeaders,
   AxiosResponse,
 } from 'axios';
 import { DocumentNameType } from '@/src/constants';
@@ -60,7 +60,7 @@ export class APIHandler {
   private get(
     route: string,
     query: object = {},
-    headers: AxiosRequestHeaders = {}
+    headers: RawAxiosRequestHeaders = {}
   ): Promise<AxiosResponse> {
     if (query && typeof query !== 'object') {
       throw new Error(
@@ -73,7 +73,7 @@ export class APIHandler {
   private post<T extends APIRoute>(
     route: Route<T>,
     payload: object,
-    headers?: AxiosRequestHeaders
+    headers?: RawAxiosRequestHeaders
   ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
       throw new Error(
@@ -86,7 +86,7 @@ export class APIHandler {
   private put(
     route: string,
     payload?: object,
-    headers?: AxiosRequestHeaders
+    headers?: RawAxiosRequestHeaders
   ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
       throw new Error(
@@ -99,7 +99,7 @@ export class APIHandler {
   private patch(
     route: string,
     payload?: object,
-    headers?: AxiosRequestHeaders
+    headers?: RawAxiosRequestHeaders
   ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
       throw new Error(
@@ -628,7 +628,7 @@ export class APIHandler {
   /// // //////
 
   getCurrentIdentity(
-    headers: AxiosRequestHeaders | undefined = undefined
+    headers: RawAxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
     return this.get(`/current`, {}, headers);
   }
@@ -638,7 +638,7 @@ export class APIHandler {
   }
 
   getCurrentProfileComplete(
-    headers: AxiosRequestHeaders | undefined = undefined
+    headers: RawAxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
     return this.get(`/current/profile/complete`, {}, headers);
   }
@@ -660,7 +660,7 @@ export class APIHandler {
   }
 
   getCurrentStaffContact(
-    headers: AxiosRequestHeaders | undefined = undefined
+    headers: RawAxiosRequestHeaders | undefined = undefined
   ): Promise<AxiosResponse> {
     return this.get(`/current/staff-contact`, {}, headers);
   }
