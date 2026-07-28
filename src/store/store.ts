@@ -23,10 +23,10 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: reducers,
-  middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware({ thunk: true, serializableCheck: false }),
-    sagaMiddleware,
-  ],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ thunk: true, serializableCheck: false }).concat(
+      sagaMiddleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

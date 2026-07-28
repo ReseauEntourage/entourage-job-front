@@ -37,7 +37,8 @@ useCasesList.forEach(({ slice }) => {
 // through `combineReducers`' own inference).
 const reducers = combineReducers(reducersMap) as unknown as Reducer<
   TestRootState,
-  AnyAction
+  AnyAction,
+  Partial<TestRootState>
 >;
 
 // Built from each domain's own (already independently-typed) `RootState`
@@ -99,10 +100,10 @@ export function createTestStore(preloadedState?: Partial<TestRootState>) {
   const store = configureStore({
     reducer: reducers,
     preloadedState,
-    middleware: (getDefaultMiddleware) => [
-      ...getDefaultMiddleware({ thunk: true, serializableCheck: false }),
-      sagaMiddleware,
-    ],
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ thunk: true, serializableCheck: false }).concat(
+        sagaMiddleware
+      ),
   });
 
   sagaMiddleware.run(createRootSaga(store.dispatch));
