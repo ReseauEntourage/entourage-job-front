@@ -101,7 +101,7 @@
     "@typescript-eslint/parser": "^8.65.0",
     "@typescript-eslint/utils": "8.65.0",
     "chromatic": "^6.24.1",
-    "cypress": "^14.2.0",
+    "cypress": "^15.19.0",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^3.9.1",
