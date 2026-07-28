@@ -27,9 +27,9 @@ export const Navbar = ({
 }: NavbarProps) => {
   return (
     <StyledNavbar
-      sticky={sticky}
+      $sticky={sticky}
       id={id}
-      backgroundColor={backgroundColor}
+      $backgroundColor={backgroundColor}
       style={style}
     >
       <StyledLeftContainer>{left}</StyledLeftContainer>

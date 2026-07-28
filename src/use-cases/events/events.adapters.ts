@@ -1,6 +1,6 @@
+import { Event, EventWithParticipants } from '@/src/api/types';
 import { EventDirectoryFilters } from '@/src/features/backoffice/events/EventDirectory/useEventDirectoryQueryParams';
-import { Event, EventWithParticipants } from 'src/api/types';
-import { createRequestAdapter } from 'src/store/utils';
+import { createRequestAdapter } from '@/src/store/utils';
 
 export const fetchEventsAdapter = createRequestAdapter(
   'fetchEvents'

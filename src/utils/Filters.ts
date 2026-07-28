@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { MEMBER_FILTERS_DATA } from 'src/constants';
-import { UserRoles } from 'src/constants/users';
+import { MEMBER_FILTERS_DATA } from '@/src/constants';
+import { UserRoles } from '@/src/constants/users';
 
 export const mutateTypeFilterDependingOnRole = (
   role: UserRoles | UserRoles[]

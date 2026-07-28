@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -30,13 +30,13 @@ export const StyledConversationParticipants = styled.div`
   }
 `;
 
-export const StyledMessagePreview = styled.div<{ hasSeen: boolean }>`
+export const StyledMessagePreview = styled.div<{ $hasSeen?: boolean }>`
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: auto;
-  ${({ hasSeen }) => !hasSeen && `font-weight: 700;`}
+  ${({ $hasSeen }) => !$hasSeen && `font-weight: 700;`}
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     font-size: 12px;
     -webkit-line-clamp: 2;

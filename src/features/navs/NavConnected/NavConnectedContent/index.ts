@@ -1,4 +1,4 @@
-import { platform } from 'src/utils/Device';
+import { platform } from '@/src/utils/Device';
 import { NavConnectedContentDesktop } from './NavConnectedContent.desktop';
 import { NavConnectedContentMobile } from './NavConnectedContent.mobile';
 

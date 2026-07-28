@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
-import { AnyToFix } from 'src/utils/Types';
+import { useCloseOnClickOutsideComponent } from '@/src/hooks/useCloseOnClickOutsideComponent';
+import { AnyToFix } from '@/src/utils/Types';
 import { Button } from './Button';
 import type { ButtonSize } from './Button.types';
 import {
@@ -62,7 +62,7 @@ export function ButtonMultiple({
       >
         {children}
       </Button>
-      <StyledButtonMenu isOpen={isOpen} id={componentId} align={align}>
+      <StyledButtonMenu $isOpen={isOpen} id={componentId} $align={align}>
         {buttons.map(
           (
             {

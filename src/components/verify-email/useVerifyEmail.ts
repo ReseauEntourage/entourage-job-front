@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   authenticationActions,
   selectVerifyEmailTokenError,
   verifyEmailTokenSelectors,
-} from 'src/use-cases/authentication';
+} from '@/src/use-cases/authentication';
 
 export function useVerifyEmail() {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Api } from '@/src/api';
 import { ProfileRecommendation } from '@/src/api/types';
 import { SidePanel } from '@/src/components/ui/SidePanel';
 import { Text } from '@/src/components/ui/Text';
+import { useEmbeddingStatus } from '@/src/hooks/useEmbeddingStatus';
 import {
   SEARCHING_LOADER_VARIANTS,
   WizardSearchingLoader,
 } from '../components/WizardSearchingLoader';
-import { Api } from 'src/api';
-import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
 import { WizardCompatibleProfileCard } from './WizardCompatibleProfileCard';
 import { StyledProfileList } from './WizardRecommendationsSidePanel.styles';
 

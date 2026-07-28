@@ -18,7 +18,7 @@ export const AvailabilityTag = ({
       onClick={onClick}
       style={onClick ? { cursor: 'pointer' } : undefined}
     >
-      <StyledAvailabilityTagDot isAvailable={isAvailable} />
+      <StyledAvailabilityTagDot $isAvailable={isAvailable} />
       {isAvailable ? 'Disponible' : 'Indisponible'}
     </StyledAvailabilityTagContainer>
   );

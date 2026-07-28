@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Api } from '@/src/api';
+import { PublicProfile } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
@@ -9,8 +11,6 @@ import {
   selectRegistrationCurrentStep,
   selectRegistrationSelectedFlow,
 } from '@/src/use-cases/registration';
-import { Api } from 'src/api';
-import { PublicProfile } from 'src/api/types';
 import { NetworkPreviewStep } from './NetworkPreviewStep/NetworkPreviewStep';
 
 export function useWizardStepNetworkPreview() {

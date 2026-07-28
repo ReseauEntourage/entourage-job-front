@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const MessagingConversationWrapper = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const MessagingConversationAIPanel = styled.div`
 `;
 
 export const MessagingMessagesContainer = styled.div<{
-  blur?: boolean;
+  $blur?: boolean;
 }>`
   display: flex;
   flex-direction: column;
@@ -41,6 +41,6 @@ export const MessagingMessagesContainer = styled.div<{
   box-sizing: border-box;
   align-items: flex-start;
   flex: auto;
-  filter: ${(props) => (props.blur ? 'blur(2px)' : 'none')};
-  pointer-events: ${(props) => (props.blur ? 'none' : 'auto')};
+  filter: ${(props) => (props.$blur ? 'blur(2px)' : 'none')};
+  pointer-events: ${(props) => (props.$blur ? 'none' : 'auto')};
 `;

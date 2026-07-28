@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledCardListContainer = styled.div`
   display: flex;
@@ -7,11 +7,11 @@ export const StyledCardListContainer = styled.div`
   width: 100%;
 `;
 
-export const StyledCardList = styled.div`
+export const StyledCardList = styled.div<{ $condensed?: boolean }>`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
-  gap: ${({ condensed }) => (condensed ? '20px' : '55px')};
+  gap: ${({ $condensed }) => ($condensed ? '20px' : '55px')};
   padding: 0;
 `;
 

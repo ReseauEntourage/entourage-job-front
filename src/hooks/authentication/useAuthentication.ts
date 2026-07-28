@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   authenticationActions,
   logoutSelectors,
-} from 'src/use-cases/authentication';
+} from '@/src/use-cases/authentication';
 
 import {
   currentUserActions,
   fetchUserSelectors,
   selectCurrentUser,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 
-import { getDefaultUrl } from 'src/utils/Redirects';
+import { getDefaultUrl } from '@/src/utils/Redirects';
 import { useRoutePermissions } from './useRoutePermissions';
 
 export function useAuthentication() {

@@ -2,8 +2,8 @@ import {
   Conversation,
   ConversationParticipants,
   MessageWithConversation,
-} from 'src/api/types';
-import { createRequestAdapter } from 'src/store/utils';
+} from '@/src/api/types';
+import { createRequestAdapter } from '@/src/store/utils';
 
 export const getConversationsAdapter = createRequestAdapter(
   'getConversations'

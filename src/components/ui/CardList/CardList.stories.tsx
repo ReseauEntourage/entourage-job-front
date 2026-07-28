@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { ProfileCard } from '@/src/components/ui/Cards/EntityCards/ProfileCard';
 import { Genders } from '@/src/constants/genders';
-import { UserRoles } from 'src/constants/users';
-import { store } from 'src/store/store';
+import { UserRoles } from '@/src/constants/users';
+import { store } from '@/src/store/store';
 import { CardList } from './CardList';
 import { CardListItem } from './CardListItem';
 

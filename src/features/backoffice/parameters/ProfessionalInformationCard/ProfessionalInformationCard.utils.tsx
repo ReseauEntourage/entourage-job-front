@@ -1,8 +1,8 @@
 import { DefaultValues } from 'react-hook-form';
-import { UserProfileSectorOccupation } from 'src/api/types';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
-import { formEditCandidateProfessionalInformation } from 'src/features/forms/schemas/formEditCandidateProfessionalInformation';
-import { formEditCoachProfessionalInformation } from 'src/features/forms/schemas/formEditCoachProfessionalInformation';
+import { UserProfileSectorOccupation } from '@/src/api/types';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
+import { formEditCandidateProfessionalInformation } from '@/src/features/forms/schemas/formEditCandidateProfessionalInformation';
+import { formEditCoachProfessionalInformation } from '@/src/features/forms/schemas/formEditCoachProfessionalInformation';
 
 type ProfessionalProfile = {
   sectorOccupations?: UserProfileSectorOccupation[];

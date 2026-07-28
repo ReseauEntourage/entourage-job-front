@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BREAKPOINTS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledImageTitle = styled.section`
   color: white;
@@ -18,11 +18,13 @@ export const StyledImageTitle = styled.section`
   }
 `;
 
-export const StyledImageTitleCTAsContainer = styled.div`
+export const StyledImageTitleCTAsContainer = styled.div<{
+  $marginTop: boolean;
+}>`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: ${(props) => (props.marginTop ? '60px' : '0')};
+  margin-top: ${(props) => (props.$marginTop ? '60px' : '0')};
   button:first-child {
     margin-right: 8px;
   }

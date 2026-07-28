@@ -20,7 +20,7 @@ export const Skeleton = ({
           key={key}
           width={width}
           height={height}
-          inverted={inverted}
+          $inverted={inverted}
         />
       ))}
     </>

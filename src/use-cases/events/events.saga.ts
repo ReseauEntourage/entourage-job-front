@@ -1,12 +1,12 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
+import { Api } from '@/src/api';
+import { EVENTS_LIMIT } from '@/src/constants';
 import {
   EventMode,
   EventType,
   PublicSensibilise,
 } from '@/src/constants/events';
-import { Api } from 'src/api';
-import { EVENTS_LIMIT } from 'src/constants';
-import { mutateToArray } from 'src/utils';
+import { mutateToArray } from '@/src/utils';
 import {
   fetchEventsSelectors,
   selectEventsHasFetchedAll,

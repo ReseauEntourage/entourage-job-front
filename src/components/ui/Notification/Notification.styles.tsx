@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BREAKPOINTS, STATUS_COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { BREAKPOINTS, STATUS_COLORS } from '@/src/constants/styles';
 
 export const NOTIF_WIDTH = '450px';
 
@@ -28,7 +28,9 @@ export const StyledNotificationsContainer = styled.div`
   }
 `;
 
-export const StyledNotification = styled.div`
+export const StyledNotification = styled.div<{
+  type: 'success' | 'danger';
+}>`
   background-color: ${(props) => {
     return backgroundColor[props.type];
   }};

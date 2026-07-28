@@ -2,17 +2,17 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Message } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { Text } from '@/src/components/ui/Text';
+import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
+import { selectSelectedConversationId } from '@/src/use-cases/messaging';
+import { escapeHtml, linkify } from '@/src/utils';
+import { isSuspiciousMessage } from '@/src/utils/SuspiciousContent';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
-import { Message } from 'src/api/types';
-import { COLORS } from 'src/constants/styles';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
-import { selectSelectedConversationId } from 'src/use-cases/messaging';
-import { escapeHtml, linkify } from 'src/utils';
-import { isSuspiciousMessage } from 'src/utils/SuspiciousContent';
 import { MessageMedias } from './MessageMedias/MessageMedias';
 import {
   MessageContainer,

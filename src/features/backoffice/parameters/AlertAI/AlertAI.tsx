@@ -6,11 +6,11 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { openModal } from '@/src/features/modals/Modal';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   currentUserActions,
   uploadExternalCvSelectors,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 import {
   StyledAlertIAColumn,
   StyledAlertIAContentContainer,

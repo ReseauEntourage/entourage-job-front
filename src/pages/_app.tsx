@@ -1,8 +1,8 @@
 // use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
 
-import 'src/styles/dist/css/uikit.entourage.min.css';
-import 'src/styles/styles.css';
-import 'src/features/modals/Modal/Modal.css';
+import '@/src/styles/dist/css/uikit.entourage.min.css';
+import '@/src/styles/styles.css';
+import '@/src/features/modals/Modal/Modal.css';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -12,18 +12,20 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
+import { StyleSheetManager } from 'styled-components';
 
+import { GA_TAGS } from '@/src/constants/tags';
 import { useOnboardingRedirect } from '@/src/features/wizard/onboarding/useOnboardingRedirect';
+import { useAuthentication } from '@/src/hooks/authentication/useAuthentication';
+import { useMount } from '@/src/hooks/utils';
+import * as gtag from '@/src/lib/gtag';
+import { gaEventWithUser } from '@/src/lib/gtag';
+import { DataProvider } from '@/src/store/DataProvider';
+import { store } from '@/src/store/store';
+import { GlobalStyle } from '@/src/styles/GlobalStyle';
+import { shouldForwardProp } from '@/src/styles/shouldForwardProp';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 import { ModalsListener } from '../features/modals/Modal';
-import { GA_TAGS } from 'src/constants/tags';
-import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
-import { useMount } from 'src/hooks/utils';
-import * as gtag from 'src/lib/gtag';
-import { gaEventWithUser } from 'src/lib/gtag';
-import { DataProvider } from 'src/store/DataProvider';
-import { store } from 'src/store/store';
-import { GlobalStyle } from 'src/styles/GlobalStyle';
-import { selectCurrentUser } from 'src/use-cases/current-user';
 
 /** ************
  * This component is detached because it needs Redux content to work properly
@@ -113,15 +115,17 @@ const EntourageApp = (props: AppProps) => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <DataProvider>
-        <>
-          <GlobalStyle />
-          <RouteReadyComponent {...props} />
-          <ModalsListener />
-        </>
-      </DataProvider>
-    </Provider>
+    <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+      <Provider store={store}>
+        <DataProvider>
+          <>
+            <GlobalStyle />
+            <RouteReadyComponent {...props} />
+            <ModalsListener />
+          </>
+        </DataProvider>
+      </Provider>
+    </StyleSheetManager>
   );
 };
 

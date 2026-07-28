@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
 const BADGE_SIZE = 30;

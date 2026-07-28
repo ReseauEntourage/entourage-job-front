@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { AdminZone } from 'src/constants/departements';
+import { AdminZone } from '@/src/constants/departements';
 
 export function useZone() {
   const {

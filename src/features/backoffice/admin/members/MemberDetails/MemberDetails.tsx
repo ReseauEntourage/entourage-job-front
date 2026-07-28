@@ -1,10 +1,10 @@
 import React from 'react';
+import { MemberUser } from '@/src/api/types';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Grid, Section, SimpleLink } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
-import { MemberUser } from 'src/api/types';
-import { MEMBER_TABS } from 'src/constants';
-import { useTab } from 'src/hooks/queryParams/useTab';
+import { MEMBER_TABS } from '@/src/constants';
+import { useTab } from '@/src/hooks/queryParams/useTab';
 
 import { MemberDetailsHeader } from './MemberDetailsHeader';
 import { ParametersMemberTab } from './MemberTab';

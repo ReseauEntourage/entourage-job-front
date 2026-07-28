@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useUserId } from 'src/hooks/queryParams/useUserId';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { useUserId } from '@/src/hooks/queryParams/useUserId';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
-import { profilesActions } from 'src/use-cases/profiles';
+import { profilesActions } from '@/src/use-cases/profiles';
 import {
   fetchSelectedProfileSelectors,
   selectSelectedProfile,
-} from 'src/use-cases/profiles/profiles.selectors';
-import { assertIsDefined } from 'src/utils/asserts';
+} from '@/src/use-cases/profiles/profiles.selectors';
+import { assertIsDefined } from '@/src/utils/asserts';
 
 export function useSelectedProfile() {
   const userId = useUserId();

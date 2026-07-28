@@ -3,11 +3,11 @@ import React, { useCallback, useMemo } from 'react';
 import { UserProfileNudge } from '@/src/api/types';
 import { Button, Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { UserRoles } from 'src/constants/users';
 import {
   StyledButtonContainer,
   StyledContentContainer,

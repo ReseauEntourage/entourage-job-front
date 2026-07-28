@@ -39,7 +39,7 @@ export const ElearningUnitQuiz = ({
   );
 
   return (
-    <StyledElearningUnitContent noPadding>
+    <StyledElearningUnitContent $noPadding>
       {!isCurrentQuestionAnswered && (
         <StyledElearningQuestionCard>
           <ProgressBar value={progressValue} color="darkBlue" />

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
+import { Media } from '@/src/api/types';
 import { LegacyImg, Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { Media } from 'src/api/types';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import {
   StyledMessageMedia,
   StyledPreviewerContainer,

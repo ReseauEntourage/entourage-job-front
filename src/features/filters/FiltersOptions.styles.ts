@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledFiltersOptions = styled.div`
   display: flex;

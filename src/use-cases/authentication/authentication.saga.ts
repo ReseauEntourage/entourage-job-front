@@ -1,14 +1,14 @@
 import { call, fork, put, takeLatest } from 'typed-redux-saga';
-import { Api } from 'src/api';
+import { Api } from '@/src/api';
 import {
   isEmailAlreadyVerifiedError,
   isEmailUnverifiedError,
   isOtpExpiredError,
   isTokenExpiredError,
   isTooManyRequests,
-} from 'src/api/axiosErrors';
-import { STORAGE_KEYS } from 'src/constants';
-import { currentUserActions } from 'src/use-cases/current-user';
+} from '@/src/api/axiosErrors';
+import { STORAGE_KEYS } from '@/src/constants';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   VerifyEmailTokenErrorType,
   VerifyOtpErrorType,

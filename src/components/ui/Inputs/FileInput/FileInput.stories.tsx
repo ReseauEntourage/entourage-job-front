@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { FileTypes } from 'src/features/forms/FormSchema';
+import { FileTypes } from '@/src/features/forms/FormSchema';
 import { FileInput, FileInputProps } from './FileInput';
 
 const FileInputConfigured = ({ fileType, accept }: FileInputProps) => {

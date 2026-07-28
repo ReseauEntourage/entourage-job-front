@@ -2,10 +2,10 @@ import moment from 'moment';
 import 'moment/locale/fr';
 
 import React from 'react';
+import { Event } from '@/src/api/types';
 import { LucidIcon, Text } from '@/src/components/ui';
 import { SimpleLink } from '@/src/components/ui/SimpleLink';
 import { EventMode } from '@/src/constants/events';
-import { Event } from 'src/api/types';
 import {
   StyledContainer,
   StyledElement,

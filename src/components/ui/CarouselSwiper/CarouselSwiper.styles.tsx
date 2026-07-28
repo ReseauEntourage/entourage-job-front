@@ -1,22 +1,22 @@
 /* eslint import-x/no-unresolved: "off" */
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledSwiperSlide = styled(SwiperSlide)`
   padding-bottom: 50px;
 `;
 
-export const StyledSwiperContainer = styled.div`
+export const StyledSwiperContainer = styled.div<{ $backgroundColor?: string }>`
   --swiper-navigation-color: ${COLORS.primaryBlue};
   --swiper-navigation-size: 20px; /* défaut: 44px */
 
   padding: 0 15px;
 
   background-color: ${(props) => {
-    return props.backgroundColor;
+    return props.$backgroundColor;
   }};
   .swiper-pagination-bullet-active {
     background-color: ${COLORS.primaryBlue};

@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
+import { UserProfileLanguage } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { LANGUAGES_LEVELS } from '@/src/constants';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
 import { CardTagList } from '../Card/CardTagList/CardTagList';
-import { UserProfileLanguage } from 'src/api/types';
-import { LANGUAGES_LEVELS } from 'src/constants';
 import { ProfileLanguagesModalEdit } from './ProfileLanguagesModalEdit';
 
 interface ProfileLanguagesProps {

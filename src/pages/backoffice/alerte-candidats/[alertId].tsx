@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { AlertCandidates } from '@/src/features/backoffice/alertCandidates/AlertCandidates';
-import { selectCurrentUser } from 'src/use-cases/current-user';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 
 const AlertCandidatesPage = () => {
   const router = useRouter();

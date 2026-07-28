@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
-import { RequestState, SliceRootState } from 'src/store/utils';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import {
   fetchElearningUnitsAdapter,
   postElearningCompletionAdapter,

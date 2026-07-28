@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
-import { SliceRootState } from 'src/store/utils';
+import { SliceRootState } from '@/src/store/utils';
 
 interface State {
   notifications: {

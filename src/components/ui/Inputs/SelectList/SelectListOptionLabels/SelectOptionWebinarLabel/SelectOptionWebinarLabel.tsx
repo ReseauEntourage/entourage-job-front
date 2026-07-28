@@ -1,9 +1,9 @@
 import moment from 'moment';
 import 'moment/locale/fr';
 import React from 'react';
+import { Event } from '@/src/api/types';
 import { Text, LucidIcon } from '@/src/components/ui';
 import { EventMode } from '@/src/constants/events';
-import { Event } from 'src/api/types';
 import {
   StyledSelectOptionWebinarLabel,
   StyledSelectOptionWebinarLabelData,

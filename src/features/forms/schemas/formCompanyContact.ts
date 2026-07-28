@@ -1,14 +1,14 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import { FormSchema } from '../FormSchema';
 import {
   COMPANY_APPROACHES_FILTERS,
   COMPANY_CONTACT_ZONES_FILTERS,
   CompanyApproach,
   HEARD_ABOUT_FILTERS,
   HeardAboutValue,
-} from 'src/constants';
-import { AdminZone } from 'src/constants/departements';
+} from '@/src/constants';
+import { AdminZone } from '@/src/constants/departements';
+import { FormSchema } from '../FormSchema';
 
 export const formCompanyContact: FormSchema<{
   firstName: string;

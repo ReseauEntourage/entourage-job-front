@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledFormHeading = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ export const StyledFormHeading = styled.div`
   line-height: 21px;
   text-align: left;
 
-  :first-child {
+  &:first-child {
     margin-top: 0;
   }
 `;

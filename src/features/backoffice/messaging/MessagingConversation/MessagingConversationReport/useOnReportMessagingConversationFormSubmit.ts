@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { UserReportDto } from 'src/api/types';
-import { Action, ActionsLabels } from 'src/constants/utils';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
-import { formReportUser } from 'src/features/forms/schemas/formReportUser';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { UserReportDto } from '@/src/api/types';
+import { Action, ActionsLabels } from '@/src/constants/utils';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
+import { formReportUser } from '@/src/features/forms/schemas/formReportUser';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 export function useOnReportMessagingConversationFormSubmit(
   apiCall: (organization: UserReportDto) => Promise<AxiosResponse>,

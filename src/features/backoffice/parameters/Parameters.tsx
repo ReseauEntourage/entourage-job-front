@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Section } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
+import { HeaderProfile } from '@/src/features/headers/HeaderProfile/HeaderProfile';
 import { ParamProfessionalInformations } from '@/src/features/profile/ProfilePartCards/ParamProfessionalInformations/ParamProfessionalInformations';
 import { ProfileChangePassword } from '@/src/features/profile/ProfilePartCards/ProfileChangePassword/ProfileChangePassword';
 import { ProfileContactPreferences } from '@/src/features/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
@@ -22,6 +23,9 @@ import { useCurrentUserAchievements } from '@/src/hooks/current-user/useCurrentU
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
 import { useCurrentUserStats } from '@/src/hooks/current-user/useCurrentUserStats';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { currentUserActions } from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { ProfileDeleteAccount } from '../../profile/ProfilePartCards/ProfileDeleteAccount/ProfileDeleteAccount';
 import { ProfileLinkedInConnect } from '../../profile/ProfilePartCards/ProfileLinkedInConnect/ProfileLinkedInConnect';
 import { UserProfileAvailabilityCard } from '../../profile/ProfilePartCards/UserProfileAvailabilityCard';
@@ -30,10 +34,6 @@ import {
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
 import { LoadingScreen } from '../LoadingScreen';
-import { HeaderProfile } from 'src/features/headers/HeaderProfile/HeaderProfile';
-import { useIsDesktop } from 'src/hooks/utils';
-import { currentUserActions } from 'src/use-cases/current-user';
-import { notificationsActions } from 'src/use-cases/notifications';
 import { AlertIA } from './AlertAI/AlertAI';
 import {
   StyledParametersLeftColumn,

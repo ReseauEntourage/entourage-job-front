@@ -54,9 +54,9 @@ export const ElearningUnitVideo = ({
   }, [isShortsUrl]);
 
   return (
-    <StyledElearningUnitContent noPadding>
+    <StyledElearningUnitContent $noPadding>
       {youtubeVideoId ? (
-        <StyledElearningUnitVideoFrame isShorts={isShortsUrl}>
+        <StyledElearningUnitVideoFrame $isShorts={isShortsUrl}>
           <div className="video-inner">
             <LiteYouTubeEmbed
               ref={iframeRef}

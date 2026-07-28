@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { StyledText } from './Text.styles';
 import { TextProps } from './Text.types';
 import { sizesPx } from './Text.utils';
@@ -18,18 +18,19 @@ export function Text({
 }: TextProps) {
   const isDesktop = useIsDesktop();
   const device = isDesktop ? 'desktop' : 'mobile';
+  const resolvedSize: number =
+    typeof size === 'number' ? size : sizesPx[device][size];
 
   return (
     <StyledText
-      size={sizesPx[device][size] || size}
-      weight={weight}
+      size={resolvedSize}
+      $weight={weight}
       color={color}
-      center={center}
-      variant={variant}
-      mobile={!isDesktop}
-      textAlign={textAlign}
-      underline={underline}
-      uppercase={uppercase}
+      $center={center}
+      $variant={variant}
+      $textAlign={textAlign}
+      $underline={underline}
+      $uppercase={uppercase}
       onClick={onClick}
     >
       {children}

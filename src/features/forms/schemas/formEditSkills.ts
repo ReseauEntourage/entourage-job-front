@@ -1,6 +1,6 @@
+import { FilterConstant } from '@/src/constants/utils';
 import { FormComponents, FormSchema } from '../FormSchema';
 import { loadSkillsOptions } from '../utils/loadOptions.utils';
-import { FilterConstant } from 'src/constants/utils';
 
 export const formEditSkills: FormSchema<{
   skills: FilterConstant<string>[];

@@ -1,13 +1,13 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Api } from '@/src/api';
+import { UpdateCompanyDto } from '@/src/api/types';
+import { DocumentNames } from '@/src/constants';
 import { CompanyGoal } from '@/src/constants/company';
 import {
   CompanyStepData,
   OnboardingFlow,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
-import { Api } from 'src/api';
-import { UpdateCompanyDto } from 'src/api/types';
-import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
   selectOnboardingData,

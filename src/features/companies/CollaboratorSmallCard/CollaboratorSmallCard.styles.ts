@@ -1,25 +1,25 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledCollaboratorSmallCardContainer = styled.div<{
-  pointer?: boolean;
+  $pointer?: boolean;
 }>`
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
 
-  cursor: ${(props) => (props.pointer ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.$pointer ? 'pointer' : 'default')};
   * {
-    cursor: ${(props) => (props.pointer ? 'pointer' : 'default')};
+    cursor: ${(props) => (props.$pointer ? 'pointer' : 'default')};
   }
 `;
 
 export const StyledCollaboratorSmallCardPictureContainerStyled = styled.div<{
-  isMobile: boolean;
+  $isMobile: boolean;
 }>`
-  min-width: ${(props) => (props.isMobile ? ' 50px' : '80px')};
-  width: ${(props) => (props.isMobile ? ' 50px' : '80px')};
-  height: ${(props) => (props.isMobile ? ' 50px' : '80px')};
+  min-width: ${(props) => (props.$isMobile ? ' 50px' : '80px')};
+  width: ${(props) => (props.$isMobile ? ' 50px' : '80px')};
+  height: ${(props) => (props.$isMobile ? ' 50px' : '80px')};
   border-radius: 50%;
   overflow: hidden;
   align-items: center;

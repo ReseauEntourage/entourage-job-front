@@ -1,9 +1,9 @@
 import React from 'react';
+import { Api } from '@/src/api';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { formInterestLinkedOut } from '@/src/features/forms/schemas/formInterestLinkedOut';
 import { StepperModal } from '@/src/features/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from '@/src/features/modals/SuccessModalContent';
-import { Api } from 'src/api';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { formInterestLinkedOut } from 'src/features/forms/schemas/formInterestLinkedOut';
 
 export const ModalInterestLinkedOut = () => {
   return (

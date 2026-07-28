@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
-import { UIKIT_SCREENS } from 'src/components/variables';
-import { AnyCantFix } from 'src/utils/Types';
+import { UIKIT_SCREENS } from '@/src/components/variables';
+import { AnyCantFix } from '@/src/utils/Types';
 
 interface SimpleLinkProps {
   href?:

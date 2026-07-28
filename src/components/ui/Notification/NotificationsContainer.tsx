@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectNotifications } from 'src/use-cases/notifications';
+import { selectNotifications } from '@/src/use-cases/notifications';
 import { StyledNotificationsContainer } from './Notification.styles';
 import { NotificationWrapper } from './NotificationWrapper';
 

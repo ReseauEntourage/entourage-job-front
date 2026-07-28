@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AchievementProgressionEntry } from 'src/api/types';
-import { SliceRootState } from 'src/store/utils';
+import { AchievementProgressionEntry } from '@/src/api/types';
+import { SliceRootState } from '@/src/store/utils';
 
 interface AchievementProgressionToShow {
   entry: AchievementProgressionEntry;

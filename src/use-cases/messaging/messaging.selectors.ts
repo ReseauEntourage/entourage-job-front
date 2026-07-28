@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { ConversationType } from 'src/api/types';
+import { ConversationType } from '@/src/api/types';
 import { RootState } from './messaging.slice';
 
 export const selectNewMessage = (state: RootState) =>

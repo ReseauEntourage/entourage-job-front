@@ -15,7 +15,7 @@ import {
   flattenReferingData,
   incrementReferingStep,
 } from '@/src/features/backoffice/referer/Refering/Refering.utils';
-import { assertIsDefined } from 'src/utils/asserts';
+import { assertIsDefined } from '@/src/utils/asserts';
 import { referCandidateAdapter } from './refering.adapters';
 import { RootState } from './refering.slice';
 

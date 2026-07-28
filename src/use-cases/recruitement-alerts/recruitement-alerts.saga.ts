@@ -1,8 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest, takeEvery } from 'typed-redux-saga';
+import { Api } from '@/src/api';
+import { RecruitementAlertDto } from '@/src/api/types';
 import { notificationsActions } from '../notifications';
-import { Api } from 'src/api';
-import { RecruitementAlertDto } from 'src/api/types';
 import { slice } from './recruitement-alerts.slice';
 
 const {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { CurrentUserCompany, User } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { GA_TAGS } from '@/src/constants/tags';
+import { UserRoles } from '@/src/constants/users';
 import { NavConnectedMainItem } from '../NavConnected.types';
-import { GA_TAGS } from 'src/constants/tags';
-import { UserRoles } from 'src/constants/users';
 
 const rolesToParams = (roles) => {
   return `${roles

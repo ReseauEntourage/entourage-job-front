@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Conversation } from 'src/api/types';
+import { Conversation } from '@/src/api/types';
 
 export const conversationHasUnreadMessages = (
   conversation: Conversation,

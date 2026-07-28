@@ -1,11 +1,11 @@
 import React from 'react';
 import { Section } from '@/src/components/ui';
 import { HeaderEvent } from '@/src/features/headers/HeaderEvent/HeaderEvent';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../../Backoffice.styles';
-import { useIsDesktop } from 'src/hooks/utils';
 import { StyledLeftColumn, StyledRightColumn } from './Event.styles';
 import { EventActions } from './EventActions/EventActions';
 import { EventDescription } from './EventDescription/EventDescription';

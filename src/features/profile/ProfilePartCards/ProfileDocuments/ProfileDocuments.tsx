@@ -1,17 +1,17 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { Text } from '@/src/components/ui';
 import { DocumentItem } from '@/src/components/ui/DocumentItem/DocumentItem';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
+import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
+import { gaEvent } from '@/src/lib/gtag';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { Api } from 'src/api';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
 import { StyledDocumentList } from './ProfileDocuments.styles';
 import { ProfileDocumentsModalEdit } from './ProfileDocumentsModalEdit';
 

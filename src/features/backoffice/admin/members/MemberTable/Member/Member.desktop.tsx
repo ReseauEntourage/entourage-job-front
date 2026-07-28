@@ -3,10 +3,10 @@ import React from 'react';
 
 import { ImgUserProfile } from '@/src/components/ui';
 import { TrDesktop, TdDesktop } from '@/src/components/ui/Table';
+import { ADMIN_ZONES } from '@/src/constants/departements';
 import { GENDERS_FILTERS } from '@/src/constants/genders';
-import { ADMIN_ZONES } from 'src/constants/departements';
-import { getRolesWithOrganization } from 'src/constants/users';
-import { isRoleIncluded, findConstantFromValue } from 'src/utils/Finding';
+import { getRolesWithOrganization } from '@/src/constants/users';
+import { isRoleIncluded, findConstantFromValue } from '@/src/utils/Finding';
 import { StyledNameCell, StyledNoWrapCellContent } from './Member.styles';
 import { MemberProps } from './Member.types';
 import { MemberInfo } from './MemberInfo';

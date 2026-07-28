@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Api } from '@/src/api';
+import { MemberUser } from '@/src/api/types';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Grid, Section } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
+import { MEMBER_TABS } from '@/src/constants';
 import { MemberDetails } from '@/src/features/backoffice/admin/members/MemberDetails';
-import { Api } from 'src/api';
-import { MemberUser } from 'src/api/types';
-import { MEMBER_TABS } from 'src/constants';
-import { useMemberId } from 'src/hooks/queryParams/useMemberId';
-import { useTab } from 'src/hooks/queryParams/useTab';
-import { usePrevious } from 'src/hooks/utils';
+import { useMemberId } from '@/src/hooks/queryParams/useMemberId';
+import { useTab } from '@/src/hooks/queryParams/useTab';
+import { usePrevious } from '@/src/hooks/utils';
 
 const User = () => {
   const [user, setUser] = useState<MemberUser>();

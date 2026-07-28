@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
 export const StyledSkeletonLoader = styled.div<{
   width?: string;
   height?: string;
-  inverted?: boolean;
+  $inverted?: boolean;
 }>`
   display: flex;
   width: ${(props) => props.width || '100%'};
@@ -13,12 +13,14 @@ export const StyledSkeletonLoader = styled.div<{
   border: 1px solid ${COLORS.gray};
   background: linear-gradient(
     90deg,
-    ${(props) => (props.inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
+    ${(props) => (props.$inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
       25%,
     ${(props) =>
-      props.inverted ? COLORS.skeletonLightShimmer : COLORS.skeletonDarkShimmer}
+      props.$inverted
+        ? COLORS.skeletonLightShimmer
+        : COLORS.skeletonDarkShimmer}
       50%,
-    ${(props) => (props.inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
+    ${(props) => (props.$inverted ? COLORS.skeletonLight : COLORS.skeletonDark)}
       75%
   );
   background-repeat: no-repeat;

@@ -1,16 +1,19 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import { LINE_HEIGHT_MULTIPLIER, sizesPx } from '../../Text/Text.utils';
 import {
   commonInputContainerStyles,
   commonInputStyles,
   commonMenuOptionStyles,
 } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
-export const StyledSelectContainer = styled.div`
+export const StyledSelectContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
 `;
-export const StyledSelect = styled.div`
+export const StyledSelect = styled.div<{
+  value?: unknown;
+  $maxSelectedItems?: number;
+}>`
   & .Select__control--is-disabled {
     background-color: ${COLORS.lightGray} !important;
 
@@ -31,8 +34,8 @@ export const StyledSelect = styled.div`
     visibility: ${(props) =>
       !props.value ||
       !Array.isArray(props.value) ||
-      !props.maxSelectedItems ||
-      props.value.length < props.maxSelectedItems
+      !props.$maxSelectedItems ||
+      props.value.length < props.$maxSelectedItems
         ? 'visible'
         : 'hidden'};
   }
@@ -53,12 +56,12 @@ export const StyledSelect = styled.div`
     display: ${(props) =>
       !props.value ||
       !Array.isArray(props.value) ||
-      !props.maxSelectedItems ||
-      props.value.length < props.maxSelectedItems
+      !props.$maxSelectedItems ||
+      props.value.length < props.$maxSelectedItems
         ? 'flex'
         : 'none'};
 
-    :hover {
+    &:hover {
       color: ${COLORS.primaryBlue} !important;
       cursor: pointer;
     }
@@ -74,7 +77,7 @@ export const StyledSelect = styled.div`
 
   & .Select__control {
     ${() => commonInputStyles}
-    :hover {
+    &:hover {
       cursor: text;
     }
   }
@@ -85,7 +88,7 @@ export const StyledSelect = styled.div`
     cursor: pointer;
     padding-bottom: 0 !important;
     padding-top: 0 !important;
-    :hover {
+    &:hover {
       color: ${COLORS.gray};
       opacity: 0.6 !important;
     }
@@ -111,7 +114,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__option {
-    :hover {
+    &:hover {
       border: 0.5px solid ${COLORS.primaryBlue};
       color: ${COLORS.primaryBlue};
       cursor: pointer;
@@ -128,7 +131,7 @@ export const StyledSelect = styled.div`
   }
   & .Select__option--is-selected {
     color: ${COLORS.black} !important;
-    :hover {
+    &:hover {
       color: ${COLORS.primaryBlue} !important;
     }
   }
@@ -149,7 +152,7 @@ export const StyledSelect = styled.div`
   & .Select__multi-value__remove {
     color: ${COLORS.primaryBlue};
     padding-right: 0 !important;
-    :hover {
+    &:hover {
       background-color: white !important;
       opacity: 0.6 !important;
       cursor: pointer;
@@ -174,3 +177,14 @@ export const StyledSelect = styled.div`
     font-family: Poppins, sans-serif !important;
   }
 `;
+
+// No ThemeProvider sets a styled-components theme anywhere in this app, so
+// `theme.textColor` (used above for `.Select__loading-indicator`) always
+// resolves to `undefined` at runtime today. Declaring it here (optional, to
+// match that reality) fixes the DefaultTheme typing without fabricating a
+// theming system or changing this pre-existing behavior.
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    textColor?: string;
+  }
+}

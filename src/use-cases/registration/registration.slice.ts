@@ -7,7 +7,7 @@ import {
   RegistrationFormData,
   RegistrationStep,
 } from '@/src/features/registration/registration.types';
-import { RequestState, SliceRootState } from 'src/store/utils';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
 
 export interface PreRegistrationPreferences {

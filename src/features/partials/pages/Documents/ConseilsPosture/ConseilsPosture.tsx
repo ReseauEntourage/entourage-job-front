@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Section } from '@/src/components/ui';
 import { H1, H4, H5 } from '@/src/components/ui/Headings';
+import { COLORS } from '@/src/constants/styles';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   StyledDocumentCenteredText,
   StyledDocumentTitleText,
 } from '../Documents.styles';
-import { COLORS } from 'src/constants/styles';
-import { currentUserActions } from 'src/use-cases/current-user';
 
 const textContent = [
   {

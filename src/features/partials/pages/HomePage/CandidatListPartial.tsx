@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Section, Button, Text } from '@/src/components/ui';
 import { H2, H4 } from '@/src/components/ui/Headings';
+import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from '@/src/constants';
 import { CVList } from '@/src/features/partials/CV/CVList';
-import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 
 export const CandidatListPartial = () => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, BadgeVariant } from 'src/components/ui/Badge';
+import { Badge, BadgeVariant } from '@/src/components/ui/Badge';
 import { StyledTabsContainer } from './MessagingConversationTabs.styles';
 
 export type ConversationTabFilter = 'all' | 'unread';

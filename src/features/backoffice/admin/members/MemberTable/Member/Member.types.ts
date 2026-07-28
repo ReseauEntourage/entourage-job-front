@@ -1,6 +1,6 @@
 import { MemberUser } from '@/src/api/types';
 
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 
 export type MemberColumn =
   | 'type'

@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dropdown } from 'src/components/ui/Dropdown/Dropdown';
-import { DropdownToggle } from 'src/components/ui/Dropdown/DropdownToggle';
-import { LucidIcon } from 'src/components/ui/Icons/LucidIcon';
-import { ImgUserProfile } from 'src/components/ui/Images/ImgProfile';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
+import { DropdownToggle } from '@/src/components/ui/Dropdown/DropdownToggle';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile';
+import { authenticationActions } from '@/src/use-cases/authentication';
 import {
   selectCurrentUser,
   selectCurrentUserProfile,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 import {
   StyledDropdownItemsReset,
   StyledLoginLink,

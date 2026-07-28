@@ -2,7 +2,7 @@ import React from 'react';
 import { LegacyImg, Section } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { Text } from '@/src/components/ui/Text';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   StyledReviewCard,
   StyledReviewContainer,

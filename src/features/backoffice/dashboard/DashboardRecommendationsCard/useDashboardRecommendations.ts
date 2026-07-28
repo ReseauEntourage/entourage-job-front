@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 import {
   fetchDashboardProfilesRecommendationsSelectors,
@@ -8,7 +8,7 @@ import {
   profilesActions,
   selectIsEmbeddingPending,
   selectProfilesRecommendations,
-} from 'src/use-cases/profiles';
+} from '@/src/use-cases/profiles';
 
 /**
  * @returns {Object} An object containing:

@@ -1,4 +1,4 @@
-import { AchievementProgressionEntry, CriterionStat } from 'src/api/types';
+import { AchievementProgressionEntry, CriterionStat } from '@/src/api/types';
 
 interface ModalMessage {
   title: string;

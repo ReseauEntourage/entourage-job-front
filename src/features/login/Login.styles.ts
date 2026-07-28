@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledLoginContainer = styled.div`
@@ -17,7 +17,7 @@ export const StyledLoginFooter = styled.div`
   justify-content: space-between;
 
   > * {
-    :first-child {
+    &:first-child {
       margin-bottom: 8px;
     }
   }

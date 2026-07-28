@@ -11,15 +11,15 @@ import {
 } from 'react-hook-form';
 import { Button, ButtonIcon } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { GenericField } from '../GenericField';
-import { InputsContainer } from '../InputsContainer';
 import {
   FormFieldInput,
   FormSchema,
   ExtractFormSchemaValidation,
-} from 'src/features/forms/FormSchema/FormSchema.types';
-import { useMount } from 'src/hooks/utils';
-import { AnyCantFix } from 'src/utils/Types';
+} from '@/src/features/forms/FormSchema/FormSchema.types';
+import { useMount } from '@/src/hooks/utils';
+import { AnyCantFix } from '@/src/utils/Types';
+import { GenericField } from '../GenericField';
+import { InputsContainer } from '../InputsContainer';
 import {
   StyledMultipleFieldAddButtonContainer,
   StyledMultipleFieldButtonLabel,

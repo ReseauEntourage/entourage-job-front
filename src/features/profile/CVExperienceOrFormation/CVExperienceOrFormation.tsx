@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import { Skill } from '@/src/api/types';
 import { H5 } from '@/src/components/ui/Headings';
+import { COLORS } from '@/src/constants/styles';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { ButtonIcon } from '../../../components/ui';
 import { LucidIcon } from '../../../components/ui/Icons/LucidIcon';
 import { CVDate, formatDate } from '../CVDate';
-import { COLORS } from 'src/constants/styles';
-import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledCVExperience,
   StyledCVExperienceDate,

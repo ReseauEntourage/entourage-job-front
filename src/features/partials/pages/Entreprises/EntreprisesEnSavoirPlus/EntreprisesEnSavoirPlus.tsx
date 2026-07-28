@@ -6,12 +6,12 @@ import {
   StyledCenteredButtonContainer,
 } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { CompanyContactModal } from '@/src/features/modals/Modal/ModalGeneric/CompanyContactModal';
-import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
-import { linkEvent } from 'src/lib/lintrk';
+import { fbEvent } from '@/src/lib/fb';
+import { gaEvent } from '@/src/lib/gtag';
+import { linkEvent } from '@/src/lib/lintrk';
 import { StyledEntreprisesEnSavoirPlusContainer } from './EntreprisesEnSavoirPlus.styles';
 
 export const EntreprisesEnSavoirPlus = () => {

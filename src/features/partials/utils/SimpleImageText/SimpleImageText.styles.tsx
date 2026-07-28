@@ -1,29 +1,29 @@
-import styled from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export interface StyledSimpleImageTextBackgroundProps {
-  backgroundColor: 'blue';
+  $backgroundColor?: 'blue';
 }
 interface StyledSimpleImageTextContainerProps {
-  reverse: boolean;
+  $reverse: boolean;
 }
 
 const backgroundColors: {
   [
-    K in NonNullable<StyledSimpleImageTextBackgroundProps['backgroundColor']>
+    K in NonNullable<StyledSimpleImageTextBackgroundProps['$backgroundColor']>
   ]: string;
 } = {
   blue: COLORS.hoverBlue,
 };
 
 export const StyledSimpleImageTextBackground = styled.div<StyledSimpleImageTextBackgroundProps>`
-  background-color: ${({ backgroundColor }) =>
-    backgroundColors[backgroundColor]};
+  background-color: ${({ $backgroundColor }) =>
+    $backgroundColor ? backgroundColors[$backgroundColor] : undefined};
 `;
 
 export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextContainerProps>`
   display: flex;
-  flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
+  flex-direction: ${({ $reverse }) => ($reverse ? 'row-reverse' : 'row')};
   align-items: stretch;
   flex-wrap: wrap;
   gap: 5%;
@@ -46,7 +46,7 @@ export const StyledSimpleImageTextImageContainer = styled.div`
 `;
 
 export const StyledSimpleImageTextTextContainer = styled.div<{
-  contentPaddingY: number;
+  $contentPaddingY?: number;
 }>`
   display: flex;
   flex-direction: column;
@@ -54,7 +54,7 @@ export const StyledSimpleImageTextTextContainer = styled.div<{
   justify-content: center;
   gap: 30px;
   width: 100%;
-  padding: ${(props) => props.contentPaddingY}px 0;
+  padding: ${(props) => props.$contentPaddingY}px 0;
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     width: 50%;
   }
@@ -103,7 +103,6 @@ export const StyledCTAsContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: ${(props) => (props.marginTop ? '60px' : '0')};
   button:first-child {
     margin-right: 20px;
   }

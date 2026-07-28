@@ -1,30 +1,30 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MessagingAIPanel } from '../MessagingAIPanel';
-import { MessagingEmptyState } from '../MessagingEmptyState';
-import { ConversationType, FeatureKey } from 'src/api/types';
-import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
-import { UserRoles } from 'src/constants/users';
-import { useIsMobile } from 'src/hooks/utils';
+import { ConversationType, FeatureKey } from '@/src/api/types';
+import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
+import { UserRoles } from '@/src/constants/users';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
   selectHasBetaFeature,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectIsAIPanelOpen,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import {
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectOtherParticipantHasNotReplied,
   selectShouldGiveFeedback,
-} from 'src/use-cases/messaging/messaging.selectors';
+} from '@/src/use-cases/messaging/messaging.selectors';
+import { MessagingAIPanel } from '../MessagingAIPanel';
+import { MessagingEmptyState } from '../MessagingEmptyState';
 import {
   MessagingConversationAIPanel,
   MessagingConversationContainer,
@@ -306,7 +306,7 @@ export const MessagingConversation = () => {
         />
       ) : (
         <MessagingMessagesContainer
-          blur={shouldGiveFeedback}
+          $blur={shouldGiveFeedback}
           className={isMobile ? 'mobile' : ''}
         >
           {reversedMessages &&

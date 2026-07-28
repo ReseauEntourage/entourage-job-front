@@ -2,7 +2,7 @@ import React, { Ref } from 'react';
 import { LegacyImg, Section } from '@/src/components/ui';
 import { H2, H3, H4 } from '@/src/components/ui/Headings';
 import { COLORS } from '@/src/constants/styles';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   StyledSimpleImageTextBackground,
   StyledSimpleImageTextBackgroundProps,
@@ -13,7 +13,7 @@ import {
 } from './SimpleImageText.styles';
 
 interface SimpleImageTextProps {
-  backgroundColor?: StyledSimpleImageTextBackgroundProps['backgroundColor'];
+  backgroundColor?: StyledSimpleImageTextBackgroundProps['$backgroundColor'];
   innerRef?: Ref<HTMLDivElement>;
   title: string;
   subtitle?: string;
@@ -37,7 +37,7 @@ export const SimpleImageText = ({
 }: SimpleImageTextProps) => {
   const isDesktop = useIsDesktop();
   return (
-    <StyledSimpleImageTextBackground backgroundColor={backgroundColor}>
+    <StyledSimpleImageTextBackground $backgroundColor={backgroundColor}>
       <Section>
         {!isDesktop && (
           <H3
@@ -53,7 +53,7 @@ export const SimpleImageText = ({
         <br />
         <StyledSimpleImageTextContainer
           className={isDesktop ? '' : 'mobile'}
-          reverse={reverse}
+          $reverse={reverse}
         >
           <StyledSimpleImageTextImageContainer
             className={isDesktop ? '' : 'mobile'}
@@ -61,7 +61,9 @@ export const SimpleImageText = ({
           >
             <LegacyImg src={img} alt="" cover={imgCover} />
           </StyledSimpleImageTextImageContainer>
-          <StyledSimpleImageTextTextContainer contentPaddingY={contentPaddingY}>
+          <StyledSimpleImageTextTextContainer
+            $contentPaddingY={contentPaddingY}
+          >
             <StyledTitleContainer>
               {isDesktop && (
                 <H2

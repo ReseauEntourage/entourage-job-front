@@ -6,8 +6,8 @@ import {
   OnboardingStep,
   OnboardingStepData,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
-import { RequestState, SliceRootState } from 'src/store/utils';
-import { assertIsDefined } from 'src/utils/asserts';
+import { RequestState, SliceRootState } from '@/src/store/utils';
+import { assertIsDefined } from '@/src/utils/asserts';
 import {
   sendStepDataOnboardingAdapter,
   SendStepDataOnboardingError,

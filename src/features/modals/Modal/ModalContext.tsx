@@ -1,5 +1,5 @@
 import { Context, createContext, useContext } from 'react';
-import { assertIsDefined } from 'src/utils/asserts';
+import { assertIsDefined } from '@/src/utils/asserts';
 
 export const ModalContext: Context<{ onClose?: () => void }> = createContext(
   {}

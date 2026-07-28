@@ -3,7 +3,7 @@ import {
   CompanyRoleName,
 } from '@/src/constants/company';
 import { FilterConstant } from '@/src/constants/utils';
-import { FormSchema } from 'src/features/forms/FormSchema';
+import { FormSchema } from '@/src/features/forms/FormSchema';
 
 export const formRegistrationCompanyRole: FormSchema<{
   companyRole: FilterConstant<CompanyRoleName>;

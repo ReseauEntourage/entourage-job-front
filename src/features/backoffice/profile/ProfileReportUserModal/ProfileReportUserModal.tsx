@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
+import { Api } from '@/src/api';
+import { UserReportDto } from '@/src/api/types';
+import { Actions } from '@/src/constants/utils';
+import { formReportUser } from '@/src/features/forms/schemas/formReportUser';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
 import { useOnReportUserFormSubmit } from '../useOnReportUserFormSubmit';
-import { Api } from 'src/api';
-import { UserReportDto } from 'src/api/types';
-import { Actions } from 'src/constants/utils';
-import { formReportUser } from 'src/features/forms/schemas/formReportUser';
 
 interface ProfileReportUserModalProps {
   userId: string;

@@ -3,7 +3,7 @@ import {
   CompanyWithUsers,
   UpdateCompanyDto,
 } from '@/src/api/types';
-import { createRequestAdapter } from 'src/store/utils';
+import { createRequestAdapter } from '@/src/store/utils';
 
 type updateCompanyLogoError = 'UPDATE_LOGO_FAILED';
 type updateCompanyError = 'UPDATE_FAILED';

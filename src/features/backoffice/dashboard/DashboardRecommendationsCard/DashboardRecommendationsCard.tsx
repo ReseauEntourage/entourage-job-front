@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { PublicProfile } from '@/src/api/types';
 import { Button, Card, LucidIcon, Tooltip } from '@/src/components/ui';
 import { CardList } from '@/src/components/ui/CardList';
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { Text } from '@/src/components/ui/Text';
+import { UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { useEmbeddingStatus } from '@/src/hooks/useEmbeddingStatus';
 import { useIsDesktop } from '@/src/hooks/utils';
+import { profilesActions } from '@/src/use-cases/profiles';
+import { mutateToArray } from '@/src/utils';
 import { NetworkDirectoryUserItem } from '../../network-directory/NetworkDirectoryItem';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
-import { PublicProfile } from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
-import { useEmbeddingStatus } from 'src/hooks/useEmbeddingStatus';
-import { profilesActions } from 'src/use-cases/profiles';
-import { mutateToArray } from 'src/utils';
 import {
   StyledDashboardRecommendationsList,
   StyledRecommendationsHowItWorksWrapper,

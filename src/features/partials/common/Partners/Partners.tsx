@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, LegacyImg, Section } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from '@/src/constants/tags';
+import { gaEvent } from '@/src/lib/gtag';
 import { StyledPartners } from './Partners.styles';
 
 export interface PartnersListItem {

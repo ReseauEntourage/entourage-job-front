@@ -12,6 +12,7 @@ import {
   selectCurrentUser,
   selectCurrentUserCompany,
 } from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   createUserSelectors,
   registrationActions,
@@ -22,7 +23,6 @@ import {
   selectRegistrationSelectedFlow,
   selectRegistrationShouldSkipStep,
 } from '@/src/use-cases/registration';
-import { notificationsActions } from 'src/use-cases/notifications';
 import { useWizardStepCandidateInfo } from './steps/StepInfos/useWizardStepCandidateInfo';
 import { useWizardStepCoachInfo } from './steps/StepInfos/useWizardStepCoachInfo';
 import { useWizardStepAccount } from './steps/useWizardStepAccount';

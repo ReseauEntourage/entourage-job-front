@@ -1,18 +1,19 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledSearchBarContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const StyledSearchBar = styled.div`
+export const StyledSearchBar = styled.div<{ $light: boolean }>`
   border-radius: 23px;
   display: flex;
   justify-content: center;
   align-items: center;
   // keep this background for better visibility
-  background-color: ${({ light }) => (light ? COLORS.white : COLORS.lightGray)};
+  background-color: ${({ $light }) =>
+    $light ? COLORS.white : COLORS.lightGray};
 `;
 
 export const StyledSearchBarInputContainer = styled.div`

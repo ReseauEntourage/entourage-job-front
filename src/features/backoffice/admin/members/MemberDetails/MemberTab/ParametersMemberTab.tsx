@@ -1,23 +1,23 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
+import { MemberUser } from '@/src/api/types';
 import { Button } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { Heading } from '@/src/components/ui/Inputs/Heading';
+import { RELATED_ROLES, UserRoles } from '@/src/constants/users';
 import { EditMemberModal } from '@/src/features/backoffice/admin/members/MemberDetails/EditMemberModal';
 import { MemberTable } from '@/src/features/backoffice/admin/members/MemberTable';
 import { Member } from '@/src/features/backoffice/admin/members/MemberTable/Member';
 import { MemberColumn } from '@/src/features/backoffice/admin/members/MemberTable/Member/Member.types';
+import { formDeleteUser } from '@/src/features/forms/schemas/formDeleteUser';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { Api } from 'src/api';
-import { MemberUser } from 'src/api/types';
-import { RELATED_ROLES, UserRoles } from 'src/constants/users';
-import { formDeleteUser } from 'src/features/forms/schemas/formDeleteUser';
-import { useMemberId } from 'src/hooks/queryParams/useMemberId';
-import { useIsMobile } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
-import { isRoleIncluded } from 'src/utils/Finding';
+import { useMemberId } from '@/src/hooks/queryParams/useMemberId';
+import { useIsMobile } from '@/src/hooks/utils';
+import { notificationsActions } from '@/src/use-cases/notifications';
+import { isRoleIncluded } from '@/src/utils/Finding';
 import {
   StyledMemberActionsContainer,
   StyledRelatedMemberList,
@@ -123,7 +123,7 @@ export function ParametersMemberTab({
 
   return (
     <>
-      <StyledMemberActionsContainer isMobile={isMobile}>
+      <StyledMemberActionsContainer $isMobile={isMobile}>
         <Button
           variant="secondary"
           rounded

@@ -22,7 +22,7 @@ export const Badge = ({
 }: BadgeProps) => {
   return (
     <StyledBadge
-      variant={variant}
+      $variant={variant}
       $size={size}
       $borderRadius={borderRadius}
       $clickable={!!onClick}

@@ -1,15 +1,15 @@
-import { FormSchema } from '@/src/features/forms/FormSchema';
 import {
   CANDIDATE_YES_NO_FILTERS,
   CandidateYesNoNSPP,
   CandidateYesNoNSPPValue,
   CandidateYesNoValue,
-} from 'src/constants';
+} from '@/src/constants';
 import {
   DepartmentName,
   DEPARTMENTS_FILTERS,
-} from 'src/constants/departements';
-import { FilterConstant } from 'src/constants/utils';
+} from '@/src/constants/departements';
+import { FilterConstant } from '@/src/constants/utils';
+import { FormSchema } from '@/src/features/forms/FormSchema';
 
 export const formReferingInfo: FormSchema<{
   birthDate: string;

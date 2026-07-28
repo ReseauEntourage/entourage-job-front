@@ -1,7 +1,7 @@
 import React from 'react';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
+import { UnionKeys, UnionToIntersection } from '@/src/utils/Types';
 import { CurrentUserCompany, ReadDocumentItem, User } from '../../../api/types';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
-import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formOnboardingCompanyGoal } from './Onboarding/forms/schemas/formOnboardingCompanyGoal';
 import { formOnboardingCompanyInformation } from './Onboarding/forms/schemas/formOnboardingCompanyInformation';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';

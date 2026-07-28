@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { UserRoles } from '@/src/constants/users';
 import { useProfileGeneration } from '@/src/hooks';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserReadDocuments } from '@/src/hooks/current-user/useCurrentUserReadDocuments';
+import { selectAuthenticatedUser } from '@/src/use-cases/current-user';
 import {
   onboardingActions,
   selectIsOnboardingLoading,
@@ -15,10 +19,6 @@ import {
   findPreviousNotSkippableStep,
   getOnboardingFlow,
 } from '@/src/use-cases/onboardingOld/onboarding.utils';
-import { UserRoles } from 'src/constants/users';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
-import { useCurrentUserReadDocuments } from 'src/hooks/current-user/useCurrentUserReadDocuments';
-import { selectAuthenticatedUser } from 'src/use-cases/current-user';
 import { OnboardingFormData } from './Onboarding.types';
 
 export const useOnboarding = () => {

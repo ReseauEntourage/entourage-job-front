@@ -15,15 +15,15 @@ import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile';
 import { StyledNav } from '@/src/components/ui/Navbar/Nav/Nav.styles';
 import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
 import { COLORS } from '@/src/constants/styles';
-import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import {
   StyledMessagingIconContainer,
   StyledNavContainerDesktop,
-} from 'src/features/headers/Header.styles';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
-import { gaEvent } from 'src/lib/gtag';
+} from '@/src/features/headers/Header.styles';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { gaEvent } from '@/src/lib/gtag';
+import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import { StyledConnectedItem } from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
 import { SubMenu } from './SubMenu';

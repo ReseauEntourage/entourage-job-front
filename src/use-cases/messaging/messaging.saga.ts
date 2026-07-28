@@ -1,8 +1,8 @@
 import { call, put, select, take, takeLatest } from 'typed-redux-saga';
+import { Api } from '@/src/api';
+import { isMessagingDailyConversationLimitReachedError } from '@/src/api/axiosErrors';
+import { ConversationParticipant } from '@/src/api/types';
 import { notificationsActions } from '../notifications';
-import { Api } from 'src/api';
-import { isMessagingDailyConversationLimitReachedError } from 'src/api/axiosErrors';
-import { ConversationParticipant } from 'src/api/types';
 import { slice } from './messaging.slice';
 
 const {

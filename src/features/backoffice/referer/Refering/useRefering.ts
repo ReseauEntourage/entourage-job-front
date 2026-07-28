@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { ReduxRequestEvents } from '@/src/constants';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   selectIsFirstReferingStep,
   selectIsLastReferingStep,
@@ -15,7 +15,7 @@ import {
   referingActions,
   selectReferingNextStep,
   selectReferingShouldSkipStep,
-} from 'src/use-cases/refering';
+} from '@/src/use-cases/refering';
 import { REFERING_CONFIRMATION_STEP, ReferingFormData } from './Refering.types';
 
 export function useRefering() {

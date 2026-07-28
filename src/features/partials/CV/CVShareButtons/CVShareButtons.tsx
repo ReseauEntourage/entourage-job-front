@@ -6,12 +6,12 @@ import {
   WhatsappShareButton,
   XShareButton,
 } from 'react-share';
+import { PublicCV } from '@/src/api/types';
+import { FB_TAGS, GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalShareCV } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import { PublicCV } from 'src/api/types';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
+import { fbEvent } from '@/src/lib/fb';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledCVShareButton,
   StyledCVShareButtonsContainer,

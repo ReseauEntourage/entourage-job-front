@@ -12,7 +12,7 @@ import {
   SkippedByKeysUnion,
 } from '@/src/features/registration/registration.types';
 import { incrementRegistrationStep } from '@/src/features/registration/registration.utils';
-import { assertIsDefined } from 'src/utils/asserts';
+import { assertIsDefined } from '@/src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
 

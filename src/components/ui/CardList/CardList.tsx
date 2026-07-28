@@ -22,7 +22,7 @@ export function CardList({
 }: CardListProps) {
   return (
     <StyledCardListContainer>
-      <StyledCardList data-testid={dataTestId} condensed={condensed}>
+      <StyledCardList data-testid={dataTestId} $condensed={condensed}>
         {list.length > 0 && list}
         {list.length === 0 && !isLoading && (
           <StyledNoResult>Aucun résultat</StyledNoResult>

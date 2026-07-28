@@ -1,7 +1,7 @@
 import React from 'react';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 import { formReferingProfessionalInformation } from '@/src/features/backoffice/referer/forms/formReferingProfessionalInformation';
-import { UserProfileSectorOccupation } from 'src/api/types';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
 
 export function formatParagraph(text: string, condense?: boolean) {
   if (text) {

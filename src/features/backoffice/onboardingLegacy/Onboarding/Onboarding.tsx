@@ -1,12 +1,12 @@
 import React from 'react';
 import { Spinner } from '@/src/components/ui/Spinner';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import {
   StyledOnboardingSpinnerContainer,
   StyledStepContainer,
 } from '../Onboarding.styles';
 import { useOnboarding } from '../useOnboarding';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
 
 export const Onboarding = () => {
   const {

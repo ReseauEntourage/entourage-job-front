@@ -1,6 +1,6 @@
 import { Component, RefCallback, type JSX, ReactNode } from 'react';
 import { FieldError } from 'react-hook-form';
-import { AnyCantFix } from 'src/utils/Types';
+import { AnyCantFix } from '@/src/utils/Types';
 
 export interface CommonInputProps<
   T,

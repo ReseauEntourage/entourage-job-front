@@ -5,7 +5,7 @@ import { Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { useContactEligibility } from '@/src/hooks/useContactEligibility';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   StyledContactMessage,
   StyledProfileContactForm,

@@ -1,10 +1,10 @@
 import { FilterConstant } from '@/src/constants/utils';
-import { loadCompaniesOptions } from '@/src/features/forms/utils/loadOptions.utils';
 import {
   FormComponents,
   FormSchema,
   FormSchemaValidation,
-} from 'src/features/forms/FormSchema';
+} from '@/src/features/forms/FormSchema';
+import { loadCompaniesOptions } from '@/src/features/forms/utils/loadOptions.utils';
 
 interface FormRegistrationCompanySelectionSchema extends FormSchemaValidation {
   companyName: FilterConstant<string>;

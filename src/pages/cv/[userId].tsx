@@ -5,12 +5,12 @@ import { PublicCV } from '@/src/api/types';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Grid, Section, SimpleLink, Button } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { CV_FILTERS_DATA } from '@/src/constants';
+import { GA_TAGS } from '@/src/constants/tags';
 import { CVList } from '@/src/features/partials/CV/CVList';
 import { PageCVContent } from '@/src/features/partials/CV/PageCVContent';
 import { StyledCVPage } from '@/src/features/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
-import { CV_FILTERS_DATA } from 'src/constants';
-import { GA_TAGS } from 'src/constants/tags';
 
 export interface CVPageProps {
   publicCV: PublicCV;

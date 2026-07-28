@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Api } from '@/src/api';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
-import { Api } from 'src/api';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { formInterestLinkedOut } from 'src/features/forms/schemas/formInterestLinkedOut';
-import { useResetForm } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { formInterestLinkedOut } from '@/src/features/forms/schemas/formInterestLinkedOut';
+import { useResetForm } from '@/src/hooks/utils';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 const Contact = () => {
   const [form, resetForm] = useResetForm();

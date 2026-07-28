@@ -31,12 +31,11 @@ export const RoundBadge = ({
 
   return (
     <StyledRoundBadge
-      active={active}
-      borderColor={borderColor}
-      bgColor={bgColor}
+      $active={active}
+      $borderColor={borderColor}
+      $bgColor={bgColor}
       size={size}
-      textColor={computedTextColor}
-      borderSize={borderSize}
+      $borderSize={borderSize}
     >
       <Text
         weight={active ? 'semibold' : 'normal'}

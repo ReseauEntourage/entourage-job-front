@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledAlertCandidatesContainer = styled.div`
   padding: 24px 0;

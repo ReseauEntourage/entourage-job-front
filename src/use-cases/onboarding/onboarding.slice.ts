@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SliceRootState } from 'src/store/utils';
+import { SliceRootState } from '@/src/store/utils';
 
 interface State {
   webinarSfId: string | null;

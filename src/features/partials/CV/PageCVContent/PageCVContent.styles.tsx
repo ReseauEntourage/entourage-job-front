@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledCVPage = styled.div`
   background-color: ${COLORS.lightGray};
@@ -82,12 +82,12 @@ export const StyledHeaderDetails = styled.div`
       width: 18px;
       color: ${COLORS.primaryBlue};
 
-      :first-of-type {
+      &:first-of-type {
         margin-right: 8px;
         transform: translateY(-8px);
       }
 
-      :last-of-type {
+      &:last-of-type {
         margin-left: 8px;
         transform: translateY(8px);
       }
@@ -116,14 +116,14 @@ export const StyledCVProfilePictureContainer = styled.div`
   }
 `;
 
-export const StyledCVProfilePicture = styled.div`
+export const StyledCVProfilePicture = styled.div<{ $imgSrc: string }>`
   height: 340px;
   width: 340px;
   position: relative;
   border-radius: 50%;
   background-color: ${COLORS.hoverBlue};
   background-image: ${(props) => {
-    return `url('${props.imgSrc}')`;
+    return `url('${props.$imgSrc}')`;
   }};
   background-size: cover;
   background-position: center;
@@ -162,7 +162,7 @@ export const StyledCVPageContentStory = styled.div`
         margin: 0 auto;
         color: ${COLORS.primaryBlue};
         border-bottom: ${COLORS.primaryBlue} solid 1px;
-        :hover {
+        &:hover {
           cursor: pointer;
         }
       }

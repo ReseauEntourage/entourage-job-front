@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Color, COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { Color, COLORS } from '@/src/constants/styles';
 
 export const StyledDot = styled.div<{ color: Color }>`
   display: flex;

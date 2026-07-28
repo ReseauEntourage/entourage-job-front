@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
+import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledDatePickerContainer } from './DatePicker.styles';
 
 interface DatePickerProps extends CommonInputProps<string, HTMLInputElement> {

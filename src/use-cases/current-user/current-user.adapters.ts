@@ -10,9 +10,9 @@ import {
   UserAchievement,
   UserProfile,
   UserStats,
-} from 'src/api/types';
-import { DocumentNameType } from 'src/constants';
-import { createRequestAdapter } from 'src/store/utils';
+} from '@/src/api/types';
+import { DocumentNameType } from '@/src/constants';
+import { createRequestAdapter } from '@/src/store/utils';
 
 export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   void,

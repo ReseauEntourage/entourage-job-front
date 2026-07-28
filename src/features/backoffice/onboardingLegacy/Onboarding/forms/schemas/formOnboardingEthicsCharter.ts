@@ -1,4 +1,4 @@
-import { FormSchema } from 'src/features/forms/FormSchema';
+import { FormSchema } from '@/src/features/forms/FormSchema';
 
 export const formOnboardingEthicsCharter: FormSchema<{
   hasAcceptedEthicsCharter: boolean;

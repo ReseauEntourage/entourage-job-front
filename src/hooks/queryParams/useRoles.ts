@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 
 export function useRoles() {
   const {

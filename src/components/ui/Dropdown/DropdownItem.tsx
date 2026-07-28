@@ -31,7 +31,7 @@ export const DropdownItem = ({
       onClick={handleClick}
       className="dropdown-item"
       size={size}
-      device={device}
+      $device={device}
     >
       {children}
     </StyledDropdownMenuItem>

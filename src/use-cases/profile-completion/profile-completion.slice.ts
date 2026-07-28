@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RequestState, SliceRootState } from 'src/store/utils';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import { fetchProfileCompletionAdapter } from './profile-completion.adapters';
 
 interface State {

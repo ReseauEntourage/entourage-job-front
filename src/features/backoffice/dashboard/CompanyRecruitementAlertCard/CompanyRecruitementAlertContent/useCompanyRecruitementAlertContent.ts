@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RecruitementAlert, RecruitementAlertDto } from '@/src/api/types';
 import { CONTRACTS, WORKING_EXPERIENCE_FILTERS } from '@/src/constants';
-import { RecruitementAlert, RecruitementAlertDto } from 'src/api/types';
 import {
   fetchRecruitementAlertMatchingAction,
   selectRecruitementAlertMatchingById,
   selectFetchRecruitementAlertMatchingLoading,
   deleteRecruitementAlertAction,
   updateRecruitementAlertAction,
-} from 'src/use-cases/recruitement-alerts';
+} from '@/src/use-cases/recruitement-alerts';
 
 const MATCHING_TTL = 10 * 60 * 1000; // 10 minutes
 

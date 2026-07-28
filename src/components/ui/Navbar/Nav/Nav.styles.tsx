@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledNav = styled.ul`
   display: flex;
@@ -7,7 +7,7 @@ export const StyledNav = styled.ul`
   padding: 0;
 `;
 
-export const StyledNavItem = styled.li`
+export const StyledNavItem = styled.li<{ color?: string }>`
   display: flex;
 
   & > * {
@@ -26,7 +26,7 @@ export const StyledNavItem = styled.li`
 
   & a {
     color: ${({ color }) => {
-      return COLORS[color] || COLORS.white;
+      return (color && COLORS[color]) || COLORS.white;
     }};
     text-align: center;
   }

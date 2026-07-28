@@ -1,8 +1,8 @@
+import { UserRoles } from '@/src/constants/users';
 import { useContextualRole } from '@/src/features/backoffice/useContextualRole';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { isRoleIncluded } from '@/src/utils';
 import { useOpenCorrespondingModal } from '../../profile/ProfilePartCards/ModalEditUserInformation/useOpenModal';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { isRoleIncluded } from 'src/utils';
 import { useUploadProfileImage } from './useUploadProfileImage';
 
 export function useHeaderProfile(role: UserRoles) {

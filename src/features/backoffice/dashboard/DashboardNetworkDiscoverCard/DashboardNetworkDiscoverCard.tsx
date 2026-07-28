@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Card, LegacyImg } from '@/src/components/ui';
 import { NormalUserRoles, UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledDashboardNetworkDiscoverContent,
   StyledDashboardNetworkDiscoverText,

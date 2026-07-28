@@ -1,9 +1,9 @@
 import React from 'react';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { useModalContext } from '../Modal';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formFeedback } from './formFeedback';
 
 export function FeedbackModal() {

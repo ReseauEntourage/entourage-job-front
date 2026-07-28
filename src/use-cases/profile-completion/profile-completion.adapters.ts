@@ -1,4 +1,4 @@
-import { createRequestAdapter } from 'src/store/utils';
+import { createRequestAdapter } from '@/src/store/utils';
 
 type FetchProfileCompletionError = 'FETCH_FAILED';
 

@@ -1,8 +1,8 @@
 import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
+import { ReduxRequestEvents } from '@/src/constants';
 import { SliceRootState } from '../types';
-import { ReduxRequestEvents } from 'src/constants';
 import { createRequestAdapter, RequestState } from '.';
 
 describe('createRequestAdapter', () => {

@@ -3,8 +3,8 @@ import {
   PublicProfile,
   RecruitementAlert,
   RecruitementAlertDto,
-} from 'src/api/types';
-import { RequestState, SliceRootState } from 'src/store/utils';
+} from '@/src/api/types';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import {
   fetchRecruitementAlertsAdapter,
   createRecruitementAlertAdapter,

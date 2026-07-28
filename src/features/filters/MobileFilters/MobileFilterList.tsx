@@ -1,6 +1,6 @@
 import React from 'react';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { Filter, FilterObject } from 'src/constants/utils';
+import { Filter, FilterObject } from '@/src/constants/utils';
 import {
   StyledMobileFilterItem,
   StyledMobileFilterItemActions,

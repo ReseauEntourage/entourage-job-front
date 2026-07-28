@@ -1,14 +1,14 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Api } from '@/src/api';
+import { isConflictError } from '@/src/api/axiosErrors';
 import { Nudge } from '@/src/api/types';
+import { GA_TAGS } from '@/src/constants/tags';
 import { UserRoleByFlow } from '@/src/features/registration/registration.config';
 import { getUtmFromLocalStorage } from '@/src/features/registration/registration.utils';
 import { UtmParameters } from '@/src/hooks/queryParams/useUTM';
+import { gaEventWithUser } from '@/src/lib/gtag';
 import { assertIsDefined } from '@/src/utils/asserts';
-import { Api } from 'src/api';
-import { isConflictError } from 'src/api/axiosErrors';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEventWithUser } from 'src/lib/gtag';
-import { asyncTimeout } from 'src/utils/asyncTimeout';
+import { asyncTimeout } from '@/src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedFlow,
   selectInvitationId,

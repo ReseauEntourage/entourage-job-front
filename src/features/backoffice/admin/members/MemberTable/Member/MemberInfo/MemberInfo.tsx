@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useMemo } from 'react';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { UserRoles } from '@/src/constants/users';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledMemberInfoContainer,
   StyledMemberInfoLink,

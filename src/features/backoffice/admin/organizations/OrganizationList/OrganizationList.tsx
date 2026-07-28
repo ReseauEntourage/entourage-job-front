@@ -1,5 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { Api } from '@/src/api';
+
+import { Organization as OrganizationType } from '@/src/api/types';
 import {
   Section,
   Button,
@@ -8,18 +11,15 @@ import {
   Text,
 } from '@/src/components/ui';
 import { H4 } from '@/src/components/ui/Headings';
+import { ORGANIZATION_FILTERS_DATA } from '@/src/constants';
+import { FilterObject } from '@/src/constants/utils';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { AdminCreationButtons } from '@/src/features/backoffice/admin/AdminCreationButtons';
+import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
+import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
+import { filtersToQueryParams } from '@/src/utils/Filters';
 import { OrganizationTable } from '../OrganizationTable';
 import { Organization } from '../OrganizationTable/Organization';
-import { Api } from 'src/api';
-
-import { Organization as OrganizationType } from 'src/api/types';
-import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
-import { FilterObject } from 'src/constants/utils';
-import { SearchBar } from 'src/features/filters/SearchBar/SearchBar';
-import { HeaderBackoffice } from 'src/features/headers/HeaderBackoffice';
-import { filtersToQueryParams } from 'src/utils/Filters';
 import { StyledOrganizationsListButtonContainer } from './OrganizationList.styles';
 
 const LIMIT = 50;

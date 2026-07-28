@@ -6,8 +6,8 @@ import {
   fetchSelectedEventSelectors,
   selectSelectedEvent,
 } from '@/src/use-cases/events';
-import { notificationsActions } from 'src/use-cases/notifications';
-import { assertIsDefined } from 'src/utils/asserts';
+import { notificationsActions } from '@/src/use-cases/notifications';
+import { assertIsDefined } from '@/src/utils/asserts';
 
 export function useSelectedEvent() {
   const eventId = useEventId();

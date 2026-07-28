@@ -3,9 +3,9 @@ import {
   ProfilesFilters,
   PublicProfile,
   ProfileRecommendation,
-} from 'src/api/types';
-import { PROFILES_LIMIT, ReduxRequestEvents } from 'src/constants';
-import { RequestState, SliceRootState } from 'src/store/utils';
+} from '@/src/api/types';
+import { PROFILES_LIMIT, ReduxRequestEvents } from '@/src/constants';
+import { RequestState, SliceRootState } from '@/src/store/utils';
 import {
   fetchProfilesAdapter,
   fetchDashboardProfilesRecommendationsAdapter,

@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { CardList } from '@/src/components/ui/CardList';
-import { NetworkDirectoryUserItem } from '../network-directory/NetworkDirectoryItem';
 import {
   selectRecruitementAlertMatchingById,
   selectFetchRecruitementAlertMatchingLoading,
-} from 'src/use-cases/recruitement-alerts';
+} from '@/src/use-cases/recruitement-alerts';
+import { NetworkDirectoryUserItem } from '../network-directory/NetworkDirectoryItem';
 import { StyledAlertCandidatesListContainer } from './AlertCandidates.styles';
 
 interface AlertCandidatesListProps {

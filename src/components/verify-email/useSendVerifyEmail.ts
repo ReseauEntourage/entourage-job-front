@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { authenticationActions } from '@/src/use-cases/authentication';
 
 export function useSendVerifyEmail(email?: string) {
   const dispatch = useDispatch();

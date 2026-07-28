@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
-export const StyledSubtitle = styled.div`
+export const StyledSubtitle = styled.div<{ $center?: boolean }>`
   margin: 40px 0;
   width: 100%;
-  text-align: ${({ center }) => {
-    return center ? 'center' : 'left';
+  text-align: ${({ $center }) => {
+    return $center ? 'center' : 'left';
   }};
 `;

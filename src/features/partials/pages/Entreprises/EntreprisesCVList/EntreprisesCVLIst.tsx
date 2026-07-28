@@ -5,9 +5,9 @@ import {
   StyledCenteredButtonContainer,
 } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
+import { GA_TAGS } from '@/src/constants/tags';
 import { CVList } from '@/src/features/partials/CV/CVList';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from '@/src/lib/gtag';
 import { StyledEntreprisesCVListContainer } from './EntreprisesCVList.styles';
 
 export const EntreprisesCVList = () => {

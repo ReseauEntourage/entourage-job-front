@@ -1,14 +1,16 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
-export const StyledMemberActionsContainer = styled.div`
+export const StyledMemberActionsContainer = styled.div<{
+  $isMobile: boolean;
+}>`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
   & > button {
     margin-left: 8px;
-    margin-top: ${({ isMobile }) => {
-      return isMobile ? 8 : 0;
+    margin-top: ${({ $isMobile }) => {
+      return $isMobile ? 8 : 0;
     }}px;
   }
 `;

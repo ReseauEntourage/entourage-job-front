@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { UpdateCompanyDto } from 'src/api/types';
-import { companyActions } from 'src/use-cases/company';
+import { UpdateCompanyDto } from '@/src/api/types';
+import { companyActions } from '@/src/use-cases/company';
 
 export const useUpdateCompany = () => {
   const dispatch = useDispatch();

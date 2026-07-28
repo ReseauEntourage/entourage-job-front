@@ -5,8 +5,8 @@ import {
   ReferingStep,
   ReferingStepData,
 } from '@/src/features/backoffice/referer/Refering/Refering.types';
-import { RequestState, SliceRootState } from 'src/store/utils';
-import { assertIsDefined } from 'src/utils/asserts';
+import { RequestState, SliceRootState } from '@/src/store/utils';
+import { assertIsDefined } from '@/src/utils/asserts';
 import {
   referCandidateAdapter,
   ReferCandidateError,

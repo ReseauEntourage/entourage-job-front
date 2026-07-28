@@ -14,14 +14,14 @@ import {
   MobileFilterDrawer,
 } from '@/src/features/filters/MobileFilters';
 import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
+import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
+import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { useFilters } from '@/src/hooks';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useIsMobile } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
 import { findConstantFromValue, mutateToArray } from '@/src/utils';
 import { EventDirectoryList } from '../EventDirectoryList/EventDirectoryList';
-import { HeaderBackoffice } from 'src/features/headers/HeaderBackoffice';
-import { StyledBackgroundedHeaderBackoffice } from 'src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import {
   StyledEventDirectoryButtonContainer,
   StyledEventDirectoryContainer,

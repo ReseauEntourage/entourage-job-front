@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectIsEmptyReferingData } from '@/src/use-cases/refering';
 import { REFERING_FIRST_STEP } from '../Refering.types';
-import { selectIsEmptyReferingData } from 'src/use-cases/refering';
 
 export function useConfirmationRedirection() {
   const { replace } = useRouter();

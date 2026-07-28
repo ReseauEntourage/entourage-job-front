@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { StyledH5 } from './Headings.styles';
 import { HeadingComponentProps } from './Headings.types';
 
@@ -14,10 +14,10 @@ export const H5 = ({
   return (
     <StyledH5
       color={color}
-      mobile={!isDesktop}
-      center={center}
-      weight={weight}
-      noMarginBottom={noMarginBottom}
+      $mobile={!isDesktop}
+      $center={center}
+      $weight={weight}
+      $noMarginBottom={noMarginBottom}
     >
       {title}
     </StyledH5>

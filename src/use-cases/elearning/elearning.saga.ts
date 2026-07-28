@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'typed-redux-saga';
 import { Api } from '@/src/api';
+import { authenticationActions } from '@/src/use-cases/authentication';
 import { currentUserActions } from '@/src/use-cases/current-user';
-import { authenticationActions } from 'src/use-cases/authentication';
 import { slice } from './elearning.slice';
 
 const {

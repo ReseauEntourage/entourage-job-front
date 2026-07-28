@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import UIkit from 'uikit';
+import { GA_TAGS } from '@/src/constants/tags';
+import { gaEvent } from '@/src/lib/gtag';
 import { LucidIcon } from '../Icons/LucidIcon';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
 
 interface CarouselProps {
   style?: string;

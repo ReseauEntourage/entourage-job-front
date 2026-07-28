@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { getDefaultUrl } from 'src/utils/Redirects';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { getDefaultUrl } from '@/src/utils/Redirects';
 
 export function DefaultRedirection() {
   const { replace } = useRouter();

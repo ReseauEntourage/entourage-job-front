@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { FilterConstant } from '@/src/constants/utils';
+import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
+import { useCloseOnClickOutsideComponent } from '@/src/hooks/useCloseOnClickOutsideComponent';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { StyledInputLabel, StyledInputLabelOptional } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FilterConstant } from 'src/constants/utils';
-import { FieldErrorMessage } from 'src/features/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
 interface SelectSimpleProps<

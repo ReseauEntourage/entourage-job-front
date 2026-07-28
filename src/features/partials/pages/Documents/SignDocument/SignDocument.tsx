@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Button } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { CheckBox } from '@/src/components/ui/Inputs';
-import { DocumentNameType, ReduxRequestEvents } from 'src/constants';
+import { DocumentNameType, ReduxRequestEvents } from '@/src/constants';
 import {
   currentUserActions,
   readDocumentSelectors,
-} from 'src/use-cases/current-user';
-import { notificationsActions } from 'src/use-cases/notifications';
+} from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   StyledSignDocument,
   StyledSignDocumentButtonContainer,

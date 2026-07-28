@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
+import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
@@ -12,9 +13,8 @@ import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
-import { GA_TAGS } from 'src/constants/tags';
-import { useIsDesktop } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { gaEvent } from '@/src/lib/gtag';
 
 const reviews = [
   {

@@ -1,9 +1,9 @@
 import React from 'react';
+import { Event } from '@/src/api/types';
 import { Card, LucidIcon, Text } from '@/src/components/ui';
 import { ButtonAddToCalendar } from '@/src/components/ui/Button/ButtonAddToCalendar';
 import { ButtonShare } from '@/src/components/ui/Button/ButtonShare';
 import { EventParticipateButton } from '../EventParticipateButton/EventParticipateButton';
-import { Event } from 'src/api/types';
 import {
   StyledButtonsContainer,
   StyledContainer,
@@ -40,7 +40,7 @@ export const EventActions = ({
       <StyledContainer>
         <StyledStatusContainer>
           <Text>Statut</Text>
-          <StyledStatusBadge enabled={isParticipating}>
+          <StyledStatusBadge $enabled={isParticipating}>
             {isParticipating ? 'Inscrit' : 'Non inscrit'}
           </StyledStatusBadge>
         </StyledStatusContainer>

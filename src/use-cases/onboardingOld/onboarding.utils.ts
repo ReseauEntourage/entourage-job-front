@@ -1,3 +1,4 @@
+import { CurrentUserCompany, ReadDocumentItem, User } from '@/src/api/types';
 import { CompanyOnboardingStepContents } from '@/src/features/backoffice/onboardingLegacy/Onboarding/stepContent';
 import {
   FlattenedOnboardingFormData,
@@ -7,7 +8,6 @@ import {
   OnboardingStepContent,
   OnboardingStepData,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
-import { CurrentUserCompany, ReadDocumentItem, User } from 'src/api/types';
 
 type OnboardingSkipContext = {
   readDocuments: ReadDocumentItem[];

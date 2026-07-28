@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { Button, Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { currentUserActions } from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { Api } from 'src/api';
-import { notificationsActions } from 'src/use-cases/notifications';
 
 export const ProfileLinkedInConnect = () => {
   const dispatch = useDispatch();

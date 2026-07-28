@@ -8,8 +8,8 @@ import {
   TagSize,
   TagVariant,
 } from '@/src/components/ui';
-import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { Filter, FilterConstant, FilterObject } from '@/src/constants/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import { StyledDropdownContainer } from './FiltersDropdowns.styles';
 
 const uuidValue1 = uuid();
@@ -123,8 +123,8 @@ export const FiltersDropdowns = ({
                 >
                   <StyledDropdownContainer
                     disabled={disabled}
-                    smallSelectors={smallSelectors}
-                    showSeparator={showSeparator}
+                    $smallSelectors={smallSelectors}
+                    $showSeparator={showSeparator}
                   >
                     <Button
                       disabled={disabled}

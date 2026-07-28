@@ -1,10 +1,10 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Api } from '@/src/api';
+import { isConflictError } from '@/src/api/axiosErrors';
 import { Nudge } from '@/src/api/types';
 import { flattenReferingData } from '@/src/features/backoffice/referer/Refering/Refering.utils';
-import { Api } from 'src/api';
-import { isConflictError } from 'src/api/axiosErrors';
-import { formatCareerPathSentence } from 'src/utils/Formatting';
-import { asyncTimeout } from 'src/utils/asyncTimeout';
+import { formatCareerPathSentence } from '@/src/utils/Formatting';
+import { asyncTimeout } from '@/src/utils/asyncTimeout';
 import {
   selectIsLastReferingStep,
   selectReferingData,

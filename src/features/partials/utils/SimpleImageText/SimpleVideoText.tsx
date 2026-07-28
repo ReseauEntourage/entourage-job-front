@@ -2,7 +2,7 @@ import React, { Ref } from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Section } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   StyledSimpleImageTextBackground,
   StyledSimpleImageTextBackgroundProps,
@@ -12,7 +12,7 @@ import {
 } from './SimpleImageText.styles';
 
 interface SimpleVideoTextProps {
-  backgroundColor?: StyledSimpleImageTextBackgroundProps['backgroundColor'];
+  backgroundColor?: StyledSimpleImageTextBackgroundProps['$backgroundColor'];
   innerRef?: Ref<HTMLDivElement>;
   title: React.ReactNode;
   videoId: string;
@@ -32,12 +32,12 @@ export const SimpleVideoText = ({
 }: SimpleVideoTextProps) => {
   const isDesktop = useIsDesktop();
   return (
-    <StyledSimpleImageTextBackground backgroundColor={backgroundColor}>
+    <StyledSimpleImageTextBackground $backgroundColor={backgroundColor}>
       <Section>
         {!isDesktop && <H3 title={title} color="primaryBlue" />}
         <StyledSimpleImageTextContainer
           className={isDesktop ? '' : 'mobile'}
-          reverse={reverse}
+          $reverse={reverse}
         >
           <StyledSimpleVideoTextVideoContainer
             className={isDesktop ? '' : 'mobile'}

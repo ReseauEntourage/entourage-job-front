@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import { H1, H2, H3, H4, H5, H6 } from '.';
 
 type HeadingStoryProps = React.ComponentProps<

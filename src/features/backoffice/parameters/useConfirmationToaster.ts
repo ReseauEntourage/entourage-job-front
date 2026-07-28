@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   currentUserActions,
   updateProfileSelectors,
   updateUserSelectors,
-} from 'src/use-cases/current-user';
-import { notificationsActions } from 'src/use-cases/notifications';
+} from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 export function useConfirmationToaster() {
   const dispatch = useDispatch();

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Text, ButtonIcon, LucidIcon } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
-import { Text, ButtonIcon, LucidIcon } from 'src/components/ui';
 import {
   messagingActions,
   selectActivePanelView,
-} from 'src/use-cases/messaging';
-import type { MessagingPanelView } from 'src/use-cases/messaging/messaging.slice';
+} from '@/src/use-cases/messaging';
+import type { MessagingPanelView } from '@/src/use-cases/messaging/messaging.slice';
 import { MessagingAIAssistant } from './MessagingAIAssistant';
 import {
   AIPanelContainer,
@@ -44,7 +44,7 @@ export const MessagingAIPanel = () => {
           {PANEL_TABS.map((tab) => (
             <PanelTab
               key={tab.view}
-              isActive={activePanelView === tab.view}
+              $isActive={activePanelView === tab.view}
               onClick={() => onSelectTab(tab.view)}
             >
               <LucidIcon name={tab.icon as any} size={14} />

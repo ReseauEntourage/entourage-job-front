@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Card } from '@/src/components/ui';
+import { GA_TAGS } from '@/src/constants/tags';
+import { UserRoles } from '@/src/constants/users';
 import { FeedbackModal } from '@/src/features/modals/FeedbackModal/FeedbackModal';
 import { openModal } from '@/src/features/modals/Modal';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
+import { gaEvent } from '@/src/lib/gtag';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   CardToggleList,
   SwitchItem,
 } from '../Card/CardToggleList/CardToggleList';
-import { GA_TAGS } from 'src/constants/tags';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
-import { gaEvent } from 'src/lib/gtag';
-import { currentUserActions } from 'src/use-cases/current-user';
 
 export const UserProfileAvailabilityCard = ({
   centerTitle = false,

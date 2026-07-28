@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledSubMenu = styled.ul`
   display: flex;

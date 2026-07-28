@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Api } from '@/src/api';
+import { getPusher, PUSHER_CHANNELS, PUSHER_EVENTS } from '@/src/constants';
 import {
   currentUserActions,
   selectCurrentUser,
 } from '../use-cases/current-user';
 import { notificationsActions } from '../use-cases/notifications';
-import { Api } from 'src/api';
-import { getPusher, PUSHER_CHANNELS, PUSHER_EVENTS } from 'src/constants';
 
 interface PusherResponse {
   success: boolean;

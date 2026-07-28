@@ -1,8 +1,8 @@
 import {
   PostAuthSendVerifyEmailParams,
   PostAuthVerifyOtpParams,
-} from 'src/api/types';
-import { createRequestAdapter } from 'src/store/utils';
+} from '@/src/api/types';
+import { createRequestAdapter } from '@/src/store/utils';
 
 export type LoginError =
   'RATE_LIMIT' | 'INVALID_CREDENTIALS' | 'UNVERIFIED_EMAIL';

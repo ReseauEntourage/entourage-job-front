@@ -2,21 +2,21 @@ import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NetworkDirectoryEntity } from '@/src/constants/network-directory';
+import { useIsAtBottom } from '@/src/hooks/useIsAtBottom';
+import { usePrevious } from '@/src/hooks/utils';
 import {
   companyActions,
   fetchCompaniesSelectors,
   selectCompanies,
   selectCompaniesHasFetchedAll,
 } from '@/src/use-cases/company';
-import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
-import { usePrevious } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   fetchProfilesSelectors,
   profilesActions,
   selectProfiles,
   selectProfilesHasFetchedAll,
-} from 'src/use-cases/profiles';
+} from '@/src/use-cases/profiles';
 import { useNetworkDirectoryQueryParams } from './useNetworkDirectoryQueryParams';
 
 /**

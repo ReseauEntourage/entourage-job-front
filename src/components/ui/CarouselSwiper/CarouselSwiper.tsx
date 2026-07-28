@@ -25,7 +25,7 @@ export const CarouselSwiper = ({
     return null;
   }
   return (
-    <StyledSwiperContainer backgroundColor={backgroundColor}>
+    <StyledSwiperContainer $backgroundColor={backgroundColor}>
       <Swiper
         modules={[Pagination, Autoplay, Navigation]}
         navigation

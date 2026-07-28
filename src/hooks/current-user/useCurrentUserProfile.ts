@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
-import { ReduxRequestEvents } from 'src/constants';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   currentUserActions,
   selectCurrentUserProfile,
   selectFetchCurrentProfileStatus,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 
 export function useCurrentUserProfile() {
   const dispatch = useDispatch();

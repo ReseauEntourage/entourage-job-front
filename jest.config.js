@@ -10,8 +10,6 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
-  moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {},
 };
@@ -25,6 +23,11 @@ const jestConfig = async () => {
       // Workaround to put our SVG stub first
       '\\.svg$': '<rootDir>/__mocks__/svg.js',
       ...nextJestConfig.moduleNameMapper,
+      // next/jest's SWC transform only resolves the "@/*" tsconfig path when
+      // "baseUrl" is also set. tsconfig.base.json has no baseUrl (Turbopack
+      // resolves "@/*" from "paths" alone, unlike next/jest's transform), so
+      // the mapping is declared explicitly here to keep Jest working.
+      '^@/(.*)$': '<rootDir>/$1',
     },
   };
 };

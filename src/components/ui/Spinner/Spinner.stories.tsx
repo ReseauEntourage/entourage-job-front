@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import { Spinner } from './Spinner';
 
 const meta = {

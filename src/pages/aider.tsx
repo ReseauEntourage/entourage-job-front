@@ -1,11 +1,13 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
+import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/FormatBenefits';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { gaEvent } from '@/src/lib/gtag';
 import { STORAGE_KEYS } from '../constants';
 import { PinnedCommunicationModale } from '../features/modals/PopupModal/PinnedCommunicationModale';
 import { InviteToRegisterSection } from '../features/partials/common/InviteToRegisterSection/InviteToRegisterSection';
@@ -16,8 +18,6 @@ import { CoachingVideo } from '../features/partials/pages/Aider/CoachingVideo/Co
 import { WhoAreCandidates } from '../features/partials/pages/Aider/WhoAreCandidates/WhoAreCandidates';
 import { useUtm } from '../hooks/queryParams/useUTM';
 import { useMount } from '../hooks/utils';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
 
 const Aider = () => {
   useUtm();

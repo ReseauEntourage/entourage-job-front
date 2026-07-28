@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { Filter } from 'src/constants/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { Filter } from '@/src/constants/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   filtersToQueryParams,
   getFiltersObjectsFromQueryParamsFront,
-} from 'src/utils/Filters';
+} from '@/src/utils/Filters';
 
 export function useFilters(
   filtersData: Filter[],

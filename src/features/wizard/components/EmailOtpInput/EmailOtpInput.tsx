@@ -142,7 +142,7 @@ export function EmailOtpInput({
             onChange={(e) => handleDigitChange(idx, e.target.value)}
             onKeyDown={(e) => handleKeyDown(idx, e)}
             disabled={isDisabled}
-            hasError={hasError}
+            $hasError={hasError}
             autoFocus={idx === 0}
             aria-label={`Chiffre ${idx + 1}`}
           />

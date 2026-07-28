@@ -3,11 +3,11 @@ import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Button, Section, Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { COLORS } from '@/src/constants/styles';
 import {
   StyledResetPasswordButtonContainer,
   StyledResetPasswordContainer,
 } from '../ResetPassword/ResetPassword.styles';
-import { COLORS } from 'src/constants/styles';
 
 export const ResetPasswordSuccess = () => {
   const {

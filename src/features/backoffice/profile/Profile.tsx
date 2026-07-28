@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Alert, LucidIcon, Section, Text } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { UserRoles } from '@/src/constants/users';
+import { HeaderProfile } from '@/src/features/headers/HeaderProfile/HeaderProfile';
 import { ProfileContactPreferences } from '@/src/features/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
 import { ProfileContracts } from '@/src/features/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
 import { ProfileCustomNudges } from '@/src/features/profile/ProfilePartCards/ProfileCustomNudges/ProfileCustomNudges';
@@ -13,14 +14,13 @@ import { ProfileInterests } from '@/src/features/profile/ProfilePartCards/Profil
 import { ProfileLanguages } from '@/src/features/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
 import { ProfileNudges } from '@/src/features/profile/ProfilePartCards/ProfileNudges/ProfileNudges';
 import { ProfileProfessionalInformations } from '@/src/features/profile/ProfilePartCards/ProfileProfessionalInformations/ProfileProfessionalInformations';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { selectAuthenticatedUser } from '@/src/use-cases/current-user';
 import { ProfileContactCard } from '../../profile/ProfilePartCards/ProfileContactCard';
 import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
-import { HeaderProfile } from 'src/features/headers/HeaderProfile/HeaderProfile';
-import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
