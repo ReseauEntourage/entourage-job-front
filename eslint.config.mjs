@@ -221,6 +221,7 @@ export default defineConfig([
             'tests/**/*',
             '**/__tests__/**',
             '**/__mocks__/**',
+            '**/testUtils/**',
             '**/*{.,_}{test,spec}.{js,jsx,ts,tsx}',
             '**/*.stories.*',
             '**/.storybook/**/*.*',

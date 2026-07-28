@@ -12,16 +12,18 @@ describe('createRequestAdapter', () => {
       {
         token: string;
       },
-      void
+      { reason: string }
     >();
 
     interface State {
       token: string | null;
+      error: string | null;
       login: RequestState<typeof loginRequestAdapter>;
     }
 
     const initialState: State = {
       token: null,
+      error: null,
       login: loginRequestAdapter.getInitialState(),
     };
 
@@ -32,6 +34,9 @@ describe('createRequestAdapter', () => {
         ...loginRequestAdapter.getReducers<State>((state) => state.login, {
           loginUserSucceeded(state, action) {
             state.token = action.payload.token;
+          },
+          loginUserFailed(state, action) {
+            state.error = action.payload.reason;
           },
         }),
       },
@@ -130,16 +135,19 @@ describe('createRequestAdapter', () => {
 
   it(`
     Given initial state
-    When user dispatches failed action
+    When user dispatches failed action with a reason
     Then status should be FAILED
       And isIdle should be false
       And isRequested should be false
       And isSucceeded should be false
       And isFailed should be true
+      Then error into state should equal to the dispatched reason
   `, () => {
     const { selectors, authentication, store } = getSlice();
 
-    store.dispatch(authentication.actions.loginUserFailed());
+    store.dispatch(
+      authentication.actions.loginUserFailed({ reason: 'invalid credentials' })
+    );
 
     expect(selectors.selectLoginUserStatus(store.getState())).toBe(
       ReduxRequestEvents.FAILED
@@ -148,6 +156,7 @@ describe('createRequestAdapter', () => {
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserFailed(store.getState())).toBe(true);
+    expect(store.getState().authentication.error).toBe('invalid credentials');
   });
 
   it(`
@@ -174,5 +183,39 @@ describe('createRequestAdapter', () => {
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserFailed(store.getState())).toBe(false);
+  });
+
+  it(`
+    Given a store with a succeeded request
+    When user dispatches reset action
+    Then status should be IDLE again
+  `, () => {
+    const { selectors, authentication, store } = getSlice();
+
+    store.dispatch(authentication.actions.loginUserSucceeded({ token: 'x' }));
+    store.dispatch(authentication.actions.loginUserReset());
+
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.IDLE
+    );
+    expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(true);
+  });
+
+  it(`
+    Given a store with a failed request
+    When user dispatches reset action
+    Then status should be IDLE again
+  `, () => {
+    const { selectors, authentication, store } = getSlice();
+
+    store.dispatch(
+      authentication.actions.loginUserFailed({ reason: 'network error' })
+    );
+    store.dispatch(authentication.actions.loginUserReset());
+
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.IDLE
+    );
+    expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(true);
   });
 });
