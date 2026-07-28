@@ -11,6 +11,14 @@ const customJestConfig = {
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  // jest-environment-jsdom resolves the "browser" package export condition
+  // by default, which points some packages (e.g. @react-hook/window-size,
+  // @react-hook/debounce) at untranspiled ESM builds Jest can't parse.
+  // Disabling it falls back to the "require"/CJS build for every package.
+  // This only surfaces once a test imports the full use-cases registry
+  // (e.g. the shared Redux test store), which transitively loads UI
+  // components via onboardingOld's saga -> selectors -> utils chain.
+  testEnvironmentOptions: { customExportConditions: [] },
   moduleNameMapper: {},
 };
 
