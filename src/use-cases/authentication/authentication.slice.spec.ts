@@ -1,5 +1,6 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
+import { VerifyEmailTokenErrorType } from './authentication.adapters';
 import { slice } from './authentication.slice';
 
 const { actions, reducer } = slice;
@@ -19,7 +20,6 @@ describe('authentication slice', () => {
 
       expect(state.accessToken).toBe('token-123');
       expect(state.loginError).toBeNull();
-      expect(state.login.status).toBe('SUCCEEDED');
     });
   });
 
@@ -31,7 +31,6 @@ describe('authentication slice', () => {
       );
 
       expect(state.loginError).toBe('RATE_LIMIT');
-      expect(state.login.status).toBe('FAILED');
     });
   });
 
@@ -45,7 +44,6 @@ describe('authentication slice', () => {
       const state = reducer(initialState, actions.logoutSucceeded());
 
       expect(state.accessToken).toBeNull();
-      expect(state.logout.status).toBe('SUCCEEDED');
     });
   });
 
@@ -53,11 +51,14 @@ describe('authentication slice', () => {
     it('sets the verifyEmailToken error', () => {
       const state = reducer(
         undefined,
-        actions.verifyEmailTokenFailed({ error: 1 })
+        actions.verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.TOKEN_INVALID,
+        })
       );
 
-      expect(state.verifyEmailTokenError).toBe(1);
-      expect(state.verifyEmailToken.status).toBe('FAILED');
+      expect(state.verifyEmailTokenError).toBe(
+        VerifyEmailTokenErrorType.TOKEN_INVALID
+      );
     });
   });
 
@@ -69,7 +70,6 @@ describe('authentication slice', () => {
       );
 
       expect(state.verifyOtpError).toBe('INVALID');
-      expect(state.verifyOtp.status).toBe('FAILED');
     });
   });
 
@@ -83,7 +83,6 @@ describe('authentication slice', () => {
       const state = reducer(initialState, actions.verifyOtpSucceeded());
 
       expect(state.verifyOtpError).toBeNull();
-      expect(state.verifyOtp.status).toBe('SUCCEEDED');
     });
   });
 
@@ -108,15 +107,22 @@ describe('authentication slice', () => {
 
   describe('setVerifyEmailTokenError', () => {
     it('sets the verifyEmailToken error', () => {
-      const state = reducer(undefined, actions.setVerifyEmailTokenError(2));
+      const state = reducer(
+        undefined,
+        actions.setVerifyEmailTokenError(
+          VerifyEmailTokenErrorType.ALREADY_VERIFIED
+        )
+      );
 
-      expect(state.verifyEmailTokenError).toBe(2);
+      expect(state.verifyEmailTokenError).toBe(
+        VerifyEmailTokenErrorType.ALREADY_VERIFIED
+      );
     });
 
     it('resets the verifyEmailToken error to null', () => {
       const initialState = {
         ...slice.getInitialState(),
-        verifyEmailTokenError: 2,
+        verifyEmailTokenError: VerifyEmailTokenErrorType.ALREADY_VERIFIED,
       };
 
       const state = reducer(

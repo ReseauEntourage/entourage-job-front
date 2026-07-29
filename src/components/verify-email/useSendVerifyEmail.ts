@@ -1,10 +1,17 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { authenticationActions } from '@/src/use-cases/authentication';
+import {
+  authenticationActions,
+  SEND_VERIFY_EMAIL_FIXED_CACHE_KEY,
+  useSendVerifyEmailMutation,
+} from '@/src/use-cases/authentication';
 
 export function useSendVerifyEmail(email?: string) {
   const dispatch = useDispatch();
+  const [, { reset: resetSendVerifyEmail }] = useSendVerifyEmailMutation({
+    fixedCacheKey: SEND_VERIFY_EMAIL_FIXED_CACHE_KEY,
+  });
 
   const {
     query: { token },
@@ -37,9 +44,9 @@ export function useSendVerifyEmail(email?: string) {
   // on component unmount
   useEffect(() => {
     return () => {
-      dispatch(authenticationActions.sendVerifyEmailReset());
+      resetSendVerifyEmail();
     };
-  }, [dispatch]);
+  }, [resetSendVerifyEmail]);
 
   return { sendVerifyEmail };
 }

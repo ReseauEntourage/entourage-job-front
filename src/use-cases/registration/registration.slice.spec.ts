@@ -23,44 +23,11 @@ const buildRegistrationData = (
   }) as NonNullable<RegistrationData>;
 
 describe('registration slice', () => {
-  describe('createUser request lifecycle', () => {
-    it('createUserRequested sets isLoading and clears the previous error', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        createUserError: 'DUPLICATE_EMAIL' as const,
-      };
-
-      const state = reducer(initialState, actions.createUserRequested());
+  describe('createUserRequested', () => {
+    it('sets isLoading', () => {
+      const state = reducer(undefined, actions.createUserRequested());
 
       expect(state.isLoading).toBe(true);
-      expect(state.createUserError).toBeNull();
-      expect(state.createUser.status).toBe('REQUESTED');
-    });
-
-    it('createUserSucceeded only transitions the request status', () => {
-      const initialState = { ...slice.getInitialState(), isLoading: true };
-
-      const state = reducer(initialState, actions.createUserSucceeded());
-
-      expect(state.createUser.status).toBe('SUCCEEDED');
-      expect(state.isLoading).toBe(true);
-    });
-
-    it('createUserFailed sets isLoading to false and stores the error', () => {
-      const state = reducer(
-        undefined,
-        actions.createUserFailed({ error: 'DUPLICATE_EMAIL' })
-      );
-
-      expect(state.isLoading).toBe(false);
-      expect(state.createUserError).toBe('DUPLICATE_EMAIL');
-      expect(state.createUser.status).toBe('FAILED');
-    });
-
-    it('createUserFailed clears the error when no payload is given', () => {
-      const state = reducer(undefined, actions.createUserFailed(null));
-
-      expect(state.createUserError).toBeNull();
     });
   });
 

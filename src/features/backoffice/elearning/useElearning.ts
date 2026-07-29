@@ -1,26 +1,16 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from '@/src/constants';
+import { useCallback, useMemo } from 'react';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import {
-  elearningActions,
-  selectElearningUnits,
-  selectFetchElearningUnitsState,
-  selectIsLoading,
+  useGetElearningUnitsQuery,
+  usePostElearningCompletionMutation,
 } from '@/src/use-cases/elearning';
 
 export const useElearning = () => {
   const user = useAuthenticatedUser();
-  const isLoading = useSelector(selectIsLoading);
-  const elearningUnits = useSelector(selectElearningUnits);
-  const fetchElearningUnitsState = useSelector(selectFetchElearningUnitsState);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (fetchElearningUnitsState.status === ReduxRequestEvents.IDLE) {
-      dispatch(elearningActions.fetchElearningUnitsRequested(user.role));
-    }
-  }, [elearningUnits, user.role, dispatch, fetchElearningUnitsState.status]);
+  const { data: elearningUnits = [], isLoading } = useGetElearningUnitsQuery(
+    user.role
+  );
+  const [postElearningCompletion] = usePostElearningCompletionMutation();
 
   const nbUnitsCompleted = useMemo(() => {
     return elearningUnits.filter((unit) => unit.userCompletions.length > 0)
@@ -40,9 +30,9 @@ export const useElearning = () => {
 
   const completeUnit = useCallback(
     (unitId: string) => {
-      dispatch(elearningActions.postElearningCompletionRequested({ unitId }));
+      postElearningCompletion({ unitId, role: user.role });
     },
-    [dispatch]
+    [postElearningCompletion, user.role]
   );
 
   const hasCompleteAllUnits = useMemo(() => {

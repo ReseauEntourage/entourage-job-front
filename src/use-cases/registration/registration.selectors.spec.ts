@@ -8,7 +8,6 @@ import {
 import { RegistrationData } from '@/src/features/registration/registration.types';
 import {
   selectCompatibleProfilesCount,
-  selectCreateUserError,
   selectDefinedRegistrationSelectedFlow,
   selectInvitationId,
   selectIsFirstRegistrationStep,
@@ -41,20 +40,6 @@ const buildRegistrationData = (
   }) as RegistrationData;
 
 describe('registration.selectors', () => {
-  describe('selectCreateUserError', () => {
-    it('returns the create user error', () => {
-      expect(
-        selectCreateUserError(
-          buildState({ createUserError: 'DUPLICATE_EMAIL' })
-        )
-      ).toBe('DUPLICATE_EMAIL');
-    });
-
-    it('returns null when there is no error', () => {
-      expect(selectCreateUserError(buildState())).toBeNull();
-    });
-  });
-
   describe('selectInvitationId', () => {
     it('returns the invitation id', () => {
       expect(

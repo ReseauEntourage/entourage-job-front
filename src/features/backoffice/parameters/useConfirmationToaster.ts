@@ -2,9 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from '@/src/constants';
 import {
-  currentUserActions,
+  UPDATE_PROFILE_FIXED_CACHE_KEY,
+  UPDATE_USER_FIXED_CACHE_KEY,
   updateProfileSelectors,
   updateUserSelectors,
+  useUpdateProfileMutation,
+  useUpdateUserMutation,
 } from '@/src/use-cases/current-user';
 import { notificationsActions } from '@/src/use-cases/notifications';
 
@@ -19,12 +22,19 @@ export function useConfirmationToaster() {
     updateUserSelectors.selectUpdateUserStatus
   );
 
+  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
+    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+  });
+  const [, { reset: resetUpdateUser }] = useUpdateUserMutation({
+    fixedCacheKey: UPDATE_USER_FIXED_CACHE_KEY,
+  });
+
   useEffect(() => {
     return () => {
-      dispatch(currentUserActions.updateProfileReset());
-      dispatch(currentUserActions.updateUserReset());
+      resetUpdateProfile();
+      resetUpdateUser();
     };
-  }, [dispatch]);
+  }, [resetUpdateProfile, resetUpdateUser]);
 
   useEffect(() => {
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {

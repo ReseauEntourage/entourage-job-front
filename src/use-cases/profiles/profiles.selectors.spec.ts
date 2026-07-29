@@ -9,7 +9,7 @@ import {
   selectProfilesRecommendations,
   selectSelectedProfile,
 } from './profiles.selectors';
-import { RootState, slice } from './profiles.slice';
+import { slice } from './profiles.slice';
 
 const buildProfile = (overrides: Partial<PublicProfile> = {}) =>
   ({
@@ -19,12 +19,14 @@ const buildProfile = (overrides: Partial<PublicProfile> = {}) =>
     ...overrides,
   }) as PublicProfile;
 
+// `as any`: these selectors only read `state.profiles.*`, but the module's
+// exported `RootState` type also requires the shared `api` reducer key (for
+// the RTK-Query-backed status selectors in the same file) — not relevant here.
 const buildState = (
   overrides: Partial<ReturnType<typeof slice.getInitialState>> = {}
-): RootState =>
-  ({
-    profiles: { ...slice.getInitialState(), ...overrides },
-  }) as RootState;
+): any => ({
+  profiles: { ...slice.getInitialState(), ...overrides },
+});
 
 describe('profiles.selectors', () => {
   it('selectProfiles returns the profiles list', () => {

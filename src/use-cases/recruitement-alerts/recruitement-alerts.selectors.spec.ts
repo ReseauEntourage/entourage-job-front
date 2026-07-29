@@ -1,13 +1,8 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { RecruitementAlert } from '@/src/api/types';
-import {
-  selectFetchRecruitementAlertMatchingLoading,
-  selectFetchRecruitementAlertsLoading,
-  selectRecruitementAlertMatchingById,
-  selectRecruitementAlerts,
-} from './recruitement-alerts.selectors';
-import { RootState, slice } from './recruitement-alerts.slice';
+import { selectRecruitementAlerts } from './recruitement-alerts.selectors';
+import { slice } from './recruitement-alerts.slice';
 
 const buildRecruitementAlert = (
   overrides: Partial<RecruitementAlert> = {}
@@ -25,12 +20,16 @@ const buildRecruitementAlert = (
     ...overrides,
   }) as RecruitementAlert;
 
+// `as any`: this selector only reads `state.recruitementAlerts.*`, but the
+// module's exported `RootState` type also requires the shared `api` reducer
+// key (for the RTK-Query-backed selectors in `recruitement-alerts.selectors.ts`,
+// exercised via `createTestStore` in `recruitement-alerts.api.spec.ts` instead)
+// — not relevant here.
 const buildState = (
   overrides: Partial<ReturnType<typeof slice.getInitialState>> = {}
-): RootState =>
-  ({
-    recruitementAlerts: { ...slice.getInitialState(), ...overrides },
-  }) as RootState;
+): any => ({
+  recruitementAlerts: { ...slice.getInitialState(), ...overrides },
+});
 
 describe('recruitement-alerts.selectors', () => {
   describe('selectRecruitementAlerts', () => {
@@ -40,66 +39,6 @@ describe('recruitement-alerts.selectors', () => {
       expect(
         selectRecruitementAlerts(buildState({ recruitementAlerts }))
       ).toEqual(recruitementAlerts);
-    });
-  });
-
-  describe('selectRecruitementAlertMatchingById', () => {
-    it('returns the matching entry for the given alertId', () => {
-      const matching = {
-        profiles: [{ id: 'profile-1' }] as any,
-        timestamp: 123,
-      };
-      const state = buildState({
-        recruitementAlertMatchings: { 'alert-1': matching },
-      });
-
-      expect(selectRecruitementAlertMatchingById('alert-1')(state)).toEqual(
-        matching
-      );
-    });
-
-    it('returns an empty default when there is no matching entry for the alertId', () => {
-      const state = buildState({ recruitementAlertMatchings: {} });
-
-      expect(
-        selectRecruitementAlertMatchingById('unknown-alert')(state)
-      ).toEqual({ profiles: [], timestamp: 0 });
-    });
-  });
-
-  describe('selectFetchRecruitementAlertsLoading', () => {
-    it('returns true while the alerts fetch is requested', () => {
-      const state = buildState({
-        fetchRecruitementAlerts: { status: 'REQUESTED' as any },
-      });
-
-      expect(selectFetchRecruitementAlertsLoading(state)).toBe(true);
-    });
-
-    it('returns false when the alerts fetch is not requested', () => {
-      const state = buildState({
-        fetchRecruitementAlerts: { status: 'SUCCEEDED' as any },
-      });
-
-      expect(selectFetchRecruitementAlertsLoading(state)).toBe(false);
-    });
-  });
-
-  describe('selectFetchRecruitementAlertMatchingLoading', () => {
-    it('returns true while the matching fetch is requested', () => {
-      const state = buildState({
-        fetchRecruitementAlertMatching: { status: 'REQUESTED' as any },
-      });
-
-      expect(selectFetchRecruitementAlertMatchingLoading(state)).toBe(true);
-    });
-
-    it('returns false when the matching fetch is not requested', () => {
-      const state = buildState({
-        fetchRecruitementAlertMatching: { status: 'IDLE' as any },
-      });
-
-      expect(selectFetchRecruitementAlertMatchingLoading(state)).toBe(false);
     });
   });
 });

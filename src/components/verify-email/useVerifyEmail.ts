@@ -5,6 +5,8 @@ import { ReduxRequestEvents } from '@/src/constants';
 import {
   authenticationActions,
   selectVerifyEmailTokenError,
+  useVerifyEmailTokenMutation,
+  VERIFY_EMAIL_TOKEN_FIXED_CACHE_KEY,
   verifyEmailTokenSelectors,
 } from '@/src/use-cases/authentication';
 
@@ -32,6 +34,9 @@ export function useVerifyEmail() {
     verifyEmailTokenSelectors.selectVerifyEmailTokenStatus
   );
   const verifyEmailTokenError = useSelector(selectVerifyEmailTokenError);
+  const [, { reset: resetVerifyEmailToken }] = useVerifyEmailTokenMutation({
+    fixedCacheKey: VERIFY_EMAIL_TOKEN_FIXED_CACHE_KEY,
+  });
 
   useEffect(() => {
     if (
@@ -45,9 +50,9 @@ export function useVerifyEmail() {
   // on component unmount
   useEffect(() => {
     return () => {
-      dispatch(authenticationActions.verifyEmailTokenReset());
+      resetVerifyEmailToken();
     };
-  }, [dispatch]);
+  }, [resetVerifyEmailToken]);
 
   return { isLoading, verifyEmailTokenError };
 }

@@ -1,22 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { SimpleLink } from '@/src/components/ui';
-import { ReduxRequestEvents } from '@/src/constants';
 import {
-  createUserSelectors,
-  selectCreateUserError,
+  CREATE_USER_FIXED_CACHE_KEY,
+  useCreateUserMutation,
 } from '@/src/use-cases/registration';
 
 export function EmailAlreadyUsedInlineLink() {
-  const createUserStatus = useSelector(
-    createUserSelectors.selectCreateUserStatus
-  );
-  const createUserError = useSelector(selectCreateUserError);
+  const [, { isError, error }] = useCreateUserMutation({
+    fixedCacheKey: CREATE_USER_FIXED_CACHE_KEY,
+  });
 
-  if (
-    createUserStatus !== ReduxRequestEvents.FAILED ||
-    createUserError !== 'DUPLICATE_EMAIL'
-  ) {
+  if (!isError || error !== 'DUPLICATE_EMAIL') {
     return null;
   }
 

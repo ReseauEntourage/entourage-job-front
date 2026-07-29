@@ -34,12 +34,10 @@ import expect from 'expect';
 import { Genders } from '@/src/constants/genders';
 import { LastStepContent } from '@/src/features/backoffice/referer/Refering/Refering.types';
 import {
-  referCandidateSelectors,
   selectIsEmptyReferingData,
   selectIsFirstReferingStep,
   selectIsLastReferingStep,
   selectIsReferingLoading,
-  selectReferCandidateError,
   selectReferingConfirmationStepContent,
   selectReferingCurrentStep,
   selectReferingCurrentStepContent,
@@ -64,33 +62,6 @@ const buildState = (
   }) as RootState;
 
 describe('refering.selectors', () => {
-  describe('referCandidateSelectors', () => {
-    it('reads the request status from refering.referCandate', () => {
-      const state = buildState({ referCandate: { status: 'SUCCEEDED' } });
-
-      expect(referCandidateSelectors.selectReferCandidateStatus(state)).toBe(
-        'SUCCEEDED'
-      );
-      expect(
-        referCandidateSelectors.selectIsReferCandidateSucceeded(state)
-      ).toBe(true);
-    });
-  });
-
-  describe('selectReferCandidateError', () => {
-    it('returns the stored error', () => {
-      expect(
-        selectReferCandidateError(
-          buildState({ referCandidateError: 'DUPLICATE_EMAIL' })
-        )
-      ).toBe('DUPLICATE_EMAIL');
-    });
-
-    it('returns null when there is no error', () => {
-      expect(selectReferCandidateError(buildState())).toBeNull();
-    });
-  });
-
   describe('selectIsEmptyReferingData', () => {
     it('is true when no data has been collected', () => {
       expect(selectIsEmptyReferingData(buildState())).toBe(true);

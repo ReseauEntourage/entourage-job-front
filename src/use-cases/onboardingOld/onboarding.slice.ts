@@ -6,16 +6,10 @@ import {
   OnboardingStep,
   OnboardingStepData,
 } from '@/src/features/backoffice/onboardingLegacy/Onboarding.types';
-import { RequestState, SliceRootState } from '@/src/store/utils';
+import { SliceRootState } from '@/src/store/utils';
 import { assertIsDefined } from '@/src/utils/asserts';
-import {
-  sendStepDataOnboardingAdapter,
-  SendStepDataOnboardingError,
-} from './onboarding.adapters';
 
 interface State {
-  sendStepData: RequestState<typeof sendStepDataOnboardingAdapter>;
-  sendStepDataError: SendStepDataOnboardingError | null;
   currentStep: OnboardingStep;
   onboardingFlow: OnboardingFlow | null;
   shouldLaunchOnboarding: boolean;
@@ -24,8 +18,6 @@ interface State {
 }
 
 const initialState: State = {
-  sendStepData: sendStepDataOnboardingAdapter.getInitialState(),
-  sendStepDataError: null,
   currentStep: 0,
   onboardingFlow: null,
   data: {},
@@ -37,19 +29,6 @@ export const slice = createSlice({
   name: 'onboardingOld',
   initialState,
   reducers: {
-    ...sendStepDataOnboardingAdapter.getReducers<State>(
-      (state) => state.sendStepData,
-      {
-        sendStepDataOnboardingSucceeded(_state) {},
-        sendStepDataOnboardingFailed(
-          state,
-          action: PayloadAction<{ error: SendStepDataOnboardingError } | null>
-        ) {
-          state.isLoading = false;
-          state.sendStepDataError = action.payload?.error || null;
-        },
-      }
-    ),
     launchOnboarding(state: State, action: PayloadAction<OnboardingFlow>) {
       state.onboardingFlow = action.payload;
     },

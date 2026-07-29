@@ -1,7 +1,7 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { ProfilesFilters, PublicProfile } from '@/src/api/types';
-import { PROFILES_LIMIT, ReduxRequestEvents } from '@/src/constants';
+import { PROFILES_LIMIT } from '@/src/constants';
 import { slice } from './profiles.slice';
 
 const { actions, reducer } = slice;
@@ -163,53 +163,22 @@ describe('profiles slice', () => {
     expect(state).toEqual(initialState);
   });
 
-  describe('fetchProfilesNextPage', () => {
-    it('increments the offset when not all profiles are fetched and the previous fetch succeeded', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        profilesOffset: 0,
-        profilesHasFetchedAll: false,
-        fetchProfiles: { status: ReduxRequestEvents.SUCCEEDED },
-      };
+  it('fetchProfilesNextPage does not mutate state (guard moved to profiles.listeners.ts)', () => {
+    const initialState = slice.getInitialState();
 
-      const state = reducer(
-        initialState,
-        actions.fetchProfilesNextPage(buildFilters())
-      );
+    const state = reducer(
+      initialState,
+      actions.fetchProfilesNextPage(buildFilters())
+    );
 
-      expect(state.profilesOffset).toBe(PROFILES_LIMIT);
-    });
+    expect(state).toEqual(initialState);
+  });
 
-    it('does not increment the offset when all profiles are already fetched', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        profilesOffset: 0,
-        profilesHasFetchedAll: true,
-        fetchProfiles: { status: ReduxRequestEvents.SUCCEEDED },
-      };
+  it('incrementProfilesOffset increments the offset by PROFILES_LIMIT', () => {
+    const initialState = { ...slice.getInitialState(), profilesOffset: 0 };
 
-      const state = reducer(
-        initialState,
-        actions.fetchProfilesNextPage(buildFilters())
-      );
+    const state = reducer(initialState, actions.incrementProfilesOffset());
 
-      expect(state.profilesOffset).toBe(0);
-    });
-
-    it('does not increment the offset when a fetch is still in progress', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        profilesOffset: 0,
-        profilesHasFetchedAll: false,
-        fetchProfiles: { status: ReduxRequestEvents.REQUESTED },
-      };
-
-      const state = reducer(
-        initialState,
-        actions.fetchProfilesNextPage(buildFilters())
-      );
-
-      expect(state.profilesOffset).toBe(0);
-    });
+    expect(state.profilesOffset).toBe(PROFILES_LIMIT);
   });
 });

@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Text } from '@/src/components/ui';
 import { selectOnboardingCurrentStep } from '@/src/use-cases/onboardingOld';
-import {
-  profileCompletionActions,
-  selectProfileCompletionRate,
-} from '@/src/use-cases/profile-completion';
+import { useGetProfileCompletionQuery } from '@/src/use-cases/profile-completion';
 import {
   StyledHeader,
   StyledProfileCompletion,
@@ -14,15 +11,10 @@ import {
 } from './ProfileCompletion.style';
 
 export const ProfileCompletion = () => {
-  const dispatch = useDispatch();
-  const completionRate = useSelector(selectProfileCompletionRate);
   const onbordingCurrentStep = useSelector(selectOnboardingCurrentStep);
-
-  useEffect(() => {
-    if (onbordingCurrentStep === 0) {
-      dispatch(profileCompletionActions.fetchProfileCompletionRequested());
-    }
-  }, [dispatch, onbordingCurrentStep]);
+  const { data: completionRate = 0 } = useGetProfileCompletionQuery(undefined, {
+    skip: onbordingCurrentStep !== 0,
+  });
 
   return (
     <StyledProfileCompletion>

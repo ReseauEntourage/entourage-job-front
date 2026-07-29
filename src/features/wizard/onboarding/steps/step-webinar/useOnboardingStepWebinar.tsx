@@ -12,7 +12,7 @@ import {
   currentUserActions,
   selectCurrentUser,
 } from '@/src/use-cases/current-user';
-import { updateUserParticipationThunk } from '@/src/use-cases/events';
+import { eventsApi } from '@/src/use-cases/events';
 import {
   onboardingActions,
   selectWebinarSfId,
@@ -84,7 +84,7 @@ export const useOnboardingStepWebinar = ({
     onSubmit: async () => {
       if (webinarSfId) {
         await dispatch(
-          updateUserParticipationThunk({
+          eventsApi.endpoints.updateUserParticipation.initiate({
             eventSalesForceId: webinarSfId,
             isParticipating: true,
           })

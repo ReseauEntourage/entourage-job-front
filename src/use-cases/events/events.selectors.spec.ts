@@ -2,23 +2,21 @@
 import expect from 'expect';
 import { EventWithParticipants } from '@/src/api/types';
 import {
-  fetchEventsSelectors,
-  fetchSelectedEventParticipantsSelectors,
-  fetchSelectedEventSelectors,
   selectEvents,
   selectEventsHasFetchedAll,
   selectEventsOffset,
   selectSelectedEvent,
-  updateUserParticipationSelectors,
 } from './events.selectors';
-import { RootState, slice } from './events.slice';
+import { slice } from './events.slice';
 
+// `as any`: these selectors only read `state.events.*`, but the module's
+// exported `RootState` type also requires the shared `api` reducer key (for
+// the RTK-Query-backed status selectors in the same file) — not relevant here.
 const buildState = (
   overrides: Partial<ReturnType<typeof slice.getInitialState>> = {}
-): RootState =>
-  ({
-    events: { ...slice.getInitialState(), ...overrides },
-  }) as RootState;
+): any => ({
+  events: { ...slice.getInitialState(), ...overrides },
+});
 
 describe('events.selectors', () => {
   describe('selectEvents', () => {
@@ -57,41 +55,6 @@ describe('events.selectors', () => {
 
     it('returns null when there is no selected event', () => {
       expect(selectSelectedEvent(buildState())).toBeNull();
-    });
-  });
-
-  const statusSelectors: [string, (state: RootState) => string, string][] = [
-    [
-      'fetchEventsSelectors.selectFetchEventsStatus',
-      fetchEventsSelectors.selectFetchEventsStatus,
-      'fetchEvents',
-    ],
-    [
-      'fetchSelectedEventSelectors.selectFetchSelectedEventStatus',
-      fetchSelectedEventSelectors.selectFetchSelectedEventStatus,
-      'fetchSelectedEvent',
-    ],
-    [
-      'fetchSelectedEventParticipantsSelectors.selectFetchSelectedEventParticipantsStatus',
-      fetchSelectedEventParticipantsSelectors.selectFetchSelectedEventParticipantsStatus,
-      'fetchSelectedEventParticipants',
-    ],
-    [
-      'updateUserParticipationSelectors.selectUpdateUserParticipationStatus',
-      updateUserParticipationSelectors.selectUpdateUserParticipationStatus,
-      'updateUserParticipation',
-    ],
-  ];
-
-  statusSelectors.forEach(([name, selector, stateKey]) => {
-    describe(name, () => {
-      it(`reads the status from events.${stateKey}`, () => {
-        const state = buildState({
-          [stateKey]: { status: 'SUCCEEDED' },
-        } as any);
-
-        expect(selector(state)).toBe('SUCCEEDED');
-      });
     });
   });
 });

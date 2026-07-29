@@ -2,60 +2,48 @@ import {
   AnyAction,
   combineReducers,
   configureStore,
+  Reducer,
   ThunkDispatch,
 } from '@reduxjs/toolkit';
-import createSagaMiddleware, { Saga } from 'redux-saga';
-import { all, spawn, call } from 'typed-redux-saga';
 import { useCasesConfig } from '@/src/use-cases';
 import { UseCaseConfigItem } from '@/src/use-cases/types';
+import { api } from './api/api.slice';
+import { listenerMiddleware } from './listenerMiddleware';
+import { getPreloadedState } from './preloadedState';
 
 const useCasesList = Object.values(useCasesConfig) as UseCaseConfigItem[];
 
-const reducersMap: Record<string, any> = {};
+const reducersMap: Record<string, any> = {
+  [api.reducerPath]: api.reducer,
+};
 
 useCasesList.forEach(({ slice }) => {
   reducersMap[slice.name] = slice.reducer;
 });
 
-const reducers = combineReducers(reducersMap);
+// Cast needed so `api.middleware` (which requires the `api` reducer key to
+// be concretely present in the root state type) and `preloadedState` type
+// check: `reducersMap`'s `Record<string, any>` typing otherwise widens
+// `combineReducers`' inferred state to a bare index signature that doesn't
+// satisfy either. See `createTestStore.ts` for the same pattern.
+type StoreState = Record<string, any> & {
+  [K in typeof api.reducerPath]: ReturnType<typeof api.reducer>;
+};
 
-const sagaMiddleware = createSagaMiddleware();
+const reducers = combineReducers(reducersMap) as unknown as Reducer<
+  StoreState,
+  AnyAction,
+  Partial<StoreState>
+>;
 
 export const store = configureStore({
   reducer: reducers,
-  middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware({ thunk: true, serializableCheck: false }),
-    sagaMiddleware,
-  ],
+  preloadedState: getPreloadedState(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ thunk: true, serializableCheck: false })
+      .prepend(listenerMiddleware.middleware)
+      .concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
-
-function* rootSaga() {
-  yield* all(
-    useCasesList
-      .filter(
-        (useCase): useCase is UseCaseConfigItem & { saga: Saga } =>
-          !!useCase.saga
-      )
-      .map((useCase) =>
-        spawn(function* () {
-          while (true) {
-            try {
-              yield* call(useCase.saga);
-              break;
-            } catch (error) {
-              store.dispatch({
-                type: 'SAGA_ERROR',
-                error: error?.toString?.(),
-                useCaseName: useCase.slice.name,
-              });
-            }
-          }
-        })
-      )
-  );
-}
-
-sagaMiddleware.run(rootSaga);

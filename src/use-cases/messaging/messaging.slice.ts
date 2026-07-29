@@ -1,52 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Conversation, ConversationType } from '@/src/api/types';
-import { RequestState, SliceRootState } from '@/src/store/utils';
-import { notificationsActions } from '../notifications';
-import {
-  getSelectedConversationAdapter,
-  getConversationsAdapter,
-  postMessageAdapter,
-  getUnseenConversationsCountAdapter,
-  bindNewConversationAdapter,
-  postFeedbackAdapter,
-} from './messaging.adapter';
+import { SliceRootState } from '@/src/store/utils';
 
-type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
+type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | 'ADDRESSEE_DELETED' | null;
 
 export type MessagingPanelView = 'ai';
 
 interface State {
-  getConversations: RequestState<typeof getConversationsAdapter>;
-  getUnseenConversationsCount: RequestState<
-    typeof getUnseenConversationsCountAdapter
-  >;
-  bindNewConversation: RequestState<typeof bindNewConversationAdapter>;
-  getSelectedConversation: RequestState<typeof getSelectedConversationAdapter>;
-  postMessage: RequestState<typeof postMessageAdapter>;
-  conversations: Conversation[] | null;
   selectedConversationId: string | null;
-  selectedConversation: Conversation | null;
   pinnedInfo: MessagingPinnedInfo;
   query: string;
-  unseenConversationCount: number;
   newMessage: string;
   isAIPanelOpen: boolean;
   activePanelView: MessagingPanelView;
 }
 
 const initialState: State = {
-  getConversations: getConversationsAdapter.getInitialState(),
-  getUnseenConversationsCount:
-    getUnseenConversationsCountAdapter.getInitialState(),
-  bindNewConversation: bindNewConversationAdapter.getInitialState(),
-  getSelectedConversation: getSelectedConversationAdapter.getInitialState(),
-  postMessage: postMessageAdapter.getInitialState(),
-  conversations: null,
   selectedConversationId: null,
-  selectedConversation: null,
   pinnedInfo: null,
   query: '',
-  unseenConversationCount: 0,
   newMessage: '',
   isAIPanelOpen: false,
   activePanelView: 'ai',
@@ -56,142 +27,38 @@ export const slice = createSlice({
   name: 'messaging',
   initialState,
   reducers: {
-    ...getConversationsAdapter.getReducers<State>(
-      (state) => state.getConversations,
-      {
-        getConversationsSucceeded(state, action) {
-          state.conversations = action.payload;
-        },
+    // No-op trigger actions: real handling lives in `messaging.api.ts`,
+    // dispatched via `messaging.listeners.ts` in reaction to these.
+    getConversationsRequested() {},
+    getUnseenConversationsCountRequested() {},
+    getSelectedConversationRequested() {},
+    postMessageRequested(_state, _action: { payload: FormData }) {},
+    bindNewConversationRequested(_state, _action: { payload: string }) {},
+    postFeedbackRequested(
+      _state,
+      _action: {
+        payload: { conversationParticipantId: string; rating: number | null };
       }
-    ),
-    ...getUnseenConversationsCountAdapter.getReducers<State>(
-      (state) => state.getUnseenConversationsCount,
-      {
-        getUnseenConversationsCountSucceeded(state, action) {
-          state.unseenConversationCount = action.payload;
-        },
-      }
-    ),
-    ...bindNewConversationAdapter.getReducers<State>(
-      (state) => state.bindNewConversation,
-      {
-        bindNewConversationSucceeded(state, action) {
-          const conversation = state.conversations?.find(
-            (conv) =>
-              conv.type === 'direct' &&
-              conv.participants.find((p) => p.id === action.payload[0].id) // The required user is in the conversation
-          );
-
-          if (conversation) {
-            state.selectedConversationId = conversation.id;
-          } else {
-            const newConversation: Conversation = {
-              id: '',
-              type:
-                action.payload.length > 1
-                  ? ConversationType.GROUP
-                  : ConversationType.DIRECT,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              messages: [],
-              participants: action.payload,
-            };
-            state.selectedConversationId = 'new';
-            state.selectedConversation = newConversation;
-          }
-        },
-      }
-    ),
-    ...postMessageAdapter.getReducers<State>((state) => state.postMessage, {
-      postMessageSucceeded(state, action) {
-        const { message } = action.payload;
-        const { isNewConversation } = action.payload;
-
-        if (isNewConversation) {
-          // Always select the newly created conversation, even if
-          // `conversations` hasn't loaded yet (e.g. sending from the wizard,
-          // which never mounts the messaging page beforehand).
-          state.selectedConversationId = message.conversation.id;
-
-          // Append the new conversation to the conversation list at the top
-          if (state.conversations) {
-            const newConversation = {
-              ...message.conversation,
-              messages: [message],
-            };
-            state.conversations.unshift(newConversation);
-          }
-        } else if (state.conversations) {
-          // Append the new message to the conversation list
-          const selectedConvIdx = state.conversations?.findIndex(
-            (conversation) => conversation.id === state.selectedConversationId
-          );
-          state.conversations[selectedConvIdx].messages.unshift(message);
-          state.selectedConversation?.messages.unshift(message);
-
-          // Set the conversation as seen
-          state.conversations[selectedConvIdx].participants.forEach(
-            (participant) => {
-              if (participant.id === message.authorId) {
-                participant.conversationParticipant.seenAt = message.createdAt;
-              }
-            }
-          );
-
-          // Move the conversation to the first position
-          const conversation = state.conversations[selectedConvIdx];
-          state.conversations.splice(selectedConvIdx, 1);
-          state.conversations.unshift(conversation);
-        }
-      },
-    }),
-    ...getSelectedConversationAdapter.getReducers<State>(
-      (state) => state.getSelectedConversation,
-      {
-        getSelectedConversationSucceeded(state, action) {
-          state.selectedConversation = action.payload;
-          if (state.conversations) {
-            const idxSelectedConversation = state.conversations?.findIndex(
-              (conversation) => conversation.id === state.selectedConversationId
-            );
-            state.conversations[idxSelectedConversation] = action.payload;
-          }
-        },
-      }
-    ),
-    selectConversation(state, action) {
+    ) {},
+    selectConversation(state, action: { payload: string | null }) {
       state.selectedConversationId = action.payload;
     },
-    setQuery(state, action) {
+    setQuery(state, action: { payload: string }) {
       state.query = action.payload;
     },
-    setPinnedInfo(state, action) {
+    setPinnedInfo(state, action: { payload: MessagingPinnedInfo }) {
       state.pinnedInfo = action.payload;
     },
-    setNewMessage(state, action) {
+    setNewMessage(state, action: { payload: string }) {
       state.newMessage = action.payload;
     },
-    setIsAIPanelOpen(state, action) {
+    setIsAIPanelOpen(state, action: { payload: boolean }) {
       state.isAIPanelOpen = action.payload;
     },
-    setActivePanelView(state, action) {
+    setActivePanelView(state, action: { payload: MessagingPanelView }) {
       state.activePanelView = action.payload;
       state.isAIPanelOpen = true;
     },
-    ...postFeedbackAdapter.getReducers<State>((state) => state.postMessage, {
-      postFeedbackSucceeded(state) {
-        if (state.selectedConversation) {
-          state.selectedConversation.shouldGiveFeedback = false;
-        }
-      },
-      postFeedbackFailed() {
-        notificationsActions.addNotification({
-          type: 'danger',
-          message:
-            "Une erreur s'est produite lors de l'envoi de votre feedback",
-        });
-      },
-    }),
   },
 });
 

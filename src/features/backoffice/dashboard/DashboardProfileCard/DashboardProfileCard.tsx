@@ -23,7 +23,7 @@ import { useCurrentUserOrganization } from '@/src/hooks/current-user/useCurrentU
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserExternalCv } from '@/src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from '@/src/use-cases/current-user';
-import { selectProfileCompletionRate } from '@/src/use-cases/profile-completion';
+import { profileCompletionApi } from '@/src/use-cases/profile-completion';
 import { useContextualRole } from '../../useContextualRole';
 import {
   StyledDashboardCTAContainer,
@@ -46,7 +46,12 @@ export const DashboardProfileCard = () => {
   const achievements = useCurrentUserAchievements();
   const externalCv = useCurrentUserExternalCv();
   const { contextualRole } = useContextualRole(user.role);
-  const completionRate = useSelector(selectProfileCompletionRate);
+  const completionRate = useSelector(
+    (state: any) =>
+      profileCompletionApi.endpoints.getProfileCompletion.select(undefined)(
+        state
+      ).data ?? 0
+  );
 
   const buttonText = completionRate < 100 ? 'Compléter' : 'Modifier';
 

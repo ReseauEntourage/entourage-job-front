@@ -99,13 +99,6 @@ export const slice = createSlice({
     dismissAchievementProgressionModal(state) {
       state.achievementProgressionToShow = null;
     },
-
-    /**
-     * Triggers an initial fetch of achievement progressions (no-op reducer).
-     * Dispatched from a global layout on mount so that a baseline is established
-     * before the user sends any message, enabling comparison on the first action.
-     */
-    fetchAchievementProgressionInitial() {},
   },
 });
 

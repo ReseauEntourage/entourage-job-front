@@ -16,6 +16,11 @@ jest.mock('react-redux', () => {
   return {
     useSelector: jest.fn(),
     useDispatch: () => jest.fn(),
+    // RTK Query's `/react` module checks for all three custom-context hooks
+    // at `createApi()` init time (transitively pulled in by importing any
+    // migrated domain's barrel, even just for a selector) — not otherwise
+    // used by this component/test.
+    useStore: jest.fn(),
   };
 });
 

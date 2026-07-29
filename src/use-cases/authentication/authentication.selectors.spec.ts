@@ -1,23 +1,23 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
+import { VerifyEmailTokenErrorType } from './authentication.adapters';
 import {
-  logoutSelectors,
   selectAccessToken,
   selectLoginError,
   selectVerifyEmailTokenError,
   selectVerifyOtpError,
-  sendVerifyEmailSelectors,
-  verifyEmailTokenSelectors,
-  verifyOtpSelectors,
 } from './authentication.selectors';
-import { RootState, slice } from './authentication.slice';
+import { slice } from './authentication.slice';
 
+// `as any`: these selectors only read `state.authentication.*`, but the
+// module's exported `RootState` type also requires the shared `api` reducer
+// key (for the RTK-Query-backed status selectors in the same file) — not
+// relevant here.
 const buildState = (
   overrides: Partial<ReturnType<typeof slice.getInitialState>> = {}
-): RootState =>
-  ({
-    authentication: { ...slice.getInitialState(), ...overrides },
-  }) as RootState;
+): any => ({
+  authentication: { ...slice.getInitialState(), ...overrides },
+});
 
 describe('authentication.selectors', () => {
   describe('selectAccessToken', () => {
@@ -47,8 +47,12 @@ describe('authentication.selectors', () => {
   describe('selectVerifyEmailTokenError', () => {
     it('returns the verifyEmailToken error', () => {
       expect(
-        selectVerifyEmailTokenError(buildState({ verifyEmailTokenError: 1 }))
-      ).toBe(1);
+        selectVerifyEmailTokenError(
+          buildState({
+            verifyEmailTokenError: VerifyEmailTokenErrorType.TOKEN_INVALID,
+          })
+        )
+      ).toBe(VerifyEmailTokenErrorType.TOKEN_INVALID);
     });
 
     it('returns null when there is no verifyEmailToken error', () => {
@@ -65,45 +69,6 @@ describe('authentication.selectors', () => {
 
     it('returns null when there is no verifyOtp error', () => {
       expect(selectVerifyOtpError(buildState())).toBeNull();
-    });
-  });
-
-  const adapterStatusSelectors: [
-    string,
-    (state: RootState) => string,
-    'logout' | 'verifyEmailToken' | 'sendVerifyEmail' | 'verifyOtp',
-  ][] = [
-    [
-      'selectLogoutStatus',
-      (logoutSelectors as any).selectLogoutStatus,
-      'logout',
-    ],
-    [
-      'selectVerifyEmailTokenStatus',
-      (verifyEmailTokenSelectors as any).selectVerifyEmailTokenStatus,
-      'verifyEmailToken',
-    ],
-    [
-      'selectSendVerifyEmailStatus',
-      (sendVerifyEmailSelectors as any).selectSendVerifyEmailStatus,
-      'sendVerifyEmail',
-    ],
-    [
-      'selectVerifyOtpStatus',
-      (verifyOtpSelectors as any).selectVerifyOtpStatus,
-      'verifyOtp',
-    ],
-  ];
-
-  adapterStatusSelectors.forEach(([name, selector, stateKey]) => {
-    describe(name, () => {
-      it(`reads the status from authentication.${stateKey}`, () => {
-        const state = buildState({
-          [stateKey]: { status: 'SUCCEEDED' },
-        } as any);
-
-        expect(selector(state)).toBe('SUCCEEDED');
-      });
     });
   });
 });

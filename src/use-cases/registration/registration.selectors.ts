@@ -13,16 +13,7 @@ import {
 } from '@/src/features/registration/registration.types';
 import { incrementRegistrationStep } from '@/src/features/registration/registration.utils';
 import { assertIsDefined } from '@/src/utils/asserts';
-import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
-
-export const createUserSelectors = createUserAdapter.getSelectors<RootState>(
-  (state) => state.registration.createUser
-);
-
-export const selectCreateUserError = (state: RootState) => {
-  return state.registration.createUserError;
-};
 
 export const selectInvitationId = (state: RootState) => {
   return state.registration.invitationId;

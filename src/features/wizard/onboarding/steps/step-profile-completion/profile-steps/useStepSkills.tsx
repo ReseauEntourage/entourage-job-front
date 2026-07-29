@@ -11,7 +11,9 @@ import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurre
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import {
   currentUserActions,
+  UPDATE_PROFILE_FIXED_CACHE_KEY,
   updateProfileSelectors,
+  useUpdateProfileMutation,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { sortByOrder } from '@/src/utils';
@@ -50,6 +52,9 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
+  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
+    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+  });
 
   const pendingResolveRef = useRef<(() => void) | null>(null);
   const lastSubmitFailedRef = useRef(false);
@@ -166,7 +171,7 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
   const handleFormWithValidationSubmit = useCallback(
     (values: SkillsFormValues) =>
       new Promise<void>((resolve) => {
-        dispatch(currentUserActions.updateProfileReset());
+        resetUpdateProfile();
         pendingResolveRef.current = resolve;
 
         updateUserProfile({
@@ -180,7 +185,7 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
           })),
         });
       }),
-    [dispatch, updateUserProfile]
+    [resetUpdateProfile, updateUserProfile]
   );
 
   const submitViaForm = useStepFormSubmit(formRef);

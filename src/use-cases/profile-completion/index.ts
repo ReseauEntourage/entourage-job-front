@@ -1,12 +1,3 @@
-import { UseCaseConfigItem } from '../types';
-import { saga } from './profile-completion.saga';
-import { slice } from './profile-completion.slice';
+import './profile-completion.listeners';
 
-export * from './profile-completion.selectors';
-
-export const profileCompletionActions = slice.actions;
-
-export const profileCompletionConfig = {
-  slice,
-  saga,
-} as UseCaseConfigItem;
+export * from './profile-completion.api';

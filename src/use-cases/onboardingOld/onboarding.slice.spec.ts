@@ -6,52 +6,6 @@ import { slice } from './onboarding.slice';
 const { actions, reducer } = slice;
 
 describe('onboardingOld slice', () => {
-  describe('sendStepDataOnboardingSucceeded', () => {
-    it('is a no-op on domain fields (only the request status transitions)', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        isLoading: true,
-        sendStepDataError: 'NOT_SAVE_DATA' as const,
-      };
-
-      const state = reducer(
-        initialState,
-        actions.sendStepDataOnboardingSucceeded()
-      );
-
-      expect(state.isLoading).toBe(true);
-      expect(state.sendStepDataError).toBe('NOT_SAVE_DATA');
-    });
-  });
-
-  describe('sendStepDataOnboardingFailed', () => {
-    it('sets isLoading to false and stores the error', () => {
-      const initialState = { ...slice.getInitialState(), isLoading: true };
-
-      const state = reducer(
-        initialState,
-        actions.sendStepDataOnboardingFailed({ error: 'NOT_SAVE_DATA' })
-      );
-
-      expect(state.isLoading).toBe(false);
-      expect(state.sendStepDataError).toBe('NOT_SAVE_DATA');
-    });
-
-    it('resets the error to null when the payload has no error', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        sendStepDataError: 'NOT_SAVE_DATA' as const,
-      };
-
-      const state = reducer(
-        initialState,
-        actions.sendStepDataOnboardingFailed(null)
-      );
-
-      expect(state.sendStepDataError).toBeNull();
-    });
-  });
-
   describe('launchOnboarding', () => {
     it('sets the onboarding flow', () => {
       const state = reducer(
