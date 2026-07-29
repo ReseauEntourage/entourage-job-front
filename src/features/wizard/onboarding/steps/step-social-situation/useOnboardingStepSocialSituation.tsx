@@ -12,6 +12,10 @@ import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { updateSocialSituationSelectors } from '@/src/use-cases/current-user';
 import { fetchCurrentUserSocialSituationSelectors } from '@/src/use-cases/current-user';
+import {
+  UPDATE_SOCIAL_SITUATION_FIXED_CACHE_KEY,
+  useUpdateSocialSituationMutation,
+} from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { StyledCardList } from './Content.styles';
 import { socialSituationFormSchema } from './SocialSituationFormSchema';
@@ -49,6 +53,11 @@ export const useOnboardingStepSocialSituation = ({
     updateSocialSituationSelectors.selectIsUpdateSocialSituationFailed
   );
 
+  const [, { reset: resetUpdateSocialSituation }] =
+    useUpdateSocialSituationMutation({
+      fixedCacheKey: UPDATE_SOCIAL_SITUATION_FIXED_CACHE_KEY,
+    });
+
   const submitResolveRef = useRef<((value: boolean) => void) | null>(null);
   const lastSubmitFailedRef = useRef(false);
   const fetchSocialSituationDeferredRef = useRef<{
@@ -58,14 +67,14 @@ export const useOnboardingStepSocialSituation = ({
 
   const waitForSocialSituationUpdate = useCallback(
     (values: SocialSituationFormValues) => {
-      dispatch(currentUserActions.updateSocialSituationReset());
+      resetUpdateSocialSituation();
       dispatch(currentUserActions.updateSocialSituationRequested(values));
 
       return new Promise<boolean>((resolve) => {
         submitResolveRef.current = resolve;
       });
     },
-    [dispatch]
+    [dispatch, resetUpdateSocialSituation]
   );
 
   const waitForSocialSituationFetch = useCallback(() => {

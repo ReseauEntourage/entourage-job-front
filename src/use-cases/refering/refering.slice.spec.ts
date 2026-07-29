@@ -30,50 +30,6 @@ const buildAccountFormData = (
 });
 
 describe('refering slice', () => {
-  describe('referCandidateSucceeded', () => {
-    it('only transitions the request status', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        referCandidateError: 'DUPLICATE_EMAIL' as const,
-      };
-
-      const state = reducer(initialState, actions.referCandidateSucceeded());
-
-      expect(state.referCandate.status).toBe('SUCCEEDED');
-      // referCandidateSucceeded has no custom merge logic: pre-existing
-      // error state is left untouched (only referCandidateFailed clears it).
-      expect(state.referCandidateError).toBe('DUPLICATE_EMAIL');
-    });
-  });
-
-  describe('referCandidateFailed', () => {
-    it('stores the error and stops loading', () => {
-      const initialState = { ...slice.getInitialState(), isLoading: true };
-
-      const state = reducer(
-        initialState,
-        actions.referCandidateFailed({ error: 'DUPLICATE_EMAIL' })
-      );
-
-      expect(state.referCandate.status).toBe('FAILED');
-      expect(state.referCandidateError).toBe('DUPLICATE_EMAIL');
-      expect(state.isLoading).toBe(false);
-    });
-
-    it('clears the error when failing without a payload', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        isLoading: true,
-        referCandidateError: 'DUPLICATE_EMAIL' as const,
-      };
-
-      const state = reducer(initialState, actions.referCandidateFailed(null));
-
-      expect(state.referCandidateError).toBeNull();
-      expect(state.isLoading).toBe(false);
-    });
-  });
-
   describe('setReferingCurrentStepData', () => {
     it('throws when there is no current step', () => {
       const initialState = slice.getInitialState();

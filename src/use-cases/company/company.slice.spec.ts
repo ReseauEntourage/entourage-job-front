@@ -144,53 +144,22 @@ describe('company slice', () => {
     expect(state).toEqual(initialState);
   });
 
-  describe('fetchCompaniesNextPage', () => {
-    it('increments the offset when not all companies are fetched and the previous fetch succeeded', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        companiesOffset: 0,
-        companiesHasFetchedAll: false,
-        fetchCompanies: { status: 'SUCCEEDED' as const },
-      };
+  it('fetchCompaniesNextPage does not mutate state (guard + increment now live in company.listeners.ts)', () => {
+    const initialState = slice.getInitialState();
 
-      const state = reducer(
-        initialState,
-        actions.fetchCompaniesNextPage(buildFilters())
-      );
+    const state = reducer(
+      initialState,
+      actions.fetchCompaniesNextPage(buildFilters())
+    );
 
-      expect(state.companiesOffset).toBe(COMPANIES_LIMIT);
-    });
+    expect(state).toEqual(initialState);
+  });
 
-    it('does not increment the offset when all companies are already fetched', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        companiesOffset: 0,
-        companiesHasFetchedAll: true,
-        fetchCompanies: { status: 'SUCCEEDED' as const },
-      };
+  it('incrementCompaniesOffset increments the offset by the page limit', () => {
+    const initialState = { ...slice.getInitialState(), companiesOffset: 0 };
 
-      const state = reducer(
-        initialState,
-        actions.fetchCompaniesNextPage(buildFilters())
-      );
+    const state = reducer(initialState, actions.incrementCompaniesOffset());
 
-      expect(state.companiesOffset).toBe(0);
-    });
-
-    it('does not increment the offset when a fetch is still in progress', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        companiesOffset: 0,
-        companiesHasFetchedAll: false,
-        fetchCompanies: { status: 'REQUESTED' as const },
-      };
-
-      const state = reducer(
-        initialState,
-        actions.fetchCompaniesNextPage(buildFilters())
-      );
-
-      expect(state.companiesOffset).toBe(0);
-    });
+    expect(state.companiesOffset).toBe(COMPANIES_LIMIT);
   });
 });

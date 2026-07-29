@@ -1,29 +1,60 @@
+import { api } from '@/src/store/api/api.slice';
 import {
-  fetchEventsAdapter,
-  fetchSelectedEventAdapter,
-  fetchSelectedEventParticipantsAdapter,
-  updateUserParticipationAdapter,
-} from './events.adapters';
-import { RootState } from './events.slice';
+  eventsApi,
+  FETCH_EVENTS_FIXED_CACHE_KEY,
+  FETCH_SELECTED_EVENT_FIXED_CACHE_KEY,
+  FETCH_SELECTED_EVENT_PARTICIPANTS_FIXED_CACHE_KEY,
+  UPDATE_USER_PARTICIPATION_FIXED_CACHE_KEY,
+} from './events.api';
+import { RootState as EventsSliceRootState } from './events.slice';
 
-export const fetchEventsSelectors = fetchEventsAdapter.getSelectors<RootState>(
-  (state) => state.events.fetchEvents
-);
+// `RootState` here also needs the shared `api` reducer key (for the
+// `eventsApi.endpoints.*.select()` calls below) — same reasoning as
+// `store.ts`/`createTestStore.ts`.
+type RootState = EventsSliceRootState & {
+  [K in typeof api.reducerPath]: ReturnType<typeof api.reducer>;
+};
 
-export const fetchSelectedEventSelectors =
-  fetchSelectedEventAdapter.getSelectors<RootState>(
-    (state) => state.events.fetchSelectedEvent
-  );
+export const fetchEventsSelectors = {
+  selectIsFetchEventsIdle: (state: RootState) =>
+    eventsApi.endpoints.fetchEvents.select(FETCH_EVENTS_FIXED_CACHE_KEY)(state)
+      .isUninitialized,
+  selectIsFetchEventsRequested: (state: RootState) =>
+    eventsApi.endpoints.fetchEvents.select(FETCH_EVENTS_FIXED_CACHE_KEY)(state)
+      .isLoading,
+  selectIsFetchEventsFailed: (state: RootState) =>
+    eventsApi.endpoints.fetchEvents.select(FETCH_EVENTS_FIXED_CACHE_KEY)(state)
+      .isError,
+};
 
-export const fetchSelectedEventParticipantsSelectors =
-  fetchSelectedEventParticipantsAdapter.getSelectors<RootState>(
-    (state) => state.events.fetchSelectedEventParticipants
-  );
+export const fetchSelectedEventSelectors = {
+  selectIsFetchSelectedEventRequested: (state: RootState) =>
+    eventsApi.endpoints.fetchSelectedEvent.select(
+      FETCH_SELECTED_EVENT_FIXED_CACHE_KEY
+    )(state).isLoading,
+  selectIsFetchSelectedEventFailed: (state: RootState) =>
+    eventsApi.endpoints.fetchSelectedEvent.select(
+      FETCH_SELECTED_EVENT_FIXED_CACHE_KEY
+    )(state).isError,
+};
 
-export const updateUserParticipationSelectors =
-  updateUserParticipationAdapter.getSelectors<RootState>(
-    (state) => state.events.updateUserParticipation
-  );
+export const fetchSelectedEventParticipantsSelectors = {
+  selectIsFetchSelectedEventParticipantsRequested: (state: RootState) =>
+    eventsApi.endpoints.fetchSelectedEventParticipants.select(
+      FETCH_SELECTED_EVENT_PARTICIPANTS_FIXED_CACHE_KEY
+    )(state).isLoading,
+  selectIsFetchSelectedEventParticipantsFailed: (state: RootState) =>
+    eventsApi.endpoints.fetchSelectedEventParticipants.select(
+      FETCH_SELECTED_EVENT_PARTICIPANTS_FIXED_CACHE_KEY
+    )(state).isError,
+};
+
+export const updateUserParticipationSelectors = {
+  selectIsUpdateUserParticipationRequested: (state: RootState) =>
+    eventsApi.endpoints.updateUserParticipation.select(
+      UPDATE_USER_PARTICIPATION_FIXED_CACHE_KEY
+    )(state).isLoading,
+};
 
 export function selectEvents(state: RootState) {
   return state.events.events;

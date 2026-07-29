@@ -20,7 +20,6 @@ import next from '@next/eslint-plugin-next';
 ======================= */
 import importPlugin from 'eslint-plugin-import-x';
 import prettier from 'eslint-plugin-prettier';
-import typedReduxSaga from '@jambit/eslint-plugin-typed-redux-saga';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginJest from 'eslint-plugin-jest';
 
@@ -89,7 +88,6 @@ export default defineConfig([
       'react-hooks': reactHooks,
       'import-x': importPlugin,
       prettier,
-      '@jambit/typed-redux-saga': typedReduxSaga,
       'jsx-a11y': jsxA11y,
       local: { rules: { 'no-untransient-styled-props': noUntransientStyledProps } },
     },
@@ -277,16 +275,6 @@ export default defineConfig([
     rules: {
       'import-x/no-default-export': 'off',
       'import-x/prefer-default-export': 'error',
-    },
-  },
-
-  // typed-redux-saga
-  {
-    files: ['**/*.ts'],
-    ignores: ['**/*.spec.ts'],
-    rules: {
-      '@jambit/typed-redux-saga/use-typed-effects': 'error',
-      '@jambit/typed-redux-saga/delegate-effects': 'error',
     },
   },
 

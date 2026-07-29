@@ -1,12 +1,12 @@
 import { UseCaseConfigItem } from '../types';
-import { saga } from './gamification.saga';
+import './gamification.listeners';
 import { slice } from './gamification.slice';
 
 export * from './gamification.selectors';
+export * from './gamification.api';
 
 export const gamificationActions = slice.actions;
 
 export const gamificationConfig = {
   slice,
-  saga,
 } as UseCaseConfigItem;

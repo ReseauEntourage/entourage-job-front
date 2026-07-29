@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useUserId } from '@/src/hooks/queryParams/useUserId';
 import { notificationsActions } from '@/src/use-cases/notifications';
 
-import { profilesActions } from '@/src/use-cases/profiles';
+import {
+  FETCH_SELECTED_PROFILE_FIXED_CACHE_KEY,
+  profilesActions,
+  useFetchSelectedProfileMutation,
+} from '@/src/use-cases/profiles';
 import {
   fetchSelectedProfileSelectors,
   selectSelectedProfile,
@@ -18,6 +22,10 @@ export function useSelectedProfile() {
     fetchSelectedProfileSelectors.selectIsFetchSelectedProfileFailed
   );
   const selectedProfile = useSelector(selectSelectedProfile);
+  const [, { reset: resetFetchSelectedProfile }] =
+    useFetchSelectedProfileMutation({
+      fixedCacheKey: FETCH_SELECTED_PROFILE_FIXED_CACHE_KEY,
+    });
 
   useEffect(() => {
     if (userId) {
@@ -42,9 +50,9 @@ export function useSelectedProfile() {
 
   useEffect(() => {
     return () => {
-      dispatch(profilesActions.fetchSelectedProfileReset());
+      resetFetchSelectedProfile();
     };
-  }, [dispatch]);
+  }, [resetFetchSelectedProfile]);
 
   return {
     selectedProfile,

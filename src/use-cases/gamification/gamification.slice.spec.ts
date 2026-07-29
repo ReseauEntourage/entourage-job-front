@@ -227,17 +227,4 @@ describe('gamification slice', () => {
       expect(state.achievementProgressionToShow).toBeNull();
     });
   });
-
-  describe('fetchAchievementProgressionInitial', () => {
-    it('is a no-op reducer', () => {
-      const initialState = slice.getInitialState();
-
-      const state = reducer(
-        initialState,
-        actions.fetchAchievementProgressionInitial()
-      );
-
-      expect(state).toEqual(initialState);
-    });
-  });
 });

@@ -35,7 +35,7 @@ describe('recruitement-alerts slice', () => {
     });
   });
 
-  describe('deleteRecruitementAlertSucceeded', () => {
+  describe('removeRecruitementAlert', () => {
     it('removes the deleted alert from the list', () => {
       const remaining = buildRecruitementAlert({ id: 'alert-2' });
       const initialState = {
@@ -48,42 +48,10 @@ describe('recruitement-alerts slice', () => {
 
       const state = reducer(
         initialState,
-        actions.deleteRecruitementAlertSucceeded('alert-1')
+        actions.removeRecruitementAlert('alert-1')
       );
 
       expect(state.recruitementAlerts).toEqual([remaining]);
-    });
-
-    it('removes the associated matching entry when one exists', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        recruitementAlerts: [buildRecruitementAlert({ id: 'alert-1' })],
-        recruitementAlertMatchings: {
-          'alert-1': { profiles: [], timestamp: 123 },
-        },
-      };
-
-      const state = reducer(
-        initialState,
-        actions.deleteRecruitementAlertSucceeded('alert-1')
-      );
-
-      expect(state.recruitementAlertMatchings).toEqual({});
-    });
-
-    it('does not throw when there is no matching entry for the deleted alert', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        recruitementAlerts: [buildRecruitementAlert({ id: 'alert-1' })],
-        recruitementAlertMatchings: {},
-      };
-
-      expect(() =>
-        reducer(
-          initialState,
-          actions.deleteRecruitementAlertSucceeded('alert-1')
-        )
-      ).not.toThrow();
     });
   });
 
@@ -127,47 +95,6 @@ describe('recruitement-alerts slice', () => {
       );
 
       expect(state.recruitementAlerts).toEqual(initialState.recruitementAlerts);
-    });
-  });
-
-  describe('fetchRecruitementAlertMatchingSucceeded', () => {
-    it('stores the matching profiles keyed by alertId from action.meta.arg', () => {
-      const profiles = [{ id: 'profile-1' }] as any;
-      const action = {
-        type: actions.fetchRecruitementAlertMatchingSucceeded.type,
-        payload: profiles,
-        meta: { arg: 'alert-1' },
-      };
-
-      const state = reducer(undefined, action);
-
-      expect(state.recruitementAlertMatchings['alert-1'].profiles).toEqual(
-        profiles
-      );
-      expect(typeof state.recruitementAlertMatchings['alert-1'].timestamp).toBe(
-        'number'
-      );
-    });
-
-    it('defaults profiles to an empty array when the payload is not an array', () => {
-      const action = {
-        type: actions.fetchRecruitementAlertMatchingSucceeded.type,
-        payload: { not: 'an array' },
-        meta: { arg: 'alert-1' },
-      };
-
-      const state = reducer(undefined, action);
-
-      expect(state.recruitementAlertMatchings['alert-1'].profiles).toEqual([]);
-    });
-
-    it('is a no-op on recruitementAlertMatchings when there is no meta.arg', () => {
-      const state = reducer(
-        undefined,
-        actions.fetchRecruitementAlertMatchingSucceeded([] as any)
-      );
-
-      expect(state.recruitementAlertMatchings).toEqual({});
     });
   });
 
@@ -217,7 +144,7 @@ describe('recruitement-alerts slice', () => {
   ];
 
   plainTriggerActions.forEach(([name, buildAction]) => {
-    it(`${name} does not mutate the state (consumed by the saga only)`, () => {
+    it(`${name} does not mutate the state (consumed by the listener only)`, () => {
       const initialState = slice.getInitialState();
 
       const state = reducer(initialState, buildAction());

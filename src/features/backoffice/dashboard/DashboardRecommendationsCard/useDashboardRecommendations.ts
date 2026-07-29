@@ -5,9 +5,11 @@ import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   fetchDashboardProfilesRecommendationsSelectors,
   fetchProfilesSelectors,
+  FETCH_DASHBOARD_PROFILES_RECOMMENDATIONS_FIXED_CACHE_KEY,
   profilesActions,
   selectIsEmbeddingPending,
   selectProfilesRecommendations,
+  useFetchDashboardProfilesRecommendationsMutation,
 } from '@/src/use-cases/profiles';
 
 /**
@@ -81,12 +83,18 @@ export function useDashboardRecommendations() {
     isFetchDashboardProfilesFailed,
   ]);
 
+  const [, { reset: resetFetchDashboardProfilesRecommendations }] =
+    useFetchDashboardProfilesRecommendationsMutation({
+      fixedCacheKey: FETCH_DASHBOARD_PROFILES_RECOMMENDATIONS_FIXED_CACHE_KEY,
+    });
+
   // clean on unmount depending on context
   useEffect(() => {
     return () => {
       dispatch(profilesActions.fetchDashboardProfilesRecommendationsReset());
+      resetFetchDashboardProfilesRecommendations();
     };
-  }, [dispatch]);
+  }, [dispatch, resetFetchDashboardProfilesRecommendations]);
 
   return { recommendations, isLoading, isError, isEmbeddingPending };
 }

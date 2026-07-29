@@ -22,7 +22,7 @@ export const useCompanyRecruitementAlertContent = (
   const now = Date.now();
 
   const isLoadingMatching = useSelector(
-    selectFetchRecruitementAlertMatchingLoading
+    selectFetchRecruitementAlertMatchingLoading(alert.id)
   );
   const isExpired = isLoadingMatching
     ? false

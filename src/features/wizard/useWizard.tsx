@@ -11,7 +11,10 @@ import {
   selectCurrentUser,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
-import { createUserSelectors } from '@/src/use-cases/registration';
+import {
+  CREATE_USER_FIXED_CACHE_KEY,
+  useCreateUserMutation,
+} from '@/src/use-cases/registration';
 import { EMAIL_CONFIRMATION_STEP } from './steps/useWizardStepEmailConfirmation';
 import { useRegistrationWizard } from './useRegistrationWizard';
 
@@ -35,9 +38,9 @@ export const useWizard = (): WizardState => {
   const dispatch = useDispatch();
 
   const currentUser = useSelector(selectCurrentUser);
-  const createUserStatus = useSelector(
-    createUserSelectors.selectCreateUserStatus
-  );
+  const [, { isSuccess: isCreateUserSucceeded }] = useCreateUserMutation({
+    fixedCacheKey: CREATE_USER_FIXED_CACHE_KEY,
+  });
   const isLogoutSucceeded = useSelector(
     logoutSelectors.selectIsLogoutSucceeded
   );
@@ -70,7 +73,7 @@ export const useWizard = (): WizardState => {
     goToStepById,
   });
 
-  const phase = resolveWizardPhase(currentUser, createUserStatus);
+  const phase = resolveWizardPhase(currentUser, isCreateUserSucceeded);
   const isOnboardingPhase = phase === 'onboarding';
   const isEmailConfirmationPhase = phase === 'email-confirmation';
 

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { Event, EventWithParticipants } from '@/src/api/types';
-import { EVENTS_LIMIT, ReduxRequestEvents } from '@/src/constants';
+import { EVENTS_LIMIT } from '@/src/constants';
 import {
   EventMode,
   EventType,
@@ -187,44 +187,19 @@ describe('events slice', () => {
     expect(state).toEqual(initialState);
   });
 
-  describe('fetchEventsNextPage', () => {
-    it('increments the offset when not all events are fetched and the previous fetch succeeded', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        eventsOffset: 0,
-        eventsHasFetchedAll: false,
-        fetchEvents: { status: ReduxRequestEvents.SUCCEEDED },
-      };
+  it('fetchEventsNextPage does not mutate state (guard moved to events.listeners.ts)', () => {
+    const initialState = slice.getInitialState();
 
-      const state = reducer(initialState, actions.fetchEventsNextPage({}));
+    const state = reducer(initialState, actions.fetchEventsNextPage({}));
 
-      expect(state.eventsOffset).toBe(EVENTS_LIMIT);
-    });
+    expect(state).toEqual(initialState);
+  });
 
-    it('does not increment the offset when all events are already fetched', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        eventsOffset: 0,
-        eventsHasFetchedAll: true,
-        fetchEvents: { status: ReduxRequestEvents.SUCCEEDED },
-      };
+  it('incrementEventsOffset increments the offset by EVENTS_LIMIT', () => {
+    const initialState = { ...slice.getInitialState(), eventsOffset: 0 };
 
-      const state = reducer(initialState, actions.fetchEventsNextPage({}));
+    const state = reducer(initialState, actions.incrementEventsOffset());
 
-      expect(state.eventsOffset).toBe(0);
-    });
-
-    it('does not increment the offset when a fetch is still in progress', () => {
-      const initialState = {
-        ...slice.getInitialState(),
-        eventsOffset: 0,
-        eventsHasFetchedAll: false,
-        fetchEvents: { status: ReduxRequestEvents.REQUESTED },
-      };
-
-      const state = reducer(initialState, actions.fetchEventsNextPage({}));
-
-      expect(state.eventsOffset).toBe(0);
-    });
+    expect(state.eventsOffset).toBe(EVENTS_LIMIT);
   });
 });

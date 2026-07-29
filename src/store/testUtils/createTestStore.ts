@@ -4,8 +4,9 @@ import {
   configureStore,
   Reducer,
 } from '@reduxjs/toolkit';
-import createSagaMiddleware, { Saga } from 'redux-saga';
-import { all, spawn, call } from 'typed-redux-saga';
+import { api } from '@/src/store/api/api.slice';
+import { listenerMiddleware } from '@/src/store/listenerMiddleware';
+import { getPreloadedState } from '@/src/store/preloadedState';
 import { useCasesConfig } from '@/src/use-cases';
 import type { RootState as AuthenticationRootState } from '@/src/use-cases/authentication/authentication.slice';
 import type { RootState as CompanyRootState } from '@/src/use-cases/company/company.slice';
@@ -17,7 +18,8 @@ import type { RootState as MessagingRootState } from '@/src/use-cases/messaging/
 import type { RootState as NotificationsRootState } from '@/src/use-cases/notifications/notifications.slice';
 import type { RootState as OnboardingRootState } from '@/src/use-cases/onboarding/onboarding.slice';
 import type { RootState as OnboardingOldRootState } from '@/src/use-cases/onboardingOld/onboarding.slice';
-import type { RootState as ProfileCompletionRootState } from '@/src/use-cases/profile-completion/profile-completion.slice';
+// Side-effect only: no slice/saga left (see use-cases/index.ts).
+import '@/src/use-cases/profile-completion';
 import type { RootState as ProfilesRootState } from '@/src/use-cases/profiles/profiles.slice';
 import type { RootState as RecruitementAlertsRootState } from '@/src/use-cases/recruitement-alerts/recruitement-alerts.slice';
 import type { RootState as ReferingRootState } from '@/src/use-cases/refering/refering.slice';
@@ -26,7 +28,9 @@ import { UseCaseConfigItem } from '@/src/use-cases/types';
 
 const useCasesList = Object.values(useCasesConfig) as UseCaseConfigItem[];
 
-const reducersMap: Record<string, any> = {};
+const reducersMap: Record<string, any> = {
+  [api.reducerPath]: api.reducer,
+};
 
 useCasesList.forEach(({ slice }) => {
   reducersMap[slice.name] = slice.reducer;
@@ -58,55 +62,32 @@ export type TestRootState = AuthenticationRootState &
   NotificationsRootState &
   OnboardingRootState &
   OnboardingOldRootState &
-  ProfileCompletionRootState &
   ProfilesRootState &
   RecruitementAlertsRootState &
   ReferingRootState &
-  RegistrationRootState;
-
-function createRootSaga(dispatch: (action: AnyAction) => void) {
-  return function* rootSaga() {
-    yield* all(
-      useCasesList
-        .filter(
-          (useCase): useCase is UseCaseConfigItem & { saga: Saga } =>
-            !!useCase.saga
-        )
-        .map((useCase) =>
-          spawn(function* () {
-            try {
-              yield* call(useCase.saga);
-            } catch (error) {
-              dispatch({
-                type: 'SAGA_ERROR',
-                error: error?.toString?.(),
-                useCaseName: useCase.slice.name,
-              });
-            }
-          })
-        )
-    );
+  RegistrationRootState & {
+    [K in typeof api.reducerPath]: ReturnType<typeof api.reducer>;
   };
-}
 
 /**
- * Builds a real store from the same use-case reducer/saga registry as the
+ * Builds a real store from the same use-case reducer registry as the
  * production store (`src/store/store.ts`), so behavioral tests exercise the
- * actual saga -> reducer -> selector chain instead of a mocked one.
+ * actual listener -> RTK Query -> reducer -> selector chain instead of a
+ * mocked one.
  */
 export function createTestStore(preloadedState?: Partial<TestRootState>) {
-  const sagaMiddleware = createSagaMiddleware();
-
   const store = configureStore({
     reducer: reducers,
-    preloadedState,
+    // Mirrors `store.ts`: `authentication`'s access token comes from
+    // `getPreloadedState()` (localStorage) — `seedAccessToken()` in tests
+    // relies on this same read happening here. An explicit
+    // `preloadedState.authentication` still overrides it.
+    preloadedState: { ...getPreloadedState(), ...preloadedState },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ thunk: true, serializableCheck: false }).concat(
-        sagaMiddleware
-      ),
+      getDefaultMiddleware({ thunk: true, serializableCheck: false })
+        .prepend(listenerMiddleware.middleware)
+        .concat(api.middleware),
   });
-
-  sagaMiddleware.run(createRootSaga(store.dispatch));
 
   return store;
 }

@@ -16,7 +16,9 @@ export function AlertCandidatesList({
   alertId,
 }: AlertCandidatesListProps): React.ReactElement {
   const candidates = useSelector(selectRecruitementAlertMatchingById(alertId));
-  const isLoading = useSelector(selectFetchRecruitementAlertMatchingLoading);
+  const isLoading = useSelector(
+    selectFetchRecruitementAlertMatchingLoading(alertId)
+  );
 
   const candidatesList = useMemo(() => {
     return candidates?.profiles?.map((candidate) => {

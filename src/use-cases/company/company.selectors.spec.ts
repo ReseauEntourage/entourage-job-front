@@ -9,7 +9,7 @@ import {
   selectSelectedCompanyId,
   selectSelectedCompanyWithCollaborators,
 } from './company.selectors';
-import { RootState, slice } from './company.slice';
+import { slice } from './company.slice';
 
 const buildCompany = (overrides: Partial<CompanyWithUsers> = {}) =>
   ({
@@ -18,12 +18,14 @@ const buildCompany = (overrides: Partial<CompanyWithUsers> = {}) =>
     ...overrides,
   }) as CompanyWithUsers;
 
+// `as any`: these selectors only read `state.company.*`, but the module's
+// exported `RootState` type also requires the shared `api` reducer key (for
+// the RTK-Query-backed status selectors in the same file) — not relevant here.
 const buildState = (
   overrides: Partial<ReturnType<typeof slice.getInitialState>> = {}
-): RootState =>
-  ({
-    company: { ...slice.getInitialState(), ...overrides },
-  }) as RootState;
+): any => ({
+  company: { ...slice.getInitialState(), ...overrides },
+});
 
 describe('company.selectors', () => {
   it('selectSelectedCompanyId returns the selected company id', () => {

@@ -16,19 +16,11 @@ const buildUser = (overrides: Partial<User> = {}): User =>
 
 describe('current-user slice', () => {
   it('resetCurrentUser returns the initial state', () => {
-    const mutated = reducer(undefined, actions.setUser(buildUser()));
+    const mutated = reducer(undefined, actions.fetchUserSucceeded(buildUser()));
 
     expect(reducer(mutated, actions.resetCurrentUser())).toEqual(
       slice.getInitialState()
     );
-  });
-
-  it('setUser sets the user', () => {
-    const user = buildUser();
-
-    const state = reducer(undefined, actions.setUser(user));
-
-    expect(state.user).toEqual(user);
   });
 
   it('fetchUserSucceeded sets the user and resets complete to false', () => {
@@ -92,15 +84,6 @@ describe('current-user slice', () => {
     expect(state.staffContact).toEqual(staffContact);
   });
 
-  it('fetchCompleteUserSucceeded sets the user and complete to true', () => {
-    const user = buildUser();
-
-    const state = reducer(undefined, actions.fetchCompleteUserSucceeded(user));
-
-    expect(state.user).toEqual(user);
-    expect(state.complete).toBe(true);
-  });
-
   it('updateUserSucceeded merges the payload into the existing user', () => {
     const initialState = {
       ...slice.getInitialState(),
@@ -122,30 +105,6 @@ describe('current-user slice', () => {
         actions.updateUserSucceeded({ user: { email: 'new@example.com' } })
       )
     ).toThrow();
-  });
-
-  it('updateUserFailed sets userUpdateError', () => {
-    const state = reducer(
-      undefined,
-      actions.updateUserFailed({ error: 'UPDATE_FAILED' })
-    );
-
-    expect(state.userUpdateError).toBe('UPDATE_FAILED');
-  });
-
-  it('updateUserCompanyFailed sets userCompanyUpdateError', () => {
-    const state = reducer(
-      undefined,
-      actions.updateUserCompanyFailed({ error: 'UPDATE_FAILED' })
-    );
-
-    expect(state.userCompanyUpdateError).toBe('UPDATE_FAILED');
-  });
-
-  it('updateUserCompanySucceeded only transitions the request status', () => {
-    const state = reducer(undefined, actions.updateUserCompanySucceeded());
-
-    expect(state.updateUserCompany.status).toBe('SUCCEEDED');
   });
 
   it('updateProfileSucceeded merges userProfile into profile and profileComplete', () => {
@@ -181,15 +140,6 @@ describe('current-user slice', () => {
     expect(state.profileComplete).toBeNull();
   });
 
-  it('updateProfileFailed sets userUpdateError', () => {
-    const state = reducer(
-      undefined,
-      actions.updateProfileFailed({ error: 'UPDATE_FAILED' })
-    );
-
-    expect(state.userUpdateError).toBe('UPDATE_FAILED');
-  });
-
   it('updateOnboardingStatusSucceeded sets user.onboardingStatus', () => {
     const initialState = {
       ...slice.getInitialState(),
@@ -215,22 +165,6 @@ describe('current-user slice', () => {
         })
       )
     ).toThrow();
-  });
-
-  it('forceOnboardingAsCompletedSucceeded sets user.onboardingStatus', () => {
-    const initialState = {
-      ...slice.getInitialState(),
-      user: buildUser({ onboardingStatus: 'NOT_STARTED' as any }),
-    };
-
-    const state = reducer(
-      initialState,
-      actions.forceOnboardingAsCompletedSucceeded({
-        onboardingStatus: 'COMPLETED' as any,
-      })
-    );
-
-    expect(state.user?.onboardingStatus).toBe('COMPLETED');
   });
 
   it('updateUserProfilePictureSucceeded sets hasPicture on profile and profileComplete', () => {
@@ -366,29 +300,6 @@ describe('current-user slice', () => {
 
     expect(state.profile?.hasExternalCv).toBe(false);
     expect(state.profileComplete?.hasExternalCv).toBe(false);
-  });
-
-  it('getExternalCvSucceeded sets externalCv', () => {
-    const state = reducer(
-      undefined,
-      actions.getExternalCvSucceeded('https://example.com/cv.pdf')
-    );
-
-    expect(state.externalCv).toBe('https://example.com/cv.pdf');
-  });
-
-  it('generateProfileFromCVSucceeded sets hasExtractedCvData on profileComplete', () => {
-    const initialState = {
-      ...slice.getInitialState(),
-      profileComplete: { hasExtractedCvData: false } as any,
-    };
-
-    const state = reducer(
-      initialState,
-      actions.generateProfileFromCVSucceeded()
-    );
-
-    expect(state.profileComplete?.hasExtractedCvData).toBe(true);
   });
 
   it('profileCompleteDraftUpdated merges the partial payload into profileComplete', () => {

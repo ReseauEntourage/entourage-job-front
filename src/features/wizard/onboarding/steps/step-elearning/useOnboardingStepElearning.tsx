@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { User } from '@/src/api/types';
 import { Badge, BadgeVariant } from '@/src/components/ui';
-import { ReduxRequestEvents } from '@/src/constants';
 import { useElearningQuiz } from '@/src/features/backoffice/elearning/elearning-unit/useElearningQuiz';
 import { ElearningUnit } from '@/src/features/backoffice/elearning/elearning.types';
 import {
@@ -13,12 +12,12 @@ import {
   WizardStep,
   WizardStepId,
 } from '@/src/features/wizard/shell/wizard.types';
-import { useAwaitRequestStatus } from '@/src/features/wizard/useAwaitRequestStatus';
 import { useIsDesktop } from '@/src/hooks/utils/usePlatforms';
+import { AppDispatch } from '@/src/store/store';
 import {
-  elearningActions,
-  selectElearningUnits,
-  selectFetchElearningUnitsState,
+  elearningApi,
+  useGetElearningUnitsQuery,
+  usePostElearningCompletionMutation,
 } from '@/src/use-cases/elearning';
 import { Content } from './Content/Content';
 import { ElearningSidePanel } from './SidePanel/ElearningSidePanel';
@@ -32,51 +31,42 @@ export const useOnboardingStepElearning = ({
   userRole,
   requestAdvance,
 }: WizardStepElearningProps) => {
-  const store = useStore();
-  const getState = () => store.getState() as any;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isDesktop = useIsDesktop();
 
-  const elearningFetchStatus = useSelector(
-    (state: any) => selectFetchElearningUnitsState(state).status
-  );
-  const elearningUnits = useSelector((state: any) =>
-    selectElearningUnits(state)
-  ) as ElearningUnit[] | null;
-
-  useEffect(() => {
-    if (elearningFetchStatus === ReduxRequestEvents.IDLE && userRole) {
-      dispatch(elearningActions.fetchElearningUnitsRequested(userRole));
-    }
-  }, [elearningFetchStatus, userRole, dispatch]);
+  const { data: elearningUnits = null, isSuccess: hasFetchedElearningUnits } =
+    useGetElearningUnitsQuery(userRole!, { skip: !userRole });
+  const [postElearningCompletion] = usePostElearningCompletionMutation();
 
   const hasCompletedAllUnits =
-    elearningFetchStatus === ReduxRequestEvents.SUCCEEDED &&
+    hasFetchedElearningUnits &&
     elearningUnits !== null &&
     elearningUnits.length > 0 &&
     elearningUnits.every((unit) => unit.userCompletions.length > 0);
 
-  const awaitElearningUnitsSettled = useAwaitRequestStatus(
-    (state: any) => selectFetchElearningUnitsState(state).status
-  );
+  /**
+   * Ensures `getElearningUnits` has settled (dispatching it if it hasn't
+   * been triggered yet — a no-op if already cached, thanks to RTK Query's
+   * own dedup) and returns the freshest units, or `null` on failure.
+   * Replaces the prior `awaitElearningUnitsSettled`/`getState()` polling.
+   */
+  const fetchElearningUnits = useCallback(async (): Promise<
+    ElearningUnit[] | null
+  > => {
+    if (!userRole) {
+      return null;
+    }
 
-  const computeHasCompleteAllUnitsFromStore = (): boolean => {
-    const units = selectElearningUnits(getState());
+    return dispatch(elearningApi.endpoints.getElearningUnits.initiate(userRole))
+      .unwrap()
+      .catch(() => null);
+  }, [dispatch, userRole]);
+
+  const computeHasCompleteAllUnits = (units: ElearningUnit[] | null) => {
     if (!units || units.length === 0) {
       return false;
     }
     return units.every((unit) => unit.userCompletions.length > 0);
-  };
-
-  const ensureAndComputeHasCompleteAllUnits = async (): Promise<boolean> => {
-    const status = selectFetchElearningUnitsState(getState()).status;
-
-    if (status === ReduxRequestEvents.IDLE && userRole) {
-      dispatch(elearningActions.fetchElearningUnitsRequested(userRole));
-    }
-
-    await awaitElearningUnitsSettled();
-    return computeHasCompleteAllUnitsFromStore();
   };
 
   const skipElearning = useCallback(async (): Promise<void> => {
@@ -91,7 +81,7 @@ export const useOnboardingStepElearning = ({
   useEffect(() => {
     if (
       hasInitializedIndexRef.current ||
-      elearningFetchStatus !== ReduxRequestEvents.SUCCEEDED ||
+      !hasFetchedElearningUnits ||
       !elearningUnits
     ) {
       return;
@@ -109,20 +99,16 @@ export const useOnboardingStepElearning = ({
     }
 
     setCurrentUnitIndex(firstIncompleteIdx);
-  }, [elearningUnits, elearningFetchStatus]);
+  }, [elearningUnits, hasFetchedElearningUnits]);
 
   const currentUnit = elearningUnits?.[currentUnitIndex];
 
   const handleModuleComplete = useCallback(() => {
-    if (!currentUnit) {
+    if (!currentUnit || !userRole) {
       return;
     }
 
-    dispatch(
-      elearningActions.postElearningCompletionRequested({
-        unitId: currentUnit.id,
-      })
-    );
+    postElearningCompletion({ unitId: currentUnit.id, role: userRole });
 
     const nextIndex = currentUnitIndex + 1;
     const hasNextUnit = !!elearningUnits && nextIndex < elearningUnits.length;
@@ -132,7 +118,14 @@ export const useOnboardingStepElearning = ({
     } else {
       requestAdvance('elearning');
     }
-  }, [currentUnit, currentUnitIndex, elearningUnits, dispatch, requestAdvance]);
+  }, [
+    currentUnit,
+    currentUnitIndex,
+    elearningUnits,
+    postElearningCompletion,
+    requestAdvance,
+    userRole,
+  ]);
 
   const quiz = useElearningQuiz({
     questions: currentUnit?.questions ?? [],
@@ -213,21 +206,20 @@ export const useOnboardingStepElearning = ({
     ),
     sidePanelContent,
     isStepCompleted: async () => {
-      return ensureAndComputeHasCompleteAllUnits();
+      return computeHasCompleteAllUnits(await fetchElearningUnits());
     },
     isAutoSkippable: async () => {
-      const hasCompletedAll = await ensureAndComputeHasCompleteAllUnits();
-      if (hasCompletedAll) {
+      const units = await fetchElearningUnits();
+      if (computeHasCompleteAllUnits(units)) {
         return true;
       }
-      const units = selectElearningUnits(getState());
       return !units || units.length === 0;
     },
     onSubmit: async () => {
       return true;
     },
     incrementationIsAllowed: async () => {
-      return ensureAndComputeHasCompleteAllUnits();
+      return computeHasCompleteAllUnits(await fetchElearningUnits());
     },
     section: 'formation',
   };

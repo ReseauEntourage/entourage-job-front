@@ -16,20 +16,9 @@ import {
   selectCurrentUserReferrer,
   selectCurrentUserStats,
   selectExternalCv,
-  selectFetchCurrentAchievementsStatus,
-  selectFetchCurrentCompanyStatus,
-  selectFetchCurrentOrganizationStatus,
-  selectFetchCurrentProfileCompleteStatus,
-  selectFetchCurrentProfileStatus,
-  selectFetchCurrentReadDocumentsStatus,
-  selectFetchCurrentReferredUsersStatus,
-  selectFetchCurrentReferrerStatus,
-  selectFetchUserStatsStatus,
   selectHasBetaFeature,
-  selectIsComplete,
   selectStaffContact,
 } from './current-user.selectors';
-import { RootState } from './current-user.slice';
 import { slice } from './current-user.slice';
 
 const buildUser = (overrides: Partial<User> = {}): User =>
@@ -40,12 +29,16 @@ const buildUser = (overrides: Partial<User> = {}): User =>
     ...overrides,
   }) as User;
 
+// `as any`: these selectors only read `state.currentUser.*`, but the
+// module's exported `RootState` type also requires the shared `api` reducer
+// key (for the RTK-Query-backed status selectors in the same file, exercised
+// via `createTestStore` in `current-user.api.spec.ts` instead) — not
+// relevant here.
 const buildState = (
   overrides: Partial<ReturnType<typeof slice.getInitialState>> = {}
-): RootState =>
-  ({
-    currentUser: { ...slice.getInitialState(), ...overrides },
-  }) as RootState;
+): any => ({
+  currentUser: { ...slice.getInitialState(), ...overrides },
+});
 
 describe('current-user.selectors', () => {
   describe('selectCurrentUser', () => {
@@ -102,13 +95,6 @@ describe('current-user.selectors', () => {
     it('returns the user stats', () => {
       const stats = { profileViews: 1 } as any;
       expect(selectCurrentUserStats(buildState({ stats }))).toEqual(stats);
-    });
-  });
-
-  describe('selectIsComplete', () => {
-    it('returns the complete flag', () => {
-      expect(selectIsComplete(buildState({ complete: true }))).toBe(true);
-      expect(selectIsComplete(buildState({ complete: false }))).toBe(false);
     });
   });
 
@@ -220,66 +206,6 @@ describe('current-user.selectors', () => {
           buildState({ user })
         )
       ).toBe(false);
-    });
-  });
-
-  const statusSelectors: [string, (state: RootState) => string, string][] = [
-    [
-      'selectFetchCurrentCompanyStatus',
-      selectFetchCurrentCompanyStatus,
-      'fetchCurrentCompany',
-    ],
-    [
-      'selectFetchCurrentProfileStatus',
-      selectFetchCurrentProfileStatus,
-      'fetchCurrentProfile',
-    ],
-    [
-      'selectFetchCurrentProfileCompleteStatus',
-      selectFetchCurrentProfileCompleteStatus,
-      'fetchCurrentProfileComplete',
-    ],
-    [
-      'selectFetchCurrentOrganizationStatus',
-      selectFetchCurrentOrganizationStatus,
-      'fetchCurrentOrganization',
-    ],
-    [
-      'selectFetchCurrentAchievementsStatus',
-      selectFetchCurrentAchievementsStatus,
-      'fetchCurrentAchievements',
-    ],
-    [
-      'selectFetchCurrentReadDocumentsStatus',
-      selectFetchCurrentReadDocumentsStatus,
-      'fetchCurrentReadDocuments',
-    ],
-    [
-      'selectFetchCurrentReferredUsersStatus',
-      selectFetchCurrentReferredUsersStatus,
-      'fetchCurrentReferredUsers',
-    ],
-    [
-      'selectFetchCurrentReferrerStatus',
-      selectFetchCurrentReferrerStatus,
-      'fetchCurrentReferrer',
-    ],
-    [
-      'selectFetchUserStatsStatus',
-      selectFetchUserStatsStatus,
-      'fetchUserStats',
-    ],
-  ];
-
-  statusSelectors.forEach(([name, selector, stateKey]) => {
-    describe(name, () => {
-      it(`reads the status from currentUser.${stateKey}`, () => {
-        const state = buildState({
-          [stateKey]: { status: 'SUCCEEDED' },
-        } as any);
-
-        expect(selector(state)).toBe('SUCCEEDED');
-      });
     });
   });
 });

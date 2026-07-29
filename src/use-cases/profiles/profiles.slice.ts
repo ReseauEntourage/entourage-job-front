@@ -3,21 +3,12 @@ import {
   ProfilesFilters,
   PublicProfile,
   ProfileRecommendation,
+  ProfileRecommendationPage,
 } from '@/src/api/types';
-import { PROFILES_LIMIT, ReduxRequestEvents } from '@/src/constants';
-import { RequestState, SliceRootState } from '@/src/store/utils';
-import {
-  fetchProfilesAdapter,
-  fetchDashboardProfilesRecommendationsAdapter,
-  fetchSelectedProfileAdapter,
-} from './profiles.adapters';
+import { PROFILES_LIMIT } from '@/src/constants';
+import { SliceRootState } from '@/src/store/utils';
 
 interface State {
-  fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
-  fetchDashboardProfilesRecommendations: RequestState<
-    typeof fetchDashboardProfilesRecommendationsAdapter
-  >;
-  fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
   profiles: PublicProfile[];
   profilesOffset: number;
   profilesHasFetchedAll: boolean;
@@ -27,10 +18,6 @@ interface State {
 }
 
 const initialState: State = {
-  fetchProfiles: fetchProfilesAdapter.getInitialState(),
-  fetchDashboardProfilesRecommendations:
-    fetchDashboardProfilesRecommendationsAdapter.getInitialState(),
-  fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
   profiles: [],
   profilesOffset: 0,
   profilesHasFetchedAll: false,
@@ -43,36 +30,27 @@ export const slice = createSlice({
   name: 'profiles',
   initialState,
   reducers: {
-    ...fetchProfilesAdapter.getReducers<State>((state) => state.fetchProfiles, {
-      fetchProfilesSucceeded(state, action) {
-        state.profiles =
-          state.profilesOffset === 0
-            ? action.payload
-            : [...state.profiles, ...action.payload];
-        state.profilesHasFetchedAll = action.payload.length < PROFILES_LIMIT;
-      },
-    }),
-    ...fetchDashboardProfilesRecommendationsAdapter.getReducers<State>(
-      (state) => state.fetchDashboardProfilesRecommendations,
-      {
-        fetchDashboardProfilesRecommendationsSucceeded(state, action) {
-          state.profilesRecommendations = action.payload.recommendations;
-          state.isEmbeddingPending = action.payload.embeddingPending;
-        },
-        fetchDashboardProfilesRecommendationsReset(state) {
-          state.profilesRecommendations = [];
-          state.isEmbeddingPending = false;
-        },
-      }
-    ),
-    ...fetchSelectedProfileAdapter.getReducers<State>(
-      (state) => state.fetchSelectedProfile,
-      {
-        fetchSelectedProfileSucceeded(state, action) {
-          state.selectedProfile = action.payload;
-        },
-      }
-    ),
+    fetchProfilesSucceeded(state, action: PayloadAction<PublicProfile[]>) {
+      state.profiles =
+        state.profilesOffset === 0
+          ? action.payload
+          : [...state.profiles, ...action.payload];
+      state.profilesHasFetchedAll = action.payload.length < PROFILES_LIMIT;
+    },
+    fetchDashboardProfilesRecommendationsSucceeded(
+      state,
+      action: PayloadAction<ProfileRecommendationPage>
+    ) {
+      state.profilesRecommendations = action.payload.recommendations;
+      state.isEmbeddingPending = action.payload.embeddingPending;
+    },
+    fetchDashboardProfilesRecommendationsReset(state) {
+      state.profilesRecommendations = [];
+      state.isEmbeddingPending = false;
+    },
+    fetchSelectedProfileSucceeded(state, action: PayloadAction<PublicProfile>) {
+      state.selectedProfile = action.payload;
+    },
     embeddingPendingChanged(state, action: PayloadAction<boolean>) {
       state.isEmbeddingPending = action.payload;
     },
@@ -81,20 +59,24 @@ export const slice = createSlice({
       state.profilesHasFetchedAll = false;
       state.profiles = [];
     },
+    // No-op trigger actions: real handling lives in `profiles.api.ts`,
+    // dispatched via `profiles.listeners.ts` in reaction to these.
     fetchProfilesWithFilters(
       _state,
       _action: PayloadAction<ProfilesFilters>
     ) {},
-    fetchProfilesNextPage(state, _action: PayloadAction<ProfilesFilters>) {
-      // Do not increment offset if all profiles are fetched or a fetch is already in progress.
-      // Guards against the stale-closure race where a filter reset triggers fetchProfilesRequested
-      // (status → REQUESTED) before React re-renders the useIsAtBottom callback closure.
-      if (
-        !state.profilesHasFetchedAll &&
-        state.fetchProfiles.status === ReduxRequestEvents.SUCCEEDED
-      ) {
-        state.profilesOffset += PROFILES_LIMIT;
-      }
+    fetchProfilesRequested(_state, _action: PayloadAction<ProfilesFilters>) {},
+    fetchDashboardProfilesRecommendationsRequested() {},
+    fetchSelectedProfileRequested(
+      _state,
+      _action: PayloadAction<{ userId: string }>
+    ) {},
+    // No-op trigger: the guard (hasFetchedAll / last fetch succeeded) and
+    // the offset increment both moved to `profiles.listeners.ts`, since the
+    // guard now needs the `fetchProfiles` mutation's own state.
+    fetchProfilesNextPage(_state, _action: PayloadAction<ProfilesFilters>) {},
+    incrementProfilesOffset(state) {
+      state.profilesOffset += PROFILES_LIMIT;
     },
   },
 });

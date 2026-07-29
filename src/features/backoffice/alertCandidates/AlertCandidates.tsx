@@ -26,7 +26,7 @@ interface AlertCandidatesProps {
 export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
   const dispatch = useDispatch();
   const isMatchingLoading = useSelector(
-    selectFetchRecruitementAlertMatchingLoading
+    selectFetchRecruitementAlertMatchingLoading(alertId)
   );
   const isAlertsLoading = useSelector(selectFetchRecruitementAlertsLoading);
   const isLoading = isMatchingLoading || isAlertsLoading;
