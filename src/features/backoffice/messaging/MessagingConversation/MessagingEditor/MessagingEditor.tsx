@@ -149,6 +149,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
               onClick={onRequestAttachFileClick}
               rounded="circle"
               size="large"
+              dataTestId="messaging-attach-button"
             >
               <LucidIcon name="Plus" size={25} />
             </Button>
@@ -166,6 +167,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
               dispatch(messagingActions.setNewMessage(e.target.value));
             }}
             disabled={readonly}
+            data-testid="messaging-editor-input"
           />
         </MessagingInputContainer>
         {isMobile ? (
@@ -176,9 +178,14 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
             disabled={readonly}
             color={COLORS.white}
             variant="primary"
+            dataTestId="messaging-send-button"
           />
         ) : (
-          <Button onClick={sendNewMessage} disabled={readonly}>
+          <Button
+            onClick={sendNewMessage}
+            disabled={readonly}
+            dataTestId="messaging-send-button"
+          >
             Envoyer
           </Button>
         )}

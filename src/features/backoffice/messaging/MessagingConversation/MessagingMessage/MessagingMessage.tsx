@@ -70,7 +70,11 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
   };
 
   return (
-    <MessageContainer className={isOwnMessage ? 'own-message' : ''}>
+    <MessageContainer
+      className={isOwnMessage ? 'own-message' : ''}
+      data-testid="messaging-message"
+      data-own-message={isOwnMessage}
+    >
       <StyledMessage className={isOwnMessage ? 'own-message' : ''}>
         {message.medias.length > 0 && <MessageMedias medias={message.medias} />}
         <Text>

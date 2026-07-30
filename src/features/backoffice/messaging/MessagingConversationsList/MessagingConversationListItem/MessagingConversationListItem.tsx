@@ -51,7 +51,12 @@ export const MessagingConversationListItem = ({
   };
 
   return (
-    <ContainerStyled onClick={selectConversation} $isActive={isActivated}>
+    <ContainerStyled
+      onClick={selectConversation}
+      $isActive={isActivated}
+      data-testid="messaging-conversation-item"
+      data-conversation-id={conversation.id}
+    >
       <ContainerAvatarStyled>
         {addresee && (
           <ImgUserProfile

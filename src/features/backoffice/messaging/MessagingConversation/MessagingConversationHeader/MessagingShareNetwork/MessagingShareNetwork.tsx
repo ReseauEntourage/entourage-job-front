@@ -25,6 +25,7 @@ export const MessagingShareNetwork = ({
           prependIcon={<LucidIcon name="Share" />}
           disabled={isWhatsappLoading}
           rounded={false}
+          dataTestId="messaging-share-network-toggle"
         >
           Partager le profil
         </Button>

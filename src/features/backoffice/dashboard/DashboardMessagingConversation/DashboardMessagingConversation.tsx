@@ -40,7 +40,11 @@ export const DashboardMessagingConversation = () => {
   };
 
   return (
-    <Card title="Mes derniers messages" centerTitle>
+    <Card
+      title="Mes derniers messages"
+      centerTitle
+      dataTestId="dashboard-messaging-widget"
+    >
       <CardContent>
         <ConversationList>
           {conversations &&

@@ -140,6 +140,7 @@ export const MessagingConversationHeader = () => {
           onClick={onClickReportUser}
           color={COLORS.teal}
           variant="text"
+          dataTestId="messaging-report-button"
         />
       </MessagingConversationHeaderMainInfos>
       {isMobile && <ActionList />}

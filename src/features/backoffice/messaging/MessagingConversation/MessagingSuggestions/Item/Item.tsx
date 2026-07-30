@@ -10,7 +10,7 @@ interface ItemProps {
 
 export const Item = ({ suggestion, onClick }: ItemProps) => {
   return (
-    <ItemContainer onClick={onClick}>
+    <ItemContainer onClick={onClick} data-testid="messaging-suggestion-item">
       <Text size="small">{suggestion.name}</Text>
     </ItemContainer>
   );

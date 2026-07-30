@@ -30,6 +30,7 @@ export const MessagingWaitingReplyBanner = ({
       variant="outlined"
       rounded={false}
       title={`Message envoyé à ${recipientFirstName}`}
+      dataTestId="messaging-waiting-reply-banner"
       icon={
         <ButtonIcon
           icon={<LucidIcon name="Check" />}
