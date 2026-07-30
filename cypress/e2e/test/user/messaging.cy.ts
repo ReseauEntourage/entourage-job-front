@@ -591,8 +591,8 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.get('[data-testid="messaging-report-button"]').click();
       cy.contains('Signaler une conversation').should('be.visible');
 
-      cy.get('#form-report-user-reason').click();
-      cy.get('.Select__option').contains('Spam').click();
+      cy.get('[data-testid="form-report-user-reason"]').click();
+      cy.get('#select-option-SPAM').click();
       cy.get('#form-report-user-comment').type('Sollicitation commerciale');
       cy.get('[data-testid="form-confirm-form-report-user"]').click();
 
@@ -756,6 +756,10 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
 
       interceptGetConversations({ statusCode: 200, body: [conversation] });
       interceptGetConversationById({ statusCode: 200, body: conversation });
+      interceptGetProfileShareText({
+        statusCode: 200,
+        body: { text: 'Découvrez le profil de Yasmine !' },
+      });
 
       cy.visit(
         '/backoffice/messaging?conversationId=conversation-share-linkedin'
@@ -774,14 +778,12 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
 
   describe('Contenu suspect', () => {
     it('Affiche un avertissement sur un message reçu contenant une expression suspecte et permet de le signaler', () => {
-      // NEXT_PUBLIC_MESSAGING_FORBIDDEN_EXPRESSIONS must be set in the test
-      // env (see cypress/README.md env var list) — this feature is entirely
-      // dark otherwise, since isSuspiciousMessage() short-circuits to false
-      // when the env var is empty.
+      // isSuspiciousMessage() matches against the NEXT_PUBLIC_MESSAGING_FORBIDDEN_EXPRESSIONS
+      // env var, which is baked in at build time (Next.js public env var) —
+      // Cypress.env() can't see or override it at runtime. "rib" is part of
+      // the list committed in .env; if that list changes, update this string.
+      // The feature is entirely dark if the env var is ever emptied (see .env.dist).
       signInAs({ role: 'Candidat' });
-      const forbiddenExpressions =
-        Cypress.env('NEXT_PUBLIC_MESSAGING_FORBIDDEN_EXPRESSIONS') ||
-        'numero de telephone';
       const coach = buildParticipant({ id: 'user-coach', role: 'Coach' });
       const conversation = buildConversation({
         id: 'conversation-suspicious',
@@ -792,7 +794,7 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
         messages: [
           buildMessage({
             author: coach,
-            content: `Envoyez-moi votre ${forbiddenExpressions.split(',')[0]}`,
+            content: 'Envoyez-moi votre rib pour vous aider plus vite',
           }),
         ],
       });

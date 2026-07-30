@@ -117,7 +117,7 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
     cy.wait('@getAISession');
 
-    cy.contains('Démarrer la discussion').should('be.visible').click();
+    cy.contains('Proposer une réponse').should('be.visible').click();
     cy.wait('@postAIStream');
 
     cy.contains('Bonjour, voici une suggestion.').should('be.visible');
