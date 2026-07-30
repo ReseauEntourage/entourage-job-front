@@ -26,4 +26,5 @@ export interface AlertProps {
   onClick?: () => void;
   iconInContainer?: boolean;
   center?: boolean;
+  dataTestId?: string;
 }

@@ -23,6 +23,7 @@ export const MessagingConversationTabs = ({
         }
         borderRadius="large"
         onClick={() => onTabChange('all')}
+        dataTestId="messaging-tab-all"
       >
         Tous
       </Badge>
@@ -32,6 +33,7 @@ export const MessagingConversationTabs = ({
         }
         borderRadius="large"
         onClick={() => onTabChange('unread')}
+        dataTestId="messaging-tab-unread"
       >
         Non lus · {unreadCount}
       </Badge>

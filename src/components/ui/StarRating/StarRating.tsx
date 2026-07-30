@@ -26,6 +26,7 @@ export const StarRating = ({ onClick }: StarRatingProps) => {
             width={30}
             onMouseEnter={() => setHover(ratingValue)}
             onClick={() => onStarRatingClick(ratingValue)}
+            data-testid={`star-rating-${ratingValue}`}
           />
         );
       })}

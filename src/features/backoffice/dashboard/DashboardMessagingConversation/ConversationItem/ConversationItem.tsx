@@ -36,7 +36,10 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   };
 
   return (
-    <StyledContainer onClick={openConversation}>
+    <StyledContainer
+      onClick={openConversation}
+      data-testid="dashboard-messaging-widget-item"
+    >
       <StyledConversationMainInfos>
         <StyledConversationParticipants>
           <ImgUserProfile

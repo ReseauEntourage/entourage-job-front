@@ -76,14 +76,14 @@ export const MessagingConversationList = () => {
   }, []);
 
   return (
-    <ContainerStyled>
+    <ContainerStyled data-testid="messaging-conversation-list">
       <MessagingConversationTabs
         activeTab={activeTab}
         unreadCount={unseenConversationCount}
         onTabChange={setActiveTab}
       />
       {!isMobile && (
-        <StyledSearchBarContainer>
+        <StyledSearchBarContainer data-testid="messaging-search-bar">
           <SearchBar
             search={query}
             setSearch={setSearch}
@@ -105,7 +105,7 @@ export const MessagingConversationList = () => {
         {conversations &&
           conversations.length === 0 &&
           activeTab === 'unread' && (
-            <StyledEmptyState>
+            <StyledEmptyState data-testid="messaging-unread-empty-state">
               <Text center>Aucune conversation non lue</Text>
             </StyledEmptyState>
           )}

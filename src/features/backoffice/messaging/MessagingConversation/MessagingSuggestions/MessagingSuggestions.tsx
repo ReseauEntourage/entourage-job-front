@@ -155,7 +155,7 @@ export const MessagingSuggestions = ({
       return null;
     }
     return (
-      <MessagingQuickRepliesContainer>
+      <MessagingQuickRepliesContainer data-testid="messaging-quick-replies">
         <MessagingQuickRepliesListContainer>
           <LucidIcon
             name="MessageCircleReply"
@@ -177,7 +177,7 @@ export const MessagingSuggestions = ({
   }
 
   return (
-    <MessagingSuggestionsContainer>
+    <MessagingSuggestionsContainer data-testid="messaging-starter-suggestions">
       {newMessage.length <= 0 && (
         <>
           <MessagingSuggestionsExplanation>

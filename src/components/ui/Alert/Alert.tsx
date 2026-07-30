@@ -37,6 +37,7 @@ export const Alert = ({
   children,
   iconInContainer = false,
   center = false,
+  dataTestId,
 }: AlertProps) => {
   const handleClick = () => {
     if (clickable && onClick) {
@@ -78,6 +79,7 @@ export const Alert = ({
       $clickable={clickable && !!onClick}
       $center={center}
       onClick={handleClick}
+      data-testid={dataTestId}
     >
       {resizedIcon && (
         <StyledIconContainer $iconInContainer={iconInContainer}>

@@ -11,6 +11,7 @@ interface BadgeProps {
   size?: BadgeSize;
   borderRadius?: 'small' | 'medium' | 'large';
   onClick?: () => void;
+  dataTestId?: string;
 }
 
 export const Badge = ({
@@ -19,6 +20,7 @@ export const Badge = ({
   size = 'medium',
   borderRadius,
   onClick,
+  dataTestId,
 }: BadgeProps) => {
   return (
     <StyledBadge
@@ -27,6 +29,7 @@ export const Badge = ({
       $borderRadius={borderRadius}
       $clickable={!!onClick}
       onClick={onClick}
+      data-testid={dataTestId}
     >
       {children}
     </StyledBadge>

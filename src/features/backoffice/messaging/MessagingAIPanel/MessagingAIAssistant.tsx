@@ -282,7 +282,7 @@ export const MessagingAIAssistant = () => {
       </AIMessagesContainer>
 
       {escalation && (
-        <AIEscalateCard>
+        <AIEscalateCard data-testid="messaging-ai-escalate-card">
           <Text>
             <LucidIcon name="BadgeAlert" size={14} /> Cette situation peut
             nécessiter l&apos;intervention de{' '}
@@ -305,6 +305,7 @@ export const MessagingAIAssistant = () => {
           type={AlertType.Error}
           icon={<LucidIcon name="Clock" size={14} />}
           rounded
+          dataTestId="messaging-ai-rate-limit-alert"
         >
           Limite horaire atteinte (10 messages/heure). Réessayez dans environ{' '}
           {rateLimitMinutesLeft} minute{rateLimitMinutesLeft !== 1 ? 's' : ''}.
@@ -408,6 +409,7 @@ export const MessagingAIAssistant = () => {
               onClick={onNewConversation}
               disabled={isLoading || messages.length === 0}
               rounded={false}
+              dataTestId="messaging-ai-reset-button"
             >
               <LucidIcon name="RotateCcw" size={16} />
             </Button>
@@ -417,6 +419,7 @@ export const MessagingAIAssistant = () => {
               onClick={() => sendMessage(inputValue)}
               disabled={!inputValue.trim() || isLoading || isRateLimited}
               rounded={false}
+              dataTestId="messaging-ai-send-button"
             >
               <LucidIcon name="Send" size={18} />
             </Button>

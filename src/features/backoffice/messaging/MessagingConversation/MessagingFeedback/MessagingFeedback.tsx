@@ -67,6 +67,7 @@ export const MessagingFeedback = ({
       }
       onClose={() => onClose()}
       closable
+      dataTestId="messaging-feedback-alert"
     >
       <StyledAlertFeedbackContainer>
         <StyledAlertFeedbackTitle>
