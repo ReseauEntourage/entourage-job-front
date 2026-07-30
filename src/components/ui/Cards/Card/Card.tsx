@@ -29,6 +29,7 @@ interface CardProps {
   borderColor?: string;
   bgColor?: Color;
   shadow?: boolean;
+  contentPadding?: string;
 }
 
 export const Card = ({
@@ -45,6 +46,7 @@ export const Card = ({
   centerTitle = false,
   bgColor = 'white',
   shadow = true,
+  contentPadding,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -97,10 +99,16 @@ export const Card = ({
               </StyledChevronContainer>
             )}
           </StyledCardTopContainer>
-          {isOpen && <StyledCardContent>{children}</StyledCardContent>}
+          {isOpen && (
+            <StyledCardContent $contentPadding={contentPadding}>
+              {children}
+            </StyledCardContent>
+          )}
         </>
       ) : (
-        <StyledCardContent>{children}</StyledCardContent>
+        <StyledCardContent $contentPadding={contentPadding}>
+          {children}
+        </StyledCardContent>
       )}
     </StyledCard>
   );

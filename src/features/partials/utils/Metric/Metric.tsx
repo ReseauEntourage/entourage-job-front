@@ -24,7 +24,7 @@ interface MetricCardProps {
 
 export const MetricCard = ({ metric }: MetricCardProps) => {
   return (
-    <Card borderColor={COLORS.gray}>
+    <Card borderColor={COLORS.gray} contentPadding="0">
       <StyledMetricCard>
         <StyledCoverContainer>
           <Image src={metric.imageUrl} alt={metric.title} cover />
