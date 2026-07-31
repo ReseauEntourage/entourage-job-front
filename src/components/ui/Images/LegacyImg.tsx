@@ -1,5 +1,4 @@
-import { StaticImageData } from 'next/image';
-import Image from 'next/legacy/image';
+import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import { addPrefix } from '@/src/utils/Prefixing';
 
@@ -22,15 +21,16 @@ export const LegacyImg = ({
   onError = () => {},
   id = '',
 }: LegacyImgProps) => {
+  const resolvedSrc = typeof src === 'string' ? addPrefix(src) : src;
+
   if (cover) {
     return (
       <Image
         onError={onError}
         alt={alt}
-        src={typeof src === 'string' ? addPrefix(src) : src}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        src={resolvedSrc}
+        fill
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
         id={id}
       />
     );
@@ -40,10 +40,10 @@ export const LegacyImg = ({
       <Image
         onError={onError}
         alt={alt}
-        src={typeof src === 'string' ? addPrefix(src) : src}
+        src={resolvedSrc}
         width={width}
         height={height}
-        objectFit="contain"
+        style={{ objectFit: 'contain' }}
         id={id}
       />
     );
@@ -52,9 +52,9 @@ export const LegacyImg = ({
     <Image
       onError={onError}
       alt={alt}
-      src={typeof src === 'string' ? addPrefix(src) : src}
-      layout="fill"
-      objectFit="contain"
+      src={resolvedSrc}
+      fill
+      style={{ objectFit: 'contain' }}
       id={id}
     />
   );

@@ -38,8 +38,8 @@ export const StyledCardTopContainer = styled.div<{
       : ``}
 `;
 
-export const StyledCardContent = styled.div`
-  padding: 30px 22.5px 30px 22.5px;
+export const StyledCardContent = styled.div<{ $contentPadding?: string }>`
+  padding: ${({ $contentPadding }) => $contentPadding || '30px 22.5px 30px 22.5px'};
   width: 100%;
 `;
 
