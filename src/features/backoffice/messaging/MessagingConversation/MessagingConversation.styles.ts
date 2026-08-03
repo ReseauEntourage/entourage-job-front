@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const MessagingConversationWrapper = styled.div`
   display: flex;
@@ -20,6 +20,10 @@ export const MessagingConversationContainer = styled.div`
   border: ${COLORS.lightGray} 1px solid;
   box-sizing: border-box;
   height: 100%;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    min-height: 0;
+  }
 `;
 
 export const MessagingConversationAIPanel = styled.div`

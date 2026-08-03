@@ -93,7 +93,7 @@ export const MessagingConversationList = () => {
           />
         </StyledSearchBarContainer>
       )}
-      <StyledConversationsContainer className={isMobile ? 'mobile' : ''}>
+      <StyledConversationsContainer>
         {conversations &&
           conversations.length > 0 &&
           conversations.map((conversation) => (

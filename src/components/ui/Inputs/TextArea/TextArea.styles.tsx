@@ -23,7 +23,6 @@ export const StyledTextArea = styled.textarea<{
   $hasLineLimit: boolean;
   $textAreaWidth?: number;
   width: number;
-  $device: 'mobile' | 'desktop';
   $naked?: boolean;
 }>`
   ${() => commonInputStyles}

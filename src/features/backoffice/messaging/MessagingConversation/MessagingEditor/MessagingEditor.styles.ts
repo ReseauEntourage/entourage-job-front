@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const MessagingEditorContainer = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ export const MessagingEditorContainer = styled.div`
   padding: 20px 20px 20px 20px;
   gap: 10px;
   box-sizing: border-box;
-  &.mobile {
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
     position: sticky;
     bottom: 0;
   }
@@ -28,7 +28,7 @@ export const MessagingMessageForm = styled.form<{
   background: ${COLORS.lightGray};
   box-sizing: border-box;
   gap: 25px;
-  &.mobile {
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
     position: sticky;
     bottom: 0;
   }
