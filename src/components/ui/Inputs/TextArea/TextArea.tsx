@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { Text } from '@/src/components/ui';
-import { useIsMobile } from '@/src/hooks/utils';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -47,7 +46,6 @@ export function TextArea({
   setIsMaxLinesReached,
   naked = false,
 }: TextAreaProps) {
-  const isMobile = useIsMobile();
   const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
     useLineLimit(value, name, onChange, maxLines?.lines);
 
@@ -90,7 +88,6 @@ export function TextArea({
         width={maxLinesWidth}
       >
         <StyledTextArea
-          $device={isMobile ? 'mobile' : 'desktop'}
           $hasLineLimit={!!maxLines}
           width={maxLinesWidth}
           $naked={naked}

@@ -133,10 +133,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
           ))}
         </StyledAttachementInfoContainer>
       )}
-      <MessagingMessageForm
-        $blur={shouldGiveFeedback}
-        className={isMobile ? 'mobile' : ''}
-      >
+      <MessagingMessageForm $blur={shouldGiveFeedback}>
         <FileInput
           id="file-input"
           name="file-input"

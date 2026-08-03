@@ -43,7 +43,7 @@ export const CollaboratorSmallCard = ({
         </div>
       )}
       {!!email && (
-        <StyledCollaboratorSmallCardPictureContainerStyled $isMobile={isMobile}>
+        <StyledCollaboratorSmallCardPictureContainerStyled>
           <LegacyImg
             src="/static/img/profile-placeholder.png"
             alt="Default Profile"

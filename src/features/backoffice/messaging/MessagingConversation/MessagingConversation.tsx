@@ -305,10 +305,7 @@ export const MessagingConversation = () => {
           participants={selectedConversation?.participants || []}
         />
       ) : (
-        <MessagingMessagesContainer
-          $blur={shouldGiveFeedback}
-          className={isMobile ? 'mobile' : ''}
-        >
+        <MessagingMessagesContainer $blur={shouldGiveFeedback}>
           {reversedMessages &&
             reversedMessages.map((message) => (
               <MessagingMessage key={message.id} message={message} />
@@ -343,7 +340,7 @@ export const MessagingConversation = () => {
 
   if (!selectedConversationId) {
     return (
-      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+      <MessagingConversationContainer>
         <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
       </MessagingConversationContainer>
     );
@@ -355,7 +352,7 @@ export const MessagingConversation = () => {
 
   return (
     <MessagingConversationWrapper>
-      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+      <MessagingConversationContainer>
         {conversationContent}
       </MessagingConversationContainer>
       {!isMobile &&
