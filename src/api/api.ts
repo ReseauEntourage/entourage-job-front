@@ -53,6 +53,7 @@ export class APIHandler {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      paramsSerializer: { indexes: null },
     });
     addAxiosInterceptors(this.api);
   }
