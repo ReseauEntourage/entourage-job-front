@@ -305,7 +305,7 @@ describe('current-user slice', () => {
   it('profileCompleteDraftUpdated merges the partial payload into profileComplete', () => {
     const initialState = {
       ...slice.getInitialState(),
-      profileComplete: { description: 'Old', isAvailable: true } as any,
+      profileComplete: { description: 'Old', unavailableAt: null } as any,
     };
 
     const state = reducer(
@@ -315,7 +315,7 @@ describe('current-user slice', () => {
 
     expect(state.profileComplete).toEqual({
       description: 'New',
-      isAvailable: true,
+      unavailableAt: null,
     });
   });
 

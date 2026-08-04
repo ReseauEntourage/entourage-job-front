@@ -5,7 +5,7 @@
   "role": "Candidat",
   "zone": "LILLE",
   "currentJob": null,
-  "isAvailable": true,
+  "unavailableAt": null,
   "userProfileNudges": [
     {
       "id": "181a0e77-8e5f-4d02-ab1d-900f70d8e2ff",

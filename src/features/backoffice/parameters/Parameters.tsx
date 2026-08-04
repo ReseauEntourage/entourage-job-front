@@ -61,7 +61,7 @@ export const Parameters = () => {
       dispatch(
         currentUserActions.updateProfileRequested({
           userId: user.id,
-          userProfile: { isAvailable: true, unavailabilityReason: null },
+          userProfile: { unavailableAt: null, unavailabilityReason: null },
         })
       );
       dispatch(
@@ -112,7 +112,7 @@ export const Parameters = () => {
         role={user.role}
         gender={user.gender}
         department={userProfileComplete.department}
-        isAvailable={userProfileComplete.isAvailable}
+        isAvailable={!userProfileComplete.unavailableAt}
         phone={user.phone}
         email={user.email}
         hasPicture={userProfileComplete.hasPicture ?? false}

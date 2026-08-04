@@ -182,7 +182,7 @@ const CompactProfileCard = ({
         </StyledCardInfo>
       </StyledCardTop>
       <StyledCardBottom>
-        <AvailabilityTag isAvailable={profile.isAvailable} />
+        <AvailabilityTag isAvailable={!profile.unavailableAt} />
         {locked && <LockedCTA />}
       </StyledCardBottom>
     </StyledCard>
@@ -224,7 +224,7 @@ const FullProfileCard = ({
           {badgeLabel}
         </Badge>
         <StyledCardName>{displayName}</StyledCardName>
-        <AvailabilityTag isAvailable={profile.isAvailable} />
+        <AvailabilityTag isAvailable={!profile.unavailableAt} />
         {metierSource === 'currentJob' && (
           <StyledFullSectorLine>{metierText}</StyledFullSectorLine>
         )}

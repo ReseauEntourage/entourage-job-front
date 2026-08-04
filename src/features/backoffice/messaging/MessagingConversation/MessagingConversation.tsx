@@ -219,7 +219,7 @@ export const MessagingConversation = () => {
       (participant) => participant.id !== currentUserId
     );
     const addresseesAreUnavailable = addressees?.some(
-      (addressee) => addressee.userProfile?.isAvailable === false
+      (addressee) => !!addressee.userProfile?.unavailableAt
     );
     if (addresseesAreUnavailable) {
       dispatch(messagingActions.setPinnedInfo('ADDRESSEE_UNAVAILABLE'));

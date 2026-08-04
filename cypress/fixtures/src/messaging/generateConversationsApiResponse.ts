@@ -25,7 +25,7 @@ export const generateConversationsApiResponse = (count = 5) => {
           zone: 'PARIS',
           email: 'current-user@entourage.social',
           elearningCompletedAt: '2024-01-01T00:00:00.000Z',
-          userProfile: { hasPicture: false, isAvailable: true },
+          userProfile: { hasPicture: false, unavailableAt: null },
           conversationParticipant: {
             id: faker.string.uuid(),
             seenAt: createdAt,
@@ -42,7 +42,7 @@ export const generateConversationsApiResponse = (count = 5) => {
           zone: 'PARIS',
           email: faker.internet.exampleEmail(),
           elearningCompletedAt: '2024-01-01T00:00:00.000Z',
-          userProfile: { hasPicture: false, isAvailable: true },
+          userProfile: { hasPicture: false, unavailableAt: null },
           conversationParticipant: {
             id: faker.string.uuid(),
             seenAt: null,

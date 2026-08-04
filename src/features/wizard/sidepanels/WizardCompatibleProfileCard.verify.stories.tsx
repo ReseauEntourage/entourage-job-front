@@ -7,7 +7,7 @@ const baseProfile = {
   firstName: 'Jeanne',
   lastName: 'Dupont',
   role: UserRoles.COACH,
-  isAvailable: true,
+  unavailableAt: null,
   hasPicture: false,
   currentJob: 'Développeuse',
   sectorOccupations: [
