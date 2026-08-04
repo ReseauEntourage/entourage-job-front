@@ -62,6 +62,7 @@ export const HeaderProfileDesktop = ({
   averageDelayResponse,
   responseRate,
   totalConversationWithMirrorRoleCount,
+  availableMirrorRoleParticipantsCount,
   lastConnection,
   achievements,
 }: HeaderProfileProps) => {
@@ -173,6 +174,9 @@ export const HeaderProfileDesktop = ({
                         totalConversationWithMirrorRoleCount={
                           totalConversationWithMirrorRoleCount ?? null
                         }
+                        availableMirrorRoleParticipantsCount={
+                          availableMirrorRoleParticipantsCount ?? null
+                        }
                         lastConnection={lastConnection}
                         isOwnProfile={ownProfile}
                       />
@@ -202,6 +206,9 @@ export const HeaderProfileDesktop = ({
                   responseRate={responseRate ?? null}
                   totalConversationWithMirrorRoleCount={
                     totalConversationWithMirrorRoleCount ?? null
+                  }
+                  availableMirrorRoleParticipantsCount={
+                    availableMirrorRoleParticipantsCount ?? null
                   }
                   lastConnection={lastConnection}
                   isOwnProfile={ownProfile}
