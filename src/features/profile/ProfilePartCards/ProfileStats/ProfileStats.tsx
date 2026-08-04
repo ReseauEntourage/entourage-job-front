@@ -15,6 +15,7 @@ interface ProfileStatsProps {
   lastConnection: string;
   responseRate: number | null;
   totalConversationWithMirrorRoleCount: number | null;
+  availableMirrorRoleParticipantsCount: number | null;
   isOwnProfile: boolean;
 }
 
@@ -30,6 +31,7 @@ export const ProfileStats = ({
   lastConnection,
   responseRate,
   totalConversationWithMirrorRoleCount,
+  availableMirrorRoleParticipantsCount,
   isOwnProfile,
 }: ProfileStatsProps) => {
   const relativeConnectionDateInDays = useMemo(() => {
@@ -100,6 +102,18 @@ export const ProfileStats = ({
         });
       }
     }
+    if (
+      availableMirrorRoleParticipantsCount &&
+      availableMirrorRoleParticipantsCount > 0 &&
+      userRole === UserRoles.CANDIDATE
+    ) {
+      list.push({
+        value: `${availableMirrorRoleParticipantsCount} coach${
+          availableMirrorRoleParticipantsCount > 1 ? 's' : ''
+        } à ses côtés`,
+        icon: <LucidIcon name="HandHeart" />,
+      });
+    }
     return list;
   }, [
     createdAt,
@@ -108,6 +122,7 @@ export const ProfileStats = ({
     responseRate,
     averageDelayResponse,
     totalConversationWithMirrorRoleCount,
+    availableMirrorRoleParticipantsCount,
     userRole,
   ]);
 

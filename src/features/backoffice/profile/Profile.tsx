@@ -58,6 +58,9 @@ export const Profile = () => {
         totalConversationWithMirrorRoleCount={
           selectedProfile.totalConversationWithMirrorRoleCount ?? null
         }
+        availableMirrorRoleParticipantsCount={
+          selectedProfile.availableMirrorRoleParticipantsCount ?? null
+        }
         lastConnection={selectedProfile.lastConnection ?? null}
         achievements={selectedProfile.achievements ?? []}
         gender={selectedProfile.gender}

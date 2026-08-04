@@ -20,6 +20,7 @@ export interface HeaderProfileProps {
   averageDelayResponse: number | null;
   responseRate: number | null;
   totalConversationWithMirrorRoleCount: number | null;
+  availableMirrorRoleParticipantsCount: number | null;
   lastConnection: string;
 
   // Only for own profile

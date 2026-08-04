@@ -123,6 +123,9 @@ export const Parameters = () => {
         totalConversationWithMirrorRoleCount={
           userStats?.totalConversationWithMirrorRoleCount ?? null
         }
+        availableMirrorRoleParticipantsCount={
+          userStats?.availableMirrorRoleParticipantsCount ?? null
+        }
         lastConnection={user.lastConnection ?? null}
         achievements={achievements ?? []}
       />

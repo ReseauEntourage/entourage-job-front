@@ -65,6 +65,7 @@ export const HeaderProfileMobile = ({
   averageDelayResponse,
   responseRate,
   totalConversationWithMirrorRoleCount,
+  availableMirrorRoleParticipantsCount,
   lastConnection,
   achievements,
 }: HeaderProfileProps) => {
@@ -181,6 +182,9 @@ export const HeaderProfileMobile = ({
             responseRate={responseRate || null}
             totalConversationWithMirrorRoleCount={
               totalConversationWithMirrorRoleCount || null
+            }
+            availableMirrorRoleParticipantsCount={
+              availableMirrorRoleParticipantsCount || null
             }
             lastConnection={lastConnection}
             isOwnProfile={ownProfile}

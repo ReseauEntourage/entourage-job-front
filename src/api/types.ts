@@ -284,6 +284,7 @@ export type UserStats = {
   averageDelayResponse: number | null;
   responseRate: number | null;
   totalConversationWithMirrorRoleCount: number | null;
+  availableMirrorRoleParticipantsCount: number | null;
 };
 
 export enum FeatureKey {
