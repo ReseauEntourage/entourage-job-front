@@ -27,7 +27,7 @@ export function NetworkDirectoryList() {
             department={profile.department}
             sectorOccupations={profile.sectorOccupations}
             job={profile.currentJob}
-            isAvailable={profile.isAvailable}
+            isAvailable={!profile.unavailableAt}
             hasPicture={profile.hasPicture}
             currentJob={profile.currentJob}
             achievements={profile.achievements}

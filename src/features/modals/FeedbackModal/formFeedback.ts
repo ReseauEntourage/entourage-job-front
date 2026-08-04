@@ -10,7 +10,6 @@ import {
 } from '@/src/features/forms/FormSchema';
 
 interface FormFeedbackSchema extends FormSchemaValidation {
-  isAvailable: boolean;
   unavailabilityReason: string;
 }
 

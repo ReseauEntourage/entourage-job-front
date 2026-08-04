@@ -7,13 +7,16 @@ import { useModalContext } from '../Modal';
 import { formFeedback } from './formFeedback';
 
 export function FeedbackModal() {
-  const nextAvailibility = false;
+  const nextUnavailableAt = new Date().toISOString();
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
   const { onClose } = useModalContext();
 
   const onSubmit = ({ unavailabilityReason }) => {
-    updateUserProfile({ isAvailable: nextAvailibility, unavailabilityReason });
+    updateUserProfile({
+      unavailableAt: nextUnavailableAt,
+      unavailabilityReason,
+    });
     onClose?.();
   };
 
@@ -22,7 +25,7 @@ export function FeedbackModal() {
       title="Dites-nous en plus !"
       description="Votre avis nous intéresse. Pourriez-vous prendre un instant pour nous expliquer pourquoi vous n'êtes plus disponible ?"
       onClose={() => {
-        updateUserProfile({ isAvailable: nextAvailibility });
+        updateUserProfile({ unavailableAt: nextUnavailableAt });
         onClose?.();
       }}
     >

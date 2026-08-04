@@ -33,7 +33,7 @@ export function AlertCandidatesList({
           department={candidate.department}
           sectorOccupations={candidate.sectorOccupations}
           job={candidate.currentJob || undefined}
-          isAvailable={candidate.isAvailable || false}
+          isAvailable={candidate.unavailableAt === null}
           hasPicture={candidate.hasPicture || false}
           currentJob={candidate.currentJob || undefined}
           achievements={candidate.achievements || []}

@@ -22,7 +22,7 @@ export const AvailabilityTagEditable = ({
     if (isAvailable) {
       openModal(<FeedbackModal />);
     } else {
-      updateUserProfile({ isAvailable: true, unavailabilityReason: null });
+      updateUserProfile({ unavailableAt: null, unavailabilityReason: null });
     }
   };
 

@@ -11,7 +11,7 @@ export const interceptCurrentUserSubResources = () => {
     description: null,
     linkedinUrl: null,
     department: null,
-    isAvailable: true,
+    unavailableAt: null,
     currentJob: null,
     optInRecommendations: false,
     nudges: [],

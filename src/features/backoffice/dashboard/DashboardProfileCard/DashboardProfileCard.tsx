@@ -86,7 +86,7 @@ export const DashboardProfileCard = () => {
           {userProfile?.department && <Text>{userProfile.department}</Text>}
           <StyledTagList>
             <AvailabilityTagEditable
-              isAvailable={userProfile?.isAvailable ?? false}
+              isAvailable={!!userProfile && !userProfile.unavailableAt}
               user={user}
             />
             {achievements && achievements.length > 0 && (

@@ -42,7 +42,9 @@ export const UserProfileAvailabilityCard = ({
       ? 'Disponibilité pour recevoir des coups de pouces'
       : 'Disponibilité pour accompagner un candidat';
 
-  const itemName = profile?.isAvailable
+  const isAvailable = !!profile && !profile.unavailableAt;
+
+  const itemName = isAvailable
     ? 'Je suis disponible'
     : 'Je ne suis pas disponible';
 
@@ -52,7 +54,7 @@ export const UserProfileAvailabilityCard = ({
       openModal(<FeedbackModal />);
     } else {
       updateUserProfile({
-        isAvailable: true,
+        unavailableAt: null,
         unavailabilityReason: null,
       });
     }
@@ -61,7 +63,7 @@ export const UserProfileAvailabilityCard = ({
   return (
     <Card title={cardTitle} centerTitle={centerTitle}>
       <CardToggleList
-        items={[{ name: itemName, value: profile?.isAvailable ?? false }]}
+        items={[{ name: itemName, value: isAvailable }]}
         isEditable
         onChange={onChange}
       />

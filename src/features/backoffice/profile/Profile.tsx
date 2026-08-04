@@ -46,7 +46,7 @@ export const Profile = () => {
     <StyledBackofficeBackground>
       <HeaderProfile
         id={selectedProfile.id}
-        isAvailable={selectedProfile.isAvailable}
+        isAvailable={!selectedProfile.unavailableAt}
         firstName={selectedProfile.firstName}
         lastName={selectedProfile.lastName}
         role={selectedProfile.role}
@@ -121,7 +121,7 @@ export const Profile = () => {
               userId={selectedProfile.id}
               firstName={selectedProfile.firstName}
               role={selectedProfile.role}
-              isAvailable={selectedProfile.isAvailable}
+              isAvailable={!selectedProfile.unavailableAt}
             />
             {selectedProfile.role === UserRoles.CANDIDATE && (
               <ProfileShareNetwork profile={selectedProfile} />

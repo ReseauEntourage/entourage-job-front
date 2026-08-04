@@ -20,7 +20,7 @@ export const buildParticipant = (overrides: Record<string, any> = {}) => {
     zone: 'PARIS',
     email: faker.internet.exampleEmail(),
     elearningCompletedAt: '2024-01-01T00:00:00.000Z',
-    userProfile: { hasPicture: false, isAvailable: true },
+    userProfile: { hasPicture: false, unavailableAt: null },
     conversationParticipant: {
       id: faker.string.uuid(),
       seenAt: '2024-01-01T00:00:00.000Z',
