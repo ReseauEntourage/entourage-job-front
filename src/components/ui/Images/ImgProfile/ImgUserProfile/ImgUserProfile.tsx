@@ -45,7 +45,7 @@ export const ImgUserProfile = ({
 
   return (
     <ImgProfile
-      pictureUrl={hasPicture ? `${urlImg}?${hash}` : null}
+      pictureUrl={hasPicture && urlImg ? `${urlImg}?${hash}` : null}
       placeholder={user.firstName}
       size={size}
       highlight={highlight}
