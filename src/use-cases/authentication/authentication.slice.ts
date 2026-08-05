@@ -89,6 +89,7 @@ export const slice = createSlice({
       _state,
       _action: PayloadAction<{ email: string; code: string }>
     ) {},
+    autologinRequested(_state, _action: PayloadAction<{ token: string }>) {},
   },
 });
 

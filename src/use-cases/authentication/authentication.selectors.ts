@@ -1,6 +1,7 @@
 import { ReduxRequestEvents } from '@/src/constants';
 import { api } from '@/src/store/api/api.slice';
 import {
+  AUTOLOGIN_FIXED_CACHE_KEY,
   authenticationApi,
   SEND_VERIFY_EMAIL_FIXED_CACHE_KEY,
   VERIFY_EMAIL_TOKEN_FIXED_CACHE_KEY,
@@ -92,3 +93,12 @@ export const verifyOtpSelectors = {
 export function selectVerifyOtpError(state: RootState) {
   return state.authentication.verifyOtpError;
 }
+
+export const autologinSelectors = {
+  selectAutologinStatus: (state: RootState) =>
+    toReduxRequestStatus(
+      authenticationApi.endpoints.autologin.select(AUTOLOGIN_FIXED_CACHE_KEY)(
+        state
+      )
+    ),
+};

@@ -19,6 +19,7 @@ import {
   InviteCollaboratorsFromCompanyDto,
   Organization,
   OrganizationDto,
+  PostAuthAutologinParams,
   PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   PostAuthVerifyOtpParams,
@@ -605,6 +606,12 @@ export class APIHandler {
     params: PostAuthFinalizeReferedUserParams
   ): Promise<AxiosResponse<string>> {
     return this.post('/auth/finalize-refered-user', params);
+  }
+
+  postAuthAutologin(
+    params: PostAuthAutologinParams
+  ): Promise<AxiosResponse<{ token: string }>> {
+    return this.post('/auth/autologin', params);
   }
 
   // no logout?
