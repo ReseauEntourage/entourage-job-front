@@ -765,6 +765,10 @@ export type PostAuthFinalizeReferedUserParams = {
   password: string;
 };
 
+export type PostAuthAutologinParams = {
+  token: string;
+};
+
 export type ExternalCv = {
   url: string;
 };

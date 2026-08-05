@@ -37,6 +37,7 @@ export const LOGOUT_FIXED_CACHE_KEY = 'logout';
 export const VERIFY_EMAIL_TOKEN_FIXED_CACHE_KEY = 'verifyEmailToken';
 export const SEND_VERIFY_EMAIL_FIXED_CACHE_KEY = 'sendVerifyEmail';
 export const VERIFY_OTP_FIXED_CACHE_KEY = 'verifyOtp';
+export const AUTOLOGIN_FIXED_CACHE_KEY = 'autologin';
 
 export const authenticationApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -165,6 +166,32 @@ export const authenticationApi = api.injectEndpoints({
         }
       },
     }),
+    /**
+     * Exchanges the one-time autologin token from a new message notification
+     * email link for a session. Strictly scoped to that link — on failure
+     * (invalid/expired/already consumed token), the caller falls back to the
+     * normal `/login` redirect, so no dedicated error state is tracked here.
+     */
+    autologin: builder.mutation<{ accessToken: string }, { token: string }>({
+      queryFn: async ({ token }) => {
+        try {
+          const response = await Api.postAuthAutologin({ token });
+          return { data: { accessToken: response.data.token } };
+        } catch (error) {
+          return { error };
+        }
+      },
+      onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(loginSucceeded(data));
+          localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.accessToken);
+        } catch {
+          // No dedicated failure state: the caller falls back to the
+          // normal unauthenticated flow (redirect to `/login`).
+        }
+      },
+    }),
   }),
 });
 
@@ -174,4 +201,5 @@ export const {
   useVerifyEmailTokenMutation,
   useSendVerifyEmailMutation,
   useVerifyOtpMutation,
+  useAutologinMutation,
 } = authenticationApi;

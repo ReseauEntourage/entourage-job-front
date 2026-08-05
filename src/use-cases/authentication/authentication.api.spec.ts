@@ -10,6 +10,7 @@ import { seedAccessToken } from '@/src/store/testUtils/seedAccessToken';
 import { selectFetchCurrentProfileStatus } from '@/src/use-cases/current-user';
 import { VerifyEmailTokenErrorType } from './authentication.adapters';
 import {
+  autologinSelectors,
   logoutSelectors,
   sendVerifyEmailSelectors,
   verifyEmailTokenSelectors,
@@ -294,6 +295,47 @@ describe('authentication api', () => {
       await flushPromises();
 
       expect(store.getState().authentication.verifyOtpError).toBe('INVALID');
+    });
+  });
+
+  describe('autologinRequested (trigger listener)', () => {
+    it('logs in and stores the access token on success', async () => {
+      const store = createTestStore();
+      mockedApi.postAuthAutologin.mockResolvedValue({
+        data: { token: 'autologin-token' },
+      } as any);
+
+      store.dispatch(actions.autologinRequested({ token: 'link-token' }));
+      await flushPromises();
+
+      expect(store.getState().authentication.accessToken).toBe(
+        'autologin-token'
+      );
+      expect(localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)).toBe(
+        'autologin-token'
+      );
+      expect(autologinSelectors.selectAutologinStatus(store.getState())).toBe(
+        'SUCCEEDED'
+      );
+      expect(mockedApi.postAuthAutologin).toHaveBeenCalledWith({
+        token: 'link-token',
+      });
+    });
+
+    it('fails without touching the access token when the token is invalid/expired/already used', async () => {
+      const store = createTestStore();
+      mockedApi.postAuthAutologin.mockRejectedValue(
+        buildAxiosError(401, 'AUTOLOGIN_TOKEN_EXPIRED')
+      );
+
+      store.dispatch(actions.autologinRequested({ token: 'link-token' }));
+      await flushPromises();
+
+      expect(autologinSelectors.selectAutologinStatus(store.getState())).toBe(
+        'FAILED'
+      );
+      expect(store.getState().authentication.accessToken).toBeNull();
+      expect(localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)).toBeNull();
     });
   });
 });

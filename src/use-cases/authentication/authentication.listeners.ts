@@ -1,5 +1,6 @@
 import { listenerMiddleware } from '@/src/store/listenerMiddleware';
 import {
+  AUTOLOGIN_FIXED_CACHE_KEY,
   authenticationApi,
   LOGIN_FIXED_CACHE_KEY,
   LOGOUT_FIXED_CACHE_KEY,
@@ -66,6 +67,17 @@ listenerMiddleware.startListening({
     listenerApi.dispatch(
       authenticationApi.endpoints.verifyOtp.initiate(action.payload, {
         fixedCacheKey: VERIFY_OTP_FIXED_CACHE_KEY,
+      })
+    );
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: actions.autologinRequested,
+  effect: (action, listenerApi) => {
+    listenerApi.dispatch(
+      authenticationApi.endpoints.autologin.initiate(action.payload, {
+        fixedCacheKey: AUTOLOGIN_FIXED_CACHE_KEY,
       })
     );
   },
