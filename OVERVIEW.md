@@ -53,10 +53,6 @@ pnpm run add-icons
 pnpm dlx dead-exports
 ```
 
-Docker:
-
-- `docker-compose.yml` — Node.js + Next.js dev server.
-
 Heroku Procfile:
 
 ```
@@ -87,7 +83,7 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 - **Styling**: CSS Modules + styled-components.
 - **Real-time**: Pusher WebSocket.
 - **CI/CD**: GitHub Actions.
-- **Deployment**: Heroku, Docker.
+- **Deployment**: Heroku.
 
 ## Secrets (env vars)
 
