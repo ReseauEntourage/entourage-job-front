@@ -2,12 +2,13 @@
 
 > Added by the `entourage_specs` meta-repo. The submodule's own canonical README lives at `README.md`.
 
-The PRO product frontend. Next.js 15 (App Router) + React 19 + Redux Toolkit + Redux-Saga. Serves candidates, coaches, companies and admins with responsive UI for job placement, CV profiles, real-time messaging, event management and company engagement. Tested with Cypress (cloud-recorded on Cypress.io) and Jest. Storybook component library with Chromatic visual regression. Hosted on Heroku.
+The PRO product frontend. Next.js 16 (Pages Router, Turbopack) + React 19 + Redux Toolkit with RTK Query. Serves candidates, coaches, referers, companies and admins with responsive UI for job placement, profiles, messaging, event management and company engagement. Tested with Cypress (cloud-recorded on Cypress Cloud) and Jest. Storybook component library with Chromatic visual regression. Hosted on Heroku.
 
 ## Interactions
 
-- **Backend**: HTTPS REST via Axios to `NEXT_PUBLIC_API_URL` (the `entourage-job-back` API). Auth tokens stored in cookies.
-- **Real-time messaging**: Pusher JS 7.6 client (`NEXT_PUBLIC_PUSHER_API_KEY`) for coach/candidate live chat.
+- **Backend**: HTTPS REST via Axios to `NEXT_PUBLIC_API_URL` (the `entourage-job-back` API). Auth token stored in `localStorage` and injected by an Axios interceptor.
+- **Messaging**: HTTP polling (30s) against the `/messaging` endpoints — not WebSocket.
+- **Pusher**: Pusher JS 7.6 client (`NEXT_PUBLIC_PUSHER_API_KEY`) used for profile-generation and embedding-status channels only.
 - **Analytics / monitoring**:
   - Google Analytics (`NEXT_PUBLIC_GA_TRACKING_ID`) via `gtag.ts`.
   - Datadog RUM Browser 6.24 (`NEXT_PUBLIC_DD_APP_ID`, `NEXT_PUBLIC_DD_CLIENT_TOKEN`).
@@ -28,7 +29,6 @@ pnpm run test:ts-check
 
 # Dev
 pnpm run dev               # next dev --turbopack
-pnpm run dev:network       # accessible from LAN (mobile testing)
 
 # Prod
 pnpm run build
@@ -44,7 +44,6 @@ pnpm run cypress:local
 pnpm run cypress:io
 
 # Tooling
-pnpm run lint
 pnpm run format
 pnpm run storybook
 pnpm run build-storybook
@@ -63,25 +62,25 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 
 ## External libraries
 
-- **Framework / rendering**: Next.js 15.5.15, React 19.0.0, React-DOM 19, Webpack 5.
-- **State**: `@reduxjs/toolkit` 1.9.7, `react-redux` 8.1.3, `redux-saga` 1.3.0, `typed-redux-saga` 1.5.0, `rxjs` 7.8.2.
-- **Styling**: UIKit 3.6.22 (legacy, being phased out), `styled-components` 6.4.4, SVGR.
-- **Forms / input**: `react-hook-form` 7.54.2, `react-phone-number-input` 3.4.12, `react-select` 5.10.1.
-- **HTTP / utils**: `axios` 0.31.0, `check-password-strength` 2.0.10.
-- **Real-time**: `pusher-js` 7.6.0.
-- **Components**: `react-transition-group` 4.4.5, `react-spinners` 0.13.8, `react-tooltip` 5.28.0, `react-countup` 4.4.0, `react-visibility-sensor` 5.1.1, `react-lite-youtube-embed` 3.3.3, `react-share` 5.3.0, `react-modal` 3.16.3, `swiper` 12.1.2, `mobile-detect` 1.4.5.
-- **Content**: `marked` 4 + `dompurify` 3.4.1.
+- **Framework / rendering**: Next.js 16.2.12, React 19.2.8, React-DOM 19.2.8, Turbopack (Webpack config kept as fallback).
+- **State**: `@reduxjs/toolkit` 2.12 (incl. RTK Query), `react-redux` 9.3.0, `rxjs` 7.8.2. No sagas — replaced by RTK Query + RTK listener middleware.
+- **Styling**: `styled-components` 6.4.4, SVGR, UIkit 3.6.22 (legacy, being phased out).
+- **Forms / input**: `react-hook-form` 7.54.2, `react-phone-number-input` 3.4.12, `react-select` 5.10.1, `react-image-file-resizer` 0.3.11.
+- **HTTP / utils**: `axios` 1.18.1, `lodash` 4.18, `moment` 2.30, `validator` 13.15, `uuid` 11.1, `check-password-strength` 2.0.10.
+- **Pusher**: `pusher-js` 7.6.0.
+- **Components / icons**: `lucide-react` 0.447, `react-transition-group` 4.4.5, `react-spinners` 0.13.8, `react-tooltip` 5.28.0, `react-countup` 4.4.0, `react-visibility-sensor` 5.1.1, `react-lite-youtube-embed` 3.3.3, `react-share` 5.3.0, `react-modal` 3.16.3, `swiper` 12.1.2, `mobile-detect` 1.4.5.
+- **Content**: `marked` 4 + `dompurify` 3.4.12.
 - **Monitoring**: `@datadog/browser-rum` 6.24.0, `dd-trace` 5.76 (SSR).
-- **Test**: Cypress 14.2.0, Jest 30.4.2, `@testing-library/react` 16.2.0, `@testing-library/jest-dom` 6.6.3, Storybook 10.3.5, Chromatic 6.24.1.
+- **Test**: Cypress 15.19.0, Jest 30.4.2, `@testing-library/react` 16.2.0, `@testing-library/jest-dom` 6.6.3, Storybook 10.3.5, Chromatic 6.24.1.
 
 ## Used technologies
 
-- **Language**: TypeScript 5.9.3.
-- **Runtime**: Node.js 22.x (per `package.json` engines), 20.x supported.
-- **Framework**: Next.js 15 (App Router) + React 19.
-- **State**: Redux Toolkit + Redux-Saga.
-- **Styling**: CSS Modules + styled-components.
-- **Real-time**: Pusher WebSocket.
+- **Language**: TypeScript 6.x.
+- **Runtime**: Node.js 24.x (per `package.json` engines; `.nvmrc` pins 24.15.0).
+- **Package manager**: pnpm 11.15.1 (npm is not supported on this project).
+- **Framework**: Next.js 16 (Pages Router) + React 19.
+- **State**: Redux Toolkit + RTK Query + listener middleware.
+- **Styling**: styled-components (+ residual UIkit).
 - **CI/CD**: GitHub Actions.
 - **Deployment**: Heroku.
 
