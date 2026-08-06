@@ -1,6 +1,6 @@
 import _ from 'lodash';
+import { FilterConstant } from '@/src/constants/utils';
 import { UserRoles } from '../constants/users';
-import { FilterConstant } from 'src/constants/utils';
 
 export function findConstantFromValue<T extends FilterConstant>(
   valToFind: string | boolean | number,

@@ -3,8 +3,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Genders } from '@/src/constants/genders';
-import { UserRoles } from 'src/constants/users';
-import { store } from 'src/store/store';
+import { UserRoles } from '@/src/constants/users';
+import { store } from '@/src/store/store';
 import { ProfileCard, ProfileCardProps } from '.';
 
 const Component = (props: ProfileCardProps) => {

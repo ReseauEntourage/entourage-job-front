@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react';
+import { Text } from '@/src/components/ui';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -7,8 +8,6 @@ import {
   StyledLimitContainer,
 } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { Text } from 'src/components/ui';
-import { useIsMobile } from 'src/hooks/utils';
 import {
   StyledTextArea,
   StyledTextAreaContainer,
@@ -47,7 +46,6 @@ export function TextArea({
   setIsMaxLinesReached,
   naked = false,
 }: TextAreaProps) {
-  const isMobile = useIsMobile();
   const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
     useLineLimit(value, name, onChange, maxLines?.lines);
 
@@ -78,23 +76,21 @@ export function TextArea({
   const shouldShowFooter = !!error || shouldShowAnnotations;
 
   return (
-    <StyledTextAreaContainer disabled={disabled} naked={naked}>
+    <StyledTextAreaContainer disabled={disabled} $naked={naked}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
         </StyledInputLabel>
       )}
       <StyledTextAreaScrollContainer
-        textAreaWidth={textAreaWidth}
-        isMobile={isMobile}
-        hasLineLimit={!!maxLines}
+        $textAreaWidth={textAreaWidth}
+        $hasLineLimit={!!maxLines}
         width={maxLinesWidth}
       >
         <StyledTextArea
-          device={isMobile ? 'mobile' : 'desktop'}
-          hasLineLimit={!!maxLines}
+          $hasLineLimit={!!maxLines}
           width={maxLinesWidth}
-          naked={naked}
+          $naked={naked}
           ref={(e: HTMLTextAreaElement | null) => {
             if (inputRef) {
               inputRef(e);
@@ -106,7 +102,10 @@ export function TextArea({
           data-testid={id}
           rows={rows || 5}
           placeholder={
-            (showLabel ? placeholder : placeholder || title) || 'Écrivez'
+            (showLabel
+              ? placeholder
+              : placeholder ||
+                (typeof title === 'string' ? title : undefined)) || 'Écrivez'
           }
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event.target.value)
@@ -114,7 +113,7 @@ export function TextArea({
           disabled={disabled}
           onBlur={onBlur}
           onKeyDown={onKeyDown}
-          maxLength={!maxLines ? maxLength : null}
+          maxLength={!maxLines ? maxLength : undefined}
           value={value || ''}
         />
       </StyledTextAreaScrollContainer>

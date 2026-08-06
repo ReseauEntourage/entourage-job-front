@@ -5,9 +5,10 @@ import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { authenticationActions } from '@/src/use-cases/authentication';
 import {
-  messagingActions,
+  POST_MESSAGE_FIXED_CACHE_KEY,
   selectPostMessageStatus,
   selectSelectedConversationId,
+  usePostMessageMutation,
 } from '@/src/use-cases/messaging';
 
 interface UseWizardRedirectsParams {
@@ -37,6 +38,9 @@ export const useWizardRedirects = ({
   const router = useRouter();
   const postMessageStatus = useSelector(selectPostMessageStatus);
   const selectedConversationId = useSelector(selectSelectedConversationId);
+  const [, { reset: resetPostMessage }] = usePostMessageMutation({
+    fixedCacheKey: POST_MESSAGE_FIXED_CACHE_KEY,
+  });
 
   // Back to selection if there's no valid flow (null or unrecognized value).
   // We wait for the current user fetch to finish: on a direct reload of
@@ -93,7 +97,7 @@ export const useWizardRedirects = ({
     }
     if (postMessageStatus === ReduxRequestEvents.SUCCEEDED) {
       pendingSuggestedMessageRedirectRef.current = false;
-      dispatch(messagingActions.postMessageReset());
+      resetPostMessage();
       // `postMessageSucceeded` already puts the newly created conversation's
       // id into `selectedConversationId` (cf. messaging.slice.ts): pass it
       // explicitly as a query param rather than relying on the Redux store
@@ -108,7 +112,7 @@ export const useWizardRedirects = ({
       // impossible to let the user correct and retry there. So we send them
       // back to the dashboard rather than leaving them stuck on an empty step.
       pendingSuggestedMessageRedirectRef.current = false;
-      dispatch(messagingActions.postMessageReset());
+      resetPostMessage();
       router.push('/backoffice/dashboard');
     }
   }, [
@@ -116,6 +120,6 @@ export const useWizardRedirects = ({
     selectedConversationId,
     pendingSuggestedMessageRedirectRef,
     router,
-    dispatch,
+    resetPostMessage,
   ]);
 };

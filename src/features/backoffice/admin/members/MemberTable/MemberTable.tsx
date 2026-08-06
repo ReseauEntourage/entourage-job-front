@@ -1,6 +1,6 @@
 import React, { useMemo, type JSX } from 'react';
 import { Table, Th } from '@/src/components/ui/Table';
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import { MemberColumn } from './Member/Member.types';
 
 interface MemberTableProps {

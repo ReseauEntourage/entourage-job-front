@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { Button, Text } from '@/src/components/ui';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
@@ -10,9 +11,8 @@ import { openModal } from '@/src/features/modals/Modal/openModal';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useProfileShare } from '@/src/hooks/useProfileShare';
-import { Api } from 'src/api';
-import { currentUserActions } from 'src/use-cases/current-user';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { currentUserActions } from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 interface ProfileShareNetworkProps {
   profile: {

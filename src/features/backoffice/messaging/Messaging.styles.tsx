@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS, HEIGHTS } from '@/src/constants/styles';
 
 /**
  * General Messaging Styles
@@ -8,6 +8,7 @@ export const StyledMessagingGridDesktop = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100vh - ${HEIGHTS.HEADER}px);
+  height: calc(100dvh - ${HEIGHTS.HEADER}px);
   flex: 1;
   border-top: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
     ${COLORS.lightGray};
@@ -21,6 +22,7 @@ export const StyledMessagingGridMobile = styled.div`
   align-items: flex-start;
   width: 100%;
   height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
+  height: calc(100dvh - ${HEIGHTS.HEADER_MOBILE}px);
 `;
 
 export const StyledMessagingLeftPanel = styled.div`
@@ -52,6 +54,7 @@ export const StyledMessagingConversationContainerMobile = styled.div`
 export const MessagingEmptyStateContainerDesktop = styled.div`
   flex: 1;
   height: calc(100vh - ${HEIGHTS.HEADER}px);
+  height: calc(100dvh - ${HEIGHTS.HEADER}px);
   padding: 20px 50px;
 `;
 

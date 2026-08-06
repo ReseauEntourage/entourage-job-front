@@ -4,7 +4,11 @@ import { ReduxRequestEvents } from '@/src/constants';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { verifyOtpSelectors } from '@/src/use-cases/authentication/authentication.selectors';
 import { selectFetchCurrentProfileStatus } from '@/src/use-cases/current-user';
-import { registrationActions } from '@/src/use-cases/registration';
+import {
+  CREATE_USER_FIXED_CACHE_KEY,
+  registrationActions,
+  useCreateUserMutation,
+} from '@/src/use-cases/registration';
 import { useWizardStepEmailConfirmation } from './steps/useWizardStepEmailConfirmation';
 
 export interface EmailConfirmationPhaseState {
@@ -26,18 +30,21 @@ export const useEmailConfirmationPhase = ({
   goToStepById,
 }: UseEmailConfirmationPhaseParams): EmailConfirmationPhaseState => {
   const dispatch = useDispatch();
+  const [, { reset: resetCreateUser }] = useCreateUserMutation({
+    fixedCacheKey: CREATE_USER_FIXED_CACHE_KEY,
+  });
 
   const onBack = useCallback(() => {
-    dispatch(registrationActions.createUserReset());
+    resetCreateUser();
     dispatch(registrationActions.setRegistrationIsEnded(false));
     goToLastStep();
-  }, [dispatch, goToLastStep]);
+  }, [dispatch, goToLastStep, resetCreateUser]);
 
   const onEditEmail = useCallback(() => {
-    dispatch(registrationActions.createUserReset());
+    resetCreateUser();
     dispatch(registrationActions.setRegistrationIsEnded(false));
     goToStepById('account');
-  }, [dispatch, goToStepById]);
+  }, [dispatch, goToStepById, resetCreateUser]);
 
   const step = useWizardStepEmailConfirmation(onEditEmail);
 

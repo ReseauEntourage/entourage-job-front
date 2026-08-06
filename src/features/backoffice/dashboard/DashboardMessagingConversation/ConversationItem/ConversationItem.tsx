@@ -2,11 +2,11 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Conversation, ConversationParticipant } from '@/src/api/types';
 import { ImgUserProfile, Text } from '@/src/components/ui';
 import { conversationHasUnreadMessages } from '@/src/features/backoffice/messaging/messaging.utils';
-import { Conversation, ConversationParticipant } from 'src/api/types';
-import { useIsDesktop } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   StyledContainer,
   StyledConversationMainInfos,
@@ -36,7 +36,10 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   };
 
   return (
-    <StyledContainer onClick={openConversation}>
+    <StyledContainer
+      onClick={openConversation}
+      data-testid="dashboard-messaging-widget-item"
+    >
       <StyledConversationMainInfos>
         <StyledConversationParticipants>
           <ImgUserProfile
@@ -49,7 +52,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
           </Text>
         </StyledConversationParticipants>
         {isDesktop && (
-          <StyledMessagePreview hasSeen={userHasSeenConversation}>
+          <StyledMessagePreview $hasSeen={userHasSeenConversation}>
             <Text weight={!userHasSeenConversation ? 'bold' : undefined}>
               {conversation.messages[0].content}
             </Text>

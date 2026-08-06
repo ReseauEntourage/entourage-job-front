@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color, FONT_WEIGHTS } from 'src/constants/styles';
+import { Color, FONT_WEIGHTS } from '@/src/constants/styles';
 
 export type TextSize =
   'xsmall' | 'small' | 'normal' | 'large' | 'xlarge' | 'xxlarge' | number;

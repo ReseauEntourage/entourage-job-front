@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledColorsContainer = styled.div`
   display: flex;
@@ -20,12 +20,15 @@ export const StyledColorContainer = styled.div`
   }
 `;
 
-export const StyledColor = styled.div`
+export const StyledColor = styled.div<{
+  color: string;
+  $isDarkColor?: boolean;
+}>`
   background-color: ${(props) => {
     return props.color;
   }};
   color: ${(props) => {
-    return props.isDarkColor ? COLORS.white : COLORS.black;
+    return props.$isDarkColor ? COLORS.white : COLORS.black;
   }};
   height: 100px;
   width: 150px;

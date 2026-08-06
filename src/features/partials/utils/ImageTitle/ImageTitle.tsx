@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, BackgroundImage, Text } from '@/src/components/ui';
 import { H1 } from '@/src/components/ui/Headings';
-import { Color } from 'src/constants/styles';
-import { useIsDesktop } from 'src/hooks/utils';
+import { Color } from '@/src/constants/styles';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   StyledImageTitle,
   StyledImageTitleCTAsContainer,
@@ -48,7 +48,7 @@ export const ImageTitle = ({
       isHero
       hasCta={!!cta}
     >
-      <StyledImageTitle textColor={textColor || 'white'}>
+      <StyledImageTitle>
         <H1 title={title} color={textColor || 'white'} />
         {description && (
           <Text
@@ -72,7 +72,7 @@ export const ImageTitle = ({
           </Button>
         )}
         {cta && Array.isArray(cta) && cta.length > 0 && (
-          <StyledImageTitleCTAsContainer marginTop={!description}>
+          <StyledImageTitleCTAsContainer $marginTop={!description}>
             {cta.map(
               (
                 { label, variant, dataTest, onClick, href, isExternal, newTab },

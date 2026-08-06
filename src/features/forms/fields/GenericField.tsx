@@ -25,16 +25,14 @@ import {
 } from '@/src/components/ui/Inputs';
 import { CommonInputProps } from '@/src/components/ui/Inputs/Inputs.types';
 import { RadioTypes } from '@/src/components/ui/Inputs/Radio/Radio.types';
-import {
-  SelectCard,
-  SelectCardType,
-} from '@/src/components/ui/Inputs/SelectCard';
 
 import { SelectListAsync } from '@/src/components/ui/Inputs/SelectList';
 import {
   SelectList,
   SelectListType,
 } from '@/src/components/ui/Inputs/SelectList';
+import { FilterConstant } from '@/src/constants/utils';
+import { AnyCantFix } from '@/src/utils/Types';
 import {
   ComponentException,
   ExtractFormSchemaValidation,
@@ -48,8 +46,6 @@ import {
   mapFieldRules,
   Rule,
 } from '../FormSchema';
-import { FilterConstant } from 'src/constants/utils';
-import { AnyCantFix } from 'src/utils/Types';
 
 interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
   formSchema: S;
@@ -355,24 +351,6 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
               await field.loadOptions(callback);
             }
           }}
-        />
-      );
-    }
-    if (field.component === 'select-card') {
-      return (
-        <SelectCard
-          {...commonProps}
-          isMulti={field.isMulti}
-          optionsToDisable={
-            field.optionsToDisable
-              ? field.optionsToDisable(getValue)
-              : undefined
-          }
-          options={
-            (typeof field.options === 'function'
-              ? field.options(getValue)
-              : field.options) as SelectCardType[]
-          }
         />
       );
     }

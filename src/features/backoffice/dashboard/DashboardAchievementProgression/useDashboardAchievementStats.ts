@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Api } from 'src/api';
+import { Api } from '@/src/api';
 
 interface AchievementStats {
   responseRate: number | null;

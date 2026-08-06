@@ -1,17 +1,17 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Spinner } from '@/src/components/ui/Spinner';
-import { Api } from 'src/api';
+import { Api } from '@/src/api';
 import {
   isEmailAlreadyVerifiedError,
   isInvalidTokenError,
   isTokenExpiredError,
-} from 'src/api/axiosErrors';
-import { PostAuthFinalizeReferedUserParams } from 'src/api/types';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { formFinalizeReferedUser } from 'src/features/forms/schemas/formFinalizeReferedUser';
-import { authenticationActions } from 'src/use-cases/authentication';
+} from '@/src/api/axiosErrors';
+import { PostAuthFinalizeReferedUserParams } from '@/src/api/types';
+import { Spinner } from '@/src/components/ui/Spinner';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { formFinalizeReferedUser } from '@/src/features/forms/schemas/formFinalizeReferedUser';
+import { authenticationActions } from '@/src/use-cases/authentication';
 
 export const FinalizeReferedUser = () => {
   const [tokenString, setToken] = useState<string | null>(null);

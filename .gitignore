@@ -9,7 +9,7 @@ public/static/img/compress.sh
 coverage/
 /cypress/screenshots
 /cypress/videos
-/tsconfig.tsbuildinfo
-/tsconfig.base.tsbuildinfo
+tsconfig.tsbuildinfo
+tsconfig.base.tsbuildinfo
 /storybook-static
 cypress/fixtures/api/generated/*.json

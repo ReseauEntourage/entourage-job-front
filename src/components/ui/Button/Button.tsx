@@ -43,23 +43,27 @@ export function Button({
       })
     : appendIcon;
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    return onClick(e.nativeEvent);
+  };
+
   const buttonComponent = (
     <StyledButton
       id={id}
       className={`${className}`}
-      rounded={rounded}
+      $rounded={rounded}
       disabled={disabled}
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       data-testid={dataTestId}
-      variant={variant}
+      $variant={variant}
       size={size}
       color={color}
-      align={align}
+      $align={align}
       style={style}
-      weight={weight}
+      $weight={weight}
     >
       {resizedPrependIcon && (
         <span style={{ flexShrink: 0 }}>{resizedPrependIcon}</span>

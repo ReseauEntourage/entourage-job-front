@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Api } from '@/src/api';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from '@/src/constants/tags';
+import { formCompanyContact } from '@/src/features/forms/schemas/formCompanyContact';
 import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { Api } from 'src/api';
-import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
-import { formCompanyContact } from 'src/features/forms/schemas/formCompanyContact';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
-import { linkEvent } from 'src/lib/lintrk';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { fbEvent } from '@/src/lib/fb';
+import { gaEvent } from '@/src/lib/gtag';
+import { linkEvent } from '@/src/lib/lintrk';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 export const CompanyContactModal = () => {
   const dispatch = useDispatch();

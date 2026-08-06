@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { useMount } from 'src/hooks/utils';
+import { useMount } from '@/src/hooks/utils';
 import { Radio } from './Radio';
 import {
   StyledRadioContainer,

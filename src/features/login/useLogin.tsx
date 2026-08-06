@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { selectLoginError } from '@/src/use-cases/authentication';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
+import { getDefaultUrl } from '@/src/utils/Redirects';
 import { SendVerifyEmailButton } from '../../components/verify-email/SendVerifyEmailButton';
 import { StyledErrorMessage } from '../forms/FormFooter/FormFooter.styles';
-import { selectLoginError } from 'src/use-cases/authentication';
-import { selectCurrentUser } from 'src/use-cases/current-user';
-import { getDefaultUrl } from 'src/utils/Redirects';
 
 export function useLogin() {
   const user = useSelector(selectCurrentUser);

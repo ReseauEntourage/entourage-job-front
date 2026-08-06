@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Api } from '@/src/api';
 import { Button, LegacyImg } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { EXTERNAL_LINKS } from '@/src/constants';
+import { GA_TAGS } from '@/src/constants/tags';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { formGetEmail } from '@/src/features/forms/schemas/formGetEmail';
 import { StepperModal } from '@/src/features/modals/Modal/ModalGeneric/StepperModal';
-import { Api } from 'src/api';
-import { EXTERNAL_LINKS } from 'src/constants';
-import { GA_TAGS } from 'src/constants/tags';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { formGetEmail } from 'src/features/forms/schemas/formGetEmail';
-import { gaEvent } from 'src/lib/gtag';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { gaEvent } from '@/src/lib/gtag';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 interface ModalShareCVProps {
   firstName: string;

@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useStep } from 'src/hooks/queryParams/useStep';
+import { useStep } from '@/src/hooks/queryParams/useStep';
 import {
   referingActions,
   selectReferingCurrentStep,
-} from 'src/use-cases/refering';
+} from '@/src/use-cases/refering';
 import { REFERING_FIRST_STEP } from './Refering.types';
 
 export function useReferingRedirection() {

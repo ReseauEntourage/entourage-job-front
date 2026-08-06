@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Event } from '@/src/api/types';
 import {
   Badge,
   BadgeVariant,
@@ -7,13 +8,12 @@ import {
   Tooltip,
 } from '@/src/components/ui';
 import { EVENT_IMAGES, PublicSensibilise } from '@/src/constants/events';
+import { GA_TAGS } from '@/src/constants/tags';
 import { EventInfoSummary } from '@/src/features/backoffice/events/EventInfoSummary/EventInfoSummary';
+import { gaEvent } from '@/src/lib/gtag';
 import { H5 } from '../../../Headings';
 import { LegacyImg } from '../../../Images';
 import { EntityCard } from '../EntityCard/EntityCard';
-import { Event } from 'src/api/types';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
 import {
   StyledEventCardContentContainer,
   StyledEventCardOverlay,

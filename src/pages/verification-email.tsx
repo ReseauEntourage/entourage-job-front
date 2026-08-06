@@ -3,7 +3,7 @@ import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { VerifyEmailContainer } from 'src/components/verify-email/VerifyEmailContainer';
+import { VerifyEmailContainer } from '@/src/components/verify-email/VerifyEmailContainer';
 
 const VerificationEmailPage = () => {
   return (

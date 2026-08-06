@@ -1,12 +1,12 @@
 import { UseCaseConfigItem } from '../types';
-import { saga } from './elearning.saga';
+import './elearning.listeners';
 import { slice } from './elearning.slice';
 
 export * from './elearning.selectors';
+export * from './elearning.api';
 
 export const elearningActions = slice.actions;
 
 export const elearningConfig = {
   slice,
-  saga,
 } as UseCaseConfigItem;

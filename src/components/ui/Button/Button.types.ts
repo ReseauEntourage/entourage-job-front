@@ -1,7 +1,7 @@
 import React from 'react';
 import { Color } from '@/src/constants/styles';
+import { AnyToFix } from '@/src/utils/Types';
 import { TextWeight } from '../Text';
-import { AnyToFix } from 'src/utils/Types';
 
 export type ButtonVariant =
   'default' | 'primary' | 'secondary' | 'text' | 'hoverBlue';

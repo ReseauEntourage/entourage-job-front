@@ -3,12 +3,12 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Grid, Section, SimpleLink, Button } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { EXTERNAL_LINKS } from '@/src/constants';
+import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { PageType } from '@/src/features/partials/Footer/Footer.type';
-import { EXTERNAL_LINKS } from 'src/constants';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from '@/src/lib/gtag';
 import { AssociationEntourage } from './AssociationEntourage';
 
 const pages: PageType = [

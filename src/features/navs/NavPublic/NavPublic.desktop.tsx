@@ -1,9 +1,9 @@
 import React from 'react';
 import { Nav, Navbar, NavbarLogo } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
+import { GA_TAGS } from '@/src/constants/tags';
+import { gaEvent } from '@/src/lib/gtag';
 import { StyledNavContainerDesktop } from '../../headers/Header.styles';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
 import { LINKS } from './NavPublic.utils';
 import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 

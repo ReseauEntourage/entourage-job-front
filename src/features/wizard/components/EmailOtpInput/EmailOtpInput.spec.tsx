@@ -8,6 +8,11 @@ import { EmailOtpInput } from './EmailOtpInput';
 jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(() => jest.fn()),
+  // RTK Query's `/react` module checks for all three custom-context hooks at
+  // `createApi()` init time (transitively pulled in by importing any
+  // migrated domain's barrel, even just for a selector) — not otherwise used
+  // by this component/test.
+  useStore: jest.fn(),
 }));
 
 // Pulled in transitively via '@/src/components/ui' (Headings -> usePlatforms),

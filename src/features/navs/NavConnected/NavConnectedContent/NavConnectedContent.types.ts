@@ -1,5 +1,5 @@
+import { UserRoles } from '@/src/constants/users';
 import { NavConnectedMainItem, NotifBadges } from '../NavConnected.types';
-import { UserRoles } from 'src/constants/users';
 
 export interface NavConnectedContentProps {
   links?: {

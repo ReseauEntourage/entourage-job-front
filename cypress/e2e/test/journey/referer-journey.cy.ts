@@ -1,5 +1,5 @@
 import { interceptCurrentUserSubResources } from '../../intercept/current-user.req';
-import { refererJourneyRequests } from 'cypress/e2e/intercept/journey/referer.req';
+import { refererJourneyRequests } from '../../intercept/journey/referer.req';
 import bootstrap from '../bootstrap';
 
 describe('En tant que - Prescripteur', () => {

@@ -1,4 +1,4 @@
-import { EventMode } from 'src/constants/events';
+import { EventMode } from '@/src/constants/events';
 
 interface ICSEventData {
   id?: string;

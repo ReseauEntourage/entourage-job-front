@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { AnyCantFix } from './Types';
 
 interface PlateformParams<T> {

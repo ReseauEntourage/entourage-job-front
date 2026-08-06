@@ -7,8 +7,7 @@ import {
   RegistrationFormData,
   RegistrationStep,
 } from '@/src/features/registration/registration.types';
-import { RequestState, SliceRootState } from 'src/store/utils';
-import { createUserAdapter, CreateUserError } from './registration.adapters';
+import { SliceRootState } from '@/src/store/utils';
 
 export interface PreRegistrationPreferences {
   nudgeIds: string[];
@@ -18,8 +17,6 @@ export interface PreRegistrationPreferences {
 }
 
 interface State {
-  createUser: RequestState<typeof createUserAdapter>;
-  createUserError: CreateUserError | null;
   currentStep: RegistrationStep;
   selectedFlow: RegistrationFlow | null;
   data: RegistrationData;
@@ -31,8 +28,6 @@ interface State {
 }
 
 const initialState: State = {
-  createUser: createUserAdapter.getInitialState(),
-  createUserError: null,
   selectedFlow: null,
   currentStep: -1,
   data: null,
@@ -47,20 +42,9 @@ export const slice = createSlice({
   name: 'registration',
   initialState,
   reducers: {
-    ...createUserAdapter.getReducers<State>((state) => state.createUser, {
-      createUserRequested(state) {
-        state.isLoading = true;
-        state.createUserError = null;
-      },
-      createUserSucceeded(_state) {},
-      createUserFailed(
-        state,
-        action: PayloadAction<{ error: CreateUserError } | null>
-      ) {
-        state.isLoading = false;
-        state.createUserError = action.payload?.error || null;
-      },
-    }),
+    createUserRequested(state) {
+      state.isLoading = true;
+    },
     moveForwardInRegistration(
       state,
       action: PayloadAction<{

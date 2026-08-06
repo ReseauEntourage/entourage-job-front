@@ -1,78 +1,66 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RequestState, SliceRootState } from 'src/store/utils';
+import { SliceRootState } from '@/src/store/utils';
 import {
   LoginError,
-  loginAdapter,
-  logoutAdapter,
-  verifyEmailTokenAdapter,
   VerifyEmailTokenErrorType,
-  sendVerifyEmailAdapter,
-  verifyOtpAdapter,
   VerifyOtpErrorType,
 } from './authentication.adapters';
 
 interface State {
-  login: RequestState<typeof loginAdapter>;
-  logout: RequestState<typeof logoutAdapter>;
-  verifyEmailToken: RequestState<typeof verifyEmailTokenAdapter>;
-  sendVerifyEmail: RequestState<typeof verifyEmailTokenAdapter>;
-  verifyOtp: RequestState<typeof verifyOtpAdapter>;
   accessToken: string | null;
   loginError: LoginError | null;
   verifyEmailTokenError: VerifyEmailTokenErrorType | null;
   verifyOtpError: VerifyOtpErrorType | null;
+  // Deliberately a plain slice flag, not the `logout` mutation's own RTK
+  // Query status: `logoutSucceeded` triggers the central
+  // `api.util.resetApiState()` listener (design.md Decision 9), which would
+  // otherwise wipe the `logout` mutation's own fixedCacheKey entry (and
+  // thus its success flag) in the very same tick, before any consumer could
+  // observe it. This flag lives outside the `api` reducer, so it survives.
+  isLogoutSucceeded: boolean;
 }
 
 const initialState: State = {
-  logout: logoutAdapter.getInitialState(),
-  login: loginAdapter.getInitialState(),
-  verifyEmailToken: verifyEmailTokenAdapter.getInitialState(),
-  sendVerifyEmail: verifyEmailTokenAdapter.getInitialState(),
-  verifyOtp: verifyOtpAdapter.getInitialState(),
   accessToken: null,
   loginError: null,
   verifyEmailTokenError: null,
   verifyOtpError: null,
+  isLogoutSucceeded: false,
 };
 
 export const slice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    ...loginAdapter.getReducers<State>((state) => state.login, {
-      loginSucceeded(state, action) {
-        state.accessToken = action.payload.accessToken;
-        state.loginError = null;
-      },
-      loginFailed(state, action) {
-        state.loginError = action.payload.error;
-      },
-    }),
-    ...logoutAdapter.getReducers<State>((state) => state.logout, {
-      logoutSucceeded(state) {
-        state.accessToken = null;
-      },
-    }),
-    ...verifyEmailTokenAdapter.getReducers<State>(
-      (state) => state.verifyEmailToken,
-      {
-        verifyEmailTokenFailed(state, action) {
-          state.verifyEmailTokenError = action.payload.error;
-        },
-      }
-    ),
-    ...sendVerifyEmailAdapter.getReducers<State>(
-      (state) => state.sendVerifyEmail,
-      {}
-    ),
-    ...verifyOtpAdapter.getReducers<State>((state) => state.verifyOtp, {
-      verifyOtpFailed(state, action) {
-        state.verifyOtpError = action.payload.error;
-      },
-      verifyOtpSucceeded(state) {
-        state.verifyOtpError = null;
-      },
-    }),
+    loginSucceeded(state, action: PayloadAction<{ accessToken: string }>) {
+      state.accessToken = action.payload.accessToken;
+      state.loginError = null;
+    },
+    loginFailed(state, action: PayloadAction<{ error: LoginError }>) {
+      state.loginError = action.payload.error;
+    },
+    logoutSucceeded(state) {
+      state.accessToken = null;
+      state.isLogoutSucceeded = true;
+    },
+    logoutReset(state) {
+      state.isLogoutSucceeded = false;
+    },
+    verifyEmailTokenFailed(
+      state,
+      action: PayloadAction<{ error: VerifyEmailTokenErrorType }>
+    ) {
+      state.verifyEmailTokenError = action.payload.error;
+    },
+    verifyOtpFailed(
+      state,
+      action: PayloadAction<{ error: VerifyOtpErrorType }>
+    ) {
+      state.verifyOtpError = action.payload.error;
+    },
+    verifyOtpSucceeded(state) {
+      state.verifyOtpError = null;
+    },
     setAccessToken(state, action: PayloadAction<string | null>) {
       state.accessToken = action.payload;
     },
@@ -82,6 +70,26 @@ export const slice = createSlice({
     ) {
       state.verifyEmailTokenError = action.payload;
     },
+    // No-op trigger actions: real handling lives in `authentication.api.ts`,
+    // dispatched via `authentication.listeners.ts` in reaction to these.
+    loginRequested(
+      _state,
+      _action: PayloadAction<{ email: string; password: string }>
+    ) {},
+    logoutRequested() {},
+    verifyEmailTokenRequested(
+      _state,
+      _action: PayloadAction<{ token: string }>
+    ) {},
+    sendVerifyEmailRequested(
+      _state,
+      _action: PayloadAction<{ email?: string; token?: string }>
+    ) {},
+    verifyOtpRequested(
+      _state,
+      _action: PayloadAction<{ email: string; code: string }>
+    ) {},
+    autologinRequested(_state, _action: PayloadAction<{ token: string }>) {},
   },
 });
 

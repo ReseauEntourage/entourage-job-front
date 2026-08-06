@@ -21,7 +21,7 @@ export const EntityCard = ({
 }: EntityCardProps) => {
   return (
     <Link href={href} onClick={onClick}>
-      <StyledEntityCard borderColor={borderColor}>{children}</StyledEntityCard>
+      <StyledEntityCard $borderColor={borderColor}>{children}</StyledEntityCard>
     </Link>
   );
 };

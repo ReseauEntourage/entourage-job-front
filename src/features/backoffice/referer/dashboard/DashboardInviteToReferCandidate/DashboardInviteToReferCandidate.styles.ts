@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BREAKPOINTS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledContainer = styled.div`
   display: flex;

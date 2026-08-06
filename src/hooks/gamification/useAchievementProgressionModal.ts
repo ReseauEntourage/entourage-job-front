@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AchievementProgressionModal } from 'src/features/modals/AchievementProgressionModal/AchievementProgressionModal';
-import { openModal } from 'src/features/modals/Modal/openModal';
+import { AchievementProgressionModal } from '@/src/features/modals/AchievementProgressionModal/AchievementProgressionModal';
+import { openModal } from '@/src/features/modals/Modal/openModal';
 import {
   gamificationActions,
   selectAchievementProgressionToShow,
-} from 'src/use-cases/gamification';
+} from '@/src/use-cases/gamification';
 
 /**
  * Watches the gamification Redux state and opens the achievement progression

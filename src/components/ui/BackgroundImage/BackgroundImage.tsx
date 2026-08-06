@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledBackground } from '@/src/components/ui/BackgroundImage/BackgroundImage.styles';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 
 export interface BackgroundImageProps {
   img: string;
@@ -26,7 +26,7 @@ export const BackgroundImage = ({
 
   return (
     <StyledBackground
-      mobileHeight={mobileHeight}
+      $mobileHeight={mobileHeight}
       className={isHero ? 'top-banner' : ''}
     >
       <div

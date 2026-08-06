@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
+import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
+import { formChangePassword } from '@/src/features/forms/schemas/formChangePassword';
+import { useResetForm } from '@/src/hooks/utils';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { Api } from 'src/api';
-import { FormWithValidation } from 'src/features/forms/FormWithValidation';
-import { formChangePassword } from 'src/features/forms/schemas/formChangePassword';
-import { useResetForm } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
 
 export const ProfileChangePassword = () => {
   const [form, resetForm] = useResetForm();

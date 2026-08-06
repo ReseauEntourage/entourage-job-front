@@ -1,16 +1,15 @@
 import {
   UnavailabilityReason,
   UnavailabilityReasons,
-} from 'src/constants/unavailabilityReasons';
-import { NormalUserRoles, UserRoles } from 'src/constants/users';
-import { FilterConstant } from 'src/constants/utils';
+} from '@/src/constants/unavailabilityReasons';
+import { NormalUserRoles, UserRoles } from '@/src/constants/users';
+import { FilterConstant } from '@/src/constants/utils';
 import {
   FormSchema,
   FormSchemaValidation,
-} from 'src/features/forms/FormSchema';
+} from '@/src/features/forms/FormSchema';
 
 interface FormFeedbackSchema extends FormSchemaValidation {
-  isAvailable: boolean;
   unavailabilityReason: string;
 }
 

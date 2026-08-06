@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
+import { GA_TAGS } from '@/src/constants/tags';
 import { ThankYouMessagesType, Merci } from '@/src/features/merci/Merci';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
-import { GA_TAGS } from 'src/constants/tags';
 
 const MerciPage = () => {
   const {

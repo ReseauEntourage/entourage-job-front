@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 import { commonInputContainerStyles } from '../Inputs.styles';
 import { SelectListVariant } from './SelectList';

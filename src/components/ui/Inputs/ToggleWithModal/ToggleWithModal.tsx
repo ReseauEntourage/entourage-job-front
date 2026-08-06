@@ -1,11 +1,11 @@
 import React from 'react';
-import { openModal } from '@/src/features/modals/Modal';
-import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
 import {
   ExtractFormSchemaValidation,
   FormSchema,
-} from 'src/features/forms/FormSchema';
-import { AnyCantFix } from 'src/utils/Types';
+} from '@/src/features/forms/FormSchema';
+import { openModal } from '@/src/features/modals/Modal';
+import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
+import { AnyCantFix } from '@/src/utils/Types';
 import { ModalToggle } from './ModalToggle';
 import {
   StyledSlider,
@@ -98,7 +98,7 @@ export const ToggleWithModal = <S extends FormSchema<AnyCantFix>>({
               }
             }}
           />
-          <StyledSlider isToggled={isToggled} />
+          <StyledSlider $isToggled={isToggled} />
           {(title || subtitle) && (
             <StyledToggleLabel>
               {title && <span>{title}</span>}

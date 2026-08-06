@@ -3,9 +3,9 @@ import { ButtonIcon } from '@/src/components/ui/Button';
 import { H5 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Color } from '@/src/constants/styles';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Text } from '../../Text';
-import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledCard,
   StyledCardContent,
@@ -29,6 +29,7 @@ interface CardProps {
   borderColor?: string;
   bgColor?: Color;
   shadow?: boolean;
+  contentPadding?: string;
 }
 
 export const Card = ({
@@ -45,6 +46,7 @@ export const Card = ({
   centerTitle = false,
   bgColor = 'white',
   shadow = true,
+  contentPadding,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -63,7 +65,7 @@ export const Card = ({
     >
       {title ? (
         <>
-          <StyledCardTopContainer isOpen={isOpen}>
+          <StyledCardTopContainer $isOpen={isOpen}>
             {isLoading && (
               <StyledSpinnerContainer>
                 <Spinner />
@@ -75,7 +77,6 @@ export const Card = ({
                   setIsOpen(!isOpen);
                 }
               }}
-              centerTitle={centerTitle}
             >
               <H5 title={title} center={centerTitle} />
               {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
@@ -98,10 +99,16 @@ export const Card = ({
               </StyledChevronContainer>
             )}
           </StyledCardTopContainer>
-          {isOpen && <StyledCardContent>{children}</StyledCardContent>}
+          {isOpen && (
+            <StyledCardContent $contentPadding={contentPadding}>
+              {children}
+            </StyledCardContent>
+          )}
         </>
       ) : (
-        <StyledCardContent>{children}</StyledCardContent>
+        <StyledCardContent $contentPadding={contentPadding}>
+          {children}
+        </StyledCardContent>
       )}
     </StyledCard>
   );

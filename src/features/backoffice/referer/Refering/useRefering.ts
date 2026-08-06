@@ -1,21 +1,20 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   selectIsFirstReferingStep,
   selectIsLastReferingStep,
   selectIsReferingLoading,
-  selectReferCandidateError,
   selectReferingCurrentStepContent,
   selectReferingCurrentStepData,
   selectReferingDataFromOtherStep,
-  referCandidateSelectors,
   referingActions,
+  REFER_CANDIDATE_FIXED_CACHE_KEY,
   selectReferingNextStep,
   selectReferingShouldSkipStep,
-} from 'src/use-cases/refering';
+  useReferCandidateMutation,
+} from '@/src/use-cases/refering';
 import { REFERING_CONFIRMATION_STEP, ReferingFormData } from './Refering.types';
 
 export function useRefering() {
@@ -32,11 +31,12 @@ export function useRefering() {
   const nextStep = useSelector(selectReferingNextStep);
   const shouldSkipStep = useSelector(selectReferingShouldSkipStep);
 
-  const referCandidateStatus = useSelector(
-    referCandidateSelectors.selectReferCandidateStatus
-  );
-
-  const referCandateError = useSelector(selectReferCandidateError);
+  // Only observes the mutation — it's actually triggered by
+  // `refering.listeners.ts`'s auto-submit-on-last-step listener, via the
+  // shared `fixedCacheKey` (RTK Query's pattern for this split).
+  const [, { isSuccess, isError, error, reset }] = useReferCandidateMutation({
+    fixedCacheKey: REFER_CANDIDATE_FIXED_CACHE_KEY,
+  });
 
   const onSubmitStepForm = useCallback(
     async (fields: ReferingFormData) => {
@@ -77,7 +77,7 @@ export function useRefering() {
   }, [nextStep, replace, shouldSkipStep, dispatch, stepContent]);
 
   useEffect(() => {
-    if (referCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
+    if (isSuccess) {
       push(
         {
           pathname: `/backoffice/referer/orienter/${REFERING_CONFIRMATION_STEP}`,
@@ -87,26 +87,27 @@ export function useRefering() {
           shallow: true,
         }
       );
-    } else if (referCandidateStatus === ReduxRequestEvents.FAILED) {
+    } else if (isError) {
+      dispatch(referingActions.setReferingIsLoading(false));
       dispatch(
         notificationsActions.addNotification({
           type: 'danger',
           message:
-            referCandateError === 'DUPLICATE_EMAIL'
+            error === 'DUPLICATE_EMAIL'
               ? 'Cette adresse email est déjà utilisée'
               : 'Une erreur est survenue',
         })
       );
     }
-  }, [referCandateError, referCandidateStatus, dispatch, push]);
+  }, [error, isError, isSuccess, dispatch, push]);
 
   const onBack = useCallback(back, [back]);
 
   useEffect(() => {
     return () => {
-      dispatch(referingActions.referCandidateReset());
+      reset();
     };
-  }, [dispatch]);
+  }, [reset]);
 
   return {
     isReferingLoading,

@@ -14,17 +14,17 @@ import { FilePreviewCV } from '@/src/components/ui/Inputs/FileInput/FilePreview'
 import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { ProfileNudges } from '@/src/constants/nudges';
+import { UserRoles } from '@/src/constants/users';
 import { ProfileCompletion } from '@/src/features/headers/HeaderProfile/ProfileCompletion/ProfileCompletion';
 import { ProfileAchievementHighlighter } from '@/src/features/profile/ProfileAchievementHighlighter';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserAchievements } from '@/src/hooks/current-user/useCurrentUserAchievements';
+import { useCurrentUserOrganization } from '@/src/hooks/current-user/useCurrentUserOrganization';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserExternalCv } from '@/src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from '@/src/use-cases/current-user';
-import { selectProfileCompletionRate } from '@/src/use-cases/profile-completion';
+import { profileCompletionApi } from '@/src/use-cases/profile-completion';
 import { useContextualRole } from '../../useContextualRole';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserAchievements } from 'src/hooks/current-user/useCurrentUserAchievements';
-import { useCurrentUserOrganization } from 'src/hooks/current-user/useCurrentUserOrganization';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
 import {
   StyledDashboardCTAContainer,
   StyledDashboardProfileCardIntroduction,
@@ -46,7 +46,12 @@ export const DashboardProfileCard = () => {
   const achievements = useCurrentUserAchievements();
   const externalCv = useCurrentUserExternalCv();
   const { contextualRole } = useContextualRole(user.role);
-  const completionRate = useSelector(selectProfileCompletionRate);
+  const completionRate = useSelector(
+    (state: any) =>
+      profileCompletionApi.endpoints.getProfileCompletion.select(undefined)(
+        state
+      ).data ?? 0
+  );
 
   const buttonText = completionRate < 100 ? 'Compléter' : 'Modifier';
 
@@ -81,7 +86,7 @@ export const DashboardProfileCard = () => {
           {userProfile?.department && <Text>{userProfile.department}</Text>}
           <StyledTagList>
             <AvailabilityTagEditable
-              isAvailable={userProfile?.isAvailable ?? false}
+              isAvailable={!!userProfile && !userProfile.unavailableAt}
               user={user}
             />
             {achievements && achievements.length > 0 && (

@@ -11,6 +11,6 @@ export const ContainerMarginY = ({
   margin,
 }: ContainerMarginYProps) => {
   return (
-    <StyledContainerMarginY margin={margin}>{children}</StyledContainerMarginY>
+    <StyledContainerMarginY $margin={margin}>{children}</StyledContainerMarginY>
   );
 };

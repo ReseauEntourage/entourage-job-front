@@ -8,19 +8,22 @@ import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticate
 import { useContactEligibility } from './useContactEligibility';
 
 jest.mock('next/router', () => ({ useRouter: jest.fn() }));
-jest.mock('src/hooks/authentication/useAuthenticatedUser', () => ({
+jest.mock('@/src/hooks/authentication/useAuthenticatedUser', () => ({
   useAuthenticatedUser: jest.fn(),
 }));
-jest.mock('src/features/modals/Modal', () => ({ openModal: jest.fn() }));
+jest.mock('@/src/features/modals/Modal', () => ({ openModal: jest.fn() }));
 // ElearningGateModal transitively imports the UI barrel, which pulls in the
 // ESM-only @react-hook/window-size (cf. useEmailConfirmationPhase.spec.tsx) -
 // stub it directly so this hook test doesn't need to transform that chain.
-jest.mock('src/features/modals/ElearningGateModal/ElearningGateModal', () => ({
-  ElearningGateModal: () => null,
-}));
+jest.mock(
+  '@/src/features/modals/ElearningGateModal/ElearningGateModal',
+  () => ({
+    ElearningGateModal: () => null,
+  })
+);
 
 const { ElearningGateModal } = jest.requireMock(
-  'src/features/modals/ElearningGateModal/ElearningGateModal'
+  '@/src/features/modals/ElearningGateModal/ElearningGateModal'
 );
 
 const mockUseRouter = useRouter as jest.Mock;

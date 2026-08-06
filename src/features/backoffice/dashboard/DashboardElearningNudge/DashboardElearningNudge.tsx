@@ -1,12 +1,12 @@
 import React from 'react';
+import { Button, Card, LucidIcon, Text } from '@/src/components/ui';
 import { CheckListElement, List } from '@/src/components/ui/Lists';
+import { ProgressBar } from '@/src/components/ui/ProgressBar/ProgressBar';
 import { COLORS } from '@/src/constants/styles';
+import { UserRoles } from '@/src/constants/users';
 import { useElearning } from '@/src/features/backoffice/elearning/useElearning';
-import { Button, Card, LucidIcon, Text } from 'src/components/ui';
-import { ProgressBar } from 'src/components/ui/ProgressBar/ProgressBar';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
 import {
   StyledElearningNudge,
   StyledElearningNudgeContent,

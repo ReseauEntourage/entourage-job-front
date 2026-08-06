@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import { Text } from './Text';
 import { sizesPx } from './Text.utils';
 

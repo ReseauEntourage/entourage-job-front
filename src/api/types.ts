@@ -1,17 +1,17 @@
-import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
-import { CompanyGoal, CompanyUserRole } from '../constants/company';
-import { ContactTypeEnum } from '../constants/contactTypes';
-import { PublicSensibilise, EventMode, EventType } from '../constants/events';
-import { Genders } from '../constants/genders';
 import {
   CompanyApproach,
   Contract as ContractValue,
   HeardAboutValue,
   WorkingExperience,
-} from 'src/constants';
-import { AdminZone, DepartmentName } from 'src/constants/departements';
-import { RegistrableUserRoles, UserRoles } from 'src/constants/users';
-import { FilterConstant } from 'src/constants/utils';
+} from '@/src/constants';
+import { AdminZone, DepartmentName } from '@/src/constants/departements';
+import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
+import { FilterConstant } from '@/src/constants/utils';
+import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
+import { CompanyGoal, CompanyUserRole } from '../constants/company';
+import { ContactTypeEnum } from '../constants/contactTypes';
+import { PublicSensibilise, EventMode, EventType } from '../constants/events';
+import { Genders } from '../constants/genders';
 
 export type SocialMedia =
   'facebook' | 'linkedin' | 'twitter' | 'whatsapp' | 'other';
@@ -175,7 +175,7 @@ export type UserProfile = {
   currentJob: string | null;
   description: string | null;
   department: DepartmentName;
-  isAvailable: boolean;
+  unavailableAt: string | null;
   unavailabilityReason: string | null;
   nudges: Nudge[] | null;
   customNudges: UserProfileNudge[] | null;
@@ -284,6 +284,7 @@ export type UserStats = {
   averageDelayResponse: number | null;
   responseRate: number | null;
   totalConversationWithMirrorRoleCount: number | null;
+  availableMirrorRoleParticipantsCount: number | null;
 };
 
 export enum FeatureKey {
@@ -398,7 +399,7 @@ export type CurrentUserProfile = {
   description: string | null;
   linkedinUrl: string | null;
   department: DepartmentName | null;
-  isAvailable: boolean;
+  unavailableAt: string | null;
   currentJob: string | null;
   optInRecommendations: boolean;
   nudges: UserProfile['nudges'];
@@ -615,7 +616,7 @@ export type ConversationParticipant = Pick<
   | 'email'
   | 'elearningCompletedAt'
 > & {
-  userProfile: Pick<UserProfile, 'hasPicture' | 'isAvailable'> | null;
+  userProfile: Pick<UserProfile, 'hasPicture' | 'unavailableAt'> | null;
   conversationParticipant: {
     id: string;
     seenAt: string;
@@ -656,7 +657,7 @@ export type PublicProfile = {
   currentJob: string;
   description: string;
   elearningCompletedAt: string | null;
-  isAvailable: boolean;
+  unavailableAt: string | null;
   customNudges: UserProfileNudge[];
   nudges: Nudge[];
   sectorOccupations: UserProfileSectorOccupation[];
@@ -764,6 +765,10 @@ export type PostAuthFinalizeReferedUserParams = {
   password: string;
 };
 
+export type PostAuthAutologinParams = {
+  token: string;
+};
+
 export type ExternalCv = {
   url: string;
 };
@@ -798,7 +803,7 @@ export type UserWithCompanyAndConversations = User & {
   companyUser: CompanyUser;
   userProfile?: Pick<
     UserProfile,
-    'hasPicture' | 'isAvailable' | 'currentJob' | 'sectorOccupations'
+    'hasPicture' | 'unavailableAt' | 'currentJob' | 'sectorOccupations'
   > | null;
   achievements?: UserAchievement[];
   invitations?: Invitation[];

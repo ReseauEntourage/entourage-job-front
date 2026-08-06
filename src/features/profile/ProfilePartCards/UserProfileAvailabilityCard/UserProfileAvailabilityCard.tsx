@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Card } from '@/src/components/ui';
+import { GA_TAGS } from '@/src/constants/tags';
+import { UserRoles } from '@/src/constants/users';
 import { FeedbackModal } from '@/src/features/modals/FeedbackModal/FeedbackModal';
 import { openModal } from '@/src/features/modals/Modal';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
+import { gaEvent } from '@/src/lib/gtag';
+import {
+  UPDATE_PROFILE_FIXED_CACHE_KEY,
+  useUpdateProfileMutation,
+} from '@/src/use-cases/current-user';
 import {
   CardToggleList,
   SwitchItem,
 } from '../Card/CardToggleList/CardToggleList';
-import { GA_TAGS } from 'src/constants/tags';
-import { UserRoles } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
-import { gaEvent } from 'src/lib/gtag';
-import { currentUserActions } from 'src/use-cases/current-user';
 
 export const UserProfileAvailabilityCard = ({
   centerTitle = false,
@@ -22,22 +24,27 @@ export const UserProfileAvailabilityCard = ({
 }) => {
   const user = useAuthenticatedUser();
   const profile = useCurrentUserProfile();
-  const dispatch = useDispatch();
 
   const { updateUserProfile } = useUpdateProfile(user);
 
+  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
+    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+  });
+
   useEffect(() => {
     return () => {
-      dispatch(currentUserActions.updateProfileReset());
+      resetUpdateProfile();
     };
-  }, [dispatch]);
+  }, [resetUpdateProfile]);
 
   const cardTitle =
     user.role === UserRoles.CANDIDATE
       ? 'Disponibilité pour recevoir des coups de pouces'
       : 'Disponibilité pour accompagner un candidat';
 
-  const itemName = profile?.isAvailable
+  const isAvailable = !!profile && !profile.unavailableAt;
+
+  const itemName = isAvailable
     ? 'Je suis disponible'
     : 'Je ne suis pas disponible';
 
@@ -47,7 +54,7 @@ export const UserProfileAvailabilityCard = ({
       openModal(<FeedbackModal />);
     } else {
       updateUserProfile({
-        isAvailable: true,
+        unavailableAt: null,
         unavailabilityReason: null,
       });
     }
@@ -56,7 +63,7 @@ export const UserProfileAvailabilityCard = ({
   return (
     <Card title={cardTitle} centerTitle={centerTitle}>
       <CardToggleList
-        items={[{ name: itemName, value: profile?.isAvailable ?? false }]}
+        items={[{ name: itemName, value: isAvailable }]}
         isEditable
         onChange={onChange}
       />

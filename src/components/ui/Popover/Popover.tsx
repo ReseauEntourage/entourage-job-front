@@ -42,8 +42,8 @@ export const Popover = ({
       {children}
       {isOpen && (
         <StyledPopoverContent
-          placement={placement}
-          align={align}
+          $placement={placement}
+          $align={align}
           onMouseEnter={open}
           onMouseLeave={scheduleClose}
           onClick={() => setIsOpen(false)}

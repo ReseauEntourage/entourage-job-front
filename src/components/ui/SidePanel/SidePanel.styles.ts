@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Color, COLORS } from '@/src/constants/styles';
 
 export type SidePanelVariant = 'white' | 'lightGray' | 'blue-gradient';

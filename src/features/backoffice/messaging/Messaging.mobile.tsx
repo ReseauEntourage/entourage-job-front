@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   selectHasMessages,
   selectSelectedConversationId,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import {
   MessagingEmptyStateContainerMobile,
   StyledMessagingConversationContainerMobile,

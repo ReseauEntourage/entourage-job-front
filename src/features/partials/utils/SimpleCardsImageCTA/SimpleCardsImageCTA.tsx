@@ -2,8 +2,8 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Button, LegacyImg, Section, Text } from '@/src/components/ui';
 import { H2, H3 } from '@/src/components/ui/Headings';
-import { useIsDesktop } from 'src/hooks/utils';
-import { AnyToFix } from 'src/utils/Types';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { AnyToFix } from '@/src/utils/Types';
 import {
   StyledCriteria,
   StyledCriteriaIllu,

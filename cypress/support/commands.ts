@@ -3,6 +3,7 @@ import { generateBusinessSectorsApiResponse } from '../fixtures/src/business-sec
 import { generateCampaignsApiResponse } from '../fixtures/src/campaign/generateCampaignsApiResponse';
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
 import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
+import { generateConversationsApiResponse } from '../fixtures/src/messaging/generateConversationsApiResponse';
 import { generateNudgesApiResponse } from '../fixtures/src/nudges/generateNudgesApiResponse';
 import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
 import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse';
@@ -24,6 +25,7 @@ declare global {
       generateUserProfileReferedApiResponse(): Chainable<Subject>;
       generateNudgesApiResponse(): Chainable<Subject>;
       generateBusinessSectorsApiResponse(): Chainable<Subject>;
+      generateConversationsApiResponse(count: number): Chainable<Subject>;
     }
   }
 }
@@ -125,6 +127,17 @@ Cypress.Commands.add('generateBusinessSectorsApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/business-sectors.json',
     generateBusinessSectorsApiResponse(10),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate a list of messaging conversations
+ */
+Cypress.Commands.add('generateConversationsApiResponse', (count) => {
+  cy.writeFile(
+    'cypress/fixtures/api/generated/conversations.json',
+    generateConversationsApiResponse(count),
     'utf-8'
   );
 });

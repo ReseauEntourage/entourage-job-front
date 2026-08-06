@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const StyledDashboardNetworkDiscoverContent = styled.div`
   max-width: 700px;

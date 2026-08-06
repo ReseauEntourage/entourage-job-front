@@ -2,12 +2,12 @@ import useChange from '@react-hook/change';
 import _ from 'lodash';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { User } from 'src/api/types';
-import { ReduxRequestEvents } from 'src/constants';
+import { User } from '@/src/api/types';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   currentUserActions,
   updateUserSelectors,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 
 export const useUpdateUser = (user: User) => {
   const dispatch = useDispatch();

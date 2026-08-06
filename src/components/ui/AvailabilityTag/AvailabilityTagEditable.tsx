@@ -1,9 +1,9 @@
 import React from 'react';
+import { User } from '@/src/api/types';
 import { Button, Popover, Text } from '@/src/components/ui';
 import { FeedbackModal } from '@/src/features/modals/FeedbackModal/FeedbackModal';
 import { openModal } from '@/src/features/modals/Modal';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { User } from 'src/api/types';
 import { AvailabilityTag } from './AvailabilityTag';
 import { StyledAvailabilityTagEditableContent } from './AvailabilityTagEditable.styles';
 
@@ -22,7 +22,7 @@ export const AvailabilityTagEditable = ({
     if (isAvailable) {
       openModal(<FeedbackModal />);
     } else {
-      updateUserProfile({ isAvailable: true, unavailabilityReason: null });
+      updateUserProfile({ unavailableAt: null, unavailabilityReason: null });
     }
   };
 

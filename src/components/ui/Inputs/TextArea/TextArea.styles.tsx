@@ -1,14 +1,17 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import {
   commonInputContainerStyles,
   commonInputStyles,
 } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
-export const StyledTextAreaContainer = styled.div<{ naked?: boolean }>`
+export const StyledTextAreaContainer = styled.div<{
+  disabled?: boolean;
+  $naked?: boolean;
+}>`
   ${() => commonInputContainerStyles}
-  ${({ naked }) =>
-    naked &&
+  ${({ $naked }) =>
+    $naked &&
     css`
       margin-bottom: 0;
       flex: 1;
@@ -17,30 +20,29 @@ export const StyledTextAreaContainer = styled.div<{ naked?: boolean }>`
 `;
 
 export const StyledTextArea = styled.textarea<{
-  hasLineLimit: boolean;
-  textAreaWidth?: number;
+  $hasLineLimit: boolean;
+  $textAreaWidth?: number;
   width: number;
-  device: 'mobile' | 'desktop';
-  naked?: boolean;
+  $naked?: boolean;
 }>`
   ${() => commonInputStyles}
   width: 100%;
   padding-bottom: 12px;
   resize: none;
-  width: ${({ hasLineLimit, width }) => {
+  width: ${({ $hasLineLimit, width }) => {
     // Hard code the width in case the width of the modal changes
-    return hasLineLimit ? `${width}px` : '100%';
+    return $hasLineLimit ? `${width}px` : '100%';
   }};
   &::placeholder {
     color: ${COLORS.mediumGray};
     background-color: transparent;
     font-family: Poppins, sans-serif;
   }
-  :focus-visible {
+  &:focus-visible {
     outline: none;
   }
-  ${({ naked }) =>
-    naked &&
+  ${({ $naked }) =>
+    $naked &&
     css`
       border: none;
       padding: 0;
@@ -56,12 +58,16 @@ export const StyledTextArea = styled.textarea<{
     `}
 `;
 
-export const StyledTextAreaScrollContainer = styled.div`
+export const StyledTextAreaScrollContainer = styled.div<{
+  $hasLineLimit: boolean;
+  $textAreaWidth?: number;
+  width: number;
+}>`
   overflow-x: auto;
-  ${({ hasLineLimit, textAreaWidth, width }) => {
-    return hasLineLimit
+  ${({ $hasLineLimit, $textAreaWidth, width }) => {
+    return $hasLineLimit
       ? css`
-          width: ${textAreaWidth || width}px;
+          width: ${$textAreaWidth || width}px;
           max-width: ${width}px;
         `
       : css`

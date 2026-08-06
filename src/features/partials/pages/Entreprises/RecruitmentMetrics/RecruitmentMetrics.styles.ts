@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledRecruitmentMetricsContainer = styled.div`

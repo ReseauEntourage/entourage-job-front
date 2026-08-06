@@ -1,7 +1,15 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "isolatedModules": true
+    "isolatedModules": true,
+    // next/jest's SWC transform (unlike tsc and Turbopack) resolves baseUrl-less
+    // "paths" relative to the directory of *this* file rather than the file that
+    // declares "paths" (tsconfig.base.json, at the repo root). Re-declaring the
+    // mapping here, relative to this file's own directory, keeps it correct for
+    // that transform without reintroducing a "baseUrl" compiler option.
+    "paths": {
+      "@/*": ["../*"]
+    }
   },
   "exclude": [
     "../node_modules",

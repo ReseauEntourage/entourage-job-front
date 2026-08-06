@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
-export const StyledButtonMenu = styled.div`
+export const StyledButtonMenu = styled.div<{
+  $align?: 'left' | 'right';
+  $isOpen: boolean;
+}>`
   flex-direction: column;
   position: absolute;
   z-index: 100;
@@ -10,14 +13,14 @@ export const StyledButtonMenu = styled.div`
   margin-top: 8px;
   padding-top: 8px;
   padding-bottom: 8px;
-  ${({ align }) => {
-    if (align === 'left') {
+  ${({ $align }) => {
+    if ($align === 'left') {
       return {
         left: 0,
       };
     }
 
-    if (align === 'right') {
+    if ($align === 'right') {
       return {
         right: 0,
       };
@@ -25,24 +28,24 @@ export const StyledButtonMenu = styled.div`
 
     return {};
   }}
-  display: ${({ isOpen }) => {
-    return isOpen ? 'flex' : 'none';
+  display: ${({ $isOpen }) => {
+    return $isOpen ? 'flex' : 'none';
   }};
-  opacity: ${({ isOpen }) => {
-    return isOpen ? '1' : '0';
+  opacity: ${({ $isOpen }) => {
+    return $isOpen ? '1' : '0';
   }};
   > * {
     min-width: max-content;
     display: flex;
-    text-align: ${({ align }) => {
-      return align;
+    text-align: ${({ $align }) => {
+      return $align;
     }};
-    justify-content: ${({ align }) => {
-      if (align === 'left') {
+    justify-content: ${({ $align }) => {
+      if ($align === 'left') {
         return 'flex-start';
       }
 
-      if (align === 'right') {
+      if ($align === 'right') {
         return 'flex-end';
       }
 

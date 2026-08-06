@@ -20,9 +20,13 @@ import next from '@next/eslint-plugin-next';
 ======================= */
 import importPlugin from 'eslint-plugin-import-x';
 import prettier from 'eslint-plugin-prettier';
-import typedReduxSaga from '@jambit/eslint-plugin-typed-redux-saga';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginJest from 'eslint-plugin-jest';
+
+/* =======================
+   Local custom rules
+======================= */
+import noUntransientStyledProps from './eslint-rules/no-untransient-styled-props.mjs';
 
 export default defineConfig([
   /* ==================================================
@@ -84,8 +88,8 @@ export default defineConfig([
       'react-hooks': reactHooks,
       'import-x': importPlugin,
       prettier,
-      '@jambit/typed-redux-saga': typedReduxSaga,
       'jsx-a11y': jsxA11y,
+      local: { rules: { 'no-untransient-styled-props': noUntransientStyledProps } },
     },
 
     settings: {
@@ -188,6 +192,11 @@ export default defineConfig([
       '@typescript-eslint/explicit-function-return-type': 'off',
 
       /* =======================
+         Local custom rules
+      ======================= */
+      'local/no-untransient-styled-props': 'error',
+
+      /* =======================
          Imports
       ======================= */
       'import-x/extensions': [
@@ -210,6 +219,7 @@ export default defineConfig([
             'tests/**/*',
             '**/__tests__/**',
             '**/__mocks__/**',
+            '**/testUtils/**',
             '**/*{.,_}{test,spec}.{js,jsx,ts,tsx}',
             '**/*.stories.*',
             '**/.storybook/**/*.*',
@@ -265,16 +275,6 @@ export default defineConfig([
     rules: {
       'import-x/no-default-export': 'off',
       'import-x/prefer-default-export': 'error',
-    },
-  },
-
-  // typed-redux-saga
-  {
-    files: ['**/*.ts'],
-    ignores: ['**/*.spec.ts'],
-    rules: {
-      '@jambit/typed-redux-saga/use-typed-effects': 'error',
-      '@jambit/typed-redux-saga/delegate-effects': 'error',
     },
   },
 

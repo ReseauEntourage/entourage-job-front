@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { CardList } from '@/src/components/ui/CardList';
-import { NetworkDirectoryUserItem } from '../network-directory/NetworkDirectoryItem';
 import {
   selectRecruitementAlertMatchingById,
   selectFetchRecruitementAlertMatchingLoading,
-} from 'src/use-cases/recruitement-alerts';
+} from '@/src/use-cases/recruitement-alerts';
+import { NetworkDirectoryUserItem } from '../network-directory/NetworkDirectoryItem';
 import { StyledAlertCandidatesListContainer } from './AlertCandidates.styles';
 
 interface AlertCandidatesListProps {
@@ -16,7 +16,9 @@ export function AlertCandidatesList({
   alertId,
 }: AlertCandidatesListProps): React.ReactElement {
   const candidates = useSelector(selectRecruitementAlertMatchingById(alertId));
-  const isLoading = useSelector(selectFetchRecruitementAlertMatchingLoading);
+  const isLoading = useSelector(
+    selectFetchRecruitementAlertMatchingLoading(alertId)
+  );
 
   const candidatesList = useMemo(() => {
     return candidates?.profiles?.map((candidate) => {
@@ -31,7 +33,7 @@ export function AlertCandidatesList({
           department={candidate.department}
           sectorOccupations={candidate.sectorOccupations}
           job={candidate.currentJob || undefined}
-          isAvailable={candidate.isAvailable || false}
+          isAvailable={candidate.unavailableAt === null}
           hasPicture={candidate.hasPicture || false}
           currentJob={candidate.currentJob || undefined}
           achievements={candidate.achievements || []}

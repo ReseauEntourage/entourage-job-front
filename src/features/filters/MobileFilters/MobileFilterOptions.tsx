@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckBox } from '@/src/components/ui/Inputs/CheckBox/CheckBox';
-import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { Filter, FilterConstant, FilterObject } from '@/src/constants/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledCheckboxContainer,
   StyledMobileFilterOption,

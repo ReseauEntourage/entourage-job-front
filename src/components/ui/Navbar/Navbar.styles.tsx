@@ -1,15 +1,21 @@
-import styled from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS, HEIGHTS } from '@/src/constants/styles';
 
-export const StyledNavbar = styled.nav`
-  background-color: ${({ backgroundColor }) => {
-    return COLORS[backgroundColor] || COLORS.extraDarkGray;
+export const StyledNavbar = styled.nav<{
+  $backgroundColor?: string;
+  color?: string;
+  $sticky?: boolean;
+}>`
+  background-color: ${({ $backgroundColor }) => {
+    return (
+      ($backgroundColor && COLORS[$backgroundColor]) || COLORS.extraDarkGray
+    );
   }};
   color: ${({ color }) => {
-    return COLORS[color] || COLORS.extraDarkGray;
+    return (color && COLORS[color]) || COLORS.extraDarkGray;
   }};
-  position: ${({ sticky }) => {
-    return sticky ? 'fixed' : 'inherit';
+  position: ${({ $sticky }) => {
+    return $sticky ? 'fixed' : 'inherit';
   }};
   top: 0;
   display: flex;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { useUpdateUser } from '@/src/hooks';
-import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
-import { User, UserProfile } from 'src/api/types';
+import { User, UserProfile } from '@/src/api/types';
 import {
   ExtractFormSchemaValidation,
   FormSchema,
-} from 'src/features/forms/FormSchema';
-import { AnyCantFix } from 'src/utils/Types';
+} from '@/src/features/forms/FormSchema';
+import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
+import { useUpdateUser } from '@/src/hooks';
+import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
+import { AnyCantFix } from '@/src/utils/Types';
 
 interface ModalEditProfessionalInformationProps<
   S extends FormSchema<AnyCantFix>,

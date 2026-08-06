@@ -3,8 +3,8 @@ import { LucidIcon } from '@/src/components/ui';
 import { SelectOptionTitleIconDescriptionLabelType } from '@/src/components/ui/Inputs/SelectList';
 import { SelectOptionTitleIconDescriptionLabel } from '@/src/components/ui/Inputs/SelectList/SelectListOptionLabels/SelectOptionTitleIconDescriptionLabel/SelectOptionTitleIconDescriptionLabel';
 import { COLORS } from '@/src/constants/styles';
+import { FormSchema } from '@/src/features/forms/FormSchema';
 import { RegistrationFlow } from '../flows/flows.types';
-import { FormSchema } from 'src/features/forms/FormSchema';
 
 export const FlowOptions: SelectOptionTitleIconDescriptionLabelType<RegistrationFlow>[] =
   [

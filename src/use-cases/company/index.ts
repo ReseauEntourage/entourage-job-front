@@ -1,12 +1,12 @@
 import { UseCaseConfigItem } from '../types';
-import { saga } from './company.saga';
+import './company.listeners';
 import { slice } from './company.slice';
 
 export * from './company.selectors';
+export * from './company.api';
 
 export const companyActions = slice.actions;
 
 export const companyConfig = {
   slice,
-  saga,
 } as UseCaseConfigItem;

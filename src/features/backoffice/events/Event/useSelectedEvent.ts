@@ -4,10 +4,12 @@ import { useEventId } from '@/src/hooks/queryParams/useEventId';
 import {
   eventsActions,
   fetchSelectedEventSelectors,
+  FETCH_SELECTED_EVENT_FIXED_CACHE_KEY,
   selectSelectedEvent,
+  useFetchSelectedEventMutation,
 } from '@/src/use-cases/events';
-import { notificationsActions } from 'src/use-cases/notifications';
-import { assertIsDefined } from 'src/utils/asserts';
+import { notificationsActions } from '@/src/use-cases/notifications';
+import { assertIsDefined } from '@/src/utils/asserts';
 
 export function useSelectedEvent() {
   const eventId = useEventId();
@@ -17,6 +19,9 @@ export function useSelectedEvent() {
     fetchSelectedEventSelectors.selectIsFetchSelectedEventFailed
   );
   const selectedEvent = useSelector(selectSelectedEvent);
+  const [, { reset: resetFetchSelectedEvent }] = useFetchSelectedEventMutation({
+    fixedCacheKey: FETCH_SELECTED_EVENT_FIXED_CACHE_KEY,
+  });
 
   useEffect(() => {
     if (eventId) {
@@ -41,9 +46,9 @@ export function useSelectedEvent() {
 
   useEffect(() => {
     return () => {
-      dispatch(eventsActions.fetchSelectedEventReset());
+      resetFetchSelectedEvent();
     };
-  }, [dispatch]);
+  }, [resetFetchSelectedEvent]);
 
   return {
     selectedEvent,

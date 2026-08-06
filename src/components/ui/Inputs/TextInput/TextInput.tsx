@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import { Text } from '@/src/components/ui';
 import { ButtonIcon } from '../../Button';
 import { LucidIcon } from '../../Icons/LucidIcon';
 import { Tooltip } from '../../Tooltip';
@@ -10,7 +11,6 @@ import {
   StyledLimitContainer,
 } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { Text } from 'src/components/ui';
 import {
   StyledTextInputGroupForm,
   StyledTextInputWrapper,

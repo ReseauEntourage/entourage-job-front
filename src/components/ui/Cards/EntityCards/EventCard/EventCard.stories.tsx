@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { EventMode, EventType } from '@/src/constants/events';
-import { store } from 'src/store/store';
+import { store } from '@/src/store/store';
 import { EventCard, EventCardProps } from './EventCard';
 
 const Component = (props: EventCardProps) => {
@@ -75,6 +75,7 @@ export const Irl = {
     registrationCount: 42,
     meetingLink: null,
     isParticipating: false,
+    publicSensibilise: null,
   },
 } satisfies Story;
 
@@ -89,6 +90,7 @@ export const Online = {
     registrationCount: 42,
     meetingLink: 'https://example.com/meeting',
     isParticipating: false,
+    publicSensibilise: null,
   },
 } satisfies Story;
 
@@ -103,5 +105,6 @@ export const Participate = {
     registrationCount: 42,
     meetingLink: 'https://example.com/meeting',
     isParticipating: true,
+    publicSensibilise: null,
   },
 } satisfies Story;

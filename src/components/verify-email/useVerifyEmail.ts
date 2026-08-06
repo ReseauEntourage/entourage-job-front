@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
+import { ReduxRequestEvents } from '@/src/constants';
 import {
   authenticationActions,
   selectVerifyEmailTokenError,
+  useVerifyEmailTokenMutation,
+  VERIFY_EMAIL_TOKEN_FIXED_CACHE_KEY,
   verifyEmailTokenSelectors,
-} from 'src/use-cases/authentication';
+} from '@/src/use-cases/authentication';
 
 export function useVerifyEmail() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +34,9 @@ export function useVerifyEmail() {
     verifyEmailTokenSelectors.selectVerifyEmailTokenStatus
   );
   const verifyEmailTokenError = useSelector(selectVerifyEmailTokenError);
+  const [, { reset: resetVerifyEmailToken }] = useVerifyEmailTokenMutation({
+    fixedCacheKey: VERIFY_EMAIL_TOKEN_FIXED_CACHE_KEY,
+  });
 
   useEffect(() => {
     if (
@@ -45,9 +50,9 @@ export function useVerifyEmail() {
   // on component unmount
   useEffect(() => {
     return () => {
-      dispatch(authenticationActions.verifyEmailTokenReset());
+      resetVerifyEmailToken();
     };
-  }, [dispatch]);
+  }, [resetVerifyEmailToken]);
 
   return { isLoading, verifyEmailTokenError };
 }

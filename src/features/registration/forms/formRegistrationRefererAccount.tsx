@@ -2,21 +2,21 @@ import { passwordStrength } from 'check-password-strength';
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
+import { Api } from '@/src/api';
 import { SimpleLink } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
-import { Api } from 'src/api';
 import {
   DepartmentName,
   DEPARTMENTS_FILTERS,
-} from 'src/constants/departements';
-import { COLORS } from 'src/constants/styles';
-import { FilterConstant } from 'src/constants/utils';
+} from '@/src/constants/departements';
+import { COLORS } from '@/src/constants/styles';
+import { FilterConstant } from '@/src/constants/utils';
+import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import {
   FormSchema,
   FormSchemaValidation,
   GetValueType,
-} from 'src/features/forms/FormSchema';
+} from '@/src/features/forms/FormSchema';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
 

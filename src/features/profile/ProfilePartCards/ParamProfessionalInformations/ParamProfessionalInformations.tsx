@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { UserProfileSectorOccupation } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { H6 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
@@ -9,15 +10,14 @@ import {
   getCoachDefaultProfessionalValues,
 } from '@/src/features/backoffice/parameters/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ProfileCareerPathSentence } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
+import { formEditCandidateProfessionalInformation } from '@/src/features/forms/schemas/formEditCandidateProfessionalInformation';
+import { formEditCoachProfessionalInformation } from '@/src/features/forms/schemas/formEditCoachProfessionalInformation';
 import { openModal } from '@/src/features/modals/Modal';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { formatCareerPathSentence } from '@/src/utils';
 import { ProfilePartCard } from '../Card/Card/Card';
-import { UserProfileSectorOccupation } from 'src/api/types';
-import { formEditCandidateProfessionalInformation } from 'src/features/forms/schemas/formEditCandidateProfessionalInformation';
-import { formEditCoachProfessionalInformation } from 'src/features/forms/schemas/formEditCoachProfessionalInformation';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
-import { formatCareerPathSentence } from 'src/utils';
 
 interface ParamProfessionalInformationsProps {
   isEditable?: boolean;

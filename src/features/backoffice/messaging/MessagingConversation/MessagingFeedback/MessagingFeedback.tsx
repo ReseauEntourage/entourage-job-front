@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { ConversationParticipant } from '@/src/api/types';
 import { Alert } from '@/src/components/ui/Alert/Alert';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { StarRating } from '@/src/components/ui/StarRating/StarRating';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { ConversationParticipant } from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
-import { useIsDesktop } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { UserRoles } from '@/src/constants/users';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   StyledAlertFeedbackContainer,
   StyledAlertFeedbackDescription,
@@ -67,6 +67,7 @@ export const MessagingFeedback = ({
       }
       onClose={() => onClose()}
       closable
+      dataTestId="messaging-feedback-alert"
     >
       <StyledAlertFeedbackContainer>
         <StyledAlertFeedbackTitle>

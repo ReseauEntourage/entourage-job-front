@@ -1,6 +1,6 @@
 import React from 'react';
-import { Filter, FilterObject } from 'src/constants/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { Filter, FilterObject } from '@/src/constants/utils';
+import { gaEvent } from '@/src/lib/gtag';
 
 interface FiltersCheckboxesProps {
   filters: FilterObject;

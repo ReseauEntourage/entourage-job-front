@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import ReactModal from 'react-modal';
 import { LucidIcon } from '@/src/components/ui';
+import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 import { useModalContext } from '@/src/features/modals/Modal/ModalContext';
 import { useIsMobile } from '@/src/hooks/utils';
-import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 import { ModalSize } from './Modal.types';
 import { StyledCloseButton } from './Modals.styles';
 

@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
-import { UIKIT_BLENDS, UIKIT_STYLES } from 'src/components/variables';
-import { addPrefix } from 'src/utils';
+import { UIKIT_BLENDS, UIKIT_STYLES } from '@/src/components/variables';
+import { addPrefix } from '@/src/utils';
 
 interface BackgroundProps {
   children: JSX.Element | JSX.Element[];

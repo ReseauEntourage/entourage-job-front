@@ -7,7 +7,9 @@ import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurre
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import {
   currentUserActions,
+  UPDATE_PROFILE_FIXED_CACHE_KEY,
   updateProfileSelectors,
+  useUpdateProfileMutation,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
@@ -28,6 +30,9 @@ export const useStepFormations = ({ user }: UseStepFormationsProps) => {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
+  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
+    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+  });
 
   const [formations, setFormations] = useState<Formation[]>(
     (profileComplete?.formations as Formation[]) ?? []
@@ -98,7 +103,7 @@ export const useStepFormations = ({ user }: UseStepFormationsProps) => {
       }
 
       return new Promise<boolean>((resolve) => {
-        dispatch(currentUserActions.updateProfileReset());
+        resetUpdateProfile();
         pendingResolveRef.current = resolve;
         updateUserProfile({ formations });
       });

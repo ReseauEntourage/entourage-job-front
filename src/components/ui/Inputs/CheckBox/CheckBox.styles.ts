@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import { commonInputContainerStyles } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
-export const StyledCheckbox = styled.div`
+export const StyledCheckbox = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
   justify-content: center;
   margin-bottom: 15px;

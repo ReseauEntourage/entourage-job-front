@@ -1,30 +1,30 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MessagingAIPanel } from '../MessagingAIPanel';
-import { MessagingEmptyState } from '../MessagingEmptyState';
-import { ConversationType, FeatureKey } from 'src/api/types';
-import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
-import { UserRoles } from 'src/constants/users';
-import { useIsMobile } from 'src/hooks/utils';
+import { ConversationType, FeatureKey } from '@/src/api/types';
+import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
+import { UserRoles } from '@/src/constants/users';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
   selectHasBetaFeature,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectIsAIPanelOpen,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import {
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectOtherParticipantHasNotReplied,
   selectShouldGiveFeedback,
-} from 'src/use-cases/messaging/messaging.selectors';
+} from '@/src/use-cases/messaging/messaging.selectors';
+import { MessagingAIPanel } from '../MessagingAIPanel';
+import { MessagingEmptyState } from '../MessagingEmptyState';
 import {
   MessagingConversationAIPanel,
   MessagingConversationContainer,
@@ -219,7 +219,7 @@ export const MessagingConversation = () => {
       (participant) => participant.id !== currentUserId
     );
     const addresseesAreUnavailable = addressees?.some(
-      (addressee) => addressee.userProfile?.isAvailable === false
+      (addressee) => !!addressee.userProfile?.unavailableAt
     );
     if (addresseesAreUnavailable) {
       dispatch(messagingActions.setPinnedInfo('ADDRESSEE_UNAVAILABLE'));
@@ -305,10 +305,7 @@ export const MessagingConversation = () => {
           participants={selectedConversation?.participants || []}
         />
       ) : (
-        <MessagingMessagesContainer
-          blur={shouldGiveFeedback}
-          className={isMobile ? 'mobile' : ''}
-        >
+        <MessagingMessagesContainer $blur={shouldGiveFeedback}>
           {reversedMessages &&
             reversedMessages.map((message) => (
               <MessagingMessage key={message.id} message={message} />
@@ -343,7 +340,7 @@ export const MessagingConversation = () => {
 
   if (!selectedConversationId) {
     return (
-      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+      <MessagingConversationContainer>
         <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
       </MessagingConversationContainer>
     );
@@ -355,7 +352,7 @@ export const MessagingConversation = () => {
 
   return (
     <MessagingConversationWrapper>
-      <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+      <MessagingConversationContainer>
         {conversationContent}
       </MessagingConversationContainer>
       {!isMobile &&

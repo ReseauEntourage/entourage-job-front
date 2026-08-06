@@ -1,14 +1,14 @@
 import React from 'react';
-import { CardListItem } from '@/src/components/ui/CardList';
-import { ProfileCard } from '@/src/components/ui/Cards/EntityCards/ProfileCard';
-import { Genders } from '@/src/constants/genders';
 import {
   MatchingReason,
   UserAchievement,
   UserProfileSectorOccupation,
-} from 'src/api/types';
-import { DepartmentName } from 'src/constants/departements';
-import { UserRoles } from 'src/constants/users';
+} from '@/src/api/types';
+import { CardListItem } from '@/src/components/ui/CardList';
+import { ProfileCard } from '@/src/components/ui/Cards/EntityCards/ProfileCard';
+import { DepartmentName } from '@/src/constants/departements';
+import { Genders } from '@/src/constants/genders';
+import { UserRoles } from '@/src/constants/users';
 
 interface NetworkDirectoryUserItemProps {
   id: string;

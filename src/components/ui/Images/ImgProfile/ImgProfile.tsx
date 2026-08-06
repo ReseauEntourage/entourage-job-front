@@ -25,8 +25,8 @@ export const ImgProfile = ({
   return (
     <StyledImgProfileContainer
       size={size}
-      highlight={highlight}
-      bgColor={bgColor}
+      $highlight={highlight}
+      $bgColor={bgColor}
     >
       {pictureUrl ? (
         <LegacyImg src={pictureUrl} alt={alt} cover={cover} />

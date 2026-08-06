@@ -1,6 +1,6 @@
 import React, { type JSX } from 'react';
 import { StyledSection } from '@/src/components/ui/Section/Section.styles';
-import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from 'src/components/variables';
+import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from '@/src/components/variables';
 
 interface SectionProps {
   style?: UIKIT_STYLES;

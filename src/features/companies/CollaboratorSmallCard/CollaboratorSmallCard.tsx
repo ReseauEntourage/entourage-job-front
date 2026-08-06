@@ -30,7 +30,7 @@ export const CollaboratorSmallCard = ({
   const isMobile = useIsMobile();
   return (
     <StyledCollaboratorSmallCardContainer
-      pointer={!!user}
+      $pointer={!!user}
       onClick={user ? openProfile : undefined}
     >
       {!!user && (
@@ -43,7 +43,7 @@ export const CollaboratorSmallCard = ({
         </div>
       )}
       {!!email && (
-        <StyledCollaboratorSmallCardPictureContainerStyled isMobile={isMobile}>
+        <StyledCollaboratorSmallCardPictureContainerStyled>
           <LegacyImg
             src="/static/img/profile-placeholder.png"
             alt="Default Profile"

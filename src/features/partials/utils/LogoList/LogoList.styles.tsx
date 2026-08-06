@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const LogoListFlexContainer = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ export const LogoListFlexContainer = styled.div`
   padding: 15px;
 `;
 
-export const LogoListFlexItem = styled.div`
+export const LogoListFlexItem = styled.div<{ width: string }>`
   box-sizing: border-box;
   padding-left: 15px;
   width: ${({ width }) => {

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
 const LINE_HEIGHT = 2;
@@ -10,9 +10,9 @@ export const StyledContainer = styled.div`
   flex-wrap: nowrap;
 `;
 
-export const StyledLine = styled.div<{ badgeSize: number }>`
+export const StyledLine = styled.div<{ $badgeSize: number }>`
   position: absolute;
-  top: ${({ badgeSize }) => badgeSize / 2}px;
+  top: ${({ $badgeSize }) => $badgeSize / 2}px;
   left: 0;
   right: 0;
   height: ${LINE_HEIGHT}px;
@@ -30,13 +30,13 @@ export const StyledItemContainer = styled.div`
 `;
 
 // Ajout d'une prop $isLast pour gérer le flex
-export const StyledItem = styled.div<{ isLast?: boolean }>`
+export const StyledItem = styled.div<{ $isLast?: boolean }>`
   display: flex;
   flex-direction: row;
   gap: 16px;
   justify-content: flex-start;
   max-width: 220px;
-  ${({ isLast }) => !isLast && 'flex: 1;'}
+  ${({ $isLast }) => !$isLast && 'flex: 1;'}
 `;
 
 export const StyledItemCounterContainer = styled.div`

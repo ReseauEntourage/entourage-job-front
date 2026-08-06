@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ReduxRequestEvents } from '@/src/constants';
+import { UserRoles } from '@/src/constants/users';
+import { useImageFallback } from '@/src/hooks/useImageFallback';
+import { updateUserProfilePictureSelectors } from '@/src/use-cases/current-user';
 import { ImgProfile } from '../ImgProfile';
-import { ReduxRequestEvents } from 'src/constants';
-import { UserRoles } from 'src/constants/users';
-import { useImageFallback } from 'src/hooks/useImageFallback';
-import { updateUserProfilePictureSelectors } from 'src/use-cases/current-user';
 
 interface ImgUserProfileProps {
   user: {
@@ -45,7 +45,7 @@ export const ImgUserProfile = ({
 
   return (
     <ImgProfile
-      pictureUrl={hasPicture ? `${urlImg}?${hash}` : null}
+      pictureUrl={hasPicture && urlImg ? `${urlImg}?${hash}` : null}
       placeholder={user.firstName}
       size={size}
       highlight={highlight}

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { TdDesktop, TdMobile, TrMobile } from '@/src/components/ui/Table';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledNameCell = styled(TdDesktop)`
   border-left: solid 3px ${COLORS.white} !important;

@@ -27,7 +27,7 @@ interface OffCanvasProps {
 export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
   ({ children, position = 'left', closeButtonSize }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
-    const offCanvasRef = useRef<HTMLElement>(null);
+    const offCanvasRef = useRef<HTMLDivElement>(null);
 
     const closeOffCanvas = useCallback(() => {
       setIsOpen(false);
@@ -60,7 +60,7 @@ export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
     }, [isOpen, closeOffCanvas]);
 
     return (
-      <StyledOffCanvas position={position} isOpen={isOpen} ref={offCanvasRef}>
+      <StyledOffCanvas $position={position} $isOpen={isOpen} ref={offCanvasRef}>
         <StyledCloseButtonContainer>
           <CloseButton
             onClick={closeOffCanvas}

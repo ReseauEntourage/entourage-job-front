@@ -23,6 +23,7 @@ export const MessagingFirstContactBanner = ({
       rounded={false}
       onClose={() => setVisible(false)}
       closable
+      dataTestId="messaging-first-contact-banner"
     >
       <StyledMessagingFirstContactBannerContent>
         <div>

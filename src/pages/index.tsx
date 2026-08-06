@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
+import { GA_TAGS } from '@/src/constants/tags';
 import { CandidateTestimoniesOrientation } from '@/src/features/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { NousSoutenir } from '@/src/features/partials/common/NousSoutenir';
@@ -11,13 +12,12 @@ import { Engagement } from '@/src/features/partials/pages/HomePage/Engagement';
 import { Figures } from '@/src/features/partials/pages/HomePage/Figures';
 import { Rejoindre } from '@/src/features/partials/pages/HomePage/Rejoindre';
 import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { gaEvent } from '@/src/lib/gtag';
 import { STORAGE_KEYS } from '../constants';
 import { openModal } from '../features/modals/Modal';
 import { PinnedCommunicationModale } from '../features/modals/PopupModal/PinnedCommunicationModale';
 import { useUtm } from '../hooks/queryParams/useUTM';
 import { useMount } from '../hooks/utils';
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
 
 const Index = () => {
   useUtm();

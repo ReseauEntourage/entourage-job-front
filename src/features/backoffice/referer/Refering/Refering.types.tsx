@@ -1,12 +1,12 @@
 import React from 'react';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
 import { candidateLastStepBullets } from '@/src/features/registration/registration.config';
+import { UnionKeys, UnionToIntersection } from '@/src/utils/Types';
 import { formReferingAccountReferedCandidate } from '../forms/formReferingAccountReferedCandidate';
 import { formReferingExpectations } from '../forms/formReferingExpectations';
 import { formReferingInfo } from '../forms/formReferingInfo';
 import { formReferingProfessionalInformation } from '../forms/formReferingProfessionalInformation';
 import { formReferingSocialSituation } from '../forms/formReferingSocialSituation';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
-import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 
 export type ReferingStep = `step-${number}`;
 export const REFERING_FIRST_STEP = 'step-1' as const;

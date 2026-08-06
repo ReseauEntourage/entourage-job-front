@@ -1,6 +1,6 @@
 import React from 'react';
+import { GA_TAGS } from '@/src/constants/tags';
 import { Partners, PartnersListItem } from '../Partners';
-import { GA_TAGS } from 'src/constants/tags';
 
 interface PartnersWorkingWithUsProps {
   tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];

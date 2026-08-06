@@ -1,14 +1,14 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Conversation, ConversationParticipant } from '@/src/api/types';
 import { ImgUserProfile } from '@/src/components/ui';
-import { conversationHasUnreadMessages } from '../../messaging.utils';
-import { Conversation, ConversationParticipant } from 'src/api/types';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectSelectedConversationId,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
+import { conversationHasUnreadMessages } from '../../messaging.utils';
 import {
   ContainerAvatarStyled,
   ConversationAddresee,
@@ -51,7 +51,12 @@ export const MessagingConversationListItem = ({
   };
 
   return (
-    <ContainerStyled onClick={selectConversation} isActive={isActivated}>
+    <ContainerStyled
+      onClick={selectConversation}
+      $isActive={isActivated}
+      data-testid="messaging-conversation-item"
+      data-conversation-id={conversation.id}
+    >
       <ContainerAvatarStyled>
         {addresee && (
           <ImgUserProfile
@@ -62,7 +67,7 @@ export const MessagingConversationListItem = ({
         )}
         {hasUnreadMessages && <StyledUnreadDot />}
       </ContainerAvatarStyled>
-      <RightColumn highlight={shouldHighlightConversation}>
+      <RightColumn $highlight={shouldHighlightConversation}>
         <MainInfos>
           {addresee && (
             <ConversationAddresee>

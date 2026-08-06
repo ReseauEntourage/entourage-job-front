@@ -4,16 +4,16 @@ import { Button, ButtonIcon } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { FileInput } from '@/src/components/ui/Inputs';
 import { COLORS } from '@/src/constants/styles';
-import { GA_TAGS } from 'src/constants/tags';
-import { useIsMobile } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from '@/src/constants/tags';
+import { useIsMobile } from '@/src/hooks/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   messagingActions,
   selectNewMessage,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectShouldGiveFeedback,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import { Attachment } from './Attachment/Attachment';
 import {
   MessagingEditorContainer,
@@ -133,10 +133,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
           ))}
         </StyledAttachementInfoContainer>
       )}
-      <MessagingMessageForm
-        blur={shouldGiveFeedback}
-        className={isMobile ? 'mobile' : ''}
-      >
+      <MessagingMessageForm $blur={shouldGiveFeedback}>
         <FileInput
           id="file-input"
           name="file-input"
@@ -149,6 +146,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
               onClick={onRequestAttachFileClick}
               rounded="circle"
               size="large"
+              dataTestId="messaging-attach-button"
             >
               <LucidIcon name="Plus" size={25} />
             </Button>
@@ -166,6 +164,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
               dispatch(messagingActions.setNewMessage(e.target.value));
             }}
             disabled={readonly}
+            data-testid="messaging-editor-input"
           />
         </MessagingInputContainer>
         {isMobile ? (
@@ -176,9 +175,14 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
             disabled={readonly}
             color={COLORS.white}
             variant="primary"
+            dataTestId="messaging-send-button"
           />
         ) : (
-          <Button onClick={sendNewMessage} disabled={readonly}>
+          <Button
+            onClick={sendNewMessage}
+            disabled={readonly}
+            dataTestId="messaging-send-button"
+          >
             Envoyer
           </Button>
         )}

@@ -3,10 +3,10 @@ import React from 'react';
 import { v4 as uuidV4 } from 'uuid';
 import { Button, Section, Text } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
-import { COLORS } from 'src/constants/styles';
-import { GA_TAGS } from 'src/constants/tags';
-import { useIsDesktop } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { COLORS } from '@/src/constants/styles';
+import { GA_TAGS } from '@/src/constants/tags';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledNousSoutenirButton,
   StyledNousSoutenirCard,

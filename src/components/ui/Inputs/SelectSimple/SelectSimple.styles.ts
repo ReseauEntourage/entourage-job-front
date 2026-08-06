@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import {
   commonInputContainerStyles,
   commonInputStyles,
   commonMenuOptionStyles,
 } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
-export const StyledSelectContainer = styled.div`
+export const StyledSelectContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
   .select {
     width: 100%;

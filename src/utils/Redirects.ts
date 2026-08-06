@@ -1,4 +1,4 @@
-import { UserRoles } from 'src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 
 const defaultPages = {
   [UserRoles.ADMIN]: '/backoffice/admin/membres',

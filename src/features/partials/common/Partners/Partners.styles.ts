@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS, BREAKPOINTS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS, BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledPartners = styled.div`
   padding: 40px 0;

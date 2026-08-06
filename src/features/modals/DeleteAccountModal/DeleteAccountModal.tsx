@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { Text } from '@/src/components/ui';
+import { authenticationActions } from '@/src/use-cases/authentication';
 import { ModalConfirm } from '../Modal/ModalGeneric/ModalConfirm';
-import { Api } from 'src/api';
-import { authenticationActions } from 'src/use-cases/authentication';
 import { StyledContainer } from './DeleteAccountModal.styles';
 
 export function DeleteAccountModal() {

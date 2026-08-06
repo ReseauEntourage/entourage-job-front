@@ -1,6 +1,6 @@
 import React from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 interface SpinnerProps {
   color?: string;

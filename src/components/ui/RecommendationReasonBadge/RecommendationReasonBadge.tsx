@@ -1,11 +1,11 @@
 import React from 'react';
+import { MatchingReason } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { Color } from '@/src/constants/styles';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { Badge, BadgeVariant } from '../Badge';
 import { IconName, LucidIcon } from '../Icons';
-import { MatchingReason } from 'src/api/types';
-import { UserRoles } from 'src/constants/users';
 import {
   StyledBadgeContainer,
   StyledBadgeContent,

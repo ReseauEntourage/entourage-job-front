@@ -27,7 +27,7 @@ export const CardTitle = ({
   const iconWithContainer = useMemo(() => {
     const icon = <LucidIcon {...iconProps} />;
     return (
-      <StyledIconContainer isCompleted={isCompleted}>
+      <StyledIconContainer $isCompleted={!!isCompleted}>
         {icon}
       </StyledIconContainer>
     );

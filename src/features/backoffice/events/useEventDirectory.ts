@@ -1,15 +1,19 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { eventsActions } from '@/src/use-cases/events';
+import { useIsAtBottom } from '@/src/hooks/useIsAtBottom';
+import { usePrevious } from '@/src/hooks/utils';
+import {
+  eventsActions,
+  FETCH_EVENTS_FIXED_CACHE_KEY,
+  useFetchEventsMutation,
+} from '@/src/use-cases/events';
 import {
   fetchEventsSelectors,
   selectEvents,
   selectEventsHasFetchedAll,
 } from '@/src/use-cases/events/events.selectors';
-import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
-import { usePrevious } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { useEventDirectoryQueryParams } from './EventDirectory/useEventDirectoryQueryParams';
 
 // Manage directory requests and filters
@@ -34,6 +38,9 @@ export function useEventDirectory() {
   );
 
   const events = useSelector(selectEvents);
+  const [, { reset: resetFetchEvents }] = useFetchEventsMutation({
+    fixedCacheKey: FETCH_EVENTS_FIXED_CACHE_KEY,
+  });
 
   /**
    * Filters and params
@@ -71,9 +78,9 @@ export function useEventDirectory() {
   useEffect(() => {
     return () => {
       dispatch(eventsActions.resetEventsOffset());
-      dispatch(eventsActions.fetchEventsReset());
+      resetFetchEvents();
     };
-  }, [dispatch]);
+  }, [dispatch, resetFetchEvents]);
 
   // Get state to check if all items have been fetched
   const eventsHasFetchedAll = useSelector(selectEventsHasFetchedAll);

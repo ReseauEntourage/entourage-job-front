@@ -33,7 +33,7 @@ export const Tag = ({
   removeCallback,
 }: TagProps) => {
   return (
-    <StyledTag size={size} variant={variant}>
+    <StyledTag size={size} $variant={variant}>
       {children}
       {removeCallback && (
         <ButtonIcon

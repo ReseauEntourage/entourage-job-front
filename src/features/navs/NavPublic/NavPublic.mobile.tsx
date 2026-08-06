@@ -9,11 +9,11 @@ import {
 import { Button } from '@/src/components/ui/Button';
 import { Hamburger } from '@/src/components/ui/Hamburger';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { FB_TAGS, GA_TAGS } from '@/src/constants/tags';
 import { StyledNavContainerMobile } from '@/src/features/headers/Header.styles';
 import { useOffCanvas } from '@/src/hooks/useOffCanvas';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
+import { fbEvent } from '@/src/lib/fb';
+import { gaEvent } from '@/src/lib/gtag';
 import { LINKS } from './NavPublic.utils';
 import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 

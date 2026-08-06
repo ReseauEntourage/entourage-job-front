@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
+import { styled, css } from 'styled-components';
 
-export const StyledTh = styled.th`
+export const StyledTh = styled.th<{ $isMobile: boolean }>`
   white-space: nowrap;
   position: sticky;
   top: 0;
@@ -11,9 +11,9 @@ export const StyledTh = styled.th`
   font-weight: 400;
   color: #999;
 
-  ${({ isMobile }) => {
+  ${({ $isMobile }) => {
     return (
-      isMobile &&
+      $isMobile &&
       css`
         display: none;
       `

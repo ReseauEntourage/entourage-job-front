@@ -3,7 +3,7 @@ import { Text } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert/Alert';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { useIsDesktop } from 'src/hooks/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
 
 interface MessagingPinnedInfoProps {
   pinnedInfo: string;

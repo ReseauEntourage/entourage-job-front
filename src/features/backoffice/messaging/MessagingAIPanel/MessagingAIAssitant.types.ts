@@ -1,4 +1,4 @@
-import { AiAssistantMessage } from 'src/api/types';
+import { AiAssistantMessage } from '@/src/api/types';
 
 export type AIQuickActionId =
   'reengage' | 'summarize' | 'sector' | 'start_discussion' | 'suggest_response';

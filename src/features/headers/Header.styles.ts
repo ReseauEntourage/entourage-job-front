@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS, HEIGHTS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledNavContainerDesktop = styled.header`
   height: ${HEIGHTS.HEADER}px;

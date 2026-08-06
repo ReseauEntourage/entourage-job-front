@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, LucidIcon, Text } from '@/src/components/ui';
 import { ButtonAddToCalendar } from '@/src/components/ui/Button/ButtonAddToCalendar';
 import { ButtonShare } from '@/src/components/ui/Button/ButtonShare';
+import { EventMode } from '@/src/constants/events';
 import { EventParticipateButton } from '../EventParticipateButton/EventParticipateButton';
-import { EventMode } from 'src/constants/events';
 import {
   StyledActionContainer,
   StyledInvitationToActionContainer,

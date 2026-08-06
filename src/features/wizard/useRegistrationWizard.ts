@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import {
@@ -12,17 +11,17 @@ import {
   selectCurrentUser,
   selectCurrentUserCompany,
 } from '@/src/use-cases/current-user';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
-  createUserSelectors,
   registrationActions,
-  selectCreateUserError,
   selectIsRegistrationLoading,
   selectRegistrationCurrentStep,
   selectRegistrationNextStep,
   selectRegistrationSelectedFlow,
   selectRegistrationShouldSkipStep,
+  CREATE_USER_FIXED_CACHE_KEY,
+  useCreateUserMutation,
 } from '@/src/use-cases/registration';
-import { notificationsActions } from 'src/use-cases/notifications';
 import { useWizardStepCandidateInfo } from './steps/StepInfos/useWizardStepCandidateInfo';
 import { useWizardStepCoachInfo } from './steps/StepInfos/useWizardStepCoachInfo';
 import { useWizardStepAccount } from './steps/useWizardStepAccount';
@@ -58,10 +57,14 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   const isLoading = useSelector(selectIsRegistrationLoading);
   const nextStep = useSelector(selectRegistrationNextStep);
   const shouldSkipStep = useSelector(selectRegistrationShouldSkipStep);
-  const createUserStatus = useSelector(
-    createUserSelectors.selectCreateUserStatus
-  );
-  const createUserError = useSelector(selectCreateUserError);
+  const [
+    ,
+    {
+      isError: isCreateUserError,
+      error: createUserError,
+      reset: resetCreateUser,
+    },
+  ] = useCreateUserMutation({ fixedCacheKey: CREATE_USER_FIXED_CACHE_KEY });
 
   // Step hooks (always called, rules of hooks)
   const { step: candidateInfoStep } = useWizardStepCandidateInfo();
@@ -166,10 +169,7 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
   // Show error notification on failed account creation
   // (DUPLICATE_EMAIL est affiché inline sous le champ email, voir useWizardStepAccount)
   useEffect(() => {
-    if (
-      createUserStatus === ReduxRequestEvents.FAILED &&
-      createUserError !== 'DUPLICATE_EMAIL'
-    ) {
+    if (isCreateUserError && createUserError !== 'DUPLICATE_EMAIL') {
       dispatch(
         notificationsActions.addNotification({
           type: 'danger',
@@ -177,14 +177,14 @@ export function useRegistrationWizard(): UseRegistrationWizardReturn {
         })
       );
     }
-  }, [createUserStatus, createUserError, dispatch]);
+  }, [isCreateUserError, createUserError, dispatch]);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      dispatch(registrationActions.createUserReset());
+      resetCreateUser();
     };
-  }, [dispatch]);
+  }, [resetCreateUser]);
 
   const incrementStep = useCallback(async () => {
     if (!currentWizardStep?.onSubmit) {

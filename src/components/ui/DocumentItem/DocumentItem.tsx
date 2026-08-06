@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonIcon, Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 import { StyledDocumentItem, TitleAndIcon } from './DocumentItem.styles';
 
 interface DocumentItemProps {

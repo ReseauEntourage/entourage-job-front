@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
+import { PublicCV } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
 import { H1, H3, H5 } from '@/src/components/ui/Headings';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { CONTRACTS } from '@/src/constants';
+import { COLORS } from '@/src/constants/styles';
 import { ProfileCareerPathSentence } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
 import {
   StyledCVPageContent,
@@ -26,13 +29,10 @@ import {
   StyledCVSkillTagContainer,
   StyledSkillTag,
 } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation.styles';
-import { CVShareButtons } from '../CVShareButtons';
-import { PublicCV } from 'src/api/types';
 
-import { CONTRACTS } from 'src/constants';
-import { COLORS } from 'src/constants/styles';
-import { useIsDesktop } from 'src/hooks/utils';
-import { findConstantFromValue } from 'src/utils';
+import { useIsDesktop } from '@/src/hooks/utils';
+import { findConstantFromValue } from '@/src/utils';
+import { CVShareButtons } from '../CVShareButtons';
 
 interface openedPanelType {
   informations: boolean;
@@ -74,7 +74,7 @@ export const PageCVContent = ({
         <StyledCVProfilePictureContainer className={!isDesktop ? 'mobile' : ''}>
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
-            imgSrc={imgSrc}
+            $imgSrc={imgSrc}
           />
           {isDesktop && (
             <>

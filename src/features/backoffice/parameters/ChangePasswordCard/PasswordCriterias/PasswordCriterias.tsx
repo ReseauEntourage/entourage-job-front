@@ -30,7 +30,7 @@ export const PasswordCriterias = ({
   }
 
   return (
-    <StyledPasswordCriteriasList removeMargin={removeMargin}>
+    <StyledPasswordCriteriasList $removeMargin={removeMargin}>
       {items}
     </StyledPasswordCriteriasList>
   );

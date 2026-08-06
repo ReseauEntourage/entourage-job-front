@@ -1,9 +1,9 @@
 import React from 'react';
+import { PublicAchievement } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { H1, H3 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
-import { PublicAchievement } from 'src/api/types';
 import {
   StyledBadgeWrapper,
   StyledCertificateCard,

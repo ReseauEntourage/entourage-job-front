@@ -1,18 +1,18 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
+import { Api } from '@/src/api';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { ADMIN_ZONES_FILTERS, AdminZone } from '@/src/constants/departements';
 import { Genders, GENDERS_FILTERS } from '@/src/constants/genders';
-import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
-import { Api } from 'src/api';
-import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import {
   getRolesWithOrganization,
   USER_ROLES_FILTERS,
   UserRoles,
-} from 'src/constants/users';
-import { FilterConstant } from 'src/constants/utils';
-import { isRoleIncluded } from 'src/utils/Finding';
+} from '@/src/constants/users';
+import { FilterConstant } from '@/src/constants/utils';
+import { isRoleIncluded } from '@/src/utils/Finding';
+import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
 

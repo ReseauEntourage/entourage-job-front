@@ -1,13 +1,16 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 import {
   commonInputContainerStyles,
   commonInputStyles,
 } from '../Inputs.styles';
-import { COLORS } from 'src/constants/styles';
 
-export const StyledFileInputGroupForm = styled.div<{ noPadding?: boolean }>`
+export const StyledFileInputGroupForm = styled.div<{
+  $noPadding?: boolean;
+  disabled?: boolean;
+}>`
   ${() => commonInputContainerStyles}
-  ${({ noPadding }) => noPadding && 'margin-bottom: 0;'}
+  ${({ $noPadding }) => $noPadding && 'margin-bottom: 0;'}
   input {
     ${() => commonInputStyles}
     &.secondary {
@@ -27,9 +30,9 @@ export const StyledFileInputGroupForm = styled.div<{ noPadding?: boolean }>`
   }
 `;
 
-export const StyledFileInputWrapper = styled.div<{ noPadding: boolean }>`
+export const StyledFileInputWrapper = styled.div<{ $noPadding: boolean }>`
   position: relative;
-  padding: ${({ noPadding }) => (noPadding ? '0' : '10px 0 20px')};
+  padding: ${({ $noPadding }) => ($noPadding ? '0' : '10px 0 20px')};
 `;
 
 export const StyledHiddenInput = styled.input`

@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, LegacyImg } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
+import { VerifyEmailTokenErrorType } from '@/src/use-cases/authentication/authentication.adapters';
 import { SendVerifyEmailButton } from '../SendVerifyEmailButton';
 import { useVerifyEmail } from '../useVerifyEmail';
-import { VerifyEmailTokenErrorType } from 'src/use-cases/authentication/authentication.adapters';
 import {
   StyledVerifyEmailContainer,
   StyledVerifyEmailRow,

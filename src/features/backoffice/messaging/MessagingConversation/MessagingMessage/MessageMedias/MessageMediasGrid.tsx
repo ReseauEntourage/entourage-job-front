@@ -1,5 +1,5 @@
 import React from 'react';
-import { Media } from 'src/api/types';
+import { Media } from '@/src/api/types';
 import { MessageMedia } from './MessageMedia/MessageMedia';
 import { StyledMessageMediasGrid } from './MessageMedias.styles';
 

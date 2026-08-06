@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledAvailabilityTagContainer = styled.div`
   display: flex;
@@ -12,11 +12,11 @@ export const StyledAvailabilityTagContainer = styled.div`
   overflow-wrap: normal;
 `;
 
-export const StyledAvailabilityTagDot = styled.div<{ isAvailable: boolean }>`
+export const StyledAvailabilityTagDot = styled.div<{ $isAvailable: boolean }>`
   height: 10px;
   width: 10px;
-  background-color: ${({ isAvailable }) => {
-    return isAvailable ? COLORS.green : COLORS.lightRed;
+  background-color: ${({ $isAvailable }) => {
+    return $isAvailable ? COLORS.green : COLORS.lightRed;
   }};
   border-radius: 50%;
   margin-right: 8px;

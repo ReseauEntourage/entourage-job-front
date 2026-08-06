@@ -1,5 +1,8 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Api } from '@/src/api';
+import { OrganizationDto } from '@/src/api/types';
+import { DEPARTMENTS } from '@/src/constants/departements';
 import {
   FormWithValidation,
   FormWithValidationRef,
@@ -10,14 +13,11 @@ import {
 } from '@/src/features/registration/forms/formRegistrationRefererAccount';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   registrationActions,
   selectRegistrationData,
 } from '@/src/use-cases/registration';
-import { Api } from 'src/api';
-import { OrganizationDto } from 'src/api/types';
-import { DEPARTMENTS } from 'src/constants/departements';
-import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useWizardStepRefererAccount() {
   const dispatch = useDispatch();

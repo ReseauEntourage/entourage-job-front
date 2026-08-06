@@ -19,16 +19,16 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ImageInput } from '@/src/components/ui/Inputs';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { UserActions } from '@/src/components/ui/UserActions/UserActions';
+import { COLORS } from '@/src/constants/styles';
+import { UserRoles } from '@/src/constants/users';
 import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { useFileActivator } from '@/src/hooks/useFileActivator';
-import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
-import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
-import { COLORS } from 'src/constants/styles';
-import { UserRoles } from 'src/constants/users';
 import {
   selectAuthenticatedUser,
   selectCurrentUserId,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
+import { ProfileAchievementHighlighter } from '../../profile/ProfileAchievementHighlighter';
+import { ProfileStats } from '../../profile/ProfilePartCards/ProfileStats/ProfileStats';
 import {
   StyledEditPictureIconContainer,
   StyledHeaderAvailibilityAndUserActions,
@@ -65,6 +65,7 @@ export const HeaderProfileMobile = ({
   averageDelayResponse,
   responseRate,
   totalConversationWithMirrorRoleCount,
+  availableMirrorRoleParticipantsCount,
   lastConnection,
   achievements,
 }: HeaderProfileProps) => {
@@ -181,6 +182,9 @@ export const HeaderProfileMobile = ({
             responseRate={responseRate || null}
             totalConversationWithMirrorRoleCount={
               totalConversationWithMirrorRoleCount || null
+            }
+            availableMirrorRoleParticipantsCount={
+              availableMirrorRoleParticipantsCount || null
             }
             lastConnection={lastConnection}
             isOwnProfile={ownProfile}

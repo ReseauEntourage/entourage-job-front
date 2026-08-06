@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/src/components/ui';
+import { COLORS } from '@/src/constants/styles';
 import { LucidIcon } from '../../components/ui/Icons/LucidIcon';
-import { COLORS } from 'src/constants/styles';
 
 interface SuccessModalContentProps {
   text: React.ReactNode;

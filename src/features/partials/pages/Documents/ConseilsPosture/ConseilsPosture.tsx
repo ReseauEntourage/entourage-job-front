@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Section } from '@/src/components/ui';
 import { H1, H4, H5 } from '@/src/components/ui/Headings';
+import { COLORS } from '@/src/constants/styles';
+import {
+  READ_DOCUMENT_FIXED_CACHE_KEY,
+  useReadDocumentMutation,
+} from '@/src/use-cases/current-user';
 import {
   StyledDocumentCenteredText,
   StyledDocumentTitleText,
 } from '../Documents.styles';
-import { COLORS } from 'src/constants/styles';
-import { currentUserActions } from 'src/use-cases/current-user';
 
 const textContent = [
   {
@@ -64,12 +66,14 @@ const textContent = [
 ];
 
 export const ConseilsPosture = () => {
-  const dispatch = useDispatch();
+  const [, { reset: resetReadDocument }] = useReadDocumentMutation({
+    fixedCacheKey: READ_DOCUMENT_FIXED_CACHE_KEY,
+  });
   useEffect(() => {
     return () => {
-      dispatch(currentUserActions.readDocumentReset());
+      resetReadDocument();
     };
-  }, [dispatch]);
+  }, [resetReadDocument]);
   return (
     <Section style="custom-primary">
       <H1

@@ -1,79 +1,175 @@
-import { FeatureKey } from 'src/api/types';
-import { assertIsDefined } from 'src/utils/asserts';
+import { FeatureKey } from '@/src/api/types';
+import { ReduxRequestEvents } from '@/src/constants';
+import { api } from '@/src/store/api/api.slice';
+import { assertIsDefined } from '@/src/utils/asserts';
 import {
-  fetchCurrentUserSocialSituationAdapter,
-  fetchStaffContactAdapter,
-  fetchUserAdapter,
-  forceOnboardingAsCompletedAdapter,
+  currentUserApi,
+  FETCH_CURRENT_ACHIEVEMENTS_FIXED_CACHE_KEY,
+  FETCH_CURRENT_COMPANY_FIXED_CACHE_KEY,
+  FETCH_CURRENT_ORGANIZATION_FIXED_CACHE_KEY,
+  FETCH_CURRENT_PROFILE_COMPLETE_FIXED_CACHE_KEY,
+  FETCH_CURRENT_PROFILE_FIXED_CACHE_KEY,
+  FETCH_CURRENT_READ_DOCUMENTS_FIXED_CACHE_KEY,
+  FETCH_CURRENT_REFERRED_USERS_FIXED_CACHE_KEY,
+  FETCH_CURRENT_REFERRER_FIXED_CACHE_KEY,
+  FETCH_CURRENT_USER_SOCIAL_SITUATION_FIXED_CACHE_KEY,
+  FETCH_STAFF_CONTACT_FIXED_CACHE_KEY,
+  FETCH_USER_FIXED_CACHE_KEY,
+  FETCH_USER_STATS_FIXED_CACHE_KEY,
+  READ_DOCUMENT_FIXED_CACHE_KEY,
+  UPDATE_ONBOARDING_STATUS_FIXED_CACHE_KEY,
+  UPDATE_PROFILE_FIXED_CACHE_KEY,
+  UPDATE_SOCIAL_SITUATION_FIXED_CACHE_KEY,
+  UPDATE_USER_FIXED_CACHE_KEY,
+  UPDATE_USER_PROFILE_PICTURE_FIXED_CACHE_KEY,
+  UPLOAD_EXTERNAL_CV_FIXED_CACHE_KEY,
+} from './current-user.api';
+import {
   NOT_AUTHENTICATED_USER,
-  readDocumentAdapter,
-  updateOnboardingStatusAdapter,
-  updateProfileAdapter,
-  updateSocialSituationAdapter,
-  updateUserAdapter,
-  updateUserCompanyAdapter,
-  updateUserProfilePictureAdapter,
-  uploadExternalCvAdapter,
-} from './current-user.adapters';
-import { RootState } from './current-user.slice';
+  RootState as CurrentUserSliceRootState,
+} from './current-user.slice';
 
-export const fetchUserSelectors = fetchUserAdapter.getSelectors<RootState>(
-  (state) => state.currentUser.fetchUser
-);
+// `RootState` here also needs the shared `api` reducer key (for the
+// `currentUserApi.endpoints.*.select()` calls below) — same reasoning as
+// `store.ts`/`createTestStore.ts`.
+type RootState = CurrentUserSliceRootState & {
+  [K in typeof api.reducerPath]: ReturnType<typeof api.reducer>;
+};
 
-export const fetchStaffContactSelectors =
-  fetchStaffContactAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.fetchStaffContact
-  );
+type ReduxRequestStatus =
+  (typeof ReduxRequestEvents)[keyof typeof ReduxRequestEvents];
 
-export const fetchCurrentUserSocialSituationSelectors =
-  fetchCurrentUserSocialSituationAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.fetchCurrentUserSocialSituation
-  );
+/**
+ * Maps an RTK Query result's status flags to the `ReduxRequestEvents` enum
+ * this domain's consumers already compare against, so migrating the data
+ * layer doesn't force every consumer to switch to `isLoading`/`isSuccess`.
+ */
+function toReduxRequestStatus(result: {
+  isUninitialized: boolean;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+}): ReduxRequestStatus {
+  if (result.isSuccess) {
+    return ReduxRequestEvents.SUCCEEDED;
+  }
+  if (result.isError) {
+    return ReduxRequestEvents.FAILED;
+  }
+  if (result.isUninitialized) {
+    return ReduxRequestEvents.IDLE;
+  }
+  return ReduxRequestEvents.REQUESTED;
+}
 
-export const updateProfileSelectors =
-  updateProfileAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.updateProfile
-  );
+export const fetchUserSelectors = {
+  selectIsFetchUserIdle: (state: RootState) =>
+    currentUserApi.endpoints.fetchUser.select(FETCH_USER_FIXED_CACHE_KEY)(state)
+      .isUninitialized,
+  selectIsFetchUserSucceeded: (state: RootState) =>
+    currentUserApi.endpoints.fetchUser.select(FETCH_USER_FIXED_CACHE_KEY)(state)
+      .isSuccess,
+  selectIsFetchUserFailed: (state: RootState) =>
+    currentUserApi.endpoints.fetchUser.select(FETCH_USER_FIXED_CACHE_KEY)(state)
+      .isError,
+};
 
-export const readDocumentSelectors =
-  readDocumentAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.readDocument
-  );
+export const fetchStaffContactSelectors = {
+  selectIsFetchStaffContactIdle: (state: RootState) =>
+    currentUserApi.endpoints.fetchStaffContact.select(
+      FETCH_STAFF_CONTACT_FIXED_CACHE_KEY
+    )(state).isUninitialized,
+  selectIsFetchStaffContactRequested: (state: RootState) =>
+    currentUserApi.endpoints.fetchStaffContact.select(
+      FETCH_STAFF_CONTACT_FIXED_CACHE_KEY
+    )(state).isLoading,
+};
 
-export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(
-  (state) => state.currentUser.updateUser
-);
+export const fetchCurrentUserSocialSituationSelectors = {
+  selectIsFetchCurrentUserSocialSituationIdle: (state: RootState) =>
+    currentUserApi.endpoints.fetchCurrentUserSocialSituation.select(
+      FETCH_CURRENT_USER_SOCIAL_SITUATION_FIXED_CACHE_KEY
+    )(state).isUninitialized,
+  selectIsFetchCurrentUserSocialSituationSucceeded: (state: RootState) =>
+    currentUserApi.endpoints.fetchCurrentUserSocialSituation.select(
+      FETCH_CURRENT_USER_SOCIAL_SITUATION_FIXED_CACHE_KEY
+    )(state).isSuccess,
+  selectIsFetchCurrentUserSocialSituationFailed: (state: RootState) =>
+    currentUserApi.endpoints.fetchCurrentUserSocialSituation.select(
+      FETCH_CURRENT_USER_SOCIAL_SITUATION_FIXED_CACHE_KEY
+    )(state).isError,
+};
 
-export const selectUpdateOnboardingStatusSelectors =
-  updateOnboardingStatusAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.updateOnboardingStatus
-  );
+export const updateProfileSelectors = {
+  selectUpdateProfileStatus: (state: RootState) =>
+    toReduxRequestStatus(
+      currentUserApi.endpoints.updateProfile.select(
+        UPDATE_PROFILE_FIXED_CACHE_KEY
+      )(state)
+    ),
+};
 
-export const selectForceOnboardingAsCompletedSelectors =
-  forceOnboardingAsCompletedAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.forceOnboardingAsCompleted
-  );
+export const readDocumentSelectors = {
+  selectReadDocumentStatus: (state: RootState) =>
+    toReduxRequestStatus(
+      currentUserApi.endpoints.readDocument.select(
+        READ_DOCUMENT_FIXED_CACHE_KEY
+      )(state)
+    ),
+};
 
-export const updateUserCompanySelectors =
-  updateUserCompanyAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.updateUserCompany
-  );
+export const updateUserSelectors = {
+  selectUpdateUserStatus: (state: RootState) =>
+    toReduxRequestStatus(
+      currentUserApi.endpoints.updateUser.select(UPDATE_USER_FIXED_CACHE_KEY)(
+        state
+      )
+    ),
+};
 
-export const updateUserProfilePictureSelectors =
-  updateUserProfilePictureAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.updateUserProfilePicture
-  );
+export const selectUpdateOnboardingStatusSelectors = {
+  selectUpdateOnboardingStatusStatus: (state: RootState) =>
+    toReduxRequestStatus(
+      currentUserApi.endpoints.updateOnboardingStatus.select(
+        UPDATE_ONBOARDING_STATUS_FIXED_CACHE_KEY
+      )(state)
+    ),
+};
 
-export const uploadExternalCvSelectors =
-  uploadExternalCvAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.uploadExternalCv
-  );
+export const updateUserProfilePictureSelectors = {
+  selectUpdateUserProfilePictureStatus: (state: RootState) =>
+    toReduxRequestStatus(
+      currentUserApi.endpoints.updateUserProfilePicture.select(
+        UPDATE_USER_PROFILE_PICTURE_FIXED_CACHE_KEY
+      )(state)
+    ),
+};
 
-export const updateSocialSituationSelectors =
-  updateSocialSituationAdapter.getSelectors<RootState>(
-    (state) => state.currentUser.updateSocialSituation
-  );
+export const uploadExternalCvSelectors = {
+  selectIsUploadExternalCvRequested: (state: RootState) =>
+    currentUserApi.endpoints.uploadExternalCv.select(
+      UPLOAD_EXTERNAL_CV_FIXED_CACHE_KEY
+    )(state).isLoading,
+  selectIsUploadExternalCvSucceeded: (state: RootState) =>
+    currentUserApi.endpoints.uploadExternalCv.select(
+      UPLOAD_EXTERNAL_CV_FIXED_CACHE_KEY
+    )(state).isSuccess,
+  selectIsUploadExternalCvFailed: (state: RootState) =>
+    currentUserApi.endpoints.uploadExternalCv.select(
+      UPLOAD_EXTERNAL_CV_FIXED_CACHE_KEY
+    )(state).isError,
+};
+
+export const updateSocialSituationSelectors = {
+  selectIsUpdateSocialSituationSucceeded: (state: RootState) =>
+    currentUserApi.endpoints.updateSocialSituation.select(
+      UPDATE_SOCIAL_SITUATION_FIXED_CACHE_KEY
+    )(state).isSuccess,
+  selectIsUpdateSocialSituationFailed: (state: RootState) =>
+    currentUserApi.endpoints.updateSocialSituation.select(
+      UPDATE_SOCIAL_SITUATION_FIXED_CACHE_KEY
+    )(state).isError,
+};
 
 export const selectCurrentUser = (state: RootState) => {
   return state.currentUser.user;
@@ -105,10 +201,6 @@ export const selectCurrentUserStats = (state: RootState) => {
   return state.currentUser.stats;
 };
 
-export const selectIsComplete = (state: RootState): boolean => {
-  return state.currentUser.complete;
-};
-
 export const selectCurrentUserProfile = (state: RootState) =>
   state.currentUser.profile;
 
@@ -134,31 +226,67 @@ export const selectCurrentUserReferrer = (state: RootState) =>
   state.currentUser.referrer;
 
 export const selectFetchCurrentCompanyStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentCompany.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentCompany.select(
+      FETCH_CURRENT_COMPANY_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentProfileStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentProfile.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentProfile.select(
+      FETCH_CURRENT_PROFILE_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentProfileCompleteStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentProfileComplete.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentProfileComplete.select(
+      FETCH_CURRENT_PROFILE_COMPLETE_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentOrganizationStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentOrganization.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentOrganization.select(
+      FETCH_CURRENT_ORGANIZATION_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentAchievementsStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentAchievements.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentAchievements.select(
+      FETCH_CURRENT_ACHIEVEMENTS_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentReadDocumentsStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentReadDocuments.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentReadDocuments.select(
+      FETCH_CURRENT_READ_DOCUMENTS_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentReferredUsersStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentReferredUsers.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentReferredUsers.select(
+      FETCH_CURRENT_REFERRED_USERS_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchCurrentReferrerStatus = (state: RootState) =>
-  state.currentUser.fetchCurrentReferrer.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchCurrentReferrer.select(
+      FETCH_CURRENT_REFERRER_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectFetchUserStatsStatus = (state: RootState) =>
-  state.currentUser.fetchUserStats.status;
+  toReduxRequestStatus(
+    currentUserApi.endpoints.fetchUserStats.select(
+      FETCH_USER_STATS_FIXED_CACHE_KEY
+    )(state)
+  );
 
 export const selectBetaFeatures = (state: RootState): Record<string, boolean> =>
   state.currentUser.user?.betaFeatures ?? {};

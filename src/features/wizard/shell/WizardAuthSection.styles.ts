@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { SimpleLink } from 'src/components/ui';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { SimpleLink } from '@/src/components/ui';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledLoginLink = styled(SimpleLink)<{ $onDark?: boolean }>`
   font-size: 0.9rem;

@@ -1,12 +1,12 @@
 import React, { Ref } from 'react';
 import { Button, Text } from '@/src/components/ui';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { GA_TAGS } from '@/src/constants/tags';
 import { StyledCriteriaIllu } from '@/src/features/partials/utils/SimpleCardsImageCTA/SimpleCardsImageCTA.styles';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
 import { StyledCTAsContainer } from '@/src/features/partials/utils/SimpleImageText/SimpleImageText.styles';
 
-import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from '@/src/lib/gtag';
 import { StyledCriteria, StyledCriteriasContainer } from './WhyUseEp.styles';
 
 type DisplayAs = 'Coach' | 'Candidat' | 'Referer';

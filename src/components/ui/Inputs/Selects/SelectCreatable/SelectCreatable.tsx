@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SelectInstance } from 'react-select';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
+import { Text } from '@/src/components/ui';
+import { FilterConstant } from '@/src/constants/utils';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -16,8 +18,6 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { Text } from 'src/components/ui';
-import { FilterConstant } from 'src/constants/utils';
 
 interface SelectCreatableProps<
   T extends FilterConstant | FilterConstant[] | null,

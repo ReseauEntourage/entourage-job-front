@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { EventMode } from 'src/constants/events';
-import { downloadICS, generateICSContent } from 'src/utils/ics';
+import { EventMode } from '@/src/constants/events';
+import { downloadICS, generateICSContent } from '@/src/utils/ics';
 import { Button } from './Button';
 import { ButtonProps } from './Button.types';
 

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledProfileCompletion = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ export const StyledProgressionContainer = styled.div`
   height: 9px;
 `;
 
-export const StyledProgression = styled.div<{ completionRate: number }>`
+export const StyledProgression = styled.div<{ $completionRate: number }>`
   // Background is a gradient of green and blue
   background: linear-gradient(
     to right,
@@ -30,5 +30,5 @@ export const StyledProgression = styled.div<{ completionRate: number }>`
   opacity: 0.6;
   border-radius: 20px;
   height: 100%;
-  width: ${({ completionRate }) => completionRate}%;
+  width: ${({ $completionRate }) => $completionRate}%;
 `;

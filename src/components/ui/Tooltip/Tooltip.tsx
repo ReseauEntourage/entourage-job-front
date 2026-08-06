@@ -129,10 +129,10 @@ export const Tooltip = ({
         ReactDOM.createPortal(
           <StyledTooltipContent
             ref={contentRef}
-            top={position.top}
-            left={position.left}
+            $top={position.top}
+            $left={position.left}
             width={width}
-            placement={effectivePlacement}
+            $placement={effectivePlacement}
           >
             {content}
           </StyledTooltipContent>,

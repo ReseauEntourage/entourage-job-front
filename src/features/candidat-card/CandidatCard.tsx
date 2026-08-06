@@ -1,20 +1,20 @@
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
+import DefaultProfilePic from '@/public/static/img/arthur.jpg';
 import { BusinessSector, Occupation } from '@/src/api/types';
 import { LegacyImg, Tag, TagSize, TagVariant } from '@/src/components/ui';
-import DefaultProfilePic from 'public/static/img/arthur.jpg';
 
-import { GA_TAGS } from 'src/constants/tags';
+import { GA_TAGS } from '@/src/constants/tags';
 import {
   CandidatCardContentStyled,
   CandidatCardPictureContainerStyled,
   CandidatCardPictureOverlay,
   CandidatCardStyled,
   CandidateCardBusinessSectorsStyled,
-} from 'src/features/candidat-card/CandidatCard.styles';
-import { gaEvent } from 'src/lib/gtag';
-import { sortByOrder } from 'src/utils';
+} from '@/src/features/candidat-card/CandidatCard.styles';
+import { gaEvent } from '@/src/lib/gtag';
+import { sortByOrder } from '@/src/utils';
 
 interface CandidatCardProps {
   url: string;

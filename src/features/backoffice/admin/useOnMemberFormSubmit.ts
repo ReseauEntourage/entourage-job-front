@@ -1,16 +1,16 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Api } from 'src/api';
-import { UserDto } from 'src/api/types';
-import { Action, ActionsLabels } from 'src/constants/utils';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
+import { Api } from '@/src/api';
+import { UserDto } from '@/src/api/types';
+import { Action, ActionsLabels } from '@/src/constants/utils';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
 import {
   CREATE_NEW_ORGANIZATION_VALUE,
   formAddUser,
-} from 'src/features/forms/schemas/formAddUser';
-import { usePrevious } from 'src/hooks/utils';
-import { notificationsActions } from 'src/use-cases/notifications';
+} from '@/src/features/forms/schemas/formAddUser';
+import { usePrevious } from '@/src/hooks/utils';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 export function useOnMemberFormSubmit(
   apiCall: (user: UserDto) => Promise<AxiosResponse>,

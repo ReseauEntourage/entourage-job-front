@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
 import { User } from '@/src/api/types';
+import { DEPARTMENTS_FILTERS } from '@/src/constants/departements';
 import { getNormalUserRoles, UserRoles } from '@/src/constants/users';
-import { openModal } from '@/src/features/modals/Modal';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   formPersonalDataAsAdmin,
   formPersonalDataAsCandidate,
   formPersonalDataAsCoach,
-} from 'src/features/forms/schemas/formPersonalData';
-import { useCurrentUserProfile } from 'src/hooks/current-user/useCurrentUserProfile';
-import { findConstantFromValue, isRoleIncluded } from 'src/utils';
+} from '@/src/features/forms/schemas/formPersonalData';
+import { openModal } from '@/src/features/modals/Modal';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import { findConstantFromValue, isRoleIncluded } from '@/src/utils';
 import { ModalEditUserInformation } from '.';
 
 export const useOpenCorrespondingModal = (user: User) => {

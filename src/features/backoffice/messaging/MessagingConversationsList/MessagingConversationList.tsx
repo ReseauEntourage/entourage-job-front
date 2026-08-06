@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { conversationHasUnreadMessages } from '../messaging.utils';
-import { Text } from 'src/components/ui';
-import { SearchBar } from 'src/features/filters/SearchBar/SearchBar';
-import { useIsMobile } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { Text } from '@/src/components/ui';
+import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
+import { useIsMobile } from '@/src/hooks/utils';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectConversations,
   selectUnseenConversationCount,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
+import { conversationHasUnreadMessages } from '../messaging.utils';
 import {
   ContainerStyled,
   StyledConversationsContainer,
@@ -76,14 +76,14 @@ export const MessagingConversationList = () => {
   }, []);
 
   return (
-    <ContainerStyled>
+    <ContainerStyled data-testid="messaging-conversation-list">
       <MessagingConversationTabs
         activeTab={activeTab}
         unreadCount={unseenConversationCount}
         onTabChange={setActiveTab}
       />
       {!isMobile && (
-        <StyledSearchBarContainer>
+        <StyledSearchBarContainer data-testid="messaging-search-bar">
           <SearchBar
             search={query}
             setSearch={setSearch}
@@ -93,7 +93,7 @@ export const MessagingConversationList = () => {
           />
         </StyledSearchBarContainer>
       )}
-      <StyledConversationsContainer className={isMobile ? 'mobile' : ''}>
+      <StyledConversationsContainer>
         {conversations &&
           conversations.length > 0 &&
           conversations.map((conversation) => (
@@ -105,7 +105,7 @@ export const MessagingConversationList = () => {
         {conversations &&
           conversations.length === 0 &&
           activeTab === 'unread' && (
-            <StyledEmptyState>
+            <StyledEmptyState data-testid="messaging-unread-empty-state">
               <Text center>Aucune conversation non lue</Text>
             </StyledEmptyState>
           )}

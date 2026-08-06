@@ -17,7 +17,9 @@ import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurre
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import {
   currentUserActions,
+  UPDATE_PROFILE_FIXED_CACHE_KEY,
   updateProfileSelectors,
+  useUpdateProfileMutation,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
 import { sortByOrder } from '@/src/utils';
@@ -48,6 +50,9 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
+  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
+    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+  });
 
   const pendingResolveRef = useRef<((value: boolean) => void) | null>(null);
 
@@ -245,7 +250,7 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
       return new Promise<boolean>((resolve) => {
         formMethods.handleSubmit(
           (values) => {
-            dispatch(currentUserActions.updateProfileReset());
+            resetUpdateProfile();
             pendingResolveRef.current = resolve;
 
             updateUserProfile({

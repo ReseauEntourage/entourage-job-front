@@ -1,5 +1,5 @@
 import React from 'react';
-import { COLORS } from 'src/constants/styles';
+import { COLORS } from '@/src/constants/styles';
 
 import { ButtonMultiple } from './ButtonMultiple';
 

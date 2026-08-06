@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { COLORS } from '@/src/constants/styles';
 import { ALERT_COLORS } from '../Alert/Alert.styles';
-import { COLORS } from 'src/constants/styles';
 
 import {
   StyledColor,
@@ -42,7 +42,7 @@ const ColorsTemplate = () => {
                 alert(`Copied: ${COLORS[colorKey]}`);
               }}
             >
-              <StyledColor color={COLORS[colorKey]} isDarkColor={isDarkColor}>
+              <StyledColor color={COLORS[colorKey]} $isDarkColor={isDarkColor}>
                 {COLORS[colorKey]}
               </StyledColor>
               <div>{colorKey}</div>

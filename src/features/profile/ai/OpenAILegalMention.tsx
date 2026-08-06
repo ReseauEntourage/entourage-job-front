@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { Text, TextProps } from 'src/components/ui';
+import { Text, TextProps } from '@/src/components/ui';
 
 type OpenAILegalMentionProps = Omit<TextProps, 'children'>;
 

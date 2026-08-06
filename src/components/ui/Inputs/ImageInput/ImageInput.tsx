@@ -1,7 +1,7 @@
 import React from 'react';
+import { useUploadImage } from '@/src/hooks/useUploadImage';
 import { FileInput } from '../FileInput';
 import { CommonInputProps } from '../Inputs.types';
-import { useUploadImage } from 'src/hooks/useUploadImage';
 import { StyledImageInputContainer } from './ImageInput.styles';
 
 interface ImageInputProps extends Omit<

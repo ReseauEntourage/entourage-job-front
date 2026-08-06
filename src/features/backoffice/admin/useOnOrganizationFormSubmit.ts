@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { OrganizationDto } from 'src/api/types';
-import { Action, ActionsLabels } from 'src/constants/utils';
-import { ExtractFormSchemaValidation } from 'src/features/forms/FormSchema';
-import { formAddOrganization } from 'src/features/forms/schemas/formAddOrganization';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { OrganizationDto } from '@/src/api/types';
+import { Action, ActionsLabels } from '@/src/constants/utils';
+import { ExtractFormSchemaValidation } from '@/src/features/forms/FormSchema';
+import { formAddOrganization } from '@/src/features/forms/schemas/formAddOrganization';
+import { notificationsActions } from '@/src/use-cases/notifications';
 
 export function useOnOrganizationFormSubmit(
   apiCall: (organization: OrganizationDto) => Promise<AxiosResponse>,

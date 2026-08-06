@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Section } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { BackLink } from '../../../components/ui/BackLink';
-import { HeaderBackoffice } from 'src/features/headers/HeaderBackoffice';
-import { StyledBackgroundedHeaderBackoffice } from 'src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
+import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
+import { StyledBackgroundedHeaderBackoffice } from '@/src/features/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import {
   selectFetchRecruitementAlertMatchingLoading,
   fetchRecruitementAlertMatchingAction,
   selectRecruitementAlerts,
   fetchRecruitementAlertsAction,
   selectFetchRecruitementAlertsLoading,
-} from 'src/use-cases/recruitement-alerts';
+} from '@/src/use-cases/recruitement-alerts';
+import { BackLink } from '../../../components/ui/BackLink';
 import {
   StyledAlertCandidatesContainer,
   StyledHeaderContainer,
@@ -26,7 +26,7 @@ interface AlertCandidatesProps {
 export const AlertCandidates = ({ alertId }: AlertCandidatesProps) => {
   const dispatch = useDispatch();
   const isMatchingLoading = useSelector(
-    selectFetchRecruitementAlertMatchingLoading
+    selectFetchRecruitementAlertMatchingLoading(alertId)
   );
   const isAlertsLoading = useSelector(selectFetchRecruitementAlertsLoading);
   const isLoading = isMatchingLoading || isAlertsLoading;

@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { renderLinks } from '@/src/features/navs/NavConnected/NavConnectedContent/NavConnectedContent.utils';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserCompany } from 'src/hooks/current-user/useCurrentUserCompany';
-import { useNotifBadges } from 'src/hooks/useNotifBadges';
-import { usePrevious } from 'src/hooks/utils';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCompany';
+import { useNotifBadges } from '@/src/hooks/useNotifBadges';
+import { usePrevious } from '@/src/hooks/utils';
+import { authenticationActions } from '@/src/use-cases/authentication';
 import {
   messagingActions,
   selectConversations,
   selectSelectedConversation,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
 import { NavConnectedContent } from './NavConnectedContent';
 
 export const NavConnected = () => {

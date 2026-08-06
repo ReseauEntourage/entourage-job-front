@@ -2,6 +2,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  ConversationParticipant,
+  ConversationParticipants,
+} from '@/src/api/types';
+import {
   Badge,
   BadgeVariant,
   ImgUserProfile,
@@ -13,21 +17,17 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
-import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
-import {
-  ConversationParticipant,
-  ConversationParticipants,
-} from 'src/api/types';
-import { useIsDesktop, useIsMobile } from 'src/hooks/utils';
+import { useIsDesktop, useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
-} from 'src/use-cases/current-user';
+} from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
-} from 'src/use-cases/messaging';
+} from '@/src/use-cases/messaging';
+import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { ActionList } from './ActionList/ActionList';
 import {
   AddreseeBadges,
@@ -140,6 +140,7 @@ export const MessagingConversationHeader = () => {
           onClick={onClickReportUser}
           color={COLORS.teal}
           variant="text"
+          dataTestId="messaging-report-button"
         />
       </MessagingConversationHeaderMainInfos>
       {isMobile && <ActionList />}

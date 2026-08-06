@@ -15,18 +15,8 @@ import {
   flattenReferingData,
   incrementReferingStep,
 } from '@/src/features/backoffice/referer/Refering/Refering.utils';
-import { assertIsDefined } from 'src/utils/asserts';
-import { referCandidateAdapter } from './refering.adapters';
+import { assertIsDefined } from '@/src/utils/asserts';
 import { RootState } from './refering.slice';
-
-export const referCandidateSelectors =
-  referCandidateAdapter.getSelectors<RootState>(
-    (state) => state.refering.referCandate
-  );
-
-export const selectReferCandidateError = (state: RootState) => {
-  return state.refering.referCandidateError;
-};
 
 export const selectIsEmptyReferingData = (state: RootState) => {
   return _.isEmpty(state.refering.data);

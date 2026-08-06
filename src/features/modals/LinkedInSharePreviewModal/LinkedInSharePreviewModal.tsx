@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Api } from '@/src/api';
 import { isLinkedinShareDuplicateError } from '@/src/api/axiosErrors';
 import { Alert, Button, Text } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
@@ -8,8 +9,7 @@ import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { ModalFooter } from '@/src/features/modals/Modal/ModalGeneric/ModalFooter/ModalFooter';
 import { openModal } from '@/src/features/modals/Modal/openModal';
-import { Api } from 'src/api';
-import { notificationsActions } from 'src/use-cases/notifications';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { LinkedInMentionEditor } from './LinkedInMentionEditor';
 import { StyledContentContainer } from './LinkedInSharePreviewModal.styles';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useIsDesktop } from 'src/hooks/utils';
+// import { useIsDesktop } from '@/src/hooks/utils';
 import { StyledH6 } from './Headings.styles';
 import { HeadingComponentProps } from './Headings.types';
 
@@ -14,10 +14,10 @@ export const H6 = ({
   return (
     <StyledH6
       color={color}
-      center={center}
-      weight={weight}
+      $center={center}
+      $weight={weight}
       // mobile={!isDesktop}
-      noMarginBottom={noMarginBottom}
+      $noMarginBottom={noMarginBottom}
     >
       {title}
     </StyledH6>
