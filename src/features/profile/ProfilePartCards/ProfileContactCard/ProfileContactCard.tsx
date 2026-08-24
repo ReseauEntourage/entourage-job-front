@@ -57,8 +57,8 @@ export const ProfileContactCard = ({
       ) : (
         <StyledProfileContactForm>
           <StyledContactMessage>
-            {firstName} n&apos;est pas disponible pour le moment pour recevoir
-            des demandes de contact
+            {firstName}&nbsp;n&apos;est pas disponible pour le moment pour
+            recevoir des demandes de contact
           </StyledContactMessage>
         </StyledProfileContactForm>
       )}
