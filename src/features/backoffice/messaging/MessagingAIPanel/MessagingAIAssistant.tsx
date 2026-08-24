@@ -21,12 +21,12 @@ import {
   selectSelectedConversationId,
 } from '@/src/use-cases/messaging';
 import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
+import { EscalationState } from './MessagingAIAssistant.types';
 import {
   QUICK_ACTIONS,
   getContextualQuickAction,
   processSSEStream,
 } from './MessagingAIAssistant.utils';
-import { EscalationState } from './MessagingAIAssitant.types';
 import {
   AIChatActions,
   AIChatEditor,

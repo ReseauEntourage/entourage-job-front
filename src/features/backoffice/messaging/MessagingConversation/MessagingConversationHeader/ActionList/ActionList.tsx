@@ -71,7 +71,7 @@ export const ActionList = () => {
           rounded={false}
           dataTestId="messaging-ai-assistant-toggle"
         >
-          Assitant {!isMobile && 'Coach'}
+          Assistant {!isMobile && 'Coach'}
         </Button>
       )}
     </StyledButtonContainer>

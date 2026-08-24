@@ -1,4 +1,4 @@
-import { AIQuickAction, EscalationState } from './MessagingAIAssitant.types';
+import { AIQuickAction, EscalationState } from './MessagingAIAssistant.types';
 
 type SSEStreamCallbacks = {
   onContent: (chunk: string) => void;
