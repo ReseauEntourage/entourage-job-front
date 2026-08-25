@@ -330,6 +330,7 @@ export const MessagingConversation = () => {
       {displayWaitingReplyBanner && currentUser && otherParticipant && (
         <MessagingWaitingReplyBanner
           recipientFirstName={otherParticipant.firstName}
+          recipientGender={otherParticipant.gender}
           currentUserRole={currentUser.role as UserRoles}
         />
       )}
