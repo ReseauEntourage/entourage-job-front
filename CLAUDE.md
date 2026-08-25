@@ -71,11 +71,26 @@ ComponentName/
 
 ### State management
 
-Redux with sagas. API calls flow: component → action → saga → `Api.*` → store.
+Redux Toolkit + **RTK Query**. There are no sagas left — they were fully migrated (archived OpenSpec change `2026-07-29-redux-saga-to-rtk-query`, referenced as `design.md` in code comments).
+
+Two shapes, both valid:
+
+- **Direct**: component → RTK Query hook (`useGetXQuery`) → `queryFn` → `Api.*`
+- **Via a domain action**: component → no-op `*Requested` action → listener (`*.listeners.ts`) → `endpoints.x.initiate()` → `Api.*` → cache + slice
+
+Key rules:
+
+- One single `createApi` instance for the whole app (`src/store/api/api.slice.ts`); domains add endpoints with `api.injectEndpoints({...})`, never a second `createApi()`.
+- It uses `fakeBaseQuery()` — every endpoint calls the existing Axios `Api.*` from its own `queryFn`, preserving auth and interceptors.
+- One shared listener middleware (`src/store/listenerMiddleware.ts`); `logoutSucceeded` triggers a global `api.util.resetApiState()`.
+- Slices now hold only UI state (selection, drafts, typed errors) — server data lives in the RTK Query cache.
+- `queryFn` must return `{ data }` or `{ error }` and never throw; a falsy `error` reads as "no error", so error enums use string values.
+
+See [`docs/use-cases.md`](docs/use-cases.md) for the full anatomy of a domain.
 
 ### Network Directory feature (EN-9019)
 
-The `NetworkDirectorySort` enum (`LAST_CONNECTION | RELEVANCE`) lives in `src/constants/network-directory.ts`. The `sort` parameter is threaded from URL → saga → `Api.getAllUsersProfiles` → backend query param.
+The `NetworkDirectorySort` enum (`LAST_CONNECTION | RELEVANCE`) lives in `src/constants/network-directory.ts`. The `sort` parameter is threaded from URL → `profiles` endpoint → `Api.getAllUsersProfiles` → backend query param.
 
 For `RELEVANCE` sort the backend runs `findBySimilarity(annPoolSize=500, poolSize=500)` — expect higher latency than `LAST_CONNECTION`.
 
@@ -88,4 +103,4 @@ Profile similarity is computed server-side (pgvector + VoyageAI `voyage-4-lite`,
 When a change touches an API endpoint, update both repos in the same session:
 
 1. Update the backend controller/service in `entourage-job-back`
-2. Update the API type in `src/api/types.ts` and the consuming saga/hook in the front
+2. Update the API type in `src/api/types.ts` and the consuming endpoint/hook in the front

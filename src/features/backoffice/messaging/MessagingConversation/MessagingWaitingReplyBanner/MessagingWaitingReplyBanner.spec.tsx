@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import expect from 'expect';
 import React from 'react';
 import '@testing-library/jest-dom';
+import { Genders } from '@/src/constants/genders';
 import { UserRoles } from '@/src/constants/users';
 import { MessagingWaitingReplyBanner } from './MessagingWaitingReplyBanner';
 
@@ -18,6 +19,7 @@ describe('MessagingWaitingReplyBanner', () => {
     render(
       <MessagingWaitingReplyBanner
         recipientFirstName="Awa"
+        recipientGender={Genders.MALE}
         currentUserRole={UserRoles.CANDIDATE}
       />
     );
@@ -25,10 +27,11 @@ describe('MessagingWaitingReplyBanner', () => {
     expect(screen.getByText('Message envoyé à Awa')).toBeInTheDocument();
   });
 
-  it('shows the waiting-for-reply subtitle', () => {
+  it('shows the waiting-for-reply subtitle with a masculine pronoun for a male recipient', () => {
     render(
       <MessagingWaitingReplyBanner
         recipientFirstName="Awa"
+        recipientGender={Genders.MALE}
         currentUserRole={UserRoles.CANDIDATE}
       />
     );
@@ -40,10 +43,27 @@ describe('MessagingWaitingReplyBanner', () => {
     ).toBeInTheDocument();
   });
 
+  it('shows the waiting-for-reply subtitle with a feminine pronoun for a female recipient', () => {
+    render(
+      <MessagingWaitingReplyBanner
+        recipientFirstName="Awa"
+        recipientGender={Genders.FEMALE}
+        currentUserRole={UserRoles.CANDIDATE}
+      />
+    );
+
+    expect(
+      screen.getByText(
+        'Elle recevra une notification et vous répondra ici même. En attendant, vous pouvez :'
+      )
+    ).toBeInTheDocument();
+  });
+
   it('always shows a dashboard button linking to /backoffice/dashboard', () => {
     render(
       <MessagingWaitingReplyBanner
         recipientFirstName="Awa"
+        recipientGender={Genders.MALE}
         currentUserRole={UserRoles.CANDIDATE}
       />
     );
@@ -57,6 +77,7 @@ describe('MessagingWaitingReplyBanner', () => {
     render(
       <MessagingWaitingReplyBanner
         recipientFirstName="Awa"
+        recipientGender={Genders.MALE}
         currentUserRole={UserRoles.CANDIDATE}
       />
     );
@@ -73,6 +94,7 @@ describe('MessagingWaitingReplyBanner', () => {
     render(
       <MessagingWaitingReplyBanner
         recipientFirstName="Karim"
+        recipientGender={Genders.MALE}
         currentUserRole={UserRoles.COACH}
       />
     );
@@ -89,6 +111,7 @@ describe('MessagingWaitingReplyBanner', () => {
     render(
       <MessagingWaitingReplyBanner
         recipientFirstName="Karim"
+        recipientGender={Genders.MALE}
         currentUserRole={UserRoles.REFERER}
       />
     );

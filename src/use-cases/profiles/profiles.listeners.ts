@@ -13,6 +13,17 @@ import { slice } from './profiles.slice';
 
 const { actions } = slice;
 
+/**
+ * Tracks the in-flight `fetchProfiles` request so a newer one can abort it,
+ * mirroring the old `takeLatest(fetchProfilesRequested)` saga: without this,
+ * two concurrent requests (e.g. the transient default-role fetch fired before
+ * `useNetworkDirectoryRedirection` has loaded the current user, followed by
+ * the real filtered fetch once the URL is corrected) can resolve out of
+ * order, letting the stale one silently overwrite the store with results for
+ * the wrong role/filter.
+ */
+let activeFetchProfilesRequest: { abort: () => void } | undefined;
+
 /** Translates `fetchProfilesWithFiltersSaga`. */
 listenerMiddleware.startListening({
   actionCreator: actions.fetchProfilesWithFilters,
@@ -48,8 +59,10 @@ listenerMiddleware.startListening({
 listenerMiddleware.startListening({
   actionCreator: actions.fetchProfilesRequested,
   effect: (action, listenerApi) => {
+    activeFetchProfilesRequest?.abort();
+
     const offset = selectProfilesOffset(listenerApi.getState() as never);
-    listenerApi.dispatch(
+    activeFetchProfilesRequest = listenerApi.dispatch(
       profilesApi.endpoints.fetchProfiles.initiate(
         { ...action.payload, offset },
         { fixedCacheKey: FETCH_PROFILES_FIXED_CACHE_KEY }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, Button, ButtonIcon, Text } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { Genders } from '@/src/constants/genders';
 import { COLORS } from '@/src/constants/styles';
 import { RELATED_ROLES, UserRoles } from '@/src/constants/users';
 import {
@@ -11,11 +12,13 @@ import {
 
 interface MessagingWaitingReplyBannerProps {
   recipientFirstName: string;
+  recipientGender: Genders;
   currentUserRole: UserRoles;
 }
 
 export const MessagingWaitingReplyBanner = ({
   recipientFirstName,
+  recipientGender,
   currentUserRole,
 }: MessagingWaitingReplyBannerProps) => {
   const oppositeRole = RELATED_ROLES[currentUserRole] || null;
@@ -23,6 +26,7 @@ export const MessagingWaitingReplyBanner = ({
     oppositeRole === UserRoles.COACH
       ? "Voir d'autres coachs"
       : "Voir d'autres candidats";
+  const recipientPronoun = recipientGender === Genders.FEMALE ? 'Elle' : 'Il';
 
   return (
     <Alert
@@ -40,8 +44,8 @@ export const MessagingWaitingReplyBanner = ({
     >
       <StyledMessagingWaitingReplyBannerContent>
         <Text>
-          Il recevra une notification et vous répondra ici même. En attendant,
-          vous pouvez :
+          {recipientPronoun} recevra une notification et vous répondra ici même.
+          En attendant, vous pouvez :
         </Text>
         <StyledMessagingWaitingReplyBannerActions>
           <Button
