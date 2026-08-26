@@ -48,6 +48,33 @@ listenerMiddleware.startListening({
   },
 });
 
+/**
+ * Explicit read receipt, triggered on initial load. (The delta-poll and
+ * load-older-messages flows are called directly from
+ * `MessagingConversation` via their mutation hooks instead of this
+ * trigger-action pattern: unlike a plain fire-and-forget request, they
+ * need their result back locally — respectively to compute the next
+ * poll's cursor from already-selected state, and to know whether the
+ * returned page was full, to decide if there's more history to load.)
+ */
+listenerMiddleware.startListening({
+  actionCreator: actions.markConversationSeenRequested,
+  effect: (_action, listenerApi) => {
+    const { selectedConversationId } = (
+      listenerApi.getState() as never as {
+        messaging: { selectedConversationId: string | null };
+      }
+    ).messaging;
+    if (selectedConversationId && selectedConversationId !== 'new') {
+      listenerApi.dispatch(
+        messagingApi.endpoints.markConversationSeen.initiate(
+          selectedConversationId
+        )
+      );
+    }
+  },
+});
+
 /** Translates `postMessageSagaRequested`'s trigger. */
 listenerMiddleware.startListening({
   actionCreator: actions.postMessageRequested,
