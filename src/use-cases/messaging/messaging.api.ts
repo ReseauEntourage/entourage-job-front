@@ -5,6 +5,7 @@ import {
   ConversationParticipant,
   ConversationParticipants,
   ConversationType,
+  Message,
   MessageWithConversation,
 } from '@/src/api/types';
 import { api } from '@/src/store/api/api.slice';
@@ -111,6 +112,108 @@ export const messagingApi = api.injectEndpoints({
           );
         } catch {
           // Non-critical: the list item simply won't be refreshed
+        }
+      },
+    }),
+    /**
+     * Loads the 30 messages preceding the given cursor (infinite scroll
+     * towards the top) and appends them to the end of the cached
+     * `getSelectedConversation` messages array (which is newest-first).
+     */
+    loadOlderMessages: builder.mutation<
+      Message[],
+      { conversationId: string; before: string }
+    >({
+      queryFn: async ({ conversationId, before }) => {
+        try {
+          const { data } = await Api.getConversationById(conversationId, {
+            before,
+          });
+          return { data: data.messages };
+        } catch (error) {
+          return { error };
+        }
+      },
+      onQueryStarted: async (
+        { conversationId },
+        { dispatch, queryFulfilled }
+      ) => {
+        try {
+          const { data: olderMessages } = await queryFulfilled;
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getSelectedConversation',
+              conversationId,
+              (draft) => {
+                const existingIds = new Set(draft.messages.map((m) => m.id));
+                draft.messages.push(
+                  ...olderMessages.filter((m) => !existingIds.has(m.id))
+                );
+              }
+            )
+          );
+        } catch {
+          // Non-critical: the user can retry by scrolling up again
+        }
+      },
+    }),
+    /**
+     * Delta polling: fetches only the messages posted after the given
+     * cursor (unbounded) and prepends them to the cached
+     * `getSelectedConversation` messages array, instead of the old
+     * behavior of reloading the whole conversation on every tick.
+     */
+    pollConversationMessages: builder.mutation<
+      Message[],
+      { conversationId: string; after: string }
+    >({
+      queryFn: async ({ conversationId, after }) => {
+        try {
+          const { data } = await Api.getConversationById(conversationId, {
+            after,
+          });
+          return { data: data.messages };
+        } catch (error) {
+          return { error };
+        }
+      },
+      onQueryStarted: async (
+        { conversationId },
+        { dispatch, queryFulfilled }
+      ) => {
+        try {
+          const { data: newMessages } = await queryFulfilled;
+          if (newMessages.length === 0) {
+            return;
+          }
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getSelectedConversation',
+              conversationId,
+              (draft) => {
+                const existingIds = new Set(draft.messages.map((m) => m.id));
+                draft.messages.unshift(
+                  ...newMessages.filter((m) => !existingIds.has(m.id))
+                );
+              }
+            )
+          );
+          dispatch(
+            messagingApi.endpoints.markConversationSeen.initiate(conversationId)
+          );
+        } catch {
+          // Non-critical: the next poll tick will retry
+        }
+      },
+    }),
+    /** Explicit read receipt, decoupled from simply loading messages. */
+    markConversationSeen: builder.mutation<void, string>({
+      queryFn: async (conversationId) => {
+        try {
+          await Api.markConversationSeen(conversationId);
+          return { data: undefined };
+        } catch (error) {
+          return { error };
         }
       },
     }),
@@ -303,6 +406,9 @@ export const {
   useGetConversationsQuery,
   useGetUnseenConversationsCountQuery,
   useGetSelectedConversationQuery,
+  useLoadOlderMessagesMutation,
+  usePollConversationMessagesMutation,
+  useMarkConversationSeenMutation,
   usePostMessageMutation,
   useBindNewConversationMutation,
   usePostFeedbackMutation,
