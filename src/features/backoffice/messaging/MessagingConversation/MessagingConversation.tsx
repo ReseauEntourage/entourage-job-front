@@ -21,7 +21,6 @@ import {
   selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectOtherParticipantHasNotReplied,
-  selectShouldGiveFeedback,
 } from '@/src/use-cases/messaging/messaging.selectors';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
@@ -33,7 +32,6 @@ import {
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
-import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
 import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
@@ -64,7 +62,6 @@ export const MessagingConversation = () => {
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
 
-  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
   );
@@ -199,21 +196,6 @@ export const MessagingConversation = () => {
     dispatch(messagingActions.setNewMessage(suggestion.message));
   };
 
-  const onRatingOrClose = (rating: number | null) => {
-    const conversationParticipantId = selectedConversation?.participants.find(
-      (participant) => participant.id === currentUserId
-    )?.conversationParticipant.id;
-
-    if (selectedConversationId && conversationParticipantId) {
-      dispatch(
-        messagingActions.postFeedbackRequested({
-          conversationParticipantId,
-          rating,
-        })
-      );
-    }
-  };
-
   useEffect(() => {
     const addressees = selectedConversation?.participants.filter(
       (participant) => participant.id !== currentUserId
@@ -289,15 +271,6 @@ export const MessagingConversation = () => {
         )
       )}
 
-      {shouldGiveFeedback && (
-        <MessagingFeedback
-          onRatingOrClose={onRatingOrClose}
-          adressee={selectedConversation?.participants.find(
-            (participant) => participant.id !== currentUserId
-          )}
-        />
-      )}
-
       {displaySuggestions ? (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
@@ -305,7 +278,7 @@ export const MessagingConversation = () => {
           participants={selectedConversation?.participants || []}
         />
       ) : (
-        <MessagingMessagesContainer $blur={shouldGiveFeedback}>
+        <MessagingMessagesContainer>
           {reversedMessages &&
             reversedMessages.map((message) => (
               <MessagingMessage key={message.id} message={message} />

@@ -639,7 +639,6 @@ export type Conversation = {
   messages: Message[];
   participants: ConversationParticipants;
   seenAt?: string;
-  shouldGiveFeedback?: boolean;
 };
 
 export type MessageWithConversation = Message & {

@@ -100,14 +100,6 @@ export const selectConversationParticipantsAreDeleted = (state: RootState) => {
   });
 };
 
-export const selectShouldGiveFeedback = (state: RootState): boolean => {
-  const selectedConversation = selectSelectedConversation(state);
-  if (!selectedConversation) {
-    return false;
-  }
-  return selectedConversation.shouldGiveFeedback || false;
-};
-
 const selectCurrentUserIdParam = (
   _state: RootState,
   currentUserId: string | null

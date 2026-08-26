@@ -259,43 +259,6 @@ export const messagingApi = api.injectEndpoints({
         }
       },
     }),
-    /** Translates `postFeedbackSagaRequested`. */
-    postFeedback: builder.mutation<
-      void,
-      { conversationParticipantId: string; rating: number | null }
-    >({
-      queryFn: async (payload) => {
-        try {
-          await Api.postConversationFeedback(payload);
-          return { data: undefined };
-        } catch (error) {
-          return { error };
-        }
-      },
-      onQueryStarted: async (_arg, { dispatch, getState, queryFulfilled }) => {
-        try {
-          await queryFulfilled;
-          const selectedConversationId = (getState() as any).messaging
-            .selectedConversationId;
-          if (!selectedConversationId) {
-            return;
-          }
-          dispatch(
-            messagingApi.util.updateQueryData(
-              'getSelectedConversation',
-              selectedConversationId,
-              (draft) => {
-                draft.shouldGiveFeedback = false;
-              }
-            )
-          );
-        } catch {
-          // Matches the pre-existing behavior of `postFeedbackFailed`: it
-          // built a notification action but never dispatched it, so no
-          // notification was ever actually shown on failure.
-        }
-      },
-    }),
   }),
 });
 
@@ -305,5 +268,4 @@ export const {
   useGetSelectedConversationQuery,
   usePostMessageMutation,
   useBindNewConversationMutation,
-  usePostFeedbackMutation,
 } = messagingApi;

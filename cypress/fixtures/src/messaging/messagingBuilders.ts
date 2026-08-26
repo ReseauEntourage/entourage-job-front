@@ -95,7 +95,6 @@ export const buildConversation = (overrides: Record<string, any> = {}) => {
     createdAt: '2024-06-01T09:00:00.000Z',
     updatedAt: '2024-06-01T10:00:00.000Z',
     seenAt: null,
-    shouldGiveFeedback: false,
     ...overrides,
     participants,
     messages,

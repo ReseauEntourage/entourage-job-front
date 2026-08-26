@@ -764,13 +764,6 @@ export class APIHandler {
     );
   }
 
-  postConversationFeedback(params: {
-    conversationParticipantId: string;
-    rating: number | null;
-  }): Promise<AxiosResponse> {
-    return this.post('/messaging/conversations/feedback', params);
-  }
-
   /// ////////////////
   // AI Assistant  //
   /// ////////////////

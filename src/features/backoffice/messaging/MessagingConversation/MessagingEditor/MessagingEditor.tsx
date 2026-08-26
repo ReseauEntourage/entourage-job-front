@@ -12,7 +12,6 @@ import {
   selectNewMessage,
   selectSelectedConversation,
   selectSelectedConversationId,
-  selectShouldGiveFeedback,
 } from '@/src/use-cases/messaging';
 import { Attachment } from './Attachment/Attachment';
 import {
@@ -36,7 +35,6 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const newMessage = useSelector(selectNewMessage);
-  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
 
   // States
   const [attachments, setAttachments] = useState<{ id: number; file: File }[]>(
@@ -133,7 +131,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
           ))}
         </StyledAttachementInfoContainer>
       )}
-      <MessagingMessageForm $blur={shouldGiveFeedback}>
+      <MessagingMessageForm>
         <FileInput
           id="file-input"
           name="file-input"
