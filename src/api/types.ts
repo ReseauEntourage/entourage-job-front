@@ -639,6 +639,7 @@ export type Conversation = {
   messages: Message[];
   participants: ConversationParticipants;
   seenAt?: string;
+  archivedAt?: string | null;
 };
 
 export type MessageWithConversation = Message & {

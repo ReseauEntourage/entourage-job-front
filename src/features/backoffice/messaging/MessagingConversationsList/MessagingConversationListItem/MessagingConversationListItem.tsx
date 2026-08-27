@@ -3,10 +3,15 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Conversation, ConversationParticipant } from '@/src/api/types';
 import { ImgUserProfile } from '@/src/components/ui';
+import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
+import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   messagingActions,
   selectSelectedConversationId,
+  useArchiveConversationMutation,
+  useUnarchiveConversationMutation,
 } from '@/src/use-cases/messaging';
 import { conversationHasUnreadMessages } from '../../messaging.utils';
 import {
@@ -15,6 +20,7 @@ import {
   MainInfos,
   ContainerStyled,
   RightColumn,
+  StyledArchiveButton,
   StyledUnreadDot,
 } from './MessagingConversationListItem.styles';
 
@@ -29,6 +35,10 @@ export const MessagingConversationListItem = ({
   const currentUserId = useSelector(selectCurrentUserId);
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const [isActivated, setIsActivated] = React.useState(false);
+  const isDesktop = useIsDesktop();
+  const [archiveConversation] = useArchiveConversationMutation();
+  const [unarchiveConversation] = useUnarchiveConversationMutation();
+  const isArchived = !!conversation.archivedAt;
 
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
@@ -48,6 +58,15 @@ export const MessagingConversationListItem = ({
 
   const selectConversation = () => {
     dispatch(messagingActions.selectConversation(conversation.id));
+  };
+
+  const onClickArchiveToggle = (e: Event) => {
+    e.stopPropagation();
+    if (isArchived) {
+      unarchiveConversation(conversation.id);
+    } else {
+      archiveConversation(conversation.id);
+    }
   };
 
   return (
@@ -90,6 +109,23 @@ export const MessagingConversationListItem = ({
           </p>
         )}
       </RightColumn>
+      {isDesktop && (
+        <StyledArchiveButton>
+          <ButtonIcon
+            icon={
+              <LucidIcon name={isArchived ? 'ArchiveRestore' : 'Archive'} />
+            }
+            onClick={onClickArchiveToggle}
+            variant="text"
+            size="small"
+            dataTestId={
+              isArchived
+                ? 'messaging-unarchive-button'
+                : 'messaging-archive-button'
+            }
+          />
+        </StyledArchiveButton>
+      )}
     </ContainerStyled>
   );
 };

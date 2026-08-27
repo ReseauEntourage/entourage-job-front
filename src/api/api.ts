@@ -764,6 +764,17 @@ export class APIHandler {
     );
   }
 
+  archiveConversation(conversationId: string): Promise<AxiosResponse> {
+    return this.post(`/messaging/conversations/${conversationId}/archive`, {});
+  }
+
+  unarchiveConversation(conversationId: string): Promise<AxiosResponse> {
+    return this.post(
+      `/messaging/conversations/${conversationId}/unarchive`,
+      {}
+    );
+  }
+
   /// ////////////////
   // AI Assistant  //
   /// ////////////////
