@@ -743,8 +743,25 @@ export class APIHandler {
     return this.get('/messaging/conversations/unseen-count');
   }
 
-  getConversationById(conversationId: string): Promise<AxiosResponse> {
-    return this.get(`/messaging/conversations/${conversationId}`);
+  getConversationById(
+    conversationId: string,
+    cursor?: { before?: string; after?: string }
+  ): Promise<AxiosResponse> {
+    const params = new URLSearchParams();
+    if (cursor?.before) {
+      params.set('before', cursor.before);
+    }
+    if (cursor?.after) {
+      params.set('after', cursor.after);
+    }
+    const query = params.toString();
+    return this.get(
+      `/messaging/conversations/${conversationId}${query ? `?${query}` : ''}`
+    );
+  }
+
+  markConversationSeen(conversationId: string): Promise<AxiosResponse> {
+    return this.post(`/messaging/conversations/${conversationId}/seen`, {});
   }
 
   postMessage(formData: FormData): Promise<AxiosResponse> {

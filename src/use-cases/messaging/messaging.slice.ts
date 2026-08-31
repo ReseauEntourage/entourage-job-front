@@ -32,6 +32,7 @@ export const slice = createSlice({
     getConversationsRequested() {},
     getUnseenConversationsCountRequested() {},
     getSelectedConversationRequested() {},
+    markConversationSeenRequested() {},
     postMessageRequested(_state, _action: { payload: FormData }) {},
     bindNewConversationRequested(_state, _action: { payload: string }) {},
     selectConversation(state, action: { payload: string | null }) {
