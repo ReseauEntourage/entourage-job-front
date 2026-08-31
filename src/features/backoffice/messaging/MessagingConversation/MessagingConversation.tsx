@@ -4,6 +4,7 @@ import { ConversationType, FeatureKey } from '@/src/api/types';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { useIsMobile } from '@/src/hooks/utils';
+import { useGetCheckinQuery } from '@/src/use-cases/checkin';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -24,6 +25,7 @@ import {
 } from '@/src/use-cases/messaging/messaging.selectors';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { MessagingCheckinBanner } from './MessagingCheckinBanner/MessagingCheckinBanner';
 import {
   MessagingConversationAIPanel,
   MessagingConversationContainer,
@@ -61,6 +63,12 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const { data: checkinState } = useGetCheckinQuery(
+    selectedConversationId ?? '',
+    {
+      skip: !selectedConversationId || selectedConversationId === 'new',
+    }
+  );
 
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
@@ -164,6 +172,15 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
     currentUserId,
   ]);
+
+  const displayCheckinBanner = useMemo(() => {
+    if (!checkinState) {
+      return false;
+    }
+    // The banner disappears once the current user has started (even partially)
+    // or completed their checkin for this conversation.
+    return checkinState.eligible && !checkinState.checkin;
+  }, [checkinState]);
 
   const otherParticipant = useMemo(() => {
     return selectedConversation?.participants.find(
@@ -269,6 +286,13 @@ export const MessagingConversation = () => {
             role={currentUser.role as UserRoles}
           />
         )
+      )}
+
+      {displayCheckinBanner && selectedConversationId && otherParticipant && (
+        <MessagingCheckinBanner
+          conversationId={selectedConversationId}
+          otherFirstName={otherParticipant.firstName}
+        />
       )}
 
       {displaySuggestions ? (

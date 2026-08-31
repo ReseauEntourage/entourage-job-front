@@ -10,7 +10,9 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   AchievementProgressionEntry,
   APIRoute,
+  CheckinState,
   CandidateInscription,
+  ConversationCheckin,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
@@ -28,6 +30,7 @@ import {
   RecruitementAlertDto,
   Route,
   SocialMedia,
+  SubmitCheckinAnswerParams,
   UserDto,
   UpdateCompanyDto,
   UserProfile,
@@ -773,6 +776,34 @@ export class APIHandler {
       `/messaging/conversations/${conversationId}/unarchive`,
       {}
     );
+  }
+
+  /// ////////
+  // checkin //
+  /// ////////
+
+  getCheckin(conversationId: string): Promise<AxiosResponse<CheckinState>> {
+    return this.get(`/checkin/${conversationId}`);
+  }
+
+  submitCheckinAnswer(
+    conversationId: string,
+    params: SubmitCheckinAnswerParams
+  ): Promise<AxiosResponse<ConversationCheckin>> {
+    return this.put(`/checkin/${conversationId}`, params);
+  }
+
+  postCheckinContactRequest(
+    conversationId: string
+  ): Promise<AxiosResponse<ConversationCheckin>> {
+    return this.post(`/checkin/${conversationId}/contact-request`, {});
+  }
+
+  postCheckinNote(
+    conversationId: string,
+    content: string
+  ): Promise<AxiosResponse<ConversationCheckin>> {
+    return this.post(`/checkin/${conversationId}/note`, { content });
   }
 
   /// ////////////////

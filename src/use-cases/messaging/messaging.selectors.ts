@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { ConversationType } from '@/src/api/types';
+import { ConversationType, MessageType } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { api } from '@/src/store/api/api.slice';
 import { messagingApi, POST_MESSAGE_FIXED_CACHE_KEY } from './messaging.api';
@@ -137,7 +137,9 @@ const selectOtherParticipantHasNotRepliedSelector = createSelector(
     }
 
     return selectedConversation.messages.every(
-      (message) => message.authorId === currentUserId
+      (message) =>
+        message.authorId === currentUserId ||
+        message.type === MessageType.SERVICE
     );
   }
 );

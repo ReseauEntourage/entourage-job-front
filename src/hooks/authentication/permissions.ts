@@ -13,6 +13,7 @@ export const authenticatedPermissions = [
       '/backoffice/companies/[companyId]/collaborators',
       '/backoffice/events',
       '/backoffice/events/[eventId]',
+      '/backoffice/checkin/[conversationId]',
     ],
     roles: '*',
   },

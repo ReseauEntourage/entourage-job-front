@@ -13,7 +13,10 @@ import {
   useArchiveConversationMutation,
   useUnarchiveConversationMutation,
 } from '@/src/use-cases/messaging';
-import { conversationHasUnreadMessages } from '../../messaging.utils';
+import {
+  conversationHasUnreadMessages,
+  getLastUserMessage,
+} from '../../messaging.utils';
 import {
   ContainerAvatarStyled,
   ConversationAddresee,
@@ -44,7 +47,8 @@ export const MessagingConversationListItem = ({
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipant;
 
-  const lastMessage = conversation.messages[0];
+  const lastMessage =
+    getLastUserMessage(conversation.messages) ?? conversation.messages[0];
 
   const hasUnreadMessages = conversationHasUnreadMessages(
     conversation,
@@ -103,7 +107,7 @@ export const MessagingConversationListItem = ({
         )}
         {!lastMessage.content && lastMessage.medias && (
           <p className="preview-last-message">
-            {lastMessage.author.firstName} a envoyé {lastMessage.medias.length}{' '}
+            {lastMessage.author?.firstName} a envoyé {lastMessage.medias.length}{' '}
             fichier
             {lastMessage.medias.length > 1 ? 's' : ''}
           </p>
