@@ -35,12 +35,6 @@ export const slice = createSlice({
     markConversationSeenRequested() {},
     postMessageRequested(_state, _action: { payload: FormData }) {},
     bindNewConversationRequested(_state, _action: { payload: string }) {},
-    postFeedbackRequested(
-      _state,
-      _action: {
-        payload: { conversationParticipantId: string; rating: number | null };
-      }
-    ) {},
     selectConversation(state, action: { payload: string | null }) {
       state.selectedConversationId = action.payload;
     },

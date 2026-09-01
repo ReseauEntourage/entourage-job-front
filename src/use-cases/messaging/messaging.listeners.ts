@@ -96,13 +96,3 @@ listenerMiddleware.startListening({
     );
   },
 });
-
-/** Translates `postFeedbackSagaRequested`'s trigger. */
-listenerMiddleware.startListening({
-  actionCreator: actions.postFeedbackRequested,
-  effect: (action, listenerApi) => {
-    listenerApi.dispatch(
-      messagingApi.endpoints.postFeedback.initiate(action.payload)
-    );
-  },
-});

@@ -26,6 +26,8 @@ import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
+  useArchiveConversationMutation,
+  useUnarchiveConversationMutation,
 } from '@/src/use-cases/messaging';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { ActionList } from './ActionList/ActionList';
@@ -41,6 +43,9 @@ import {
 
 const ADMIN_EXEMPTION_INDICATOR_LABEL =
   'Formation non terminée - visible uniquement par les administrateurs.';
+const ARCHIVE_LABEL = 'Archiver la conversation';
+const UNARCHIVE_LABEL = 'Désarchiver la conversation';
+const REPORT_LABEL = 'Signaler la conversation';
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
@@ -51,6 +56,9 @@ export const MessagingConversationHeader = () => {
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectCurrentUser);
+  const [archiveConversation] = useArchiveConversationMutation();
+  const [unarchiveConversation] = useUnarchiveConversationMutation();
+  const isArchived = !!selectedConversation?.archivedAt;
 
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
@@ -79,6 +87,17 @@ export const MessagingConversationHeader = () => {
           conversationId={selectedConversationId}
         />
       );
+    }
+  };
+
+  const onClickArchiveToggle = () => {
+    if (!selectedConversationId) {
+      return;
+    }
+    if (isArchived) {
+      unarchiveConversation(selectedConversationId);
+    } else {
+      archiveConversation(selectedConversationId);
     }
   };
 
@@ -135,13 +154,36 @@ export const MessagingConversationHeader = () => {
         </LeftColumn>
         {isDesktop && <ActionList />}
 
-        <ButtonIcon
-          icon={<LucidIcon name="Flag" />}
-          onClick={onClickReportUser}
-          color={COLORS.teal}
-          variant="text"
-          dataTestId="messaging-report-button"
-        />
+        {selectedConversation && (
+          <Tooltip
+            content={isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}
+            ariaLabel={isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}
+          >
+            <ButtonIcon
+              icon={
+                <LucidIcon name={isArchived ? 'ArchiveRestore' : 'Archive'} />
+              }
+              onClick={onClickArchiveToggle}
+              color={COLORS.teal}
+              variant="text"
+              dataTestId={
+                isArchived
+                  ? 'messaging-unarchive-button'
+                  : 'messaging-archive-button'
+              }
+            />
+          </Tooltip>
+        )}
+
+        <Tooltip content={REPORT_LABEL} ariaLabel={REPORT_LABEL}>
+          <ButtonIcon
+            icon={<LucidIcon name="Flag" />}
+            onClick={onClickReportUser}
+            color={COLORS.teal}
+            variant="text"
+            dataTestId="messaging-report-button"
+          />
+        </Tooltip>
       </MessagingConversationHeaderMainInfos>
       {isMobile && <ActionList />}
     </MessagingConversationHeaderContainer>

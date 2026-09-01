@@ -313,6 +313,87 @@ export const messagingApi = api.injectEndpoints({
         }
       },
     }),
+    archiveConversation: builder.mutation<void, string>({
+      queryFn: async (conversationId) => {
+        try {
+          await Api.archiveConversation(conversationId);
+          return { data: undefined };
+        } catch (error) {
+          return { error };
+        }
+      },
+      onQueryStarted: async (conversationId, { dispatch, queryFulfilled }) => {
+        const archivedAt = new Date().toISOString();
+        const patches = [
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getConversations',
+              undefined,
+              (draft) => {
+                const conversation = draft.find((c) => c.id === conversationId);
+                if (conversation) {
+                  conversation.archivedAt = archivedAt;
+                }
+              }
+            )
+          ),
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getSelectedConversation',
+              conversationId,
+              (draft) => {
+                draft.archivedAt = archivedAt;
+              }
+            )
+          ),
+        ];
+        try {
+          await queryFulfilled;
+        } catch {
+          patches.forEach((patch) => patch.undo());
+        }
+      },
+    }),
+    unarchiveConversation: builder.mutation<void, string>({
+      queryFn: async (conversationId) => {
+        try {
+          await Api.unarchiveConversation(conversationId);
+          return { data: undefined };
+        } catch (error) {
+          return { error };
+        }
+      },
+      onQueryStarted: async (conversationId, { dispatch, queryFulfilled }) => {
+        const patches = [
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getConversations',
+              undefined,
+              (draft) => {
+                const conversation = draft.find((c) => c.id === conversationId);
+                if (conversation) {
+                  conversation.archivedAt = null;
+                }
+              }
+            )
+          ),
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getSelectedConversation',
+              conversationId,
+              (draft) => {
+                draft.archivedAt = null;
+              }
+            )
+          ),
+        ];
+        try {
+          await queryFulfilled;
+        } catch {
+          patches.forEach((patch) => patch.undo());
+        }
+      },
+    }),
     /** Translates `bindNewConversationSagaRequested`. */
     bindNewConversation: builder.mutation<void, string>({
       queryFn: async (requiredConvUserId, { dispatch }) => {
@@ -362,43 +443,6 @@ export const messagingApi = api.injectEndpoints({
         }
       },
     }),
-    /** Translates `postFeedbackSagaRequested`. */
-    postFeedback: builder.mutation<
-      void,
-      { conversationParticipantId: string; rating: number | null }
-    >({
-      queryFn: async (payload) => {
-        try {
-          await Api.postConversationFeedback(payload);
-          return { data: undefined };
-        } catch (error) {
-          return { error };
-        }
-      },
-      onQueryStarted: async (_arg, { dispatch, getState, queryFulfilled }) => {
-        try {
-          await queryFulfilled;
-          const selectedConversationId = (getState() as any).messaging
-            .selectedConversationId;
-          if (!selectedConversationId) {
-            return;
-          }
-          dispatch(
-            messagingApi.util.updateQueryData(
-              'getSelectedConversation',
-              selectedConversationId,
-              (draft) => {
-                draft.shouldGiveFeedback = false;
-              }
-            )
-          );
-        } catch {
-          // Matches the pre-existing behavior of `postFeedbackFailed`: it
-          // built a notification action but never dispatched it, so no
-          // notification was ever actually shown on failure.
-        }
-      },
-    }),
   }),
 });
 
@@ -411,5 +455,6 @@ export const {
   useMarkConversationSeenMutation,
   usePostMessageMutation,
   useBindNewConversationMutation,
-  usePostFeedbackMutation,
+  useArchiveConversationMutation,
+  useUnarchiveConversationMutation,
 } = messagingApi;

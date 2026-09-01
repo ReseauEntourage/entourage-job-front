@@ -14,7 +14,6 @@ export const generateConversationsApiResponse = (count = 5) => {
       createdAt,
       updatedAt: createdAt,
       seenAt: null,
-      shouldGiveFeedback: false,
       participants: [
         {
           id: currentUserId,

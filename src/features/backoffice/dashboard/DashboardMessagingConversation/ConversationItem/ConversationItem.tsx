@@ -4,7 +4,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Conversation, ConversationParticipant } from '@/src/api/types';
 import { ImgUserProfile, Text } from '@/src/components/ui';
-import { conversationHasUnreadMessages } from '@/src/features/backoffice/messaging/messaging.utils';
+import {
+  conversationHasUnreadMessages,
+  getLastUserMessage,
+} from '@/src/features/backoffice/messaging/messaging.utils';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
@@ -30,6 +33,8 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
     conversation,
     currentUserId
   );
+  const lastUserMessage =
+    getLastUserMessage(conversation.messages) ?? conversation.messages[0];
 
   const openConversation = () => {
     router.push(`/backoffice/messaging?userId=${addresee.id}`);
@@ -54,14 +59,12 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
         {isDesktop && (
           <StyledMessagePreview $hasSeen={userHasSeenConversation}>
             <Text weight={!userHasSeenConversation ? 'bold' : undefined}>
-              {conversation.messages[0].content}
+              {lastUserMessage.content}
             </Text>
           </StyledMessagePreview>
         )}
         <StyledMessageDate>
-          <Text>
-            {moment(conversation.messages[0].createdAt).format('DD/MM/YYYY')}
-          </Text>
+          <Text>{moment(lastUserMessage.createdAt).format('DD/MM/YYYY')}</Text>
         </StyledMessageDate>
       </StyledConversationMainInfos>
       {!isDesktop && (
@@ -70,7 +73,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
             size="small"
             weight={!userHasSeenConversation ? 'bold' : undefined}
           >
-            {conversation.messages[0].content}
+            {lastUserMessage.content}
           </Text>
         </StyledMessagePreview>
       )}

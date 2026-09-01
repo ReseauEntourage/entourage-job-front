@@ -3,6 +3,7 @@ import { COLORS } from '@/src/constants/styles';
 
 export const ContainerStyled = styled.div<{ $isActive: boolean }>`
   display: flex;
+  align-items: center;
   gap: 10px;
   padding: 20px 15px;
   cursor: pointer;
@@ -16,6 +17,15 @@ export const ContainerStyled = styled.div<{ $isActive: boolean }>`
 
   * {
     margin: 0;
+  }
+`;
+
+export const StyledArchiveButton = styled.div`
+  flex-shrink: 0;
+  opacity: 0;
+
+  ${ContainerStyled}:hover & {
+    opacity: 1;
   }
 `;
 

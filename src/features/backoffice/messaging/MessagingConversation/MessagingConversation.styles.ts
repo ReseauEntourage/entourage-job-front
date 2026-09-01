@@ -33,9 +33,7 @@ export const MessagingConversationAIPanel = styled.div`
   overflow: hidden;
 `;
 
-export const MessagingMessagesContainer = styled.div<{
-  $blur?: boolean;
-}>`
+export const MessagingMessagesContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -52,8 +50,6 @@ export const MessagingMessagesContainer = styled.div<{
   box-sizing: border-box;
   align-items: flex-start;
   flex: auto;
-  filter: ${(props) => (props.$blur ? 'blur(2px)' : 'none')};
-  pointer-events: ${(props) => (props.$blur ? 'none' : 'auto')};
 `;
 
 /** Sits in the normal flow (not absolutely positioned) so it doesn't

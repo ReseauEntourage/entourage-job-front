@@ -57,11 +57,20 @@ export const MessagingConversationList = () => {
       );
     }
 
+    if (activeTab === 'archived') {
+      return filtered.filter((c) => !!c.archivedAt);
+    }
+
     if (activeTab === 'unread') {
+      // Unlike "Tous", "Non lus" still surfaces an archived conversation that
+      // received a new message, so the user notices it despite having archived it.
       return filtered.filter((c) =>
         conversationHasUnreadMessages(c, currentUserId)
       );
     }
+
+    // "Tous" excludes conversations archived by the current user
+    filtered = filtered.filter((c) => !c.archivedAt);
 
     // Sort unread conversations first in the "all" tab
     return [...filtered].sort((a, b) => {
@@ -107,6 +116,13 @@ export const MessagingConversationList = () => {
           activeTab === 'unread' && (
             <StyledEmptyState data-testid="messaging-unread-empty-state">
               <Text center>Aucune conversation non lue</Text>
+            </StyledEmptyState>
+          )}
+        {conversations &&
+          conversations.length === 0 &&
+          activeTab === 'archived' && (
+            <StyledEmptyState data-testid="messaging-archived-empty-state">
+              <Text center>Aucune conversation archivée</Text>
             </StyledEmptyState>
           )}
       </StyledConversationsContainer>

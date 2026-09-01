@@ -11,6 +11,7 @@ import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { useIsMobile } from '@/src/hooks/utils';
+import { useGetCheckinQuery } from '@/src/use-cases/checkin';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -30,7 +31,6 @@ import {
   selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectOtherParticipantHasNotReplied,
-  selectShouldGiveFeedback,
 } from '@/src/use-cases/messaging/messaging.selectors';
 import {
   encodeMessageCursor,
@@ -38,6 +38,7 @@ import {
 } from '@/src/use-cases/messaging/messaging.utils';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { MessagingCheckinBanner } from './MessagingCheckinBanner/MessagingCheckinBanner';
 import {
   MessagingConversationAIPanel,
   MessagingConversationContainer,
@@ -47,7 +48,6 @@ import {
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
-import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
 import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
@@ -77,8 +77,13 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const { data: checkinState } = useGetCheckinQuery(
+    selectedConversationId ?? '',
+    {
+      skip: !selectedConversationId || selectedConversationId === 'new',
+    }
+  );
 
-  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
   );
@@ -198,6 +203,15 @@ export const MessagingConversation = () => {
     currentUserId,
   ]);
 
+  const displayCheckinBanner = useMemo(() => {
+    if (!checkinState) {
+      return false;
+    }
+    // The banner disappears once the current user has started (even partially)
+    // or completed their checkin for this conversation.
+    return checkinState.eligible && !checkinState.checkin;
+  }, [checkinState]);
+
   const otherParticipant = useMemo(() => {
     return selectedConversation?.participants.find(
       (p) => p.id !== currentUserId
@@ -227,21 +241,6 @@ export const MessagingConversation = () => {
 
   const onSuggestionClick = (suggestion: MessagingSuggestionItem) => {
     dispatch(messagingActions.setNewMessage(suggestion.message));
-  };
-
-  const onRatingOrClose = (rating: number | null) => {
-    const conversationParticipantId = selectedConversation?.participants.find(
-      (participant) => participant.id === currentUserId
-    )?.conversationParticipant.id;
-
-    if (selectedConversationId && conversationParticipantId) {
-      dispatch(
-        messagingActions.postFeedbackRequested({
-          conversationParticipantId,
-          rating,
-        })
-      );
-    }
   };
 
   useEffect(() => {
@@ -424,12 +423,10 @@ export const MessagingConversation = () => {
         )
       )}
 
-      {shouldGiveFeedback && (
-        <MessagingFeedback
-          onRatingOrClose={onRatingOrClose}
-          adressee={selectedConversation?.participants.find(
-            (participant) => participant.id !== currentUserId
-          )}
+      {displayCheckinBanner && selectedConversationId && otherParticipant && (
+        <MessagingCheckinBanner
+          conversationId={selectedConversationId}
+          otherFirstName={otherParticipant.firstName}
         />
       )}
 
@@ -443,7 +440,6 @@ export const MessagingConversation = () => {
         <MessagingMessagesContainer
           ref={messagesContainerRef}
           onScroll={handleMessagesScroll}
-          $blur={shouldGiveFeedback}
         >
           {isLoadingOlderMessages && (
             <MessagingOlderMessagesLoader>
