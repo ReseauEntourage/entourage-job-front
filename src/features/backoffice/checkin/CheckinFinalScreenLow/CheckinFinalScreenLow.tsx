@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Card, LucidIcon, Text } from '@/src/components/ui';
 import { RoundBadge } from '@/src/components/ui/Badge/RoundBadge/RoundBadge';
+import { Genders } from '@/src/constants/genders';
 import { UserRoles, RELATED_ROLES } from '@/src/constants/users';
 import { StaffContactCard } from '@/src/features/backoffice/StaffContactCard';
 import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
@@ -13,15 +14,18 @@ import {
 interface CheckinFinalScreenLowProps {
   conversationId: string;
   currentUserRole: UserRoles;
+  currentUserGender: Genders;
   otherFirstName: string;
 }
 
 export const CheckinFinalScreenLow = ({
   conversationId,
   currentUserRole,
+  currentUserGender,
   otherFirstName,
 }: CheckinFinalScreenLowProps) => {
   const [step, setStep] = useState<'ask' | 'done'>('ask');
+  const [contactRequested, setContactRequested] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [requestContact, { isLoading }] = useRequestCheckinContactMutation();
   const staffContact = useCurrentUserStaffContact();
@@ -30,6 +34,8 @@ export const CheckinFinalScreenLow = ({
   const discoverOthersNoun =
     oppositeRole === UserRoles.COACH ? 'coachs' : 'candidats';
   const discoverOthersLabel = `Voir d'autres ${discoverOthersNoun}`;
+  const recontacted =
+    currentUserGender === Genders.FEMALE ? 'recontactée' : 'recontacté';
 
   if (step === 'ask') {
     return (
@@ -62,13 +68,16 @@ export const CheckinFinalScreenLow = ({
               setError(null);
               try {
                 await requestContact(conversationId).unwrap();
+                setContactRequested(true);
                 setStep('done');
               } catch {
                 setError('Une erreur est survenue, veuillez réessayer.');
               }
             }}
           >
-            Oui, j&apos;aimerais en parler
+            {staffContact
+              ? `Oui, être ${recontacted} par ${staffContact.name}`
+              : `Oui, être ${recontacted} par mon référent`}
           </Button>
           <Button variant="text" onClick={() => setStep('done')}>
             Non merci
@@ -86,8 +95,13 @@ export const CheckinFinalScreenLow = ({
       <Text size="xxlarge" weight="semibold">
         Merci pour vos retours
       </Text>
+      {contactRequested && staffContact && (
+        <Text>
+          {staffContact.name} va vous recontacter dans les meilleurs délais.
+        </Text>
+      )}
       <Text>
-        D&apos;autres {discoverOthersNoun} sont disponibles, et certains
+        D&apos;autres {discoverOthersNoun}&nbsp;sont disponibles, et certains
         correspondent peut-être mieux à ce que vous cherchez en ce moment.
       </Text>
       <StyledCheckinFinalScreenLowActions>

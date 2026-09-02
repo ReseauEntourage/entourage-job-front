@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Text } from '@/src/components/ui';
-import { ImgProfile } from '@/src/components/ui/Images/ImgProfile/ImgProfile';
+import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
+import { UserRoles } from '@/src/constants/users';
 import { CHECKIN_QUESTION_STEP_ORDER } from '../CheckinFlow/checkin-flow.constants';
 import { CheckinProgressBar } from '../CheckinProgressBar/CheckinProgressBar';
 import {
@@ -15,7 +16,8 @@ import {
 const TOTAL_STEPS = CHECKIN_QUESTION_STEP_ORDER.length;
 
 interface CheckinStepShellProps {
-  otherFirstName: string;
+  otherParticipant: { id: string; firstName: string; role: UserRoles };
+  otherParticipantHasPicture: boolean;
   currentIdx: number;
   question: string;
   children: React.ReactNode;
@@ -27,7 +29,8 @@ interface CheckinStepShellProps {
 }
 
 export const CheckinStepShell = ({
-  otherFirstName,
+  otherParticipant,
+  otherParticipantHasPicture,
   currentIdx,
   question,
   children,
@@ -40,9 +43,13 @@ export const CheckinStepShell = ({
   return (
     <StyledCheckinStepShell>
       <StyledCheckinStepHeader>
-        <ImgProfile pictureUrl={null} placeholder={otherFirstName} size={32} />
+        <ImgUserProfile
+          user={otherParticipant}
+          hasPicture={otherParticipantHasPicture}
+          size={32}
+        />
         <Text size="large" weight="semibold">
-          Vos échanges avec {otherFirstName}
+          Vos échanges avec {otherParticipant.firstName}
         </Text>
       </StyledCheckinStepHeader>
       <StyledCheckinStepProgress>

@@ -27,8 +27,8 @@ export const CheckinFinalScreenMedium = ({
         Merci pour vos retours
       </Text>
       <Text>
-        D&apos;autres {discoverOthersNoun} sont disponibles, n&apos;hésitez pas
-        à explorer d&apos;autres profils.
+        D&apos;autres {discoverOthersNoun}&nbsp;sont disponibles, n&apos;hésitez
+        pas à explorer d&apos;autres profils.
       </Text>
       <Button
         size="large"
