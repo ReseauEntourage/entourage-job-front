@@ -22,6 +22,7 @@ import {
   getPerceivedBenefitOptions,
 } from '@/src/constants/checkin';
 import { UserRoles } from '@/src/constants/users';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import {
   useGetCheckinQuery,
   useSubmitCheckinAnswerMutation,
@@ -81,6 +82,7 @@ interface CheckinFlowProps {
 export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
   const router = useRouter();
   const currentUser = useSelector(selectCurrentUser);
+  const currentUserProfile = useCurrentUserProfile();
   const { data, isLoading, isError } = useGetCheckinQuery(conversationId, {
     skip: !conversationId,
   });
@@ -143,6 +145,13 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
 
   const otherFirstName = data.otherParticipant.firstName;
   const currentUserRole = currentUser.role as UserRoles;
+  const otherParticipant = {
+    id: data.otherParticipant.id,
+    firstName: otherFirstName,
+    role: data.otherParticipant.role,
+  };
+  const otherParticipantHasPicture =
+    data.otherParticipant.userProfile?.hasPicture ?? false;
   const perceivedBenefitOptions = getPerceivedBenefitOptions(currentUserRole);
   const needsEmploymentSubquestion = perceivedBenefits.includes(
     CheckinPerceivedBenefitCandidate.FIND_JOB_INTERNSHIP_OR_APPRENTICESHIP
@@ -182,7 +191,14 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow $tinted>
           <CheckinIntroScreen
-            otherFirstName={otherFirstName}
+            currentUser={{
+              id: currentUser.id,
+              firstName: currentUser.firstName,
+              role: currentUserRole,
+            }}
+            currentUserHasPicture={currentUserProfile?.hasPicture ?? false}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             onStart={() => setStep(CheckinStepId.STILL_IN_TOUCH)}
             onLater={goToConversation}
           />
@@ -193,7 +209,8 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.indexOf(step)}
             question={getQuestionTitle(step, currentUserRole, otherFirstName)}
             canContinue={stillInTouch !== null}
@@ -221,9 +238,15 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.indexOf(step)}
-            question={getQuestionTitle(step, currentUserRole, otherFirstName)}
+            question={getQuestionTitle(
+              step,
+              currentUserRole,
+              otherFirstName,
+              stillInTouch
+            )}
             canContinue={exchangeModes.length > 0}
             isSubmitting={isSubmitting}
             error={error}
@@ -258,9 +281,15 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.indexOf(step)}
-            question={getQuestionTitle(step, currentUserRole, otherFirstName)}
+            question={getQuestionTitle(
+              step,
+              currentUserRole,
+              otherFirstName,
+              stillInTouch
+            )}
             canContinue={exchangeFrequency !== null}
             isSubmitting={isSubmitting}
             error={error}
@@ -289,7 +318,8 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.indexOf(step)}
             question={getQuestionTitle(step, currentUserRole, otherFirstName)}
             canContinue={
@@ -361,7 +391,8 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.indexOf(step)}
             question={getQuestionTitle(step, currentUserRole, otherFirstName)}
             canContinue={perceivedSupport !== null}
@@ -389,7 +420,8 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.indexOf(step)}
             question={getQuestionTitle(step, currentUserRole, otherFirstName)}
             canContinue={rating !== null}
@@ -412,7 +444,8 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
       return (
         <StyledCheckinFlow>
           <CheckinStepShell
-            otherFirstName={otherFirstName}
+            otherParticipant={otherParticipant}
+            otherParticipantHasPicture={otherParticipantHasPicture}
             currentIdx={CHECKIN_QUESTION_STEP_ORDER.length}
             question="Voulez-vous nous en dire plus ?"
             canContinue={comment.trim().length > 0}
@@ -452,6 +485,7 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
             <CheckinFinalScreenLow
               conversationId={conversationId}
               currentUserRole={currentUserRole}
+              currentUserGender={currentUser.gender}
               otherFirstName={otherFirstName}
             />
           </StyledCheckinFlow>

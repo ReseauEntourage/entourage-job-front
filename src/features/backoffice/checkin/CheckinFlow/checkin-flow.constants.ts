@@ -84,15 +84,23 @@ const PERCEIVED_SUPPORT_TITLES: Record<
 export const getQuestionTitle = (
   step: CheckinStepId,
   role: UserRoles,
-  otherFirstName: string
+  otherFirstName: string,
+  stillInTouch: CheckinStillInTouch | null = null
 ): string => {
+  const isPast =
+    stillInTouch !== null && stillInTouch !== CheckinStillInTouch.YES;
+
   switch (step) {
     case CheckinStepId.STILL_IN_TOUCH:
       return `Êtes-vous encore en lien avec ${otherFirstName} ?`;
     case CheckinStepId.EXCHANGE_MODES:
-      return `Comment se passent vos échanges avec ${otherFirstName} ?`;
+      return isPast
+        ? `Par quels moyens échangiez-vous avec ${otherFirstName} ?`
+        : `Par quels moyens échangez-vous avec ${otherFirstName} ?`;
     case CheckinStepId.EXCHANGE_FREQUENCY:
-      return `À quelle fréquence échangez-vous avec ${otherFirstName} ?`;
+      return isPast
+        ? `À quelle fréquence échangiez-vous avec ${otherFirstName} ?`
+        : `À quelle fréquence échangez-vous avec ${otherFirstName} ?`;
     case CheckinStepId.PERCEIVED_BENEFITS:
       return PERCEIVED_BENEFITS_TITLES[role];
     case CheckinStepId.PERCEIVED_SUPPORT:

@@ -654,7 +654,9 @@ export type ConversationCheckin = {
 export type CheckinOtherParticipant = Pick<
   User,
   'id' | 'firstName' | 'lastName' | 'role' | 'gender'
->;
+> & {
+  userProfile: Pick<UserProfile, 'hasPicture'> | null;
+};
 
 export type CheckinState = {
   eligible: boolean;
