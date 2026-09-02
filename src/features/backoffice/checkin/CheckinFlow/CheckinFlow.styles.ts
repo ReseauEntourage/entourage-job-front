@@ -1,8 +1,9 @@
 import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '../../../../constants/styles';
 
-// Tinted background is reserved for the intro and final screens — question steps in
-// between stay on a plain white background.
+// On mobile, tinted background is reserved for the intro and final screens — question
+// steps in between stay on a plain white background. On desktop, the background is
+// always tinted regardless of step.
 export const StyledCheckinFlow = styled.div<{ $tinted?: boolean }>`
   display: flex;
   flex-direction: column;
@@ -11,6 +12,10 @@ export const StyledCheckinFlow = styled.div<{ $tinted?: boolean }>`
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     min-height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
+  }
+
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    background: ${COLORS.hoverBlue};
   }
 `;
 

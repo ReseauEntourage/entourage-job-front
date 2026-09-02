@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ConversationCheckin } from '@/src/api/types';
 import { Alert, Button, Text } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
@@ -75,6 +76,55 @@ const resolvePerceivedBenefitsValues = (
   return nextValues;
 };
 
+// Every step in CHECKIN_QUESTION_STEP_ORDER is submitted atomically (all its fields
+// present or none), so resuming just means finding the first step whose field(s) are
+// still null on the persisted checkin — see design.md "Reprise = première étape non
+// répondue, sans réhydratation partielle".
+export const getFirstUnansweredStep = (
+  checkin: ConversationCheckin
+): CheckinStepId => {
+  for (const step of CHECKIN_QUESTION_STEP_ORDER) {
+    switch (step) {
+      case CheckinStepId.STILL_IN_TOUCH:
+        if (!checkin.stillInTouch) {
+          return step;
+        }
+        break;
+      case CheckinStepId.EXCHANGE_MODES:
+        if (!checkin.exchangeModes || checkin.exchangeModes.length === 0) {
+          return step;
+        }
+        break;
+      case CheckinStepId.EXCHANGE_FREQUENCY:
+        if (!checkin.exchangeFrequency) {
+          return step;
+        }
+        break;
+      case CheckinStepId.PERCEIVED_BENEFITS:
+        if (
+          !checkin.perceivedBenefits ||
+          checkin.perceivedBenefits.length === 0
+        ) {
+          return step;
+        }
+        break;
+      case CheckinStepId.PERCEIVED_SUPPORT:
+        if (!checkin.perceivedSupport) {
+          return step;
+        }
+        break;
+      case CheckinStepId.RATING:
+        if (checkin.rating === null || checkin.rating === undefined) {
+          return step;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  return CheckinStepId.RATING;
+};
+
 interface CheckinFlowProps {
   conversationId: string;
 }
@@ -90,7 +140,21 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
     useSubmitCheckinAnswerMutation();
 
   const [step, setStep] = useState<CheckinStepId>(CheckinStepId.INTRO);
+  const [hasInitializedStep, setHasInitializedStep] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Runs once, as soon as the checkin state has loaded: a started-but-not-completed
+  // checkin resumes directly at the first unanswered question (INTRO screen skipped);
+  // no checkin (or a completed one, handled by the block below) keeps the INTRO default.
+  useEffect(() => {
+    if (hasInitializedStep || !data) {
+      return;
+    }
+    if (data.checkin && !data.checkin.completedAt) {
+      setStep(getFirstUnansweredStep(data.checkin));
+    }
+    setHasInitializedStep(true);
+  }, [data, hasInitializedStep]);
 
   const [stillInTouch, setStillInTouch] = useState<CheckinStillInTouch | null>(
     null
@@ -126,7 +190,17 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
     );
   }
 
-  if (data.checkin) {
+  // Avoids flashing the INTRO screen for a step or two while the resume-step effect
+  // above still has to run (data just became available on this same render).
+  if (!hasInitializedStep) {
+    return (
+      <StyledCheckinFlowCentered>
+        <Spinner />
+      </StyledCheckinFlowCentered>
+    );
+  }
+
+  if (data.checkin?.completedAt) {
     return (
       <StyledCheckinFlowCentered>
         <Text>Vous avez déjà répondu à ce bilan. Merci !</Text>
@@ -436,6 +510,7 @@ export const CheckinFlow = ({ conversationId }: CheckinFlowProps) => {
             }
           >
             <CheckinRatingInput value={rating} onChange={setRating} />
+            <br />
           </CheckinStepShell>
         </StyledCheckinFlow>
       );

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button, Text } from '@/src/components/ui';
+import { Card } from '@/src/components/ui/Cards/Card';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
 import { UserRoles } from '@/src/constants/users';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { CHECKIN_QUESTION_STEP_ORDER } from '../CheckinFlow/checkin-flow.constants';
 import { CheckinProgressBar } from '../CheckinProgressBar/CheckinProgressBar';
 import {
@@ -40,8 +42,10 @@ export const CheckinStepShell = ({
   error = null,
   secondaryAction,
 }: CheckinStepShellProps) => {
-  return (
-    <StyledCheckinStepShell>
+  const isDesktop = useIsDesktop();
+
+  const content = (
+    <>
       <StyledCheckinStepHeader>
         <ImgUserProfile
           user={otherParticipant}
@@ -52,12 +56,14 @@ export const CheckinStepShell = ({
           Vos échanges avec {otherParticipant.firstName}
         </Text>
       </StyledCheckinStepHeader>
+      <br />
       <StyledCheckinStepProgress>
         <CheckinProgressBar
           current={Math.min(currentIdx + 1, TOTAL_STEPS)}
           total={TOTAL_STEPS}
         />
       </StyledCheckinStepProgress>
+      <br />
       <StyledCheckinStepContent>
         <Text weight="semibold" size="xxlarge">
           {question}
@@ -79,6 +85,12 @@ export const CheckinStepShell = ({
           </Button>
         )}
       </StyledCheckinStepFooter>
+    </>
+  );
+
+  return (
+    <StyledCheckinStepShell>
+      {isDesktop ? <Card>{content}</Card> : content}
     </StyledCheckinStepShell>
   );
 };

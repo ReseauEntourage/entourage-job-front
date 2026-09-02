@@ -647,6 +647,7 @@ export type ConversationCheckin = {
   comment: string | null;
   contactRequestedAt: string | null;
   noteSentAt: string | null;
+  completedAt: string | null;
   createdAt: string;
   updatedAt: string;
 };

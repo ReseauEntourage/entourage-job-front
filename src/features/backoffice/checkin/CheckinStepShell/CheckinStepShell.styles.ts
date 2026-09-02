@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledCheckinStepShell = styled.div`
   display: flex;
@@ -9,6 +9,12 @@ export const StyledCheckinStepShell = styled.div`
   max-width: 560px;
   margin: 0 auto;
   padding: 32px 16px;
+
+  /* On desktop, content is wrapped in a Card that already provides its own padding. */
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    width: 100%;
+    padding: 32px 0;
+  }
 `;
 
 export const StyledCheckinStepHeader = styled.div`

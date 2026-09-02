@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ConversationType, FeatureKey } from '@/src/api/types';
+import { CheckinState, ConversationType, FeatureKey } from '@/src/api/types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
@@ -54,6 +54,17 @@ import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
 import { MessagingWaitingReplyBanner } from './MessagingWaitingReplyBanner/MessagingWaitingReplyBanner';
+
+// The banner stays visible while the current user's checkin for this conversation is
+// unstarted or started-but-not-finalized; it only disappears once completedAt is set.
+export const getDisplayCheckinBanner = (
+  checkinState: CheckinState | undefined
+): boolean => {
+  if (!checkinState) {
+    return false;
+  }
+  return checkinState.eligible && !checkinState.checkin?.completedAt;
+};
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -203,14 +214,10 @@ export const MessagingConversation = () => {
     currentUserId,
   ]);
 
-  const displayCheckinBanner = useMemo(() => {
-    if (!checkinState) {
-      return false;
-    }
-    // The banner disappears once the current user has started (even partially)
-    // or completed their checkin for this conversation.
-    return checkinState.eligible && !checkinState.checkin;
-  }, [checkinState]);
+  const displayCheckinBanner = useMemo(
+    () => getDisplayCheckinBanner(checkinState),
+    [checkinState]
+  );
 
   const otherParticipant = useMemo(() => {
     return selectedConversation?.participants.find(
