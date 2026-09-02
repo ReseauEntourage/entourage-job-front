@@ -13,6 +13,7 @@ import {
   Tooltip,
 } from '@/src/components/ui';
 import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
+import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
@@ -36,6 +37,7 @@ import {
   AddreseeInfosContainer,
   AddreseeSection,
   ConversationAddresee,
+  DropdownItemContent,
   LeftColumn,
   MessagingConversationHeaderContainer,
   MessagingConversationHeaderMainInfos,
@@ -43,9 +45,9 @@ import {
 
 const ADMIN_EXEMPTION_INDICATOR_LABEL =
   'Formation non terminée - visible uniquement par les administrateurs.';
-const ARCHIVE_LABEL = 'Archiver la conversation';
-const UNARCHIVE_LABEL = 'Désarchiver la conversation';
-const REPORT_LABEL = 'Signaler la conversation';
+const ARCHIVE_LABEL = 'Archiver';
+const UNARCHIVE_LABEL = 'Désarchiver';
+const REPORT_LABEL = 'Signaler';
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
@@ -155,35 +157,41 @@ export const MessagingConversationHeader = () => {
         {isDesktop && <ActionList />}
 
         {selectedConversation && (
-          <Tooltip
-            content={isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}
-            ariaLabel={isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}
-          >
-            <ButtonIcon
-              icon={
-                <LucidIcon name={isArchived ? 'ArchiveRestore' : 'Archive'} />
-              }
-              onClick={onClickArchiveToggle}
-              color={COLORS.teal}
-              variant="text"
-              dataTestId={
-                isArchived
-                  ? 'messaging-unarchive-button'
-                  : 'messaging-archive-button'
-              }
-            />
-          </Tooltip>
+          <Dropdown>
+            <Dropdown.Toggle>
+              <ButtonIcon
+                icon={<LucidIcon name="EllipsisVertical" />}
+                onClick={() => {}}
+                color={COLORS.teal}
+                variant="text"
+                dataTestId="messaging-conversation-actions-button"
+              />
+            </Dropdown.Toggle>
+            <Dropdown.Menu openDirection="left">
+              <Dropdown.Item onClick={onClickArchiveToggle}>
+                <DropdownItemContent
+                  data-testid={
+                    isArchived
+                      ? 'messaging-unarchive-button'
+                      : 'messaging-archive-button'
+                  }
+                >
+                  <LucidIcon
+                    name={isArchived ? 'ArchiveRestore' : 'Archive'}
+                    size={16}
+                  />
+                  {isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}
+                </DropdownItemContent>
+              </Dropdown.Item>
+              <Dropdown.Item onClick={onClickReportUser}>
+                <DropdownItemContent data-testid="messaging-report-button">
+                  <LucidIcon name="Flag" size={16} />
+                  {REPORT_LABEL}
+                </DropdownItemContent>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         )}
-
-        <Tooltip content={REPORT_LABEL} ariaLabel={REPORT_LABEL}>
-          <ButtonIcon
-            icon={<LucidIcon name="Flag" />}
-            onClick={onClickReportUser}
-            color={COLORS.teal}
-            variant="text"
-            dataTestId="messaging-report-button"
-          />
-        </Tooltip>
       </MessagingConversationHeaderMainInfos>
       {isMobile && <ActionList />}
     </MessagingConversationHeaderContainer>
