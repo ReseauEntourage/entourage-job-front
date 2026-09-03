@@ -77,3 +77,9 @@ export const StyledButtonContainer = styled.div`
     border-top: 1px solid ${COLORS.gray};
   }
 `;
+
+export const DropdownItemContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;

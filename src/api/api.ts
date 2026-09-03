@@ -10,7 +10,9 @@ import { addAxiosInterceptors } from './interceptor';
 import {
   AchievementProgressionEntry,
   APIRoute,
+  CheckinState,
   CandidateInscription,
+  ConversationCheckin,
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
@@ -28,6 +30,7 @@ import {
   RecruitementAlertDto,
   Route,
   SocialMedia,
+  SubmitCheckinAnswerParams,
   UserDto,
   UpdateCompanyDto,
   UserProfile,
@@ -740,8 +743,25 @@ export class APIHandler {
     return this.get('/messaging/conversations/unseen-count');
   }
 
-  getConversationById(conversationId: string): Promise<AxiosResponse> {
-    return this.get(`/messaging/conversations/${conversationId}`);
+  getConversationById(
+    conversationId: string,
+    cursor?: { before?: string; after?: string }
+  ): Promise<AxiosResponse> {
+    const params = new URLSearchParams();
+    if (cursor?.before) {
+      params.set('before', cursor.before);
+    }
+    if (cursor?.after) {
+      params.set('after', cursor.after);
+    }
+    const query = params.toString();
+    return this.get(
+      `/messaging/conversations/${conversationId}${query ? `?${query}` : ''}`
+    );
+  }
+
+  markConversationSeen(conversationId: string): Promise<AxiosResponse> {
+    return this.post(`/messaging/conversations/${conversationId}/seen`, {});
   }
 
   postMessage(formData: FormData): Promise<AxiosResponse> {
@@ -764,11 +784,43 @@ export class APIHandler {
     );
   }
 
-  postConversationFeedback(params: {
-    conversationParticipantId: string;
-    rating: number | null;
-  }): Promise<AxiosResponse> {
-    return this.post('/messaging/conversations/feedback', params);
+  archiveConversation(conversationId: string): Promise<AxiosResponse> {
+    return this.post(`/messaging/conversations/${conversationId}/archive`, {});
+  }
+
+  unarchiveConversation(conversationId: string): Promise<AxiosResponse> {
+    return this.post(
+      `/messaging/conversations/${conversationId}/unarchive`,
+      {}
+    );
+  }
+
+  /// ////////
+  // checkin //
+  /// ////////
+
+  getCheckin(conversationId: string): Promise<AxiosResponse<CheckinState>> {
+    return this.get(`/checkin/${conversationId}`);
+  }
+
+  submitCheckinAnswer(
+    conversationId: string,
+    params: SubmitCheckinAnswerParams
+  ): Promise<AxiosResponse<ConversationCheckin>> {
+    return this.put(`/checkin/${conversationId}`, params);
+  }
+
+  postCheckinContactRequest(
+    conversationId: string
+  ): Promise<AxiosResponse<ConversationCheckin>> {
+    return this.post(`/checkin/${conversationId}/contact-request`, {});
+  }
+
+  postCheckinNote(
+    conversationId: string,
+    content: string
+  ): Promise<AxiosResponse<ConversationCheckin>> {
+    return this.post(`/checkin/${conversationId}/note`, { content });
   }
 
   /// ////////////////

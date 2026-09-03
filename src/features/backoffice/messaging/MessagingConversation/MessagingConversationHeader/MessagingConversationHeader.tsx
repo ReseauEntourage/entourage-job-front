@@ -13,6 +13,7 @@ import {
   Tooltip,
 } from '@/src/components/ui';
 import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
+import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
@@ -26,6 +27,8 @@ import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
+  useArchiveConversationMutation,
+  useUnarchiveConversationMutation,
 } from '@/src/use-cases/messaging';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { ActionList } from './ActionList/ActionList';
@@ -34,6 +37,7 @@ import {
   AddreseeInfosContainer,
   AddreseeSection,
   ConversationAddresee,
+  DropdownItemContent,
   LeftColumn,
   MessagingConversationHeaderContainer,
   MessagingConversationHeaderMainInfos,
@@ -41,6 +45,9 @@ import {
 
 const ADMIN_EXEMPTION_INDICATOR_LABEL =
   'Formation non terminée - visible uniquement par les administrateurs.';
+const ARCHIVE_LABEL = 'Archiver';
+const UNARCHIVE_LABEL = 'Désarchiver';
+const REPORT_LABEL = 'Signaler';
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
@@ -51,6 +58,9 @@ export const MessagingConversationHeader = () => {
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectCurrentUser);
+  const [archiveConversation] = useArchiveConversationMutation();
+  const [unarchiveConversation] = useUnarchiveConversationMutation();
+  const isArchived = !!selectedConversation?.archivedAt;
 
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
@@ -79,6 +89,17 @@ export const MessagingConversationHeader = () => {
           conversationId={selectedConversationId}
         />
       );
+    }
+  };
+
+  const onClickArchiveToggle = () => {
+    if (!selectedConversationId) {
+      return;
+    }
+    if (isArchived) {
+      unarchiveConversation(selectedConversationId);
+    } else {
+      archiveConversation(selectedConversationId);
     }
   };
 
@@ -135,13 +156,42 @@ export const MessagingConversationHeader = () => {
         </LeftColumn>
         {isDesktop && <ActionList />}
 
-        <ButtonIcon
-          icon={<LucidIcon name="Flag" />}
-          onClick={onClickReportUser}
-          color={COLORS.teal}
-          variant="text"
-          dataTestId="messaging-report-button"
-        />
+        {selectedConversation && (
+          <Dropdown>
+            <Dropdown.Toggle>
+              <ButtonIcon
+                icon={<LucidIcon name="EllipsisVertical" />}
+                onClick={() => {}}
+                color={COLORS.teal}
+                variant="text"
+                dataTestId="messaging-conversation-actions-button"
+              />
+            </Dropdown.Toggle>
+            <Dropdown.Menu openDirection="left">
+              <Dropdown.Item onClick={onClickArchiveToggle}>
+                <DropdownItemContent
+                  data-testid={
+                    isArchived
+                      ? 'messaging-unarchive-button'
+                      : 'messaging-archive-button'
+                  }
+                >
+                  <LucidIcon
+                    name={isArchived ? 'ArchiveRestore' : 'Archive'}
+                    size={16}
+                  />
+                  {isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}
+                </DropdownItemContent>
+              </Dropdown.Item>
+              <Dropdown.Item onClick={onClickReportUser}>
+                <DropdownItemContent data-testid="messaging-report-button">
+                  <LucidIcon name="Flag" size={16} />
+                  {REPORT_LABEL}
+                </DropdownItemContent>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
       </MessagingConversationHeaderMainInfos>
       {isMobile && <ActionList />}
     </MessagingConversationHeaderContainer>

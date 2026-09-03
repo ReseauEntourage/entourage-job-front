@@ -2,7 +2,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Message } from '@/src/api/types';
+import { Message, MessageType, ServiceMessageKind } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { Text } from '@/src/components/ui/Text';
 import { COLORS } from '@/src/constants/styles';
@@ -17,6 +17,8 @@ import { MessageMedias } from './MessageMedias/MessageMedias';
 import {
   MessageContainer,
   StyledMessage,
+  StyledServiceMessage,
+  StyledServiceMessageQuote,
   StyledWarning,
 } from './MessagingMessage.styles';
 import { MessagingMessageSuspiciousModal } from './MessagingMessageSuspiciousModal/MessagingMessageSuspiciousModal';
@@ -28,7 +30,9 @@ interface MessagingMessageProps {
 export const MessagingMessage = ({ message }: MessagingMessageProps) => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const currentUserId = useSelector(selectCurrentUserId);
-  const isOwnMessage = message.author.id === currentUserId;
+  const isServiceMessage = message.type === MessageType.SERVICE;
+  const isOwnMessage =
+    !isServiceMessage && message.author?.id === currentUserId;
   const [isSuspicious, setIsSuspicious] = React.useState(false);
 
   useEffect(() => {
@@ -48,7 +52,7 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       const isVerifiedDomain = whitelist.some((whitelistedDomain) =>
         domain.endsWith(whitelistedDomain)
       );
-      const isSentByAdmin = message.author.role === UserRoles.ADMIN;
+      const isSentByAdmin = message.author?.role === UserRoles.ADMIN;
 
       if (!isVerifiedDomain && !isSentByAdmin) {
         event.preventDefault();
@@ -68,6 +72,52 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       );
     }
   };
+
+  if (isServiceMessage) {
+    const checkinNote =
+      message.serviceMessageKind === ServiceMessageKind.CHECKIN_NOTE
+        ? message.metadata
+        : null;
+
+    return (
+      <MessageContainer
+        className="service-message"
+        data-testid="messaging-message"
+        data-message-type="SERVICE"
+      >
+        <StyledServiceMessage>
+          {checkinNote ? (
+            <>
+              <Text size="small" center>
+                💬 {checkinNote.authorFirstName} a fait son bilan et vous a
+                laissé un mot :
+              </Text>
+              <StyledServiceMessageQuote>
+                <Text size="small" center>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: linkify(escapeHtml(checkinNote.quotedText)),
+                    }}
+                  />
+                </Text>
+              </StyledServiceMessageQuote>
+            </>
+          ) : (
+            <Text size="small" center>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: linkify(escapeHtml(message.content)),
+                }}
+              />
+            </Text>
+          )}
+        </StyledServiceMessage>
+        <p className="message-date">
+          {moment(message.createdAt).format('LLL')}
+        </p>
+      </MessageContainer>
+    );
+  }
 
   return (
     <MessageContainer

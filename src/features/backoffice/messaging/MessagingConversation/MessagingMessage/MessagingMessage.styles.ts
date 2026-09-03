@@ -32,6 +32,18 @@ export const MessageContainer = styled.div`
       text-align: left;
     }
   }
+  &.service-message {
+    align-items: center;
+    padding-left: 60px;
+    padding-right: 60px;
+    @media (max-width: ${BREAKPOINTS.desktop}px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    p.message-date {
+      text-align: center;
+    }
+  }
 `;
 
 export const StyledMessage = styled.div`
@@ -55,6 +67,26 @@ export const StyledMessage = styled.div`
   &:not(.own-message) {
     background: ${COLORS.hoverBlue};
   }
+`;
+
+export const StyledServiceMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 10px 16px;
+  box-sizing: border-box;
+  background: ${COLORS.lightYellow};
+  text-align: center;
+  white-space: pre-line;
+`;
+
+export const StyledServiceMessageQuote = styled.div`
+  border-left: 2px solid ${COLORS.mediumGray};
+  padding: 4px 12px;
+  font-style: italic;
 `;
 
 export const StyledWarning = styled.div`

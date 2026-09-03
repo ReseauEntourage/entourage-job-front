@@ -54,6 +54,10 @@ export const ActionList = () => {
     }
   };
 
+  if (!canUseAIAssistant && !canShareNetwork) {
+    return null;
+  }
+
   return (
     <StyledButtonContainer>
       {canShareNetwork && (

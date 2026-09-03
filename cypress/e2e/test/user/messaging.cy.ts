@@ -1,3 +1,10 @@
+import {
+  buildConversation,
+  buildCurrentUser,
+  buildMessage,
+  buildParticipant,
+  CURRENT_USER_ID,
+} from '../../../fixtures/src/messaging/messagingBuilders';
 import { interceptCurrentUserSubResources } from '../../intercept/current-user.req';
 import { interceptCurrentUser } from '../../intercept/user/auth.req';
 import {
@@ -6,19 +13,11 @@ import {
   interceptGetProfileShareText,
   interceptGetPublicProfile,
   interceptGetUnseenCount,
-  interceptPostFeedback,
   interceptPostMessage,
   interceptReportConversation,
   interceptShareProfile,
 } from '../../intercept/user/messaging.req';
 import bootstrap from '../bootstrap';
-import {
-  buildConversation,
-  buildCurrentUser,
-  buildMessage,
-  buildParticipant,
-  CURRENT_USER_ID,
-} from '../../../fixtures/src/messaging/messagingBuilders';
 
 /**
  * Signs in as a given user (role + overrides applied to the /current
@@ -494,76 +493,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
     });
   });
 
-  describe('Avis sur la conversation (feedback)', () => {
-    it('Cliquer sur une étoile envoie la note et affiche une notification de remerciement', () => {
-      signInAs({ role: 'Candidat' });
-      const coach = buildParticipant({
-        id: 'user-coach',
-        firstName: 'Marc',
-        role: 'Coach',
-      });
-      const conversation = buildConversation({
-        id: 'conversation-feedback',
-        shouldGiveFeedback: true,
-        participants: [
-          buildParticipant({ id: CURRENT_USER_ID, role: 'Candidat' }),
-          coach,
-        ],
-        messages: [buildMessage({ author: coach, content: 'Bon courage !' })],
-      });
-
-      interceptGetConversations({ statusCode: 200, body: [conversation] });
-      interceptGetConversationById({ statusCode: 200, body: conversation });
-      interceptPostFeedback({ statusCode: 201, body: {} });
-
-      cy.visit('/backoffice/messaging?conversationId=conversation-feedback');
-      cy.wait('@getCurrent');
-      cy.wait('@getConversationById');
-
-      cy.get('[data-testid="messaging-feedback-alert"]').should('be.visible');
-      cy.get('[data-testid="star-rating-4"]').click();
-
-      cy.wait('@postFeedback')
-        .its('request.body')
-        .should('deep.include', { rating: 4 });
-      cy.contains('Merci pour votre retour').should('be.visible');
-      cy.get('[data-testid="messaging-feedback-alert"]').should('not.exist');
-    });
-
-    it("Fermer l'alerte envoie une note nulle sans afficher de confirmation", () => {
-      signInAs({ role: 'Candidat' });
-      const coach = buildParticipant({ id: 'user-coach', role: 'Coach' });
-      const conversation = buildConversation({
-        id: 'conversation-feedback-close',
-        shouldGiveFeedback: true,
-        participants: [
-          buildParticipant({ id: CURRENT_USER_ID, role: 'Candidat' }),
-          coach,
-        ],
-        messages: [buildMessage({ author: coach })],
-      });
-
-      interceptGetConversations({ statusCode: 200, body: [conversation] });
-      interceptGetConversationById({ statusCode: 200, body: conversation });
-      interceptPostFeedback({ statusCode: 201, body: {} });
-
-      cy.visit(
-        '/backoffice/messaging?conversationId=conversation-feedback-close'
-      );
-      cy.wait('@getCurrent');
-      cy.wait('@getConversationById');
-
-      cy.get('[data-testid="messaging-feedback-alert"] button').first().click({
-        force: true,
-      });
-
-      cy.wait('@postFeedback')
-        .its('request.body')
-        .should('deep.include', { rating: null });
-      cy.contains('Merci pour votre retour').should('not.exist');
-    });
-  });
-
   describe('Signalement (report abuse)', () => {
     it("Depuis l'en-tête, je signale la conversation avec une raison et un commentaire", () => {
       signInAs({ role: 'Coach' });
@@ -588,6 +517,7 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
 
+      cy.get('[data-testid="messaging-conversation-actions-button"]').click();
       cy.get('[data-testid="messaging-report-button"]').click();
       cy.contains('Signaler une conversation').should('be.visible');
 

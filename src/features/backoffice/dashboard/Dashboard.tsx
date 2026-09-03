@@ -11,6 +11,7 @@ import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
+import { StaffContactCard } from '../StaffContactCard';
 import { DashboardInviteToReferCandidate } from '../referer/dashboard/DashboardInviteToReferCandidate/DashboardInviteToReferCandidate';
 import { DashboardReferedCandidateList } from '../referer/dashboard/DashboardReferedCandidateList/DashboardReferedCandidateList';
 import { CompanyRecruitementAlertCard } from './CompanyRecruitementAlertCard';
@@ -28,7 +29,6 @@ import { DashboardMessagingConversation } from './DashboardMessagingConversation
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
-import { DashboardStaffContactCard } from './DashboardStaffContactCard';
 import { DashboardToolboxCard } from './DashboardToolboxCard';
 
 export const Dashboard = () => {
@@ -59,7 +59,7 @@ export const Dashboard = () => {
         {!isCompanyAdmin && company && (
           <DashboardCompanyCard company={company} />
         )}
-        <DashboardStaffContactCard />
+        <StaffContactCard />
       </>
     );
   };

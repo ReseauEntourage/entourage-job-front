@@ -29,12 +29,6 @@ export const interceptPostMessage = (data: object) => {
   cy.intercept('POST', '/messaging/messages', data).as('postMessage');
 };
 
-export const interceptPostFeedback = (data: object) => {
-  cy.intercept('POST', '/messaging/conversations/feedback', data).as(
-    'postFeedback'
-  );
-};
-
 export const interceptReportConversation = (data: object) => {
   cy.intercept('POST', '/messaging/conversations/*/report', data).as(
     'postReportConversation'

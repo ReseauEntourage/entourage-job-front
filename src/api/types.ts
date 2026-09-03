@@ -8,6 +8,13 @@ import { AdminZone, DepartmentName } from '@/src/constants/departements';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
+import {
+  CheckinEmploymentType,
+  CheckinExchangeFrequency,
+  CheckinExchangeMode,
+  CheckinPerceivedSupport,
+  CheckinStillInTouch,
+} from '../constants/checkin';
 import { CompanyGoal, CompanyUserRole } from '../constants/company';
 import { ContactTypeEnum } from '../constants/contactTypes';
 import { PublicSensibilise, EventMode, EventType } from '../constants/events';
@@ -31,6 +38,7 @@ export const APIRoutes = {
   ELEARNING: 'elearning',
   LINKEDIN: 'linkedin',
   PROFILE_GENERATION: 'profile-generation',
+  CHECKIN: 'checkin',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -594,16 +602,79 @@ export type Media = {
   signedUrl: string;
 };
 
+export enum MessageType {
+  USER = 'USER',
+  SERVICE = 'SERVICE',
+}
+
+export enum ServiceMessageKind {
+  CHECKIN_NOTE = 'CHECKIN_NOTE',
+}
+
+export type CheckinNoteMetadata = {
+  authorFirstName: string;
+  quotedText: string;
+};
+
 export type Message = {
   id: string;
   content: string;
-  authorId: string;
+  authorId: string | null;
   createdAt: string;
   updatedAt: string;
   conversationId: string;
-  author: User;
+  type: MessageType;
+  // Only set for `type: SERVICE` messages.
+  serviceMessageKind: ServiceMessageKind | null;
+  // Only set for `type: SERVICE` messages, payload specific to `serviceMessageKind`.
+  metadata: CheckinNoteMetadata | null;
+  // Null only for `type: SERVICE` messages.
+  author: User | null;
   medias: Media[];
 };
+
+export type ConversationCheckin = {
+  id: string;
+  conversationId: string;
+  userId: string;
+  stillInTouch: CheckinStillInTouch | null;
+  exchangeModes: CheckinExchangeMode[] | null;
+  exchangeFrequency: CheckinExchangeFrequency | null;
+  perceivedBenefits: string[] | null;
+  employmentType: CheckinEmploymentType | null;
+  perceivedSupport: CheckinPerceivedSupport | null;
+  rating: number | null;
+  comment: string | null;
+  contactRequestedAt: string | null;
+  noteSentAt: string | null;
+  completedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CheckinOtherParticipant = Pick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role' | 'gender'
+> & {
+  userProfile: Pick<UserProfile, 'hasPicture'> | null;
+};
+
+export type CheckinState = {
+  eligible: boolean;
+  otherParticipant: CheckinOtherParticipant | null;
+  checkin: ConversationCheckin | null;
+};
+
+export type SubmitCheckinAnswerParams = Partial<{
+  stillInTouch: CheckinStillInTouch;
+  exchangeModes: CheckinExchangeMode[];
+  exchangeFrequency: CheckinExchangeFrequency;
+  perceivedBenefits: string[];
+  employmentType: CheckinEmploymentType;
+  perceivedSupport: CheckinPerceivedSupport;
+  rating: number;
+  comment: string;
+}>;
 
 export type ConversationParticipant = Pick<
   User,
@@ -639,7 +710,7 @@ export type Conversation = {
   messages: Message[];
   participants: ConversationParticipants;
   seenAt?: string;
-  shouldGiveFeedback?: boolean;
+  archivedAt?: string | null;
 };
 
 export type MessageWithConversation = Message & {

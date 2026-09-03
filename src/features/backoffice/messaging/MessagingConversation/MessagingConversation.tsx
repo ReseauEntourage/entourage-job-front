@@ -1,9 +1,17 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ConversationType, FeatureKey } from '@/src/api/types';
+import { CheckinState, ConversationType, FeatureKey } from '@/src/api/types';
+import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
 import { useIsMobile } from '@/src/hooks/utils';
+import { useGetCheckinQuery } from '@/src/use-cases/checkin';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -15,31 +23,48 @@ import {
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
+  useLoadOlderMessagesMutation,
+  usePollConversationMessagesMutation,
 } from '@/src/use-cases/messaging';
 import {
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectOtherParticipantHasNotReplied,
-  selectShouldGiveFeedback,
 } from '@/src/use-cases/messaging/messaging.selectors';
+import {
+  encodeMessageCursor,
+  MESSAGES_PAGE_SIZE,
+} from '@/src/use-cases/messaging/messaging.utils';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { MessagingCheckinBanner } from './MessagingCheckinBanner/MessagingCheckinBanner';
 import {
   MessagingConversationAIPanel,
   MessagingConversationContainer,
   MessagingConversationWrapper,
   MessagingMessagesContainer,
+  MessagingOlderMessagesLoader,
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
-import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
 import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 import { MessagingSuggestionItem } from './MessagingSuggestions/MessagingSuggestions.types';
 import { MessagingWaitingReplyBanner } from './MessagingWaitingReplyBanner/MessagingWaitingReplyBanner';
+
+// The banner stays visible while the current user's checkin for this conversation is
+// unstarted or started-but-not-finalized; it only disappears once completedAt is set.
+export const getDisplayCheckinBanner = (
+  checkinState: CheckinState | undefined
+): boolean => {
+  if (!checkinState) {
+    return false;
+  }
+  return checkinState.eligible && !checkinState.checkin?.completedAt;
+};
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -63,11 +88,32 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const { data: checkinState } = useGetCheckinQuery(
+    selectedConversationId ?? '',
+    {
+      skip: !selectedConversationId || selectedConversationId === 'new',
+    }
+  );
 
-  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
   );
+  const [loadOlderMessages, { isLoading: isLoadingOlderMessages }] =
+    useLoadOlderMessagesMutation();
+  const [pollConversationMessages] = usePollConversationMessagesMutation();
+  const [hasMoreOlderMessages, setHasMoreOlderMessages] = useState(true);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const previousNewestMessageIdRef = useRef<string | null>(null);
+  const selectedConversationRef = useRef(selectedConversation);
+  /**
+   * While loading an older page, tracks the container's `scrollHeight` so
+   * a `useLayoutEffect` below can compensate `scrollTop` by however much
+   * it grew — first when the loader itself is inserted, then again when
+   * it's replaced by the actual older messages — keeping whatever the
+   * user was looking at in view instead of jumping around. `null` when
+   * not currently preserving (i.e. not loading an older page).
+   */
+  const preservedScrollRef = useRef<{ scrollHeight: number } | null>(null);
   const displaySuggestions = useMemo(() => {
     return (
       selectedConversationId === 'new' &&
@@ -168,6 +214,11 @@ export const MessagingConversation = () => {
     currentUserId,
   ]);
 
+  const displayCheckinBanner = useMemo(
+    () => getDisplayCheckinBanner(checkinState),
+    [checkinState]
+  );
+
   const otherParticipant = useMemo(() => {
     return selectedConversation?.participants.find(
       (p) => p.id !== currentUserId
@@ -199,21 +250,6 @@ export const MessagingConversation = () => {
     dispatch(messagingActions.setNewMessage(suggestion.message));
   };
 
-  const onRatingOrClose = (rating: number | null) => {
-    const conversationParticipantId = selectedConversation?.participants.find(
-      (participant) => participant.id === currentUserId
-    )?.conversationParticipant.id;
-
-    if (selectedConversationId && conversationParticipantId) {
-      dispatch(
-        messagingActions.postFeedbackRequested({
-          conversationParticipantId,
-          rating,
-        })
-      );
-    }
-  };
-
   useEffect(() => {
     const addressees = selectedConversation?.participants.filter(
       (participant) => participant.id !== currentUserId
@@ -236,31 +272,136 @@ export const MessagingConversation = () => {
   ]);
 
   useEffect(() => {
+    selectedConversationRef.current = selectedConversation;
+  }, [selectedConversation]);
+
+  useEffect(() => {
+    setHasMoreOlderMessages(true);
+  }, [selectedConversationId]);
+
+  /**
+   * Guards against a spurious `scroll` event firing before we've
+   * positioned the view for the conversation's *current* messages: this
+   * container is reused across conversations, so switching to a shorter
+   * conversation can leave a stale, too-large `scrollTop` that the
+   * browser clamps down as soon as the new (shorter) content replaces
+   * the old — a native reflow side effect, not the user scrolling up.
+   * A fixed timer can't reliably outlast that (its length depends on
+   * how long the conversation takes to fetch), so instead this is
+   * cleared only once our own positioning effect below has actually run
+   * for the current message set.
+   */
+  const hasPositionedScrollRef = useRef(false);
+  useEffect(() => {
+    hasPositionedScrollRef.current = false;
+  }, [selectedConversationId]);
+
+  useEffect(() => {
     if (selectedConversationId && selectedConversationId !== 'new') {
       dispatch(messagingActions.getSelectedConversationRequested());
+      dispatch(messagingActions.markConversationSeenRequested());
     }
   }, [dispatch, selectedConversationId]);
 
   /**
-   * Refresh the selected conversation every DELAY_REFRESH_CONVERSATIONS ms
+   * Poll for new messages every DELAY_REFRESH_CONVERSATIONS ms, fetching
+   * only the delta since the most recent message currently held (instead
+   * of reloading the whole conversation), and mark it as seen whenever
+   * that poll actually reports new messages.
    */
   useEffect(() => {
     const interval = setInterval(() => {
-      if (selectedConversationId && selectedConversationId !== 'new') {
-        dispatch(messagingActions.getSelectedConversationRequested());
+      const conversation = selectedConversationRef.current;
+      const newestMessage = conversation?.messages[0];
+      if (
+        selectedConversationId &&
+        selectedConversationId !== 'new' &&
+        newestMessage
+      ) {
+        pollConversationMessages({
+          conversationId: selectedConversationId,
+          after: encodeMessageCursor(newestMessage),
+        });
       }
       dispatch(messagingActions.getConversationsRequested());
     }, DELAY_REFRESH_CONVERSATIONS);
 
     return () => clearInterval(interval);
-  }, [dispatch, selectedConversationId]);
+  }, [dispatch, selectedConversationId, pollConversationMessages]);
+
+  const handleMessagesScroll = () => {
+    const container = messagesContainerRef.current;
+    const conversation = selectedConversation;
+    const oldestMessage =
+      conversation?.messages[conversation.messages.length - 1];
+    if (
+      !container ||
+      !selectedConversationId ||
+      selectedConversationId === 'new' ||
+      !oldestMessage ||
+      isLoadingOlderMessages ||
+      !hasMoreOlderMessages ||
+      !hasPositionedScrollRef.current ||
+      container.scrollTop > 100
+    ) {
+      return;
+    }
+    // Arm the scroll-position compensation (see the `useLayoutEffect`
+    // below) with the height *before* the loader — and later the older
+    // messages — get prepended above the current view.
+    preservedScrollRef.current = { scrollHeight: container.scrollHeight };
+    loadOlderMessages({
+      conversationId: selectedConversationId,
+      before: encodeMessageCursor(oldestMessage),
+    })
+      .unwrap()
+      .then((olderMessages) => {
+        if (olderMessages.length < MESSAGES_PAGE_SIZE) {
+          setHasMoreOlderMessages(false);
+        }
+      })
+      .catch(() => {
+        // Non-critical: the user can retry by scrolling up again
+      });
+  };
+
+  // Applies the scroll-position compensation armed above: fires once when
+  // the loader is inserted (isLoadingOlderMessages flips true), and again
+  // once it's replaced by the actual older messages (isLoadingOlderMessages
+  // flips back to false) — each time shifting scrollTop by however much
+  // scrollHeight grew, so the previously-visible content stays in view.
+  useLayoutEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container || !preservedScrollRef.current) {
+      return;
+    }
+    const delta =
+      container.scrollHeight - preservedScrollRef.current.scrollHeight;
+    if (delta !== 0) {
+      container.scrollTop += delta;
+    }
+    if (isLoadingOlderMessages) {
+      preservedScrollRef.current = { scrollHeight: container.scrollHeight };
+    } else {
+      preservedScrollRef.current = null;
+    }
+  }, [isLoadingOlderMessages, selectedConversation?.messages.length]);
 
   useEffect(() => {
-    if (selectedConversation && selectedConversation.messages) {
+    const newestMessageId = selectedConversation?.messages[0]?.id ?? null;
+    if (
+      selectedConversation &&
+      newestMessageId &&
+      newestMessageId !== previousNewestMessageIdRef.current
+    ) {
       scrollToBottom();
     }
+    previousNewestMessageIdRef.current = newestMessageId;
+    if (selectedConversation) {
+      hasPositionedScrollRef.current = true;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedConversation?.id, selectedConversation?.messages.length]);
+  }, [selectedConversation?.id, selectedConversation?.messages[0]?.id]);
 
   const conversationHasCandidate =
     selectedConversation?.participants.some(
@@ -289,12 +430,10 @@ export const MessagingConversation = () => {
         )
       )}
 
-      {shouldGiveFeedback && (
-        <MessagingFeedback
-          onRatingOrClose={onRatingOrClose}
-          adressee={selectedConversation?.participants.find(
-            (participant) => participant.id !== currentUserId
-          )}
+      {displayCheckinBanner && selectedConversationId && otherParticipant && (
+        <MessagingCheckinBanner
+          conversationId={selectedConversationId}
+          otherFirstName={otherParticipant.firstName}
         />
       )}
 
@@ -305,7 +444,15 @@ export const MessagingConversation = () => {
           participants={selectedConversation?.participants || []}
         />
       ) : (
-        <MessagingMessagesContainer $blur={shouldGiveFeedback}>
+        <MessagingMessagesContainer
+          ref={messagesContainerRef}
+          onScroll={handleMessagesScroll}
+        >
+          {isLoadingOlderMessages && (
+            <MessagingOlderMessagesLoader>
+              <Spinner size={20} />
+            </MessagingOlderMessagesLoader>
+          )}
           {reversedMessages &&
             reversedMessages.map((message) => (
               <MessagingMessage key={message.id} message={message} />
