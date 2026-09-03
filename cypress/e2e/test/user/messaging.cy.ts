@@ -517,6 +517,7 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
 
+      cy.get('[data-testid="messaging-conversation-actions-button"]').click();
       cy.get('[data-testid="messaging-report-button"]').click();
       cy.contains('Signaler une conversation').should('be.visible');
 
