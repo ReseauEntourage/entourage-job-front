@@ -27,6 +27,7 @@ export enum EventType {
   APERO_COACH = 'APERO_COACH',
   APERO_ENTOURAGE = 'APERO_ENTOURAGE',
   WORKSHOP = 'WORKSHOP',
+  FRIENDLINESS = 'FRIENDLINESS',
 }
 
 const EVENT_TYPES = [
@@ -66,6 +67,10 @@ const EVENT_TYPES = [
     name: 'Atelier Entourage Pro',
     type: EventType.WORKSHOP,
   },
+  {
+    name: 'Evenement de convivialité',
+    type: EventType.FRIENDLINESS,
+  },
 ];
 
 export const EVENT_IMAGES: {
@@ -80,6 +85,7 @@ export const EVENT_IMAGES: {
   [EventType.APERO_COACH]: '/static/img/events/apero_coach.jpg',
   [EventType.APERO_ENTOURAGE]: '/static/img/events/apero_entourage.jpg',
   [EventType.WORKSHOP]: '/static/img/events/workshop.jpg',
+  [EventType.FRIENDLINESS]: '/static/img/events/friendliness.jpg',
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
 
