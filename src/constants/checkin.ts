@@ -64,6 +64,7 @@ export enum CheckinPerceivedBenefitCandidate {
   WORK_ON_POSTURE = 'WORK_ON_POSTURE',
   METHODOLOGICAL_SUPPORT = 'METHODOLOGICAL_SUPPORT',
   MORAL_SUPPORT = 'MORAL_SUPPORT',
+  MEANINGFUL_HUMAN_ENCOUNTER = 'MEANINGFUL_HUMAN_ENCOUNTER',
   BUILD_PROFESSIONAL_PROJECT = 'BUILD_PROFESSIONAL_PROJECT',
   FIND_JOB_INTERNSHIP_OR_APPRENTICESHIP = 'FIND_JOB_INTERNSHIP_OR_APPRENTICESHIP',
   FIND_TRAINING = 'FIND_TRAINING',
@@ -134,6 +135,12 @@ const CANDIDATE_PERCEIVED_BENEFIT_OPTIONS: PerceivedBenefitOption[] = [
     label: 'Avoir un soutien moral',
     icon: 'Heart',
     description: 'Prendre de vos nouvelles, vous remotiver...',
+  },
+  {
+    value: CheckinPerceivedBenefitCandidate.MEANINGFUL_HUMAN_ENCOUNTER,
+    label: 'Une rencontre humaine qui compte',
+    icon: 'Users',
+    description: 'Un lien sincère, au-delà de l’accompagnement',
   },
   {
     value: CheckinPerceivedBenefitCandidate.BUILD_PROFESSIONAL_PROJECT,
