@@ -161,7 +161,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         }}
       >
         <fieldset>
-          {fields.map((field: ExtractFormSchemaValidation<S>[string], i) => {
+          {fields.map((field: ExtractFormSchemaValidation<S>[string]) => {
             const shouldHide = field.hide
               ? field.hide(getValues, fieldOptions)
               : field.hidden;
@@ -178,13 +178,21 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
 
               if (field.component === 'heading') {
                 return (
-                  <Heading id={`${formId}-${field.id}`} title={title} key={i} />
+                  <Heading
+                    id={`${formId}-${field.id}`}
+                    title={title}
+                    key={field.id}
+                  />
                 );
               }
 
               if (field.component === 'text') {
                 return (
-                  <Text id={`${formId}-${field.id}`} title={title} key={i} />
+                  <Text
+                    id={`${formId}-${field.id}`}
+                    title={title}
+                    key={field.id}
+                  />
                 );
               }
             }
@@ -196,7 +204,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
 
               if (field.component === 'react-node') {
                 return (
-                  <div key={i} id={`${formId}-${field.id}`}>
+                  <div key={field.id} id={`${formId}-${field.id}`}>
                     {field.reactNode}
                   </div>
                 );
@@ -212,7 +220,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
                 const { fields: childrenFields } = field;
 
                 return (
-                  <li key={i}>
+                  <li key={field.id}>
                     <InputsContainer
                       fields={childrenFields.map((childrenField) => {
                         const shouldHideField = childrenField.hide
@@ -234,7 +242,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
                               <Text
                                 id={`${formId}-${childrenField.id}`}
                                 title={title}
-                                key={i}
+                                key={childrenField.id}
                               />
                             );
                           }
@@ -277,7 +285,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
                   name: multipleFieldsName,
                 } = field;
                 return (
-                  <li key={i}>
+                  <li key={field.id}>
                     <MultipleFields
                       formSchema={formSchema}
                       watch={watch}
@@ -299,7 +307,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
                 return null;
               }
               return (
-                <li key={i}>
+                <li key={(field as AnyCantFix).name}>
                   <GenericField
                     formSchema={formSchema}
                     watch={watch}
