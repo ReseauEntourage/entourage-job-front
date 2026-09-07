@@ -88,7 +88,7 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
-  const { data: checkinState } = useGetCheckinQuery(
+  const { currentData: checkinState } = useGetCheckinQuery(
     selectedConversationId ?? '',
     {
       skip: !selectedConversationId || selectedConversationId === 'new',
