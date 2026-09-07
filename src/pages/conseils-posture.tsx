@@ -7,7 +7,7 @@ import { useAuthentication } from '@/src/hooks/authentication/useAuthentication'
 const ConseilsPosturePage = () => {
   const { isAuthRouteReady } = useAuthentication();
   return (
-    <Layout title="Conseils de posture - Entourage Pro">
+    <Layout title="Charte éthique - Entourage Pro">
       {isAuthRouteReady ? <ConseilsPosture /> : <LoadingScreen />}
     </Layout>
   );
