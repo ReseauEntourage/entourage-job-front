@@ -6,12 +6,14 @@ export type ConversationTabFilter = 'all' | 'unread' | 'archived';
 
 interface MessagingConversationTabsProps {
   activeTab: ConversationTabFilter;
+  activeConversationsCount: number;
   unreadCount: number;
   onTabChange: (tab: ConversationTabFilter) => void;
 }
 
 export const MessagingConversationTabs = ({
   activeTab,
+  activeConversationsCount,
   unreadCount,
   onTabChange,
 }: MessagingConversationTabsProps) => {
@@ -25,7 +27,7 @@ export const MessagingConversationTabs = ({
         onClick={() => onTabChange('all')}
         dataTestId="messaging-tab-all"
       >
-        Actives
+        En cours · {activeConversationsCount}
       </Badge>
       <Badge
         variant={
