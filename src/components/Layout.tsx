@@ -6,7 +6,6 @@ import React from 'react';
 import { NotificationsContainer } from '@/src/components/ui/Notification';
 import { NavConnected } from '@/src/features/navs/NavConnected';
 import { NavPublic } from '@/src/features/navs/NavPublic';
-import { AppVersion } from '@/src/features/partials/AppVersion';
 import { Footer } from '@/src/features/partials/Footer';
 import { addPrefix } from '@/src/utils';
 
@@ -84,7 +83,6 @@ export const Layout = withRouter<LayoutProps>(
         <NotificationsContainer />
         {children}
         {!isPDF && !isBackoffice && !noFooter && <Footer />}
-        {!isPDF && (isBackoffice || noFooter) && <AppVersion />}
         {!isPDF && process.env.NEXT_PUBLIC_TARTEAUCITRON_UUID && (
           <Script
             src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.NEXT_PUBLIC_TARTEAUCITRON_UUID}`}

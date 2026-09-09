@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Api } from '@/src/api';
-import { Text } from '@/src/components/ui';
+import { Text, Tooltip } from '@/src/components/ui';
 
 type BackVersionState =
   | { status: 'loading' }
@@ -38,21 +38,31 @@ export const AppVersion = () => {
 
   const frontRelease = process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION || 'dev';
 
-  return (
-    <div id="app-version">
-      <Text size="xsmall" color="mediumGray" center>
+  const tooltipContent = (
+    <>
+      <Text size="xsmall" color="white">
         Version Front : v{process.env.NEXT_PUBLIC_APP_VERSION} ({frontRelease})
       </Text>
       {backVersion.status === 'success' && (
-        <Text size="xsmall" color="mediumGray" center>
+        <Text size="xsmall" color="white">
           Version Back : v{backVersion.version} ({backVersion.release || 'dev'})
         </Text>
       )}
       {backVersion.status === 'error' && (
-        <Text size="xsmall" color="mediumGray" center>
+        <Text size="xsmall" color="white">
           Version Back : indisponible
         </Text>
       )}
+    </>
+  );
+
+  return (
+    <div id="app-version">
+      <Tooltip content={tooltipContent} ariaLabel="Version d'Entourage Pro">
+        <Text size="xsmall" color="mediumGray" center>
+          Version d&apos;Entourage Pro
+        </Text>
+      </Tooltip>
     </div>
   );
 };

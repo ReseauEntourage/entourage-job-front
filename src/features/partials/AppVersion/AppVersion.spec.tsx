@@ -1,6 +1,6 @@
 jest.mock('@/src/api');
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -9,6 +9,10 @@ import { getMockedApi } from '@/src/store/testUtils/mockApi';
 import { AppVersion } from './AppVersion';
 
 const mockedApi = getMockedApi();
+
+function openTooltip() {
+  fireEvent.mouseEnter(screen.getByText("Version d'Entourage Pro"));
+}
 
 describe('AppVersion', () => {
   const originalEnv = process.env;
@@ -26,10 +30,22 @@ describe('AppVersion', () => {
     process.env = originalEnv;
   });
 
-  it('displays the front version immediately, from build-time env vars', () => {
+  it('shows the trigger text without exposing versions upfront', () => {
     mockedApi.getVersion.mockReturnValue(new Promise(() => {}));
 
     render(<AppVersion />);
+
+    expect(screen.getByText("Version d'Entourage Pro")).toBeInTheDocument();
+    expect(
+      screen.queryByText('Version Front : v2.25.2 (v588)')
+    ).not.toBeInTheDocument();
+  });
+
+  it('displays the front version in the tooltip, from build-time env vars', () => {
+    mockedApi.getVersion.mockReturnValue(new Promise(() => {}));
+
+    render(<AppVersion />);
+    openTooltip();
 
     expect(
       screen.getByText('Version Front : v2.25.2 (v588)')
@@ -41,6 +57,7 @@ describe('AppVersion', () => {
     mockedApi.getVersion.mockReturnValue(new Promise(() => {}));
 
     render(<AppVersion />);
+    openTooltip();
 
     expect(
       screen.getByText('Version Front : v2.25.2 (dev)')
@@ -53,6 +70,7 @@ describe('AppVersion', () => {
     } as any);
 
     render(<AppVersion />);
+    openTooltip();
 
     await waitFor(() => {
       expect(
@@ -67,6 +85,7 @@ describe('AppVersion', () => {
     } as any);
 
     render(<AppVersion />);
+    openTooltip();
 
     await waitFor(() => {
       expect(
@@ -79,6 +98,7 @@ describe('AppVersion', () => {
     mockedApi.getVersion.mockRejectedValue(new Error('network error'));
 
     render(<AppVersion />);
+    openTooltip();
 
     await waitFor(() => {
       expect(
