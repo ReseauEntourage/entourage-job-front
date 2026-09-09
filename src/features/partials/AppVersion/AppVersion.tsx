@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Api } from '@/src/api';
+import { Text } from '@/src/components/ui';
 
 type BackVersionState =
   | { status: 'loading' }
@@ -38,20 +39,19 @@ export const AppVersion = () => {
   const frontRelease = process.env.NEXT_PUBLIC_HEROKU_RELEASE_VERSION || 'dev';
 
   return (
-    <div
-      id="app-version"
-      className="uk-flex uk-flex-column uk-flex-middle uk-text-meta"
-    >
-      <span>
+    <div id="app-version">
+      <Text size="xsmall" color="mediumGray" center>
         Version Front : v{process.env.NEXT_PUBLIC_APP_VERSION} ({frontRelease})
-      </span>
+      </Text>
       {backVersion.status === 'success' && (
-        <span>
+        <Text size="xsmall" color="mediumGray" center>
           Version Back : v{backVersion.version} ({backVersion.release || 'dev'})
-        </span>
+        </Text>
       )}
       {backVersion.status === 'error' && (
-        <span>Version Back : indisponible</span>
+        <Text size="xsmall" color="mediumGray" center>
+          Version Back : indisponible
+        </Text>
       )}
     </div>
   );
