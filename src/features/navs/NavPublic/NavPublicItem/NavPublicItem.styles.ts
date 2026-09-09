@@ -16,8 +16,8 @@ export const StyledNavPublicItemMobileLinkContainer = styled.div<{
 
   a {
     font-family: Poppins, sans-serif;
-    font-weight: ${(props) => (props.selected ? '600' : '400')};
-    color: ${(props) => (props.selected ? COLORS.white : COLORS.extraDarkGray)};
+    font-weight: ${(props) => (props.selected ? '700' : '400')};
+    color: ${(props) => (props.selected ? COLORS.white : COLORS.black)};
     text-decoration: none;
   }
 `;

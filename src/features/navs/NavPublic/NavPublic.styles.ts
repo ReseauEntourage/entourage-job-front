@@ -52,11 +52,17 @@ export const StyledPublicItem = styled.div<{
   border-radius: 999px;
   font-family: Poppins, sans-serif;
   font-size: 12px;
-  font-weight: ${({ selected }) => (selected ? '600' : '400')};
-  color: ${({ selected }) => (selected ? COLORS.white : COLORS.extraDarkGray)};
+  font-weight: ${({ selected }) => (selected ? '700' : '400')};
+  color: ${({ selected }) => (selected ? COLORS.white : COLORS.black)};
   background-color: ${({ selected }) => (selected ? COLORS.primaryBlue : 'transparent')};
   transition:
     background-color 0.15s ease-in-out,
     color 0.15s ease-in-out;
   ${({ $isMenu }) => ($isMenu ? 'cursor: pointer;' : '')}
+
+  a {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+  }
 `;
