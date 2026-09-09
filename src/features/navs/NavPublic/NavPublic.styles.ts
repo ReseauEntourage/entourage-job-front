@@ -1,21 +1,62 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
+
+export const StyledPublicNavCard = styled.nav`
+  position: fixed;
+  top: ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP}px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1040;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(1314px, calc(100% - 32px));
+  height: ${HEIGHTS.PUBLIC_NAV_CARD}px;
+  padding: 0 24px;
+  background-color: ${COLORS.white};
+  border-radius: 999px;
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    height: ${HEIGHTS.PUBLIC_NAV_CARD_MOBILE}px;
+    padding: 0 16px;
+  }
+`;
+
+export const StyledPublicNavItemsRow = styled.ul`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+export const StyledPublicNavActionsRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
 
 export const StyledPublicItem = styled.div<{
-  color: string;
   selected: boolean;
   $isMenu: boolean;
 }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: ${({ selected }) => (selected ? '600' : '400')};
-  text-decoration: ${({ selected }) => (selected ? 'underline' : 'none')};
-  color: ${({ color }) => {
-    return COLORS[color] || COLORS.white;
-  }};
+  white-space: nowrap;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-family: Poppins, sans-serif;
   font-size: 12px;
+  font-weight: ${({ selected }) => (selected ? '600' : '400')};
+  color: ${({ selected }) => (selected ? COLORS.white : COLORS.extraDarkGray)};
+  background-color: ${({ selected }) => (selected ? COLORS.primaryBlue : 'transparent')};
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
   ${({ $isMenu }) => ($isMenu ? 'cursor: pointer;' : '')}
-  height: 100%;
-  width: 100%;
 `;

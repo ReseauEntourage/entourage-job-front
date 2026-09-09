@@ -46,7 +46,7 @@ const Index = () => {
         cta={[
           {
             label: 'Devenir candidat(e)',
-            href: '/travailler',
+            href: '/candidat',
             variant: 'primary',
             dataTest: 'banner-cta',
             onClick: () => {

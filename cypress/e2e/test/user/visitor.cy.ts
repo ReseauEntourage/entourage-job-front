@@ -35,13 +35,13 @@ describe('En tant que - Visiteur', () => {
   });
 
   /**
-   * Je parcours la page /travailler
+   * Je parcours la page /candidat
    */
-  it("J'accède à la page - /travailler", () => {
-    cy.get('header').within(() => {
+  it("J'accède à la page - /candidat", () => {
+    cy.get('#nav').within(() => {
       cy.get('a').contains('Devenir candidat(e)').click({ force: true });
       cy.wait(1000);
-      cy.url().should('include', 'travailler');
+      cy.url().should('include', 'candidat');
     });
   });
 
@@ -49,8 +49,8 @@ describe('En tant que - Visiteur', () => {
    * Je parcours la page /entreprise/s-engager
    */
   it("J'accède à la page - /entreprises", () => {
-    cy.get('header').within(() => {
-      cy.get('div').contains('Engager mon entreprise').click({ force: true });
+    cy.get('#nav').within(() => {
+      cy.get('div').contains('Engager son entreprise').click({ force: true });
       cy.wait(1000);
       cy.get('div')
         .contains('Engager mes collaborateurs')
@@ -64,8 +64,8 @@ describe('En tant que - Visiteur', () => {
    * Je parcours la page /entreprise/recruter-inclusif
    */
   it("J'accède à la page - /entreprises", () => {
-    cy.get('header').within(() => {
-      cy.get('div').contains('Engager mon entreprise').click({ force: true });
+    cy.get('#nav').within(() => {
+      cy.get('div').contains('Engager son entreprise').click({ force: true });
       cy.wait(1000);
       cy.get('div').contains('Recruter inclusif').click({ force: true });
       cy.wait(1000);
@@ -77,7 +77,7 @@ describe('En tant que - Visiteur', () => {
    * Je parcours la page /aider
    */
   it("J'accède à la page - /aider", () => {
-    cy.get('header').within(() => {
+    cy.get('#nav').within(() => {
       cy.get('a').contains('Devenir coach').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'aider');
@@ -87,7 +87,7 @@ describe('En tant que - Visiteur', () => {
    * Je vais sur la page login
    */
   it("J'accède à la page - /login", () => {
-    cy.get('header').within(() => {
+    cy.get('#nav').within(() => {
       cy.get('button').contains('Connexion').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'login');
@@ -97,7 +97,7 @@ describe('En tant que - Visiteur', () => {
    * Je vais sur la page inscription
    */
   it("J'accède à la page - /wizard", () => {
-    cy.get('header').within(() => {
+    cy.get('#nav').within(() => {
       cy.get('button').contains('Inscription').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'wizard');

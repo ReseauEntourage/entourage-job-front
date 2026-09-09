@@ -101,7 +101,7 @@ const pages: PageType = [
       },
       {
         title: 'Candidats',
-        path: '/travailler',
+        path: '/candidat',
         props: {
           onClick: () => {
             gaEvent(GA_TAGS.FOOTER_TRAVAILLER_CLIC);

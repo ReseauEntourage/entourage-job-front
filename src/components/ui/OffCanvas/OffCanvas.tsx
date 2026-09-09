@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 
 import { CloseButton } from '@/src/components/ui/CloseButton/CloseButton';
+import { Color } from '@/src/constants/styles';
 import {
   StyledCloseButtonContainer,
   StyledOffCanvas,
@@ -22,10 +23,21 @@ interface OffCanvasProps {
   children: React.ReactNode;
   position?: 'left' | 'right';
   closeButtonSize?: number;
+  backgroundColor?: Color;
+  closeButtonColor?: Color;
 }
 
 export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
-  ({ children, position = 'left', closeButtonSize }, ref) => {
+  (
+    {
+      children,
+      position = 'left',
+      closeButtonSize,
+      backgroundColor,
+      closeButtonColor = 'white',
+    },
+    ref
+  ) => {
     const [isOpen, setIsOpen] = useState(false);
     const offCanvasRef = useRef<HTMLDivElement>(null);
 
@@ -60,11 +72,16 @@ export const OffCanvas = forwardRef<OffCanvasRef, OffCanvasProps>(
     }, [isOpen, closeOffCanvas]);
 
     return (
-      <StyledOffCanvas $position={position} $isOpen={isOpen} ref={offCanvasRef}>
+      <StyledOffCanvas
+        $position={position}
+        $isOpen={isOpen}
+        $backgroundColor={backgroundColor}
+        ref={offCanvasRef}
+      >
         <StyledCloseButtonContainer>
           <CloseButton
             onClick={closeOffCanvas}
-            color="white"
+            color={closeButtonColor}
             size={closeButtonSize}
           />
         </StyledCloseButtonContainer>

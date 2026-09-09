@@ -1,19 +1,15 @@
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
-import {
-  Navbar,
-  NavbarLogo,
-  OffCanvas,
-  OffCanvasRef,
-} from '@/src/components/ui';
+import { NavbarLogo, OffCanvas, OffCanvasRef } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
 import { Hamburger } from '@/src/components/ui/Hamburger';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { COLORS } from '@/src/constants/styles';
 import { FB_TAGS, GA_TAGS } from '@/src/constants/tags';
-import { StyledNavContainerMobile } from '@/src/features/headers/Header.styles';
 import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import { fbEvent } from '@/src/lib/fb';
 import { gaEvent } from '@/src/lib/gtag';
+import { StyledPublicNavCard } from './NavPublic.styles';
 import { LINKS } from './NavPublic.utils';
 import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 
@@ -26,34 +22,31 @@ export const NavPublicMobile = () => {
   const { push } = useRouter();
 
   return (
-    <StyledNavContainerMobile id="nav">
-      <Navbar
-        backgroundColor="darkerBlack"
-        sticky
-        left={
-          <div className="uk-flex uk-flex-middle uk-position-relative">
-            <NavbarLogo href="/" type="secondary" />
-          </div>
-        }
-        right={
-          <div className="uk-padding-small uk-flex uk-flex-middle">
-            <Hamburger
-              onClick={() => {
-                if (offCanvasRef.current) {
-                  offCanvasRef.current.open();
-                }
-              }}
-            />
-          </div>
-        }
-      />
-      <OffCanvas position="right" ref={offCanvasRef} closeButtonSize={40}>
+    <>
+      <StyledPublicNavCard id="nav">
+        <NavbarLogo href="/" type="primary" />
+        <Hamburger
+          color="extraDarkGray"
+          onClick={() => {
+            if (offCanvasRef.current) {
+              offCanvasRef.current.open();
+            }
+          }}
+        />
+      </StyledPublicNavCard>
+      <OffCanvas
+        position="right"
+        ref={offCanvasRef}
+        closeButtonSize={40}
+        backgroundColor="white"
+        closeButtonColor="extraDarkGray"
+      >
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
               aria-hidden="true"
               className="uk-flex uk-flex-middle"
-              style={{ color: 'white' }}
+              style={{ color: COLORS.extraDarkGray }}
               onClick={() => {
                 push('/');
                 closeOffCanvas();
@@ -95,6 +88,10 @@ export const NavPublicMobile = () => {
               variant="primary"
               rounded
               size="small"
+              style={{
+                backgroundColor: COLORS.darkTeal,
+                borderColor: COLORS.darkTeal,
+              }}
               onClick={() => {
                 gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
                 closeOffCanvas();
@@ -113,7 +110,7 @@ export const NavPublicMobile = () => {
                 fbEvent(FB_TAGS.DONATION);
                 closeOffCanvas();
               }}
-              variant="default"
+              variant="secondary"
             >
               Faire un don
               <LucidIcon name="ChevronRight" />
@@ -121,6 +118,6 @@ export const NavPublicMobile = () => {
           </li>
         </ul>
       </OffCanvas>
-    </StyledNavContainerMobile>
+    </>
   );
 };
