@@ -29,6 +29,8 @@ pnpm install            # restore dependencies
 
 **Never write raw HTML elements directly in business code.** Always use the component system.
 
+**UIkit (`uk-*` CSS classes) is deprecated for this project — never introduce a new `uk-*` class.** Existing `uk-*` usages in the codebase (e.g. `Footer.tsx`) are legacy debt, not a pattern to extend or copy into new code, even when they look like the path of least resistance for something small (a font size, a spacing utility). Use the `Text` primitive (`size`, `color`, `weight` props, values from `src/constants/styles`) or a dedicated `ComponentName.styles.ts` styled-component instead — see below.
+
 ### Two layers
 
 | Layer               | Location             | Purpose                                                 |
