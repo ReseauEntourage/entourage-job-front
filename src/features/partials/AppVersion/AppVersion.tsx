@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Api } from '@/src/api';
 import { Text, Tooltip } from '@/src/components/ui';
+import { StyledAppVersion } from './AppVersion.styles';
 
 type BackVersionState =
   | { status: 'loading' }
@@ -57,12 +58,12 @@ export const AppVersion = () => {
   );
 
   return (
-    <div id="app-version">
-      <Tooltip content={tooltipContent} ariaLabel="Version d'Entourage Pro">
+    <StyledAppVersion id="app-version">
+      <Tooltip content={tooltipContent}>
         <Text size="xsmall" color="mediumGray" center>
           Version d&apos;Entourage Pro
         </Text>
       </Tooltip>
-    </div>
+    </StyledAppVersion>
   );
 };
