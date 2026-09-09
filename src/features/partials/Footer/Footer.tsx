@@ -7,6 +7,7 @@ import { EXTERNAL_LINKS } from '@/src/constants';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { AppVersion } from '@/src/features/partials/AppVersion';
 import { PageType } from '@/src/features/partials/Footer/Footer.type';
 import { gaEvent } from '@/src/lib/gtag';
 import { AssociationEntourage } from './AssociationEntourage';
@@ -331,6 +332,7 @@ export const Footer = () => {
               Gestion des cookies
             </SimpleLink>
           </Grid>
+          <AppVersion />
         </Grid>
       </Section>
     </footer>

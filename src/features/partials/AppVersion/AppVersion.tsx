@@ -40,7 +40,7 @@ export const AppVersion = () => {
   return (
     <div
       id="app-version"
-      className="uk-flex uk-flex-column uk-flex-middle uk-text-small uk-text-muted uk-margin-small-top"
+      className="uk-flex uk-flex-column uk-flex-middle uk-text-meta"
     >
       <span>
         Version Front : v{process.env.NEXT_PUBLIC_APP_VERSION} ({frontRelease})

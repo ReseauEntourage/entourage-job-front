@@ -84,7 +84,7 @@ export const Layout = withRouter<LayoutProps>(
         <NotificationsContainer />
         {children}
         {!isPDF && !isBackoffice && !noFooter && <Footer />}
-        {!isPDF && <AppVersion />}
+        {!isPDF && (isBackoffice || noFooter) && <AppVersion />}
         {!isPDF && process.env.NEXT_PUBLIC_TARTEAUCITRON_UUID && (
           <Script
             src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.NEXT_PUBLIC_TARTEAUCITRON_UUID}`}
