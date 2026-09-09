@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import tracer from 'dd-trace';
+import packageJson from './package.json' with { type: 'json' };
 
 tracer.init({
   version: process.env.HEROKU_RELEASE_VERSION,
@@ -107,6 +108,8 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_RELEASE_VERSION:
       process.env.HEROKU_SLUG_COMMIT || 'development',
+    NEXT_PUBLIC_APP_VERSION: packageJson.version,
+    NEXT_PUBLIC_HEROKU_RELEASE_VERSION: process.env.HEROKU_RELEASE_VERSION || '',
   },
   typescript: {
     tsconfigPath: 'src/tsconfig.json',
