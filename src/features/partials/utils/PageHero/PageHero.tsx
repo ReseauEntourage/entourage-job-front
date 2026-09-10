@@ -26,7 +26,6 @@ export interface PageHeroCTAProps {
 
 interface PageHeroProps {
   img: string;
-  imgMobile?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
   alt?: string;
@@ -44,7 +43,6 @@ export const PageHero = ({
   title,
   description,
   img,
-  imgMobile,
   alt,
   cta,
 }: PageHeroProps) => {
@@ -54,11 +52,7 @@ export const PageHero = ({
     <StyledPageHero>
       <StyledPageHeroContainer>
         <StyledPageHeroImageCard>
-          <LegacyImg
-            src={isDesktop ? img : imgMobile || img}
-            cover
-            alt={alt || ''}
-          />
+          <LegacyImg src={img} alt={alt || ''} />
         </StyledPageHeroImageCard>
         <StyledPageHeroContent>
           <H1 title={title} color="white" />

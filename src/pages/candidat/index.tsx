@@ -61,7 +61,6 @@ const Travailler = () => {
     <Layout title="Travailler - Entourage Pro">
       <PageHero
         img="/static/img/candidate-banner-desktop.jpg"
-        imgMobile="/static/img/candidate-banner-mobile.png"
         title={`Entourage Pro : un tremplin vers l’emploi${
           isDesktop ? ' pour les plus exclus' : ''
         }`}

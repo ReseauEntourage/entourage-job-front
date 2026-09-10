@@ -51,7 +51,6 @@ const Aider = () => {
           </>
         }
         img="/static/img/aider-banner-desktop.jpg"
-        imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
         cta={{
           label: 'Je deviens coach',

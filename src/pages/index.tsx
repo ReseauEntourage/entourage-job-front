@@ -41,7 +41,6 @@ const Index = () => {
           </>
         }
         img="/static/img/home-banner.jpg"
-        imgMobile="/static/img/home-banner.jpg"
         alt="Entourage Pro réseau solidaire professionnel"
         cta={[
           {

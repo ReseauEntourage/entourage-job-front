@@ -92,7 +92,6 @@ const RecruterInclusif = () => {
     <Layout title="Recruter inclusif - Entourage Pro">
       <PageHero
         img="/static/img/recruter-inclusif-banner-desktop.jpg"
-        imgMobile="/static/img/recruter-inclusif-banner-mobile.jpg"
         title="Pour gagner en performance et en impact, recrutez inclusif"
         description={
           <>

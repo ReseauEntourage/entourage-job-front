@@ -65,7 +65,6 @@ const Orienter = () => {
     <Layout title="Orienter - Entourage Pro">
       <PageHero
         img="/static/img/orienter-banner-desktop.jpg"
-        imgMobile="/static/img/orienter-banner-mobile.jpg"
         title={
           <>
             Travaillons ensemble pour
