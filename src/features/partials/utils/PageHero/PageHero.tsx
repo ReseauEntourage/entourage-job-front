@@ -55,7 +55,7 @@ export const PageHero = ({
           <LegacyImg src={img} alt={alt || ''} />
         </StyledPageHeroImageCard>
         <StyledPageHeroContent>
-          <H1 title={title} color="white" />
+          <H1 title={title} color="white" weight="black" />
           {description && (
             <Text size={isDesktop ? 'xlarge' : 'normal'} color="white">
               {description}

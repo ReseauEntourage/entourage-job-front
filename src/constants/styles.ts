@@ -120,4 +120,5 @@ export const FONT_WEIGHTS = {
   medium: '500',
   semibold: '600',
   bold: 'bold',
+  black: '900',
 };

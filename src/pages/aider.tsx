@@ -36,9 +36,8 @@ const Aider = () => {
       <PageHero
         title={
           <>
-            Devenez coach Entourage Pro
-            <br />
-            et donnez le coup de pouce qui change tout.
+            Devenez coach Entourage Pro et donnez le coup de pouce qui change
+            tout.
           </>
         }
         description={
@@ -50,7 +49,7 @@ const Aider = () => {
             chances.
           </>
         }
-        img="/static/img/aider-banner-desktop.jpg"
+        img="/static/img/coach-hero-desktop.png"
         alt="Un candidat Entourage Pro et sa coach"
         cta={{
           label: 'Je deviens coach',
