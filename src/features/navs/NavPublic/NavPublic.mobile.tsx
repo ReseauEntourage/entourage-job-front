@@ -99,20 +99,6 @@ export const NavPublicMobile = () => {
             >
               Inscription
             </Button>
-            <Button
-              href={process.env.NEXT_PUBLIC_DONATION_LINK}
-              isExternal
-              newTab
-              onClick={() => {
-                gaEvent(GA_TAGS.HEADER_DON_CLIC);
-                fbEvent(FB_TAGS.DONATION);
-                closeMenu();
-              }}
-              variant="secondary"
-            >
-              Faire un don
-              <LucidIcon name="ChevronRight" />
-            </Button>
           </StyledMobileMenuActions>
         </StyledMobileMenuPanel>
       )}
