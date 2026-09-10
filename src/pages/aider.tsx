@@ -43,10 +43,9 @@ const Aider = () => {
         description={
           <>
             Partagez votre expérience et votre réseau pour soutenir des
-            candidats en situation de précarité et isolés de l’emploi, motivés à
-            retrouver le chemin du monde professionnel. Une façon simple,
-            humaine et flexible de vous engager en faveur de l’égalité des
-            chances.
+            candidats en situation de précarité et isolés dans leur recherche
+            d’emploi. Une façon simple, humaine et flexible de vous engager en
+            faveur de l’égalité des chances !
           </>
         }
         img="/static/img/coach-hero-desktop.png"

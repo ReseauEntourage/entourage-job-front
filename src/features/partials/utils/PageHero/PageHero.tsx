@@ -69,7 +69,8 @@ export const PageHero = ({
               href={cta.href}
               isExternal={cta.isExternal}
               newTab={cta.newTab}
-              weight="bold"
+              weight="black"
+              size="large"
             >
               {cta.label}
             </Button>
@@ -99,6 +100,7 @@ export const PageHero = ({
                       dataTestId={dataTest}
                       newTab={newTab}
                       weight="bold"
+                      size="large"
                     >
                       {label}
                     </Button>
