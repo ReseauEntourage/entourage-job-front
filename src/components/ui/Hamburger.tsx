@@ -6,13 +6,24 @@ import { LucidIcon } from './Icons/LucidIcon';
 interface HamburgerProps {
   onClick: () => void;
   color?: Color;
+  isOpen?: boolean;
 }
 
-export const Hamburger = ({ onClick, color = 'white' }: HamburgerProps) => {
+export const Hamburger = ({
+  onClick,
+  color = 'white',
+  isOpen = false,
+}: HamburgerProps) => {
   return (
     <ButtonIcon
       onClick={onClick}
-      icon={<LucidIcon name="Menu" size={30} color={COLORS[color]} />}
+      icon={
+        <LucidIcon
+          name={isOpen ? 'X' : 'Menu'}
+          size={30}
+          color={COLORS[color]}
+        />
+      }
       variant="text"
     />
   );
