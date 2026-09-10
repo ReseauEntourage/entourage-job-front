@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { NavbarLogo } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
@@ -21,6 +22,7 @@ import { StyledNavPublicItemMobileLinkContainer } from './NavPublicItem/NavPubli
 
 export const NavPublicMobile = () => {
   const items = LINKS;
+  const { asPath } = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -59,7 +61,7 @@ export const NavPublicMobile = () => {
         <StyledMobileMenuPanel ref={panelRef}>
           <StyledMobileMenuList>
             <li>
-              <StyledNavPublicItemMobileLinkContainer selected={false}>
+              <StyledNavPublicItemMobileLinkContainer selected={asPath === '/'}>
                 <Link href="/" onClick={closeMenu}>
                   Accueil
                 </Link>
