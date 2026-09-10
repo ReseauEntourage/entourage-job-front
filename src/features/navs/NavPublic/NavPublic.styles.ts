@@ -18,6 +18,7 @@ export const StyledPublicNavCard = styled.nav`
   box-shadow: 0px 5px 20px 0px rgba(38, 125, 140, 0.85);
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
+    top: ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP_MOBILE}px;
     height: ${HEIGHTS.PUBLIC_NAV_CARD_MOBILE}px;
     padding: 0 16px;
   }
