@@ -4,10 +4,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { NavbarLogo } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
 import { Hamburger } from '@/src/components/ui/Hamburger';
-import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
-import { FB_TAGS, GA_TAGS } from '@/src/constants/tags';
-import { fbEvent } from '@/src/lib/fb';
+import { GA_TAGS } from '@/src/constants/tags';
 import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledMobileMenuActions,
