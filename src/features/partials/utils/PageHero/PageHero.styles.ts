@@ -4,6 +4,12 @@ import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 const WAVE_HEIGHT_MOBILE = 40;
 const WAVE_HEIGHT_DESKTOP = 80;
 
+// Hauteur minimum du hero (image + bloc texte), pour éviter un hero trop bas
+// sur les pages à contenu court et garantir une image de bonne taille.
+const CONTENT_MIN_HEIGHT_MOBILE = 380;
+const CONTENT_MIN_HEIGHT_DESKTOP = 460;
+const IMAGE_CARD_MIN_HEIGHT_MOBILE = 260;
+
 // Espace réservé sous la carte du menu public flottant (NavPublic), qui est
 // position: fixed et ne réserve plus d'espace dans le flux de la page.
 const DESKTOP_TOP_GAP = 24;
@@ -31,11 +37,13 @@ export const StyledPageHeroContainer = styled.div`
   flex-direction: column-reverse;
   align-items: center;
   gap: 32px;
+  min-height: ${CONTENT_MIN_HEIGHT_MOBILE}px;
 
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     gap: 60px;
+    min-height: ${CONTENT_MIN_HEIGHT_DESKTOP}px;
   }
 `;
 
@@ -43,12 +51,18 @@ export const StyledPageHeroImageCard = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
+  min-height: ${IMAGE_CARD_MIN_HEIGHT_MOBILE}px;
   border-radius: 24px;
   overflow: hidden;
   flex-shrink: 0;
 
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     width: 45%;
+    /* Sur desktop, la carte s'étire (align-items: stretch du parent) pour
+       occuper toute la hauteur du hero plutôt que d'être bornée par son
+       propre ratio d'aspect. */
+    aspect-ratio: unset;
+    min-height: 0;
   }
 `;
 
@@ -56,6 +70,7 @@ export const StyledPageHeroContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   gap: 15px;
   width: 100%;
 
