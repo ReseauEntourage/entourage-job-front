@@ -46,7 +46,7 @@ export const NavPublicMobile = () => {
             <a
               aria-hidden="true"
               className="uk-flex uk-flex-middle"
-              style={{ color: COLORS.black }}
+              style={{ color: COLORS.extraDarkGray }}
               onClick={() => {
                 push('/');
                 closeOffCanvas();
