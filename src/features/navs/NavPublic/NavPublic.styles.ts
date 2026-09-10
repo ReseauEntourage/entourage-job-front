@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledPublicNavCard = styled.nav`
+  width: min(1314px, calc(100% - 32px));
   position: fixed;
   top: ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP}px;
   left: 50%;
@@ -11,11 +12,9 @@ export const StyledPublicNavCard = styled.nav`
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  width: min(1314px, calc(100% - 32px));
-  height: ${HEIGHTS.PUBLIC_NAV_CARD}px;
-  padding: 0 24px;
+  padding: 6px 24px;
   background-color: ${COLORS.white};
-  border-radius: 999px;
+  border-radius: 35px;
   box-shadow: 0px 5px 20px 0px rgba(38, 125, 140, 0.85);
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
@@ -53,7 +52,7 @@ export const StyledPublicItem = styled.div<{
   font-family: Poppins, sans-serif;
   font-size: 12px;
   font-weight: ${({ selected }) => (selected ? '700' : '400')};
-  color: ${({ selected }) => (selected ? COLORS.white : COLORS.black)};
+  color: ${({ selected }) => (selected ? COLORS.white : COLORS.extraDarkGray)};
   background-color: ${({ selected }) => (selected ? COLORS.primaryBlue : 'transparent')};
   transition:
     background-color 0.15s ease-in-out,

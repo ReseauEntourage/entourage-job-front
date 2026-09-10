@@ -9,10 +9,10 @@ const MOBILE_NAV_SPACE = `calc(${HEIGHTS.PUBLIC_NAV_OFFSET_TOP}px + ${HEIGHTS.PU
 export const StyledLoginContainer = styled.div`
   background-color: ${COLORS.lightGray};
   width: 100%;
-  margin-top: ${DESKTOP_NAV_SPACE};
+  padding-top: ${DESKTOP_NAV_SPACE};
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
-    margin-top: ${MOBILE_NAV_SPACE};
+    padding-top: ${MOBILE_NAV_SPACE};
     min-height: calc(100vh - ${MOBILE_NAV_SPACE});
   }
 `;

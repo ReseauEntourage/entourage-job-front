@@ -2,14 +2,14 @@ import { COLORS } from '@/src/constants/styles';
 
 export const BUTTON_SIZES = {
   small: {
-    fontSize: 13,
-    padding: '6px 10px',
+    fontSize: 11,
+    padding: '9px 18px',
     paddingCircle: '0px',
     iconSize: 14,
   },
   medium: {
-    fontSize: 14,
-    padding: '11px 19px',
+    fontSize: 12,
+    padding: '10px 20px',
     paddingCircle: '6px',
     iconSize: 20,
   },

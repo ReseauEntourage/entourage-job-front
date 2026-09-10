@@ -18,18 +18,23 @@ export const NavPublicDesktop = () => {
   return (
     <StyledPublicNavCard id="nav">
       <NavbarLogo href="/" type="primary" />
-      <StyledPublicNavItemsRow>
-        {items.map((item, i) => (
-          <li key={i}>
-            <NavPublicItem item={item} />
-          </li>
-        ))}
-      </StyledPublicNavItemsRow>
+
       <StyledPublicNavActionsRow>
+        <StyledPublicNavItemsRow>
+          {items.map((item, i) => (
+            <li key={i}>
+              <NavPublicItem item={item} />
+            </li>
+          ))}
+        </StyledPublicNavItemsRow>
         <Button
           href="/login"
           variant="secondary"
           rounded
+          style={{
+            borderColor: COLORS.darkTeal,
+            color: COLORS.darkTeal,
+          }}
           onClick={() => {
             gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
           }}
