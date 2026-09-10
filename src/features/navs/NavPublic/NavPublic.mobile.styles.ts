@@ -5,14 +5,14 @@ const MOBILE_MENU_GAP = 8;
 
 export const StyledMobileMenuPanel = styled.div`
   position: fixed;
-  top: ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP + HEIGHTS.PUBLIC_NAV_CARD_MOBILE + MOBILE_MENU_GAP}px;
+  top: ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP_MOBILE + HEIGHTS.PUBLIC_NAV_CARD_MOBILE + MOBILE_MENU_GAP}px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1039;
   width: min(1314px, calc(100% - 32px));
   max-height: calc(
     100vh -
-      ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP + HEIGHTS.PUBLIC_NAV_CARD_MOBILE + MOBILE_MENU_GAP}px -
+      ${HEIGHTS.PUBLIC_NAV_OFFSET_TOP_MOBILE + HEIGHTS.PUBLIC_NAV_CARD_MOBILE + MOBILE_MENU_GAP}px -
       16px
   );
   overflow-y: auto;
