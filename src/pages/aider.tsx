@@ -36,8 +36,11 @@ const Aider = () => {
       <PageHero
         title={
           <>
-            Devenez coach Entourage Pro et donnez le coup de pouce qui change
-            tout.
+            Devenez coach Entourage Pro
+            <br />
+            et donnez le coup de pouce
+            <br />
+            qui change tout.
           </>
         }
         description={

@@ -7,7 +7,7 @@ const WAVE_HEIGHT_DESKTOP = 80;
 // Hauteur minimum du hero (image + bloc texte), pour éviter un hero trop bas
 // sur les pages à contenu court et garantir une image de bonne taille.
 const CONTENT_MIN_HEIGHT_MOBILE = 380;
-const CONTENT_MIN_HEIGHT_DESKTOP = 460;
+const CONTENT_MIN_HEIGHT_DESKTOP = 530;
 const IMAGE_CARD_MIN_HEIGHT_MOBILE = 260;
 
 // Espace réservé sous la carte du menu public flottant (NavPublic), qui est
