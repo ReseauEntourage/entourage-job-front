@@ -12,7 +12,10 @@ import { EntreprisesEnSavoirPlus } from '@/src/features/partials/pages/Entrepris
 import { EntreprisesFAQ } from '@/src/features/partials/pages/Entreprises/EntreprisesFAQ/EntreprisesFAQ';
 import { EntreprisesTuto } from '@/src/features/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/features/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
-import { CTAProps, ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import {
+  PageHero,
+  PageHeroCTAProps,
+} from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
@@ -81,12 +84,12 @@ const RecruterInclusif = () => {
       href: `/wizard?flow=${RegistrationFlow.COMPANY}`,
       variant: 'primary',
       label: 'Créer mon espace entreprise',
-    } as CTAProps;
+    } as PageHeroCTAProps;
   }, []);
 
   return (
     <Layout title="S'engager - Entourage Pro">
-      <ImageTitle
+      <PageHero
         img="/static/img/entreprises-engager-banner-desktop.jpg"
         imgMobile="/static/img/entreprises-engager-banner-mobile.jpg"
         title="Sensibiliser et engager mes collaborateurs"

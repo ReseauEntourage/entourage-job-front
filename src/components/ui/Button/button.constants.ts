@@ -43,12 +43,14 @@ export const BUTTON_STYLES = {
     primary: COLORS.primaryBlue,
     secondary: COLORS.primaryBlue,
     text: 'transparent',
+    heroPrimary: COLORS.darkTeal,
   },
   borderSize: {
     default: '1px',
     primary: '1px',
     secondary: '1px',
     text: '0px',
+    heroPrimary: '1px',
   },
   backgroundColor: {
     default: COLORS.white,
@@ -56,6 +58,7 @@ export const BUTTON_STYLES = {
     secondary: COLORS.white,
     text: 'transparent',
     hoverBlue: COLORS.hoverBlue,
+    heroPrimary: COLORS.darkTeal,
   },
   color: {
     default: COLORS.black,
@@ -63,6 +66,7 @@ export const BUTTON_STYLES = {
     secondary: COLORS.primaryBlue,
     text: COLORS.black,
     hoverBlue: COLORS.darkBlue,
+    heroPrimary: COLORS.white,
   },
   hoverBackgroundColor: {
     default: COLORS.hoverWhite,
@@ -70,6 +74,7 @@ export const BUTTON_STYLES = {
     secondary: COLORS.hoverBlue,
     hoverBlue: COLORS.darkBlue,
     text: 'transparent',
+    heroPrimary: COLORS.extraDarkBlue,
   },
   hoverColor: {
     default: COLORS.primaryBlue,
@@ -77,11 +82,13 @@ export const BUTTON_STYLES = {
     secondary: COLORS.primaryBlue,
     text: COLORS.black,
     hoverBlue: COLORS.white,
+    heroPrimary: COLORS.white,
   },
   hoverBorder: {
     default: COLORS.primaryBlue,
     primary: COLORS.darkBlue,
     secondary: COLORS.primaryBlue,
     text: 'none',
+    heroPrimary: COLORS.extraDarkBlue,
   },
 };

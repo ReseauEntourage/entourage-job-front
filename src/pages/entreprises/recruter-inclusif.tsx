@@ -13,7 +13,10 @@ import { EntreprisesFAQ } from '@/src/features/partials/pages/Entreprises/Entrep
 import { EntreprisesTuto } from '@/src/features/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/features/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
 import { RecruitmentMetrics } from '@/src/features/partials/pages/Entreprises/RecruitmentMetrics/RecruitmentMetrics';
-import { CTAProps, ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import {
+  PageHero,
+  PageHeroCTAProps,
+} from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
@@ -82,12 +85,12 @@ const RecruterInclusif = () => {
       href: `/wizard?flow=${RegistrationFlow.COMPANY}`,
       variant: 'primary',
       label: 'Créer mon espace entreprise',
-    } as CTAProps;
+    } as PageHeroCTAProps;
   }, []);
 
   return (
     <Layout title="Recruter inclusif - Entourage Pro">
-      <ImageTitle
+      <PageHero
         img="/static/img/recruter-inclusif-banner-desktop.jpg"
         imgMobile="/static/img/recruter-inclusif-banner-mobile.jpg"
         title="Pour gagner en performance et en impact, recrutez inclusif"

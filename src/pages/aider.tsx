@@ -6,7 +6,7 @@ import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/Fo
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
-import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { gaEvent } from '@/src/lib/gtag';
 import { STORAGE_KEYS } from '../constants';
 import { PinnedCommunicationModale } from '../features/modals/PopupModal/PinnedCommunicationModale';
@@ -33,7 +33,7 @@ const Aider = () => {
   });
   return (
     <Layout title="Aider - Entourage Pro">
-      <ImageTitle
+      <PageHero
         title={
           <>
             Devenez coach Entourage Pro
