@@ -5,6 +5,10 @@ export const BREAKPOINTS = {
 export const HEIGHTS = {
   HEADER: 80,
   HEADER_MOBILE: 80,
+  PUBLIC_NAV_CARD: 66,
+  PUBLIC_NAV_CARD_MOBILE: 56,
+  PUBLIC_NAV_OFFSET_TOP: 42,
+  PUBLIC_NAV_OFFSET_TOP_MOBILE: 16,
   TABS_HEIGHT_WITHOUT_NUMBERS: 55,
   TABS_HEIGHT: 79.5,
   DEFAULT_SECTION_PADDING: 50,
@@ -60,6 +64,7 @@ export const COLORS = {
   blueShade1: '#A1CED8',
   blueShade2: '#61BECF',
   primaryBlue: '#47A8B9',
+  darkTeal: '#267D8C',
   blueShade3: '#427F8D',
   hoverBlue: '#EEF8FA',
   lightBlueGreen: '#C1E9DF',

@@ -23,7 +23,6 @@ export const NavPublicItemDesktop = ({ item }: NavPublicItemProps) => {
   // Generate menu Item
   const menuItem = (
     <StyledPublicItem
-      color="white"
       onClick={() => {
         gaEvent(item.tag);
       }}
