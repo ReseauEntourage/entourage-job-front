@@ -12,8 +12,8 @@ import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/Fo
 import { Impact } from '@/src/features/partials/common/Impact';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
-import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
 import { LogoList } from '@/src/features/partials/utils/LogoList';
+import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { gaEvent } from '@/src/lib/gtag';
@@ -63,9 +63,8 @@ const Orienter = () => {
 
   return (
     <Layout title="Orienter - Entourage Pro">
-      <ImageTitle
+      <PageHero
         img="/static/img/orienter-banner-desktop.jpg"
-        imgMobile="/static/img/orienter-banner-mobile.jpg"
         title={
           <>
             Travaillons ensemble pour
@@ -73,7 +72,6 @@ const Orienter = () => {
             l&apos;accès à l’emploi
           </>
         }
-        textColor="white"
         description={
           <>
             Vous accompagnez des personnes en situation d&apos;exclusion ? Avec

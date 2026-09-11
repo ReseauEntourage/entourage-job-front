@@ -6,7 +6,7 @@ import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/Fo
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
-import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { gaEvent } from '@/src/lib/gtag';
 import { STORAGE_KEYS } from '../constants';
 import { PinnedCommunicationModale } from '../features/modals/PopupModal/PinnedCommunicationModale';
@@ -33,25 +33,25 @@ const Aider = () => {
   });
   return (
     <Layout title="Aider - Entourage Pro">
-      <ImageTitle
+      <PageHero
         title={
           <>
             Devenez coach Entourage Pro
             <br />
-            et donnez le coup de pouce qui change tout.
+            et donnez le coup de pouce
+            <br />
+            qui change tout.
           </>
         }
         description={
           <>
             Partagez votre expérience et votre réseau pour soutenir des
-            candidats en situation de précarité et isolés de l’emploi, motivés à
-            retrouver le chemin du monde professionnel. Une façon simple,
-            humaine et flexible de vous engager en faveur de l’égalité des
-            chances.
+            candidats en situation de précarité et isolés dans leur recherche
+            d’emploi. Une façon simple, humaine et flexible de vous engager en
+            faveur de l’égalité des chances !
           </>
         }
-        img="/static/img/aider-banner-desktop.jpg"
-        imgMobile="/static/img/aider-banner-mobile.jpg"
+        img="/static/img/coach-hero-desktop.png"
         alt="Un candidat Entourage Pro et sa coach"
         cta={{
           label: 'Je deviens coach',

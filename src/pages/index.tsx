@@ -11,7 +11,7 @@ import { Decouvrir } from '@/src/features/partials/pages/HomePage/Decouvrir';
 import { Engagement } from '@/src/features/partials/pages/HomePage/Engagement';
 import { Figures } from '@/src/features/partials/pages/HomePage/Figures';
 import { Rejoindre } from '@/src/features/partials/pages/HomePage/Rejoindre';
-import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { gaEvent } from '@/src/lib/gtag';
 import { STORAGE_KEYS } from '../constants';
 import { openModal } from '../features/modals/Modal';
@@ -33,7 +33,7 @@ const Index = () => {
   });
   return (
     <Layout>
-      <ImageTitle
+      <PageHero
         title={
           <>
             Le premier réseau
@@ -41,7 +41,6 @@ const Index = () => {
           </>
         }
         img="/static/img/home-banner.jpg"
-        imgMobile="/static/img/home-banner.jpg"
         alt="Entourage Pro réseau solidaire professionnel"
         cta={[
           {

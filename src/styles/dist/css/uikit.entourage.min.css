@@ -266,7 +266,10 @@ blockquote footer::before {
   content: '— ';
 }
 pre {
-  font: 0.875rem/1.5 Consolas, monaco, monospace;
+  font:
+    0.875rem/1.5 Consolas,
+    monaco,
+    monospace;
   color: #363636;
   -moz-tab-size: 4;
   tab-size: 4;
@@ -1597,7 +1600,7 @@ select.uk-form-width-xsmall {
   background: #47a8b9;
 }
 .uk-section-hover-blue {
-  background: #ECF8FB;
+  background: #ecf8fb;
 }
 .uk-section-secondary {
   background: #222;
@@ -10511,6 +10514,12 @@ iframe.uk-cover {
   src: url('/static/fonts/Poppins-SemiBold.ttf') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 900;
+  src: url('/static/fonts/Poppins-Black.ttf') format('truetype');
+  font-display: swap;
+}
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
@@ -10525,12 +10534,16 @@ iframe.uk-cover {
 .mark-animated > * > * > * > *,
 mark {
   background: #fff;
-  box-shadow: 15px 0 0 #fff, -15px 0 0 #fff;
+  box-shadow:
+    15px 0 0 #fff,
+    -15px 0 0 #fff;
   line-height: 1.5;
   display: inline;
 }
 .mark-small {
-  box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;
+  box-shadow:
+    10px 0 0 #fff,
+    -10px 0 0 #fff;
 }
 .ent-link-muted {
   color: #fff;

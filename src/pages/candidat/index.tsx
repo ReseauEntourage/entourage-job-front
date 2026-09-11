@@ -10,7 +10,7 @@ import { Impact } from '@/src/features/partials/common/Impact';
 import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
-import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { useIsDesktop } from '@/src/hooks/utils';
@@ -59,9 +59,8 @@ const Travailler = () => {
 
   return (
     <Layout title="Travailler - Entourage Pro">
-      <ImageTitle
+      <PageHero
         img="/static/img/candidate-banner-desktop.jpg"
-        imgMobile="/static/img/candidate-banner-mobile.png"
         title={`Entourage Pro : un tremplin vers l’emploi${
           isDesktop ? ' pour les plus exclus' : ''
         }`}
