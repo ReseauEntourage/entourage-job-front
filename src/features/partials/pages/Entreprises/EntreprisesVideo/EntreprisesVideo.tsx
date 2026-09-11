@@ -19,6 +19,7 @@ export const EntreprisesVideo = ({ context }: EntreprisesVideoProps) => {
       <StyledVideoContainer>
         <LiteYouTubeEmbed
           id={videoByContext[context || CompanyGoal.SENSIBILIZE]}
+          poster="maxresdefault"
           title="Témoignages Entourage Pro"
           aspectWidth={1280}
           aspectHeight={515}

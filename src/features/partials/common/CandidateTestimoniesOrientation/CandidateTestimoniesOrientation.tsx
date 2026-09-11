@@ -106,6 +106,7 @@ export const CandidateTestimoniesOrientation = ({
         <div className="uk-margin-medium-top">
           <LiteYouTubeEmbed
             id="ztZB4BIBi44"
+            poster="maxresdefault"
             title="Témoignages Entourage Pro"
             aspectWidth={1280}
             aspectHeight={720}
