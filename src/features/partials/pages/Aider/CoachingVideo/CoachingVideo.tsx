@@ -9,6 +9,7 @@ export const CoachingVideo = () => {
       <StyledVideoContainer>
         <LiteYouTubeEmbed
           id="puDIh46PQUI"
+          poster="maxresdefault"
           title="Témoignages Entourage Pro"
           aspectWidth={1280}
           aspectHeight={515}
