@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section, Text } from '@/src/components/ui';
-import { H2, H6 } from '@/src/components/ui/Headings';
+import { H2 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import {
@@ -61,11 +61,11 @@ export const CoachHowItWorks = () => {
           {STEPS.map((step, index) => (
             <StyledStep key={index}>
               <StyledStepIcon>{step.illu}</StyledStepIcon>
-              <StyledStepBadge $isLast={index === STEPS.length - 1}>
-                {index + 1}
-              </StyledStepBadge>
-              <H6 title={step.title} color="black" weight="bold" center />
-              <Text size="small" color="darkGray" center>
+              <StyledStepBadge>{index + 1}</StyledStepBadge>
+              <Text size="small" weight="normal" color="primaryBlue" center>
+                {step.title}
+              </Text>
+              <Text size="small" weight="normal" color="black" center>
                 {step.description}
               </Text>
             </StyledStep>

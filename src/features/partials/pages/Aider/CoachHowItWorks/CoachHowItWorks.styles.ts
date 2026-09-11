@@ -3,8 +3,14 @@ import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 const GRID_GAP = 20;
 const BADGE_SIZE = 32;
+const ICON_HEIGHT = 70;
+const STEP_GAP = 12;
+const CONNECTOR_TOP = ICON_HEIGHT + STEP_GAP + BADGE_SIZE / 2;
 
 export const StyledCoachHowItWorks = styled.div`
+  background: ${COLORS.hoverBlue};
+  border-radius: 30px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,22 +31,41 @@ export const StyledStepsGrid = styled.div`
 `;
 
 export const StyledStep = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: ${STEP_GAP}px;
   text-align: center;
+
+  &:not(:last-child) {
+    @media (min-width: ${BREAKPOINTS.desktop}px) {
+      &::after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        top: ${CONNECTOR_TOP}px;
+        left: 50%;
+        width: calc(100% + ${GRID_GAP}px);
+        height: 2px;
+        background: ${COLORS.blueShade1};
+      }
+    }
+  }
 `;
 
 export const StyledStepIcon = styled.div`
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
+  height: ${ICON_HEIGHT}px;
 `;
 
-export const StyledStepBadge = styled.div<{ $isLast: boolean }>`
+export const StyledStepBadge = styled.div`
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,21 +75,4 @@ export const StyledStepBadge = styled.div<{ $isLast: boolean }>`
   background: ${COLORS.primaryBlue};
   color: ${COLORS.white};
   font-weight: 900;
-
-  ${({ $isLast }) =>
-    !$isLast &&
-    `
-    @media (min-width: ${BREAKPOINTS.desktop}px) {
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 100%;
-        width: ${GRID_GAP}px;
-        height: 2px;
-        background: ${COLORS.blueShade1};
-        transform: translateY(-50%);
-      }
-    }
-  `}
 `;
