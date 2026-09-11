@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
-import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/FormatBenefits';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
@@ -12,6 +11,7 @@ import { PinnedCommunicationModale } from '../features/modals/PopupModal/PinnedC
 import { InviteToRegisterSection } from '../features/partials/common/InviteToRegisterSection/InviteToRegisterSection';
 import { ShareSection } from '../features/partials/common/ShareSection/ShareSection';
 import { CoachFormatHighlights } from '../features/partials/pages/Aider/CoachFormatHighlights/CoachFormatHighlights';
+import { CoachHowItWorks } from '../features/partials/pages/Aider/CoachHowItWorks/CoachHowItWorks';
 import { CoachReassurance } from '../features/partials/pages/Aider/CoachReassurance/CoachReassurance';
 import { CoachRessources } from '../features/partials/pages/Aider/CoachRessources/CoachRessources';
 import { CoachingVideo } from '../features/partials/pages/Aider/CoachingVideo/CoachingVideo';
@@ -62,10 +62,7 @@ const Aider = () => {
 
       <CoachFormatHighlights />
 
-      <FormatBenefits
-        as="Coach"
-        title="Concrètement, comment pouvez-vous agir ?"
-      />
+      <CoachHowItWorks />
 
       <WhoAreCandidates />
 
