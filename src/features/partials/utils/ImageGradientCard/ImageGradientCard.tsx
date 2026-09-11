@@ -28,7 +28,7 @@ export const ImageGradientCard = ({
       </StyledImageLayer>
       <StyledGradientOverlay />
       <StyledTextLayer>
-        <H4 title={title} color="white" weight="bold" noMarginBottom />
+        <H4 title={title} color="white" weight="black" noMarginBottom />
         <Text size="small" color="white">
           {description}
         </Text>

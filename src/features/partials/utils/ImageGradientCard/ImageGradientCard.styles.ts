@@ -21,13 +21,7 @@ export const StyledGradientOverlay = styled.div`
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(20, 62, 76, 0) 0%,
-    ${COLORS.photoOverlayBlue1} 45%,
-    ${COLORS.photoOverlayBlue2} 75%,
-    ${COLORS.photoOverlayBlue3} 100%
-  );
+  box-shadow: -12px -201px 102.3px -26px ${COLORS.primaryBlue} inset;
 `;
 
 export const StyledTextLayer = styled.div`
