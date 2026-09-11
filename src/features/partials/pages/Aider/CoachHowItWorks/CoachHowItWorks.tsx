@@ -62,7 +62,7 @@ export const CoachHowItWorks = () => {
             <StyledStep key={index}>
               <StyledStepIcon>{step.illu}</StyledStepIcon>
               <StyledStepBadge>{index + 1}</StyledStepBadge>
-              <Text size="small" weight="normal" color="primaryBlue" center>
+              <Text size={13} weight="bold" color="primaryBlue" center>
                 {step.title}
               </Text>
               <Text size="small" weight="normal" color="black" center>
