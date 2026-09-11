@@ -1,6 +1,7 @@
 import React, { Ref } from 'react';
 import { Button, Text } from '@/src/components/ui';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { StyledCriteriaIllu } from '@/src/features/partials/utils/SimpleCardsImageCTA/SimpleCardsImageCTA.styles';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
@@ -40,6 +41,8 @@ const criteriasIlluSizes = {
   height: 30,
 };
 
+const highlightStyle = { color: COLORS.primaryBlue, fontWeight: 'bold' };
+
 const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
     title: 'Pourquoi devenir candidat ?',
@@ -72,19 +75,23 @@ const contentAs: { [K in DisplayAs]: Content } = {
     ],
   },
   Coach: {
-    title: 'Pourquoi devenir coach ?',
+    title: 'Pourquoi choisir Entourage Pro ?',
     img: '/static/img/front-office/why/why-become-coach.png',
     content: (
       <>
         Vous aussi vous pensez que le réseau ne devrait pas être un privilège ?
-        Entourage Pro est un réseau solidaire qui rapproche des personnes. La
-        relation est horizontale, sans pression de résultat. C'est la force du
-        lien social qui remet les gens en mouvement. Pas les cases à cocher.
+        Entourage Pro est{' '}
+        <span style={highlightStyle}>un réseau solidaire</span> qui rapproche
+        des personnes. La relation est horizontale, sans pression de résultat.
+        C'est la force du lien social qui remet les gens en mouvement. Pas les
+        cases à cocher.
         <br />
         <br />
-        C'est une façon flexible de s’engager pour l’égalité des chances et de
-        donner du sens à sa vie professionnelle en étant outillé et accompagné
-        par Entourage.
+        C'est une façon flexible de s’engager pour l’égalité des chances et de{' '}
+        <span style={highlightStyle}>
+          donner du sens à sa vie professionnelle
+        </span>{' '}
+        en étant outillé et accompagné par Entourage.
       </>
     ),
     ctas: [
