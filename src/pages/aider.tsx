@@ -62,11 +62,11 @@ const Aider = () => {
 
       <CoachFormatHighlights />
 
+      <CoachingVideo />
+
       <CoachHowItWorks />
 
       <WhoAreCandidates />
-
-      <CoachingVideo />
 
       <CoachReassurance />
 
