@@ -181,7 +181,7 @@ export const WhyUseEp = ({
               variant="primary"
               rounded
               key={index}
-              size="medium"
+              size={as === 'Coach' ? 'large' : 'medium'}
               onClick={() => gaEvent(cta.gaTag)}
               href={cta.href}
               weight="bold"

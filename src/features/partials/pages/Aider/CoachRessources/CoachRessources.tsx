@@ -83,7 +83,7 @@ export const CoachRessources = () => {
         <Button
           variant="primary"
           rounded
-          size="medium"
+          size="large"
           onClick={() => gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC)}
           href="/wizard"
           weight="bold"

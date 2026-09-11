@@ -77,7 +77,7 @@ export const CoachFormatHighlights = () => {
           <Button
             variant="primary"
             rounded
-            size="medium"
+            size="large"
             weight="bold"
             href="/wizard"
             onClick={() => gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC)}
