@@ -1,7 +1,8 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
-import { Section } from '@/src/components/ui';
+import { Button, Section, Text } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { PARTNERS } from '@/src/constants/partners';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
@@ -11,13 +12,32 @@ import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/Fo
 
 import { Impact } from '@/src/features/partials/common/Impact';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
-import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
+import {
+  StyledCriteria,
+  StyledCriteriasContainer,
+} from '@/src/features/partials/common/WhyUserEP/WhyUseEp.styles';
 import { LogoList } from '@/src/features/partials/utils/LogoList';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
+import { StyledCriteriaIllu } from '@/src/features/partials/utils/SimpleCardsImageCTA/SimpleCardsImageCTA.styles';
+import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
+import { StyledCTAsContainer } from '@/src/features/partials/utils/SimpleImageText/SimpleImageText.styles';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { gaEvent } from '@/src/lib/gtag';
 import { useUtm } from '../hooks/queryParams/useUTM';
+
+const criteriasIlluSizes = { width: 30, height: 30 };
+
+const whyCriterias = [
+  {
+    text: 'Recevoir et suivre leurs actualités ',
+    illu: <SvgIcon name="IlluTeteHomme" {...criteriasIlluSizes} />,
+  },
+  {
+    text: 'Suivre les grandes étapes',
+    illu: <SvgIcon name="IlluCalendrier" {...criteriasIlluSizes} />,
+  },
+];
 
 const reviews = [
   {
@@ -80,7 +100,55 @@ const Orienter = () => {
         }
       />
 
-      <WhyUseEp as="Referer" />
+      <SimpleImageText
+        title="Pourquoi rejoindre notre espace asso ?"
+        img="/static/img/front-office/why/why-refer-candidate.jpg"
+        imgCover={false}
+      >
+        <StyledCriteriasContainer>
+          {whyCriterias.map((criteria, index) => (
+            <StyledCriteria key={index}>
+              <StyledCriteriaIllu>{criteria.illu}</StyledCriteriaIllu>
+              <Text size="large" color="darkGray">
+                {criteria.text}
+              </Text>
+            </StyledCriteria>
+          ))}
+        </StyledCriteriasContainer>
+        <Text size="large">
+          Rejoignez l’espace asso de notre plateforme pour{' '}
+          <span style={{ fontWeight: 'bold' }}>
+            orienter les personnes que vous accompagnez
+          </span>
+          .
+          <br />
+          <br />
+          Clarifier son projet professionnel, élaborer un CV et une lettre de
+          motivation, se préparer aux entretiens, être soutenu dans ses
+          recherches, se constituer un réseau : grâce à nos coachs bénévoles,
+          vos publics seront préparés à intégrer le monde professionnel.
+          <br />
+          <br />
+          En inscrivant un candidat via l’espace asso, vous pourrez bien
+          sûr&nbsp;
+          <span style={{ fontWeight: 'bold' }}>
+            suivre les grandes étapes d’avancement
+          </span>{' '}
+          de sa recherche d’emploi.
+        </Text>
+        <StyledCTAsContainer>
+          <Button
+            variant="primary"
+            rounded
+            size="large"
+            onClick={() => gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC)}
+            href="/wizard"
+            weight="bold"
+          >
+            Orienter un(e) candidat(e)
+          </Button>
+        </StyledCTAsContainer>
+      </SimpleImageText>
 
       <FormatBenefits
         as="Referer"
