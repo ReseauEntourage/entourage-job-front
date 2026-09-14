@@ -258,10 +258,6 @@ const Candidat = () => {
         onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
       />
 
-      <UnderstandFormat as="Candidat" />
-
-      <WhyUseEp as="Candidat" />
-
       <ContactUsSection
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_TRAVAILLER_CONTACT_OPEN);
