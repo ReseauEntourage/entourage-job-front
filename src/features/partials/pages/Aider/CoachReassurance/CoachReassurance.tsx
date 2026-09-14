@@ -34,7 +34,7 @@ export const CoachReassurance = () => {
     {
       illu: (
         <SvgIcon
-          name="IlluPoigneeDeMain"
+          name="IlluEntourageLogo"
           width={iconSize.width}
           height={iconSize.height}
         />

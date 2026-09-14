@@ -23,27 +23,27 @@ const HIGHLIGHTS: Highlight[] = [
     title: 'Rejoindre une communauté de citoyens bénévoles',
     description:
       'Et donner des coups de pouce concrets dans leur recherche d’emploi à des personnes isolées et précaires',
-    img: '/static/img/front-office/aider/coach-ressources.jpg',
+    img: '/static/img/front-office/aider/format-highlight-1.jpg',
     alt: 'Un groupe de coachs et candidats réunis autour d’une table',
   },
   {
     title: 'Donner du sens à son expérience pro',
     description:
       'Et vivre des rencontres que vous n’auriez peut-être jamais faites autrement',
-    img: '/static/img/why-become-coach.jpg',
+    img: '/static/img/front-office/aider/format-highlight-2.jpg',
     alt: 'Une coach échangeant avec un candidat, carnet de notes en main',
   },
   {
     title: 'Participer à des événements et à des ateliers thématiques',
     description:
       'Grâce au soutien de la communauté Entourage Pro et à la disponibilité de nos équipes',
-    img: '/static/img/aider-coach.jpg',
+    img: '/static/img/front-office/aider/format-highlight-3.jpg',
     alt: 'Un échange entre un candidat et une coach, entourés d’autres participants',
   },
   {
     title: 'S’engager selon ses disponibilités',
     description: 'Sans pression de durée ni de fréquence, partout en France',
-    img: '/static/img/dashboard-bao-coach-1.jpg',
+    img: '/static/img/front-office/aider/format-highlight-4.jpg',
     alt: 'Une coach et un candidat discutant face à face',
   },
 ];
