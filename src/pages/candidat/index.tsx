@@ -11,11 +11,11 @@ import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/P
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { CandidatHowItWorks } from '@/src/features/partials/pages/Candidat/CandidatHowItWorks/CandidatHowItWorks';
+import { CandidateFormatHighlights } from '@/src/features/partials/pages/Candidats/CandidateFormatHighlights/CandidateFormatHighlights';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSection';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
-import { useIsDesktop } from '@/src/hooks/utils';
 import { gaEvent } from '@/src/lib/gtag';
 
 const reviews = [
@@ -56,23 +56,28 @@ const reviews = [
 ];
 
 const Travailler = () => {
-  const isDesktop = useIsDesktop();
   useUtm();
 
   return (
     <Layout title="Travailler - Entourage Pro">
       <PageHero
-        img="/static/img/candidate-banner-desktop.jpg"
-        title={`Entourage Pro : un tremplin vers l’emploi${
-          isDesktop ? ' pour les plus exclus' : ''
-        }`}
+        img="/static/img/candidat-hero-desktop.png"
+        title={`Entourage Pro : le réseau professionnel de celles et ceux qui n’en ont pas`}
         description={
           <>
-            Vous êtes dans une situation de précarité ou d’isolement ?<br />{' '}
-            Rejoignez gratuitement Entourage Pro
+            Vous êtes motivé à trouver un emploi mais vous êtes isolé et vivez
+            une forme de précarité matérielle ?<br />
+            Rejoignez gratuitement Entourage Pro !
           </>
         }
+        cta={{
+          label: 'Je deviens candidat',
+          onClick: () => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK),
+          href: '/wizard',
+        }}
       />
+
+      <CandidateFormatHighlights />
 
       <UnderstandFormat as="Candidat" />
       <FormatBenefits as="Candidat" title="Les avantages de devenir candidat" />
