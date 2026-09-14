@@ -524,6 +524,9 @@ export const GA_TAGS = {
   PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK: {
     action: 'Page_Travailler_Decouvrir_Programme_Coup_De_Pouce_Click',
   },
+  PAGE_AIDER_MESURE_IMPACT_CLICK: {
+    action: 'Page_Aider_Mesure_Impact_Click',
+  },
   PAGE_AIDER_DECOUVRIR_PROGRAMME_360_CLICK: {
     action: 'Page_Aider_Decouvrir_Programme_360_Click',
   },

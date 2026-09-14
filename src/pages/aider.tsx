@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
+import { Impact } from '@/src/features/partials/common/Impact';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
@@ -67,6 +68,8 @@ const Aider = () => {
       <CoachHowItWorks />
 
       <WhoAreCandidates />
+
+      <Impact as="Coach" gaEventTag={GA_TAGS.PAGE_AIDER_MESURE_IMPACT_CLICK} />
 
       <CoachReassurance />
 

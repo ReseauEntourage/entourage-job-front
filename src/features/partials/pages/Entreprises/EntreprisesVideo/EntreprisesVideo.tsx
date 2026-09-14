@@ -1,8 +1,6 @@
 import React from 'react';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import { Section } from '@/src/components/ui';
 import { CompanyGoal } from '@/src/constants/company';
-import { StyledVideoContainer } from './EntreprisesVideo.styles';
+import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSection';
 
 interface EntreprisesVideoProps {
   context: CompanyGoal;
@@ -15,17 +13,10 @@ export const EntreprisesVideo = ({ context }: EntreprisesVideoProps) => {
   };
 
   return (
-    <Section>
-      <StyledVideoContainer>
-        <LiteYouTubeEmbed
-          id={videoByContext[context || CompanyGoal.SENSIBILIZE]}
-          poster="maxresdefault"
-          title="Témoignages Entourage Pro"
-          aspectWidth={1280}
-          aspectHeight={515}
-          params="rel=0&showinfo=0&iv_load_policy=3"
-        />
-      </StyledVideoContainer>
-    </Section>
+    <SimpleVideoSection
+      videoId={videoByContext[context || CompanyGoal.SENSIBILIZE]}
+      videoTitle="Témoignages Entourage Pro"
+      borderRadius={20}
+    />
   );
 };

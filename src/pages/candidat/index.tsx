@@ -10,8 +10,10 @@ import { Impact } from '@/src/features/partials/common/Impact';
 import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from '@/src/features/partials/common/WhyUserEP/WhyUseEp';
+import { CandidatHowItWorks } from '@/src/features/partials/pages/Candidat/CandidatHowItWorks/CandidatHowItWorks';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
+import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSection';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { gaEvent } from '@/src/lib/gtag';
@@ -74,6 +76,14 @@ const Travailler = () => {
 
       <UnderstandFormat as="Candidat" />
       <FormatBenefits as="Candidat" title="Les avantages de devenir candidat" />
+
+      <SimpleVideoSection
+        videoId="puDIh46PQUI"
+        videoTitle="Témoignages Entourage Pro"
+      />
+
+      <CandidatHowItWorks />
+
       <WhyUseEp as="Candidat" />
 
       <ContactUsSection

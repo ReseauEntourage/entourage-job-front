@@ -7,7 +7,7 @@ const ICON_HEIGHT = 70;
 const STEP_GAP = 12;
 const CONNECTOR_TOP = ICON_HEIGHT + STEP_GAP + BADGE_SIZE / 2;
 
-export const StyledCoachHowItWorks = styled.div`
+export const StyledConnectedStepsGrid = styled.div`
   background: ${COLORS.hoverBlue};
   border-radius: 30px;
   padding: 30px;
