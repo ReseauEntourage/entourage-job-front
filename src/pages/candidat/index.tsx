@@ -20,6 +20,7 @@ import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { gaEvent } from '@/src/lib/gtag';
 import { caveatFont } from '@/src/styles/fonts';
 import { Button, Text } from '../../components/ui';
+import { NewsletterPartial } from '../../features/partials/common/NewsletterPartial';
 import {
   StyledCandidatsGrid,
   StyledCTAContainer,
@@ -111,25 +112,25 @@ const howItWorksSteps: ConnectedStep[] = [
   {
     title: 'Vous complétez votre profil',
     description: 'Votre parcours et ce que vous recherchez',
-    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+    illu: <SvgIcon name="IlluDossierCandidat" width={75} height={75} />,
   },
   {
     title: 'Vous êtes mis en relation avec des coachs adaptés à votre profil',
     description:
       "Vous les contactez et pouvez en contacter d'autres dans tout le réseau mis à votre disposition",
-    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+    illu: <SvgIcon name="IlluReseau" width={75} height={75} />,
   },
   {
     title: 'Vous profitez de leurs coups de pouce',
     description:
       "Clarifier votre projet, relire votre CV, vos lettres de motivations, faire des simulations d'entretiens, etc.",
-    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+    illu: <SvgIcon name="IlluPouceCoeur" width={75} height={75} />,
   },
   {
     title: 'Vous avancez à votre rythme',
     description:
       "C'est vous qui menez votre recherche, les coachs sont là pour vous soutenir.",
-    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+    illu: <SvgIcon name="IlluPoigneeDeMain" width={75} height={75} />,
   },
 ];
 
@@ -395,18 +396,9 @@ const Candidat = () => {
         dataTestId="button-cta-candidat-community"
         onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
       />
-
-      <CtaSection
-        title="Une question, une précision ?"
-        description="Notre équipe est à votre disposition !"
-        ctaLabel="Nous contacter"
-        dataTestId="button-contact"
-        onClick={() => {
-          gaEvent(GA_TAGS.PAGE_TRAVAILLER_CONTACT_OPEN);
-          openModal(<ModalInterestLinkedOut />);
-        }}
-      />
+      <NewsletterPartial tag={GA_TAGS.PAGE_TRAVAILLER_NEWSLETTER_CLIC} />
     </Layout>
   );
 };
+
 export default Candidat;

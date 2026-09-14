@@ -257,14 +257,8 @@ export const GA_TAGS = {
   PAGE_TRAVAILLER_CARROUSEL_CLIC: {
     action: 'Page_Travailler_Carrousel_Clic',
   },
-  PAGE_TRAVAILLER_CONTACT_OPEN: {
-    action: 'Page_Travailler_Contact_Open',
-  },
-  PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC: {
-    action: 'Page_Travailler_Deposer_Candidature_Clic',
-  },
-  PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC: {
-    action: 'Page_Travailler_Envoyer_Deposer_Candidature_Clic',
+  PAGE_TRAVAILLER_NEWSLETTER_CLIC: {
+    action: 'Page_Travailler_Newsletter_Clic',
   },
   PAGE_ORIENTER_CARROUSEL_CLIC: {
     action: 'Page_Orienter_Carrousel_Clic',
