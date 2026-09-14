@@ -260,8 +260,6 @@ const Candidat = () => {
           openModal(<ModalInterestLinkedOut />);
         }}
       />
-
-      <PartnersWorkingWithUs />
     </Layout>
   );
 };
