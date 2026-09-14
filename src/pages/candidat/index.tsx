@@ -34,6 +34,7 @@ const iconSize = {
 
 const highlightCriteriaStyle = {
   fontWeight: 'bold',
+  color: COLORS.primaryBlue,
 };
 
 const reviews = [
@@ -194,10 +195,13 @@ const Candidat = () => {
           c’est d’y accéder, surtout quand on n’a pas le réseau, les codes, la
           confiance ou le carnet d’adresse. Entourage Pro, c’est une conviction
           :{' '}
-          <span style={{ color: COLORS.primaryBlue }}>
+          <span style={{ color: COLORS.primaryBlue, fontWeight: 'bold' }}>
             le réseau professionnel ne devrait pas être un privilège, mais un
             bien commun, accessible à tous.
-          </span>{' '}
+          </span>
+        </Text>
+        <br />
+        <Text>
           Les coachs que vous allez rencontrer sont en emploi dans différents
           secteurs d’activités et dans toute la France. Ils sont prêts à vous
           soutenir dans votre recherche d’emploi en vous donnant des coups de
@@ -206,6 +210,7 @@ const Candidat = () => {
           les événements et ateliers du parcours Entourage Pro pour favoriser
           vos opportunités professionnelles.
         </Text>
+        <br />
         <Text size="xxlarge" weight="bold" color="primaryBlue">
           <span className={caveatFont.className}>
             Contactez-les via la plateforme et partagez vos besoins.
@@ -243,18 +248,6 @@ const Candidat = () => {
             </StyledCriteria>
           ))}
         </StyledCriteriasContainer>
-        <StyledCTAsContainer>
-          <Button
-            variant="primary"
-            rounded
-            size="large"
-            onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
-            href="/wizard"
-            weight="bold"
-          >
-            Je deviens candidat
-          </Button>
-        </StyledCTAsContainer>
       </SimpleImageText>
 
       <UnderstandFormat as="Candidat" />

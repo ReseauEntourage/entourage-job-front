@@ -37,7 +37,8 @@ const StyledReviewCardAuthor = styled.div`
   align-items: center;
   font-size: 14px;
   line-height: 21px;
-  color: ${COLORS.mediumGray};
+  color: ${COLORS.primaryBlue};
+  font-weight: bold;
   img {
     border-radius: 50%;
   }
