@@ -10,7 +10,7 @@ import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric
 import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
 import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/FormatBenefits';
 
-import { Impact } from '@/src/features/partials/common/Impact';
+import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
 import {
   StyledCriteria,
@@ -27,6 +27,31 @@ import { gaEvent } from '@/src/lib/gtag';
 import { useUtm } from '../hooks/queryParams/useUTM';
 
 const criteriasIlluSizes = { width: 30, height: 30 };
+const impactIlluSizes = { width: 85, height: 85 };
+
+const impactInsights: ImpactInsight[] = [
+  {
+    // https://metabase-analytics.entourage.social/question/1899-stat-total-candidats-engages-kpi-site-entourage-pro
+    value: '2500',
+    description: 'candidats accompagnés depuis le lancement',
+    illu: <SvgIcon name="IlluPoigneeDeMain" {...impactIlluSizes} />,
+  },
+  {
+    value: '67%',
+    description: 'des candidats ont retrouvé un emploi',
+    illu: <SvgIcon name="IlluMalette" {...impactIlluSizes} />,
+  },
+  {
+    value: '80%',
+    description: 'des candidats ont développé de nouvelles compétences',
+    illu: <SvgIcon name="IlluAmpoule" {...impactIlluSizes} />,
+  },
+  {
+    value: '92%',
+    description: 'des structures sociales sont satisfaites de leur expérience',
+    illu: <SvgIcon name="IlluCoeurSurLaMain" {...impactIlluSizes} />,
+  },
+];
 
 const whyCriterias = [
   {
@@ -169,7 +194,7 @@ const Orienter = () => {
         title="Ils utilisent l’espace asso, ils en parlent"
       />
 
-      <Impact as="Referer" />
+      <Impact title="Quelques chiffres" insights={impactInsights} />
 
       {/* already done => only remove uikit */}
       {isDesktop && (

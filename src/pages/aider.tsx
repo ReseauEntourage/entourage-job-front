@@ -5,7 +5,7 @@ import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
-import { Impact } from '@/src/features/partials/common/Impact';
+import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
 import {
@@ -30,6 +30,25 @@ const highlightCriteriaStyle = { color: COLORS.primaryBlue, fontWeight: '600' };
 const highlightWhyStyle = { color: COLORS.primaryBlue, fontWeight: 'bold' };
 const iconSize = { width: 28, height: 28 };
 const ressourcesIconSize = { width: 30, height: 30 };
+const impactIlluSizes = { width: 85, height: 85 };
+
+const impactInsights: ImpactInsight[] = [
+  {
+    value: '6 000',
+    description: 'candidats sur la plateforme',
+    illu: <SvgIcon name="IlluBulleQuestion" {...impactIlluSizes} />,
+  },
+  {
+    value: '97%',
+    description: 'des coachs déclarent que leur regard a changé positivement',
+    illu: <SvgIcon name="IlluBulleQuestion" {...impactIlluSizes} />,
+  },
+  {
+    value: '75%',
+    description: "des coachs ont un sentiment d'utilité",
+    illu: <SvgIcon name="IlluBulleQuestion" {...impactIlluSizes} />,
+  },
+];
 
 const reassuranceCriterias = [
   {
@@ -157,7 +176,11 @@ const Aider = () => {
 
       <CoachHowItWorks />
 
-      <Impact as="Coach" gaEventTag={GA_TAGS.PAGE_AIDER_MESURE_IMPACT_CLICK} />
+      <Impact
+        title="Quelques chiffres"
+        insights={impactInsights}
+        gaEventTag={GA_TAGS.PAGE_AIDER_MESURE_IMPACT_CLICK}
+      />
 
       <SimpleImageText
         title="Qui sont les candidats ?"

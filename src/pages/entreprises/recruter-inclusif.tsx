@@ -2,9 +2,10 @@ import React, { useMemo } from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Button, Text } from '@/src/components/ui';
 import { CheckListElement, List } from '@/src/components/ui/Lists';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyGoal } from '@/src/constants/company';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from '@/src/constants/tags';
-import { Impact } from '@/src/features/partials/common/Impact';
+import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { EntreprisesCVList } from '@/src/features/partials/pages/Entreprises/EntreprisesCVList';
@@ -24,6 +25,32 @@ import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { fbEvent } from '@/src/lib/fb';
 import { gaEvent } from '@/src/lib/gtag';
 import { linkEvent } from '@/src/lib/lintrk';
+
+const impactIlluSizes = { width: 85, height: 85 };
+
+const impactInsights: ImpactInsight[] = [
+  {
+    value: '81%',
+    description: 'des personnes disent se sentir mieux',
+    illu: <SvgIcon name="IlluPoigneeDeMain" {...impactIlluSizes} />,
+  },
+  {
+    value: '500',
+    description: 'entreprises partenaires',
+    illu: <SvgIcon name="IlluMalette" {...impactIlluSizes} />,
+  },
+  {
+    value: '19 000',
+    description: 'personnes sensibilisées',
+    illu: <SvgIcon name="IlluCoeurSurLaMain" {...impactIlluSizes} />,
+  },
+];
+
+const impactTitle = (
+  <>
+    Notre <span className="orange">impact</span> en chiffres
+  </>
+);
 
 const reviews = [
   {
@@ -170,7 +197,8 @@ const RecruterInclusif = () => {
       <EntreprisesCVList />
 
       <Impact
-        as="Company"
+        title={impactTitle}
+        insights={impactInsights}
         gaEventTag={GA_TAGS.PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK}
         inviteToShowMore
         invertBgColor

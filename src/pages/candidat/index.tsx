@@ -8,7 +8,7 @@ import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
-import { Impact } from '@/src/features/partials/common/Impact';
+import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import {
   ConnectedStep,
   ConnectedStepsGrid,
@@ -43,6 +43,31 @@ const highlightCriteriaStyle = {
   fontWeight: 'bold',
   color: COLORS.primaryBlue,
 };
+
+const impactIlluSizes = { width: 85, height: 85 };
+
+const impactInsights: ImpactInsight[] = [
+  {
+    value: '3 000',
+    description: 'coachs engagés sur la plateforme',
+    illu: <SvgIcon name="IlluAmpoule" {...impactIlluSizes} />,
+  },
+  {
+    value: '81%',
+    description: 'des candidats ont rencontrés de nouvelles personnes',
+    illu: <SvgIcon name="IlluPoigneeDeMain" {...impactIlluSizes} />,
+  },
+  {
+    value: '89%',
+    description: 'des candidats disent se sentir mieux',
+    illu: <SvgIcon name="IlluHeartGradient" {...impactIlluSizes} />,
+  },
+  {
+    value: '83%',
+    description: 'ont développé de nouvelles compétences',
+    illu: <SvgIcon name="IlluMalette" {...impactIlluSizes} />,
+  },
+];
 
 interface Highlight {
   title: React.ReactNode;
@@ -290,7 +315,8 @@ const Candidat = () => {
       <ConnectedStepsGrid title="Comment ça marche ?" steps={howItWorksSteps} />
 
       <Impact
-        as="Candidat"
+        title="Notre impact"
+        insights={impactInsights}
         gaEventTag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK}
       />
 
