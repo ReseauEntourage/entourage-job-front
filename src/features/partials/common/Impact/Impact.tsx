@@ -153,7 +153,7 @@ export const Impact = ({
 
   return (
     <StyledImpactBackground>
-      <Section>
+      <Section className="custom-page">
         <H3 title={contentAs[as].title} center />
         <StyledImpactContainer>
           <StyledInsightsContainer

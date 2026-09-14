@@ -1,24 +1,25 @@
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Section } from '@/src/components/ui';
-import { UIKIT_STYLES } from '@/src/components/variables';
 import { StyledVideoContainer } from './SimpleVideoSection.styles';
 
 interface SimpleVideoSectionProps {
   videoId: string;
   videoTitle: string;
-  sectionStyle?: UIKIT_STYLES;
+  highlighted?: boolean;
   borderRadius?: number;
 }
 
 export const SimpleVideoSection = ({
   videoId,
   videoTitle,
-  sectionStyle,
+  highlighted = false,
   borderRadius = 50,
 }: SimpleVideoSectionProps) => {
   return (
-    <Section style={sectionStyle}>
+    <Section
+      className={highlighted ? 'custom-page custom-blue-bg' : 'custom-page'}
+    >
       <StyledVideoContainer $borderRadius={borderRadius}>
         <LiteYouTubeEmbed
           id={videoId}

@@ -26,7 +26,7 @@ export const ConnectedStepsGrid = ({
   steps,
 }: ConnectedStepsGridProps) => {
   return (
-    <Section>
+    <Section className="custom-page">
       <StyledConnectedStepsGrid>
         <H2
           title={title}
