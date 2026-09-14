@@ -1,5 +1,7 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
+import { Section } from '@/src/components/ui';
+import { H2, H4 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
@@ -7,8 +9,10 @@ import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
 import { Impact } from '@/src/features/partials/common/Impact';
-import { CandidatHowItWorks } from '@/src/features/partials/pages/Candidat/CandidatHowItWorks/CandidatHowItWorks';
-import { CandidateFormatHighlights } from '@/src/features/partials/pages/Candidats/CandidateFormatHighlights/CandidateFormatHighlights';
+import {
+  ConnectedStep,
+  ConnectedStepsGrid,
+} from '@/src/features/partials/utils/ConnectedStepsGrid';
 import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSection';
@@ -16,6 +20,12 @@ import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { gaEvent } from '@/src/lib/gtag';
 import { caveatFont } from '@/src/styles/fonts';
 import { Button, Text } from '../../components/ui';
+import {
+  StyledCandidatsGrid,
+  StyledCTAContainer,
+  StyledCandidateFormatHighlights,
+} from '../../features/partials/pages/Candidats/CandidateFormatHighlights/CandidateFormatHighlights.styles';
+import { ImageGradientCard } from '../../features/partials/utils/ImageGradientCard';
 import {
   StyledCriteria,
   StyledCriteriaIllu,
@@ -33,6 +43,70 @@ const highlightCriteriaStyle = {
   fontWeight: 'bold',
   color: COLORS.primaryBlue,
 };
+
+interface Highlight {
+  title: React.ReactNode;
+  description: React.ReactNode;
+  img: string;
+  alt: string;
+}
+
+const formatHighlights: Highlight[] = [
+  {
+    title: 'Rejoindre un réseau professionnel solidaire',
+    description:
+      'Pour faire des rencontres pro et profiter du soutien de coachs bénévoles.',
+    img: '/static/img/front-office/candidat/format-highlight-1.jpg',
+    alt: 'Un groupe de coachs et candidats réunis autour d’une table',
+  },
+  {
+    title: 'Participer à des évènements et ateliers collectifs réguliers',
+    description:
+      'Pour rencontrer des coachs et des candidats, et monter en compétence sur votre recherche d’emploi.',
+    img: '/static/img/front-office/candidat/format-highlight-2.jpg',
+    alt: 'Une coach échangeant avec un candidat, carnet de notes en main',
+  },
+  {
+    title: 'Être écouté et retrouver confiance en soi',
+    description:
+      'Grâce au soutien de la communauté Entourage Pro et à la disponibilité de nos équipes.',
+    img: '/static/img/front-office/candidat/format-highlight-3.jpg',
+    alt: 'Un échange entre un candidat et une coach, entourés d’autres participants',
+  },
+  {
+    title: 'S’engager selon ses contraintes et son rythme',
+    description:
+      'Sans pression de durée ni de fréquence, partout en France, en ligne ou en présentiel.',
+    img: '/static/img/front-office/candidat/format-highlight-4.jpg',
+    alt: 'Une coach et un candidat discutant face à face',
+  },
+];
+
+const howItWorksSteps: ConnectedStep[] = [
+  {
+    title: 'Vous complétez votre profil',
+    description: 'Votre parcours et ce que vous recherchez',
+    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+  },
+  {
+    title: 'Vous êtes mis en relation avec des coachs adaptés à votre profil',
+    description:
+      "Vous les contactez et pouvez en contacter d'autres dans tout le réseau mis à votre disposition",
+    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+  },
+  {
+    title: 'Vous profitez de leurs coups de pouce',
+    description:
+      "Clarifier votre projet, relire votre CV, vos lettres de motivations, faire des simulations d'entretiens, etc.",
+    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+  },
+  {
+    title: 'Vous avancez à votre rythme',
+    description:
+      "C'est vous qui menez votre recherche, les coachs sont là pour vous soutenir.",
+    illu: <SvgIcon name="IlluBulleQuestion" width={64} height={64} />,
+  },
+];
 
 const reviews = [
   {
@@ -166,14 +240,54 @@ const Candidat = () => {
         }}
       />
 
-      <CandidateFormatHighlights />
+      <Section>
+        <StyledCandidateFormatHighlights>
+          <H2
+            title="C’est quoi être candidat Entourage Pro ?"
+            weight="bold"
+            color={COLORS.primaryBlue}
+            center
+            noMarginBottom
+          />
+          <H4
+            title="Être soutenu dans son retour à l’emploi via un réseau professionnel solidaire."
+            weight="normal"
+            center
+          />
+
+          <StyledCandidatsGrid>
+            {formatHighlights.map((highlight, index) => (
+              <ImageGradientCard
+                key={index}
+                title={highlight.title}
+                description={highlight.description}
+                img={highlight.img}
+                alt={highlight.alt}
+              />
+            ))}
+          </StyledCandidatsGrid>
+
+          <StyledCTAContainer>
+            <Button
+              variant="primary"
+              rounded
+              size="large"
+              weight="bold"
+              href="/wizard"
+              onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
+            >
+              Je deviens candidat
+            </Button>
+          </StyledCTAContainer>
+        </StyledCandidateFormatHighlights>
+      </Section>
 
       <SimpleVideoSection
         videoId="puDIh46PQUI"
         videoTitle="Témoignages Entourage Pro"
       />
 
-      <CandidatHowItWorks />
+      <ConnectedStepsGrid title="Comment ça marche ?" steps={howItWorksSteps} />
 
       <Impact
         as="Candidat"
