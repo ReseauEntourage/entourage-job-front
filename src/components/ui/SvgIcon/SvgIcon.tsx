@@ -39,6 +39,7 @@ import IlluBulleQuestionSvg from '@/assets/icons/illu-bulle-question.svg';
 import IlluBulleWebinaireSvg from '@/assets/icons/illu-bulle-webinaire.svg';
 import IlluCalendrierSvg from '@/assets/icons/illu-calendrier.svg';
 import IlluCandidatFolderSvg from '@/assets/icons/illu-candidat-folder.svg';
+import IlluCarteDeDonSvg from '@/assets/icons/illu-carte-de-don.svg';
 import IlluCartonSvg from '@/assets/icons/illu-carton.svg';
 import IlluClefSvg from '@/assets/icons/illu-clef.svg';
 import IlluCoachEtCandidatSvg from '@/assets/icons/illu-coach-et-candidat.svg';
@@ -162,6 +163,7 @@ export const SvgIcons = {
   IlluCarton: IlluCartonSvg,
   IlluEntourageLogo: IlluEntourageLogoSvg,
   IlluHeartGradient: IlluHeartGradientSvg,
+  IlluCarteDeDon: IlluCarteDeDonSvg,
   Info: InfoSvg,
   Instagram: InstagramSvg,
   Language: LanguageSvg,

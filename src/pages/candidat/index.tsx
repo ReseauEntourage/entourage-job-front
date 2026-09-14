@@ -1,10 +1,10 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
-import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/FormatBenefits';
 import { Impact } from '@/src/features/partials/common/Impact';
 import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { UnderstandFormat } from '@/src/features/partials/common/UnderstandFormat/UnderstandFormat';
@@ -17,8 +17,22 @@ import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSec
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { gaEvent } from '@/src/lib/gtag';
 import { Button, Text } from '../../components/ui';
+import {
+  StyledCriteria,
+  StyledCriteriaIllu,
+  StyledCriteriasContainer,
+} from '../../features/partials/utils/SimpleCardsImageCTA/SimpleCardsImageCTA.styles';
 import { SimpleImageText } from '../../features/partials/utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../features/partials/utils/SimpleImageText/SimpleImageText.styles';
+
+const iconSize = {
+  width: 28,
+  height: 28,
+};
+
+const highlightCriteriaStyle = {
+  fontWeight: 'bold',
+};
 
 const reviews = [
   {
@@ -57,7 +71,80 @@ const reviews = [
   },
 ];
 
-const Travailler = () => {
+const criterias = [
+  {
+    illu: (
+      <SvgIcon
+        name="IlluCarteDeDon"
+        width={iconSize.width}
+        height={iconSize.height}
+      />
+    ),
+    text: (
+      <>
+        <span style={highlightCriteriaStyle}>À des personnes motivées</span> à
+        retrouver un travail mais qui sont isolées dans leur recherche d’emploi
+        et vivent une forme de précarité matérielle.
+      </>
+    ),
+  },
+  {
+    illu: (
+      <SvgIcon
+        name="IlluConversation"
+        width={iconSize.width}
+        height={iconSize.height}
+      />
+    ),
+    text: (
+      <>
+        <span style={highlightCriteriaStyle}>
+          Pas besoin de s’inscrire pour une durée définie.
+        </span>{' '}
+        Vous profitez du réseau Entourage Pro le temps qu’il faut, en fonction
+        de vos besoins.
+      </>
+    ),
+  },
+  {
+    illu: (
+      <SvgIcon
+        name="IlluPoigneeDeMain"
+        width={iconSize.width}
+        height={iconSize.height}
+      />
+    ),
+    text: (
+      <>
+        <span style={highlightCriteriaStyle}>
+          L'objectif n'est pas de promettre un emploi,
+        </span>{' '}
+        mais de se sentir soutenu et de développer son réseau pour multiplier
+        les opportunités d’emploi.
+      </>
+    ),
+  },
+  {
+    illu: (
+      <SvgIcon
+        name="IlluPouce"
+        width={iconSize.width}
+        height={iconSize.height}
+      />
+    ),
+    text: (
+      <>
+        <span style={highlightCriteriaStyle}>
+          Une plateforme complémentaire
+        </span>{' '}
+        aux institutions et aux associations du secteur, qui peut être un
+        véritable coup de pouce supplémentaire dans votre parcours.
+      </>
+    ),
+  },
+];
+
+const Candidat = () => {
   useUtm();
 
   return (
@@ -130,7 +217,35 @@ const Travailler = () => {
 
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
-      <FormatBenefits as="Candidat" title="Les avantages de devenir candidat" />
+      <SimpleImageText
+        title="À qui s’adresse le programme Entourage Pro ?"
+        img="/static/img/front-office/candidat/for-who.png"
+        reverse
+        imgCover={false}
+      >
+        <StyledCriteriasContainer>
+          {criterias?.map((criteria, index) => (
+            <StyledCriteria key={index}>
+              <StyledCriteriaIllu>{criteria.illu}</StyledCriteriaIllu>
+              <Text size="large" color="darkGray">
+                {criteria.text}
+              </Text>
+            </StyledCriteria>
+          ))}
+        </StyledCriteriasContainer>
+        <StyledCTAsContainer>
+          <Button
+            variant="primary"
+            rounded
+            size="large"
+            onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
+            href="/wizard"
+            weight="bold"
+          >
+            Je deviens candidat
+          </Button>
+        </StyledCTAsContainer>
+      </SimpleImageText>
 
       <UnderstandFormat as="Candidat" />
 
@@ -148,4 +263,4 @@ const Travailler = () => {
   );
 };
 
-export default Travailler;
+export default Candidat;
