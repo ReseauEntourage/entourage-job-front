@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
+import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -16,6 +17,7 @@ import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSection';
 import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { gaEvent } from '@/src/lib/gtag';
+import { caveatFont } from '@/src/styles/fonts';
 import { Button, Text } from '../../components/ui';
 import { SimpleImageText } from '../../features/partials/utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../features/partials/utils/SimpleImageText/SimpleImageText.styles';
@@ -104,15 +106,23 @@ const Travailler = () => {
           Trouver un travail est un facteur clé d'intégration. Le problème,
           c’est d’y accéder, surtout quand on n’a pas le réseau, les codes, la
           confiance ou le carnet d’adresse. Entourage Pro, c’est une conviction
-          : le réseau professionnel ne devrait pas être un privilège, mais un
-          bien commun, accessible à tous. Les coachs que vous allez rencontrer
-          sont en emploi dans différents secteurs d’activités et dans toute la
-          France. Ils sont prêts à vous soutenir dans votre recherche d’emploi
-          en vous donnant des coups de pouce.. Ils sont là pour vous écouter,
-          vous conseiller et vous soutenir dans vos démarches grâce à leur
-          expérience. Ils animent aussi les événements et ateliers du parcours
-          Entourage Pro pour favoriser vos opportunités professionnelles.
-          Contactez-les via la plateforme et partagez vos besoins.
+          :{' '}
+          <span style={{ color: COLORS.primaryBlue }}>
+            le réseau professionnel ne devrait pas être un privilège, mais un
+            bien commun, accessible à tous.
+          </span>{' '}
+          Les coachs que vous allez rencontrer sont en emploi dans différents
+          secteurs d’activités et dans toute la France. Ils sont prêts à vous
+          soutenir dans votre recherche d’emploi en vous donnant des coups de
+          pouce.. Ils sont là pour vous écouter, vous conseiller et vous
+          soutenir dans vos démarches grâce à leur expérience. Ils animent aussi
+          les événements et ateliers du parcours Entourage Pro pour favoriser
+          vos opportunités professionnelles.
+        </Text>
+        <Text size="xxlarge" weight="bold" color="primaryBlue">
+          <span className={caveatFont.className}>
+            Contactez-les via la plateforme et partagez vos besoins.
+          </span>
         </Text>
         <StyledCTAsContainer>
           <Button
