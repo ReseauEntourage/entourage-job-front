@@ -183,6 +183,10 @@ const Orienter = () => {
       <UnderstandFormat as="Referer" />
 
       <CtaSection
+        title="Une question, une précision ?"
+        description="Notre équipe est à votre disposition !"
+        ctaLabel="Nous contacter"
+        dataTestId="button-contact"
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
           openModal(<ModalInterestLinkedOut />);

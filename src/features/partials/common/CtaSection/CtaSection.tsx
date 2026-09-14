@@ -5,20 +5,20 @@ import { Text } from '@/src/components/ui/Text';
 import { StyledSectionContent } from './CtaSection.styles';
 
 interface CtaSectionProps {
-  title?: string;
-  description?: string;
-  ctaLabel?: string;
+  title: string;
+  description: string;
+  ctaLabel: string;
   href?: string;
-  dataTestId?: string;
+  dataTestId: string;
   onClick: () => void;
 }
 
 export const CtaSection = ({
-  title = 'Une question, une précision ?',
-  description = 'Notre équipe est à votre disposition !',
-  ctaLabel = 'Nous contacter',
+  title,
+  description,
+  ctaLabel,
   href,
-  dataTestId = 'button-contact',
+  dataTestId,
   onClick,
 }: CtaSectionProps) => {
   return (

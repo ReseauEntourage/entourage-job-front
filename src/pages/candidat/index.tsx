@@ -397,6 +397,10 @@ const Candidat = () => {
       />
 
       <CtaSection
+        title="Une question, une précision ?"
+        description="Notre équipe est à votre disposition !"
+        ctaLabel="Nous contacter"
+        dataTestId="button-contact"
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_TRAVAILLER_CONTACT_OPEN);
           openModal(<ModalInterestLinkedOut />);
