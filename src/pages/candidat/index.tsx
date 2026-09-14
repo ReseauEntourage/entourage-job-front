@@ -257,6 +257,14 @@ const Candidat = () => {
         </StyledCTAsContainer>
       </SimpleImageText>
 
+      <ContactUsSection
+        title="Rejoignez une large communauté de candidats qui se battent pour que l’isolement et la précarité ne soit plus un frein à leur recherche d’emploi."
+        description=""
+        ctaLabel="Je deviens candidat"
+        href="/wizard"
+        onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
+      />
+
       <UnderstandFormat as="Candidat" />
 
       <WhyUseEp as="Candidat" />

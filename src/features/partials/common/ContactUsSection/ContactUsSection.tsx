@@ -4,22 +4,39 @@ import { H2 } from '@/src/components/ui/Headings';
 import { Text } from '@/src/components/ui/Text';
 import { StyledSectionContent } from './ContactUsSection.styles';
 
-export const ContactUsSection = ({ onClick }: { onClick: () => void }) => {
+interface ContactUsSectionProps {
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  href?: string;
+  onClick: () => void;
+}
+
+export const ContactUsSection = ({
+  title = 'Une question, une précision ?',
+  description = 'Notre équipe est à votre disposition !',
+  ctaLabel = 'Nous contacter',
+  href,
+  onClick,
+}: ContactUsSectionProps) => {
   return (
     <Section style="primary">
       <StyledSectionContent>
-        <H2 title="Une question, une précision ?" color="white" center />
-        <Text color="white" size="large" center>
-          Notre équipe est à votre disposition !
-        </Text>
+        <H2 title={title} color="white" center />
+        {description && (
+          <Text color="white" size="large" center>
+            {description}
+          </Text>
+        )}
         <Button
           variant="secondary"
           rounded
           size="medium"
           onClick={onClick}
+          href={href}
           dataTestId="button-contact"
         >
-          Nous contacter
+          {ctaLabel}
         </Button>
       </StyledSectionContent>
     </Section>
