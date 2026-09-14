@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Card, LegacyImg, SimpleLink } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Text } from '@/src/components/ui/Text';
-import { DEPARTMENTS } from '@/src/constants/departements';
+import { ADMIN_ZONES, DEPARTMENTS } from '@/src/constants/departements';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
 import { fetchStaffContactSelectors } from '@/src/use-cases/current-user';
@@ -42,10 +42,13 @@ export const StaffContactCard = ({
 
   const isLoading = isFetchStaffContactIdle || isFetchStaffContactRequested;
 
-  const staffContactRegion = useMemo(() => {
-    return DEPARTMENTS.find((deptObj) => {
-      return deptObj.name === profile?.department;
-    })?.region;
+  const staffContactZoneLabel = useMemo(() => {
+    const deptObj = DEPARTMENTS.find((dept) => {
+      return dept.name === profile?.department;
+    });
+    // "Hors zone" is displayed as "National" rather than the department's
+    // actual region.
+    return deptObj?.zone === ADMIN_ZONES.HZ ? 'National' : deptObj?.region;
   }, [profile?.department]);
 
   if (variant === 'compact') {
@@ -87,7 +90,7 @@ export const StaffContactCard = ({
               </StyledStaffContactName>
               <StyledStaffContactRole>
                 <Text variant="italic">
-                  Référent(e) Entourage Pro {staffContactRegion || ''}
+                  Référent(e) Entourage Pro {staffContactZoneLabel || ''}
                 </Text>
               </StyledStaffContactRole>
             </StyledStaffContactNameContainer>

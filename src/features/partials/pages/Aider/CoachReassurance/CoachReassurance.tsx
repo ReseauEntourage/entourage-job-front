@@ -26,65 +26,25 @@ export const CoachReassurance = () => {
       ),
       text: (
         <>
-          <span style={highlightCriteriaStyle}>
-            Pas besoin d’être certifié.
-          </span>{' '}
-          Votre expérience du monde du travail et votre réseau sont vos
-          meilleurs outils.
+          <span style={highlightCriteriaStyle}>Coachs :</span> soyez juste vous,
+          votre expérience terrain et votre réseau sont vos meilleurs outils.
         </>
       ),
     },
     {
       illu: (
         <SvgIcon
-          name="OrienterSablier"
-          width={iconSize.width}
-          height={iconSize.height}
-          color={COLORS.orangeSocial}
-        />
-      ),
-      text: (
-        <>
-          <span style={highlightCriteriaStyle}>
-            Pas besoin de 15h par semaine.
-          </span>{' '}
-          Vous donnez un coup de pouce selon vos disponibilités, en toute
-          liberté.
-        </>
-      ),
-    },
-    {
-      illu: (
-        <SvgIcon
-          name="IlluPoigneeDeMain"
+          name="IlluEntourageLogo"
           width={iconSize.width}
           height={iconSize.height}
         />
       ),
       text: (
         <>
-          <span style={highlightCriteriaStyle}>
-            L'objectif n'est pas de promettre un emploi,
-          </span>{' '}
-          mais de donner les clés pour que le candidat puisse se sentir soutenu
-          et remobilisé dans sa recherche.
-        </>
-      ),
-    },
-    {
-      illu: (
-        <SvgIcon
-          name="IlluPouce"
-          width={iconSize.width}
-          height={iconSize.height}
-        />
-      ),
-      text: (
-        <>
-          <span style={highlightCriteriaStyle}>
-            Vous ne remplacez pas les institutions
-          </span>{' '}
-          mais êtes un véritable coup de pouce pour les candidats du programme.
+          <span style={highlightCriteriaStyle}>Référents Entourage Pro :</span>{' '}
+          disponibles toute la semaine pour échanger, vous conseiller sur des
+          cas complexes et orienter les candidats vers les dispositifs de droits
+          communs (suivi social, hébergement etc.).
         </>
       ),
     },
@@ -110,7 +70,7 @@ export const CoachReassurance = () => {
         <Button
           variant="primary"
           rounded
-          size="medium"
+          size="large"
           onClick={() => gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC)}
           href="/wizard"
           weight="bold"
