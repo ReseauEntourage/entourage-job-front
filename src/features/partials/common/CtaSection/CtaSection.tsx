@@ -2,23 +2,25 @@ import React from 'react';
 import { Button, Section } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
 import { Text } from '@/src/components/ui/Text';
-import { StyledSectionContent } from './ContactUsSection.styles';
+import { StyledSectionContent } from './CtaSection.styles';
 
-interface ContactUsSectionProps {
+interface CtaSectionProps {
   title?: string;
   description?: string;
   ctaLabel?: string;
   href?: string;
+  dataTestId?: string;
   onClick: () => void;
 }
 
-export const ContactUsSection = ({
+export const CtaSection = ({
   title = 'Une question, une précision ?',
   description = 'Notre équipe est à votre disposition !',
   ctaLabel = 'Nous contacter',
   href,
+  dataTestId = 'button-contact',
   onClick,
-}: ContactUsSectionProps) => {
+}: CtaSectionProps) => {
   return (
     <Section style="primary">
       <StyledSectionContent>
@@ -34,7 +36,7 @@ export const ContactUsSection = ({
           size="medium"
           onClick={onClick}
           href={href}
-          dataTestId="button-contact"
+          dataTestId={dataTestId}
         >
           {ctaLabel}
         </Button>

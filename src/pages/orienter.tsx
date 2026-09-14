@@ -7,7 +7,7 @@ import { PARTNERS } from '@/src/constants/partners';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
+import { CtaSection } from '@/src/features/partials/common/CtaSection/CtaSection';
 import { FormatBenefits } from '@/src/features/partials/common/FormatBenefits/FormatBenefits';
 
 import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
@@ -182,7 +182,7 @@ const Orienter = () => {
 
       <UnderstandFormat as="Referer" />
 
-      <ContactUsSection
+      <CtaSection
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
           openModal(<ModalInterestLinkedOut />);

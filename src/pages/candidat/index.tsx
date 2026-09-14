@@ -7,7 +7,7 @@ import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { ContactUsSection } from '@/src/features/partials/common/ContactUsSection/ContactUsSection';
+import { CtaSection } from '@/src/features/partials/common/CtaSection/CtaSection';
 import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import {
   ConnectedStep,
@@ -387,15 +387,16 @@ const Candidat = () => {
         </StyledCriteriasContainer>
       </SimpleImageText>
 
-      <ContactUsSection
+      <CtaSection
         title="Rejoignez une large communauté de candidats qui se battent pour que l’isolement et la précarité ne soit plus un frein à leur recherche d’emploi."
         description=""
         ctaLabel="Je deviens candidat"
         href="/wizard"
+        dataTestId="button-cta-candidat-community"
         onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
       />
 
-      <ContactUsSection
+      <CtaSection
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_TRAVAILLER_CONTACT_OPEN);
           openModal(<ModalInterestLinkedOut />);
