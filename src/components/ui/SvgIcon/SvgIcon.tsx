@@ -56,6 +56,7 @@ import IlluHeartGradientSvg from '@/assets/icons/illu-heart-gradient.svg';
 import IlluMaletteSvg from '@/assets/icons/illu-malette.svg';
 import IlluOrdiCVSvg from '@/assets/icons/illu-ordi-cv.svg';
 import IlluPoigneeDeMainSvg from '@/assets/icons/illu-poignee-de-main.svg';
+import IlluPouceCoeurSvg from '@/assets/icons/illu-pouce-coeur.svg';
 import IlluPouceSvg from '@/assets/icons/illu-pouce.svg';
 import IlluQuestionReponseOrangeSvg from '@/assets/icons/illu-question-reponse-orange.svg';
 import IlluReseauSvg from '@/assets/icons/illu-reseau.svg';
@@ -164,6 +165,7 @@ export const SvgIcons = {
   IlluEntourageLogo: IlluEntourageLogoSvg,
   IlluHeartGradient: IlluHeartGradientSvg,
   IlluCarteDeDon: IlluCarteDeDonSvg,
+  IlluPouceCoeur: IlluPouceCoeurSvg,
   Info: InfoSvg,
   Instagram: InstagramSvg,
   Language: LanguageSvg,

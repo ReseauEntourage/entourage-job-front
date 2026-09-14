@@ -57,7 +57,7 @@ export const Impact = ({
                 <Text color="primaryBlue" size={40} weight="bold" center>
                   {insight.value}
                 </Text>
-                <Text color="darkGray" center>
+                <Text color="darkGray" center size="large">
                   {insight.description}
                 </Text>
               </StyledInsight>

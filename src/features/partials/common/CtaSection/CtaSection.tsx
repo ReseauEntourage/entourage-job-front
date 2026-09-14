@@ -33,10 +33,11 @@ export const CtaSection = ({
         <Button
           variant="secondary"
           rounded
-          size="medium"
+          size="large"
           onClick={onClick}
           href={href}
           dataTestId={dataTestId}
+          weight="bold"
         >
           {ctaLabel}
         </Button>
