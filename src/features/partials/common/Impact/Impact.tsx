@@ -4,7 +4,7 @@ import {
   StyledCenteredButtonContainer,
   Section,
 } from '@/src/components/ui';
-import { H3 } from '@/src/components/ui/Headings';
+import { H2 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
 import { GA_TAGS } from '@/src/constants/tags';
@@ -48,22 +48,22 @@ const contentAs: { [K in DisplayAs]: Content } = {
       {
         value: '3 000',
         description: 'coachs engagés sur la plateforme',
-        illu: <SvgIcon name="IlluBulleQuestion" {...illuSizes} />,
+        illu: <SvgIcon name="IlluAmpoule" {...illuSizes} />,
       },
       {
         value: '81%',
         description: 'des candidats ont rencontrés de nouvelles personnes',
-        illu: <SvgIcon name="IlluBulleQuestion" {...illuSizes} />,
+        illu: <SvgIcon name="IlluPoigneeDeMain" {...illuSizes} />,
       },
       {
         value: '89%',
         description: 'des candidats disent se sentir mieux',
-        illu: <SvgIcon name="IlluBulleQuestion" {...illuSizes} />,
+        illu: <SvgIcon name="IlluHeartGradient" {...illuSizes} />,
       },
       {
         value: '83%',
         description: 'ont développé de nouvelles compétences',
-        illu: <SvgIcon name="IlluBulleQuestion" {...illuSizes} />,
+        illu: <SvgIcon name="IlluMalette" {...illuSizes} />,
       },
     ],
   },
@@ -154,7 +154,7 @@ export const Impact = ({
   return (
     <StyledImpactBackground>
       <Section className="custom-page">
-        <H3 title={contentAs[as].title} center />
+        <H2 title={contentAs[as].title} center color="white" />
         <StyledImpactContainer>
           <StyledInsightsContainer
             $withIllu={withIllu}

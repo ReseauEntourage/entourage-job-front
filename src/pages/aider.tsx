@@ -67,9 +67,9 @@ const Aider = () => {
 
       <CoachHowItWorks />
 
-      <WhoAreCandidates />
-
       <Impact as="Coach" gaEventTag={GA_TAGS.PAGE_AIDER_MESURE_IMPACT_CLICK} />
+
+      <WhoAreCandidates />
 
       <CoachReassurance />
 

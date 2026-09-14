@@ -6,7 +6,6 @@ export const CoachingVideo = () => {
     <SimpleVideoSection
       videoId="puDIh46PQUI"
       videoTitle="Témoignages Entourage Pro"
-      highlighted
     />
   );
 };
