@@ -1,21 +1,11 @@
 import React from 'react';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import { Section } from '@/src/components/ui';
-import { StyledVideoContainer } from './CoachingVideo.styles';
+import { SimpleVideoSection } from '@/src/features/partials/utils/SimpleVideoSection';
 
 export const CoachingVideo = () => {
   return (
-    <Section style="hover-blue">
-      <StyledVideoContainer>
-        <LiteYouTubeEmbed
-          id="puDIh46PQUI"
-          poster="maxresdefault"
-          title="Témoignages Entourage Pro"
-          aspectWidth={1280}
-          aspectHeight={515}
-          params="rel=0&showinfo=0&iv_load_policy=3"
-        />
-      </StyledVideoContainer>
-    </Section>
+    <SimpleVideoSection
+      videoId="puDIh46PQUI"
+      videoTitle="Témoignages Entourage Pro"
+    />
   );
 };

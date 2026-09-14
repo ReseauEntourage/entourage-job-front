@@ -1,23 +1,11 @@
 import React from 'react';
-import { Section, Text } from '@/src/components/ui';
-import { H2 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { COLORS } from '@/src/constants/styles';
 import {
-  StyledCoachHowItWorks,
-  StyledStep,
-  StyledStepBadge,
-  StyledStepIcon,
-  StyledStepsGrid,
-} from './CoachHowItWorks.styles';
+  ConnectedStep,
+  ConnectedStepsGrid,
+} from '@/src/features/partials/utils/ConnectedStepsGrid';
 
-interface Step {
-  title: string;
-  description: string;
-  illu: React.ReactNode;
-}
-
-const STEPS: Step[] = [
+const STEPS: ConnectedStep[] = [
   {
     title: 'Vous suivez une courte formation en ligne',
     description:
@@ -46,32 +34,5 @@ const STEPS: Step[] = [
 ];
 
 export const CoachHowItWorks = () => {
-  return (
-    <Section>
-      <StyledCoachHowItWorks>
-        <H2
-          title="Comment ça marche ?"
-          weight="bold"
-          color={COLORS.primaryBlue}
-          center
-          noMarginBottom
-        />
-
-        <StyledStepsGrid>
-          {STEPS.map((step, index) => (
-            <StyledStep key={index}>
-              <StyledStepIcon>{step.illu}</StyledStepIcon>
-              <StyledStepBadge>{index + 1}</StyledStepBadge>
-              <Text size={13} weight="bold" color="primaryBlue" center>
-                {step.title}
-              </Text>
-              <Text size="small" weight="normal" color="black" center>
-                {step.description}
-              </Text>
-            </StyledStep>
-          ))}
-        </StyledStepsGrid>
-      </StyledCoachHowItWorks>
-    </Section>
-  );
+  return <ConnectedStepsGrid title="Comment ça marche ?" steps={STEPS} />;
 };

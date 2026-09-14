@@ -1,6 +1,13 @@
 import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
+export const StyledImpactBackground = styled.div`
+  background-image: url('/static/img/wave-pattern-blue-pro.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
 export const StyledImpactContainer = styled.div`
   display: flex;
   flex-direction: column;
