@@ -39,13 +39,14 @@ const highlightCriteriaStyle = {
 
 const reviews = [
   {
-    author: 'Elicia',
-    authorStatus: 'accompagnée par l’Accélérateur, a trouvé chez Kiko',
+    author: 'Fatma',
+    authorStatus: 'candidate Entourage Pro',
     review: (
       <>
-        &quot;Maintenant j’arrive à plus parler aux gens, à aller vers les
-        autres, c’est grâce à Entourage Pro. Je faisais la paresseuse avant, et
-        là, ça m’a donné envie de me donner à fond.&quot;
+        &quot;Je remercie les coachs Entourage Pro d&apos;avoir pris contact
+        avec moi. Cela m&apos;a permis de me sentir entourée dans ma recherche.
+        Vraiment il y a eu deux coachs importants : grâce à eux, je me suis
+        remobilisée.&quot;
       </>
     ),
   },
@@ -61,14 +62,13 @@ const reviews = [
     ),
   },
   {
-    author: 'Grégoire',
-    authorStatus: "Recruteur de M'Bemba Dani Alu",
+    author: 'Milan',
+    authorStatus: 'candidat Entourage Pro',
     review: (
       <>
-        &quot;Le recrutement de M&lsquo;Bemba a resserré les équipes. Elles se
-        sont investies dans un projet. Elles peuvent être très fières d’avoir
-        fait en sorte que M&lsquo;Bemba soit épanoui et polyvalent dans
-        l’atelier.&quot;
+        &quot;J&apos;ai beaucoup aimé l&apos;expérience Entourage Pro, le site
+        est bien fait, c&apos;est très clair et très pro. J&apos;ai pu avoir 2
+        rendez vous avec des coachs qui donnent de bon conseils.&quot;
       </>
     ),
   },
@@ -249,6 +249,14 @@ const Candidat = () => {
           ))}
         </StyledCriteriasContainer>
       </SimpleImageText>
+
+      <ContactUsSection
+        title="Rejoignez une large communauté de candidats qui se battent pour que l’isolement et la précarité ne soit plus un frein à leur recherche d’emploi."
+        description=""
+        ctaLabel="Je deviens candidat"
+        href="/wizard"
+        onClick={() => gaEvent(GA_TAGS.PAGE_TRAVAILLER_INSCRIPTION_CLICK)}
+      />
 
       <UnderstandFormat as="Candidat" />
 
