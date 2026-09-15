@@ -18,7 +18,9 @@ export const SimpleVideoSection = ({
 }: SimpleVideoSectionProps) => {
   return (
     <Section
-      className={highlighted ? 'custom-page custom-blue-bg' : 'custom-page'}
+      className={
+        highlighted ? 'custom-page medium custom-blue-bg' : 'custom-page medium'
+      }
     >
       <StyledVideoContainer $borderRadius={borderRadius}>
         <LiteYouTubeEmbed
