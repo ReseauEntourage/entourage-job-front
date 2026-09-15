@@ -1,9 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Button } from '@/src/components/ui/Button';
 import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from '@/src/lib/gtag';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 
 export interface NavPublicAuthActionsProps {
   onNavigate?: () => void;
@@ -12,7 +13,11 @@ export interface NavPublicAuthActionsProps {
 export const NavPublicAuthActions = ({
   onNavigate,
 }: NavPublicAuthActionsProps) => {
-  const user = useAuthenticatedUser();
+  // NavPublic is rendered on pages that may or may not be authenticated,
+  // unlike NavConnected (backoffice-only) — use the nullable selector,
+  // not useAuthenticatedUser()/selectAuthenticatedUser which asserts and
+  // throws when no user is logged in.
+  const user = useSelector(selectCurrentUser);
 
   if (user) {
     return (

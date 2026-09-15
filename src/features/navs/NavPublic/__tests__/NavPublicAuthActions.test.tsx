@@ -6,16 +6,22 @@ import expect from 'expect';
 
 import { NavPublicAuthActions } from '../NavPublicAuthActions';
 
-jest.mock('@/src/hooks/authentication/useAuthenticatedUser', () => ({
-  useAuthenticatedUser: jest.fn(),
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(() => jest.fn()),
+  // RTK Query's `/react` module checks for all three custom-context hooks at
+  // `createApi()` init time (transitively pulled in by importing the
+  // current-user barrel, even just for a selector) — not otherwise used by
+  // this component/test.
+  useStore: jest.fn(),
 }));
 
 // eslint-disable-next-line import-x/order
-import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
+import { useSelector } from 'react-redux';
 
 describe('NavPublicAuthActions', () => {
   it('renders Connexion/Inscription when no user is authenticated', () => {
-    (useAuthenticatedUser as jest.Mock).mockReturnValue(null);
+    (useSelector as unknown as jest.Mock).mockReturnValue(null);
 
     render(<NavPublicAuthActions />);
 
@@ -31,7 +37,7 @@ describe('NavPublicAuthActions', () => {
   });
 
   it('renders a single access button when a user is authenticated', () => {
-    (useAuthenticatedUser as jest.Mock).mockReturnValue({ id: 1 });
+    (useSelector as unknown as jest.Mock).mockReturnValue({ id: 1 });
 
     render(<NavPublicAuthActions />);
 
