@@ -2,11 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { NavbarLogo } from '@/src/components/ui';
-import { Button } from '@/src/components/ui/Button';
 import { Hamburger } from '@/src/components/ui/Hamburger';
-import { COLORS } from '@/src/constants/styles';
-import { GA_TAGS } from '@/src/constants/tags';
-import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledMobileMenuActions,
   StyledMobileMenuDivider,
@@ -15,6 +11,7 @@ import {
 } from './NavPublic.mobile.styles';
 import { StyledPublicNavCard } from './NavPublic.styles';
 import { LINKS } from './NavPublic.utils';
+import { NavPublicAuthActions } from './NavPublicAuthActions';
 import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 import { StyledNavPublicItemMobileLinkContainer } from './NavPublicItem/NavPublicItem.styles';
 
@@ -73,32 +70,7 @@ export const NavPublicMobile = () => {
           <StyledMobileMenuDivider />
 
           <StyledMobileMenuActions>
-            <Button
-              href="/login"
-              variant="secondary"
-              rounded
-              onClick={() => {
-                gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
-                closeMenu();
-              }}
-            >
-              Connexion
-            </Button>
-            <Button
-              href="/wizard"
-              variant="primary"
-              rounded
-              style={{
-                backgroundColor: COLORS.darkTeal,
-                borderColor: COLORS.darkTeal,
-              }}
-              onClick={() => {
-                gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
-                closeMenu();
-              }}
-            >
-              Inscription
-            </Button>
+            <NavPublicAuthActions onNavigate={closeMenu} />
           </StyledMobileMenuActions>
         </StyledMobileMenuPanel>
       )}

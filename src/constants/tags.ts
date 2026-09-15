@@ -251,6 +251,9 @@ export const GA_TAGS = {
   HEADER_CONNEXION_CLIC: {
     action: 'Header_Connexion_Clic',
   },
+  HEADER_ACCEDER_ESPACE_CLIC: {
+    action: 'Header_Acceder_Espace_Clic',
+  },
   PAGE_RECRUTER_CARROUSEL_CLIC: {
     action: 'Page_Recruter_Carrousel_Clic',
   },
