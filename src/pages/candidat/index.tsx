@@ -248,7 +248,7 @@ const Candidat = () => {
   return (
     <Layout title="Travailler - Entourage Pro">
       <PageHero
-        img="/static/img/candidat-hero-desktop.png"
+        img="/static/img/front-office/candidat/candidat-hero-desktop.png"
         title={`Entourage Pro : le réseau professionnel de celles et ceux qui n’en ont pas`}
         description={
           <>

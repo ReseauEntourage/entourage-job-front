@@ -161,7 +161,7 @@ const Aider = () => {
             faveur de l’égalité des chances !
           </>
         }
-        img="/static/img/coach-hero-desktop.png"
+        img="/static/img/front-office/aider/coach-hero-desktop.png"
         alt="Un candidat Entourage Pro et sa coach"
         cta={{
           label: 'Je deviens coach',

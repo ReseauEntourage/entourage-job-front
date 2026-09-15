@@ -30,6 +30,7 @@ interface PageHeroProps {
   description?: React.ReactNode;
   alt?: string;
   cta?: PageHeroCTAProps | PageHeroCTAProps[];
+  reverse?: boolean;
 }
 
 // Le CTA principal du hero (sans variant "secondary" explicite) utilise un fond
@@ -45,12 +46,13 @@ export const PageHero = ({
   img,
   alt,
   cta,
+  reverse,
 }: PageHeroProps) => {
   const isDesktop = useIsDesktop();
 
   return (
     <StyledPageHero>
-      <StyledPageHeroContainer>
+      <StyledPageHeroContainer $reverse={reverse}>
         <StyledPageHeroImageCard>
           <LegacyImg src={img} alt={alt || ''} />
         </StyledPageHeroImageCard>

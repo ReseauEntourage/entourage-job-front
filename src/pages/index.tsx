@@ -34,13 +34,8 @@ const Index = () => {
   return (
     <Layout>
       <PageHero
-        title={
-          <>
-            Le premier réseau
-            <br /> professionnel solidaire
-          </>
-        }
-        img="/static/img/home-banner.jpg"
+        title={<>Le premier réseau professionnel solidaire</>}
+        img="/static/img/front-office/homepage/homepage-hero-desktop.png"
         alt="Entourage Pro réseau solidaire professionnel"
         cta={[
           {

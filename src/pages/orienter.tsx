@@ -109,7 +109,7 @@ const Orienter = () => {
   return (
     <Layout title="Orienter - Entourage Pro">
       <PageHero
-        img="/static/img/orienter-banner-desktop.jpg"
+        img="/static/img/front-office/orienter/orienter-hero-desktop.png"
         title={
           <>
             Travaillons ensemble pour
@@ -119,10 +119,17 @@ const Orienter = () => {
         }
         description={
           <>
-            Vous accompagnez des personnes en situation d&apos;exclusion ? Avec
-            Entourage Pro, accélérez leur retour à l&apos;emploi !
+            Vous êtes en lien avec des personnes isolées et en situation de
+            précarité ? Avec Entourage Pro, permettez-leur de développer leur
+            réseau professionnel et d’accélérer leur recherche d’emploi.
           </>
         }
+        cta={{
+          label: "Je m'inscris",
+          onClick: () => gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC),
+          href: '/wizard',
+        }}
+        reverse
       />
 
       <SimpleImageText

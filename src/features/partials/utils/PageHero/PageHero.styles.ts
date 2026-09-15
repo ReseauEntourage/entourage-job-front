@@ -28,7 +28,7 @@ export const StyledPageHero = styled.section`
   }
 `;
 
-export const StyledPageHeroContainer = styled.div`
+export const StyledPageHeroContainer = styled.div<{ $reverse?: boolean }>`
   position: relative;
   z-index: 1;
   max-width: 1314px;
@@ -40,7 +40,7 @@ export const StyledPageHeroContainer = styled.div`
   min-height: ${CONTENT_MIN_HEIGHT_MOBILE}px;
 
   @media (min-width: ${BREAKPOINTS.desktop}px) {
-    flex-direction: row;
+    flex-direction: ${({ $reverse }) => ($reverse ? 'row-reverse' : 'row')};
     align-items: stretch;
     gap: 60px;
     min-height: ${CONTENT_MIN_HEIGHT_DESKTOP}px;
@@ -50,14 +50,14 @@ export const StyledPageHeroContainer = styled.div`
 export const StyledPageHeroImageCard = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  min-height: ${IMAGE_CARD_MIN_HEIGHT_MOBILE}px;
+  // aspect-ratio: 4 / 3;
+  // min-height: ${IMAGE_CARD_MIN_HEIGHT_MOBILE}px;
   border-radius: 24px;
   overflow: hidden;
   flex-shrink: 0;
 
   @media (min-width: ${BREAKPOINTS.desktop}px) {
-    width: 45%;
+    width: 55%;
     /* Sur desktop, la carte s'étire (align-items: stretch du parent) pour
        occuper toute la hauteur du hero plutôt que d'être bornée par son
        propre ratio d'aspect. */
