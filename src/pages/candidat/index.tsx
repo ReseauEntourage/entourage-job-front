@@ -5,8 +5,6 @@ import { H2, H4 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
-import { openModal } from '@/src/features/modals/Modal';
-import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { CtaSection } from '@/src/features/partials/common/CtaSection/CtaSection';
 import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import {
