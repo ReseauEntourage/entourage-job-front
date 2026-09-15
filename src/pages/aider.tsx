@@ -30,23 +30,23 @@ const highlightCriteriaStyle = { color: COLORS.primaryBlue, fontWeight: '600' };
 const highlightWhyStyle = { color: COLORS.primaryBlue, fontWeight: 'bold' };
 const iconSize = { width: 28, height: 28 };
 const ressourcesIconSize = { width: 30, height: 30 };
-const impactIlluSizes = { width: 85, height: 85 };
+const impactIlluSizes = { height: 85 };
 
 const impactInsights: ImpactInsight[] = [
   {
     value: '6 000',
     description: 'candidats sur la plateforme',
-    illu: <SvgIcon name="IlluBulleQuestion" {...impactIlluSizes} />,
+    illu: <SvgIcon name="IlluOrdiCV" {...impactIlluSizes} />,
   },
   {
     value: '97%',
     description: 'des coachs déclarent que leur regard a changé positivement',
-    illu: <SvgIcon name="IlluBulleQuestion" {...impactIlluSizes} />,
+    illu: <SvgIcon name="IlluOeil" {...impactIlluSizes} />,
   },
   {
     value: '75%',
     description: "des coachs ont un sentiment d'utilité",
-    illu: <SvgIcon name="IlluBulleQuestion" {...impactIlluSizes} />,
+    illu: <SvgIcon name="IlluCoeurSurLaMain" {...impactIlluSizes} />,
   },
 ];
 
