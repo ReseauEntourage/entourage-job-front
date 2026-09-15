@@ -273,6 +273,7 @@ const Aider = () => {
       <SimpleImageText
         title="Pourquoi choisir Entourage Pro ?"
         img="/static/img/front-office/why/why-become-coach.png"
+        imgCover={false}
       >
         <Text size="large">
           Vous aussi vous pensez que le réseau ne devrait pas être un privilège
