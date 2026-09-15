@@ -1,5 +1,8 @@
 import { Api } from '@/src/api';
-import { isMessagingDailyConversationLimitReachedError } from '@/src/api/axiosErrors';
+import {
+  getApiErrorMessage,
+  isMessagingDailyConversationLimitReachedError,
+} from '@/src/api/axiosErrors';
 import {
   Conversation,
   ConversationParticipant,
@@ -307,6 +310,16 @@ export const messagingApi = api.injectEndpoints({
               notificationsActions.addNotification({
                 type: 'danger',
                 message: `Nous sommes désolés, vous avez déjà contacté le maximum de membres aujourd’hui. Laissez le temps aux membres de vous répondre ! Si besoin, vous pourrez en contacter plus à partir de demain !`,
+              })
+            );
+          } else {
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'danger',
+                message: getApiErrorMessage(
+                  error,
+                  "Une erreur est survenue lors de l'envoi du message. Veuillez réessayer."
+                ),
               })
             );
           }
