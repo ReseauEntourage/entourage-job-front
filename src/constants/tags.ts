@@ -251,20 +251,17 @@ export const GA_TAGS = {
   HEADER_CONNEXION_CLIC: {
     action: 'Header_Connexion_Clic',
   },
+  HEADER_ACCEDER_ESPACE_CLIC: {
+    action: 'Header_Acceder_Espace_Clic',
+  },
   PAGE_RECRUTER_CARROUSEL_CLIC: {
     action: 'Page_Recruter_Carrousel_Clic',
   },
   PAGE_TRAVAILLER_CARROUSEL_CLIC: {
     action: 'Page_Travailler_Carrousel_Clic',
   },
-  PAGE_TRAVAILLER_CONTACT_OPEN: {
-    action: 'Page_Travailler_Contact_Open',
-  },
-  PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC: {
-    action: 'Page_Travailler_Deposer_Candidature_Clic',
-  },
-  PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC: {
-    action: 'Page_Travailler_Envoyer_Deposer_Candidature_Clic',
+  PAGE_TRAVAILLER_NEWSLETTER_CLIC: {
+    action: 'Page_Travailler_Newsletter_Clic',
   },
   PAGE_ORIENTER_CARROUSEL_CLIC: {
     action: 'Page_Orienter_Carrousel_Clic',
@@ -523,6 +520,9 @@ export const GA_TAGS = {
   },
   PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK: {
     action: 'Page_Travailler_Decouvrir_Programme_Coup_De_Pouce_Click',
+  },
+  PAGE_AIDER_MESURE_IMPACT_CLICK: {
+    action: 'Page_Aider_Mesure_Impact_Click',
   },
   PAGE_AIDER_DECOUVRIR_PROGRAMME_360_CLICK: {
     action: 'Page_Aider_Decouvrir_Programme_360_Click',

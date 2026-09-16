@@ -64,19 +64,19 @@ export const SimpleImageText = ({
           <StyledSimpleImageTextTextContainer
             $contentPaddingY={contentPaddingY}
           >
-            <StyledTitleContainer>
-              {isDesktop && (
+            {isDesktop && (
+              <StyledTitleContainer>
                 <H2
                   title={title}
                   weight="bold"
                   color={COLORS.primaryBlue}
                   noMarginBottom
                 />
-              )}
-              {isDesktop && subtitle && (
-                <H4 title={subtitle} weight="normal" noMarginBottom />
-              )}
-            </StyledTitleContainer>
+                {subtitle && (
+                  <H4 title={subtitle} weight="normal" noMarginBottom />
+                )}
+              </StyledTitleContainer>
+            )}
             <div>{children}</div>
           </StyledSimpleImageTextTextContainer>
         </StyledSimpleImageTextContainer>
