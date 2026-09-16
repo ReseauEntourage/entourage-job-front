@@ -114,7 +114,7 @@ export const MessagingConversationListItem = ({
         )}
       </RightColumn>
       {isDesktop && (
-        <StyledArchiveButton>
+        <StyledArchiveButton onClick={(e) => e.stopPropagation()}>
           <ButtonIcon
             icon={
               <LucidIcon name={isArchived ? 'ArchiveRestore' : 'Archive'} />

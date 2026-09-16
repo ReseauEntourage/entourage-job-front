@@ -9,7 +9,7 @@ export const formOnboardingEthicsCharter: FormSchema<{
       id: 'hasAcceptedEthicsCharter',
       name: 'hasAcceptedEthicsCharter',
       component: 'checkbox-alert',
-      title: "J'accepte la charte éthique d'Entourage Pro",
+      title: "J'accepte la charte éthique d'Entourage Pro*",
       showLabel: true,
       isRequired: true,
     },

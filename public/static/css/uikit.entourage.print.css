@@ -12629,6 +12629,12 @@ iframe.uk-cover {
   src: url('/static/fonts/Poppins-SemiBold.ttf') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 900;
+  src: url('/static/fonts/Poppins-Black.ttf') format('truetype');
+  font-display: swap;
+}
 * {
   -webkit-print-color-adjust: exact !important;
 }

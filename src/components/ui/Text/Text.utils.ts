@@ -17,4 +17,4 @@ export const sizesPx = {
   },
 };
 
-export const LINE_HEIGHT_MULTIPLIER = 1.5;
+export const LINE_HEIGHT_MULTIPLIER = 1.7;

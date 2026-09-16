@@ -28,7 +28,7 @@ export const Carousel = ({
   if (asPath.includes('/recruter')) {
     tag = GA_TAGS.PAGE_RECRUTER_CARROUSEL_CLIC;
   }
-  if (asPath.includes('/travailler')) {
+  if (asPath.includes('/candidat')) {
     tag = GA_TAGS.PAGE_TRAVAILLER_CARROUSEL_CLIC;
   }
   if (asPath.includes('/orienter')) {

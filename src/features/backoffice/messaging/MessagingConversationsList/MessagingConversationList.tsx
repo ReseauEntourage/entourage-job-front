@@ -69,7 +69,7 @@ export const MessagingConversationList = () => {
       );
     }
 
-    // "Tous" excludes conversations archived by the current user
+    // "En cours" excludes conversations archived by the current user
     filtered = filtered.filter((c) => !c.archivedAt);
 
     // Sort unread conversations first in the "all" tab
@@ -80,6 +80,14 @@ export const MessagingConversationList = () => {
     });
   }, [allConversations, currentUserId, query, activeTab]);
 
+  const activeConversationsCount = useMemo(() => {
+    if (!allConversations) {
+      return 0;
+    }
+
+    return allConversations.filter((c) => !c.archivedAt).length;
+  }, [allConversations]);
+
   const setSearch = useCallback((search) => {
     setQuery(search);
   }, []);
@@ -88,6 +96,7 @@ export const MessagingConversationList = () => {
     <ContainerStyled data-testid="messaging-conversation-list">
       <MessagingConversationTabs
         activeTab={activeTab}
+        activeConversationsCount={activeConversationsCount}
         unreadCount={unseenConversationCount}
         onTabChange={setActiveTab}
       />

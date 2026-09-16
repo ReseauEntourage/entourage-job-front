@@ -31,6 +31,12 @@ export const StyledSection = styled.section`
       padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
       padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
     }
+
+    &.medium {
+      & > .section-container {
+        max-width: 1000px;
+      }
+    }
     &.small {
       & > .section-container {
         max-width: 700px;

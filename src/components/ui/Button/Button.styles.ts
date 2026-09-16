@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { COLORS, FONT_WEIGHTS } from '@/src/constants/styles';
 import { LINE_HEIGHT_MULTIPLIER } from '../Text/Text.utils';
 import { ButtonProps, ButtonSize } from './Button.types';
 import {
@@ -25,7 +25,7 @@ export const StyledButton = styled.button<{
   cursor: pointer;
   display: flex;
   font-family: 'Poppins', sans-serif;
-  font-weight: ${({ $weight }) => $weight};
+  font-weight: ${({ $weight }) => FONT_WEIGHTS[$weight || 'medium']};
   text-align: ${({ $align }) => $align ?? 'center'};
   line-height: ${({ size }) =>
     BUTTON_SIZES[size].fontSize * LINE_HEIGHT_MULTIPLIER}px;

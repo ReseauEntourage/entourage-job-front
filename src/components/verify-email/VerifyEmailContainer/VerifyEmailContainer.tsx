@@ -1,4 +1,5 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { Button, LegacyImg } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
@@ -11,10 +12,18 @@ import {
 } from './VerifyEmailContainer.styles';
 
 export const VerifyEmailContainer = () => {
-  const { isLoading, verifyEmailTokenError } = useVerifyEmail();
+  const { isLoading, verifyEmailTokenError, shouldRedirectToWizard } =
+    useVerifyEmail();
+  const { replace } = useRouter();
   const iconSizeProps = { width: 60, height: 60 };
 
-  if (isLoading) {
+  useEffect(() => {
+    if (shouldRedirectToWizard) {
+      replace('/wizard');
+    }
+  }, [shouldRedirectToWizard, replace]);
+
+  if (isLoading || shouldRedirectToWizard) {
     return <Spinner />;
   }
 

@@ -10,7 +10,6 @@ export * from './SimpleLink';
 export * from './Containers';
 export * from './Alert';
 export * from './Button';
-export * from './BackgroundImage';
 export * from './BackToTop';
 export * from './Navbar/Nav';
 export * from './Navbar';

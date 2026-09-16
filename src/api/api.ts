@@ -885,4 +885,13 @@ export class APIHandler {
   postElearningCompletion(unitId: string): Promise<AxiosResponse> {
     return this.post(`/elearning/units/${unitId}/completions`, {});
   }
+
+  // ///////// //
+  // Version  //
+  // ///////// //
+  getVersion(): Promise<
+    AxiosResponse<{ version: string; release: string | null }>
+  > {
+    return this.get('/version');
+  }
 }
