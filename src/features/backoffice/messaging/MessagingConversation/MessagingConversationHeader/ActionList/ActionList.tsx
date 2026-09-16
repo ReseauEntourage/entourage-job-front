@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   ConversationParticipant,
   ConversationParticipants,
-  FeatureKey,
 } from '@/src/api/types';
 import { Button, LucidIcon } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
@@ -10,7 +9,6 @@ import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
-  selectHasBetaFeature,
 } from '@/src/use-cases/current-user';
 import {
   messagingActions,

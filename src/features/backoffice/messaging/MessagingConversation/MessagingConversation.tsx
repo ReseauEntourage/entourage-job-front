@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckinState, ConversationType, FeatureKey } from '@/src/api/types';
+import { CheckinState, ConversationType } from '@/src/api/types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
@@ -15,7 +15,6 @@ import { useGetCheckinQuery } from '@/src/use-cases/checkin';
 import {
   selectCurrentUser,
   selectCurrentUserId,
-  selectHasBetaFeature,
 } from '@/src/use-cases/current-user';
 import {
   messagingActions,
