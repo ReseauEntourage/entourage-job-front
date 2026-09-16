@@ -22,12 +22,15 @@ export const StyledInsightsContainer = styled.div<{
 }>`
   display: grid;
   grid-template-columns: 1fr;
-  @media (min-width: ${BREAKPOINTS.desktop}px) {
-    grid-template-columns: repeat(${(props) => props.$nbColumns || 4}, 1fr);
-    background: ${(props) =>
-      !props.$invertBgColor ? COLORS.white : COLORS.hoverBlue};
+  background: ${(props) =>
+    !props.$invertBgColor ? COLORS.white : COLORS.hoverBlue};
+  margin-top: 20px;
 
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
     margin-top: ${(props) => (props.$withIllu ? SHIFT + 20 : 20)}px;
+
+    grid-template-columns: repeat(${(props) => props.$nbColumns || 4}, 1fr);
+
     > div {
       margin-top: -${(props) => (props.$withIllu ? SHIFT : 0)}px;
       box-sizing: border-box;
@@ -36,7 +39,7 @@ export const StyledInsightsContainer = styled.div<{
   gap: 30px;
   flex: 1;
 
-  padding: 0px 75px 60px 75px;
+  padding: 20px 30px 30px 30px;
   padding-top: ${(props) => (!props.$withIllu ? 60 : 0)}px;
   border-radius: 110px;
 `;

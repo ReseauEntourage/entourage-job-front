@@ -245,6 +245,7 @@ const Aider = () => {
         subtitle="L’équipe Entourage est à vos côtés dès le premier jour"
         img="/static/img/front-office/aider/coach-ressources.jpg"
         reverse
+        imgCover
       >
         <StyledCriteriasContainer>
           {ressourcesCriterias.map((criteria, index) => (
