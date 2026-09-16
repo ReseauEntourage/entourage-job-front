@@ -25,7 +25,6 @@ const signInAsCoachWithAIAssistant = (betaEnabled = true) => {
     statusCode: 200,
     body: buildCurrentUser({
       role: 'Coach',
-      betaFeatures: { messaging_ai_assistant: betaEnabled },
     }),
   });
   interceptCurrentUserSubResources();
@@ -77,7 +76,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
       body: buildCurrentUser({
         id: 'user-candidate',
         role: 'Candidat',
-        betaFeatures: { messaging_ai_assistant: true },
       }),
     });
     interceptCurrentUserSubResources();

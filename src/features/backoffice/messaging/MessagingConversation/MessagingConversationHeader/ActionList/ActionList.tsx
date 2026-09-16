@@ -27,17 +27,13 @@ export const ActionList = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-  const hasMessagingAIAssistant = useSelector(
-    selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
-  );
   const selectedConversation = useSelector(selectSelectedConversation);
 
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
-  const canUseAIAssistant =
-    currentUser?.role !== UserRoles.CANDIDATE && hasMessagingAIAssistant;
+  const canUseAIAssistant = currentUser?.role !== UserRoles.CANDIDATE;
 
   const isOneToOneConversation = selectedConversation?.type === 'direct';
   const canShareNetwork =
