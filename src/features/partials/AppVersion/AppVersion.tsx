@@ -41,18 +41,16 @@ export const AppVersion = () => {
 
   const tooltipContent = (
     <>
-      <Text size="xsmall" color="white">
+      <Text size="xsmall">
         Version Front : v{process.env.NEXT_PUBLIC_APP_VERSION} ({frontRelease})
       </Text>
       {backVersion.status === 'success' && (
-        <Text size="xsmall" color="white">
+        <Text size="xsmall">
           Version Back : v{backVersion.version} ({backVersion.release || 'dev'})
         </Text>
       )}
       {backVersion.status === 'error' && (
-        <Text size="xsmall" color="white">
-          Version Back : indisponible
-        </Text>
+        <Text size="xsmall">Version Back : indisponible</Text>
       )}
     </>
   );
