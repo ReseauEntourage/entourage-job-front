@@ -136,6 +136,16 @@ const nextConfig = {
         destination: '/entourage-pro',
         permanent: false,
       },
+      {
+        source: '/inscription',
+        destination: '/wizard',
+        permanent: true,
+      },
+      {
+        source: '/travailler',
+        destination: '/candidat',
+        permanent: true,
+      },
     ];
   },
   async headers() {

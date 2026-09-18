@@ -14,7 +14,7 @@ export const Rejoindre = () => {
           description:
             "Vous avez besoin d'aide ? Notre communauté de coachs met son expertise à votre disposition pour vous proposer l'accompagnement qu'il vous faut.",
           img: '/static/img/home-rejoindre-1.jpg',
-          href: '/travailler',
+          href: '/candidat',
           CTAText: 'Devenir candidat(e)',
           onClick: () => {
             gaEvent(GA_TAGS.HOME_REJOINDRE_CANDIDAT_CLICK);

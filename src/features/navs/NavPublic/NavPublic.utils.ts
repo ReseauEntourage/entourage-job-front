@@ -4,7 +4,7 @@ import { INavPublicItem } from './NavPublic.types';
 export const LINKS: INavPublicItem[] = [
   { href: '/aider', name: 'Devenir coach', tag: GA_TAGS.HEADER_AIDER_CLIC },
   {
-    href: '/travailler',
+    href: '/candidat',
     name: 'Devenir candidat(e)',
     tag: GA_TAGS.HEADER_TRAVAILLER_CLIC,
   },
@@ -14,7 +14,7 @@ export const LINKS: INavPublicItem[] = [
     tag: GA_TAGS.HEADER_ORIENTER_CLIC,
   },
   {
-    name: 'Engager mon entreprise',
+    name: 'Engager son entreprise',
     tag: GA_TAGS.HEADER_RECRUTER_CLIC,
     childrens: [
       {
