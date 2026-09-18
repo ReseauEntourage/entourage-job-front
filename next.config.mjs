@@ -137,6 +137,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: '/inscription',
+        destination: '/wizard',
+        permanent: true,
+      },
+      {
         source: '/travailler',
         destination: '/candidat',
         permanent: true,
