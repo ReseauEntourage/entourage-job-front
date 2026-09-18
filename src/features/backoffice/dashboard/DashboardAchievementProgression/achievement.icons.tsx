@@ -33,16 +33,18 @@ export const ACHIEVEMENT_TOOLTIP: Partial<
 > = {
   [AchievementType.SUPER_ENGAGED_COACH]: (
     <StyledTooltipContent>
-      <Text weight="semibold">Ce que ça change pour les candidats</Text>
-      <Text color="darkGray">
+      <Text weight="semibold" color="white">
+        Ce que ça change pour les candidats
+      </Text>
+      <Text color="white">
         <LucidIcon name="Eye" /> Votre profil remonte en priorité quand un
         candidat cherche un coach.
       </Text>
-      <Text color="darkGray">
+      <Text color="white">
         <LucidIcon name="Mail" /> Les candidats osent écrire, en sachant
         qu&apos;ils auront une réponse.
       </Text>
-      <Text color="darkGray">
+      <Text color="white">
         <LucidIcon name="Handshake" /> Un signal fort que leur démarche est
         prise au sérieux.
       </Text>
