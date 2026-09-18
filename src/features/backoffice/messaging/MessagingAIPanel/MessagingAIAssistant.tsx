@@ -60,6 +60,8 @@ export const MessagingAIAssistant = () => {
     null
   );
   const [rateLimitResetAt, setRateLimitResetAt] = useState<number | null>(null);
+  const [isRateLimitWarningDismissed, setIsRateLimitWarningDismissed] =
+    useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -125,6 +127,10 @@ export const MessagingAIAssistant = () => {
   useLayoutEffect(adjustInputHeight, []);
 
   const isRateLimited = rateLimitResetAt !== null;
+
+  useEffect(() => {
+    setIsRateLimitWarningDismissed(false);
+  }, [rateLimitRemaining]);
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -314,11 +320,14 @@ export const MessagingAIAssistant = () => {
 
       {!isRateLimited &&
         rateLimitRemaining !== null &&
-        rateLimitRemaining <= 2 && (
+        rateLimitRemaining <= 2 &&
+        !isRateLimitWarningDismissed && (
           <Alert
             type={AlertType.Warning}
             icon={<LucidIcon name="TriangleAlert" size={14} />}
             rounded
+            closable
+            onClose={() => setIsRateLimitWarningDismissed(true)}
           >
             {rateLimitRemaining === 0 ? (
               <Text>Vous avez atteint la limite horaire.</Text>
@@ -328,8 +337,9 @@ export const MessagingAIAssistant = () => {
                   {rateLimitRemaining} message
                   {rateLimitRemaining !== 1 ? 's' : ''}
                 </strong>{' '}
-                restant{rateLimitRemaining === 0 ? 's' : ''} avant
-                d&apos;atteindre la limite horaire.
+                {`restant${
+                  rateLimitRemaining !== 1 ? 's' : ''
+                } avant d'atteindre la limite horaire.`}
               </Text>
             )}
           </Alert>

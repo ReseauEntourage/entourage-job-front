@@ -26,7 +26,7 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
   const isDesktop = useIsDesktop();
   return (
     <Section id="reviews" style="default">
-      <H3 title={title} center />
+      <H3 title={title} center color="primaryBlue" />
       <br />
       <StyledReviewContainer>
         {reviews.map(

@@ -32,7 +32,7 @@ export const Decouvrir = () => {
       <Button
         variant="primary"
         rounded
-        href="/travailler"
+        href="/candidat"
         onClick={() => {
           gaEvent(GA_TAGS.HOME_DECOUVRIR_CTA_CLICK);
         }}

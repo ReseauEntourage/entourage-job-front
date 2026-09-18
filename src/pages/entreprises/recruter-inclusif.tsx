@@ -2,9 +2,10 @@ import React, { useMemo } from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Button, Text } from '@/src/components/ui';
 import { CheckListElement, List } from '@/src/components/ui/Lists';
+import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { CompanyGoal } from '@/src/constants/company';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from '@/src/constants/tags';
-import { Impact } from '@/src/features/partials/common/Impact';
+import { Impact, ImpactInsight } from '@/src/features/partials/common/Impact';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
 import { PartnersWorkingWithUs } from '@/src/features/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { EntreprisesCVList } from '@/src/features/partials/pages/Entreprises/EntreprisesCVList';
@@ -13,7 +14,10 @@ import { EntreprisesFAQ } from '@/src/features/partials/pages/Entreprises/Entrep
 import { EntreprisesTuto } from '@/src/features/partials/pages/Entreprises/EntreprisesTuto/EntreprisesTuto';
 import { EntreprisesVideo } from '@/src/features/partials/pages/Entreprises/EntreprisesVideo/EntreprisesVideo';
 import { RecruitmentMetrics } from '@/src/features/partials/pages/Entreprises/RecruitmentMetrics/RecruitmentMetrics';
-import { CTAProps, ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import {
+  PageHero,
+  PageHeroCTAProps,
+} from '@/src/features/partials/utils/PageHero';
 import { Reviews } from '@/src/features/partials/utils/Reviews';
 import { SimpleImageText } from '@/src/features/partials/utils/SimpleImageText';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
@@ -21,6 +25,32 @@ import { useUtm } from '@/src/hooks/queryParams/useUTM';
 import { fbEvent } from '@/src/lib/fb';
 import { gaEvent } from '@/src/lib/gtag';
 import { linkEvent } from '@/src/lib/lintrk';
+
+const impactIlluSizes = { width: 85, height: 85 };
+
+const impactInsights: ImpactInsight[] = [
+  {
+    value: '81%',
+    description: 'des personnes disent se sentir mieux',
+    illu: <SvgIcon name="IlluPoigneeDeMain" {...impactIlluSizes} />,
+  },
+  {
+    value: '500',
+    description: 'entreprises partenaires',
+    illu: <SvgIcon name="IlluMalette" {...impactIlluSizes} />,
+  },
+  {
+    value: '19 000',
+    description: 'personnes sensibilisées',
+    illu: <SvgIcon name="IlluCoeurSurLaMain" {...impactIlluSizes} />,
+  },
+];
+
+const impactTitle = (
+  <>
+    Notre <span className="orange">impact</span> en chiffres
+  </>
+);
 
 const reviews = [
   {
@@ -82,14 +112,13 @@ const RecruterInclusif = () => {
       href: `/wizard?flow=${RegistrationFlow.COMPANY}`,
       variant: 'primary',
       label: 'Créer mon espace entreprise',
-    } as CTAProps;
+    } as PageHeroCTAProps;
   }, []);
 
   return (
     <Layout title="Recruter inclusif - Entourage Pro">
-      <ImageTitle
+      <PageHero
         img="/static/img/recruter-inclusif-banner-desktop.jpg"
-        imgMobile="/static/img/recruter-inclusif-banner-mobile.jpg"
         title="Pour gagner en performance et en impact, recrutez inclusif"
         description={
           <>
@@ -168,7 +197,8 @@ const RecruterInclusif = () => {
       <EntreprisesCVList />
 
       <Impact
-        as="Company"
+        title={impactTitle}
+        insights={impactInsights}
         gaEventTag={GA_TAGS.PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK}
         inviteToShowMore
         invertBgColor
