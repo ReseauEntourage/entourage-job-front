@@ -9,14 +9,46 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
   const { asPath } = useRouter();
   const isExactPath = asPath === item.href;
 
-  // Generate <Link> or simple text if not necessary
-  let link: React.ReactNode = item.name;
-  if (item.href) {
-    link = (
+  if (item.childrens && item.childrens.length > 0) {
+    return (
+      <>
+        {item.childrens.map((child) => {
+          const isChildPath = child.href === asPath;
+
+          return (
+            <li key={child.name}>
+              <StyledNavPublicItemMobileLinkContainer
+                selected={isChildPath}
+                $isChild
+              >
+                <Link
+                  href={child.href || '#'}
+                  onClick={() => {
+                    gaEvent(child.tag);
+                    if (onClick) {
+                      onClick();
+                    }
+                  }}
+                >
+                  {child.name}
+                </Link>
+              </StyledNavPublicItemMobileLinkContainer>
+            </li>
+          );
+        })}
+      </>
+    );
+  }
+
+  if (!item.href) {
+    return null;
+  }
+
+  return (
+    <li>
       <StyledNavPublicItemMobileLinkContainer selected={isExactPath}>
         <Link
-          className="uk-text-center"
-          href={item.href || '#'}
+          href={item.href}
           onClick={() => {
             gaEvent(item.tag);
             if (onClick) {
@@ -27,35 +59,6 @@ export const NavPublicItemMobile = ({ item, onClick }: NavPublicItemProps) => {
           {item.name}
         </Link>
       </StyledNavPublicItemMobileLinkContainer>
-    );
-  }
-
-  // Generate menu item containing the <Link>
-  const menuItem = <div className="uk-flex-center">{link}</div>;
-
-  if (item.childrens && item.childrens.length > 0) {
-    return (
-      <>
-        {item.childrens.map((child) => {
-          const isChildPath = child.href === asPath;
-
-          return (
-            <div className="uk-flex-center" key={child.name}>
-              <StyledNavPublicItemMobileLinkContainer
-                selected={isChildPath}
-                key={child.name}
-              >
-                <Link href={child.href || '#'} key={child.name}>
-                  {child.name}
-                </Link>
-              </StyledNavPublicItemMobileLinkContainer>
-            </div>
-          );
-        })}
-      </>
-    );
-  }
-
-  // Return a simple menuItem
-  return menuItem;
+    </li>
+  );
 };

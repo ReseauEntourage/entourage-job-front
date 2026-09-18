@@ -88,8 +88,7 @@ export const NewsletterPartial = ({
     >
       <div className="uk-text-center">
         <H3
-          title="Inscrivez-vous à la newsletter pour avoir des nouvelles des candidats
-          et être informé de l'évolution du projet&nbsp;!"
+          title="Inscrivez-vous à la newsletter pour suivre l’actualité d’Entourage Pro"
           center
         />
       </div>

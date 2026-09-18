@@ -11,7 +11,7 @@ import { Decouvrir } from '@/src/features/partials/pages/HomePage/Decouvrir';
 import { Engagement } from '@/src/features/partials/pages/HomePage/Engagement';
 import { Figures } from '@/src/features/partials/pages/HomePage/Figures';
 import { Rejoindre } from '@/src/features/partials/pages/HomePage/Rejoindre';
-import { ImageTitle } from '@/src/features/partials/utils/ImageTitle';
+import { PageHero } from '@/src/features/partials/utils/PageHero';
 import { gaEvent } from '@/src/lib/gtag';
 import { STORAGE_KEYS } from '../constants';
 import { openModal } from '../features/modals/Modal';
@@ -33,20 +33,15 @@ const Index = () => {
   });
   return (
     <Layout>
-      <ImageTitle
-        title={
-          <>
-            Le premier réseau
-            <br /> professionnel solidaire
-          </>
-        }
-        img="/static/img/home-banner.jpg"
-        imgMobile="/static/img/home-banner.jpg"
+      <PageHero
+        title={<>Le premier réseau professionnel solidaire</>}
+        description="Aujourd’hui, chercher un travail est de plus en plus difficile. Pour les plus précaires, c’est quasiment mission impossible. Entourage Pro vise à changer ça."
+        img="/static/img/front-office/homepage/homepage-hero-desktop.png"
         alt="Entourage Pro réseau solidaire professionnel"
         cta={[
           {
             label: 'Devenir candidat(e)',
-            href: '/travailler',
+            href: '/candidat',
             variant: 'primary',
             dataTest: 'banner-cta',
             onClick: () => {

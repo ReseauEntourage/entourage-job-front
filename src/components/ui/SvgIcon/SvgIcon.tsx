@@ -39,6 +39,7 @@ import IlluBulleQuestionSvg from '@/assets/icons/illu-bulle-question.svg';
 import IlluBulleWebinaireSvg from '@/assets/icons/illu-bulle-webinaire.svg';
 import IlluCalendrierSvg from '@/assets/icons/illu-calendrier.svg';
 import IlluCandidatFolderSvg from '@/assets/icons/illu-candidat-folder.svg';
+import IlluCarteDeDonSvg from '@/assets/icons/illu-carte-de-don.svg';
 import IlluCartonSvg from '@/assets/icons/illu-carton.svg';
 import IlluClefSvg from '@/assets/icons/illu-clef.svg';
 import IlluCoachEtCandidatSvg from '@/assets/icons/illu-coach-et-candidat.svg';
@@ -50,9 +51,13 @@ import IlluConversationSvg from '@/assets/icons/illu-conversation.svg';
 import IlluDesktopSvg from '@/assets/icons/illu-desktop.svg';
 import IlluDiscussionBancSvg from '@/assets/icons/illu-discussion-banc.svg';
 import IlluDossierCandidatSvg from '@/assets/icons/illu-dossier-candidat.svg';
+import IlluEntourageLogoSvg from '@/assets/icons/illu-entourage-logo.svg';
+import IlluHeartGradientSvg from '@/assets/icons/illu-heart-gradient.svg';
 import IlluMaletteSvg from '@/assets/icons/illu-malette.svg';
+import IlluOeilSvg from '@/assets/icons/illu-oeil.svg';
 import IlluOrdiCVSvg from '@/assets/icons/illu-ordi-cv.svg';
 import IlluPoigneeDeMainSvg from '@/assets/icons/illu-poignee-de-main.svg';
+import IlluPouceCoeurSvg from '@/assets/icons/illu-pouce-coeur.svg';
 import IlluPouceSvg from '@/assets/icons/illu-pouce.svg';
 import IlluQuestionReponseOrangeSvg from '@/assets/icons/illu-question-reponse-orange.svg';
 import IlluReseauSvg from '@/assets/icons/illu-reseau.svg';
@@ -144,6 +149,7 @@ export const SvgIcons = {
   IlluCoeurSurLaMain: IlluCoeurSurLaMainSvg,
   IlluCoeurSurMainSeule: IlluCoeurSurMainSeuleSvg,
   IlluConversation: IlluConversationSvg,
+  IlluOeil: IlluOeilSvg,
   IlluDesktop: IlluDesktopSvg,
   IlluDiscussionBanc: IlluDiscussionBancSvg,
   IlluDossierCandidat: IlluDossierCandidatSvg,
@@ -158,6 +164,10 @@ export const SvgIcons = {
   IlluBulleWebinaire: IlluBulleWebinaireSvg,
   IlluClef: IlluClefSvg,
   IlluCarton: IlluCartonSvg,
+  IlluEntourageLogo: IlluEntourageLogoSvg,
+  IlluHeartGradient: IlluHeartGradientSvg,
+  IlluCarteDeDon: IlluCarteDeDonSvg,
+  IlluPouceCoeur: IlluPouceCoeurSvg,
   Info: InfoSvg,
   Instagram: InstagramSvg,
   Language: LanguageSvg,

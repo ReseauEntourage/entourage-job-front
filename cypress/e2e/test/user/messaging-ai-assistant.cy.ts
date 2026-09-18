@@ -25,7 +25,6 @@ const signInAsCoachWithAIAssistant = (betaEnabled = true) => {
     statusCode: 200,
     body: buildCurrentUser({
       role: 'Coach',
-      betaFeatures: { messaging_ai_assistant: betaEnabled },
     }),
   });
   interceptCurrentUserSubResources();
@@ -59,16 +58,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     interceptGetAISession({ statusCode: 200, body: { messages: [] } });
   });
 
-  it("N'affiche pas le bouton assistant si le feature flag beta est désactivé", () => {
-    signInAsCoachWithAIAssistant(false);
-
-    cy.visit('/backoffice/messaging?conversationId=conversation-ai');
-    cy.wait('@getCurrent');
-    cy.wait('@getConversationById');
-
-    cy.get('[data-testid="messaging-ai-assistant-toggle"]').should('not.exist');
-  });
-
   it("N'affiche pas le bouton assistant pour un candidat même avec le flag activé", () => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     window.localStorage.setItem('access-token', 'fake-access-token');
@@ -77,7 +66,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
       body: buildCurrentUser({
         id: 'user-candidate',
         role: 'Candidat',
-        betaFeatures: { messaging_ai_assistant: true },
       }),
     });
     interceptCurrentUserSubResources();

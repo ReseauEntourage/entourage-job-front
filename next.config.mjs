@@ -141,6 +141,11 @@ const nextConfig = {
         destination: '/wizard',
         permanent: true,
       },
+      {
+        source: '/travailler',
+        destination: '/candidat',
+        permanent: true,
+      },
     ];
   },
   async headers() {

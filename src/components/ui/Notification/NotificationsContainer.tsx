@@ -7,6 +7,10 @@ import { NotificationWrapper } from './NotificationWrapper';
 export const NotificationsContainer = () => {
   const notifications = useSelector(selectNotifications);
 
+  if (!notifications.length) {
+    return null;
+  }
+
   return (
     <StyledNotificationsContainer>
       {notifications.map((notification) => (
