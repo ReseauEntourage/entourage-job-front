@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   ConversationParticipant,
   ConversationParticipants,
-  FeatureKey,
 } from '@/src/api/types';
 import { Button, LucidIcon } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
@@ -10,7 +9,6 @@ import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
-  selectHasBetaFeature,
 } from '@/src/use-cases/current-user';
 import {
   messagingActions,
@@ -27,17 +25,13 @@ export const ActionList = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-  const hasMessagingAIAssistant = useSelector(
-    selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)
-  );
   const selectedConversation = useSelector(selectSelectedConversation);
 
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
-  const canUseAIAssistant =
-    currentUser?.role !== UserRoles.CANDIDATE && hasMessagingAIAssistant;
+  const canUseAIAssistant = currentUser?.role !== UserRoles.CANDIDATE;
 
   const isOneToOneConversation = selectedConversation?.type === 'direct';
   const canShareNetwork =

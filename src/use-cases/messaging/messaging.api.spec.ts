@@ -175,14 +175,42 @@ describe('messaging api', () => {
       ).toHaveLength(1);
     });
 
-    it('does not notify on a generic error', async () => {
+    it('notifies with a fallback message on a generic (non-axios) error', async () => {
       const store = createTestStore();
       mockedApi.postMessage.mockRejectedValue(new Error('boom'));
 
       store.dispatch(actions.postMessageRequested(new FormData()));
       await flushPromises();
 
-      expect(store.getState().notifications.notifications).toHaveLength(0);
+      expect(store.getState().notifications.notifications).toHaveLength(1);
+      expect(store.getState().notifications.notifications[0]).toMatchObject({
+        type: 'danger',
+        message:
+          "Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.",
+      });
+    });
+
+    it('notifies with the backend message when the elearning gate blocks the conversation', async () => {
+      const store = createTestStore();
+      mockedApi.postMessage.mockRejectedValue({
+        isAxiosError: true,
+        response: {
+          status: 401,
+          data: {
+            message:
+              "Vous devez terminer votre parcours de formation avant de pouvoir contacter d'autres membres. Rendez-vous sur la page Formations pour le compléter.",
+          },
+        },
+      });
+
+      store.dispatch(actions.postMessageRequested(new FormData()));
+      await flushPromises();
+
+      expect(store.getState().notifications.notifications[0]).toMatchObject({
+        type: 'danger',
+        message:
+          "Vous devez terminer votre parcours de formation avant de pouvoir contacter d'autres membres. Rendez-vous sur la page Formations pour le compléter.",
+      });
     });
 
     it('notifies the user when the daily conversation limit is reached', async () => {

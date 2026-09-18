@@ -14,6 +14,26 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
     supportFile: 'cypress/support/e2e.ts',
+    blockHosts: [
+      '*.ytimg.com',
+      '*.youtube.com',
+      '*.gvt1.com',
+      '*.google.com',
+      '*.googlevideo.com',
+    ],
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium') {
+          launchOptions.args.push(
+            '--disable-background-networking',
+            '--disable-component-update',
+            '--disable-domain-reliability',
+            '--disable-client-side-phishing-detection'
+          );
+        }
+        return launchOptions;
+      });
+    },
   },
   retries: 3,
 });

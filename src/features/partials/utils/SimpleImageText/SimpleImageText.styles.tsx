@@ -32,12 +32,14 @@ export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextCo
 export const StyledSimpleImageTextImageContainer = styled.div`
   width: 45%;
   position: relative;
-  min-height: 300px;
+  min-height: 100%;
+  min-height: 500px;
+  margin: auto 0;
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
     margin-bottom: 20px;
-    height: 340px;
+    min-height: 250px;
   }
 
   img {

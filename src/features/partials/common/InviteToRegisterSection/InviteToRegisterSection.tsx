@@ -30,7 +30,7 @@ export const InviteToRegisterSection = ({
         <Button
           variant="secondary"
           rounded
-          size="medium"
+          size="large"
           onClick={onClick}
           dataTestId="button-register"
           weight="bold"

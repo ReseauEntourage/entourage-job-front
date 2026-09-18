@@ -1,54 +1,31 @@
 import React from 'react';
-import { Nav, Navbar, NavbarLogo } from '@/src/components/ui';
-import { Button } from '@/src/components/ui/Button';
-import { GA_TAGS } from '@/src/constants/tags';
-import { gaEvent } from '@/src/lib/gtag';
-import { StyledNavContainerDesktop } from '../../headers/Header.styles';
+import { NavbarLogo } from '@/src/components/ui';
+import {
+  StyledPublicNavActionsRow,
+  StyledPublicNavCard,
+  StyledPublicNavItemsRow,
+} from './NavPublic.styles';
 import { LINKS } from './NavPublic.utils';
+import { NavPublicAuthActions } from './NavPublicAuthActions';
 import { NavPublicItem } from './NavPublicItem/NavPublicItem';
 
 export const NavPublicDesktop = () => {
   const items = LINKS;
 
-  const rightItems = [
-    ...items.map((item, i) => <NavPublicItem item={item} key={i} />),
-    <div>
-      <Button
-        href="/login"
-        variant="secondary"
-        rounded
-        onClick={() => {
-          gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
-        }}
-      >
-        Connexion
-      </Button>
-    </div>,
-    <div>
-      <Button
-        href="/wizard"
-        variant="primary"
-        rounded
-        onClick={() => {
-          gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
-        }}
-      >
-        Inscription
-      </Button>
-    </div>,
-  ];
   return (
-    <StyledNavContainerDesktop id="nav">
-      <Navbar
-        backgroundColor="darkerBlack"
-        sticky
-        left={
-          <div className="uk-flex uk-flex-middle">
-            <NavbarLogo href="/" type="secondary" />
-          </div>
-        }
-        right={<Nav items={rightItems} color="white" />}
-      />
-    </StyledNavContainerDesktop>
+    <StyledPublicNavCard id="nav">
+      <NavbarLogo href="/" type="primary" />
+
+      <StyledPublicNavActionsRow>
+        <StyledPublicNavItemsRow>
+          {items.map((item, i) => (
+            <li key={i}>
+              <NavPublicItem item={item} />
+            </li>
+          ))}
+        </StyledPublicNavItemsRow>
+        <NavPublicAuthActions />
+      </StyledPublicNavActionsRow>
+    </StyledPublicNavCard>
   );
 };
