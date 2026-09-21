@@ -401,9 +401,13 @@ export const messagingApi = api.injectEndpoints({
     /** Translates `bindNewConversationSagaRequested`. */
     bindNewConversation: builder.mutation<void, string>({
       queryFn: async (requiredConvUserId, { dispatch }) => {
+        // Non-subscribing: this one-shot read must not pin the entry (see
+        // `messaging.listeners.ts` — cache lifetime belongs to the
+        // components that display the data).
         const { data: conversations } = await dispatch(
           messagingApi.endpoints.getConversations.initiate(undefined, {
             forceRefetch: true,
+            subscribe: false,
           })
         );
 

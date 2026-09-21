@@ -456,4 +456,67 @@ describe('messaging api', () => {
       }
     });
   });
+
+  /**
+   * Same contract for the conversation list and the unread badge. Their
+   * listeners used to leak a subscription per trigger — and the messaging
+   * screen triggers a refresh every 30s, so they piled up for the whole
+   * session. Now non-subscribing, their cache lifetime rests on
+   * `MessagingConversationList` / `MessagingConversation` and on
+   * `NavConnected` respectively.
+   */
+  describe('conversation list and unread count cache lifetime', () => {
+    const WELL_PAST_CACHE_GC = 10 * 60 * 1000;
+
+    it('keeps the conversation list alive while a subscriber is mounted', async () => {
+      jest.useFakeTimers();
+      try {
+        const store = createTestStore();
+        mockedApi.getConversations.mockResolvedValue({
+          data: [buildConversation({ id: 'conv-1' })],
+        } as any);
+
+        // Stands in for the mounted list's query hook.
+        const subscription = store.dispatch(
+          messagingApi.endpoints.getConversations.initiate()
+        );
+        await jest.advanceTimersByTimeAsync(0);
+        await jest.advanceTimersByTimeAsync(WELL_PAST_CACHE_GC);
+
+        expect(selectConversations(store.getState())).toHaveLength(1);
+
+        subscription.unsubscribe();
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
+    it('does not pin the list or the unread count through the listeners alone', async () => {
+      jest.useFakeTimers();
+      try {
+        const store = createTestStore();
+        mockedApi.getConversations.mockResolvedValue({
+          data: [buildConversation({ id: 'conv-1' })],
+        } as any);
+        mockedApi.getUnseenConversationsCount.mockResolvedValue({
+          data: 3,
+        } as any);
+
+        store.dispatch(actions.getConversationsRequested());
+        store.dispatch(actions.getUnseenConversationsCountRequested());
+        await jest.advanceTimersByTimeAsync(0);
+        expect(selectConversations(store.getState())).toHaveLength(1);
+        expect(selectUnseenConversationCount(store.getState())).toBe(3);
+
+        await jest.advanceTimersByTimeAsync(WELL_PAST_CACHE_GC);
+
+        // Collected, because the forced refresh no longer subscribes. On a
+        // real screen the mounted components hold the subscription.
+        expect(selectConversations(store.getState())).toBeNull();
+        expect(selectUnseenConversationCount(store.getState())).toBe(0);
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+  });
 });

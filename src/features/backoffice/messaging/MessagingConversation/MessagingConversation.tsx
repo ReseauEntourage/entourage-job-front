@@ -23,6 +23,7 @@ import {
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
+  useGetConversationsQuery,
   useGetSelectedConversationQuery,
   useLoadOlderMessagesMutation,
   usePollConversationMessagesMutation,
@@ -105,6 +106,13 @@ export const MessagingConversation = () => {
       !selectedConversationId || selectedConversationId === NEW_CONVERSATION_ID,
     refetchOnMountOrArgChange: true,
   });
+  /**
+   * The 30s poll below used to dispatch `getConversationsRequested`, whose
+   * listener opened a subscription it never released — one per tick, for as
+   * long as this screen stayed open. Refetching through the hook keeps the
+   * same cadence while holding a single subscription tied to this mount.
+   */
+  const { refetch: refetchConversations } = useGetConversationsQuery();
 
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
@@ -339,11 +347,11 @@ export const MessagingConversation = () => {
           after: encodeMessageCursor(newestMessage),
         });
       }
-      dispatch(messagingActions.getConversationsRequested());
+      refetchConversations();
     }, DELAY_REFRESH_CONVERSATIONS);
 
     return () => clearInterval(interval);
-  }, [dispatch, selectedConversationId, pollConversationMessages]);
+  }, [refetchConversations, selectedConversationId, pollConversationMessages]);
 
   const handleMessagesScroll = () => {
     const container = messagesContainerRef.current;

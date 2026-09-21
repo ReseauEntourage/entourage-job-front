@@ -6,20 +6,18 @@ import { NEW_CONVERSATION_ID } from './messaging.utils';
 const { actions } = slice;
 
 /**
- * ⚠️ The two listeners below deliberately keep their (never-released)
- * subscription, unlike `getSelectedConversationRequested` further down.
+ * Every `initiate()` below is non-subscribing: these listeners force a
+ * refresh, which is not a reason to keep an entry alive. They used to open a
+ * subscription that was never released — one per trigger, and the messaging
+ * screen triggers a conversations refresh every 30 seconds, so a session
+ * accumulated dead subscriptions for as long as it stayed open.
  *
- * No component subscribes to `getConversations` or
- * `getUnseenConversationsCount` — both are read through selectors only — so
- * that subscription is the single thing keeping their cache entries alive.
- * Adding `subscribe: false` here without first giving those consumers a
- * real query-hook subscription would make the conversation list and the
- * unread badge silently empty themselves after `keepUnusedDataFor`: exactly
- * the bug that `fix-new-conversation-stub-gc` fixed on the new-conversation
- * screen, moved to another screen.
- *
- * Cleaning this up properly means subscribing from the components that
- * display them, then dropping the subscription here — in that order.
+ * Cache lifetime belongs to the components that display the data:
+ * `MessagingConversationList` and `MessagingConversation` for the
+ * conversations, `NavConnected` (mounted on every backoffice page) for the
+ * unread count, `MessagingConversation` for the selected conversation. Do
+ * not re-add `subscribe: true` here — give the consumer a query hook
+ * instead.
  */
 
 /** Translates `getConversationsSagaRequested`'s trigger. */
@@ -29,6 +27,7 @@ listenerMiddleware.startListening({
     listenerApi.dispatch(
       messagingApi.endpoints.getConversations.initiate(undefined, {
         forceRefetch: true,
+        subscribe: false,
       })
     );
   },
@@ -41,6 +40,7 @@ listenerMiddleware.startListening({
     listenerApi.dispatch(
       messagingApi.endpoints.getUnseenConversationsCount.initiate(undefined, {
         forceRefetch: true,
+        subscribe: false,
       })
     );
   },
