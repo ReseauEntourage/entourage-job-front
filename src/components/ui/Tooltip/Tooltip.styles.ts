@@ -43,12 +43,13 @@ export const StyledTooltipContent = styled.div<{
   width: ${({ width }) => (width ? `${width}px` : 'max-content')};
   max-width: ${({ width }) => (width ? `${width}px` : '300px')};
   padding: 8px 12px;
-  background: ${COLORS.black};
+  background: ${COLORS.white};
+  border: 1px solid ${COLORS.gray};
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   font-size: 13px;
   line-height: 1.4;
-  color: ${COLORS.white};
+  color: ${COLORS.black};
   z-index: 9999;
   ${({ $placement }) => placementTransform($placement)}
 `;
