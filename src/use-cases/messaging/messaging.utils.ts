@@ -1,7 +1,47 @@
-import { Message } from '@/src/api/types';
+import {
+  Conversation,
+  ConversationParticipants,
+  ConversationType,
+  Message,
+} from '@/src/api/types';
 
 /** Mirrors the backend's default page size for `GET conversations/:id`. */
 export const MESSAGES_PAGE_SIZE = 30;
+
+/**
+ * Sentinel `selectedConversationId` for the "new conversation" screen: a
+ * conversation being composed that does not exist server-side yet, and
+ * therefore has no real id.
+ */
+export const NEW_CONVERSATION_ID = 'new';
+
+/**
+ * Builds the client-only conversation displayed while composing a first
+ * message.
+ *
+ * Derived on read from `messaging.newConversationDraft` (see
+ * `selectSelectedConversation`) rather than stored. It used to be injected
+ * into the RTK Query cache under the `'new'` key, where — having no
+ * subscriber — it was garbage-collected after `keepUnusedDataFor` (60s by
+ * default). Past that delay the addressee vanished from the header and the
+ * send button became a silent no-op: anyone taking more than a minute to
+ * write their first message simply could not send it.
+ */
+export function buildNewConversationStub(
+  participants: ConversationParticipants
+): Conversation {
+  return {
+    id: '',
+    type:
+      participants.length > 1
+        ? ConversationType.GROUP
+        : ConversationType.DIRECT,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    messages: [],
+    participants,
+  };
+}
 
 /**
  * Encodes a message's `(createdAt, id)` as the same opaque pagination

@@ -570,8 +570,8 @@ Real User Monitoring (RUM) SDK for frontend observability.
 
 | | |
 |---|---|
-| **Version** | `^5.76.0` |
-| **Release date** | 2025 (approximate) |
+| **Version** | `^6.16.0` |
+| **Release date** | September 2026 |
 | **Changelog** | [CHANGELOG.md](https://github.com/DataDog/dd-trace-js/blob/master/CHANGELOG.md) |
 
 Datadog APM tracer for Node.js server-side tracing.

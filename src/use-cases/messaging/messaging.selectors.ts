@@ -4,6 +4,10 @@ import { ReduxRequestEvents } from '@/src/constants';
 import { api } from '@/src/store/api/api.slice';
 import { messagingApi, POST_MESSAGE_FIXED_CACHE_KEY } from './messaging.api';
 import { RootState as MessagingSliceRootState } from './messaging.slice';
+import {
+  buildNewConversationStub,
+  NEW_CONVERSATION_ID,
+} from './messaging.utils';
 
 // `RootState` here also needs the shared `api` reducer key (for the
 // `messagingApi.endpoints.*.select()` calls below), unlike the plain
@@ -63,10 +67,34 @@ export const selectGetConversationsStatus = (state: RootState) =>
 export const selectSelectedConversationId = (state: RootState) =>
   state.messaging.selectedConversationId;
 
+export const selectNewConversationDraft = (state: RootState) =>
+  state.messaging.newConversationDraft;
+
+/**
+ * `createSelector` is load-bearing here, not an optimization: `useSelector`
+ * compares by reference, so rebuilding the stub on every read would hand
+ * consumers a brand new object on each render and loop.
+ */
+const selectNewConversationStub = createSelector(
+  [selectNewConversationDraft],
+  (participants) =>
+    participants ? buildNewConversationStub(participants) : null
+);
+
+/**
+ * Single read of the conversation currently on screen, whichever kind it
+ * is: the draft being composed when the `'new'` sentinel is selected, the
+ * cached conversation otherwise. Consumers (header, editor, suggestions)
+ * need not know the difference — which is what keeps the addressee
+ * displayed, and the send working, however long the user takes to write.
+ */
 export const selectSelectedConversation = (state: RootState) => {
   const id = selectSelectedConversationId(state);
   if (!id) {
     return null;
+  }
+  if (id === NEW_CONVERSATION_ID) {
+    return selectNewConversationStub(state);
   }
   return (
     messagingApi.endpoints.getSelectedConversation.select(id)(state).data ??

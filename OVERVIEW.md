@@ -12,7 +12,7 @@ The PRO product frontend. Next.js 16 (Pages Router, Turbopack) + React 19 + Redu
 - **Analytics / monitoring**:
   - Google Analytics (`NEXT_PUBLIC_GA_TRACKING_ID`) via `gtag.ts`.
   - Datadog RUM Browser 6.24 (`NEXT_PUBLIC_DD_APP_ID`, `NEXT_PUBLIC_DD_CLIENT_TOKEN`).
-  - Datadog APM via `dd-trace` 5.76 for SSR.
+  - Datadog APM via `dd-trace` 6.16 for SSR.
 - **Content / CDN**: AWS S3 + CloudFront via `NEXT_PUBLIC_AWSS3_CDN_URL` / `NEXT_PUBLIC_CDN_URL` (images, CVs).
 - **Social / consent**: Facebook Pixel (`NEXT_PUBLIC_FB_APP_ID`, `NEXT_PUBLIC_FB_DOMAIN_VERIFICATION`), Tarte au Citron cookie banner (`NEXT_PUBLIC_TARTEAUCITRON_UUID`), `react-share` social buttons.
 - **Video**: `react-lite-youtube-embed` for video embeds.
@@ -70,7 +70,7 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 - **Pusher**: `pusher-js` 7.6.0.
 - **Components / icons**: `lucide-react` 0.447, `react-transition-group` 4.4.5, `react-spinners` 0.13.8, `react-tooltip` 5.28.0, `react-countup` 4.4.0, `react-visibility-sensor` 5.1.1, `react-lite-youtube-embed` 3.3.3, `react-share` 5.3.0, `react-modal` 3.16.3, `swiper` 12.1.2, `mobile-detect` 1.4.5.
 - **Content**: `marked` 4 + `dompurify` 3.4.12.
-- **Monitoring**: `@datadog/browser-rum` 6.24.0, `dd-trace` 5.76 (SSR).
+- **Monitoring**: `@datadog/browser-rum` 6.24.0, `dd-trace` 6.16 (SSR).
 - **Test**: Cypress 15.19.0, Jest 30.4.2, `@testing-library/react` 16.2.0, `@testing-library/jest-dom` 6.6.3, Storybook 10.3.5, Chromatic 6.24.1.
 
 ## Used technologies
