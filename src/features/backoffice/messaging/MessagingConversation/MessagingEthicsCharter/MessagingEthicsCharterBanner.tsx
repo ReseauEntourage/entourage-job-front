@@ -12,6 +12,7 @@ import {
   StyledMessagingEthicsCharterActions,
   StyledMessagingEthicsCharterBar,
   StyledMessagingEthicsCharterBarLabel,
+  StyledMessagingEthicsCharterColumn,
   StyledMessagingEthicsCharterContent,
   StyledMessagingEthicsCharterHeader,
   StyledMessagingEthicsCharterLink,
@@ -34,6 +35,21 @@ const INTRO =
 const CHARTER_LINK_LABEL = 'Voir la charte complète';
 const CHARTER_PATH = '/conseils-posture';
 const ACKNOWLEDGE_LABEL = "J'ai compris";
+
+/**
+ * Répartit les sections en deux colonnes de lecture, la première prenant la
+ * section supplémentaire quand le total est impair. Les colonnes vides sont
+ * écartées pour que la version desktop reste correcte si la charte venait à
+ * ne porter qu'un seul résumé.
+ */
+const splitInColumns = (
+  summaries: EthicsCharterSummary[]
+): EthicsCharterSummary[][] => {
+  const midpoint = Math.ceil(summaries.length / 2);
+  return [summaries.slice(0, midpoint), summaries.slice(midpoint)].filter(
+    (column) => column.length > 0
+  );
+};
 
 const CharterSection = ({ summary }: { summary: EthicsCharterSummary }) => (
   <StyledMessagingEthicsCharterSection>
@@ -195,8 +211,12 @@ export const MessagingEthicsCharterBanner = () => {
         </StyledMessagingEthicsCharterHeader>
 
         <StyledMessagingEthicsCharterSections>
-          {summaries.map((summary) => (
-            <CharterSection key={summary.title} summary={summary} />
+          {splitInColumns(summaries).map((column) => (
+            <StyledMessagingEthicsCharterColumn key={column[0].title}>
+              {column.map((summary) => (
+                <CharterSection key={summary.title} summary={summary} />
+              ))}
+            </StyledMessagingEthicsCharterColumn>
           ))}
         </StyledMessagingEthicsCharterSections>
 

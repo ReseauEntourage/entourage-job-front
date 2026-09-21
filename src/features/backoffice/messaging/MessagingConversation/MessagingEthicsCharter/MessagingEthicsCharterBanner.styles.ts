@@ -13,11 +13,25 @@ export const StyledMessagingEthicsCharterHeader = styled.div`
   flex-direction: column;
 `;
 
+/**
+ * Deux colonnes indépendantes, et non une grille de rangées : une grille
+ * cale chaque rangée sur sa section la plus haute, si bien qu'une section
+ * d'une seule puce laisse un vide sous elle avant la rangée suivante.
+ * Chaque colonne porte donc son propre espacement, uniforme, et les deux
+ * s'alignent par le haut.
+ */
 export const StyledMessagingEthicsCharterSections = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 32px;
-  row-gap: 12px;
+  align-items: start;
+`;
+
+export const StyledMessagingEthicsCharterColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
 `;
 
 export const StyledMessagingEthicsCharterSection = styled.div`
