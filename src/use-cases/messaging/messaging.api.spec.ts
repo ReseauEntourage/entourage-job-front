@@ -9,6 +9,7 @@ import { getMockedApi } from '@/src/store/testUtils/mockApi';
 import { messagingApi } from './messaging.api';
 import {
   selectConversations,
+  selectNewConversationDraft,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectUnseenConversationCount,
@@ -296,6 +297,163 @@ describe('messaging api', () => {
       expect(
         selectSelectedConversation(store.getState())?.participants[0].id
       ).toBe('user-99');
+    });
+  });
+
+  /**
+   * The draft used to be injected into the RTK Query cache under the `'new'`
+   * key. Having no subscriber, it was garbage-collected after
+   * `keepUnusedDataFor`, so a first message written in more than that delay
+   * could never be sent — no request, no error, no trace anywhere.
+   *
+   * These tests run on the real store and the real `api` slice, so the
+   * actual garbage collection runs. Mocking the cache away would make them
+   * pass without ever reproducing the bug.
+   */
+  describe('new conversation draft lifetime', () => {
+    // Far beyond any plausible `keepUnusedDataFor`, and deliberately not
+    // hard-coding the library's default so the test survives a change to it.
+    const WELL_PAST_CACHE_GC = 10 * 60 * 1000;
+
+    const bindNewConversationWith = async (userId: string) => {
+      const store = createTestStore();
+      mockedApi.getConversations.mockResolvedValue({ data: [] } as any);
+      mockedApi.getPublicUserProfile.mockResolvedValue({
+        data: { id: userId, firstName: 'Jane', lastName: 'Doe', role: 'Coach' },
+      } as any);
+
+      store.dispatch(actions.bindNewConversationRequested(userId));
+      await flushPromises();
+
+      return store;
+    };
+
+    it('keeps the addressee readable long after the cache would have been collected', async () => {
+      jest.useFakeTimers();
+      try {
+        const store = createTestStore();
+        mockedApi.getConversations.mockResolvedValue({ data: [] } as any);
+        mockedApi.getPublicUserProfile.mockResolvedValue({
+          data: {
+            id: 'user-99',
+            firstName: 'Jane',
+            lastName: 'Doe',
+            role: 'Coach',
+          },
+        } as any);
+
+        store.dispatch(actions.bindNewConversationRequested('user-99'));
+        await jest.advanceTimersByTimeAsync(0);
+
+        await jest.advanceTimersByTimeAsync(WELL_PAST_CACHE_GC);
+
+        // Both the send path (participant ids) and the header (addressee
+        // display) read through this selector: before the fix it returned
+        // null here, blanking the header and turning send into a no-op.
+        expect(selectSelectedConversationId(store.getState())).toBe('new');
+        expect(
+          selectSelectedConversation(store.getState())?.participants[0].id
+        ).toBe('user-99');
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
+    it('discards the draft when another conversation is selected', async () => {
+      const store = await bindNewConversationWith('user-99');
+
+      store.dispatch(actions.selectConversation('some-other-conversation'));
+
+      expect(selectNewConversationDraft(store.getState())).toBeNull();
+    });
+
+    it('discards the draft when the selection is cleared', async () => {
+      const store = await bindNewConversationWith('user-99');
+
+      store.dispatch(actions.selectConversation(null));
+
+      expect(selectNewConversationDraft(store.getState())).toBeNull();
+    });
+
+    it('discards the draft once the conversation has been created', async () => {
+      const store = await bindNewConversationWith('user-99');
+      mockedApi.postMessage.mockResolvedValue({
+        data: {
+          id: 'message-1',
+          conversation: buildConversation({ id: 'created-conv' }),
+        },
+      } as any);
+
+      const formData = new FormData();
+      formData.append('content', 'Bonjour');
+      formData.append('participantIds[]', 'user-99');
+      store.dispatch(actions.postMessageRequested(formData));
+      await flushPromises();
+
+      expect(selectNewConversationDraft(store.getState())).toBeNull();
+      expect(selectSelectedConversationId(store.getState())).toBe(
+        'created-conv'
+      );
+    });
+  });
+
+  /**
+   * Guards the other half of the fix. The listener used to `initiate()`
+   * without ever releasing the subscription, which kept every visited
+   * conversation cached forever and hid the fact that no component
+   * subscribed. Now that the leak is gone, the cache entry's lifetime rests
+   * entirely on `MessagingConversation`'s `useGetSelectedConversationQuery`
+   * subscription — so that subscription had better hold.
+   */
+  describe('existing conversation cache lifetime', () => {
+    const WELL_PAST_CACHE_GC = 10 * 60 * 1000;
+
+    it('keeps the conversation readable past the collection window while a subscriber is mounted', async () => {
+      jest.useFakeTimers();
+      try {
+        const store = createTestStore();
+        const conversation = buildConversation({ id: 'conv-7' });
+        mockedApi.getConversationById.mockResolvedValue({
+          data: conversation,
+        } as any);
+        store.dispatch(actions.selectConversation('conv-7'));
+
+        // Stands in for the mounted component's query hook.
+        const subscription = store.dispatch(
+          messagingApi.endpoints.getSelectedConversation.initiate('conv-7')
+        );
+        await jest.advanceTimersByTimeAsync(0);
+        await jest.advanceTimersByTimeAsync(WELL_PAST_CACHE_GC);
+
+        expect(selectSelectedConversation(store.getState())?.id).toBe('conv-7');
+
+        subscription.unsubscribe();
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
+    it('does not keep the entry alive through the listener alone', async () => {
+      jest.useFakeTimers();
+      try {
+        const store = createTestStore();
+        mockedApi.getConversationById.mockResolvedValue({
+          data: buildConversation({ id: 'conv-7' }),
+        } as any);
+        store.dispatch(actions.selectConversation('conv-7'));
+
+        // The forced refresh must not, on its own, pin the entry: that was
+        // the leak.
+        store.dispatch(actions.getSelectedConversationRequested());
+        await jest.advanceTimersByTimeAsync(0);
+        expect(selectSelectedConversation(store.getState())?.id).toBe('conv-7');
+
+        await jest.advanceTimersByTimeAsync(WELL_PAST_CACHE_GC);
+
+        expect(selectSelectedConversation(store.getState())).toBeNull();
+      } finally {
+        jest.useRealTimers();
+      }
     });
   });
 });

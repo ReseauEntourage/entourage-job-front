@@ -6,16 +6,19 @@ import {
 import {
   Conversation,
   ConversationParticipant,
-  ConversationParticipants,
-  ConversationType,
   Message,
   MessageWithConversation,
 } from '@/src/api/types';
 import { api } from '@/src/store/api/api.slice';
 import { notificationsActions } from '../notifications';
 import { slice } from './messaging.slice';
+import { NEW_CONVERSATION_ID } from './messaging.utils';
 
-const { selectConversation } = slice.actions;
+const {
+  selectConversation,
+  setNewConversationDraft,
+  clearNewConversationDraft,
+} = slice.actions;
 
 /**
  * Shared between the trigger listener (`messaging.listeners.ts`, which
@@ -38,23 +41,6 @@ function findExistingDirectConversation(
       conv.type === 'direct' &&
       conv.participants.find((p) => p.id === participantId)
   );
-}
-
-/** Builds the same client-only "new conversation" stub as the old reducer. */
-function buildNewConversationStub(
-  participants: ConversationParticipants
-): Conversation {
-  return {
-    id: '',
-    type:
-      participants.length > 1
-        ? ConversationType.GROUP
-        : ConversationType.DIRECT,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    messages: [],
-    participants,
-  };
 }
 
 export const messagingApi = api.injectEndpoints({
@@ -244,6 +230,11 @@ export const messagingApi = api.injectEndpoints({
           const { message, isNewConversation } = result;
 
           if (isNewConversation) {
+            // The conversation now exists server-side: the draft has served
+            // its purpose. `selectConversation` below clears it too, but
+            // being explicit keeps the lifecycle readable — and correct
+            // should the selection ever stop being dispatched here.
+            dispatch(clearNewConversationDraft());
             // Always select the newly created conversation, even if
             // `getConversations` hasn't loaded yet (e.g. sending from the
             // wizard, which never mounts the messaging page beforehand).
@@ -441,14 +432,13 @@ export const messagingApi = api.injectEndpoints({
             userProfile: profile,
           } as ConversationParticipant;
 
-          dispatch(selectConversation('new'));
-          dispatch(
-            messagingApi.util.upsertQueryData(
-              'getSelectedConversation',
-              'new',
-              buildNewConversationStub([participant])
-            )
-          );
+          // The draft goes to the slice, never to the RTK Query cache: an
+          // entry with no subscriber is garbage-collected after
+          // `keepUnusedDataFor`, which used to silently break the send.
+          // Set before selecting, so the screen never renders on `'new'`
+          // with no addressee.
+          dispatch(setNewConversationDraft([participant]));
+          dispatch(selectConversation(NEW_CONVERSATION_ID));
 
           return { data: undefined };
         } catch (error) {

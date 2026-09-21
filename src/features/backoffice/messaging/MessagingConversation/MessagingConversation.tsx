@@ -18,10 +18,12 @@ import {
 } from '@/src/use-cases/current-user';
 import {
   messagingActions,
+  NEW_CONVERSATION_ID,
   selectIsAIPanelOpen,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
+  useGetSelectedConversationQuery,
   useLoadOlderMessagesMutation,
   usePollConversationMessagesMutation,
 } from '@/src/use-cases/messaging';
@@ -90,6 +92,19 @@ export const MessagingConversation = () => {
       skip: !selectedConversationId || selectedConversationId === 'new',
     }
   );
+  /**
+   * Owns both the fetch and the cache entry's lifetime for the selected
+   * conversation. Subscribing here is what keeps the entry alive while this
+   * screen is mounted: it used to survive only through a never-released
+   * subscription leaked by `messaging.listeners.ts`. Skipped on the `'new'`
+   * sentinel, which is not a server-side conversation — its draft lives in
+   * the `messaging` slice instead.
+   */
+  useGetSelectedConversationQuery(selectedConversationId ?? '', {
+    skip:
+      !selectedConversationId || selectedConversationId === NEW_CONVERSATION_ID,
+    refetchOnMountOrArgChange: true,
+  });
 
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
@@ -293,8 +308,13 @@ export const MessagingConversation = () => {
   }, [selectedConversationId]);
 
   useEffect(() => {
-    if (selectedConversationId && selectedConversationId !== 'new') {
-      dispatch(messagingActions.getSelectedConversationRequested());
+    if (
+      selectedConversationId &&
+      selectedConversationId !== NEW_CONVERSATION_ID
+    ) {
+      // No `getSelectedConversationRequested` here any more: the query hook
+      // above already refetches on arg change, and dispatching both would
+      // fire two requests for every conversation opened.
       dispatch(messagingActions.markConversationSeenRequested());
     }
   }, [dispatch, selectedConversationId]);
