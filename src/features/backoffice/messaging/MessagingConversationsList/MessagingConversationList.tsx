@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Text } from '@/src/components/ui';
 import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
 import { useIsMobile } from '@/src/hooks/utils';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
-  messagingActions,
   selectConversations,
   selectUnseenConversationCount,
+  useGetConversationsQuery,
+  useGetUnseenConversationsCountQuery,
 } from '@/src/use-cases/messaging';
 import { conversationHasUnreadMessages } from '../messaging.utils';
 import {
@@ -23,16 +24,24 @@ import {
 } from './MessagingConversationTabs/MessagingConversationTabs';
 
 export const MessagingConversationList = () => {
-  const dispatch = useDispatch();
   const allConversations = useSelector(selectConversations);
   const currentUserId = useSelector(selectCurrentUserId);
   const [query, setQuery] = useState('');
   const [activeTab, setActiveTab] = useState<ConversationTabFilter>('all');
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    dispatch(messagingActions.getConversationsRequested());
-  }, [dispatch]);
+  /**
+   * Subscribing (rather than dispatching a trigger action) is what keeps
+   * these cache entries alive while this list is mounted. They used to
+   * survive only through subscriptions the listeners opened and never
+   * released — one per trigger, accumulating for the whole session.
+   * `refetchOnMountOrArgChange` preserves the previous "fresh on mount"
+   * behaviour of the trigger action this replaces.
+   */
+  useGetConversationsQuery(undefined, { refetchOnMountOrArgChange: true });
+  useGetUnseenConversationsCountQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const unseenConversationCount = useSelector(selectUnseenConversationCount);
 

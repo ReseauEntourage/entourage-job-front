@@ -7,9 +7,9 @@ import { useNotifBadges } from '@/src/hooks/useNotifBadges';
 import { usePrevious } from '@/src/hooks/utils';
 import { authenticationActions } from '@/src/use-cases/authentication';
 import {
-  messagingActions,
   selectConversations,
   selectSelectedConversation,
+  useGetUnseenConversationsCountQuery,
 } from '@/src/use-cases/messaging';
 import { NavConnectedContent } from './NavConnectedContent';
 
@@ -37,9 +37,17 @@ export const NavConnected = () => {
     }
   }, [user, logout, prevUser, company]);
 
+  /**
+   * This nav is mounted on every backoffice page, so subscribing here is
+   * what keeps the unread-count entry alive app-wide. It previously relied
+   * on the subscription the listener opened and never released — re-opened,
+   * and leaked again, on every one of the refreshes below.
+   */
+  const { refetch: refetchUnseenCount } = useGetUnseenConversationsCountQuery();
+
   useEffect(() => {
-    dispatch(messagingActions.getUnseenConversationsCountRequested());
-  }, [dispatch, user, selectedConversation, conversations]);
+    refetchUnseenCount();
+  }, [refetchUnseenCount, user, selectedConversation, conversations]);
 
   return (
     <NavConnectedContent

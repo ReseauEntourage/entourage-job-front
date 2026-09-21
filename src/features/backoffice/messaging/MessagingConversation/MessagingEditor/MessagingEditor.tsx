@@ -9,10 +9,13 @@ import { useIsMobile } from '@/src/hooks/utils';
 import { gaEvent } from '@/src/lib/gtag';
 import {
   messagingActions,
+  NEW_CONVERSATION_ID,
+  selectNewConversationDraft,
   selectNewMessage,
   selectSelectedConversation,
   selectSelectedConversationId,
 } from '@/src/use-cases/messaging';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { Attachment } from './Attachment/Attachment';
 import {
   MessagingEditorContainer,
@@ -34,6 +37,7 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   // Selected props
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
+  const newConversationDraft = useSelector(selectNewConversationDraft);
   const newMessage = useSelector(selectNewMessage);
 
   // States
@@ -80,9 +84,27 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   };
 
   const sendNewMessage = () => {
-    if (selectedConversation === null) {
+    const isNewConversation = selectedConversationId === NEW_CONVERSATION_ID;
+    const recipientIds = isNewConversation
+      ? (newConversationDraft ?? []).map((participant) => participant.id)
+      : [];
+    const conversationId = isNewConversation ? null : selectedConversation?.id;
+
+    // Never fail silently: a click on "send" always produces something the
+    // user can see. Returning quietly here is what made a lost first
+    // message indistinguishable from a broken button — and left no trace
+    // anywhere, since no request was ever sent.
+    if (isNewConversation ? recipientIds.length === 0 : !conversationId) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            "Une erreur est survenue lors de l'envoi du message. Rechargez la page et réessayez.",
+        })
+      );
       return;
     }
+
     // Send the message by providing the conversationId if the conversation is not new
     // or the participantIds if the conversation is new
     const formData = new FormData();
@@ -95,14 +117,12 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
         });
       }
     }
-    if (selectedConversationId === 'new') {
-      selectedConversation.participants
-        .map((participant) => participant.id)
-        .forEach((participantId) => {
-          formData.append('participantIds[]', participantId);
-        });
+    if (isNewConversation) {
+      recipientIds.forEach((participantId) => {
+        formData.append('participantIds[]', participantId);
+      });
     } else {
-      formData.append('conversationId', selectedConversation.id);
+      formData.append('conversationId', conversationId as string);
     }
     dispatch(messagingActions.postMessageRequested(formData));
     gaEvent(GA_TAGS.BACKOFFICE_MESSAGING_MESSAGE_SEND);
