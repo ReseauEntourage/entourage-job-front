@@ -47,6 +47,7 @@ import {
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
+import { MessagingEthicsCharterBanner } from './MessagingEthicsCharter/MessagingEthicsCharterBanner';
 import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
@@ -63,6 +64,58 @@ export const getDisplayCheckinBanner = (
     return false;
   }
   return checkinState.eligible && !checkinState.checkin?.completedAt;
+};
+
+/**
+ * Rappel de la charte éthique : même déclencheur que le bandeau « Nouveau
+ * contact » (l'utilisateur courant n'a pas encore écrit), mais ouvert aussi
+ * aux référents. Masqué dès qu'un administrateur est dans la boucle — une
+ * conversation avec l'équipe Entourage n'est pas une mise en relation entre
+ * membres — et quand une information épinglée passe l'éditeur en readonly.
+ */
+export const getDisplayEthicsCharterBanner = ({
+  currentUserRole,
+  currentUserId,
+  pinnedInfo,
+  selectedConversation,
+  selectedConversationId,
+  currentUserHasSentMessages,
+}: {
+  currentUserRole: string | undefined;
+  currentUserId: string | undefined;
+  pinnedInfo: unknown;
+  selectedConversation:
+    | { id: string; participants: { id: string; role: string }[] }
+    | null
+    | undefined;
+  selectedConversationId: string | null | undefined;
+  currentUserHasSentMessages: boolean;
+}): boolean => {
+  if (!currentUserRole || currentUserRole === UserRoles.ADMIN) {
+    return false;
+  }
+  if (pinnedInfo) {
+    return false;
+  }
+  if (selectedConversationId === 'new') {
+    return true;
+  }
+  if (
+    !selectedConversation ||
+    selectedConversation.id !== selectedConversationId
+  ) {
+    return false;
+  }
+  if (
+    selectedConversation.participants.some(
+      (participant) =>
+        participant.id !== currentUserId && participant.role === UserRoles.ADMIN
+    )
+  ) {
+    return false;
+  }
+
+  return !currentUserHasSentMessages;
 };
 
 export const MessagingConversation = () => {
@@ -209,6 +262,26 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
     currentUserId,
   ]);
+
+  const displayEthicsCharterBanner = useMemo(
+    () =>
+      getDisplayEthicsCharterBanner({
+        currentUserRole: currentUser?.role,
+        currentUserId,
+        pinnedInfo,
+        selectedConversation,
+        selectedConversationId,
+        currentUserHasSentMessages,
+      }),
+    [
+      currentUser,
+      currentUserId,
+      pinnedInfo,
+      selectedConversation,
+      selectedConversationId,
+      currentUserHasSentMessages,
+    ]
+  );
 
   const displayCheckinBanner = useMemo(
     () => getDisplayCheckinBanner(checkinState),
@@ -474,6 +547,10 @@ export const MessagingConversation = () => {
           recipientGender={otherParticipant.gender}
           currentUserRole={currentUser.role as UserRoles}
         />
+      )}
+
+      {displayEthicsCharterBanner && (
+        <MessagingEthicsCharterBanner key={selectedConversationId} />
       )}
 
       <MessagingEditor readonly={conversationParticipantsAreDeleted} />
