@@ -89,7 +89,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
         .click();
 
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
       cy.get('[data-testid="messaging-message"]').should(
         'contain.text',
         'Bonjour, merci pour votre message !'
@@ -117,7 +116,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-42');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-message"]').should(
         'contain.text',
@@ -250,7 +248,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-1');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-editor-input"]').type(
         'Merci, je reviens vers vous rapidement.'
@@ -290,7 +287,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-deleted');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-editor-input"]').should('be.disabled');
       cy.get('[data-testid="messaging-send-button"]').should('be.disabled');
@@ -323,7 +319,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.wait('@getCurrent');
       cy.wait('@getConversations');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-message"]').should(
         'contain.text',
@@ -347,7 +342,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.wait('@getCurrent');
       cy.wait('@getConversations');
       cy.wait('@getPublicProfile');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-starter-suggestions"]').should(
         'be.visible'
@@ -371,7 +365,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?userId=user-coach');
       cy.wait('@getCurrent');
       cy.wait('@getPublicProfile');
-      cy.closeEthicsCharterModal();
 
       cy.contains('Solliciter le réseau').should('be.visible');
     });
@@ -404,7 +397,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-quick-reply');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-quick-replies"]').should('be.visible');
       cy.get('[data-testid="messaging-quick-replies"]')
@@ -439,7 +431,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       );
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-quick-replies"]').should('be.visible');
       cy.get('[data-testid="messaging-editor-input"]').type(
@@ -473,7 +464,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-waiting');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-waiting-reply-banner"]')
         .should('be.visible')
@@ -492,7 +482,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?userId=user-coach');
       cy.wait('@getCurrent');
       cy.wait('@getPublicProfile');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-first-contact-banner"]').should(
         'be.visible'
@@ -500,6 +489,71 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.contains('Voir les conseils').click();
       cy.contains('Comment structurer votre premier échange').should(
         'be.visible'
+      );
+    });
+  });
+
+  describe('Rappel de la charte éthique', () => {
+    /**
+     * Les autres tests s'appuient sur l'utilisateur par défaut, qui a déjà
+     * accepté la charte : ici on surcharge la liste des documents lus pour
+     * obtenir la modale.
+     */
+    const signInWithoutCharter = () => {
+      signInAs({ role: 'Candidat' });
+      cy.intercept('GET', '/current/read-documents', {
+        statusCode: 200,
+        body: { readDocuments: [] },
+      }).as('currentReadDocumentsEmpty');
+    };
+
+    it("Ouvre la modale sur une conversation où je n'ai pas encore écrit, et « J'ai compris » l'enregistre", () => {
+      signInWithoutCharter();
+      const coach = buildParticipant({ id: 'user-coach', role: 'Coach' });
+
+      interceptGetConversations({ statusCode: 200, body: [] });
+      interceptGetPublicProfile({ statusCode: 200, body: coach });
+
+      cy.visit('/backoffice/messaging?userId=user-coach');
+      cy.wait('@getCurrent');
+      cy.wait('@getPublicProfile');
+      cy.wait('@currentReadDocumentsEmpty');
+
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'be.visible'
+      );
+      cy.contains("Ici, on se parle d'égal à égal").should('be.visible');
+
+      cy.contains('button', "J'ai compris").click();
+      cy.wait('@postReadDocument')
+        .its('request.body.documentName')
+        .should('eq', 'CharteEthique');
+
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'not.exist'
+      );
+      cy.get('[data-testid="messaging-ethics-charter-note"]').should(
+        'be.visible'
+      );
+    });
+
+    it("N'ouvre pas la modale quand la charte a déjà été acceptée", () => {
+      signInAs({ role: 'Candidat' });
+      const coach = buildParticipant({ id: 'user-coach', role: 'Coach' });
+
+      interceptGetConversations({ statusCode: 200, body: [] });
+      interceptGetPublicProfile({ statusCode: 200, body: coach });
+
+      cy.visit('/backoffice/messaging?userId=user-coach');
+      cy.wait('@getCurrent');
+      cy.wait('@getPublicProfile');
+      cy.wait('@currentReadDocuments');
+
+      cy.get('[data-testid="messaging-ethics-charter-note"]').should(
+        'be.visible'
+      );
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'not.exist'
       );
     });
   });
@@ -527,7 +581,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-report');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-conversation-actions-button"]').click();
       cy.get('[data-testid="messaging-report-button"]').click();
@@ -565,7 +618,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?userId=user-too-many');
       cy.wait('@getCurrent');
       cy.wait('@getPublicProfile');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-editor-input"]').type('Bonjour !');
       cy.get('[data-testid="messaging-send-button"]').click();
@@ -601,7 +653,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-share');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-share-network-toggle"]').should(
         'be.visible'
@@ -629,7 +680,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       );
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-share-network-toggle"]').should(
         'not.exist'
@@ -666,7 +716,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       );
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.window().then((win) => cy.stub(win, 'open').as('windowOpen'));
 
@@ -712,7 +761,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       );
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.get('[data-testid="messaging-share-network-toggle"]').click();
       cy.contains('Partager sur LinkedIn').click();
@@ -753,7 +801,6 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.visit('/backoffice/messaging?conversationId=conversation-suspicious');
       cy.wait('@getCurrent');
       cy.wait('@getConversationById');
-      cy.closeEthicsCharterModal();
 
       cy.contains('peut-être malveillant').should('be.visible');
       cy.contains('signaler ce message').click();

@@ -65,10 +65,24 @@ export const interceptCurrentUserSubResources = () => {
     body: [],
   }).as('currentAchievements');
 
-  cy.intercept('GET', '/current/read-documents', {
-    statusCode: 200,
-    body: { readDocuments: [] },
-  }).as('currentReadDocuments');
+  /**
+   * L'utilisateur par défaut a déjà accepté la charte éthique, comme tout
+   * compte passé par l'onboarding. Sans cela, la modale de rappel de la
+   * charte s'ouvrirait sur chaque conversation non répondue et son voile
+   * couvrirait les éléments que les tests cherchent à cliquer. Un test qui
+   * veut la modale surcharge cet intercept avec une liste vide.
+   */
+  cy.fixture('user-read-document-ethics-charter.json').then((readDocument) => {
+    cy.intercept('GET', '/current/read-documents', {
+      statusCode: 200,
+      body: { readDocuments: [readDocument] },
+    }).as('currentReadDocuments');
+  });
+
+  cy.intercept('POST', '/current/read-documents', {
+    statusCode: 201,
+    body: {},
+  }).as('postReadDocument');
 
   cy.intercept('GET', '/current/referred-users', {
     statusCode: 200,

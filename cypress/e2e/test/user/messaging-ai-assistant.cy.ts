@@ -90,7 +90,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
-    cy.closeEthicsCharterModal();
 
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').should('not.exist');
   });
@@ -102,7 +101,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
-    cy.closeEthicsCharterModal();
 
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
     cy.wait('@getAISession');
@@ -120,7 +118,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
-    cy.closeEthicsCharterModal();
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
     cy.wait('@getAISession');
 
@@ -144,7 +141,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
-    cy.closeEthicsCharterModal();
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
     cy.wait('@getAISession');
 
@@ -164,7 +160,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
-    cy.closeEthicsCharterModal();
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
     cy.wait('@getAISession');
 
@@ -193,7 +188,6 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
-    cy.closeEthicsCharterModal();
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
     cy.wait('@getAISession');
 
