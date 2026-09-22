@@ -88,6 +88,13 @@ export const RecapSuggestedMessage = ({
 
   useLayoutEffect(adjustMessageHeight, []);
 
+  /**
+   * Takes the addressee straight from the recommended profile, never from
+   * the messaging slice's new-conversation draft: this screen already knows
+   * who it is writing to. That independence is why the onboarding recap was
+   * never affected by the cache-collection bug that broke the messaging
+   * screen's first message — keep it that way.
+   */
   const handleSend = () => {
     const formData = new FormData();
     formData.append('content', newMessage);

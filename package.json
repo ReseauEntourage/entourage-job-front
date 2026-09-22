@@ -1,6 +1,6 @@
 {
   "name": "entourage-pro-front",
-  "version": "2.27.0",
+  "version": "2.27.1",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -45,7 +45,7 @@
     "@svgr/webpack": "^8.1.0",
     "axios": "^1.18.1",
     "check-password-strength": "^2.0.10",
-    "dd-trace": "^5.76.0",
+    "dd-trace": "^6.16.0",
     "dompurify": "^3.4.13",
     "dotenv": "^16.4.7",
     "expect": "^29.7.0",
