@@ -504,28 +504,30 @@ export const MessagingConversation = () => {
         />
       )}
 
-      {displaySuggestions ? (
+      <MessagingMessagesContainer
+        ref={messagesContainerRef}
+        onScroll={handleMessagesScroll}
+      >
+        {isLoadingOlderMessages && (
+          <MessagingOlderMessagesLoader>
+            <Spinner size={20} />
+          </MessagingOlderMessagesLoader>
+        )}
+        {reversedMessages &&
+          reversedMessages.map((message) => (
+            <MessagingMessage key={message.id} message={message} />
+          ))}
+        <div ref={messagesEndRef} />
+      </MessagingMessagesContainer>
+
+      {/* Accolées à l'éditeur, comme les réponses rapides, plutôt qu'occupant
+          toute la zone du fil de discussion. */}
+      {displaySuggestions && (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
           newMessage={newMessage}
           participants={selectedConversation?.participants || []}
         />
-      ) : (
-        <MessagingMessagesContainer
-          ref={messagesContainerRef}
-          onScroll={handleMessagesScroll}
-        >
-          {isLoadingOlderMessages && (
-            <MessagingOlderMessagesLoader>
-              <Spinner size={20} />
-            </MessagingOlderMessagesLoader>
-          )}
-          {reversedMessages &&
-            reversedMessages.map((message) => (
-              <MessagingMessage key={message.id} message={message} />
-            ))}
-          <div ref={messagesEndRef} />
-        </MessagingMessagesContainer>
       )}
 
       {displayQuickReplies && (

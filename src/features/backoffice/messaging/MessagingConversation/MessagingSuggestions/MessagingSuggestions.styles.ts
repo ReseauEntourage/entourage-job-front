@@ -1,21 +1,24 @@
 import { styled } from 'styled-components';
 
+/**
+ * Bandeau compact accolé à l'éditeur, sur le modèle des réponses rapides :
+ * il épouse la hauteur de son contenu au lieu d'occuper la zone du fil de
+ * discussion, qui reste vide tant qu'aucun message n'a été échangé.
+ */
 export const MessagingSuggestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   width: 100%;
-  overflow-y: auto;
-  padding: 20px;
+  padding: 10px 20px;
   box-sizing: border-box;
-  flex: auto;
-  gap: 20px;
-  justify-content: flex-start;
+  flex-shrink: 0;
 `;
 
 export const MessagingSuggestionsListContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
 `;
 
