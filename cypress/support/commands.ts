@@ -26,6 +26,7 @@ declare global {
       generateNudgesApiResponse(): Chainable<Subject>;
       generateBusinessSectorsApiResponse(): Chainable<Subject>;
       generateConversationsApiResponse(count: number): Chainable<Subject>;
+      closeEthicsCharterModal(): Chainable<Subject>;
     }
   }
 }
@@ -140,4 +141,26 @@ Cypress.Commands.add('generateConversationsApiResponse', (count) => {
     generateConversationsApiResponse(count),
     'utf-8'
   );
+});
+
+/**
+ * Referme la modale de rappel de la charte éthique lorsqu'elle est ouverte.
+ * Elle s'ouvre d'elle-même sur toute conversation où l'utilisateur courant
+ * n'a pas encore écrit, et son voile intercepte les clics : un test qui
+ * interagit avec une telle conversation doit d'abord la refermer.
+ * Sans effet si la modale ne s'applique pas à la conversation ouverte.
+ */
+Cypress.Commands.add('closeEthicsCharterModal', () => {
+  // Le rappel et l'éditeur sont rendus dans le même arbre : attendre l'éditeur
+  // garantit que la modale est montée si elle s'applique, et évite de tester sa
+  // présence avant que React ait peint.
+  cy.get('[data-testid="messaging-editor-input"]').should('exist');
+  cy.get('body').then(($body) => {
+    if ($body.find('[data-testid="messaging-ethics-charter-modal"]').length) {
+      cy.contains('button', "J'ai compris").click();
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'not.exist'
+      );
+    }
+  });
 });
