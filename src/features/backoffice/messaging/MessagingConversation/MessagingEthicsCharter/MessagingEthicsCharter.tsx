@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text } from '@/src/components/ui';
+import { Button, Text } from '@/src/components/ui';
 import {
   EthicsCharterSummary,
   getEthicsCharterSummaries,
@@ -8,7 +8,8 @@ import {
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { DocumentNames, ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
-import { Modal, ModalContext } from '@/src/features/modals/Modal';
+import { ModalContext } from '@/src/features/modals/Modal';
+import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { isReadDocument } from '@/src/features/partials/pages/Documents/Documents.utils';
 import { useCurrentUserReadDocuments } from '@/src/hooks/current-user/useCurrentUserReadDocuments';
 import {
@@ -16,17 +17,14 @@ import {
   selectFetchCurrentReadDocumentsStatus,
 } from '@/src/use-cases/current-user';
 import {
-  StyledMessagingEthicsCharterAcknowledge,
   StyledMessagingEthicsCharterLink,
-  StyledMessagingEthicsCharterModalBody,
-  StyledMessagingEthicsCharterModalFooter,
-  StyledMessagingEthicsCharterModalHeader,
   StyledMessagingEthicsCharterNote,
   StyledMessagingEthicsCharterNoteLink,
   StyledMessagingEthicsCharterPoints,
   StyledMessagingEthicsCharterSection,
   StyledMessagingEthicsCharterSectionBody,
   StyledMessagingEthicsCharterSectionIcon,
+  StyledMessagingEthicsCharterSections,
 } from './MessagingEthicsCharter.styles';
 
 const MODAL_ID = 'messaging-ethics-charter-modal';
@@ -122,41 +120,43 @@ export const MessagingEthicsCharter = () => {
 
       {isModalOpen && (
         <ModalContext.Provider value={modalContextValue}>
-          <Modal id={MODAL_ID} size="medium" ariaLabel={TITLE} withCloseButton>
-            <StyledMessagingEthicsCharterModalHeader>
-              <Text weight="semibold" size="xxlarge">
-                {TITLE}
-              </Text>
-              <Text>{INTRO}</Text>
-            </StyledMessagingEthicsCharterModalHeader>
-
-            <StyledMessagingEthicsCharterModalBody>
+          <ModalGeneric
+            id={MODAL_ID}
+            size="medium"
+            ariaLabel={TITLE}
+            title={TITLE}
+            description={INTRO}
+            align="left"
+            footer={
+              <>
+                <StyledMessagingEthicsCharterLink
+                  href={CHARTER_PATH}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Text>{CHARTER_LINK_LABEL}</Text>
+                  <LucidIcon
+                    name="ExternalLink"
+                    size={14}
+                    color={COLORS.extraDarkGray}
+                  />
+                </StyledMessagingEthicsCharterLink>
+                <Button
+                  variant="heroPrimary"
+                  onClick={acknowledge}
+                  dataTestId="messaging-ethics-charter-acknowledge"
+                >
+                  {ACKNOWLEDGE_LABEL}
+                </Button>
+              </>
+            }
+          >
+            <StyledMessagingEthicsCharterSections>
               {summaries.map((summary) => (
                 <CharterSection key={summary.title} summary={summary} />
               ))}
-            </StyledMessagingEthicsCharterModalBody>
-
-            <StyledMessagingEthicsCharterModalFooter>
-              <StyledMessagingEthicsCharterLink
-                href={CHARTER_PATH}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Text>{CHARTER_LINK_LABEL}</Text>
-                <LucidIcon
-                  name="ExternalLink"
-                  size={14}
-                  color={COLORS.extraDarkGray}
-                />
-              </StyledMessagingEthicsCharterLink>
-              <StyledMessagingEthicsCharterAcknowledge
-                type="button"
-                onClick={acknowledge}
-              >
-                {ACKNOWLEDGE_LABEL}
-              </StyledMessagingEthicsCharterAcknowledge>
-            </StyledMessagingEthicsCharterModalFooter>
-          </Modal>
+            </StyledMessagingEthicsCharterSections>
+          </ModalGeneric>
         </ModalContext.Provider>
       )}
     </>

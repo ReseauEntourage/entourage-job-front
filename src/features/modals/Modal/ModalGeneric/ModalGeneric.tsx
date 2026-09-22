@@ -4,6 +4,7 @@ import { Modal, useModalContext } from '@/src/features/modals/Modal';
 import { StyledModalContent } from '@/src/features/modals/Modal/Modals.styles';
 import { ModalSize } from '../Modal.types';
 import { HeaderModal } from './HeaderModal';
+import { ModalFooter } from './ModalFooter/ModalFooter';
 
 interface ModalGenericProps {
   id?: string;
@@ -16,6 +17,15 @@ interface ModalGenericProps {
   closeOnNextRender?: boolean;
   noCloseIcon?: boolean;
   buttonText?: string;
+  /** Alignement du titre et de la description dans l'en-tête. */
+  align?: 'center' | 'left';
+  /**
+   * Actions posées sous le corps défilant, hors de la zone qui défile — le
+   * corps peut alors être plus haut que la modale sans les emporter.
+   */
+  footer?: React.ReactNode;
+  /** Nom de la modale pour les lecteurs d'écran. */
+  ariaLabel?: string;
 }
 
 export const ModalGeneric = ({
@@ -29,15 +39,24 @@ export const ModalGeneric = ({
   closeOnNextRender = false,
   noCloseIcon = false,
   buttonText = 'Fermer',
+  align = 'center',
+  footer,
+  ariaLabel,
 }: ModalGenericProps & { buttonText?: string }) => {
   const { onClose } = useModalContext();
   return (
-    <Modal id={id} size={size} closeOnNextRender={closeOnNextRender}>
+    <Modal
+      id={id}
+      size={size}
+      closeOnNextRender={closeOnNextRender}
+      ariaLabel={ariaLabel}
+    >
       <HeaderModal
         title={title}
         description={description}
         noCloseIcon={noCloseIcon}
         onClose={customOnClose}
+        align={align}
       />
       <StyledModalContent>
         {children}
@@ -53,6 +72,7 @@ export const ModalGeneric = ({
           </Button>
         )}
       </StyledModalContent>
+      {footer && <ModalFooter layout="spread">{footer}</ModalFooter>}
     </Modal>
   );
 };
