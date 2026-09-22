@@ -79,7 +79,7 @@ export const interceptCurrentUserSubResources = () => {
     }).as('currentReadDocuments');
   });
 
-  cy.intercept('POST', '/current/read-documents', {
+  cy.intercept('POST', '/readDocuments/read/*', {
     statusCode: 201,
     body: {},
   }).as('postReadDocument');
