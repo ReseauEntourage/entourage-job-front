@@ -47,7 +47,7 @@ import {
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
-import { MessagingEthicsCharterBanner } from './MessagingEthicsCharter/MessagingEthicsCharterBanner';
+import { MessagingEthicsCharter } from './MessagingEthicsCharter/MessagingEthicsCharter';
 import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
@@ -73,7 +73,7 @@ export const getDisplayCheckinBanner = (
  * conversation avec l'équipe Entourage n'est pas une mise en relation entre
  * membres — et quand une information épinglée passe l'éditeur en readonly.
  */
-export const getDisplayEthicsCharterBanner = ({
+export const getDisplayEthicsCharter = ({
   currentUserRole,
   currentUserId,
   pinnedInfo,
@@ -263,9 +263,9 @@ export const MessagingConversation = () => {
     currentUserId,
   ]);
 
-  const displayEthicsCharterBanner = useMemo(
+  const displayEthicsCharter = useMemo(
     () =>
-      getDisplayEthicsCharterBanner({
+      getDisplayEthicsCharter({
         currentUserRole: currentUser?.role,
         currentUserId,
         pinnedInfo,
@@ -551,8 +551,8 @@ export const MessagingConversation = () => {
         />
       )}
 
-      {displayEthicsCharterBanner && (
-        <MessagingEthicsCharterBanner key={selectedConversationId} />
+      {displayEthicsCharter && (
+        <MessagingEthicsCharter key={selectedConversationId} />
       )}
 
       <MessagingEditor readonly={conversationParticipantsAreDeleted} />
