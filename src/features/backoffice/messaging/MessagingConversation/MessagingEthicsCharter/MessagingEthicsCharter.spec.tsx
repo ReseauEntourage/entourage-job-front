@@ -1,10 +1,14 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
 import { getEthicsCharterSummaries } from '@/src/components/ui/EthicsCharter/EthicsCharter';
+import { ReduxRequestEvents } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
+import { useCurrentUserReadDocuments } from '@/src/hooks/current-user/useCurrentUserReadDocuments';
+import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
+import { selectFetchCurrentReadDocumentsStatus } from '@/src/use-cases/current-user';
 import { getDisplayEthicsCharter } from '../MessagingConversation';
 import { MessagingEthicsCharter } from './MessagingEthicsCharter';
 
@@ -119,9 +123,47 @@ describe('getEthicsCharterSummaries', () => {
   });
 });
 
+/**
+ * Le statut de chargement vient du cache RTK Query et la liste des documents
+ * lus du hook dédié : tous deux sont pilotés ici plutôt que par un état
+ * préchargé, que le cache ignorerait.
+ */
+jest.mock('@/src/hooks/current-user/useCurrentUserReadDocuments', () => ({
+  useCurrentUserReadDocuments: jest.fn(),
+}));
+
+jest.mock('@/src/use-cases/current-user', () => ({
+  ...jest.requireActual('@/src/use-cases/current-user'),
+  selectFetchCurrentReadDocumentsStatus: jest.fn(),
+}));
+
+const mockedUseReadDocuments =
+  useCurrentUserReadDocuments as jest.MockedFunction<
+    typeof useCurrentUserReadDocuments
+  >;
+const mockedStatus =
+  selectFetchCurrentReadDocumentsStatus as jest.MockedFunction<
+    typeof selectFetchCurrentReadDocumentsStatus
+  >;
+
+const CHARTER_READ = [
+  { documentName: 'CharteEthique', createdAt: '2026-09-01T00:00:00.000Z' },
+];
+
+const render = () => renderWithProviders(<MessagingEthicsCharter />);
+
 describe('MessagingEthicsCharter', () => {
+  beforeEach(() => {
+    mockedUseReadDocuments.mockReturnValue([]);
+    mockedStatus.mockReturnValue(ReduxRequestEvents.SUCCEEDED);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('opens the modal as soon as the conversation is displayed', () => {
-    render(<MessagingEthicsCharter />);
+    render();
 
     expect(
       screen.getByTestId('messaging-ethics-charter-modal')
@@ -132,7 +174,7 @@ describe('MessagingEthicsCharter', () => {
   });
 
   it('always shows the discreet note above the editor', () => {
-    render(<MessagingEthicsCharter />);
+    render();
 
     const note = screen.getByTestId('messaging-ethics-charter-note');
     expect(note).toHaveTextContent(
@@ -141,7 +183,7 @@ describe('MessagingEthicsCharter', () => {
   });
 
   it('closes the modal on "J\'ai compris" but keeps the note', () => {
-    render(<MessagingEthicsCharter />);
+    render();
 
     fireEvent.click(screen.getByRole('button', { name: "J'ai compris" }));
 
@@ -154,7 +196,7 @@ describe('MessagingEthicsCharter', () => {
   });
 
   it('closes the modal on its cross', () => {
-    render(<MessagingEthicsCharter />);
+    render();
 
     fireEvent.click(screen.getByRole('button', { name: 'Fermer la charte' }));
 
@@ -164,7 +206,7 @@ describe('MessagingEthicsCharter', () => {
   });
 
   it('closes the modal on Escape', () => {
-    render(<MessagingEthicsCharter />);
+    render();
 
     fireEvent.keyDown(document, { key: 'Escape' });
 
@@ -174,7 +216,7 @@ describe('MessagingEthicsCharter', () => {
   });
 
   it('opens the full charter in a new tab, from the modal and from the note', () => {
-    render(<MessagingEthicsCharter />);
+    render();
 
     screen
       .getAllByRole('link')
@@ -192,20 +234,24 @@ describe('MessagingEthicsCharter', () => {
     ).toBeInTheDocument();
   });
 
-  it('reopens the modal when remounted under a new conversation key', () => {
-    const { rerender } = render(
-      <MessagingEthicsCharter key="conversation-1" />
-    );
+  it('never opens the modal for a user who already read the charter', () => {
+    mockedUseReadDocuments.mockReturnValue(CHARTER_READ as never);
+    render();
 
-    fireEvent.click(screen.getByRole('button', { name: "J'ai compris" }));
     expect(
       screen.queryByTestId('messaging-ethics-charter-modal')
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByTestId('messaging-ethics-charter-note')
+    ).toBeInTheDocument();
+  });
 
-    rerender(<MessagingEthicsCharter key="conversation-2" />);
+  it('keeps the modal closed while the read documents are still loading', () => {
+    mockedStatus.mockReturnValue(ReduxRequestEvents.REQUESTED);
+    render();
 
     expect(
-      screen.getByTestId('messaging-ethics-charter-modal')
-    ).toBeInTheDocument();
+      screen.queryByTestId('messaging-ethics-charter-modal')
+    ).not.toBeInTheDocument();
   });
 });

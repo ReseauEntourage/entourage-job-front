@@ -16,6 +16,7 @@ import {
   MessagingQuickRepliesContainer,
   MessagingQuickRepliesListContainer,
   MessagingSuggestionsContainer,
+  MessagingSuggestionsHeader,
   MessagingSuggestionsListContainer,
 } from './MessagingSuggestions.styles';
 import { MessagingSuggestionItem } from './MessagingSuggestions.types';
@@ -178,9 +179,12 @@ export const MessagingSuggestions = ({
     <MessagingSuggestionsContainer data-testid="messaging-starter-suggestions">
       {newMessage.length <= 0 && (
         <>
-          <Text weight="semibold">
-            Vous avez besoin d'aide pour vous lancer
-          </Text>
+          <MessagingSuggestionsHeader>
+            <LucidIcon name="Lightbulb" size={18} color={COLORS.darkTeal} />
+            <Text weight="semibold">
+              Vous avez besoin d'aide pour vous lancer
+            </Text>
+          </MessagingSuggestionsHeader>
           <MessagingSuggestionsListContainer>
             {suggestions.map((suggestion) => (
               <Item

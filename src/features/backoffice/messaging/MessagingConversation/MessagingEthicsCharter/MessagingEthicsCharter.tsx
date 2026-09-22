@@ -1,11 +1,19 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Text } from '@/src/components/ui';
 import {
   EthicsCharterSummary,
   getEthicsCharterSummaries,
 } from '@/src/components/ui/EthicsCharter/EthicsCharter';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { DocumentNames, ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
+import { isReadDocument } from '@/src/features/partials/pages/Documents/Documents.utils';
+import { useCurrentUserReadDocuments } from '@/src/hooks/current-user/useCurrentUserReadDocuments';
+import {
+  currentUserActions,
+  selectFetchCurrentReadDocumentsStatus,
+} from '@/src/use-cases/current-user';
 import {
   StyledMessagingEthicsCharterAcknowledge,
   StyledMessagingEthicsCharterLink,
@@ -51,14 +59,42 @@ const CharterSection = ({ summary }: { summary: EthicsCharterSummary }) => (
 );
 
 export const MessagingEthicsCharter = () => {
-  // La modale s'ouvre à l'ouverture de la conversation. Sa fermeture n'est pas
-  // persistée : le parent remonte ce composant à chaque changement de
-  // conversation (`key`), et un rechargement la rouvre.
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const dispatch = useDispatch();
+  const readDocuments = useCurrentUserReadDocuments();
+  const readDocumentsStatus = useSelector(
+    selectFetchCurrentReadDocumentsStatus
+  );
+  const [isDismissed, setIsDismissed] = useState(false);
   const summaries = getEthicsCharterSummaries();
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const closeModal = useCallback(() => setIsModalOpen(false), []);
+  /**
+   * La modale ne s'ouvre qu'une fois par utilisateur : elle attend que la
+   * liste des documents lus soit chargée — sans quoi elle s'afficherait un
+   * instant à quelqu'un qui l'a déjà vue — puis vérifie l'absence du document
+   * `CharteEthique`.
+   */
+  const isModalOpen =
+    !isDismissed &&
+    readDocumentsStatus === ReduxRequestEvents.SUCCEEDED &&
+    !isReadDocument(readDocuments, DocumentNames.CharteEthique);
+
+  const closeModal = useCallback(() => setIsDismissed(true), []);
+
+  /**
+   * Seul « J'ai compris » mémorise : la croix et Échap referment pour cette
+   * fois. Le rafraîchissement de la liste évite que la modale se rouvre au
+   * changement de conversation, où le composant est remonté.
+   */
+  const acknowledge = useCallback(() => {
+    dispatch(
+      currentUserActions.readDocumentRequested({
+        documentName: DocumentNames.CharteEthique,
+      })
+    );
+    dispatch(currentUserActions.fetchCurrentReadDocumentsRequested());
+    setIsDismissed(true);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -141,7 +177,7 @@ export const MessagingEthicsCharter = () => {
               </StyledMessagingEthicsCharterLink>
               <StyledMessagingEthicsCharterAcknowledge
                 type="button"
-                onClick={closeModal}
+                onClick={acknowledge}
               >
                 {ACKNOWLEDGE_LABEL}
               </StyledMessagingEthicsCharterAcknowledge>

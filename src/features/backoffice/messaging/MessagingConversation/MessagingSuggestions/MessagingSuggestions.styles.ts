@@ -15,6 +15,12 @@ export const MessagingSuggestionsContainer = styled.div`
   flex-shrink: 0;
 `;
 
+export const MessagingSuggestionsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
 export const MessagingSuggestionsListContainer = styled.div`
   display: flex;
   flex-direction: row;
