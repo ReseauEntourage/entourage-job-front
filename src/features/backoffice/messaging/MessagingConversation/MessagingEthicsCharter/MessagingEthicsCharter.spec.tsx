@@ -198,7 +198,7 @@ describe('MessagingEthicsCharter', () => {
   it('closes the modal on its cross', () => {
     render();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Fermer la charte' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Fermer' }));
 
     expect(
       screen.queryByTestId('messaging-ethics-charter-modal')
@@ -208,7 +208,12 @@ describe('MessagingEthicsCharter', () => {
   it('closes the modal on Escape', () => {
     render();
 
-    fireEvent.keyDown(document, { key: 'Escape' });
+    // react-modal écoute la touche sur le contenu de la modale, pas sur le
+    // document, et la reconnaît par son `keyCode`.
+    fireEvent.keyDown(screen.getByTestId('messaging-ethics-charter-modal'), {
+      key: 'Escape',
+      keyCode: 27,
+    });
 
     expect(
       screen.queryByTestId('messaging-ethics-charter-modal')

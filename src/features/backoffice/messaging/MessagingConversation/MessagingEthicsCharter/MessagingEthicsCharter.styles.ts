@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 /**
  * Ligne discrète au-dessus de l'éditeur : elle survit à la fermeture de la
@@ -28,81 +28,23 @@ export const StyledMessagingEthicsCharterNoteLink = styled.a`
 `;
 
 /**
- * Reprend la mécanique de la modale du produit (`src/features/modals/Modal`) :
- * même voile, même largeur, mêmes rayons, et sur mobile une feuille qui part
- * du bas du header. La modale est rendue ici plutôt qu'ouverte par
- * `openModal()` car elle s'ouvre d'elle-même au montage : le flux `openModal`
- * passe par un `Subject` RxJS sans rejeu, qui perd une modale émise avant que
- * son écouteur soit monté.
+ * Le voile, la largeur, les rayons et la feuille mobile viennent de la modale
+ * du produit (`src/features/modals/Modal`) : ne restent ici que l'en-tête, le
+ * corps défilant et le pied, alignés sur ses gouttières de 50 px (20 px sous
+ * le point de rupture desktop).
  */
-export const StyledMessagingEthicsCharterOverlay = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 1050;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
-    align-items: flex-end;
-  }
-`;
-
-export const StyledMessagingEthicsCharterModal = styled.div`
-  width: 640px;
-  max-width: calc(100% - 30px);
-  max-height: 90vh;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  background-color: ${COLORS.white};
-  border-radius: 20px;
-  padding: 30px 0;
-  box-shadow: 0 28px 50px rgba(0, 0, 0, 0.16);
-
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
-    width: 100%;
-    max-width: 100%;
-    margin-top: ${HEIGHTS.HEADER_MOBILE}px;
-    max-height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
-    border-radius: 25px 25px 0 0;
-    padding: 20px 0;
-  }
-`;
-
 export const StyledMessagingEthicsCharterModalHeader = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  box-sizing: border-box;
-  padding: 0 50px;
-  flex-shrink: 0;
-
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
-    padding: 0 20px;
-  }
-`;
-
-export const StyledMessagingEthicsCharterModalTitle = styled.div`
-  flex-grow: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-`;
-
-export const StyledMessagingEthicsCharterModalClose = styled.button`
+  box-sizing: border-box;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
+  /* Dégage la croix de fermeture de la modale, posée à 30 px du bord. */
+  padding: 0 70px 0 50px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    padding: 0 60px 0 20px;
+  }
 `;
 
 export const StyledMessagingEthicsCharterModalBody = styled.div`

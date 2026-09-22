@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text } from '@/src/components/ui';
 import {
@@ -8,6 +8,7 @@ import {
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { DocumentNames, ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
+import { Modal, ModalContext } from '@/src/features/modals/Modal';
 import { isReadDocument } from '@/src/features/partials/pages/Documents/Documents.utils';
 import { useCurrentUserReadDocuments } from '@/src/hooks/current-user/useCurrentUserReadDocuments';
 import {
@@ -17,28 +18,24 @@ import {
 import {
   StyledMessagingEthicsCharterAcknowledge,
   StyledMessagingEthicsCharterLink,
-  StyledMessagingEthicsCharterModal,
   StyledMessagingEthicsCharterModalBody,
-  StyledMessagingEthicsCharterModalClose,
   StyledMessagingEthicsCharterModalFooter,
   StyledMessagingEthicsCharterModalHeader,
-  StyledMessagingEthicsCharterModalTitle,
   StyledMessagingEthicsCharterNote,
   StyledMessagingEthicsCharterNoteLink,
-  StyledMessagingEthicsCharterOverlay,
   StyledMessagingEthicsCharterPoints,
   StyledMessagingEthicsCharterSection,
   StyledMessagingEthicsCharterSectionBody,
   StyledMessagingEthicsCharterSectionIcon,
 } from './MessagingEthicsCharter.styles';
 
+const MODAL_ID = 'messaging-ethics-charter-modal';
 const TITLE = "Ici, on se parle d'égal à égal";
 const INTRO =
   "Pour des échanges respectueux et sincères, voici ce à quoi chacun s'engage ici.";
 const CHARTER_LINK_LABEL = 'Voir la charte complète';
 const CHARTER_PATH = '/conseils-posture';
 const ACKNOWLEDGE_LABEL = "J'ai compris";
-const CLOSE_LABEL = 'Fermer la charte';
 
 const CharterSection = ({ summary }: { summary: EthicsCharterSummary }) => (
   <StyledMessagingEthicsCharterSection>
@@ -66,7 +63,6 @@ export const MessagingEthicsCharter = () => {
   );
   const [isDismissed, setIsDismissed] = useState(false);
   const summaries = getEthicsCharterSummaries();
-  const modalRef = useRef<HTMLDivElement>(null);
 
   /**
    * La modale ne s'ouvre qu'une fois par utilisateur : elle attend que la
@@ -96,22 +92,16 @@ export const MessagingEthicsCharter = () => {
     setIsDismissed(true);
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!isModalOpen) {
-      return undefined;
-    }
-
-    modalRef.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeModal();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isModalOpen, closeModal]);
+  /**
+   * La modale du produit est rendue ici, sous son propre contexte, plutôt
+   * qu'émise par `openModal()` : elle s'ouvre au montage et doit disparaître
+   * au démontage, au changement de conversation notamment. `openModal` empile
+   * les modales et n'en referme aucune de l'extérieur.
+   */
+  const modalContextValue = useMemo(
+    () => ({ onClose: closeModal }),
+    [closeModal]
+  );
 
   return (
     <>
@@ -131,29 +121,13 @@ export const MessagingEthicsCharter = () => {
       </StyledMessagingEthicsCharterNote>
 
       {isModalOpen && (
-        <StyledMessagingEthicsCharterOverlay>
-          <StyledMessagingEthicsCharterModal
-            ref={modalRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={TITLE}
-            tabIndex={-1}
-            data-testid="messaging-ethics-charter-modal"
-          >
+        <ModalContext.Provider value={modalContextValue}>
+          <Modal id={MODAL_ID} size="medium" ariaLabel={TITLE} withCloseButton>
             <StyledMessagingEthicsCharterModalHeader>
-              <StyledMessagingEthicsCharterModalTitle>
-                <Text weight="semibold" size="xxlarge">
-                  {TITLE}
-                </Text>
-                <Text>{INTRO}</Text>
-              </StyledMessagingEthicsCharterModalTitle>
-              <StyledMessagingEthicsCharterModalClose
-                type="button"
-                onClick={closeModal}
-                aria-label={CLOSE_LABEL}
-              >
-                <LucidIcon name="X" size={20} color={COLORS.extraDarkGray} />
-              </StyledMessagingEthicsCharterModalClose>
+              <Text weight="semibold" size="xxlarge">
+                {TITLE}
+              </Text>
+              <Text>{INTRO}</Text>
             </StyledMessagingEthicsCharterModalHeader>
 
             <StyledMessagingEthicsCharterModalBody>
@@ -182,8 +156,8 @@ export const MessagingEthicsCharter = () => {
                 {ACKNOWLEDGE_LABEL}
               </StyledMessagingEthicsCharterAcknowledge>
             </StyledMessagingEthicsCharterModalFooter>
-          </StyledMessagingEthicsCharterModal>
-        </StyledMessagingEthicsCharterOverlay>
+          </Modal>
+        </ModalContext.Provider>
       )}
     </>
   );

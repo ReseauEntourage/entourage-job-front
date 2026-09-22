@@ -7,9 +7,16 @@ import { useIsMobile } from '@/src/hooks/utils';
 import { ModalSize } from './Modal.types';
 import { StyledCloseButton } from './Modals.styles';
 
-if (typeof document !== 'undefined' && document.querySelector('#__next')) {
-  ReactModal.setAppElement('#__next');
-}
+/**
+ * react-modal masque l'élément d'application aux lecteurs d'écran tant qu'une
+ * modale est ouverte. Hors de l'application — en test — il n'y a pas de
+ * `#__next` : le masquage est alors désactivé plutôt que reporté sur `body`,
+ * qui contient aussi le portail de la modale et la rendrait inaccessible.
+ */
+const getAppElement = () =>
+  typeof document === 'undefined'
+    ? null
+    : (document.querySelector('#__next') as HTMLElement | null);
 
 interface CustomModalProps {
   id: string;
@@ -18,6 +25,11 @@ interface CustomModalProps {
   withCloseButton?: boolean;
   size: ModalSize;
   fillHeight?: boolean;
+  /**
+   * Nom de la modale pour les lecteurs d'écran, à renseigner quand son titre
+   * n'est pas un simple texte en tête de contenu.
+   */
+  ariaLabel?: string;
 }
 
 const CustomModal = ({
@@ -27,6 +39,7 @@ const CustomModal = ({
   withCloseButton = false,
   size,
   fillHeight = false,
+  ariaLabel,
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
   const isMobile = useIsMobile();
@@ -67,6 +80,8 @@ const CustomModal = ({
     },
     [onClose]
   );
+
+  const appElement = useMemo(getAppElement, []);
 
   const headerHeight = useMemo(
     () => (isMobile ? HEIGHTS.HEADER_MOBILE : HEIGHTS.HEADER),
@@ -140,6 +155,9 @@ const CustomModal = ({
         }
       }}
       style={style}
+      contentLabel={ariaLabel}
+      appElement={appElement ?? undefined}
+      ariaHideApp={!!appElement}
       shouldCloseOnOverlayClick={isMobile}
       isOpen
       onRequestClose={onRequestClose}
@@ -147,6 +165,7 @@ const CustomModal = ({
       {withCloseButton && (
         <StyledCloseButton
           type="button"
+          aria-label="Fermer"
           onClick={() => {
             if (onClose) {
               onClose();
