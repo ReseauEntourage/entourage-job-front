@@ -22,8 +22,9 @@ export type EthicsCharterSummary = {
   points: string[];
   /**
    * Rang du résumé, l'ordre de lecture voulu ne suivant pas celui de la
-   * charte : « Consentement » y vient après « Entraide », alors que le
-   * résumé le présente avant.
+   * charte : le résumé va du plus engageant au plus interdit — respect,
+   * entraide, posture, puis consentement et comportements interdits —
+   * là où la charte suit son propre plan.
    */
   order: number;
 };
@@ -93,7 +94,7 @@ const items: EthicsCharterItemType[] = [
     title: 'Comportements déviants',
     summary: {
       icon: 'Ban',
-      order: 2,
+      order: 5,
       title: 'Comportements interdits',
       points: [
         'Drague, harcèlement, allusions à caractère sexuel.',
@@ -121,7 +122,7 @@ const items: EthicsCharterItemType[] = [
     title: 'Entraide',
     summary: {
       icon: 'HandHelping',
-      order: 4,
+      order: 2,
       title: "L'esprit d'entraide",
       points: [
         'Chacun est considéré pour ses qualités et son potentiel, sans jugement.',
@@ -139,7 +140,7 @@ const items: EthicsCharterItemType[] = [
     title: 'Consentement',
     summary: {
       icon: 'Lock',
-      order: 3,
+      order: 4,
       title: 'Consentement et données personnelles',
       points: [
         "Aucune information permettant d'identifier ou de localiser quelqu'un sans son accord.",
@@ -154,7 +155,7 @@ const items: EthicsCharterItemType[] = [
     title: 'Posture des coachs et des candidats',
     summary: {
       icon: 'Users',
-      order: 5,
+      order: 3,
       title: 'Coachs et candidats',
       points: [
         'Ni contrat, ni obligation de résultat : le lien humain prime sur la performance.',

@@ -107,10 +107,10 @@ describe('getEthicsCharterSummaries', () => {
     expect(getEthicsCharterSummaries().map((summary) => summary.title)).toEqual(
       [
         'Le respect avant tout',
-        'Comportements interdits',
-        'Consentement et données personnelles',
         "L'esprit d'entraide",
         'Coachs et candidats',
+        'Consentement et données personnelles',
+        'Comportements interdits',
       ]
     );
   });
