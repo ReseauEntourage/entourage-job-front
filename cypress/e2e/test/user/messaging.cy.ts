@@ -496,15 +496,28 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
   describe('Rappel de la charte éthique', () => {
     /**
      * Les autres tests s'appuient sur l'utilisateur par défaut, qui a déjà
-     * accepté la charte : ici on surcharge la liste des documents lus pour
-     * obtenir la modale.
+     * accepté la charte : ici on repart d'une liste de documents lus vide,
+     * que le POST vient remplir comme le ferait le back. Un stub figé ne
+     * suffirait pas : le composant est remonté au fil du chargement de la
+     * conversation, et la modale se rouvrirait puisque la liste rechargée
+     * dirait toujours que la charte n'a pas été acceptée.
      */
     const signInWithoutCharter = () => {
       signInAs({ role: 'Candidat' });
-      cy.intercept('GET', '/current/read-documents', {
-        statusCode: 200,
-        body: { readDocuments: [] },
-      }).as('currentReadDocumentsEmpty');
+      const readDocuments: unknown[] = [];
+
+      cy.fixture('user-read-document-ethics-charter.json').then(
+        (readDocument) => {
+          cy.intercept('GET', '/current/read-documents', (req) => {
+            req.reply({ statusCode: 200, body: { readDocuments } });
+          }).as('currentReadDocumentsEmpty');
+
+          cy.intercept('POST', '/readDocuments/read/*', (req) => {
+            readDocuments.push(readDocument);
+            req.reply({ statusCode: 201, body: {} });
+          }).as('postReadDocument');
+        }
+      );
     };
 
     it("Ouvre la modale sur une conversation où je n'ai pas encore écrit, et « J'ai compris » l'enregistre", () => {
