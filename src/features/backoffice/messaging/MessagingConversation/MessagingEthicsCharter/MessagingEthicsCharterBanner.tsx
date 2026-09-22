@@ -58,11 +58,13 @@ const CharterSection = ({ summary }: { summary: EthicsCharterSummary }) => (
       <LucidIcon name={summary.icon} color={COLORS.darkTeal} />
     </StyledMessagingEthicsCharterSectionIcon>
     <StyledMessagingEthicsCharterSectionBody>
-      <Text weight="semibold">{summary.title}</Text>
+      <Text weight="semibold" size="small">
+        {summary.title}
+      </Text>
       <StyledMessagingEthicsCharterPoints>
         {summary.points.map((point) => (
           <li key={point}>
-            <Text>{point}</Text>
+            <Text size="small">{point}</Text>
           </li>
         ))}
       </StyledMessagingEthicsCharterPoints>
@@ -76,7 +78,7 @@ const CharterLink = () => (
     target="_blank"
     rel="noopener noreferrer"
   >
-    <Text>{CHARTER_LINK_LABEL}</Text>
+    <Text size="small">{CHARTER_LINK_LABEL}</Text>
     <LucidIcon name="ExternalLink" size={14} color={COLORS.extraDarkGray} />
   </StyledMessagingEthicsCharterLink>
 );
@@ -168,7 +170,7 @@ export const MessagingEthicsCharterBanner = () => {
                 <Text weight="semibold" size="large">
                   {TITLE}
                 </Text>
-                <Text>{INTRO}</Text>
+                <Text size="small">{INTRO}</Text>
               </StyledMessagingEthicsCharterPanelTitle>
               <StyledMessagingEthicsCharterPanelClose
                 type="button"
@@ -221,10 +223,8 @@ export const MessagingEthicsCharterBanner = () => {
     >
       <StyledMessagingEthicsCharterContent>
         <StyledMessagingEthicsCharterHeader>
-          <Text weight="semibold" size="large">
-            {TITLE}
-          </Text>
-          <Text>{INTRO}</Text>
+          <Text weight="semibold">{TITLE}</Text>
+          <Text size="small">{INTRO}</Text>
         </StyledMessagingEthicsCharterHeader>
 
         <StyledMessagingEthicsCharterSections>

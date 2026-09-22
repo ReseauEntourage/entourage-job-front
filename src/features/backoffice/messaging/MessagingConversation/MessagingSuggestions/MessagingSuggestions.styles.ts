@@ -8,26 +8,8 @@ export const MessagingSuggestionsContainer = styled.div`
   padding: 20px;
   box-sizing: border-box;
   flex: auto;
-  gap: 30px;
-  justify-content: center;
-`;
-
-export const MessagingSuggestionsExplanation = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
   gap: 20px;
-
-  h3 {
-    margin: 0;
-  }
-  p {
-    margin: 0;
-    text-align: center;
-  }
+  justify-content: flex-start;
 `;
 
 export const MessagingSuggestionsListContainer = styled.div`

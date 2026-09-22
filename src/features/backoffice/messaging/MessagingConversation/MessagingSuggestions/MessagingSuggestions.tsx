@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { ConversationParticipant } from '@/src/api/types';
-import { H3 } from '@/src/components/ui/Headings/H3';
+import { Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { COLORS } from '@/src/constants/styles';
 import { getRolesNotAdmin, UserRoles } from '@/src/constants/users';
 import { getSectorOccupationLabels } from '@/src/features/backoffice/profile/ProfileProfessionalInformationCard/ProfileCareerPathSentence';
@@ -17,7 +16,6 @@ import {
   MessagingQuickRepliesContainer,
   MessagingQuickRepliesListContainer,
   MessagingSuggestionsContainer,
-  MessagingSuggestionsExplanation,
   MessagingSuggestionsListContainer,
 } from './MessagingSuggestions.styles';
 import { MessagingSuggestionItem } from './MessagingSuggestions.types';
@@ -180,14 +178,9 @@ export const MessagingSuggestions = ({
     <MessagingSuggestionsContainer data-testid="messaging-starter-suggestions">
       {newMessage.length <= 0 && (
         <>
-          <MessagingSuggestionsExplanation>
-            <SvgIcon name="IlluConversation" width={226} height={226} />
-            <H3 title="Vous avez besoin d'aide pour vous lancer ?" center />
-            <p>
-              Choisissez un sujet ci-dessous et envoyez votre premier message en
-              toute simplicité
-            </p>
-          </MessagingSuggestionsExplanation>
+          <Text weight="semibold">
+            Vous avez besoin d'aide pour vous lancer
+          </Text>
           <MessagingSuggestionsListContainer>
             {suggestions.map((suggestion) => (
               <Item
