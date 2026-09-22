@@ -198,6 +198,7 @@ export const MessagingEthicsCharterBanner = () => {
       type={AlertType.Info}
       variant="outlined"
       rounded={false}
+      alignTop
       closable
       onClose={acknowledge}
       dataTestId="messaging-ethics-charter-banner"
