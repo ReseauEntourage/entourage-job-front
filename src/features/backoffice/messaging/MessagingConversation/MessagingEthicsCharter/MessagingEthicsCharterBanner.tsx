@@ -35,6 +35,7 @@ const INTRO =
 const CHARTER_LINK_LABEL = 'Voir la charte complète';
 const CHARTER_PATH = '/conseils-posture';
 const ACKNOWLEDGE_LABEL = "J'ai compris";
+const INFO_ICON_SIZE = 22;
 
 /**
  * Répartit les sections en deux colonnes de lecture, la première prenant la
@@ -133,7 +134,11 @@ export const MessagingEthicsCharterBanner = () => {
           onClick={() => setIsPanelOpen(true)}
           data-testid="messaging-ethics-charter-bar"
         >
-          <LucidIcon name="Info" size={25} color={COLORS.extraDarkGray} />
+          <LucidIcon
+            name="Info"
+            size={INFO_ICON_SIZE}
+            color={COLORS.extraDarkGray}
+          />
           <StyledMessagingEthicsCharterBarLabel>
             <Text weight="semibold">{TITLE}</Text>
           </StyledMessagingEthicsCharterBarLabel>
@@ -154,7 +159,11 @@ export const MessagingEthicsCharterBanner = () => {
             data-testid="messaging-ethics-charter-panel"
           >
             <StyledMessagingEthicsCharterPanelHeader>
-              <LucidIcon name="Info" size={25} color={COLORS.extraDarkGray} />
+              <LucidIcon
+                name="Info"
+                size={INFO_ICON_SIZE}
+                color={COLORS.extraDarkGray}
+              />
               <StyledMessagingEthicsCharterPanelTitle>
                 <Text weight="semibold" size="large">
                   {TITLE}
@@ -199,6 +208,13 @@ export const MessagingEthicsCharterBanner = () => {
       variant="outlined"
       rounded={false}
       alignTop
+      icon={
+        <LucidIcon
+          name="Info"
+          size={INFO_ICON_SIZE}
+          color={COLORS.extraDarkGray}
+        />
+      }
       closable
       onClose={acknowledge}
       dataTestId="messaging-ethics-charter-banner"

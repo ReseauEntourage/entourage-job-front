@@ -156,6 +156,14 @@ describe('MessagingEthicsCharterBanner', () => {
       ).not.toBeInTheDocument();
     });
 
+    it('renders the info icon at 22px', () => {
+      // Alert ne retaille pas son icône par défaut (un DefaultAlertIcon, pas
+      // un LucidIcon), qui retombe donc à 18px : le composant la fournit.
+      const { container } = render(<MessagingEthicsCharterBanner />);
+
+      expect(container.querySelector('svg')).toHaveAttribute('width', '22');
+    });
+
     it('opens the full charter in a new tab', () => {
       render(<MessagingEthicsCharterBanner />);
 
