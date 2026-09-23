@@ -124,8 +124,8 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
     });
   });
 
-  describe('Filtres de la liste (Tous / Non lus)', () => {
-    it("L'onglet Non lus ne garde que les conversations avec un message non lu et affiche l'état vide sinon", () => {
+  describe('Filtres de la liste (En cours / Non lues)', () => {
+    it("L'onglet Non lues ne garde que les conversations avec un message non lu et affiche l'état vide sinon", () => {
       signInAs({ role: 'Coach' });
       const readAddressee = buildParticipant({
         firstName: 'Lu',

@@ -4,17 +4,22 @@ import { StyledTabsContainer } from './MessagingConversationTabs.styles';
 
 export type ConversationTabFilter = 'all' | 'unread' | 'archived';
 
+export type ConversationTabCounts = Record<ConversationTabFilter, number>;
+
 interface MessagingConversationTabsProps {
   activeTab: ConversationTabFilter;
-  activeConversationsCount: number;
-  unreadCount: number;
+  // Undefined until the conversations are loaded: the tabs then show their bare label
+  // instead of a "· 0" that would be wrong.
+  counts?: ConversationTabCounts;
   onTabChange: (tab: ConversationTabFilter) => void;
 }
 
+const formatTabLabel = (label: string, count?: number) =>
+  count === undefined ? label : `${label} · ${count}`;
+
 export const MessagingConversationTabs = ({
   activeTab,
-  activeConversationsCount,
-  unreadCount,
+  counts,
   onTabChange,
 }: MessagingConversationTabsProps) => {
   return (
@@ -27,7 +32,7 @@ export const MessagingConversationTabs = ({
         onClick={() => onTabChange('all')}
         dataTestId="messaging-tab-all"
       >
-        En cours · {activeConversationsCount}
+        {formatTabLabel('En cours', counts?.all)}
       </Badge>
       <Badge
         variant={
@@ -37,7 +42,7 @@ export const MessagingConversationTabs = ({
         onClick={() => onTabChange('unread')}
         dataTestId="messaging-tab-unread"
       >
-        Non lus · {unreadCount}
+        {formatTabLabel('Non lues', counts?.unread)}
       </Badge>
       <Badge
         variant={
@@ -49,7 +54,7 @@ export const MessagingConversationTabs = ({
         onClick={() => onTabChange('archived')}
         dataTestId="messaging-tab-archived"
       >
-        Archivées
+        {formatTabLabel('Archivées', counts?.archived)}
       </Badge>
     </StyledTabsContainer>
   );

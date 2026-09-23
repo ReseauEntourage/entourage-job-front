@@ -6,7 +6,6 @@ import { useIsMobile } from '@/src/hooks/utils';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   selectConversations,
-  selectUnseenConversationCount,
   useGetConversationsQuery,
   useGetUnseenConversationsCountQuery,
 } from '@/src/use-cases/messaging';
@@ -37,65 +36,85 @@ export const MessagingConversationList = () => {
    * released — one per trigger, accumulating for the whole session.
    * `refetchOnMountOrArgChange` preserves the previous "fresh on mount"
    * behaviour of the trigger action this replaces.
+   *
+   * The unseen count is no longer displayed here — the tabs count what they
+   * list — but opening the messaging is what refreshes the navigation badge,
+   * so this list keeps subscribing to it.
    */
   useGetConversationsQuery(undefined, { refetchOnMountOrArgChange: true });
   useGetUnseenConversationsCountQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
-  const unseenConversationCount = useSelector(selectUnseenConversationCount);
-
-  const conversations = useMemo(() => {
+  // Conversations matching the search bar, before any tab filtering. The three tab
+  // lists all derive from it, so a tab counter is exactly the length of the list that
+  // tab displays, search included. The search only matches participant names, never
+  // message content.
+  const searchedConversations = useMemo(() => {
     if (!allConversations) {
       return null;
     }
 
-    let filtered = allConversations;
-
-    if (query) {
-      filtered = filtered.filter((conversation) =>
-        conversation.participants
-          .filter((participant) => participant.id !== currentUserId)
-          .some(
-            (participant) =>
-              participant.firstName
-                .toLowerCase()
-                .includes(query.toLowerCase()) ||
-              participant.lastName.toLowerCase().includes(query.toLowerCase())
-          )
-      );
+    if (!query) {
+      return allConversations;
     }
 
-    if (activeTab === 'archived') {
-      return filtered.filter((c) => !!c.archivedAt);
+    return allConversations.filter((conversation) =>
+      conversation.participants
+        .filter((participant) => participant.id !== currentUserId)
+        .some(
+          (participant) =>
+            participant.firstName.toLowerCase().includes(query.toLowerCase()) ||
+            participant.lastName.toLowerCase().includes(query.toLowerCase())
+        )
+    );
+  }, [allConversations, currentUserId, query]);
+
+  // All three lists are computed, not just the active tab's one, because every tab
+  // displays the count of what it holds.
+  const conversationsByTab = useMemo(() => {
+    if (!searchedConversations) {
+      return null;
     }
 
-    if (activeTab === 'unread') {
-      // Unlike "Tous", "Non lus" still surfaces an archived conversation that
-      // received a new message, so the user notices it despite having archived it.
-      return filtered.filter((c) =>
-        conversationHasUnreadMessages(c, currentUserId)
-      );
-    }
+    // "En cours" excludes the conversations archived by the current user, and sorts
+    // unread ones first without excluding the others.
+    const all = [...searchedConversations]
+      .filter((c) => !c.archivedAt)
+      .sort((a, b) => {
+        const aUnread = conversationHasUnreadMessages(a, currentUserId) ? 1 : 0;
+        const bUnread = conversationHasUnreadMessages(b, currentUserId) ? 1 : 0;
+        return bUnread - aUnread;
+      });
 
-    // "En cours" excludes conversations archived by the current user
-    filtered = filtered.filter((c) => !c.archivedAt);
+    // Unlike "En cours", "Non lues" still surfaces an archived conversation that
+    // received a new message, so the user notices it despite having archived it.
+    const unread = searchedConversations.filter((c) =>
+      conversationHasUnreadMessages(c, currentUserId)
+    );
 
-    // Sort unread conversations first in the "all" tab
-    return [...filtered].sort((a, b) => {
-      const aUnread = conversationHasUnreadMessages(a, currentUserId) ? 1 : 0;
-      const bUnread = conversationHasUnreadMessages(b, currentUserId) ? 1 : 0;
-      return bUnread - aUnread;
-    });
-  }, [allConversations, currentUserId, query, activeTab]);
+    const archived = searchedConversations.filter((c) => !!c.archivedAt);
 
-  const activeConversationsCount = useMemo(() => {
-    if (!allConversations) {
-      return 0;
-    }
+    return { all, unread, archived };
+  }, [searchedConversations, currentUserId]);
 
-    return allConversations.filter((c) => !c.archivedAt).length;
-  }, [allConversations]);
+  const conversations = conversationsByTab
+    ? conversationsByTab[activeTab]
+    : null;
+
+  // Left undefined until the conversations are loaded, so the tabs show their bare
+  // label rather than a misleading "· 0".
+  const counts = useMemo(
+    () =>
+      conversationsByTab
+        ? {
+            all: conversationsByTab.all.length,
+            unread: conversationsByTab.unread.length,
+            archived: conversationsByTab.archived.length,
+          }
+        : undefined,
+    [conversationsByTab]
+  );
 
   const setSearch = useCallback((search) => {
     setQuery(search);
@@ -105,8 +124,7 @@ export const MessagingConversationList = () => {
     <ContainerStyled data-testid="messaging-conversation-list">
       <MessagingConversationTabs
         activeTab={activeTab}
-        activeConversationsCount={activeConversationsCount}
-        unreadCount={unseenConversationCount}
+        counts={counts}
         onTabChange={setActiveTab}
       />
       {!isMobile && (
