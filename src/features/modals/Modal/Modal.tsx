@@ -7,9 +7,16 @@ import { useIsMobile } from '@/src/hooks/utils';
 import { ModalSize } from './Modal.types';
 import { StyledCloseButton } from './Modals.styles';
 
-if (typeof document !== 'undefined' && document.querySelector('#__next')) {
-  ReactModal.setAppElement('#__next');
-}
+/**
+ * react-modal hides the app element from screen readers while a modal is
+ * open. Outside the application — in tests — there is no `#__next`: the
+ * hiding is then disabled rather than moved to `body`, which also holds the
+ * modal's portal and would make it unreachable.
+ */
+const getAppElement = () =>
+  typeof document === 'undefined'
+    ? null
+    : (document.querySelector('#__next') as HTMLElement | null);
 
 interface CustomModalProps {
   id: string;
@@ -18,6 +25,11 @@ interface CustomModalProps {
   withCloseButton?: boolean;
   size: ModalSize;
   fillHeight?: boolean;
+  /**
+   * Name of the modal for screen readers. Fill it in when the title is not
+   * plain text at the top of the content.
+   */
+  ariaLabel?: string;
 }
 
 const CustomModal = ({
@@ -27,6 +39,7 @@ const CustomModal = ({
   withCloseButton = false,
   size,
   fillHeight = false,
+  ariaLabel,
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
   const isMobile = useIsMobile();
@@ -67,6 +80,8 @@ const CustomModal = ({
     },
     [onClose]
   );
+
+  const appElement = useMemo(getAppElement, []);
 
   const headerHeight = useMemo(
     () => (isMobile ? HEIGHTS.HEADER_MOBILE : HEIGHTS.HEADER),
@@ -140,6 +155,9 @@ const CustomModal = ({
         }
       }}
       style={style}
+      contentLabel={ariaLabel}
+      appElement={appElement ?? undefined}
+      ariaHideApp={!!appElement}
       shouldCloseOnOverlayClick={isMobile}
       isOpen
       onRequestClose={onRequestClose}
@@ -147,6 +165,7 @@ const CustomModal = ({
       {withCloseButton && (
         <StyledCloseButton
           type="button"
+          aria-label="Fermer"
           onClick={() => {
             if (onClose) {
               onClose();

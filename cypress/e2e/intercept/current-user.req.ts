@@ -65,10 +65,24 @@ export const interceptCurrentUserSubResources = () => {
     body: [],
   }).as('currentAchievements');
 
-  cy.intercept('GET', '/current/read-documents', {
-    statusCode: 200,
-    body: { readDocuments: [] },
-  }).as('currentReadDocuments');
+  /**
+   * The default user has already accepted the ethics charter, like any account
+   * that went through onboarding. Without this, the charter reminder modal
+   * would open on every unanswered conversation and its overlay would cover
+   * the elements the tests try to click. A test that wants the modal overrides
+   * this intercept with an empty list.
+   */
+  cy.fixture('user-read-document-ethics-charter.json').then((readDocument) => {
+    cy.intercept('GET', '/current/read-documents', {
+      statusCode: 200,
+      body: { readDocuments: [readDocument] },
+    }).as('currentReadDocuments');
+  });
+
+  cy.intercept('POST', '/readDocuments/read/*', {
+    statusCode: 201,
+    body: {},
+  }).as('postReadDocument');
 
   cy.intercept('GET', '/current/referred-users', {
     statusCode: 200,

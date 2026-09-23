@@ -1,39 +1,30 @@
 import { styled } from 'styled-components';
 
+/**
+ * Compact strip hugging the editor, on the quick replies model: it hugs the
+ * height of its content instead of taking over the message thread area, which
+ * stays empty as long as no message has been exchanged.
+ */
 export const MessagingSuggestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   width: 100%;
-  overflow-y: auto;
-  padding: 20px;
+  padding: 10px 20px;
   box-sizing: border-box;
-  flex: auto;
-  gap: 30px;
-  justify-content: center;
+  flex-shrink: 0;
 `;
 
-export const MessagingSuggestionsExplanation = styled.div`
+export const MessagingSuggestionsHeader = styled.div`
   display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: center;
   align-items: center;
-  height: 100%;
-  gap: 20px;
-
-  h3 {
-    margin: 0;
-  }
-  p {
-    margin: 0;
-    text-align: center;
-  }
+  gap: 8px;
 `;
 
 export const MessagingSuggestionsListContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
 `;
 

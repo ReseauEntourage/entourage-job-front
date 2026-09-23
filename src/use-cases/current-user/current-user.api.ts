@@ -20,6 +20,7 @@ import {
   selectCurrentUser,
   selectCurrentUserId,
   selectCurrentUserProfileComplete,
+  selectCurrentUserReadDocuments,
 } from './current-user.selectors';
 import { slice } from './current-user.slice';
 
@@ -344,9 +345,43 @@ export const currentUserApi = api.injectEndpoints({
      * outcome).
      */
     readDocument: builder.mutation<void, { documentName: DocumentNameType }>({
-      queryFn: ({ documentName }, { getState }) => {
+      queryFn: ({ documentName }, { getState, dispatch }) => {
         const userId = selectCurrentUserId(getState() as never);
-        Api.postReadDocument({ documentName }, userId);
+        const readDocuments = selectCurrentUserReadDocuments(
+          getState() as never
+        );
+
+        /**
+         * The local read documents are completed right away. Since
+         * `Api.postReadDocument` is not awaited, reloading the list just
+         * afterwards would start from a response predating the recording, and
+         * the document would still be missing.
+         */
+        if (
+          !readDocuments.some(
+            (readDocument) => readDocument.documentName === documentName
+          )
+        ) {
+          dispatch(
+            fetchCurrentReadDocumentsSucceeded([
+              ...readDocuments,
+              { documentName, createdAt: new Date().toISOString() },
+            ])
+          );
+        }
+
+        Api.postReadDocument({ documentName }, userId).catch(() => {
+          // Nothing was recorded: the document must not stay marked as read
+          // for the rest of the session.
+          dispatch(
+            fetchCurrentReadDocumentsSucceeded(
+              selectCurrentUserReadDocuments(getState() as never).filter(
+                (readDocument) => readDocument.documentName !== documentName
+              )
+            )
+          );
+        });
+
         return { data: undefined };
       },
       onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {

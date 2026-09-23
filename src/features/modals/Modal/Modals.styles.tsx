@@ -38,14 +38,20 @@ export const StyledHeaderModalTop = styled.div`
   position: relative;
 `;
 
-export const StyledHeaderModalTitleContainer = styled.div`
+export const StyledHeaderModalTitleContainer = styled.div<{
+  $align: 'center' | 'left';
+}>`
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: ${({ $align }) =>
+    $align === 'left' ? 'flex-start' : 'center'};
 `;
 
 export const StyledModalContent = styled.div`
   height: auto;
+  /* Lets the body yield height to the header and footer, then scroll. */
+  flex: 1 1 auto;
+  min-height: 0;
   max-height: 100%;
   overflow-y: auto;
 

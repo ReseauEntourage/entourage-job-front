@@ -50,6 +50,7 @@ import {
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingEditor } from './MessagingEditor/MessagingEditor';
+import { MessagingEthicsCharter } from './MessagingEthicsCharter/MessagingEthicsCharter';
 import { MessagingFirstContactBanner } from './MessagingFirstContact/MessagingFirstContactBanner';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
@@ -66,6 +67,65 @@ export const getDisplayCheckinBanner = (
     return false;
   }
   return checkinState.eligible && !checkinState.checkin?.completedAt;
+};
+
+/**
+ * Ethics charter reminder: same trigger as the "Nouveau contact" banner (the
+ * current user has not written yet), but open to referrers too. Hidden as
+ * soon as an administrator is in the loop — a conversation with the Entourage
+ * team is not a connection between members — and when a pinned info turns the
+ * editor readonly.
+ */
+export const getDisplayEthicsCharter = ({
+  currentUserRole,
+  currentUserId,
+  pinnedInfo,
+  selectedConversation,
+  selectedConversationId,
+  currentUserHasSentMessages,
+}: {
+  currentUserRole: string | undefined;
+  currentUserId: string | undefined;
+  pinnedInfo: unknown;
+  selectedConversation:
+    | { id: string; participants: { id: string; role: string }[] }
+    | null
+    | undefined;
+  selectedConversationId: string | null | undefined;
+  currentUserHasSentMessages: boolean;
+}): boolean => {
+  if (!currentUserRole || currentUserRole === UserRoles.ADMIN) {
+    return false;
+  }
+  if (pinnedInfo) {
+    return false;
+  }
+
+  /**
+   * A conversation being created carries no id yet: `bindNewConversation`
+   * seeds it as a stub holding the addressee. Waiting for that stub is what
+   * lets the administrator check below run on it too.
+   */
+  const isNewConversation = selectedConversationId === 'new';
+  if (!selectedConversation) {
+    return false;
+  }
+  if (
+    !isNewConversation &&
+    selectedConversation.id !== selectedConversationId
+  ) {
+    return false;
+  }
+  if (
+    selectedConversation.participants.some(
+      (participant) =>
+        participant.id !== currentUserId && participant.role === UserRoles.ADMIN
+    )
+  ) {
+    return false;
+  }
+
+  return isNewConversation || !currentUserHasSentMessages;
 };
 
 export const MessagingConversation = () => {
@@ -232,6 +292,26 @@ export const MessagingConversation = () => {
     currentUserHasSentMessages,
     currentUserId,
   ]);
+
+  const displayEthicsCharter = useMemo(
+    () =>
+      getDisplayEthicsCharter({
+        currentUserRole: currentUser?.role,
+        currentUserId,
+        pinnedInfo,
+        selectedConversation,
+        selectedConversationId,
+        currentUserHasSentMessages,
+      }),
+    [
+      currentUser,
+      currentUserId,
+      pinnedInfo,
+      selectedConversation,
+      selectedConversationId,
+      currentUserHasSentMessages,
+    ]
+  );
 
   const displayCheckinBanner = useMemo(
     () => getDisplayCheckinBanner(checkinState),
@@ -459,28 +539,30 @@ export const MessagingConversation = () => {
         />
       )}
 
-      {displaySuggestions ? (
+      <MessagingMessagesContainer
+        ref={messagesContainerRef}
+        onScroll={handleMessagesScroll}
+      >
+        {isLoadingOlderMessages && (
+          <MessagingOlderMessagesLoader>
+            <Spinner size={20} />
+          </MessagingOlderMessagesLoader>
+        )}
+        {reversedMessages &&
+          reversedMessages.map((message) => (
+            <MessagingMessage key={message.id} message={message} />
+          ))}
+        <div ref={messagesEndRef} />
+      </MessagingMessagesContainer>
+
+      {/* Accolées à l'éditeur, comme les réponses rapides, plutôt qu'occupant
+          toute la zone du fil de discussion. */}
+      {displaySuggestions && (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
           newMessage={newMessage}
           participants={selectedConversation?.participants || []}
         />
-      ) : (
-        <MessagingMessagesContainer
-          ref={messagesContainerRef}
-          onScroll={handleMessagesScroll}
-        >
-          {isLoadingOlderMessages && (
-            <MessagingOlderMessagesLoader>
-              <Spinner size={20} />
-            </MessagingOlderMessagesLoader>
-          )}
-          {reversedMessages &&
-            reversedMessages.map((message) => (
-              <MessagingMessage key={message.id} message={message} />
-            ))}
-          <div ref={messagesEndRef} />
-        </MessagingMessagesContainer>
       )}
 
       {displayQuickReplies && (
@@ -502,6 +584,10 @@ export const MessagingConversation = () => {
           recipientGender={otherParticipant.gender}
           currentUserRole={currentUser.role as UserRoles}
         />
+      )}
+
+      {displayEthicsCharter && (
+        <MessagingEthicsCharter key={selectedConversationId} />
       )}
 
       <MessagingEditor readonly={conversationParticipantsAreDeleted} />
