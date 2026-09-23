@@ -6,6 +6,7 @@ import {
   getEthicsCharterSummaries,
 } from '@/src/components/ui/EthicsCharter/EthicsCharter';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { BulletListElement, List } from '@/src/components/ui/Lists';
 import { DocumentNames, ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
 import { ModalContext } from '@/src/features/modals/Modal';
@@ -43,11 +44,13 @@ const CharterSection = ({ summary }: { summary: EthicsCharterSummary }) => (
     <StyledMessagingEthicsCharterSectionBody>
       <Text weight="semibold">{summary.title}</Text>
       <StyledMessagingEthicsCharterPoints>
-        {summary.points.map((point) => (
-          <li key={point}>
-            <Text>{point}</Text>
-          </li>
-        ))}
+        <List>
+          {summary.points.map((point) => (
+            <BulletListElement key={point}>
+              <Text>{point}</Text>
+            </BulletListElement>
+          ))}
+        </List>
       </StyledMessagingEthicsCharterPoints>
     </StyledMessagingEthicsCharterSectionBody>
   </StyledMessagingEthicsCharterSection>
@@ -63,10 +66,9 @@ export const MessagingEthicsCharter = () => {
   const summaries = getEthicsCharterSummaries();
 
   /**
-   * La modale ne s'ouvre qu'une fois par utilisateur : elle attend que la
-   * liste des documents lus soit chargée — sans quoi elle s'afficherait un
-   * instant à quelqu'un qui l'a déjà vue — puis vérifie l'absence du document
-   * `CharteEthique`.
+   * The modal opens only once per user: it waits for the read documents to be
+   * loaded — otherwise it would flash at someone who has already seen it —
+   * then checks that the `CharteEthique` document is absent.
    */
   const isModalOpen =
     !isDismissed &&
@@ -76,10 +78,10 @@ export const MessagingEthicsCharter = () => {
   const closeModal = useCallback(() => setIsDismissed(true), []);
 
   /**
-   * Seul « J'ai compris » mémorise : la croix et Échap referment pour cette
-   * fois. L'enregistrement complète aussitôt la liste locale des documents
-   * lus, ce qui garde la modale fermée quand le composant est remonté — au
-   * changement de conversation notamment.
+   * Only "J'ai compris" remembers: the cross and Escape close it for this time
+   * only. Recording the document immediately completes the local read
+   * documents, which keeps the modal closed when the component is remounted —
+   * on a conversation change in particular.
    */
   const acknowledge = useCallback(() => {
     dispatch(
@@ -91,10 +93,10 @@ export const MessagingEthicsCharter = () => {
   }, [dispatch]);
 
   /**
-   * La modale du produit est rendue ici, sous son propre contexte, plutôt
-   * qu'émise par `openModal()` : elle s'ouvre au montage et doit disparaître
-   * au démontage, au changement de conversation notamment. `openModal` empile
-   * les modales et n'en referme aucune de l'extérieur.
+   * The product modal is rendered here, under its own context, rather than
+   * emitted through `openModal()`: it opens on mount and must disappear on
+   * unmount, on a conversation change in particular. `openModal` stacks modals
+   * and closes none of them from the outside.
    */
   const modalContextValue = useMemo(
     () => ({ onClose: closeModal }),

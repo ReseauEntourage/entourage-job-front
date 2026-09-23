@@ -17,14 +17,14 @@ interface ModalGenericProps {
   closeOnNextRender?: boolean;
   noCloseIcon?: boolean;
   buttonText?: string;
-  /** Alignement du titre et de la description dans l'en-tête. */
+  /** Alignment of the title and description in the header. */
   align?: 'center' | 'left';
   /**
-   * Actions posées sous le corps défilant, hors de la zone qui défile — le
-   * corps peut alors être plus haut que la modale sans les emporter.
+   * Actions placed below the scrolling body, outside the area that scrolls —
+   * the body can then be taller than the modal without carrying them away.
    */
   footer?: React.ReactNode;
-  /** Nom de la modale pour les lecteurs d'écran. */
+  /** Name of the modal for screen readers. */
   ariaLabel?: string;
 }
 

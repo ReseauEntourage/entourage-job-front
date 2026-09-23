@@ -2,8 +2,8 @@ import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 /**
- * Ligne discrète au-dessus de l'éditeur : elle survit à la fermeture de la
- * modale et reste le seul rappel permanent de la charte dans la conversation.
+ * Discreet line above the editor: it outlives the modal being closed and
+ * remains the only permanent reminder of the charter in the conversation.
  */
 export const StyledMessagingEthicsCharterNote = styled.div`
   display: flex;
@@ -28,9 +28,9 @@ export const StyledMessagingEthicsCharterNoteLink = styled.a`
 `;
 
 /**
- * Le reste de la modale — voile, largeur, en-tête, corps défilant, pied,
- * feuille mobile — vient de `ModalGeneric` : il ne reste ici que le contenu
- * propre au résumé de la charte.
+ * The rest of the modal — overlay, width, header, scrolling body, footer,
+ * mobile sheet — comes from `ModalGeneric`: only the content specific to the
+ * charter summary is left here.
  */
 export const StyledMessagingEthicsCharterSections = styled.div`
   display: flex;
@@ -59,18 +59,30 @@ export const StyledMessagingEthicsCharterSectionBody = styled.div`
   min-width: 0;
 `;
 
-export const StyledMessagingEthicsCharterPoints = styled.ul`
-  margin: 0;
-  padding-left: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+/**
+ * The product bullets, tightened: a summary of five sections read at a glance
+ * needs a denser rhythm than the full charter page they were sized for.
+ */
+export const StyledMessagingEthicsCharterPoints = styled.div`
+  li {
+    padding-left: 18px;
+
+    &:not(:last-child) {
+      margin-bottom: 2px;
+    }
+
+    &:before {
+      width: 6px;
+      height: 6px;
+      top: 9px;
+    }
+  }
 `;
 
 /**
- * Lien natif plutôt que `Button href newTab` : la prop `newTab` du composant
- * n'a d'effet que sur un lien externe, et y pose `target="_"` au lieu de
- * `_blank`.
+ * Native link rather than `Button href newTab`: the component's `newTab` prop
+ * only has an effect on an external link, where it sets `target="_"` instead
+ * of `_blank`.
  */
 export const StyledMessagingEthicsCharterLink = styled.a`
   display: inline-flex;

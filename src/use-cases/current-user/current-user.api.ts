@@ -345,24 +345,18 @@ export const currentUserApi = api.injectEndpoints({
      * outcome).
      */
     readDocument: builder.mutation<void, { documentName: DocumentNameType }>({
-      queryFn: ({ documentName }, { getState }) => {
+      queryFn: ({ documentName }, { getState, dispatch }) => {
         const userId = selectCurrentUserId(getState() as never);
-        Api.postReadDocument({ documentName }, userId);
-        return { data: undefined };
-      },
-      onQueryStarted: async (
-        { documentName },
-        { dispatch, getState, queryFulfilled }
-      ) => {
-        /**
-         * La liste locale des documents lus est complétée tout de suite.
-         * `Api.postReadDocument` n'étant pas attendu, un rechargement de la
-         * liste juste après repartirait d'une réponse antérieure à
-         * l'enregistrement, et le document manquerait encore.
-         */
         const readDocuments = selectCurrentUserReadDocuments(
           getState() as never
         );
+
+        /**
+         * The local read documents are completed right away. Since
+         * `Api.postReadDocument` is not awaited, reloading the list just
+         * afterwards would start from a response predating the recording, and
+         * the document would still be missing.
+         */
         if (
           !readDocuments.some(
             (readDocument) => readDocument.documentName === documentName
@@ -376,6 +370,21 @@ export const currentUserApi = api.injectEndpoints({
           );
         }
 
+        Api.postReadDocument({ documentName }, userId).catch(() => {
+          // Nothing was recorded: the document must not stay marked as read
+          // for the rest of the session.
+          dispatch(
+            fetchCurrentReadDocumentsSucceeded(
+              selectCurrentUserReadDocuments(getState() as never).filter(
+                (readDocument) => readDocument.documentName !== documentName
+              )
+            )
+          );
+        });
+
+        return { data: undefined };
+      },
+      onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
         try {
           await queryFulfilled;
         } catch {

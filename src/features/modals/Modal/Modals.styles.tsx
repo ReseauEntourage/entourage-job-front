@@ -49,7 +49,7 @@ export const StyledHeaderModalTitleContainer = styled.div<{
 
 export const StyledModalContent = styled.div`
   height: auto;
-  /* Laisse le corps céder la hauteur à l'en-tête et au pied, puis défiler. */
+  /* Lets the body yield height to the header and footer, then scroll. */
   flex: 1 1 auto;
   min-height: 0;
   max-height: 100%;

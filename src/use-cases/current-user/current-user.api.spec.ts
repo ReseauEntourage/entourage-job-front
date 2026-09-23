@@ -378,7 +378,7 @@ describe('current-user api', () => {
       store.dispatch(actions.fetchUserRequested());
       await flushPromises();
 
-      mockedApi.postReadDocument.mockReturnValue(undefined as any);
+      mockedApi.postReadDocument.mockResolvedValue({} as any);
       const refreshedUser = { id: 'user-1', updated: true } as any;
       mockedApi.getCurrentIdentity.mockResolvedValue({
         data: refreshedUser,
@@ -397,13 +397,15 @@ describe('current-user api', () => {
 
     it('adds the document to the read documents without waiting for the API', async () => {
       const store = buildAuthenticatedStore();
-      // `postReadDocument` n'est pas attendu : la liste locale doit refléter
-      // l'enregistrement tout de suite, sans quoi un rechargement immédiat
-      // repartirait d'une réponse antérieure.
-      mockedApi.postReadDocument.mockReturnValue(new Promise(() => {}) as any);
       mockedApi.getCurrentIdentity.mockResolvedValue({
         data: { id: 'user-1' },
       } as any);
+      store.dispatch(actions.fetchUserRequested());
+      await flushPromises();
+      // `postReadDocument` is not awaited: the local list must reflect the
+      // recording right away, otherwise an immediate reload would start from
+      // an earlier response.
+      mockedApi.postReadDocument.mockReturnValue(new Promise(() => {}) as any);
 
       store.dispatch(
         actions.readDocumentRequested({ documentName: 'CharteEthique' as any })
@@ -417,12 +419,31 @@ describe('current-user api', () => {
       ).toEqual(['CharteEthique']);
     });
 
-    it('does not duplicate a document already marked as read', async () => {
+    it('rolls the document back when the API call fails', async () => {
       const store = buildAuthenticatedStore();
-      mockedApi.postReadDocument.mockReturnValue(undefined as any);
       mockedApi.getCurrentIdentity.mockResolvedValue({
         data: { id: 'user-1' },
       } as any);
+      store.dispatch(actions.fetchUserRequested());
+      await flushPromises();
+      mockedApi.postReadDocument.mockRejectedValue(new Error('boom'));
+
+      store.dispatch(
+        actions.readDocumentRequested({ documentName: 'CharteEthique' as any })
+      );
+      await flushPromises();
+
+      expect(selectCurrentUserReadDocuments(store.getState())).toEqual([]);
+    });
+
+    it('does not duplicate a document already marked as read', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-1' },
+      } as any);
+      store.dispatch(actions.fetchUserRequested());
+      await flushPromises();
+      mockedApi.postReadDocument.mockResolvedValue({} as any);
       mockedApi.getCurrentReadDocuments.mockResolvedValue({
         data: {
           readDocuments: [

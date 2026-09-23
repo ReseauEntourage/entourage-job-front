@@ -19,7 +19,7 @@ export const HeaderModal = ({
   description?: React.ReactNode;
   onClose?: (onClose?: () => void) => void;
   noCloseIcon?: boolean;
-  /** Titre et description centrés, ou alignés à gauche. */
+  /** Title and description centred, or aligned to the left. */
   align?: 'center' | 'left';
 }) => {
   const { onClose } = useModalContext();

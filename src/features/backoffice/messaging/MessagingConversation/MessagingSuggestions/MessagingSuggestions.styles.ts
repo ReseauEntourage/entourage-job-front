@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
 
 /**
- * Bandeau compact accolé à l'éditeur, sur le modèle des réponses rapides :
- * il épouse la hauteur de son contenu au lieu d'occuper la zone du fil de
- * discussion, qui reste vide tant qu'aucun message n'a été échangé.
+ * Compact strip hugging the editor, on the quick replies model: it hugs the
+ * height of its content instead of taking over the message thread area, which
+ * stays empty as long as no message has been exchanged.
  */
 export const MessagingSuggestionsContainer = styled.div`
   display: flex;

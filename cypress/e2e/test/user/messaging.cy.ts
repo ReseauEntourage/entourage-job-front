@@ -495,12 +495,12 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
 
   describe('Rappel de la charte éthique', () => {
     /**
-     * Les autres tests s'appuient sur l'utilisateur par défaut, qui a déjà
-     * accepté la charte : ici on repart d'une liste de documents lus vide,
-     * que le POST vient remplir comme le ferait le back. Un stub figé ne
-     * suffirait pas : le composant est remonté au fil du chargement de la
-     * conversation, et la modale se rouvrirait puisque la liste rechargée
-     * dirait toujours que la charte n'a pas été acceptée.
+     * The other tests rely on the default user, who has already accepted the
+     * charter: here we start from an empty list of read documents, which the
+     * POST fills in as the back end would. A frozen stub would not do: the
+     * component is remounted while the conversation loads, and the modal would
+     * reopen since the reloaded list would still say the charter has not been
+     * accepted.
      */
     const signInWithoutCharter = () => {
       signInAs({ role: 'Candidat' });

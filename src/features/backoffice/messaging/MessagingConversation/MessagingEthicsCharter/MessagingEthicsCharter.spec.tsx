@@ -40,10 +40,36 @@ describe('getDisplayEthicsCharter', () => {
     expect(
       getDisplayEthicsCharter({
         ...baseArgs,
-        selectedConversation: null,
+        selectedConversation: {
+          ...conversationWith({ id: 'other', role: UserRoles.CANDIDATE }),
+          id: '',
+        },
         selectedConversationId: 'new',
       })
     ).toBe(true);
+  });
+
+  it('waits for the stub of a conversation being created', () => {
+    expect(
+      getDisplayEthicsCharter({
+        ...baseArgs,
+        selectedConversation: null,
+        selectedConversationId: 'new',
+      })
+    ).toBe(false);
+  });
+
+  it('is false when creating a conversation with an administrator', () => {
+    expect(
+      getDisplayEthicsCharter({
+        ...baseArgs,
+        selectedConversation: {
+          ...conversationWith({ id: 'staff', role: UserRoles.ADMIN }),
+          id: '',
+        },
+        selectedConversationId: 'new',
+      })
+    ).toBe(false);
   });
 
   it('is true on an existing conversation the current user has not answered', () => {
@@ -124,9 +150,9 @@ describe('getEthicsCharterSummaries', () => {
 });
 
 /**
- * Le statut de chargement vient du cache RTK Query et la liste des documents
- * lus du hook dédié : tous deux sont pilotés ici plutôt que par un état
- * préchargé, que le cache ignorerait.
+ * The loading status comes from the RTK Query cache and the read documents
+ * from their dedicated hook: both are driven here rather than through a
+ * preloaded state, which the cache would ignore.
  */
 jest.mock('@/src/hooks/current-user/useCurrentUserReadDocuments', () => ({
   useCurrentUserReadDocuments: jest.fn(),
@@ -208,8 +234,8 @@ describe('MessagingEthicsCharter', () => {
   it('closes the modal on Escape', () => {
     render();
 
-    // react-modal écoute la touche sur le contenu de la modale, pas sur le
-    // document, et la reconnaît par son `keyCode`.
+    // react-modal listens for the key on the modal content, not on the
+    // document, and recognises it by its `keyCode`.
     fireEvent.keyDown(screen.getByTestId('messaging-ethics-charter-modal'), {
       key: 'Escape',
       keyCode: 27,

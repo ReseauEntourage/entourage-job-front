@@ -8,10 +8,10 @@ import { ModalSize } from './Modal.types';
 import { StyledCloseButton } from './Modals.styles';
 
 /**
- * react-modal masque l'élément d'application aux lecteurs d'écran tant qu'une
- * modale est ouverte. Hors de l'application — en test — il n'y a pas de
- * `#__next` : le masquage est alors désactivé plutôt que reporté sur `body`,
- * qui contient aussi le portail de la modale et la rendrait inaccessible.
+ * react-modal hides the app element from screen readers while a modal is
+ * open. Outside the application — in tests — there is no `#__next`: the
+ * hiding is then disabled rather than moved to `body`, which also holds the
+ * modal's portal and would make it unreachable.
  */
 const getAppElement = () =>
   typeof document === 'undefined'
@@ -26,8 +26,8 @@ interface CustomModalProps {
   size: ModalSize;
   fillHeight?: boolean;
   /**
-   * Nom de la modale pour les lecteurs d'écran, à renseigner quand son titre
-   * n'est pas un simple texte en tête de contenu.
+   * Name of the modal for screen readers. Fill it in when the title is not
+   * plain text at the top of the content.
    */
   ariaLabel?: string;
 }

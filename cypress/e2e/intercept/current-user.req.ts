@@ -66,11 +66,11 @@ export const interceptCurrentUserSubResources = () => {
   }).as('currentAchievements');
 
   /**
-   * L'utilisateur par défaut a déjà accepté la charte éthique, comme tout
-   * compte passé par l'onboarding. Sans cela, la modale de rappel de la
-   * charte s'ouvrirait sur chaque conversation non répondue et son voile
-   * couvrirait les éléments que les tests cherchent à cliquer. Un test qui
-   * veut la modale surcharge cet intercept avec une liste vide.
+   * The default user has already accepted the ethics charter, like any account
+   * that went through onboarding. Without this, the charter reminder modal
+   * would open on every unanswered conversation and its overlay would cover
+   * the elements the tests try to click. A test that wants the modal overrides
+   * this intercept with an empty list.
    */
   cy.fixture('user-read-document-ethics-charter.json').then((readDocument) => {
     cy.intercept('GET', '/current/read-documents', {

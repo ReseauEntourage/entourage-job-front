@@ -13,7 +13,7 @@ export const StyledModalFooter = styled.div<{
   ${({ $layout }) =>
     $layout === 'spread'
       ? `
-  /* Pied posé sous le corps défilant : il porte donc ses propres gouttières. */
+  /* Footer sits below the scrolling body, so it carries its own gutters. */
   flex-shrink: 0;
   box-sizing: border-box;
   gap: 20px;

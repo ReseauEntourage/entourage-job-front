@@ -67,11 +67,11 @@ export const getDisplayCheckinBanner = (
 };
 
 /**
- * Rappel de la charte éthique : même déclencheur que le bandeau « Nouveau
- * contact » (l'utilisateur courant n'a pas encore écrit), mais ouvert aussi
- * aux référents. Masqué dès qu'un administrateur est dans la boucle — une
- * conversation avec l'équipe Entourage n'est pas une mise en relation entre
- * membres — et quand une information épinglée passe l'éditeur en readonly.
+ * Ethics charter reminder: same trigger as the "Nouveau contact" banner (the
+ * current user has not written yet), but open to referrers too. Hidden as
+ * soon as an administrator is in the loop — a conversation with the Entourage
+ * team is not a connection between members — and when a pinned info turns the
+ * editor readonly.
  */
 export const getDisplayEthicsCharter = ({
   currentUserRole,
@@ -97,11 +97,18 @@ export const getDisplayEthicsCharter = ({
   if (pinnedInfo) {
     return false;
   }
-  if (selectedConversationId === 'new') {
-    return true;
+
+  /**
+   * A conversation being created carries no id yet: `bindNewConversation`
+   * seeds it as a stub holding the addressee. Waiting for that stub is what
+   * lets the administrator check below run on it too.
+   */
+  const isNewConversation = selectedConversationId === 'new';
+  if (!selectedConversation) {
+    return false;
   }
   if (
-    !selectedConversation ||
+    !isNewConversation &&
     selectedConversation.id !== selectedConversationId
   ) {
     return false;
@@ -115,7 +122,7 @@ export const getDisplayEthicsCharter = ({
     return false;
   }
 
-  return !currentUserHasSentMessages;
+  return isNewConversation || !currentUserHasSentMessages;
 };
 
 export const MessagingConversation = () => {

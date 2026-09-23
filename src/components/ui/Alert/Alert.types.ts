@@ -27,10 +27,10 @@ export interface AlertProps {
   iconInContainer?: boolean;
   center?: boolean;
   /**
-   * Aligne l'icône et la croix de fermeture en haut plutôt qu'au centre.
-   * Utile dès que le contenu fait plusieurs lignes : centrée, l'icône se
-   * retrouve au milieu d'un pavé de texte au lieu d'introduire sa première
-   * ligne.
+   * Aligns the icon and the close cross to the top rather than the middle.
+   * Useful as soon as the content spans several lines: centred, the icon
+   * sits in the middle of a block of text instead of introducing its first
+   * line.
    */
   alignTop?: boolean;
   dataTestId?: string;

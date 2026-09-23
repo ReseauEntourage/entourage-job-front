@@ -4,9 +4,9 @@ import { StyledModalFooter } from './ModalFooter.styles';
 interface ModalFooterProps {
   children: React.ReactNode;
   /**
-   * `centered` : les actions groupées au centre, dans le corps de la modale.
-   * `spread` : une action à chaque bout, sous le corps défilant, avec ses
-   * gouttières et un filet de séparation ; les actions s'empilent sur mobile.
+   * `centered`: actions grouped in the middle, inside the modal body.
+   * `spread`: one action at each end, below the scrolling body, with its own
+   * gutters and a separating rule; actions stack on mobile.
    */
   layout?: 'centered' | 'spread';
 }

@@ -11,20 +11,20 @@ import {
 import { EthicsCharterVariant } from './EthicsCharter.types';
 
 /**
- * Résumé court d'une section de la charte, affiché hors de cette page —
- * aujourd'hui par le rappel de charte de la messagerie. Porté ici, et non
- * dupliqué côté messagerie, pour qu'une mise à jour de la charte et de son
- * résumé se fasse au même endroit. `EthicsCharter` ne le rend jamais.
+ * Short summary of a charter section, displayed outside this page — today by
+ * the messaging charter reminder. Held here rather than duplicated on the
+ * messaging side, so that updating the charter and its summary happens in one
+ * place. `EthicsCharter` never renders it.
  */
 export type EthicsCharterSummary = {
   icon: IconName;
   title: string;
   points: string[];
   /**
-   * Rang du résumé, l'ordre de lecture voulu ne suivant pas celui de la
-   * charte : le résumé va du plus engageant au plus interdit — respect,
-   * entraide, posture, puis consentement et comportements interdits —
-   * là où la charte suit son propre plan.
+   * Rank in the summary: the intended reading order is not the charter's.
+   * The summary goes from the most engaging to the most prohibited — respect,
+   * mutual help, posture, then consent and forbidden behaviours — where the
+   * charter follows its own outline.
    */
   order: number;
 };
@@ -188,9 +188,9 @@ const items: EthicsCharterItemType[] = [
 ];
 
 /**
- * Les sections de la charte qui portent un résumé, dans l'ordre de lecture
- * voulu pour ce résumé (`order`), qui n'est pas celui de la charte.
- * Seul point d'entrée pour afficher ce résumé ailleurs dans le produit.
+ * The charter sections carrying a summary, in the reading order intended for
+ * that summary (`order`), which is not the charter's own.
+ * The single entry point for displaying this summary elsewhere in the product.
  */
 export const getEthicsCharterSummaries = (): EthicsCharterSummary[] =>
   items
