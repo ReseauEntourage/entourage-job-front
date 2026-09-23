@@ -77,8 +77,9 @@ export const MessagingEthicsCharter = () => {
 
   /**
    * Seul « J'ai compris » mémorise : la croix et Échap referment pour cette
-   * fois. Le rafraîchissement de la liste évite que la modale se rouvre au
-   * changement de conversation, où le composant est remonté.
+   * fois. L'enregistrement complète aussitôt la liste locale des documents
+   * lus, ce qui garde la modale fermée quand le composant est remonté — au
+   * changement de conversation notamment.
    */
   const acknowledge = useCallback(() => {
     dispatch(
@@ -86,7 +87,6 @@ export const MessagingEthicsCharter = () => {
         documentName: DocumentNames.CharteEthique,
       })
     );
-    dispatch(currentUserActions.fetchCurrentReadDocumentsRequested());
     setIsDismissed(true);
   }, [dispatch]);
 

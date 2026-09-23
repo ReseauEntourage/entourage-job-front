@@ -20,6 +20,7 @@ import {
   selectCurrentUser,
   selectCurrentUserId,
   selectCurrentUserProfileComplete,
+  selectCurrentUserReadDocuments,
 } from './current-user.selectors';
 import { slice } from './current-user.slice';
 
@@ -349,7 +350,32 @@ export const currentUserApi = api.injectEndpoints({
         Api.postReadDocument({ documentName }, userId);
         return { data: undefined };
       },
-      onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
+      onQueryStarted: async (
+        { documentName },
+        { dispatch, getState, queryFulfilled }
+      ) => {
+        /**
+         * La liste locale des documents lus est complétée tout de suite.
+         * `Api.postReadDocument` n'étant pas attendu, un rechargement de la
+         * liste juste après repartirait d'une réponse antérieure à
+         * l'enregistrement, et le document manquerait encore.
+         */
+        const readDocuments = selectCurrentUserReadDocuments(
+          getState() as never
+        );
+        if (
+          !readDocuments.some(
+            (readDocument) => readDocument.documentName === documentName
+          )
+        ) {
+          dispatch(
+            fetchCurrentReadDocumentsSucceeded([
+              ...readDocuments,
+              { documentName, createdAt: new Date().toISOString() },
+            ])
+          );
+        }
+
         try {
           await queryFulfilled;
         } catch {
