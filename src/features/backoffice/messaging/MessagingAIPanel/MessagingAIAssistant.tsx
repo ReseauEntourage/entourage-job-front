@@ -63,7 +63,7 @@ export const MessagingAIAssistant = () => {
   const [isRateLimitWarningDismissed, setIsRateLimitWarningDismissed] =
     useState(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const adjustInputHeight = () => {
@@ -117,7 +117,10 @@ export const MessagingAIAssistant = () => {
   }, [rateLimitResetAt]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scrolls the container only: `scrollIntoView` would also scroll the
+    // document, hiding the panel header under the fixed nav on mobile.
+    const container = messagesContainerRef.current;
+    container?.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }, [messages, isLoading]);
 
   useEffect(() => {
@@ -254,7 +257,7 @@ export const MessagingAIAssistant = () => {
 
   return (
     <>
-      <AIMessagesContainer>
+      <AIMessagesContainer ref={messagesContainerRef}>
         {messages.length === 0 && !isLoading && (
           <AIEmptyState>
             <LucidIcon name="Sparkles" size={32} />
@@ -284,7 +287,6 @@ export const MessagingAIAssistant = () => {
             <span />
           </AILoadingIndicator>
         )}
-        <div ref={messagesEndRef} />
       </AIMessagesContainer>
 
       {escalation && (

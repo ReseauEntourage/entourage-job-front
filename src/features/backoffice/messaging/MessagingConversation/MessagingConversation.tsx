@@ -331,15 +331,23 @@ export const MessagingConversation = () => {
     return [...selectedConversation.messages].reverse();
   }, [selectedConversation]);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     setScrollBehavior('instant' as ScrollBehavior);
     dispatch(messagingActions.setNewMessage(''));
   }, [dispatch, selectedConversationId]);
 
+  /**
+   * Scrolls the messages container itself rather than calling
+   * `scrollIntoView` on a sentinel: the latter also scrolls every scrollable
+   * ancestor, the document included, which on mobile pushed the sticky
+   * conversation header under the fixed nav.
+   */
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: scrollBehavior });
+    const container = messagesContainerRef.current;
+    container?.scrollTo({
+      top: container.scrollHeight,
+      behavior: scrollBehavior,
+    });
     setTimeout(() => {
       setScrollBehavior('smooth' as ScrollBehavior);
     }, 1000);
@@ -552,7 +560,6 @@ export const MessagingConversation = () => {
           reversedMessages.map((message) => (
             <MessagingMessage key={message.id} message={message} />
           ))}
-        <div ref={messagesEndRef} />
       </MessagingMessagesContainer>
 
       {/* Accolées à l'éditeur, comme les réponses rapides, plutôt qu'occupant
