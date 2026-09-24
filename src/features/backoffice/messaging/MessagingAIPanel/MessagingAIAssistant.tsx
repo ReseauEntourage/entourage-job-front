@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@/src/api';
-import { AiAssistantMessage } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert/Alert';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
@@ -21,7 +20,11 @@ import {
   selectSelectedConversationId,
 } from '@/src/use-cases/messaging';
 import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
-import { EscalationState } from './MessagingAIAssistant.types';
+import {
+  AiMessageStatus,
+  EscalationState,
+  LocalAiMessage,
+} from './MessagingAIAssistant.types';
 import {
   QUICK_ACTIONS,
   getContextualQuickAction,
@@ -51,8 +54,11 @@ export const MessagingAIAssistant = () => {
   const hasConversationHistory =
     (selectedConversation?.messages?.length ?? 0) > 0;
 
-  const [messages, setMessages] = useState<AiAssistantMessage[]>([]);
+  const [messages, setMessages] = useState<LocalAiMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
+    null
+  );
   const [inputValue, setInputValue] = useState('');
   const [escalation, setEscalation] = useState<EscalationState | null>(null);
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true);
@@ -151,6 +157,7 @@ export const MessagingAIAssistant = () => {
         { id: assistantPlaceholderId, role: 'assistant', content: '' },
       ]);
       setIsLoading(true);
+      setStreamingMessageId(assistantPlaceholderId);
       setInputValue('');
 
       const updatePlaceholder = (updater: (prev: string) => string) => {
@@ -159,6 +166,18 @@ export const MessagingAIAssistant = () => {
             m.id === assistantPlaceholderId
               ? { ...m, content: updater(m.content) }
               : m
+          )
+        );
+      };
+
+      // Set once content has streamed in, so a later failure keeps the partial
+      // answer on screen instead of replacing it with a generic error.
+      let hasReceivedContent = false;
+
+      const setPlaceholderStatus = (status: AiMessageStatus) => {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantPlaceholderId ? { ...m, status } : m
           )
         );
       };
@@ -178,10 +197,14 @@ export const MessagingAIAssistant = () => {
           throw new Error('ReadableStream non disponible.');
         }
 
-        await processSSEStream(reader, {
-          onContent: (chunk) => updatePlaceholder((prev) => prev + chunk),
+        const { completed } = await processSSEStream(reader, {
+          onContent: (chunk) => {
+            hasReceivedContent = true;
+            updatePlaceholder((prev) => prev + chunk);
+          },
           onEscalate: (state) => setEscalation(state),
           onError: (message) => updatePlaceholder(() => message),
+          onTruncated: () => setPlaceholderStatus('truncated'),
           onRateLimitInfo: (remaining) => setRateLimitRemaining(remaining),
           onRateLimit: (resetInSeconds) => {
             setRateLimitResetAt(Date.now() + resetInSeconds * 1000);
@@ -194,10 +217,21 @@ export const MessagingAIAssistant = () => {
             );
           },
         });
+
+        if (!completed) {
+          setPlaceholderStatus('interrupted');
+        }
       } catch {
-        updatePlaceholder(() => 'Une erreur est survenue. Veuillez réessayer.');
+        if (hasReceivedContent) {
+          setPlaceholderStatus('interrupted');
+        } else {
+          updatePlaceholder(
+            () => 'Une erreur est survenue. Veuillez réessayer.'
+          );
+        }
       } finally {
         setIsLoading(false);
+        setStreamingMessageId(null);
       }
     },
     [isLoading, isRateLimited, selectedConversationId]
@@ -269,6 +303,8 @@ export const MessagingAIAssistant = () => {
             <AssistantMessageBubble
               key={message.id}
               content={message.content}
+              status={message.status}
+              isStreaming={message.id === streamingMessageId}
               onUseSuggestion={handleUseSuggestion}
             />
           ) : (

@@ -1,15 +1,28 @@
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import { useMemo } from 'react';
+import { Text } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button/Button';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { useIsDesktop } from '@/src/hooks/utils';
+import { AiMessageStatus } from '../MessagingAIAssistant.types';
 import { AIMarkdownContent, AIMessageBubble } from '../MessagingAIPanel.styles';
+
+const SUGGESTION_OPEN_TAG = '[SUGGESTION]';
+
+export const AI_MESSAGE_STATUS_NOTICES: Record<AiMessageStatus, string> = {
+  truncated:
+    'Réponse incomplète : elle a atteint la longueur maximale. Demandez la suite si besoin.',
+  interrupted: 'Réponse interrompue. Réessayez si elle vous semble incomplète.',
+};
 
 type ContentSegment =
   { type: 'text'; content: string } | { type: 'suggestion'; content: string };
 
-function parseSegments(content: string): ContentSegment[] {
+export function parseSegments(
+  content: string,
+  isStreaming = false
+): ContentSegment[] {
   const segments: ContentSegment[] = [];
   const regex = /\[SUGGESTION\]([\s\S]*?)\[\/SUGGESTION\]/g;
   let lastIndex = 0;
@@ -27,12 +40,20 @@ function parseSegments(content: string): ContentSegment[] {
     lastIndex = regex.lastIndex;
   }
 
-  // Remaining text — stop before any incomplete [SUGGESTION] block
-  const remaining = content.slice(lastIndex);
-  const incompleteIdx = remaining.indexOf('[SUGGESTION]');
-  const textEnd = (
-    incompleteIdx === -1 ? remaining : remaining.slice(0, incompleteIdx)
-  ).trim();
+  // Remaining text. While streaming, hide an unclosed [SUGGESTION] block until
+  // its closing tag arrives. Once the answer is over, show that text as plain
+  // text (tag stripped) rather than as a clickable suggestion, since it may
+  // have been cut mid-message.
+  let remaining = content.slice(lastIndex);
+  const incompleteIdx = remaining.indexOf(SUGGESTION_OPEN_TAG);
+  if (incompleteIdx !== -1) {
+    const beforeTag = remaining.slice(0, incompleteIdx);
+    const afterTag = remaining.slice(
+      incompleteIdx + SUGGESTION_OPEN_TAG.length
+    );
+    remaining = isStreaming ? beforeTag : beforeTag + afterTag;
+  }
+  const textEnd = remaining.trim();
   if (textEnd) {
     segments.push({ type: 'text', content: textEnd });
   }
@@ -63,14 +84,21 @@ const TextSegment = ({ content }: TextSegmentProps) => {
 
 interface AssistantMessageBubbleProps {
   content: string;
+  status?: AiMessageStatus;
+  isStreaming?: boolean;
   onUseSuggestion?: (text: string) => void;
 }
 
 export const AssistantMessageBubble = ({
   content,
+  status,
+  isStreaming = false,
   onUseSuggestion,
 }: AssistantMessageBubbleProps) => {
-  const segments = useMemo(() => parseSegments(content), [content]);
+  const segments = useMemo(
+    () => parseSegments(content, isStreaming),
+    [content, isStreaming]
+  );
 
   return (
     <AIMessageBubble role="assistant">
@@ -90,6 +118,11 @@ export const AssistantMessageBubble = ({
             <span style={{ whiteSpace: 'pre-wrap' }}>{segment.content}</span>
           </Button>
         )
+      )}
+      {status && (
+        <Text size="small" color="mediumGray">
+          {AI_MESSAGE_STATUS_NOTICES[status]}
+        </Text>
       )}
     </AIMessageBubble>
   );
