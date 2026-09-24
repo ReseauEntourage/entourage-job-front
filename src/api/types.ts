@@ -836,6 +836,10 @@ export type PostAuthFinalizeReferedUserParams = {
   password: string;
 };
 
+export type PostAuthSendFinalizeReferedUserParams = {
+  token: string;
+};
+
 export type PostAuthAutologinParams = {
   token: string;
 };

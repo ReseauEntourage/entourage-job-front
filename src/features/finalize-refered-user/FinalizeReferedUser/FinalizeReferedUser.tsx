@@ -12,9 +12,22 @@ import { Spinner } from '@/src/components/ui/Spinner';
 import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { formFinalizeReferedUser } from '@/src/features/forms/schemas/formFinalizeReferedUser';
 import { authenticationActions } from '@/src/use-cases/authentication';
+import { SendFinalizeReferedUserButton } from '../SendFinalizeReferedUserButton';
+import { getTokenExpirationDate } from '../getTokenExpirationDate';
+
+export const EXPIRED_LINK_MESSAGE =
+  "Votre lien d'activation a expiré. Vous pouvez en recevoir un nouveau par email.";
+export const INVALID_LINK_MESSAGE =
+  "Ce lien d'activation n'est pas valide. Vérifiez que vous avez bien ouvert le lien reçu par email.";
+
+const isExpired = (token: string) => {
+  const expirationDate = getTokenExpirationDate(token);
+  return !!expirationDate && expirationDate.getTime() < Date.now();
+};
 
 export const FinalizeReferedUser = () => {
   const [tokenString, setToken] = useState<string | null>(null);
+  const [isLinkExpired, setIsLinkExpired] = useState(false);
   const {
     query: { token },
     isReady,
@@ -24,7 +37,11 @@ export const FinalizeReferedUser = () => {
 
   useEffect(() => {
     if (isReady) {
-      setToken(token as string);
+      const queryToken = typeof token === 'string' ? token : null;
+      setToken(queryToken);
+      // Tell the candidate right away, rather than after they typed a password
+      // for nothing. The backend still rejects expired tokens on submit.
+      setIsLinkExpired(!!queryToken && isExpired(queryToken));
     }
   }, [token, isReady]);
 
@@ -33,7 +50,16 @@ export const FinalizeReferedUser = () => {
   }
 
   if (!tokenString) {
-    return <div>Pas de token</div>;
+    return <p>{INVALID_LINK_MESSAGE}</p>;
+  }
+
+  if (isLinkExpired) {
+    return (
+      <>
+        <p>{EXPIRED_LINK_MESSAGE}</p>
+        <SendFinalizeReferedUserButton token={tokenString} />
+      </>
+    );
   }
 
   return (
@@ -57,8 +83,12 @@ export const FinalizeReferedUser = () => {
             );
             await push('/backoffice/dashboard');
           } catch (err) {
-            if (isTokenExpiredError(err) || isInvalidTokenError(err)) {
-              setError('Le token est invalide, veuillez réessayer');
+            if (isTokenExpiredError(err)) {
+              // Expired between page load and submit, or client clock ahead.
+              setIsLinkExpired(true);
+            }
+            if (isInvalidTokenError(err)) {
+              setError(INVALID_LINK_MESSAGE);
             }
             if (isEmailAlreadyVerifiedError(err)) {
               setError('Vous avez déja défini un mot de passe');
