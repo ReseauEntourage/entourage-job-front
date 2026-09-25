@@ -198,7 +198,8 @@ describe('FinalizeAccount', () => {
         email: 'candidate@example.com',
         password: chosenInput,
       });
-      expect(mockedApi.getCurrentIdentity).toHaveBeenCalled();
+      // A single `/current` call: the one started by the login listener.
+      expect(mockedApi.getCurrentIdentity).toHaveBeenCalledTimes(1);
       expect(store.getState().authentication.accessToken).toBe(
         'full-session-token'
       );

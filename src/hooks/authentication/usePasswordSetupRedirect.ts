@@ -17,7 +17,7 @@ export function getRequestedPath(asPath: string) {
 
 /**
  * Blocks every page for an authenticated account that has no password yet
- * (e.g. a refered candidate logged in through an autologin link), and sends it
+ * (e.g. a referred candidate logged in through an autologin link), and sends it
  * to `/finaliser-compte`. The backend restricts such a session anyway: the
  * page is not rendered before the redirection, so its calls never answer 403.
  */

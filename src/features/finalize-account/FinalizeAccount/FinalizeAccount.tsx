@@ -1,18 +1,18 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Api } from '@/src/api';
 import {
   isEmailAlreadyVerifiedError,
   isInvalidTokenError,
   isTokenExpiredError,
 } from '@/src/api/axiosErrors';
-import { PostAuthFinalizeAccountParams } from '@/src/api/types';
+import { PostAuthFinalizeAccountParams, User } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { formFinalizeAccount } from '@/src/features/forms/schemas/formFinalizeAccount';
-import { AppDispatch } from '@/src/store/store';
+import { AppDispatch, RootState } from '@/src/store/store';
 import {
   authenticationApi,
   LOGIN_FIXED_CACHE_KEY,
@@ -41,6 +41,51 @@ export const LOGIN_AFTER_FINALIZE_ERROR_MESSAGE =
   'Votre mot de passe a bien été enregistré, mais la connexion a échoué. Réessayez avec ce même mot de passe.';
 export const ALREADY_FINALIZED_MESSAGE =
   'Vous avez déjà défini un mot de passe';
+
+const IDENTITY_REFRESH_TIMEOUT_MS = 15000;
+
+const selectFetchUserRequest = (state: RootState) =>
+  currentUserApi.endpoints.fetchUser.select(FETCH_USER_FIXED_CACHE_KEY)(state);
+
+type StoreLike = {
+  getState: () => RootState;
+  subscribe: (listener: () => void) => () => void;
+};
+
+/**
+ * Resolves with the identity refreshed by the `loginSucceeded` listener
+ * (`current-user.listeners.ts`), i.e. the first `fetchUser` request started
+ * after `previousRequestId`. Awaiting that request, rather than starting a
+ * second one, keeps a single `/current` call per login.
+ */
+export const waitForIdentityRefresh = (
+  store: StoreLike,
+  previousRequestId: string | undefined
+) =>
+  new Promise<User>((resolve, reject) => {
+    let unsubscribe = () => {};
+    const timeout = setTimeout(() => {
+      unsubscribe();
+      reject(new Error('IDENTITY_REFRESH_TIMEOUT'));
+    }, IDENTITY_REFRESH_TIMEOUT_MS);
+    const check = () => {
+      const request = selectFetchUserRequest(store.getState());
+      if (!request.requestId || request.requestId === previousRequestId) {
+        return;
+      }
+      if (request.isSuccess) {
+        clearTimeout(timeout);
+        unsubscribe();
+        resolve(request.data as User);
+      } else if (request.isError) {
+        clearTimeout(timeout);
+        unsubscribe();
+        reject(request.error);
+      }
+    };
+    unsubscribe = store.subscribe(check);
+    check();
+  });
 
 const isExpired = (token: string) => {
   const expirationDate = getTokenExpirationDate(token);
@@ -86,6 +131,7 @@ export const FinalizeAccount = () => {
     push,
   } = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+  const store = useStore<RootState>();
 
   const currentUser = useSelector(selectCurrentUser);
   const accessToken = useSelector(selectAccessToken);
@@ -172,17 +218,22 @@ export const FinalizeAccount = () => {
           // leaving: the next page must not mount with the restricted session,
           // nor be sent back here by `usePasswordSetupRedirect`.
           try {
+            const previousRequestId = selectFetchUserRequest(
+              store.getState()
+            ).requestId;
+            const identityRefresh = waitForIdentityRefresh(
+              store,
+              previousRequestId
+            );
+            // Avoids an unhandled rejection if the login fails first.
+            identityRefresh.catch(() => {});
             await dispatch(
               authenticationApi.endpoints.login.initiate(
                 { email, password: setPassword },
                 { fixedCacheKey: LOGIN_FIXED_CACHE_KEY }
               )
             ).unwrap();
-            const identity = await dispatch(
-              currentUserApi.endpoints.fetchUser.initiate(undefined, {
-                fixedCacheKey: FETCH_USER_FIXED_CACHE_KEY,
-              })
-            ).unwrap();
+            const identity = await identityRefresh;
             dispatch(currentUserActions.fetchUserSucceeded(identity));
           } catch {
             setError(LOGIN_AFTER_FINALIZE_ERROR_MESSAGE);
