@@ -120,7 +120,7 @@ export const AssistantMessageBubble = ({
         )
       )}
       {status && (
-        <Text size="small" color="mediumGray">
+        <Text size="small" color="darkGray">
           {AI_MESSAGE_STATUS_NOTICES[status]}
         </Text>
       )}

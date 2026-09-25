@@ -71,6 +71,10 @@ export const MessagingAIAssistant = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  // Placeholder id of the request that currently owns isLoading and
+  // streamingMessageId. A stream left running after a conversation change must
+  // not clear the state of a newer stream when it finishes.
+  const activeRequestIdRef = useRef<string | null>(null);
 
   const adjustInputHeight = () => {
     if (!inputRef.current) {
@@ -102,8 +106,10 @@ export const MessagingAIAssistant = () => {
 
     return () => {
       cancelled = true;
+      activeRequestIdRef.current = null;
       setMessages([]);
       setIsLoading(false);
+      setStreamingMessageId(null);
       setInputValue('');
       setEscalation(null);
     };
@@ -156,6 +162,7 @@ export const MessagingAIAssistant = () => {
         { id: `user-${Date.now()}`, role: 'user', content: content.trim() },
         { id: assistantPlaceholderId, role: 'assistant', content: '' },
       ]);
+      activeRequestIdRef.current = assistantPlaceholderId;
       setIsLoading(true);
       setStreamingMessageId(assistantPlaceholderId);
       setInputValue('');
@@ -230,8 +237,11 @@ export const MessagingAIAssistant = () => {
           );
         }
       } finally {
-        setIsLoading(false);
-        setStreamingMessageId(null);
+        if (activeRequestIdRef.current === assistantPlaceholderId) {
+          activeRequestIdRef.current = null;
+          setIsLoading(false);
+          setStreamingMessageId(null);
+        }
       }
     },
     [isLoading, isRateLimited, selectedConversationId]
