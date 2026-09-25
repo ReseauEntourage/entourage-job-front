@@ -25,6 +25,9 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
   const isCurrentUserFetchFinished = isFetchUserSucceeded || isFetchUserFailed;
 
   const onboardingStatus = currentUser?.onboardingStatus;
+  // Finalizing the account comes first: `usePasswordSetupRedirect` owns the
+  // navigation until the password is set, so the two never compete.
+  const isPasswordSetupRequired = currentUser?.hasPassword === false;
   const isUserAuthenticated = !!currentUser;
   const isOnboardingExcludedRole = onboardingExcludedRoles.includes(
     currentUser?.role as UserRoles
@@ -49,6 +52,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     }
     const isOnboardingRequired =
       isUserAuthenticated &&
+      !isPasswordSetupRequired &&
       isInBackoffice &&
       !isOnboardingExcludedRole &&
       !isOnboardingCompleted &&
@@ -74,6 +78,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     isCompanyAdmin,
     onboardingPath,
     shouldWaitForCurrentUser,
+    isPasswordSetupRequired,
   ]);
 
   // Si la route ne nécessite pas d'authentification (pas de currentUser), on considère la route comme prête
@@ -81,6 +86,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     !shouldWaitForCurrentUser &&
     (!isInBackoffice ||
       !isUserAuthenticated ||
+      isPasswordSetupRequired ||
       isOnboardingExcludedRole ||
       isOnboardingCompleted ||
       isOnOnboardingPage ||

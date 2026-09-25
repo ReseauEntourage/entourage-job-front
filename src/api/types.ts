@@ -319,6 +319,9 @@ export type User = {
   elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
+  // Set from `GET /current`. `false` means the account has no password yet and
+  // its session is restricted until it is finalized on `/finaliser-compte`.
+  hasPassword?: boolean;
 };
 
 export type MemberUser = User & {
@@ -398,6 +401,7 @@ export type CurrentUserIdentity = {
   elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
+  hasPassword: boolean;
 };
 
 export type CurrentUserProfile = {
@@ -831,8 +835,10 @@ export type PostAuthVerifyOtpParams = {
   code: string;
 };
 
-export type PostAuthFinalizeReferedUserParams = {
-  token: string;
+export type PostAuthFinalizeAccountParams = {
+  // Omitted when the identity is proven by the session of an account without
+  // a password (e.g. after an autologin link) instead of an activation link.
+  token?: string;
   password: string;
 };
 

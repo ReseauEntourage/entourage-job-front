@@ -17,6 +17,7 @@ import { StyleSheetManager } from 'styled-components';
 import { GA_TAGS } from '@/src/constants/tags';
 import { useOnboardingRedirect } from '@/src/features/wizard/onboarding/useOnboardingRedirect';
 import { useAuthentication } from '@/src/hooks/authentication/useAuthentication';
+import { usePasswordSetupRedirect } from '@/src/hooks/authentication/usePasswordSetupRedirect';
 import { useMount } from '@/src/hooks/utils';
 import * as gtag from '@/src/lib/gtag';
 import { gaEventWithUser } from '@/src/lib/gtag';
@@ -45,8 +46,13 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
 
   const { isAuthRouteReady } = useAuthentication();
   const { isOnboardingRouteReady } = useOnboardingRedirect({ currentUser });
+  const { isPasswordSetupRouteReady } = usePasswordSetupRedirect({
+    currentUser,
+  });
 
-  return isAuthRouteReady && isOnboardingRouteReady ? (
+  return isAuthRouteReady &&
+    isOnboardingRouteReady &&
+    isPasswordSetupRouteReady ? (
     <Component {...pageProps} />
   ) : null;
 };
