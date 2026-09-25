@@ -12,6 +12,11 @@ export type AIQuickAction = {
 
 export type EscalationState = { referentUserId: string; referentName: string };
 
+// Why an assistant answer ended abnormally. Local UI state only: not persisted,
+// so it is lost when the session is reloaded.
+export type AiMessageStatus = 'truncated' | 'interrupted';
+
 export type LocalAiMessage = AiAssistantMessage & {
   suggestions?: string[];
+  status?: AiMessageStatus;
 };
