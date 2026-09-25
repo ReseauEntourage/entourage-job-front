@@ -7,6 +7,7 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { AiMessageStatus } from '../MessagingAIAssistant.types';
 import { AIMarkdownContent, AIMessageBubble } from '../MessagingAIPanel.styles';
+import { StyledAssistantMessageNotice } from './AssistantMessageBubble.styles';
 
 const SUGGESTION_OPEN_TAG = '[SUGGESTION]';
 
@@ -121,11 +122,11 @@ export const AssistantMessageBubble = ({
       )}
       {status && (
         // Live region so screen readers announce a notice added after the fact.
-        <div role="status">
+        <StyledAssistantMessageNotice role="status">
           <Text size="small" color="darkGray">
             {AI_MESSAGE_STATUS_NOTICES[status]}
           </Text>
-        </div>
+        </StyledAssistantMessageNotice>
       )}
     </AIMessageBubble>
   );
