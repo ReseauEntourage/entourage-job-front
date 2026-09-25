@@ -181,13 +181,22 @@ export const MessagingAIAssistant = () => {
       // answer on screen instead of replacing it with a generic error.
       let hasReceivedContent = false;
 
+      // First status wins: 'truncated' is reported by the server before the
+      // stream ends, and must not be overwritten by a later 'interrupted'.
       const setPlaceholderStatus = (status: AiMessageStatus) => {
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === assistantPlaceholderId ? { ...m, status } : m
+            m.id === assistantPlaceholderId
+              ? { ...m, status: m.status ?? status }
+              : m
           )
         );
       };
+
+      // False once the user switched conversation: the stream keeps running
+      // but must not touch the new conversation's state.
+      const isActiveRequest = () =>
+        activeRequestIdRef.current === assistantPlaceholderId;
 
       try {
         const response = await Api.streamAIMessage(
@@ -209,7 +218,11 @@ export const MessagingAIAssistant = () => {
             hasReceivedContent = true;
             updatePlaceholder((prev) => prev + chunk);
           },
-          onEscalate: (state) => setEscalation(state),
+          onEscalate: (state) => {
+            if (isActiveRequest()) {
+              setEscalation(state);
+            }
+          },
           onError: (message) => updatePlaceholder(() => message),
           onTruncated: () => setPlaceholderStatus('truncated'),
           onRateLimitInfo: (remaining) => setRateLimitRemaining(remaining),
@@ -237,7 +250,7 @@ export const MessagingAIAssistant = () => {
           );
         }
       } finally {
-        if (activeRequestIdRef.current === assistantPlaceholderId) {
+        if (isActiveRequest()) {
           activeRequestIdRef.current = null;
           setIsLoading(false);
           setStreamingMessageId(null);

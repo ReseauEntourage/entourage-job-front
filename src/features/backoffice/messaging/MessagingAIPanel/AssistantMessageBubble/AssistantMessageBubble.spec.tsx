@@ -51,14 +51,14 @@ describe('AssistantMessageBubble', () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
-  it('shows the truncated notice', () => {
+  it('shows the truncated notice in a live region', () => {
     render(
       <AssistantMessageBubble content="Réponse coupée" status="truncated" />
     );
 
-    expect(
-      screen.getByText(AI_MESSAGE_STATUS_NOTICES.truncated)
-    ).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent(
+      AI_MESSAGE_STATUS_NOTICES.truncated
+    );
   });
 
   it('shows the interrupted notice and keeps the received text', () => {

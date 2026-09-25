@@ -120,9 +120,12 @@ export const AssistantMessageBubble = ({
         )
       )}
       {status && (
-        <Text size="small" color="darkGray">
-          {AI_MESSAGE_STATUS_NOTICES[status]}
-        </Text>
+        // Live region so screen readers announce a notice added after the fact.
+        <div role="status">
+          <Text size="small" color="darkGray">
+            {AI_MESSAGE_STATUS_NOTICES[status]}
+          </Text>
+        </div>
       )}
     </AIMessageBubble>
   );
