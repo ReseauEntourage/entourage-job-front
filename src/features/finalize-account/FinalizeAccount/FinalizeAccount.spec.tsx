@@ -15,6 +15,7 @@ import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   EXPIRED_LINK_MESSAGE,
+  FINALIZE_GENERIC_ERROR_MESSAGE,
   FinalizeAccount,
   getRedirectPath,
   INVALID_LINK_MESSAGE,
@@ -218,6 +219,21 @@ describe('FinalizeAccount', () => {
 
       expect(push).not.toHaveBeenCalled();
       expect(screen.getByText(LOGIN_AFTER_FINALIZE_ERROR_MESSAGE)).toBeTruthy();
+    });
+
+    it('shows a generic error and stays on the page, if finalization fails unexpectedly', async () => {
+      mockedApi.postAuthFinalizeAccount.mockRejectedValue(
+        new Error('Network Error')
+      );
+      const { push } = renderWithSessionWithoutPassword(
+        '/backoffice/messaging'
+      );
+
+      await submitPassword(chosenInput);
+
+      expect(push).not.toHaveBeenCalled();
+      expect(mockedApi.postAuthLogin).not.toHaveBeenCalled();
+      expect(screen.getByText(FINALIZE_GENERIC_ERROR_MESSAGE)).toBeTruthy();
     });
 
     it('goes to the dashboard when no page was requested', async () => {

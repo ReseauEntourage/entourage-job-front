@@ -35,6 +35,8 @@ export const INVALID_LINK_MESSAGE =
 
 const DEFAULT_REDIRECT_PATH = '/backoffice/dashboard';
 
+export const FINALIZE_GENERIC_ERROR_MESSAGE =
+  'Une erreur est survenue. Veuillez réessayer.';
 export const LOGIN_AFTER_FINALIZE_ERROR_MESSAGE =
   'Votre mot de passe a bien été enregistré, mais la connexion a échoué. Connectez-vous avec votre email et ce mot de passe.';
 
@@ -147,12 +149,13 @@ export const FinalizeAccount = () => {
             if (isTokenExpiredError(err)) {
               // Expired between page load and submit, or client clock ahead.
               setIsLinkExpired(true);
-            }
-            if (isInvalidTokenError(err)) {
+            } else if (isInvalidTokenError(err)) {
               setError(INVALID_LINK_MESSAGE);
-            }
-            if (isEmailAlreadyVerifiedError(err)) {
+            } else if (isEmailAlreadyVerifiedError(err)) {
               setError('Vous avez déja défini un mot de passe');
+            } else {
+              // Network error, 5xx...: never leave the submission silent.
+              setError(FINALIZE_GENERIC_ERROR_MESSAGE);
             }
             return;
           }
