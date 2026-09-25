@@ -18,6 +18,7 @@ import {
   FinalizeAccount,
   getRedirectPath,
   INVALID_LINK_MESSAGE,
+  LOGIN_AFTER_FINALIZE_ERROR_MESSAGE,
 } from './FinalizeAccount';
 
 const mockedApi = getMockedApi();
@@ -32,6 +33,9 @@ const buildToken = (payload: Record<string, unknown>) => {
       .replace(/=+$/, '');
   return `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode(payload)}.signature`;
 };
+// Meets the strength rules of the form; a test fixture, not a credential.
+const chosenInput = 'Candidat123!';
+
 const nowInSeconds = () => Math.floor(Date.now() / 1000);
 const expiredToken = buildToken({ sub: 'user-id', exp: nowInSeconds() - 60 });
 const validToken = buildToken({ sub: 'user-id', exp: nowInSeconds() + 3600 });
@@ -156,8 +160,15 @@ describe('FinalizeAccount', () => {
   });
 
   describe('from a session without a password', () => {
-    // Meets the strength rules of the form; a test fixture, not a credential.
-    const chosenInput = 'Candidat123!';
+    // The account now has a password: login and identity succeed.
+    const mockSuccessfulLogin = () => {
+      mockedApi.postAuthLogin.mockResolvedValue({
+        data: { token: 'full-session-token' },
+      } as never);
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-id', isEmailVerified: true, hasPassword: true },
+      } as never);
+    };
 
     it('shows the password form without any link message', () => {
       renderWithSessionWithoutPassword();
@@ -171,6 +182,7 @@ describe('FinalizeAccount', () => {
       mockedApi.postAuthFinalizeAccount.mockResolvedValue({
         data: 'candidate@example.com',
       } as never);
+      mockSuccessfulLogin();
       const { push, store } = renderWithSessionWithoutPassword(
         '/backoffice/messaging?userId=author'
       );
@@ -180,14 +192,39 @@ describe('FinalizeAccount', () => {
       expect(mockedApi.postAuthFinalizeAccount).toHaveBeenCalledWith({
         password: chosenInput,
       });
+      // Navigates only once the new session and identity are in place.
+      expect(mockedApi.postAuthLogin).toHaveBeenCalledWith({
+        email: 'candidate@example.com',
+        password: chosenInput,
+      });
+      expect(mockedApi.getCurrentIdentity).toHaveBeenCalled();
+      expect(store.getState().authentication.accessToken).toBe(
+        'full-session-token'
+      );
       expect(store.getState().currentUser.user?.hasPassword).toBe(true);
       expect(push).toHaveBeenCalledWith('/backoffice/messaging?userId=author');
+    });
+
+    it('stays on the page with an error, if the login fails after the password was set', async () => {
+      mockedApi.postAuthFinalizeAccount.mockResolvedValue({
+        data: 'candidate@example.com',
+      } as never);
+      mockedApi.postAuthLogin.mockRejectedValue(new Error('failed'));
+      const { push } = renderWithSessionWithoutPassword(
+        '/backoffice/messaging'
+      );
+
+      await submitPassword(chosenInput);
+
+      expect(push).not.toHaveBeenCalled();
+      expect(screen.getByText(LOGIN_AFTER_FINALIZE_ERROR_MESSAGE)).toBeTruthy();
     });
 
     it('goes to the dashboard when no page was requested', async () => {
       mockedApi.postAuthFinalizeAccount.mockResolvedValue({
         data: 'candidate@example.com',
       } as never);
+      mockSuccessfulLogin();
       const { push } = renderWithSessionWithoutPassword();
 
       await submitPassword(chosenInput);
@@ -196,19 +233,64 @@ describe('FinalizeAccount', () => {
     });
   });
 
+  describe('from an activation link', () => {
+    it('logs in with the new password before leaving, without any prior session', async () => {
+      mockedApi.postAuthFinalizeAccount.mockResolvedValue({
+        data: 'candidate@example.com',
+      } as never);
+      mockedApi.postAuthLogin.mockResolvedValue({
+        data: { token: 'full-session-token' },
+      } as never);
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-id', isEmailVerified: true, hasPassword: true },
+      } as never);
+      const push = jest.fn().mockResolvedValue(true);
+      mockUseRouter.mockReturnValue({
+        query: { token: validToken },
+        isReady: true,
+        push,
+      });
+      renderWithProviders(<FinalizeAccount />);
+
+      await act(async () => {
+        screen
+          .getAllByPlaceholderText('Entrez votre mot de passe')
+          .forEach((input) =>
+            fireEvent.change(input, { target: { value: chosenInput } })
+          );
+        await flushPromises();
+      });
+      await act(async () => {
+        fireEvent.click(screen.getByText('Se connecter'));
+        await flushPromises();
+      });
+
+      expect(mockedApi.postAuthFinalizeAccount).toHaveBeenCalledWith(
+        expect.objectContaining({ token: validToken })
+      );
+      expect(mockedApi.getCurrentIdentity).toHaveBeenCalled();
+      expect(push).toHaveBeenCalledWith('/backoffice/dashboard');
+    });
+  });
+
   describe('getRedirectPath', () => {
-    it('keeps an internal path', () => {
-      expect(getRedirectPath('/backoffice/messaging?userId=a')).toBe(
-        '/backoffice/messaging?userId=a'
+    it('keeps an internal path, with its query and fragment', () => {
+      expect(getRedirectPath('/backoffice/messaging?userId=a#last')).toBe(
+        '/backoffice/messaging?userId=a#last'
       );
     });
 
-    ['https://evil.example', '//evil.example', undefined, ['/a']].forEach(
-      (requestedPath) => {
-        it(`falls back to the dashboard for ${JSON.stringify(requestedPath)}`, () => {
-          expect(getRedirectPath(requestedPath)).toBe('/backoffice/dashboard');
-        });
-      }
-    );
+    [
+      'https://evil.example',
+      '//evil.example',
+      '/\\evil.example',
+      '/\\/evil.example',
+      undefined,
+      ['/a'],
+    ].forEach((requestedPath) => {
+      it(`falls back to the dashboard for ${JSON.stringify(requestedPath)}`, () => {
+        expect(getRedirectPath(requestedPath)).toBe('/backoffice/dashboard');
+      });
+    });
   });
 });

@@ -8,15 +8,20 @@ import {
   isTokenExpiredError,
 } from '@/src/api/axiosErrors';
 import { PostAuthFinalizeAccountParams } from '@/src/api/types';
+import { Text } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { formFinalizeAccount } from '@/src/features/forms/schemas/formFinalizeAccount';
+import { AppDispatch } from '@/src/store/store';
 import {
-  authenticationActions,
+  authenticationApi,
+  LOGIN_FIXED_CACHE_KEY,
   selectAccessToken,
 } from '@/src/use-cases/authentication';
 import {
   currentUserActions,
+  currentUserApi,
+  FETCH_USER_FIXED_CACHE_KEY,
   fetchUserSelectors,
   selectCurrentUser,
 } from '@/src/use-cases/current-user';
@@ -30,6 +35,9 @@ export const INVALID_LINK_MESSAGE =
 
 const DEFAULT_REDIRECT_PATH = '/backoffice/dashboard';
 
+export const LOGIN_AFTER_FINALIZE_ERROR_MESSAGE =
+  'Votre mot de passe a bien été enregistré, mais la connexion a échoué. Connectez-vous avec votre email et ce mot de passe.';
+
 const isExpired = (token: string) => {
   const expirationDate = getTokenExpirationDate(token);
   return !!expirationDate && expirationDate.getTime() < Date.now();
@@ -37,14 +45,24 @@ const isExpired = (token: string) => {
 
 /**
  * Only internal paths are honored, so the page can never be used to send
- * someone to another site.
+ * someone to another site. The value is resolved the way the browser would
+ * (e.g. `/\evil.example` becomes `https://evil.example`) and kept only if it
+ * stays on the current origin.
  */
-export const getRedirectPath = (requestedPath: unknown) =>
-  typeof requestedPath === 'string' &&
-  requestedPath.startsWith('/') &&
-  !requestedPath.startsWith('//')
-    ? requestedPath
-    : DEFAULT_REDIRECT_PATH;
+export const getRedirectPath = (requestedPath: unknown) => {
+  if (typeof requestedPath !== 'string' || !requestedPath.startsWith('/')) {
+    return DEFAULT_REDIRECT_PATH;
+  }
+  try {
+    const { origin } = window.location;
+    const url = new URL(requestedPath, origin);
+    return url.origin === origin
+      ? `${url.pathname}${url.search}${url.hash}`
+      : DEFAULT_REDIRECT_PATH;
+  } catch {
+    return DEFAULT_REDIRECT_PATH;
+  }
+};
 
 /**
  * The single screen on which an account without a password gets its first
@@ -60,7 +78,7 @@ export const FinalizeAccount = () => {
     isReady,
     push,
   } = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const currentUser = useSelector(selectCurrentUser);
   const accessToken = useSelector(selectAccessToken);
@@ -98,14 +116,14 @@ export const FinalizeAccount = () => {
       return <Spinner />;
     }
     if (!isSessionWithoutPassword) {
-      return <p>{INVALID_LINK_MESSAGE}</p>;
+      return <Text>{INVALID_LINK_MESSAGE}</Text>;
     }
   }
 
   if (tokenString && isLinkExpired) {
     return (
       <>
-        <p>{EXPIRED_LINK_MESSAGE}</p>
+        <Text>{EXPIRED_LINK_MESSAGE}</Text>
         <SendFinalizeReferedUserButton token={tokenString} />
       </>
     );
@@ -121,25 +139,10 @@ export const FinalizeAccount = () => {
             ...(tokenString ? { token: tokenString } : {}),
             password: setPassword,
           };
+          let email: string;
           try {
             const response = await Api.postAuthFinalizeAccount(params);
-            setError('');
-            if (currentUser) {
-              // Lifts `usePasswordSetupRedirect` right away, so that it does
-              // not send the user back here before the identity is refetched.
-              dispatch(
-                currentUserActions.updateUserSucceeded({
-                  user: { hasPassword: true, isEmailVerified: true },
-                })
-              );
-            }
-            dispatch(
-              authenticationActions.loginRequested({
-                email: response.data,
-                password: setPassword,
-              })
-            );
-            await push(getRedirectPath(requestedPath));
+            email = response.data;
           } catch (err) {
             if (isTokenExpiredError(err)) {
               // Expired between page load and submit, or client clock ahead.
@@ -151,7 +154,31 @@ export const FinalizeAccount = () => {
             if (isEmailAlreadyVerifiedError(err)) {
               setError('Vous avez déja défini un mot de passe');
             }
+            return;
           }
+
+          // Wait for the new session and the refreshed identity before
+          // leaving: the next page must not mount with the restricted session,
+          // nor be sent back here by `usePasswordSetupRedirect`.
+          try {
+            await dispatch(
+              authenticationApi.endpoints.login.initiate(
+                { email, password: setPassword },
+                { fixedCacheKey: LOGIN_FIXED_CACHE_KEY }
+              )
+            ).unwrap();
+            const identity = await dispatch(
+              currentUserApi.endpoints.fetchUser.initiate(undefined, {
+                fixedCacheKey: FETCH_USER_FIXED_CACHE_KEY,
+              })
+            ).unwrap();
+            dispatch(currentUserActions.fetchUserSucceeded(identity));
+          } catch {
+            setError(LOGIN_AFTER_FINALIZE_ERROR_MESSAGE);
+            return;
+          }
+          setError('');
+          await push(getRedirectPath(requestedPath));
         }}
       />
     </>

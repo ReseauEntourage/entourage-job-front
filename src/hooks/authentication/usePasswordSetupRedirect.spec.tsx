@@ -44,6 +44,20 @@ describe('usePasswordSetupRedirect', () => {
     });
   });
 
+  it('keeps the fragment of the requested page apart from its query', () => {
+    const replace = mockRouter(
+      '/backoffice/messaging',
+      '/backoffice/messaging?userId=author&autologinToken=abc.def#last'
+    );
+
+    renderHook(() => usePasswordSetupRedirect({ currentUser: user(false) }));
+
+    expect(replace).toHaveBeenCalledWith({
+      pathname: FINALIZE_ACCOUNT_PATH,
+      query: { requestedPath: '/backoffice/messaging?userId=author#last' },
+    });
+  });
+
   it('does not redirect in a loop from the finalize page itself', () => {
     const replace = mockRouter(
       FINALIZE_ACCOUNT_PATH,

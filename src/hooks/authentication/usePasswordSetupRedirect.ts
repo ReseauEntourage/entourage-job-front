@@ -8,12 +8,11 @@ export const FINALIZE_ACCOUNT_PATH = '/finaliser-compte';
  * The page to come back to once the password is set, without the one-time
  * autologin token that may still be in the URL (it has already been consumed).
  */
-function getRequestedPath(asPath: string) {
-  const [pathname, search = ''] = asPath.split('?');
-  const params = new URLSearchParams(search);
-  params.delete('autologinToken');
-  const query = params.toString();
-  return query ? `${pathname}?${query}` : pathname;
+export function getRequestedPath(asPath: string) {
+  // Any base works: only the path, query and fragment are kept.
+  const url = new URL(asPath, 'http://localhost');
+  url.searchParams.delete('autologinToken');
+  return `${url.pathname}${url.search}${url.hash}`;
 }
 
 /**
