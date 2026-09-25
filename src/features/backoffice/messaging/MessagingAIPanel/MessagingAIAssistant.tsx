@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@/src/api';
-import { AiAssistantMessage } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { Alert } from '@/src/components/ui/Alert/Alert';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
@@ -21,7 +20,11 @@ import {
   selectSelectedConversationId,
 } from '@/src/use-cases/messaging';
 import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
-import { EscalationState } from './MessagingAIAssistant.types';
+import {
+  AiMessageStatus,
+  EscalationState,
+  LocalAiMessage,
+} from './MessagingAIAssistant.types';
 import {
   QUICK_ACTIONS,
   getContextualQuickAction,
@@ -51,8 +54,11 @@ export const MessagingAIAssistant = () => {
   const hasConversationHistory =
     (selectedConversation?.messages?.length ?? 0) > 0;
 
-  const [messages, setMessages] = useState<AiAssistantMessage[]>([]);
+  const [messages, setMessages] = useState<LocalAiMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(
+    null
+  );
   const [inputValue, setInputValue] = useState('');
   const [escalation, setEscalation] = useState<EscalationState | null>(null);
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true);
@@ -63,8 +69,12 @@ export const MessagingAIAssistant = () => {
   const [isRateLimitWarningDismissed, setIsRateLimitWarningDismissed] =
     useState(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  // Placeholder id of the request that currently owns isLoading and
+  // streamingMessageId. A stream left running after a conversation change must
+  // not clear the state of a newer stream when it finishes.
+  const activeRequestIdRef = useRef<string | null>(null);
 
   const adjustInputHeight = () => {
     if (!inputRef.current) {
@@ -96,8 +106,10 @@ export const MessagingAIAssistant = () => {
 
     return () => {
       cancelled = true;
+      activeRequestIdRef.current = null;
       setMessages([]);
       setIsLoading(false);
+      setStreamingMessageId(null);
       setInputValue('');
       setEscalation(null);
     };
@@ -117,7 +129,10 @@ export const MessagingAIAssistant = () => {
   }, [rateLimitResetAt]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scrolls the container only: `scrollIntoView` would also scroll the
+    // document, hiding the panel header under the fixed nav on mobile.
+    const container = messagesContainerRef.current;
+    container?.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }, [messages, isLoading]);
 
   useEffect(() => {
@@ -150,7 +165,9 @@ export const MessagingAIAssistant = () => {
         { id: `user-${Date.now()}`, role: 'user', content: content.trim() },
         { id: assistantPlaceholderId, role: 'assistant', content: '' },
       ]);
+      activeRequestIdRef.current = assistantPlaceholderId;
       setIsLoading(true);
+      setStreamingMessageId(assistantPlaceholderId);
       setInputValue('');
 
       const updatePlaceholder = (updater: (prev: string) => string) => {
@@ -162,6 +179,27 @@ export const MessagingAIAssistant = () => {
           )
         );
       };
+
+      // Set once content has streamed in, so a later failure keeps the partial
+      // answer on screen instead of replacing it with a generic error.
+      let hasReceivedContent = false;
+
+      // First status wins: 'truncated' is reported by the server before the
+      // stream ends, and must not be overwritten by a later 'interrupted'.
+      const setPlaceholderStatus = (status: AiMessageStatus) => {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantPlaceholderId
+              ? { ...m, status: m.status ?? status }
+              : m
+          )
+        );
+      };
+
+      // False once the user switched conversation: the stream keeps running
+      // but must not touch the new conversation's state.
+      const isActiveRequest = () =>
+        activeRequestIdRef.current === assistantPlaceholderId;
 
       try {
         const response = await Api.streamAIMessage(
@@ -178,10 +216,18 @@ export const MessagingAIAssistant = () => {
           throw new Error('ReadableStream non disponible.');
         }
 
-        await processSSEStream(reader, {
-          onContent: (chunk) => updatePlaceholder((prev) => prev + chunk),
-          onEscalate: (state) => setEscalation(state),
+        const { completed } = await processSSEStream(reader, {
+          onContent: (chunk) => {
+            hasReceivedContent = true;
+            updatePlaceholder((prev) => prev + chunk);
+          },
+          onEscalate: (state) => {
+            if (isActiveRequest()) {
+              setEscalation(state);
+            }
+          },
           onError: (message) => updatePlaceholder(() => message),
+          onTruncated: () => setPlaceholderStatus('truncated'),
           onRateLimitInfo: (remaining) => setRateLimitRemaining(remaining),
           onRateLimit: (resetInSeconds) => {
             setRateLimitResetAt(Date.now() + resetInSeconds * 1000);
@@ -194,10 +240,24 @@ export const MessagingAIAssistant = () => {
             );
           },
         });
+
+        if (!completed) {
+          setPlaceholderStatus('interrupted');
+        }
       } catch {
-        updatePlaceholder(() => 'Une erreur est survenue. Veuillez réessayer.');
+        if (hasReceivedContent) {
+          setPlaceholderStatus('interrupted');
+        } else {
+          updatePlaceholder(
+            () => 'Une erreur est survenue. Veuillez réessayer.'
+          );
+        }
       } finally {
-        setIsLoading(false);
+        if (isActiveRequest()) {
+          activeRequestIdRef.current = null;
+          setIsLoading(false);
+          setStreamingMessageId(null);
+        }
       }
     },
     [isLoading, isRateLimited, selectedConversationId]
@@ -254,7 +314,7 @@ export const MessagingAIAssistant = () => {
 
   return (
     <>
-      <AIMessagesContainer>
+      <AIMessagesContainer ref={messagesContainerRef}>
         {messages.length === 0 && !isLoading && (
           <AIEmptyState>
             <LucidIcon name="Sparkles" size={32} />
@@ -269,6 +329,8 @@ export const MessagingAIAssistant = () => {
             <AssistantMessageBubble
               key={message.id}
               content={message.content}
+              status={message.status}
+              isStreaming={message.id === streamingMessageId}
               onUseSuggestion={handleUseSuggestion}
             />
           ) : (
@@ -284,7 +346,6 @@ export const MessagingAIAssistant = () => {
             <span />
           </AILoadingIndicator>
         )}
-        <div ref={messagesEndRef} />
       </AIMessagesContainer>
 
       {escalation && (
