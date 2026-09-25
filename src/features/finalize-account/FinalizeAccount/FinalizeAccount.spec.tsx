@@ -221,6 +221,29 @@ describe('FinalizeAccount', () => {
       expect(screen.getByText(LOGIN_AFTER_FINALIZE_ERROR_MESSAGE)).toBeTruthy();
     });
 
+    it('retries only the login on a new submission, if the login failed after the password was saved', async () => {
+      mockedApi.postAuthFinalizeAccount.mockResolvedValue({
+        data: 'candidate@example.com',
+      } as never);
+      mockedApi.postAuthLogin.mockRejectedValueOnce(new Error('failed'));
+      const { push } = renderWithSessionWithoutPassword(
+        '/backoffice/messaging'
+      );
+
+      await submitPassword(chosenInput);
+      expect(screen.getByText(LOGIN_AFTER_FINALIZE_ERROR_MESSAGE)).toBeTruthy();
+
+      mockSuccessfulLogin();
+      await act(async () => {
+        fireEvent.click(screen.getByText('Se connecter'));
+        await flushPromises();
+      });
+
+      expect(mockedApi.postAuthFinalizeAccount).toHaveBeenCalledTimes(1);
+      expect(mockedApi.postAuthLogin).toHaveBeenCalledTimes(2);
+      expect(push).toHaveBeenCalledWith('/backoffice/messaging');
+    });
+
     it('shows a generic error and stays on the page, if finalization fails unexpectedly', async () => {
       mockedApi.postAuthFinalizeAccount.mockRejectedValue(
         new Error('Network Error')

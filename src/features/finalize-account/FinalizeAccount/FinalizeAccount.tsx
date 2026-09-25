@@ -38,7 +38,9 @@ const DEFAULT_REDIRECT_PATH = '/backoffice/dashboard';
 export const FINALIZE_GENERIC_ERROR_MESSAGE =
   'Une erreur est survenue. Veuillez réessayer.';
 export const LOGIN_AFTER_FINALIZE_ERROR_MESSAGE =
-  'Votre mot de passe a bien été enregistré, mais la connexion a échoué. Connectez-vous avec votre email et ce mot de passe.';
+  'Votre mot de passe a bien été enregistré, mais la connexion a échoué. Réessayez avec ce même mot de passe.';
+export const ALREADY_FINALIZED_MESSAGE =
+  'Vous avez déjà défini un mot de passe';
 
 const isExpired = (token: string) => {
   const expirationDate = getTokenExpirationDate(token);
@@ -75,6 +77,9 @@ export const getRedirectPath = (requestedPath: unknown) => {
 export const FinalizeAccount = () => {
   const [tokenString, setToken] = useState<string | null>(null);
   const [isLinkExpired, setIsLinkExpired] = useState(false);
+  // Set once the password is saved: a retry after a failed login must only
+  // retry the login, the account being already finalized.
+  const [finalizedEmail, setFinalizedEmail] = useState<string | null>(null);
   const {
     query: { token, requestedPath },
     isReady,
@@ -137,27 +142,30 @@ export const FinalizeAccount = () => {
         submitText="Se connecter"
         formSchema={formFinalizeAccount}
         onSubmit={async ({ setPassword }, setError) => {
-          const params: PostAuthFinalizeAccountParams = {
-            ...(tokenString ? { token: tokenString } : {}),
-            password: setPassword,
-          };
-          let email: string;
-          try {
-            const response = await Api.postAuthFinalizeAccount(params);
-            email = response.data;
-          } catch (err) {
-            if (isTokenExpiredError(err)) {
-              // Expired between page load and submit, or client clock ahead.
-              setIsLinkExpired(true);
-            } else if (isInvalidTokenError(err)) {
-              setError(INVALID_LINK_MESSAGE);
-            } else if (isEmailAlreadyVerifiedError(err)) {
-              setError('Vous avez déja défini un mot de passe');
-            } else {
-              // Network error, 5xx...: never leave the submission silent.
-              setError(FINALIZE_GENERIC_ERROR_MESSAGE);
+          let email = finalizedEmail;
+          if (!email) {
+            const params: PostAuthFinalizeAccountParams = {
+              ...(tokenString ? { token: tokenString } : {}),
+              password: setPassword,
+            };
+            try {
+              const response = await Api.postAuthFinalizeAccount(params);
+              email = response.data;
+              setFinalizedEmail(email);
+            } catch (err) {
+              if (isTokenExpiredError(err)) {
+                // Expired between page load and submit, or client clock ahead.
+                setIsLinkExpired(true);
+              } else if (isInvalidTokenError(err)) {
+                setError(INVALID_LINK_MESSAGE);
+              } else if (isEmailAlreadyVerifiedError(err)) {
+                setError(ALREADY_FINALIZED_MESSAGE);
+              } else {
+                // Network error, 5xx...: never leave the submission silent.
+                setError(FINALIZE_GENERIC_ERROR_MESSAGE);
+              }
+              return;
             }
-            return;
           }
 
           // Wait for the new session and the refreshed identity before
