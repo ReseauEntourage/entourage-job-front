@@ -7,14 +7,18 @@ import { act, cleanup, fireEvent, screen } from '@testing-library/react';
 import expect from 'expect';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { User } from '@/src/api/types';
+import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { flushPromises } from '@/src/store/testUtils/flushPromises';
 import { getMockedApi } from '@/src/store/testUtils/mockApi';
 import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import {
   EXPIRED_LINK_MESSAGE,
-  FinalizeReferedUser,
+  FinalizeAccount,
+  getRedirectPath,
   INVALID_LINK_MESSAGE,
-} from './FinalizeReferedUser';
+} from './FinalizeAccount';
 
 const mockedApi = getMockedApi();
 const mockUseRouter = useRouter as jest.Mock;
@@ -38,10 +42,45 @@ const renderWithToken = (token: string | undefined) => {
     isReady: true,
     push: jest.fn(),
   });
-  return renderWithProviders(<FinalizeReferedUser />);
+  return renderWithProviders(<FinalizeAccount />);
 };
 
-describe('FinalizeReferedUser', () => {
+// Session of an account without a password, e.g. after an autologin link.
+const renderWithSessionWithoutPassword = (requestedPath?: string) => {
+  const push = jest.fn().mockResolvedValue(true);
+  mockUseRouter.mockReturnValue({
+    query: requestedPath === undefined ? {} : { requestedPath },
+    isReady: true,
+    push,
+  });
+  const store = createTestStore();
+  store.dispatch(
+    currentUserActions.fetchUserSucceeded({
+      id: 'user-id',
+      email: 'candidate@example.com',
+      isEmailVerified: false,
+      hasPassword: false,
+    } as User)
+  );
+  return { push, ...renderWithProviders(<FinalizeAccount />, { store }) };
+};
+
+const submitPassword = async (password: string) => {
+  await act(async () => {
+    screen
+      .getAllByPlaceholderText('Entrez votre mot de passe')
+      .forEach((input) =>
+        fireEvent.change(input, { target: { value: password } })
+      );
+    await flushPromises();
+  });
+  await act(async () => {
+    fireEvent.click(screen.getByText('Se connecter'));
+    await flushPromises();
+  });
+};
+
+describe('FinalizeAccount', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -114,5 +153,62 @@ describe('FinalizeReferedUser', () => {
     expect(screen.getByText('Se connecter')).toBeTruthy();
     expect(screen.queryByText(EXPIRED_LINK_MESSAGE)).toBeNull();
     expect(screen.queryByText('Recevoir un nouveau lien')).toBeNull();
+  });
+
+  describe('from a session without a password', () => {
+    // Meets the strength rules of the form; a test fixture, not a credential.
+    const chosenInput = 'Candidat123!';
+
+    it('shows the password form without any link message', () => {
+      renderWithSessionWithoutPassword();
+
+      expect(screen.getByText('Se connecter')).toBeTruthy();
+      expect(screen.queryByText(INVALID_LINK_MESSAGE)).toBeNull();
+      expect(screen.queryByText(EXPIRED_LINK_MESSAGE)).toBeNull();
+    });
+
+    it('finalizes the account without a token, then goes back to the requested page', async () => {
+      mockedApi.postAuthFinalizeAccount.mockResolvedValue({
+        data: 'candidate@example.com',
+      } as never);
+      const { push, store } = renderWithSessionWithoutPassword(
+        '/backoffice/messaging?userId=author'
+      );
+
+      await submitPassword(chosenInput);
+
+      expect(mockedApi.postAuthFinalizeAccount).toHaveBeenCalledWith({
+        password: chosenInput,
+      });
+      expect(store.getState().currentUser.user?.hasPassword).toBe(true);
+      expect(push).toHaveBeenCalledWith('/backoffice/messaging?userId=author');
+    });
+
+    it('goes to the dashboard when no page was requested', async () => {
+      mockedApi.postAuthFinalizeAccount.mockResolvedValue({
+        data: 'candidate@example.com',
+      } as never);
+      const { push } = renderWithSessionWithoutPassword();
+
+      await submitPassword(chosenInput);
+
+      expect(push).toHaveBeenCalledWith('/backoffice/dashboard');
+    });
+  });
+
+  describe('getRedirectPath', () => {
+    it('keeps an internal path', () => {
+      expect(getRedirectPath('/backoffice/messaging?userId=a')).toBe(
+        '/backoffice/messaging?userId=a'
+      );
+    });
+
+    ['https://evil.example', '//evil.example', undefined, ['/a']].forEach(
+      (requestedPath) => {
+        it(`falls back to the dashboard for ${JSON.stringify(requestedPath)}`, () => {
+          expect(getRedirectPath(requestedPath)).toBe('/backoffice/dashboard');
+        });
+      }
+    );
   });
 });

@@ -3,11 +3,11 @@ import React from 'react';
 import { PasswordCriterias } from '@/src/features/backoffice/parameters/ChangePasswordCard/PasswordCriterias';
 import { FormSchema } from '../FormSchema';
 
-export const formFinalizeReferedUser: FormSchema<{
+export const formFinalizeAccount: FormSchema<{
   setPassword: string;
   confirmPassword: string;
 }> = {
-  id: 'form-finalize-refered-user',
+  id: 'form-finalize-account',
   fields: [
     {
       id: 'setPassword',
