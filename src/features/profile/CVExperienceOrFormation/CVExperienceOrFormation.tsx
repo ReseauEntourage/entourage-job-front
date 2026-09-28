@@ -5,7 +5,7 @@ import { COLORS } from '@/src/constants/styles';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { ButtonIcon } from '../../../components/ui';
 import { LucidIcon } from '../../../components/ui/Icons/LucidIcon';
-import { CVDate, formatDate } from '../CVDate';
+import { CVDate, formatDateRange, hasKnownDate } from '../CVDate';
 import {
   StyledCVExperience,
   StyledCVExperienceDate,
@@ -73,25 +73,17 @@ export function CVExperienceOrFormation({
     }`;
   }, [location, structure]);
 
-  const dateRangeLine = useMemo(() => {
-    if (!startDate) {
-      return null;
-    }
+  const dateRangeLine = useMemo(
+    () => formatDateRange({ startDate, endDate }),
+    [endDate, startDate]
+  );
 
-    const start = formatDate(startDate);
-    const end = endDate ? formatDate(endDate) : "Aujourd'hui";
-    return `${start} - ${end}`;
-  }, [endDate, startDate]);
+  const summaryDateRangeLine = useMemo(
+    () => formatDateRange({ startDate, endDate }, ' à '),
+    [endDate, startDate]
+  );
 
-  const summaryDateRangeLine = useMemo(() => {
-    if (!startDate) {
-      return null;
-    }
-
-    const start = formatDate(startDate);
-    const end = endDate ? formatDate(endDate) : "Aujourd'hui";
-    return `${start} à ${end}`;
-  }, [endDate, startDate]);
+  const showDates = hasKnownDate({ startDate, endDate });
 
   if (variant === 'summary') {
     return (
@@ -204,7 +196,7 @@ export function CVExperienceOrFormation({
     <StyledCVExperience>
       {isDesktop && (
         <StyledCVExperienceDate>
-          {startDate && (
+          {showDates && (
             <CVDate experienceOrFormation={{ startDate, endDate }} />
           )}
         </StyledCVExperienceDate>
@@ -213,7 +205,7 @@ export function CVExperienceOrFormation({
         {title && <H5 title={title} color={COLORS.black} />}
         {!isDesktop && (
           <StyledCVExperienceDateMobile>
-            {startDate && (
+            {showDates && (
               <CVDate experienceOrFormation={{ startDate, endDate }} isMobile />
             )}
           </StyledCVExperienceDateMobile>
