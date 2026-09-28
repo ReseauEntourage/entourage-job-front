@@ -32,13 +32,21 @@ declare global {
 
 const OUTPUT_DIR = 'cypress/pr-screenshots/output';
 
-// The support file is re-evaluated for each spec: the counter orders the captures of one spec.
+// The support file is re-evaluated for each spec: the counter orders the captures of one
+// spec; the maps catch titles that would overwrite each other's files, while letting a
+// retried test capture its titles again.
 let sequence = 0;
+const slugOwners = new Map<string, string>();
+let attemptSlugs = new Set<string>();
+
+beforeEach(() => {
+  attemptSlugs = new Set();
+});
 
 function slugify(value: string) {
   return value
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
@@ -51,6 +59,15 @@ Cypress.Commands.add(
     const device = Cypress.expose('device') as string;
     const spec = Cypress.spec.name.replace(/\.shot\.ts$/, '');
     const slug = slugify(`${spec}-${title}`);
+    const test = Cypress.currentTest.titlePath.join(' > ');
+    const owner = slugOwners.get(slug);
+    if (attemptSlugs.has(slug) || (owner && owner !== test)) {
+      throw new Error(
+        `cy.capture(): "${title}" gives the same file name as another capture of this spec (${slug}), use a distinct title`
+      );
+    }
+    slugOwners.set(slug, test);
+    attemptSlugs.add(slug);
     const name = `${slug}.${device}`;
     const index = sequence++;
 

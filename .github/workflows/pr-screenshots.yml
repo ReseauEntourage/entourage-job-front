@@ -69,7 +69,7 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           shots=$(git diff --name-only --diff-filter=AMR "$BASE_SHA"...HEAD -- 'cypress/pr-screenshots/*.shot.ts' | tr '\n' ' ')
-          ui=$(git diff --name-only "$BASE_SHA"...HEAD -- 'src/*.tsx' 'src/*.styles.ts' 'src/*.css' 'src/constants/styles.ts' | head -n 1)
+          ui=$(git diff --name-only "$BASE_SHA"...HEAD -- 'src/*.tsx' 'src/*.styles.ts' 'src/*.css' 'src/constants/styles.ts' 'public/static/img' 'assets/icons' | head -n 1)
           echo "shots=${shots% }" >> "$GITHUB_OUTPUT"
           echo "ui_changed=$([ -n "$ui" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
           echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
@@ -121,7 +121,8 @@ jobs:
   publish:
     # Runs even when the capture failed, to report it in the PR description.
     needs: capture
-    if: always() && needs.capture.outputs.short_sha != ''
+    # (`!cancelled()`: a run cancelled by a newer push must not report a failure.)
+    if: "!cancelled() && needs.capture.outputs.short_sha != ''"
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -157,6 +158,11 @@ jobs:
           mkdir -p "$dir"
           cp "$RUNNER_TEMP"/screenshots/*.png "$dir/"
           git add -A
+          # Re-run on the same SHA with identical PNGs: already published.
+          if git diff --cached --quiet; then
+            echo "Screenshots of $SHORT_SHA already published"
+            exit 0
+          fi
           git commit -q -m "PR #$PR_NUMBER — screenshots of $SHORT_SHA"
 
           # Each PR only writes into its own folder: a rebase is enough on a race.
@@ -168,6 +174,8 @@ jobs:
           exit 1
 
       - name: Update PR description
+        # Also after a failed download/publish, to replace stale links with the caution below.
+        if: '!cancelled()'
         uses: actions/github-script@v7
         env:
           SHOTS: ${{ needs.capture.outputs.shots }}
@@ -189,11 +197,11 @@ jobs:
                 `<sub>📸 Capturé sur \`${SHORT_SHA}\` depuis ${specs} — [run](${runUrl})</sub>`,
               ].join('\n');
             } else if (SHOTS) {
-              content = `> [!CAUTION]\n> La capture des écrans a échoué sur \`${SHORT_SHA}\` — voir le [run](${runUrl}).`;
+              content = `> [!CAUTION]\n> La capture ou la publication des écrans a échoué sur \`${SHORT_SHA}\` — voir le [run](${runUrl}).`;
             } else if (UI_CHANGED === 'true') {
               content = [
                 '> [!WARNING]',
-                "> Cette PR modifie l'UI (`src/**/*.tsx`, `*.styles.ts`, `*.css`) mais n'ajoute ni ne modifie aucune spec `cypress/pr-screenshots/*.shot.ts`.",
+                "> Cette PR modifie l'UI (`src/**/*.tsx`, `*.styles.ts`, `*.css`, images ou icônes) mais n'ajoute ni ne modifie aucune spec `cypress/pr-screenshots/*.shot.ts`.",
                 '> Ajoutez-en une pour montrer le rendu réel (voir `cypress/pr-screenshots/README.md`).',
               ].join('\n');
             } else {

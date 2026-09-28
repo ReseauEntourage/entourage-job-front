@@ -14,7 +14,7 @@ Toute PR qui modifie l'interface montre le **rendu réel** des écrans concerné
 3. Les PNG sont publiés sur la branche orpheline `pr-screenshots` (`pr-<numéro>/<sha>/`), puis
    injectés dans la section « 🖼️ Captures » de la PR, entre les marqueurs
    `<!-- screenshots:start -->` et `<!-- screenshots:end -->`. Chaque push les régénère.
-4. Si la PR touche `src/**/*.tsx`, `*.styles.ts` ou `*.css` sans spec de capture, la section
+4. Si la PR touche `src/**/*.tsx`, `*.styles.ts`, `*.css`, `public/static/img/` ou `assets/icons/` sans spec de capture, la section
    affiche un avertissement. Une PR fermée sans merge voit ses captures supprimées de la branche.
 
 > ⚠️ Le dépôt est public, et la branche `pr-screenshots` l'est donc aussi : une capture ne doit
@@ -59,6 +59,7 @@ Exemple complet : [`dashboard.shot.ts`](dashboard.shot.ts).
   (`cy.get(...).capture(titre)`), il capture uniquement cet élément. Avant chaque capture, la
   commande force le chargement des images lazy puis attend les images et les polices ; les
   animations sont désactivées.
+- Chaque titre doit être unique dans sa spec : il donne le nom du fichier (`cy.capture()` échoue sinon).
 - Montrer ce qui a changé : ouvrir la modale, remplir le formulaire, afficher l'état
   d'erreur… Plusieurs `capture()` par test si besoin.
 - Mocker **toutes** les requêtes de la page : une requête non interceptée laisse un spinner
