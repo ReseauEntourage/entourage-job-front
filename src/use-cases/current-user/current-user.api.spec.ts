@@ -378,7 +378,7 @@ describe('current-user api', () => {
       store.dispatch(actions.fetchUserRequested());
       await flushPromises();
 
-      mockedApi.postReadDocument.mockReturnValue(undefined as any);
+      mockedApi.postReadDocument.mockResolvedValue({} as any);
       const refreshedUser = { id: 'user-1', updated: true } as any;
       mockedApi.getCurrentIdentity.mockResolvedValue({
         data: refreshedUser,
@@ -393,6 +393,73 @@ describe('current-user api', () => {
         readDocumentSelectors.selectReadDocumentStatus(store.getState())
       ).toBe('SUCCEEDED');
       expect(store.getState().currentUser.user).toEqual(refreshedUser);
+    });
+
+    it('adds the document to the read documents without waiting for the API', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-1' },
+      } as any);
+      store.dispatch(actions.fetchUserRequested());
+      await flushPromises();
+      // `postReadDocument` is not awaited: the local list must reflect the
+      // recording right away, otherwise an immediate reload would start from
+      // an earlier response.
+      mockedApi.postReadDocument.mockReturnValue(new Promise(() => {}) as any);
+
+      store.dispatch(
+        actions.readDocumentRequested({ documentName: 'CharteEthique' as any })
+      );
+      await flushPromises();
+
+      expect(
+        selectCurrentUserReadDocuments(store.getState()).map(
+          (readDocument) => readDocument.documentName
+        )
+      ).toEqual(['CharteEthique']);
+    });
+
+    it('rolls the document back when the API call fails', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-1' },
+      } as any);
+      store.dispatch(actions.fetchUserRequested());
+      await flushPromises();
+      mockedApi.postReadDocument.mockRejectedValue(new Error('boom'));
+
+      store.dispatch(
+        actions.readDocumentRequested({ documentName: 'CharteEthique' as any })
+      );
+      await flushPromises();
+
+      expect(selectCurrentUserReadDocuments(store.getState())).toEqual([]);
+    });
+
+    it('does not duplicate a document already marked as read', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-1' },
+      } as any);
+      store.dispatch(actions.fetchUserRequested());
+      await flushPromises();
+      mockedApi.postReadDocument.mockResolvedValue({} as any);
+      mockedApi.getCurrentReadDocuments.mockResolvedValue({
+        data: {
+          readDocuments: [
+            { documentName: 'CharteEthique', createdAt: '2026-09-01' },
+          ],
+        },
+      } as any);
+      store.dispatch(actions.fetchCurrentReadDocumentsRequested());
+      await flushPromises();
+
+      store.dispatch(
+        actions.readDocumentRequested({ documentName: 'CharteEthique' as any })
+      );
+      await flushPromises();
+
+      expect(selectCurrentUserReadDocuments(store.getState())).toHaveLength(1);
     });
   });
 

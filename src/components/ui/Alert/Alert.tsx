@@ -37,6 +37,7 @@ export const Alert = ({
   children,
   iconInContainer = false,
   center = false,
+  alignTop = false,
   dataTestId,
 }: AlertProps) => {
   const handleClick = () => {
@@ -78,6 +79,7 @@ export const Alert = ({
       $rounded={rounded}
       $clickable={clickable && !!onClick}
       $center={center}
+      $alignTop={alignTop}
       onClick={handleClick}
       data-testid={dataTestId}
     >

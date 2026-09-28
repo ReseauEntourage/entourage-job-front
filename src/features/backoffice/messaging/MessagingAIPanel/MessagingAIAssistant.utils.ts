@@ -7,12 +7,19 @@ type SSEStreamCallbacks = {
   onSuggest?: (suggestions: string[]) => void;
   onRateLimitInfo?: (remaining: number) => void;
   onRateLimit?: (resetInSeconds: number) => void;
+  onTruncated?: () => void;
+};
+
+export type SSEStreamResult = {
+  // false when the connection closed before a terminal event ([DONE], rate
+  // limit or error): network cut, server timeout, non-JSON server error, etc.
+  completed: boolean;
 };
 
 export async function processSSEStream(
   reader: ReadableStreamDefaultReader<Uint8Array>,
   callbacks: SSEStreamCallbacks
-): Promise<void> {
+): Promise<SSEStreamResult> {
   const decoder = new TextDecoder();
   let buffer = '';
 
@@ -62,6 +69,11 @@ export async function processSSEStream(
         return false;
       }
 
+      if (parsed.type === 'truncated') {
+        callbacks.onTruncated?.();
+        return false;
+      }
+
       if (parsed.type === 'suggest') {
         if (
           Array.isArray(parsed.suggestions) &&
@@ -96,12 +108,12 @@ export async function processSSEStream(
 
     for (const line of lines) {
       if (processLine(line)) {
-        return;
+        return { completed: true };
       }
     }
 
     if (done) {
-      break;
+      return { completed: false };
     }
   }
 }

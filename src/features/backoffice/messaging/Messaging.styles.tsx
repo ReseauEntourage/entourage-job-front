@@ -25,12 +25,13 @@ export const StyledMessagingGridMobile = styled.div`
   height: calc(100dvh - ${HEIGHTS.HEADER_MOBILE}px);
 `;
 
+/** Largeur fixe (et non proportionnelle) pour que la liste rende la même chose
+ * quel que soit le viewport, et reste au-dessus de la largeur exigée par la
+ * ligne de filtres, qui ne peut ni se replier ni se comprimer. */
 export const StyledMessagingLeftPanel = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-width: 320px;
-  max-width: 500px;
+  flex: 0 0 380px;
   border-right: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
     ${COLORS.lightGray};
 `;

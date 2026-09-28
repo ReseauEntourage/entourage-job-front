@@ -124,8 +124,8 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
     });
   });
 
-  describe('Filtres de la liste (Tous / Non lus)', () => {
-    it("L'onglet Non lus ne garde que les conversations avec un message non lu et affiche l'état vide sinon", () => {
+  describe('Filtres de la liste (En cours / Non lues)', () => {
+    it("L'onglet Non lues ne garde que les conversations avec un message non lu et affiche l'état vide sinon", () => {
       signInAs({ role: 'Coach' });
       const readAddressee = buildParticipant({
         firstName: 'Lu',
@@ -489,6 +489,84 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
       cy.contains('Voir les conseils').click();
       cy.contains('Comment structurer votre premier échange').should(
         'be.visible'
+      );
+    });
+  });
+
+  describe('Rappel de la charte éthique', () => {
+    /**
+     * The other tests rely on the default user, who has already accepted the
+     * charter: here we start from an empty list of read documents, which the
+     * POST fills in as the back end would. A frozen stub would not do: the
+     * component is remounted while the conversation loads, and the modal would
+     * reopen since the reloaded list would still say the charter has not been
+     * accepted.
+     */
+    const signInWithoutCharter = () => {
+      signInAs({ role: 'Candidat' });
+      const readDocuments: unknown[] = [];
+
+      cy.fixture('user-read-document-ethics-charter.json').then(
+        (readDocument) => {
+          cy.intercept('GET', '/current/read-documents', (req) => {
+            req.reply({ statusCode: 200, body: { readDocuments } });
+          }).as('currentReadDocumentsEmpty');
+
+          cy.intercept('POST', '/readDocuments/read/*', (req) => {
+            readDocuments.push(readDocument);
+            req.reply({ statusCode: 201, body: {} });
+          }).as('postReadDocument');
+        }
+      );
+    };
+
+    it("Ouvre la modale sur une conversation où je n'ai pas encore écrit, et « J'ai compris » l'enregistre", () => {
+      signInWithoutCharter();
+      const coach = buildParticipant({ id: 'user-coach', role: 'Coach' });
+
+      interceptGetConversations({ statusCode: 200, body: [] });
+      interceptGetPublicProfile({ statusCode: 200, body: coach });
+
+      cy.visit('/backoffice/messaging?userId=user-coach');
+      cy.wait('@getCurrent');
+      cy.wait('@getPublicProfile');
+      cy.wait('@currentReadDocumentsEmpty');
+
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'be.visible'
+      );
+      cy.contains("Ici, on se parle d'égal à égal").should('be.visible');
+
+      cy.contains('button', "J'ai compris").click();
+      cy.wait('@postReadDocument')
+        .its('request.body.documentName')
+        .should('eq', 'CharteEthique');
+
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'not.exist'
+      );
+      cy.get('[data-testid="messaging-ethics-charter-note"]').should(
+        'be.visible'
+      );
+    });
+
+    it("N'ouvre pas la modale quand la charte a déjà été acceptée", () => {
+      signInAs({ role: 'Candidat' });
+      const coach = buildParticipant({ id: 'user-coach', role: 'Coach' });
+
+      interceptGetConversations({ statusCode: 200, body: [] });
+      interceptGetPublicProfile({ statusCode: 200, body: coach });
+
+      cy.visit('/backoffice/messaging?userId=user-coach');
+      cy.wait('@getCurrent');
+      cy.wait('@getPublicProfile');
+      cy.wait('@currentReadDocuments');
+
+      cy.get('[data-testid="messaging-ethics-charter-note"]').should(
+        'be.visible'
+      );
+      cy.get('[data-testid="messaging-ethics-charter-modal"]').should(
+        'not.exist'
       );
     });
   });

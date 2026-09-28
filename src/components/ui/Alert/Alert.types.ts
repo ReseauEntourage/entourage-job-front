@@ -26,5 +26,12 @@ export interface AlertProps {
   onClick?: () => void;
   iconInContainer?: boolean;
   center?: boolean;
+  /**
+   * Aligns the icon and the close cross to the top rather than the middle.
+   * Useful as soon as the content spans several lines: centred, the icon
+   * sits in the middle of a block of text instead of introducing its first
+   * line.
+   */
+  alignTop?: boolean;
   dataTestId?: string;
 }

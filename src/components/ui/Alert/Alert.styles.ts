@@ -54,6 +54,7 @@ export const StyledAlert = styled.div<{
   $rounded: boolean;
   $clickable?: boolean;
   $center?: boolean;
+  $alignTop?: boolean;
 }>`
   display: ${(props) => {
     return props.$visible ? 'flex' : 'none';
@@ -64,7 +65,7 @@ export const StyledAlert = styled.div<{
         ? COLORS.transparent
         : COLORS[ALERT_COLORS[props.$type]?.mainColor] || COLORS.transparent;
     }};
-  align-items: center;
+  align-items: ${(props) => (props.$alignTop ? 'flex-start' : 'center')};
   gap: 15px;
   border-radius: ${(props) => {
     return props.$rounded ? '10px' : '0';

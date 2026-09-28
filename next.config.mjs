@@ -109,7 +109,8 @@ const nextConfig = {
     NEXT_PUBLIC_RELEASE_VERSION:
       process.env.HEROKU_SLUG_COMMIT || 'development',
     NEXT_PUBLIC_APP_VERSION: packageJson.version,
-    NEXT_PUBLIC_HEROKU_RELEASE_VERSION: process.env.HEROKU_RELEASE_VERSION || '',
+    NEXT_PUBLIC_HEROKU_RELEASE_VERSION:
+      process.env.HEROKU_RELEASE_VERSION || '',
   },
   typescript: {
     tsconfigPath: 'src/tsconfig.json',
@@ -144,6 +145,12 @@ const nextConfig = {
       {
         source: '/travailler',
         destination: '/candidat',
+        permanent: true,
+      },
+      {
+        // Activation links sent before the page was renamed (valid 7 days).
+        source: '/finaliser-compte-oriente',
+        destination: '/finaliser-compte',
         permanent: true,
       },
     ];

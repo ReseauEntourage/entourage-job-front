@@ -73,6 +73,10 @@ export const interceptAIStream = (sseBody: string, statusCode = 200) => {
 export const sseEvent = (payload: object) =>
   `data: ${JSON.stringify(payload)}\n\n`;
 
+// Terminal event of a stream that completed normally. Without it, the UI
+// treats the stream as interrupted.
+export const sseDone = 'data: [DONE]\n\n';
+
 export const interceptShareProfile = (data: object) => {
   cy.intercept('POST', '/user/profile/*/shares', data).as('postShareProfile');
 };

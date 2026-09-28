@@ -7,6 +7,7 @@ import {
   interceptGetConversations,
   interceptGetUnseenCount,
   interceptResetAISession,
+  sseDone,
   sseEvent,
 } from '../../intercept/user/messaging.req';
 import bootstrap from '../bootstrap';
@@ -96,7 +97,9 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
 
   it('Ouvre le panneau, envoie une question via une suggestion rapide et affiche la réponse streamée', () => {
     signInAsCoachWithAIAssistant(true);
-    interceptAIStream(sseEvent({ content: 'Bonjour, voici une suggestion.' }));
+    interceptAIStream(
+      sseEvent({ content: 'Bonjour, voici une suggestion.' }) + sseDone
+    );
 
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
@@ -109,11 +112,14 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.wait('@postAIStream');
 
     cy.contains('Bonjour, voici une suggestion.').should('be.visible');
+    cy.contains('Réponse interrompue').should('not.exist');
   });
 
   it("Envoie un message manuel via le champ de saisie de l'assistant", () => {
     signInAsCoachWithAIAssistant(true);
-    interceptAIStream(sseEvent({ content: 'Réponse à votre question.' }));
+    interceptAIStream(
+      sseEvent({ content: 'Réponse à votre question.' }) + sseDone
+    );
 
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');
     cy.wait('@getCurrent');
@@ -126,6 +132,25 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.wait('@postAIStream');
 
     cy.contains('Réponse à votre question.').should('be.visible');
+    cy.contains('Réponse interrompue').should('not.exist');
+  });
+
+  it("Affiche l'avis de réponse interrompue quand le flux se termine sans [DONE]", () => {
+    signInAsCoachWithAIAssistant(true);
+    interceptAIStream(sseEvent({ content: 'Début de réponse' }));
+
+    cy.visit('/backoffice/messaging?conversationId=conversation-ai');
+    cy.wait('@getCurrent');
+    cy.wait('@getConversationById');
+    cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
+    cy.wait('@getAISession');
+
+    cy.get('#ai-chat-input').type('Comment relancer ce candidat ?');
+    cy.get('[data-testid="messaging-ai-send-button"]').click();
+    cy.wait('@postAIStream');
+
+    cy.contains('Début de réponse').should('be.visible');
+    cy.contains('Réponse interrompue').should('be.visible');
   });
 
   it("Affiche la carte d'escalade quand l'assistant signale un besoin d'intervention d'un référent", () => {
@@ -135,7 +160,9 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
         type: 'escalate',
         referentUserId: 'referent-1',
         referentName: 'Julie Référente',
-      }) + sseEvent({ content: 'Je vous invite à contacter votre référent.' })
+      }) +
+        sseEvent({ content: 'Je vous invite à contacter votre référent.' }) +
+        sseDone
     );
 
     cy.visit('/backoffice/messaging?conversationId=conversation-ai');

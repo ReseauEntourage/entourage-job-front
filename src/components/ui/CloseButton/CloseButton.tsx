@@ -22,7 +22,7 @@ export const CloseButton = ({
     <StyledCloseButton
       className={className}
       type="button"
-      aria-label="close"
+      aria-label="Fermer"
       onClick={onClick}
       data-testid={dataTestId}
     >

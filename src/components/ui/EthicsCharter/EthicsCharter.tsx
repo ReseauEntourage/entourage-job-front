@@ -1,5 +1,6 @@
 import React from 'react';
 import { H1, H2 } from '@/src/components/ui/Headings';
+import { IconName } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { BulletListElement, List } from '../Lists';
 import { Text, TextProps } from '../Text';
@@ -9,11 +10,31 @@ import {
 } from './EthicsCharter.styles';
 import { EthicsCharterVariant } from './EthicsCharter.types';
 
+/**
+ * Short summary of a charter section, displayed outside this page — today by
+ * the messaging charter reminder. Held here rather than duplicated on the
+ * messaging side, so that updating the charter and its summary happens in one
+ * place. `EthicsCharter` never renders it.
+ */
+export type EthicsCharterSummary = {
+  icon: IconName;
+  title: string;
+  points: string[];
+  /**
+   * Rank in the summary: the intended reading order is not the charter's.
+   * The summary goes from the most engaging to the most prohibited — respect,
+   * mutual help, posture, then consent and forbidden behaviours — where the
+   * charter follows its own outline.
+   */
+  order: number;
+};
+
 type EthicsCharterItemType = {
   title: string;
   content: string | string[];
   list?: string[];
   afterList?: string | string[];
+  summary?: EthicsCharterSummary;
 };
 
 const LAST_UPDATED_AT = 'Mise à jour le 7 septembre 2026';
@@ -54,6 +75,15 @@ const items: EthicsCharterItemType[] = [
   },
   {
     title: 'Propos discriminatoires et violents',
+    summary: {
+      icon: 'Heart',
+      order: 1,
+      title: 'Le respect avant tout',
+      points: [
+        'Bienveillance, courtoisie et sincérité dans chaque échange.',
+        'Aucun propos discriminatoire, violent ou illégal.',
+      ],
+    },
     content: [
       "La bienveillance et le respect sont au cœur de chaque échange. **Tout comportement discriminatoire, violent ou contraire à la loi est strictement interdit**. Toute personne adoptant un tel comportement pourrait voir son compte supprimé et s'exposer à des poursuites judiciaires conformément au cadre légal en vigueur.",
       "**Les comportements violents ou irrespectueux envers les équipes de l'association entraîneront également un blocage temporaire ou définitif du compte**.",
@@ -62,6 +92,15 @@ const items: EthicsCharterItemType[] = [
   },
   {
     title: 'Comportements déviants',
+    summary: {
+      icon: 'Ban',
+      order: 5,
+      title: 'Comportements interdits',
+      points: [
+        'Drague, harcèlement, allusions à caractère sexuel.',
+        'Démarches commerciales, prosélytes ou manipulatrices.',
+      ],
+    },
     content: [
       "Pour préserver la sécurité de toutes et tous, certains comportements n'ont pas leur place au sein de notre communauté.",
       'Ainsi, sont strictement interdits :',
@@ -81,6 +120,15 @@ const items: EthicsCharterItemType[] = [
   },
   {
     title: 'Entraide',
+    summary: {
+      icon: 'HandHelping',
+      order: 2,
+      title: "L'esprit d'entraide",
+      points: [
+        'Chacun est considéré pour ses qualités et son potentiel, sans jugement.',
+        "Répondre dans des délais raisonnables, prévenir en cas d'empêchement.",
+      ],
+    },
     content: [
       "Sur Entourage Pro, chaque rencontre repose sur le respect, l'écoute et l'égalité. Vous choisissez de considérer votre interlocuteur à travers ses qualités, ses talents et son potentiel, en adoptant une posture d'ouverture et sans jugement. Les échanges se font d'égal à égal, dans un esprit de confiance mutuelle, où aucune forme de dévalorisation n'a sa place.",
       "Dans ce cadre, vous veillez à vous exprimer avec courtoisie, bienveillance et sincérité. L'honnêteté, la clarté et le respect guident vos interactions, afin de créer un environnement propice à des relations authentiques et constructives.",
@@ -90,6 +138,14 @@ const items: EthicsCharterItemType[] = [
   },
   {
     title: 'Consentement',
+    summary: {
+      icon: 'Lock',
+      order: 4,
+      title: 'Consentement et données personnelles',
+      points: [
+        "Aucune information permettant d'identifier ou de localiser quelqu'un sans son accord.",
+      ],
+    },
     content: [
       "Lorsque vous publiez une demande au nom d'une autre personne, assurez-vous toujours d'avoir obtenu son accord au préalable. **Le respect du consentement est essentiel** : chacun doit pouvoir choisir ce qui est partagé à son sujet. De la même manière, attention à **ne pas diffuser d'informations personnelles** (comme un numéro de téléphone, une adresse ou des détails sur la situation d'une personne) **permettant d'identifier et de localiser précisément une personne, ni aucune donnée sensible** (médicale, judiciaire…) sans son accord explicite. Chez Entourage, la solidarité se construit dans le respect et la confiance.",
       "Et si vous avez besoin d'un accompagnement ou d'une orientation personnalisée, n'hésitez pas à nous écrire à votre référent Entourage Pro, notre équipe se fera un plaisir de vous écouter et de comprendre votre besoin.",
@@ -97,6 +153,14 @@ const items: EthicsCharterItemType[] = [
   },
   {
     title: 'Posture des coachs et des candidats',
+    summary: {
+      icon: 'Users',
+      order: 3,
+      title: 'Coachs et candidats',
+      points: [
+        'Ni contrat, ni obligation de résultat : le lien humain prime sur la performance.',
+      ],
+    },
     content: [
       "Chez Entourage Pro, avant d'être coach ou candidat, il y a d'abord le lien qui se crée entre deux personnes avec simplicité, sourire et convivialité. C'est cette dimension humaine qui donne tout son sens au soutien apporté : bien plus qu'un suivi vers l'emploi, c'est l'occasion de créer du lien, de partager un moment, de prendre soin de l'autre.",
       "Cet accompagnement n'a d'ailleurs rien d'un coaching professionnel classique : pas de contrat, pas d'obligation de résultat, pas de posture de client à satisfaire. C'est pourquoi nous parlons de candidats et non de clients : parce qu'ici, c'est la relation humaine et conviviale qui prime sur la performance.",
@@ -122,6 +186,16 @@ const items: EthicsCharterItemType[] = [
     ],
   },
 ];
+
+/**
+ * The charter sections carrying a summary, in the reading order intended for
+ * that summary (`order`), which is not the charter's own.
+ * The single entry point for displaying this summary elsewhere in the product.
+ */
+export const getEthicsCharterSummaries = (): EthicsCharterSummary[] =>
+  items
+    .flatMap((item) => (item.summary ? [item.summary] : []))
+    .sort((a, b) => a.order - b.order);
 
 export const EthicsCharter = ({
   variant = 'compact',

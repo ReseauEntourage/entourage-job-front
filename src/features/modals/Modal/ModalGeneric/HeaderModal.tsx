@@ -13,11 +13,14 @@ export const HeaderModal = ({
   description,
   onClose: customOnClose,
   noCloseIcon = false,
+  align = 'center',
 }: {
   title?: React.ReactNode;
   description?: React.ReactNode;
   onClose?: (onClose?: () => void) => void;
   noCloseIcon?: boolean;
+  /** Title and description centred, or aligned to the left. */
+  align?: 'center' | 'left';
 }) => {
   const { onClose } = useModalContext();
 
@@ -28,8 +31,8 @@ export const HeaderModal = ({
     <StyledHeaderModal>
       <StyledHeaderModalTop>
         {title && (
-          <StyledHeaderModalTitleContainer>
-            <H2 title={title} weight="semibold" center />
+          <StyledHeaderModalTitleContainer $align={align}>
+            <H2 title={title} weight="semibold" center={align === 'center'} />
           </StyledHeaderModalTitleContainer>
         )}
         {!noCloseIcon && (
@@ -46,7 +49,12 @@ export const HeaderModal = ({
         )}
       </StyledHeaderModalTop>
       {description && (
-        <Text color="mediumGray" size="large" weight="normal" center>
+        <Text
+          color="mediumGray"
+          size="large"
+          weight="normal"
+          center={align === 'center'}
+        >
           {description}
         </Text>
       )}

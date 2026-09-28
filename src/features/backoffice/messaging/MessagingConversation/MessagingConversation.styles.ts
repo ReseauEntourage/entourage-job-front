@@ -26,8 +26,11 @@ export const MessagingConversationContainer = styled.div`
   }
 `;
 
+/** Le plancher garde le volet lisible en bas de gamme desktop, où 45 % de la
+ * place restante ne suffiraient pas ; le plafond évite une colonne de chat
+ * inutilement large au-delà de ~1600px, le surplus revenant à la conversation. */
 export const MessagingConversationAIPanel = styled.div`
-  width: 40%;
+  width: clamp(340px, 45%, 560px);
   flex-shrink: 0;
   height: 100%;
   overflow: hidden;
