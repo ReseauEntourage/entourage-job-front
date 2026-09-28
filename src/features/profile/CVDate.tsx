@@ -29,11 +29,11 @@ export const hasKnownDate = ({
 };
 
 /**
- * Libellé des dates d'une expérience ou d'une formation sur une ligne :
- * - début et fin : "{début}{séparateur}{fin}"
- * - début seul (en cours) : "{début}{séparateur}Aujourd'hui"
- * - fin seule : l'année de fin
- * - aucune date : null
+ * One-line date label of an experience or formation:
+ * - start and end: "{start}{separator}{end}"
+ * - start only (ongoing): "{start}{separator}Aujourd'hui"
+ * - end only: the end year
+ * - no date: null
  */
 export const formatDateRange = (
   { startDate, endDate }: ExperienceOrFormationDates,
