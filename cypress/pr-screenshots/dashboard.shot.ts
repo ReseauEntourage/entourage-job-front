@@ -24,11 +24,30 @@ describe('Tableau de bord', () => {
     interceptCurrentUserSubResources();
     interceptGetUnseenCount({ statusCode: 200, body: 0 });
     interceptGetConversations({ fixture: 'api/generated/conversations' });
+    cy.fixture('public-profile-res').then((profile) => {
+      cy.intercept('GET', '/user/profile/recommendations*', {
+        statusCode: 200,
+        body: {
+          embeddingPending: false,
+          nextCursor: null,
+          recommendations: [1, 2, 3].map((index) => ({
+            id: `reco-${index}`,
+            publicProfile: {
+              ...profile,
+              id: `${profile.id}-${index}`,
+              role: 'Candidate',
+            },
+            reason: null,
+          })),
+        },
+      }).as('getRecommendations');
+    });
 
     cy.visit('/backoffice/dashboard');
     // Wait for the state to show BEFORE capturing (data loaded, modal open…).
     cy.wait('@getCurrent');
     cy.wait('@getConversations');
+    cy.wait('@getRecommendations');
     cy.get('[data-testid="dashboard-messaging-widget"]').should('be.visible');
 
     cy.capture('Tableau de bord');

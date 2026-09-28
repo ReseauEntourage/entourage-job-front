@@ -4,6 +4,9 @@ name: PR screenshots
 # publishes the PNGs on the orphan branch `pr-screenshots` and injects them into the PR
 # description, between the <!-- screenshots:start/end --> markers.
 # See cypress/pr-screenshots/README.md.
+#
+# Two jobs on purpose: `capture` installs and runs the PR code with a read-only token and
+# no persisted git credentials; only `publish`, which never executes that code, can write.
 
 on:
   pull_request:
@@ -13,38 +16,44 @@ concurrency:
   group: pr-screenshots-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 env:
   SCREENSHOTS_BRANCH: pr-screenshots
   PR_NUMBER: ${{ github.event.pull_request.number }}
-  # Same app configuration as the E2E job of ci.yml; the back end is mocked by cy.intercept.
-  PORT: 3000
-  NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
-  NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
-  NEXT_PUBLIC_TOOLBOX_COMPANY_URL: 'https://google.com'
-  NEXT_PUBLIC_DONATION_LINK: 'https://google.com'
-  NEXT_PUBLIC_SERVER_URL: 'http://localhost:3000'
-  NEXT_PUBLIC_API_URL: 'http://localhost:3002'
-  NEXT_PUBLIC_AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
-  NEXT_PUBLIC_AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
-  # Empty on purpose: in production mode Next.js would load this build's chunks from the
-  # CDN (assetPrefix), where they do not exist. Everything is served by `next start`.
-  NEXT_PUBLIC_CDN_URL: ''
-  NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY: /images/
-  NEXT_PUBLIC_PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
-  NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS: '174 Rue Championnet 75018, Paris'
-  NEXT_PUBLIC_MESSAGING_FORBIDDEN_EXPRESSIONS: 'rib'
-  NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
   capture:
-    # No write token on PRs from forks.
+    # Fork PRs get no write token for the publish job.
     if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     environment: 'entourage-job-front'
+    permissions:
+      contents: read
+    env:
+      # Same app configuration as the E2E job of ci.yml; the back end is mocked by cy.intercept.
+      PORT: 3000
+      NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
+      NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
+      NEXT_PUBLIC_TOOLBOX_COMPANY_URL: 'https://google.com'
+      NEXT_PUBLIC_DONATION_LINK: 'https://google.com'
+      NEXT_PUBLIC_SERVER_URL: 'http://localhost:3000'
+      NEXT_PUBLIC_API_URL: 'http://localhost:3002'
+      NEXT_PUBLIC_AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
+      NEXT_PUBLIC_AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
+      # Empty on purpose: in production mode Next.js would load this build's chunks from the
+      # CDN (assetPrefix), where they do not exist. Everything is served by `next start`.
+      NEXT_PUBLIC_CDN_URL: ''
+      NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY: /images/
+      NEXT_PUBLIC_PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
+      NEXT_PUBLIC_LOCAL_BRANCH_ADDRESS_PARIS: '174 Rue Championnet 75018, Paris'
+      NEXT_PUBLIC_MESSAGING_FORBIDDEN_EXPRESSIONS: 'rib'
+      NEXT_TELEMETRY_DISABLED: 1
+    outputs:
+      shots: ${{ steps.detect.outputs.shots }}
+      ui_changed: ${{ steps.detect.outputs.ui_changed }}
+      short_sha: ${{ steps.detect.outputs.short_sha }}
+      captured: ${{ steps.render.outcome == 'success' }}
 
     steps:
       - name: Checkout
@@ -52,6 +61,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Detect capture specs and UI changes
         id: detect
@@ -88,48 +98,82 @@ jobs:
         if: steps.detect.outputs.shots != ''
         run: node cypress/pr-screenshots/run.mjs ${{ steps.detect.outputs.shots }}
 
-      - name: Publish to ${{ env.SCREENSHOTS_BRANCH }} branch
-        id: publish
+      - name: Render Markdown
+        id: render
         if: steps.capture.outcome == 'success'
         env:
           SHORT_SHA: ${{ steps.detect.outputs.short_sha }}
         run: |
+          base_url="https://github.com/$GITHUB_REPOSITORY/blob/$SCREENSHOTS_BRANCH/pr-$PR_NUMBER/$SHORT_SHA"
+          node cypress/pr-screenshots/render-markdown.mjs cypress/pr-screenshots/output "$base_url" \
+            > cypress/pr-screenshots/output/screenshots.md
+
+      - name: Upload screenshots
+        if: steps.render.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-screenshots
+          path: |
+            cypress/pr-screenshots/output/*.png
+            cypress/pr-screenshots/output/screenshots.md
+          retention-days: 1
+
+  publish:
+    # Runs even when the capture failed, to report it in the PR description.
+    needs: capture
+    if: always() && needs.capture.outputs.short_sha != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Download screenshots
+        if: needs.capture.outputs.captured == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-screenshots
+          path: ${{ runner.temp }}/screenshots
+
+      - name: Publish to ${{ env.SCREENSHOTS_BRANCH }} branch
+        id: publish
+        if: needs.capture.outputs.captured == 'true'
+        env:
+          SHORT_SHA: ${{ needs.capture.outputs.short_sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git init -q publish && cd publish
+          git remote add origin "https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          publish="$RUNNER_TEMP/screenshots-branch"
-          if git fetch --depth=1 origin "$SCREENSHOTS_BRANCH"; then
-            git worktree add --detach "$publish" FETCH_HEAD
+          if git fetch -q --depth=1 origin "$SCREENSHOTS_BRANCH"; then
+            git checkout -q FETCH_HEAD
           else
-            git worktree add --detach "$publish" HEAD
-            git -C "$publish" switch --orphan "$SCREENSHOTS_BRANCH"
+            git checkout -q --orphan "$SCREENSHOTS_BRANCH"
           fi
 
           dir="pr-$PR_NUMBER/$SHORT_SHA"
-          rm -rf "$publish/pr-$PR_NUMBER"
-          mkdir -p "$publish/$dir"
-          cp cypress/pr-screenshots/output/*.png "$publish/$dir/"
-
-          cd "$publish"
+          rm -rf "pr-$PR_NUMBER"
+          mkdir -p "$dir"
+          cp "$RUNNER_TEMP"/screenshots/*.png "$dir/"
           git add -A
           git commit -q -m "PR #$PR_NUMBER — screenshots of $SHORT_SHA"
+
           # Each PR only writes into its own folder: a rebase is enough on a race.
           for attempt in 1 2 3; do
-            git push origin "HEAD:refs/heads/$SCREENSHOTS_BRANCH" && break
-            git pull --rebase origin "$SCREENSHOTS_BRANCH"
+            git push -q origin "HEAD:refs/heads/$SCREENSHOTS_BRANCH" && exit 0
+            git pull -q --rebase origin "$SCREENSHOTS_BRANCH"
           done
-
-          base_url="https://github.com/$GITHUB_REPOSITORY/blob/$SCREENSHOTS_BRANCH/$dir"
-          node "$GITHUB_WORKSPACE/cypress/pr-screenshots/render-markdown.mjs" \
-            "$GITHUB_WORKSPACE/cypress/pr-screenshots/output" "$base_url" > "$RUNNER_TEMP/screenshots.md"
+          echo "::error::Could not push to $SCREENSHOTS_BRANCH after 3 attempts"
+          exit 1
 
       - name: Update PR description
-        if: always() && steps.detect.outcome == 'success'
         uses: actions/github-script@v7
         env:
-          SHOTS: ${{ steps.detect.outputs.shots }}
-          UI_CHANGED: ${{ steps.detect.outputs.ui_changed }}
+          SHOTS: ${{ needs.capture.outputs.shots }}
+          UI_CHANGED: ${{ needs.capture.outputs.ui_changed }}
           PUBLISH: ${{ steps.publish.outcome }}
-          SHORT_SHA: ${{ steps.detect.outputs.short_sha }}
+          SHORT_SHA: ${{ needs.capture.outputs.short_sha }}
         with:
           script: |
             const fs = require('fs');
@@ -140,7 +184,7 @@ jobs:
             if (PUBLISH === 'success') {
               const specs = SHOTS.split(' ').map((f) => `\`${f}\``).join(', ');
               content = [
-                fs.readFileSync(`${RUNNER_TEMP}/screenshots.md`, 'utf8'),
+                fs.readFileSync(`${RUNNER_TEMP}/screenshots/screenshots.md`, 'utf8'),
                 '',
                 `<sub>📸 Capturé sur \`${SHORT_SHA}\` depuis ${specs} — [run](${runUrl})</sub>`,
               ].join('\n');
@@ -178,11 +222,15 @@ jobs:
       github.event.action == 'closed' && !github.event.pull_request.merged
       && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Remove PR screenshots
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git init -q publish && cd publish
-          git remote add origin "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY.git"
+          git remote add origin "https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
           git fetch -q --depth=1 origin "$SCREENSHOTS_BRANCH" || exit 0
           git checkout -q FETCH_HEAD
           [ -d "pr-$PR_NUMBER" ] || exit 0
@@ -191,6 +239,8 @@ jobs:
           git rm -rq "pr-$PR_NUMBER"
           git commit -q -m "PR #$PR_NUMBER closed — removing screenshots"
           for attempt in 1 2 3; do
-            git push origin "HEAD:refs/heads/$SCREENSHOTS_BRANCH" && break
-            git pull --rebase origin "$SCREENSHOTS_BRANCH"
+            git push -q origin "HEAD:refs/heads/$SCREENSHOTS_BRANCH" && exit 0
+            git pull -q --rebase origin "$SCREENSHOTS_BRANCH"
           done
+          echo "::error::Could not push to $SCREENSHOTS_BRANCH after 3 attempts"
+          exit 1
