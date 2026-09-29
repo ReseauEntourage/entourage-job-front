@@ -23,24 +23,21 @@ interface GenerationState {
 
 interface PhaseParams {
   generation: GenerationState;
+  // Generation already used or given up on (the user left the step, or chose
+  // to write): its result must never be inserted again.
   abandonedRequestId: string | null;
-  // The presentation was already filled when the user arrived on the step:
-  // no AI text is ever shown in that case.
-  hadPresentationOnArrival: boolean;
   now: number;
 }
 
 export const getPresentationGenerationPhase = ({
   generation,
   abandonedRequestId,
-  hadPresentationOnArrival,
   now,
 }: PhaseParams): PresentationGenerationPhase => {
   const { status, requestId, startedTimeStamp, fulfilledTimeStamp } =
     generation;
 
   if (
-    hadPresentationOnArrival ||
     status === 'uninitialized' ||
     (requestId && requestId === abandonedRequestId)
   ) {

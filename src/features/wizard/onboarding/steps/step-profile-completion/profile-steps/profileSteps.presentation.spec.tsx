@@ -117,8 +117,34 @@ describe('useStepSkills', () => {
     expect(mockedApi.postGeneratePresentation).toHaveBeenCalledTimes(1);
   });
 
-  it('does not generate when a presentation already exists', async () => {
-    mockedApi.putUserProfile.mockResolvedValue({ data: {} } as never);
+  it('regenerates when the draft holds an unsaved AI proposal', async () => {
+    // Going back to the skills step after a proposal: the draft carries the
+    // proposal, but nothing is saved yet.
+    mockedApi.putUserProfile.mockResolvedValue({
+      data: { description: null },
+    } as never);
+    mockedApi.postGeneratePresentation.mockResolvedValue({
+      data: { description: 'Nouveau texte' },
+    } as never);
+    const store = buildStore('Texte proposé non enregistré');
+    const { result } = renderHook(() => useStepSkills({ user: USER }), {
+      wrapper: wrapper(store),
+    });
+
+    await act(async () => {
+      await submitSkills(
+        result.current.onboardingStepSkills.content as ReactElement
+      );
+      await flushPromises();
+    });
+
+    expect(mockedApi.postGeneratePresentation).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not generate when a presentation is saved', async () => {
+    mockedApi.putUserProfile.mockResolvedValue({
+      data: { description: 'Ma présentation' },
+    } as never);
     const store = buildStore('Ma présentation');
     const { result } = renderHook(() => useStepSkills({ user: USER }), {
       wrapper: wrapper(store),

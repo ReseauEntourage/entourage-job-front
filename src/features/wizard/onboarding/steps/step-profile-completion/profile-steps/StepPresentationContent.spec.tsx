@@ -281,6 +281,58 @@ describe('StepPresentationContent', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('shows the profile as it is when coming back without a new generation', async () => {
+    mockedApi.postGeneratePresentation.mockResolvedValue({
+      data: { description: PROPOSAL },
+    } as never);
+    const store = buildStore({});
+    launchFromSkillsStep(store);
+    const first = renderContent(store);
+    expect(await screen.findByTestId('presentation-field')).toHaveValue(
+      PROPOSAL
+    );
+    first.unmount();
+
+    // Back from the next step: the draft is shown, no longer as an AI proposal.
+    renderContent(store);
+    expect(await screen.findByTestId('presentation-field')).toHaveValue(
+      PROPOSAL
+    );
+    expect(
+      screen.queryByText(/Texte proposé par une IA/)
+    ).not.toBeInTheDocument();
+  });
+
+  it('shows the new proposal after going back and validating the skills again', async () => {
+    mockedApi.postGeneratePresentation.mockResolvedValueOnce({
+      data: { description: PROPOSAL },
+    } as never);
+    const store = buildStore({});
+    launchFromSkillsStep(store);
+    const first = renderContent(store);
+    expect(await screen.findByTestId('presentation-field')).toHaveValue(
+      PROPOSAL
+    );
+    first.unmount();
+
+    const NEW_PROPOSAL = 'Je recherche un poste dans la logistique.';
+    mockedApi.postGeneratePresentation.mockResolvedValueOnce({
+      data: { description: NEW_PROPOSAL },
+    } as never);
+    await act(async () => {
+      await launchFromSkillsStep(store);
+    });
+    renderContent(store);
+
+    expect(await screen.findByTestId('presentation-field')).toHaveValue(
+      NEW_PROPOSAL
+    );
+    expect(screen.getByText(/Texte proposé par une IA/)).toBeInTheDocument();
+    expect(store.getState().currentUser.profileComplete?.description).toBe(
+      NEW_PROPOSAL
+    );
+  });
+
   it('abandons the generation when the step is left while waiting', async () => {
     mockedApi.postGeneratePresentation.mockReturnValue(
       deferred().promise as never

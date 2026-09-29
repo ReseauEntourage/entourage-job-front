@@ -57,8 +57,8 @@ export const StepPresentationContent = ({
     selectAbandonedPresentationGenerationId
   );
 
-  // Snapshot taken once the profile is known: a presentation that already
-  // exists on arrival is never replaced by an AI proposal.
+  // Snapshot taken once the profile is known: with a presentation already
+  // there on arrival, no generation is launched from this step.
   const [hadPresentationOnArrival, setHadPresentationOnArrival] = useState<
     boolean | null
   >(profileComplete ? !!profileComplete.description?.trim() : null);
@@ -93,7 +93,6 @@ export const StepPresentationContent = ({
             description: generation.data?.description,
           },
           abandonedRequestId,
-          hadPresentationOnArrival,
           now,
         });
 
@@ -151,14 +150,15 @@ export const StepPresentationContent = ({
     }
   }, [dispatch, phase, storedDescription, proposedDescription]);
 
-  // Leaving the step (including "Terminer mon profil") while waiting abandons
-  // the generation: its result must never be inserted afterwards.
-  const latest = useRef({ phase, requestId: generation.requestId });
-  latest.current = { phase, requestId: generation.requestId };
+  // Leaving the step (including "Terminer mon profil") uses up the current
+  // generation, whatever its state: coming back shows the profile as it is,
+  // and only a new validation of the skills step brings a new proposal.
+  const latestRequestIdRef = useRef(generation.requestId);
+  latestRequestIdRef.current = generation.requestId;
   useEffect(
     () => () => {
-      const { phase: lastPhase, requestId } = latest.current;
-      if (lastPhase === 'generating' && requestId) {
+      const requestId = latestRequestIdRef.current;
+      if (requestId) {
         dispatch(onboardingActions.presentationGenerationAbandoned(requestId));
       }
     },

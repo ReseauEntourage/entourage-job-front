@@ -18,7 +18,6 @@ const phase = (
   getPresentationGenerationPhase({
     generation,
     abandonedRequestId: null,
-    hadPresentationOnArrival: false,
     now: START + 1_000,
     ...overrides,
   });
@@ -26,15 +25,6 @@ const phase = (
 describe('getPresentationGenerationPhase', () => {
   it('is idle when no generation was launched', () => {
     expect(phase({ status: 'uninitialized' })).toBe('idle');
-  });
-
-  it('is idle when a presentation already existed on arrival', () => {
-    expect(
-      phase(
-        { status: 'pending', requestId: 'r1', startedTimeStamp: START },
-        { hadPresentationOnArrival: true }
-      )
-    ).toBe('idle');
   });
 
   it('is generating while pending before the deadline', () => {

@@ -54,13 +54,16 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
-  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
-    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
-  });
+  const [, { reset: resetUpdateProfile, data: savedProfile }] =
+    useUpdateProfileMutation({
+      fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+    });
   const [generatePresentation] = useGeneratePresentationMutation({
     fixedCacheKey: GENERATE_PRESENTATION_FIXED_CACHE_KEY,
   });
-  const hasPresentation = !!profileComplete?.description?.trim();
+  // Read from the saved profile returned by the save, not from the local
+  // draft: an unsaved AI proposal must not prevent a new generation.
+  const hasSavedPresentation = !!savedProfile?.description?.trim();
 
   const pendingResolveRef = useRef<(() => void) | null>(null);
   const lastSubmitFailedRef = useRef(false);
@@ -74,7 +77,7 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
       // Launched once the skills are saved (the back end reads the saved
       // profile) and not awaited: the presentation step shows the waiting
       // state until the proposal arrives.
-      if (!hasPresentation) {
+      if (!hasSavedPresentation) {
         generatePresentation();
       }
       const resolve = pendingResolveRef.current;
@@ -91,7 +94,12 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
       pendingResolveRef.current = null;
       resolve();
     }
-  }, [dispatch, updateProfileStatus, hasPresentation, generatePresentation]);
+  }, [
+    dispatch,
+    updateProfileStatus,
+    hasSavedPresentation,
+    generatePresentation,
+  ]);
 
   const initialValues = useMemo<SkillsFormValues>(
     () => ({
