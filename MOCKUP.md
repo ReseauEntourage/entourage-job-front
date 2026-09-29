@@ -415,7 +415,7 @@ Routes: `/backoffice/admin/membres`, `/backoffice/admin/structures`
 | `/reset/success`            | Simple              | Reset success confirmation                     |
 | `/verification-email`       | Simple              | Email verification prompt                      |
 | `/auth/linkedin/callback`   | —                   | LinkedIn OAuth callback (redirect only)        |
-| `/finaliser-compte-oriente` | Simple              | Finalize account for users referred by a coach |
+| `/finaliser-compte`         | Simple              | Set the first password of an account without one (activation link or session) |
 | `/coach-certification/[id]` | Simple              | Coach certification achievement page           |
 | `/merci` / `/merci/[type]`  | Simple              | Thank-you / post-registration confirmation     |
 

@@ -22,7 +22,8 @@ import {
   Organization,
   OrganizationDto,
   PostAuthAutologinParams,
-  PostAuthFinalizeReferedUserParams,
+  PostAuthFinalizeAccountParams,
+  PostAuthSendFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   PostAuthVerifyOtpParams,
   PreRegistrationCompatibleProfilesResponse,
@@ -611,10 +612,16 @@ export class APIHandler {
     return this.post('/auth/verify-otp', params);
   }
 
-  postAuthFinalizeReferedUser(
-    params: PostAuthFinalizeReferedUserParams
+  postAuthFinalizeAccount(
+    params: PostAuthFinalizeAccountParams
   ): Promise<AxiosResponse<string>> {
-    return this.post('/auth/finalize-refered-user', params);
+    return this.post('/auth/finalize-account', params);
+  }
+
+  postAuthSendFinalizeReferedUser(
+    params: PostAuthSendFinalizeReferedUserParams
+  ): Promise<AxiosResponse> {
+    return this.post('/auth/send-finalize-refered-user', params);
   }
 
   postAuthAutologin(
