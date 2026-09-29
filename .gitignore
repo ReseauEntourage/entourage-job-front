@@ -9,6 +9,8 @@ public/static/img/compress.sh
 coverage/
 /cypress/screenshots
 /cypress/videos
+/cypress/pr-screenshots/output
+/cypress/pr-screenshots/.raw
 tsconfig.tsbuildinfo
 tsconfig.base.tsbuildinfo
 /storybook-static

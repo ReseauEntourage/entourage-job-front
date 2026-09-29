@@ -11,7 +11,17 @@ describe('onboarding slice', () => {
     expect(state).toEqual({
       webinarSfId: null,
       formErrorMessage: null,
+      abandonedPresentationGenerationId: null,
     });
+  });
+
+  it('presentationGenerationAbandoned stores the abandoned request id', () => {
+    const state = reducer(
+      undefined,
+      actions.presentationGenerationAbandoned('request-1')
+    );
+
+    expect(state.abandonedPresentationGenerationId).toBe('request-1');
   });
 
   it('setWebinarSfId sets webinarSfId', () => {

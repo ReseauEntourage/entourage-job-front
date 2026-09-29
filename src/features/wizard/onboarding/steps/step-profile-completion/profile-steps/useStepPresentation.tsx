@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
 import { FormWithValidationRef } from '@/src/features/forms/FormWithValidation';
-import { FormWithValidationSync } from '@/src/features/wizard/FormWithValidationSync';
 import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
 import { useStepFormSubmit } from '@/src/features/wizard/useStepFormSubmit';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
@@ -27,19 +26,26 @@ import {
   buildIntroductionField,
   PROFILE_COMPLETION_FORM_ID,
 } from '../profileCompletionFormSchema';
+import {
+  PresentationFormValues,
+  StepPresentationContent,
+} from './StepPresentationContent';
+import { PRESENTATION_MAX_LENGTH } from './presentationGeneration.utils';
 
 const NULL_USER = { id: '' } as unknown as User;
 
-interface PresentationFormValues {
-  description: string;
-}
-
 // Reflète les contraintes du champ description (facultatif, maxLength: 500)
 // pour piloter isNextEnabled sans attendre une soumission.
-const isIntroductionValid = (description: string | null | undefined) => {
+export const isIntroductionValid = (description: string | null | undefined) => {
   const length = description?.trim().length ?? 0;
-  return length <= 500;
+  return length <= PRESENTATION_MAX_LENGTH;
 };
+
+// The step only counts as done once a presentation exists: otherwise, after a
+// reload, the wizard comes back to it and a new AI proposal is launched.
+export const isPresentationStepCompleted = (
+  description: string | null | undefined
+) => !!description?.trim();
 
 interface UseStepPresentationProps {
   user: User | null;
@@ -141,13 +147,8 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
       'Ce texte facultatif apparaîtra en tête de votre profil auprès des personnes qui le consulteront.',
     content: (
       <StyledOnboardingStepContainer>
-        <FormWithValidationSync
-          // FormWithValidation ne relit ses defaultValues qu'au montage : la key force
-          // un remontage quand profileComplete arrive (fetch async), pour préremplir le
-          // texte existant au lieu de le laisser vide.
-          key={profileComplete ? 'loaded' : 'pending'}
+        <StepPresentationContent
           formSchema={presentationFormSchema}
-          defaultValues={{ description: profileComplete?.description ?? '' }}
           onSubmit={handleFormWithValidationSubmit}
           onWatch={handleWatch}
           formRef={formRef}
@@ -157,11 +158,9 @@ export const useStepPresentation = ({ user }: UseStepPresentationProps) => {
     sidePanelContent: () => <ProfileLivePreviewPanel />,
     mobileBottomSheet: false,
     isNextEnabled,
-    isStepCompleted: async () => {
-      // Le champ description est facultatif : l'étape est considérée
-      // franchie dès que le profil a été chargé, qu'elle soit remplie ou non.
-      return !!profileComplete;
-    },
+    buttonLabel: 'Terminer mon profil',
+    isStepCompleted: async () =>
+      isPresentationStepCompleted(profileComplete?.description),
     onSubmit,
     section: 'profil',
   };

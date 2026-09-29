@@ -20,16 +20,16 @@ Replace XXX with the PR numbers: GitHub turns `owner/repo#123` into a link and s
 
 ## 🖼️ Captures
 
-<!-- For any visible change. Drop the images into the cells; delete the section otherwise. -->
+<!--
+Filled AUTOMATICALLY by the « PR screenshots » workflow from the cypress/pr-screenshots/*.shot.ts
+specs added or modified in this PR (desktop + mobile).
+Visible change => add or update a capture spec (cypress/pr-screenshots/README.md).
+Do not edit the content between the two markers: it is rewritten on every push.
+-->
 
-<details open>
-<summary>Avant / après</summary>
-
-| Avant | Après |
-|:-:|:-:|
-| | |
-
-</details>
+<!-- screenshots:start -->
+_⏳ Les captures apparaîtront ici après l'exécution du workflow **PR screenshots**._
+<!-- screenshots:end -->
 
 ## 🚀 Déploiement
 
