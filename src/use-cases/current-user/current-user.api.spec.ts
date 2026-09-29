@@ -11,6 +11,10 @@ import {
   logoutSelectors,
 } from '@/src/use-cases/authentication';
 import {
+  currentUserApi,
+  GENERATE_PRESENTATION_FIXED_CACHE_KEY,
+} from './current-user.api';
+import {
   fetchCurrentUserSocialSituationSelectors,
   fetchUserSelectors,
   readDocumentSelectors,
@@ -811,6 +815,53 @@ describe('current-user api', () => {
           store.getState()
         )
       ).toBe(true);
+    });
+  });
+
+  describe('generatePresentation', () => {
+    const generate = (store: ReturnType<typeof createTestStore>) =>
+      store.dispatch(
+        currentUserApi.endpoints.generatePresentation.initiate(undefined, {
+          fixedCacheKey: GENERATE_PRESENTATION_FIXED_CACHE_KEY,
+        })
+      );
+    const select = (store: ReturnType<typeof createTestStore>) =>
+      currentUserApi.endpoints.generatePresentation.select(
+        GENERATE_PRESENTATION_FIXED_CACHE_KEY
+      )(store.getState() as never);
+
+    it('exposes the proposal and the launch timestamp', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.postGeneratePresentation.mockResolvedValue({
+        data: { description: 'Texte proposé' },
+      } as any);
+
+      await generate(store);
+
+      const state = select(store);
+      expect(state.status).toBe('fulfilled');
+      expect(state.data).toEqual({ description: 'Texte proposé' });
+      expect(state.startedTimeStamp).toEqual(expect.any(Number));
+    });
+
+    it('keeps a null proposal as a successful answer', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.postGeneratePresentation.mockResolvedValue({
+        data: { description: null },
+      } as any);
+
+      await generate(store);
+
+      expect(select(store).data).toEqual({ description: null });
+    });
+
+    it('reports a network error as rejected', async () => {
+      const store = buildAuthenticatedStore();
+      mockedApi.postGeneratePresentation.mockRejectedValue(new Error('429'));
+
+      await generate(store);
+
+      expect(select(store).status).toBe('rejected');
     });
   });
 });

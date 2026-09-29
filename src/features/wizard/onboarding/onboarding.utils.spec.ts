@@ -76,10 +76,10 @@ describe('buildOnboardingStepOrder', () => {
     ).toEqual([
       'photo',
       'cv-choice',
-      'presentation',
       'experiences',
       'formations',
       'skills',
+      'presentation',
       'elearning',
       'webinar',
       'match-recap',

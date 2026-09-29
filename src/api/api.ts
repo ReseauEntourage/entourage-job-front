@@ -183,6 +183,12 @@ export class APIHandler {
     return this.post(`/profile-generation/${jobId}/cancel`, {});
   }
 
+  postGeneratePresentation(): Promise<
+    AxiosResponse<{ description: string | null }>
+  > {
+    return this.post('/profile-generation/presentation', {});
+  }
+
   // post
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });

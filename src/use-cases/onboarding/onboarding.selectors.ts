@@ -5,3 +5,6 @@ export const selectWebinarSfId = (state: RootState) =>
 
 export const selectFormErrorMessage = (state: RootState) =>
   state.onboarding.formErrorMessage;
+
+export const selectAbandonedPresentationGenerationId = (state: RootState) =>
+  state.onboarding.abandonedPresentationGenerationId;

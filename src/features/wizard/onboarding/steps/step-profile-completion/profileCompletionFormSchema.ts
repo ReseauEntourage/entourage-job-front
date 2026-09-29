@@ -36,7 +36,7 @@ export const buildIntroductionField = (
       ? INTRODUCTION_PLACEHOLDER_CANDIDATE
       : INTRODUCTION_PLACEHOLDER_DEFAULT,
   showLabel: true,
-  maxLength: 1000,
+  maxLength: 500,
   rows: 3,
 });
 
