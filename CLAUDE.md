@@ -106,3 +106,11 @@ When a change touches an API endpoint, update both repos in the same session:
 
 1. Update the backend controller/service in `entourage-job-back`
 2. Update the API type in `src/api/types.ts` and the consuming endpoint/hook in the front
+
+## PR screenshots
+
+**Any change with a visual impact** (component, page, style) adds or updates `cypress/pr-screenshots/<capability>.shot.ts`, showing the new state (modal open, form filled, error…). The `.github/workflows/pr-screenshots.yml` workflow runs the capture specs modified by the PR (desktop 1440 px + mobile 390 px, back end mocked with the E2E intercepts and fixtures), publishes the PNGs on the orphan branch `pr-screenshots` and injects them into the PR description. Details and example: `cypress/pr-screenshots/README.md`.
+
+- Before pushing, run the spec against a production build without CDN (`NEXT_PUBLIC_CDN_URL= pnpm build && NEXT_PUBLIC_CDN_URL= pnpm start`, then `pnpm screenshots cypress/pr-screenshots/<capability>.shot.ts`) and **look at** the PNGs in `cypress/pr-screenshots/output/`: expected state visible, no spinner left by an unmocked request.
+- Every PR follows `.github/pull_request_template.md`. Never remove or rewrite the `<!-- screenshots:start -->` … `<!-- screenshots:end -->` block: re-read the current PR description before editing it.
+- Never commit to the `pr-screenshots` branch: it is managed by the workflow. The repo is public — captures only ever show fixtures.
