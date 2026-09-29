@@ -554,7 +554,7 @@ describe('Wizard', () => {
       cy.contains('Vos formations');
     });
 
-    it('should advance to the presentation step when choosing to fill the profile manually from cv-choice', () => {
+    it('should advance to the experiences step when choosing to fill the profile manually from cv-choice', () => {
       cy.fixture('auth-current-candidate-onboarding-not-started-res').then(
         (user) => {
           cy.intercept('GET', '/current', {
@@ -603,7 +603,8 @@ describe('Wizard', () => {
       cy.contains('Deux façons de faire');
       cy.contains('button', 'Le remplir moi-même').click();
 
-      cy.contains('Présentez-vous en quelques lignes');
+      // The manual path starts with the experiences; the presentation is last.
+      cy.contains('Vos expériences professionnelles');
     });
 
     it('should advance to the cv-loading step when uploading a CV from cv-choice', () => {

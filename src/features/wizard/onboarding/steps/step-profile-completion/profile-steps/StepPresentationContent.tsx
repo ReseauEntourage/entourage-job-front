@@ -1,4 +1,10 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text } from '@/src/components/ui';
 import { FormSchema } from '@/src/features/forms/FormSchema';
@@ -110,16 +116,40 @@ export const StepPresentationContent = ({
   const proposedDescription =
     phase === 'proposed' ? (generation.data?.description ?? '') : null;
 
-  // Reflect the inserted proposal in the live profile preview.
+  // Latest value of the field once a proposal is shown (the proposal itself,
+  // then the user's edits).
+  const fieldValueRef = useRef<string | null>(null);
   useEffect(() => {
-    if (proposedDescription) {
+    if (proposedDescription !== null) {
+      fieldValueRef.current = proposedDescription;
+    }
+  }, [proposedDescription]);
+  const handleWatch = useCallback(
+    (values: PresentationFormValues) => {
+      fieldValueRef.current = values.description;
+      onWatch(values);
+    },
+    [onWatch]
+  );
+
+  // Reflect the field in the live profile preview. Saving the skills step
+  // refreshes the profile from the server, and that response can land after
+  // the proposal: re-apply the field value whenever the stored draft drifts.
+  const storedDescription = profileComplete?.description ?? null;
+  useEffect(() => {
+    const fieldValue = fieldValueRef.current;
+    if (
+      phase === 'proposed' &&
+      fieldValue !== null &&
+      storedDescription !== fieldValue
+    ) {
       dispatch(
         currentUserActions.profileCompleteDraftUpdated({
-          description: proposedDescription,
+          description: fieldValue,
         })
       );
     }
-  }, [dispatch, proposedDescription]);
+  }, [dispatch, phase, storedDescription, proposedDescription]);
 
   // Leaving the step (including "Terminer mon profil") while waiting abandons
   // the generation: its result must never be inserted afterwards.
@@ -167,7 +197,7 @@ export const StepPresentationContent = ({
             proposedDescription ?? profileComplete?.description ?? '',
         }}
         onSubmit={onSubmit}
-        onWatch={onWatch}
+        onWatch={handleWatch}
         formRef={formRef}
       />
       {phase === 'proposed' && (

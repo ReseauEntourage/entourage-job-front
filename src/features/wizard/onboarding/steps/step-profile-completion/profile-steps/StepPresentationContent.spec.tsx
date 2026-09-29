@@ -143,6 +143,42 @@ describe('StepPresentationContent', () => {
     );
   });
 
+  it('keeps the proposal in the preview when the profile refresh lands afterwards', async () => {
+    const pending = deferred();
+    mockedApi.postGeneratePresentation.mockReturnValue(
+      pending.promise as never
+    );
+    const store = buildStore({ experiences: [{ id: 'e1' }] });
+    launchFromSkillsStep(store);
+    renderContent(store);
+
+    await act(async () => {
+      pending.resolve({ data: { description: PROPOSAL } });
+      await flushPromises();
+    });
+    expect(await screen.findByTestId('presentation-field')).toHaveValue(
+      PROPOSAL
+    );
+
+    // The refresh started by the skills save returns the server profile,
+    // whose presentation is still empty.
+    await act(async () => {
+      store.dispatch(
+        currentUserSlice.actions.fetchCurrentProfileCompleteSucceeded({
+          description: null,
+          experiences: [{ id: 'e1' }],
+          formations: [],
+        } as never)
+      );
+      await flushPromises();
+    });
+
+    expect(store.getState().currentUser.profileComplete?.description).toBe(
+      PROPOSAL
+    );
+    expect(screen.getByTestId('presentation-field')).toHaveValue(PROPOSAL);
+  });
+
   it('shows an empty field and never inserts the text after "Écrire moi-même"', async () => {
     const pending = deferred();
     mockedApi.postGeneratePresentation.mockReturnValue(

@@ -10,6 +10,7 @@ import {
   loadSkillsOptions,
 } from '@/src/features/forms/utils/loadOptions.utils';
 import type { AnyCantFix } from '@/src/utils/Types';
+import { PRESENTATION_MAX_LENGTH } from './profile-steps/presentationGeneration.utils';
 
 export const PROFILE_COMPLETION_FORM_ID = 'form-onboarding-profile-completion';
 
@@ -36,7 +37,7 @@ export const buildIntroductionField = (
       ? INTRODUCTION_PLACEHOLDER_CANDIDATE
       : INTRODUCTION_PLACEHOLDER_DEFAULT,
   showLabel: true,
-  maxLength: 500,
+  maxLength: PRESENTATION_MAX_LENGTH,
   rows: 3,
 });
 

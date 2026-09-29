@@ -41,8 +41,8 @@ export const isIntroductionValid = (description: string | null | undefined) => {
   return length <= PRESENTATION_MAX_LENGTH;
 };
 
-// L'étape n'est franchie que si une présentation existe : sinon, au
-// rechargement, le wizard y revient et une proposition de l'IA est relancée.
+// The step only counts as done once a presentation exists: otherwise, after a
+// reload, the wizard comes back to it and a new AI proposal is launched.
 export const isPresentationStepCompleted = (
   description: string | null | undefined
 ) => !!description?.trim();
