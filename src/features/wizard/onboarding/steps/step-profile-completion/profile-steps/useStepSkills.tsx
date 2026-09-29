@@ -11,8 +11,10 @@ import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurre
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import {
   currentUserActions,
+  GENERATE_PRESENTATION_FIXED_CACHE_KEY,
   UPDATE_PROFILE_FIXED_CACHE_KEY,
   updateProfileSelectors,
+  useGeneratePresentationMutation,
   useUpdateProfileMutation,
 } from '@/src/use-cases/current-user';
 import { onboardingActions } from '@/src/use-cases/onboarding';
@@ -52,9 +54,16 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
-  const [, { reset: resetUpdateProfile }] = useUpdateProfileMutation({
-    fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+  const [, { reset: resetUpdateProfile, data: savedProfile }] =
+    useUpdateProfileMutation({
+      fixedCacheKey: UPDATE_PROFILE_FIXED_CACHE_KEY,
+    });
+  const [generatePresentation] = useGeneratePresentationMutation({
+    fixedCacheKey: GENERATE_PRESENTATION_FIXED_CACHE_KEY,
   });
+  // Read from the saved profile returned by the save, not from the local
+  // draft: an unsaved AI proposal must not prevent a new generation.
+  const hasSavedPresentation = !!savedProfile?.description?.trim();
 
   const pendingResolveRef = useRef<(() => void) | null>(null);
   const lastSubmitFailedRef = useRef(false);
@@ -65,6 +74,12 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
     }
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
       lastSubmitFailedRef.current = false;
+      // Launched once the skills are saved (the back end reads the saved
+      // profile) and not awaited: the presentation step shows the waiting
+      // state until the proposal arrives.
+      if (!hasSavedPresentation) {
+        generatePresentation();
+      }
       const resolve = pendingResolveRef.current;
       pendingResolveRef.current = null;
       resolve();
@@ -79,7 +94,12 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
       pendingResolveRef.current = null;
       resolve();
     }
-  }, [dispatch, updateProfileStatus]);
+  }, [
+    dispatch,
+    updateProfileStatus,
+    hasSavedPresentation,
+    generatePresentation,
+  ]);
 
   const initialValues = useMemo<SkillsFormValues>(
     () => ({
@@ -224,7 +244,6 @@ export const useStepSkills = ({ user }: UseStepSkillsProps) => {
     ),
     sidePanelContent: () => <ProfileLivePreviewPanel />,
     mobileBottomSheet: false,
-    buttonLabel: 'Terminer mon profil',
     isNextEnabled: true,
     isStepCompleted: async () => true,
     onSubmit,

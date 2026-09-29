@@ -36,10 +36,11 @@ export const buildOnboardingStepOrder = ({
     ids.push('cv-loading');
     ids.push('cv-recap');
   } else if (profileMode === 'manual') {
-    ids.push('presentation');
     ids.push('experiences');
     ids.push('formations');
     ids.push('skills');
+    // Last, so the AI proposal can use everything the user just entered.
+    ids.push('presentation');
   }
 
   ids.push('elearning');

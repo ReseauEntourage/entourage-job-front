@@ -79,6 +79,7 @@ export const FETCH_CURRENT_READ_DOCUMENTS_FIXED_CACHE_KEY =
 export const FETCH_CURRENT_REFERRED_USERS_FIXED_CACHE_KEY =
   'fetchCurrentReferredUsers';
 export const FETCH_CURRENT_REFERRER_FIXED_CACHE_KEY = 'fetchCurrentReferrer';
+export const GENERATE_PRESENTATION_FIXED_CACHE_KEY = 'generatePresentation';
 
 export const currentUserApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -268,6 +269,24 @@ export const currentUserApi = api.injectEndpoints({
           }
         } catch {
           // Handled by the mutation's own error state; no data change needed.
+        }
+      },
+    }),
+    /**
+     * AI presentation proposal (EN-9628). Launched by the skills step and read
+     * by the presentation step through GENERATE_PRESENTATION_FIXED_CACHE_KEY.
+     * The back end resolves every failure to `{ description: null }`.
+     */
+    generatePresentation: builder.mutation<
+      { description: string | null },
+      void
+    >({
+      queryFn: async () => {
+        try {
+          const { data } = await Api.postGeneratePresentation();
+          return { data };
+        } catch (error) {
+          return { error };
         }
       },
     }),
@@ -675,6 +694,7 @@ export const currentUserApi = api.injectEndpoints({
 export const {
   useUpdateUserMutation,
   useUpdateProfileMutation,
+  useGeneratePresentationMutation,
   useUpdateSocialSituationMutation,
   useReadDocumentMutation,
 } = currentUserApi;
