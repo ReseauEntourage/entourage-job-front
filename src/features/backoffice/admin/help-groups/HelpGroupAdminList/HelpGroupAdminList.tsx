@@ -52,7 +52,7 @@ export function HelpGroupAdminList() {
   );
 
   return (
-    <>
+    <Section className="custom-page">
       <HeaderBackoffice
         title="Gestion des groupes"
         description="Créez, publiez, épinglez et restaurez les groupes d'entraide"
@@ -61,44 +61,42 @@ export function HelpGroupAdminList() {
           onClick: () => openModal(<EditHelpGroupModal />),
         }}
       />
-      <Section className="custom-page">
-        <StyledHelpGroupAdminToggle>
-          <Button
-            size="small"
-            variant={showDeleted ? 'default' : 'primary'}
-            dataTestId="help-groups-toggle-active"
-            onClick={() => setShowDeleted(false)}
-          >
-            Groupes
-          </Button>
-          <Button
-            size="small"
-            variant={showDeleted ? 'primary' : 'default'}
-            dataTestId="help-groups-toggle-deleted"
-            onClick={() => setShowDeleted(true)}
-          >
-            Supprimés
-          </Button>
-        </StyledHelpGroupAdminToggle>
-        {isLoading && <LoadingScreen />}
-        {isError && (
-          <ContainerWithTextCentered>
-            <Text>Les groupes n&apos;ont pas pu être chargés.</Text>
-          </ContainerWithTextCentered>
-        )}
-        {groups && groups.length > 0 && (
-          <HelpGroupAdminTable groups={groups} onAction={onAction} />
-        )}
-        {groups && groups.length === 0 && (
-          <ContainerWithTextCentered>
-            <Text variant="italic">
-              {showDeleted
-                ? 'Aucun groupe supprimé'
-                : 'Aucun groupe pour le moment'}
-            </Text>
-          </ContainerWithTextCentered>
-        )}
-      </Section>
-    </>
+      <StyledHelpGroupAdminToggle>
+        <Button
+          size="small"
+          variant={showDeleted ? 'default' : 'primary'}
+          dataTestId="help-groups-toggle-active"
+          onClick={() => setShowDeleted(false)}
+        >
+          Groupes
+        </Button>
+        <Button
+          size="small"
+          variant={showDeleted ? 'primary' : 'default'}
+          dataTestId="help-groups-toggle-deleted"
+          onClick={() => setShowDeleted(true)}
+        >
+          Supprimés
+        </Button>
+      </StyledHelpGroupAdminToggle>
+      {isLoading && <LoadingScreen />}
+      {isError && (
+        <ContainerWithTextCentered>
+          <Text>Les groupes n&apos;ont pas pu être chargés.</Text>
+        </ContainerWithTextCentered>
+      )}
+      {groups && groups.length > 0 && (
+        <HelpGroupAdminTable groups={groups} onAction={onAction} />
+      )}
+      {groups && groups.length === 0 && (
+        <ContainerWithTextCentered>
+          <Text variant="italic">
+            {showDeleted
+              ? 'Aucun groupe supprimé'
+              : 'Aucun groupe pour le moment'}
+          </Text>
+        </ContainerWithTextCentered>
+      )}
+    </Section>
   );
 }
