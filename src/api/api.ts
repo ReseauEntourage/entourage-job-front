@@ -43,6 +43,15 @@ import {
   User,
   WhatsappZone,
   PublicAchievement,
+  CursorPage,
+  HelpGroupAdminAction,
+  HelpGroupAdminItem,
+  HelpGroupCard,
+  HelpGroupDiscussion,
+  HelpGroupDiscussionItem,
+  HelpGroupDto,
+  HelpGroupPage,
+  HelpGroupReply,
 } from './types';
 
 export class APIHandler {
@@ -546,6 +555,72 @@ export class APIHandler {
     params: InviteCollaboratorsFromCompanyDto
   ): Promise<AxiosResponse> {
     return this.post(`/companies/${companyId}/invite-collaborators`, params);
+  }
+
+  /// //////////// ///
+  /// help groups  ///
+  /// //////////// ///
+
+  getHelpGroups(): Promise<AxiosResponse<HelpGroupCard[]>> {
+    return this.get('/help-groups');
+  }
+
+  getHelpGroup(slug: string): Promise<AxiosResponse<HelpGroupPage>> {
+    return this.get(`/help-groups/${encodeURIComponent(slug)}`);
+  }
+
+  getHelpGroupDiscussions(
+    slug: string,
+    params: { cursor?: string; limit?: number }
+  ): Promise<AxiosResponse<CursorPage<HelpGroupDiscussionItem>>> {
+    return this.get(`/help-groups/${encodeURIComponent(slug)}/discussions`, {
+      params,
+    });
+  }
+
+  getHelpGroupDiscussion(
+    slug: string,
+    discussionId: string
+  ): Promise<AxiosResponse<HelpGroupDiscussion>> {
+    return this.get(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`
+    );
+  }
+
+  getHelpGroupDiscussionReplies(
+    slug: string,
+    discussionId: string,
+    params: { after?: string; limit?: number }
+  ): Promise<AxiosResponse<CursorPage<HelpGroupReply>>> {
+    return this.get(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies`,
+      { params }
+    );
+  }
+
+  getAdminHelpGroups(
+    deleted: boolean
+  ): Promise<AxiosResponse<HelpGroupAdminItem[]>> {
+    return this.get('/admin/help-groups', { params: { deleted } });
+  }
+
+  postAdminHelpGroup(params: HelpGroupDto): Promise<AxiosResponse> {
+    return this.post('/admin/help-groups', params);
+  }
+
+  putAdminHelpGroup(id: string, params: HelpGroupDto): Promise<AxiosResponse> {
+    return this.put(`/admin/help-groups/${id}`, params);
+  }
+
+  postAdminHelpGroupAction(
+    id: string,
+    action: HelpGroupAdminAction
+  ): Promise<AxiosResponse> {
+    return this.post(`/admin/help-groups/${id}/${action}`, {});
+  }
+
+  deleteAdminHelpGroup(id: string): Promise<AxiosResponse> {
+    return this.delete(`/admin/help-groups/${id}`);
   }
 
   /// ///////////// ///

@@ -66,6 +66,46 @@ export const escapeHtml = (unsafe: string): string => {
     .replace(/>/g, '&gt;');
 };
 
+const LINK_PATTERN =
+  /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
+
+/**
+ * Same URL detection as `linkify`, but returns React nodes instead of an HTML
+ * string: the text is never interpreted as markup (no `dangerouslySetInnerHTML`),
+ * only web addresses become links, opened in a new tab. Line breaks are kept
+ * as is and rendered by the container (`white-space: pre-line`).
+ */
+export const linkifyToNodes = (content: string): React.ReactNode[] => {
+  if (!content) {
+    return [];
+  }
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  content.replace(LINK_PATTERN, (url: string, ...args) => {
+    const offset = args[args.length - 2] as number;
+    if (offset > lastIndex) {
+      nodes.push(content.slice(lastIndex, offset));
+    }
+    const href = /^https?:\/\//i.test(url) ? url : `http://${url}`;
+    nodes.push(
+      <a
+        key={`${offset}-${url}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+      >
+        {url}
+      </a>
+    );
+    lastIndex = offset + url.length;
+    return url;
+  });
+  if (lastIndex < content.length) {
+    nodes.push(content.slice(lastIndex));
+  }
+  return nodes;
+};
+
 export const linkify = (content: string): string => {
   const urlPattern =
     /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;

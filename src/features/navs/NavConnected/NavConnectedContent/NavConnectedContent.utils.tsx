@@ -17,6 +17,14 @@ const candidateRolesParams = rolesToParams([UserRoles.CANDIDATE]);
 const coachRolesParams = rolesToParams([UserRoles.COACH]);
 const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
+// Placed right after "Réseau d'entraide" for every role. The item stays
+// active on the group and discussion pages since the nav matches the current
+// path with `asPath.includes(href)`.
+const helpGroupsItem: NavConnectedMainItem = {
+  href: '/backoffice/groupes',
+  name: 'Groupes',
+};
+
 const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
   const onboardingStatus = user.onboardingStatus;
   let items: NavConnectedMainItem[] = [];
@@ -37,6 +45,7 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
+      helpGroupsItem,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -102,6 +111,7 @@ const renderCoachHeaderItems = (
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
+      helpGroupsItem,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -200,6 +210,10 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
         },
         {
+          href: '/backoffice/admin/groupes',
+          name: 'Les groupes',
+        },
+        {
           href: '/backoffice/parametres',
           name: 'Mon profil',
         },
@@ -207,6 +221,7 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
+        helpGroupsItem,
         {
           href: '/backoffice/events',
           name: 'Événements',
@@ -228,6 +243,7 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
+        helpGroupsItem,
         {
           href: '/backoffice/events',
           name: 'Événements',
