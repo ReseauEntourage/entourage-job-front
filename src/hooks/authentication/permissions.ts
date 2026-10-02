@@ -14,6 +14,7 @@ export const authenticatedPermissions = [
       '/backoffice/events',
       '/backoffice/events/[eventId]',
       '/backoffice/checkin/[conversationId]',
+      '/backoffice/groupes',
     ],
     roles: '*',
   },

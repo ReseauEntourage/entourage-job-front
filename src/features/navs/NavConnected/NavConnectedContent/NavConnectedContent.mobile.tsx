@@ -32,6 +32,7 @@ export const NavConnectedContentMobile = ({
     [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
     [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
+  administration = null,
   dropdown = [NavConnectedMainItemDefaultProps],
 }: NavConnectedContentProps) => {
   const offCanvasRef = useRef<OffCanvasRef>(null);
@@ -39,7 +40,8 @@ export const NavConnectedContentMobile = ({
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0] || null;
+  // The admin home is the first administration page, no longer in the main nav
+  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -70,6 +72,7 @@ export const NavConnectedContentMobile = ({
               )}
             </StyledMessagingIconContainer>
             <Hamburger
+              dataTestId="nav-hamburger"
               onClick={() => {
                 if (offCanvasRef.current) {
                   offCanvasRef.current.open();
@@ -159,6 +162,30 @@ export const NavConnectedContentMobile = ({
                 );
               }
             )}
+          {administration?.subMenu && (
+            <>
+              <hr style={{ opacity: '.5' }} />
+              <StyledConnectedItemMobile
+                className={`hasSubMenu ${
+                  administration.subMenu.some(({ href }) =>
+                    asPath.includes(href)
+                  )
+                    ? 'active'
+                    : ''
+                }`}
+              >
+                <a>
+                  <span>
+                    <span className="uk-margin-small-right">
+                      {administration.icon}
+                    </span>
+                    {administration.name}
+                  </span>
+                </a>
+                <SubMenu items={administration.subMenu} badges={badges} />
+              </StyledConnectedItemMobile>
+            </>
+          )}
           <hr style={{ opacity: '.5' }} />
           <StyledConnectedItemMobile>
             <a

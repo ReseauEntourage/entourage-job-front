@@ -39,6 +39,8 @@ export const APIRoutes = {
   LINKEDIN: 'linkedin',
   PROFILE_GENERATION: 'profile-generation',
   CHECKIN: 'checkin',
+  HELP_GROUPS: 'help-groups',
+  ADMIN_HELP_GROUPS: 'admin/help-groups',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -907,3 +909,111 @@ export type AiAssistantMessage = {
 export type AiAssistantSession = {
   messages: AiAssistantMessage[];
 };
+
+/// Help groups ///
+
+export type HelpGroupReactionEmoji = '💪' | '❤️' | '👏' | '🙌' | '🎉';
+
+/**
+ * Minimal author: the full last name and the email are never exposed. A
+ * deleted account only keeps `isDeleted`.
+ */
+export type HelpGroupAuthor = {
+  id: string | null;
+  firstName: string | null;
+  lastNameInitial: string | null;
+  roleLabel: string | null;
+  isDeleted: boolean;
+  profileLinkable: boolean;
+  // Only for the author of the original message, when the profile is linkable
+  department?: string | null;
+};
+
+// Carries no count on purpose: a number of reactions is never displayed
+export type HelpGroupReactionsSummary = {
+  emojis: HelpGroupReactionEmoji[];
+  firstNames: string[];
+  hasOthers: boolean;
+};
+
+export type HelpGroupContributor = {
+  id: string;
+  initials: string;
+  hasPicture: boolean;
+};
+
+export type HelpGroupCard = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  membersCount: number;
+  isMember: boolean;
+  recentContributors: HelpGroupContributor[];
+  pinnedAt: string | null;
+};
+
+export type HelpGroupPage = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  charter: string;
+  membersCount: number;
+  isMember: boolean;
+  isPublished: boolean;
+};
+
+export type HelpGroupDiscussionItem = {
+  id: string;
+  title: string | null;
+  createdAt: string;
+  lastActivityAt: string;
+  author: HelpGroupAuthor;
+  repliesCount: number;
+  reactionsSummary: HelpGroupReactionsSummary | null;
+};
+
+export type HelpGroupDiscussion = HelpGroupDiscussionItem & {
+  content: string;
+  editedAt: string | null;
+  group: { id: string; slug: string; name: string; isPublished: boolean };
+};
+
+export type HelpGroupReply = {
+  id: string;
+  content: string;
+  createdAt: string;
+  editedAt: string | null;
+  author: HelpGroupAuthor;
+  reactionsSummary: HelpGroupReactionsSummary | null;
+};
+
+export type CursorPage<T> = {
+  items: T[];
+  nextCursor: string | null;
+};
+
+export type HelpGroupAdminItem = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  charter: string;
+  publishedAt: string | null;
+  pinnedAt: string | null;
+  createdAt: string;
+  deletedAt: string | null;
+  membersCount: number;
+  discussionsCount: number;
+  lastActivityAt: string | null;
+};
+
+export type HelpGroupDto = {
+  name: string;
+  description: string;
+  charter: string;
+};
+
+export type HelpGroupAdminAction =
+  'publish' | 'unpublish' | 'pin' | 'unpin' | 'restore';

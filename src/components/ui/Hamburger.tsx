@@ -7,12 +7,14 @@ interface HamburgerProps {
   onClick: () => void;
   color?: Color;
   isOpen?: boolean;
+  dataTestId?: string;
 }
 
 export const Hamburger = ({
   onClick,
   color = 'white',
   isOpen = false,
+  dataTestId,
 }: HamburgerProps) => {
   return (
     <ButtonIcon
@@ -25,6 +27,7 @@ export const Hamburger = ({
         />
       }
       variant="text"
+      dataTestId={dataTestId}
     />
   );
 };
