@@ -8,7 +8,9 @@ import {
   useGetHelpGroupDiscussionsInfiniteQuery,
   useGetHelpGroupQuery,
 } from '@/src/use-cases/help-groups';
+import { HelpGroupLoadError } from '../HelpGroupLoadError';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
+import { HELP_GROUPS_LOAD_ERROR_LABELS } from '../help-groups.labels';
 import { useLoadMoreOnScroll } from '../hooks/useLoadMoreOnScroll';
 import { DiscussionList } from './DiscussionList';
 import { HelpGroupCharter } from './HelpGroupCharter';
@@ -28,13 +30,17 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
     data: group,
     isLoading,
     error,
+    refetch,
   } = useGetHelpGroupQuery(slug, { skip: !slug });
   const {
     data: discussionsData,
     isLoading: isLoadingDiscussions,
+    isFetching: isFetchingDiscussions,
     isFetchingNextPage,
+    isError: isDiscussionsError,
     hasNextPage,
     fetchNextPage,
+    refetch: refetchDiscussions,
   } = useGetHelpGroupDiscussionsInfiniteQuery(slug, { skip: !group });
 
   const discussions = useMemo(
@@ -44,12 +50,22 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
 
   useLoadMoreOnScroll({
     hasNextPage,
-    isFetching: isFetchingNextPage,
+    isFetching: isFetchingDiscussions,
     fetchNextPage,
   });
 
   if (error === HelpGroupsError.NOT_FOUND) {
     return <HelpGroupNotFound />;
+  }
+  if (error) {
+    return (
+      <Section className="custom-page">
+        <HelpGroupLoadError
+          message={HELP_GROUPS_LOAD_ERROR_LABELS.group}
+          onRetry={refetch}
+        />
+      </Section>
+    );
   }
   if (isLoading || !group) {
     return <LoadingScreen />;
@@ -66,12 +82,21 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
         />
         <HelpGroupHeader group={group} />
         <HelpGroupCharter charter={group.charter} />
-        {isLoadingDiscussions ? (
-          <Spinner />
-        ) : (
-          <DiscussionList groupSlug={group.slug} discussions={discussions} />
-        )}
+        {isLoadingDiscussions && <Spinner />}
+        {/* A failed first page is not an empty group */}
+        {!isLoadingDiscussions &&
+          !(isDiscussionsError && discussions.length === 0) && (
+            <DiscussionList groupSlug={group.slug} discussions={discussions} />
+          )}
         {isFetchingNextPage && <Spinner />}
+        {isDiscussionsError && !isFetchingDiscussions && (
+          <HelpGroupLoadError
+            message={HELP_GROUPS_LOAD_ERROR_LABELS.discussions}
+            onRetry={
+              discussions.length === 0 ? refetchDiscussions : fetchNextPage
+            }
+          />
+        )}
       </StyledHelpGroupPage>
     </Section>
   );

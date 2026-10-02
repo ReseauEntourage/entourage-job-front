@@ -1,5 +1,13 @@
 import { HelpGroupAuthor, HelpGroupReactionsSummary } from '@/src/api/types';
 
+export const HELP_GROUPS_RETRY_LABEL = 'Réessayer';
+export const HELP_GROUPS_LOAD_ERROR_LABELS = {
+  groups: 'Les groupes n’ont pas pu être chargés.',
+  group: 'Ce groupe n’a pas pu être chargé.',
+  discussions: 'Les discussions n’ont pas pu être chargées.',
+  discussion: 'Cette discussion n’a pas pu être chargée.',
+  replies: 'Les réponses n’ont pas pu être chargées.',
+} as const;
 export const HELP_GROUP_NO_DISCUSSION_LABEL = "Ce groupe vient d'ouvrir";
 export const HELP_GROUP_NO_MEMBER_LABEL =
   'Soyez parmi les premiers à rejoindre';

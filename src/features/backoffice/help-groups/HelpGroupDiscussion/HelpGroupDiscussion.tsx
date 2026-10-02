@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Section } from '@/src/components/ui';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import {
   HelpGroupsError,
   useGetHelpGroupDiscussionQuery,
   useGetHelpGroupDiscussionRepliesInfiniteQuery,
 } from '@/src/use-cases/help-groups';
+import { HelpGroupLoadError } from '../HelpGroupLoadError';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
+import { HELP_GROUPS_LOAD_ERROR_LABELS } from '../help-groups.labels';
 import { useLoadMoreOnScroll } from '../hooks/useLoadMoreOnScroll';
 import { HelpGroupDiscussionView } from './HelpGroupDiscussionView';
 import { getReplyElementId, getReplyTargetState } from './replyTarget';
@@ -27,6 +30,7 @@ export function HelpGroupDiscussion({
     data: discussion,
     isLoading,
     error,
+    refetch,
   } = useGetHelpGroupDiscussionQuery(
     { slug, discussionId },
     { skip: !isReady }
@@ -34,9 +38,12 @@ export function HelpGroupDiscussion({
   const {
     data: repliesData,
     isLoading: isLoadingReplies,
+    isFetching: isFetchingReplies,
     isFetchingNextPage,
+    isError: isRepliesError,
     hasNextPage,
     fetchNextPage,
+    refetch: refetchReplies,
   } = useGetHelpGroupDiscussionRepliesInfiniteQuery(
     { slug, discussionId },
     { skip: !discussion }
@@ -54,12 +61,24 @@ export function HelpGroupDiscussion({
     hasNextPage,
   });
 
-  // Load the replies pages until the designated reply is found (capped)
+  // Load the replies pages until the designated reply is found (capped). A
+  // failed page stops the loop: the reader retries from the error state.
   useEffect(() => {
-    if (repliesData && replyTargetState === 'loadMore' && !isFetchingNextPage) {
+    if (
+      repliesData &&
+      replyTargetState === 'loadMore' &&
+      !isFetchingNextPage &&
+      !isRepliesError
+    ) {
       fetchNextPage();
     }
-  }, [repliesData, replyTargetState, isFetchingNextPage, fetchNextPage]);
+  }, [
+    repliesData,
+    replyTargetState,
+    isFetchingNextPage,
+    isRepliesError,
+    fetchNextPage,
+  ]);
 
   const [highlightedReplyId, setHighlightedReplyId] = useState<string | null>(
     null
@@ -82,21 +101,39 @@ export function HelpGroupDiscussion({
     }
     if (
       replyTargetState === 'none' ||
-      (replyTargetState === 'notFound' && !isLoadingReplies)
+      (replyTargetState === 'notFound' && !isLoadingReplies) ||
+      (isRepliesError && !isFetchingReplies)
     ) {
       hasPositionedView.current = true;
       window.scrollTo?.({ top: 0 });
     }
-  }, [discussion, replyTargetState, replyId, isLoadingReplies]);
+  }, [
+    discussion,
+    replyTargetState,
+    replyId,
+    isLoadingReplies,
+    isRepliesError,
+    isFetchingReplies,
+  ]);
 
   useLoadMoreOnScroll({
     hasNextPage,
-    isFetching: isFetchingNextPage,
+    isFetching: isFetchingReplies,
     fetchNextPage,
   });
 
   if (error === HelpGroupsError.NOT_FOUND) {
     return <HelpGroupNotFound />;
+  }
+  if (error) {
+    return (
+      <Section className="custom-page">
+        <HelpGroupLoadError
+          message={HELP_GROUPS_LOAD_ERROR_LABELS.discussion}
+          onRetry={refetch}
+        />
+      </Section>
+    );
   }
   if (isLoading || !discussion) {
     return <LoadingScreen />;
@@ -108,6 +145,14 @@ export function HelpGroupDiscussion({
       replies={replies}
       highlightedReplyId={highlightedReplyId}
       isLoadingReplies={isLoadingReplies || isFetchingNextPage}
+      repliesError={
+        isRepliesError && !isFetchingReplies ? (
+          <HelpGroupLoadError
+            message={HELP_GROUPS_LOAD_ERROR_LABELS.replies}
+            onRetry={replies.length === 0 ? refetchReplies : fetchNextPage}
+          />
+        ) : null
+      }
     />
   );
 }

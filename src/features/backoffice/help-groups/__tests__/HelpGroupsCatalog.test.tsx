@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -79,5 +79,22 @@ describe('HelpGroupsCatalog', () => {
     render(<HelpGroupsCatalog />);
     expect(replace).not.toHaveBeenCalled();
     expect(screen.getByTestId('help-group-card')).toBeInTheDocument();
+  });
+
+  it('shows an error with a retry, without redirecting, when the groups fail to load', () => {
+    const refetch = jest.fn();
+    (useGetHelpGroupsQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      refetch,
+    });
+    render(<HelpGroupsCatalog />);
+    expect(replace).not.toHaveBeenCalled();
+    expect(screen.getByTestId('help-group-load-error')).toHaveTextContent(
+      'Les groupes n’ont pas pu être chargés.'
+    );
+    fireEvent.click(screen.getByTestId('help-group-load-error-retry'));
+    expect(refetch).toHaveBeenCalled();
   });
 });

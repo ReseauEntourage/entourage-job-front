@@ -5,6 +5,7 @@ export const StyledHelpGroupAvatar = styled.div<{
   $size: number;
   $isPlaceholder: boolean;
 }>`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -257,6 +257,27 @@ const interceptGroupReads = () => {
   ).as('getReplies');
 };
 
+// On desktop the header is captured alone; on mobile the hamburger menu is
+// opened first, since the entries only show up there.
+const captureMenu = (
+  title: string,
+  caption: string,
+  openDesktopMenu?: () => void
+) => {
+  if (Cypress.expose('device') === 'mobile') {
+    cy.get('[data-testid="nav-hamburger"]').click();
+    cy.get('#nav').contains('a', 'Mon profil').should('be.visible');
+    cy.capture(title, { caption, capture: 'viewport' });
+    return;
+  }
+  if (openDesktopMenu) {
+    openDesktopMenu();
+    cy.capture(title, { caption, capture: 'viewport' });
+    return;
+  }
+  cy.get('#nav').capture(title, { caption });
+};
+
 describe('Groupes', () => {
   bootstrap();
 
@@ -292,6 +313,44 @@ describe('Groupes', () => {
       caption:
         'Réponses chronologiques, compte supprimé, réactions en prénoms, carte de l’auteur et réponse désignée par ?replyId= mise en évidence.',
     });
+  });
+
+  it('menu d’un candidat', () => {
+    loginAs('Candidat');
+    interceptGroupReads();
+
+    cy.visit('/backoffice/groupes/refaire-un-cv');
+    cy.wait('@getCurrent');
+    cy.wait('@getHelpGroups');
+    cy.wait('@getHelpGroup');
+    // The entry is rendered once the published groups are loaded
+    cy.get('#nav').contains('a', 'Groupes').should('exist');
+    captureMenu(
+      'Menu d’un candidat',
+      'Entrée « Groupes » juste après « Réseau d’entraide », active sur la page d’un groupe. Elle n’apparaît qu’à partir d’un groupe publié.'
+    );
+  });
+
+  it('menu d’administration', () => {
+    loginAs('Admin');
+    interceptGroupReads();
+    cy.intercept('GET', '/admin/help-groups*', {
+      statusCode: 200,
+      body: adminGroups,
+    }).as('getAdminHelpGroups');
+
+    cy.visit('/backoffice/admin/groupes');
+    cy.wait('@getCurrent');
+    cy.wait('@getAdminHelpGroups');
+    cy.get('[data-testid="help-group-admin-list"]').should('be.visible');
+    captureMenu(
+      'Menu d’administration',
+      'Pages d’administration regroupées dans un menu à part, ouvert par la roue dentée : Les candidats, Les coachs, Les prescripteurs, Les structures partenaires, Les groupes.',
+      () => {
+        cy.get('[data-testid="nav-administration"]').click();
+        cy.contains('.dropdown-item', 'Les groupes').should('be.visible');
+      }
+    );
   });
 
   it('administration des groupes', () => {

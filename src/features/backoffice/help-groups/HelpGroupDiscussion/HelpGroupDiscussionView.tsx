@@ -26,6 +26,8 @@ interface HelpGroupDiscussionViewProps {
   replies: HelpGroupReply[];
   highlightedReplyId: string | null;
   isLoadingReplies: boolean;
+  // Shown below the loaded replies when a replies page failed
+  repliesError?: React.ReactNode;
 }
 
 /**
@@ -37,6 +39,7 @@ export function HelpGroupDiscussionView({
   replies,
   highlightedReplyId,
   isLoadingReplies,
+  repliesError = null,
 }: HelpGroupDiscussionViewProps) {
   const repliesLabel = formatRepliesLabel(discussion.repliesCount);
   const { group } = discussion;
@@ -87,6 +90,7 @@ export function HelpGroupDiscussionView({
               ))}
             </StyledReplies>
             {isLoadingReplies && <Spinner />}
+            {repliesError}
           </StyledHelpGroupDiscussionMain>
           <AuthorCard author={discussion.author} />
         </StyledHelpGroupDiscussionColumns>

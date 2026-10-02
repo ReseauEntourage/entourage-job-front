@@ -72,6 +72,7 @@ export const NavConnectedContentMobile = ({
               )}
             </StyledMessagingIconContainer>
             <Hamburger
+              dataTestId="nav-hamburger"
               onClick={() => {
                 if (offCanvasRef.current) {
                   offCanvasRef.current.open();

@@ -6,6 +6,8 @@ import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useGetHelpGroupsQuery } from '@/src/use-cases/help-groups';
 import { getDefaultUrl } from '@/src/utils/Redirects';
+import { HelpGroupLoadError } from '../HelpGroupLoadError';
+import { HELP_GROUPS_LOAD_ERROR_LABELS } from '../help-groups.labels';
 import { HelpGroupList } from './HelpGroupList';
 import { StyledHelpGroupsHeader } from './HelpGroupList.styles';
 
@@ -16,7 +18,7 @@ import { StyledHelpGroupsHeader } from './HelpGroupList.styles';
 export function HelpGroupsCatalog() {
   const { replace } = useRouter();
   const user = useAuthenticatedUser();
-  const { data: groups, isLoading } = useGetHelpGroupsQuery();
+  const { data: groups, isLoading, isError, refetch } = useGetHelpGroupsQuery();
   const hasNoPublishedGroup = !isLoading && groups?.length === 0;
 
   useEffect(() => {
@@ -30,11 +32,18 @@ export function HelpGroupsCatalog() {
       <StyledHelpGroupsHeader>
         <H2 title="Groupes" />
       </StyledHelpGroupsHeader>
-      {isLoading || hasNoPublishedGroup ? (
-        <LoadingScreen />
-      ) : (
-        <HelpGroupList groups={groups ?? []} />
+      {isError && (
+        <HelpGroupLoadError
+          message={HELP_GROUPS_LOAD_ERROR_LABELS.groups}
+          onRetry={refetch}
+        />
       )}
+      {!isError &&
+        (isLoading || hasNoPublishedGroup ? (
+          <LoadingScreen />
+        ) : (
+          <HelpGroupList groups={groups ?? []} />
+        ))}
     </Section>
   );
 }
