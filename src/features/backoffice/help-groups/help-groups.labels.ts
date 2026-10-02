@@ -1,6 +1,5 @@
 import { HelpGroupAuthor, HelpGroupReactionsSummary } from '@/src/api/types';
 
-export const HELP_GROUPS_EMPTY_LIST_LABEL = 'Les groupes ouvrent bientôt';
 export const HELP_GROUP_NO_DISCUSSION_LABEL = "Ce groupe vient d'ouvrir";
 export const HELP_GROUP_NO_MEMBER_LABEL =
   'Soyez parmi les premiers à rejoindre';

@@ -17,15 +17,25 @@ const candidateRolesParams = rolesToParams([UserRoles.CANDIDATE]);
 const coachRolesParams = rolesToParams([UserRoles.COACH]);
 const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
-// Placed right after "Réseau d'entraide" for every role. The item stays
-// active on the group and discussion pages since the nav matches the current
-// path with `asPath.includes(href)`.
-const helpGroupsItem: NavConnectedMainItem = {
-  href: '/backoffice/groupes',
-  name: 'Groupes',
-};
+// Placed right after "Réseau d'entraide" for every role, only once a group
+// is published. The item stays active on the group and discussion pages since
+// the nav matches the current path with `asPath.includes(href)`.
+const renderHelpGroupsItems = (
+  hasPublishedHelpGroups: boolean
+): NavConnectedMainItem[] =>
+  hasPublishedHelpGroups
+    ? [
+        {
+          href: '/backoffice/groupes',
+          name: 'Groupes',
+        },
+      ]
+    : [];
 
-const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
+const renderCandidateHeaderItems = (
+  user: User,
+  helpGroupsItems: NavConnectedMainItem[]
+): NavConnectedMainItem[] => {
   const onboardingStatus = user.onboardingStatus;
   let items: NavConnectedMainItem[] = [];
 
@@ -45,7 +55,7 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
-      helpGroupsItem,
+      ...helpGroupsItems,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -79,7 +89,8 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
 
 const renderCoachHeaderItems = (
   user: User,
-  company: CurrentUserCompany | null
+  company: CurrentUserCompany | null,
+  helpGroupsItems: NavConnectedMainItem[]
 ): NavConnectedMainItem[] => {
   const isCompanyAdmin = company && company.companyUser?.isAdmin;
   const onboardingStatus = user.onboardingStatus;
@@ -111,7 +122,7 @@ const renderCoachHeaderItems = (
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
-      helpGroupsItem,
+      ...helpGroupsItems,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -157,14 +168,23 @@ const renderCoachHeaderItems = (
 export const renderLinks = (
   user: User,
   logout: () => void,
-  company: CurrentUserCompany | null
+  company: CurrentUserCompany | null,
+  hasPublishedHelpGroups = false
 ): {
   links: { [K in UserRoles]: NavConnectedMainItem[] };
   messaging: NavConnectedMainItem;
   dropdown: NavConnectedMainItem[];
 } => {
-  const candidateHeaderItems = renderCandidateHeaderItems(user);
-  const coachHeaderItems = renderCoachHeaderItems(user, company);
+  const helpGroupsItems = renderHelpGroupsItems(hasPublishedHelpGroups);
+  const candidateHeaderItems = renderCandidateHeaderItems(
+    user,
+    helpGroupsItems
+  );
+  const coachHeaderItems = renderCoachHeaderItems(
+    user,
+    company,
+    helpGroupsItems
+  );
 
   return {
     links: {
@@ -221,7 +241,7 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
-        helpGroupsItem,
+        ...helpGroupsItems,
         {
           href: '/backoffice/events',
           name: 'Événements',
@@ -243,7 +263,7 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
-        helpGroupsItem,
+        ...helpGroupsItems,
         {
           href: '/backoffice/events',
           name: 'Événements',

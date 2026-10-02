@@ -10,11 +10,15 @@ const buildUser = (role: UserRoles, onboardingStatus = 'completed') =>
 const getNames = (
   role: UserRoles,
   onboardingStatus?: string,
-  company: CurrentUserCompany | null = null
+  company: CurrentUserCompany | null = null,
+  hasPublishedHelpGroups = true
 ) =>
-  renderLinks(buildUser(role, onboardingStatus), jest.fn(), company).links[
-    role
-  ].map(({ name }) => name);
+  renderLinks(
+    buildUser(role, onboardingStatus),
+    jest.fn(),
+    company,
+    hasPublishedHelpGroups
+  ).links[role].map(({ name }) => name);
 
 describe('NavConnectedContent.utils - help groups entries', () => {
   [
@@ -46,7 +50,8 @@ describe('NavConnectedContent.utils - help groups entries', () => {
     const groupsItem = renderLinks(
       buildUser(UserRoles.CANDIDATE),
       jest.fn(),
-      null
+      null,
+      true
     ).links[UserRoles.CANDIDATE].find(({ name }) => name === 'Groupes');
     expect(groupsItem?.href).toBe('/backoffice/groupes');
   });
@@ -55,6 +60,25 @@ describe('NavConnectedContent.utils - help groups entries', () => {
     it(`hides "Groupes" for a ${role} whose onboarding is not completed`, () => {
       expect(getNames(role, 'in_progress')).not.toContain('Groupes');
     });
+  });
+
+  [
+    UserRoles.CANDIDATE,
+    UserRoles.COACH,
+    UserRoles.REFERER,
+    UserRoles.ADMIN,
+  ].forEach((role) => {
+    it(`hides "Groupes" for ${role} while no group is published`, () => {
+      const names = getNames(role, 'completed', null, false);
+      expect(names).not.toContain('Groupes');
+      expect(names[names.indexOf("Réseau d'entraide") + 1]).toBe('Événements');
+    });
+  });
+
+  it('keeps the admin entry "Les groupes" while no group is published', () => {
+    expect(getNames(UserRoles.ADMIN, 'completed', null, false)).toContain(
+      'Les groupes'
+    );
   });
 
   it('puts the admin entry "Les groupes" right after "Les structures partenaires"', () => {

@@ -11,11 +11,6 @@ export const StyledHelpGroupList = styled.div`
   }
 `;
 
-export const StyledHelpGroupListEmpty = styled.div`
-  padding: 40px 0;
-  text-align: center;
-`;
-
 export const StyledHelpGroupsHeader = styled.div`
   margin-bottom: 24px;
 `;

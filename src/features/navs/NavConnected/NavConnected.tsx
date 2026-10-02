@@ -6,6 +6,7 @@ import { useCurrentUserCompany } from '@/src/hooks/current-user/useCurrentUserCo
 import { useNotifBadges } from '@/src/hooks/useNotifBadges';
 import { usePrevious } from '@/src/hooks/utils';
 import { authenticationActions } from '@/src/use-cases/authentication';
+import { useGetHelpGroupsQuery } from '@/src/use-cases/help-groups';
 import {
   selectConversations,
   selectSelectedConversation,
@@ -24,18 +25,38 @@ export const NavConnected = () => {
     dispatch(authenticationActions.logoutRequested());
   }, [dispatch]);
 
+  // Same query as the groups list, shared through the RTK Query cache. The
+  // entry stays hidden while loading or on error so it never shows up only to
+  // vanish, and the admin actions invalidate the tag so it appears as soon as
+  // the first group is published.
+  const { data: helpGroups } = useGetHelpGroupsQuery();
+  const hasPublishedHelpGroups = (helpGroups?.length ?? 0) > 0;
+
   const [linksConnected, setLinksConnected] = useState(
-    renderLinks(user, logout, company)
+    renderLinks(user, logout, company, hasPublishedHelpGroups)
   );
 
   const badges = useNotifBadges();
   const prevUser = usePrevious(user);
+  const prevHasPublishedHelpGroups = usePrevious(hasPublishedHelpGroups);
 
   useEffect(() => {
-    if (user !== prevUser) {
-      setLinksConnected(renderLinks(user, logout, company));
+    if (
+      user !== prevUser ||
+      hasPublishedHelpGroups !== prevHasPublishedHelpGroups
+    ) {
+      setLinksConnected(
+        renderLinks(user, logout, company, hasPublishedHelpGroups)
+      );
     }
-  }, [user, logout, prevUser, company]);
+  }, [
+    user,
+    logout,
+    prevUser,
+    company,
+    hasPublishedHelpGroups,
+    prevHasPublishedHelpGroups,
+  ]);
 
   /**
    * This nav is mounted on every backoffice page, so subscribing here is

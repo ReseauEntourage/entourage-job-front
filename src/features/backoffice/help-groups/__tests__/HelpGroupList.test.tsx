@@ -71,10 +71,4 @@ describe('HelpGroupList', () => {
     renderWithProviders(<HelpGroupList groups={[buildCard()]} />);
     expect(screen.queryByTestId('help-group-avatar')).not.toBeInTheDocument();
   });
-
-  it('shows a neutral message when no group is published', () => {
-    renderWithProviders(<HelpGroupList groups={[]} />);
-    expect(screen.getByText('Les groupes ouvrent bientôt')).toBeInTheDocument();
-    expect(document.body.textContent).not.toMatch(/0 groupe|aucun groupe/i);
-  });
 });
