@@ -7,10 +7,16 @@ interface UseLoadMoreOnScrollParams {
   fetchNextPage: () => unknown;
 }
 
+// The scroll position cannot change on a page shorter than the viewport, so
+// no "bottom reached" event would ever fire there
+const isPageBottomVisible = () =>
+  window.innerHeight + window.scrollY >= document.body.offsetHeight - 1;
+
 /**
  * Loads the next page of an infinite query each time the reader reaches the
  * bottom of the page. A bottom reached while a request is in flight is kept
- * pending and served once it completes, so a short page keeps paginating.
+ * pending and served once it completes, and pages keep loading while the
+ * bottom of the page stays visible (a short list never scrolls).
  */
 export const useLoadMoreOnScroll = ({
   hasNextPage,
@@ -28,11 +34,15 @@ export const useLoadMoreOnScroll = ({
   }, [bottomReachedCount]);
 
   useEffect(() => {
-    if (!isLoadRequested || isFetching) {
+    if (isFetching) {
       return;
     }
-    setIsLoadRequested(false);
-    if (hasNextPage) {
+    if (!hasNextPage) {
+      setIsLoadRequested(false);
+      return;
+    }
+    if (isLoadRequested || isPageBottomVisible()) {
+      setIsLoadRequested(false);
       fetchNextPage();
     }
   }, [isLoadRequested, isFetching, hasNextPage, fetchNextPage]);
