@@ -75,23 +75,53 @@ describe('NavConnectedContent.utils - help groups entries', () => {
     });
   });
 
-  it('keeps the admin entry "Les groupes" while no group is published', () => {
-    expect(getNames(UserRoles.ADMIN, 'completed', null, false)).toContain(
-      'Les groupes'
-    );
+  const getAdministration = (role: UserRoles, hasPublishedHelpGroups = true) =>
+    renderLinks(buildUser(role), jest.fn(), null, hasPublishedHelpGroups)
+      .administration;
+
+  it('gathers the admin pages in the "Administration" menu, in order', () => {
+    const administration = getAdministration(UserRoles.ADMIN);
+    expect(administration?.name).toBe('Administration');
+    expect(administration?.subMenu?.map(({ name }) => name)).toEqual([
+      'Les candidats',
+      'Les coachs',
+      'Les prescripteurs',
+      'Les structures partenaires',
+      'Les groupes',
+    ]);
+    expect(
+      administration?.subMenu?.map(
+        ({ href, queryParams }) => href + (queryParams || '')
+      )
+    ).toEqual([
+      '/backoffice/admin/membres?role=Candidat&zone=PARIS',
+      '/backoffice/admin/membres?role=Coach&zone=PARIS',
+      '/backoffice/admin/membres?role=Prescripteur&zone=PARIS',
+      '/backoffice/admin/structures?zone=PARIS',
+      '/backoffice/admin/groupes',
+    ]);
   });
 
-  it('puts the admin entry "Les groupes" right after "Les structures partenaires"', () => {
-    const items = renderLinks(buildUser(UserRoles.ADMIN), jest.fn(), null)
-      .links[UserRoles.ADMIN];
-    const names = items.map(({ name }) => name);
-    const index = names.indexOf('Les structures partenaires');
-    expect(names[index + 1]).toBe('Les groupes');
-    expect(items[index + 1].href).toBe('/backoffice/admin/groupes');
+  it('keeps "Les groupes" in the "Administration" menu while no group is published', () => {
+    expect(
+      getAdministration(UserRoles.ADMIN, false)?.subMenu?.map(
+        ({ name }) => name
+      )
+    ).toContain('Les groupes');
+  });
+
+  it('leaves the admin pages out of the admin main menu', () => {
+    expect(getNames(UserRoles.ADMIN)).toEqual([
+      'Mon profil',
+      "Réseau d'entraide",
+      'Groupes',
+      'Événements',
+    ]);
   });
 
   [UserRoles.CANDIDATE, UserRoles.COACH, UserRoles.REFERER].forEach((role) => {
-    it(`does not show "Les groupes" to a ${role}`, () => {
+    it(`shows no "Administration" menu to a ${role}`, () => {
+      expect(getAdministration(role)).toBeNull();
       expect(getNames(role)).not.toContain('Les groupes');
     });
   });

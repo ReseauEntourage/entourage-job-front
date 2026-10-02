@@ -5,6 +5,7 @@ export interface NavConnectedContentProps {
   links?: {
     [K in UserRoles]: NavConnectedMainItem[];
   };
+  administration?: NavConnectedMainItem | null;
   dropdown: NavConnectedMainItem[];
   messaging: NavConnectedMainItem;
   badges: NotifBadges;

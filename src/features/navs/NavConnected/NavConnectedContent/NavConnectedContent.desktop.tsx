@@ -38,6 +38,7 @@ export const NavConnectedContentDesktop = ({
     [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
     [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
+  administration = null,
   dropdown = [NavConnectedMainItemDefaultProps],
   messaging = NavConnectedMainItemDefaultProps,
 }: NavConnectedContentProps) => {
@@ -45,10 +46,45 @@ export const NavConnectedContentDesktop = ({
   const profile = useCurrentUserProfile();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0] || null;
+  // The admin home is the first administration page, no longer in the main nav
+  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
 
   const rightItems = [
     <div className="uk-flex uk-flex-middle">
+      {/* Administration */}
+      {administration?.subMenu && (
+        <Dropdown>
+          <DropdownToggle>
+            <ButtonIcon
+              icon={administration.icon}
+              color={COLORS.black}
+              variant="text"
+              size="xxlarge"
+              dataTestId="nav-administration"
+            />
+          </DropdownToggle>
+          <Dropdown.Menu openDirection="left">
+            {administration.subMenu.map(
+              ({ href, name, tag, queryParams }, index) => {
+                return (
+                  <Dropdown.Item
+                    key={`${index}-administration-${uuidValue}`}
+                    onClick={() => {
+                      if (tag) {
+                        gaEvent(tag);
+                      }
+                      push(href + (queryParams || ''));
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                );
+              }
+            )}
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
+
       {/* Messages */}
       <StyledMessagingIconContainer>
         <ButtonIcon

@@ -74,6 +74,7 @@ export const NavConnected = () => {
     <NavConnectedContent
       badges={badges}
       links={linksConnected.links}
+      administration={linksConnected.administration}
       dropdown={linksConnected.dropdown}
       messaging={linksConnected.messaging}
     />

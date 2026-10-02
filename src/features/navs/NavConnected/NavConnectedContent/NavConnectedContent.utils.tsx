@@ -172,6 +172,7 @@ export const renderLinks = (
   hasPublishedHelpGroups = false
 ): {
   links: { [K in UserRoles]: NavConnectedMainItem[] };
+  administration: NavConnectedMainItem | null;
   messaging: NavConnectedMainItem;
   dropdown: NavConnectedMainItem[];
 } => {
@@ -189,50 +190,6 @@ export const renderLinks = (
   return {
     links: {
       [UserRoles.ADMIN]: [
-        {
-          href: '/backoffice/admin/membres',
-          queryParams: `?${candidateRolesParams}${
-            user?.zone ? `zone=${user?.zone}` : ''
-          }`,
-          name: 'Les membres',
-          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC,
-          subMenu: [
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${candidateRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les candidats',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
-            },
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${coachRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les coachs',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
-            },
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${refererRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les prescripteurs',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
-            },
-          ],
-        },
-        {
-          href: '/backoffice/admin/structures',
-          queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
-          name: 'Les structures partenaires',
-          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
-        },
-        {
-          href: '/backoffice/admin/groupes',
-          name: 'Les groupes',
-        },
         {
           href: '/backoffice/parametres',
           name: 'Mon profil',
@@ -287,6 +244,51 @@ export const renderLinks = (
         },
       ],
     },
+    // Admin pages live in their own menu (cog icon) instead of the main nav.
+    // The sub menu has a single level, hence the members entries flattened.
+    administration:
+      user?.role === UserRoles.ADMIN
+        ? {
+            name: 'Administration',
+            icon: <LucidIcon name="Settings" stroke="thin" />,
+            subMenu: [
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${candidateRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les candidats',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${coachRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les coachs',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${refererRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les prescripteurs',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/structures',
+                queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
+                name: 'Les structures partenaires',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/groupes',
+                name: 'Les groupes',
+              },
+            ],
+          }
+        : null,
     messaging: {
       href: '/backoffice/messaging',
       icon: <LucidIcon name="MessageCircleMore" stroke="thin" />,
