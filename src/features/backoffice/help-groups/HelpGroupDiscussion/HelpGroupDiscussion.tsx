@@ -119,6 +119,7 @@ export function HelpGroupDiscussion({
   useLoadMoreOnScroll({
     hasNextPage,
     isFetching: isFetchingReplies,
+    hasError: isRepliesError,
     fetchNextPage,
   });
 

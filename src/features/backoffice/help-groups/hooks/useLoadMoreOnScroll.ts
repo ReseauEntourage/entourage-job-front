@@ -4,6 +4,9 @@ import { useIsAtBottom } from '@/src/hooks/useIsAtBottom';
 interface UseLoadMoreOnScrollParams {
   hasNextPage: boolean;
   isFetching: boolean;
+  // The last request failed: no automatic retry, the reader retries from the
+  // error state or by reaching the bottom again
+  hasError?: boolean;
   fetchNextPage: () => unknown;
 }
 
@@ -21,6 +24,7 @@ const isPageBottomVisible = () =>
 export const useLoadMoreOnScroll = ({
   hasNextPage,
   isFetching,
+  hasError = false,
   fetchNextPage,
 }: UseLoadMoreOnScrollParams) => {
   const [bottomReachedCount, setBottomReachedCount] = useState(0);
@@ -41,9 +45,9 @@ export const useLoadMoreOnScroll = ({
       setIsLoadRequested(false);
       return;
     }
-    if (isLoadRequested || isPageBottomVisible()) {
+    if (isLoadRequested || (!hasError && isPageBottomVisible())) {
       setIsLoadRequested(false);
       fetchNextPage();
     }
-  }, [isLoadRequested, isFetching, hasNextPage, fetchNextPage]);
+  }, [isLoadRequested, isFetching, hasError, hasNextPage, fetchNextPage]);
 };

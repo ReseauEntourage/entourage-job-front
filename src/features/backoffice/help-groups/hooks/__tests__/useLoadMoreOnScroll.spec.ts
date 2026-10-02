@@ -80,4 +80,25 @@ describe('useLoadMoreOnScroll', () => {
     rerender({ isFetching: false, hasNextPage: false });
     expect(fetchNextPage).toHaveBeenCalledTimes(2);
   });
+
+  it('does not retry on its own after a failed page, even at the bottom', () => {
+    setPageHeight(100);
+    const fetchNextPage = jest.fn();
+    const { rerender } = renderHook(
+      ({ isFetching, hasError }) =>
+        useLoadMoreOnScroll({
+          hasNextPage: true,
+          isFetching,
+          hasError,
+          fetchNextPage,
+        }),
+      { initialProps: { isFetching: true, hasError: false } }
+    );
+    rerender({ isFetching: false, hasError: true });
+    rerender({ isFetching: false, hasError: true });
+    expect(fetchNextPage).not.toHaveBeenCalled();
+    // Reaching the bottom again is an explicit retry
+    act(() => reachBottom());
+    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+  });
 });

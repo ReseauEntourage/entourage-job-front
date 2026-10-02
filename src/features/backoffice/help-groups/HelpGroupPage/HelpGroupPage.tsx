@@ -51,6 +51,7 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
   useLoadMoreOnScroll({
     hasNextPage,
     isFetching: isFetchingDiscussions,
+    hasError: isDiscussionsError,
     fetchNextPage,
   });
 
