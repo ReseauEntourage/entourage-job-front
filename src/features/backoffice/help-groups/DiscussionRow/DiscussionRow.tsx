@@ -3,6 +3,7 @@ import { HelpGroupDiscussionItem } from '@/src/api/types';
 import { SimpleLink, Text } from '@/src/components/ui';
 import { HelpGroupAuthor } from '../HelpGroupAuthor';
 import { ReactionsSummary } from '../ReactionsSummary';
+import { UNDER_REVIEW_MENTION } from '../help-groups-participation.labels';
 import { formatHelpGroupDate, formatRepliesLabel } from '../help-groups.labels';
 import {
   StyledDiscussionRow,
@@ -34,6 +35,12 @@ export function DiscussionRow({ groupSlug, discussion }: DiscussionRowProps) {
           </Text>
         </SimpleLink>
       </StyledDiscussionRowTitle>
+      {/* Only its author and the admins still see it in the list */}
+      {discussion.isUnderReview && (
+        <Text size="small" variant="italic" color="darkGray">
+          {UNDER_REVIEW_MENTION}
+        </Text>
+      )}
       <HelpGroupAuthor author={discussion.author} withAvatar={false} />
       <Text size="small" color="darkGray">
         Dernière activité le {formatHelpGroupDate(discussion.lastActivityAt)}

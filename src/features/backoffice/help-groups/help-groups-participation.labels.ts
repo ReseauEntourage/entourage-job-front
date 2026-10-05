@@ -87,6 +87,7 @@ export const MESSAGE_MENU_LABELS = {
   edit: 'Modifier',
   delete: 'Supprimer',
   revisions: 'Voir les versions précédentes',
+  report: 'Signaler ce message',
   moderate: 'Supprimer ce message',
 } as const;
 export const LINK_COPIED_LABEL = 'Lien copié';
@@ -132,3 +133,33 @@ export const REVISIONS_MODAL = {
 
 export const LEAVE_PAGE_CONFIRM =
   'Votre texte n’est pas publié. Quitter la page quand même ?';
+
+export const REPORT_COMMENT_MAX_LENGTH = 1000;
+export const REPORT_MODAL = {
+  title: 'Signaler ce message',
+  text: 'L’équipe Entourage lit chaque signalement et intervient si besoin. La personne signalée n’est pas prévenue.',
+  reasonLabel: 'Motif',
+  reasonRequired: 'Choisissez un motif.',
+  commentLabel: 'Commentaire (facultatif)',
+  // The number is rendered as a call link between the two parts
+  helpBefore: 'Vous, ou la personne concernée, allez mal ? Le ',
+  helpNumber: '3114',
+  helpAfter: ' répond 24h/24, gratuitement.',
+  formatReferent: (name: string) =>
+    `Vous pouvez aussi écrire à ${name}, votre référent(e) Entourage :`,
+  confirm: 'Envoyer le signalement',
+  // Labels validated by the PM on 01/10/2026
+  done: 'Merci, l’équipe a été prévenue',
+  alreadyReported: 'Vous avez déjà signalé ce message',
+  error: 'Votre signalement n’a pas pu être envoyé. Réessayez.',
+};
+
+// Labels validated by the PM on 01/10/2026
+export const UNDER_REVIEW_MENTION =
+  'Ce message est en cours de vérification par l’équipe';
+export const HIDDEN_BY_REPORTS_BANNER = 'Masqué après signalements';
+export const RESTORE_LABEL = 'Rétablir';
+export const MODERATION_DELETE_SHORT_LABEL = 'Supprimer';
+export const RESTORE_ERROR_LABEL = 'Le message n’a pas pu être rétabli.';
+export const formatReportReasons = (labels: string[]) =>
+  `Motifs : ${labels.join(', ')}`;

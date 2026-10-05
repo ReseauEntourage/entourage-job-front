@@ -1,14 +1,19 @@
 import React from 'react';
 import {
-  HelpGroupDiscussion,
-  HelpGroupReply,
+  HelpGroupDiscussionView as HelpGroupDiscussionViewData,
+  HelpGroupReplyView,
   HelpGroupViewerPermissions,
+  isHelpGroupHiddenMessage,
 } from '@/src/api/types';
 import { Section, Text } from '@/src/components/ui';
 import { Breadcrumb } from '@/src/components/ui/Breadcrumb';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { AuthorCard } from '../AuthorCard';
-import { HelpGroupMessage, HelpGroupViewer } from '../HelpGroupMessage';
+import {
+  HelpGroupMessage,
+  HelpGroupViewer,
+  HiddenHelpGroupMessage,
+} from '../HelpGroupMessage';
 import { UNPUBLISHED_MENTION } from '../HelpGroupPage/HelpGroupHeader';
 import { StyledUnpublishedMention } from '../HelpGroupPage/HelpGroupPage.styles';
 import { ReplyComposer } from '../ReplyComposer';
@@ -17,7 +22,10 @@ import {
   shouldShowFirstResponderInvite,
 } from '../WelcomeInvite';
 import { WriteInvitation } from '../WriteInvitation';
-import { NEW_REPLY_PILL_LABEL } from '../help-groups-participation.labels';
+import {
+  NEW_REPLY_PILL_LABEL,
+  UNDER_REVIEW_MENTION,
+} from '../help-groups-participation.labels';
 import { formatRepliesLabel } from '../help-groups.labels';
 import {
   StyledDiscussionPanel,
@@ -33,8 +41,9 @@ import {
 import { getReplyElementId } from './replyTarget';
 
 interface HelpGroupDiscussionViewProps {
-  discussion: HelpGroupDiscussion;
-  replies: HelpGroupReply[];
+  // Reduced to a neutral mention when hidden after reports for the viewer
+  discussion: HelpGroupDiscussionViewData;
+  replies: HelpGroupReplyView[];
   highlightedReplyId: string | null;
   isLoadingReplies: boolean;
   // Shown below the loaded replies when a replies page failed
@@ -77,7 +86,9 @@ export function HelpGroupDiscussionView({
   // No write action at all in an unpublished group (admin preview)
   const state = group.isPublished ? viewerPermissions?.state : undefined;
   const canWrite = state === 'canWrite';
-  const isAuthor = !!viewer.id && discussion.author.id === viewer.id;
+  const isHidden = isHelpGroupHiddenMessage(discussion);
+  const author = isHidden ? null : discussion.author;
+  const isAuthor = !!viewer.id && author?.id === viewer.id;
 
   return (
     <Section className="custom-page">
@@ -86,7 +97,9 @@ export function HelpGroupDiscussionView({
           items={[
             { label: 'Groupes', href: '/backoffice/groupes' },
             { label: group.name, href: `/backoffice/groupes/${group.slug}` },
-            { label: discussion.title ?? '' },
+            {
+              label: isHidden ? UNDER_REVIEW_MENTION : (discussion.title ?? ''),
+            },
           ]}
         />
         <StyledHelpGroupDiscussionColumns>
@@ -103,34 +116,39 @@ export function HelpGroupDiscussionView({
                       {UNPUBLISHED_MENTION}
                     </StyledUnpublishedMention>
                   )}
-                  <HelpGroupMessage
-                    kind="discussion"
-                    message={discussion}
-                    slug={group.slug}
-                    discussionId={discussion.id}
-                    viewer={viewer}
-                    canReact={canWrite}
-                    canManage={group.isPublished}
-                    onDiscussionDeleted={onDiscussionGone}
-                    onModerated={onModerated}
-                  />
+                  {isHidden ? (
+                    <HiddenHelpGroupMessage />
+                  ) : (
+                    <HelpGroupMessage
+                      kind="discussion"
+                      message={discussion}
+                      slug={group.slug}
+                      discussionId={discussion.id}
+                      viewer={viewer}
+                      canReact={canWrite}
+                      canManage={group.isPublished}
+                      onDiscussionDeleted={onDiscussionGone}
+                      onModerated={onModerated}
+                    />
+                  )}
                 </StyledOriginalMessage>
                 {repliesLabel && <Text weight="semibold">{repliesLabel}</Text>}
-                {shouldShowFirstResponderInvite({
-                  canWrite,
-                  isAuthor,
-                  // The server count, not the loaded replies: a page still
-                  // loading or failed must not read as "no reply"
-                  repliesCount: Math.max(
-                    discussion.repliesCount,
-                    replies.length
-                  ),
-                  authorFirstName: discussion.author.firstName,
-                }) && (
-                  <FirstResponderInvite
-                    authorFirstName={discussion.author.firstName as string}
-                  />
-                )}
+                {author &&
+                  shouldShowFirstResponderInvite({
+                    canWrite,
+                    isAuthor,
+                    // The server count, not the loaded replies: a page still
+                    // loading or failed must not read as "no reply"
+                    repliesCount: Math.max(
+                      discussion.repliesCount,
+                      replies.length
+                    ),
+                    authorFirstName: author.firstName,
+                  }) && (
+                    <FirstResponderInvite
+                      authorFirstName={author.firstName as string}
+                    />
+                  )}
                 <StyledReplies>
                   {replies.map((reply) => (
                     <StyledReply
@@ -140,16 +158,20 @@ export function HelpGroupDiscussionView({
                       data-testid="discussion-reply"
                       data-highlighted={reply.id === highlightedReplyId}
                     >
-                      <HelpGroupMessage
-                        kind="reply"
-                        message={reply}
-                        slug={group.slug}
-                        discussionId={discussion.id}
-                        viewer={viewer}
-                        canReact={canWrite}
-                        canManage={group.isPublished}
-                        onModerated={onModerated}
-                      />
+                      {isHelpGroupHiddenMessage(reply) ? (
+                        <HiddenHelpGroupMessage />
+                      ) : (
+                        <HelpGroupMessage
+                          kind="reply"
+                          message={reply}
+                          slug={group.slug}
+                          discussionId={discussion.id}
+                          viewer={viewer}
+                          canReact={canWrite}
+                          canManage={group.isPublished}
+                          onModerated={onModerated}
+                        />
+                      )}
                     </StyledReply>
                   ))}
                 </StyledReplies>
@@ -170,7 +192,7 @@ export function HelpGroupDiscussionView({
                   key={discussion.id}
                   slug={group.slug}
                   discussionId={discussion.id}
-                  authorFirstName={discussion.author.firstName}
+                  authorFirstName={author?.firstName ?? null}
                   charterAccepted={viewerPermissions.charterAccepted}
                   onReplied={onReplied}
                   onDiscussionGone={onDiscussionGone}
@@ -181,7 +203,7 @@ export function HelpGroupDiscussionView({
               )}
             </StyledDiscussionPanel>
           </StyledHelpGroupDiscussionMain>
-          <AuthorCard author={discussion.author} />
+          {author && <AuthorCard author={author} />}
         </StyledHelpGroupDiscussionColumns>
       </StyledHelpGroupDiscussion>
     </Section>

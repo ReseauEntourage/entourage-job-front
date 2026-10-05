@@ -4,15 +4,18 @@ import {
   HelpGroupAuthor as HelpGroupAuthorType,
   HelpGroupReactionEmoji,
   HelpGroupReactionsSummary,
+  HelpGroupReportReason,
 } from '@/src/api/types';
 import { Button, Text } from '@/src/components/ui';
 import { H3 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
+import { REPORT_REASONS } from '@/src/constants/reports';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalConfirm } from '@/src/features/modals/Modal/ModalGeneric/ModalConfirm/ModalConfirm';
 import {
   useDeleteHelpGroupDiscussionMutation,
   useDeleteHelpGroupReplyMutation,
+  useRestoreHelpGroupMessageMutation,
   useSetHelpGroupReactionMutation,
   useUpdateHelpGroupDiscussionMutation,
   useUpdateHelpGroupReplyMutation,
@@ -28,23 +31,33 @@ import {
 import { ModerationDeleteModal, RevisionsModal } from '../ModerationModals';
 import { ReactionPicker } from '../ReactionPicker';
 import { ReactionsSummary } from '../ReactionsSummary';
+import { HelpGroupReportModal } from '../ReportModal';
 import {
   COMPOSER_CANCEL_LABEL,
   DELETE_DISCUSSION_CONFIRM,
   DELETE_REPLY_CONFIRM,
   EDIT_SAVE_LABEL,
   EDITED_MENTION,
+  formatReportReasons,
+  HIDDEN_BY_REPORTS_BANNER,
   LINK_COPIED_LABEL,
   MESSAGE_MAX_LENGTH,
+  MODERATION_DELETE_SHORT_LABEL,
+  RESTORE_ERROR_LABEL,
+  RESTORE_LABEL,
   TITLE_MAX_LENGTH,
+  UNDER_REVIEW_MENTION,
   WRITE_ERROR_LABELS,
 } from '../help-groups-participation.labels';
 import {
+  StyledHiddenByReportsActions,
+  StyledHiddenByReportsBanner,
   StyledMessageEditor,
   StyledMessageEditorActions,
   StyledMessageFooter,
   StyledMessageHeader,
   StyledMessageMeta,
+  StyledUnderReviewMention,
 } from './HelpGroupMessage.styles';
 
 export interface HelpGroupMessageData {
@@ -56,7 +69,15 @@ export interface HelpGroupMessageData {
   editedAt: string | null;
   reactionsSummary: HelpGroupReactionsSummary | null;
   viewerReaction: HelpGroupReactionEmoji | null;
+  // Hidden after reports: only its author and the admins receive it
+  isUnderReview?: boolean;
+  // Admins only, on a message under review
+  reportReasons?: HelpGroupReportReason[];
 }
+
+const REPORT_REASON_LABELS = Object.fromEntries(
+  REPORT_REASONS.map(({ value, label }) => [value, label])
+) as Record<HelpGroupReportReason, string>;
 
 export interface HelpGroupViewer {
   id: string | null;
@@ -123,6 +144,10 @@ export function HelpGroupMessage({
     useUpdateHelpGroupReplyMutation();
   const [deleteDiscussion] = useDeleteHelpGroupDiscussionMutation();
   const [deleteReply] = useDeleteHelpGroupReplyMutation();
+  const [restoreMessage, { isLoading: isRestoring }] =
+    useRestoreHelpGroupMessageMutation();
+  const isUnderReview = !!message.isUnderReview;
+  const apiKind = isDiscussion ? 'discussions' : 'replies';
 
   const notifyError = (text: string) =>
     dispatch(
@@ -201,8 +226,33 @@ export function HelpGroupMessage({
     );
   };
 
+  const openModeration = () =>
+    openModal(
+      <ModerationDeleteModal
+        kind={apiKind}
+        id={message.id}
+        slug={slug}
+        discussionId={discussionId}
+        onDeleted={() => {
+          onModerated?.(message.author.isDeleted ? null : message.author.id);
+          if (isDiscussion) {
+            onDiscussionDeleted?.();
+          }
+        }}
+      />
+    );
+
+  const restore = async () => {
+    if (isRestoring) {
+      return;
+    }
+    const result = await restoreMessage({ kind: apiKind, id: message.id });
+    if ('error' in result && result.error) {
+      notifyError(RESTORE_ERROR_LABEL);
+    }
+  };
+
   const onAction = async (action: MessageMenuAction) => {
-    const apiKind = isDiscussion ? 'discussions' : 'replies';
     switch (action) {
       case 'copyLink':
         try {
@@ -234,30 +284,69 @@ export function HelpGroupMessage({
       case 'revisions':
         openModal(<RevisionsModal kind={apiKind} id={message.id} />);
         break;
-      case 'moderate':
+      case 'report':
         openModal(
-          <ModerationDeleteModal
-            kind={apiKind}
-            id={message.id}
+          <HelpGroupReportModal
             slug={slug}
             discussionId={discussionId}
-            onDeleted={() => {
-              onModerated?.(
-                message.author.isDeleted ? null : message.author.id
-              );
-              if (isDiscussion) {
-                onDiscussionDeleted?.();
-              }
-            }}
+            replyId={isDiscussion ? undefined : message.id}
           />
         );
+        break;
+      case 'moderate':
+        openModeration();
         break;
       default:
     }
   };
 
+  // The admin decides on a message hidden after reports, from the group
+  const showAdminDecision = isUnderReview && viewer.isAdmin && !isAuthor;
+
   return (
     <>
+      {showAdminDecision && (
+        <StyledHiddenByReportsBanner data-testid="hidden-by-reports-banner">
+          <div>
+            <Text weight="bold">{HIDDEN_BY_REPORTS_BANNER}</Text>
+            {!!message.reportReasons?.length && (
+              <Text size="small">
+                {formatReportReasons(
+                  message.reportReasons.map(
+                    (reason) => REPORT_REASON_LABELS[reason] ?? reason
+                  )
+                )}
+              </Text>
+            )}
+          </div>
+          {canManage && (
+            <StyledHiddenByReportsActions>
+              <Button
+                variant="secondary"
+                size="small"
+                disabled={isRestoring}
+                onClick={restore}
+                dataTestId="restore-message"
+              >
+                {RESTORE_LABEL}
+              </Button>
+              <Button
+                variant="default"
+                size="small"
+                onClick={openModeration}
+                dataTestId="moderate-hidden-message"
+              >
+                {MODERATION_DELETE_SHORT_LABEL}
+              </Button>
+            </StyledHiddenByReportsActions>
+          )}
+        </StyledHiddenByReportsBanner>
+      )}
+      {isUnderReview && isAuthor && (
+        <StyledUnderReviewMention data-testid="under-review-mention">
+          {UNDER_REVIEW_MENTION}
+        </StyledUnderReviewMention>
+      )}
       <StyledMessageHeader>
         <StyledMessageMeta>
           <HelpGroupAuthor author={message.author} date={message.createdAt} />
@@ -274,6 +363,7 @@ export function HelpGroupMessage({
                   isAuthor,
                   isAdmin: viewer.isAdmin,
                   isEdited: !!message.editedAt,
+                  isUnderReview,
                 })
               : ['copyLink']
           }

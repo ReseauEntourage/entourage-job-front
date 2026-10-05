@@ -981,6 +981,9 @@ export type HelpGroupPage = {
   viewerPermissions: HelpGroupViewerPermissions;
 };
 
+export type HelpGroupReportReason =
+  'SPAM' | 'FRAUD' | 'INSULTS' | 'IN_DANGER' | 'OTHER';
+
 export type HelpGroupDiscussionItem = {
   id: string;
   title: string | null;
@@ -989,14 +992,42 @@ export type HelpGroupDiscussionItem = {
   author: HelpGroupAuthor;
   repliesCount: number;
   reactionsSummary: HelpGroupReactionsSummary | null;
+  // Hidden after reports: only listed for its author and the admins
+  isUnderReview: boolean;
+};
+
+export type HelpGroupDiscussionGroup = {
+  id: string;
+  slug: string;
+  name: string;
+  isPublished: boolean;
 };
 
 export type HelpGroupDiscussion = HelpGroupDiscussionItem & {
   content: string;
   editedAt: string | null;
   viewerReaction: HelpGroupReactionEmoji | null;
-  group: { id: string; slug: string; name: string; isPublished: boolean };
+  group: HelpGroupDiscussionGroup;
+  // Admins only, on a message under review
+  reportReasons?: HelpGroupReportReason[];
 };
+
+/**
+ * A message hidden after reports, for a reader who is neither its author nor
+ * an admin: the back sends neither its content, title, author nor reactions.
+ */
+export type HelpGroupHiddenMessage = {
+  id: string;
+  isUnderReview: true;
+};
+
+export type HelpGroupHiddenDiscussion = HelpGroupHiddenMessage & {
+  group: HelpGroupDiscussionGroup;
+  repliesCount: number;
+};
+
+export type HelpGroupDiscussionView =
+  HelpGroupDiscussion | HelpGroupHiddenDiscussion;
 
 export type HelpGroupReply = {
   id: string;
@@ -1006,6 +1037,23 @@ export type HelpGroupReply = {
   author: HelpGroupAuthor;
   reactionsSummary: HelpGroupReactionsSummary | null;
   viewerReaction: HelpGroupReactionEmoji | null;
+  isUnderReview: boolean;
+  // Admins only, on a message under review
+  reportReasons?: HelpGroupReportReason[];
+};
+
+export type HelpGroupReplyView = HelpGroupReply | HelpGroupHiddenMessage;
+
+export const isHelpGroupHiddenMessage = (
+  message: HelpGroupDiscussionView | HelpGroupReplyView
+): message is HelpGroupHiddenMessage | HelpGroupHiddenDiscussion =>
+  !('content' in message);
+
+// The reported message: the discussion itself or one of its replies
+export type HelpGroupReportDto = {
+  target: { discussionId: string } | { replyId: string };
+  reason: HelpGroupReportReason;
+  comment?: string;
 };
 
 export type CursorPage<T> = {

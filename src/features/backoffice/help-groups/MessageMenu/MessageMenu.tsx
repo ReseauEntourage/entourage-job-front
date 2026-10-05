@@ -8,13 +8,15 @@ import {
 } from './MessageMenu.styles';
 
 export type MessageMenuAction =
-  'copyLink' | 'edit' | 'delete' | 'revisions' | 'moderate';
+  'copyLink' | 'edit' | 'delete' | 'revisions' | 'report' | 'moderate';
 
 /**
  * Actions of a message, depending on the viewer:
  * - anyone: copy the link,
  * - the author: edit, delete,
  * - an Entourage admin, on an edited message: previous versions,
+ * - any logged-in person, member or not, on someone else's message which is
+ *   not hidden after reports: report,
  * - an Entourage admin, on someone else's message: moderation deletion,
  *   set apart from the other actions.
  */
@@ -22,14 +24,17 @@ export const getMessageMenuActions = ({
   isAuthor,
   isAdmin,
   isEdited,
+  isUnderReview = false,
 }: {
   isAuthor: boolean;
   isAdmin: boolean;
   isEdited: boolean;
+  isUnderReview?: boolean;
 }): MessageMenuAction[] => [
   'copyLink',
   ...(isAuthor ? (['edit', 'delete'] as const) : []),
   ...(isAdmin && isEdited ? (['revisions'] as const) : []),
+  ...(!isAuthor && !isUnderReview ? (['report'] as const) : []),
   ...(isAdmin && !isAuthor ? (['moderate'] as const) : []),
 ];
 

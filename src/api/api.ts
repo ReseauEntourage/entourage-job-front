@@ -49,9 +49,12 @@ import {
   HelpGroupCard,
   HelpGroupDiscussion,
   HelpGroupDiscussionItem,
+  HelpGroupDiscussionView,
   HelpGroupDto,
   HelpGroupPage,
   HelpGroupReply,
+  HelpGroupReplyView,
+  HelpGroupReportDto,
   HelpGroupDiscussionDto,
   HelpGroupMessageRevisions,
   HelpGroupModerationDto,
@@ -588,7 +591,7 @@ export class APIHandler {
   getHelpGroupDiscussion(
     slug: string,
     discussionId: string
-  ): Promise<AxiosResponse<HelpGroupDiscussion>> {
+  ): Promise<AxiosResponse<HelpGroupDiscussionView>> {
     return this.get(
       `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`
     );
@@ -598,7 +601,7 @@ export class APIHandler {
     slug: string,
     discussionId: string,
     params: { after?: string; limit?: number }
-  ): Promise<AxiosResponse<CursorPage<HelpGroupReply>>> {
+  ): Promise<AxiosResponse<CursorPage<HelpGroupReplyView>>> {
     return this.get(
       `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies`,
       { params }
@@ -705,6 +708,27 @@ export class APIHandler {
     return this.delete(
       `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reactions`,
       params
+    );
+  }
+
+  postHelpGroupReport(
+    slug: string,
+    discussionId: string,
+    params: HelpGroupReportDto
+  ): Promise<AxiosResponse<{ id: string }>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reports`,
+      params
+    );
+  }
+
+  postAdminHelpGroupMessageRestore(
+    kind: 'discussions' | 'replies',
+    id: string
+  ): Promise<AxiosResponse> {
+    return this.post(
+      `/admin/help-groups/${kind}/${encodeURIComponent(id)}/restore`,
+      {}
     );
   }
 

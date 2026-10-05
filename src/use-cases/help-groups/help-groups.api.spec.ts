@@ -3,6 +3,7 @@ jest.mock('@/src/api');
 import { AxiosError, AxiosHeaders } from 'axios';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
+import { HelpGroupDiscussion } from '@/src/api/types';
 import {
   buildDiscussion,
   buildReply,
@@ -128,7 +129,7 @@ describe('help groups write api', () => {
     const readDiscussion = (store: ReturnType<typeof createTestStore>) =>
       helpGroupsApi.endpoints.getHelpGroupDiscussion.select(key)(
         store.getState() as never
-      ).data;
+      ).data as HelpGroupDiscussion | undefined;
 
     it('shows the reaction at once, then the server summary', async () => {
       const store = createTestStore();
@@ -224,8 +225,9 @@ describe('help groups write api', () => {
           'getHelpGroupDiscussion',
           key,
           (draft) => {
-            draft.viewerReaction = '🎉';
-            draft.reactionsSummary = {
+            const discussion = draft as HelpGroupDiscussion;
+            discussion.viewerReaction = '🎉';
+            discussion.reactionsSummary = {
               emojis: ['🎉'],
               firstNames: ['Julien'],
               hasOthers: false,

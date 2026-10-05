@@ -14,9 +14,12 @@ import {
   HelpGroupCard,
   HelpGroupDiscussion,
   HelpGroupDiscussionItem,
+  HelpGroupDiscussionView,
   HelpGroupDto,
   HelpGroupPage,
-  HelpGroupReply,
+  HelpGroupReplyView,
+  HelpGroupReportDto,
+  isHelpGroupHiddenMessage,
 } from '@/src/api/types';
 import { api } from '@/src/store/api/api.slice';
 
@@ -103,6 +106,17 @@ export const toWriteError = (error: unknown): HelpGroupsWriteError => {
   return HelpGroupsWriteError.FAILED;
 };
 
+export enum HelpGroupsReportError {
+  // A report of the same person on this message is still to handle
+  ALREADY_REPORTED = 'ALREADY_REPORTED',
+  FAILED = 'FAILED',
+}
+
+const toReportError = (error: unknown): HelpGroupsReportError =>
+  isAxiosError(error) && error.response?.status === 409
+    ? HelpGroupsReportError.ALREADY_REPORTED
+    : HelpGroupsReportError.FAILED;
+
 const writeMutation =
   <TArgs, TData>(call: (args: TArgs) => Promise<{ data: TData }>) =>
   async (args: TArgs) => {
@@ -164,7 +178,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
     }),
 
     getHelpGroupDiscussion: builder.query<
-      HelpGroupDiscussion,
+      HelpGroupDiscussionView,
       { slug: string; discussionId: string }
     >({
       queryFn: readQuery(({ slug, discussionId }) =>
@@ -174,7 +188,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
     }),
 
     getHelpGroupDiscussionReplies: builder.infiniteQuery<
-      CursorPage<HelpGroupReply>,
+      CursorPage<HelpGroupReplyView>,
       { slug: string; discussionId: string },
       string | null
     >({
@@ -276,7 +290,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
     }),
 
     createHelpGroupReply: builder.mutation<
-      HelpGroupReply,
+      HelpGroupReplyView,
       DiscussionArgs & { dto: HelpGroupReplyDto }
     >({
       queryFn: writeMutation(
@@ -311,7 +325,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
     }),
 
     updateHelpGroupReply: builder.mutation<
-      HelpGroupReply,
+      HelpGroupReplyView,
       DiscussionArgs & { replyId: string; content: string }
     >({
       queryFn: writeMutation(
@@ -444,6 +458,44 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG],
     }),
 
+    /**
+     * Report of a message. The message is hidden from the readers at once
+     * (automatic hiding): the open discussion and the list are reloaded.
+     */
+    reportHelpGroupMessage: builder.mutation<
+      { id: string },
+      DiscussionArgs & { dto: HelpGroupReportDto }
+    >({
+      queryFn: async ({
+        slug,
+        discussionId,
+        dto,
+      }: DiscussionArgs & { dto: HelpGroupReportDto }) => {
+        try {
+          const { data } = await Api.postHelpGroupReport(
+            slug,
+            discussionId,
+            dto
+          );
+          return { data };
+        } catch (error) {
+          return { error: toReportError(error) };
+        }
+      },
+      invalidatesTags: (_result, error) => (error ? [] : [HELP_GROUPS_TAG]),
+    }),
+
+    restoreHelpGroupMessage: builder.mutation<
+      unknown,
+      { kind: 'discussions' | 'replies'; id: string }
+    >({
+      queryFn: writeMutation(
+        ({ kind, id }: { kind: 'discussions' | 'replies'; id: string }) =>
+          Api.postAdminHelpGroupMessageRestore(kind, id)
+      ),
+      invalidatesTags: (_result, error) => (error ? [] : [HELP_GROUPS_TAG]),
+    }),
+
     getHelpGroupMessageRevisions: builder.query<
       HelpGroupMessageRevisions,
       { kind: 'discussions' | 'replies'; id: string }
@@ -496,7 +548,7 @@ type RepliesCacheKey = DiscussionArgs;
 
 const updateReplies = (
   key: RepliesCacheKey,
-  map: (reply: HelpGroupReply) => HelpGroupReply | null
+  map: (reply: HelpGroupReplyView) => HelpGroupReplyView | null
 ) =>
   helpGroupsApi.util.updateQueryData(
     'getHelpGroupDiscussionReplies',
@@ -505,7 +557,7 @@ const updateReplies = (
       draft.pages.forEach((page) => {
         page.items = page.items
           .map(map)
-          .filter((reply): reply is HelpGroupReply => reply !== null);
+          .filter((reply): reply is HelpGroupReplyView => reply !== null);
       });
     }
   );
@@ -514,7 +566,7 @@ const updateReplies = (
  * Adds a reply at the end of the loaded thread, once: the realtime event of
  * one's own reply finds it already there.
  */
-export const appendReply = (key: RepliesCacheKey, reply: HelpGroupReply) =>
+export const appendReply = (key: RepliesCacheKey, reply: HelpGroupReplyView) =>
   helpGroupsApi.util.updateQueryData(
     'getHelpGroupDiscussionReplies',
     key,
@@ -602,7 +654,10 @@ const applyReactionToCache = (
           'getHelpGroupDiscussion',
           { slug, discussionId },
           (draft) => {
-            Object.assign(draft, next(draft));
+            // A hidden message offers no reaction
+            if (!isHelpGroupHiddenMessage(draft)) {
+              Object.assign(draft, next(draft));
+            }
           }
         )
       ) as { undo: () => void },
@@ -616,7 +671,10 @@ const applyReactionToCache = (
         (draft) => {
           draft.pages.forEach((page) => {
             page.items.forEach((reply) => {
-              if (reply.id === target.replyId) {
+              if (
+                reply.id === target.replyId &&
+                !isHelpGroupHiddenMessage(reply)
+              ) {
                 Object.assign(reply, next(reply));
               }
             });
@@ -649,5 +707,7 @@ export const {
   useDeleteHelpGroupReplyMutation,
   useSetHelpGroupReactionMutation,
   useDeleteHelpGroupMessageAsAdminMutation,
+  useReportHelpGroupMessageMutation,
+  useRestoreHelpGroupMessageMutation,
   useLazyGetHelpGroupMessageRevisionsQuery,
 } = helpGroupsApi;

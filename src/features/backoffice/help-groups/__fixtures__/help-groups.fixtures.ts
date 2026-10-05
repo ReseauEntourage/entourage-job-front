@@ -3,6 +3,8 @@ import {
   HelpGroupCard,
   HelpGroupDiscussion,
   HelpGroupDiscussionItem,
+  HelpGroupHiddenDiscussion,
+  HelpGroupHiddenMessage,
   HelpGroupPage,
   HelpGroupReply,
 } from '@/src/api/types';
@@ -54,6 +56,7 @@ export const buildDiscussionItem = (
   author: buildAuthor(),
   repliesCount: 0,
   reactionsSummary: null,
+  isUnderReview: false,
   ...props,
 });
 
@@ -83,6 +86,24 @@ export const buildReply = (
   author: buildAuthor(),
   reactionsSummary: null,
   viewerReaction: null,
+  isUnderReview: false,
+  ...props,
+});
+
+export const buildHiddenReply = (
+  id = 'reply-hidden'
+): HelpGroupHiddenMessage => ({
+  id,
+  isUnderReview: true,
+});
+
+export const buildHiddenDiscussion = (
+  props: Partial<HelpGroupHiddenDiscussion> = {}
+): HelpGroupHiddenDiscussion => ({
+  id: 'discussion-1',
+  isUnderReview: true,
+  repliesCount: 0,
+  group: buildDiscussion().group,
   ...props,
 });
 

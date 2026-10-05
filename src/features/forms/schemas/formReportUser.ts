@@ -1,12 +1,10 @@
+import { REPORT_REASONS } from '@/src/constants/reports';
 import { FormSchema } from '../FormSchema';
 
-const USER_REPORT_REASONS = [
-  { value: 'SPAM', label: 'Spam' },
-  { value: 'FRAUD', label: 'Arnaque' },
-  { value: 'INSULTS', label: 'Propos déplacés' },
-  { value: 'IN_DANGER', label: 'Mise en danger' },
-  { value: 'OTHER', label: 'Autre' },
-];
+const USER_REPORT_REASONS = REPORT_REASONS.map(({ value, label }) => ({
+  value,
+  label,
+}));
 
 export const formReportUser: FormSchema<{
   reason: string;

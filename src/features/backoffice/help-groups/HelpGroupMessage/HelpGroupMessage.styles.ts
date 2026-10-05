@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledMessageHeader = styled.div`
   display: flex;
@@ -30,5 +31,30 @@ export const StyledMessageEditor = styled.div`
 export const StyledMessageEditorActions = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
+`;
+
+// Mention of a message hidden after reports, for its author or instead of it
+export const StyledUnderReviewMention = styled.div`
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: ${COLORS.extraLightGray};
+  font-style: italic;
+`;
+
+// What an admin sees above a message hidden after reports
+export const StyledHiddenByReportsBanner = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: ${COLORS.extraLightRed};
+`;
+
+export const StyledHiddenByReportsActions = styled.div`
+  display: flex;
   gap: 8px;
 `;

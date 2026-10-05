@@ -359,7 +359,7 @@ describe('Discussion participation', () => {
       [
         'a member on someone else message',
         { isAuthor: false, isAdmin: false, isEdited: true },
-        ['copyLink'],
+        ['copyLink', 'report'],
       ],
       [
         'the author',
@@ -369,12 +369,12 @@ describe('Discussion participation', () => {
       [
         'an admin on an edited message of someone else',
         { isAuthor: false, isAdmin: true, isEdited: true },
-        ['copyLink', 'revisions', 'moderate'],
+        ['copyLink', 'revisions', 'report', 'moderate'],
       ],
       [
         'an admin on a non edited message of someone else',
         { isAuthor: false, isAdmin: true, isEdited: false },
-        ['copyLink', 'moderate'],
+        ['copyLink', 'report', 'moderate'],
       ],
     ];
     profiles.forEach(([label, profile, expected]) => {

@@ -418,6 +418,72 @@ describe('Groupes', () => {
     });
   });
 
+  it('signalement et masquage d’un message', () => {
+    loginAs('Candidat');
+    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="discussion-reply"]')
+      .first()
+      .find('[data-testid="message-menu-toggle"]')
+      .click();
+    cy.contains('Signaler ce message').click();
+    cy.get('[data-testid="help-group-report-modal"]').should('be.visible');
+    cy.contains('label', 'Propos déplacés').click();
+    cy.capture('Signalement d’un message', {
+      caption:
+        'Ouvert à toute personne connectée, membre ou non : motif obligatoire, commentaire facultatif, encart 3114 toujours affiché.',
+      capture: 'viewport',
+    });
+
+    cy.intercept(
+      'GET',
+      '/help-groups/refaire-un-cv/discussions/discussion-gap/replies*',
+      {
+        statusCode: 200,
+        body: {
+          items: [{ id: 'reply-1', isUnderReview: true }, ...replies.slice(1)],
+          nextCursor: null,
+        },
+      }
+    ).as('getReplies');
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="hidden-message"]').should('be.visible');
+    cy.capture('Message masqué pour un lecteur', {
+      caption:
+        'Masqué dès le premier signalement : mention neutre, sans auteur, réactions ni actions. Le contenu n’est pas envoyé par l’API.',
+    });
+
+    loginAs('Admin');
+    cy.intercept(
+      'GET',
+      '/help-groups/refaire-un-cv/discussions/discussion-gap/replies*',
+      {
+        statusCode: 200,
+        body: {
+          items: [
+            {
+              ...replies[0],
+              isUnderReview: true,
+              reportReasons: ['INSULTS'],
+            },
+            ...replies.slice(1),
+          ],
+          nextCursor: null,
+        },
+      }
+    ).as('getReplies');
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="hidden-by-reports-banner"]').should('be.visible');
+    cy.capture('Message masqué, vue admin', {
+      caption:
+        'Bandeau « Masqué après signalements » avec les motifs reçus, « Rétablir » et « Supprimer » (suppression de modération).',
+    });
+  });
+
   it('menu d’un candidat', () => {
     loginAs('Candidat');
     interceptGroupReads();
