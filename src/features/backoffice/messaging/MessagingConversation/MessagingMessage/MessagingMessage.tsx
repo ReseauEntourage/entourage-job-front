@@ -11,7 +11,10 @@ import { openModal } from '@/src/features/modals/Modal';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import { selectSelectedConversationId } from '@/src/use-cases/messaging';
 import { escapeHtml, linkify } from '@/src/utils';
-import { isSuspiciousMessage } from '@/src/utils/SuspiciousContent';
+import {
+  isSuspiciousMessage,
+  isVerifiedLinkDomain,
+} from '@/src/utils/SuspiciousContent';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { MessageMedias } from './MessageMedias/MessageMedias';
 import {
@@ -42,16 +45,10 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
   }, [message.content]);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const whitelist =
-      process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS?.split(',') || [];
     const target = event.target as HTMLAnchorElement;
 
     if (target.tagName === 'A') {
-      const domainMatch = target.href.match(/https?:\/\/(www\.)?([\w.-]+)/i);
-      const domain = domainMatch ? domainMatch[2] : '';
-      const isVerifiedDomain = whitelist.some((whitelistedDomain) =>
-        domain.endsWith(whitelistedDomain)
-      );
+      const isVerifiedDomain = isVerifiedLinkDomain(target.href);
       const isSentByAdmin = message.author?.role === UserRoles.ADMIN;
 
       if (!isVerifiedDomain && !isSentByAdmin) {
