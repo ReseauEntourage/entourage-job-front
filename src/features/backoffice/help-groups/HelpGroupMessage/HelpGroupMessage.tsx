@@ -231,9 +231,14 @@ export function HelpGroupMessage({
             id={message.id}
             slug={slug}
             discussionId={discussionId}
-            onDeleted={() =>
-              onModerated?.(message.author.isDeleted ? null : message.author.id)
-            }
+            onDeleted={() => {
+              onModerated?.(
+                message.author.isDeleted ? null : message.author.id
+              );
+              if (isDiscussion) {
+                onDiscussionDeleted?.();
+              }
+            }}
           />
         );
         break;
