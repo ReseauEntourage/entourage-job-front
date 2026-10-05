@@ -118,7 +118,12 @@ export function HelpGroupDiscussionView({
                 {shouldShowFirstResponderInvite({
                   canWrite,
                   isAuthor,
-                  repliesCount: replies.length,
+                  // The server count, not the loaded replies: a page still
+                  // loading or failed must not read as "no reply"
+                  repliesCount: Math.max(
+                    discussion.repliesCount,
+                    replies.length
+                  ),
                   authorFirstName: discussion.author.firstName,
                 }) && (
                   <FirstResponderInvite

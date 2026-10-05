@@ -18,11 +18,19 @@ export const isSuspiciousMessage = (message: string): boolean => {
  * "Vous quittez le réseau Entourage Pro" confirmation.
  */
 export const isVerifiedLinkDomain = (href: string): boolean => {
-  const whitelist =
-    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS?.split(',') || [];
-  const domainMatch = href.match(/https?:\/\/(www\.)?([\w.-]+)/i);
-  const domain = domainMatch ? domainMatch[2] : '';
-  return whitelist.some((whitelistedDomain) =>
-    domain.endsWith(whitelistedDomain)
+  const whitelist = (process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS || '')
+    .split(',')
+    .map((domain) => domain.trim().toLowerCase().replace(/^\.+/, ''))
+    .filter(Boolean);
+  let hostname: string;
+  try {
+    hostname = new URL(href).hostname.toLowerCase();
+  } catch {
+    return false;
+  }
+  // Exact host or a dot-delimited subdomain: `evil-entourage-pro.fr` does
+  // not match `entourage-pro.fr`
+  return whitelist.some(
+    (domain) => hostname === domain || hostname.endsWith(`.${domain}`)
   );
 };

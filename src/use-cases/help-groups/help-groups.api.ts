@@ -27,8 +27,9 @@ export enum HelpGroupsError {
 }
 
 export const HELP_GROUPS_TAG = 'HelpGroups';
-// Only the discussions list of a group: an activity in a discussion (reply,
-// edition) reorders it without reloading the open discussion
+// Only the discussions list of a group: a new or deleted reply moves its
+// discussion (last activity), a discussion edition changes its title, without
+// reloading the open discussion. A reply edition changes neither.
 export const HELP_GROUP_DISCUSSIONS_LIST_TAG = 'HelpGroupDiscussionsList';
 
 /**

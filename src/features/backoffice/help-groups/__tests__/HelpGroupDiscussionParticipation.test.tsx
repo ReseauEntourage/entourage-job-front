@@ -226,6 +226,20 @@ describe('Discussion participation', () => {
       ).not.toBeInTheDocument();
     });
 
+    it('does not invite while the replies of a discussion with replies are loading', () => {
+      renderView({
+        discussion: buildDiscussion({
+          repliesCount: 2,
+          author: buildAuthor({ id: 'claire', firstName: 'Claire' }),
+        }),
+        replies: [],
+        isLoadingReplies: true,
+      });
+      expect(
+        screen.queryByTestId('first-responder-invite')
+      ).not.toBeInTheDocument();
+    });
+
     it('disappears once a reply is published', () => {
       renderView({ replies: [buildReply()] });
       expect(
