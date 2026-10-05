@@ -1015,12 +1015,18 @@ export type HelpGroupDiscussion = HelpGroupDiscussionItem & {
 /**
  * A message hidden after reports, for a reader who is neither its author nor
  * an admin: the back sends neither its content, title, author nor reactions.
+ * A hidden reply is exactly this shape.
  */
 export type HelpGroupHiddenMessage = {
   id: string;
   isUnderReview: true;
 };
 
+/**
+ * A hidden discussion stays readable at its address with its replies: for a
+ * reader, the back adds its group and replies count (and nothing else) to
+ * the minimal projection — `GET /help-groups/:slug/discussions/:id`.
+ */
 export type HelpGroupHiddenDiscussion = HelpGroupHiddenMessage & {
   group: HelpGroupDiscussionGroup;
   repliesCount: number;
