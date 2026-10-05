@@ -24,10 +24,31 @@ export const toTitleSource = (origin: TitleOrigin): HelpGroupTitleSource => {
   return 'MANUAL';
 };
 
+/**
+ * Proposals already made for this draft. Kept with the draft in the browser,
+ * so that coming back to it neither resets the 5 retries limit nor proposes
+ * again for an unchanged message.
+ */
+export interface TitleSuggestionHistory {
+  previousTitles: string[];
+  retriesCount: number;
+  lastSuggestedContent: string | null;
+}
+
+export const EMPTY_TITLE_SUGGESTION_HISTORY: TitleSuggestionHistory = {
+  previousTitles: [],
+  retriesCount: 0,
+  lastSuggestedContent: null,
+};
+
 interface UseTitleSuggestionParams {
   slug: string;
   content: string;
   titleOrigin: TitleOrigin;
+  history: TitleSuggestionHistory;
+  onHistoryChange: (
+    update: (history: TitleSuggestionHistory) => TitleSuggestionHistory
+  ) => void;
   // Applies a proposed title to the draft
   onSuggested: (title: string) => void;
 }
@@ -42,14 +63,14 @@ export const useTitleSuggestion = ({
   slug,
   content,
   titleOrigin,
+  history,
+  onHistoryChange,
   onSuggested,
 }: UseTitleSuggestionParams) => {
   const [suggestTitle] = useSuggestHelpGroupTitleMutation();
   const [isSuggesting, setIsSuggesting] = useState(false);
-  const [retriesCount, setRetriesCount] = useState(0);
-  const previousTitles = useRef<string[]>([]);
-  const lastSuggestedContent = useRef<string | null>(null);
   const requestNumber = useRef(0);
+  const { previousTitles, retriesCount, lastSuggestedContent } = history;
 
   const trimmedContent = content.trim();
   const isLongEnough = trimmedContent.length >= TITLE_SUGGESTION_MIN_LENGTH;
@@ -57,12 +78,15 @@ export const useTitleSuggestion = ({
   const request = useCallback(async () => {
     requestNumber.current += 1;
     const current = requestNumber.current;
-    lastSuggestedContent.current = trimmedContent;
+    onHistoryChange((previous) => ({
+      ...previous,
+      lastSuggestedContent: trimmedContent,
+    }));
     setIsSuggesting(true);
     const result = await suggestTitle({
       slug,
       content: trimmedContent,
-      previousTitles: previousTitles.current,
+      previousTitles,
     });
     if (current !== requestNumber.current) {
       return;
@@ -70,10 +94,20 @@ export const useTitleSuggestion = ({
     setIsSuggesting(false);
     const title = 'data' in result ? result.data?.title : null;
     if (title) {
-      previousTitles.current = [...previousTitles.current, title];
+      onHistoryChange((previous) => ({
+        ...previous,
+        previousTitles: [...previous.previousTitles, title],
+      }));
       onSuggested(title);
     }
-  }, [slug, trimmedContent, suggestTitle, onSuggested]);
+  }, [
+    slug,
+    trimmedContent,
+    previousTitles,
+    suggestTitle,
+    onSuggested,
+    onHistoryChange,
+  ]);
 
   /** Leaving the message field: propose, unless the member owns the title */
   const onMessageBlur = useCallback(() => {
@@ -82,11 +116,17 @@ export const useTitleSuggestion = ({
     if (
       isLongEnough &&
       canReplaceTitle &&
-      trimmedContent !== lastSuggestedContent.current
+      trimmedContent !== lastSuggestedContent
     ) {
       request();
     }
-  }, [isLongEnough, titleOrigin, trimmedContent, request]);
+  }, [
+    isLongEnough,
+    titleOrigin,
+    trimmedContent,
+    lastSuggestedContent,
+    request,
+  ]);
 
   /** "Proposer un autre titre", limited per draft */
   const retry = useCallback(() => {
@@ -97,9 +137,12 @@ export const useTitleSuggestion = ({
     ) {
       return;
     }
-    setRetriesCount((count) => count + 1);
+    onHistoryChange((previous) => ({
+      ...previous,
+      retriesCount: previous.retriesCount + 1,
+    }));
     request();
-  }, [titleOrigin, retriesCount, isLongEnough, request]);
+  }, [titleOrigin, retriesCount, isLongEnough, request, onHistoryChange]);
 
   /** Any typing makes the pending proposal stale */
   const cancelPending = useCallback(() => {
@@ -107,12 +150,8 @@ export const useTitleSuggestion = ({
     setIsSuggesting(false);
   }, []);
 
-  const reset = useCallback(() => {
-    cancelPending();
-    setRetriesCount(0);
-    previousTitles.current = [];
-    lastSuggestedContent.current = null;
-  }, [cancelPending]);
+  // The history itself is erased with the draft
+  const reset = cancelPending;
 
   return {
     isSuggesting,
@@ -123,7 +162,7 @@ export const useTitleSuggestion = ({
       isLongEnough &&
       !isSuggesting &&
       retriesCount < TITLE_SUGGESTION_MAX_RETRIES &&
-      previousTitles.current.length > 0,
+      previousTitles.length > 0,
     onMessageBlur,
     retry,
     cancelPending,

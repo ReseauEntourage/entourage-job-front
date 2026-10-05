@@ -403,6 +403,37 @@ describe('Discussion participation', () => {
       ).toBeInTheDocument();
     });
 
+    it('only offers to copy the link in an admin preview of an unpublished group', () => {
+      renderView({
+        viewer: { id: 'viewer-1', firstName: 'Claire', isAdmin: true },
+        discussion: buildDiscussion({
+          author: buildAuthor({ id: 'viewer-1', firstName: 'Claire' }),
+          editedAt: '2026-09-03T10:00:00.000Z',
+          group: {
+            id: 'group-1',
+            slug: 'refaire-un-cv',
+            name: 'Refaire un CV',
+            isPublished: false,
+          },
+        }),
+        replies: [buildReply({ editedAt: '2026-09-03T10:00:00.000Z' })],
+      });
+      screen.getAllByTestId('message-menu-toggle').forEach((toggle) => {
+        fireEvent.click(toggle);
+      });
+      expect(
+        screen.getAllByText('Copier le lien du message').length
+      ).toBeGreaterThan(0);
+      [
+        'Modifier',
+        'Supprimer',
+        'Voir les versions précédentes',
+        'Supprimer ce message',
+      ].forEach((label) => {
+        expect(screen.queryByText(label)).not.toBeInTheDocument();
+      });
+    });
+
     it('copies the link of a reply, designating the reply', async () => {
       const writeText = jest.fn().mockResolvedValue(undefined);
       Object.assign(navigator, { clipboard: { writeText } });

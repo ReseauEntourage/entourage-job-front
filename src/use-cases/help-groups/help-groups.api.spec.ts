@@ -171,6 +171,50 @@ describe('help groups write api', () => {
       ]);
     });
 
+    it('refreshes the discussions list after a reaction to the discussion only', async () => {
+      const store = createTestStore();
+      await seedDiscussion(store);
+      mockedApi.getHelpGroupDiscussions.mockResolvedValue({
+        data: { items: [], nextCursor: null },
+      } as never);
+      const subscription = store.dispatch(
+        helpGroupsApi.endpoints.getHelpGroupDiscussions.initiate(key.slug)
+      );
+      await subscription;
+      expect(mockedApi.getHelpGroupDiscussions).toHaveBeenCalledTimes(1);
+      const result = {
+        data: {
+          targetId: 'x',
+          viewerReaction: '💪',
+          reactionsSummary: null,
+        },
+      };
+      mockedApi.putHelpGroupReaction.mockResolvedValue(result as never);
+
+      await store.dispatch(
+        helpGroupsApi.endpoints.setHelpGroupReaction.initiate({
+          ...key,
+          target: { replyId: 'reply-1' },
+          emoji: '💪',
+          viewerFirstName: 'Julien',
+        })
+      );
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockedApi.getHelpGroupDiscussions).toHaveBeenCalledTimes(1);
+
+      await store.dispatch(
+        helpGroupsApi.endpoints.setHelpGroupReaction.initiate({
+          ...key,
+          target: { discussionId: key.discussionId },
+          emoji: '💪',
+          viewerFirstName: 'Julien',
+        })
+      );
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockedApi.getHelpGroupDiscussions).toHaveBeenCalledTimes(2);
+      subscription.unsubscribe();
+    });
+
     it('comes back to the previous state on failure', async () => {
       const store = createTestStore();
       await seedDiscussion(store);

@@ -373,6 +373,29 @@ describe('Help group participation', () => {
       expect(titleInput().value).toBe('Mon titre retouché');
     });
 
+    it('keeps the proposals history with the draft: no new proposal for an unchanged message, retries still counted', async () => {
+      localStorage.setItem(
+        'help-groups:draft:viewer-1:group:group-1',
+        JSON.stringify({
+          content: longMessage,
+          title: 'Titre 5',
+          titleOrigin: 'suggested',
+          suggestionHistory: {
+            previousTitles: ['T0', 'T1', 'T2', 'T3', 'T4', 'Titre 5'],
+            retriesCount: 5,
+            lastSuggestedContent: longMessage,
+          },
+        })
+      );
+      renderPage();
+      blurMessage();
+      expect(mockSuggestTitle).not.toHaveBeenCalled();
+      expect(titleInput().value).toBe('Titre 5');
+      expect(
+        screen.queryByTestId('discussion-composer-retry-title')
+      ).not.toBeInTheDocument();
+    });
+
     it('empties the title on « Écrire le mien »', async () => {
       renderPage();
       openComposer();

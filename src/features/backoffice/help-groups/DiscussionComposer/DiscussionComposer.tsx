@@ -39,7 +39,9 @@ import {
   StyledTitleField,
 } from './DiscussionComposer.styles';
 import {
+  EMPTY_TITLE_SUGGESTION_HISTORY,
   TitleOrigin,
+  TitleSuggestionHistory,
   toTitleSource,
   useTitleSuggestion,
 } from './useTitleSuggestion';
@@ -48,12 +50,15 @@ interface DiscussionDraft {
   content: string;
   title: string;
   titleOrigin: TitleOrigin;
+  // Absent from the drafts saved before it existed
+  suggestionHistory?: TitleSuggestionHistory;
 }
 
 const EMPTY_DRAFT: DiscussionDraft = {
   content: '',
   title: '',
   titleOrigin: 'none',
+  suggestionHistory: EMPTY_TITLE_SUGGESTION_HISTORY,
 };
 
 const isDraftEmpty = ({ content, title }: DiscussionDraft) =>
@@ -114,10 +119,22 @@ export function DiscussionComposer({
       setDraft((current) => ({ ...current, title, titleOrigin: 'suggested' })),
     [setDraft]
   );
+  const onHistoryChange = useCallback(
+    (update: (history: TitleSuggestionHistory) => TitleSuggestionHistory) =>
+      setDraft((current) => ({
+        ...current,
+        suggestionHistory: update(
+          current.suggestionHistory ?? EMPTY_TITLE_SUGGESTION_HISTORY
+        ),
+      })),
+    [setDraft]
+  );
   const suggestion = useTitleSuggestion({
     slug,
     content: draft.content,
     titleOrigin: draft.titleOrigin,
+    history: draft.suggestionHistory ?? EMPTY_TITLE_SUGGESTION_HISTORY,
+    onHistoryChange,
     onSuggested,
   });
 

@@ -110,6 +110,7 @@ export function HelpGroupDiscussionView({
                     discussionId={discussion.id}
                     viewer={viewer}
                     canReact={canWrite}
+                    canManage={group.isPublished}
                     onDiscussionDeleted={onDiscussionGone}
                     onModerated={onModerated}
                   />
@@ -146,6 +147,7 @@ export function HelpGroupDiscussionView({
                         discussionId={discussion.id}
                         viewer={viewer}
                         canReact={canWrite}
+                        canManage={group.isPublished}
                         onModerated={onModerated}
                       />
                     </StyledReply>

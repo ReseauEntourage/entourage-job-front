@@ -72,6 +72,9 @@ interface HelpGroupMessageProps {
   viewer: HelpGroupViewer;
   // Member allowed to write: the reaction action is shown
   canReact: boolean;
+  // False in an admin preview of an unpublished group: no write action at
+  // all, only « Copier le lien du message »
+  canManage?: boolean;
   // The author deleted their discussion
   onDiscussionDeleted?: () => void;
   // An admin deleted the message: shortcut to write to its author
@@ -101,6 +104,7 @@ export function HelpGroupMessage({
   discussionId,
   viewer,
   canReact,
+  canManage = true,
   onDiscussionDeleted,
   onModerated,
 }: HelpGroupMessageProps) {
@@ -258,11 +262,15 @@ export function HelpGroupMessage({
           )}
         </StyledMessageMeta>
         <MessageMenu
-          actions={getMessageMenuActions({
-            isAuthor,
-            isAdmin: viewer.isAdmin,
-            isEdited: !!message.editedAt,
-          })}
+          actions={
+            canManage
+              ? getMessageMenuActions({
+                  isAuthor,
+                  isAdmin: viewer.isAdmin,
+                  isEdited: !!message.editedAt,
+                })
+              : ['copyLink']
+          }
           onAction={onAction}
         />
       </StyledMessageHeader>

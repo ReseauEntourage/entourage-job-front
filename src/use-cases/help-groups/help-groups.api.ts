@@ -401,6 +401,11 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
           patches.forEach((patch) => patch.undo());
         }
       },
+      // The discussions list shows the reactions summary of each discussion
+      invalidatesTags: (_result, error, { target }) =>
+        !error && 'discussionId' in target
+          ? [HELP_GROUP_DISCUSSIONS_LIST_TAG]
+          : [],
     }),
 
     deleteHelpGroupMessageAsAdmin: builder.mutation<
