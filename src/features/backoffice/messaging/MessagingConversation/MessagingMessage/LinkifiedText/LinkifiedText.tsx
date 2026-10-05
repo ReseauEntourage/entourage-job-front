@@ -6,9 +6,10 @@ import { MessagingMessageSuspiciousModal } from '../MessagingMessageSuspiciousMo
 const URL_PATTERN =
   /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
 
-// The pattern can start right after another scheme (ftp://, javascript://):
-// such a URL must stay plain text instead of linking its domain part
-const OTHER_SCHEME_PREFIX = /\w[\w+.-]*:\/\/$/;
+// The pattern can start right after another URI scheme (ftp://, mailto:,
+// javascript:) or inside an email address: such text must stay plain instead
+// of linking its domain part
+const NON_WEB_PREFIX = /(@|[a-z][a-z0-9+.-]*:\/{0,2})$/i;
 
 export type TextSegment =
   | { type: 'text'; value: string }
@@ -36,7 +37,10 @@ export const splitTextAndLinks = (content: string): TextSegment[] => {
     const url = match[0];
     const index = match.index ?? 0;
     const href = toSafeHref(url);
-    if (!href || OTHER_SCHEME_PREFIX.test(content.slice(0, index))) {
+    const isPartOfNonWebText =
+      !/^https?:\/\//i.test(url) &&
+      NON_WEB_PREFIX.test(content.slice(0, index));
+    if (!href || isPartOfNonWebText) {
       continue;
     }
     if (index > lastIndex) {

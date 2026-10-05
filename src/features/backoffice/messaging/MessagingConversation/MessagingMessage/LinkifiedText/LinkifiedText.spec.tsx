@@ -59,15 +59,37 @@ describe('splitTextAndLinks', () => {
     ]);
   });
 
-  ['ftp://example.com/fichier', 'javascript://example.com/x'].forEach(
-    (content) => {
-      it(`keeps a URL with another scheme as plain text: ${content}`, () => {
-        expect(splitTextAndLinks(content)).toEqual([
-          { type: 'text', value: content },
-        ]);
-      });
-    }
-  );
+  [
+    'ftp://example.com/fichier',
+    'javascript://example.com/x',
+    'ftp:example.com',
+    'mailto:awa@example.com',
+    'awa@example.com',
+  ].forEach((content) => {
+    it(`keeps a non-web URI or an email address as plain text: ${content}`, () => {
+      expect(splitTextAndLinks(content)).toEqual([
+        { type: 'text', value: content },
+      ]);
+    });
+  });
+
+  it('still links an http URL glued to a colon', () => {
+    expect(splitTextAndLinks('Voir:https://example.com')).toEqual([
+      { type: 'text', value: 'Voir:' },
+      {
+        type: 'link',
+        value: 'https://example.com',
+        href: 'https://example.com/',
+      },
+    ]);
+  });
+
+  it('still links a URL after a colon followed by a space', () => {
+    expect(splitTextAndLinks('Lien : example.com')).toEqual([
+      { type: 'text', value: 'Lien : ' },
+      { type: 'link', value: 'example.com', href: 'http://example.com/' },
+    ]);
+  });
 
   it('splits text around a URL', () => {
     expect(splitTextAndLinks('Voir https://example.com/offre merci')).toEqual([
