@@ -6,10 +6,24 @@ import { MessagingMessageSuspiciousModal } from '../MessagingMessageSuspiciousMo
 const URL_PATTERN =
   /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
 
-// The pattern can start right after another URI scheme (ftp://, mailto:,
-// javascript:) or inside an email address: such text must stay plain instead
-// of linking its domain part
-const NON_WEB_PREFIX = /(@|[a-z][a-z0-9+.-]*:\/{0,2})$/i;
+// Without http(s)://, the pattern can match part of a larger non-web word: an
+// email address (awa@example.com, awa.foo@example.com) or a URI with another
+// scheme (mailto:, ftp://, data:text/html,evil.com). Such words stay plain text
+// instead of linking a piece of them.
+const SCHEME_AT_WORD_START = /^[^\w]*[a-z][a-z0-9+.-]*:/i;
+
+const isPartOfNonWebWord = (content: string, index: number, url: string) => {
+  if (/^https?:\/\//i.test(url)) {
+    return false;
+  }
+  const wordBefore = content.slice(0, index).match(/\S*$/)?.[0] ?? '';
+  const wordAfter = content.slice(index + url.length).match(/^\S*/)?.[0] ?? '';
+  return (
+    wordBefore.includes('@') ||
+    wordAfter.startsWith('@') ||
+    SCHEME_AT_WORD_START.test(wordBefore)
+  );
+};
 
 export type TextSegment =
   | { type: 'text'; value: string }
@@ -37,10 +51,7 @@ export const splitTextAndLinks = (content: string): TextSegment[] => {
     const url = match[0];
     const index = match.index ?? 0;
     const href = toSafeHref(url);
-    const isPartOfNonWebText =
-      !/^https?:\/\//i.test(url) &&
-      NON_WEB_PREFIX.test(content.slice(0, index));
-    if (!href || isPartOfNonWebText) {
+    if (!href || isPartOfNonWebWord(content, index, url)) {
       continue;
     }
     if (index > lastIndex) {

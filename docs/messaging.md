@@ -80,21 +80,21 @@ src/
 
 #### Vue conversation
 
-| Composant                     | Rôle                                                                                                                                                 |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `MessagingConversation`       | Composant central. Charge la conversation, gère le polling (30 s), l'auto-scroll, l'affichage des suggestions, du feedback, et des alertes épinglées. |
-| `MessagingConversationHeader` | Informations de l'interlocuteur, liste d'actions (`ActionList`), partage de réseau (`MessagingShareNetwork`) et bouton de signalement.                |
-| `MessagingMessage`            | Affiche un message individuel. Sanitize le HTML, détecte les liens suspects, propose de signaler.                                                    |
-| `MessageMedias`               | Affiche les pièces jointes d'un message (images ou fichiers).                                                                                        |
-| `MessagingEditor`             | Zone de saisie. Gère la mise en forme auto du textarea, l'upload de fichier, la prévisualisation des pièces jointes, et l'envoi.                     |
-| `MessagingPinnedInfo`         | Bandeau d'alerte épinglé en haut de la conversation (`ADDRESSEE_UNAVAILABLE` ou `ADDRESSEE_DELETED`).                                                |
-| `MessagingFirstContactBanner` / `MessagingFirstContactModal` | Accompagnent l'utilisateur lors d'un premier contact avec un membre.                                                   |
-| `MessagingWaitingReplyBanner` | Affiché après l'envoi d'un premier message resté sans réponse. Propose de découvrir d'autres membres du rôle opposé.                                 |
-| `MessagingFeedback`           | Note en étoiles (1-5) affichée quand `shouldGiveFeedback === true`. Différents textes selon le rôle de l'utilisateur.                                |
-| `MessagingConversationReport` | Modale de signalement : raison + commentaire libre.                                                                                                  |
-| `MessagingSuggestions`        | Suggestions de messages pré-écrits (voir section dédiée).                                                                                            |
-| `MessagingAIPanel` / `MessagingAIAssistant` | Panneau latéral d'assistant IA, en streaming (voir section dédiée).                                                                    |
-| `RecapSuggestedMessage`       | Récapitulatif du message suggéré, construit à partir du contexte de la conversation.                                                                 |
+| Composant                                                    | Rôle                                                                                                                                                  |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `MessagingConversation`                                      | Composant central. Charge la conversation, gère le polling (30 s), l'auto-scroll, l'affichage des suggestions, du feedback, et des alertes épinglées. |
+| `MessagingConversationHeader`                                | Informations de l'interlocuteur, liste d'actions (`ActionList`), partage de réseau (`MessagingShareNetwork`) et bouton de signalement.                |
+| `MessagingMessage`                                           | Affiche un message individuel. Sanitize le HTML, détecte les liens suspects, propose de signaler.                                                     |
+| `MessageMedias`                                              | Affiche les pièces jointes d'un message (images ou fichiers).                                                                                         |
+| `MessagingEditor`                                            | Zone de saisie. Gère la mise en forme auto du textarea, l'upload de fichier, la prévisualisation des pièces jointes, et l'envoi.                      |
+| `MessagingPinnedInfo`                                        | Bandeau d'alerte épinglé en haut de la conversation (`ADDRESSEE_UNAVAILABLE` ou `ADDRESSEE_DELETED`).                                                 |
+| `MessagingFirstContactBanner` / `MessagingFirstContactModal` | Accompagnent l'utilisateur lors d'un premier contact avec un membre.                                                                                  |
+| `MessagingWaitingReplyBanner`                                | Affiché après l'envoi d'un premier message resté sans réponse. Propose de découvrir d'autres membres du rôle opposé.                                  |
+| `MessagingFeedback`                                          | Note en étoiles (1-5) affichée quand `shouldGiveFeedback === true`. Différents textes selon le rôle de l'utilisateur.                                 |
+| `MessagingConversationReport`                                | Modale de signalement : raison + commentaire libre.                                                                                                   |
+| `MessagingSuggestions`                                       | Suggestions de messages pré-écrits (voir section dédiée).                                                                                             |
+| `MessagingAIPanel` / `MessagingAIAssistant`                  | Panneau latéral d'assistant IA, en streaming (voir section dédiée).                                                                                   |
+| `RecapSuggestedMessage`                                      | Récapitulatif du message suggéré, construit à partir du contexte de la conversation.                                                                  |
 
 ---
 
@@ -106,12 +106,12 @@ Depuis la migration vers RTK Query (voir [use-cases.md](./use-cases.md)), **les 
 
 ```typescript
 {
-  selectedConversationId: string | null;  // 'new' pour une conversation en cours de création
+  selectedConversationId: string | null; // 'new' pour une conversation en cours de création
   pinnedInfo: 'ADDRESSEE_UNAVAILABLE' | 'ADDRESSEE_DELETED' | null;
-  query: string;                          // Filtre de recherche dans la liste
-  newMessage: string;                     // Valeur courante de l'éditeur
-  isAIPanelOpen: boolean;                 // Panneau assistant IA ouvert
-  activePanelView: 'ai';                  // Vue active du panneau latéral
+  query: string; // Filtre de recherche dans la liste
+  newMessage: string; // Valeur courante de l'éditeur
+  isAIPanelOpen: boolean; // Panneau assistant IA ouvert
+  activePanelView: 'ai'; // Vue active du panneau latéral
 }
 ```
 
@@ -119,32 +119,32 @@ Le slice expose aussi des **actions déclencheuses no-op** — `getConversations
 
 **Endpoints RTK Query** : `src/use-cases/messaging/messaging.api.ts`
 
-| Endpoint | Type | Rôle |
-| --- | --- | --- |
-| `getConversations` | query | Liste des conversations |
-| `getSelectedConversation` | query | Conversation complète avec ses messages ; resynchronise l'élément de liste correspondant |
-| `getUnseenConversationsCount` | query | Compteur pour le badge de navigation |
-| `postMessage` | mutation | Envoi ; met à jour le cache de façon optimiste (`fixedCacheKey: 'postMessage'`) |
-| `bindNewConversation` | mutation | Résout ou crée la conversation cible |
-| `postFeedback` | mutation | Note de satisfaction ; repasse `shouldGiveFeedback` à `false` |
+| Endpoint                      | Type     | Rôle                                                                                     |
+| ----------------------------- | -------- | ---------------------------------------------------------------------------------------- |
+| `getConversations`            | query    | Liste des conversations                                                                  |
+| `getSelectedConversation`     | query    | Conversation complète avec ses messages ; resynchronise l'élément de liste correspondant |
+| `getUnseenConversationsCount` | query    | Compteur pour le badge de navigation                                                     |
+| `postMessage`                 | mutation | Envoi ; met à jour le cache de façon optimiste (`fixedCacheKey: 'postMessage'`)          |
+| `bindNewConversation`         | mutation | Résout ou crée la conversation cible                                                     |
+| `postFeedback`                | mutation | Note de satisfaction ; repasse `shouldGiveFeedback` à `false`                            |
 
 **Sélecteurs principaux** :
 
-| Sélecteur                                  | Retourne                                        |
-| ------------------------------------------ | ----------------------------------------------- |
-| `selectConversations`                      | Liste de toutes les conversations (cache)       |
-| `selectSelectedConversation`               | Conversation actuellement affichée              |
-| `selectSelectedConversationId`             | ID de la conversation sélectionnée              |
-| `selectNewMessage`                         | Texte en cours de saisie                        |
-| `selectPinnedInfo`                         | Alerte épinglée à afficher                      |
-| `selectUnseenConversationCount`            | Nombre de conversations non vues (badge nav)    |
-| `selectShouldGiveFeedback`                 | Booléen : afficher le composant feedback        |
-| `selectConversationParticipantsAreDeleted` | Booléen : conversation en lecture seule         |
-| `selectHasMessages`                        | Booléen : la conversation contient des messages |
-| `selectCurrentUserHasSentMessages`         | Booléen : l'utilisateur a déjà écrit            |
-| `selectOtherParticipantHasNotReplied`      | Booléen : pilote `MessagingWaitingReplyBanner`  |
-| `selectGetConversationsStatus` / `selectPostMessageStatus` | Statut des requêtes             |
-| `selectIsAIPanelOpen` / `selectActivePanelView` | État du panneau assistant IA               |
+| Sélecteur                                                  | Retourne                                        |
+| ---------------------------------------------------------- | ----------------------------------------------- |
+| `selectConversations`                                      | Liste de toutes les conversations (cache)       |
+| `selectSelectedConversation`                               | Conversation actuellement affichée              |
+| `selectSelectedConversationId`                             | ID de la conversation sélectionnée              |
+| `selectNewMessage`                                         | Texte en cours de saisie                        |
+| `selectPinnedInfo`                                         | Alerte épinglée à afficher                      |
+| `selectUnseenConversationCount`                            | Nombre de conversations non vues (badge nav)    |
+| `selectShouldGiveFeedback`                                 | Booléen : afficher le composant feedback        |
+| `selectConversationParticipantsAreDeleted`                 | Booléen : conversation en lecture seule         |
+| `selectHasMessages`                                        | Booléen : la conversation contient des messages |
+| `selectCurrentUserHasSentMessages`                         | Booléen : l'utilisateur a déjà écrit            |
+| `selectOtherParticipantHasNotReplied`                      | Booléen : pilote `MessagingWaitingReplyBanner`  |
+| `selectGetConversationsStatus` / `selectPostMessageStatus` | Statut des requêtes                             |
+| `selectIsAIPanelOpen` / `selectActivePanelView`            | État du panneau assistant IA                    |
 
 ---
 
@@ -194,27 +194,27 @@ Le slice expose aussi des **actions déclencheuses no-op** — `getConversations
 
 Le composant a deux variantes :
 
-| Variante | Quand |
-| --- | --- |
-| `default` | À l'initiation d'une **nouvelle conversation**, tant qu'aucun texte n'est saisi |
-| `quick-replies` | Réponses rapides dans une conversation existante |
+| Variante        | Quand                                                                           |
+| --------------- | ------------------------------------------------------------------------------- |
+| `default`       | À l'initiation d'une **nouvelle conversation**, tant qu'aucun texte n'est saisi |
+| `quick-replies` | Réponses rapides dans une conversation existante                                |
 
 Les suggestions sont adaptées au rôle de l'utilisateur connecté et interpolent le prénom des participants (et, pour les candidats, leur métier et secteur issus du profil).
 
 **Variante `default`**
 
-| Rôle | Nombre | Thèmes |
-| --- | --- | --- |
-| Candidat | 6 | Affiner son projet, créer un premier CV, relecture de CV, préparation d'entretien, solliciter le réseau, retour d'expérience |
-| Coach / Prescripteur | 4 | Proposer un échange, clarifier son projet, activer mon réseau, partager mon expérience |
-| Admin | 0 | Pas de suggestions |
+| Rôle                 | Nombre | Thèmes                                                                                                                       |
+| -------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Candidat             | 6      | Affiner son projet, créer un premier CV, relecture de CV, préparation d'entretien, solliciter le réseau, retour d'expérience |
+| Coach / Prescripteur | 4      | Proposer un échange, clarifier son projet, activer mon réseau, partager mon expérience                                       |
+| Admin                | 0      | Pas de suggestions                                                                                                           |
 
 **Variante `quick-replies`**
 
-| Rôle | Nombre | Thèmes |
-| --- | --- | --- |
-| Candidat | 4 | Oui avec plaisir, proposer un créneau, dire ce que je cherche, ne suis plus disponible |
-| Coach | 3 | Proposer de l'aide, pas disponible, domaine d'activité différent |
+| Rôle     | Nombre | Thèmes                                                                                 |
+| -------- | ------ | -------------------------------------------------------------------------------------- |
+| Candidat | 4      | Oui avec plaisir, proposer un créneau, dire ce que je cherche, ne suis plus disponible |
+| Coach    | 3      | Proposer de l'aide, pas disponible, domaine d'activité différent                       |
 
 Quand l'utilisateur clique sur une suggestion, le texte pré-écrit remplit l'éditeur. Il peut le modifier avant d'envoyer.
 
@@ -224,11 +224,11 @@ Quand l'utilisateur clique sur une suggestion, le texte pré-écrit remplit l'é
 
 Panneau latéral ouvert depuis la conversation (`isAIPanelOpen` dans le slice), qui aide l'utilisateur à rédiger et à avancer dans son échange.
 
-| Appel | Endpoint |
-| --- | --- |
-| `Api.getAISession(conversationId)` | `GET /ai-assistant/conversations/:id/session` |
+| Appel                                          | Endpoint                                                                              |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `Api.getAISession(conversationId)`             | `GET /ai-assistant/conversations/:id/session`                                         |
 | `Api.streamAIMessage(conversationId, message)` | Réponse **en streaming** (`fetch` + token depuis `localStorage`, hors instance Axios) |
-| `Api.resetAISession(conversationId)` | `DELETE /ai-assistant/conversations/:id/session/messages` |
+| `Api.resetAISession(conversationId)`           | `DELETE /ai-assistant/conversations/:id/session/messages`                             |
 
 Les messages de l'assistant sont rendus par `AssistantMessageBubble`.
 
@@ -263,9 +263,9 @@ Le fichier `src/utils/SuspiciousContent.ts` expose `isSuspiciousMessage(message)
 
 #### Validation des liens externes
 
-- Les URLs dans les messages sont détectées via `linkify()`
-- Les domaines de confiance sont définis dans `NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS`
-- Pour tout lien vers un domaine non listé, une modale de confirmation est affichée avant ouverture
+- Les URLs dans les messages sont détectées et rendues en liens par le composant `LinkifiedText` (`MessagingMessage/LinkifiedText/`), sans HTML injecté : seules les URLs `http(s)` deviennent des liens, les emails et les URI d'autres schémas restent du texte
+- Les domaines de confiance sont définis dans `NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS` : un lien est vérifié seulement si son domaine est exactement un domaine listé ou l'un de ses sous-domaines (une liste vide ne vérifie rien)
+- Pour tout lien vers un domaine non listé, une modale de confirmation est affichée avant ouverture, y compris dans le mot de fin de bilan
 - Les messages des admins sont exemptés de cette vérification
 
 #### Signalement

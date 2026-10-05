@@ -65,6 +65,8 @@ describe('splitTextAndLinks', () => {
     'ftp:example.com',
     'mailto:awa@example.com',
     'awa@example.com',
+    'awa.foo@example.com',
+    'data:text/html,evil.com',
   ].forEach((content) => {
     it(`keeps a non-web URI or an email address as plain text: ${content}`, () => {
       expect(splitTextAndLinks(content)).toEqual([
@@ -82,6 +84,14 @@ describe('splitTextAndLinks', () => {
         href: 'https://example.com/',
       },
     ]);
+  });
+
+  ['medium.com/@awa', 'example.com:8080/offre'].forEach((content) => {
+    it(`still links a URL whose path or port looks unusual: ${content}`, () => {
+      expect(splitTextAndLinks(content)).toEqual([
+        { type: 'link', value: content, href: `http://${content}` },
+      ]);
+    });
   });
 
   it('still links a URL after a colon followed by a space', () => {
