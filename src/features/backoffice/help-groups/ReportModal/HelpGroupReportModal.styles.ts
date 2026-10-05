@@ -18,8 +18,12 @@ export const StyledReportHelp = styled.div`
 
   a {
     font-weight: 700;
-    color: ${COLORS.primaryBlue};
   }
+`;
+
+export const StyledReportReferent = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledReportError = styled.p`

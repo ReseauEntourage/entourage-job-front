@@ -54,6 +54,12 @@ export const StyledHiddenByReportsBanner = styled.div`
   background-color: ${COLORS.extraLightRed};
 `;
 
+export const StyledHiddenByReportsText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+`;
+
 export const StyledHiddenByReportsActions = styled.div`
   display: flex;
   gap: 8px;

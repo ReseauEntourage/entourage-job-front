@@ -52,6 +52,7 @@ import {
 import {
   StyledHiddenByReportsActions,
   StyledHiddenByReportsBanner,
+  StyledHiddenByReportsText,
   StyledMessageEditor,
   StyledMessageEditorActions,
   StyledMessageFooter,
@@ -300,14 +301,15 @@ export function HelpGroupMessage({
     }
   };
 
-  // The admin decides on a message hidden after reports, from the group
-  const showAdminDecision = isUnderReview && viewer.isAdmin && !isAuthor;
+  // The admin decides on a message hidden after reports, from the group,
+  // even on their own message
+  const showAdminDecision = isUnderReview && viewer.isAdmin;
 
   return (
     <>
       {showAdminDecision && (
         <StyledHiddenByReportsBanner data-testid="hidden-by-reports-banner">
-          <div>
+          <StyledHiddenByReportsText>
             <Text weight="bold">{HIDDEN_BY_REPORTS_BANNER}</Text>
             {!!message.reportReasons?.length && (
               <Text size="small">
@@ -318,7 +320,7 @@ export function HelpGroupMessage({
                 )}
               </Text>
             )}
-          </div>
+          </StyledHiddenByReportsText>
           {canManage && (
             <StyledHiddenByReportsActions>
               <Button
@@ -342,7 +344,7 @@ export function HelpGroupMessage({
           )}
         </StyledHiddenByReportsBanner>
       )}
-      {isUnderReview && isAuthor && (
+      {isUnderReview && isAuthor && !viewer.isAdmin && (
         <StyledUnderReviewMention data-testid="under-review-mention">
           {UNDER_REVIEW_MENTION}
         </StyledUnderReviewMention>

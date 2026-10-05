@@ -22,6 +22,7 @@ import {
   StyledReportError,
   StyledReportHelp,
   StyledReportModalContent,
+  StyledReportReferent,
 } from './HelpGroupReportModal.styles';
 
 interface HelpGroupReportModalProps {
@@ -122,18 +123,20 @@ export function HelpGroupReportModal({
         <StyledReportHelp data-testid="report-help">
           <Text>
             {REPORT_MODAL.helpBefore}
-            <a href="tel:3114">{REPORT_MODAL.helpNumber}</a>
+            <SimpleLink isExternal href="tel:3114">
+              {REPORT_MODAL.helpNumber}
+            </SimpleLink>
             {REPORT_MODAL.helpAfter}
           </Text>
           {staffContact && (
-            <div data-testid="report-referent">
+            <StyledReportReferent data-testid="report-referent">
               <Text>
                 {REPORT_MODAL.formatReferent(staffContact.name)}{' '}
                 <SimpleLink isExternal href={`mailto:${staffContact.email}`}>
                   {staffContact.email}
                 </SimpleLink>
               </Text>
-            </div>
+            </StyledReportReferent>
           )}
         </StyledReportHelp>
         {error && (

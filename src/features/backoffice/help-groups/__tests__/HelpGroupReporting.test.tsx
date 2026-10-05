@@ -332,6 +332,26 @@ describe('Help group reporting', () => {
       ).toBeInTheDocument();
     });
 
+    it('gives the decision to an admin on their own hidden message', () => {
+      renderView({
+        viewer: admin,
+        replies: [
+          buildReply({
+            author: buildAuthor({ id: 'admin-1', firstName: 'Paul' }),
+            isUnderReview: true,
+            reportReasons: ['SPAM'],
+          }),
+        ],
+      });
+      expect(
+        screen.getByTestId('hidden-by-reports-banner')
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('restore-message')).toBeInTheDocument();
+      expect(
+        screen.queryByTestId('under-review-mention')
+      ).not.toBeInTheDocument();
+    });
+
     it('replaces the title and message of a hidden discussion, its replies staying readable', () => {
       renderView({
         discussion: buildHiddenDiscussion({ repliesCount: 1 }),

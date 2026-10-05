@@ -14,6 +14,7 @@ import { authenticationApi } from '@/src/use-cases/authentication';
 import {
   applyViewerReaction,
   helpGroupsApi,
+  HelpGroupsReportError,
   HelpGroupsWriteError,
   toWriteError,
 } from './help-groups.api';
@@ -288,6 +289,93 @@ describe('help groups write api', () => {
       expect(
         replies?.pages.flatMap(({ items }) => items).map(({ id }) => id)
       ).toEqual(['reply-1', 'reply-2']);
+    });
+  });
+
+  describe('reportHelpGroupMessage and restoreHelpGroupMessage', () => {
+    const dto = { target: { replyId: 'reply-1' }, reason: 'SPAM' as const };
+
+    // The open discussion is reloaded, and comes back projected by the back
+    const subscribeDiscussion = async (
+      store: ReturnType<typeof createTestStore>
+    ) => {
+      mockedApi.getHelpGroupDiscussion.mockResolvedValue({
+        data: buildDiscussion({ id: key.discussionId }),
+      } as never);
+      const subscription = store.dispatch(
+        helpGroupsApi.endpoints.getHelpGroupDiscussion.initiate(key)
+      );
+      await subscription;
+      // Wrapped: an async function would unwrap the thenable subscription
+      return { unsubscribe: () => subscription.unsubscribe() };
+    };
+
+    it('sends the report and reloads the open discussion', async () => {
+      const store = createTestStore();
+      const subscription = await subscribeDiscussion(store);
+      mockedApi.postHelpGroupReport.mockResolvedValue({
+        data: { id: 'report-1' },
+      } as never);
+
+      const result = await store.dispatch(
+        helpGroupsApi.endpoints.reportHelpGroupMessage.initiate({ ...key, dto })
+      );
+      expect('data' in result && result.data).toEqual({ id: 'report-1' });
+      expect(mockedApi.postHelpGroupReport).toHaveBeenCalledWith(
+        key.slug,
+        key.discussionId,
+        dto
+      );
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockedApi.getHelpGroupDiscussion).toHaveBeenCalledTimes(2);
+      subscription.unsubscribe();
+    });
+
+    it('tells a duplicate report apart from another failure, and reloads nothing', async () => {
+      const store = createTestStore();
+      const subscription = await subscribeDiscussion(store);
+      mockedApi.postHelpGroupReport.mockRejectedValueOnce(
+        axiosError(409, 'REPORT_ALREADY_PENDING')
+      );
+      const duplicate = await store.dispatch(
+        helpGroupsApi.endpoints.reportHelpGroupMessage.initiate({ ...key, dto })
+      );
+      expect('error' in duplicate && duplicate.error).toBe(
+        HelpGroupsReportError.ALREADY_REPORTED
+      );
+
+      mockedApi.postHelpGroupReport.mockRejectedValueOnce(axiosError(500));
+      const failed = await store.dispatch(
+        helpGroupsApi.endpoints.reportHelpGroupMessage.initiate({ ...key, dto })
+      );
+      expect('error' in failed && failed.error).toBe(
+        HelpGroupsReportError.FAILED
+      );
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockedApi.getHelpGroupDiscussion).toHaveBeenCalledTimes(1);
+      subscription.unsubscribe();
+    });
+
+    it('restores a message and reloads the open discussion', async () => {
+      const store = createTestStore();
+      const subscription = await subscribeDiscussion(store);
+      mockedApi.postAdminHelpGroupMessageRestore.mockResolvedValue({
+        data: undefined,
+      } as never);
+
+      await store.dispatch(
+        helpGroupsApi.endpoints.restoreHelpGroupMessage.initiate({
+          kind: 'replies',
+          id: 'reply-1',
+        })
+      );
+      expect(mockedApi.postAdminHelpGroupMessageRestore).toHaveBeenCalledWith(
+        'replies',
+        'reply-1'
+      );
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockedApi.getHelpGroupDiscussion).toHaveBeenCalledTimes(2);
+      subscription.unsubscribe();
     });
   });
 
