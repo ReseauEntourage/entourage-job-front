@@ -1,5 +1,5 @@
 import Pusher from 'pusher-js';
-import { STORAGE_KEYS } from '@/src/constants';
+import { STORAGE_KEYS } from './storage';
 
 export const PUSHER_CHANNELS = {
   PROFILE_GENERATION: 'profile-generation-channel',

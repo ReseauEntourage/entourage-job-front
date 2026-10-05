@@ -9,7 +9,7 @@ import {
 } from '@/src/features/backoffice/help-groups/__fixtures__/help-groups.fixtures';
 import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { getMockedApi } from '@/src/store/testUtils/mockApi';
-import { authenticationActions } from '@/src/use-cases/authentication';
+import { authenticationApi } from '@/src/use-cases/authentication';
 import {
   applyViewerReaction,
   helpGroupsApi,
@@ -21,7 +21,6 @@ import {
   readHelpGroupDraft,
   writeHelpGroupDraft,
 } from './help-groups.drafts';
-import './help-groups.listeners';
 
 const mockedApi = getMockedApi();
 
@@ -43,7 +42,7 @@ describe('help groups write api', () => {
   });
 
   describe('toWriteError', () => {
-    it.each([
+    const cases: [unknown, HelpGroupsWriteError][] = [
       [axiosError(409), HelpGroupsWriteError.CHARTER_NOT_ACCEPTED],
       [
         axiosError(403, 'ELEARNING_NOT_COMPLETED'),
@@ -61,8 +60,11 @@ describe('help groups write api', () => {
       [axiosError(400), HelpGroupsWriteError.INVALID],
       [axiosError(500), HelpGroupsWriteError.FAILED],
       [new Error('network'), HelpGroupsWriteError.FAILED],
-    ])('maps %s', (error, expected) => {
-      expect(toWriteError(error)).toBe(expected);
+    ];
+    cases.forEach(([error, expected], index) => {
+      it(`maps the error case ${index + 1} to ${expected}`, () => {
+        expect(toWriteError(error)).toBe(expected);
+      });
     });
   });
 
@@ -244,13 +246,13 @@ describe('help groups write api', () => {
   });
 
   describe('drafts', () => {
-    it('erases every help groups draft at logout', () => {
+    it('erases every help groups draft at logout', async () => {
       const store = createTestStore();
       const draftKey = getHelpGroupDraftKey('user-1', 'group', 'group-1');
       writeHelpGroupDraft(draftKey, { content: 'Bonjour' });
       localStorage.setItem('other-key', 'kept');
 
-      store.dispatch(authenticationActions.logoutSucceeded());
+      await store.dispatch(authenticationApi.endpoints.logout.initiate());
 
       expect(readHelpGroupDraft(draftKey)).toBeNull();
       expect(localStorage.getItem('other-key')).toBe('kept');
