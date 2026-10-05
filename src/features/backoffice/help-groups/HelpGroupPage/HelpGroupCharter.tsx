@@ -1,38 +1,34 @@
-import React, { useState } from 'react';
-import { Button } from '@/src/components/ui';
+import React from 'react';
+import { Text } from '@/src/components/ui';
 import { H5 } from '@/src/components/ui/Headings';
-import { HelpGroupContent } from '../HelpGroupContent';
+import {
+  HELP_GROUPS_CHARTER_INTRO,
+  HELP_GROUPS_CHARTER_RULES,
+  HELP_GROUPS_CHARTER_TITLE,
+} from '../help-groups.charter';
 import {
   StyledHelpGroupCharter,
-  StyledHelpGroupCharterText,
+  StyledHelpGroupCharterRules,
 } from './HelpGroupPage.styles';
 
-interface HelpGroupCharterProps {
-  charter: string;
-}
-
 /**
- * The beginning of the charter, readable in full by anyone, member or not.
+ * The frame common to every group, readable in full by anyone, member or not.
  */
-export function HelpGroupCharter({ charter }: HelpGroupCharterProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+export function HelpGroupCharter() {
   return (
-    <StyledHelpGroupCharter aria-label="Cadre de prise de parole">
-      <H5 title="Cadre de prise de parole" noMarginBottom />
-      <StyledHelpGroupCharterText
-        $isExpanded={isExpanded}
-        data-testid="help-group-charter"
-      >
-        <HelpGroupContent content={charter} />
-      </StyledHelpGroupCharterText>
-      <Button
-        variant="text"
-        size="small"
-        onClick={() => setIsExpanded((expanded) => !expanded)}
-      >
-        {isExpanded ? 'Réduire' : 'Lire le cadre en entier'}
-      </Button>
+    <StyledHelpGroupCharter
+      aria-label={HELP_GROUPS_CHARTER_TITLE}
+      data-testid="help-group-charter"
+    >
+      <H5 title={HELP_GROUPS_CHARTER_TITLE} noMarginBottom />
+      <Text>{HELP_GROUPS_CHARTER_INTRO}</Text>
+      <StyledHelpGroupCharterRules>
+        {HELP_GROUPS_CHARTER_RULES.map((rule) => (
+          <li key={rule}>
+            <Text>{rule}</Text>
+          </li>
+        ))}
+      </StyledHelpGroupCharterRules>
     </StyledHelpGroupCharter>
   );
 }

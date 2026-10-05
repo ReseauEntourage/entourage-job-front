@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -17,7 +17,6 @@ const groupPage = {
   slug: 'refaire-un-cv',
   name: 'Refaire un CV',
   description: 'Première ligne\nDeuxième ligne',
-  charter: 'Bienveillance',
   membersCount: 128,
   isMember: false,
   isPublished: true,
@@ -121,13 +120,19 @@ describe('Help group page', () => {
   });
 
   describe('HelpGroupCharter', () => {
-    it('lets the reader expand the charter', () => {
-      renderWithProviders(<HelpGroupCharter charter="Bienveillance" />);
-      expect(screen.getByTestId('help-group-charter')).toHaveTextContent(
-        'Bienveillance'
+    it('shows the frame common to every group, in full', () => {
+      renderWithProviders(<HelpGroupCharter />);
+      const charter = screen.getByTestId('help-group-charter');
+      expect(charter).toHaveTextContent('Le cadre');
+      expect(charter).toHaveTextContent(
+        'Ces règles valent pour tous les groupes.'
       );
-      fireEvent.click(screen.getByText('Lire le cadre en entier'));
-      expect(screen.getByText('Réduire')).toBeInTheDocument();
+      expect(charter).toHaveTextContent(
+        'Ce qui se dit dans un groupe reste dans le groupe.'
+      );
+      expect(charter.querySelectorAll('li')).toHaveLength(4);
+      // Not the platform ethics charter, and nothing to expand
+      expect(screen.queryByText('Lire le cadre en entier')).toBeNull();
     });
   });
 });

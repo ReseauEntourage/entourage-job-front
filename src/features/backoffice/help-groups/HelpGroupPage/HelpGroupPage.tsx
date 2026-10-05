@@ -82,7 +82,7 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
           ]}
         />
         <HelpGroupHeader group={group} />
-        <HelpGroupCharter charter={group.charter} />
+        <HelpGroupCharter />
         {isLoadingDiscussions && <Spinner />}
         {/* A failed first page is not an empty group */}
         {!isLoadingDiscussions &&

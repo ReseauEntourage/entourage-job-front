@@ -27,7 +27,6 @@ const group: HelpGroupAdminItem = {
   slug: 'refaire-un-cv',
   name: 'Refaire un CV',
   description: 'Description',
-  charter: 'Cadre',
   publishedAt: '2026-09-01T10:00:00.000Z',
   pinnedAt: null,
   createdAt: '2026-09-01T10:00:00.000Z',
@@ -61,19 +60,19 @@ describe('EditHelpGroupModal', () => {
     renderInModal(<EditHelpGroupModal />);
     expect(screen.getByText(/80 caractère\(s\) restant\(s\)/)).toBeVisible();
     expect(screen.getByText(/500 caractère\(s\) restant\(s\)/)).toBeVisible();
-    expect(screen.getByText(/5000 caractère\(s\) restant\(s\)/)).toBeVisible();
+    // The frame is common to every group: no field to fill in
+    expect(screen.queryByText(/5000 caractère\(s\) restant\(s\)/)).toBeNull();
+    expect(screen.queryByText(/Cadre de prise de parole/)).toBeNull();
   });
 
   [
     ['name', 81, 80],
     ['description', 501, 500],
-    ['charter', 5001, 5000],
   ].forEach(([field, length, max]) => {
     it(`refuses a ${field} longer than ${max} characters`, async () => {
       renderInModal(<EditHelpGroupModal />);
       fillField('name', 'Refaire un CV');
       fillField('description', 'Description');
-      fillField('charter', 'Cadre');
       fillField(field as string, 'a'.repeat(length as number));
       fireEvent.click(screen.getByText('Créer le groupe'));
 
@@ -88,14 +87,12 @@ describe('EditHelpGroupModal', () => {
     const onClose = renderInModal(<EditHelpGroupModal />);
     fillField('name', 'a'.repeat(80));
     fillField('description', 'Description');
-    fillField('charter', 'Cadre');
     fireEvent.click(screen.getByText('Créer le groupe'));
 
     await waitFor(() =>
       expect(mockCreateHelpGroup).toHaveBeenCalledWith({
         name: 'a'.repeat(80),
         description: 'Description',
-        charter: 'Cadre',
       })
     );
     await waitFor(() => expect(onClose).toHaveBeenCalled());

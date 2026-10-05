@@ -16,8 +16,8 @@ interface EditHelpGroupModalProps {
 }
 
 /**
- * Creation and edition of a group: name (80), description (500) and charter
- * (5000), plain text, with characters counters.
+ * Creation and edition of a group: name (80) and description (500), plain
+ * text, with characters counters. The frame is common to every group.
  */
 export function EditHelpGroupModal({ group }: EditHelpGroupModalProps) {
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ export function EditHelpGroupModal({ group }: EditHelpGroupModalProps) {
       const dto: HelpGroupDto = {
         name: fields.name,
         description: fields.description,
-        charter: fields.charter,
       };
       const result = group
         ? await updateHelpGroup({ id: group.id, dto })
@@ -76,7 +75,6 @@ export function EditHelpGroupModal({ group }: EditHelpGroupModalProps) {
           ? {
               name: group.name,
               description: group.description,
-              charter: group.charter,
             }
           : undefined
       }

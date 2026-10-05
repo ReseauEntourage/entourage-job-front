@@ -28,7 +28,6 @@ const group = {
   slug: 'refaire-un-cv',
   name: 'Refaire un CV',
   description: 'Description',
-  charter: 'Bienveillance',
   membersCount: 3,
   isMember: false,
   isPublished: true,
@@ -107,5 +106,26 @@ describe('HelpGroupPage loading states', () => {
     expect(screen.getAllByTestId('discussion-row')).toHaveLength(1);
     fireEvent.click(screen.getByTestId('help-group-load-error-retry'));
     expect(fetchNextPage).toHaveBeenCalled();
+  });
+
+  it('shows the same frame, common to every group, on two different groups', () => {
+    (useGetHelpGroupDiscussionsInfiniteQuery as jest.Mock).mockReturnValue(
+      discussionsResult({ data: { pages: [{ items: [], nextCursor: null }] } })
+    );
+    const charterOf = (name: string) => {
+      (useGetHelpGroupQuery as jest.Mock).mockReturnValue({
+        data: { ...group, id: name, slug: name, name },
+        isLoading: false,
+        error: undefined,
+        refetch: jest.fn(),
+      });
+      const { unmount } = renderWithProviders(<HelpGroupPage slug={name} />);
+      const text = screen.getByTestId('help-group-charter').textContent;
+      unmount();
+      return text;
+    };
+    const first = charterOf('Refaire un CV');
+    expect(first).toContain('Ces règles valent pour tous les groupes.');
+    expect(charterOf('Bonnes nouvelles')).toBe(first);
   });
 });

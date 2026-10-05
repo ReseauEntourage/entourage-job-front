@@ -3,7 +3,6 @@ import { FormSchema } from '../FormSchema';
 // Same limits as the API DTO
 export const HELP_GROUP_NAME_MAX_LENGTH = 80;
 export const HELP_GROUP_DESCRIPTION_MAX_LENGTH = 500;
-export const HELP_GROUP_CHARTER_MAX_LENGTH = 5000;
 
 const notBlankRule = {
   method: (fieldValue: string) => !!fieldValue && fieldValue.trim().length > 0,
@@ -13,7 +12,6 @@ const notBlankRule = {
 export const formHelpGroup: FormSchema<{
   name: string;
   description: string;
-  charter: string;
 }> = {
   id: 'form-help-group',
   fields: [
@@ -36,16 +34,6 @@ export const formHelpGroup: FormSchema<{
       showLabel: true,
       isRequired: true,
       maxLength: HELP_GROUP_DESCRIPTION_MAX_LENGTH,
-      rules: [notBlankRule],
-    },
-    {
-      id: 'charter',
-      name: 'charter',
-      component: 'textarea',
-      title: 'Cadre de prise de parole *',
-      showLabel: true,
-      isRequired: true,
-      maxLength: HELP_GROUP_CHARTER_MAX_LENGTH,
       rules: [notBlankRule],
     },
   ],

@@ -958,7 +958,6 @@ export type HelpGroupPage = {
   slug: string;
   name: string;
   description: string;
-  charter: string;
   membersCount: number;
   isMember: boolean;
   isPublished: boolean;
@@ -999,7 +998,6 @@ export type HelpGroupAdminItem = {
   slug: string;
   name: string;
   description: string;
-  charter: string;
   publishedAt: string | null;
   pinnedAt: string | null;
   createdAt: string;
@@ -1012,7 +1010,6 @@ export type HelpGroupAdminItem = {
 export type HelpGroupDto = {
   name: string;
   description: string;
-  charter: string;
 };
 
 export type HelpGroupAdminAction =

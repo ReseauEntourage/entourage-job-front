@@ -33,17 +33,12 @@ export const StyledHelpGroupCharter = styled.section`
   background-color: ${COLORS.hoverBlue};
 `;
 
-export const StyledHelpGroupCharterText = styled.div<{ $isExpanded: boolean }>`
-  width: 100%;
-  ${({ $isExpanded }) =>
-    $isExpanded
-      ? ''
-      : `
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  `}
+export const StyledHelpGroupCharterRules = styled.ul`
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 export const StyledDiscussionList = styled.div`

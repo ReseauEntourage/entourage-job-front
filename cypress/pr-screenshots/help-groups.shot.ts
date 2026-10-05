@@ -85,8 +85,6 @@ const groupPage = {
   name: 'Refaire un CV',
   description:
     'Échanger des conseils pour rédiger, mettre à jour et valoriser son CV, quel que soit son parcours.\nLes coachs du réseau y partagent aussi leurs relectures.',
-  charter:
-    'Ici, on se parle avec bienveillance et respect.\n\nOn ne partage pas de coordonnées personnelles dans les discussions : la messagerie privée est faite pour ça.\n\nOn reste sur le sujet du groupe, et on signale tout message qui ne respecte pas ce cadre.\n\nLes conseils partagés n’engagent que leurs auteurs.',
   membersCount: 61,
   isMember: true,
   isPublished: true,
@@ -187,7 +185,6 @@ const replies = [
 const adminGroups = [
   {
     ...groups[0],
-    charter: groupPage.charter,
     publishedAt: '2026-09-01T10:00:00.000Z',
     createdAt: '2026-08-30T10:00:00.000Z',
     deletedAt: null,
@@ -196,7 +193,6 @@ const adminGroups = [
   },
   {
     ...groups[1],
-    charter: groupPage.charter,
     publishedAt: '2026-09-05T10:00:00.000Z',
     createdAt: '2026-09-04T10:00:00.000Z',
     deletedAt: null,
@@ -205,7 +201,6 @@ const adminGroups = [
   },
   {
     ...groups[2],
-    charter: groupPage.charter,
     publishedAt: null,
     pinnedAt: null,
     createdAt: '2026-09-28T10:00:00.000Z',
@@ -300,7 +295,7 @@ describe('Groupes', () => {
     cy.get('[data-testid="discussion-row"]').should('have.length', 3);
     cy.capture('Page d’un groupe', {
       caption:
-        'Fil d’Ariane, en-tête, cadre de prise de parole et discussions, en lecture seule.',
+        'Fil d’Ariane, en-tête, cadre commun à tous les groupes et discussions, en lecture seule.',
     });
 
     cy.visit(
