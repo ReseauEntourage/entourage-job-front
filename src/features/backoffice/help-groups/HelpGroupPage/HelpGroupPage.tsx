@@ -1,15 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Section } from '@/src/components/ui';
 import { Breadcrumb } from '@/src/components/ui/Breadcrumb';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 import {
   HelpGroupsError,
   useGetHelpGroupDiscussionsInfiniteQuery,
   useGetHelpGroupQuery,
 } from '@/src/use-cases/help-groups';
+import { DiscussionComposer } from '../DiscussionComposer';
 import { HelpGroupLoadError } from '../HelpGroupLoadError';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
+import { MembershipActions } from '../MembershipActions';
+import { WelcomeInvite } from '../WelcomeInvite';
+import { WriteInvitation } from '../WriteInvitation';
 import { HELP_GROUPS_LOAD_ERROR_LABELS } from '../help-groups.labels';
 import { useLoadMoreOnScroll } from '../hooks/useLoadMoreOnScroll';
 import { DiscussionList } from './DiscussionList';
@@ -22,10 +28,14 @@ interface HelpGroupPageProps {
 }
 
 /**
- * Read-only group page: no join, publish, reply nor react action is shown,
- * not even disabled, until writing is available.
+ * Group page. A member allowed to write gets the composer; anyone else gets
+ * the invitation matching their situation instead (never disabled actions).
+ * An unpublished group (admin preview) shows no write action at all.
  */
 export function HelpGroupPage({ slug }: HelpGroupPageProps) {
+  const currentUser = useSelector(selectCurrentUser);
+  const [justJoined, setJustJoined] = useState(false);
+  const [composerOpenSignal, setComposerOpenSignal] = useState(0);
   const {
     data: group,
     isLoading,
@@ -82,7 +92,34 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
           ]}
         />
         <HelpGroupHeader group={group} />
+        {group.isPublished && group.viewerPermissions.state === 'canWrite' && (
+          <MembershipActions slug={group.slug} justJoined={justJoined} />
+        )}
         <HelpGroupCharter />
+        {group.isPublished &&
+          (group.viewerPermissions.state === 'canWrite' ? (
+            <>
+              {group.viewerPermissions.showWelcomeInvite &&
+                currentUser?.firstName && (
+                  <WelcomeInvite
+                    firstName={currentUser.firstName}
+                    onClick={() => setComposerOpenSignal((count) => count + 1)}
+                  />
+                )}
+              <DiscussionComposer
+                slug={group.slug}
+                groupId={group.id}
+                charterAccepted={group.viewerPermissions.charterAccepted}
+                openSignal={composerOpenSignal}
+              />
+            </>
+          ) : (
+            <WriteInvitation
+              slug={group.slug}
+              state={group.viewerPermissions.state}
+              onJoined={() => setJustJoined(true)}
+            />
+          ))}
         {isLoadingDiscussions && <Spinner />}
         {/* A failed first page is not an empty group */}
         {!isLoadingDiscussions &&
