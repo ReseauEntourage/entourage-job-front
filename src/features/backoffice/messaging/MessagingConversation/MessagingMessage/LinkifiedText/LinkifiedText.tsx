@@ -1,4 +1,5 @@
 import React from 'react';
+import { SimpleLink } from '@/src/components/ui';
 import { openModal } from '@/src/features/modals/Modal';
 import { MessagingMessageSuspiciousModal } from '../MessagingMessageSuspiciousModal/MessagingMessageSuspiciousModal';
 
@@ -48,13 +49,21 @@ export const splitTextAndLinks = (content: string): TextSegment[] => {
   return segments;
 };
 
-const isVerifiedDomain = (href: string): boolean => {
-  const whitelist =
-    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS?.split(',') || [];
-  const domainMatch = href.match(/https?:\/\/(www\.)?([\w.-]+)/i);
-  const domain = domainMatch ? domainMatch[2] : '';
-  return whitelist.some((whitelistedDomain) =>
-    domain.endsWith(whitelistedDomain)
+// A domain is verified when the link host is a whitelisted domain or one of its
+// subdomains: blank entries and look-alike suffixes (evil-domain.fr) never match
+export const isVerifiedDomain = (href: string): boolean => {
+  const whitelist = (process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS || '')
+    .split(',')
+    .map((domain) => domain.trim().toLowerCase())
+    .filter(Boolean);
+  let hostname: string;
+  try {
+    hostname = new URL(href).hostname.toLowerCase();
+  } catch {
+    return false;
+  }
+  return whitelist.some(
+    (domain) => hostname === domain || hostname.endsWith(`.${domain}`)
   );
 };
 
@@ -85,15 +94,16 @@ export const LinkifiedText = ({
     <>
       {segments.map((segment, index) =>
         segment.type === 'link' ? (
-          <a
+          <SimpleLink
             key={index}
             href={segment.href}
+            isExternal
             target="_blank"
             rel="noopener noreferrer"
             onClick={(event) => handleLinkClick(event, segment.href)}
           >
             {segment.value}
-          </a>
+          </SimpleLink>
         ) : (
           <React.Fragment key={index}>{segment.value}</React.Fragment>
         )

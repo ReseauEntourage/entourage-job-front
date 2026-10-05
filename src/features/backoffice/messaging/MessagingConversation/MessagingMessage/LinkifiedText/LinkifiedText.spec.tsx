@@ -4,7 +4,12 @@ import expect from 'expect';
 import React from 'react';
 import '@testing-library/jest-dom';
 import { openModal } from '@/src/features/modals/Modal';
-import { LinkifiedText, splitTextAndLinks, toSafeHref } from './LinkifiedText';
+import {
+  isVerifiedDomain,
+  LinkifiedText,
+  splitTextAndLinks,
+  toSafeHref,
+} from './LinkifiedText';
 
 jest.mock('@/src/features/modals/Modal', () => ({
   openModal: jest.fn(),
@@ -64,6 +69,41 @@ describe('splitTextAndLinks', () => {
       },
       { type: 'text', value: ' merci' },
     ]);
+  });
+});
+
+describe('isVerifiedDomain', () => {
+  const initialSafeDomains = process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS;
+
+  afterEach(() => {
+    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS = initialSafeDomains;
+  });
+
+  it('trusts the whitelisted domain and its subdomains', () => {
+    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS =
+      'entourage-pro.fr, linkedin.com';
+
+    expect(isVerifiedDomain('https://entourage-pro.fr/offres')).toBe(true);
+    expect(isVerifiedDomain('https://www.entourage-pro.fr/')).toBe(true);
+    expect(isVerifiedDomain('https://fr.linkedin.com/in/awa')).toBe(true);
+  });
+
+  it('does not trust a look-alike suffix', () => {
+    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS = 'entourage-pro.fr';
+
+    expect(isVerifiedDomain('https://evilentourage-pro.fr/')).toBe(false);
+    expect(isVerifiedDomain('https://entourage-pro.fr.evil.com/')).toBe(false);
+  });
+
+  it('trusts nothing when the whitelist is empty or blank', () => {
+    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS = '';
+    expect(isVerifiedDomain('https://example.com/')).toBe(false);
+
+    process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS = ' , ';
+    expect(isVerifiedDomain('https://example.com/')).toBe(false);
+
+    delete process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS;
+    expect(isVerifiedDomain('https://example.com/')).toBe(false);
   });
 });
 
