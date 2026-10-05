@@ -47,9 +47,15 @@ describe('HelpGroupDiscussionView', () => {
     expect(
       screen.getByRole('link', { name: 'Voir son profil' })
     ).toBeInTheDocument();
-    // Read only: no write action
+    // Without viewer permissions: no write action, only the message menu
+    // (« Copier le lien du message » is offered to everyone)
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('reaction-toggle')).not.toBeInTheDocument();
+    expect(
+      screen
+        .getAllByRole('button')
+        .map((button) => button.getAttribute('aria-label'))
+    ).toEqual(['Actions sur le message']);
   });
 
   it('displays HTML as text and makes web addresses clickable in a new tab', () => {

@@ -107,6 +107,8 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
                   />
                 )}
               <DiscussionComposer
+                // A fresh composer per group: draft, title proposal, state
+                key={group.id}
                 slug={group.slug}
                 groupId={group.id}
                 charterAccepted={group.viewerPermissions.charterAccepted}

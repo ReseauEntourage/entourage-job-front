@@ -361,6 +361,19 @@ describe('Discussion participation', () => {
       });
     });
 
+    it('opens from a real button, reachable from the keyboard', () => {
+      renderWithProviders(
+        <MessageMenu actions={['copyLink']} onAction={jest.fn()} />
+      );
+      const toggle = screen.getByRole('button', {
+        name: 'Actions sur le message',
+      });
+      toggle.focus();
+      expect(document.activeElement).toBe(toggle);
+      fireEvent.click(toggle);
+      expect(screen.getByText('Copier le lien du message')).toBeInTheDocument();
+    });
+
     it('sets the moderation apart from the other actions', () => {
       renderWithProviders(
         <MessageMenu

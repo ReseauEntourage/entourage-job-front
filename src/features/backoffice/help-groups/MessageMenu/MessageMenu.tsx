@@ -42,7 +42,10 @@ export function MessageMenu({ actions, onAction }: MessageMenuProps) {
   return (
     <Dropdown>
       <Dropdown.Toggle>
+        {/* A real button: reachable and activable from the keyboard */}
         <StyledMessageMenuToggle
+          type="button"
+          aria-haspopup="menu"
           aria-label={MESSAGE_MENU_LABELS.open}
           data-testid="message-menu-toggle"
         >

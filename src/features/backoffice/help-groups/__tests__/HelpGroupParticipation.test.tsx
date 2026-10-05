@@ -357,6 +357,22 @@ describe('Help group participation', () => {
       expect(titleInput()).not.toBeDisabled();
     });
 
+    it('no longer proposes another title once the proposal is retouched', async () => {
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      blurMessage();
+      await waitFor(() => expect(titleInput().value).not.toBe(''));
+      expect(
+        screen.getByTestId('discussion-composer-retry-title')
+      ).toBeInTheDocument();
+      typeTitle('Mon titre retouché');
+      expect(
+        screen.queryByTestId('discussion-composer-retry-title')
+      ).not.toBeInTheDocument();
+      expect(titleInput().value).toBe('Mon titre retouché');
+    });
+
     it('empties the title on « Écrire le mien »', async () => {
       renderPage();
       openComposer();

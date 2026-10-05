@@ -90,12 +90,16 @@ export const useTitleSuggestion = ({
 
   /** "Proposer un autre titre", limited per draft */
   const retry = useCallback(() => {
-    if (retriesCount >= TITLE_SUGGESTION_MAX_RETRIES || !isLongEnough) {
+    if (
+      titleOrigin !== 'suggested' ||
+      retriesCount >= TITLE_SUGGESTION_MAX_RETRIES ||
+      !isLongEnough
+    ) {
       return;
     }
     setRetriesCount((count) => count + 1);
     request();
-  }, [retriesCount, isLongEnough, request]);
+  }, [titleOrigin, retriesCount, isLongEnough, request]);
 
   /** Any typing makes the pending proposal stale */
   const cancelPending = useCallback(() => {
@@ -112,7 +116,10 @@ export const useTitleSuggestion = ({
 
   return {
     isSuggesting,
+    // Only while the title is still the proposal: never over a retouched or
+    // written title
     canRetry:
+      titleOrigin === 'suggested' &&
       isLongEnough &&
       !isSuggesting &&
       retriesCount < TITLE_SUGGESTION_MAX_RETRIES &&

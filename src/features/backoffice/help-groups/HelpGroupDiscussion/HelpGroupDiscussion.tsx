@@ -70,7 +70,11 @@ export function HelpGroupDiscussion({
     { skip: !isReady }
   );
   // The viewer state (member, eLearning, charter) comes with the group page
-  const { data: group } = useGetHelpGroupQuery(slug, { skip: !isReady });
+  const {
+    data: group,
+    error: groupError,
+    refetch: refetchGroup,
+  } = useGetHelpGroupQuery(slug, { skip: !isReady });
   const {
     data: repliesData,
     isLoading: isLoadingReplies,
@@ -272,7 +276,10 @@ export function HelpGroupDiscussion({
       </Section>
     );
   }
-  if (error === HelpGroupsError.NOT_FOUND) {
+  if (
+    error === HelpGroupsError.NOT_FOUND ||
+    groupError === HelpGroupsError.NOT_FOUND
+  ) {
     return <HelpGroupNotFound />;
   }
   if (error) {
@@ -281,6 +288,18 @@ export function HelpGroupDiscussion({
         <HelpGroupLoadError
           message={HELP_GROUPS_LOAD_ERROR_LABELS.discussion}
           onRetry={refetch}
+        />
+      </Section>
+    );
+  }
+  // The viewer's rights come with the group: without them, nobody could
+  // write, with no way to recover
+  if (groupError) {
+    return (
+      <Section className="custom-page">
+        <HelpGroupLoadError
+          message={HELP_GROUPS_LOAD_ERROR_LABELS.group}
+          onRetry={refetchGroup}
         />
       </Section>
     );

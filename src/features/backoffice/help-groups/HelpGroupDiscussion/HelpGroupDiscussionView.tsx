@@ -165,6 +165,7 @@ export function HelpGroupDiscussionView({
               )}
               {canWrite && viewerPermissions && (
                 <ReplyComposer
+                  key={discussion.id}
                   slug={group.slug}
                   discussionId={discussion.id}
                   authorFirstName={discussion.author.firstName}
