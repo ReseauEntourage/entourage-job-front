@@ -32,7 +32,9 @@ export function EmailsSetting({
 }: EmailsSettingProps) {
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
-  const [updateEmails] = useUpdateHelpGroupEmailsMutation();
+  // Disabled while a change is saved: overlapping optimistic updates could
+  // roll back a later choice
+  const [updateEmails, { isLoading }] = useUpdateHelpGroupEmailsMutation();
 
   useEffect(() => {
     if (isHighlighted) {
@@ -69,6 +71,7 @@ export function EmailsSetting({
         checked={emailsEnabled}
         onChange={onChange}
         ariaLabel={EMAILS_SETTING_LABEL}
+        disabled={isLoading}
       />
     </StyledEmailsSetting>
   );

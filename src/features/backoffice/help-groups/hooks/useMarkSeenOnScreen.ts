@@ -23,16 +23,33 @@ export const useMarkSeenOnScreen = (enabled: boolean) => {
   const elementsRef = useRef(new Map<string, Element>());
   const pendingRef = useRef(new Set<string>());
   const sentRef = useRef(new Set<string>());
+  // Messages already sent again after a failure: one retry only
+  const retriedRef = useRef(new Set<string>());
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const flush = useCallback(() => {
     timerRef.current = null;
     const messageIds = Array.from(pendingRef.current);
     pendingRef.current.clear();
-    if (messageIds.length > 0) {
-      messageIds.forEach((id) => sentRef.current.add(id));
-      markSeen(messageIds);
+    if (messageIds.length === 0) {
+      return;
     }
+    messageIds.forEach((id) => sentRef.current.add(id));
+    markSeen(messageIds)
+      .unwrap()
+      .catch(() => {
+        // Observed again, to be sent once more if still displayed
+        messageIds
+          .filter((id) => !retriedRef.current.has(id))
+          .forEach((id) => {
+            retriedRef.current.add(id);
+            sentRef.current.delete(id);
+            const element = elementsRef.current.get(id);
+            if (element) {
+              observerRef.current?.observe(element);
+            }
+          });
+      });
   }, [markSeen]);
 
   useEffect(() => {

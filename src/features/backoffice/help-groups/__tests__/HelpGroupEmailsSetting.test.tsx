@@ -9,6 +9,7 @@ import { HelpGroupPage } from '../HelpGroupPage';
 import { buildGroupPage } from '../__fixtures__/help-groups.fixtures';
 
 const mockUpdateEmails = jest.fn();
+const mockUseUpdateEmails = jest.fn();
 
 jest.mock('@/src/use-cases/help-groups', () => ({
   ...jest.requireActual('@/src/use-cases/help-groups'),
@@ -23,7 +24,7 @@ jest.mock('@/src/use-cases/help-groups', () => ({
     fetchNextPage: jest.fn(),
     refetch: jest.fn(),
   }),
-  useUpdateHelpGroupEmailsMutation: () => [mockUpdateEmails],
+  useUpdateHelpGroupEmailsMutation: () => mockUseUpdateEmails(),
 }));
 
 jest.mock('@/src/use-cases/current-user', () => ({
@@ -71,6 +72,21 @@ describe('Help group emails setting', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUpdateEmails.mockResolvedValue({ data: { emailsEnabled: false } });
+    mockUseUpdateEmails.mockReturnValue([
+      mockUpdateEmails,
+      { isLoading: false },
+    ]);
+  });
+
+  it('is disabled while a change is saved', () => {
+    mockUseUpdateEmails.mockReturnValue([
+      mockUpdateEmails,
+      { isLoading: true },
+    ]);
+    renderPage();
+    expect(
+      screen.getByRole('switch', { name: 'Emails de ce groupe' })
+    ).toBeDisabled();
   });
 
   it('is absent for a non member', () => {

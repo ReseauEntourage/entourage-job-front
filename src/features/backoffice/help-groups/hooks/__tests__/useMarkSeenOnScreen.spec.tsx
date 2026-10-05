@@ -56,6 +56,7 @@ describe('useMarkSeenOnScreen', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.clearAllMocks();
+    mockMarkSeen.mockReturnValue({ unwrap: () => Promise.resolve() });
     observed.clear();
     window.IntersectionObserver =
       MockIntersectionObserver as unknown as typeof IntersectionObserver;
@@ -111,5 +112,27 @@ describe('useMarkSeenOnScreen', () => {
     show(getByTestId('reply-1'), 1);
     unmount();
     expect(mockMarkSeen).toHaveBeenCalledWith(['reply-1']);
+  });
+
+  it('observes a message again after a failure, and retries it once only', async () => {
+    mockMarkSeen.mockReturnValue({
+      unwrap: () => Promise.reject(new Error('Network error')),
+    });
+    const { getByTestId } = render(<Messages ids={['reply-1']} />);
+    const element = getByTestId('reply-1');
+    show(element, 1);
+    expect(observed.has(element)).toBe(false);
+    await act(async () => {
+      jest.advanceTimersByTime(SEEN_FLUSH_DELAY_MS);
+    });
+    expect(observed.has(element)).toBe(true);
+
+    show(element, 1);
+    await act(async () => {
+      jest.advanceTimersByTime(SEEN_FLUSH_DELAY_MS);
+    });
+    expect(mockMarkSeen).toHaveBeenCalledTimes(2);
+    // No third attempt
+    expect(observed.has(element)).toBe(false);
   });
 });
