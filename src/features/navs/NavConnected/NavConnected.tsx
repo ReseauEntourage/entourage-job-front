@@ -12,6 +12,7 @@ import {
   selectSelectedConversation,
   useGetUnseenConversationsCountQuery,
 } from '@/src/use-cases/messaging';
+import { useNotificationsRealtime } from '@/src/use-cases/notifications-center';
 import { NavConnectedContent } from './NavConnectedContent';
 
 export const NavConnected = () => {
@@ -37,6 +38,9 @@ export const NavConnected = () => {
   );
 
   const badges = useNotifBadges();
+  // The nav is mounted on every backoffice page: the subscription lasts the
+  // session, and ends with the logout
+  useNotificationsRealtime(user?.id);
   const prevUser = usePrevious(user);
   const prevHasPublishedHelpGroups = usePrevious(hasPublishedHelpGroups);
 

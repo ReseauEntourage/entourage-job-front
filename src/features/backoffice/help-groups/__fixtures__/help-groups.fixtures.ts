@@ -116,6 +116,7 @@ export const buildGroupPage = (
   description: 'Échanger sur la rédaction de son CV',
   membersCount: 128,
   isMember: true,
+  emailsEnabled: true,
   isPublished: true,
   viewerPermissions: {
     state: 'canWrite',

@@ -19,6 +19,7 @@ const groupPage = {
   description: 'Première ligne\nDeuxième ligne',
   membersCount: 128,
   isMember: false,
+  emailsEnabled: null,
   isPublished: true,
   viewerPermissions: {
     state: 'mustJoin' as const,

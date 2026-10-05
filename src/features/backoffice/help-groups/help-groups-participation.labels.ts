@@ -163,3 +163,9 @@ export const MODERATION_DELETE_SHORT_LABEL = 'Supprimer';
 export const RESTORE_ERROR_LABEL = 'Le message n’a pas pu être rétabli.';
 export const formatReportReasons = (labels: string[]) =>
   `Motifs : ${labels.join(', ')}`;
+
+// "Emails de ce groupe": per group only, the bell is not affected
+export const EMAILS_SETTING_LABEL = 'Emails de ce groupe';
+export const EMAILS_SETTING_DESCRIPTION =
+  'Recevoir un email quand on vous répond ou qu’on soutient votre message, et le récapitulatif de la semaine.';
+export const EMAILS_SETTING_ERROR = 'Le réglage n’a pas pu être enregistré.';

@@ -11,6 +11,7 @@ import {
   useGetHelpGroupQuery,
 } from '@/src/use-cases/help-groups';
 import { DiscussionComposer } from '../DiscussionComposer';
+import { EmailsSetting } from '../EmailsSetting';
 import { HelpGroupLoadError } from '../HelpGroupLoadError';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
 import { MembershipActions } from '../MembershipActions';
@@ -25,6 +26,8 @@ import { StyledHelpGroupPage } from './HelpGroupPage.styles';
 
 interface HelpGroupPageProps {
   slug: string;
+  // `?emails=1`, from the emails setting link: highlights the switch
+  highlightEmails?: boolean;
 }
 
 /**
@@ -32,7 +35,10 @@ interface HelpGroupPageProps {
  * the invitation matching their situation instead (never disabled actions).
  * An unpublished group (admin preview) shows no write action at all.
  */
-export function HelpGroupPage({ slug }: HelpGroupPageProps) {
+export function HelpGroupPage({
+  slug,
+  highlightEmails = false,
+}: HelpGroupPageProps) {
   const currentUser = useSelector(selectCurrentUser);
   const [justJoined, setJustJoined] = useState(false);
   const [composerOpenSignal, setComposerOpenSignal] = useState(0);
@@ -94,6 +100,14 @@ export function HelpGroupPage({ slug }: HelpGroupPageProps) {
         <HelpGroupHeader group={group} />
         {group.isPublished && group.viewerPermissions.state === 'canWrite' && (
           <MembershipActions slug={group.slug} justJoined={justJoined} />
+        )}
+        {/* Members only, whatever their write state */}
+        {group.isMember && group.emailsEnabled !== null && (
+          <EmailsSetting
+            slug={group.slug}
+            emailsEnabled={group.emailsEnabled}
+            isHighlighted={highlightEmails}
+          />
         )}
         <HelpGroupCharter />
         {group.isPublished &&

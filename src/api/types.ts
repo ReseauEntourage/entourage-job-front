@@ -41,6 +41,7 @@ export const APIRoutes = {
   CHECKIN: 'checkin',
   HELP_GROUPS: 'help-groups',
   ADMIN_HELP_GROUPS: 'admin/help-groups',
+  NOTIFICATIONS: 'notifications',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -977,6 +978,8 @@ export type HelpGroupPage = {
   description: string;
   membersCount: number;
   isMember: boolean;
+  // "Emails de ce groupe" of the viewer; null when not a member
+  emailsEnabled: boolean | null;
   isPublished: boolean;
   viewerPermissions: HelpGroupViewerPermissions;
 };
@@ -1131,3 +1134,32 @@ export type HelpGroupMessageRevisions = {
 
 export type HelpGroupAdminAction =
   'publish' | 'unpublish' | 'pin' | 'unpin' | 'restore';
+
+// Notifications center (the bell)
+
+export type NotificationType = 'HELP_GROUP_REPLY' | 'HELP_GROUP_REACTION';
+
+/**
+ * A notification of the bell, one per subject (a discussion for the replies,
+ * a message for the reactions). The label is composed by the back, in first
+ * names and never with a number.
+ */
+export type NotificationItem = {
+  id: string;
+  type: NotificationType;
+  label: string;
+  // Beginning of the latest reply, for a reply notification
+  excerpt: string | null;
+  context: {
+    groupName: string;
+    discussionTitle: string | null;
+  };
+  lastEventAt: string;
+  seen: boolean;
+  destination: {
+    slug: string;
+    discussionId: string;
+    // The first unseen reply, or the reacted reply; null for the discussion
+    replyId: string | null;
+  };
+};

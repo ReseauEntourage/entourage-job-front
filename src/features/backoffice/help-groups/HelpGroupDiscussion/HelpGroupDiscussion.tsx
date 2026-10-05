@@ -28,6 +28,7 @@ import {
 } from '../help-groups-participation.labels';
 import { HELP_GROUPS_LOAD_ERROR_LABELS } from '../help-groups.labels';
 import { useDiscussionRealtime } from '../hooks/useDiscussionRealtime';
+import { useMarkSeenOnScreen } from '../hooks/useMarkSeenOnScreen';
 import { StyledDiscussionGone } from './HelpGroupDiscussion.styles';
 import { HelpGroupDiscussionView } from './HelpGroupDiscussionView';
 import { getReplyElementId, getReplyTargetState } from './replyTarget';
@@ -250,6 +251,10 @@ export function HelpGroupDiscussion({
     },
   });
 
+  // Displaying a notified reply (or a reacted message) makes it seen,
+  // whatever the path that led here
+  const seenRef = useMarkSeenOnScreen(!!viewer.id && !isGone);
+
   const onReplied = useCallback((newReplyId: string) => {
     setScrollToReplyId(newReplyId);
   }, []);
@@ -326,6 +331,7 @@ export function HelpGroupDiscussion({
         viewerPermissions={group?.viewerPermissions}
         viewer={viewer}
         threadRef={threadRef}
+        seenRef={seenRef}
         onThreadScroll={onThreadScroll}
         hasNewReply={hasNewReply}
         onNewReplyClick={() => {

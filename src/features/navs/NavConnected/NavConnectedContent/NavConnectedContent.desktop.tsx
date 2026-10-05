@@ -20,6 +20,7 @@ import {
   StyledMessagingIconContainer,
   StyledNavContainerDesktop,
 } from '@/src/features/headers/Header.styles';
+import { NotificationsBell } from '@/src/features/notifications-center';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from '@/src/lib/gtag';
@@ -83,6 +84,15 @@ export const NavConnectedContentDesktop = ({
             )}
           </Dropdown.Menu>
         </Dropdown>
+      )}
+
+      {/* Notifications: only where the menu is shown (onboarding done) */}
+      {links[user.role]?.length > 0 && (
+        <NotificationsBell
+          variant="desktop"
+          color={COLORS.black}
+          unseenCount={badges.notifications}
+        />
       )}
 
       {/* Messages */}

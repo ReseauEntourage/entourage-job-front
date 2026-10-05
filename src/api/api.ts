@@ -62,6 +62,7 @@ import {
   HelpGroupReactionResult,
   HelpGroupReactionTarget,
   HelpGroupReplyDto,
+  NotificationItem,
 } from './types';
 
 export class APIHandler {
@@ -567,6 +568,26 @@ export class APIHandler {
     return this.post(`/companies/${companyId}/invite-collaborators`, params);
   }
 
+  /// ////////////// ///
+  /// notifications  ///
+  /// ////////////// ///
+
+  getNotifications(params: {
+    cursor?: string;
+  }): Promise<AxiosResponse<CursorPage<NotificationItem>>> {
+    return this.get('/notifications', { params });
+  }
+
+  getNotificationsUnseenCount(): Promise<AxiosResponse<{ count: number }>> {
+    return this.get('/notifications/unseen-count');
+  }
+
+  postNotificationsSeen(params: {
+    messageIds: string[];
+  }): Promise<AxiosResponse> {
+    return this.post('/notifications/seen', params);
+  }
+
   /// //////////// ///
   /// help groups  ///
   /// //////////// ///
@@ -614,6 +635,16 @@ export class APIHandler {
 
   deleteHelpGroupMembership(slug: string): Promise<AxiosResponse> {
     return this.delete(`/help-groups/${encodeURIComponent(slug)}/membership`);
+  }
+
+  patchHelpGroupMembership(
+    slug: string,
+    params: { emailsEnabled: boolean }
+  ): Promise<AxiosResponse<{ emailsEnabled: boolean }>> {
+    return this.patch(
+      `/help-groups/${encodeURIComponent(slug)}/membership`,
+      params
+    );
   }
 
   postHelpGroupDiscussion(

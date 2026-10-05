@@ -16,6 +16,8 @@ export const PUSHER_EVENTS = {
   REACTIONS_UPDATED: 'reactions-updated',
   DISCUSSION_UPDATED: 'discussion-updated',
   DISCUSSION_DELETED: 'discussion-deleted',
+  // Notifications center: an empty payload, the bell reloads
+  NOTIFICATIONS_CHANGED: 'notifications-changed',
 };
 
 /**
@@ -25,6 +27,13 @@ export const PUSHER_EVENTS = {
  */
 export const getPostPrivateChannel = (postId: string) =>
   `private-post-${postId}`;
+
+/**
+ * Private channel of the logged-in user (notifications center): the back
+ * only signs it for this user.
+ */
+export const getUserPrivateChannel = (userId: string) =>
+  `private-user-${userId}`;
 
 export type PostRealtimePayload = {
   discussionId: string;

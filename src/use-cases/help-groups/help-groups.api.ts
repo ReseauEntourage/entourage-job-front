@@ -220,6 +220,30 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
       invalidatesTags: [HELP_GROUPS_TAG],
     }),
 
+    /**
+     * "Emails de ce groupe", applied to the group page right away and rolled
+     * back on failure. Nothing else depends on it: no tag is invalidated.
+     */
+    updateHelpGroupEmails: builder.mutation<
+      { emailsEnabled: boolean },
+      { slug: string; emailsEnabled: boolean }
+    >({
+      queryFn: writeMutation(({ slug, emailsEnabled }) =>
+        Api.patchHelpGroupMembership(slug, { emailsEnabled })
+      ),
+      async onQueryStarted(
+        { slug, emailsEnabled },
+        { dispatch, queryFulfilled }
+      ) {
+        const patch = dispatch(
+          helpGroupsApi.util.updateQueryData('getHelpGroup', slug, (draft) => {
+            draft.emailsEnabled = emailsEnabled;
+          })
+        );
+        await queryFulfilled.catch(() => patch.undo());
+      },
+    }),
+
     createHelpGroupDiscussion: builder.mutation<
       HelpGroupDiscussion,
       { slug: string; dto: HelpGroupDiscussionDto }
@@ -698,6 +722,7 @@ export const {
   useDeleteHelpGroupMutation,
   useJoinHelpGroupMutation,
   useLeaveHelpGroupMutation,
+  useUpdateHelpGroupEmailsMutation,
   useCreateHelpGroupDiscussionMutation,
   useSuggestHelpGroupTitleMutation,
   useUpdateHelpGroupDiscussionMutation,

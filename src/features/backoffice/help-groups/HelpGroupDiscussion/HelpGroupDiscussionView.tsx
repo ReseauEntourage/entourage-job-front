@@ -58,6 +58,8 @@ interface HelpGroupDiscussionViewProps {
   onReplied?: (replyId: string) => void;
   onDiscussionGone?: () => void;
   onModerated?: (authorId: string | null) => void;
+  // Ref of a displayed message, to mark its notifications seen once on screen
+  seenRef?: (messageId: string) => (element: HTMLElement | null) => void;
 }
 
 /**
@@ -80,6 +82,7 @@ export function HelpGroupDiscussionView({
   onReplied = () => undefined,
   onDiscussionGone = () => undefined,
   onModerated,
+  seenRef,
 }: HelpGroupDiscussionViewProps) {
   const repliesLabel = formatRepliesLabel(discussion.repliesCount);
   const { group } = discussion;
@@ -110,7 +113,10 @@ export function HelpGroupDiscussionView({
                 onScroll={onThreadScroll}
                 data-testid="discussion-thread"
               >
-                <StyledOriginalMessage data-testid="original-message">
+                <StyledOriginalMessage
+                  data-testid="original-message"
+                  ref={isHidden ? undefined : seenRef?.(discussion.id)}
+                >
                   {!group.isPublished && (
                     <StyledUnpublishedMention>
                       {UNPUBLISHED_MENTION}
@@ -157,6 +163,11 @@ export function HelpGroupDiscussionView({
                       $isHighlighted={reply.id === highlightedReplyId}
                       data-testid="discussion-reply"
                       data-highlighted={reply.id === highlightedReplyId}
+                      ref={
+                        isHelpGroupHiddenMessage(reply)
+                          ? undefined
+                          : seenRef?.(reply.id)
+                      }
                     >
                       {isHelpGroupHiddenMessage(reply) ? (
                         <HiddenHelpGroupMessage />

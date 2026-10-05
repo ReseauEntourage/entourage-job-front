@@ -2,6 +2,8 @@ import type { JSX } from 'react';
 
 export interface NotifBadges {
   messaging: number;
+  // Unseen notifications of the bell (rows, not events)
+  notifications: number;
 }
 
 export type NotifBadge = keyof NotifBadges;
