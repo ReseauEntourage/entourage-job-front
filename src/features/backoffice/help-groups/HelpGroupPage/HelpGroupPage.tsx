@@ -102,7 +102,7 @@ export function HelpGroupPage({
           <MembershipActions slug={group.slug} justJoined={justJoined} />
         )}
         {/* Members only, whatever their write state */}
-        {group.isMember && group.emailsEnabled !== null && (
+        {group.isMember && typeof group.emailsEnabled === 'boolean' && (
           <EmailsSetting
             slug={group.slug}
             emailsEnabled={group.emailsEnabled}

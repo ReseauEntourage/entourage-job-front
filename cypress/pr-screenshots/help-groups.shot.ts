@@ -93,6 +93,7 @@ const groupPage = {
     'Échanger des conseils pour rédiger, mettre à jour et valoriser son CV, quel que soit son parcours.\nLes coachs du réseau y partagent aussi leurs relectures.',
   membersCount: 61,
   isMember: true,
+  emailsEnabled: true,
   isPublished: true,
   viewerPermissions: {
     state: 'canWrite',
@@ -239,6 +240,10 @@ const loginAs = (role: string) => {
   });
   interceptCurrentUserSubResources();
   interceptGetUnseenCount({ statusCode: 200, body: 0 });
+  cy.intercept('GET', '/notifications/unseen-count', {
+    statusCode: 200,
+    body: { count: 0 },
+  });
   cy.intercept('GET', '/gamification/achievement-progression', {
     statusCode: 200,
     body: [],
