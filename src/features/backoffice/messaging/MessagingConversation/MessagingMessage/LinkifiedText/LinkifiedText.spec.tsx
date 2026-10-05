@@ -59,6 +59,16 @@ describe('splitTextAndLinks', () => {
     ]);
   });
 
+  ['ftp://example.com/fichier', 'javascript://example.com/x'].forEach(
+    (content) => {
+      it(`keeps a URL with another scheme as plain text: ${content}`, () => {
+        expect(splitTextAndLinks(content)).toEqual([
+          { type: 'text', value: content },
+        ]);
+      });
+    }
+  );
+
   it('splits text around a URL', () => {
     expect(splitTextAndLinks('Voir https://example.com/offre merci')).toEqual([
       { type: 'text', value: 'Voir ' },

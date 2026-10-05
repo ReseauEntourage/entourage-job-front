@@ -74,23 +74,19 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
               </Text>
               <StyledServiceMessageQuote>
                 <Text size="small" center>
-                  <span>
-                    <LinkifiedText
-                      content={checkinNote.quotedText}
-                      skipExternalLinkWarning={isSentByAdmin}
-                    />
-                  </span>
+                  <LinkifiedText
+                    content={checkinNote.quotedText}
+                    skipExternalLinkWarning={isSentByAdmin}
+                  />
                 </Text>
               </StyledServiceMessageQuote>
             </>
           ) : (
             <Text size="small" center>
-              <span>
-                <LinkifiedText
-                  content={message.content}
-                  skipExternalLinkWarning={isSentByAdmin}
-                />
-              </span>
+              <LinkifiedText
+                content={message.content}
+                skipExternalLinkWarning={isSentByAdmin}
+              />
             </Text>
           )}
         </StyledServiceMessage>
@@ -110,12 +106,10 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       <StyledMessage className={isOwnMessage ? 'own-message' : ''}>
         {message.medias.length > 0 && <MessageMedias medias={message.medias} />}
         <Text>
-          <span>
-            <LinkifiedText
-              content={message.content}
-              skipExternalLinkWarning={isSentByAdmin}
-            />
-          </span>
+          <LinkifiedText
+            content={message.content}
+            skipExternalLinkWarning={isSentByAdmin}
+          />
         </Text>
       </StyledMessage>
       {!isOwnMessage && isSuspicious && (
