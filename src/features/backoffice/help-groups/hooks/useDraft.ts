@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  getHelpGroupDraftsGeneration,
   readHelpGroupDraft,
   writeHelpGroupDraft,
 } from '@/src/use-cases/help-groups';
@@ -30,7 +31,11 @@ export const useDraft = <T extends object>(
   }
   const value = state.key === key ? state.value : read(key);
 
-  const pending = useRef<{ key: string; value: T } | null>(null);
+  const pending = useRef<{
+    key: string;
+    value: T;
+    generation: number;
+  } | null>(null);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const flush = useCallback(() => {
@@ -39,8 +44,13 @@ export const useDraft = <T extends object>(
       timeout.current = null;
     }
     if (pending.current) {
-      const { key: draftKey, value: draftValue } = pending.current;
-      writeHelpGroupDraft(draftKey, isEmpty(draftValue) ? null : draftValue);
+      const { key: draftKey, value: draftValue, generation } = pending.current;
+      // Dropped when the drafts were purged (logout) in the meantime
+      writeHelpGroupDraft(
+        draftKey,
+        isEmpty(draftValue) ? null : draftValue,
+        generation
+      );
       pending.current = null;
     }
     // `isEmpty` is a stable predicate given by the caller
@@ -55,7 +65,11 @@ export const useDraft = <T extends object>(
             ? (next as (current: T) => T)(current.value)
             : next;
         if (current.key) {
-          pending.current = { key: current.key, value: nextValue };
+          pending.current = {
+            key: current.key,
+            value: nextValue,
+            generation: getHelpGroupDraftsGeneration(),
+          };
           if (timeout.current) {
             clearTimeout(timeout.current);
           }

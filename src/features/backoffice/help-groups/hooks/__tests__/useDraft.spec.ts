@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
+import { purgeHelpGroupDrafts } from '@/src/use-cases/help-groups';
 import { useDraft } from '../useDraft';
 
 type Draft = { content: string };
@@ -69,6 +70,32 @@ describe('useDraft', () => {
       window.dispatchEvent(new Event('pagehide'));
     });
     expect(stored('k1')).toEqual({ content: 'Avant fermeture' });
+  });
+
+  it('never writes back a draft typed before a logout purge', () => {
+    const { result, unmount } = renderHook(() =>
+      useDraft<Draft>('help-groups:draft:u1:group:g1', EMPTY, isEmpty)
+    );
+    act(() => result.current[1]({ content: 'Texte privé' }));
+    // Logout while the composer is still mounted, then the page unmounts
+    purgeHelpGroupDrafts();
+    unmount();
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(stored('help-groups:draft:u1:group:g1')).toBeNull();
+  });
+
+  it('drops a pending debounced write after a logout purge', () => {
+    const { result } = renderHook(() =>
+      useDraft<Draft>('help-groups:draft:u1:group:g1', EMPTY, isEmpty)
+    );
+    act(() => result.current[1]({ content: 'Texte privé' }));
+    purgeHelpGroupDrafts();
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(stored('help-groups:draft:u1:group:g1')).toBeNull();
   });
 
   it('erases the draft on clear, cancelling a pending write', () => {

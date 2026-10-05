@@ -7,6 +7,12 @@
  */
 export const HELP_GROUPS_DRAFT_PREFIX = 'help-groups:draft:';
 
+// Incremented by each purge (logout): a write recorded before it, still
+// pending in a mounted composer, must never bring a draft back
+let draftsGeneration = 0;
+
+export const getHelpGroupDraftsGeneration = () => draftsGeneration;
+
 export const getHelpGroupDraftKey = (
   userId: string,
   scope: 'group' | 'discussion',
@@ -22,7 +28,15 @@ export const readHelpGroupDraft = <T>(key: string): T | null => {
   }
 };
 
-export const writeHelpGroupDraft = <T>(key: string, value: T | null) => {
+export const writeHelpGroupDraft = <T>(
+  key: string,
+  value: T | null,
+  // Generation at which the value was typed: stale after a purge
+  generation: number = draftsGeneration
+) => {
+  if (generation !== draftsGeneration) {
+    return;
+  }
   try {
     if (value === null) {
       window.localStorage.removeItem(key);
@@ -38,6 +52,7 @@ export const writeHelpGroupDraft = <T>(key: string, value: T | null) => {
  * Removes every help groups draft, of any person (shared computer).
  */
 export const purgeHelpGroupDrafts = () => {
+  draftsGeneration += 1;
   try {
     const keys: string[] = [];
     for (let index = 0; index < window.localStorage.length; index += 1) {
