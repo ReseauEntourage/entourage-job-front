@@ -359,6 +359,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         );
         if (isDone) {
           dispatch(removeReply({ slug, discussionId }, replyId));
+          dispatch(decrementRepliesCount({ slug, discussionId }));
         }
       },
       invalidatesTags: (_result, error) =>
@@ -430,6 +431,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         );
         if (isDone && kind === 'replies' && slug && discussionId) {
           dispatch(removeReply({ slug, discussionId }, id));
+          dispatch(decrementRepliesCount({ slug, discussionId }));
         }
       },
       invalidatesTags: (_result, error) =>
@@ -524,6 +526,11 @@ export const appendReply = (key: RepliesCacheKey, reply: HelpGroupReply) =>
 
 export const removeReply = (key: RepliesCacheKey, replyId: string) =>
   updateReplies(key, (reply) => (reply.id === replyId ? null : reply));
+
+const decrementRepliesCount = (key: RepliesCacheKey) =>
+  helpGroupsApi.util.updateQueryData('getHelpGroupDiscussion', key, (draft) => {
+    draft.repliesCount = Math.max(0, draft.repliesCount - 1);
+  });
 
 type ReactionState = Pick<
   HelpGroupReactionResult,
