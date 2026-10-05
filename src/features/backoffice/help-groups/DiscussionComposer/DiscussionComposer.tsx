@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Text } from '@/src/components/ui';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
-import { selectCurrentUserId } from '@/src/use-cases/current-user';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 import {
   getHelpGroupDraftKey,
   HelpGroupsWriteError,
@@ -95,7 +95,7 @@ export function DiscussionComposer({
   openSignal = 0,
 }: DiscussionComposerProps) {
   const dispatch = useDispatch();
-  const userId = useSelector(selectCurrentUserId);
+  const userId = useSelector(selectCurrentUser)?.id;
   const [draft, setDraft, clearDraft] = useDraft<DiscussionDraft>(
     userId ? getHelpGroupDraftKey(userId, 'group', groupId) : null,
     EMPTY_DRAFT,
