@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Section, Text } from '@/src/components/ui';
 import { UserRoles } from '@/src/constants/users';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
+import { AppDispatch } from '@/src/store/store';
 import { selectCurrentUser } from '@/src/use-cases/current-user';
 import {
   HelpGroupsError,
@@ -47,7 +48,7 @@ export function HelpGroupDiscussion({
   discussionId,
   replyId,
 }: HelpGroupDiscussionProps) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const currentUser = useSelector(selectCurrentUser);
   const viewer: HelpGroupViewer = useMemo(
     () => ({

@@ -20,6 +20,7 @@ const defaultProps = {
   replies: [],
   highlightedReplyId: null,
   isLoadingReplies: false,
+  viewer: { id: 'viewer-1', firstName: 'Julien', isAdmin: false },
 };
 
 describe('HelpGroupDiscussionView', () => {
