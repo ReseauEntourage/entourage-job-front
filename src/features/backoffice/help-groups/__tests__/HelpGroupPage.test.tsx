@@ -20,6 +20,11 @@ const groupPage = {
   membersCount: 128,
   isMember: false,
   isPublished: true,
+  viewerPermissions: {
+    state: 'mustJoin' as const,
+    charterAccepted: false,
+    showWelcomeInvite: false,
+  },
 };
 
 describe('Help group page', () => {

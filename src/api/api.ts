@@ -52,6 +52,13 @@ import {
   HelpGroupDto,
   HelpGroupPage,
   HelpGroupReply,
+  HelpGroupDiscussionDto,
+  HelpGroupMessageRevisions,
+  HelpGroupModerationDto,
+  HelpGroupReactionEmoji,
+  HelpGroupReactionResult,
+  HelpGroupReactionTarget,
+  HelpGroupReplyDto,
 } from './types';
 
 export class APIHandler {
@@ -124,8 +131,8 @@ export class APIHandler {
     return this.api.patch(route, payload, { headers });
   }
 
-  private delete(route: string): Promise<AxiosResponse> {
-    return this.api.delete(route);
+  private delete(route: string, payload?: object): Promise<AxiosResponse> {
+    return this.api.delete(route, payload ? { data: payload } : undefined);
   }
 
   /// //////
@@ -595,6 +602,129 @@ export class APIHandler {
     return this.get(
       `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies`,
       { params }
+    );
+  }
+
+  postHelpGroupMembership(slug: string): Promise<AxiosResponse> {
+    return this.post(`/help-groups/${encodeURIComponent(slug)}/membership`, {});
+  }
+
+  deleteHelpGroupMembership(slug: string): Promise<AxiosResponse> {
+    return this.delete(`/help-groups/${encodeURIComponent(slug)}/membership`);
+  }
+
+  postHelpGroupDiscussion(
+    slug: string,
+    params: HelpGroupDiscussionDto
+  ): Promise<AxiosResponse<HelpGroupDiscussion>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions`,
+      params
+    );
+  }
+
+  postHelpGroupTitleSuggestion(
+    slug: string,
+    params: { content: string; previousTitles?: string[] }
+  ): Promise<AxiosResponse<{ title: string | null }>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/title-suggestions`,
+      params
+    );
+  }
+
+  patchHelpGroupDiscussion(
+    slug: string,
+    discussionId: string,
+    params: { title?: string; content?: string }
+  ): Promise<AxiosResponse<HelpGroupDiscussion>> {
+    return this.patch(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`,
+      params
+    );
+  }
+
+  deleteHelpGroupDiscussion(
+    slug: string,
+    discussionId: string
+  ): Promise<AxiosResponse> {
+    return this.delete(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`
+    );
+  }
+
+  postHelpGroupReply(
+    slug: string,
+    discussionId: string,
+    params: HelpGroupReplyDto
+  ): Promise<AxiosResponse<HelpGroupReply>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies`,
+      params
+    );
+  }
+
+  patchHelpGroupReply(
+    slug: string,
+    discussionId: string,
+    replyId: string,
+    params: { content: string }
+  ): Promise<AxiosResponse<HelpGroupReply>> {
+    return this.patch(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies/${encodeURIComponent(replyId)}`,
+      params
+    );
+  }
+
+  deleteHelpGroupReply(
+    slug: string,
+    discussionId: string,
+    replyId: string
+  ): Promise<AxiosResponse> {
+    return this.delete(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies/${encodeURIComponent(replyId)}`
+    );
+  }
+
+  putHelpGroupReaction(
+    slug: string,
+    discussionId: string,
+    params: { target: HelpGroupReactionTarget; emoji: HelpGroupReactionEmoji }
+  ): Promise<AxiosResponse<HelpGroupReactionResult>> {
+    return this.put(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reactions`,
+      params
+    );
+  }
+
+  deleteHelpGroupReaction(
+    slug: string,
+    discussionId: string,
+    params: { target: HelpGroupReactionTarget }
+  ): Promise<AxiosResponse<HelpGroupReactionResult>> {
+    return this.delete(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reactions`,
+      params
+    );
+  }
+
+  deleteAdminHelpGroupMessage(
+    kind: 'discussions' | 'replies',
+    id: string,
+    params: HelpGroupModerationDto
+  ): Promise<AxiosResponse> {
+    return this.delete(
+      `/admin/help-groups/${kind}/${encodeURIComponent(id)}`,
+      params
+    );
+  }
+
+  getAdminHelpGroupMessageRevisions(
+    kind: 'discussions' | 'replies',
+    id: string
+  ): Promise<AxiosResponse<HelpGroupMessageRevisions>> {
+    return this.get(
+      `/admin/help-groups/${kind}/${encodeURIComponent(id)}/revisions`
     );
   }
 

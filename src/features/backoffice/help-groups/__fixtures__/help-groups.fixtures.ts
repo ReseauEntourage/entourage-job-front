@@ -3,6 +3,7 @@ import {
   HelpGroupCard,
   HelpGroupDiscussion,
   HelpGroupDiscussionItem,
+  HelpGroupPage,
   HelpGroupReply,
 } from '@/src/api/types';
 
@@ -14,6 +15,7 @@ export const buildAuthor = (
   lastNameInitial: 'L.',
   roleLabel: 'Coach',
   isDeleted: false,
+  isAdmin: false,
   profileLinkable: true,
   ...props,
 });
@@ -24,6 +26,7 @@ export const deletedAuthor: HelpGroupAuthor = {
   lastNameInitial: null,
   roleLabel: null,
   isDeleted: true,
+  isAdmin: false,
   profileLinkable: false,
 };
 
@@ -60,6 +63,7 @@ export const buildDiscussion = (
   ...buildDiscussionItem(),
   content: 'Bonjour à tous',
   editedAt: null,
+  viewerReaction: null,
   group: {
     id: 'group-1',
     slug: 'refaire-un-cv',
@@ -78,5 +82,24 @@ export const buildReply = (
   editedAt: null,
   author: buildAuthor(),
   reactionsSummary: null,
+  viewerReaction: null,
+  ...props,
+});
+
+export const buildGroupPage = (
+  props: Partial<HelpGroupPage> = {}
+): HelpGroupPage => ({
+  id: 'group-1',
+  slug: 'refaire-un-cv',
+  name: 'Refaire un CV',
+  description: 'Échanger sur la rédaction de son CV',
+  membersCount: 128,
+  isMember: true,
+  isPublished: true,
+  viewerPermissions: {
+    state: 'canWrite',
+    charterAccepted: true,
+    showWelcomeInvite: false,
+  },
   ...props,
 });

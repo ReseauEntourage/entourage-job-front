@@ -924,6 +924,8 @@ export type HelpGroupAuthor = {
   lastNameInitial: string | null;
   roleLabel: string | null;
   isDeleted: boolean;
+  // Entourage admin: their links open without the external link warning
+  isAdmin: boolean;
   profileLinkable: boolean;
   // Only for the author of the original message, when the profile is linkable
   department?: string | null;
@@ -953,6 +955,21 @@ export type HelpGroupCard = {
   pinnedAt: string | null;
 };
 
+export type HelpGroupViewerState =
+  'canWrite' | 'mustJoin' | 'mustCompleteElearning';
+
+/**
+ * What the viewer can do in a group, computed by the back: the front picks
+ * the invitation shown instead of the write actions from it.
+ */
+export type HelpGroupViewerPermissions = {
+  state: HelpGroupViewerState;
+  // The charter is common to every group and accepted once per person
+  charterAccepted: boolean;
+  // Member for less than 7 days who has not published in the group yet
+  showWelcomeInvite: boolean;
+};
+
 export type HelpGroupPage = {
   id: string;
   slug: string;
@@ -961,6 +978,7 @@ export type HelpGroupPage = {
   membersCount: number;
   isMember: boolean;
   isPublished: boolean;
+  viewerPermissions: HelpGroupViewerPermissions;
 };
 
 export type HelpGroupDiscussionItem = {
@@ -976,6 +994,7 @@ export type HelpGroupDiscussionItem = {
 export type HelpGroupDiscussion = HelpGroupDiscussionItem & {
   content: string;
   editedAt: string | null;
+  viewerReaction: HelpGroupReactionEmoji | null;
   group: { id: string; slug: string; name: string; isPublished: boolean };
 };
 
@@ -986,6 +1005,7 @@ export type HelpGroupReply = {
   editedAt: string | null;
   author: HelpGroupAuthor;
   reactionsSummary: HelpGroupReactionsSummary | null;
+  viewerReaction: HelpGroupReactionEmoji | null;
 };
 
 export type CursorPage<T> = {
@@ -1010,6 +1030,49 @@ export type HelpGroupAdminItem = {
 export type HelpGroupDto = {
   name: string;
   description: string;
+};
+
+export type HelpGroupTitleSource = 'AI_ACCEPTED' | 'AI_EDITED' | 'MANUAL';
+
+export type HelpGroupDiscussionDto = {
+  title: string;
+  content: string;
+  titleSource: HelpGroupTitleSource;
+  acceptCharter?: boolean;
+};
+
+export type HelpGroupReplyDto = {
+  content: string;
+  acceptCharter?: boolean;
+};
+
+// The reacted message: the discussion itself or one of its replies
+export type HelpGroupReactionTarget =
+  { discussionId: string } | { replyId: string };
+
+export type HelpGroupReactionResult = {
+  targetId: string;
+  reactionsSummary: HelpGroupReactionsSummary | null;
+  viewerReaction: HelpGroupReactionEmoji | null;
+};
+
+export type HelpGroupDeletionReason =
+  'PERSONAL_DATA' | 'DISRESPECT' | 'SPAM' | 'OFF_TOPIC' | 'OTHER';
+
+export type HelpGroupModerationDto = {
+  reason: HelpGroupDeletionReason;
+  comment?: string;
+};
+
+export type HelpGroupMessageRevisions = {
+  current: { title: string | null; content: string; date: string };
+  // Most recent first
+  previous: {
+    id: string;
+    title: string | null;
+    content: string;
+    createdAt: string;
+  }[];
 };
 
 export type HelpGroupAdminAction =
