@@ -115,7 +115,8 @@ export function HelpGroupMessage({
   const [editedTitle, setEditedTitle] = useState(message.title ?? '');
   const [editedContent, setEditedContent] = useState(message.content);
 
-  const [setReaction] = useSetHelpGroupReactionMutation();
+  const [setReaction, { isLoading: isReacting }] =
+    useSetHelpGroupReactionMutation();
   const [updateDiscussion, { isLoading: isUpdatingDiscussion }] =
     useUpdateHelpGroupDiscussionMutation();
   const [updateReply, { isLoading: isUpdatingReply }] =
@@ -129,6 +130,11 @@ export function HelpGroupMessage({
     );
 
   const onReact = async (emoji: HelpGroupReactionEmoji | null) => {
+    // One reaction request at a time per message: the rollback of a failed
+    // request must never undo a newer optimistic change
+    if (isReacting) {
+      return;
+    }
     const result = await setReaction({
       slug,
       discussionId,
@@ -323,6 +329,7 @@ export function HelpGroupMessage({
         <ReactionsSummary summary={message.reactionsSummary} />
         {canReact && (
           <ReactionPicker
+            disabled={isReacting}
             viewerReaction={message.viewerReaction}
             onChange={onReact}
           />

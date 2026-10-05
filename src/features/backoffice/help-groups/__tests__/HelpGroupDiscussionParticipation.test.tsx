@@ -25,6 +25,7 @@ import {
 
 const mockCreateReply = jest.fn();
 const mockSetReaction = jest.fn();
+let mockIsReacting = false;
 const mockDeleteMessage = jest.fn();
 const mockFetchRevisions = jest.fn();
 let mockRevisionsState: object = {};
@@ -35,7 +36,10 @@ jest.mock('@/src/use-cases/help-groups', () => ({
     mockCreateReply,
     { isLoading: false },
   ],
-  useSetHelpGroupReactionMutation: () => [mockSetReaction],
+  useSetHelpGroupReactionMutation: () => [
+    mockSetReaction,
+    { isLoading: mockIsReacting },
+  ],
   useUpdateHelpGroupDiscussionMutation: () => [jest.fn(), {}],
   useUpdateHelpGroupReplyMutation: () => [jest.fn(), {}],
   useDeleteHelpGroupDiscussionMutation: () => [jest.fn()],
@@ -309,6 +313,24 @@ describe('Discussion participation', () => {
       const onChange = renderPicker('💪');
       fireEvent.click(screen.getByTestId('reaction-option-💪'));
       expect(onChange).toHaveBeenCalledWith(null);
+    });
+
+    it('disables the reaction of a message while its previous one is being saved', () => {
+      mockIsReacting = true;
+      renderView();
+      expect(screen.getByTestId('reaction-toggle')).toBeDisabled();
+      mockIsReacting = false;
+    });
+
+    it('cannot be opened while the previous reaction is being saved', () => {
+      renderWithProviders(
+        <ReactionPicker viewerReaction={null} disabled onChange={jest.fn()} />
+      );
+      expect(screen.getByTestId('reaction-toggle')).toBeDisabled();
+      fireEvent.click(screen.getByTestId('reaction-toggle'));
+      expect(
+        screen.queryByTestId('reaction-option-💪')
+      ).not.toBeInTheDocument();
     });
 
     it('shows a discreet error when the reaction fails', async () => {

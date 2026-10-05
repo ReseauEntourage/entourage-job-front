@@ -14,8 +14,13 @@ export const StyledReactionToggle = styled.button`
   font-size: 14px;
   cursor: pointer;
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: ${COLORS.primaryBlue};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
   }
 `;
 

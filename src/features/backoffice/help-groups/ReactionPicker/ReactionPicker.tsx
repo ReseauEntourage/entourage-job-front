@@ -11,6 +11,8 @@ import {
 
 interface ReactionPickerProps {
   viewerReaction: HelpGroupReactionEmoji | null;
+  // While the previous change of the viewer is being saved
+  disabled?: boolean;
   // null removes the viewer's reaction
   onChange: (emoji: HelpGroupReactionEmoji | null) => void;
 }
@@ -21,6 +23,7 @@ interface ReactionPickerProps {
  */
 export function ReactionPicker({
   viewerReaction,
+  disabled = false,
   onChange,
 }: ReactionPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +33,7 @@ export function ReactionPicker({
       <StyledReactionToggle
         type="button"
         aria-expanded={isOpen}
+        disabled={disabled}
         onClick={() => setIsOpen((open) => !open)}
         data-testid="reaction-toggle"
       >
