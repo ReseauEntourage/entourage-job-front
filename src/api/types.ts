@@ -5,6 +5,7 @@ import {
   WorkingExperience,
 } from '@/src/constants';
 import { AdminZone, DepartmentName } from '@/src/constants/departements';
+import { ReportReasonValue } from '@/src/constants/reports';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
@@ -41,6 +42,8 @@ export const APIRoutes = {
   CHECKIN: 'checkin',
   HELP_GROUPS: 'help-groups',
   ADMIN_HELP_GROUPS: 'admin/help-groups',
+  ADMIN_REPORTS: 'admin/reports',
+  NOTIFICATIONS: 'notifications',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -228,15 +231,18 @@ export type Event = {
   publicSensibilise: PublicSensibilise[] | null;
 };
 
-export type UserReportDto = {
-  reason: string;
-  comment: string;
+/**
+ * Contract shared by the conversation, profile and help group message
+ * reports: a motive among the shared ones and an optional comment.
+ */
+export type ReportDto = {
+  reason: ReportReasonValue;
+  comment?: string;
 };
 
-export type ConversationReportDto = {
-  reason: string;
-  comment: string;
-};
+export type UserReportDto = ReportDto;
+
+export type ConversationReportDto = ReportDto;
 
 export type UserSocialSituation = {
   hasCompletedSurvey: boolean;
@@ -924,6 +930,8 @@ export type HelpGroupAuthor = {
   lastNameInitial: string | null;
   roleLabel: string | null;
   isDeleted: boolean;
+  // Entourage admin: their links open without the external link warning
+  isAdmin: boolean;
   profileLinkable: boolean;
   // Only for the author of the original message, when the profile is linkable
   department?: string | null;
@@ -953,6 +961,21 @@ export type HelpGroupCard = {
   pinnedAt: string | null;
 };
 
+export type HelpGroupViewerState =
+  'canWrite' | 'mustJoin' | 'mustCompleteElearning';
+
+/**
+ * What the viewer can do in a group, computed by the back: the front picks
+ * the invitation shown instead of the write actions from it.
+ */
+export type HelpGroupViewerPermissions = {
+  state: HelpGroupViewerState;
+  // The charter is common to every group and accepted once per person
+  charterAccepted: boolean;
+  // Member for less than 7 days who has not published in the group yet
+  showWelcomeInvite: boolean;
+};
+
 export type HelpGroupPage = {
   id: string;
   slug: string;
@@ -960,8 +983,14 @@ export type HelpGroupPage = {
   description: string;
   membersCount: number;
   isMember: boolean;
+  // "Emails de ce groupe" of the viewer; null when not a member
+  emailsEnabled: boolean | null;
   isPublished: boolean;
+  viewerPermissions: HelpGroupViewerPermissions;
 };
+
+// Same motives as every report
+export type HelpGroupReportReason = ReportReasonValue;
 
 export type HelpGroupDiscussionItem = {
   id: string;
@@ -971,13 +1000,48 @@ export type HelpGroupDiscussionItem = {
   author: HelpGroupAuthor;
   repliesCount: number;
   reactionsSummary: HelpGroupReactionsSummary | null;
+  // Hidden after reports: only listed for its author and the admins
+  isUnderReview: boolean;
+};
+
+export type HelpGroupDiscussionGroup = {
+  id: string;
+  slug: string;
+  name: string;
+  isPublished: boolean;
 };
 
 export type HelpGroupDiscussion = HelpGroupDiscussionItem & {
   content: string;
   editedAt: string | null;
-  group: { id: string; slug: string; name: string; isPublished: boolean };
+  viewerReaction: HelpGroupReactionEmoji | null;
+  group: HelpGroupDiscussionGroup;
+  // Admins only, on a message under review
+  reportReasons?: HelpGroupReportReason[];
 };
+
+/**
+ * A message hidden after reports, for a reader who is neither its author nor
+ * an admin: the back sends neither its content, title, author nor reactions.
+ * A hidden reply is exactly this shape.
+ */
+export type HelpGroupHiddenMessage = {
+  id: string;
+  isUnderReview: true;
+};
+
+/**
+ * A hidden discussion stays readable at its address with its replies: for a
+ * reader, the back adds its group and replies count (and nothing else) to
+ * the minimal projection — `GET /help-groups/:slug/discussions/:id`.
+ */
+export type HelpGroupHiddenDiscussion = HelpGroupHiddenMessage & {
+  group: HelpGroupDiscussionGroup;
+  repliesCount: number;
+};
+
+export type HelpGroupDiscussionView =
+  HelpGroupDiscussion | HelpGroupHiddenDiscussion;
 
 export type HelpGroupReply = {
   id: string;
@@ -986,6 +1050,24 @@ export type HelpGroupReply = {
   editedAt: string | null;
   author: HelpGroupAuthor;
   reactionsSummary: HelpGroupReactionsSummary | null;
+  viewerReaction: HelpGroupReactionEmoji | null;
+  isUnderReview: boolean;
+  // Admins only, on a message under review
+  reportReasons?: HelpGroupReportReason[];
+};
+
+export type HelpGroupReplyView = HelpGroupReply | HelpGroupHiddenMessage;
+
+export const isHelpGroupHiddenMessage = (
+  message: HelpGroupDiscussionView | HelpGroupReplyView
+): message is HelpGroupHiddenMessage | HelpGroupHiddenDiscussion =>
+  !('content' in message);
+
+// The reported message: the discussion itself or one of its replies
+export type HelpGroupReportDto = {
+  target: { discussionId: string } | { replyId: string };
+  reason: HelpGroupReportReason;
+  comment?: string;
 };
 
 export type CursorPage<T> = {
@@ -1012,5 +1094,170 @@ export type HelpGroupDto = {
   description: string;
 };
 
+export type HelpGroupTitleSource = 'AI_ACCEPTED' | 'AI_EDITED' | 'MANUAL';
+
+export type HelpGroupDiscussionDto = {
+  title: string;
+  content: string;
+  titleSource: HelpGroupTitleSource;
+  acceptCharter?: boolean;
+};
+
+export type HelpGroupReplyDto = {
+  content: string;
+  acceptCharter?: boolean;
+};
+
+// The reacted message: the discussion itself or one of its replies
+export type HelpGroupReactionTarget =
+  { discussionId: string } | { replyId: string };
+
+export type HelpGroupReactionResult = {
+  targetId: string;
+  reactionsSummary: HelpGroupReactionsSummary | null;
+  viewerReaction: HelpGroupReactionEmoji | null;
+};
+
+export type HelpGroupDeletionReason =
+  'PERSONAL_DATA' | 'DISRESPECT' | 'SPAM' | 'OFF_TOPIC' | 'OTHER';
+
+export type HelpGroupModerationDto = {
+  reason: HelpGroupDeletionReason;
+  comment?: string;
+};
+
+export type HelpGroupMessageRevisions = {
+  current: { title: string | null; content: string; date: string };
+  // Most recent first
+  previous: {
+    id: string;
+    title: string | null;
+    content: string;
+    createdAt: string;
+  }[];
+};
+
 export type HelpGroupAdminAction =
   'publish' | 'unpublish' | 'pin' | 'unpin' | 'restore';
+
+// Notifications center (the bell)
+
+export type NotificationType = 'HELP_GROUP_REPLY' | 'HELP_GROUP_REACTION';
+
+/**
+ * A notification of the bell, one per subject (a discussion for the replies,
+ * a message for the reactions). The label is composed by the back, in first
+ * names and never with a number.
+ */
+export type NotificationItem = {
+  id: string;
+  type: NotificationType;
+  label: string;
+  // Beginning of the latest reply, for a reply notification
+  excerpt: string | null;
+  context: {
+    groupName: string;
+    discussionTitle: string | null;
+  };
+  lastEventAt: string;
+  seen: boolean;
+  destination: {
+    slug: string;
+    discussionId: string;
+    // The first unseen reply, or the reacted reply; null for the discussion
+    replyId: string | null;
+  };
+};
+
+/*
+ * Reports admin tab ("Signalements")
+ */
+
+export type ReportTargetType =
+  'POST' | 'POST_REPLY' | 'CONVERSATION' | 'USER_PROFILE';
+
+// Type filter of the tab: discussions and replies are "group messages"
+export type ReportTargetFilter =
+  'CONVERSATION' | 'USER_PROFILE' | 'GROUP_MESSAGE';
+
+// PENDING while one of the reports of the target is still to handle
+export type ReportTargetStatus = 'PENDING' | 'RESOLVED';
+
+export type ReportReason = ReportDto['reason'];
+
+export type ReportTargetItem = {
+  targetType: ReportTargetType;
+  targetId: string;
+  label: string;
+  zones: AdminZone[];
+  pendingCount: number;
+  reportsCount: number;
+  reasons: ReportReason[];
+  lastReportedAt: string;
+  status: ReportTargetStatus;
+};
+
+export type ReportTargetsParams = {
+  type?: ReportTargetFilter;
+  status?: ReportTargetStatus;
+  zone?: AdminZone;
+  cursor?: string;
+};
+
+// Null for a deleted account, shown "Utilisateur supprimé"
+export type ReportUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: UserRoles;
+  zone: AdminZone | null;
+} | null;
+
+export type ReportItem = {
+  id: string;
+  reporter: ReportUser;
+  reason: ReportReason;
+  comment: string | null;
+  zone: AdminZone | null;
+  status: 'PENDING' | 'RESOLVED';
+  createdAt: string;
+  resolution: 'RESTORED' | 'DELETED' | 'MANUAL' | null;
+  resolvedAt: string | null;
+  resolvedBy: ReportUser;
+  resolutionNote: string | null;
+};
+
+export type ReportGroupMessageState = 'VISIBLE' | 'HIDDEN' | 'DELETED';
+
+export type ReportTargetContext =
+  | { targetType: 'CONVERSATION'; participants: ReportUser[] }
+  | { targetType: 'USER_PROFILE'; user: ReportUser }
+  | {
+      targetType: 'POST' | 'POST_REPLY';
+      group: { id: string; name: string; slug: string } | null;
+      message: {
+        discussionId: string;
+        replyId: string | null;
+        title: string | null;
+        content: string;
+        author: ReportUser;
+        state: ReportGroupMessageState;
+        createdAt: string;
+      } | null;
+    };
+
+export type ReportTargetDetail = {
+  targetType: ReportTargetType;
+  targetId: string;
+  label: string;
+  status: ReportTargetStatus;
+  // False for a group message, handled in its group
+  canResolve: boolean;
+  reports: ReportItem[];
+  context: ReportTargetContext;
+};
+
+export type ReportConversationMessagesPage = {
+  messages: Message[];
+  nextCursor: string | null;
+};

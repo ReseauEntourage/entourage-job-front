@@ -31,6 +31,11 @@ const group = {
   membersCount: 3,
   isMember: false,
   isPublished: true,
+  viewerPermissions: {
+    state: 'mustJoin' as const,
+    charterAccepted: false,
+    showWelcomeInvite: false,
+  },
 };
 
 const discussionsResult = (overrides = {}) => ({

@@ -13,6 +13,7 @@ import {
   StyledMessagingIconContainer,
   StyledNavContainerMobile,
 } from '@/src/features/headers/Header.styles';
+import { NotificationsBell } from '@/src/features/notifications-center';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import { gaEvent } from '@/src/lib/gtag';
@@ -56,6 +57,14 @@ export const NavConnectedContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
+            {/* Notifications: only where the menu is shown (onboarding done) */}
+            {links[user.role]?.length > 0 && (
+              <NotificationsBell
+                variant="mobile"
+                color="white"
+                unseenCount={badges.notifications}
+              />
+            )}
             {/* Messages */}
             <StyledMessagingIconContainer>
               <ButtonIcon
@@ -181,6 +190,11 @@ export const NavConnectedContentMobile = ({
                     </span>
                     {administration.name}
                   </span>
+                  {administration.badge && badges[administration.badge] > 0 && (
+                    <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                      {badges[administration.badge]}
+                    </Tag>
+                  )}
                 </a>
                 <SubMenu items={administration.subMenu} badges={badges} />
               </StyledConnectedItemMobile>

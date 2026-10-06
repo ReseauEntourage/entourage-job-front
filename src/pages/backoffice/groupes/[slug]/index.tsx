@@ -9,7 +9,13 @@ const HelpGroup = () => {
 
   return (
     <LayoutBackOffice title="Groupes">
-      <HelpGroupPage slug={slug} />
+      {/* Keyed by group: no state (just joined, open composer) carries
+          over to another group on a client side navigation */}
+      <HelpGroupPage
+        key={slug}
+        slug={slug}
+        highlightEmails={query.emails === '1'}
+      />
     </LayoutBackOffice>
   );
 };

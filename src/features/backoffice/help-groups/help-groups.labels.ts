@@ -110,3 +110,15 @@ export const formatHelpGroupDate = (date: string | Date): string =>
 
 export const getProfileHref = (userId: string): string =>
   `/backoffice/profile/${userId}`;
+
+/**
+ * Date and time of a version, e.g. "1 octobre 2026 à 14:05".
+ */
+export const formatHelpGroupDateTime = (date: string | Date): string =>
+  new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(date));

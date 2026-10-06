@@ -2,7 +2,10 @@ import { interceptCurrentUserSubResources } from '../e2e/intercept/current-user.
 import { interceptCurrentUser } from '../e2e/intercept/user/auth.req';
 import { interceptGetUnseenCount } from '../e2e/intercept/user/messaging.req';
 import bootstrap from '../e2e/test/bootstrap';
-import { buildCurrentUser } from '../fixtures/src/messaging/messagingBuilders';
+import {
+  buildCurrentUser,
+  CURRENT_USER_ID,
+} from '../fixtures/src/messaging/messagingBuilders';
 
 const author = (
   id: string,
@@ -16,6 +19,7 @@ const author = (
   lastNameInitial,
   roleLabel,
   isDeleted: false,
+  isAdmin: roleLabel === 'Équipe Entourage',
   profileLinkable: true,
   ...extra,
 });
@@ -26,11 +30,13 @@ const deletedAuthor = {
   lastNameInitial: null,
   roleLabel: null,
   isDeleted: true,
+  isAdmin: false,
   profileLinkable: false,
 };
 
 const amina = author('user-amina', 'Amina', 'L.', 'Coach');
-const julien = author('user-julien', 'Julien', 'P.', 'Candidat', {
+// The logged-in candidate: their messages get the author actions
+const julien = author(CURRENT_USER_ID, 'Julien', 'P.', 'Candidat', {
   department: 'Paris (75)',
 });
 const team = author('user-admin', 'Claire', 'M.', 'Équipe Entourage', {
@@ -87,7 +93,13 @@ const groupPage = {
     'Échanger des conseils pour rédiger, mettre à jour et valoriser son CV, quel que soit son parcours.\nLes coachs du réseau y partagent aussi leurs relectures.',
   membersCount: 61,
   isMember: true,
+  emailsEnabled: true,
   isPublished: true,
+  viewerPermissions: {
+    state: 'canWrite',
+    charterAccepted: false,
+    showWelcomeInvite: true,
+  },
 };
 
 const discussions = [
@@ -133,6 +145,7 @@ const discussion = {
   content:
     'Bonjour à tous,\nJ’ai arrêté de travailler pendant deux ans pour m’occuper de ma famille. Comment le présenter sans que ce soit un frein ?\nJ’ai trouvé ce guide, mais je ne sais pas s’il est à jour : https://www.example.com/guide-cv',
   editedAt: null,
+  viewerReaction: '💪',
   group: {
     id: 'group-cv',
     slug: 'refaire-un-cv',
@@ -147,7 +160,8 @@ const replies = [
     content:
       'Bonjour Julien, une ligne « Projet familial » avec les dates suffit, sans se justifier davantage.',
     createdAt: '2026-09-25T10:00:00.000Z',
-    editedAt: null,
+    editedAt: '2026-09-25T11:00:00.000Z',
+    viewerReaction: '👏',
     author: amina,
     reactionsSummary: {
       emojis: ['👏'],
@@ -160,6 +174,7 @@ const replies = [
     content: 'Pareil pour moi, et ça n’a jamais posé de problème en entretien.',
     createdAt: '2026-09-26T10:00:00.000Z',
     editedAt: null,
+    viewerReaction: null,
     author: deletedAuthor,
     reactionsSummary: null,
   },
@@ -169,6 +184,7 @@ const replies = [
       'Vous pouvez aussi valoriser ce que vous avez appris pendant cette période (organisation, bénévolat…).',
     createdAt: '2026-09-29T10:00:00.000Z',
     editedAt: null,
+    viewerReaction: null,
     author: team,
     reactionsSummary: null,
   },
@@ -177,6 +193,7 @@ const replies = [
     content: 'Merci à tous, je vais reprendre mon CV avec vos conseils !',
     createdAt: '2026-09-30T16:00:00.000Z',
     editedAt: null,
+    viewerReaction: null,
     author: julien,
     reactionsSummary: null,
   },
@@ -223,19 +240,31 @@ const loginAs = (role: string) => {
   });
   interceptCurrentUserSubResources();
   interceptGetUnseenCount({ statusCode: 200, body: 0 });
+  cy.intercept('GET', '/notifications/unseen-count', {
+    statusCode: 200,
+    body: { count: 0 },
+  });
   cy.intercept('GET', '/gamification/achievement-progression', {
     statusCode: 200,
     body: [],
   });
 };
 
-const interceptGroupReads = () => {
+const interceptGroupReads = (
+  viewerPermissions: Partial<typeof groupPage.viewerPermissions> = {}
+) => {
   cy.intercept('GET', '/help-groups', { statusCode: 200, body: groups }).as(
     'getHelpGroups'
   );
   cy.intercept('GET', '/help-groups/refaire-un-cv', {
     statusCode: 200,
-    body: groupPage,
+    body: {
+      ...groupPage,
+      viewerPermissions: {
+        ...groupPage.viewerPermissions,
+        ...viewerPermissions,
+      },
+    },
   }).as('getHelpGroup');
   cy.intercept('GET', '/help-groups/refaire-un-cv/discussions*', {
     statusCode: 200,
@@ -295,7 +324,7 @@ describe('Groupes', () => {
     cy.get('[data-testid="discussion-row"]').should('have.length', 3);
     cy.capture('Page d’un groupe', {
       caption:
-        'Fil d’Ariane, en-tête, cadre commun à tous les groupes et discussions, en lecture seule.',
+        'Fil d’Ariane, en-tête, « Quitter le groupe », cadre commun, invitation à se présenter et barre de rédaction.',
     });
 
     cy.visit(
@@ -306,7 +335,157 @@ describe('Groupes', () => {
     cy.get('[data-highlighted="true"]').should('be.visible');
     cy.capture('Discussion', {
       caption:
-        'Réponses chronologiques, compte supprimé, réactions en prénoms, carte de l’auteur et réponse désignée par ?replyId= mise en évidence.',
+        'Panneau à hauteur fixe, zone de réponse collée en bas, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
+    });
+  });
+
+  it('participation d’un membre', () => {
+    loginAs('Candidat');
+    interceptGroupReads();
+    cy.intercept(
+      'POST',
+      '/help-groups/refaire-un-cv/discussions/title-suggestions',
+      {
+        statusCode: 200,
+        body: { title: 'Comment présenter deux ans sans emploi sur mon CV ?' },
+      }
+    ).as('suggestTitle');
+
+    cy.visit('/backoffice/groupes/refaire-un-cv');
+    cy.wait('@getHelpGroup');
+    cy.get('[data-testid="discussion-composer-bar"]').click();
+    cy.get('[data-testid="discussion-composer-message"]')
+      .type(
+        'J’ai arrêté de travailler deux ans pour m’occuper de ma famille, comment le présenter ?'
+      )
+      .blur();
+    cy.wait('@suggestTitle');
+    cy.contains('Proposé pour vous, modifiable').should('be.visible');
+    cy.capture('Rédaction d’une discussion', {
+      caption:
+        'Rédaction en place, message avant le titre, titre proposé modifiable, « Proposer un autre titre » et « Écrire le mien ».',
+    });
+
+    cy.get('[data-testid="discussion-composer-publish"]').click();
+    cy.contains('Avant votre première publication').should('be.visible');
+    cy.capture('Cadre à la première publication', {
+      caption:
+        'Cadre commun accepté une seule fois, « Accepter et publier » actif case cochée.',
+      capture: 'viewport',
+    });
+  });
+
+  it('invitations à la place des actions d’écriture', () => {
+    loginAs('Candidat');
+    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+
+    cy.visit('/backoffice/groupes/refaire-un-cv');
+    cy.wait('@getHelpGroup');
+    cy.get('[data-testid="write-invitation-join"]').should('be.visible');
+    cy.capture('Invitation à rejoindre', {
+      caption:
+        'Un non-membre lit librement ; l’invitation et « Rejoindre le groupe » remplacent la rédaction.',
+    });
+
+    interceptGroupReads({ state: 'mustCompleteElearning' });
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="write-invitation-elearning"]').should('be.visible');
+    cy.capture('Formation à terminer', {
+      caption:
+        'E-learning non terminé : invitation vers la page Formations à la place de la zone de réponse et des réactions.',
+    });
+  });
+
+  it('modération par un admin', () => {
+    loginAs('Admin');
+    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="discussion-reply"]')
+      .first()
+      .find('[data-testid="message-menu-toggle"]')
+      .click();
+    cy.contains('Supprimer ce message').should('be.visible');
+    cy.capture('Menu d’un message pour un admin', {
+      caption:
+        'Copier le lien, versions précédentes d’un message modifié et, séparée par un filet, la suppression de modération.',
+      capture: 'viewport',
+    });
+
+    cy.contains('Supprimer ce message').click();
+    cy.contains('Données personnelles exposées').should('be.visible');
+    cy.capture('Suppression de modération', {
+      caption:
+        'Motif obligatoire, précision facultative, visibles de l’équipe seulement.',
+      capture: 'viewport',
+    });
+  });
+
+  it('signalement et masquage d’un message', () => {
+    loginAs('Candidat');
+    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="discussion-reply"]')
+      .first()
+      .find('[data-testid="message-menu-toggle"]')
+      .click();
+    cy.contains('Signaler ce message').click();
+    cy.get('[data-testid="help-group-report-modal"]').should('be.visible');
+    cy.contains('label', 'Propos déplacés').click();
+    cy.capture('Signalement d’un message', {
+      caption:
+        'Ouvert à toute personne connectée, membre ou non : motif obligatoire, commentaire facultatif, encart 3114 toujours affiché.',
+      capture: 'viewport',
+    });
+
+    cy.intercept(
+      'GET',
+      '/help-groups/refaire-un-cv/discussions/discussion-gap/replies*',
+      {
+        statusCode: 200,
+        body: {
+          items: [{ id: 'reply-1', isUnderReview: true }, ...replies.slice(1)],
+          nextCursor: null,
+        },
+      }
+    ).as('getReplies');
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="hidden-message"]').should('be.visible');
+    cy.capture('Message masqué pour un lecteur', {
+      caption:
+        'Masqué dès le premier signalement : mention neutre, sans auteur, réactions ni actions. Le contenu n’est pas envoyé par l’API.',
+    });
+
+    loginAs('Admin');
+    cy.intercept(
+      'GET',
+      '/help-groups/refaire-un-cv/discussions/discussion-gap/replies*',
+      {
+        statusCode: 200,
+        body: {
+          items: [
+            {
+              ...replies[0],
+              isUnderReview: true,
+              reportReasons: ['INSULTS'],
+            },
+            ...replies.slice(1),
+          ],
+          nextCursor: null,
+        },
+      }
+    ).as('getReplies');
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="hidden-by-reports-banner"]').should('be.visible');
+    cy.capture('Message masqué, vue admin', {
+      caption:
+        'Bandeau « Masqué après signalements » avec les motifs reçus, « Rétablir » et « Supprimer » (suppression de modération).',
     });
   });
 

@@ -20,11 +20,17 @@ import {
   StyledMessagingIconContainer,
   StyledNavContainerDesktop,
 } from '@/src/features/headers/Header.styles';
+import { NotificationsBell } from '@/src/features/notifications-center';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from '@/src/lib/gtag';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
-import { StyledConnectedItem } from './NavConnectedContent.styles';
+import {
+  StyledConnectedItem,
+  StyledNavDropdownItemContent,
+  StyledNavIconBadge,
+  StyledNavIconBadgeContainer,
+} from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
 import { SubMenu } from './SubMenu';
 
@@ -55,17 +61,25 @@ export const NavConnectedContentDesktop = ({
       {administration?.subMenu && (
         <Dropdown>
           <DropdownToggle>
-            <ButtonIcon
-              icon={administration.icon}
-              color={COLORS.black}
-              variant="text"
-              size="xxlarge"
-              dataTestId="nav-administration"
-            />
+            <StyledNavIconBadgeContainer>
+              <ButtonIcon
+                icon={administration.icon}
+                color={COLORS.black}
+                variant="text"
+                size="xxlarge"
+                dataTestId="nav-administration"
+                ariaLabel={administration.name}
+              />
+              {administration.badge && badges[administration.badge] > 0 && (
+                <StyledNavIconBadge data-testid="nav-administration-badge">
+                  {badges[administration.badge]}
+                </StyledNavIconBadge>
+              )}
+            </StyledNavIconBadgeContainer>
           </DropdownToggle>
           <Dropdown.Menu openDirection="left">
             {administration.subMenu.map(
-              ({ href, name, tag, queryParams }, index) => {
+              ({ href, name, tag, queryParams, badge }, index) => {
                 return (
                   <Dropdown.Item
                     key={`${index}-administration-${uuidValue}`}
@@ -76,13 +90,32 @@ export const NavConnectedContentDesktop = ({
                       push(href + (queryParams || ''));
                     }}
                   >
-                    {name}
+                    <StyledNavDropdownItemContent>
+                      {name}
+                      {badge && badges[badge] > 0 && (
+                        <Tag
+                          size={TagSize.Small}
+                          variant={TagVariant.Secondary}
+                        >
+                          {badges[badge]}
+                        </Tag>
+                      )}
+                    </StyledNavDropdownItemContent>
                   </Dropdown.Item>
                 );
               }
             )}
           </Dropdown.Menu>
         </Dropdown>
+      )}
+
+      {/* Notifications: only where the menu is shown (onboarding done) */}
+      {links[user.role]?.length > 0 && (
+        <NotificationsBell
+          variant="desktop"
+          color={COLORS.black}
+          unseenCount={badges.notifications}
+        />
       )}
 
       {/* Messages */}

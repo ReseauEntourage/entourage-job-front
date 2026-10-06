@@ -1,48 +1,29 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { Api } from '@/src/api';
-import { UserReportDto } from '@/src/api/types';
-import { Actions } from '@/src/constants/utils';
-import { formReportUser } from '@/src/features/forms/schemas/formReportUser';
-import { ModalEdit } from '@/src/features/modals/Modal/ModalGeneric/ModalEdit';
-import { useOnReportUserFormSubmit } from '../useOnReportUserFormSubmit';
+import { ReportDto } from '@/src/api/types';
+import {
+  REPORT_MODAL_TITLES,
+  ReportModal,
+  sendReport,
+} from '@/src/features/modals/ReportModal';
 
 interface ProfileReportUserModalProps {
   userId: string;
 }
 
+/**
+ * Report of a profile, through the shared report modal.
+ */
 export const ProfileReportUserModal = ({
   userId,
 }: ProfileReportUserModalProps) => {
-  const { onSubmit } = useOnReportUserFormSubmit(
-    async (userReportDto: UserReportDto) => {
-      return Api.postProfileUserAbuse(userId, userReportDto);
-    },
-    Actions.CREATE
+  return (
+    <ReportModal
+      title={REPORT_MODAL_TITLES.profile}
+      onSubmit={(dto: ReportDto) =>
+        sendReport(() => Api.postProfileUserAbuse(userId, dto))
+      }
+      dataTestId="profile-report-modal"
+    />
   );
-
-  const handleReportUserSubmit = useCallback(
-    async (fields, closeModal) => {
-      await onSubmit(fields, closeModal);
-    },
-    [onSubmit]
-  );
-
-  const updateUserModalProps = useMemo(() => {
-    return {
-      formId: 'id',
-      formSchema: formReportUser,
-      title: 'Signaler un utilisateur',
-      description:
-        'Vous pouvez signaler un utilisateur si vous pensez qu’il ne respecte pas les règles de la plateforme.',
-      submitText: 'Envoyer',
-      cancelText: 'Annuler',
-      onSubmit: handleReportUserSubmit,
-      defaultValues: {
-        reason: '',
-        comment: '',
-      },
-    };
-  }, [handleReportUserSubmit]);
-
-  return <ModalEdit {...updateUserModalProps} />;
 };
