@@ -34,7 +34,10 @@ export function ReportModal({
   const dispatch = useDispatch();
   const staffContact = useCurrentUserStaffContact();
   const [reason, setReason] = useState<ReportReasonValue | ''>('');
-  const [comment, setComment] = useState(defaultComment || '');
+  // A long suspicious message is cut to the limit the back accepts
+  const [comment, setComment] = useState(
+    (defaultComment || '').slice(0, formReport.commentMaxLength)
+  );
   const [showReasonError, setShowReasonError] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);

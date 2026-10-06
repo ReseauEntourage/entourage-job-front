@@ -107,6 +107,19 @@ describe('ReportModal', () => {
     );
   });
 
+  it('cuts a long pre-filled comment to the 1000 characters the back accepts', () => {
+    renderInModal(
+      <ReportModal
+        title="Signaler cette conversation"
+        onSubmit={onSubmit}
+        defaultComment={'a'.repeat(1500)}
+      />
+    );
+    expect(
+      (screen.getByRole('textbox') as HTMLTextAreaElement).value
+    ).toHaveLength(1000);
+  });
+
   describe('Contexts', () => {
     it('reports a conversation with its own title and the help box, the comment pre-filled from a suspicious message', async () => {
       mockedApi.reportMessage.mockResolvedValue({

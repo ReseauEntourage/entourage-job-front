@@ -1,6 +1,7 @@
 import React from 'react';
 import { SimpleLink, Text } from '@/src/components/ui';
 import { TdDesktop, TrDesktop } from '@/src/components/ui/Table';
+import { ReportTargetStatusTag } from '../ReportTargetStatusTag';
 import {
   formatReportDate,
   formatReportReason,
@@ -9,7 +10,6 @@ import {
 } from '../reports.labels';
 import { getReportTargetHref } from '../reports.utils';
 import { ReportTargetRowProps } from './ReportTargetRow.types';
-import { ReportTargetStatusTag } from './ReportTargetStatusTag';
 
 export function ReportTargetRowDesktop({ target }: ReportTargetRowProps) {
   return (

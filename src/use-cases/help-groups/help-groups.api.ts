@@ -22,6 +22,7 @@ import {
   isHelpGroupHiddenMessage,
 } from '@/src/api/types';
 import { api } from '@/src/store/api/api.slice';
+import { REPORTS_TAG } from '@/src/use-cases/reports';
 
 export enum HelpGroupsError {
   NOT_FOUND = 'NOT_FOUND',
@@ -138,7 +139,7 @@ type ReactionArgs = DiscussionArgs & {
 };
 
 const helpGroupsTaggedApi = api.enhanceEndpoints({
-  addTagTypes: [HELP_GROUPS_TAG, HELP_GROUP_DISCUSSIONS_LIST_TAG],
+  addTagTypes: [HELP_GROUPS_TAG, HELP_GROUP_DISCUSSIONS_LIST_TAG, REPORTS_TAG],
 });
 
 /**
@@ -309,8 +310,9 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
       queryFn: writeMutation(({ slug, discussionId }: DiscussionArgs) =>
         Api.deleteHelpGroupDiscussion(slug, discussionId)
       ),
+      // A deletion closes the reports of the message
       invalidatesTags: (_result, error) =>
-        error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG],
+        error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG, REPORTS_TAG],
     }),
 
     createHelpGroupReply: builder.mutation<
@@ -402,7 +404,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         }
       },
       invalidatesTags: (_result, error) =>
-        error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG],
+        error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG, REPORTS_TAG],
     }),
 
     /**
@@ -479,7 +481,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         }
       },
       invalidatesTags: (_result, error) =>
-        error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG],
+        error ? [] : [HELP_GROUP_DISCUSSIONS_LIST_TAG, REPORTS_TAG],
     }),
 
     /**
@@ -506,7 +508,9 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
           return { error: toReportError(error) };
         }
       },
-      invalidatesTags: (_result, error) => (error ? [] : [HELP_GROUPS_TAG]),
+      // The admin reports tab and its badge count the new report
+      invalidatesTags: (_result, error) =>
+        error ? [] : [HELP_GROUPS_TAG, REPORTS_TAG],
     }),
 
     restoreHelpGroupMessage: builder.mutation<
@@ -517,7 +521,9 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         ({ kind, id }: { kind: 'discussions' | 'replies'; id: string }) =>
           Api.postAdminHelpGroupMessageRestore(kind, id)
       ),
-      invalidatesTags: (_result, error) => (error ? [] : [HELP_GROUPS_TAG]),
+      // A restoration closes the reports of the message
+      invalidatesTags: (_result, error) =>
+        error ? [] : [HELP_GROUPS_TAG, REPORTS_TAG],
     }),
 
     getHelpGroupMessageRevisions: builder.query<

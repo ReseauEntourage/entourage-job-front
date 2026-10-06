@@ -9,10 +9,10 @@ import { Table, Th } from '@/src/components/ui/Table';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import { useGetAdminReportTargetsInfiniteQuery } from '@/src/use-cases/reports';
+import { ReportTargetFilters } from '../ReportTargetFilters';
 import { ReportTargetRow } from '../ReportTargetRow';
 import { REPORTS_TAB_LABELS } from '../reports.labels';
 import { useReportFilters } from '../useReportFilters';
-import { ReportTargetFilters } from './ReportTargetFilters';
 import { StyledReportLoadMore } from './ReportTargetList.styles';
 
 /**

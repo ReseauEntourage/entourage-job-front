@@ -12,19 +12,19 @@ import {
   ReportsError,
   useGetAdminReportTargetQuery,
 } from '@/src/use-cases/reports';
+import { ReportCard } from '../ReportCard';
 import {
   ConversationReportContext,
   GroupMessageReportContext,
   ProfileReportContext,
 } from '../ReportContexts';
 import { ReportResolveForm } from '../ReportResolveForm';
-import { ReportTargetStatusTag } from '../ReportTargetRow';
+import { ReportTargetStatusTag } from '../ReportTargetStatusTag';
 import {
   REPORT_TARGET_TYPE_LABELS,
   REPORTS_TAB_LABELS,
 } from '../reports.labels';
 import { REPORTS_PATH } from '../reports.utils';
-import { ReportCard } from './ReportCard';
 import {
   StyledReportList,
   StyledReportTargetHeader,

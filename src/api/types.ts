@@ -5,6 +5,7 @@ import {
   WorkingExperience,
 } from '@/src/constants';
 import { AdminZone, DepartmentName } from '@/src/constants/departements';
+import { ReportReasonValue } from '@/src/constants/reports';
 import { RegistrableUserRoles, UserRoles } from '@/src/constants/users';
 import { FilterConstant } from '@/src/constants/utils';
 import { OnboardingStatus } from '@/src/features/wizard/onboarding/onboarding.constants';
@@ -235,7 +236,7 @@ export type Event = {
  * reports: a motive among the shared ones and an optional comment.
  */
 export type ReportDto = {
-  reason: 'SPAM' | 'FRAUD' | 'INSULTS' | 'IN_DANGER' | 'OTHER';
+  reason: ReportReasonValue;
   comment?: string;
 };
 
@@ -988,8 +989,8 @@ export type HelpGroupPage = {
   viewerPermissions: HelpGroupViewerPermissions;
 };
 
-export type HelpGroupReportReason =
-  'SPAM' | 'FRAUD' | 'INSULTS' | 'IN_DANGER' | 'OTHER';
+// Same motives as every report
+export type HelpGroupReportReason = ReportReasonValue;
 
 export type HelpGroupDiscussionItem = {
   id: string;

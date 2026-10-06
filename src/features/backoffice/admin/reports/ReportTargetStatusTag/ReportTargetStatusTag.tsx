@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReportTargetStatus } from '@/src/api/types';
 import { REPORT_TARGET_STATUS_LABELS } from '../reports.labels';
-import { StyledReportTargetStatus } from './ReportTargetRow.styles';
+import { StyledReportTargetStatus } from './ReportTargetStatusTag.styles';
 
 export function ReportTargetStatusTag({
   status,

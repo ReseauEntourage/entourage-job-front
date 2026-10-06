@@ -8,7 +8,7 @@ import {
 } from '../reports.labels';
 import { ALL_FILTER_VALUE } from '../reports.utils';
 import { ReportFilterKey, ReportFilterValues } from '../useReportFilters';
-import { StyledReportFilters } from './ReportTargetList.styles';
+import { StyledReportFilters } from './ReportTargetFilters.styles';
 
 const toOptions = (labels: Record<string, string>, allLabel: string) => [
   { value: ALL_FILTER_VALUE, label: allLabel },
