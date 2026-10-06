@@ -8,6 +8,7 @@ import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
 import { NotificationsBell } from '../NotificationsBell';
 import {
   formatUnseenBadge,
+  getBellLabel,
   getNotificationHref,
 } from '../notifications-center.utils';
 
@@ -77,18 +78,20 @@ describe('NotificationsBell', () => {
     expect(formatUnseenBadge(10)).toBe('9+');
   });
 
-  it('names the bell for screen readers, on desktop and mobile', () => {
+  it('names the bell for screen readers with the unseen count, on desktop and mobile', () => {
     const { unmount } = renderBell(2);
     expect(
-      screen.getByRole('button', { name: 'Notifications' })
+      screen.getByRole('button', { name: 'Notifications, 2 non vues' })
     ).toBeInTheDocument();
     unmount();
     renderWithProviders(
-      <NotificationsBell variant="mobile" color="white" unseenCount={2} />
+      <NotificationsBell variant="mobile" color="white" unseenCount={1} />
     );
     expect(
-      screen.getByRole('button', { name: 'Notifications' })
+      screen.getByRole('button', { name: 'Notifications, 1 non vue' })
     ).toBeInTheDocument();
+    expect(getBellLabel(12)).toBe('Notifications, 9+ non vues');
+    expect(getBellLabel(0)).toBe('Notifications');
   });
 
   it('shows no badge once everything is seen', () => {

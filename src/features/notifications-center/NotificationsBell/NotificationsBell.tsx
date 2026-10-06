@@ -4,6 +4,7 @@ import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { NotificationsList } from '../NotificationsList';
 import {
   formatUnseenBadge,
+  getBellLabel,
   NOTIFICATIONS_LABELS,
   NOTIFICATIONS_PAGE_HREF,
 } from '../notifications-center.utils';
@@ -68,7 +69,7 @@ export const NotificationsBell = ({
         variant="text"
         size="xxlarge"
         dataTestId="notifications-bell-button"
-        ariaLabel={NOTIFICATIONS_LABELS.BELL}
+        ariaLabel={getBellLabel(unseenCount)}
         {...(variant === 'mobile'
           ? { href: NOTIFICATIONS_PAGE_HREF }
           : { onClick: () => setIsOpen((open) => !open) })}

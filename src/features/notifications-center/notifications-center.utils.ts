@@ -10,6 +10,20 @@ export const formatUnseenBadge = (count: number): string | null =>
       ? `${UNSEEN_BADGE_MAX}+`
       : String(count);
 
+/**
+ * Accessible name of the bell, with the unseen count of the badge (which is
+ * hidden from screen readers), e.g. "Notifications, 2 non vues".
+ */
+export const getBellLabel = (count: number): string => {
+  const badge = formatUnseenBadge(count);
+  if (!badge) {
+    return NOTIFICATIONS_LABELS.BELL;
+  }
+  return `${NOTIFICATIONS_LABELS.BELL}, ${badge} ${
+    count > 1 ? 'non vues' : 'non vue'
+  }`;
+};
+
 // Page of the bell on mobile, where the list opens full screen
 export const NOTIFICATIONS_PAGE_HREF = '/backoffice/notifications';
 
