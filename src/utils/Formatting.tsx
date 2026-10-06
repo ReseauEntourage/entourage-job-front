@@ -59,19 +59,12 @@ export const formatCareerPathSentence = (
   });
 };
 
-export const escapeHtml = (unsafe: string): string => {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-};
-
 const LINK_PATTERN =
   /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
 
 /**
- * Same URL detection as `linkify`, but returns React nodes instead of an HTML
- * string: the text is never interpreted as markup (no `dangerouslySetInnerHTML`),
+ * Detects web addresses and returns React nodes instead of an HTML string: the
+ * text is never interpreted as markup (no `dangerouslySetInnerHTML`),
  * only web addresses become links, opened in a new tab. Line breaks are kept
  * as is and rendered by the container (`white-space: pre-line`).
  */
@@ -104,23 +97,4 @@ export const linkifyToNodes = (content: string): React.ReactNode[] => {
     nodes.push(content.slice(lastIndex));
   }
   return nodes;
-};
-
-export const linkify = (content: string): string => {
-  const urlPattern =
-    /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
-
-  return content.replace(urlPattern, (url) => {
-    let normalizedUrl = url;
-
-    if (!/^https?:\/\//i.test(url)) {
-      normalizedUrl = `http://${url}`;
-    }
-
-    // Escape special characters to prevent XSS attacks
-    const safeUrl = escapeHtml(normalizedUrl);
-    const safeDisplayUrl = escapeHtml(url);
-
-    return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeDisplayUrl}</a>`;
-  });
 };
