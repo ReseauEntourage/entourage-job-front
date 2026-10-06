@@ -10,12 +10,9 @@ import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import { selectSelectedConversationId } from '@/src/use-cases/messaging';
-import { escapeHtml, linkify } from '@/src/utils';
-import {
-  isSuspiciousMessage,
-  isVerifiedLinkDomain,
-} from '@/src/utils/SuspiciousContent';
+import { isSuspiciousMessage } from '@/src/utils/SuspiciousContent';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
+import { LinkifiedText } from './LinkifiedText/LinkifiedText';
 import { MessageMedias } from './MessageMedias/MessageMedias';
 import {
   MessageContainer,
@@ -24,7 +21,6 @@ import {
   StyledServiceMessageQuote,
   StyledWarning,
 } from './MessagingMessage.styles';
-import { MessagingMessageSuspiciousModal } from './MessagingMessageSuspiciousModal/MessagingMessageSuspiciousModal';
 
 interface MessagingMessageProps {
   message: Message;
@@ -36,6 +32,7 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
   const isServiceMessage = message.type === MessageType.SERVICE;
   const isOwnMessage =
     !isServiceMessage && message.author?.id === currentUserId;
+  const isSentByAdmin = message.author?.role === UserRoles.ADMIN;
   const [isSuspicious, setIsSuspicious] = React.useState(false);
 
   useEffect(() => {
@@ -43,20 +40,6 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       setIsSuspicious(isSuspiciousMessage(message.content));
     }
   }, [message.content]);
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLAnchorElement;
-
-    if (target.tagName === 'A') {
-      const isVerifiedDomain = isVerifiedLinkDomain(target.href);
-      const isSentByAdmin = message.author?.role === UserRoles.ADMIN;
-
-      if (!isVerifiedDomain && !isSentByAdmin) {
-        event.preventDefault();
-        openModal(<MessagingMessageSuspiciousModal href={target.href} />);
-      }
-    }
-  };
 
   const reportMessage = () => {
     const reportContent = `Le message suivant me semble suspicieux : "${message.content}"`;
@@ -91,20 +74,18 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
               </Text>
               <StyledServiceMessageQuote>
                 <Text size="small" center>
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: linkify(escapeHtml(checkinNote.quotedText)),
-                    }}
+                  <LinkifiedText
+                    content={checkinNote.quotedText}
+                    skipExternalLinkWarning={isSentByAdmin}
                   />
                 </Text>
               </StyledServiceMessageQuote>
             </>
           ) : (
             <Text size="small" center>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: linkify(escapeHtml(message.content)),
-                }}
+              <LinkifiedText
+                content={message.content}
+                skipExternalLinkWarning={isSentByAdmin}
               />
             </Text>
           )}
@@ -125,11 +106,9 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       <StyledMessage className={isOwnMessage ? 'own-message' : ''}>
         {message.medias.length > 0 && <MessageMedias medias={message.medias} />}
         <Text>
-          <span
-            dangerouslySetInnerHTML={{
-              __html: linkify(escapeHtml(message.content)),
-            }}
-            onClick={handleClick}
+          <LinkifiedText
+            content={message.content}
+            skipExternalLinkWarning={isSentByAdmin}
           />
         </Text>
       </StyledMessage>
