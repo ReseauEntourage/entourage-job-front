@@ -279,7 +279,8 @@ describe('Signalements', () => {
       });
       return;
     }
-    cy.get('[data-testid="nav-administration-badge"]').should('be.visible');
+    // Drawn over the cog without catching clicks: Cypress reads it as covered
+    cy.get('[data-testid="nav-administration-badge"]').should('have.text', '2');
     cy.get('[data-testid="nav-administration"]').click();
     cy.contains('.dropdown-item', 'Les signalements').should('be.visible');
     cy.capture('Menu d’administration', {
