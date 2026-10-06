@@ -17,7 +17,25 @@ const candidateRolesParams = rolesToParams([UserRoles.CANDIDATE]);
 const coachRolesParams = rolesToParams([UserRoles.COACH]);
 const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
-const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
+// Placed right after "Réseau d'entraide" for every role, only once a group
+// is published. The item stays active on the group and discussion pages since
+// the nav matches the current path with `asPath.includes(href)`.
+const renderHelpGroupsItems = (
+  hasPublishedHelpGroups: boolean
+): NavConnectedMainItem[] =>
+  hasPublishedHelpGroups
+    ? [
+        {
+          href: '/backoffice/groupes',
+          name: 'Groupes',
+        },
+      ]
+    : [];
+
+const renderCandidateHeaderItems = (
+  user: User,
+  helpGroupsItems: NavConnectedMainItem[]
+): NavConnectedMainItem[] => {
   const onboardingStatus = user.onboardingStatus;
   let items: NavConnectedMainItem[] = [];
 
@@ -37,6 +55,7 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
+      ...helpGroupsItems,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -70,7 +89,8 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
 
 const renderCoachHeaderItems = (
   user: User,
-  company: CurrentUserCompany | null
+  company: CurrentUserCompany | null,
+  helpGroupsItems: NavConnectedMainItem[]
 ): NavConnectedMainItem[] => {
   const isCompanyAdmin = company && company.companyUser?.isAdmin;
   const onboardingStatus = user.onboardingStatus;
@@ -102,6 +122,7 @@ const renderCoachHeaderItems = (
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
+      ...helpGroupsItems,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -147,58 +168,28 @@ const renderCoachHeaderItems = (
 export const renderLinks = (
   user: User,
   logout: () => void,
-  company: CurrentUserCompany | null
+  company: CurrentUserCompany | null,
+  hasPublishedHelpGroups = false
 ): {
   links: { [K in UserRoles]: NavConnectedMainItem[] };
+  administration: NavConnectedMainItem | null;
   messaging: NavConnectedMainItem;
   dropdown: NavConnectedMainItem[];
 } => {
-  const candidateHeaderItems = renderCandidateHeaderItems(user);
-  const coachHeaderItems = renderCoachHeaderItems(user, company);
+  const helpGroupsItems = renderHelpGroupsItems(hasPublishedHelpGroups);
+  const candidateHeaderItems = renderCandidateHeaderItems(
+    user,
+    helpGroupsItems
+  );
+  const coachHeaderItems = renderCoachHeaderItems(
+    user,
+    company,
+    helpGroupsItems
+  );
 
   return {
     links: {
       [UserRoles.ADMIN]: [
-        {
-          href: '/backoffice/admin/membres',
-          queryParams: `?${candidateRolesParams}${
-            user?.zone ? `zone=${user?.zone}` : ''
-          }`,
-          name: 'Les membres',
-          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC,
-          subMenu: [
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${candidateRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les candidats',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
-            },
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${coachRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les coachs',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
-            },
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${refererRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les prescripteurs',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
-            },
-          ],
-        },
-        {
-          href: '/backoffice/admin/structures',
-          queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
-          name: 'Les structures partenaires',
-          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
-        },
         {
           href: '/backoffice/parametres',
           name: 'Mon profil',
@@ -207,6 +198,7 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
+        ...helpGroupsItems,
         {
           href: '/backoffice/events',
           name: 'Événements',
@@ -228,6 +220,7 @@ export const renderLinks = (
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
+        ...helpGroupsItems,
         {
           href: '/backoffice/events',
           name: 'Événements',
@@ -251,6 +244,51 @@ export const renderLinks = (
         },
       ],
     },
+    // Admin pages live in their own menu (cog icon) instead of the main nav.
+    // The sub menu has a single level, hence the members entries flattened.
+    administration:
+      user?.role === UserRoles.ADMIN
+        ? {
+            name: 'Administration',
+            icon: <LucidIcon name="Settings" stroke="thin" />,
+            subMenu: [
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${candidateRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les candidats',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${coachRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les coachs',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${refererRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les prescripteurs',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/structures',
+                queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
+                name: 'Les structures partenaires',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/groupes',
+                name: 'Les groupes',
+              },
+            ],
+          }
+        : null,
     messaging: {
       href: '/backoffice/messaging',
       icon: <LucidIcon name="MessageCircleMore" stroke="thin" />,
