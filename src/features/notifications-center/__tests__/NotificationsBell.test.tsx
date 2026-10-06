@@ -77,6 +77,20 @@ describe('NotificationsBell', () => {
     expect(formatUnseenBadge(10)).toBe('9+');
   });
 
+  it('names the bell for screen readers, on desktop and mobile', () => {
+    const { unmount } = renderBell(2);
+    expect(
+      screen.getByRole('button', { name: 'Notifications' })
+    ).toBeInTheDocument();
+    unmount();
+    renderWithProviders(
+      <NotificationsBell variant="mobile" color="white" unseenCount={2} />
+    );
+    expect(
+      screen.getByRole('button', { name: 'Notifications' })
+    ).toBeInTheDocument();
+  });
+
   it('shows no badge once everything is seen', () => {
     renderBell(0);
     expect(screen.queryByTestId('notifications-badge')).not.toBeInTheDocument();

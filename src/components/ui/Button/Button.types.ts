@@ -24,6 +24,8 @@ export interface ButtonProps {
   scroll?: boolean;
   className?: string;
   dataTestId?: string;
+  // Accessible name, for a button without visible text
+  ariaLabel?: string;
   color?: Color;
   align?: 'left' | 'center';
   style?: React.CSSProperties;

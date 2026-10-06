@@ -11,6 +11,8 @@ export interface ButtonIconProps {
   onClick?: (e: Event) => Promise<void> | void;
   href?: string;
   dataTestId?: string;
+  // Accessible name of the button, which shows only an icon
+  ariaLabel?: string;
   newTab?: boolean;
   disabled?: boolean;
   color?: string;
@@ -31,6 +33,7 @@ export const ButtonIcon = ({
   color = COLORS.primaryBlue,
   href,
   dataTestId,
+  ariaLabel,
   newTab,
   size = 'medium',
   disabled = false,
@@ -52,6 +55,7 @@ export const ButtonIcon = ({
       rounded="circle"
       onClick={onClick}
       dataTestId={dataTestId}
+      ariaLabel={ariaLabel}
       newTab={newTab}
       disabled={disabled}
       variant={BUTTON_ICON_VARIANT_MAP[variant]}

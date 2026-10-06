@@ -8,6 +8,7 @@ import {
   NOTIFICATIONS_PAGE_HREF,
 } from '../notifications-center.utils';
 import {
+  StyledNotificationsBadge,
   StyledNotificationsBell,
   StyledNotificationsPanel,
   StyledNotificationsPanelHeader,
@@ -67,14 +68,18 @@ export const NotificationsBell = ({
         variant="text"
         size="xxlarge"
         dataTestId="notifications-bell-button"
+        ariaLabel={NOTIFICATIONS_LABELS.BELL}
         {...(variant === 'mobile'
           ? { href: NOTIFICATIONS_PAGE_HREF }
           : { onClick: () => setIsOpen((open) => !open) })}
       />
       {badge && (
-        <div className="pin-notification" data-testid="notifications-badge">
+        <StyledNotificationsBadge
+          aria-hidden="true"
+          data-testid="notifications-badge"
+        >
           {badge}
-        </div>
+        </StyledNotificationsBadge>
       )}
       {variant === 'desktop' && isOpen && (
         <StyledNotificationsPanel

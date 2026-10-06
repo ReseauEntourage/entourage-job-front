@@ -3,23 +3,23 @@ import { COLORS } from '@/src/constants/styles';
 
 export const StyledNotificationsBell = styled.div`
   position: relative;
+`;
 
-  .pin-notification {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 4px;
-    background: ${COLORS.lightRed};
-    border-radius: 9px;
-    color: ${COLORS.white};
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
+export const StyledNotificationsBadge = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: ${COLORS.lightRed};
+  border-radius: 9px;
+  color: ${COLORS.white};
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 `;
 
 export const StyledNotificationsPanel = styled.div`
