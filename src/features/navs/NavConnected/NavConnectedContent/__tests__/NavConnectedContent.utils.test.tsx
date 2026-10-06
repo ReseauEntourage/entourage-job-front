@@ -88,6 +88,7 @@ describe('NavConnectedContent.utils - help groups entries', () => {
       'Les prescripteurs',
       'Les structures partenaires',
       'Les groupes',
+      'Les signalements',
     ]);
     expect(
       administration?.subMenu?.map(
@@ -99,7 +100,17 @@ describe('NavConnectedContent.utils - help groups entries', () => {
       '/backoffice/admin/membres?role=Prescripteur&zone=PARIS',
       '/backoffice/admin/structures?zone=PARIS',
       '/backoffice/admin/groupes',
+      '/backoffice/admin/signalements',
     ]);
+  });
+
+  it('puts the reports badge on "Les signalements" and on the cog', () => {
+    const administration = getAdministration(UserRoles.ADMIN);
+    expect(
+      administration?.subMenu?.find(({ name }) => name === 'Les signalements')
+        ?.badge
+    ).toBe('reports');
+    expect(administration?.badge).toBe('reports');
   });
 
   it('keeps "Les groupes" in the "Administration" menu while no group is published', () => {

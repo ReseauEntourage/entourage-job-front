@@ -286,7 +286,14 @@ export const renderLinks = (
                 href: '/backoffice/admin/groupes',
                 name: 'Les groupes',
               },
+              {
+                href: '/backoffice/admin/signalements',
+                name: 'Les signalements',
+                badge: 'reports',
+              },
             ],
+            // The cog shows the badge too, visible with the menu closed
+            badge: 'reports',
           }
         : null,
     messaging: {

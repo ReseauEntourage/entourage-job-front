@@ -212,7 +212,9 @@ describe('Help group reporting', () => {
       chooseReason('Autre');
       fireEvent.click(screen.getByTestId('report-confirm'));
       expect(
-        await screen.findByText('Vous avez déjà signalé ce message')
+        await screen.findByText(
+          'Vous avez déjà signalé ce contenu, l’équipe s’en occupe'
+        )
       ).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
     });

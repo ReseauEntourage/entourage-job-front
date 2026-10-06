@@ -63,6 +63,11 @@ import {
   HelpGroupReactionTarget,
   HelpGroupReplyDto,
   NotificationItem,
+  ReportConversationMessagesPage,
+  ReportTargetDetail,
+  ReportTargetItem,
+  ReportTargetsParams,
+  ReportTargetType,
 } from './types';
 
 export class APIHandler {
@@ -806,6 +811,54 @@ export class APIHandler {
 
   deleteAdminHelpGroup(id: string): Promise<AxiosResponse> {
     return this.delete(`/admin/help-groups/${id}`);
+  }
+
+  /// //////////////// ///
+  /// reports (admin)  ///
+  /// //////////////// ///
+
+  getAdminReportTargets(
+    params: ReportTargetsParams
+  ): Promise<AxiosResponse<CursorPage<ReportTargetItem>>> {
+    return this.get('/admin/reports/targets', { params });
+  }
+
+  getAdminReportTarget(
+    targetType: ReportTargetType,
+    targetId: string
+  ): Promise<AxiosResponse<ReportTargetDetail>> {
+    return this.get(
+      `/admin/reports/targets/${targetType}/${encodeURIComponent(targetId)}`
+    );
+  }
+
+  getAdminReportedConversationMessages(
+    conversationId: string,
+    before?: string
+  ): Promise<AxiosResponse<ReportConversationMessagesPage>> {
+    return this.get(
+      `/admin/reports/targets/CONVERSATION/${encodeURIComponent(conversationId)}/messages`,
+      { params: before ? { before } : {} }
+    );
+  }
+
+  postAdminReportTargetResolve(
+    targetType: ReportTargetType,
+    targetId: string,
+    params: { note?: string }
+  ): Promise<AxiosResponse<{ resolvedCount: number }>> {
+    return this.post(
+      `/admin/reports/targets/${targetType}/${encodeURIComponent(targetId)}/resolve`,
+      params
+    );
+  }
+
+  getAdminReportsPendingCount(
+    zone?: AdminZone | null
+  ): Promise<AxiosResponse<{ count: number }>> {
+    return this.get('/admin/reports/pending-count', {
+      params: zone ? { zone } : {},
+    });
   }
 
   /// ///////////// ///

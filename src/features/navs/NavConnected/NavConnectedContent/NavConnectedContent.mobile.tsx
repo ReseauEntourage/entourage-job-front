@@ -190,6 +190,11 @@ export const NavConnectedContentMobile = ({
                     </span>
                     {administration.name}
                   </span>
+                  {administration.badge && badges[administration.badge] > 0 && (
+                    <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                      {badges[administration.badge]}
+                    </Tag>
+                  )}
                 </a>
                 <SubMenu items={administration.subMenu} badges={badges} />
               </StyledConnectedItemMobile>

@@ -41,6 +41,7 @@ export const APIRoutes = {
   CHECKIN: 'checkin',
   HELP_GROUPS: 'help-groups',
   ADMIN_HELP_GROUPS: 'admin/help-groups',
+  ADMIN_REPORTS: 'admin/reports',
   NOTIFICATIONS: 'notifications',
 } as const;
 
@@ -229,15 +230,18 @@ export type Event = {
   publicSensibilise: PublicSensibilise[] | null;
 };
 
-export type UserReportDto = {
-  reason: string;
-  comment: string;
+/**
+ * Contract shared by the conversation, profile and help group message
+ * reports: a motive among the shared ones and an optional comment.
+ */
+export type ReportDto = {
+  reason: 'SPAM' | 'FRAUD' | 'INSULTS' | 'IN_DANGER' | 'OTHER';
+  comment?: string;
 };
 
-export type ConversationReportDto = {
-  reason: string;
-  comment: string;
-};
+export type UserReportDto = ReportDto;
+
+export type ConversationReportDto = ReportDto;
 
 export type UserSocialSituation = {
   hasCompletedSurvey: boolean;
@@ -1162,4 +1166,97 @@ export type NotificationItem = {
     // The first unseen reply, or the reacted reply; null for the discussion
     replyId: string | null;
   };
+};
+
+/*
+ * Reports admin tab ("Signalements")
+ */
+
+export type ReportTargetType =
+  'POST' | 'POST_REPLY' | 'CONVERSATION' | 'USER_PROFILE';
+
+// Type filter of the tab: discussions and replies are "group messages"
+export type ReportTargetFilter =
+  'CONVERSATION' | 'USER_PROFILE' | 'GROUP_MESSAGE';
+
+// PENDING while one of the reports of the target is still to handle
+export type ReportTargetStatus = 'PENDING' | 'RESOLVED';
+
+export type ReportReason = ReportDto['reason'];
+
+export type ReportTargetItem = {
+  targetType: ReportTargetType;
+  targetId: string;
+  label: string;
+  zones: AdminZone[];
+  pendingCount: number;
+  reportsCount: number;
+  reasons: ReportReason[];
+  lastReportedAt: string;
+  status: ReportTargetStatus;
+};
+
+export type ReportTargetsParams = {
+  type?: ReportTargetFilter;
+  status?: ReportTargetStatus;
+  zone?: AdminZone;
+  cursor?: string;
+};
+
+// Null for a deleted account, shown "Utilisateur supprimé"
+export type ReportUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: UserRoles;
+  zone: AdminZone | null;
+} | null;
+
+export type ReportItem = {
+  id: string;
+  reporter: ReportUser;
+  reason: ReportReason;
+  comment: string | null;
+  zone: AdminZone | null;
+  status: 'PENDING' | 'RESOLVED';
+  createdAt: string;
+  resolution: 'RESTORED' | 'DELETED' | 'MANUAL' | null;
+  resolvedAt: string | null;
+  resolvedBy: ReportUser;
+  resolutionNote: string | null;
+};
+
+export type ReportGroupMessageState = 'VISIBLE' | 'HIDDEN' | 'DELETED';
+
+export type ReportTargetContext =
+  | { targetType: 'CONVERSATION'; participants: ReportUser[] }
+  | { targetType: 'USER_PROFILE'; user: ReportUser }
+  | {
+      targetType: 'POST' | 'POST_REPLY';
+      group: { id: string; name: string; slug: string } | null;
+      message: {
+        discussionId: string;
+        replyId: string | null;
+        title: string | null;
+        content: string;
+        author: ReportUser;
+        state: ReportGroupMessageState;
+        createdAt: string;
+      } | null;
+    };
+
+export type ReportTargetDetail = {
+  targetType: ReportTargetType;
+  targetId: string;
+  label: string;
+  status: ReportTargetStatus;
+  // False for a group message, handled in its group
+  canResolve: boolean;
+  reports: ReportItem[];
+  context: ReportTargetContext;
+};
+
+export type ReportConversationMessagesPage = {
+  messages: Message[];
+  nextCursor: string | null;
 };
