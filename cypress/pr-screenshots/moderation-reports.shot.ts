@@ -329,9 +329,7 @@ describe('Signalements', () => {
 
     cy.visit('/backoffice/admin/signalements/POST_REPLY/reply-reported');
     cy.wait('@getTarget');
-    cy.get('[data-testid="report-context-group-message"]').should(
-      'be.visible'
-    );
+    cy.get('[data-testid="report-context-group-message"]').should('be.visible');
     cy.capture('Fiche d’un message de groupe', {
       caption:
         'État du message et lien vers le fil ; pas de « Marquer comme traité », le traitement se fait dans le groupe.',
