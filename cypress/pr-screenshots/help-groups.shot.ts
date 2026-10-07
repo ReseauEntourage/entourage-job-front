@@ -340,6 +340,24 @@ describe('Groupes', () => {
     });
   });
 
+  it('groupe sans discussion', () => {
+    loginAs('Candidat');
+    interceptGroupReads();
+    cy.intercept('GET', '/help-groups/refaire-un-cv/discussions*', {
+      statusCode: 200,
+      body: { items: [], nextCursor: null },
+    }).as('getDiscussions');
+
+    cy.visit('/backoffice/groupes/refaire-un-cv');
+    cy.wait('@getHelpGroup');
+    cy.wait('@getDiscussions');
+    cy.get('[data-testid="help-group-no-discussion"]').should('be.visible');
+    cy.capture('Groupe sans discussion', {
+      caption:
+        'Bloc en pointillés « Ce groupe vient d’ouvrir », avec l’invitation à poser la première question.',
+    });
+  });
+
   it('participation d’un membre', () => {
     loginAs('Candidat');
     interceptGroupReads();
