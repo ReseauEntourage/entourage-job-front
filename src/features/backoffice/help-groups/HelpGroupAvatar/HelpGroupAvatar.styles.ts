@@ -1,11 +1,12 @@
 import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
+export const AVATAR_RING_WIDTH = 2;
+
 export const StyledHelpGroupAvatar = styled.div<{
   $size: number;
   $isPlaceholder: boolean;
 }>`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,15 +15,8 @@ export const StyledHelpGroupAvatar = styled.div<{
   height: ${({ $size }) => $size}px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid ${COLORS.white};
+  border: ${AVATAR_RING_WIDTH}px solid ${COLORS.white};
   box-sizing: border-box;
   background-color: ${({ $isPlaceholder }) =>
-    $isPlaceholder ? COLORS.gray : COLORS.primaryBlue};
-  color: ${COLORS.white};
-  font-size: ${({ $size }) => Math.round($size / 2.6)}px;
-  text-transform: uppercase;
-`;
-
-export const StyledHelpGroupAvatarInitials = styled.span`
-  line-height: 1;
+    $isPlaceholder ? COLORS.gray : COLORS.white};
 `;

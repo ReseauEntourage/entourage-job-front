@@ -98,15 +98,16 @@ export const formatAuthorRoleLabel = (
   return author.roleLabel;
 };
 
-export const getAuthorInitials = (
-  author: Pick<HelpGroupAuthor, 'isDeleted' | 'firstName' | 'lastNameInitial'>
-): string | null => {
-  if (author.isDeleted || !author.firstName) {
+/**
+ * User passed to the avatar, or null for a deleted account (grey disc).
+ */
+export const getAuthorAvatarUser = (
+  author: Pick<HelpGroupAuthor, 'isDeleted' | 'id' | 'firstName'>
+): { id: string; firstName: string } | null => {
+  if (author.isDeleted || !author.id || !author.firstName) {
     return null;
   }
-  return `${author.firstName.charAt(0)}${
-    author.lastNameInitial?.charAt(0) ?? ''
-  }`.toUpperCase();
+  return { id: author.id, firstName: author.firstName };
 };
 
 /**

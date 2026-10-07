@@ -61,15 +61,7 @@ export function GroupMessageReportContext({
       {message ? (
         <>
           <StyledReportGroupMessage>
-            <HelpGroupAvatar
-              userId={author?.id ?? null}
-              initials={
-                author
-                  ? `${author.firstName.charAt(0)}${author.lastName.charAt(0)}`
-                  : null
-              }
-              size={36}
-            />
+            <HelpGroupAvatar user={author ?? null} size={36} />
             <StyledReportGroupMessageBody>
               <Text size="small" color="darkGray">
                 {[

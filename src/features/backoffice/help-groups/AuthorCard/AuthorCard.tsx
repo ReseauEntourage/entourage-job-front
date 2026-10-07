@@ -5,7 +5,7 @@ import { HelpGroupAvatar } from '../HelpGroupAvatar';
 import {
   formatAuthorName,
   formatAuthorRoleLabel,
-  getAuthorInitials,
+  getAuthorAvatarUser,
   getProfileHref,
 } from '../help-groups.labels';
 import {
@@ -33,11 +33,7 @@ export function AuthorCard({ author }: AuthorCardProps) {
 
   return (
     <StyledAuthorCard aria-label="Auteur de la discussion">
-      <HelpGroupAvatar
-        userId={author.id}
-        initials={getAuthorInitials(author)}
-        size={56}
-      />
+      <HelpGroupAvatar user={getAuthorAvatarUser(author)} size={56} />
       <StyledAuthorCardIdentity>
         <Text weight="semibold">{formatAuthorName(author)}</Text>
         {details && (

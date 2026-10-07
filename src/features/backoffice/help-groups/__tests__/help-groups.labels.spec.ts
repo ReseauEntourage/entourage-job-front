@@ -7,7 +7,7 @@ import {
   formatMembersLabel,
   formatReactionsLabel,
   formatRepliesLabel,
-  getAuthorInitials,
+  getAuthorAvatarUser,
   HELP_GROUP_NO_MEMBER_LABEL,
 } from '../help-groups.labels';
 
@@ -75,12 +75,14 @@ describe('help groups labels', () => {
 
   describe('authors', () => {
     const author = {
+      id: 'author-id',
       isDeleted: false,
       firstName: 'Amina',
       lastNameInitial: 'L.',
       roleLabel: 'Coach',
     };
     const deleted = {
+      id: null as string | null,
       isDeleted: true,
       firstName: null as string | null,
       lastNameInitial: null as string | null,
@@ -89,7 +91,10 @@ describe('help groups labels', () => {
 
     it('formats the name with the last name initial', () => {
       expect(formatAuthorName(author)).toBe('Amina L.');
-      expect(getAuthorInitials(author)).toBe('AL');
+      expect(getAuthorAvatarUser(author)).toEqual({
+        id: 'author-id',
+        firstName: 'Amina',
+      });
     });
     it('formats the role labels', () => {
       expect(formatAuthorRoleLabel(author)).toBe('Coach');
@@ -100,7 +105,7 @@ describe('help groups labels', () => {
     it('hides the identity of a deleted account', () => {
       expect(formatAuthorName(deleted)).toBe(DELETED_AUTHOR_LABEL);
       expect(formatAuthorRoleLabel(deleted)).toBeNull();
-      expect(getAuthorInitials(deleted)).toBeNull();
+      expect(getAuthorAvatarUser(deleted)).toBeNull();
     });
   });
 });

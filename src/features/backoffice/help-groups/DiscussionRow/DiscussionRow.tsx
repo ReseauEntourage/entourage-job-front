@@ -9,7 +9,7 @@ import {
   formatAuthorRoleLabel,
   formatHelpGroupDate,
   formatRepliesLabel,
-  getAuthorInitials,
+  getAuthorAvatarUser,
   getProfileHref,
 } from '../help-groups.labels';
 import {
@@ -48,11 +48,7 @@ export function DiscussionRow({ groupSlug, discussion }: DiscussionRowProps) {
   return (
     <StyledDiscussionRow data-testid="discussion-row">
       <StyledDiscussionRowAvatar>
-        <HelpGroupAvatar
-          userId={author.isDeleted ? null : author.id}
-          initials={getAuthorInitials(author)}
-          size={40}
-        />
+        <HelpGroupAvatar user={getAuthorAvatarUser(author)} size={40} />
       </StyledDiscussionRowAvatar>
       <StyledDiscussionRowContent>
         <StyledDiscussionRowTitle>

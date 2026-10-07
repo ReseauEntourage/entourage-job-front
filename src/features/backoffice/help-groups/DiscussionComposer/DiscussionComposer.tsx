@@ -100,10 +100,6 @@ const toFieldError = (message: string | null) =>
 
 const TITLE_INPUT_ID = 'discussion-composer-title';
 
-const getInitials = (firstName?: string, lastName?: string) =>
-  `${firstName?.charAt(0) ?? ''}${lastName?.charAt(0) ?? ''}`.toUpperCase() ||
-  null;
-
 interface DiscussionComposerProps {
   slug: string;
   groupId: string;
@@ -203,8 +199,11 @@ export function DiscussionComposer({
 
   const avatar = (size: number) => (
     <HelpGroupAvatar
-      userId={userId ?? null}
-      initials={getInitials(currentUser?.firstName, currentUser?.lastName)}
+      user={
+        currentUser
+          ? { id: currentUser.id, firstName: currentUser.firstName }
+          : null
+      }
       hasPicture={hasPicture}
       size={size}
     />

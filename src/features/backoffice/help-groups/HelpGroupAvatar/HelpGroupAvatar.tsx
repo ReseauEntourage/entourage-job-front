@@ -1,46 +1,43 @@
 import React from 'react';
-import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
-import { useImageFallback } from '@/src/hooks/useImageFallback';
+import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile';
 import {
+  AVATAR_RING_WIDTH,
   StyledHelpGroupAvatar,
-  StyledHelpGroupAvatarInitials,
 } from './HelpGroupAvatar.styles';
 
+export interface HelpGroupAvatarUser {
+  id: string;
+  firstName: string;
+}
+
 interface HelpGroupAvatarProps {
-  userId: string | null;
-  // null for a deleted account: a neutral avatar, without initials
-  initials: string | null;
+  // null for a deleted account: a neutral grey disc
+  user: HelpGroupAvatarUser | null;
   hasPicture?: boolean;
   size?: number;
 }
 
 /**
- * Profile picture when the user has one, otherwise their initials.
+ * The shared `ImgUserProfile` (picture, or the first initial as in the
+ * navigation bar) inside a white ring that keeps overlapping avatars apart.
  */
 export function HelpGroupAvatar({
-  userId,
-  initials,
+  user,
   hasPicture = false,
   size = 32,
 }: HelpGroupAvatarProps) {
-  const { urlImg } = useImageFallback({
-    userId: userId ?? '',
-    hasPicture: hasPicture && !!userId,
-  });
-  const pictureUrl = hasPicture && userId ? urlImg : null;
-
   return (
     <StyledHelpGroupAvatar
       $size={size}
-      $isPlaceholder={!initials}
+      $isPlaceholder={!user}
       data-testid="help-group-avatar"
     >
-      {pictureUrl ? (
-        <LegacyImg src={pictureUrl} alt={initials ?? ''} cover />
-      ) : (
-        <StyledHelpGroupAvatarInitials aria-hidden="true">
-          {initials ?? ''}
-        </StyledHelpGroupAvatarInitials>
+      {user && (
+        <ImgUserProfile
+          user={user}
+          hasPicture={hasPicture}
+          size={size - AVATAR_RING_WIDTH * 2}
+        />
       )}
     </StyledHelpGroupAvatar>
   );

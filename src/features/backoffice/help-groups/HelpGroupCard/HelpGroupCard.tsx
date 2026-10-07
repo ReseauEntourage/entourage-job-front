@@ -73,8 +73,11 @@ export function HelpGroupCard({ group }: HelpGroupCardProps) {
                 {group.recentContributors.map((contributor) => (
                   <HelpGroupAvatar
                     key={contributor.id}
-                    userId={contributor.id}
-                    initials={contributor.initials}
+                    // Only the initials are exposed: the first one is shown
+                    user={{
+                      id: contributor.id,
+                      firstName: contributor.initials,
+                    }}
                     hasPicture={contributor.hasPicture}
                     size={30}
                   />

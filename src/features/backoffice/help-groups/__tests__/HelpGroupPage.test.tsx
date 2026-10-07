@@ -57,7 +57,7 @@ describe('Help group page', () => {
       expect(row).toHaveTextContent('Coach');
       expect(row).toHaveTextContent(/dernière activité le 2 septembre 2026/);
       expect(within(row).getByTestId('help-group-avatar')).toHaveTextContent(
-        'AL'
+        /^A$/
       );
       expect(row).toHaveTextContent('Amina et Sofia soutiennent');
       expect(row).toHaveTextContent('4 réponses');

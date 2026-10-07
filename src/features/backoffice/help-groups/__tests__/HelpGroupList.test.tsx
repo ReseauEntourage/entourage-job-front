@@ -88,7 +88,7 @@ describe('HelpGroupList', () => {
     expect(card.querySelector('svg.lucide-arrow-right')).not.toBeNull();
   });
 
-  it('shows the contributors picture when available, otherwise their initials', () => {
+  it('shows the contributors picture when available, otherwise their first initial', () => {
     process.env.NEXT_PUBLIC_AWSS3_URL = 'https://s3.example/';
     process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY = 'images/';
     renderWithProviders(
@@ -106,9 +106,10 @@ describe('HelpGroupList', () => {
     const avatars = screen.getAllByTestId('help-group-avatar');
     expect(avatars).toHaveLength(2);
     expect(avatars[0].querySelector('img')).not.toBeNull();
-    expect(avatars[0]).not.toHaveTextContent('AL');
+    expect(avatars[0]).not.toHaveTextContent('A');
     expect(avatars[1].querySelector('img')).toBeNull();
-    expect(avatars[1]).toHaveTextContent('SB');
+    // One initial, as in the navigation bar
+    expect(avatars[1]).toHaveTextContent(/^S$/);
   });
 
   it('shows no avatar nor placeholder without contributors', () => {

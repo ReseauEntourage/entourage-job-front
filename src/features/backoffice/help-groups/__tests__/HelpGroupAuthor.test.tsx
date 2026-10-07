@@ -20,7 +20,7 @@ describe('HelpGroupAuthor', () => {
       '/backoffice/profile/author-1'
     );
     expect(screen.getByText('Coach')).toBeInTheDocument();
-    expect(screen.getByText('AL')).toBeInTheDocument();
+    expect(screen.getByTestId('help-group-avatar')).toHaveTextContent(/^A$/);
   });
 
   it('shows the « Équipe Entourage » label of an admin', () => {
