@@ -7,6 +7,7 @@ import { UNDER_REVIEW_MENTION } from '../help-groups-participation.labels';
 import { formatHelpGroupDate, formatRepliesLabel } from '../help-groups.labels';
 import {
   StyledDiscussionRow,
+  StyledDiscussionRowAuthor,
   StyledDiscussionRowFooter,
   StyledDiscussionRowTitle,
 } from './DiscussionRow.styles';
@@ -21,7 +22,8 @@ export const getDiscussionHref = (groupSlug: string, discussionId: string) =>
 
 /**
  * Title, author, last activity, reactions as first names when any, and the
- * replies count only when above zero.
+ * replies count only when above zero. The whole card leads to the
+ * discussion, except the author's name, which leads to their profile.
  */
 export function DiscussionRow({ groupSlug, discussion }: DiscussionRowProps) {
   const repliesLabel = formatRepliesLabel(discussion.repliesCount);
@@ -41,7 +43,9 @@ export function DiscussionRow({ groupSlug, discussion }: DiscussionRowProps) {
           {UNDER_REVIEW_MENTION}
         </Text>
       )}
-      <HelpGroupAuthor author={discussion.author} withAvatar={false} />
+      <StyledDiscussionRowAuthor>
+        <HelpGroupAuthor author={discussion.author} withAvatar={false} />
+      </StyledDiscussionRowAuthor>
       <Text size="small" color="darkGray">
         Dernière activité le {formatHelpGroupDate(discussion.lastActivityAt)}
       </Text>
