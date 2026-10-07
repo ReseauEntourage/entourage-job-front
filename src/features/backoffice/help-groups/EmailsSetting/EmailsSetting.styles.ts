@@ -1,27 +1,34 @@
 import { css, styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS, SHADOWS } from '@/src/constants/styles';
 
-export const StyledEmailsSetting = styled.div<{ $isHighlighted: boolean }>`
+export const StyledEmailsSetting = styled.section<{ $isHighlighted: boolean }>`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 16px;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 16px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+  border-radius: 10px;
   background-color: ${COLORS.white};
-  transition: background-color 0.4s;
+  box-shadow: ${SHADOWS.card};
+  transition:
+    background-color 0.4s,
+    box-shadow 0.4s;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    gap: 8px;
+    padding: 16px;
+  }
 
   ${({ $isHighlighted }) =>
     $isHighlighted &&
     css`
-      border-color: ${COLORS.primaryBlue};
       background-color: ${COLORS.hoverBlue};
+      box-shadow: 0 0 0 2px ${COLORS.primaryBlue};
     `}
 `;
 
-export const StyledEmailsSettingText = styled.div`
+export const StyledEmailsSettingHeader = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 `;

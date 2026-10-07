@@ -1,24 +1,52 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { COLORS, FONT_WEIGHTS } from '@/src/constants/styles';
 
 export const StyledReportModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  /* Keeps the gap above the footer rule, which sits outside the body */
+  padding-bottom: 20px;
   text-align: left;
 `;
 
-export const StyledReportHelp = styled.div`
+export const StyledReportExcerpt = styled.blockquote`
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: ${COLORS.lightGray};
+  overflow-wrap: anywhere;
+`;
+
+export const StyledReportExcerptAuthor = styled.span`
+  font-weight: ${FONT_WEIGHTS.semibold};
+  color: ${COLORS.black};
+`;
+
+export const StyledReportHelp = styled.aside`
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background-color: ${COLORS.extraExtraLightOrange};
+
+  a {
+    font-weight: ${FONT_WEIGHTS.semibold};
+  }
+`;
+
+export const StyledReportHelpIcon = styled.span`
+  flex: none;
+  display: flex;
+  padding-top: 2px;
+`;
+
+export const StyledReportHelpText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background-color: ${COLORS.hoverBlue};
-
-  a {
-    font-weight: 700;
-  }
+  min-width: 0;
 `;
 
 export const StyledReportReferent = styled.div`

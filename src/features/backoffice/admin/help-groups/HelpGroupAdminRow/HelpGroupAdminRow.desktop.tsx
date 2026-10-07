@@ -1,13 +1,12 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
 import { TdDesktop, TrDesktop } from '@/src/components/ui/Table';
-import {
-  formatHelpGroupLastActivity,
-  formatHelpGroupState,
-} from '../helpGroupsAdmin.utils';
+import { formatHelpGroupLastActivity } from '../helpGroupsAdmin.utils';
 import { HelpGroupAdminActions } from './HelpGroupAdminActions';
-import { StyledHelpGroupAdminState } from './HelpGroupAdminRow.styles';
+import { StyledHelpGroupAdminCenter } from './HelpGroupAdminRow.styles';
 import { HelpGroupAdminRowProps } from './HelpGroupAdminRow.types';
+import { HelpGroupPinToggle } from './HelpGroupPinToggle';
+import { HelpGroupStateBadge } from './HelpGroupStateBadge';
 
 export function HelpGroupAdminRowDesktop(props: HelpGroupAdminRowProps) {
   const { group } = props;
@@ -17,12 +16,12 @@ export function HelpGroupAdminRowDesktop(props: HelpGroupAdminRowProps) {
         <Text weight="semibold">{group.name}</Text>
       </TdDesktop>
       <TdDesktop>
-        <StyledHelpGroupAdminState $isPublished={!!group.publishedAt}>
-          {formatHelpGroupState(group)}
-        </StyledHelpGroupAdminState>
+        <HelpGroupStateBadge group={group} />
       </TdDesktop>
       <TdDesktop>
-        <Text>{group.pinnedAt ? 'Épinglé' : '-'}</Text>
+        <StyledHelpGroupAdminCenter>
+          <HelpGroupPinToggle {...props} />
+        </StyledHelpGroupAdminCenter>
       </TdDesktop>
       <TdDesktop>
         <Text>{group.membersCount}</Text>
@@ -31,7 +30,9 @@ export function HelpGroupAdminRowDesktop(props: HelpGroupAdminRowProps) {
         <Text>{group.discussionsCount}</Text>
       </TdDesktop>
       <TdDesktop>
-        <Text>{formatHelpGroupLastActivity(group.lastActivityAt)}</Text>
+        <Text color="darkGray">
+          {formatHelpGroupLastActivity(group.lastActivityAt)}
+        </Text>
       </TdDesktop>
       <TdDesktop>
         <HelpGroupAdminActions {...props} />

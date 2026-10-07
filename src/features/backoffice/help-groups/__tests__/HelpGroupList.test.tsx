@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -42,6 +42,50 @@ describe('HelpGroupList', () => {
     const card = screen.getByTestId('help-group-card');
     expect(card).toHaveTextContent('Vous êtes membre');
     expect(card).toHaveTextContent('61 membres, dont vous');
+  });
+
+  it('shows « À la une » on a pinned group, and only on it', () => {
+    renderWithProviders(
+      <HelpGroupList
+        groups={[
+          buildCard({ pinnedAt: '2026-10-01T10:00:00.000Z' }),
+          buildCard({
+            id: 'group-2',
+            slug: 'preparer-un-entretien',
+            name: 'Préparer un entretien',
+          }),
+        ]}
+      />
+    );
+    const [pinned, notPinned] = screen.getAllByTestId('help-group-card');
+    expect(
+      within(pinned).getByTestId('help-group-pinned-badge')
+    ).toHaveTextContent('À la une');
+    expect(notPinned).not.toHaveTextContent('À la une');
+    expect(
+      within(notPinned).queryByTestId('help-group-pinned-badge')
+    ).not.toBeInTheDocument();
+  });
+
+  it('makes the whole card a single link, ending with an arrow', () => {
+    renderWithProviders(
+      <HelpGroupList
+        groups={[
+          buildCard({
+            pinnedAt: '2026-10-01T10:00:00.000Z',
+            isMember: true,
+            recentContributors: [
+              { id: 'without-picture', initials: 'SB', hasPicture: false },
+            ],
+          }),
+        ]}
+      />
+    );
+    const link = screen.getByRole('link');
+    const card = screen.getByTestId('help-group-card');
+    expect(link).toContainElement(card);
+    expect(within(card).getByTestId('help-group-member-badge')).toBeVisible();
+    expect(card.querySelector('svg.lucide-arrow-right')).not.toBeNull();
   });
 
   it('shows the contributors picture when available, otherwise their initials', () => {

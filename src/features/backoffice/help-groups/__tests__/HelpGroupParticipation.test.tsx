@@ -59,6 +59,12 @@ jest.mock('next/router', () => ({
 jest.mock('@/src/features/backoffice/LoadingScreen', () => ({
   LoadingScreen: () => <div data-testid="loading-screen" />,
 }));
+// jsdom has no layout: the window width is set by each test
+let mockWindowWidth = 1440;
+jest.mock('@react-hook/window-size', () => ({
+  ...jest.requireActual('@react-hook/window-size'),
+  useWindowWidth: () => mockWindowWidth,
+}));
 
 // eslint-disable-next-line import-x/order
 import { useGetHelpGroupQuery } from '@/src/use-cases/help-groups';
@@ -112,6 +118,7 @@ describe('Help group participation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    mockWindowWidth = 1440;
     mockSuggestTitle.mockResolvedValue({
       data: { title: 'Comment expliquer deux ans sans emploi ?' },
     });
@@ -221,17 +228,26 @@ describe('Help group participation', () => {
   });
 
   describe('Layout', () => {
-    const about = () => within(screen.getByTestId('help-group-about'));
+    const header = () => within(screen.getByTestId('help-group-header'));
+    const isBefore = (first: Element, second: Element) =>
+      !!(
+        first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING
+      );
 
-    it('shows the full description in « À propos de ce groupe »', () => {
+    it('shows the full description in the full-width header', () => {
       renderPage({}, { description: 'Première ligne\nDeuxième ligne' });
-      expect(about().getByText('À propos de ce groupe')).toBeInTheDocument();
       expect(
-        about().getByText(/Première ligne\s+Deuxième ligne/)
+        header().getByText(/Première ligne\s+Deuxième ligne/)
       ).toBeInTheDocument();
+      expect(
+        header().getByRole('heading', { level: 1, name: 'Refaire un CV' })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('À propos de ce groupe')
+      ).not.toBeInTheDocument();
     });
 
-    it('invites a non member in the header and offers to join in « À propos »', () => {
+    it('offers « Rejoindre le groupe » in the header to an eligible non member, the invitation being in the main column', () => {
       renderPage({ state: 'mustJoin' });
       const invitation = screen.getByTestId('write-invitation-join');
       expect(invitation).toHaveTextContent(
@@ -240,79 +256,128 @@ describe('Help group participation', () => {
       expect(
         within(invitation).queryByTestId('join-help-group')
       ).not.toBeInTheDocument();
-      expect(about().getByTestId('join-help-group')).toBeInTheDocument();
-      expect(
-        about().queryByTestId('publish-discussion')
-      ).not.toBeInTheDocument();
+      expect(header().getByTestId('join-help-group')).toHaveTextContent(
+        'Rejoindre le groupe'
+      );
+      expect(header().queryByTestId('leave-help-group')).toBeNull();
     });
 
-    it('offers no action in « À propos » to a person without the eLearning', () => {
+    it('offers no adhesion action to a person without the eLearning', () => {
       renderPage({ state: 'mustCompleteElearning' });
       expect(
         screen.getByTestId('write-invitation-elearning')
       ).toBeInTheDocument();
-      expect(about().queryByRole('button')).not.toBeInTheDocument();
+      expect(header().queryByRole('button')).not.toBeInTheDocument();
     });
 
-    it('offers to publish, and to leave as a secondary action, to a member', () => {
+    it('offers « Quitter le groupe » in the header to a member, and no « Publier une discussion »', () => {
       renderPage();
-      expect(about().getByTestId('publish-discussion')).toHaveTextContent(
-        'Publier une discussion'
+      expect(header().getByTestId('help-group-member-badge')).toHaveTextContent(
+        'Vous êtes membre'
       );
-      expect(about().getByTestId('leave-help-group')).toBeInTheDocument();
+      expect(header().getByTestId('leave-help-group')).toHaveTextContent(
+        'Quitter le groupe'
+      );
       expect(
         screen.queryByTestId('write-invitation-join')
       ).not.toBeInTheDocument();
+      expect(screen.queryByText('Publier une discussion')).toBeNull();
+      expect(screen.queryByTestId('publish-discussion')).toBeNull();
     });
 
-    it('opens the composer in place from « Publier une discussion »', () => {
-      renderPage();
-      expect(
-        screen.queryByTestId('discussion-composer')
-      ).not.toBeInTheDocument();
-      fireEvent.click(screen.getByTestId('publish-discussion'));
-      expect(screen.getByTestId('discussion-composer')).toBeInTheDocument();
-      expect(screen.getByTestId('discussion-composer-message')).toHaveFocus();
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-
-    it('offers no action in the preview of an unpublished group', () => {
+    it('offers no adhesion action in the preview of an unpublished group', () => {
       renderPage({}, { isPublished: false });
-      expect(about().queryByRole('button')).not.toBeInTheDocument();
+      expect(header().getByText('Non publié')).toBeInTheDocument();
+      expect(header().queryByRole('button')).not.toBeInTheDocument();
     });
 
-    it('orders the header, « À propos », the discussions and « Le cadre »', () => {
-      renderPage();
-      const aboutBlock = screen.getByTestId('help-group-about');
+    it('puts the information, the composer and the discussions on the left, « Le cadre » then the emails on the right', () => {
+      renderPage({ showWelcomeInvite: true });
+      const headerBlock = screen.getByTestId('help-group-header');
+      const welcome = screen.getByTestId('welcome-invite');
       const composerBar = screen.getByTestId('discussion-composer-bar');
+      const discussions = screen.getByTestId('help-group-no-discussion');
       const charter = screen.getByTestId('help-group-charter');
-      expect(
-        screen
-          .getByText('Refaire un CV', { selector: 'h2' })
-          .compareDocumentPosition(aboutBlock) &
-          Node.DOCUMENT_POSITION_FOLLOWING
-      ).toBeTruthy();
-      expect(
-        aboutBlock.compareDocumentPosition(composerBar) &
-          Node.DOCUMENT_POSITION_FOLLOWING
-      ).toBeTruthy();
-      expect(
-        composerBar.compareDocumentPosition(charter) &
-          Node.DOCUMENT_POSITION_FOLLOWING
-      ).toBeTruthy();
+      const emails = screen.getByTestId('emails-setting');
+      [headerBlock, welcome, composerBar, discussions].reduce(
+        (previous, block) => {
+          expect(isBefore(previous, block)).toBe(true);
+          return block;
+        }
+      );
+      expect(isBefore(charter, emails)).toBe(true);
+      const aside = charter.closest('aside');
+      expect(aside).not.toBeNull();
+      expect(aside).toContainElement(emails);
+      expect(aside).not.toContainElement(welcome);
+      expect(aside).not.toContainElement(composerBar);
+      expect(headerBlock).not.toContainElement(charter);
+    });
+
+    describe('below the desktop breakpoint', () => {
+      beforeEach(() => {
+        mockWindowWidth = 390;
+      });
+
+      it('offers « Quitter le groupe » only in the « ⋯ » menu next to the name', async () => {
+        renderPage();
+        expect(
+          screen.queryByTestId('leave-help-group')
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText('Quitter le groupe')).not.toBeInTheDocument();
+        const toggle = header().getByRole('button', {
+          name: "Plus d'actions sur le groupe",
+        });
+        fireEvent.click(toggle);
+        const leave = header().getByTestId('leave-help-group');
+        expect(leave).toHaveTextContent('Quitter le groupe');
+        fireEvent.click(leave);
+        fireEvent.click(await screen.findByTestId('modal-confirm-confirm'));
+        await waitFor(() =>
+          expect(mockLeave).toHaveBeenCalledWith('refaire-un-cv')
+        );
+      });
+
+      it('collapses « Le cadre » under the description, and chains the blocks in a single column', () => {
+        renderPage({ showWelcomeInvite: true });
+        const headerBlock = screen.getByTestId('help-group-header');
+        const charter = screen.getByTestId('help-group-charter');
+        expect(charter.tagName).toBe('DETAILS');
+        expect(charter).not.toHaveAttribute('open');
+        expect(headerBlock).toContainElement(charter);
+        expect(
+          isBefore(
+            header().getByText('Échanger sur la rédaction de son CV'),
+            charter
+          )
+        ).toBe(true);
+        expect(document.querySelector('aside')).toBeNull();
+        const blocks = [
+          headerBlock,
+          screen.getByTestId('welcome-invite'),
+          screen.getByTestId('discussion-composer-bar'),
+          screen.getByTestId('help-group-no-discussion'),
+          screen.getByTestId('emails-setting'),
+        ];
+        blocks.reduce((previous, block) => {
+          expect(isBefore(previous, block)).toBe(true);
+          return block;
+        });
+      });
     });
   });
 
   describe('Welcome', () => {
-    it('invites a new member by their first name, and opens the composer', () => {
+    it('invites a new member by their first name, and « Me présenter » opens the composer', () => {
       renderPage({ showWelcomeInvite: true });
-      expect(
-        screen.getByText(
-          'Bienvenue, Julien. Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.'
-        )
-      ).toBeInTheDocument();
-      fireEvent.click(screen.getByTestId('welcome-invite'));
+      const invite = screen.getByTestId('welcome-invite');
+      expect(invite).toHaveTextContent('Bienvenue, Julien.');
+      expect(invite).toHaveTextContent(
+        'Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.'
+      );
+      fireEvent.click(within(invite).getByText('Me présenter'));
       expect(screen.getByTestId('discussion-composer')).toBeInTheDocument();
+      expect(screen.getByTestId('discussion-composer-message')).toHaveFocus();
     });
 
     it('does not invite when the back does not ask for it', () => {
@@ -322,6 +387,81 @@ describe('Help group participation', () => {
   });
 
   describe('Composer', () => {
+    const messageInput = () =>
+      screen.getByTestId('discussion-composer-message') as HTMLTextAreaElement;
+
+    it('is closed by default, on one line with the viewer avatar and the invitation', () => {
+      renderPage();
+      const bar = screen.getByTestId('discussion-composer-bar');
+      expect(bar).toHaveTextContent(
+        'Posez une question, partagez une situation, proposez votre aide…'
+      );
+      expect(bar).toHaveAccessibleName('Écrire une nouvelle discussion');
+      expect(
+        within(bar.parentElement as HTMLElement).getByTestId(
+          'help-group-avatar'
+        )
+      ).toHaveTextContent('J');
+      expect(
+        screen.queryByTestId('discussion-composer')
+      ).not.toBeInTheDocument();
+    });
+
+    it('opens as soon as the bar takes the focus, the message taking it', () => {
+      renderPage();
+      fireEvent.focus(screen.getByTestId('discussion-composer-bar'));
+      expect(screen.getByTestId('discussion-composer')).toBeInTheDocument();
+      expect(messageInput()).toHaveFocus();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    it('opens with a draft restored when coming back', () => {
+      localStorage.setItem(
+        'help-groups:draft:viewer-1:group:group-1',
+        JSON.stringify({
+          content: 'Mon brouillon',
+          title: '',
+          titleOrigin: 'none',
+        })
+      );
+      renderPage();
+      expect(
+        screen.queryByTestId('discussion-composer-bar')
+      ).not.toBeInTheDocument();
+      expect(messageInput().value).toBe('Mon brouillon');
+      expect(messageInput()).not.toHaveFocus();
+    });
+
+    it('stays open when the message loses the focus with a text', () => {
+      renderPage();
+      openComposer();
+      typeMessage('Trop court');
+      blurMessage();
+      fireEvent.mouseDown(document.body);
+      fireEvent.click(document.body);
+      expect(screen.getByTestId('discussion-composer')).toBeInTheDocument();
+      expect(messageInput().value).toBe('Trop court');
+    });
+
+    it('closes only on « Annuler », which erases the draft', async () => {
+      const { unmount } = renderPage();
+      openComposer();
+      typeMessage('Mon brouillon');
+      await waitFor(() =>
+        expect(
+          localStorage.getItem('help-groups:draft:viewer-1:group:group-1')
+        ).not.toBeNull()
+      );
+      fireEvent.click(screen.getByTestId('discussion-composer-cancel'));
+      expect(screen.getByTestId('discussion-composer-bar')).toBeInTheDocument();
+      expect(
+        localStorage.getItem('help-groups:draft:viewer-1:group:group-1')
+      ).toBeNull();
+      unmount();
+      renderPage();
+      expect(screen.getByTestId('discussion-composer-bar')).toBeInTheDocument();
+    });
+
     it('opens in place, message first, with the visibility mention', () => {
       renderPage();
       openComposer();
@@ -350,8 +490,10 @@ describe('Help group participation', () => {
         )
       );
       expect(
-        screen.getByText('Proposé pour vous, modifiable')
-      ).toBeInTheDocument();
+        screen.getByTestId('discussion-composer-suggested-title')
+      ).toHaveTextContent(
+        "Proposé par l'IA. Vérifiez, ajustez sa proposition."
+      );
       expect(mockSuggestTitle).toHaveBeenCalledWith({
         slug: 'refaire-un-cv',
         content: longMessage,

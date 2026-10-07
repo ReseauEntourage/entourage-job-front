@@ -90,8 +90,7 @@ describe('AuthorCard', () => {
       />
     );
     expect(screen.getByText('Amina L.')).toBeInTheDocument();
-    expect(screen.getByText('Candidat')).toBeInTheDocument();
-    expect(screen.getByText('Paris (75)')).toBeInTheDocument();
+    expect(screen.getByText('Candidat · Paris (75)')).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'Voir son profil' })
     ).toHaveAttribute('href', '/backoffice/profile/author-1');

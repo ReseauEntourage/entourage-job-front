@@ -14,6 +14,15 @@ export const HELP_GROUP_NO_DISCUSSION_TEXT =
 export const HELP_GROUP_NO_MEMBER_LABEL =
   'Soyez parmi les premiers à rejoindre';
 export const HELP_GROUP_MEMBER_MENTION = 'Vous êtes membre';
+export const HELP_GROUP_PINNED_MENTION = 'À la une';
+export const HELP_GROUP_DISCUSSIONS_TITLE = 'Discussions';
+// Introduction of the groups list, design of 07/10/2026
+export const HELP_GROUPS_INTRO = {
+  overline: "Groupes d'entraide",
+  title: 'Trouvez le groupe qui parle de votre situation',
+  text: "Posez une question, partagez une situation, proposez votre aide. Candidats, coachs et prescripteurs s'y entraident d'égal à égal.",
+  charterLink: 'Lire le cadre des groupes',
+} as const;
 export const DELETED_AUTHOR_LABEL = 'Utilisateur supprimé';
 
 /**

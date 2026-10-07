@@ -1,18 +1,30 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { COLORS, SHADOWS } from '@/src/constants/styles';
 
 export const StyledAuthorCard = styled.aside`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  padding: 20px;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 20px;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 10px;
   background-color: ${COLORS.white};
-  text-align: center;
+  box-shadow: ${SHADOWS.card};
+`;
 
-  a {
-    color: ${COLORS.primaryBlue};
+export const StyledAuthorCardIdentity = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+`;
+
+// The profile link takes the whole width of the card, under the identity
+export const StyledAuthorCardLink = styled.div`
+  flex-basis: 100%;
+
+  a,
+  button {
+    width: 100%;
   }
 `;

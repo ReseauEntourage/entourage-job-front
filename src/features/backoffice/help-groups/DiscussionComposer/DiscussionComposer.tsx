@@ -1,16 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Text } from '@/src/components/ui';
+import {
+  Badge,
+  BadgeVariant,
+  Button,
+  LucidIcon,
+  Text,
+} from '@/src/components/ui';
+import { H5 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
-import { selectCurrentUser } from '@/src/use-cases/current-user';
+import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
+import {
+  selectCurrentUser,
+  selectCurrentUserProfile,
+} from '@/src/use-cases/current-user';
 import {
   getHelpGroupDraftKey,
   HelpGroupsWriteError,
   useCreateHelpGroupDiscussionMutation,
 } from '@/src/use-cases/help-groups';
 import { notificationsActions } from '@/src/use-cases/notifications';
+import { HelpGroupAvatar } from '../HelpGroupAvatar';
 import {
+  COMPOSER_BAR_LABEL,
   COMPOSER_CANCEL_LABEL,
+  COMPOSER_HEADING,
   COMPOSER_MESSAGE_LABEL,
   COMPOSER_MESSAGE_REQUIRED,
   COMPOSER_PLACEHOLDER,
@@ -35,8 +49,12 @@ import {
   StyledComposer,
   StyledComposerActions,
   StyledComposerBar,
+  StyledComposerBarButton,
+  StyledComposerHeading,
+  StyledComposerVisibility,
   StyledTitleActions,
   StyledTitleField,
+  StyledTitleLabelRow,
 } from './DiscussionComposer.styles';
 import {
   EMPTY_TITLE_SUGGESTION_HISTORY,
@@ -80,6 +98,12 @@ const validate = ({ content, title }: DiscussionDraft) => ({
 const toFieldError = (message: string | null) =>
   message ? { type: 'validate', message } : undefined;
 
+const TITLE_INPUT_ID = 'discussion-composer-title';
+
+const getInitials = (firstName?: string, lastName?: string) =>
+  `${firstName?.charAt(0) ?? ''}${lastName?.charAt(0) ?? ''}`.toUpperCase() ||
+  null;
+
 interface DiscussionComposerProps {
   slug: string;
   groupId: string;
@@ -92,6 +116,11 @@ interface DiscussionComposerProps {
  * Writing a discussion in place, the group staying visible: never a modal
  * (only the charter one, at the very first publication). The message comes
  * first, then the title, which the AI can propose but never imposes.
+ *
+ * Closed, it is a one-line bar with the viewer's avatar. It opens as soon as
+ * the bar takes the focus, or while a draft exists (a restored one
+ * included), and losing the focus never closes it: only « Annuler » does,
+ * which erases the draft.
  */
 export function DiscussionComposer({
   slug,
@@ -100,14 +129,21 @@ export function DiscussionComposer({
   openSignal = 0,
 }: DiscussionComposerProps) {
   const dispatch = useDispatch();
-  const userId = useSelector(selectCurrentUser)?.id;
+  const currentUser = useSelector(selectCurrentUser);
+  const hasPicture = useSelector(selectCurrentUserProfile)?.hasPicture ?? false;
+  const userId = currentUser?.id;
   const [draft, setDraft, clearDraft] = useDraft<DiscussionDraft>(
     userId ? getHelpGroupDraftKey(userId, 'group', groupId) : null,
     EMPTY_DRAFT,
     isDraftEmpty
   );
-  // A kept draft reopens the composer with its text
-  const [isOpen, setIsOpen] = useState(() => !isDraftEmpty(draft));
+  // Opened by the bar or the welcome invite, until « Annuler »
+  const [isExpanded, setIsExpanded] = useState(false);
+  // A draft, restored or being typed, keeps the composer open
+  const isOpen = isExpanded || !isDraftEmpty(draft);
+  // Incremented by a gesture opening the composer: the message takes the
+  // focus, which brings it into view. Not on a restored draft.
+  const [focusRequest, setFocusRequest] = useState(0);
   const [hasTriedToPublish, setHasTriedToPublish] = useState(false);
   const [createDiscussion, { isLoading }] =
     useCreateHelpGroupDiscussionMutation();
@@ -140,24 +176,39 @@ export function DiscussionComposer({
 
   useLeaveConfirmation(isOpen && !isDraftEmpty(draft));
 
+  const open = () => {
+    setIsExpanded(true);
+    setFocusRequest((count) => count + 1);
+  };
+
   useEffect(() => {
     if (openSignal > 0) {
-      setIsOpen(true);
+      setIsExpanded(true);
+      setFocusRequest((count) => count + 1);
     }
   }, [openSignal]);
 
   useEffect(() => {
-    if (isOpen && openSignal > 0) {
+    if (isOpen && focusRequest > 0) {
       messageRef.current?.focus();
     }
-  }, [isOpen, openSignal]);
+  }, [isOpen, focusRequest]);
 
   const close = () => {
     suggestion.reset();
     clearDraft();
     setHasTriedToPublish(false);
-    setIsOpen(false);
+    setIsExpanded(false);
   };
+
+  const avatar = (size: number) => (
+    <HelpGroupAvatar
+      userId={userId ?? null}
+      initials={getInitials(currentUser?.firstName, currentUser?.lastName)}
+      hasPicture={hasPicture}
+      size={size}
+    />
+  );
 
   const errors = validate(draft);
 
@@ -208,21 +259,31 @@ export function DiscussionComposer({
 
   if (!isOpen) {
     return (
-      <StyledComposerBar
-        type="button"
-        onClick={() => setIsOpen(true)}
-        data-testid="discussion-composer-bar"
-      >
-        {COMPOSER_PLACEHOLDER}
+      <StyledComposerBar aria-label={COMPOSER_HEADING}>
+        {avatar(40)}
+        <StyledComposerBarButton
+          type="button"
+          aria-label={COMPOSER_BAR_LABEL}
+          onFocus={open}
+          onClick={open}
+          data-testid="discussion-composer-bar"
+        >
+          {COMPOSER_PLACEHOLDER}
+        </StyledComposerBarButton>
       </StyledComposerBar>
     );
   }
 
   return (
-    <StyledComposer onSubmit={onSubmit} data-testid="discussion-composer">
-      <Text size="small" color="darkGray">
-        {COMPOSER_VISIBILITY_LABEL}
-      </Text>
+    <StyledComposer
+      onSubmit={onSubmit}
+      aria-label={COMPOSER_HEADING}
+      data-testid="discussion-composer"
+    >
+      <StyledComposerHeading>
+        {avatar(36)}
+        <H5 title={COMPOSER_HEADING} weight="semibold" noMarginBottom />
+      </StyledComposerHeading>
       <TextArea
         id="discussion-composer-message"
         name="discussion-composer-message"
@@ -243,11 +304,25 @@ export function DiscussionComposer({
         error={hasTriedToPublish ? toFieldError(errors.content) : undefined}
       />
       <StyledTitleField>
+        <StyledTitleLabelRow>
+          <StyledInputLabel htmlFor={TITLE_INPUT_ID}>
+            {COMPOSER_TITLE_LABEL}
+          </StyledInputLabel>
+          {draft.titleOrigin === 'suggested' && !suggestion.isSuggesting && (
+            <Badge
+              variant={BadgeVariant.ExtraLightTeal}
+              size="small"
+              dataTestId="discussion-composer-suggested-title"
+            >
+              <LucidIcon name="Sparkles" size={14} />
+              {COMPOSER_TITLE_SUGGESTED_LABEL}
+            </Badge>
+          )}
+        </StyledTitleLabelRow>
         <TextInput
-          id="discussion-composer-title"
-          name="discussion-composer-title"
+          id={TITLE_INPUT_ID}
+          name={TITLE_INPUT_ID}
           title={COMPOSER_TITLE_LABEL}
-          showLabel
           placeholder={
             suggestion.isSuggesting
               ? COMPOSER_TITLE_LOADING_LABEL
@@ -278,15 +353,11 @@ export function DiscussionComposer({
               {COMPOSER_TITLE_LOADING_LABEL}
             </Text>
           )}
-          {draft.titleOrigin === 'suggested' && !suggestion.isSuggesting && (
-            <Text size="small" color="darkGray">
-              {COMPOSER_TITLE_SUGGESTED_LABEL}
-            </Text>
-          )}
           {suggestion.canRetry && (
             <Button
               variant="text"
               size="small"
+              weight="semibold"
               onClick={suggestion.retry}
               dataTestId="discussion-composer-retry-title"
             >
@@ -298,6 +369,7 @@ export function DiscussionComposer({
             <Button
               variant="text"
               size="small"
+              weight="semibold"
               dataTestId="discussion-composer-own-title"
               onClick={() => {
                 suggestion.cancelPending();
@@ -315,8 +387,14 @@ export function DiscussionComposer({
         </StyledTitleActions>
       </StyledTitleField>
       <StyledComposerActions>
+        <StyledComposerVisibility>
+          <LucidIcon name="Eye" size={14} />
+          <Text size="small" color="darkGray">
+            {COMPOSER_VISIBILITY_LABEL}
+          </Text>
+        </StyledComposerVisibility>
         <Button
-          variant="default"
+          variant="text"
           onClick={close}
           dataTestId="discussion-composer-cancel"
         >
@@ -324,6 +402,7 @@ export function DiscussionComposer({
         </Button>
         <Button
           variant="primary"
+          size="large"
           disabled={isLoading}
           onClick={() => onSubmit()}
           dataTestId="discussion-composer-publish"

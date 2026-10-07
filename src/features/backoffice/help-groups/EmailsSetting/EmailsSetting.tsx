@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Text } from '@/src/components/ui';
+import { H5 } from '@/src/components/ui/Headings';
 import { ToggleSwitch } from '@/src/components/ui/Inputs/ToggleSwitch/ToggleSwitch';
 import { useUpdateHelpGroupEmailsMutation } from '@/src/use-cases/help-groups';
 import { notificationsActions } from '@/src/use-cases/notifications';
@@ -11,7 +12,7 @@ import {
 } from '../help-groups-participation.labels';
 import {
   StyledEmailsSetting,
-  StyledEmailsSettingText,
+  StyledEmailsSettingHeader,
 } from './EmailsSetting.styles';
 
 interface EmailsSettingProps {
@@ -31,7 +32,7 @@ export function EmailsSetting({
   isHighlighted,
 }: EmailsSettingProps) {
   const dispatch = useDispatch();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
   // Disabled while a change is saved: overlapping optimistic updates could
   // roll back a later choice
   const [updateEmails, { isLoading }] = useUpdateHelpGroupEmailsMutation();
@@ -61,18 +62,18 @@ export function EmailsSetting({
       data-testid="emails-setting"
       data-highlighted={isHighlighted}
     >
-      <StyledEmailsSettingText>
-        <Text weight="semibold">{EMAILS_SETTING_LABEL}</Text>
-        <Text size="small" color="darkGray">
-          {EMAILS_SETTING_DESCRIPTION}
-        </Text>
-      </StyledEmailsSettingText>
-      <ToggleSwitch
-        checked={emailsEnabled}
-        onChange={onChange}
-        ariaLabel={EMAILS_SETTING_LABEL}
-        disabled={isLoading}
-      />
+      <StyledEmailsSettingHeader>
+        <H5 title={EMAILS_SETTING_LABEL} weight="semibold" noMarginBottom />
+        <ToggleSwitch
+          checked={emailsEnabled}
+          onChange={onChange}
+          ariaLabel={EMAILS_SETTING_LABEL}
+          disabled={isLoading}
+        />
+      </StyledEmailsSettingHeader>
+      <Text size="small" color="darkGray">
+        {EMAILS_SETTING_DESCRIPTION}
+      </Text>
     </StyledEmailsSetting>
   );
 }

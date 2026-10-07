@@ -5,6 +5,7 @@ import { MESSAGE_MENU_LABELS } from '../help-groups-participation.labels';
 import {
   StyledMessageMenuToggle,
   StyledModerationItem,
+  StyledReportItem,
 } from './MessageMenu.styles';
 
 export type MessageMenuAction =
@@ -17,8 +18,8 @@ export type MessageMenuAction =
  * - an Entourage admin, on an edited message: previous versions,
  * - any logged-in person, member or not, on someone else's message which is
  *   not hidden after reports: report,
- * - an Entourage admin, on someone else's message: moderation deletion,
- *   set apart from the other actions.
+ * - an Entourage admin, on someone else's message: moderation deletion.
+ * Reporting and moderation are set apart from the other actions.
  */
 export const getMessageMenuActions = ({
   isAuthor,
@@ -43,7 +44,13 @@ interface MessageMenuProps {
   onAction: (action: MessageMenuAction) => void;
 }
 
+// Actions shown after a separator, in a warning color
+const SET_APART_ACTIONS: MessageMenuAction[] = ['report', 'moderate'];
+
 export function MessageMenu({ actions, onAction }: MessageMenuProps) {
+  const setApartActions = actions.filter((action) =>
+    SET_APART_ACTIONS.includes(action)
+  );
   return (
     <Dropdown>
       <Dropdown.Toggle>
@@ -54,26 +61,31 @@ export function MessageMenu({ actions, onAction }: MessageMenuProps) {
           aria-label={MESSAGE_MENU_LABELS.open}
           data-testid="message-menu-toggle"
         >
-          <LucidIcon name="Ellipsis" size={18} />
+          <LucidIcon name="Ellipsis" size={20} />
         </StyledMessageMenuToggle>
       </Dropdown.Toggle>
       <Dropdown.Menu openDirection="left">
         {actions
-          .filter((action) => action !== 'moderate')
+          .filter((action) => !SET_APART_ACTIONS.includes(action))
           .map((action) => (
             <Dropdown.Item key={action} onClick={() => onAction(action)}>
               {MESSAGE_MENU_LABELS[action]}
             </Dropdown.Item>
           ))}
+        {setApartActions.length > 0 && <Dropdown.ItemSeparator />}
+        {actions.includes('report') && (
+          <Dropdown.Item onClick={() => onAction('report')}>
+            <StyledReportItem data-testid="message-menu-report">
+              {MESSAGE_MENU_LABELS.report}
+            </StyledReportItem>
+          </Dropdown.Item>
+        )}
         {actions.includes('moderate') && (
-          <>
-            <Dropdown.ItemSeparator />
-            <Dropdown.Item onClick={() => onAction('moderate')}>
-              <StyledModerationItem>
-                {MESSAGE_MENU_LABELS.moderate}
-              </StyledModerationItem>
-            </Dropdown.Item>
-          </>
+          <Dropdown.Item onClick={() => onAction('moderate')}>
+            <StyledModerationItem>
+              {MESSAGE_MENU_LABELS.moderate}
+            </StyledModerationItem>
+          </Dropdown.Item>
         )}
       </Dropdown.Menu>
     </Dropdown>

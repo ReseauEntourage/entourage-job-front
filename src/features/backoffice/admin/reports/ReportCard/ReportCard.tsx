@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReportItem } from '@/src/api/types';
-import { Text } from '@/src/components/ui';
+import { Tag, TagSize, Text } from '@/src/components/ui';
 import { ReportPerson } from '../ReportPerson';
 import { ReportTargetStatusTag } from '../ReportTargetStatusTag';
 import {
@@ -38,14 +38,16 @@ export function ReportCard({ report }: { report: ReportItem }) {
         <ReportPerson user={report.reporter} />
         <ReportTargetStatusTag status={report.status} />
       </StyledReportCardHeader>
-      <Text size="small" color="darkGray">
-        {formatReportDate(report.createdAt)}
-      </Text>
       <StyledReportCardReason>
-        <Text weight="semibold">Motif :</Text>
-        <Text>{formatReportReason(report.reason)}</Text>
+        <Tag size={TagSize.Small}>{formatReportReason(report.reason)}</Tag>
+        <Text size="small" color="darkGray">
+          {formatReportDate(report.createdAt)}
+        </Text>
       </StyledReportCardReason>
-      <Text variant={report.comment ? 'normal' : 'italic'}>
+      <Text
+        variant={report.comment ? 'normal' : 'italic'}
+        color={report.comment ? 'black' : 'darkGray'}
+      >
         {report.comment || REPORTS_TAB_LABELS.noComment}
       </Text>
       {resolution && (

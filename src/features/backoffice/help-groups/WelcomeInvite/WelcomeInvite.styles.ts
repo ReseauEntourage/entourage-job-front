@@ -1,14 +1,30 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
-export const StyledWelcomeInvite = styled.button`
-  width: 100%;
-  padding: 16px 20px;
-  border: none;
-  border-radius: 20px;
-  background-color: ${COLORS.extraLightOrange};
-  text-align: left;
-  cursor: pointer;
+export const StyledWelcomeInvite = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 10px;
+  background-color: ${COLORS.extraExtraLightOrange};
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+  }
+`;
+
+export const StyledWelcomeInviteText = styled.div`
+  flex: 1 1 320px;
+  min-width: 0;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex: none;
+  }
 `;
 
 export const StyledFirstResponderInvite = styled.div`

@@ -6,8 +6,8 @@ import {
   HelpGroupReactionsSummary,
   HelpGroupReportReason,
 } from '@/src/api/types';
-import { Button, Text } from '@/src/components/ui';
-import { H3 } from '@/src/components/ui/Headings';
+import { Button, SimpleLink, Text } from '@/src/components/ui';
+import { H1 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
 import { REPORT_REASONS } from '@/src/constants/reports';
 import { openModal } from '@/src/features/modals/Modal';
@@ -49,7 +49,9 @@ import {
   UNDER_REVIEW_MENTION,
   WRITE_ERROR_LABELS,
 } from '../help-groups-participation.labels';
+import { getProfileHref } from '../help-groups.labels';
 import {
+  StyledAuthorDetails,
   StyledHiddenByReportsActions,
   StyledHiddenByReportsBanner,
   StyledHiddenByReportsText,
@@ -97,6 +99,9 @@ interface HelpGroupMessageProps {
   // False in an admin preview of an unpublished group: no write action at
   // all, only « Copier le lien du message »
   canManage?: boolean;
+  // Below the desktop breakpoint, the author card is not rendered: the
+  // header of the original message gives the location and the profile link
+  showAuthorDetails?: boolean;
   // The author deleted their discussion
   onDiscussionDeleted?: () => void;
   // An admin deleted the message: shortcut to write to its author
@@ -127,6 +132,7 @@ export function HelpGroupMessage({
   viewer,
   canReact,
   canManage = true,
+  showAuthorDetails = false,
   onDiscussionDeleted,
   onModerated,
 }: HelpGroupMessageProps) {
@@ -148,6 +154,13 @@ export function HelpGroupMessage({
   const [restoreMessage, { isLoading: isRestoring }] =
     useRestoreHelpGroupMessageMutation();
   const isUnderReview = !!message.isUnderReview;
+  // Same condition as the author card: never for a deleted account nor a
+  // profile the viewer cannot see
+  const authorProfileId =
+    showAuthorDetails &&
+    !message.author.isDeleted &&
+    message.author.profileLinkable &&
+    message.author.id;
   const apiKind = isDiscussion ? 'discussions' : 'replies';
 
   const notifyError = (text: string) =>
@@ -291,6 +304,8 @@ export function HelpGroupMessage({
             slug={slug}
             discussionId={discussionId}
             replyId={isDiscussion ? undefined : message.id}
+            author={message.author}
+            content={message.content}
           />
         );
         break;
@@ -357,6 +372,20 @@ export function HelpGroupMessage({
               {EDITED_MENTION}
             </Text>
           )}
+          {authorProfileId && (
+            <StyledAuthorDetails data-testid="message-author-details">
+              {message.author.department && (
+                <Text size="small" color="darkGray">
+                  {message.author.department}
+                </Text>
+              )}
+              <SimpleLink href={getProfileHref(authorProfileId)}>
+                <Text size="small" color="darkBlue" weight="semibold">
+                  Voir son profil
+                </Text>
+              </SimpleLink>
+            </StyledAuthorDetails>
+          )}
         </StyledMessageMeta>
         <MessageMenu
           actions={
@@ -408,7 +437,7 @@ export function HelpGroupMessage({
       ) : (
         <>
           {isDiscussion && message.title && (
-            <H3 title={message.title} noMarginBottom />
+            <H1 title={message.title} weight="semibold" noMarginBottom />
           )}
           <HelpGroupContent
             content={message.content}
@@ -423,6 +452,7 @@ export function HelpGroupMessage({
           <ReactionPicker
             disabled={isReacting}
             viewerReaction={message.viewerReaction}
+            inline={isDiscussion}
             onChange={onReact}
           />
         )}

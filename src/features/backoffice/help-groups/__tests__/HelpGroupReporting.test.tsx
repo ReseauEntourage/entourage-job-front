@@ -120,6 +120,12 @@ describe('Help group reporting', () => {
             slug="refaire-un-cv"
             discussionId="discussion-1"
             replyId={replyId}
+            author={{
+              isDeleted: false,
+              firstName: 'Malik',
+              lastNameInitial: 'R.',
+            }}
+            content="Pareil pour moi !"
           />
         </ModalContext.Provider>
       );
@@ -161,6 +167,13 @@ describe('Help group reporting', () => {
             },
           })
         )
+      );
+    });
+
+    it('recalls the author and the content of the reported message', () => {
+      renderModal('reply-7');
+      expect(screen.getByTestId('report-excerpt')).toHaveTextContent(
+        'Malik R. · « Pareil pour moi ! »'
       );
     });
 

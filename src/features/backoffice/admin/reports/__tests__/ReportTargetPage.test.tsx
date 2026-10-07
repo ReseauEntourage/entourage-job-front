@@ -11,6 +11,10 @@ import { ReportTargetPage } from '../ReportTargetPage';
 const mockUseTarget = jest.fn();
 const mockUseMessages = jest.fn();
 const mockResolve = jest.fn();
+const mockRestore = jest.fn();
+const mockDeleteAsAdmin = jest.fn();
+const mockFetchRevisions = jest.fn();
+let mockRevisions: unknown = undefined;
 
 jest.mock('@/src/use-cases/reports', () => ({
   ...jest.requireActual('@/src/use-cases/reports'),
@@ -20,6 +24,18 @@ jest.mock('@/src/use-cases/reports', () => ({
   useResolveAdminReportTargetMutation: () => [
     mockResolve,
     { isLoading: false },
+  ],
+}));
+jest.mock('@/src/use-cases/help-groups', () => ({
+  ...jest.requireActual('@/src/use-cases/help-groups'),
+  useRestoreHelpGroupMessageMutation: () => [mockRestore, { isLoading: false }],
+  useDeleteHelpGroupMessageAsAdminMutation: () => [
+    mockDeleteAsAdmin,
+    { isLoading: false },
+  ],
+  useLazyGetHelpGroupMessageRevisionsQuery: () => [
+    mockFetchRevisions,
+    { data: mockRevisions, isLoading: false, isError: false },
   ],
 }));
 jest.mock('next/router', () => ({
@@ -61,6 +77,42 @@ const buildReport = (props: Partial<ReportItem> = {}): ReportItem => ({
   ...props,
 });
 
+const buildGroupMessageTarget = (
+  props: {
+    targetType?: 'POST' | 'POST_REPLY';
+    state?: 'VISIBLE' | 'HIDDEN' | 'DELETED';
+    status?: 'PENDING' | 'RESOLVED';
+  } = {}
+): ReportTargetDetail => {
+  const {
+    targetType = 'POST_REPLY',
+    state = 'HIDDEN',
+    status = 'PENDING',
+  } = props;
+  const isReply = targetType === 'POST_REPLY';
+  return {
+    targetType,
+    targetId: isReply ? 'reply-1' : 'discussion-1',
+    label: 'Refaire un CV — Une réponse signalée',
+    status,
+    canResolve: false,
+    reports: [buildReport(), buildReport({ id: 'report-2', comment: null })],
+    context: {
+      targetType,
+      group: { id: 'group-1', name: 'Refaire un CV', slug: 'refaire-un-cv' },
+      message: {
+        discussionId: 'discussion-1',
+        replyId: isReply ? 'reply-1' : null,
+        title: isReply ? null : 'Un titre',
+        content: 'Une réponse signalée',
+        author: jeanne,
+        state,
+        createdAt: '2026-10-01T10:00:00.000Z',
+      },
+    },
+  };
+};
+
 const renderPage = (target: ReportTargetDetail) => {
   mockUseTarget.mockReturnValue({ data: target, isLoading: false });
   return renderWithProviders(
@@ -74,6 +126,7 @@ const renderPage = (target: ReportTargetDetail) => {
 describe('ReportTargetPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockRevisions = undefined;
     mockUseMessages.mockReturnValue({
       data: {
         pages: [
@@ -129,6 +182,11 @@ describe('ReportTargetPage', () => {
     // Read only: nothing to write in the conversation
     expect(screen.queryByRole('textbox', { name: /message/i })).toBeNull();
     expect(screen.getByTestId('report-resolve-form')).toBeInTheDocument();
+    expect(screen.getByTestId('report-target-reports')).toHaveTextContent(
+      'Propos insultants'
+    );
+    expect(screen.queryByTestId('report-message-versions')).toBeNull();
+    expect(mockFetchRevisions).not.toHaveBeenCalled();
   });
 
   it('offers the admin page and « Écrire à… » for each person, and nothing for a deleted account', () => {
@@ -204,27 +262,7 @@ describe('ReportTargetPage', () => {
   });
 
   it('shows a group message with its state and a link to its thread, without « Marquer comme traité »', () => {
-    renderPage({
-      targetType: 'POST_REPLY',
-      targetId: 'reply-1',
-      label: 'Refaire un CV — Une réponse signalée',
-      status: 'PENDING',
-      canResolve: false,
-      reports: [buildReport()],
-      context: {
-        targetType: 'POST_REPLY',
-        group: { id: 'group-1', name: 'Refaire un CV', slug: 'refaire-un-cv' },
-        message: {
-          discussionId: 'discussion-1',
-          replyId: 'reply-1',
-          title: null,
-          content: 'Une réponse signalée',
-          author: jeanne,
-          state: 'HIDDEN',
-          createdAt: '2026-10-01T10:00:00.000Z',
-        },
-      },
-    });
+    renderPage(buildGroupMessageTarget());
 
     expect(screen.getByTestId('report-group-message-state')).toHaveTextContent(
       'Masqué'
@@ -237,6 +275,154 @@ describe('ReportTargetPage', () => {
     );
     expect(screen.queryByTestId('report-resolve-form')).toBeNull();
     expect(screen.queryByText('Marquer comme traité')).toBeNull();
+  });
+
+  it('offers « Rétablir » and « Supprimer » on a hidden message, without any deletion reason', () => {
+    renderPage(buildGroupMessageTarget());
+    const decision = screen.getByTestId('report-decision');
+    expect(decision).toHaveTextContent('Votre décision');
+    expect(decision).toHaveTextContent('ses 2 signalements à traiter');
+    expect(screen.getByTestId('report-decision-restore')).toHaveTextContent(
+      'Rétablir le message'
+    );
+    expect(screen.getByTestId('report-decision-delete')).toHaveTextContent(
+      'Supprimer le message'
+    );
+    expect(screen.queryByTestId('report-decision-delete-form')).toBeNull();
+    expect(screen.queryByText('Données personnelles exposées')).toBeNull();
+  });
+
+  it('restores a hidden reply from its page', async () => {
+    mockRestore.mockResolvedValue({ data: undefined });
+    renderPage(buildGroupMessageTarget());
+    fireEvent.click(screen.getByTestId('report-decision-restore'));
+    await waitFor(() =>
+      expect(mockRestore).toHaveBeenCalledWith({
+        kind: 'replies',
+        id: 'reply-1',
+      })
+    );
+    expect(mockDeleteAsAdmin).not.toHaveBeenCalled();
+  });
+
+  it('restores a hidden discussion from its page', async () => {
+    mockRestore.mockResolvedValue({ data: undefined });
+    renderPage(buildGroupMessageTarget({ targetType: 'POST' }));
+    fireEvent.click(screen.getByTestId('report-decision-restore'));
+    await waitFor(() =>
+      expect(mockRestore).toHaveBeenCalledWith({
+        kind: 'discussions',
+        id: 'discussion-1',
+      })
+    );
+  });
+
+  it('shows the deletion reason only once « Supprimer le message » is chosen, and hides it on « Annuler »', () => {
+    renderPage(buildGroupMessageTarget());
+    fireEvent.click(screen.getByTestId('report-decision-delete'));
+    const form = screen.getByTestId('report-decision-delete-form');
+    expect(form).toHaveTextContent('Données personnelles exposées');
+    expect(form).toHaveTextContent('Propos irrespectueux ou humiliants');
+    expect(form).toHaveTextContent('Spam ou prospection');
+    expect(form).toHaveTextContent('Hors sujet');
+    expect(form).toHaveTextContent('Autre');
+    // The reason is mandatory
+    expect(screen.getByTestId('report-decision-delete-confirm')).toBeDisabled();
+
+    fireEvent.click(screen.getByTestId('report-decision-delete-cancel'));
+    expect(screen.queryByTestId('report-decision-delete-form')).toBeNull();
+    expect(mockDeleteAsAdmin).not.toHaveBeenCalled();
+  });
+
+  it('deletes a hidden reply with its reason and comment', async () => {
+    mockDeleteAsAdmin.mockResolvedValue({ data: undefined });
+    renderPage(buildGroupMessageTarget());
+    fireEvent.click(screen.getByTestId('report-decision-delete'));
+    fireEvent.click(screen.getByLabelText('Données personnelles exposées'));
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '  Numéro de téléphone dans un message public.  ' },
+    });
+    fireEvent.click(screen.getByTestId('report-decision-delete-confirm'));
+
+    await waitFor(() =>
+      expect(mockDeleteAsAdmin).toHaveBeenCalledWith({
+        kind: 'replies',
+        id: 'reply-1',
+        dto: {
+          reason: 'PERSONAL_DATA',
+          comment: 'Numéro de téléphone dans un message public.',
+        },
+        slug: 'refaire-un-cv',
+        discussionId: 'discussion-1',
+      })
+    );
+    expect(mockRestore).not.toHaveBeenCalled();
+  });
+
+  it('deletes a hidden discussion without comment', async () => {
+    mockDeleteAsAdmin.mockResolvedValue({ data: undefined });
+    renderPage(buildGroupMessageTarget({ targetType: 'POST' }));
+    fireEvent.click(screen.getByTestId('report-decision-delete'));
+    fireEvent.click(screen.getByLabelText('Hors sujet'));
+    fireEvent.click(screen.getByTestId('report-decision-delete-confirm'));
+
+    await waitFor(() =>
+      expect(mockDeleteAsAdmin).toHaveBeenCalledWith({
+        kind: 'discussions',
+        id: 'discussion-1',
+        dto: { reason: 'OFF_TOPIC' },
+        slug: 'refaire-un-cv',
+        discussionId: 'discussion-1',
+      })
+    );
+  });
+
+  (['VISIBLE', 'DELETED'] as const).forEach((state) => {
+    it(`offers no decision on a ${state.toLowerCase()} message`, () => {
+      renderPage(buildGroupMessageTarget({ state, status: 'RESOLVED' }));
+      expect(screen.queryByTestId('report-decision')).toBeNull();
+      expect(screen.queryByText('Rétablir le message')).toBeNull();
+      expect(screen.queryByText('Supprimer le message')).toBeNull();
+      expect(screen.queryByTestId('report-resolve-form')).toBeNull();
+    });
+  });
+
+  it('shows the versions of the reported message, current one first', () => {
+    mockRevisions = {
+      current: {
+        title: null,
+        content: 'Une réponse signalée',
+        date: '2026-10-01T10:00:00.000Z',
+      },
+      previous: [
+        {
+          id: 'revision-1',
+          title: null,
+          content: 'Première version',
+          createdAt: '2026-10-01T09:00:00.000Z',
+        },
+      ],
+    };
+    renderPage(buildGroupMessageTarget());
+    expect(mockFetchRevisions).toHaveBeenCalledWith({
+      kind: 'replies',
+      id: 'reply-1',
+    });
+    const versions = screen.getAllByTestId('report-message-version');
+    expect(versions).toHaveLength(2);
+    expect(versions[0]).toHaveTextContent('Version actuelle');
+    expect(versions[0]).toHaveTextContent('Une réponse signalée');
+    expect(versions[1]).toHaveTextContent('Première version');
+  });
+
+  it('shows the reports received apart from the message', () => {
+    renderPage(buildGroupMessageTarget());
+    const reports = screen.getByTestId('report-target-reports');
+    expect(reports).toHaveTextContent('Signalements reçus (2)');
+    expect(reports).not.toHaveTextContent('Une réponse signalée');
+    expect(
+      screen.getByTestId('report-context-group-message')
+    ).toHaveTextContent('Une réponse signalée');
   });
 
   it('tells when the target was never reported', () => {

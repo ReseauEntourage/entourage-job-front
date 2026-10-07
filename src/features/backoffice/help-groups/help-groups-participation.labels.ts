@@ -21,12 +21,14 @@ export const LEAVE_CONFIRM_TITLE = 'Quitter ce groupe ?';
 export const LEAVE_CONFIRM_TEXT =
   'Vos discussions, réponses et réactions restent visibles. Vous pourrez rejoindre ce groupe à tout moment.';
 export const JUST_JOINED_LABEL = 'Vous venez de rejoindre';
-// Layout of the group page (revision of 07/10/2026)
-export const ABOUT_GROUP_TITLE = 'À propos de ce groupe';
-export const PUBLISH_DISCUSSION_LABEL = 'Publier une discussion';
+// Group page header, design of 07/10/2026
+export const HELP_GROUP_ACTIONS_LABEL = "Plus d'actions sur le groupe";
 
-export const formatWelcomeInvite = (firstName: string) =>
-  `Bienvenue, ${firstName}. Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.`;
+export const formatWelcomeInviteTitle = (firstName: string) =>
+  `Bienvenue, ${firstName}.`;
+export const WELCOME_INVITE_TEXT =
+  'Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.';
+export const WELCOME_INVITE_BUTTON_LABEL = 'Me présenter';
 
 // Positive call, naming the author: never "Personne n'a encore répondu"
 export const formatFirstResponderInvite = (authorFirstName: string) =>
@@ -34,12 +36,15 @@ export const formatFirstResponderInvite = (authorFirstName: string) =>
 
 export const COMPOSER_PLACEHOLDER =
   'Posez une question, partagez une situation, proposez votre aide…';
+export const COMPOSER_BAR_LABEL = 'Écrire une nouvelle discussion';
+export const COMPOSER_HEADING = 'Nouvelle discussion';
 export const COMPOSER_VISIBILITY_LABEL =
   'Votre message sera visible par toutes les personnes inscrites sur Entourage Pro.';
 export const COMPOSER_MESSAGE_LABEL = 'Votre message';
 export const COMPOSER_TITLE_LABEL = 'Titre';
 export const COMPOSER_TITLE_PLACEHOLDER = 'Écrivez votre titre';
-export const COMPOSER_TITLE_SUGGESTED_LABEL = 'Proposé pour vous, modifiable';
+export const COMPOSER_TITLE_SUGGESTED_LABEL =
+  "Proposé par l'IA. Vérifiez, ajustez sa proposition.";
 export const COMPOSER_TITLE_LOADING_LABEL = 'Proposition d’un titre…';
 export const COMPOSER_TITLE_RETRY_LABEL = 'Proposer un autre titre';
 export const COMPOSER_TITLE_OWN_LABEL = 'Écrire le mien';

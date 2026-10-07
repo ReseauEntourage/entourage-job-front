@@ -1,6 +1,6 @@
 import React from 'react';
 import { HelpGroupAuthor } from '@/src/api/types';
-import { SimpleLink, Text } from '@/src/components/ui';
+import { Button, Text } from '@/src/components/ui';
 import { HelpGroupAvatar } from '../HelpGroupAvatar';
 import {
   formatAuthorName,
@@ -8,43 +8,53 @@ import {
   getAuthorInitials,
   getProfileHref,
 } from '../help-groups.labels';
-import { StyledAuthorCard } from './AuthorCard.styles';
+import {
+  StyledAuthorCard,
+  StyledAuthorCardIdentity,
+  StyledAuthorCardLink,
+} from './AuthorCard.styles';
 
 interface AuthorCardProps {
   author: HelpGroupAuthor;
 }
 
 /**
- * Card of the author of the original message. Not rendered for a deleted
- * account nor when the reader cannot view the profile.
+ * Card of the author of the original message, next to the discussion on
+ * desktop. Not rendered for a deleted account nor when the reader cannot
+ * view the profile.
  */
 export function AuthorCard({ author }: AuthorCardProps) {
   if (author.isDeleted || !author.profileLinkable || !author.id) {
     return null;
   }
-  const roleLabel = formatAuthorRoleLabel(author);
+  const details = [formatAuthorRoleLabel(author), author.department]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
     <StyledAuthorCard aria-label="Auteur de la discussion">
       <HelpGroupAvatar
         userId={author.id}
         initials={getAuthorInitials(author)}
-        size={64}
+        size={56}
       />
-      <Text weight="semibold" size="large">
-        {formatAuthorName(author)}
-      </Text>
-      {roleLabel && <Text color="darkGray">{roleLabel}</Text>}
-      {author.department && (
-        <Text size="small" color="darkGray">
-          {author.department}
-        </Text>
-      )}
-      <SimpleLink href={getProfileHref(author.id)}>
-        <Text color="primaryBlue" weight="semibold">
+      <StyledAuthorCardIdentity>
+        <Text weight="semibold">{formatAuthorName(author)}</Text>
+        {details && (
+          <Text size="small" color="darkGray">
+            {details}
+          </Text>
+        )}
+      </StyledAuthorCardIdentity>
+      <StyledAuthorCardLink>
+        <Button
+          variant="secondary"
+          size="small"
+          href={getProfileHref(author.id)}
+        >
           Voir son profil
-        </Text>
-      </SimpleLink>
+        </Button>
+      </StyledAuthorCardLink>
     </StyledAuthorCard>
   );
 }

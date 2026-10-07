@@ -33,9 +33,21 @@ import { StyledDiscussionGone } from './HelpGroupDiscussion.styles';
 import { HelpGroupDiscussionView } from './HelpGroupDiscussionView';
 import { getReplyElementId, getReplyTargetState } from './replyTarget';
 
-// Distance to the bottom of the thread under which the reader is "at the
+// Distance to the bottom of the page under which the reader is "at the
 // bottom": a new reply then scrolls into view
 const AT_BOTTOM_THRESHOLD_PX = 40;
+
+// The page is the only scroll of the discussion (the backoffice layout
+// defines no scrolling container): the thread follows the window scroll
+const getPageHeight = () => document.documentElement.scrollHeight;
+
+const isPageAtBottom = () =>
+  getPageHeight() - window.scrollY - window.innerHeight <
+  AT_BOTTOM_THRESHOLD_PX;
+
+const scrollPageTo = (top: number) => window.scrollTo?.({ top });
+
+const scrollPageToBottom = () => scrollPageTo(getPageHeight());
 
 interface HelpGroupDiscussionProps {
   slug: string;
@@ -102,21 +114,6 @@ export function HelpGroupDiscussion({
   const [hasNewReply, setHasNewReply] = useState(false);
   const [scrollToReplyId, setScrollToReplyId] = useState<string | null>(null);
   const shouldScrollToBottom = useRef(false);
-  const threadRef = useRef<HTMLDivElement>(null);
-
-  const isThreadAtBottom = () => {
-    const thread = threadRef.current;
-    return (
-      !thread ||
-      thread.scrollHeight - thread.scrollTop - thread.clientHeight <
-        AT_BOTTOM_THRESHOLD_PX
-    );
-  };
-
-  const scrollThreadToBottom = () => {
-    const thread = threadRef.current;
-    thread?.scrollTo?.({ top: thread.scrollHeight });
-  };
 
   const replyTargetState = getReplyTargetState({
     replyId,
@@ -169,7 +166,7 @@ export function HelpGroupDiscussion({
       (isRepliesError && !isFetchingReplies)
     ) {
       hasPositionedView.current = true;
-      threadRef.current?.scrollTo?.({ top: 0 });
+      scrollPageTo(0);
     }
   }, [
     discussion,
@@ -180,17 +177,16 @@ export function HelpGroupDiscussion({
     isFetchingReplies,
   ]);
 
-  // Keep loading pages while the thread does not overflow its panel: no
+  // Keep loading pages while the page does not overflow the viewport: no
   // scroll event would ever fire there
   useEffect(() => {
-    const thread = threadRef.current;
+    const pageHeight = getPageHeight();
     if (
-      thread &&
-      thread.scrollHeight > 0 &&
+      pageHeight > 0 &&
       hasNextPage &&
       !isFetchingReplies &&
       !isRepliesError &&
-      thread.scrollHeight <= thread.clientHeight
+      pageHeight <= window.innerHeight
     ) {
       fetchNextPage();
     }
@@ -201,18 +197,23 @@ export function HelpGroupDiscussion({
   useEffect(() => {
     if (shouldScrollToBottom.current) {
       shouldScrollToBottom.current = false;
-      scrollThreadToBottom();
+      scrollPageToBottom();
     }
     if (scrollToReplyId && replies.some(({ id }) => id === scrollToReplyId)) {
       document
         .getElementById(getReplyElementId(scrollToReplyId))
-        ?.scrollIntoView?.({ block: 'end' });
+        // Centered: aligned on the bottom of the viewport, it would sit
+        // under the sticky reply area
+        ?.scrollIntoView?.({ block: 'center' });
       setScrollToReplyId(null);
     }
   }, [replies, scrollToReplyId]);
 
-  const onThreadScroll = () => {
-    if (!isThreadAtBottom()) {
+  // Reaching the bottom of the page hides the "new reply" pill and loads
+  // the next replies page
+  const onPageScrollRef = useRef<() => void>(() => undefined);
+  onPageScrollRef.current = () => {
+    if (!isPageAtBottom()) {
       return;
     }
     setHasNewReply(false);
@@ -220,6 +221,11 @@ export function HelpGroupDiscussion({
       fetchNextPage();
     }
   };
+  useEffect(() => {
+    const onScroll = () => onPageScrollRef.current();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const reloadReplies = useCallback(() => {
     refetchReplies();
@@ -228,7 +234,7 @@ export function HelpGroupDiscussion({
   useDiscussionRealtime(discussionId, !!discussion && !isGone, {
     isReplyLoaded: (id) => replies.some((reply) => reply.id === id),
     onReplyCreated: () => {
-      if (isThreadAtBottom()) {
+      if (isPageAtBottom()) {
         shouldScrollToBottom.current = true;
       } else {
         setHasNewReply(true);
@@ -330,13 +336,11 @@ export function HelpGroupDiscussion({
         }
         viewerPermissions={group?.viewerPermissions}
         viewer={viewer}
-        threadRef={threadRef}
         seenRef={seenRef}
-        onThreadScroll={onThreadScroll}
         hasNewReply={hasNewReply}
         onNewReplyClick={() => {
           setHasNewReply(false);
-          scrollThreadToBottom();
+          scrollPageToBottom();
         }}
         onReplied={onReplied}
         onDiscussionGone={onDiscussionGone}

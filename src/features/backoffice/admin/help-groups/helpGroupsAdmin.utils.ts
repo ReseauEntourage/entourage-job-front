@@ -5,8 +5,8 @@ export const HELP_GROUP_ADMIN_ACTION_LABELS: {
 } = {
   publish: 'Publier',
   unpublish: 'Dépublier',
-  pin: 'Épingler',
-  unpin: 'Désépingler',
+  pin: 'Mettre à la une',
+  unpin: 'Retirer de la une',
   restore: 'Restaurer',
 };
 
@@ -29,20 +29,45 @@ export const formatHelpGroupLastActivity = (
       }).format(new Date(lastActivityAt))
     : 'jamais';
 
+export const HELP_GROUP_ADMIN_LABELS = {
+  tabsLabel: 'Groupes',
+  activeTab: 'Groupes',
+  deletedTab: 'Supprimés',
+  pinColumn: 'À la une',
+  pinDisabled: 'Publiez le groupe pour le mettre à la une',
+  formatMoreActions: (name: string) => `Plus d'actions pour ${name}`,
+  preview: 'Prévisualiser',
+  edit: 'Modifier',
+  delete: 'Supprimer le groupe',
+  formatCounters: (group: HelpGroupAdminItem) =>
+    `${group.membersCount} membres · ${group.discussionsCount} discussions · activité : ${formatHelpGroupLastActivity(group.lastActivityAt)}`,
+};
+
 /**
- * Transitions available for a group depending on its state. A deleted group
- * can only be restored; pinning requires a published group.
+ * The single main transition of a group: a deleted group can only be
+ * restored, otherwise it is published or unpublished. Pinning is a separate
+ * toggle, see `getHelpGroupPinAction`.
  */
-export const getHelpGroupAvailableActions = (
+export const getHelpGroupMainAction = (
   group: HelpGroupAdminItem
-): HelpGroupAdminAction[] => {
+): Extract<HelpGroupAdminAction, 'publish' | 'unpublish' | 'restore'> => {
   if (group.deletedAt) {
-    return ['restore'];
+    return 'restore';
   }
-  if (!group.publishedAt) {
-    return ['publish'];
+  return group.publishedAt ? 'unpublish' : 'publish';
+};
+
+/**
+ * Pin toggle of a group: only a published group can be put forward, `null`
+ * when the toggle is disabled.
+ */
+export const getHelpGroupPinAction = (
+  group: HelpGroupAdminItem
+): Extract<HelpGroupAdminAction, 'pin' | 'unpin'> | null => {
+  if (group.deletedAt || !group.publishedAt) {
+    return null;
   }
-  return ['unpublish', group.pinnedAt ? 'unpin' : 'pin'];
+  return group.pinnedAt ? 'unpin' : 'pin';
 };
 
 export const getHelpGroupPreviewHref = (group: HelpGroupAdminItem) =>

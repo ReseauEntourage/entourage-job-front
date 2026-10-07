@@ -1,11 +1,10 @@
-import React, { useMemo, type JSX } from 'react';
+import React, { useMemo } from 'react';
 import {
   Button,
   ContainerWithTextCentered,
   Section,
   Text,
 } from '@/src/components/ui';
-import { Table, Th } from '@/src/components/ui/Table';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { HeaderBackoffice } from '@/src/features/headers/HeaderBackoffice';
 import { useGetAdminReportTargetsInfiniteQuery } from '@/src/use-cases/reports';
@@ -13,10 +12,13 @@ import { ReportTargetFilters } from '../ReportTargetFilters';
 import { ReportTargetRow } from '../ReportTargetRow';
 import { REPORTS_TAB_LABELS } from '../reports.labels';
 import { useReportFilters } from '../useReportFilters';
-import { StyledReportLoadMore } from './ReportTargetList.styles';
+import {
+  StyledReportLoadMore,
+  StyledReportTargetCards,
+} from './ReportTargetList.styles';
 
 /**
- * Reported targets, one row per target: to handle first, then the most
+ * Reported targets, one card per target: to handle first, then the most
  * recently reported. Filters on type, status and zone.
  */
 export function ReportTargetList() {
@@ -35,19 +37,6 @@ export function ReportTargetList() {
     [data]
   );
 
-  const columns = useMemo<JSX.Element[]>(
-    () => [
-      <Th key="type">Type</Th>,
-      <Th key="label">Contenu signalé</Th>,
-      <Th key="zones">Zone</Th>,
-      <Th key="pending">À traiter</Th>,
-      <Th key="reasons">Motifs</Th>,
-      <Th key="last">Dernier signalement</Th>,
-      <Th key="status">Statut</Th>,
-    ],
-    []
-  );
-
   return (
     <Section className="custom-page">
       <HeaderBackoffice
@@ -62,16 +51,14 @@ export function ReportTargetList() {
         </ContainerWithTextCentered>
       )}
       {!isLoading && !isError && targets.length > 0 && (
-        <Table
-          columns={columns}
-          dataTestId="report-target-list"
-          body={targets.map((target) => (
+        <StyledReportTargetCards data-testid="report-target-list">
+          {targets.map((target) => (
             <ReportTargetRow
               key={`${target.targetType}-${target.targetId}`}
               target={target}
             />
           ))}
-        />
+        </StyledReportTargetCards>
       )}
       {!isLoading && !isError && targets.length === 0 && (
         <ContainerWithTextCentered>

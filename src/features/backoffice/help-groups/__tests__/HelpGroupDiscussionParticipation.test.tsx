@@ -4,6 +4,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import expect from 'expect';
 import React from 'react';
 import { HelpGroupViewerPermissions } from '@/src/api/types';
+import { COLORS } from '@/src/constants/styles';
 import { ModalContext } from '@/src/features/modals/Modal/ModalContext';
 import { ModalsListener } from '@/src/features/modals/Modal/openModal';
 import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
@@ -123,7 +124,9 @@ describe('Discussion participation', () => {
       expect(
         screen.getByPlaceholderText('Écrivez votre réponse à Claire…')
       ).toBeInTheDocument();
-      expect(screen.getAllByTestId('reaction-toggle')).toHaveLength(1);
+      // Inline palette under the original message, no toggle
+      expect(screen.getByTestId('reaction-palette')).toBeInTheDocument();
+      expect(screen.queryByTestId('reaction-toggle')).not.toBeInTheDocument();
     });
 
     it('replaces the reply area and the reactions by the join invitation', () => {
@@ -131,6 +134,7 @@ describe('Discussion participation', () => {
       expect(screen.queryByTestId('reply-composer')).not.toBeInTheDocument();
       expect(screen.getByTestId('write-invitation-join')).toBeInTheDocument();
       expect(screen.queryByTestId('reaction-toggle')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('reaction-palette')).not.toBeInTheDocument();
     });
 
     it('invites a person without the eLearning to finish it', () => {
@@ -318,7 +322,7 @@ describe('Discussion participation', () => {
     it('disables the reaction of a message while its previous one is being saved', () => {
       mockIsReacting = true;
       renderView();
-      expect(screen.getByTestId('reaction-toggle')).toBeDisabled();
+      expect(screen.getByTestId('reaction-option-💪')).toBeDisabled();
       mockIsReacting = false;
     });
 
@@ -336,7 +340,6 @@ describe('Discussion participation', () => {
     it('shows a discreet error when the reaction fails', async () => {
       mockSetReaction.mockResolvedValue({ error: 'FAILED' });
       const { store } = renderView();
-      fireEvent.click(screen.getByTestId('reaction-toggle'));
       fireEvent.click(screen.getByTestId('reaction-option-💪'));
       await waitFor(() =>
         expect(
@@ -408,6 +411,27 @@ describe('Discussion participation', () => {
         screen.getByText('Voir les versions précédentes')
       ).toBeInTheDocument();
       expect(screen.getByText('Supprimer ce message')).toBeInTheDocument();
+    });
+
+    it('sets « Signaler ce message » apart, in the warning color, and keeps its action', () => {
+      const onAction = jest.fn();
+      renderWithProviders(
+        <MessageMenu actions={['copyLink', 'report']} onAction={onAction} />
+      );
+      fireEvent.click(screen.getByTestId('message-menu-toggle'));
+      const report = screen.getByTestId('message-menu-report');
+      expect(report).toHaveTextContent('Signaler ce message');
+      expect(report).toHaveStyle({ color: COLORS.warning });
+      // After a separator, under the other actions
+      const reportItem = report.closest('.dropdown-item') as HTMLElement;
+      const copyItem = screen
+        .getByText('Copier le lien du message')
+        .closest('.dropdown-item') as HTMLElement;
+      const separator = reportItem.previousElementSibling as HTMLElement;
+      expect(separator).not.toBe(copyItem);
+      expect(separator.previousElementSibling).toBe(copyItem);
+      fireEvent.click(report);
+      expect(onAction).toHaveBeenCalledWith('report');
     });
 
     it('announces the removal of the replies when deleting a discussion', async () => {

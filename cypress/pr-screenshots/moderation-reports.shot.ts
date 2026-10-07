@@ -164,6 +164,23 @@ const groupMessageTarget = {
   },
 };
 
+const groupMessageRevisions = {
+  current: {
+    title: null,
+    content:
+      'Envoyez-moi vos coordonnées bancaires pour que je vous rembourse la relecture.',
+    date: '2026-10-03T17:10:00.000Z',
+  },
+  previous: [
+    {
+      id: 'revision-1',
+      title: null,
+      content: 'Je peux vous rembourser la relecture, écrivez-moi.',
+      createdAt: '2026-10-03T17:00:00.000Z',
+    },
+  ],
+};
+
 const loginAs = (role: string) => {
   window.localStorage.setItem('entourage-pro-modal-closed', 'true');
   window.localStorage.setItem('access-token', 'fake-access-token');
@@ -266,7 +283,7 @@ describe('Signalements', () => {
     cy.get('[data-testid="report-target-list"]').should('be.visible');
     cy.capture('Liste des signalements', {
       caption:
-        'Une ligne par contenu signalé ; filtres préréglés sur « À traiter » et la zone de l’admin.',
+        'Une carte par contenu signalé, type en pastilles ; statut et zone préréglés sur « À traiter » et la zone de l’admin.',
     });
 
     if (Cypress.expose('device') === 'mobile') {
@@ -327,12 +344,34 @@ describe('Signalements', () => {
       { statusCode: 200, body: groupMessageTarget }
     ).as('getTarget');
 
+    cy.intercept(
+      'GET',
+      /\/admin\/help-groups\/replies\/reply-reported\/revisions$/,
+      { statusCode: 200, body: groupMessageRevisions }
+    ).as('getRevisions');
+
     cy.visit('/backoffice/admin/signalements/POST_REPLY/reply-reported');
     cy.wait('@getTarget');
+    cy.wait('@getRevisions');
     cy.get('[data-testid="report-context-group-message"]').should('be.visible');
+    cy.get('[data-testid="report-message-version"]').should('have.length', 2);
     cy.capture('Fiche d’un message de groupe', {
       caption:
-        'État du message et lien vers le fil ; pas de « Marquer comme traité », le traitement se fait dans le groupe.',
+        'Message masqué, bloc « Votre décision » (Rétablir / Supprimer), versions du message, signalements reçus à droite ; pas de « Marquer comme traité ».',
+    });
+
+    cy.get('[data-testid="report-decision-delete"]').click();
+    cy.get('#report-delete-reason-PERSONAL_DATA').check({ force: true });
+    cy.get('#report-delete-comment').type(
+      'Coordonnées bancaires demandées dans un message public.'
+    );
+    cy.get('[data-testid="report-decision-delete-form"]')
+      .scrollIntoView()
+      .should('be.visible');
+    cy.capture('Suppression depuis la fiche', {
+      caption:
+        'Le motif obligatoire et la précision facultative n’apparaissent qu’après « Supprimer le message ».',
+      capture: 'viewport',
     });
   });
 });
