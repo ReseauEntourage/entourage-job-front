@@ -14,9 +14,11 @@ interface SimpleLinkProps {
   children: React.ReactNode;
   className?: string;
   target?: string;
+  // Defaults to `noopener` when `target` is set
+  rel?: string;
   isExternal?: boolean;
   scroll?: boolean;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   toggle?: string;
   shallow?: boolean;
 }
@@ -27,12 +29,14 @@ export const SimpleLink = ({
   children,
   className,
   target,
+  rel,
   scroll,
   isExternal,
   shallow,
   onClick,
   toggle,
 }: SimpleLinkProps) => {
+  const linkRel = rel ?? (target ? 'noopener' : '');
   let classBuffer = '';
   if (visible) {
     classBuffer += ` uk-visible@${visible}`;
@@ -54,7 +58,7 @@ export const SimpleLink = ({
       href={typeof href === 'string' ? href : href?.pathname}
       target={target ? '_blank' : ''}
       className={classBuffer}
-      rel={target ? 'noopener' : ''}
+      rel={linkRel}
     >
       {children}
     </a>
@@ -66,7 +70,7 @@ export const SimpleLink = ({
       onClick={onClick}
       target={target}
       className={classBuffer}
-      rel={target ? 'noopener' : ''}
+      rel={linkRel}
     >
       {children}
     </Link>
