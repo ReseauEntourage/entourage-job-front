@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, LucidIcon, SimpleLink, Text } from '@/src/components/ui';
 import { Radio, TextArea } from '@/src/components/ui/Inputs';
@@ -51,6 +51,15 @@ export function ReportModal({
   const [showReasonError, setShowReasonError] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+
+  // The error sits at the end of the scrolling body: in the bottom sheet it
+  // would stay out of view under the help box, so bring it into view.
+  useEffect(() => {
+    if (error) {
+      errorRef.current?.scrollIntoView?.({ block: 'nearest' });
+    }
+  }, [error]);
 
   const send = async () => {
     if (isSending) {
@@ -184,7 +193,11 @@ export function ReportModal({
           </StyledReportHelpText>
         </StyledReportHelp>
         {error && (
-          <StyledReportError role="alert" data-testid="report-error">
+          <StyledReportError
+            ref={errorRef}
+            role="alert"
+            data-testid="report-error"
+          >
             {error}
           </StyledReportError>
         )}

@@ -88,6 +88,21 @@ describe('ReportModal', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  it('brings the error into view, below the help box of the bottom sheet', async () => {
+    const scrollIntoView = jest.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
+    onSubmit.mockResolvedValue(ReportSubmitResult.ALREADY_REPORTED);
+    renderInModal(
+      <ReportModal title="Signaler ce profil" onSubmit={onSubmit} />
+    );
+
+    fireEvent.click(screen.getByLabelText('Spam'));
+    fireEvent.click(screen.getByTestId('report-confirm'));
+
+    await screen.findByTestId('report-error');
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' });
+  });
+
   it('sends the trimmed comment', async () => {
     onSubmit.mockResolvedValue(ReportSubmitResult.SENT);
     renderInModal(
