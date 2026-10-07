@@ -111,7 +111,11 @@ describe('Help group page', () => {
       renderWithProviders(
         <DiscussionList groupSlug="refaire-un-cv" discussions={[]} />
       );
-      expect(screen.getByText("Ce groupe vient d'ouvrir")).toBeInTheDocument();
+      const block = screen.getByTestId('help-group-no-discussion');
+      expect(block).toHaveTextContent("Ce groupe vient d'ouvrir");
+      expect(block).toHaveTextContent(
+        "Vous pouvez y poser la première question. Les membres reçoivent un email quand quelqu'un répond."
+      );
       expect(document.body.textContent).not.toMatch(
         /0 discussion|aucune activité/i
       );

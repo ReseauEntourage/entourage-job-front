@@ -99,8 +99,3 @@ export const StyledDiscussionList = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
-
-export const StyledDiscussionListEmpty = styled.div`
-  padding: 40px 0;
-  text-align: center;
-`;

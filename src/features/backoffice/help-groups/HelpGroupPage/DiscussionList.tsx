@@ -1,12 +1,12 @@
 import React from 'react';
 import { HelpGroupDiscussionItem } from '@/src/api/types';
-import { Text } from '@/src/components/ui';
+import { Alert } from '@/src/components/ui';
 import { DiscussionRow } from '../DiscussionRow';
-import { HELP_GROUP_NO_DISCUSSION_LABEL } from '../help-groups.labels';
 import {
-  StyledDiscussionList,
-  StyledDiscussionListEmpty,
-} from './HelpGroupPage.styles';
+  HELP_GROUP_NO_DISCUSSION_LABEL,
+  HELP_GROUP_NO_DISCUSSION_TEXT,
+} from '../help-groups.labels';
+import { StyledDiscussionList } from './HelpGroupPage.styles';
 
 interface DiscussionListProps {
   groupSlug: string;
@@ -14,8 +14,9 @@ interface DiscussionListProps {
 }
 
 /**
- * Without any visible discussion, a neutral opening message (never
- * "0 discussion" nor "aucune activité").
+ * Without any visible discussion, a neutral opening message in a dashed
+ * block, inviting to ask the first question (never "0 discussion" nor
+ * "aucune activité").
  */
 export function DiscussionList({
   groupSlug,
@@ -23,11 +24,15 @@ export function DiscussionList({
 }: DiscussionListProps) {
   if (discussions.length === 0) {
     return (
-      <StyledDiscussionListEmpty>
-        <Text size="large" color="darkGray" center>
-          {HELP_GROUP_NO_DISCUSSION_LABEL}
-        </Text>
-      </StyledDiscussionListEmpty>
+      <Alert
+        variant="dashed"
+        icon={null}
+        center
+        title={HELP_GROUP_NO_DISCUSSION_LABEL}
+        dataTestId="help-group-no-discussion"
+      >
+        {HELP_GROUP_NO_DISCUSSION_TEXT}
+      </Alert>
     );
   }
   return (

@@ -9,6 +9,8 @@ export const HELP_GROUPS_LOAD_ERROR_LABELS = {
   replies: 'Les réponses n’ont pas pu être chargées.',
 } as const;
 export const HELP_GROUP_NO_DISCUSSION_LABEL = "Ce groupe vient d'ouvrir";
+export const HELP_GROUP_NO_DISCUSSION_TEXT =
+  "Vous pouvez y poser la première question. Les membres reçoivent un email quand quelqu'un répond.";
 export const HELP_GROUP_NO_MEMBER_LABEL =
   'Soyez parmi les premiers à rejoindre';
 export const HELP_GROUP_MEMBER_MENTION = 'Vous êtes membre';
