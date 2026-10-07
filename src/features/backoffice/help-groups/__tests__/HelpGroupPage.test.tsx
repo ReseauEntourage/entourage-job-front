@@ -60,6 +60,25 @@ describe('Help group page', () => {
       );
     });
 
+    it('keeps the author link apart from the discussion link stretched over the card', () => {
+      renderWithProviders(
+        <DiscussionRow
+          groupSlug="refaire-un-cv"
+          discussion={buildDiscussionItem()}
+        />
+      );
+      const discussionLink = screen.getByRole('link', {
+        name: 'Comment présenter un trou dans mon CV ?',
+      });
+      const authorLink = screen.getByRole('link', { name: /Amina L\./ });
+      expect(screen.getAllByRole('link')).toHaveLength(2);
+      expect(discussionLink).not.toContainElement(authorLink);
+      expect(authorLink).toHaveAttribute(
+        'href',
+        expect.stringContaining('author-1')
+      );
+    });
+
     it('shows « 1 réponse » for a single reply', () => {
       renderWithProviders(
         <DiscussionRow
