@@ -32,6 +32,7 @@ import { useMarkSeenOnScreen } from '../hooks/useMarkSeenOnScreen';
 import { StyledDiscussionGone } from './HelpGroupDiscussion.styles';
 import { HelpGroupDiscussionView } from './HelpGroupDiscussionView';
 import { getReplyElementId, getReplyTargetState } from './replyTarget';
+import { ModerationLinkAction, useModerationLink } from './useModerationLink';
 
 // Distance to the bottom of the page under which the reader is "at the
 // bottom": a new reply then scrolls into view
@@ -54,12 +55,18 @@ interface HelpGroupDiscussionProps {
   discussionId: string;
   // From `?replyId=`: the reply to scroll to and highlight
   replyId: string | null;
+  // From `?moderation=`, set by the buttons of the Slack moderation alerts
+  moderationAction?: ModerationLinkAction | null;
+  // The moderation action was opened: drop it from the address
+  onModerationActionConsumed?: () => void;
 }
 
 export function HelpGroupDiscussion({
   slug,
   discussionId,
   replyId,
+  moderationAction = null,
+  onModerationActionConsumed,
 }: HelpGroupDiscussionProps) {
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useSelector(selectCurrentUser);
@@ -266,6 +273,31 @@ export function HelpGroupDiscussion({
   }, []);
   const onDiscussionGone = useCallback(() => setIsGone(true), []);
   const dismissModeration = useCallback(() => setModeration(null), []);
+  const onModerated = useCallback(
+    (authorId: string | null) => setModeration({ authorId }),
+    []
+  );
+  const consumeModerationAction = useCallback(
+    () => onModerationActionConsumed?.(),
+    [onModerationActionConsumed]
+  );
+
+  useModerationLink({
+    action: moderationAction,
+    isAdmin: viewer.isAdmin,
+    slug,
+    discussionId,
+    replyId,
+    discussion,
+    replies,
+    isTargetResolved:
+      !replyId ||
+      replyTargetState === 'found' ||
+      (replyTargetState === 'notFound' && !isLoadingReplies),
+    onModerated,
+    onDiscussionGone,
+    onConsumed: consumeModerationAction,
+  });
 
   const moderationToast = moderation && (
     <ModerationToast
@@ -344,7 +376,7 @@ export function HelpGroupDiscussion({
         }}
         onReplied={onReplied}
         onDiscussionGone={onDiscussionGone}
-        onModerated={(authorId) => setModeration({ authorId })}
+        onModerated={onModerated}
       />
       {moderationToast}
     </>

@@ -1,16 +1,32 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
-import { HelpGroupDiscussion } from '@/src/features/backoffice/help-groups/HelpGroupDiscussion';
+import {
+  HelpGroupDiscussion,
+  parseModerationLinkAction,
+} from '@/src/features/backoffice/help-groups/HelpGroupDiscussion';
 
 const getStringParam = (value: string | string[] | undefined) =>
   typeof value === 'string' ? value : '';
 
 const HelpGroupDiscussionPage = () => {
-  const { query } = useRouter();
+  const router = useRouter();
+  const { query } = router;
   const slug = getStringParam(query.slug);
   const discussionId = getStringParam(query.discussionId);
   const replyId = getStringParam(query.replyId) || null;
+  const moderationAction = parseModerationLinkAction(query.moderation);
+
+  // Opened once from a Slack alert: a reload must not open it again
+  const dropModerationAction = useCallback(() => {
+    const { moderation, ...rest } = router.query;
+    if (moderation === undefined) {
+      return;
+    }
+    router.replace({ pathname: router.pathname, query: rest }, undefined, {
+      shallow: true,
+    });
+  }, [router]);
 
   return (
     <LayoutBackOffice title="Groupes">
@@ -21,6 +37,8 @@ const HelpGroupDiscussionPage = () => {
         slug={slug}
         discussionId={discussionId}
         replyId={replyId}
+        moderationAction={moderationAction}
+        onModerationActionConsumed={dropModerationAction}
       />
     </LayoutBackOffice>
   );

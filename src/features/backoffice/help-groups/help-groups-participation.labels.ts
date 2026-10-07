@@ -149,6 +149,13 @@ export const HIDDEN_BY_REPORTS_BANNER = 'Masqué après signalements';
 export const RESTORE_LABEL = 'Rétablir';
 export const MODERATION_DELETE_SHORT_LABEL = 'Supprimer';
 export const RESTORE_ERROR_LABEL = 'Le message n’a pas pu être rétabli.';
+// From the buttons of the Slack moderation alerts (revision of 07/10/2026)
+export const RESTORE_CONFIRM = {
+  title: 'Rétablir ce message ?',
+  text: 'Il redeviendra visible par tous, et ses signalements seront clos.',
+  button: 'Rétablir',
+};
+export const REPORT_ALREADY_HANDLED_LABEL = 'Ce signalement a déjà été traité.';
 export const formatReportReasons = (labels: string[]) =>
   `Motifs : ${labels.join(', ')}`;
 

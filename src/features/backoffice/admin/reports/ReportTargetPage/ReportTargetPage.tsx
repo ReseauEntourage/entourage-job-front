@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { ReportTargetDetail, ReportTargetType } from '@/src/api/types';
 import {
   Badge,
@@ -10,6 +11,7 @@ import {
 } from '@/src/components/ui';
 import { H2, H5 } from '@/src/components/ui/Headings';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   ReportsError,
   useGetAdminReportTargetQuery,
@@ -39,6 +41,10 @@ import {
 interface ReportTargetPageProps {
   targetType: ReportTargetType;
   targetId: string;
+  // From `?action=resolve`, set by « Marquer comme traité » in a Slack alert
+  openResolve?: boolean;
+  // The closing was opened (or found impossible): drop it from the address
+  onResolveOpened?: () => void;
 }
 
 const ReportContext = ({ target }: { target: ReportTargetDetail }) => {
@@ -108,7 +114,10 @@ const ReportDecision = ({
 export function ReportTargetPage({
   targetType,
   targetId,
+  openResolve = false,
+  onResolveOpened,
 }: ReportTargetPageProps) {
+  const dispatch = useDispatch();
   const {
     data: target,
     isLoading,
@@ -122,6 +131,30 @@ export function ReportTargetPage({
   const isGroupMessage =
     target?.context.targetType === 'POST' ||
     target?.context.targetType === 'POST_REPLY';
+
+  const isResolveOpened = useRef(false);
+
+  // Opened once from a Slack alert: brings the closing form into view with
+  // its note focused, never submitting it. Already handled: a notice.
+  useEffect(() => {
+    if (!openResolve || !target || isResolveOpened.current) {
+      return;
+    }
+    isResolveOpened.current = true;
+    onResolveOpened?.();
+    if (!target.canResolve || target.status !== 'PENDING') {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: REPORTS_TAB_LABELS.alreadyHandled,
+        })
+      );
+      return;
+    }
+    const note = document.getElementById('report-resolve-note');
+    note?.scrollIntoView?.({ block: 'center' });
+    note?.focus();
+  }, [openResolve, target, onResolveOpened, dispatch]);
 
   return (
     <Section className="custom-page">

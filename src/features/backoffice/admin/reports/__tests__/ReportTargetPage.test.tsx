@@ -113,15 +113,26 @@ const buildGroupMessageTarget = (
   };
 };
 
-const renderPage = (target: ReportTargetDetail) => {
+const renderPage = (
+  target: ReportTargetDetail,
+  props: { openResolve?: boolean; onResolveOpened?: () => void } = {}
+) => {
   mockUseTarget.mockReturnValue({ data: target, isLoading: false });
   return renderWithProviders(
     <ReportTargetPage
       targetType={target.targetType}
       targetId={target.targetId}
+      {...props}
     />
   );
 };
+
+const notifications = (store: { getState: () => unknown }) =>
+  (
+    store.getState() as {
+      notifications: { notifications: { message: string }[] };
+    }
+  ).notifications.notifications.map(({ message }) => message);
 
 describe('ReportTargetPage', () => {
   beforeEach(() => {
@@ -235,6 +246,48 @@ describe('ReportTargetPage', () => {
         note: 'Échange avec la personne, sans suite',
       })
     );
+  });
+
+  describe('From « Marquer comme traité » in Slack', () => {
+    const pendingProfile: ReportTargetDetail = {
+      targetType: 'USER_PROFILE',
+      targetId: 'user-1',
+      label: 'Jeanne Martin',
+      status: 'PENDING',
+      canResolve: true,
+      reports: [buildReport()],
+      context: { targetType: 'USER_PROFILE', user: jeanne },
+    };
+
+    it('brings the closing form into view with its note focused, without closing', () => {
+      const onResolveOpened = jest.fn();
+      renderPage(pendingProfile, { openResolve: true, onResolveOpened });
+      expect(screen.getByRole('textbox')).toHaveFocus();
+      expect(onResolveOpened).toHaveBeenCalledTimes(1);
+      expect(mockResolve).not.toHaveBeenCalled();
+    });
+
+    it('tells that the report was already handled, without closing form', () => {
+      const onResolveOpened = jest.fn();
+      const { store } = renderPage(
+        {
+          ...pendingProfile,
+          status: 'RESOLVED',
+          reports: [buildReport({ status: 'RESOLVED', resolution: 'MANUAL' })],
+        },
+        { openResolve: true, onResolveOpened }
+      );
+      expect(notifications(store)).toContain(
+        'Ce signalement a déjà été traité.'
+      );
+      expect(onResolveOpened).toHaveBeenCalledTimes(1);
+      expect(screen.queryByTestId('report-resolve-form')).toBeNull();
+    });
+
+    it('focuses nothing without the action in the address', () => {
+      renderPage(pendingProfile);
+      expect(screen.getByRole('textbox')).not.toHaveFocus();
+    });
   });
 
   it('shows the note and the admin of a handled report, without closing form', () => {
