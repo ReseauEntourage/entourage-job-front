@@ -49,6 +49,8 @@ export const REPORTS_TAB_LABELS = {
   resolveSubmit: 'Marquer comme traité',
   resolveDone: 'Le signalement a été marqué comme traité',
   resolveError: 'Le signalement n’a pas pu être marqué comme traité.',
+  // From « Marquer comme traité » in a Slack alert, once handled already
+  alreadyHandled: 'Ce signalement a déjà été traité.',
   formatResolved: (adminName: string, date: string) =>
     `Traité par ${adminName} le ${date}`,
   resolvedAutomatically: 'Traité depuis le groupe',
