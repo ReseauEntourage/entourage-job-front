@@ -11,18 +11,21 @@ import {
   useGetHelpGroupQuery,
 } from '@/src/use-cases/help-groups';
 import { DiscussionComposer } from '../DiscussionComposer';
-import { EmailsSetting } from '../EmailsSetting';
 import { HelpGroupLoadError } from '../HelpGroupLoadError';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
-import { MembershipActions } from '../MembershipActions';
-import { WelcomeInvite } from '../WelcomeInvite';
-import { WriteInvitation } from '../WriteInvitation';
 import { HELP_GROUPS_LOAD_ERROR_LABELS } from '../help-groups.labels';
 import { useLoadMoreOnScroll } from '../hooks/useLoadMoreOnScroll';
 import { DiscussionList } from './DiscussionList';
+import { HelpGroupAbout } from './HelpGroupAbout';
 import { HelpGroupCharter } from './HelpGroupCharter';
 import { HelpGroupHeader } from './HelpGroupHeader';
-import { StyledHelpGroupPage } from './HelpGroupPage.styles';
+import { HelpGroupInfoBlock } from './HelpGroupInfoBlock';
+import {
+  StyledHelpGroupPage,
+  StyledHelpGroupPageCharter,
+  StyledHelpGroupPageHeader,
+  StyledHelpGroupPageMain,
+} from './HelpGroupPage.styles';
 
 interface HelpGroupPageProps {
   slug: string;
@@ -34,6 +37,8 @@ interface HelpGroupPageProps {
  * Group page. A member allowed to write gets the composer; anyone else gets
  * the invitation matching their situation instead (never disabled actions).
  * An unpublished group (admin preview) shows no write action at all.
+ * Layout (revision of 07/10/2026): the header and the discussions on the
+ * left, « À propos de ce groupe » and « Le cadre » on the right.
  */
 export function HelpGroupPage({
   slug,
@@ -71,6 +76,10 @@ export function HelpGroupPage({
     fetchNextPage,
   });
 
+  // From the welcome invite or « Publier une discussion »: the composer
+  // opens and takes the focus, which brings it into view
+  const openComposer = () => setComposerOpenSignal((count) => count + 1);
+
   if (error === HelpGroupsError.NOT_FOUND) {
     return <HelpGroupNotFound />;
   }
@@ -91,35 +100,30 @@ export function HelpGroupPage({
   return (
     <Section className="custom-page">
       <StyledHelpGroupPage>
-        <Breadcrumb
-          items={[
-            { label: 'Groupes', href: '/backoffice/groupes' },
-            { label: group.name },
-          ]}
-        />
-        <HelpGroupHeader group={group} />
-        {group.isPublished && group.viewerPermissions.state === 'canWrite' && (
-          <MembershipActions slug={group.slug} justJoined={justJoined} />
-        )}
-        {/* Members only, whatever their write state */}
-        {group.isMember && typeof group.emailsEnabled === 'boolean' && (
-          <EmailsSetting
-            slug={group.slug}
-            emailsEnabled={group.emailsEnabled}
-            isHighlighted={highlightEmails}
+        <StyledHelpGroupPageHeader>
+          <Breadcrumb
+            items={[
+              { label: 'Groupes', href: '/backoffice/groupes' },
+              { label: group.name },
+            ]}
           />
-        )}
-        <HelpGroupCharter />
-        {group.isPublished &&
-          (group.viewerPermissions.state === 'canWrite' ? (
-            <>
-              {group.viewerPermissions.showWelcomeInvite &&
-                currentUser?.firstName && (
-                  <WelcomeInvite
-                    firstName={currentUser.firstName}
-                    onClick={() => setComposerOpenSignal((count) => count + 1)}
-                  />
-                )}
+          <HelpGroupHeader group={group} />
+          <HelpGroupInfoBlock
+            group={group}
+            firstName={currentUser?.firstName}
+            onWelcomeClick={openComposer}
+          />
+        </StyledHelpGroupPageHeader>
+        <HelpGroupAbout
+          group={group}
+          justJoined={justJoined}
+          highlightEmails={highlightEmails}
+          onJoined={() => setJustJoined(true)}
+          onPublish={openComposer}
+        />
+        <StyledHelpGroupPageMain>
+          {group.isPublished &&
+            group.viewerPermissions.state === 'canWrite' && (
               <DiscussionComposer
                 // A fresh composer per group: draft, title proposal, state
                 key={group.id}
@@ -128,29 +132,29 @@ export function HelpGroupPage({
                 charterAccepted={group.viewerPermissions.charterAccepted}
                 openSignal={composerOpenSignal}
               />
-            </>
-          ) : (
-            <WriteInvitation
-              slug={group.slug}
-              state={group.viewerPermissions.state}
-              onJoined={() => setJustJoined(true)}
+            )}
+          {isLoadingDiscussions && <Spinner />}
+          {/* A failed first page is not an empty group */}
+          {!isLoadingDiscussions &&
+            !(isDiscussionsError && discussions.length === 0) && (
+              <DiscussionList
+                groupSlug={group.slug}
+                discussions={discussions}
+              />
+            )}
+          {isFetchingNextPage && <Spinner />}
+          {isDiscussionsError && !isFetchingDiscussions && (
+            <HelpGroupLoadError
+              message={HELP_GROUPS_LOAD_ERROR_LABELS.discussions}
+              onRetry={
+                discussions.length === 0 ? refetchDiscussions : fetchNextPage
+              }
             />
-          ))}
-        {isLoadingDiscussions && <Spinner />}
-        {/* A failed first page is not an empty group */}
-        {!isLoadingDiscussions &&
-          !(isDiscussionsError && discussions.length === 0) && (
-            <DiscussionList groupSlug={group.slug} discussions={discussions} />
           )}
-        {isFetchingNextPage && <Spinner />}
-        {isDiscussionsError && !isFetchingDiscussions && (
-          <HelpGroupLoadError
-            message={HELP_GROUPS_LOAD_ERROR_LABELS.discussions}
-            onRetry={
-              discussions.length === 0 ? refetchDiscussions : fetchNextPage
-            }
-          />
-        )}
+        </StyledHelpGroupPageMain>
+        <StyledHelpGroupPageCharter>
+          <HelpGroupCharter />
+        </StyledHelpGroupPageCharter>
       </StyledHelpGroupPage>
     </Section>
   );

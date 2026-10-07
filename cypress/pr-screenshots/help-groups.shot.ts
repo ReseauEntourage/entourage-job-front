@@ -322,9 +322,10 @@ describe('Groupes', () => {
     cy.wait('@getHelpGroup');
     cy.wait('@getDiscussions');
     cy.get('[data-testid="discussion-row"]').should('have.length', 3);
+    cy.get('[data-testid="help-group-about"]').should('be.visible');
     cy.capture('Page d’un groupe', {
       caption:
-        'Fil d’Ariane, en-tête, « Quitter le groupe », cadre commun, invitation à se présenter et barre de rédaction.',
+        'Membre : en-tête (fil d’Ariane, nom, membres, invitation à se présenter) et discussions à gauche ; « À propos de ce groupe » (« Publier une discussion », « Quitter le groupe ») et « Le cadre » à droite. Une seule colonne sur mobile.',
     });
 
     cy.visit(
@@ -384,10 +385,18 @@ describe('Groupes', () => {
     cy.get('[data-testid="write-invitation-join"]').should('be.visible');
     cy.capture('Invitation à rejoindre', {
       caption:
-        'Un non-membre lit librement ; l’invitation et « Rejoindre le groupe » remplacent la rédaction.',
+        'Un non-membre lit librement : l’invitation dans l’en-tête, « Rejoindre le groupe » dans « À propos de ce groupe ».',
     });
 
     interceptGroupReads({ state: 'mustCompleteElearning' });
+    cy.visit('/backoffice/groupes/refaire-un-cv');
+    cy.wait('@getHelpGroup');
+    cy.get('[data-testid="write-invitation-elearning"]').should('be.visible');
+    cy.capture('Page d’un groupe, formation à terminer', {
+      caption:
+        'E-learning non terminé : invitation vers la page Formations dans l’en-tête, aucune action dans « À propos de ce groupe ».',
+    });
+
     cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
     cy.wait('@getReplies');
     cy.get('[data-testid="write-invitation-elearning"]').should('be.visible');

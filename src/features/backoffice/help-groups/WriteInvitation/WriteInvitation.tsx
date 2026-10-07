@@ -1,23 +1,21 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { HelpGroupViewerState } from '@/src/api/types';
 import { Button, Text } from '@/src/components/ui';
-import { useJoinHelpGroupMutation } from '@/src/use-cases/help-groups';
-import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   ELEARNING_INVITATION_LABEL,
   ELEARNING_LINK_LABEL,
   ELEARNING_PAGE_HREF,
-  JOIN_BUTTON_LABEL,
   JOIN_INVITATION_LABEL,
-  WRITE_ERROR_LABELS,
 } from '../help-groups-participation.labels';
+import { JoinHelpGroupButton } from './JoinHelpGroupButton';
 import { StyledWriteInvitation } from './WriteInvitation.styles';
 
 interface WriteInvitationProps {
   slug: string;
   state: Exclude<HelpGroupViewerState, 'canWrite'>;
   onJoined?: () => void;
+  // On the group page, the join button lives in « À propos de ce groupe »
+  withJoinButton?: boolean;
 }
 
 /**
@@ -29,10 +27,8 @@ export function WriteInvitation({
   slug,
   state,
   onJoined,
+  withJoinButton = true,
 }: WriteInvitationProps) {
-  const dispatch = useDispatch();
-  const [joinHelpGroup, { isLoading }] = useJoinHelpGroupMutation();
-
   if (state === 'mustCompleteElearning') {
     return (
       <StyledWriteInvitation data-testid="write-invitation-elearning">
@@ -44,31 +40,12 @@ export function WriteInvitation({
     );
   }
 
-  const join = async () => {
-    const result = await joinHelpGroup(slug);
-    if ('error' in result && result.error) {
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'danger',
-          message: WRITE_ERROR_LABELS.join,
-        })
-      );
-      return;
-    }
-    onJoined?.();
-  };
-
   return (
     <StyledWriteInvitation data-testid="write-invitation-join">
       <Text>{JOIN_INVITATION_LABEL}</Text>
-      <Button
-        variant="primary"
-        disabled={isLoading}
-        onClick={join}
-        dataTestId="join-help-group"
-      >
-        {JOIN_BUTTON_LABEL}
-      </Button>
+      {withJoinButton && (
+        <JoinHelpGroupButton slug={slug} onJoined={onJoined} />
+      )}
     </StyledWriteInvitation>
   );
 }
