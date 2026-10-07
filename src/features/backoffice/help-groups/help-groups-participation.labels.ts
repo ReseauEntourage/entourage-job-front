@@ -21,6 +21,9 @@ export const LEAVE_CONFIRM_TITLE = 'Quitter ce groupe ?';
 export const LEAVE_CONFIRM_TEXT =
   'Vos discussions, réponses et réactions restent visibles. Vous pourrez rejoindre ce groupe à tout moment.';
 export const JUST_JOINED_LABEL = 'Vous venez de rejoindre';
+// Layout of the group page (revision of 07/10/2026)
+export const ABOUT_GROUP_TITLE = 'À propos de ce groupe';
+export const PUBLISH_DISCUSSION_LABEL = 'Publier une discussion';
 
 export const formatWelcomeInvite = (firstName: string) =>
   `Bienvenue, ${firstName}. Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.`;

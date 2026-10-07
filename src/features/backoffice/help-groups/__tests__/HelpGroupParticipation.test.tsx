@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom';
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -211,6 +217,89 @@ describe('Help group participation', () => {
       fireEvent.click(screen.getByTestId('leave-help-group'));
       fireEvent.click(await screen.findByTestId('modal-confirm-cancel'));
       expect(mockLeave).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Layout', () => {
+    const about = () => within(screen.getByTestId('help-group-about'));
+
+    it('shows the full description in « À propos de ce groupe »', () => {
+      renderPage({}, { description: 'Première ligne\nDeuxième ligne' });
+      expect(about().getByText('À propos de ce groupe')).toBeInTheDocument();
+      expect(
+        about().getByText(/Première ligne\s+Deuxième ligne/)
+      ).toBeInTheDocument();
+    });
+
+    it('invites a non member in the header and offers to join in « À propos »', () => {
+      renderPage({ state: 'mustJoin' });
+      const invitation = screen.getByTestId('write-invitation-join');
+      expect(invitation).toHaveTextContent(
+        'Vous lisez ce groupe librement. Pour publier une discussion, y répondre ou réagir, rejoignez le groupe.'
+      );
+      expect(
+        within(invitation).queryByTestId('join-help-group')
+      ).not.toBeInTheDocument();
+      expect(about().getByTestId('join-help-group')).toBeInTheDocument();
+      expect(
+        about().queryByTestId('publish-discussion')
+      ).not.toBeInTheDocument();
+    });
+
+    it('offers no action in « À propos » to a person without the eLearning', () => {
+      renderPage({ state: 'mustCompleteElearning' });
+      expect(
+        screen.getByTestId('write-invitation-elearning')
+      ).toBeInTheDocument();
+      expect(about().queryByRole('button')).not.toBeInTheDocument();
+    });
+
+    it('offers to publish, and to leave as a secondary action, to a member', () => {
+      renderPage();
+      expect(about().getByTestId('publish-discussion')).toHaveTextContent(
+        'Publier une discussion'
+      );
+      expect(about().getByTestId('leave-help-group')).toBeInTheDocument();
+      expect(
+        screen.queryByTestId('write-invitation-join')
+      ).not.toBeInTheDocument();
+    });
+
+    it('opens the composer in place from « Publier une discussion »', () => {
+      renderPage();
+      expect(
+        screen.queryByTestId('discussion-composer')
+      ).not.toBeInTheDocument();
+      fireEvent.click(screen.getByTestId('publish-discussion'));
+      expect(screen.getByTestId('discussion-composer')).toBeInTheDocument();
+      expect(screen.getByTestId('discussion-composer-message')).toHaveFocus();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    it('offers no action in the preview of an unpublished group', () => {
+      renderPage({}, { isPublished: false });
+      expect(about().queryByRole('button')).not.toBeInTheDocument();
+    });
+
+    it('orders the header, « À propos », the discussions and « Le cadre »', () => {
+      renderPage();
+      const aboutBlock = screen.getByTestId('help-group-about');
+      const composerBar = screen.getByTestId('discussion-composer-bar');
+      const charter = screen.getByTestId('help-group-charter');
+      expect(
+        screen
+          .getByText('Refaire un CV', { selector: 'h2' })
+          .compareDocumentPosition(aboutBlock) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        aboutBlock.compareDocumentPosition(composerBar) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        composerBar.compareDocumentPosition(charter) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
     });
   });
 

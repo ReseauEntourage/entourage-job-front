@@ -100,13 +100,11 @@ describe('Help group page', () => {
   });
 
   describe('HelpGroupHeader', () => {
-    it('shows the name, the members count and the full description', () => {
+    it('shows the name and the members count, the description being in « À propos »', () => {
       renderWithProviders(<HelpGroupHeader group={groupPage} />);
       expect(screen.getByText('Refaire un CV')).toBeInTheDocument();
       expect(screen.getByText('128 membres')).toBeInTheDocument();
-      expect(
-        screen.getByText(/Première ligne\s+Deuxième ligne/)
-      ).toBeInTheDocument();
+      expect(screen.queryByText(/Première ligne/)).not.toBeInTheDocument();
       expect(screen.queryByText('Non publié')).not.toBeInTheDocument();
     });
 

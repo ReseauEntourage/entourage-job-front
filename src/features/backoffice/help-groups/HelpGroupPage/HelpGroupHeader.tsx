@@ -2,7 +2,6 @@ import React from 'react';
 import { HelpGroupPage } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
-import { HelpGroupContent } from '../HelpGroupContent';
 import { formatMembersLabel } from '../help-groups.labels';
 import {
   StyledHelpGroupHeader,
@@ -15,6 +14,10 @@ interface HelpGroupHeaderProps {
   group: HelpGroupPage;
 }
 
+/**
+ * Name and members count of the group. Its full description lives in
+ * « À propos de ce groupe ».
+ */
 export function HelpGroupHeader({ group }: HelpGroupHeaderProps) {
   return (
     <StyledHelpGroupHeader>
@@ -27,7 +30,6 @@ export function HelpGroupHeader({ group }: HelpGroupHeaderProps) {
       <Text size="small" weight="semibold" color="darkGray">
         {formatMembersLabel(group.membersCount, group.isMember)}
       </Text>
-      <HelpGroupContent content={group.description} />
     </StyledHelpGroupHeader>
   );
 }
