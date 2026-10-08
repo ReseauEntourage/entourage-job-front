@@ -48,7 +48,11 @@ export function DiscussionRow({ groupSlug, discussion }: DiscussionRowProps) {
   return (
     <StyledDiscussionRow data-testid="discussion-row">
       <StyledDiscussionRowAvatar>
-        <HelpGroupAvatar user={getAuthorAvatarUser(author)} size={40} />
+        <HelpGroupAvatar
+          user={getAuthorAvatarUser(author)}
+          hasPicture={author.hasPicture}
+          size={40}
+        />
       </StyledDiscussionRowAvatar>
       <StyledDiscussionRowContent>
         <StyledDiscussionRowTitle>

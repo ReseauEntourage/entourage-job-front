@@ -23,6 +23,24 @@ describe('HelpGroupAuthor', () => {
     expect(screen.getByTestId('help-group-avatar')).toHaveTextContent(/^A$/);
   });
 
+  it('shows the profile picture of an author who has one, as in the navigation bar', () => {
+    renderWithProviders(
+      <HelpGroupAuthor author={buildAuthor({ hasPicture: true })} />
+    );
+    const avatar = screen.getByTestId('help-group-avatar');
+    expect(avatar.querySelector('img')).not.toBeNull();
+    expect(avatar).not.toHaveTextContent('A');
+  });
+
+  it('shows the profile picture in the author card of the discussion', () => {
+    renderWithProviders(
+      <AuthorCard author={buildAuthor({ hasPicture: true })} />
+    );
+    expect(
+      screen.getByTestId('help-group-avatar').querySelector('img')
+    ).not.toBeNull();
+  });
+
   it('shows the « Équipe Entourage » label of an admin', () => {
     renderWithProviders(
       <HelpGroupAuthor

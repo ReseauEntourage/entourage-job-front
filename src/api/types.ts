@@ -929,6 +929,8 @@ export type HelpGroupAuthor = {
   firstName: string | null;
   lastNameInitial: string | null;
   roleLabel: string | null;
+  // Profile picture: its URL is built from the user id
+  hasPicture: boolean;
   isDeleted: boolean;
   // Entourage admin: their links open without the external link warning
   isAdmin: boolean;

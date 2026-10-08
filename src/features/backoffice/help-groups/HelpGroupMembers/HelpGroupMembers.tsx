@@ -51,12 +51,12 @@ export function HelpGroupMembers({ group }: HelpGroupMembersProps) {
       </StyledHelpGroupMembersHeading>
       {data && data.members.length > 0 && (
         <StyledHelpGroupMembersPreview>
-          {data.members.map(({ author, hasPicture }) => (
+          {data.members.map(({ author }) => (
             <StyledHelpGroupMembersPreviewItem
               key={author.id}
               data-testid="help-group-members-preview-item"
             >
-              <HelpGroupAuthor author={author} hasPicture={hasPicture} />
+              <HelpGroupAuthor author={author} />
             </StyledHelpGroupMembersPreviewItem>
           ))}
         </StyledHelpGroupMembersPreview>

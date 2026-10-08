@@ -18,8 +18,6 @@ interface HelpGroupAuthorProps {
   author: HelpGroupAuthorType;
   date?: string;
   withAvatar?: boolean;
-  // Profile picture of the author, when known (the members list)
-  hasPicture?: boolean;
 }
 
 /**
@@ -31,7 +29,6 @@ export function HelpGroupAuthor({
   author,
   date,
   withAvatar = true,
-  hasPicture = false,
 }: HelpGroupAuthorProps) {
   const name = formatAuthorName(author);
   const roleLabel = formatAuthorRoleLabel(author);
@@ -42,7 +39,7 @@ export function HelpGroupAuthor({
       {withAvatar && (
         <HelpGroupAvatar
           user={getAuthorAvatarUser(author)}
-          hasPicture={hasPicture}
+          hasPicture={author.hasPicture}
         />
       )}
       {isLinkable ? (

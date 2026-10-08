@@ -33,7 +33,11 @@ export function AuthorCard({ author }: AuthorCardProps) {
 
   return (
     <StyledAuthorCard aria-label="Auteur de la discussion">
-      <HelpGroupAvatar user={getAuthorAvatarUser(author)} size={56} />
+      <HelpGroupAvatar
+        user={getAuthorAvatarUser(author)}
+        hasPicture={author.hasPicture}
+        size={56}
+      />
       <StyledAuthorCardIdentity>
         <Text weight="semibold">{formatAuthorName(author)}</Text>
         {details && (
