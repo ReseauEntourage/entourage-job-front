@@ -14,6 +14,7 @@ import { EmailsSetting } from '../EmailsSetting';
 import { HelpGroupLoadError } from '../HelpGroupLoadError';
 import { HelpGroupMembers } from '../HelpGroupMembers';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
+import { HelpGroupsPageBackground } from '../HelpGroupsPageBackground';
 import {
   HELP_GROUP_DISCUSSIONS_TITLE,
   HELP_GROUPS_LOAD_ERROR_LABELS,
@@ -110,7 +111,7 @@ export function HelpGroupPage({
     );
 
   return (
-    <>
+    <HelpGroupsPageBackground>
       <HelpGroupHeader
         group={group}
         justJoined={justJoined}
@@ -168,6 +169,6 @@ export function HelpGroupPage({
           )}
         </StyledHelpGroupPage>
       </Section>
-    </>
+    </HelpGroupsPageBackground>
   );
 }

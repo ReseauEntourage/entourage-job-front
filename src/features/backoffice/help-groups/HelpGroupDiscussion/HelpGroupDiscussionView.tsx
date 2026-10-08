@@ -20,6 +20,7 @@ import {
   HiddenHelpGroupMessage,
 } from '../HelpGroupMessage';
 import { UNPUBLISHED_MENTION } from '../HelpGroupPage/HelpGroupHeader';
+import { HelpGroupsPageBackground } from '../HelpGroupsPageBackground';
 import { ReplyComposer } from '../ReplyComposer';
 import { WriteInvitation } from '../WriteInvitation';
 import { NEW_REPLY_PILL_LABEL } from '../help-groups-participation.labels';
@@ -98,139 +99,141 @@ export function HelpGroupDiscussionView({
   const showComposer = canWrite && !!viewerPermissions;
 
   return (
-    <Section className="custom-page">
-      <StyledHelpGroupDiscussion>
-        <HelpGroupBackLink
-          href={getHelpGroupHref(group.slug)}
-          label={group.name}
-        />
-        <StyledHelpGroupDiscussionColumns>
-          <StyledHelpGroupDiscussionMain>
-            <StyledDiscussionPanel data-testid="discussion-panel">
-              <StyledThread data-testid="discussion-thread">
-                <StyledOriginalMessage
-                  data-testid="original-message"
-                  ref={isHidden ? undefined : seenRef?.(discussion.id)}
-                >
-                  {!group.isPublished && (
-                    <StyledOriginalMessageBadges>
-                      <Badge
-                        variant={BadgeVariant.ExtraLightAmber}
-                        size="small"
-                      >
-                        {UNPUBLISHED_MENTION}
-                      </Badge>
-                    </StyledOriginalMessageBadges>
-                  )}
-                  {isHidden ? (
-                    <HiddenHelpGroupMessage />
-                  ) : (
-                    <HelpGroupMessage
-                      kind="discussion"
-                      message={discussion}
-                      slug={group.slug}
-                      discussionId={discussion.id}
-                      viewer={viewer}
-                      canReact={canWrite}
-                      canManage={group.isPublished}
-                      showAuthorDetails={!isDesktop}
-                      onDiscussionDeleted={onDiscussionGone}
-                      onModerated={onModerated}
-                    />
-                  )}
-                </StyledOriginalMessage>
-                <StyledRepliesSection aria-label={repliesLabel ?? undefined}>
-                  {repliesLabel && (
-                    <Text weight="semibold" size="small" color="darkGray">
-                      {repliesLabel}
-                    </Text>
-                  )}
-                  {author &&
-                    shouldShowFirstResponderInvite({
-                      canWrite,
-                      isAuthor,
-                      // The server count, not the loaded replies: a page still
-                      // loading or failed must not read as "no reply"
-                      repliesCount: Math.max(
-                        discussion.repliesCount,
-                        replies.length
-                      ),
-                      authorFirstName: author.firstName,
-                    }) && (
-                      <FirstResponderInvite
-                        authorFirstName={author.firstName as string}
+    <HelpGroupsPageBackground>
+      <Section className="custom-page">
+        <StyledHelpGroupDiscussion>
+          <HelpGroupBackLink
+            href={getHelpGroupHref(group.slug)}
+            label={group.name}
+          />
+          <StyledHelpGroupDiscussionColumns>
+            <StyledHelpGroupDiscussionMain>
+              <StyledDiscussionPanel data-testid="discussion-panel">
+                <StyledThread data-testid="discussion-thread">
+                  <StyledOriginalMessage
+                    data-testid="original-message"
+                    ref={isHidden ? undefined : seenRef?.(discussion.id)}
+                  >
+                    {!group.isPublished && (
+                      <StyledOriginalMessageBadges>
+                        <Badge
+                          variant={BadgeVariant.ExtraLightAmber}
+                          size="small"
+                        >
+                          {UNPUBLISHED_MENTION}
+                        </Badge>
+                      </StyledOriginalMessageBadges>
+                    )}
+                    {isHidden ? (
+                      <HiddenHelpGroupMessage />
+                    ) : (
+                      <HelpGroupMessage
+                        kind="discussion"
+                        message={discussion}
+                        slug={group.slug}
+                        discussionId={discussion.id}
+                        viewer={viewer}
+                        canReact={canWrite}
+                        canManage={group.isPublished}
+                        showAuthorDetails={!isDesktop}
+                        onDiscussionDeleted={onDiscussionGone}
+                        onModerated={onModerated}
                       />
                     )}
-                  <StyledReplies>
-                    {replies.map((reply) => (
-                      <StyledReply
-                        key={reply.id}
-                        id={getReplyElementId(reply.id)}
-                        $isHighlighted={reply.id === highlightedReplyId}
-                        data-testid="discussion-reply"
-                        data-highlighted={reply.id === highlightedReplyId}
-                        ref={
-                          isHelpGroupHiddenMessage(reply)
-                            ? undefined
-                            : seenRef?.(reply.id)
-                        }
-                      >
-                        {isHelpGroupHiddenMessage(reply) ? (
-                          <HiddenHelpGroupMessage />
-                        ) : (
-                          <HelpGroupMessage
-                            kind="reply"
-                            message={reply}
-                            slug={group.slug}
-                            discussionId={discussion.id}
-                            viewer={viewer}
-                            canReact={canWrite}
-                            canManage={group.isPublished}
-                            onModerated={onModerated}
-                          />
-                        )}
-                      </StyledReply>
-                    ))}
-                  </StyledReplies>
-                  {isLoadingReplies && <Spinner />}
-                  {repliesError}
-                </StyledRepliesSection>
-              </StyledThread>
-              {hasNewReply && (
-                <StyledNewReplyPill
-                  type="button"
-                  onClick={onNewReplyClick}
-                  data-testid="new-reply-pill"
-                >
-                  {NEW_REPLY_PILL_LABEL}
-                </StyledNewReplyPill>
-              )}
-              {(showComposer || showInvitation) && (
-                <StyledThreadBottom data-testid="discussion-bottom">
-                  {showComposer && viewerPermissions && (
-                    <ReplyComposer
-                      key={discussion.id}
-                      slug={group.slug}
-                      discussionId={discussion.id}
-                      authorFirstName={author?.firstName ?? null}
-                      charterAccepted={viewerPermissions.charterAccepted}
-                      onReplied={onReplied}
-                      onDiscussionGone={onDiscussionGone}
-                    />
-                  )}
-                  {showInvitation && state && (
-                    <StyledWriteInvitationContainer>
-                      <WriteInvitation slug={group.slug} state={state} />
-                    </StyledWriteInvitationContainer>
-                  )}
-                </StyledThreadBottom>
-              )}
-            </StyledDiscussionPanel>
-            <StyledDiscussionEnd />
-          </StyledHelpGroupDiscussionMain>
-          {author && isDesktop && <AuthorCard author={author} />}
-        </StyledHelpGroupDiscussionColumns>
-      </StyledHelpGroupDiscussion>
-    </Section>
+                  </StyledOriginalMessage>
+                  <StyledRepliesSection aria-label={repliesLabel ?? undefined}>
+                    {repliesLabel && (
+                      <Text weight="semibold" size="small" color="darkGray">
+                        {repliesLabel}
+                      </Text>
+                    )}
+                    {author &&
+                      shouldShowFirstResponderInvite({
+                        canWrite,
+                        isAuthor,
+                        // The server count, not the loaded replies: a page still
+                        // loading or failed must not read as "no reply"
+                        repliesCount: Math.max(
+                          discussion.repliesCount,
+                          replies.length
+                        ),
+                        authorFirstName: author.firstName,
+                      }) && (
+                        <FirstResponderInvite
+                          authorFirstName={author.firstName as string}
+                        />
+                      )}
+                    <StyledReplies>
+                      {replies.map((reply) => (
+                        <StyledReply
+                          key={reply.id}
+                          id={getReplyElementId(reply.id)}
+                          $isHighlighted={reply.id === highlightedReplyId}
+                          data-testid="discussion-reply"
+                          data-highlighted={reply.id === highlightedReplyId}
+                          ref={
+                            isHelpGroupHiddenMessage(reply)
+                              ? undefined
+                              : seenRef?.(reply.id)
+                          }
+                        >
+                          {isHelpGroupHiddenMessage(reply) ? (
+                            <HiddenHelpGroupMessage />
+                          ) : (
+                            <HelpGroupMessage
+                              kind="reply"
+                              message={reply}
+                              slug={group.slug}
+                              discussionId={discussion.id}
+                              viewer={viewer}
+                              canReact={canWrite}
+                              canManage={group.isPublished}
+                              onModerated={onModerated}
+                            />
+                          )}
+                        </StyledReply>
+                      ))}
+                    </StyledReplies>
+                    {isLoadingReplies && <Spinner />}
+                    {repliesError}
+                  </StyledRepliesSection>
+                </StyledThread>
+                {hasNewReply && (
+                  <StyledNewReplyPill
+                    type="button"
+                    onClick={onNewReplyClick}
+                    data-testid="new-reply-pill"
+                  >
+                    {NEW_REPLY_PILL_LABEL}
+                  </StyledNewReplyPill>
+                )}
+                {(showComposer || showInvitation) && (
+                  <StyledThreadBottom data-testid="discussion-bottom">
+                    {showComposer && viewerPermissions && (
+                      <ReplyComposer
+                        key={discussion.id}
+                        slug={group.slug}
+                        discussionId={discussion.id}
+                        authorFirstName={author?.firstName ?? null}
+                        charterAccepted={viewerPermissions.charterAccepted}
+                        onReplied={onReplied}
+                        onDiscussionGone={onDiscussionGone}
+                      />
+                    )}
+                    {showInvitation && state && (
+                      <StyledWriteInvitationContainer>
+                        <WriteInvitation slug={group.slug} state={state} />
+                      </StyledWriteInvitationContainer>
+                    )}
+                  </StyledThreadBottom>
+                )}
+              </StyledDiscussionPanel>
+              <StyledDiscussionEnd />
+            </StyledHelpGroupDiscussionMain>
+            {author && isDesktop && <AuthorCard author={author} />}
+          </StyledHelpGroupDiscussionColumns>
+        </StyledHelpGroupDiscussion>
+      </Section>
+    </HelpGroupsPageBackground>
   );
 }

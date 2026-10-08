@@ -8,6 +8,7 @@ import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticate
 import { useGetHelpGroupsQuery } from '@/src/use-cases/help-groups';
 import { getDefaultUrl } from '@/src/utils/Redirects';
 import { HelpGroupLoadError } from '../HelpGroupLoadError';
+import { HelpGroupsPageBackground } from '../HelpGroupsPageBackground';
 import {
   HELP_GROUPS_INTRO,
   HELP_GROUPS_LOAD_ERROR_LABELS,
@@ -72,22 +73,24 @@ export function HelpGroupsCatalog() {
   }, [hasNoPublishedGroup, replace, user.role]);
 
   return (
-    <Section className="custom-page">
-      <StyledHelpGroupsCatalog>
-        <HelpGroupsIntro />
-        {isError && (
-          <HelpGroupLoadError
-            message={HELP_GROUPS_LOAD_ERROR_LABELS.groups}
-            onRetry={refetch}
-          />
-        )}
-        {!isError &&
-          (isLoading || hasNoPublishedGroup ? (
-            <LoadingScreen />
-          ) : (
-            <HelpGroupList groups={groups ?? []} />
-          ))}
-      </StyledHelpGroupsCatalog>
-    </Section>
+    <HelpGroupsPageBackground>
+      <Section className="custom-page">
+        <StyledHelpGroupsCatalog>
+          <HelpGroupsIntro />
+          {isError && (
+            <HelpGroupLoadError
+              message={HELP_GROUPS_LOAD_ERROR_LABELS.groups}
+              onRetry={refetch}
+            />
+          )}
+          {!isError &&
+            (isLoading || hasNoPublishedGroup ? (
+              <LoadingScreen />
+            ) : (
+              <HelpGroupList groups={groups ?? []} />
+            ))}
+        </StyledHelpGroupsCatalog>
+      </Section>
+    </HelpGroupsPageBackground>
   );
 }
