@@ -21,4 +21,6 @@ export interface CommonInputProps<
   labelTooltip?: ReactNode;
   placeholder?: string;
   inputRef?: RefCallback<K>;
+  // Drops the bottom margin, for a parent that spaces its fields itself
+  noMarginBottom?: boolean;
 }

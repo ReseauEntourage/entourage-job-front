@@ -42,6 +42,7 @@ export function TextInput({
   inputRef,
   error,
   errorContent,
+  noMarginBottom = false,
 }: TextInputProps) {
   const [contextType, setContextType] = useState(type);
   const isPasswordContextType = contextType === 'password';
@@ -56,7 +57,10 @@ export function TextInput({
   const shouldShowFooter = !!error || !!maxLength;
 
   return (
-    <StyledTextInputGroupForm disabled={disabled}>
+    <StyledTextInputGroupForm
+      disabled={disabled}
+      $noMarginBottom={noMarginBottom}
+    >
       {showLabel &&
         (labelTooltip ? (
           <StyledLabelRow>

@@ -45,6 +45,7 @@ export function TextArea({
   rows,
   setIsMaxLinesReached,
   naked = false,
+  noMarginBottom = false,
 }: TextAreaProps) {
   const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
     useLineLimit(value, name, onChange, maxLines?.lines);
@@ -76,7 +77,11 @@ export function TextArea({
   const shouldShowFooter = !!error || shouldShowAnnotations;
 
   return (
-    <StyledTextAreaContainer disabled={disabled} $naked={naked}>
+    <StyledTextAreaContainer
+      disabled={disabled}
+      $naked={naked}
+      $noMarginBottom={noMarginBottom}
+    >
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}

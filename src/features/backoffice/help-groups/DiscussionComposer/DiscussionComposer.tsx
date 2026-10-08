@@ -293,6 +293,7 @@ export function DiscussionComposer({
         placeholder={COMPOSER_PLACEHOLDER}
         rows={5}
         maxLength={MESSAGE_MAX_LENGTH}
+        noMarginBottom
         value={draft.content}
         inputRef={(element) => {
           messageRef.current = element;
@@ -324,6 +325,7 @@ export function DiscussionComposer({
           id={TITLE_INPUT_ID}
           name={TITLE_INPUT_ID}
           title={COMPOSER_TITLE_LABEL}
+          noMarginBottom
           placeholder={
             suggestion.isSuggesting
               ? COMPOSER_TITLE_LOADING_LABEL
