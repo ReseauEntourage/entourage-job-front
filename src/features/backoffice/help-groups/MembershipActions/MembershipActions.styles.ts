@@ -29,9 +29,13 @@ export const StyledMembershipMenuToggle = styled.button`
   }
 `;
 
-export const StyledLeaveMenuItem = styled.span`
+export const StyledMenuItem = styled.span`
   display: flex;
   align-items: center;
   gap: 10px;
+  color: ${COLORS.black};
+`;
+
+export const StyledLeaveMenuItem = styled(StyledMenuItem)`
   color: ${COLORS.warning};
 `;

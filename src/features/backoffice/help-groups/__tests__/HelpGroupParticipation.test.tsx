@@ -355,6 +355,22 @@ describe('Help group participation', () => {
         );
       });
 
+      it('offers « Voir les N membres » first in the « ⋯ » menu, opening the members list', async () => {
+        renderPage();
+        fireEvent.click(
+          header().getByRole('button', { name: "Plus d'actions sur le groupe" })
+        );
+        const seeMembers = header().getByTestId('help-group-menu-see-members');
+        expect(
+          isBefore(seeMembers, header().getByTestId('leave-help-group'))
+        ).toBe(true);
+        expect(seeMembers).toHaveTextContent(/^Voir les \d+ membres$/);
+        fireEvent.click(seeMembers);
+        expect(
+          await screen.findByTestId('help-group-members-list')
+        ).toBeInTheDocument();
+      });
+
       it('collapses « Le cadre » under the description, and chains the blocks in a single column', () => {
         renderPage();
         const headerBlock = screen.getByTestId('help-group-header');
@@ -369,9 +385,12 @@ describe('Help group participation', () => {
           )
         ).toBe(true);
         expect(document.querySelector('aside')).toBeNull();
+        // No « Les membres » block: the full list is in the « ⋯ » menu
+        expect(
+          screen.queryByTestId('help-group-members')
+        ).not.toBeInTheDocument();
         const blocks = [
           headerBlock,
-          screen.getByTestId('help-group-members'),
           screen.getByTestId('discussion-composer-bar'),
           screen.getByTestId('help-group-no-discussion'),
           screen.getByTestId('emails-setting'),

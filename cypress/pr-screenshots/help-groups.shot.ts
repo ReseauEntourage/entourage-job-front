@@ -360,24 +360,33 @@ describe('Groupes', () => {
     cy.visit('/backoffice/groupes/refaire-un-cv');
     cy.wait('@getHelpGroup');
     cy.wait('@getDiscussions');
-    cy.wait('@getMembers');
     cy.get('[data-testid="discussion-row"]').should('have.length', 3);
     cy.get('[data-testid="help-group-header"]').should('be.visible');
-    cy.get('[data-testid="help-group-members-preview-item"]').should(
-      'have.length',
-      5
-    );
+    // On mobile there is no « Les membres » block: the list is in the « ⋯ » menu
+    const isMobile = Cypress.expose('device') === 'mobile';
+    if (!isMobile) {
+      cy.wait('@getMembers');
+      cy.get('[data-testid="help-group-members-preview-item"]').should(
+        'have.length',
+        5
+      );
+    }
     cy.capture('Page d’un groupe', {
       caption:
-        'Membre : en-tête pleine largeur (bouton retour « ‹ Groupes », nom, « Vous êtes membre », nombre de membres cliquable, description, « Quitter le groupe ») ; barre de rédaction et discussions à gauche, sans invitation à se présenter ; « Les membres » (5 arrivées récentes, « Voir les 61 membres »), « Le cadre » et « Emails de ce groupe » à droite. Sur mobile, une seule colonne, « Les membres » sous l’en-tête, « Le cadre » replié et « Quitter le groupe » dans le menu « ⋯ ».',
+        'Membre : en-tête pleine largeur (bouton retour « ‹ Groupes », nom, « Vous êtes membre », nombre de membres cliquable, description, « Quitter le groupe ») ; barre de rédaction et discussions à gauche, sans invitation à se présenter ; « Les membres » (5 arrivées récentes, « Voir les 61 membres »), « Le cadre » et « Emails de ce groupe » à droite. Sur mobile, une seule colonne sans « Les membres », « Le cadre » replié, « Voir les 61 membres » et « Quitter le groupe » dans le menu « ⋯ ».',
     });
 
-    cy.get('[data-testid="help-group-members-see-all"]').click();
+    if (isMobile) {
+      cy.get('[data-testid="help-group-actions-toggle"]').click();
+      cy.get('[data-testid="help-group-menu-see-members"]').click();
+    } else {
+      cy.get('[data-testid="help-group-members-see-all"]').click();
+    }
     cy.get('[data-testid="help-group-member"]').should('have.length', 20);
     cy.contains('20 sur 61 membres').should('be.visible');
     cy.capture('Liste des membres', {
       caption:
-        'Modale ouverte par « Voir les 61 membres » ou par le nombre de membres de l’en-tête : recherche par prénom, filtre par rôle, « membre depuis », « Voir le profil » seulement pour une fiche consultable, « 20 sur 61 membres » et « Afficher 20 membres de plus ».',
+        'Modale ouverte par « Voir les 61 membres » (bloc en desktop, menu « ⋯ » en mobile) ou par le nombre de membres de l’en-tête : recherche par prénom, filtre par rôle, « membre depuis », « Voir le profil » seulement pour une fiche consultable, « 20 sur 61 membres » et « Afficher 20 membres de plus ».',
       capture: 'viewport',
     });
 

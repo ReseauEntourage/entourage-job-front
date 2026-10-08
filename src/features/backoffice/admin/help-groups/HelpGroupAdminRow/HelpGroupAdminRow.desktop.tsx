@@ -34,7 +34,7 @@ export function HelpGroupAdminRowDesktop(props: HelpGroupAdminRowProps) {
           {formatHelpGroupLastActivity(group.lastActivityAt)}
         </Text>
       </TdDesktop>
-      <TdDesktop>
+      <TdDesktop keepButtonPadding>
         <HelpGroupAdminActions {...props} />
       </TdDesktop>
     </TrDesktop>

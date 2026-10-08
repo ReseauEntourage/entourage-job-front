@@ -119,7 +119,6 @@ export function HelpGroupPage({
       <Section className="custom-page">
         <StyledHelpGroupPage>
           <StyledHelpGroupPageMain>
-            {!isDesktop && <HelpGroupMembers group={group} />}
             <HelpGroupInfoBlock group={group} />
             {group.isPublished &&
               group.viewerPermissions.state === 'canWrite' && (

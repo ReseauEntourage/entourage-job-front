@@ -15,6 +15,7 @@ import { openHelpGroupMembersModal } from '../HelpGroupMembers';
 import { JustJoinedMention, MembershipActions } from '../MembershipActions';
 import { JoinHelpGroupButton } from '../WriteInvitation';
 import {
+  formatSeeAllMembersLabel,
   formatMembersLabel,
   HELP_GROUP_MEMBER_MENTION,
   HELP_GROUPS_LIST_HREF,
@@ -119,6 +120,14 @@ export function HelpGroupHeader({
                     slug={group.slug}
                     justJoined={justJoined}
                     display="menu"
+                    seeMembers={
+                      group.membersCount > 0
+                        ? {
+                            label: formatSeeAllMembersLabel(group.membersCount),
+                            onClick: () => openHelpGroupMembersModal(group),
+                          }
+                        : undefined
+                    }
                   />
                 )}
               </StyledHelpGroupTitleRow>

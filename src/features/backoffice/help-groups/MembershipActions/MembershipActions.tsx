@@ -22,6 +22,7 @@ import {
 import {
   StyledLeaveMenuItem,
   StyledMembershipActions,
+  StyledMenuItem,
   StyledMembershipMenuToggle,
 } from './MembershipActions.styles';
 
@@ -48,6 +49,9 @@ interface MembershipActionsProps {
   // `menu`: in a « ⋯ » menu, below the desktop breakpoint. The mention of
   // the membership is then left to the caller.
   display?: 'button' | 'menu';
+  // `menu` only: « Voir les N membres », first item of the menu (the
+  // « Les membres » block is not shown below the desktop breakpoint)
+  seeMembers?: { label: string; onClick: () => void };
 }
 
 /**
@@ -58,6 +62,7 @@ export function MembershipActions({
   slug,
   justJoined,
   display = 'button',
+  seeMembers,
 }: MembershipActionsProps) {
   const dispatch = useDispatch();
   const [leaveHelpGroup] = useLeaveHelpGroupMutation();
@@ -99,6 +104,14 @@ export function MembershipActions({
           </StyledMembershipMenuToggle>
         </Dropdown.Toggle>
         <Dropdown.Menu openDirection="left">
+          {seeMembers && (
+            <Dropdown.Item onClick={seeMembers.onClick}>
+              <StyledMenuItem data-testid="help-group-menu-see-members">
+                <LucidIcon name="Users" size={16} />
+                {seeMembers.label}
+              </StyledMenuItem>
+            </Dropdown.Item>
+          )}
           <Dropdown.Item onClick={confirmLeave}>
             <StyledLeaveMenuItem data-testid="leave-help-group">
               <LucidIcon name="LogOut" size={16} />
