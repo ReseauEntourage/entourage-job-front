@@ -10,11 +10,9 @@ import {
 import { H5 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
 import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useIsDesktop } from '@/src/hooks/utils';
-import {
-  selectCurrentUser,
-  selectCurrentUserProfile,
-} from '@/src/use-cases/current-user';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 import {
   getHelpGroupDraftKey,
   HelpGroupsWriteError,
@@ -125,7 +123,7 @@ export function DiscussionComposer({
   const dispatch = useDispatch();
   const isDesktop = useIsDesktop();
   const currentUser = useSelector(selectCurrentUser);
-  const hasPicture = useSelector(selectCurrentUserProfile)?.hasPicture ?? false;
+  const hasPicture = useCurrentUserProfile()?.hasPicture ?? false;
   const userId = currentUser?.id;
   const [draft, setDraft, clearDraft] = useDraft<DiscussionDraft>(
     userId ? getHelpGroupDraftKey(userId, 'group', groupId) : null,

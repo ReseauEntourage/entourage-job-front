@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { TextArea } from '@/src/components/ui/Inputs';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useIsDesktop } from '@/src/hooks/utils';
-import {
-  selectCurrentUser,
-  selectCurrentUserProfile,
-} from '@/src/use-cases/current-user';
+import { selectCurrentUser } from '@/src/use-cases/current-user';
 import {
   getHelpGroupDraftKey,
   HelpGroupsWriteError,
@@ -82,7 +80,7 @@ export function ReplyComposer({
 }: ReplyComposerProps) {
   const isDesktop = useIsDesktop();
   const currentUser = useSelector(selectCurrentUser);
-  const hasPicture = useSelector(selectCurrentUserProfile)?.hasPicture ?? false;
+  const hasPicture = useCurrentUserProfile()?.hasPicture ?? false;
   const userId = currentUser?.id;
   const [draft, setDraft, clearDraft] = useDraft<ReplyDraft>(
     userId ? getHelpGroupDraftKey(userId, 'discussion', discussionId) : null,
