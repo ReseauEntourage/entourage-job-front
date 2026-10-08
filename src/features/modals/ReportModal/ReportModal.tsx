@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, LucidIcon, SimpleLink, Text } from '@/src/components/ui';
+import { Button, LegacyImg, SimpleLink, Text } from '@/src/components/ui';
 import { Radio, TextArea } from '@/src/components/ui/Inputs';
 import { ReportReasonValue } from '@/src/constants/reports';
-import { COLORS } from '@/src/constants/styles';
 import { formReport } from '@/src/features/forms/schemas/formReport';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
+import { useIsDesktop } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
 import { REPORT_MODAL_LABELS } from './ReportModal.labels';
 import {
@@ -15,10 +15,10 @@ import {
   StyledReportExcerpt,
   StyledReportExcerptAuthor,
   StyledReportHelp,
-  StyledReportHelpIcon,
-  StyledReportHelpText,
   StyledReportModalContent,
   StyledReportReferent,
+  StyledReportReferentIdentity,
+  StyledReportReferentPicture,
 } from './ReportModal.styles';
 import { ReportModalProps, ReportSubmitResult } from './ReportModal.types';
 import { truncateExcerpt } from './ReportModal.utils';
@@ -43,6 +43,7 @@ export function ReportModal({
   const { onClose } = useModalContext();
   const dispatch = useDispatch();
   const staffContact = useCurrentUserStaffContact();
+  const isDesktop = useIsDesktop();
   const [reason, setReason] = useState<ReportReasonValue | ''>('');
   // A long suspicious message is cut to the limit the back accepts
   const [comment, setComment] = useState(
@@ -169,28 +170,44 @@ export function ReportModal({
           onChange={setComment}
         />
         <StyledReportHelp data-testid="report-help">
-          <StyledReportHelpIcon>
-            <LucidIcon name="Phone" color={COLORS.warning} />
-          </StyledReportHelpIcon>
-          <StyledReportHelpText>
-            <Text size="small">
-              {REPORT_MODAL_LABELS.helpBefore}
-              <SimpleLink isExternal href="tel:3114">
-                {REPORT_MODAL_LABELS.helpNumber}
-              </SimpleLink>
-              {REPORT_MODAL_LABELS.helpAfter}
-            </Text>
-            {staffContact && (
-              <StyledReportReferent data-testid="report-referent">
-                <Text size="small">
-                  {REPORT_MODAL_LABELS.formatReferent(staffContact.name)}{' '}
-                  <SimpleLink isExternal href={`mailto:${staffContact.email}`}>
-                    {staffContact.email}
-                  </SimpleLink>
+          <Text size="small">
+            {REPORT_MODAL_LABELS.helpBefore}
+            <SimpleLink isExternal href="tel:3114">
+              {REPORT_MODAL_LABELS.helpNumber}
+            </SimpleLink>
+            {REPORT_MODAL_LABELS.helpAfter}
+          </Text>
+          {staffContact && (
+            <StyledReportReferent data-testid="report-referent">
+              <StyledReportReferentPicture
+                role="img"
+                aria-label={REPORT_MODAL_LABELS.formatReferentPhoto(
+                  staffContact.name
+                )}
+              >
+                <LegacyImg src={staffContact.img} alt="" cover />
+              </StyledReportReferentPicture>
+              <StyledReportReferentIdentity>
+                <Text color="primaryBlue" weight="semibold">
+                  {staffContact.name}
                 </Text>
-              </StyledReportReferent>
-            )}
-          </StyledReportHelpText>
+                <Text size="small" color="darkGray">
+                  {REPORT_MODAL_LABELS.referentRole}
+                </Text>
+              </StyledReportReferentIdentity>
+              <Button
+                variant="secondary"
+                size="small"
+                rounded
+                isExternal
+                href={`mailto:${staffContact.email}`}
+              >
+                {isDesktop
+                  ? REPORT_MODAL_LABELS.referentWrite
+                  : REPORT_MODAL_LABELS.referentWriteShort}
+              </Button>
+            </StyledReportReferent>
+          )}
         </StyledReportHelp>
         {error && (
           <StyledReportError

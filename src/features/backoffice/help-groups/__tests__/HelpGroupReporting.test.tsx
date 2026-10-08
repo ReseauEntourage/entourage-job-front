@@ -21,7 +21,8 @@ import {
 
 const mockReport = jest.fn();
 const mockRestore = jest.fn();
-let mockStaffContact: { name: string; email: string } | null = null;
+let mockStaffContact: { name: string; email: string; img: string } | null =
+  null;
 
 jest.mock('@/src/use-cases/help-groups', () => ({
   ...jest.requireActual('@/src/use-cases/help-groups'),
@@ -203,10 +204,18 @@ describe('Help group reporting', () => {
     });
 
     it('offers to contact one’s referent when known', () => {
-      mockStaffContact = { name: 'Clothilde', email: 'clothilde@test.fr' };
+      mockStaffContact = {
+        name: 'Clothilde',
+        email: 'clothilde@test.fr',
+        img: '/static/img/clothilde.jpg',
+      };
       renderModal();
       const referent = screen.getByTestId('report-referent');
       expect(referent).toHaveTextContent('Clothilde');
+      expect(referent).toHaveTextContent('Votre référent(e) Entourage Pro');
+      expect(
+        within(referent).getByRole('img', { name: 'Photo de Clothilde' })
+      ).toBeInTheDocument();
       expect(within(referent).getByRole('link')).toHaveAttribute(
         'href',
         'mailto:clothilde@test.fr'

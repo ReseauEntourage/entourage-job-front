@@ -25,33 +25,51 @@ export const StyledReportExcerptAuthor = styled.span`
 
 export const StyledReportHelp = styled.aside`
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  align-items: flex-start;
   padding: 14px 16px;
   border-radius: 8px;
   background-color: ${COLORS.extraExtraLightOrange};
 
-  a {
+  p a {
     font-weight: ${FONT_WEIGHTS.semibold};
   }
 `;
 
-export const StyledReportHelpIcon = styled.span`
-  flex: none;
-  display: flex;
-  padding-top: 2px;
-`;
-
-export const StyledReportHelpText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-`;
-
+// The contact block of the dashboard, compact: picture, name, role, mail link
 export const StyledReportReferent = styled.div`
   display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background-color: ${COLORS.white};
+`;
+
+export const StyledReportReferentPicture = styled.div`
+  flex: none;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  @media (max-width: 767px) {
+    width: 44px;
+    height: 44px;
+  }
+`;
+
+export const StyledReportReferentIdentity = styled.div`
+  flex: 1;
+  min-width: 0;
+  display: flex;
   flex-direction: column;
+  overflow-wrap: anywhere;
+
+  > * {
+    margin: 0;
+  }
 `;
 
 export const StyledReportError = styled.p`

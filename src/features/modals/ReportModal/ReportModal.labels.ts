@@ -12,8 +12,11 @@ export const REPORT_MODAL_LABELS = {
   helpBefore: 'Vous, ou la personne concernée, allez mal ? Le ',
   helpNumber: '3114',
   helpAfter: ' répond 24h/24, gratuitement.',
-  formatReferent: (name: string) =>
-    `Vous pouvez aussi écrire à ${name}, votre référent(e) Entourage :`,
+  // Referent card, as the contact block of the dashboard (design 4b, 08/10/2026)
+  referentRole: 'Votre référent(e) Entourage Pro',
+  referentWrite: 'Lui écrire',
+  referentWriteShort: 'Écrire',
+  formatReferentPhoto: (name: string) => `Photo de ${name}`,
   cancel: 'Annuler',
   confirm: 'Envoyer le signalement',
   // Validated by the PM on 01/10/2026
