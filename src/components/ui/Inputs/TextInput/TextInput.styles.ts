@@ -5,8 +5,12 @@ import {
   commonInputStyles,
 } from '../Inputs.styles';
 
-export const StyledTextInputGroupForm = styled.div<{ disabled?: boolean }>`
+export const StyledTextInputGroupForm = styled.div<{
+  disabled?: boolean;
+  $noMarginBottom?: boolean;
+}>`
   ${() => commonInputContainerStyles}
+  ${({ $noMarginBottom }) => $noMarginBottom && 'margin-bottom: 0;'}
   input {
     ${() => commonInputStyles}
     &.secondary {

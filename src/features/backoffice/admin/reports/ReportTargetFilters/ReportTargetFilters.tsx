@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { FilterPills } from '@/src/components/ui';
 import { SelectSimple } from '@/src/components/ui/Inputs';
 import { ADMIN_ZONES_FILTERS } from '@/src/constants/departements';
 import {
@@ -11,7 +12,6 @@ import { ReportFilterKey, ReportFilterValues } from '../useReportFilters';
 import {
   StyledReportFilters,
   StyledReportSelects,
-  StyledReportTypePill,
   StyledReportTypePills,
 } from './ReportTargetFilters.styles';
 
@@ -46,50 +46,17 @@ export function ReportTargetFilters({
   values,
   onChange,
 }: ReportTargetFiltersProps) {
-  const pillsRef = useRef<HTMLDivElement>(null);
-
-  const onPillsKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[
-      event.key
-    ];
-    if (!step) {
-      return;
-    }
-    event.preventDefault();
-    const index = TYPE_OPTIONS.findIndex(({ value }) => value === values.type);
-    const next =
-      TYPE_OPTIONS[(index + step + TYPE_OPTIONS.length) % TYPE_OPTIONS.length];
-    onChange('type', next.value);
-    pillsRef.current
-      ?.querySelector<HTMLButtonElement>(`#report-filter-type-${next.value}`)
-      ?.focus();
-  };
-
   return (
     <StyledReportFilters data-testid="report-filters">
-      <StyledReportTypePills
-        ref={pillsRef}
-        role="radiogroup"
-        aria-label={REPORTS_TAB_LABELS.typeFilter}
-        onKeyDown={onPillsKeyDown}
-      >
-        {TYPE_OPTIONS.map(({ value, label }) => {
-          const isChecked = values.type === value;
-          return (
-            <StyledReportTypePill
-              key={value}
-              id={`report-filter-type-${value}`}
-              type="button"
-              role="radio"
-              aria-checked={isChecked}
-              tabIndex={isChecked ? 0 : -1}
-              $isChecked={isChecked}
-              onClick={() => onChange('type', value)}
-            >
-              {label}
-            </StyledReportTypePill>
-          );
-        })}
+      <StyledReportTypePills>
+        <FilterPills
+          options={TYPE_OPTIONS}
+          value={values.type}
+          onChange={(value) => onChange('type', value)}
+          ariaLabel={REPORTS_TAB_LABELS.typeFilter}
+          idPrefix="report-filter-type"
+          scrollOnMobile
+        />
       </StyledReportTypePills>
       <StyledReportSelects>
         <SelectSimple

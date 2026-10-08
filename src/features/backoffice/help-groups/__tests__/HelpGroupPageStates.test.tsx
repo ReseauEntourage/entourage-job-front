@@ -39,7 +39,6 @@ const group = {
   viewerPermissions: {
     state: 'mustJoin' as const,
     charterAccepted: false,
-    showWelcomeInvite: false,
   },
 };
 

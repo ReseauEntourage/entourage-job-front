@@ -66,6 +66,38 @@ export const StyledHelpGroupMeta = styled.div`
   color: ${COLORS.darkGray};
 `;
 
+// Opens the members list, read as secondary text: underlined on hover only
+export const StyledHelpGroupMembersCount = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: ${COLORS.darkGray};
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  text-underline-offset: 3px;
+  cursor: pointer;
+
+  &:hover {
+    color: ${COLORS.black};
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${COLORS.darkBlue};
+    outline-offset: 2px;
+  }
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    font-size: 12px;
+  }
+`;
+
 export const StyledHelpGroupDescription = styled.div`
   max-width: 720px;
 
@@ -87,8 +119,8 @@ export const StyledHelpGroupAdhesion = styled.div`
 
 /**
  * Two columns on desktop under the header: the information block, the
- * composer and the discussions on the left, « Le cadre » then the emails
- * setting on the right. One column on mobile.
+ * composer and the discussions on the left, « Les membres », « Le cadre »
+ * then the emails setting on the right. One column on mobile.
  */
 export const StyledHelpGroupPage = styled.div`
   display: grid;

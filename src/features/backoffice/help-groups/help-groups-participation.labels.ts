@@ -24,12 +24,6 @@ export const JUST_JOINED_LABEL = 'Vous venez de rejoindre';
 // Group page header, design of 07/10/2026
 export const HELP_GROUP_ACTIONS_LABEL = "Plus d'actions sur le groupe";
 
-export const formatWelcomeInviteTitle = (firstName: string) =>
-  `Bienvenue, ${firstName}.`;
-export const WELCOME_INVITE_TEXT =
-  'Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.';
-export const WELCOME_INVITE_BUTTON_LABEL = 'Me présenter';
-
 // Positive call, naming the author: never "Personne n'a encore répondu"
 export const formatFirstResponderInvite = (authorFirstName: string) =>
   `Soyez la première personne à répondre à ${authorFirstName}, même deux lignes suffisent.`;
@@ -62,6 +56,7 @@ export const formatReplyPlaceholder = (authorFirstName: string | null) =>
 export const REPLY_VISIBILITY_LABEL =
   'Votre réponse sera visible par toutes les personnes inscrites sur Entourage Pro.';
 export const REPLY_BUTTON_LABEL = 'Répondre';
+export const REPLY_BAR_LABEL = 'Écrire une réponse';
 export const NEW_REPLY_PILL_LABEL = 'Nouvelle réponse';
 
 export const CHARTER_MODAL_TITLE = 'Avant votre première publication';

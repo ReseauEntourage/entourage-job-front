@@ -10,6 +10,7 @@ import {
 import { H5 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
 import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserProfile,
@@ -104,8 +105,6 @@ interface DiscussionComposerProps {
   slug: string;
   groupId: string;
   charterAccepted: boolean;
-  // Incremented by the welcome invite to open the composer
-  openSignal?: number;
 }
 
 /**
@@ -122,9 +121,9 @@ export function DiscussionComposer({
   slug,
   groupId,
   charterAccepted,
-  openSignal = 0,
 }: DiscussionComposerProps) {
   const dispatch = useDispatch();
+  const isDesktop = useIsDesktop();
   const currentUser = useSelector(selectCurrentUser);
   const hasPicture = useSelector(selectCurrentUserProfile)?.hasPicture ?? false;
   const userId = currentUser?.id;
@@ -133,7 +132,7 @@ export function DiscussionComposer({
     EMPTY_DRAFT,
     isDraftEmpty
   );
-  // Opened by the bar or the welcome invite, until « Annuler »
+  // Opened by the bar, until « Annuler »
   const [isExpanded, setIsExpanded] = useState(false);
   // A draft, restored or being typed, keeps the composer open
   const isOpen = isExpanded || !isDraftEmpty(draft);
@@ -176,13 +175,6 @@ export function DiscussionComposer({
     setIsExpanded(true);
     setFocusRequest((count) => count + 1);
   };
-
-  useEffect(() => {
-    if (openSignal > 0) {
-      setIsExpanded(true);
-      setFocusRequest((count) => count + 1);
-    }
-  }, [openSignal]);
 
   useEffect(() => {
     if (isOpen && focusRequest > 0) {
@@ -291,6 +283,7 @@ export function DiscussionComposer({
         placeholder={COMPOSER_PLACEHOLDER}
         rows={5}
         maxLength={MESSAGE_MAX_LENGTH}
+        noMarginBottom
         value={draft.content}
         inputRef={(element) => {
           messageRef.current = element;
@@ -322,6 +315,7 @@ export function DiscussionComposer({
           id={TITLE_INPUT_ID}
           name={TITLE_INPUT_ID}
           title={COMPOSER_TITLE_LABEL}
+          noMarginBottom
           placeholder={
             suggestion.isSuggesting
               ? COMPOSER_TITLE_LOADING_LABEL
@@ -393,7 +387,9 @@ export function DiscussionComposer({
           </Text>
         </StyledComposerVisibility>
         <Button
-          variant="text"
+          // Below the desktop breakpoint the actions share a full-width row:
+          // a bordered button keeps « Annuler » readable as a button there
+          variant={isDesktop ? 'text' : 'default'}
           onClick={close}
           dataTestId="discussion-composer-cancel"
         >

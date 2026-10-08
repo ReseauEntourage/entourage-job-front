@@ -4,10 +4,12 @@ import { BREAKPOINTS, COLORS, SHADOWS } from '@/src/constants/styles';
 // Shadow of the cards of the help groups pages (no border with it)
 const MOBILE = `@media (max-width: ${BREAKPOINTS.desktop}px)`;
 
+// The back link sits close to the discussion: the start of the replies
+// must fit in the height of a small screen
 export const StyledHelpGroupDiscussion = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
 `;
 
 export const StyledHelpGroupDiscussionColumns = styled.div`
@@ -27,8 +29,7 @@ export const StyledHelpGroupDiscussionMain = styled.div`
   min-width: 0;
 `;
 
-// The discussion is part of the page flow: the page is the only scroll. No
-// `overflow` here, it would break the sticky reply area.
+// The discussion is part of the page flow: the page is the only scroll
 export const StyledDiscussionPanel = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,8 +47,8 @@ export const StyledThread = styled.div`
 export const StyledOriginalMessage = styled.article`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 28px 32px 24px;
+  gap: 10px;
+  padding: 20px 32px 16px;
   overflow-wrap: anywhere;
 
   ${MOBILE} {
@@ -103,17 +104,11 @@ export const StyledReply = styled.article<{ $isHighlighted: boolean }>`
   }
 `;
 
-// Reply area (or the invitation replacing it) stuck at the bottom of the
-// viewport while the page scrolls. Being in the flow, it never covers the
-// last reply once the end of the thread is reached.
+// Reply area (or the invitation replacing it), at the end of the thread
 export const StyledThreadBottom = styled.div`
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
-  border-top: 1px solid ${COLORS.gray};
+  border-top: 1px solid ${COLORS.extraLightGray};
   border-radius: 0 0 10px 10px;
   background-color: ${COLORS.white};
-  box-shadow: ${SHADOWS.stickyBottom};
 
   ${MOBILE} {
     border-radius: 0;
@@ -137,12 +132,12 @@ export const StyledDiscussionEnd = styled.div`
   }
 `;
 
-// Above the reply area, following it while the page scrolls
+// At the bottom of the viewport, so it stays visible while reading above
 export const StyledNewReplyPill = styled.button`
-  position: absolute;
+  position: fixed;
   left: 50%;
-  bottom: calc(100% + 12px);
-  z-index: 2;
+  bottom: 24px;
+  z-index: 20;
   padding: 6px 14px;
   border: none;
   border-radius: 16px;

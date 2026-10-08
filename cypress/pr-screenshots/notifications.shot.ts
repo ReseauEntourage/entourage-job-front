@@ -72,7 +72,6 @@ const groupPage = {
   viewerPermissions: {
     state: 'canWrite',
     charterAccepted: true,
-    showWelcomeInvite: false,
   },
 };
 

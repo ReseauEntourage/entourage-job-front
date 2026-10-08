@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -55,6 +55,16 @@ jest.mock('@/src/use-cases/help-groups', () => ({
     mockRevisionsState,
   ],
 }));
+// jsdom has no layout: a test may set the window width
+let mockWindowWidth: number | undefined;
+jest.mock('@react-hook/window-size', () => {
+  const actual = jest.requireActual('@react-hook/window-size');
+  return {
+    ...actual,
+    useWindowWidth: (...args: unknown[]) =>
+      mockWindowWidth ?? actual.useWindowWidth(...args),
+  };
+});
 jest.mock('@/src/use-cases/current-user', () => ({
   ...jest.requireActual('@/src/use-cases/current-user'),
   selectCurrentUser: () => ({ id: 'viewer-1', firstName: 'Julien' }),
@@ -82,7 +92,6 @@ const permissions = (
 ): HelpGroupViewerPermissions => ({
   state: 'canWrite',
   charterAccepted: true,
-  showWelcomeInvite: false,
   ...props,
 });
 
@@ -106,10 +115,16 @@ const renderView = (
     </>
   );
 
-const typeReply = (value: string) =>
-  fireEvent.change(screen.getByTestId('reply-composer-content'), {
-    target: { value },
-  });
+const replyContent = () =>
+  screen.getByTestId('reply-composer-content') as HTMLTextAreaElement;
+// The compact reply area opens first when it has no text yet
+const typeReply = (value: string) => {
+  const bar = screen.queryByTestId('reply-composer-bar');
+  if (bar) {
+    fireEvent.click(bar);
+  }
+  fireEvent.change(replyContent(), { target: { value } });
+};
 
 describe('Discussion participation', () => {
   beforeEach(() => {
@@ -121,9 +136,9 @@ describe('Discussion participation', () => {
   describe('Reply area and invitations', () => {
     it('names the author in the reply area of a member', () => {
       renderView();
-      expect(
-        screen.getByPlaceholderText('Écrivez votre réponse à Claire…')
-      ).toBeInTheDocument();
+      expect(screen.getByTestId('reply-composer-bar')).toHaveTextContent(
+        'Écrivez votre réponse à Claire…'
+      );
       // Inline palette under the original message, no toggle
       expect(screen.getByTestId('reaction-palette')).toBeInTheDocument();
       expect(screen.queryByTestId('reaction-toggle')).not.toBeInTheDocument();
@@ -161,10 +176,11 @@ describe('Discussion participation', () => {
         discussionId: 'discussion-1',
         dto: { content: 'Ma réponse' },
       });
+      // Emptied, the area is compact again
       expect(
-        (screen.getByTestId('reply-composer-content') as HTMLTextAreaElement)
-          .value
-      ).toBe('');
+        screen.queryByTestId('reply-composer-content')
+      ).not.toBeInTheDocument();
+      expect(screen.getByTestId('reply-composer-bar')).toBeInTheDocument();
     });
 
     it('keeps the text and shows an error when sending fails', async () => {
@@ -177,10 +193,7 @@ describe('Discussion participation', () => {
           'Votre réponse n’a pas pu être envoyée. Réessayez.'
         )
       ).toBeInTheDocument();
-      expect(
-        (screen.getByTestId('reply-composer-content') as HTMLTextAreaElement)
-          .value
-      ).toBe('Ma réponse');
+      expect(replyContent().value).toBe('Ma réponse');
     });
 
     it('tells when the discussion was deleted in the meantime, keeping the text', async () => {
@@ -207,10 +220,114 @@ describe('Discussion participation', () => {
         JSON.stringify({ content: 'Brouillon' })
       );
       renderView();
+      expect(replyContent().value).toBe('Brouillon');
+    });
+  });
+
+  describe('Compact reply area', () => {
+    const composer = () => within(screen.getByTestId('reply-composer'));
+
+    afterEach(() => {
+      mockWindowWidth = undefined;
+    });
+
+    it('is compact by default: avatar, field and an inactive « Répondre », without visibility nor counter', () => {
+      mockWindowWidth = 1440;
+      renderView();
+      const bar = screen.getByTestId('reply-composer-bar');
+      expect(bar).toHaveAccessibleName('Écrire une réponse');
+      expect(composer().getByTestId('help-group-avatar')).toBeInTheDocument();
+      expect(screen.getByTestId('reply-composer-send')).toBeDisabled();
+      expect(screen.getByTestId('reply-composer-send')).toHaveTextContent(
+        'Répondre'
+      );
       expect(
-        (screen.getByTestId('reply-composer-content') as HTMLTextAreaElement)
-          .value
-      ).toBe('Brouillon');
+        screen.queryByTestId('reply-composer-content')
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Votre réponse sera visible/)
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText(/caractère\(s\) restant/)).toBeNull();
+      expect(
+        screen.queryByTestId('reply-composer-cancel')
+      ).not.toBeInTheDocument();
+    });
+
+    it('keeps only the field and an inactive send icon below the desktop breakpoint', () => {
+      mockWindowWidth = 390;
+      renderView();
+      expect(screen.getByTestId('reply-composer-bar')).toBeInTheDocument();
+      expect(
+        composer().queryByTestId('help-group-avatar')
+      ).not.toBeInTheDocument();
+      const send = screen.getByTestId('reply-composer-send');
+      expect(send).toBeDisabled();
+      expect(send).toHaveAccessibleName('Répondre');
+    });
+
+    it('opens when the field takes the focus, with the visibility, the counter, « Annuler » and « Répondre »', () => {
+      renderView();
+      fireEvent.focus(screen.getByTestId('reply-composer-bar'));
+      expect(replyContent()).toHaveFocus();
+      expect(replyContent()).toHaveAttribute('rows', '3');
+      expect(
+        composer().getByText(
+          'Votre réponse sera visible par toutes les personnes inscrites sur Entourage Pro.'
+        )
+      ).toBeInTheDocument();
+      expect(
+        composer().getByText('5000 caractère(s) restant(s)')
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('reply-composer-cancel')).toHaveTextContent(
+        'Annuler'
+      );
+      expect(screen.getByTestId('reply-composer-send')).toHaveTextContent(
+        'Répondre'
+      );
+    });
+
+    it('opens with a restored draft', () => {
+      localStorage.setItem(
+        'help-groups:draft:viewer-1:discussion:discussion-1',
+        JSON.stringify({ content: 'Brouillon' })
+      );
+      renderView();
+      expect(
+        screen.queryByTestId('reply-composer-bar')
+      ).not.toBeInTheDocument();
+      expect(replyContent().value).toBe('Brouillon');
+      // A restored draft does not steal the focus
+      expect(replyContent()).not.toHaveFocus();
+    });
+
+    it('stays open when the field loses the focus with a text', () => {
+      renderView();
+      typeReply('Ma réponse');
+      fireEvent.blur(replyContent());
+      expect(replyContent().value).toBe('Ma réponse');
+      expect(
+        screen.queryByTestId('reply-composer-bar')
+      ).not.toBeInTheDocument();
+    });
+
+    it('empties the draft and closes on « Annuler »', async () => {
+      renderView();
+      typeReply('Ma réponse');
+      fireEvent.click(screen.getByTestId('reply-composer-cancel'));
+      expect(screen.getByTestId('reply-composer-bar')).toBeInTheDocument();
+      expect(
+        screen.queryByTestId('reply-composer-content')
+      ).not.toBeInTheDocument();
+      await waitFor(() =>
+        expect(
+          localStorage.getItem(
+            'help-groups:draft:viewer-1:discussion:discussion-1'
+          )
+        ).toBeNull()
+      );
+      // Reopened, the field is empty
+      fireEvent.click(screen.getByTestId('reply-composer-bar'));
+      expect(replyContent().value).toBe('');
     });
   });
 

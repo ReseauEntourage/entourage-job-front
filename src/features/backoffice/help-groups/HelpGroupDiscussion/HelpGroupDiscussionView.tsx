@@ -6,10 +6,14 @@ import {
   isHelpGroupHiddenMessage,
 } from '@/src/api/types';
 import { Badge, BadgeVariant, Section, Text } from '@/src/components/ui';
-import { Breadcrumb } from '@/src/components/ui/Breadcrumb';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { useIsDesktop } from '@/src/hooks/utils';
 import { AuthorCard } from '../AuthorCard';
+import {
+  FirstResponderInvite,
+  shouldShowFirstResponderInvite,
+} from '../FirstResponderInvite';
+import { HelpGroupBackLink } from '../HelpGroupBackLink';
 import {
   HelpGroupMessage,
   HelpGroupViewer,
@@ -17,16 +21,9 @@ import {
 } from '../HelpGroupMessage';
 import { UNPUBLISHED_MENTION } from '../HelpGroupPage/HelpGroupHeader';
 import { ReplyComposer } from '../ReplyComposer';
-import {
-  FirstResponderInvite,
-  shouldShowFirstResponderInvite,
-} from '../WelcomeInvite';
 import { WriteInvitation } from '../WriteInvitation';
-import {
-  NEW_REPLY_PILL_LABEL,
-  UNDER_REVIEW_MENTION,
-} from '../help-groups-participation.labels';
-import { formatRepliesLabel } from '../help-groups.labels';
+import { NEW_REPLY_PILL_LABEL } from '../help-groups-participation.labels';
+import { formatRepliesLabel, getHelpGroupHref } from '../help-groups.labels';
 import {
   StyledDiscussionEnd,
   StyledDiscussionPanel,
@@ -68,7 +65,8 @@ interface HelpGroupDiscussionViewProps {
 /**
  * Discussion in the flow of the page, the only scroll: the original message
  * as a card, then the replies separated by dividers. The reply area (or the
- * invitation replacing it) sticks to the bottom of the viewport. Below the
+ * invitation replacing it) ends the thread, after the last reply; « Nouvelle
+ * réponse » sits at the bottom of the viewport. Below the
  * desktop breakpoint, the author card gives way to the author details in the
  * header of the original message.
  */
@@ -102,14 +100,9 @@ export function HelpGroupDiscussionView({
   return (
     <Section className="custom-page">
       <StyledHelpGroupDiscussion>
-        <Breadcrumb
-          items={[
-            { label: 'Groupes', href: '/backoffice/groupes' },
-            { label: group.name, href: `/backoffice/groupes/${group.slug}` },
-            {
-              label: isHidden ? UNDER_REVIEW_MENTION : (discussion.title ?? ''),
-            },
-          ]}
+        <HelpGroupBackLink
+          href={getHelpGroupHref(group.slug)}
+          label={group.name}
         />
         <StyledHelpGroupDiscussionColumns>
           <StyledHelpGroupDiscussionMain>
@@ -203,17 +196,17 @@ export function HelpGroupDiscussionView({
                   {repliesError}
                 </StyledRepliesSection>
               </StyledThread>
-              {(hasNewReply || showComposer || showInvitation) && (
+              {hasNewReply && (
+                <StyledNewReplyPill
+                  type="button"
+                  onClick={onNewReplyClick}
+                  data-testid="new-reply-pill"
+                >
+                  {NEW_REPLY_PILL_LABEL}
+                </StyledNewReplyPill>
+              )}
+              {(showComposer || showInvitation) && (
                 <StyledThreadBottom data-testid="discussion-bottom">
-                  {hasNewReply && (
-                    <StyledNewReplyPill
-                      type="button"
-                      onClick={onNewReplyClick}
-                      data-testid="new-reply-pill"
-                    >
-                      {NEW_REPLY_PILL_LABEL}
-                    </StyledNewReplyPill>
-                  )}
                   {showComposer && viewerPermissions && (
                     <ReplyComposer
                       key={discussion.id}

@@ -74,7 +74,6 @@ const permissions = (
 ): HelpGroupViewerPermissions => ({
   state: 'canWrite',
   charterAccepted: true,
-  showWelcomeInvite: false,
   ...props,
 });
 

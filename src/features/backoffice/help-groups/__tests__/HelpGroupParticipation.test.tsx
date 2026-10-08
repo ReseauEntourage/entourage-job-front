@@ -40,6 +40,13 @@ jest.mock('@/src/use-cases/help-groups', () => ({
     { isLoading: false },
   ],
   useSuggestHelpGroupTitleMutation: () => [mockSuggestTitle],
+  useGetHelpGroupMembersQuery: () => ({
+    data: { members: [], total: 0 },
+    currentData: { members: [], total: 0 },
+    isFetching: false,
+    isError: false,
+    refetch: jest.fn(),
+  }),
 }));
 jest.mock('@/src/use-cases/current-user', () => ({
   ...jest.requireActual('@/src/use-cases/current-user'),
@@ -83,7 +90,6 @@ const renderPage = (
       viewerPermissions: {
         state: 'canWrite',
         charterAccepted: true,
-        showWelcomeInvite: false,
         ...permissions,
       },
       ...groupProps,
@@ -267,7 +273,9 @@ describe('Help group participation', () => {
       expect(
         screen.getByTestId('write-invitation-elearning')
       ).toBeInTheDocument();
-      expect(header().queryByRole('button')).not.toBeInTheDocument();
+      expect(header().queryByTestId('help-group-adhesion')).toBeNull();
+      expect(header().queryByTestId('join-help-group')).toBeNull();
+      expect(header().queryByTestId('leave-help-group')).toBeNull();
     });
 
     it('offers « Quitter le groupe » in the header to a member, and no « Publier une discussion »', () => {
@@ -288,30 +296,39 @@ describe('Help group participation', () => {
     it('offers no adhesion action in the preview of an unpublished group', () => {
       renderPage({}, { isPublished: false });
       expect(header().getByText('Non publié')).toBeInTheDocument();
-      expect(header().queryByRole('button')).not.toBeInTheDocument();
+      expect(header().queryByTestId('help-group-adhesion')).toBeNull();
+      expect(header().queryByTestId('join-help-group')).toBeNull();
+      expect(header().queryByTestId('leave-help-group')).toBeNull();
     });
 
-    it('puts the information, the composer and the discussions on the left, « Le cadre » then the emails on the right', () => {
-      renderPage({ showWelcomeInvite: true });
+    it('puts the composer and the discussions on the left, « Les membres », « Le cadre » then the emails on the right', () => {
+      renderPage();
       const headerBlock = screen.getByTestId('help-group-header');
-      const welcome = screen.getByTestId('welcome-invite');
       const composerBar = screen.getByTestId('discussion-composer-bar');
       const discussions = screen.getByTestId('help-group-no-discussion');
+      const members = screen.getByTestId('help-group-members');
       const charter = screen.getByTestId('help-group-charter');
       const emails = screen.getByTestId('emails-setting');
-      [headerBlock, welcome, composerBar, discussions].reduce(
-        (previous, block) => {
-          expect(isBefore(previous, block)).toBe(true);
-          return block;
-        }
-      );
-      expect(isBefore(charter, emails)).toBe(true);
+      [headerBlock, composerBar, discussions].reduce((previous, block) => {
+        expect(isBefore(previous, block)).toBe(true);
+        return block;
+      });
+      [members, charter, emails].reduce((previous, block) => {
+        expect(isBefore(previous, block)).toBe(true);
+        return block;
+      });
       const aside = charter.closest('aside');
       expect(aside).not.toBeNull();
+      expect(aside).toContainElement(members);
       expect(aside).toContainElement(emails);
-      expect(aside).not.toContainElement(welcome);
       expect(aside).not.toContainElement(composerBar);
       expect(headerBlock).not.toContainElement(charter);
+    });
+
+    it('shows no invitation to introduce oneself to a new member', () => {
+      renderPage();
+      expect(screen.queryByText(/Bienvenue/)).not.toBeInTheDocument();
+      expect(screen.queryByText('Me présenter')).not.toBeInTheDocument();
     });
 
     describe('below the desktop breakpoint', () => {
@@ -339,7 +356,7 @@ describe('Help group participation', () => {
       });
 
       it('collapses « Le cadre » under the description, and chains the blocks in a single column', () => {
-        renderPage({ showWelcomeInvite: true });
+        renderPage();
         const headerBlock = screen.getByTestId('help-group-header');
         const charter = screen.getByTestId('help-group-charter');
         expect(charter.tagName).toBe('DETAILS');
@@ -354,7 +371,7 @@ describe('Help group participation', () => {
         expect(document.querySelector('aside')).toBeNull();
         const blocks = [
           headerBlock,
-          screen.getByTestId('welcome-invite'),
+          screen.getByTestId('help-group-members'),
           screen.getByTestId('discussion-composer-bar'),
           screen.getByTestId('help-group-no-discussion'),
           screen.getByTestId('emails-setting'),
@@ -364,25 +381,6 @@ describe('Help group participation', () => {
           return block;
         });
       });
-    });
-  });
-
-  describe('Welcome', () => {
-    it('invites a new member by their first name, and « Me présenter » opens the composer', () => {
-      renderPage({ showWelcomeInvite: true });
-      const invite = screen.getByTestId('welcome-invite');
-      expect(invite).toHaveTextContent('Bienvenue, Julien.');
-      expect(invite).toHaveTextContent(
-        'Présentez-vous en deux lignes : où vous en êtes, et ce qui vous amène ici.'
-      );
-      fireEvent.click(within(invite).getByText('Me présenter'));
-      expect(screen.getByTestId('discussion-composer')).toBeInTheDocument();
-      expect(screen.getByTestId('discussion-composer-message')).toHaveFocus();
-    });
-
-    it('does not invite when the back does not ask for it', () => {
-      renderPage({ showWelcomeInvite: false });
-      expect(screen.queryByTestId('welcome-invite')).not.toBeInTheDocument();
     });
   });
 
