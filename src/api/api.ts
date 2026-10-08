@@ -594,6 +594,10 @@ export class APIHandler {
     return this.post('/notifications/seen', params);
   }
 
+  postNotificationsSeenAll(): Promise<AxiosResponse> {
+    return this.post('/notifications/seen-all', {});
+  }
+
   /// //////////// ///
   /// help groups  ///
   /// //////////// ///

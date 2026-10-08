@@ -13,12 +13,17 @@ import {
 } from '../notifications-center.utils';
 
 const mockMarkSeen = jest.fn();
+const mockMarkAllSeen = jest.fn();
 const mockUseNotifications = jest.fn();
 
 jest.mock('@/src/use-cases/notifications-center', () => ({
   ...jest.requireActual('@/src/use-cases/notifications-center'),
   useGetNotificationsInfiniteQuery: () => mockUseNotifications(),
   useMarkNotificationsSeenMutation: () => [mockMarkSeen],
+  useMarkAllNotificationsSeenMutation: () => [
+    mockMarkAllSeen,
+    { isLoading: false },
+  ],
 }));
 
 const buildNotification = (
@@ -176,6 +181,25 @@ describe('NotificationsBell', () => {
     fireEvent.keyDown(document, { key: 'Escape' });
     expect(screen.queryByTestId('notifications-panel')).not.toBeInTheDocument();
     expect(mockMarkSeen).not.toHaveBeenCalled();
+  });
+
+  it('marks every notification seen at once from the panel, without confirmation', () => {
+    renderBell(2);
+    openBell();
+    fireEvent.click(screen.getByTestId('notifications-mark-all-seen'));
+    expect(mockMarkAllSeen).toHaveBeenCalledTimes(1);
+    // The panel stays open
+    expect(screen.getByTestId('notifications-panel')).toBeInTheDocument();
+  });
+
+  it('disables « Tout marquer comme lu » when nothing is unseen', () => {
+    renderBell(0);
+    openBell();
+    const button = screen.getByTestId('notifications-mark-all-seen');
+    expect(button).toBeDisabled();
+    expect(button).toHaveTextContent('Tout est lu');
+    fireEvent.click(button);
+    expect(mockMarkAllSeen).not.toHaveBeenCalled();
   });
 
   it('links to the full screen page on mobile', () => {

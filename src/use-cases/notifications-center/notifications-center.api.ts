@@ -70,11 +70,28 @@ export const notificationsCenterApi =
         },
         invalidatesTags: [NOTIFICATIONS_CENTER_TAG],
       }),
+
+      /**
+       * « Tout marquer comme lu » of the bell: every notification of the
+       * user, whatever the content displayed.
+       */
+      markAllNotificationsSeen: builder.mutation<void, void>({
+        queryFn: async () => {
+          try {
+            await Api.postNotificationsSeenAll();
+            return { data: undefined };
+          } catch {
+            return { error: NotificationsCenterError.MUTATION_FAILED };
+          }
+        },
+        invalidatesTags: [NOTIFICATIONS_CENTER_TAG],
+      }),
     }),
   });
 
 export const {
   useGetNotificationsInfiniteQuery,
   useGetNotificationsUnseenCountQuery,
+  useMarkAllNotificationsSeenMutation,
   useMarkNotificationsSeenMutation,
 } = notificationsCenterApi;

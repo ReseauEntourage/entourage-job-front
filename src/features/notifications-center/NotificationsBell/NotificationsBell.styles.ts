@@ -37,6 +37,14 @@ export const StyledNotificationsPanel = styled.div`
 `;
 
 export const StyledNotificationsPanelHeader = styled.div`
-  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 8px 8px 16px;
+  background-color: ${COLORS.white};
   border-bottom: 1px solid ${COLORS.gray};
 `;

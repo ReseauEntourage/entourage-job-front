@@ -45,4 +45,6 @@ export const NOTIFICATIONS_LABELS = {
   LOAD_MORE: 'Voir plus',
   LOAD_FAILED: 'Les notifications n’ont pas pu être chargées.',
   UNSEEN: 'Nouveau',
+  MARK_ALL_SEEN: 'Tout marquer comme lu',
+  ALL_SEEN: 'Tout est lu',
 };

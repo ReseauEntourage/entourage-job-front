@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ButtonIcon, Text } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
+import { MarkAllSeenButton } from '../MarkAllSeenButton';
 import { NotificationsList } from '../NotificationsList';
 import {
   formatUnseenBadge,
@@ -92,6 +93,7 @@ export const NotificationsBell = ({
             <Text size="large" weight="semibold">
               {NOTIFICATIONS_LABELS.TITLE}
             </Text>
+            <MarkAllSeenButton unseenCount={unseenCount} />
           </StyledNotificationsPanelHeader>
           <NotificationsList onSelect={() => setIsOpen(false)} />
         </StyledNotificationsPanel>
