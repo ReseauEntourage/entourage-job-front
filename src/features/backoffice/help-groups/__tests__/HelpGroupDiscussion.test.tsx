@@ -218,7 +218,7 @@ describe('HelpGroupDiscussionView layout', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('keeps the reply area in the sticky bottom area', () => {
+  it('places the reply area at the end of the thread', () => {
     renderWithProviders(
       <HelpGroupDiscussionView
         {...defaultProps}
@@ -229,11 +229,19 @@ describe('HelpGroupDiscussionView layout', () => {
     );
     const bottom = screen.getByTestId('discussion-bottom');
     expect(within(bottom).getByTestId('reply-composer')).toBeInTheDocument();
-    // The "new reply" pill follows the reply area
-    expect(within(bottom).getByTestId('new-reply-pill')).toBeInTheDocument();
+    // The "new reply" pill stays at the bottom of the viewport, apart from it
+    expect(
+      within(bottom).queryByTestId('new-reply-pill')
+    ).not.toBeInTheDocument();
+    expect(screen.getByTestId('new-reply-pill')).toBeInTheDocument();
+    // The reply area comes after the thread, in the page flow
+    expect(
+      screen.getByTestId('discussion-thread').compareDocumentPosition(bottom) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
   });
 
-  it('keeps the write invitation in the sticky bottom area', () => {
+  it('places the write invitation at the end of the thread', () => {
     renderWithProviders(
       <HelpGroupDiscussionView
         {...defaultProps}

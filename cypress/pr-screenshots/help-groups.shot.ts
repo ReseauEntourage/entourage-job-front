@@ -336,7 +336,7 @@ describe('Groupes', () => {
     cy.get('[data-highlighted="true"]').should('be.visible');
     cy.capture('Discussion', {
       caption:
-        'Fil intégré à la page, zone de réponse collée en bas de l’écran, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
+        'Fil intégré à la page, zone de réponse à la fin des réponses, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
     });
   });
 

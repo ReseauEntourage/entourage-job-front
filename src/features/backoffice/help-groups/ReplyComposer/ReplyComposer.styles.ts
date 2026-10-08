@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
 import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
-// Laid out in the sticky bottom area of the discussion, which carries the
-// top border and the shadow
+// Laid out in the bottom area of the discussion, which carries the top border
 export const StyledReplyComposer = styled.form`
   display: flex;
   flex-direction: column;

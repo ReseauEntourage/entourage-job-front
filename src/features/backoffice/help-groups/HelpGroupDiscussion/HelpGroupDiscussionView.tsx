@@ -203,17 +203,17 @@ export function HelpGroupDiscussionView({
                   {repliesError}
                 </StyledRepliesSection>
               </StyledThread>
-              {(hasNewReply || showComposer || showInvitation) && (
+              {hasNewReply && (
+                <StyledNewReplyPill
+                  type="button"
+                  onClick={onNewReplyClick}
+                  data-testid="new-reply-pill"
+                >
+                  {NEW_REPLY_PILL_LABEL}
+                </StyledNewReplyPill>
+              )}
+              {(showComposer || showInvitation) && (
                 <StyledThreadBottom data-testid="discussion-bottom">
-                  {hasNewReply && (
-                    <StyledNewReplyPill
-                      type="button"
-                      onClick={onNewReplyClick}
-                      data-testid="new-reply-pill"
-                    >
-                      {NEW_REPLY_PILL_LABEL}
-                    </StyledNewReplyPill>
-                  )}
                   {showComposer && viewerPermissions && (
                     <ReplyComposer
                       key={discussion.id}
