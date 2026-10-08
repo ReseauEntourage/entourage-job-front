@@ -53,8 +53,8 @@ interface ReplyComposerProps {
 }
 
 /**
- * Reply area stuck at the bottom of the discussion panel. A failed sending
- * keeps the text and shows an explicit error.
+ * Reply area stuck at the bottom of the viewport, under the discussion. A
+ * failed sending keeps the text and shows an explicit error.
  */
 export function ReplyComposer({
   slug,

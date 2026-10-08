@@ -5,9 +5,8 @@ export const StyledReportCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 12px;
+  padding-top: 16px;
+  border-top: 1px solid ${COLORS.extraLightGray};
 `;
 
 export const StyledReportCardHeader = styled.div`
@@ -21,5 +20,6 @@ export const StyledReportCardHeader = styled.div`
 export const StyledReportCardReason = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
 `;

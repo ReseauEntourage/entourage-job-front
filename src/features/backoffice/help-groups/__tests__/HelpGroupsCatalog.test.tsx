@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import expect from 'expect';
 import React from 'react';
 import { UserRoles } from '@/src/constants/users';
+import { ModalsListener } from '@/src/features/modals/Modal/openModal';
 import { HelpGroupsCatalog } from '../HelpGroupList';
 import { buildCard } from '../__fixtures__/help-groups.fixtures';
 
@@ -29,6 +30,11 @@ import { useGetHelpGroupsQuery } from '@/src/use-cases/help-groups';
 
 describe('HelpGroupsCatalog', () => {
   const replace = jest.fn();
+
+  // react-modal scrolls its content on open, which jsdom does not implement
+  beforeAll(() => {
+    Element.prototype.scrollTo = jest.fn();
+  });
 
   beforeEach(() => {
     replace.mockReset();
@@ -69,6 +75,49 @@ describe('HelpGroupsCatalog', () => {
     render(<HelpGroupsCatalog />);
     expect(replace).not.toHaveBeenCalled();
     expect(screen.getByTestId('loading-screen')).toBeInTheDocument();
+  });
+
+  it('introduces the groups, with a link to their frame', () => {
+    (useGetHelpGroupsQuery as jest.Mock).mockReturnValue({
+      data: [buildCard()],
+      isLoading: false,
+    });
+    render(<HelpGroupsCatalog />);
+    const intro = screen.getByTestId('help-groups-intro');
+    expect(intro).toHaveTextContent("Groupes d'entraide");
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+        name: 'Trouvez le groupe qui parle de votre situation',
+      })
+    ).toBeInTheDocument();
+    expect(intro).toHaveTextContent(
+      "Posez une question, partagez une situation, proposez votre aide. Candidats, coachs et prescripteurs s'y entraident d'égal à égal."
+    );
+    expect(screen.getByTestId('help-groups-charter-link')).toHaveTextContent(
+      'Lire le cadre des groupes'
+    );
+  });
+
+  it('opens the frame common to every group from the introduction', async () => {
+    (useGetHelpGroupsQuery as jest.Mock).mockReturnValue({
+      data: [buildCard()],
+      isLoading: false,
+    });
+    render(
+      <>
+        <HelpGroupsCatalog />
+        <ModalsListener />
+      </>
+    );
+    fireEvent.click(screen.getByTestId('help-groups-charter-link'));
+    const modal = await screen.findByTestId(
+      'help-groups-charter-modal',
+      {},
+      { timeout: 5000 }
+    );
+    expect(modal).toHaveTextContent('Ces règles valent pour tous les groupes.');
+    expect(modal.querySelectorAll('li')).toHaveLength(4);
   });
 
   it('lists the groups without redirecting when one is published', () => {

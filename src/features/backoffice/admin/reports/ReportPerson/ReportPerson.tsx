@@ -8,13 +8,19 @@ import { StyledReportPerson } from './ReportPerson.styles';
 interface ReportPersonProps {
   user: ReportUser;
   dataTestId?: string;
+  // Only the links, when the name is already shown next to them
+  linksOnly?: boolean;
 }
 
 /**
  * A person of a report, with a link to their admin page and a shortcut to
  * write to them. A deleted account has neither.
  */
-export function ReportPerson({ user, dataTestId }: ReportPersonProps) {
+export function ReportPerson({
+  user,
+  dataTestId,
+  linksOnly = false,
+}: ReportPersonProps) {
   if (!user) {
     return (
       <StyledReportPerson data-testid={dataTestId}>
@@ -24,9 +30,11 @@ export function ReportPerson({ user, dataTestId }: ReportPersonProps) {
   }
   return (
     <StyledReportPerson data-testid={dataTestId}>
-      <Text weight="semibold">
-        {user.firstName} {user.lastName}
-      </Text>
+      {!linksOnly && (
+        <Text weight="semibold">
+          {user.firstName} {user.lastName}
+        </Text>
+      )}
       <Button
         variant="text"
         size="small"

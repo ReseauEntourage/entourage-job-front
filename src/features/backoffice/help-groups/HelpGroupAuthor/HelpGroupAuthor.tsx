@@ -6,7 +6,7 @@ import {
   formatAuthorName,
   formatAuthorRoleLabel,
   formatHelpGroupDate,
-  getAuthorInitials,
+  getAuthorAvatarUser,
   getProfileHref,
 } from '../help-groups.labels';
 import {
@@ -36,12 +36,7 @@ export function HelpGroupAuthor({
 
   return (
     <StyledHelpGroupAuthor>
-      {withAvatar && (
-        <HelpGroupAvatar
-          userId={author.isDeleted ? null : author.id}
-          initials={getAuthorInitials(author)}
-        />
-      )}
+      {withAvatar && <HelpGroupAvatar user={getAuthorAvatarUser(author)} />}
       {isLinkable ? (
         <SimpleLink href={getProfileHref(author.id as string)}>
           <Text weight="semibold">{name}</Text>

@@ -1,10 +1,4 @@
-import { platform } from '@/src/utils/Device';
-import { HelpGroupAdminRowDesktop } from './HelpGroupAdminRow.desktop';
-import { HelpGroupAdminRowMobile } from './HelpGroupAdminRow.mobile';
-
-export const HelpGroupAdminRow = platform({
-  Desktop: HelpGroupAdminRowDesktop,
-  Mobile: HelpGroupAdminRowMobile,
-});
-
+export * from './HelpGroupAdminRow.desktop';
+export * from './HelpGroupAdminRow.mobile';
 export * from './HelpGroupAdminActions';
+export * from './HelpGroupPinToggle';

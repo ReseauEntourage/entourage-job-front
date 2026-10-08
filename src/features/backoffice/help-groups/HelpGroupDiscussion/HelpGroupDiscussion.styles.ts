@@ -1,5 +1,8 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS, SHADOWS } from '@/src/constants/styles';
+
+// Shadow of the cards of the help groups pages (no border with it)
+const MOBILE = `@media (max-width: ${BREAKPOINTS.desktop}px)`;
 
 export const StyledHelpGroupDiscussion = styled.div`
   display: flex;
@@ -11,9 +14,9 @@ export const StyledHelpGroupDiscussionColumns = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
   align-items: start;
-  gap: 24px;
+  gap: 32px;
 
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
+  ${MOBILE} {
     grid-template-columns: minmax(0, 1fr);
   }
 `;
@@ -21,74 +24,124 @@ export const StyledHelpGroupDiscussionColumns = styled.div`
 export const StyledHelpGroupDiscussionMain = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
   min-width: 0;
 `;
 
+// The discussion is part of the page flow: the page is the only scroll. No
+// `overflow` here, it would break the sticky reply area.
+export const StyledDiscussionPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: ${COLORS.white};
+  box-shadow: ${SHADOWS.card};
+`;
+
+export const StyledThread = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+// The original message: the card heading the discussion
 export const StyledOriginalMessage = styled.article`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 20px;
-  background-color: ${COLORS.white};
+  gap: 16px;
+  padding: 28px 32px 24px;
   overflow-wrap: anywhere;
+
+  ${MOBILE} {
+    gap: 12px;
+    padding: 20px 16px;
+  }
 `;
 
+export const StyledOriginalMessageBadges = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+export const StyledRepliesSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 32px 8px;
+  border-top: 1px solid ${COLORS.extraLightGray};
+
+  ${MOBILE} {
+    padding: 12px 16px 8px;
+  }
+`;
+
+// Replies: a plain list separated by dividers
 export const StyledReplies = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
 `;
 
 export const StyledReply = styled.article<{ $isHighlighted: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px 20px;
-  border: 1px solid
-    ${({ $isHighlighted }) =>
-      $isHighlighted ? COLORS.primaryBlue : COLORS.gray};
-  border-radius: 16px;
+  gap: 6px;
+  margin: 0 -16px;
+  padding: 20px 16px;
+  border-bottom: 1px solid ${COLORS.extraLightGray};
+  border-radius: ${({ $isHighlighted }) => ($isHighlighted ? '8px' : '0')};
   background-color: ${({ $isHighlighted }) =>
-    $isHighlighted ? COLORS.hoverBlue : COLORS.white};
+    $isHighlighted ? COLORS.hoverBlue : COLORS.transparent};
+  overflow-wrap: anywhere;
   scroll-margin-top: 120px;
   transition: background-color 0.6s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  ${MOBILE} {
+    padding: 16px;
+  }
 `;
 
-// Fixed height panel: the original message and the replies scroll together,
-// the reply area stays visible at the bottom, on desktop as on mobile
-export const StyledDiscussionPanel = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: calc(100dvh - ${HEIGHTS.HEADER}px - 140px);
-  min-height: 420px;
-  border: 1px solid ${COLORS.gray};
-  border-radius: 20px;
-  background-color: ${COLORS.extraExtraLightOrange};
-  overflow: hidden;
-`;
-
-export const StyledThread = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  overflow-y: auto;
-`;
-
+// Reply area (or the invitation replacing it) stuck at the bottom of the
+// viewport while the page scrolls. Being in the flow, it never covers the
+// last reply once the end of the thread is reached.
 export const StyledThreadBottom = styled.div`
   position: sticky;
   bottom: 0;
+  z-index: 20;
+  border-top: 1px solid ${COLORS.gray};
+  border-radius: 0 0 10px 10px;
+  background-color: ${COLORS.white};
+  box-shadow: ${SHADOWS.stickyBottom};
+
+  ${MOBILE} {
+    border-radius: 0;
+  }
 `;
 
+export const StyledWriteInvitationContainer = styled.div`
+  padding: 16px 32px 20px;
+
+  ${MOBILE} {
+    padding: 10px 12px 14px;
+  }
+`;
+
+// Bottom spacing of the page under the reply area
+export const StyledDiscussionEnd = styled.div`
+  height: 48px;
+
+  ${MOBILE} {
+    height: 0;
+  }
+`;
+
+// Above the reply area, following it while the page scrolls
 export const StyledNewReplyPill = styled.button`
   position: absolute;
   left: 50%;
-  bottom: 140px;
+  bottom: calc(100% + 12px);
   z-index: 2;
   padding: 6px 14px;
   border: none;
@@ -96,6 +149,7 @@ export const StyledNewReplyPill = styled.button`
   background-color: ${COLORS.primaryBlue};
   color: ${COLORS.white};
   font-weight: 600;
+  white-space: nowrap;
   transform: translateX(-50%);
   cursor: pointer;
 `;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReportDto } from '@/src/api/types';
+import { HelpGroupAuthor, ReportDto } from '@/src/api/types';
 import {
   REPORT_MODAL_TITLES,
   ReportModal,
@@ -9,21 +9,28 @@ import {
   HelpGroupsReportError,
   useReportHelpGroupMessageMutation,
 } from '@/src/use-cases/help-groups';
+import { formatAuthorName } from '../help-groups.labels';
 
 interface HelpGroupReportModalProps {
   slug: string;
   discussionId: string;
   // Absent for the original message of the discussion
   replyId?: string;
+  // The reported message, recalled in the modal
+  author: Pick<HelpGroupAuthor, 'isDeleted' | 'firstName' | 'lastNameInitial'>;
+  content: string;
 }
 
 /**
- * Report of a help group message, through the shared report modal.
+ * Report of a help group message, through the shared report modal, which
+ * recalls its author and the beginning of its content.
  */
 export function HelpGroupReportModal({
   slug,
   discussionId,
   replyId,
+  author,
+  content,
 }: HelpGroupReportModalProps) {
   const [report] = useReportHelpGroupMessageMutation();
 
@@ -45,6 +52,7 @@ export function HelpGroupReportModal({
     <ReportModal
       title={REPORT_MODAL_TITLES.message}
       onSubmit={onSubmit}
+      excerpt={{ authorName: formatAuthorName(author), content }}
       dataTestId="help-group-report-modal"
     />
   );

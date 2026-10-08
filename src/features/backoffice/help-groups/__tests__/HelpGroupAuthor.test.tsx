@@ -20,7 +20,7 @@ describe('HelpGroupAuthor', () => {
       '/backoffice/profile/author-1'
     );
     expect(screen.getByText('Coach')).toBeInTheDocument();
-    expect(screen.getByText('AL')).toBeInTheDocument();
+    expect(screen.getByTestId('help-group-avatar')).toHaveTextContent(/^A$/);
   });
 
   it('shows the « Équipe Entourage » label of an admin', () => {
@@ -90,8 +90,7 @@ describe('AuthorCard', () => {
       />
     );
     expect(screen.getByText('Amina L.')).toBeInTheDocument();
-    expect(screen.getByText('Candidat')).toBeInTheDocument();
-    expect(screen.getByText('Paris (75)')).toBeInTheDocument();
+    expect(screen.getByText('Candidat · Paris (75)')).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'Voir son profil' })
     ).toHaveAttribute('href', '/backoffice/profile/author-1');

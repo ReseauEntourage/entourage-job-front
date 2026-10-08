@@ -5,6 +5,9 @@ export const REPORT_MODAL_LABELS = {
   reasonLabel: 'Motif',
   reasonRequired: 'Choisissez un motif.',
   commentLabel: 'Commentaire (facultatif)',
+  // Accessible name of the recalled message
+  excerptLabel: 'Message signalé',
+  formatExcerpt: (content: string) => `«\u00a0${content}\u00a0»`,
   // The number is rendered as a call link between the two parts
   helpBefore: 'Vous, ou la personne concernée, allez mal ? Le ',
   helpNumber: '3114',

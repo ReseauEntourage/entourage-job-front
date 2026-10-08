@@ -10,6 +10,7 @@ import { ModalContext } from '@/src/features/modals/Modal/ModalContext';
 import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
 import { ReportModal } from '../ReportModal';
 import { ReportSubmitResult } from '../ReportModal.types';
+import { truncateExcerpt } from '../ReportModal.utils';
 
 jest.mock('@/src/api');
 jest.mock('@/src/hooks/useCurrentUserStaffContact', () => ({
@@ -87,6 +88,21 @@ describe('ReportModal', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  it('brings the error into view, below the help box of the bottom sheet', async () => {
+    const scrollIntoView = jest.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
+    onSubmit.mockResolvedValue(ReportSubmitResult.ALREADY_REPORTED);
+    renderInModal(
+      <ReportModal title="Signaler ce profil" onSubmit={onSubmit} />
+    );
+
+    fireEvent.click(screen.getByLabelText('Spam'));
+    fireEvent.click(screen.getByTestId('report-confirm'));
+
+    await screen.findByTestId('report-error');
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' });
+  });
+
   it('sends the trimmed comment', async () => {
     onSubmit.mockResolvedValue(ReportSubmitResult.SENT);
     renderInModal(
@@ -120,6 +136,55 @@ describe('ReportModal', () => {
     ).toHaveLength(1000);
   });
 
+  describe('Excerpt of the reported message', () => {
+    it('recalls the author and the content above the motives', () => {
+      renderInModal(
+        <ReportModal
+          title="Signaler ce message"
+          onSubmit={onSubmit}
+          excerpt={{ authorName: 'Malik R.', content: 'Pareil pour moi !' }}
+        />
+      );
+      const excerpt = screen.getByTestId('report-excerpt');
+      expect(excerpt).toHaveTextContent('Malik R. · « Pareil pour moi ! »');
+      expect(
+        excerpt.compareDocumentPosition(screen.getByLabelText('Spam')) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+    });
+
+    it('shows a long message cut with an ellipsis, as plain text', () => {
+      const content = `<b>Bonjour</b>\n${'mot '.repeat(60)}fin`;
+      renderInModal(
+        <ReportModal
+          title="Signaler ce message"
+          onSubmit={onSubmit}
+          excerpt={{ authorName: 'Malik R.', content }}
+        />
+      );
+      const text = screen.getByTestId('report-excerpt').textContent || '';
+      expect(text).toContain('<b>Bonjour</b> mot mot');
+      expect(text).toContain('…');
+      expect(text).not.toContain('fin');
+    });
+
+    it('shows no excerpt without one', () => {
+      renderInModal(
+        <ReportModal title="Signaler ce profil" onSubmit={onSubmit} />
+      );
+      expect(screen.queryByTestId('report-excerpt')).not.toBeInTheDocument();
+    });
+
+    it('cuts at a word boundary, about 120 characters', () => {
+      expect(truncateExcerpt('Un message court')).toBe('Un message court');
+      expect(truncateExcerpt('  deux\n\nlignes  ')).toBe('deux lignes');
+      const cut = truncateExcerpt('abcde '.repeat(40));
+      expect(cut.endsWith('abcde…')).toBe(true);
+      expect(cut.length).toBeLessThanOrEqual(121);
+      expect(truncateExcerpt('x'.repeat(200))).toBe(`${'x'.repeat(120)}…`);
+    });
+  });
+
   describe('Contexts', () => {
     it('reports a conversation with its own title and the help box, the comment pre-filled from a suspicious message', async () => {
       mockedApi.reportMessage.mockResolvedValue({
@@ -137,6 +202,7 @@ describe('ReportModal', () => {
       ).toBeInTheDocument();
       expect(screen.getByTestId('report-help').textContent).toBe(HELP_TEXT);
       expect(screen.getByRole('textbox')).toHaveValue('Message suspect');
+      expect(screen.queryByTestId('report-excerpt')).not.toBeInTheDocument();
 
       fireEvent.click(screen.getByLabelText('Mise en danger'));
       fireEvent.click(screen.getByTestId('report-confirm'));
@@ -156,6 +222,7 @@ describe('ReportModal', () => {
       renderInModal(<ProfileReportUserModal userId="user-1" />);
 
       expect(screen.getByText('Signaler ce profil')).toBeInTheDocument();
+      expect(screen.queryByTestId('report-excerpt')).not.toBeInTheDocument();
       expect(screen.getByTestId('report-help').textContent).toBe(HELP_TEXT);
       expect(screen.getByRole('link', { name: '3114' })).toHaveAttribute(
         'href',

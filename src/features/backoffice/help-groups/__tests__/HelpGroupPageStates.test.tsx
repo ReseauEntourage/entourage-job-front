@@ -15,6 +15,11 @@ jest.mock('@/src/use-cases/help-groups', () => ({
 jest.mock('@/src/features/backoffice/LoadingScreen', () => ({
   LoadingScreen: () => <div data-testid="loading-screen" />,
 }));
+// jsdom has no layout: « Le cadre » is checked in the desktop column
+jest.mock('@react-hook/window-size', () => ({
+  ...jest.requireActual('@react-hook/window-size'),
+  useWindowWidth: () => 1440,
+}));
 
 // eslint-disable-next-line import-x/order
 import {

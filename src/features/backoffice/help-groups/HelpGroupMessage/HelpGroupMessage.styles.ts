@@ -15,6 +15,36 @@ export const StyledMessageMeta = styled.div`
   gap: 8px;
 `;
 
+// Location and profile link of the author in the header of the original
+// message, below the desktop breakpoint: on their own line
+export const StyledAuthorDetails = styled.div`
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+
+  /* Keep each separator on the same line as its item, even when the item wraps a block Text */
+  & > * {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  & > * > * {
+    margin: 0;
+  }
+
+  & > * + *::before {
+    content: '·';
+    margin-right: 8px;
+    color: ${COLORS.darkGray};
+  }
+
+  a {
+    text-decoration: none;
+  }
+`;
+
 export const StyledMessageFooter = styled.div`
   display: flex;
   flex-wrap: wrap;

@@ -1,44 +1,59 @@
 import React from 'react';
-import { SimpleLink, Text } from '@/src/components/ui';
-import { TdDesktop, TrDesktop } from '@/src/components/ui/Table';
+import { Text } from '@/src/components/ui';
 import { ReportTargetStatusTag } from '../ReportTargetStatusTag';
 import {
   formatReportDate,
-  formatReportReason,
   formatReportZone,
   REPORT_TARGET_TYPE_LABELS,
+  REPORT_TARGET_TYPE_SHORT_LABELS,
+  REPORTS_TAB_LABELS,
 } from '../reports.labels';
 import { getReportTargetHref } from '../reports.utils';
+import { ReportTargetReasons } from './ReportTargetReasons';
+import {
+  StyledReportTargetCard,
+  StyledReportTargetLabel,
+  StyledReportTargetLast,
+  StyledReportTargetMain,
+  StyledReportTargetStatus,
+  StyledReportTargetTypeIcon,
+} from './ReportTargetRow.styles';
 import { ReportTargetRowProps } from './ReportTargetRow.types';
 
 export function ReportTargetRowDesktop({ target }: ReportTargetRowProps) {
+  const zones = target.zones.map(formatReportZone).join(', ');
   return (
-    <TrDesktop>
-      <TdDesktop>
-        <Text>{REPORT_TARGET_TYPE_LABELS[target.targetType]}</Text>
-      </TdDesktop>
-      <TdDesktop>
-        <SimpleLink
-          href={getReportTargetHref(target.targetType, target.targetId)}
-        >
-          <Text weight="semibold">{target.label}</Text>
-        </SimpleLink>
-      </TdDesktop>
-      <TdDesktop>
-        <Text>{target.zones.map(formatReportZone).join(', ') || '-'}</Text>
-      </TdDesktop>
-      <TdDesktop>
-        <Text>{target.pendingCount}</Text>
-      </TdDesktop>
-      <TdDesktop>
-        <Text>{target.reasons.map(formatReportReason).join(', ')}</Text>
-      </TdDesktop>
-      <TdDesktop>
+    <StyledReportTargetCard
+      href={getReportTargetHref(target.targetType, target.targetId)}
+    >
+      <StyledReportTargetTypeIcon $targetType={target.targetType} aria-hidden>
+        {REPORT_TARGET_TYPE_SHORT_LABELS[target.targetType]}
+      </StyledReportTargetTypeIcon>
+      <StyledReportTargetMain>
+        <Text size="small" color="darkGray">
+          {[REPORT_TARGET_TYPE_LABELS[target.targetType], zones]
+            .filter(Boolean)
+            .join(' · ')}
+        </Text>
+        <StyledReportTargetLabel>
+          <Text weight="semibold" size="large">
+            {target.label}
+          </Text>
+        </StyledReportTargetLabel>
+        <ReportTargetReasons reasons={target.reasons} />
+      </StyledReportTargetMain>
+      <StyledReportTargetLast>
+        <Text size="small" color="darkGray">
+          {REPORTS_TAB_LABELS.lastReport}
+        </Text>
         <Text>{formatReportDate(target.lastReportedAt)}</Text>
-      </TdDesktop>
-      <TdDesktop>
-        <ReportTargetStatusTag status={target.status} />
-      </TdDesktop>
-    </TrDesktop>
+      </StyledReportTargetLast>
+      <StyledReportTargetStatus>
+        <ReportTargetStatusTag
+          status={target.status}
+          pendingCount={target.pendingCount}
+        />
+      </StyledReportTargetStatus>
+    </StyledReportTargetCard>
   );
 }

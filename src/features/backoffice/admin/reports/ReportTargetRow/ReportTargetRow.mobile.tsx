@@ -1,51 +1,49 @@
 import React from 'react';
-import { SimpleLink, Text } from '@/src/components/ui';
-import { TdMobile, TrMobile } from '@/src/components/ui/Table';
+import { Text } from '@/src/components/ui';
 import { ReportTargetStatusTag } from '../ReportTargetStatusTag';
 import {
   formatReportDate,
-  formatReportReason,
   formatReportZone,
   REPORT_TARGET_TYPE_LABELS,
+  REPORTS_TAB_LABELS,
 } from '../reports.labels';
 import { getReportTargetHref } from '../reports.utils';
-import { StyledReportTargetMobileLine } from './ReportTargetRow.styles';
+import { ReportTargetReasons } from './ReportTargetReasons';
+import {
+  StyledReportTargetCard,
+  StyledReportTargetMobileHeader,
+  StyledReportTargetTypeTag,
+} from './ReportTargetRow.styles';
 import { ReportTargetRowProps } from './ReportTargetRow.types';
 
 export function ReportTargetRowMobile({ target }: ReportTargetRowProps) {
+  const zones = target.zones.map(formatReportZone).join(', ');
   return (
-    <TrMobile>
-      <StyledReportTargetMobileLine className="line">
-        <TdMobile>
-          <SimpleLink
-            href={getReportTargetHref(target.targetType, target.targetId)}
-          >
-            <Text weight="semibold">{target.label}</Text>
-          </SimpleLink>
-          <ReportTargetStatusTag status={target.status} />
-        </TdMobile>
-      </StyledReportTargetMobileLine>
-      <StyledReportTargetMobileLine className="line">
-        <TdMobile title="Type">
-          <Text>{REPORT_TARGET_TYPE_LABELS[target.targetType]}</Text>
-        </TdMobile>
-        <TdMobile title="Zone">
-          <Text>{target.zones.map(formatReportZone).join(', ') || '-'}</Text>
-        </TdMobile>
-      </StyledReportTargetMobileLine>
-      <StyledReportTargetMobileLine className="line">
-        <TdMobile title="À traiter">
-          <Text>{target.pendingCount}</Text>
-        </TdMobile>
-        <TdMobile title="Dernier signalement">
-          <Text>{formatReportDate(target.lastReportedAt)}</Text>
-        </TdMobile>
-      </StyledReportTargetMobileLine>
-      <StyledReportTargetMobileLine className="line">
-        <TdMobile title="Motifs">
-          <Text>{target.reasons.map(formatReportReason).join(', ')}</Text>
-        </TdMobile>
-      </StyledReportTargetMobileLine>
-    </TrMobile>
+    <StyledReportTargetCard
+      $isMobile
+      href={getReportTargetHref(target.targetType, target.targetId)}
+    >
+      <StyledReportTargetMobileHeader>
+        <StyledReportTargetTypeTag $targetType={target.targetType}>
+          {REPORT_TARGET_TYPE_LABELS[target.targetType]}
+        </StyledReportTargetTypeTag>
+        <ReportTargetStatusTag
+          status={target.status}
+          pendingCount={target.pendingCount}
+        />
+      </StyledReportTargetMobileHeader>
+      <Text weight="semibold">{target.label}</Text>
+      <ReportTargetReasons reasons={target.reasons} />
+      <Text size="small" color="darkGray">
+        {[
+          zones,
+          `${REPORTS_TAB_LABELS.lastReport.toLowerCase()} ${formatReportDate(
+            target.lastReportedAt
+          )}`,
+        ]
+          .filter(Boolean)
+          .join(' · ')}
+      </Text>
+    </StyledReportTargetCard>
   );
 }

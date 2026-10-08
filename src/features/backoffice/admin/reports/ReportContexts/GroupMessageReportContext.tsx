@@ -1,17 +1,21 @@
 import React from 'react';
 import { ReportTargetContext } from '@/src/api/types';
-import { Button, Text } from '@/src/components/ui';
+import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { H5 } from '@/src/components/ui/Headings';
+import { HelpGroupAvatar } from '@/src/features/backoffice/help-groups/HelpGroupAvatar';
+import { formatHelpGroupDateTime } from '@/src/features/backoffice/help-groups/help-groups.labels';
 import { ReportPerson } from '../ReportPerson';
 import {
-  GROUP_MESSAGE_STATE_LABELS,
+  formatReportZone,
+  GROUP_MESSAGE_STATE_BANNERS,
   REPORTS_TAB_LABELS,
 } from '../reports.labels';
 import { getGroupMessageHref } from '../reports.utils';
 import {
   StyledReportContext,
-  StyledReportContextBlock,
-  StyledReportQuote,
+  StyledReportGroupMessage,
+  StyledReportGroupMessageBody,
+  StyledReportLinks,
   StyledReportState,
 } from './ReportContexts.styles';
 
@@ -20,9 +24,15 @@ type GroupMessageContext = Extract<
   { targetType: 'POST' | 'POST_REPLY' }
 >;
 
+const STATE_ICONS = {
+  HIDDEN: 'EyeOff',
+  VISIBLE: 'Eye',
+  DELETED: 'Trash2',
+} as const;
+
 /**
- * The group, the message (even hidden or deleted), its state and a link to
- * it in its thread, where it is restored or deleted.
+ * The reported message (even hidden or deleted) with its state, its group,
+ * its author and a link to it in its thread.
  */
 export function GroupMessageReportContext({
   context,
@@ -30,33 +40,49 @@ export function GroupMessageReportContext({
   context: GroupMessageContext;
 }) {
   const { group, message } = context;
+  const author = message?.author;
   return (
     <StyledReportContext data-testid="report-context-group-message">
-      <StyledReportContextBlock>
-        <H5 title={REPORTS_TAB_LABELS.group} />
-        <Text weight="semibold">
-          {group?.name ?? REPORTS_TAB_LABELS.deletedGroup}
-        </Text>
-      </StyledReportContextBlock>
+      {message && (
+        <StyledReportState
+          $state={message.state}
+          data-testid="report-group-message-state"
+        >
+          <LucidIcon name={STATE_ICONS[message.state]} size={16} />
+          {GROUP_MESSAGE_STATE_BANNERS[message.state]}
+        </StyledReportState>
+      )}
+      <H5 title={REPORTS_TAB_LABELS.reportedMessage} />
+      <Text size="small" color="darkGray">
+        {`${REPORTS_TAB_LABELS.group} : ${
+          group?.name ?? REPORTS_TAB_LABELS.deletedGroup
+        }`}
+      </Text>
       {message ? (
         <>
-          <StyledReportContextBlock>
-            <H5 title={REPORTS_TAB_LABELS.author} />
-            <ReportPerson user={message.author} />
-          </StyledReportContextBlock>
-          <StyledReportContextBlock>
-            <StyledReportState data-testid="report-group-message-state">
-              <Text weight="semibold">
-                {`État : ${GROUP_MESSAGE_STATE_LABELS[message.state]}`}
+          <StyledReportGroupMessage>
+            <HelpGroupAvatar user={author ?? null} size={36} />
+            <StyledReportGroupMessageBody>
+              <Text size="small" color="darkGray">
+                {[
+                  author
+                    ? `${author.firstName} ${author.lastName}`
+                    : REPORTS_TAB_LABELS.deletedUser,
+                  author?.role,
+                  author?.zone ? formatReportZone(author.zone) : null,
+                  formatHelpGroupDateTime(message.createdAt),
+                ]
+                  .filter(Boolean)
+                  .join(' · ')}
               </Text>
-            </StyledReportState>
-            <StyledReportQuote>
               {message.title && <Text weight="semibold">{message.title}</Text>}
               <Text>{message.content}</Text>
-            </StyledReportQuote>
+            </StyledReportGroupMessageBody>
+          </StyledReportGroupMessage>
+          <StyledReportLinks>
             {group && message.state !== 'DELETED' && (
               <Button
-                variant="secondary"
+                variant="text"
                 size="small"
                 href={getGroupMessageHref({
                   slug: group.slug,
@@ -68,10 +94,8 @@ export function GroupMessageReportContext({
                 {REPORTS_TAB_LABELS.seeMessage}
               </Button>
             )}
-            <Text size="small" variant="italic">
-              {REPORTS_TAB_LABELS.groupMessageHandling}
-            </Text>
-          </StyledReportContextBlock>
+            {author && <ReportPerson user={author} linksOnly />}
+          </StyledReportLinks>
         </>
       ) : (
         <Text variant="italic">{REPORTS_TAB_LABELS.missingMessage}</Text>

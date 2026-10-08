@@ -1,12 +1,15 @@
 import React from 'react';
-import { Text } from '@/src/components/ui';
+import { Button, Text } from '@/src/components/ui';
 import {
   formatFirstResponderInvite,
-  formatWelcomeInvite,
+  formatWelcomeInviteTitle,
+  WELCOME_INVITE_BUTTON_LABEL,
+  WELCOME_INVITE_TEXT,
 } from '../help-groups-participation.labels';
 import {
   StyledFirstResponderInvite,
   StyledWelcomeInvite,
+  StyledWelcomeInviteText,
 } from './WelcomeInvite.styles';
 
 interface WelcomeInviteProps {
@@ -16,16 +19,28 @@ interface WelcomeInviteProps {
 
 /**
  * Invitation of a new member (less than 7 days, nothing published in the
- * group since joining, computed by the back) to introduce themselves.
+ * group since joining, computed by the back) to introduce themselves:
+ * « Me présenter » opens the composer.
  */
 export function WelcomeInvite({ firstName, onClick }: WelcomeInviteProps) {
   return (
     <StyledWelcomeInvite
-      type="button"
-      onClick={onClick}
+      aria-label={WELCOME_INVITE_BUTTON_LABEL}
       data-testid="welcome-invite"
     >
-      <Text weight="semibold">{formatWelcomeInvite(firstName)}</Text>
+      <StyledWelcomeInviteText>
+        <Text size="large" weight="semibold">
+          {formatWelcomeInviteTitle(firstName)}
+        </Text>
+        <Text color="darkGray">{WELCOME_INVITE_TEXT}</Text>
+      </StyledWelcomeInviteText>
+      <Button
+        variant="secondary"
+        onClick={onClick}
+        dataTestId="welcome-invite-button"
+      >
+        {WELCOME_INVITE_BUTTON_LABEL}
+      </Button>
     </StyledWelcomeInvite>
   );
 }

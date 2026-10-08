@@ -315,17 +315,17 @@ describe('Groupes', () => {
     cy.get('[data-testid="help-group-card"]').should('have.length', 3);
     cy.capture('Liste des groupes', {
       caption:
-        'Groupe épinglé en tête, mention « Vous êtes membre », invitation à la place de « 0 membre ».',
+        'Introduction et lien vers le cadre, pastilles « À la une » et « Vous êtes membre », invitation à la place de « 0 membre ».',
     });
 
     cy.visit('/backoffice/groupes/refaire-un-cv');
     cy.wait('@getHelpGroup');
     cy.wait('@getDiscussions');
     cy.get('[data-testid="discussion-row"]').should('have.length', 3);
-    cy.get('[data-testid="help-group-about"]').should('be.visible');
+    cy.get('[data-testid="help-group-header"]').should('be.visible');
     cy.capture('Page d’un groupe', {
       caption:
-        'Membre : en-tête (fil d’Ariane, nom, membres, invitation à se présenter) et discussions à gauche ; « À propos de ce groupe » (« Publier une discussion », « Quitter le groupe ») et « Le cadre » à droite. Une seule colonne sur mobile.',
+        'Membre : en-tête pleine largeur (fil d’Ariane, nom, « Vous êtes membre », membres, description, « Quitter le groupe ») ; invitation à se présenter, barre de rédaction et discussions à gauche ; « Le cadre » et « Emails de ce groupe » à droite. Sur mobile, une seule colonne, « Le cadre » replié et « Quitter le groupe » dans le menu « ⋯ ».',
     });
 
     cy.visit(
@@ -336,7 +336,7 @@ describe('Groupes', () => {
     cy.get('[data-highlighted="true"]').should('be.visible');
     cy.capture('Discussion', {
       caption:
-        'Panneau à hauteur fixe, zone de réponse collée en bas, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
+        'Fil intégré à la page, zone de réponse collée en bas de l’écran, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
     });
   });
 
@@ -379,10 +379,12 @@ describe('Groupes', () => {
       )
       .blur();
     cy.wait('@suggestTitle');
-    cy.contains('Proposé pour vous, modifiable').should('be.visible');
+    cy.contains("Proposé par l'IA. Vérifiez, ajustez sa proposition.").should(
+      'be.visible'
+    );
     cy.capture('Rédaction d’une discussion', {
       caption:
-        'Rédaction en place, message avant le titre, titre proposé modifiable, « Proposer un autre titre » et « Écrire le mien ».',
+        'Rédaction en place, ouverte depuis la barre avec l’avatar, message avant le titre, titre proposé par l’IA, « Proposer un autre titre » et « Écrire le mien ».',
     });
 
     cy.get('[data-testid="discussion-composer-publish"]').click();
@@ -403,7 +405,7 @@ describe('Groupes', () => {
     cy.get('[data-testid="write-invitation-join"]').should('be.visible');
     cy.capture('Invitation à rejoindre', {
       caption:
-        'Un non-membre lit librement : l’invitation dans l’en-tête, « Rejoindre le groupe » dans « À propos de ce groupe ».',
+        'Un non-membre lit librement : l’invitation en tête de la colonne principale, « Rejoindre le groupe » dans l’en-tête du groupe.',
     });
 
     interceptGroupReads({ state: 'mustCompleteElearning' });
@@ -412,7 +414,7 @@ describe('Groupes', () => {
     cy.get('[data-testid="write-invitation-elearning"]').should('be.visible');
     cy.capture('Page d’un groupe, formation à terminer', {
       caption:
-        'E-learning non terminé : invitation vers la page Formations dans l’en-tête, aucune action dans « À propos de ce groupe ».',
+        'E-learning non terminé : invitation vers la page Formations en tête de la colonne principale, aucune action d’adhésion dans l’en-tête.',
     });
 
     cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
@@ -567,7 +569,7 @@ describe('Groupes', () => {
     cy.get('[data-testid="help-group-admin-list"]').should('be.visible');
     cy.capture('Administration des groupes', {
       caption:
-        'États, épinglage, compteurs, « jamais » pour un groupe sans activité, actions selon l’état.',
+        'Onglets Groupes / Supprimés, bascule « À la une » (désactivée sur un groupe non publié), compteurs, « jamais » pour un groupe sans activité, une action principale et un menu « ⋯ ».',
     });
 
     cy.contains('button', 'Créer un groupe').click();
@@ -578,6 +580,13 @@ describe('Groupes', () => {
     });
     cy.contains('button', 'Annuler').click();
 
+    cy.get('[data-testid="help-group-menu-group-news"]').click();
+    cy.get('[data-testid="help-group-delete-group-news"]').should('be.visible');
+    cy.capture('Menu « ⋯ » d’un groupe', {
+      caption:
+        'Prévisualiser, Modifier, puis « Supprimer le groupe » à part, en orange.',
+      capture: 'viewport',
+    });
     cy.get('[data-testid="help-group-delete-group-news"]').click();
     cy.get('[data-testid="delete-help-group-name"]').type('Bonnes nouv');
     cy.capture('Suppression d’un groupe', {

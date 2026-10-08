@@ -5,3 +5,9 @@ export const StyledReportLoadMore = styled.div`
   justify-content: center;
   margin-top: 24px;
 `;
+
+export const StyledReportTargetCards = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;

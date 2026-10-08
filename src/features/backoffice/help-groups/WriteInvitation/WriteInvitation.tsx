@@ -14,7 +14,7 @@ interface WriteInvitationProps {
   slug: string;
   state: Exclude<HelpGroupViewerState, 'canWrite'>;
   onJoined?: () => void;
-  // On the group page, the join button lives in « À propos de ce groupe »
+  // On the group page, the join button lives in the group header
   withJoinButton?: boolean;
 }
 
