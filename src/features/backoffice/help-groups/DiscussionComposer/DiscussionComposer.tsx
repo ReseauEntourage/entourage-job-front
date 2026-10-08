@@ -10,6 +10,7 @@ import {
 import { H5 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
 import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
+import { useIsDesktop } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserProfile,
@@ -125,6 +126,7 @@ export function DiscussionComposer({
   openSignal = 0,
 }: DiscussionComposerProps) {
   const dispatch = useDispatch();
+  const isDesktop = useIsDesktop();
   const currentUser = useSelector(selectCurrentUser);
   const hasPicture = useSelector(selectCurrentUserProfile)?.hasPicture ?? false;
   const userId = currentUser?.id;
@@ -393,7 +395,9 @@ export function DiscussionComposer({
           </Text>
         </StyledComposerVisibility>
         <Button
-          variant="text"
+          // Below the desktop breakpoint the actions share a full-width row:
+          // a bordered button keeps « Annuler » readable as a button there
+          variant={isDesktop ? 'text' : 'default'}
           onClick={close}
           dataTestId="discussion-composer-cancel"
         >

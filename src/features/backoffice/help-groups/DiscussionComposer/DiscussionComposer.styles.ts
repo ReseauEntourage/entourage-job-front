@@ -107,6 +107,19 @@ export const StyledComposerActions = styled.div`
   gap: 12px;
   padding-top: 16px;
   border-top: 1px solid ${COLORS.extraLightGray};
+
+  /* Mobile: the visibility mention on its own line, then « Annuler » and
+     « Publier » side by side across the full width */
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    > button {
+      flex: 1 1 0;
+      justify-content: center;
+    }
+
+    > button:last-child {
+      flex-grow: 2;
+    }
+  }
 `;
 
 export const StyledComposerVisibility = styled.div`
@@ -115,4 +128,8 @@ export const StyledComposerVisibility = styled.div`
   align-items: center;
   gap: 6px;
   color: ${COLORS.darkGray};
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex-basis: 100%;
+  }
 `;
