@@ -67,7 +67,6 @@ const mockedApi = getMockedApi();
 const canWrite: HelpGroupViewerPermissions = {
   state: 'canWrite',
   charterAccepted: true,
-  showWelcomeInvite: false,
 };
 
 const defaultProps = {
@@ -82,7 +81,7 @@ describe('HelpGroupDiscussionView', () => {
     mockIsDesktop = true;
   });
 
-  it('shows the breadcrumb, the original message and its author card', () => {
+  it('shows the back link to the group, the original message and its author card', () => {
     renderWithProviders(
       <HelpGroupDiscussionView
         {...defaultProps}
@@ -91,14 +90,16 @@ describe('HelpGroupDiscussionView', () => {
         })}
       />
     );
-    expect(screen.getByRole('link', { name: 'Groupes' })).toHaveAttribute(
-      'href',
-      '/backoffice/groupes'
+    // One back link to the group, without the discussion title
+    const backLink = screen.getByTestId('help-group-back-link');
+    expect(within(backLink).getAllByRole('link')).toHaveLength(1);
+    expect(
+      within(backLink).getByRole('link', { name: 'Refaire un CV' })
+    ).toHaveAttribute('href', '/backoffice/groupes/refaire-un-cv');
+    expect(backLink).not.toHaveTextContent(
+      'Comment présenter un trou dans mon CV ?'
     );
-    expect(screen.getByRole('link', { name: 'Refaire un CV' })).toHaveAttribute(
-      'href',
-      '/backoffice/groupes/refaire-un-cv'
-    );
+    expect(screen.queryByRole('link', { name: 'Groupes' })).toBeNull();
     expect(screen.getByTestId('original-message')).toHaveTextContent(
       'Bonjour à tous'
     );
@@ -500,7 +501,7 @@ describe('HelpGroupDiscussion page scroll', () => {
     expect(screen.queryByTestId('new-reply-pill')).not.toBeInTheDocument();
   });
 
-  it('scrolls to one own published reply, above the sticky reply area', async () => {
+  it('scrolls to one own published reply', async () => {
     mockedApi.postHelpGroupReply.mockResolvedValue({
       data: buildReply({ id: 'reply-mine', content: 'Ma réponse' }),
     } as never);
@@ -508,12 +509,18 @@ describe('HelpGroupDiscussion page scroll', () => {
     expect(await screen.findByText('Première')).toBeInTheDocument();
     setPageScroll(200);
 
-    fireEvent.change(await screen.findByTestId('reply-composer-content'), {
+    fireEvent.click(await screen.findByTestId('reply-composer-bar'));
+    fireEvent.change(screen.getByTestId('reply-composer-content'), {
       target: { value: 'Ma réponse' },
     });
     fireEvent.click(screen.getByTestId('reply-composer-send'));
 
-    expect(await screen.findByText('Ma réponse')).toBeInTheDocument();
+    // The published reply, not the text of the reply field
+    expect(
+      await screen.findByText('Ma réponse', {
+        ignore: 'script, style, textarea',
+      })
+    ).toBeInTheDocument();
     await waitFor(() =>
       expect(scrollIntoView).toHaveBeenCalledWith({ block: 'center' })
     );

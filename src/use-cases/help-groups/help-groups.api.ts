@@ -16,11 +16,13 @@ import {
   HelpGroupDiscussionItem,
   HelpGroupDiscussionView,
   HelpGroupDto,
+  HelpGroupMembersPage,
   HelpGroupPage,
   HelpGroupReplyView,
   HelpGroupReportDto,
   isHelpGroupHiddenMessage,
 } from '@/src/api/types';
+import { UserRoles } from '@/src/constants/users';
 import { api } from '@/src/store/api/api.slice';
 import { REPORTS_TAG } from '@/src/use-cases/reports';
 
@@ -51,6 +53,7 @@ export enum HelpGroupsWriteError {
 }
 
 export const DISCUSSIONS_PAGE_SIZE = 20;
+export const MEMBERS_PAGE_SIZE = 20;
 export const REPLIES_PAGE_SIZE = 50;
 
 // An unpublished, deleted or unknown group (or discussion) is a 404
@@ -131,6 +134,15 @@ const writeMutation =
 
 type DiscussionArgs = { slug: string; discussionId: string };
 
+export type HelpGroupMembersArgs = {
+  slug: string;
+  page: number;
+  limit: number;
+  // First name only, ignored when empty
+  search?: string;
+  role?: UserRoles;
+};
+
 type ReactionArgs = DiscussionArgs & {
   target: HelpGroupReactionTarget;
   // Applied optimistically before the response
@@ -176,6 +188,25 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
           })
         )(undefined),
       providesTags: [HELP_GROUPS_TAG, HELP_GROUP_DISCUSSIONS_LIST_TAG],
+    }),
+
+    /**
+     * One page of the members of a group (page numbers, not a cursor: the
+     * list shows « X sur Y membres »). The modal accumulates the pages.
+     */
+    getHelpGroupMembers: builder.query<
+      HelpGroupMembersPage,
+      HelpGroupMembersArgs
+    >({
+      queryFn: readQuery(
+        ({ slug, search, role, ...params }: HelpGroupMembersArgs) =>
+          Api.getHelpGroupMembers(slug, {
+            ...params,
+            ...(search ? { search } : {}),
+            ...(role ? { role } : {}),
+          })
+      ),
+      providesTags: [HELP_GROUPS_TAG],
     }),
 
     getHelpGroupDiscussion: builder.query<
@@ -253,7 +284,7 @@ export const helpGroupsApi = helpGroupsTaggedApi.injectEndpoints({
         ({ slug, dto }: { slug: string; dto: HelpGroupDiscussionDto }) =>
           Api.postHelpGroupDiscussion(slug, dto)
       ),
-      // The page (charter acceptance, welcome invite) and the list change
+      // The page (charter acceptance) and the list change
       invalidatesTags: (_result, error) => (error ? [] : [HELP_GROUPS_TAG]),
     }),
 
@@ -721,6 +752,7 @@ export const {
   useGetHelpGroupDiscussionsInfiniteQuery,
   useGetHelpGroupDiscussionQuery,
   useGetHelpGroupDiscussionRepliesInfiniteQuery,
+  useGetHelpGroupMembersQuery,
   useGetAdminHelpGroupsQuery,
   useCreateHelpGroupMutation,
   useUpdateHelpGroupMutation,

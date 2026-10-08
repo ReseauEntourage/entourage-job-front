@@ -121,7 +121,6 @@ export const buildGroupPage = (
   viewerPermissions: {
     state: 'canWrite',
     charterAccepted: true,
-    showWelcomeInvite: false,
   },
   ...props,
 });

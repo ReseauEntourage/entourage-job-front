@@ -1,11 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Section } from '@/src/components/ui';
 import { H4 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { useIsDesktop } from '@/src/hooks/utils';
-import { selectCurrentUser } from '@/src/use-cases/current-user';
 import {
   HelpGroupsError,
   useGetHelpGroupDiscussionsInfiniteQuery,
@@ -14,6 +12,7 @@ import {
 import { DiscussionComposer } from '../DiscussionComposer';
 import { EmailsSetting } from '../EmailsSetting';
 import { HelpGroupLoadError } from '../HelpGroupLoadError';
+import { HelpGroupMembers } from '../HelpGroupMembers';
 import { HelpGroupNotFound } from '../HelpGroupNotFound';
 import {
   HELP_GROUP_DISCUSSIONS_TITLE,
@@ -41,20 +40,19 @@ interface HelpGroupPageProps {
  * Group page. A member allowed to write gets the composer; anyone else gets
  * the invitation matching their situation instead (never disabled actions).
  * An unpublished group (admin preview) shows no write action at all.
- * Layout (design of 07/10/2026): a full-width header holding the adhesion
- * action, then the information block, the composer and the discussions on
- * the left, « Le cadre » and the emails setting on the right. Below the
- * desktop breakpoint, a single column: header (« Le cadre » collapsed in
- * it), information, composer, discussions, emails.
+ * Layout (design of 07/10/2026, recette of 08/10/2026): a full-width header
+ * holding the adhesion action, then the information block, the composer and
+ * the discussions on the left, « Les membres », « Le cadre » and the emails
+ * setting on the right. Below the desktop breakpoint, a single column:
+ * header (« Le cadre » collapsed in it), members, information, composer,
+ * discussions, emails.
  */
 export function HelpGroupPage({
   slug,
   highlightEmails = false,
 }: HelpGroupPageProps) {
-  const currentUser = useSelector(selectCurrentUser);
   const isDesktop = useIsDesktop();
   const [justJoined, setJustJoined] = useState(false);
-  const [composerOpenSignal, setComposerOpenSignal] = useState(0);
   const {
     data: group,
     isLoading,
@@ -83,10 +81,6 @@ export function HelpGroupPage({
     hasError: isDiscussionsError,
     fetchNextPage,
   });
-
-  // From the welcome invite: the composer opens and takes the focus, which
-  // brings it into view
-  const openComposer = () => setComposerOpenSignal((count) => count + 1);
 
   if (error === HelpGroupsError.NOT_FOUND) {
     return <HelpGroupNotFound />;
@@ -125,11 +119,8 @@ export function HelpGroupPage({
       <Section className="custom-page">
         <StyledHelpGroupPage>
           <StyledHelpGroupPageMain>
-            <HelpGroupInfoBlock
-              group={group}
-              firstName={currentUser?.firstName}
-              onWelcomeClick={openComposer}
-            />
+            {!isDesktop && <HelpGroupMembers group={group} />}
+            <HelpGroupInfoBlock group={group} />
             {group.isPublished &&
               group.viewerPermissions.state === 'canWrite' && (
                 <DiscussionComposer
@@ -138,7 +129,6 @@ export function HelpGroupPage({
                   slug={group.slug}
                   groupId={group.id}
                   charterAccepted={group.viewerPermissions.charterAccepted}
-                  openSignal={composerOpenSignal}
                 />
               )}
             <StyledDiscussionsSection aria-label={HELP_GROUP_DISCUSSIONS_TITLE}>
@@ -172,6 +162,7 @@ export function HelpGroupPage({
           </StyledHelpGroupPageMain>
           {isDesktop && (
             <StyledHelpGroupPageAside>
+              <HelpGroupMembers group={group} />
               <HelpGroupCharter />
               {emailsSetting}
             </StyledHelpGroupPageAside>

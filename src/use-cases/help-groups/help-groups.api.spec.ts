@@ -4,6 +4,7 @@ import { AxiosError, AxiosHeaders } from 'axios';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { HelpGroupDiscussion } from '@/src/api/types';
+import { UserRoles } from '@/src/constants/users';
 import {
   buildDiscussion,
   buildReply,
@@ -14,6 +15,7 @@ import { authenticationApi } from '@/src/use-cases/authentication';
 import {
   applyViewerReaction,
   helpGroupsApi,
+  HelpGroupsError,
   HelpGroupsReportError,
   HelpGroupsWriteError,
   toWriteError,
@@ -407,6 +409,54 @@ describe('help groups write api', () => {
       expect(readHelpGroupDraft('key')).toBeNull();
       getItem.mockRestore();
       setItem.mockRestore();
+    });
+  });
+
+  describe('getHelpGroupMembers', () => {
+    it('sends the page, the limit and only the filters that are set', async () => {
+      mockedApi.getHelpGroupMembers.mockResolvedValue({
+        data: { members: [], total: 0 },
+      } as never);
+      const store = createTestStore();
+      await store.dispatch(
+        helpGroupsApi.endpoints.getHelpGroupMembers.initiate({
+          slug: 'refaire-un-cv',
+          page: 1,
+          limit: 5,
+        })
+      );
+      await store.dispatch(
+        helpGroupsApi.endpoints.getHelpGroupMembers.initiate({
+          slug: 'refaire-un-cv',
+          page: 2,
+          limit: 20,
+          search: 'Ami',
+          role: UserRoles.COACH,
+        })
+      );
+      expect(mockedApi.getHelpGroupMembers).toHaveBeenNthCalledWith(
+        1,
+        'refaire-un-cv',
+        { page: 1, limit: 5 }
+      );
+      expect(mockedApi.getHelpGroupMembers).toHaveBeenNthCalledWith(
+        2,
+        'refaire-un-cv',
+        { page: 2, limit: 20, search: 'Ami', role: 'Coach' }
+      );
+    });
+
+    it('reads an unknown or unpublished group as not found', async () => {
+      mockedApi.getHelpGroupMembers.mockRejectedValue(axiosError(404));
+      const store = createTestStore();
+      const result = await store.dispatch(
+        helpGroupsApi.endpoints.getHelpGroupMembers.initiate({
+          slug: 'brouillon',
+          page: 1,
+          limit: 20,
+        })
+      );
+      expect(result.error).toBe(HelpGroupsError.NOT_FOUND);
     });
   });
 });

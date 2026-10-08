@@ -17,38 +17,18 @@ export const StyledReportFilters = styled.div`
   }
 `;
 
+// Layout of the type pills in the filters bar
 export const StyledReportTypePills = styled.div`
   display: flex;
   flex: 1 1 420px;
-  flex-wrap: wrap;
-  gap: 8px;
+  min-width: 0;
+
+  > * {
+    flex: 1;
+  }
 
   @media (max-width: ${BREAKPOINTS.desktop - 1}px) {
     flex-basis: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-`;
-
-export const StyledReportTypePill = styled.button<{ $isChecked: boolean }>`
-  flex: none;
-  min-height: 40px;
-  padding: 0 16px;
-  border: 1px solid
-    ${({ $isChecked }) => ($isChecked ? COLORS.darkBlue : COLORS.gray)};
-  border-radius: 20px;
-  background-color: ${({ $isChecked }) =>
-    $isChecked ? COLORS.hoverBlue : COLORS.white};
-  color: ${({ $isChecked }) => ($isChecked ? COLORS.darkBlue : COLORS.black)};
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-
-  &:hover,
-  &:focus-visible {
-    border-color: ${COLORS.darkBlue};
   }
 `;
 

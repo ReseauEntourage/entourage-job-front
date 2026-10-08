@@ -1,4 +1,5 @@
 import { HelpGroupAuthor, HelpGroupReactionsSummary } from '@/src/api/types';
+import { UserRoles } from '@/src/constants/users';
 
 export const HELP_GROUPS_RETRY_LABEL = 'Réessayer';
 export const HELP_GROUPS_LOAD_ERROR_LABELS = {
@@ -134,3 +135,57 @@ export const formatHelpGroupDateTime = (date: string | Date): string =>
     hour: '2-digit',
     minute: '2-digit',
   }).format(new Date(date));
+
+// Back link replacing the breadcrumb, recette of 08/10/2026
+export const HELP_GROUP_BACK_LINK_LABEL = 'Retour';
+export const HELP_GROUPS_LIST_LABEL = 'Groupes';
+export const HELP_GROUPS_LIST_HREF = '/backoffice/groupes';
+export const getHelpGroupHref = (slug: string): string =>
+  `${HELP_GROUPS_LIST_HREF}/${slug}`;
+
+// Members of a group, recette of 08/10/2026
+export const HELP_GROUP_MEMBERS_TITLE = 'Les membres';
+export const HELP_GROUP_MEMBERS_PREVIEW_SIZE = 5;
+export const HELP_GROUP_MEMBERS_SEARCH_LABEL = 'Rechercher un membre';
+export const HELP_GROUP_MEMBERS_ROLE_FILTER_LABEL = 'Filtrer par rôle';
+export const HELP_GROUP_MEMBERS_MORE_LABEL = 'Afficher 20 membres de plus';
+export const HELP_GROUP_MEMBERS_NO_RESULT_LABEL =
+  'Aucun membre ne correspond à votre recherche.';
+export const HELP_GROUP_MEMBERS_PROFILE_LABEL = 'Voir le profil';
+export const HELP_GROUP_MEMBERS_LOAD_ERROR =
+  'Les membres n’ont pas pu être chargés.';
+
+/**
+ * Plain members count, "1 membre" or "61 membres" (never called with 0: the
+ * members block is not shown for a group without members).
+ */
+export const formatMembersCount = (count: number): string =>
+  `${count} ${count === 1 ? 'membre' : 'membres'}`;
+
+export const formatSeeAllMembersLabel = (count: number): string =>
+  count === 1 ? 'Voir le membre' : `Voir les ${count} membres`;
+
+// "20 sur 61 membres"
+export const formatShownMembersLabel = (shown: number, total: number) =>
+  `${shown} sur ${formatMembersCount(total)}`;
+
+// "membre depuis octobre 2026"
+export const formatMemberSinceLabel = (joinedAt: string | Date): string =>
+  `membre depuis ${new Intl.DateTimeFormat('fr-FR', {
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(joinedAt))}`;
+
+export const HELP_GROUP_MEMBERS_ALL_ROLES = 'all';
+export type HelpGroupMembersRoleFilter =
+  typeof HELP_GROUP_MEMBERS_ALL_ROLES | UserRoles;
+export const HELP_GROUP_MEMBERS_ROLE_FILTERS: {
+  value: HelpGroupMembersRoleFilter;
+  label: string;
+}[] = [
+  { value: HELP_GROUP_MEMBERS_ALL_ROLES, label: 'Tous' },
+  { value: UserRoles.CANDIDATE, label: 'Candidats' },
+  { value: UserRoles.COACH, label: 'Coachs' },
+  { value: UserRoles.REFERER, label: 'Prescripteurs' },
+  { value: UserRoles.ADMIN, label: 'Équipe Entourage' },
+];

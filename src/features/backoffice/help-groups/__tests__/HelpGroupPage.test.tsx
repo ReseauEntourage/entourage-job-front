@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
+import { ModalsListener } from '@/src/features/modals/Modal/openModal';
 import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
 import { DiscussionRow } from '../DiscussionRow';
 import { DiscussionList, HelpGroupHeader } from '../HelpGroupPage';
@@ -18,6 +19,20 @@ jest.mock('@react-hook/window-size', () => ({
   ...jest.requireActual('@react-hook/window-size'),
   useWindowWidth: () => 1440,
 }));
+jest.mock('@/src/use-cases/help-groups', () => ({
+  ...jest.requireActual('@/src/use-cases/help-groups'),
+  useGetHelpGroupMembersQuery: () => ({
+    currentData: { members: [], total: 128 },
+    isFetching: false,
+    isError: false,
+    refetch: jest.fn(),
+  }),
+}));
+
+// react-modal scrolls its content on open, which jsdom does not implement
+beforeAll(() => {
+  Element.prototype.scrollTo = jest.fn();
+});
 
 const groupPage = {
   id: 'group-1',
@@ -31,7 +46,6 @@ const groupPage = {
   viewerPermissions: {
     state: 'mustJoin' as const,
     charterAccepted: false,
-    showWelcomeInvite: false,
   },
 };
 
@@ -148,11 +162,15 @@ describe('Help group page', () => {
   });
 
   describe('HelpGroupHeader', () => {
-    it('shows the breadcrumb, the name, the members count and the full description', () => {
+    it('shows the back link, the name, the members count and the full description', () => {
       renderWithProviders(<HelpGroupHeader group={groupPage} />);
-      expect(screen.getByRole('link', { name: 'Groupes' })).toHaveAttribute(
-        'href',
-        '/backoffice/groupes'
+      const backLink = screen.getByTestId('help-group-back-link');
+      expect(within(backLink).getAllByRole('link')).toHaveLength(1);
+      expect(
+        within(backLink).getByRole('link', { name: 'Groupes' })
+      ).toHaveAttribute('href', '/backoffice/groupes');
+      expect(screen.queryByRole('navigation', { name: "Fil d'Ariane" })).toBe(
+        null
       );
       expect(
         screen.getByRole('heading', { level: 1, name: 'Refaire un CV' })
@@ -209,7 +227,10 @@ describe('Help group page', () => {
           }}
         />
       );
-      expect(screen.queryByRole('button')).not.toBeInTheDocument();
+      // The members count is the only button left
+      expect(screen.getAllByRole('button')).toEqual([
+        screen.getByTestId('help-group-members-count'),
+      ]);
     });
 
     it('never shows zero members', () => {
@@ -217,6 +238,27 @@ describe('Help group page', () => {
         <HelpGroupHeader group={{ ...groupPage, membersCount: 0 }} />
       );
       expect(document.body.textContent).not.toMatch(/0 membre/);
+      // Nothing to list: the invitation is not a button
+      expect(
+        screen.queryByTestId('help-group-members-count')
+      ).not.toBeInTheDocument();
+    });
+
+    it('opens the members list from the members count, kept as secondary text', async () => {
+      renderWithProviders(
+        <>
+          <HelpGroupHeader group={groupPage} />
+          <ModalsListener />
+        </>
+      );
+      const count = screen.getByTestId('help-group-members-count');
+      expect(count.tagName).toBe('BUTTON');
+      expect(count).toHaveAttribute('type', 'button');
+      expect(count).toHaveAttribute('aria-haspopup', 'dialog');
+      expect(count).toHaveTextContent('128 membres');
+      fireEvent.click(count);
+      expect(await screen.findByText('Les membres · 128')).toBeInTheDocument();
+      expect(screen.getByTestId('help-group-members-list')).toBeInTheDocument();
     });
 
     it('flags an unpublished group in an admin preview', () => {
@@ -224,7 +266,8 @@ describe('Help group page', () => {
         <HelpGroupHeader group={{ ...groupPage, isPublished: false }} />
       );
       expect(screen.getByText('Non publié')).toBeInTheDocument();
-      expect(screen.queryByRole('button')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('join-help-group')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('leave-help-group')).not.toBeInTheDocument();
     });
   });
 

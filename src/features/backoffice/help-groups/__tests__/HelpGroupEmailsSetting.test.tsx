@@ -96,7 +96,6 @@ describe('Help group emails setting', () => {
       viewerPermissions: {
         state: 'mustJoin',
         charterAccepted: false,
-        showWelcomeInvite: false,
       },
     });
     expect(screen.queryByTestId('emails-setting')).not.toBeInTheDocument();
@@ -107,7 +106,6 @@ describe('Help group emails setting', () => {
       viewerPermissions: {
         state: 'mustCompleteElearning',
         charterAccepted: false,
-        showWelcomeInvite: false,
       },
     });
     expect(screen.getByTestId('emails-setting')).toHaveTextContent(

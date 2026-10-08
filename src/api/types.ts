@@ -972,8 +972,6 @@ export type HelpGroupViewerPermissions = {
   state: HelpGroupViewerState;
   // The charter is common to every group and accepted once per person
   charterAccepted: boolean;
-  // Member for less than 7 days who has not published in the group yet
-  showWelcomeInvite: boolean;
 };
 
 export type HelpGroupPage = {
@@ -987,6 +985,23 @@ export type HelpGroupPage = {
   emailsEnabled: boolean | null;
   isPublished: boolean;
   viewerPermissions: HelpGroupViewerPermissions;
+};
+
+/**
+ * A current member of a group, with the same minimal projection as the
+ * authors of the messages — `GET /help-groups/:slug/members`.
+ */
+export type HelpGroupMember = {
+  author: HelpGroupAuthor;
+  hasPicture: boolean;
+  // Date of the current membership
+  joinedAt: string;
+};
+
+export type HelpGroupMembersPage = {
+  members: HelpGroupMember[];
+  // Number of members matching the filters
+  total: number;
 };
 
 // Same motives as every report

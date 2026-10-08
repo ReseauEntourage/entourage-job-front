@@ -4,10 +4,12 @@ import { BREAKPOINTS, COLORS, SHADOWS } from '@/src/constants/styles';
 // Shadow of the cards of the help groups pages (no border with it)
 const MOBILE = `@media (max-width: ${BREAKPOINTS.desktop}px)`;
 
+// The back link sits close to the discussion: the start of the replies
+// must fit in the height of a small screen
 export const StyledHelpGroupDiscussion = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
 `;
 
 export const StyledHelpGroupDiscussionColumns = styled.div`
@@ -45,8 +47,8 @@ export const StyledThread = styled.div`
 export const StyledOriginalMessage = styled.article`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 28px 32px 24px;
+  gap: 10px;
+  padding: 20px 32px 16px;
   overflow-wrap: anywhere;
 
   ${MOBILE} {

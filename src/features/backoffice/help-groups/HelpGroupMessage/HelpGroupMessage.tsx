@@ -437,7 +437,14 @@ export function HelpGroupMessage({
       ) : (
         <>
           {isDiscussion && message.title && (
-            <H1 title={message.title} weight="semibold" noMarginBottom />
+            // 24px (20px on mobile): the original message and the start of
+            // the replies fit in the height of a small screen
+            <H1
+              title={message.title}
+              weight="semibold"
+              noMarginBottom
+              compact
+            />
           )}
           <HelpGroupContent
             content={message.content}

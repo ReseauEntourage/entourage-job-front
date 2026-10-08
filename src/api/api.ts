@@ -51,6 +51,7 @@ import {
   HelpGroupDiscussionItem,
   HelpGroupDiscussionView,
   HelpGroupDto,
+  HelpGroupMembersPage,
   HelpGroupPage,
   HelpGroupReply,
   HelpGroupReplyView,
@@ -610,6 +611,19 @@ export class APIHandler {
     params: { cursor?: string; limit?: number }
   ): Promise<AxiosResponse<CursorPage<HelpGroupDiscussionItem>>> {
     return this.get(`/help-groups/${encodeURIComponent(slug)}/discussions`, {
+      params,
+    });
+  }
+
+  /**
+   * Current members of a group, from the most recent arrival. `search` is
+   * matched against the first name only, `role` is a `UserRoles` value.
+   */
+  getHelpGroupMembers(
+    slug: string,
+    params: { page: number; limit: number; search?: string; role?: UserRoles }
+  ): Promise<AxiosResponse<HelpGroupMembersPage>> {
+    return this.get(`/help-groups/${encodeURIComponent(slug)}/members`, {
       params,
     });
   }

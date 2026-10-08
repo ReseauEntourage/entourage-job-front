@@ -105,8 +105,6 @@ interface DiscussionComposerProps {
   slug: string;
   groupId: string;
   charterAccepted: boolean;
-  // Incremented by the welcome invite to open the composer
-  openSignal?: number;
 }
 
 /**
@@ -123,7 +121,6 @@ export function DiscussionComposer({
   slug,
   groupId,
   charterAccepted,
-  openSignal = 0,
 }: DiscussionComposerProps) {
   const dispatch = useDispatch();
   const isDesktop = useIsDesktop();
@@ -135,7 +132,7 @@ export function DiscussionComposer({
     EMPTY_DRAFT,
     isDraftEmpty
   );
-  // Opened by the bar or the welcome invite, until « Annuler »
+  // Opened by the bar, until « Annuler »
   const [isExpanded, setIsExpanded] = useState(false);
   // A draft, restored or being typed, keeps the composer open
   const isOpen = isExpanded || !isDraftEmpty(draft);
@@ -178,13 +175,6 @@ export function DiscussionComposer({
     setIsExpanded(true);
     setFocusRequest((count) => count + 1);
   };
-
-  useEffect(() => {
-    if (openSignal > 0) {
-      setIsExpanded(true);
-      setFocusRequest((count) => count + 1);
-    }
-  }, [openSignal]);
 
   useEffect(() => {
     if (isOpen && focusRequest > 0) {

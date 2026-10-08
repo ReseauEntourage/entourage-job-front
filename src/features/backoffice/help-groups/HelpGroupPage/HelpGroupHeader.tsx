@@ -7,15 +7,18 @@ import {
   Section,
   Text,
 } from '@/src/components/ui';
-import { Breadcrumb } from '@/src/components/ui/Breadcrumb';
 import { H1 } from '@/src/components/ui/Headings';
 import { useIsDesktop } from '@/src/hooks/utils';
+import { HelpGroupBackLink } from '../HelpGroupBackLink';
 import { HelpGroupContent } from '../HelpGroupContent';
+import { openHelpGroupMembersModal } from '../HelpGroupMembers';
 import { JustJoinedMention, MembershipActions } from '../MembershipActions';
 import { JoinHelpGroupButton } from '../WriteInvitation';
 import {
   formatMembersLabel,
   HELP_GROUP_MEMBER_MENTION,
+  HELP_GROUPS_LIST_HREF,
+  HELP_GROUPS_LIST_LABEL,
 } from '../help-groups.labels';
 import { HelpGroupCharter } from './HelpGroupCharter';
 import {
@@ -26,6 +29,7 @@ import {
   StyledHelpGroupHeaderBand,
   StyledHelpGroupHeaderMain,
   StyledHelpGroupHeaderRow,
+  StyledHelpGroupMembersCount,
   StyledHelpGroupMeta,
   StyledHelpGroupTitleRow,
 } from './HelpGroupPage.styles';
@@ -39,8 +43,9 @@ interface HelpGroupHeaderProps {
 }
 
 /**
- * Full-width header of the group page: breadcrumb, name, membership
- * mention, members count, full description, and on the right the adhesion
+ * Full-width header of the group page: back link, name, membership
+ * mention, members count (which opens the members list), full description,
+ * and on the right the adhesion
  * action matching the situation of the person:
  * - « Rejoindre le groupe » for an eligible non member (or an admin),
  * - « Quitter le groupe » for a member allowed to write, in a « ⋯ » menu
@@ -70,21 +75,32 @@ export function HelpGroupHeader({
       {HELP_GROUP_MEMBER_MENTION}
     </Badge>
   );
-  const membersLabel = (
-    <Text size={isDesktop ? 'normal' : 'small'} color="darkGray">
-      {formatMembersLabel(group.membersCount, group.isMember)}
-    </Text>
-  );
+  const membersLabel = formatMembersLabel(group.membersCount, group.isMember);
+  // Never "0 membre": without members, the invitation is plain text
+  const membersCount =
+    group.membersCount > 0 ? (
+      <StyledHelpGroupMembersCount
+        type="button"
+        aria-haspopup="dialog"
+        onClick={() => openHelpGroupMembersModal(group)}
+        data-testid="help-group-members-count"
+      >
+        {isDesktop && <LucidIcon name="Users" size={16} />}
+        {membersLabel}
+      </StyledHelpGroupMembersCount>
+    ) : (
+      <Text size={isDesktop ? 'normal' : 'small'} color="darkGray">
+        {membersLabel}
+      </Text>
+    );
 
   return (
     <StyledHelpGroupHeaderBand data-testid="help-group-header">
       <Section className="custom-header">
         <StyledHelpGroupHeader>
-          <Breadcrumb
-            items={[
-              { label: 'Groupes', href: '/backoffice/groupes' },
-              { label: group.name },
-            ]}
+          <HelpGroupBackLink
+            href={HELP_GROUPS_LIST_HREF}
+            label={HELP_GROUPS_LIST_LABEL}
           />
           {!group.isPublished && (
             <StyledHelpGroupHeaderBadges>
@@ -108,15 +124,12 @@ export function HelpGroupHeader({
               </StyledHelpGroupTitleRow>
               <StyledHelpGroupMeta>
                 {isDesktop ? (
-                  <>
-                    <LucidIcon name="Users" size={16} />
-                    {membersLabel}
-                  </>
+                  membersCount
                 ) : (
                   <>
                     {memberMention}
                     {justJoined && canLeave && <JustJoinedMention />}
-                    {membersLabel}
+                    {membersCount}
                   </>
                 )}
               </StyledHelpGroupMeta>

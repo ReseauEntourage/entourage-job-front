@@ -43,6 +43,34 @@ const team = author('user-admin', 'Claire', 'M.', 'Équipe Entourage', {
   profileLinkable: false,
 });
 
+// 61 members, the most recent first, as the back sorts them
+const memberRoles = ['Candidat', 'Coach', 'Prescripteur'];
+const memberFirstNames = [
+  'Amina',
+  'Julien',
+  'Sofia',
+  'Malik',
+  'Nora',
+  'Karim',
+  'Inès',
+  'Thomas',
+  'Fatou',
+  'Lucas',
+];
+const members = Array.from({ length: 61 }, (_, index) => ({
+  author: author(
+    `member-${index}`,
+    memberFirstNames[index % memberFirstNames.length],
+    `${String.fromCharCode(65 + ((index * 7) % 26))}.`,
+    index === 3 ? 'Équipe Entourage' : memberRoles[index % memberRoles.length],
+    { profileLinkable: index % 4 !== 3 }
+  ),
+  hasPicture: false,
+  joinedAt: new Date(
+    Date.UTC(2026, 9 - Math.floor(index / 16), 5)
+  ).toISOString(),
+}));
+
 const groups = [
   {
     id: 'group-cv',
@@ -98,7 +126,6 @@ const groupPage = {
   viewerPermissions: {
     state: 'canWrite',
     charterAccepted: false,
-    showWelcomeInvite: true,
   },
 };
 
@@ -279,6 +306,18 @@ const interceptGroupReads = (
     '/help-groups/refaire-un-cv/discussions/discussion-gap/replies*',
     { statusCode: 200, body: { items: replies, nextCursor: null } }
   ).as('getReplies');
+  // Pages of the members list (search and role filters are not captured)
+  cy.intercept('GET', '/help-groups/refaire-un-cv/members*', (req) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 20;
+    req.reply({
+      statusCode: 200,
+      body: {
+        members: members.slice((page - 1) * limit, page * limit),
+        total: members.length,
+      },
+    });
+  }).as('getMembers');
 };
 
 // On desktop the header is captured alone; on mobile the hamburger menu is
@@ -321,11 +360,25 @@ describe('Groupes', () => {
     cy.visit('/backoffice/groupes/refaire-un-cv');
     cy.wait('@getHelpGroup');
     cy.wait('@getDiscussions');
+    cy.wait('@getMembers');
     cy.get('[data-testid="discussion-row"]').should('have.length', 3);
     cy.get('[data-testid="help-group-header"]').should('be.visible');
+    cy.get('[data-testid="help-group-members-preview-item"]').should(
+      'have.length',
+      5
+    );
     cy.capture('Page d’un groupe', {
       caption:
-        'Membre : en-tête pleine largeur (fil d’Ariane, nom, « Vous êtes membre », membres, description, « Quitter le groupe ») ; invitation à se présenter, barre de rédaction et discussions à gauche ; « Le cadre » et « Emails de ce groupe » à droite. Sur mobile, une seule colonne, « Le cadre » replié et « Quitter le groupe » dans le menu « ⋯ ».',
+        'Membre : en-tête pleine largeur (bouton retour « ‹ Groupes », nom, « Vous êtes membre », nombre de membres cliquable, description, « Quitter le groupe ») ; barre de rédaction et discussions à gauche, sans invitation à se présenter ; « Les membres » (5 arrivées récentes, « Voir les 61 membres »), « Le cadre » et « Emails de ce groupe » à droite. Sur mobile, une seule colonne, « Les membres » sous l’en-tête, « Le cadre » replié et « Quitter le groupe » dans le menu « ⋯ ».',
+    });
+
+    cy.get('[data-testid="help-group-members-see-all"]').click();
+    cy.get('[data-testid="help-group-member"]').should('have.length', 20);
+    cy.contains('20 sur 61 membres').should('be.visible');
+    cy.capture('Liste des membres', {
+      caption:
+        'Modale ouverte par « Voir les 61 membres » ou par le nombre de membres de l’en-tête : recherche par prénom, filtre par rôle, « membre depuis », « Voir le profil » seulement pour une fiche consultable, « 20 sur 61 membres » et « Afficher 20 membres de plus ».',
+      capture: 'viewport',
     });
 
     cy.visit(
@@ -334,9 +387,20 @@ describe('Groupes', () => {
     cy.wait('@getDiscussion');
     cy.wait('@getReplies');
     cy.get('[data-highlighted="true"]').should('be.visible');
+    cy.get('[data-testid="reply-composer-bar"]').should('exist');
     cy.capture('Discussion', {
       caption:
-        'Fil intégré à la page, zone de réponse à la fin des réponses, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
+        'Bouton retour « ‹ Refaire un CV » à la place du fil d’Ariane, titre à 24 px (20 px en mobile), fil intégré à la page, zone de réponse compacte (une ligne, « Répondre » inactif) à la fin des réponses, réaction de la personne signalée, mention « modifié », réponse désignée par ?replyId= mise en évidence.',
+    });
+
+    cy.get('[data-testid="reply-composer-bar"]').click();
+    cy.get('[data-testid="reply-composer-content"]').type(
+      'Merci pour vos conseils !'
+    );
+    cy.get('[data-testid="reply-composer-cancel"]').should('be.visible');
+    cy.get('[data-testid="reply-composer"]').capture('Réponse dépliée', {
+      caption:
+        'Au focus ou avec un texte : champ de 3 lignes, mention de visibilité, caractères restants, « Annuler » (vide et replie) et « Répondre ».',
     });
   });
 
@@ -398,7 +462,7 @@ describe('Groupes', () => {
 
   it('invitations à la place des actions d’écriture', () => {
     loginAs('Candidat');
-    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+    interceptGroupReads({ state: 'mustJoin' });
 
     cy.visit('/backoffice/groupes/refaire-un-cv');
     cy.wait('@getHelpGroup');
@@ -428,7 +492,7 @@ describe('Groupes', () => {
 
   it('modération par un admin', () => {
     loginAs('Admin');
-    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+    interceptGroupReads({ state: 'mustJoin' });
 
     cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
     cy.wait('@getReplies');
@@ -454,7 +518,7 @@ describe('Groupes', () => {
 
   it('signalement et masquage d’un message', () => {
     loginAs('Candidat');
-    interceptGroupReads({ state: 'mustJoin', showWelcomeInvite: false });
+    interceptGroupReads({ state: 'mustJoin' });
 
     cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
     cy.wait('@getReplies');
