@@ -384,7 +384,7 @@ describe('Groupes', () => {
     );
     cy.capture('Rédaction d’une discussion', {
       caption:
-        'Rédaction en place, ouverte depuis la barre avec l’avatar, message avant le titre, titre proposé par l’IA, « Proposer un autre titre » et « Écrire le mien ».',
+        'Rédaction en place, ouverte depuis la barre avec l’avatar, message avant le titre, titre proposé par l’IA, « Proposer un autre titre » et « Écrire le mien ». En mobile, mention de visibilité sur sa ligne, puis « Annuler » (bordé) et « Publier » sur toute la largeur.',
     });
 
     cy.get('[data-testid="discussion-composer-publish"]').click();
