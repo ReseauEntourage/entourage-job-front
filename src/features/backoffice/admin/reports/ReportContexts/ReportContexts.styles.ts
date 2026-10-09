@@ -1,11 +1,43 @@
 import { styled, css } from 'styled-components';
 import { ReportGroupMessageState } from '@/src/api/types';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledReportContext = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+`;
+
+// Body of the reported group message, under the banner flush with the card
+export const StyledReportContextBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+
+  @media (max-width: ${BREAKPOINTS.desktop - 1}px) {
+    padding: 16px;
+  }
+`;
+
+export const StyledReportReference = styled.p`
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: ${COLORS.darkGray};
+`;
+
+export const StyledReportMessageMeta = styled.p`
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: ${COLORS.darkGray};
+`;
+
+export const StyledReportMessageAuthor = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${COLORS.black};
 `;
 
 export const StyledReportContextBlock = styled.div`
@@ -71,8 +103,7 @@ export const StyledReportState = styled.div<{
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
-  border-radius: 8px;
+  padding: 12px 24px;
   font-size: 12px;
   font-weight: 600;
   ${({ $state }) => BANNER_COLORS[$state]}
@@ -100,4 +131,8 @@ export const StyledReportLinks = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 20px;
+  /* Only the links of the person are in a wrapper */
+  > div {
+    display: contents;
+  }
 `;

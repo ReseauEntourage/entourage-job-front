@@ -102,6 +102,8 @@ const buildGroupMessageTarget = (
       group: { id: 'group-1', name: 'Refaire un CV', slug: 'refaire-un-cv' },
       message: {
         discussionId: 'discussion-1',
+        discussionTitle: 'Un titre de discussion',
+        isEdited: false,
         replyId: isReply ? 'reply-1' : null,
         title: isReply ? null : 'Un titre',
         content: 'Une réponse signalée',
@@ -184,7 +186,9 @@ describe('ReportTargetPage', () => {
     });
 
     expect(mockUseMessages).toHaveBeenCalledWith('conversation-1');
-    expect(screen.getByText('Signalements reçus (2)')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Signalements reçus (2)' })
+    ).toBeInTheDocument();
     expect(screen.getByText('Aucun commentaire')).toBeInTheDocument();
     const messages = screen.getAllByTestId('report-conversation-message');
     expect(messages[0]).toHaveTextContent('Premier message');
@@ -328,6 +332,27 @@ describe('ReportTargetPage', () => {
     );
     expect(screen.queryByTestId('report-resolve-form')).toBeNull();
     expect(screen.queryByText('Marquer comme traité')).toBeNull();
+  });
+
+  it('titles a group message after its author, with a breadcrumb back to the list and the context of the thread', () => {
+    renderPage(buildGroupMessageTarget());
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Réponse de Jeanne M.' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('report-target-back').closest('a')
+    ).toHaveAttribute('href', '/backoffice/admin/signalements');
+    expect(screen.getByRole('link', { name: 'Refaire un CV' })).toHaveAttribute(
+      'href',
+      '/backoffice/groupes/refaire-un-cv'
+    );
+    expect(
+      screen.getByRole('link', { name: '« Un titre de discussion »' })
+    ).toHaveAttribute(
+      'href',
+      '/backoffice/groupes/refaire-un-cv/discussions/discussion-1'
+    );
   });
 
   it('offers « Rétablir » and « Supprimer » on a hidden message, without any deletion reason', () => {

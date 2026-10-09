@@ -4,13 +4,12 @@ import { ReportTargetDetail, ReportTargetType } from '@/src/api/types';
 import {
   Badge,
   BadgeVariant,
-  Button,
   ContainerWithTextCentered,
   Section,
   Text,
 } from '@/src/components/ui';
-import { H2, H5 } from '@/src/components/ui/Headings';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
+import { HelpGroupsPageBackground } from '@/src/features/backoffice/help-groups/HelpGroupsPageBackground';
 import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   ReportsError,
@@ -23,17 +22,21 @@ import {
   ProfileReportContext,
 } from '../ReportContexts';
 import { ReportGroupMessageDecision } from '../ReportGroupMessageDecision';
+import { ReportLink } from '../ReportLink';
 import { ReportMessageVersions } from '../ReportMessageVersions';
+import { ReportPanelTitle, ReportPanelTitleCount } from '../ReportPanelTitle';
 import { ReportResolveForm } from '../ReportResolveForm';
 import { ReportTargetStatusTag } from '../ReportTargetStatusTag';
 import {
   REPORT_TARGET_TYPE_LABELS,
   REPORTS_TAB_LABELS,
 } from '../reports.labels';
-import { REPORTS_PATH } from '../reports.utils';
+import { getReportTargetTitle, REPORTS_PATH } from '../reports.utils';
 import {
+  StyledReportBreadcrumb,
   StyledReportPanel,
   StyledReportTargetHeader,
+  StyledReportTargetTitle,
   StyledReportTargetLayout,
   StyledReportTargetPage,
 } from './ReportTargetPage.styles';
@@ -98,7 +101,7 @@ const ReportDecision = ({
   }
   return (
     <StyledReportPanel $area="decision">
-      <H5 title={REPORTS_TAB_LABELS.resolveTitle} />
+      <ReportPanelTitle>{REPORTS_TAB_LABELS.resolveTitle}</ReportPanelTitle>
       <ReportResolveForm
         targetType={target.targetType}
         targetId={target.targetId}
@@ -156,68 +159,82 @@ export function ReportTargetPage({
     note?.focus();
   }, [openResolve, target, onResolveOpened, dispatch]);
 
+  const title = target ? getReportTargetTitle(target) : '';
+
   return (
-    <Section className="custom-page">
-      <Button
-        variant="text"
-        size="small"
-        href={REPORTS_PATH}
-        dataTestId="report-target-back"
-      >
-        {REPORTS_TAB_LABELS.back}
-      </Button>
-      {isLoading && <LoadingScreen />}
-      {!!error && (
-        <ContainerWithTextCentered>
-          <Text>
-            {error === ReportsError.NOT_FOUND
-              ? REPORTS_TAB_LABELS.notFound
-              : REPORTS_TAB_LABELS.loadError}
-          </Text>
-        </ContainerWithTextCentered>
-      )}
-      {target && (
-        <StyledReportTargetPage data-testid="report-target-page">
-          <StyledReportTargetHeader>
-            <H2 title={target.label} />
-            <Badge variant={BadgeVariant.ExtraLightTeal} size="small">
-              {REPORT_TARGET_TYPE_LABELS[target.targetType]}
-            </Badge>
-            <ReportTargetStatusTag
-              status={target.status}
-              pendingCount={pendingCount}
-            />
-          </StyledReportTargetHeader>
-          <StyledReportTargetLayout>
-            <StyledReportPanel $area="context">
-              <ReportContext target={target} />
-            </StyledReportPanel>
-            <ReportDecision target={target} pendingCount={pendingCount} />
-            {isGroupMessage && (
-              <StyledReportPanel $area="versions">
-                <ReportMessageVersions
-                  kind={
-                    target.targetType === 'POST' ? 'discussions' : 'replies'
-                  }
-                  id={target.targetId}
-                />
-              </StyledReportPanel>
-            )}
-            <StyledReportPanel
-              $area="reports"
-              as="aside"
-              data-testid="report-target-reports"
-            >
-              <H5
-                title={`${REPORTS_TAB_LABELS.reportsTitle} (${target.reports.length})`}
+    <HelpGroupsPageBackground>
+      <Section className="custom-page">
+        <StyledReportBreadcrumb aria-label={REPORTS_TAB_LABELS.breadcrumb}>
+          <ReportLink
+            $isBold={false}
+            href={REPORTS_PATH}
+            data-testid="report-target-back"
+          >
+            {REPORTS_TAB_LABELS.back}
+          </ReportLink>
+          {target && (
+            <>
+              <span aria-hidden="true">›</span>
+              <span aria-current="page">{title}</span>
+            </>
+          )}
+        </StyledReportBreadcrumb>
+        {isLoading && <LoadingScreen />}
+        {!!error && (
+          <ContainerWithTextCentered>
+            <Text>
+              {error === ReportsError.NOT_FOUND
+                ? REPORTS_TAB_LABELS.notFound
+                : REPORTS_TAB_LABELS.loadError}
+            </Text>
+          </ContainerWithTextCentered>
+        )}
+        {target && (
+          <StyledReportTargetPage data-testid="report-target-page">
+            <StyledReportTargetHeader>
+              <StyledReportTargetTitle>{title}</StyledReportTargetTitle>
+              <Badge variant={BadgeVariant.ExtraLightTeal} size="small">
+                {REPORT_TARGET_TYPE_LABELS[target.targetType]}
+              </Badge>
+              <ReportTargetStatusTag
+                status={target.status}
+                pendingCount={pendingCount}
               />
-              {target.reports.map((report) => (
-                <ReportCard key={report.id} report={report} />
-              ))}
-            </StyledReportPanel>
-          </StyledReportTargetLayout>
-        </StyledReportTargetPage>
-      )}
-    </Section>
+            </StyledReportTargetHeader>
+            <StyledReportTargetLayout>
+              <StyledReportPanel $area="context" $isFlush={isGroupMessage}>
+                <ReportContext target={target} />
+              </StyledReportPanel>
+              <ReportDecision target={target} pendingCount={pendingCount} />
+              {isGroupMessage && (
+                <StyledReportPanel $area="versions">
+                  <ReportMessageVersions
+                    kind={
+                      target.targetType === 'POST' ? 'discussions' : 'replies'
+                    }
+                    id={target.targetId}
+                  />
+                </StyledReportPanel>
+              )}
+              <StyledReportPanel
+                $area="reports"
+                as="aside"
+                data-testid="report-target-reports"
+              >
+                <ReportPanelTitle>
+                  {REPORTS_TAB_LABELS.reportsTitle}{' '}
+                  <ReportPanelTitleCount>
+                    ({target.reports.length})
+                  </ReportPanelTitleCount>
+                </ReportPanelTitle>
+                {target.reports.map((report) => (
+                  <ReportCard key={report.id} report={report} />
+                ))}
+              </StyledReportPanel>
+            </StyledReportTargetLayout>
+          </StyledReportTargetPage>
+        )}
+      </Section>
+    </HelpGroupsPageBackground>
   );
 }

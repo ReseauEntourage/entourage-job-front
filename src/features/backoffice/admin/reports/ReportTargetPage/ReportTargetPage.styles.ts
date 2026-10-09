@@ -7,6 +7,27 @@ export const StyledReportTargetPage = styled.div`
   gap: 20px;
 `;
 
+export const StyledReportBreadcrumb = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: ${COLORS.darkGray};
+
+  [aria-current='page'] {
+    color: ${COLORS.black};
+  }
+`;
+
+export const StyledReportTargetTitle = styled.h1`
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: ${COLORS.black};
+`;
+
 export const StyledReportTargetHeader = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -44,18 +65,23 @@ export const StyledReportTargetLayout = styled.div`
   }
 `;
 
-export const StyledReportPanel = styled.section<{ $area: LayoutArea }>`
+export const StyledReportPanel = styled.section<{
+  $area: LayoutArea;
+  // The banner of the content touches the edges of the card
+  $isFlush?: boolean;
+}>`
   grid-area: ${({ $area }) => $area};
   display: flex;
   flex-direction: column;
   gap: 16px;
   min-width: 0;
-  padding: 24px;
+  padding: ${({ $isFlush }) => ($isFlush ? 0 : '24px')};
   border-radius: 10px;
   background-color: ${COLORS.white};
   box-shadow: ${SHADOWS.card};
+  overflow: ${({ $isFlush }) => ($isFlush ? 'hidden' : 'visible')};
 
   @media (max-width: ${BREAKPOINTS.desktop - 1}px) {
-    padding: 16px;
+    padding: ${({ $isFlush }) => ($isFlush ? 0 : '16px')};
   }
 `;

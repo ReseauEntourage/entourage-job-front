@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReportUser } from '@/src/api/types';
-import { Button, Text } from '@/src/components/ui';
+import { Text } from '@/src/components/ui';
+import { ReportLink } from '../ReportLink';
 import { REPORTS_TAB_LABELS } from '../reports.labels';
 import { getAdminMemberHref, getWriteToHref } from '../reports.utils';
 import { StyledReportPerson } from './ReportPerson.styles';
@@ -10,6 +11,8 @@ interface ReportPersonProps {
   dataTestId?: string;
   // Only the links, when the name is already shown next to them
   linksOnly?: boolean;
+  // Label of the link to the admin page, « Voir la fiche » by default
+  profileLabel?: string;
 }
 
 /**
@@ -20,6 +23,7 @@ export function ReportPerson({
   user,
   dataTestId,
   linksOnly = false,
+  profileLabel = REPORTS_TAB_LABELS.adminProfile,
 }: ReportPersonProps) {
   if (!user) {
     return (
@@ -35,22 +39,18 @@ export function ReportPerson({
           {user.firstName} {user.lastName}
         </Text>
       )}
-      <Button
-        variant="text"
-        size="small"
+      <ReportLink
         href={getAdminMemberHref(user.id)}
-        dataTestId={`report-person-profile-${user.id}`}
+        data-testid={`report-person-profile-${user.id}`}
       >
-        {REPORTS_TAB_LABELS.adminProfile}
-      </Button>
-      <Button
-        variant="text"
-        size="small"
+        {profileLabel}
+      </ReportLink>
+      <ReportLink
         href={getWriteToHref(user.id)}
-        dataTestId={`report-person-write-${user.id}`}
+        data-testid={`report-person-write-${user.id}`}
       >
         {REPORTS_TAB_LABELS.formatWriteTo(user.firstName)}
-      </Button>
+      </ReportLink>
     </StyledReportPerson>
   );
 }

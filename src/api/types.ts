@@ -1254,6 +1254,8 @@ export type ReportTargetContext =
       group: { id: string; name: string; slug: string } | null;
       message: {
         discussionId: string;
+        discussionTitle: string;
+        isEdited: boolean;
         replyId: string | null;
         title: string | null;
         content: string;

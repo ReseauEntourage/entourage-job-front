@@ -1,9 +1,11 @@
 import React from 'react';
 import { ReportTargetContext } from '@/src/api/types';
-import { Button, LucidIcon, Text } from '@/src/components/ui';
-import { H5 } from '@/src/components/ui/Headings';
+import { LucidIcon, Text } from '@/src/components/ui';
 import { HelpGroupAvatar } from '@/src/features/backoffice/help-groups/HelpGroupAvatar';
+import { EDITED_MENTION } from '@/src/features/backoffice/help-groups/help-groups-participation.labels';
 import { formatHelpGroupDateTime } from '@/src/features/backoffice/help-groups/help-groups.labels';
+import { ReportLink } from '../ReportLink';
+import { ReportPanelTitle } from '../ReportPanelTitle';
 import { ReportPerson } from '../ReportPerson';
 import {
   formatReportZone,
@@ -13,9 +15,13 @@ import {
 import { getGroupMessageHref } from '../reports.utils';
 import {
   StyledReportContext,
+  StyledReportContextBody,
   StyledReportGroupMessage,
   StyledReportGroupMessageBody,
   StyledReportLinks,
+  StyledReportMessageAuthor,
+  StyledReportMessageMeta,
+  StyledReportReference,
   StyledReportState,
 } from './ReportContexts.styles';
 
@@ -41,6 +47,8 @@ export function GroupMessageReportContext({
 }) {
   const { group, message } = context;
   const author = message?.author;
+  const isDeleted = message?.state === 'DELETED';
+  const groupName = group?.name ?? REPORTS_TAB_LABELS.deletedGroup;
   return (
     <StyledReportContext data-testid="report-context-group-message">
       {message && (
@@ -52,54 +60,103 @@ export function GroupMessageReportContext({
           {GROUP_MESSAGE_STATE_BANNERS[message.state]}
         </StyledReportState>
       )}
-      <H5 title={REPORTS_TAB_LABELS.reportedMessage} />
-      <Text size="small" color="darkGray">
-        {`${REPORTS_TAB_LABELS.group} : ${
-          group?.name ?? REPORTS_TAB_LABELS.deletedGroup
-        }`}
-      </Text>
-      {message ? (
-        <>
-          <StyledReportGroupMessage>
-            <HelpGroupAvatar user={author ?? null} size={36} />
-            <StyledReportGroupMessageBody>
-              <Text size="small" color="darkGray">
-                {[
-                  author
-                    ? `${author.firstName} ${author.lastName}`
-                    : REPORTS_TAB_LABELS.deletedUser,
-                  author?.role,
-                  author?.zone ? formatReportZone(author.zone) : null,
-                  formatHelpGroupDateTime(message.createdAt),
-                ]
-                  .filter(Boolean)
-                  .join(' · ')}
-              </Text>
-              {message.title && <Text weight="semibold">{message.title}</Text>}
-              <Text>{message.content}</Text>
-            </StyledReportGroupMessageBody>
-          </StyledReportGroupMessage>
-          <StyledReportLinks>
-            {group && message.state !== 'DELETED' && (
-              <Button
-                variant="text"
-                size="small"
-                href={getGroupMessageHref({
-                  slug: group.slug,
-                  discussionId: message.discussionId,
-                  replyId: message.replyId,
-                })}
-                dataTestId="report-group-message-link"
-              >
-                {REPORTS_TAB_LABELS.seeMessage}
-              </Button>
-            )}
-            {author && <ReportPerson user={author} linksOnly />}
-          </StyledReportLinks>
-        </>
-      ) : (
-        <Text variant="italic">{REPORTS_TAB_LABELS.missingMessage}</Text>
-      )}
+      <StyledReportContextBody>
+        <ReportPanelTitle>
+          {REPORTS_TAB_LABELS.reportedMessage}
+        </ReportPanelTitle>
+        <StyledReportReference>
+          {REPORTS_TAB_LABELS.group}{' '}
+          {group ? (
+            <ReportLink
+              $isBold={false}
+              href={`/backoffice/groupes/${encodeURIComponent(group.slug)}`}
+            >
+              {groupName}
+            </ReportLink>
+          ) : (
+            groupName
+          )}
+          {message && (
+            <>
+              {' '}
+              · {REPORTS_TAB_LABELS.discussion}{' '}
+              {group && !isDeleted ? (
+                <ReportLink
+                  $isBold={false}
+                  href={getGroupMessageHref({
+                    slug: group.slug,
+                    discussionId: message.discussionId,
+                    replyId: null,
+                  })}
+                >
+                  « {message.discussionTitle} »
+                </ReportLink>
+              ) : (
+                `« ${message.discussionTitle} »`
+              )}
+            </>
+          )}
+        </StyledReportReference>
+        {message ? (
+          <>
+            <StyledReportGroupMessage>
+              <HelpGroupAvatar user={author ?? null} size={36} />
+              <StyledReportGroupMessageBody>
+                <StyledReportMessageMeta>
+                  <StyledReportMessageAuthor>
+                    {author
+                      ? `${author.firstName} ${author.lastName}`
+                      : REPORTS_TAB_LABELS.deletedUser}
+                  </StyledReportMessageAuthor>
+                  {[
+                    author?.role,
+                    author?.zone ? formatReportZone(author.zone) : null,
+                    formatHelpGroupDateTime(message.createdAt),
+                  ]
+                    .filter(Boolean)
+                    .map((part) => ` · ${part}`)
+                    .join('')}
+                  {message.isEdited && (
+                    <>
+                      {' · '}
+                      <em>{EDITED_MENTION}</em>
+                    </>
+                  )}
+                </StyledReportMessageMeta>
+                {message.title && (
+                  <Text weight="semibold">{message.title}</Text>
+                )}
+                <Text>{message.content}</Text>
+              </StyledReportGroupMessageBody>
+            </StyledReportGroupMessage>
+            <StyledReportLinks>
+              {group && !isDeleted && (
+                <ReportLink
+                  href={getGroupMessageHref({
+                    slug: group.slug,
+                    discussionId: message.discussionId,
+                    replyId: message.replyId,
+                  })}
+                  data-testid="report-group-message-link"
+                >
+                  {REPORTS_TAB_LABELS.seeMessage}
+                </ReportLink>
+              )}
+              {author && (
+                <ReportPerson
+                  user={author}
+                  linksOnly
+                  profileLabel={REPORTS_TAB_LABELS.formatSeeProfileOf(
+                    author.firstName
+                  )}
+                />
+              )}
+            </StyledReportLinks>
+          </>
+        ) : (
+          <Text variant="italic">{REPORTS_TAB_LABELS.missingMessage}</Text>
+        )}
+      </StyledReportContextBody>
     </StyledReportContext>
   );
 }

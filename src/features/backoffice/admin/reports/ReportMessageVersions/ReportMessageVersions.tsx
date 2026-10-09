@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Text } from '@/src/components/ui';
-import { H5 } from '@/src/components/ui/Headings';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { REVISIONS_MODAL } from '@/src/features/backoffice/help-groups/help-groups-participation.labels';
 import { formatHelpGroupDateTime } from '@/src/features/backoffice/help-groups/help-groups.labels';
 import { useLazyGetHelpGroupMessageRevisionsQuery } from '@/src/use-cases/help-groups';
+import { ReportPanelTitle } from '../ReportPanelTitle';
 import { REPORTS_TAB_LABELS } from '../reports.labels';
 import {
   StyledReportVersion,
@@ -35,7 +35,7 @@ export function ReportMessageVersions({
 
   return (
     <StyledReportVersions data-testid="report-message-versions">
-      <H5 title={REPORTS_TAB_LABELS.versionsTitle} />
+      <ReportPanelTitle>{REPORTS_TAB_LABELS.versionsTitle}</ReportPanelTitle>
       {isLoading && <Spinner />}
       {isError && <Text color="lightRed">{REVISIONS_MODAL.error}</Text>}
       {data && (

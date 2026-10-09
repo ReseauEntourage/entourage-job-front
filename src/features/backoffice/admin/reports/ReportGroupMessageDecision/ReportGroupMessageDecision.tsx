@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { HelpGroupDeletionReason } from '@/src/api/types';
 import { Button, LucidIcon, Text } from '@/src/components/ui';
-import { H5 } from '@/src/components/ui/Headings';
 import { Radio, TextArea } from '@/src/components/ui/Inputs';
 import {
   MODERATION_DONE_LABEL,
@@ -15,6 +14,7 @@ import {
   useRestoreHelpGroupMessageMutation,
 } from '@/src/use-cases/help-groups';
 import { notificationsActions } from '@/src/use-cases/notifications';
+import { ReportPanelTitle } from '../ReportPanelTitle';
 import { REPORTS_TAB_LABELS } from '../reports.labels';
 import {
   StyledReportDecision,
@@ -109,7 +109,7 @@ export function ReportGroupMessageDecision({
 
   return (
     <StyledReportDecision data-testid="report-decision">
-      <H5 title={REPORTS_TAB_LABELS.decisionTitle} />
+      <ReportPanelTitle>{REPORTS_TAB_LABELS.decisionTitle}</ReportPanelTitle>
       <Text size="small" color="darkGray">
         {REPORTS_TAB_LABELS.formatDecisionText(pendingCount)}
       </Text>
