@@ -20,11 +20,17 @@ import {
   StyledMessagingIconContainer,
   StyledNavContainerDesktop,
 } from '@/src/features/headers/Header.styles';
+import { NotificationsBell } from '@/src/features/notifications-center';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from '@/src/lib/gtag';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
-import { StyledConnectedItem } from './NavConnectedContent.styles';
+import {
+  StyledConnectedItem,
+  StyledNavDropdownItemContent,
+  StyledNavIconBadge,
+  StyledNavIconBadgeContainer,
+} from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
 import { SubMenu } from './SubMenu';
 
@@ -38,6 +44,7 @@ export const NavConnectedContentDesktop = ({
     [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
     [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
+  administration = null,
   dropdown = [NavConnectedMainItemDefaultProps],
   messaging = NavConnectedMainItemDefaultProps,
 }: NavConnectedContentProps) => {
@@ -45,10 +52,72 @@ export const NavConnectedContentDesktop = ({
   const profile = useCurrentUserProfile();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0] || null;
+  // The admin home is the first administration page, no longer in the main nav
+  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
 
   const rightItems = [
     <div className="uk-flex uk-flex-middle">
+      {/* Administration */}
+      {administration?.subMenu && (
+        <Dropdown>
+          <DropdownToggle>
+            <StyledNavIconBadgeContainer>
+              <ButtonIcon
+                icon={administration.icon}
+                color={COLORS.black}
+                variant="text"
+                size="xxlarge"
+                dataTestId="nav-administration"
+                ariaLabel={administration.name}
+              />
+              {administration.badge && badges[administration.badge] > 0 && (
+                <StyledNavIconBadge data-testid="nav-administration-badge">
+                  {badges[administration.badge]}
+                </StyledNavIconBadge>
+              )}
+            </StyledNavIconBadgeContainer>
+          </DropdownToggle>
+          <Dropdown.Menu openDirection="left">
+            {administration.subMenu.map(
+              ({ href, name, tag, queryParams, badge }, index) => {
+                return (
+                  <Dropdown.Item
+                    key={`${index}-administration-${uuidValue}`}
+                    onClick={() => {
+                      if (tag) {
+                        gaEvent(tag);
+                      }
+                      push(href + (queryParams || ''));
+                    }}
+                  >
+                    <StyledNavDropdownItemContent>
+                      {name}
+                      {badge && badges[badge] > 0 && (
+                        <Tag
+                          size={TagSize.Small}
+                          variant={TagVariant.Secondary}
+                        >
+                          {badges[badge]}
+                        </Tag>
+                      )}
+                    </StyledNavDropdownItemContent>
+                  </Dropdown.Item>
+                );
+              }
+            )}
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
+
+      {/* Notifications: only where the menu is shown (onboarding done) */}
+      {links[user.role]?.length > 0 && (
+        <NotificationsBell
+          variant="desktop"
+          color={COLORS.black}
+          unseenCount={badges.notifications}
+        />
+      )}
+
       {/* Messages */}
       <StyledMessagingIconContainer>
         <ButtonIcon

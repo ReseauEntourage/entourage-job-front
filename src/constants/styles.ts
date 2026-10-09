@@ -17,6 +17,14 @@ export const HEIGHTS = {
   MESSAGING_DESKTOP_BORDER_SIZE: 3,
 };
 
+/** Elevation scale shared by cards, popovers and their hover states. */
+export const SHADOWS = {
+  card: '0 2px 8px rgba(0, 0, 0, 0.08)',
+  cardHover: '0 4px 12px rgba(0, 0, 0, 0.12)',
+  raised: '0 2px 12px rgba(0, 0, 0, 0.16)',
+  popover: '0 2px 8px rgba(0, 0, 0, 0.12)',
+};
+
 export const COLORS = {
   // B&W colors
   transparent: 'transparent',

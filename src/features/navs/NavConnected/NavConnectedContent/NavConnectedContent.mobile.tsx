@@ -13,6 +13,7 @@ import {
   StyledMessagingIconContainer,
   StyledNavContainerMobile,
 } from '@/src/features/headers/Header.styles';
+import { NotificationsBell } from '@/src/features/notifications-center';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useOffCanvas } from '@/src/hooks/useOffCanvas';
 import { gaEvent } from '@/src/lib/gtag';
@@ -32,6 +33,7 @@ export const NavConnectedContentMobile = ({
     [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
     [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
+  administration = null,
   dropdown = [NavConnectedMainItemDefaultProps],
 }: NavConnectedContentProps) => {
   const offCanvasRef = useRef<OffCanvasRef>(null);
@@ -39,7 +41,8 @@ export const NavConnectedContentMobile = ({
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0] || null;
+  // The admin home is the first administration page, no longer in the main nav
+  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
 
   return (
     <StyledNavContainerMobile id="nav">
@@ -54,6 +57,14 @@ export const NavConnectedContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
+            {/* Notifications: only where the menu is shown (onboarding done) */}
+            {links[user.role]?.length > 0 && (
+              <NotificationsBell
+                variant="mobile"
+                color="white"
+                unseenCount={badges.notifications}
+              />
+            )}
             {/* Messages */}
             <StyledMessagingIconContainer>
               <ButtonIcon
@@ -70,6 +81,7 @@ export const NavConnectedContentMobile = ({
               )}
             </StyledMessagingIconContainer>
             <Hamburger
+              dataTestId="nav-hamburger"
               onClick={() => {
                 if (offCanvasRef.current) {
                   offCanvasRef.current.open();
@@ -159,6 +171,35 @@ export const NavConnectedContentMobile = ({
                 );
               }
             )}
+          {administration?.subMenu && (
+            <>
+              <hr style={{ opacity: '.5' }} />
+              <StyledConnectedItemMobile
+                className={`hasSubMenu ${
+                  administration.subMenu.some(({ href }) =>
+                    asPath.includes(href)
+                  )
+                    ? 'active'
+                    : ''
+                }`}
+              >
+                <a>
+                  <span>
+                    <span className="uk-margin-small-right">
+                      {administration.icon}
+                    </span>
+                    {administration.name}
+                  </span>
+                  {administration.badge && badges[administration.badge] > 0 && (
+                    <Tag size={TagSize.Small} variant={TagVariant.Secondary}>
+                      {badges[administration.badge]}
+                    </Tag>
+                  )}
+                </a>
+                <SubMenu items={administration.subMenu} badges={badges} />
+              </StyledConnectedItemMobile>
+            </>
+          )}
           <hr style={{ opacity: '.5' }} />
           <StyledConnectedItemMobile>
             <a

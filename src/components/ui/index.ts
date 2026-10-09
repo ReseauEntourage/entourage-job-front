@@ -24,3 +24,5 @@ export * from './Tooltip';
 export * from './Popover';
 export * from './ProgressBar';
 export * from './CopyInput';
+export * from './Breadcrumb';
+export * from './FilterPills';
