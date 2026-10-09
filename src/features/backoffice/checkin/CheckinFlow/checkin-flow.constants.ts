@@ -63,8 +63,8 @@ export const perceivedSupportOptions = () =>
 const PERCEIVED_BENEFITS_TITLES: Record<UserRoles, string> = {
   [UserRoles.COACH]: 'Ce que ces échanges vous ont apporté :',
   [UserRoles.CANDIDATE]: 'Ce que ces échanges vous ont permis de...',
-  [UserRoles.ADMIN]: 'Ce que ces échanges vous ont permis de...',
-  [UserRoles.REFERER]: 'Ce que ces échanges vous ont permis de...',
+  [UserRoles.ADMIN]: 'Ce que ces échanges vous ont apporté :',
+  [UserRoles.REFERER]: 'Ce que ces échanges vous ont apporté :',
 };
 
 const PERCEIVED_SUPPORT_TITLES: Record<
@@ -75,10 +75,10 @@ const PERCEIVED_SUPPORT_TITLES: Record<
     `Avez-vous le sentiment d’être utile à ${otherFirstName} dans sa démarche ?`,
   [UserRoles.CANDIDATE]: () =>
     'Vous êtes-vous senti·e soutenu·e dans votre démarche ?',
-  [UserRoles.ADMIN]: () =>
-    'Vous êtes-vous senti·e soutenu·e dans votre démarche ?',
-  [UserRoles.REFERER]: () =>
-    'Vous êtes-vous senti·e soutenu·e dans votre démarche ?',
+  [UserRoles.ADMIN]: (otherFirstName) =>
+    `Avez-vous le sentiment d’être utile à ${otherFirstName} dans sa démarche ?`,
+  [UserRoles.REFERER]: (otherFirstName) =>
+    `Avez-vous le sentiment d’être utile à ${otherFirstName} dans sa démarche ?`,
 };
 
 export const getQuestionTitle = (
