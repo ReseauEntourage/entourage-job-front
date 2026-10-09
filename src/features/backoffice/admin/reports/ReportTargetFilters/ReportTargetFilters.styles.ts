@@ -36,8 +36,11 @@ export const StyledReportSelects = styled.div`
   display: flex;
   gap: 16px;
 
+  /* Fixed width: the field must not resize when its text goes from the
+     chosen option to the placeholder shown while the list is open */
   > * {
-    min-width: 160px;
+    flex: none;
+    width: 220px;
   }
 
   @media (max-width: ${BREAKPOINTS.desktop - 1}px) {
@@ -47,6 +50,7 @@ export const StyledReportSelects = styled.div`
     gap: 8px;
 
     > * {
+      width: auto;
       min-width: 0;
     }
   }
