@@ -223,9 +223,9 @@ export const getPerceivedBenefitOptions = (
   role: UserRoles
 ): PerceivedBenefitOption[] => {
   const roleOptions =
-    role === UserRoles.COACH
-      ? COACH_PERCEIVED_BENEFIT_OPTIONS
-      : CANDIDATE_PERCEIVED_BENEFIT_OPTIONS;
+    role === UserRoles.CANDIDATE
+      ? CANDIDATE_PERCEIVED_BENEFIT_OPTIONS
+      : COACH_PERCEIVED_BENEFIT_OPTIONS;
   return [...roleOptions, NOTHING_YET_OPTION(role), OTHER_OPTION];
 };
 
