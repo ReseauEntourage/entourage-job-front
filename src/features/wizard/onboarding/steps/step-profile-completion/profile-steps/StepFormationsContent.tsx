@@ -1,22 +1,21 @@
 import React from 'react';
 import type { Formation } from '@/src/api/types';
-import { Button, Text } from '@/src/components/ui';
+import { Text } from '@/src/components/ui';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useEditableFormationsByIndex } from '@/src/features/profile/hooks/useEditableFormations';
-import {
-  StyledContainer,
-  StyledHeader,
-  StyledList,
-} from './StepFormationsContent.styles';
+import { StepAddItemButton } from './StepAddItemButton';
+import { StyledContainer, StyledList } from './StepFormationsContent.styles';
 
 interface StepFormationsContentProps {
   formations: Formation[];
   onChange: (next: Formation[]) => void;
+  showSectionTitle?: boolean;
 }
 
 export const StepFormationsContent = ({
   formations,
   onChange,
+  showSectionTitle = false,
 }: StepFormationsContentProps) => {
   const { addFormation, editFormation, deleteFormation } =
     useEditableFormationsByIndex({
@@ -27,17 +26,7 @@ export const StepFormationsContent = ({
 
   return (
     <StyledContainer>
-      <StyledHeader>
-        <Text weight="semibold">Formations</Text>
-        <Button
-          variant="default"
-          size="small"
-          color="darkGray"
-          onClick={addFormation}
-        >
-          Ajouter une formation
-        </Button>
-      </StyledHeader>
+      {showSectionTitle && <Text weight="semibold">Formations</Text>}
 
       {formations.length > 0 ? (
         <StyledList>
@@ -56,13 +45,24 @@ export const StepFormationsContent = ({
               deleteItem={() => deleteFormation(idx)}
             />
           ))}
+          <StepAddItemButton
+            variant="inline"
+            label="Ajouter une autre formation"
+            onClick={addFormation}
+          />
         </StyledList>
       ) : (
-        <Text color="darkGray" size="small">
-          {
-            "Aucune formation ajoutée pour l'instant. Vous pouvez passer cette étape."
-          }
-        </Text>
+        <>
+          <StepAddItemButton
+            variant="empty"
+            label="Ajouter une formation"
+            helpText="Intitulé, établissement et dates."
+            onClick={addFormation}
+          />
+          <Text color="darkGray" size="small">
+            Vous pouvez passer cette étape.
+          </Text>
+        </>
       )}
     </StyledContainer>
   );

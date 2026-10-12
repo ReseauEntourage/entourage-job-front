@@ -1,22 +1,21 @@
 import React from 'react';
 import type { Experience } from '@/src/api/types';
-import { Button, Text } from '@/src/components/ui';
+import { Text } from '@/src/components/ui';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useEditableExperiencesByIndex } from '@/src/features/profile/hooks/useEditableExperiences';
-import {
-  StyledContainer,
-  StyledHeader,
-  StyledList,
-} from './StepExperiencesContent.styles';
+import { StepAddItemButton } from './StepAddItemButton';
+import { StyledContainer, StyledList } from './StepExperiencesContent.styles';
 
 interface StepExperiencesContentProps {
   experiences: Experience[];
   onChange: (next: Experience[]) => void;
+  showSectionTitle?: boolean;
 }
 
 export const StepExperiencesContent = ({
   experiences,
   onChange,
+  showSectionTitle = false,
 }: StepExperiencesContentProps) => {
   const { addExperience, editExperience, deleteExperience } =
     useEditableExperiencesByIndex({
@@ -27,17 +26,9 @@ export const StepExperiencesContent = ({
 
   return (
     <StyledContainer>
-      <StyledHeader>
+      {showSectionTitle && (
         <Text weight="semibold">Expériences professionnelles</Text>
-        <Button
-          variant="default"
-          size="small"
-          color="darkGray"
-          onClick={addExperience}
-        >
-          Ajouter une expérience
-        </Button>
-      </StyledHeader>
+      )}
 
       {experiences.length > 0 ? (
         <StyledList>
@@ -56,13 +47,24 @@ export const StepExperiencesContent = ({
               deleteItem={() => deleteExperience(idx)}
             />
           ))}
+          <StepAddItemButton
+            variant="inline"
+            label="Ajouter une autre expérience"
+            onClick={addExperience}
+          />
         </StyledList>
       ) : (
-        <Text color="darkGray" size="small">
-          {
-            "Aucune expérience ajoutée pour l'instant. Vous pouvez passer cette étape."
-          }
-        </Text>
+        <>
+          <StepAddItemButton
+            variant="empty"
+            label="Ajouter une expérience"
+            helpText="Poste, structure et dates."
+            onClick={addExperience}
+          />
+          <Text color="darkGray" size="small">
+            Vous pouvez passer cette étape.
+          </Text>
+        </>
       )}
     </StyledContainer>
   );
