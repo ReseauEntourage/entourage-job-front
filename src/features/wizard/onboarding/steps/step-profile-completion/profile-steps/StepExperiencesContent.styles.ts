@@ -6,13 +6,13 @@ export const StyledContainer = styled.div`
   gap: 24px;
 `;
 
-export const StyledHeader = styled.div`
+export const StyledList = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 `;
 
-export const StyledList = styled.div`
+export const StyledListWithAdd = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
