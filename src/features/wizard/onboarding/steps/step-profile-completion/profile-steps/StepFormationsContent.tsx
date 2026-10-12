@@ -4,7 +4,11 @@ import { Text } from '@/src/components/ui';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useEditableFormationsByIndex } from '@/src/features/profile/hooks/useEditableFormations';
 import { StepAddItemButton } from './StepAddItemButton';
-import { StyledContainer, StyledList } from './StepFormationsContent.styles';
+import {
+  StyledContainer,
+  StyledList,
+  StyledListWithAdd,
+} from './StepFormationsContent.styles';
 
 interface StepFormationsContentProps {
   formations: Formation[];
@@ -29,28 +33,30 @@ export const StepFormationsContent = ({
       {showSectionTitle && <Text weight="semibold">Formations</Text>}
 
       {formations.length > 0 ? (
-        <StyledList>
-          {formations.map((formation, idx) => (
-            <CVExperienceOrFormation
-              key={formation.id ?? `${formation.title}-${idx}`}
-              title={formation.title}
-              description={formation.description}
-              startDate={formation.startDate}
-              endDate={formation.endDate}
-              location={formation.location}
-              structure={formation.institution}
-              skills={formation.skills || []}
-              isEditable
-              editItem={() => editFormation(idx)}
-              deleteItem={() => deleteFormation(idx)}
-            />
-          ))}
+        <StyledListWithAdd>
+          <StyledList>
+            {formations.map((formation, idx) => (
+              <CVExperienceOrFormation
+                key={formation.id ?? `${formation.title}-${idx}`}
+                title={formation.title}
+                description={formation.description}
+                startDate={formation.startDate}
+                endDate={formation.endDate}
+                location={formation.location}
+                structure={formation.institution}
+                skills={formation.skills || []}
+                isEditable
+                editItem={() => editFormation(idx)}
+                deleteItem={() => deleteFormation(idx)}
+              />
+            ))}
+          </StyledList>
           <StepAddItemButton
             variant="inline"
             label="Ajouter une autre formation"
             onClick={addFormation}
           />
-        </StyledList>
+        </StyledListWithAdd>
       ) : (
         <>
           <StepAddItemButton
@@ -59,9 +65,11 @@ export const StepFormationsContent = ({
             helpText="Intitulé, établissement et dates."
             onClick={addFormation}
           />
-          <Text color="darkGray" size="small">
-            Vous pouvez passer cette étape.
-          </Text>
+          {!showSectionTitle && (
+            <Text color="darkGray" size="small">
+              Vous pouvez passer cette étape.
+            </Text>
+          )}
         </>
       )}
     </StyledContainer>

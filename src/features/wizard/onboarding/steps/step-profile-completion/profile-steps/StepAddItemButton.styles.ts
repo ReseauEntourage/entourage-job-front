@@ -15,7 +15,7 @@ const StyledBaseButton = styled.button`
 
   &:hover {
     border-color: ${COLORS.primaryBlue};
-    background: ${COLORS.primaryBlue}15;
+    background: ${COLORS.hoverBlue};
   }
 
   &:focus-visible {
@@ -55,7 +55,7 @@ export const StyledIconCircle = styled.span`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: ${COLORS.primaryBlue}15;
+  background: ${COLORS.hoverBlue};
 `;
 
 export const StyledTexts = styled.span`

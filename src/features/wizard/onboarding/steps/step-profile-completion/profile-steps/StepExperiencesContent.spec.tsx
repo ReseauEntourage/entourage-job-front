@@ -95,4 +95,20 @@ describe('StepExperiencesContent', () => {
       screen.getByText('Expériences professionnelles')
     ).toBeInTheDocument();
   });
+
+  it('hides the skip hint when the section title is shown (CV recap)', () => {
+    render(
+      <StepExperiencesContent
+        experiences={[]}
+        onChange={jest.fn()}
+        showSectionTitle
+      />
+    );
+    expect(
+      screen.getByRole('button', { name: /Ajouter une expérience/ })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Vous pouvez passer cette étape.')
+    ).not.toBeInTheDocument();
+  });
 });

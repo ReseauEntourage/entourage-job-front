@@ -11,3 +11,9 @@ export const StyledList = styled.div`
   flex-direction: column;
   gap: 8px;
 `;
+
+export const StyledListWithAdd = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;

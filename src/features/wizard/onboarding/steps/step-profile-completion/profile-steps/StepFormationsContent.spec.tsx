@@ -93,4 +93,20 @@ describe('StepFormationsContent', () => {
     );
     expect(screen.getByText('Formations')).toBeInTheDocument();
   });
+
+  it('hides the skip hint when the section title is shown (CV recap)', () => {
+    render(
+      <StepFormationsContent
+        formations={[]}
+        onChange={jest.fn()}
+        showSectionTitle
+      />
+    );
+    expect(
+      screen.getByRole('button', { name: /Ajouter une formation/ })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Vous pouvez passer cette étape.')
+    ).not.toBeInTheDocument();
+  });
 });

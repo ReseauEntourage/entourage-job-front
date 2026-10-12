@@ -9,22 +9,20 @@ import {
   StyledTexts,
 } from './StepAddItemButton.styles';
 
-interface StepAddItemButtonProps {
-  // `empty`: dashed card shown when the list has no item.
-  // `inline`: dashed row shown right under the last item.
-  variant: 'empty' | 'inline';
+interface StepAddItemButtonBaseProps {
   label: string;
-  helpText?: string;
   onClick: () => void;
 }
 
-export const StepAddItemButton = ({
-  variant,
-  label,
-  helpText,
-  onClick,
-}: StepAddItemButtonProps) => {
-  if (variant === 'inline') {
+// `empty`: dashed card shown when the list has no item.
+// `inline`: dashed row shown right under the last item (no help text).
+type StepAddItemButtonProps = StepAddItemButtonBaseProps &
+  ({ variant: 'empty'; helpText?: string } | { variant: 'inline' });
+
+export const StepAddItemButton = (props: StepAddItemButtonProps) => {
+  const { label, onClick } = props;
+
+  if (props.variant === 'inline') {
     return (
       <StyledInlineRow type="button" onClick={onClick}>
         <LucidIcon name="Plus" size={16} color={COLORS.primaryBlue} />
@@ -40,9 +38,9 @@ export const StepAddItemButton = ({
       </StyledIconCircle>
       <StyledTexts>
         <Text weight="semibold">{label}</Text>
-        {helpText && (
+        {props.helpText && (
           <Text color="darkGray" size="small">
-            {helpText}
+            {props.helpText}
           </Text>
         )}
       </StyledTexts>

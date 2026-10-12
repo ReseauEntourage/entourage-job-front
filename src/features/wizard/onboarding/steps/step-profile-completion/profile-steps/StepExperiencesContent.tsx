@@ -4,7 +4,11 @@ import { Text } from '@/src/components/ui';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useEditableExperiencesByIndex } from '@/src/features/profile/hooks/useEditableExperiences';
 import { StepAddItemButton } from './StepAddItemButton';
-import { StyledContainer, StyledList } from './StepExperiencesContent.styles';
+import {
+  StyledContainer,
+  StyledList,
+  StyledListWithAdd,
+} from './StepExperiencesContent.styles';
 
 interface StepExperiencesContentProps {
   experiences: Experience[];
@@ -31,28 +35,30 @@ export const StepExperiencesContent = ({
       )}
 
       {experiences.length > 0 ? (
-        <StyledList>
-          {experiences.map((experience, idx) => (
-            <CVExperienceOrFormation
-              key={experience.id ?? `${experience.title}-${idx}`}
-              title={experience.title}
-              description={experience.description}
-              startDate={experience.startDate}
-              endDate={experience.endDate}
-              location={experience.location}
-              structure={experience.company}
-              skills={experience.skills || []}
-              isEditable
-              editItem={() => editExperience(idx)}
-              deleteItem={() => deleteExperience(idx)}
-            />
-          ))}
+        <StyledListWithAdd>
+          <StyledList>
+            {experiences.map((experience, idx) => (
+              <CVExperienceOrFormation
+                key={experience.id ?? `${experience.title}-${idx}`}
+                title={experience.title}
+                description={experience.description}
+                startDate={experience.startDate}
+                endDate={experience.endDate}
+                location={experience.location}
+                structure={experience.company}
+                skills={experience.skills || []}
+                isEditable
+                editItem={() => editExperience(idx)}
+                deleteItem={() => deleteExperience(idx)}
+              />
+            ))}
+          </StyledList>
           <StepAddItemButton
             variant="inline"
             label="Ajouter une autre expérience"
             onClick={addExperience}
           />
-        </StyledList>
+        </StyledListWithAdd>
       ) : (
         <>
           <StepAddItemButton
@@ -61,9 +67,11 @@ export const StepExperiencesContent = ({
             helpText="Poste, structure et dates."
             onClick={addExperience}
           />
-          <Text color="darkGray" size="small">
-            Vous pouvez passer cette étape.
-          </Text>
+          {!showSectionTitle && (
+            <Text color="darkGray" size="small">
+              Vous pouvez passer cette étape.
+            </Text>
+          )}
         </>
       )}
     </StyledContainer>
