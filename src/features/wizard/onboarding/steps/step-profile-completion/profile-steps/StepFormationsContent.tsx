@@ -1,22 +1,25 @@
 import React from 'react';
 import type { Formation } from '@/src/api/types';
-import { Button, Text } from '@/src/components/ui';
+import { Text } from '@/src/components/ui';
 import { CVExperienceOrFormation } from '@/src/features/profile/CVExperienceOrFormation/CVExperienceOrFormation';
 import { useEditableFormationsByIndex } from '@/src/features/profile/hooks/useEditableFormations';
+import { StepAddItemButton } from './StepAddItemButton';
 import {
   StyledContainer,
-  StyledHeader,
   StyledList,
+  StyledListWithAdd,
 } from './StepFormationsContent.styles';
 
 interface StepFormationsContentProps {
   formations: Formation[];
   onChange: (next: Formation[]) => void;
+  showSectionTitle?: boolean;
 }
 
 export const StepFormationsContent = ({
   formations,
   onChange,
+  showSectionTitle = false,
 }: StepFormationsContentProps) => {
   const { addFormation, editFormation, deleteFormation } =
     useEditableFormationsByIndex({
@@ -27,42 +30,47 @@ export const StepFormationsContent = ({
 
   return (
     <StyledContainer>
-      <StyledHeader>
-        <Text weight="semibold">Formations</Text>
-        <Button
-          variant="default"
-          size="small"
-          color="darkGray"
-          onClick={addFormation}
-        >
-          Ajouter une formation
-        </Button>
-      </StyledHeader>
+      {showSectionTitle && <Text weight="semibold">Formations</Text>}
 
       {formations.length > 0 ? (
-        <StyledList>
-          {formations.map((formation, idx) => (
-            <CVExperienceOrFormation
-              key={formation.id ?? `${formation.title}-${idx}`}
-              title={formation.title}
-              description={formation.description}
-              startDate={formation.startDate}
-              endDate={formation.endDate}
-              location={formation.location}
-              structure={formation.institution}
-              skills={formation.skills || []}
-              isEditable
-              editItem={() => editFormation(idx)}
-              deleteItem={() => deleteFormation(idx)}
-            />
-          ))}
-        </StyledList>
+        <StyledListWithAdd>
+          <StyledList>
+            {formations.map((formation, idx) => (
+              <CVExperienceOrFormation
+                key={formation.id ?? `${formation.title}-${idx}`}
+                title={formation.title}
+                description={formation.description}
+                startDate={formation.startDate}
+                endDate={formation.endDate}
+                location={formation.location}
+                structure={formation.institution}
+                skills={formation.skills || []}
+                isEditable
+                editItem={() => editFormation(idx)}
+                deleteItem={() => deleteFormation(idx)}
+              />
+            ))}
+          </StyledList>
+          <StepAddItemButton
+            variant="inline"
+            label="Ajouter une autre formation"
+            onClick={addFormation}
+          />
+        </StyledListWithAdd>
       ) : (
-        <Text color="darkGray" size="small">
-          {
-            "Aucune formation ajoutée pour l'instant. Vous pouvez passer cette étape."
-          }
-        </Text>
+        <>
+          <StepAddItemButton
+            variant="empty"
+            label="Ajouter une formation"
+            helpText="Intitulé, établissement et dates."
+            onClick={addFormation}
+          />
+          {!showSectionTitle && (
+            <Text color="darkGray" size="small">
+              Vous pouvez passer cette étape.
+            </Text>
+          )}
+        </>
       )}
     </StyledContainer>
   );

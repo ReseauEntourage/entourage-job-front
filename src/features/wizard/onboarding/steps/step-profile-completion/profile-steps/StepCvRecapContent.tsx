@@ -52,6 +52,7 @@ export const StepCvRecapContent = ({
         <StepExperiencesContent
           experiences={experiences}
           onChange={onExperiencesChange}
+          showSectionTitle
         />
       </StyledSection>
 
@@ -59,6 +60,7 @@ export const StepCvRecapContent = ({
         <StepFormationsContent
           formations={formations}
           onChange={onFormationsChange}
+          showSectionTitle
         />
       </StyledSection>
 
