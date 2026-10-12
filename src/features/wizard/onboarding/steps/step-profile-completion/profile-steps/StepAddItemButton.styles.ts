@@ -62,4 +62,8 @@ export const StyledTexts = styled.span`
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    align-items: center;
+  }
 `;
