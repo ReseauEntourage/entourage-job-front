@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { Color, COLORS } from '@/src/constants/styles';
 import { TextSize } from '../Text';
 import { sizesPx } from '../Text/Text.utils';
 
@@ -36,16 +36,32 @@ export const StyledDropdownMenu = styled.div<{
 export const StyledDropdownMenuItem = styled.div<{
   $device: 'desktop' | 'mobile';
   size?: TextSize;
+  $color?: Color;
 }>`
-  color: ${COLORS.black};
+  color: ${({ $color }) => {
+    return $color ? COLORS[$color] : COLORS.black;
+  }};
   font-size: ${({ $device, size }) =>
     (size ? sizesPx[$device][size] : undefined) || sizesPx[$device].normal}px;
   cursor: pointer;
   padding: 15px 20px;
-  &:hover {
-    color: ${COLORS.primaryBlue};
+  &:hover,
+  &:focus-visible {
+    color: ${({ $color }) => {
+      return $color ? COLORS[$color] : COLORS.primaryBlue;
+    }};
     background-color: ${COLORS.hoverBlue};
   }
+  &:focus-visible {
+    outline: 2px solid ${COLORS.primaryBlue};
+    outline-offset: -2px;
+  }
+`;
+
+export const StyledDropdownMenuItemContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 `;
 
 export const StyledDropdownMenuItemSeparator = styled.div`
@@ -55,4 +71,21 @@ export const StyledDropdownMenuItemSeparator = styled.div`
 export const StyledDropdownToggleContainer = styled.div`
   display: flex;
   height: 100%;
+`;
+
+// Toggle rendered as a native button: same box as the container above
+export const StyledDropdownToggleButton = styled.button`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  &:focus-visible {
+    outline: 2px solid ${COLORS.primaryBlue};
+    outline-offset: 2px;
+  }
 `;

@@ -27,6 +27,7 @@ import { gaEvent } from '@/src/lib/gtag';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import {
   StyledConnectedItem,
+  StyledNavAccountToggle,
   StyledNavDropdownItemContent,
   StyledNavIconBadge,
   StyledNavIconBadgeContainer,
@@ -132,37 +133,25 @@ export const NavConnectedContentDesktop = ({
         )}
       </StyledMessagingIconContainer>
 
-      {/* Profile */}
+      {/* Account menu: profile and logout */}
       <Dropdown>
-        <DropdownToggle>
-          <a
-            id="nav-profile"
-            className="uk-padding-small uk-padding-remove-vertical"
-            style={{
-              height: 80,
-              fontSize: '1rem',
-              textTransform: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
+        <DropdownToggle asButton id="nav-profile" ariaLabel="Menu du compte">
+          <StyledNavAccountToggle>
             <ImgUserProfile
               user={user}
               size={40}
               hasPicture={profile?.hasPicture || false}
             />
-            <span className="uk-margin-small-left uk-margin-small-right">
-              Bonjour {user.firstName}
-            </span>
             <LucidIcon name="ChevronDown" />
-          </a>
+          </StyledNavAccountToggle>
         </DropdownToggle>
         <Dropdown.Menu openDirection="left">
-          {dropdown.map(({ href, name, onClick, tag }, index) => {
+          {dropdown.map(({ href, name, onClick, tag, icon, color }, index) => {
             return (
               <Dropdown.Item
                 key={`${index}-right-${uuidValue}`}
+                icon={icon}
+                color={color}
                 onClick={() => {
                   if (tag) {
                     gaEvent(tag);

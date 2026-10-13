@@ -79,3 +79,14 @@ export const StyledNavDropdownItemContent = styled.span`
   align-items: center;
   gap: 8px;
 `;
+
+// Content of the account menu toggle: the photo and the arrow, centered in
+// the header height
+export const StyledNavAccountToggle = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 80px;
+  padding: 0 16px;
+`;
