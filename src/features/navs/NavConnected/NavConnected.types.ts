@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import type { Color } from '@/src/constants/styles';
 
 export interface NotifBadges {
   messaging: number;
@@ -14,6 +15,8 @@ export interface NavConnectedItem {
   href: string;
   badge?: NotifBadge;
   icon?: JSX.Element;
+  // Color token of the label and icon, used by the account menu entries
+  color?: Color;
   name?: string;
   external?: boolean;
   queryParams?: string;

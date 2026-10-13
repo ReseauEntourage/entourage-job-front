@@ -3,6 +3,7 @@ import { CurrentUserCompany, User } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { GA_TAGS } from '@/src/constants/tags';
 import { UserRoles } from '@/src/constants/users';
+import { onboardingExcludedRoles } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { NavConnectedMainItem } from '../NavConnected.types';
 
 const rolesToParams = (roles) => {
@@ -44,12 +45,8 @@ const renderCandidateHeaderItems = (
       ...items,
       {
         href: '/backoffice/dashboard',
-        name: 'Tableau de bord',
+        name: 'Accueil',
         tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
-      },
-      {
-        href: '/backoffice/parametres',
-        name: 'Mon profil',
       },
       {
         href: '/backoffice/annuaire',
@@ -102,12 +99,8 @@ const renderCoachHeaderItems = (
       ...items,
       {
         href: '/backoffice/dashboard',
-        name: 'Tableau de bord',
+        name: 'Accueil',
         tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
-      },
-      {
-        href: '/backoffice/parametres',
-        name: 'Mon profil',
       },
       ...(isCompanyAdmin
         ? [
@@ -177,6 +170,9 @@ export const renderLinks = (
   dropdown: NavConnectedMainItem[];
 } => {
   const helpGroupsItems = renderHelpGroupsItems(hasPublishedHelpGroups);
+  const canAccessProfile =
+    onboardingExcludedRoles.includes(user?.role) ||
+    user?.onboardingStatus === 'completed';
   const candidateHeaderItems = renderCandidateHeaderItems(
     user,
     helpGroupsItems
@@ -190,10 +186,6 @@ export const renderLinks = (
   return {
     links: {
       [UserRoles.ADMIN]: [
-        {
-          href: '/backoffice/parametres',
-          name: 'Mon profil',
-        },
         {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
@@ -209,12 +201,8 @@ export const renderLinks = (
       [UserRoles.REFERER]: [
         {
           href: '/backoffice/dashboard',
-          name: 'Tableau de bord',
+          name: 'Accueil',
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
-        },
-        {
-          href: '/backoffice/parametres',
-          name: 'Mon profil',
         },
         {
           href: '/backoffice/annuaire',
@@ -303,10 +291,23 @@ export const renderLinks = (
       badge: 'messaging',
     },
     dropdown: [
+      // "Mon profil" lives in the account menu, not in the tabs. Candidates
+      // and coaches who have not completed the onboarding are redirected to
+      // it from every backoffice page, the profile included: no entry for them
+      ...(canAccessProfile
+        ? [
+            {
+              href: '/backoffice/parametres',
+              icon: <LucidIcon name="User" />,
+              name: 'Mon profil',
+            },
+          ]
+        : []),
       {
         href: '',
         onClick: logout,
         icon: <LucidIcon name="LogOut" />,
+        color: 'darkOrange' as const,
         name: 'Se déconnecter',
       },
     ],

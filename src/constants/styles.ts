@@ -23,6 +23,8 @@ export const SHADOWS = {
   cardHover: '0 4px 12px rgba(0, 0, 0, 0.12)',
   raised: '0 2px 12px rgba(0, 0, 0, 0.16)',
   popover: '0 2px 8px rgba(0, 0, 0, 0.12)',
+  // Floating menus: the elevation replaces the border
+  dropdown: '0 5px 12px rgba(0, 0, 0, 0.15)',
 };
 
 export const COLORS = {

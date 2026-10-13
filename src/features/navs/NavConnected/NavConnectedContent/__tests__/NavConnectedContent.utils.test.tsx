@@ -123,7 +123,6 @@ describe('NavConnectedContent.utils - help groups entries', () => {
 
   it('leaves the admin pages out of the admin main menu', () => {
     expect(getNames(UserRoles.ADMIN)).toEqual([
-      'Mon profil',
       "Réseau d'entraide",
       'Groupes',
       'Événements',
@@ -134,6 +133,70 @@ describe('NavConnectedContent.utils - help groups entries', () => {
     it(`shows no "Administration" menu to a ${role}`, () => {
       expect(getAdministration(role)).toBeNull();
       expect(getNames(role)).not.toContain('Les groupes');
+    });
+  });
+});
+
+describe('NavConnectedContent.utils - account menu and home entry', () => {
+  const getDropdownNames = (role: UserRoles, onboardingStatus?: string) =>
+    renderLinks(
+      buildUser(role, onboardingStatus),
+      jest.fn(),
+      null
+    ).dropdown.map(({ name }) => name);
+
+  [UserRoles.CANDIDATE, UserRoles.COACH, UserRoles.REFERER].forEach((role) => {
+    it(`names the first tab "Accueil" for ${role}`, () => {
+      expect(getNames(role)[0]).toBe('Accueil');
+      expect(getNames(role)).not.toContain('Tableau de bord');
+    });
+  });
+
+  it('does not give the admin an "Accueil" tab', () => {
+    expect(getNames(UserRoles.ADMIN)).not.toContain('Accueil');
+  });
+
+  [
+    UserRoles.CANDIDATE,
+    UserRoles.COACH,
+    UserRoles.REFERER,
+    UserRoles.ADMIN,
+  ].forEach((role) => {
+    it(`keeps "Mon profil" out of the tabs for ${role}`, () => {
+      expect(getNames(role)).not.toContain('Mon profil');
+    });
+
+    it(`puts "Mon profil" before "Se déconnecter" in the account menu for ${role}`, () => {
+      expect(getDropdownNames(role)).toEqual(['Mon profil', 'Se déconnecter']);
+    });
+  });
+
+  it('links "Mon profil" to the profile page', () => {
+    const entry = renderLinks(
+      buildUser(UserRoles.CANDIDATE),
+      jest.fn(),
+      null
+    ).dropdown.find(({ name }) => name === 'Mon profil');
+    expect(entry?.href).toBe('/backoffice/parametres');
+  });
+
+  it('shows "Se déconnecter" in darkOrange and calls logout', () => {
+    const logout = jest.fn();
+    const entry = renderLinks(
+      buildUser(UserRoles.COACH),
+      logout,
+      null
+    ).dropdown.find(({ name }) => name === 'Se déconnecter');
+    expect(entry?.color).toBe('darkOrange');
+    entry?.onClick?.();
+    expect(logout).toHaveBeenCalledTimes(1);
+  });
+
+  [UserRoles.CANDIDATE, UserRoles.COACH].forEach((role) => {
+    ['not_started', 'in_progress'].forEach((status) => {
+      it(`only offers "Se déconnecter" to a ${role} whose onboarding is ${status}`, () => {
+        expect(getDropdownNames(role, status)).toEqual(['Se déconnecter']);
+      });
     });
   });
 });
