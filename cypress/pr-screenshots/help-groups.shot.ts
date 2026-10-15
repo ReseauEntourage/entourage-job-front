@@ -354,8 +354,31 @@ describe('Groupes', () => {
     cy.get('[data-testid="help-group-card"]').should('have.length', 3);
     cy.capture('Liste des groupes', {
       caption:
-        'Introduction et lien vers le cadre, pastilles « À la une » et « Vous êtes membre », invitation à la place de « 0 membre ».',
+        'Titre « Groupes d’entraide » sans texte au-dessus, nouveau sous-titre et lien vers le cadre, pastilles « À la une » et « Vous êtes membre », invitation à la place de « 0 membre ».',
     });
+  });
+
+  it('cadre des groupes', () => {
+    loginAs('Candidat');
+    interceptGroupReads();
+
+    cy.visit('/backoffice/groupes');
+    cy.wait('@getCurrent');
+    cy.wait('@getHelpGroups');
+    cy.get('[data-testid="help-group-card"]').should('have.length', 3);
+    cy.get('[data-testid="help-groups-charter-link"]').click();
+    cy.get('[data-testid="help-groups-charter-modal"]').should('be.visible');
+    cy.contains("Ici, on se parle d'égal à égal").should('be.visible');
+    cy.capture('Le cadre des groupes', {
+      caption:
+        'Modale « Lire le cadre des groupes » : même contenu que la modale de la messagerie, « Ici, on se parle d’égal à égal » et ses sections.',
+      capture: 'viewport',
+    });
+  });
+
+  it('lecture d’un groupe et de ses discussions par un candidat', () => {
+    loginAs('Candidat');
+    interceptGroupReads();
 
     cy.visit('/backoffice/groupes/refaire-un-cv');
     cy.wait('@getHelpGroup');
@@ -373,7 +396,7 @@ describe('Groupes', () => {
     }
     cy.capture('Page d’un groupe', {
       caption:
-        'Membre : en-tête pleine largeur (bouton retour « ‹ Groupes », nom, « Vous êtes membre », nombre de membres cliquable, description, « Quitter le groupe ») ; barre de rédaction et discussions à gauche, sans invitation à se présenter ; « Les membres » (5 arrivées récentes, « Voir les 61 membres »), « Le cadre » et « Emails de ce groupe » à droite. Sur mobile, une seule colonne sans « Les membres », « Le cadre » replié, « Voir les 61 membres » et « Quitter le groupe » dans le menu « ⋯ ».',
+        'Membre : en-tête pleine largeur (bouton retour « ‹ Groupes », nom, « Vous êtes membre », nombre de membres cliquable, description, « Quitter le groupe ») ; barre de rédaction et discussions à gauche, sans invitation à se présenter ; « Les membres » (5 arrivées récentes, « Voir les 61 membres »), « Le cadre » (contenu de la messagerie) et « Emails de ce groupe » à droite. Sur mobile, une seule colonne sans « Les membres », « Le cadre » replié (Afficher / Masquer), « Voir les 61 membres » et « Quitter le groupe » dans le menu « ⋯ ».',
     });
 
     if (isMobile) {
@@ -464,7 +487,7 @@ describe('Groupes', () => {
     cy.contains('Avant votre première publication').should('be.visible');
     cy.capture('Cadre à la première publication', {
       caption:
-        'Cadre commun accepté une seule fois, « Accepter et publier » actif case cochée.',
+        'Cadre commun (contenu de la messagerie) accepté une seule fois, « Accepter et publier » actif case cochée.',
       capture: 'viewport',
     });
   });
@@ -475,10 +498,24 @@ describe('Groupes', () => {
 
     cy.visit('/backoffice/groupes/refaire-un-cv');
     cy.wait('@getHelpGroup');
+    cy.wait('@getDiscussions');
+    cy.get('[data-testid="discussion-row"]').should('have.length', 3);
     cy.get('[data-testid="write-invitation-join"]').should('be.visible');
     cy.capture('Invitation à rejoindre', {
       caption:
-        'Un non-membre lit librement : l’invitation en tête de la colonne principale, « Rejoindre le groupe » dans l’en-tête du groupe.',
+        'Un non-membre lit librement : l’invitation « Rejoignez le groupe pour participer à la discussion, y répondre ou réagir. » en tête de la colonne principale, avec son bouton « Rejoindre le groupe », qui est aussi dans l’en-tête du groupe.',
+    });
+
+    cy.visit('/backoffice/groupes/refaire-un-cv/discussions/discussion-gap');
+    cy.wait('@getReplies');
+    cy.get('[data-testid="discussion-reply"]').should('exist');
+    cy.get('[data-testid="write-invitation-join"]').should('be.visible');
+    cy.get('[data-testid="write-invitation-join"]')
+      .find('[data-testid="join-help-group"]')
+      .should('be.visible');
+    cy.capture('Invitation à rejoindre, discussion', {
+      caption:
+        'Un non-membre lit la discussion : l’invitation à la place de la zone de réponse, avec son bouton « Rejoindre le groupe ».',
     });
 
     interceptGroupReads({ state: 'mustCompleteElearning' });
