@@ -169,37 +169,18 @@ export const StyledHelpGroupCharterTitle = styled.div`
   color: ${COLORS.teal};
 `;
 
-export const StyledHelpGroupCharterRules = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  li {
-    display: flex;
-    gap: 10px;
-  }
-`;
-
-export const StyledHelpGroupCharterCheck = styled.span`
-  flex: none;
-  display: flex;
-  padding-top: 3px;
-  color: ${COLORS.mediumGreen};
-`;
-
 // Mobile: collapsed under the description, expanded on touch
 export const StyledHelpGroupCharterDetails = styled.details`
   margin-top: 4px;
   border: 1px solid ${COLORS.gray};
   border-radius: 8px;
+`;
 
-  & > ul {
-    padding: 0 14px 14px;
-    gap: 10px;
-  }
+export const StyledHelpGroupCharterBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 14px 6px;
 `;
 
 export const StyledHelpGroupCharterSummary = styled.summary`

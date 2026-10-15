@@ -134,7 +134,7 @@ describe('HelpGroupPage loading states', () => {
       return text;
     };
     const first = charterOf('Refaire un CV');
-    expect(first).toContain('Ces règles valent pour tous les groupes.');
+    expect(first).toContain("Ici, on se parle d'égal à égal");
     expect(charterOf('Bonnes nouvelles')).toBe(first);
   });
 });

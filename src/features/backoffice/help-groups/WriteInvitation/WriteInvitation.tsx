@@ -14,8 +14,6 @@ interface WriteInvitationProps {
   slug: string;
   state: Exclude<HelpGroupViewerState, 'canWrite'>;
   onJoined?: () => void;
-  // On the group page, the join button lives in the group header
-  withJoinButton?: boolean;
 }
 
 /**
@@ -27,7 +25,6 @@ export function WriteInvitation({
   slug,
   state,
   onJoined,
-  withJoinButton = true,
 }: WriteInvitationProps) {
   if (state === 'mustCompleteElearning') {
     return (
@@ -43,9 +40,7 @@ export function WriteInvitation({
   return (
     <StyledWriteInvitation data-testid="write-invitation-join">
       <Text>{JOIN_INVITATION_LABEL}</Text>
-      {withJoinButton && (
-        <JoinHelpGroupButton slug={slug} onJoined={onJoined} />
-      )}
+      <JoinHelpGroupButton slug={slug} onJoined={onJoined} />
     </StyledWriteInvitation>
   );
 }

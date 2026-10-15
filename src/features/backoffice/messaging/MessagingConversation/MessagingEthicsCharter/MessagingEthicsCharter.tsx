@@ -2,11 +2,11 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Text } from '@/src/components/ui';
 import {
-  EthicsCharterSummary,
-  getEthicsCharterSummaries,
-} from '@/src/components/ui/EthicsCharter/EthicsCharter';
+  ETHICS_CHARTER_SUMMARIES_INTRO,
+  ETHICS_CHARTER_SUMMARIES_TITLE,
+  EthicsCharterSummaries,
+} from '@/src/components/ui/EthicsCharter/EthicsCharterSummaries';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { BulletListElement, List } from '@/src/components/ui/Lists';
 import { DocumentNames, ReduxRequestEvents } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
 import { ModalContext } from '@/src/features/modals/Modal';
@@ -21,40 +21,14 @@ import {
   StyledMessagingEthicsCharterLink,
   StyledMessagingEthicsCharterNote,
   StyledMessagingEthicsCharterNoteLink,
-  StyledMessagingEthicsCharterPoints,
-  StyledMessagingEthicsCharterSection,
-  StyledMessagingEthicsCharterSectionBody,
-  StyledMessagingEthicsCharterSectionIcon,
-  StyledMessagingEthicsCharterSections,
 } from './MessagingEthicsCharter.styles';
 
 const MODAL_ID = 'messaging-ethics-charter-modal';
-const TITLE = "Ici, on se parle d'égal à égal";
-const INTRO =
-  "Pour des échanges respectueux et sincères, voici ce à quoi chacun s'engage ici.";
+const TITLE = ETHICS_CHARTER_SUMMARIES_TITLE;
+const INTRO = ETHICS_CHARTER_SUMMARIES_INTRO;
 const CHARTER_LINK_LABEL = 'Voir la charte complète';
 const CHARTER_PATH = '/conseils-posture';
 const ACKNOWLEDGE_LABEL = "J'ai compris";
-
-const CharterSection = ({ summary }: { summary: EthicsCharterSummary }) => (
-  <StyledMessagingEthicsCharterSection>
-    <StyledMessagingEthicsCharterSectionIcon>
-      <LucidIcon name={summary.icon} color={COLORS.darkTeal} />
-    </StyledMessagingEthicsCharterSectionIcon>
-    <StyledMessagingEthicsCharterSectionBody>
-      <Text weight="semibold">{summary.title}</Text>
-      <StyledMessagingEthicsCharterPoints>
-        <List>
-          {summary.points.map((point) => (
-            <BulletListElement key={point}>
-              <Text>{point}</Text>
-            </BulletListElement>
-          ))}
-        </List>
-      </StyledMessagingEthicsCharterPoints>
-    </StyledMessagingEthicsCharterSectionBody>
-  </StyledMessagingEthicsCharterSection>
-);
 
 export const MessagingEthicsCharter = () => {
   const dispatch = useDispatch();
@@ -63,7 +37,6 @@ export const MessagingEthicsCharter = () => {
     selectFetchCurrentReadDocumentsStatus
   );
   const [isDismissed, setIsDismissed] = useState(false);
-  const summaries = getEthicsCharterSummaries();
 
   /**
    * The modal opens only once per user: it waits for the read documents to be
@@ -153,11 +126,7 @@ export const MessagingEthicsCharter = () => {
               </>
             }
           >
-            <StyledMessagingEthicsCharterSections>
-              {summaries.map((summary) => (
-                <CharterSection key={summary.title} summary={summary} />
-              ))}
-            </StyledMessagingEthicsCharterSections>
+            <EthicsCharterSummaries />
           </ModalGeneric>
         </ModalContext.Provider>
       )}

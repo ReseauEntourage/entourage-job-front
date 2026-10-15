@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
 import { LucidIcon, Text } from '@/src/components/ui';
+import { EthicsCharterSummaries } from '@/src/components/ui/EthicsCharter/EthicsCharterSummaries';
 import { H5 } from '@/src/components/ui/Headings';
 import {
   HELP_GROUPS_CHARTER_INTRO,
-  HELP_GROUPS_CHARTER_RULES,
   HELP_GROUPS_CHARTER_TITLE,
 } from '../help-groups.charter';
 import {
   StyledHelpGroupCharter,
-  StyledHelpGroupCharterCheck,
+  StyledHelpGroupCharterBody,
   StyledHelpGroupCharterDetails,
-  StyledHelpGroupCharterRules,
   StyledHelpGroupCharterSummary,
   StyledHelpGroupCharterSummaryIcon,
   StyledHelpGroupCharterTitle,
 } from './HelpGroupPage.styles';
 
 const formatCharterToggleLabel = (isOpen: boolean) =>
-  `${HELP_GROUPS_CHARTER_RULES.length} règles · ${
-    isOpen ? 'Masquer' : 'Afficher'
-  }`;
+  isOpen ? 'Masquer' : 'Afficher';
 
 interface HelpGroupCharterProps {
   // Mobile: collapsed under the description, expandable in full
@@ -27,7 +24,7 @@ interface HelpGroupCharterProps {
 }
 
 /**
- * The frame common to every group, readable in full by anyone, member or not.
+ * The frame common to every group (the messaging charter summary), readable in full by anyone, member or not.
  */
 export function HelpGroupCharter({
   collapsible = false,
@@ -49,13 +46,10 @@ export function HelpGroupCharter({
             {formatCharterToggleLabel(isOpen)}
           </Text>
         </StyledHelpGroupCharterSummary>
-        <StyledHelpGroupCharterRules>
-          {HELP_GROUPS_CHARTER_RULES.map((rule) => (
-            <li key={rule}>
-              <Text>{rule}</Text>
-            </li>
-          ))}
-        </StyledHelpGroupCharterRules>
+        <StyledHelpGroupCharterBody>
+          <Text color="darkGray">{HELP_GROUPS_CHARTER_INTRO}</Text>
+          <EthicsCharterSummaries />
+        </StyledHelpGroupCharterBody>
       </StyledHelpGroupCharterDetails>
     );
   }
@@ -77,16 +71,7 @@ export function HelpGroupCharter({
       <Text size="small" color="darkGray">
         {HELP_GROUPS_CHARTER_INTRO}
       </Text>
-      <StyledHelpGroupCharterRules>
-        {HELP_GROUPS_CHARTER_RULES.map((rule) => (
-          <li key={rule}>
-            <StyledHelpGroupCharterCheck>
-              <LucidIcon name="Check" size={16} stroke="bold" />
-            </StyledHelpGroupCharterCheck>
-            <Text>{rule}</Text>
-          </li>
-        ))}
-      </StyledHelpGroupCharterRules>
+      <EthicsCharterSummaries />
     </StyledHelpGroupCharter>
   );
 }

@@ -84,15 +84,13 @@ describe('HelpGroupsCatalog', () => {
     });
     render(<HelpGroupsCatalog />);
     const intro = screen.getByTestId('help-groups-intro');
-    expect(intro).toHaveTextContent("Groupes d'entraide");
     expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: 'Trouvez le groupe qui parle de votre situation',
-      })
+      screen.getByRole('heading', { level: 1, name: "Groupes d'entraide" })
     ).toBeInTheDocument();
+    // No overline above the title: the other pages have none
+    expect(screen.getAllByText("Groupes d'entraide")).toHaveLength(1);
     expect(intro).toHaveTextContent(
-      "Posez une question, partagez une situation, proposez votre aide. Candidats, coachs et prescripteurs s'y entraident d'égal à égal."
+      'Rejoignez les groupes de discussions partagez avec les coachs et les candidats autour de sujets qui vous intéressent !'
     );
     expect(screen.getByTestId('help-groups-charter-link')).toHaveTextContent(
       'Lire le cadre des groupes'
@@ -116,8 +114,13 @@ describe('HelpGroupsCatalog', () => {
       {},
       { timeout: 5000 }
     );
-    expect(modal).toHaveTextContent('Ces règles valent pour tous les groupes.');
-    expect(modal.querySelectorAll('li')).toHaveLength(4);
+    expect(modal).toHaveTextContent(
+      "Pour des échanges respectueux et sincères, voici ce à quoi chacun s'engage ici."
+    );
+    expect(
+      screen.getByText("Ici, on se parle d'égal à égal")
+    ).toBeInTheDocument();
+    expect(modal.querySelectorAll('li').length).toBeGreaterThan(0);
   });
 
   it('lists the groups without redirecting when one is published', () => {

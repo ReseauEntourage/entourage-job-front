@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Text } from '@/src/components/ui';
+import { EthicsCharterSummaries } from '@/src/components/ui/EthicsCharter/EthicsCharterSummaries';
 import { CheckBox } from '@/src/components/ui/Inputs';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
@@ -11,11 +12,7 @@ import {
   CHARTER_MODAL_TITLE,
   COMPOSER_CANCEL_LABEL,
 } from '../help-groups-participation.labels';
-import { HELP_GROUPS_CHARTER_RULES } from '../help-groups.charter';
-import {
-  StyledCharterModalContent,
-  StyledCharterModalRules,
-} from './CharterModal.styles';
+import { StyledCharterModalContent } from './CharterModal.styles';
 
 interface CharterModalProps {
   // Sends the message with the charter acceptance
@@ -34,13 +31,7 @@ export function CharterModal({ onAccept }: CharterModalProps) {
     <ModalGeneric title={CHARTER_MODAL_TITLE} align="left">
       <StyledCharterModalContent>
         <Text>{CHARTER_MODAL_INTRO}</Text>
-        <StyledCharterModalRules>
-          {HELP_GROUPS_CHARTER_RULES.map((rule) => (
-            <li key={rule}>
-              <Text>{rule}</Text>
-            </li>
-          ))}
-        </StyledCharterModalRules>
+        <EthicsCharterSummaries />
         <CheckBox
           id="help-group-charter-accept"
           name="help-group-charter-accept"

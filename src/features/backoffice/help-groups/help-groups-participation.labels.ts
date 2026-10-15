@@ -9,9 +9,9 @@ export const TITLE_SUGGESTION_MIN_LENGTH = 30;
 // "Proposer un autre titre", per draft
 export const TITLE_SUGGESTION_MAX_RETRIES = 5;
 
-// Labels validated by the PM on 01/10/2026
+// Labels validated by the PM on 01/10/2026, join invitation reworded on 15/10/2026
 export const JOIN_INVITATION_LABEL =
-  'Vous lisez ce groupe librement. Pour publier une discussion, y répondre ou réagir, rejoignez le groupe.';
+  'Rejoignez le groupe pour participer à la discussion, y répondre ou réagir.';
 export const JOIN_BUTTON_LABEL = 'Rejoindre le groupe';
 export const ELEARNING_INVITATION_LABEL =
   'Terminez votre formation pour participer aux groupes';

@@ -49,10 +49,6 @@ export const StyledHelpGroupsIntroText = styled.div`
   }
 `;
 
-export const StyledHelpGroupsOverline = styled.div`
-  letter-spacing: 0.08em;
-`;
-
 export const StyledHelpGroupsIntroLead = styled.div`
   max-width: 640px;
 `;

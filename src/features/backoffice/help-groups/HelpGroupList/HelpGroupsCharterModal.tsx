@@ -1,13 +1,10 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
+import { EthicsCharterSummaries } from '@/src/components/ui/EthicsCharter/EthicsCharterSummaries';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
-import {
-  StyledCharterModalContent,
-  StyledCharterModalRules,
-} from '../CharterModal/CharterModal.styles';
+import { StyledCharterModalContent } from '../CharterModal/CharterModal.styles';
 import {
   HELP_GROUPS_CHARTER_INTRO,
-  HELP_GROUPS_CHARTER_RULES,
   HELP_GROUPS_CHARTER_TITLE,
 } from '../help-groups.charter';
 
@@ -26,13 +23,7 @@ export function HelpGroupsCharterModal() {
     >
       <StyledCharterModalContent data-testid="help-groups-charter-modal">
         <Text>{HELP_GROUPS_CHARTER_INTRO}</Text>
-        <StyledCharterModalRules>
-          {HELP_GROUPS_CHARTER_RULES.map((rule) => (
-            <li key={rule}>
-              <Text>{rule}</Text>
-            </li>
-          ))}
-        </StyledCharterModalRules>
+        <EthicsCharterSummaries />
       </StyledCharterModalContent>
     </ModalGeneric>
   );
