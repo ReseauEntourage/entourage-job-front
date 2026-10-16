@@ -49,14 +49,26 @@ describe('En-tête connecté', () => {
     cy.wait('@getRecommendations');
     cy.get('#nav').should('be.visible');
 
-    // On mobile the entries live in the side panel, opened by the hamburger
+    // On mobile the entries live in a card under the bar, opened by the hamburger
     if (Cypress.expose('device') === 'mobile') {
+      cy.get('#nav').capture('Barre mobile', {
+        caption:
+          'Bandeau blanc de 64px : logo en couleur, cloche, messagerie et menu.',
+      });
       cy.get('[data-testid="nav-hamburger"]').click();
       cy.get('#nav').contains('a', 'Accueil').should('be.visible');
-      cy.get('#nav').contains('a', 'Mon profil').should('be.visible');
-      cy.capture('Panneau mobile', {
+      // The account menu is folded: its entries only show once unfolded
+      cy.get('#nav').should('not.contain', 'Mon profil');
+      cy.capture('Menu mobile', {
         caption:
-          '« Accueil » remplace « Tableau de bord » ; « Mon profil » et « Se déconnecter » restent dans le panneau.',
+          'Carte blanche sous la barre : « Accueil » en pilule, « Ressources » repliée, menu de la photo replié en bas.',
+        capture: 'viewport',
+      });
+      cy.get('[data-testid="nav-account"]').click();
+      cy.get('#nav').contains('a', 'Mon profil').should('be.visible');
+      cy.capture('Menu de la photo déplié', {
+        caption:
+          '« Mon profil » et « Se déconnecter » après un clic sur la photo.',
         capture: 'viewport',
       });
       return;
