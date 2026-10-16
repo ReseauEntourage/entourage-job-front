@@ -39,6 +39,8 @@ export const StyledMobileMenuPanel = styled.div<{
 export const StyledMobileMenuList = styled.ul`
   display: flex;
   flex-direction: column;
+  /* Keeps the entries, and their hover background, from touching each other */
+  gap: 2px;
   margin: 0;
   padding: 0;
   list-style: none;

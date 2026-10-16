@@ -196,6 +196,13 @@ describe('NavConnectedContentMobile - menu card', () => {
     expect(screen.queryByText("Réseau d'entraide")).not.toBeInTheDocument();
   });
 
+  it('leaves a 2px gap between the entries', () => {
+    renderMobile(UserRoles.CANDIDATE);
+    openMobileMenu();
+    const list = screen.getByRole('link', { name: 'Accueil' }).closest('ul');
+    expect(list).toHaveStyle('gap: 2px');
+  });
+
   it('offers real links', () => {
     renderMobile(UserRoles.CANDIDATE);
     openMobileMenu();
