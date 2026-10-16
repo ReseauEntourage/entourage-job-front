@@ -4,6 +4,7 @@ import { WriteInvitation } from '../WriteInvitation';
 
 interface HelpGroupInfoBlockProps {
   group: HelpGroupPage;
+  onJoined?: () => void;
 }
 
 /**
@@ -11,16 +12,18 @@ interface HelpGroupInfoBlockProps {
  * of the person: the invitation to join, or to finish the training. Nothing
  * for a member allowed to write, nor in the preview of an unpublished group.
  */
-export function HelpGroupInfoBlock({ group }: HelpGroupInfoBlockProps) {
+export function HelpGroupInfoBlock({
+  group,
+  onJoined,
+}: HelpGroupInfoBlockProps) {
   if (!group.isPublished) {
     return null;
   }
   const { state } = group.viewerPermissions;
 
   if (state !== 'canWrite') {
-    // The join button lives in the group header
     return (
-      <WriteInvitation slug={group.slug} state={state} withJoinButton={false} />
+      <WriteInvitation slug={group.slug} state={state} onJoined={onJoined} />
     );
   }
   return null;

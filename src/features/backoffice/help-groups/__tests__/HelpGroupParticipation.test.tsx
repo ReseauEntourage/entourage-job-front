@@ -146,7 +146,7 @@ describe('Help group participation', () => {
     it('invites an eligible non member to join, instead of the composer', async () => {
       renderPage({ state: 'mustJoin' });
       expect(
-        screen.getByText(/Pour publier une discussion, y répondre ou réagir/)
+        screen.getByText(/Rejoignez le groupe pour participer à la discussion/)
       ).toBeInTheDocument();
       expect(
         screen.queryByTestId('discussion-composer-bar')
@@ -156,7 +156,11 @@ describe('Help group participation', () => {
 
     it('offers the write actions right after joining, with « Vous venez de rejoindre »', async () => {
       const { rerender } = renderPage({ state: 'mustJoin' });
-      fireEvent.click(screen.getByTestId('join-help-group'));
+      fireEvent.click(
+        within(screen.getByTestId('write-invitation-join')).getByTestId(
+          'join-help-group'
+        )
+      );
       await waitFor(() =>
         expect(mockJoin).toHaveBeenCalledWith('refaire-un-cv')
       );
@@ -253,15 +257,15 @@ describe('Help group participation', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('offers « Rejoindre le groupe » in the header to an eligible non member, the invitation being in the main column', () => {
+    it('offers « Rejoindre le groupe » both in the header and in the invitation of the main column to an eligible non member', () => {
       renderPage({ state: 'mustJoin' });
       const invitation = screen.getByTestId('write-invitation-join');
       expect(invitation).toHaveTextContent(
-        'Vous lisez ce groupe librement. Pour publier une discussion, y répondre ou réagir, rejoignez le groupe.'
+        'Rejoignez le groupe pour participer à la discussion, y répondre ou réagir.'
       );
       expect(
-        within(invitation).queryByTestId('join-help-group')
-      ).not.toBeInTheDocument();
+        within(invitation).getByTestId('join-help-group')
+      ).toHaveTextContent('Rejoindre le groupe');
       expect(header().getByTestId('join-help-group')).toHaveTextContent(
         'Rejoindre le groupe'
       );

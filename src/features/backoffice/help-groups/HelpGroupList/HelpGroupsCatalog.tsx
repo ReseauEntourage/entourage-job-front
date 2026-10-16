@@ -19,23 +19,17 @@ import {
   StyledHelpGroupsIntro,
   StyledHelpGroupsIntroLead,
   StyledHelpGroupsIntroText,
-  StyledHelpGroupsOverline,
 } from './HelpGroupList.styles';
 import { HelpGroupsCharterModal } from './HelpGroupsCharterModal';
 
 /**
- * Overline, title and lead of the groups list, with a link to the frame
+ * Title and lead of the groups list, with a link to the frame
  * common to every group.
  */
 export function HelpGroupsIntro() {
   return (
     <StyledHelpGroupsIntro data-testid="help-groups-intro">
       <StyledHelpGroupsIntroText>
-        <StyledHelpGroupsOverline>
-          <Text size="small" weight="semibold" color="teal" uppercase>
-            {HELP_GROUPS_INTRO.overline}
-          </Text>
-        </StyledHelpGroupsOverline>
         <H1 title={HELP_GROUPS_INTRO.title} weight="semibold" noMarginBottom />
         <StyledHelpGroupsIntroLead>
           <Text size="large" color="darkGray">

@@ -120,7 +120,10 @@ export function HelpGroupPage({
       <Section className="custom-page">
         <StyledHelpGroupPage>
           <StyledHelpGroupPageMain>
-            <HelpGroupInfoBlock group={group} />
+            <HelpGroupInfoBlock
+              group={group}
+              onJoined={() => setJustJoined(true)}
+            />
             {group.isPublished &&
               group.viewerPermissions.state === 'canWrite' && (
                 <DiscussionComposer
