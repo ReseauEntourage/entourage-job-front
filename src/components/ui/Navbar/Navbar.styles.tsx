@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { COLORS, HEIGHTS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledNavbar = styled.nav<{
   $backgroundColor?: string;
@@ -22,6 +22,10 @@ export const StyledNavbar = styled.nav<{
   width: 100%;
   z-index: 1040;
   height: ${HEIGHTS.HEADER}px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    height: ${HEIGHTS.HEADER_MOBILE}px;
+  }
 `;
 
 export const StyledCenterContainer = styled.div`

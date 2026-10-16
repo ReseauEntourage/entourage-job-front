@@ -9,13 +9,15 @@ export const StyledNavContainerMobile = styled.header`
   height: ${HEIGHTS.HEADER_MOBILE}px;
 `;
 
-export const StyledMessagingIconContainer = styled.div`
+export const StyledMessagingIconContainer = styled.div<{
+  $compact?: boolean;
+}>`
   position: relative;
 
   .pin-notification {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: ${({ $compact }) => ($compact ? '2px' : '8px')};
+    right: ${({ $compact }) => ($compact ? '2px' : '8px')};
     width: 18px;
     height: 18px;
     background: ${COLORS.lightRed};

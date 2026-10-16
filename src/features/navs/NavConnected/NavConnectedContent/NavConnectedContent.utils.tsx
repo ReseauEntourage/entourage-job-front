@@ -3,6 +3,7 @@ import { CurrentUserCompany, User } from '@/src/api/types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { GA_TAGS } from '@/src/constants/tags';
 import { UserRoles } from '@/src/constants/users';
+import { onboardingExcludedRoles } from '@/src/features/wizard/onboarding/onboarding.constants';
 import { NavConnectedMainItem } from '../NavConnected.types';
 
 const rolesToParams = (roles) => {
@@ -17,7 +18,25 @@ const candidateRolesParams = rolesToParams([UserRoles.CANDIDATE]);
 const coachRolesParams = rolesToParams([UserRoles.COACH]);
 const refererRolesParams = rolesToParams([UserRoles.REFERER]);
 
-const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
+// Placed right after "Réseau d'entraide" for every role, only once a group
+// is published. The item stays active on the group and discussion pages since
+// the nav matches the current path with `asPath.includes(href)`.
+const renderHelpGroupsItems = (
+  hasPublishedHelpGroups: boolean
+): NavConnectedMainItem[] =>
+  hasPublishedHelpGroups
+    ? [
+        {
+          href: '/backoffice/groupes',
+          name: 'Groupes',
+        },
+      ]
+    : [];
+
+const renderCandidateHeaderItems = (
+  user: User,
+  helpGroupsItems: NavConnectedMainItem[]
+): NavConnectedMainItem[] => {
   const onboardingStatus = user.onboardingStatus;
   let items: NavConnectedMainItem[] = [];
 
@@ -26,17 +45,14 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
       ...items,
       {
         href: '/backoffice/dashboard',
-        name: 'Tableau de bord',
+        name: 'Accueil',
         tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
-      },
-      {
-        href: '/backoffice/parametres',
-        name: 'Mon profil',
       },
       {
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
+      ...helpGroupsItems,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -70,7 +86,8 @@ const renderCandidateHeaderItems = (user: User): NavConnectedMainItem[] => {
 
 const renderCoachHeaderItems = (
   user: User,
-  company: CurrentUserCompany | null
+  company: CurrentUserCompany | null,
+  helpGroupsItems: NavConnectedMainItem[]
 ): NavConnectedMainItem[] => {
   const isCompanyAdmin = company && company.companyUser?.isAdmin;
   const onboardingStatus = user.onboardingStatus;
@@ -82,12 +99,8 @@ const renderCoachHeaderItems = (
       ...items,
       {
         href: '/backoffice/dashboard',
-        name: 'Tableau de bord',
+        name: 'Accueil',
         tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
-      },
-      {
-        href: '/backoffice/parametres',
-        name: 'Mon profil',
       },
       ...(isCompanyAdmin
         ? [
@@ -102,6 +115,7 @@ const renderCoachHeaderItems = (
         href: '/backoffice/annuaire',
         name: "Réseau d'entraide",
       },
+      ...helpGroupsItems,
       {
         href: '/backoffice/events',
         name: 'Événements',
@@ -147,66 +161,36 @@ const renderCoachHeaderItems = (
 export const renderLinks = (
   user: User,
   logout: () => void,
-  company: CurrentUserCompany | null
+  company: CurrentUserCompany | null,
+  hasPublishedHelpGroups = false
 ): {
   links: { [K in UserRoles]: NavConnectedMainItem[] };
+  administration: NavConnectedMainItem | null;
   messaging: NavConnectedMainItem;
   dropdown: NavConnectedMainItem[];
 } => {
-  const candidateHeaderItems = renderCandidateHeaderItems(user);
-  const coachHeaderItems = renderCoachHeaderItems(user, company);
+  const helpGroupsItems = renderHelpGroupsItems(hasPublishedHelpGroups);
+  const canAccessProfile =
+    onboardingExcludedRoles.includes(user?.role) ||
+    user?.onboardingStatus === 'completed';
+  const candidateHeaderItems = renderCandidateHeaderItems(
+    user,
+    helpGroupsItems
+  );
+  const coachHeaderItems = renderCoachHeaderItems(
+    user,
+    company,
+    helpGroupsItems
+  );
 
   return {
     links: {
       [UserRoles.ADMIN]: [
         {
-          href: '/backoffice/admin/membres',
-          queryParams: `?${candidateRolesParams}${
-            user?.zone ? `zone=${user?.zone}` : ''
-          }`,
-          name: 'Les membres',
-          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC,
-          subMenu: [
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${candidateRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les candidats',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
-            },
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${coachRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les coachs',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
-            },
-            {
-              href: '/backoffice/admin/membres',
-              queryParams: `?${refererRolesParams}${
-                user?.zone ? `zone=${user?.zone}` : ''
-              }`,
-              name: 'Les prescripteurs',
-              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
-            },
-          ],
-        },
-        {
-          href: '/backoffice/admin/structures',
-          queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
-          name: 'Les structures partenaires',
-          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
-        },
-        {
-          href: '/backoffice/parametres',
-          name: 'Mon profil',
-        },
-        {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
+        ...helpGroupsItems,
         {
           href: '/backoffice/events',
           name: 'Événements',
@@ -217,17 +201,14 @@ export const renderLinks = (
       [UserRoles.REFERER]: [
         {
           href: '/backoffice/dashboard',
-          name: 'Tableau de bord',
+          name: 'Accueil',
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
-        },
-        {
-          href: '/backoffice/parametres',
-          name: 'Mon profil',
         },
         {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
+        ...helpGroupsItems,
         {
           href: '/backoffice/events',
           name: 'Événements',
@@ -251,6 +232,58 @@ export const renderLinks = (
         },
       ],
     },
+    // Admin pages live in their own menu (cog icon) instead of the main nav.
+    // The sub menu has a single level, hence the members entries flattened.
+    administration:
+      user?.role === UserRoles.ADMIN
+        ? {
+            name: 'Administration',
+            icon: <LucidIcon name="Settings" stroke="thin" />,
+            subMenu: [
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${candidateRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les candidats',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${coachRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les coachs',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/membres',
+                queryParams: `?${refererRolesParams}${
+                  user?.zone ? `zone=${user?.zone}` : ''
+                }`,
+                name: 'Les prescripteurs',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/structures',
+                queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
+                name: 'Les structures partenaires',
+                tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
+              },
+              {
+                href: '/backoffice/admin/groupes',
+                name: 'Les groupes',
+              },
+              {
+                href: '/backoffice/admin/signalements',
+                name: 'Les signalements',
+                badge: 'reports',
+              },
+            ],
+            // The cog shows the badge too, visible with the menu closed
+            badge: 'reports',
+          }
+        : null,
     messaging: {
       href: '/backoffice/messaging',
       icon: <LucidIcon name="MessageCircleMore" stroke="thin" />,
@@ -258,10 +291,23 @@ export const renderLinks = (
       badge: 'messaging',
     },
     dropdown: [
+      // "Mon profil" lives in the account menu, not in the tabs. Candidates
+      // and coaches who have not completed the onboarding are redirected to
+      // it from every backoffice page, the profile included: no entry for them
+      ...(canAccessProfile
+        ? [
+            {
+              href: '/backoffice/parametres',
+              icon: <LucidIcon name="User" />,
+              name: 'Mon profil',
+            },
+          ]
+        : []),
       {
         href: '',
         onClick: logout,
         icon: <LucidIcon name="LogOut" />,
+        color: 'darkOrange' as const,
         name: 'Se déconnecter',
       },
     ],

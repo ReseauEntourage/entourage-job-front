@@ -82,14 +82,14 @@ describe('En tant que - Prescripteur', () => {
       cy.visit(`/backoffice/dashboard`);
     });
 
-    describe('Je peux accéder à mon tableau de bord personnel', () => {
-      it('should display "Tableau de bord" inside the navigation', () => {
-        // Check that a link with class ".menu-link" contains the text "Tableau de bord"
-        cy.get('.menu-link').contains('Tableau de bord');
+    describe('Je peux accéder à mon accueil personnel', () => {
+      it('should display "Accueil" inside the navigation', () => {
+        // Check that a link with class ".menu-link" contains the text "Accueil"
+        cy.get('.menu-link').contains('Accueil');
       });
       it('should be able to navigate to /backoffice/dashboard', () => {
-        // Click on the link with the text "Tableau de bord"
-        cy.get('.menu-link').contains('Tableau de bord').click();
+        // Click on the link with the text "Accueil"
+        cy.get('.menu-link').contains('Accueil').click();
         // Check that the URL is now /backoffice/dashboard
         cy.url().should('include', '/backoffice/dashboard');
         // Check that the page contains the text "Bienvenue sur votre tableau de bord"

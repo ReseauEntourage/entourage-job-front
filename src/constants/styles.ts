@@ -4,7 +4,7 @@ export const BREAKPOINTS = {
 
 export const HEIGHTS = {
   HEADER: 80,
-  HEADER_MOBILE: 80,
+  HEADER_MOBILE: 64,
   PUBLIC_NAV_CARD: 66,
   PUBLIC_NAV_CARD_MOBILE: 56,
   PUBLIC_NAV_OFFSET_TOP: 42,
@@ -15,6 +15,16 @@ export const HEIGHTS = {
   SECTION_PADDING: 24,
   SECTION_PADDING_MOBILE: 12,
   MESSAGING_DESKTOP_BORDER_SIZE: 3,
+};
+
+/** Elevation scale shared by cards, popovers and their hover states. */
+export const SHADOWS = {
+  card: '0 2px 8px rgba(0, 0, 0, 0.08)',
+  cardHover: '0 4px 12px rgba(0, 0, 0, 0.12)',
+  raised: '0 2px 12px rgba(0, 0, 0, 0.16)',
+  popover: '0 2px 8px rgba(0, 0, 0, 0.12)',
+  // Floating menus: the elevation replaces the border
+  dropdown: '0 5px 12px rgba(0, 0, 0, 0.15)',
 };
 
 export const COLORS = {
