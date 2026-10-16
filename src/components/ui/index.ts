@@ -15,7 +15,6 @@ export * from './Navbar/Nav';
 export * from './Navbar';
 export * from './Navbar/NavbarLogo';
 export * from './Section';
-export * from './OffCanvas/OffCanvas';
 export * from './Text';
 export * from './Dropdown/Dropdown';
 export * from './Icons';

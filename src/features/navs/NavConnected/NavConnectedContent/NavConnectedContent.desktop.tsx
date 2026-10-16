@@ -25,6 +25,7 @@ import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticate
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { gaEvent } from '@/src/lib/gtag';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
+import { isNavGroupActive } from './NavConnectedContent.active';
 import {
   StyledConnectedItem,
   StyledNavAccountToggle,
@@ -205,12 +206,11 @@ export const NavConnectedContentDesktop = ({
                   if (disabled) {
                     return;
                   }
-                  const isActiveOrChildActive =
-                    (!!href && asPath.includes(href)) ||
-                    (subMenu &&
-                      subMenu.some(({ href: subMenuHref }) => {
-                        return asPath.includes(subMenuHref);
-                      }));
+                  const isActiveOrChildActive = isNavGroupActive(asPath, {
+                    href,
+                    queryParams,
+                    subMenu,
+                  });
                   return (
                     <StyledConnectedItem
                       color="black"

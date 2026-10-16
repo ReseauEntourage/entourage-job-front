@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ButtonIcon, Text } from '@/src/components/ui';
+import { ButtonSize } from '@/src/components/ui/Button/Button.types';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { MarkAllSeenButton } from '../MarkAllSeenButton';
 import { NotificationsList } from '../NotificationsList';
@@ -22,6 +23,8 @@ interface NotificationsBellProps {
   // Desktop: a dropdown panel; mobile: a link to the full screen page
   variant: 'desktop' | 'mobile';
   color: string;
+  // Size of the bell button; a smaller one also pulls the badge in
+  size?: ButtonSize;
 }
 
 /**
@@ -32,6 +35,7 @@ export const NotificationsBell = ({
   unseenCount,
   variant,
   color,
+  size = 'xxlarge',
 }: NotificationsBellProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -68,7 +72,7 @@ export const NotificationsBell = ({
         icon={<LucidIcon name="Bell" stroke="thin" />}
         color={color}
         variant="text"
-        size="xxlarge"
+        size={size}
         dataTestId="notifications-bell-button"
         ariaLabel={getBellLabel(unseenCount)}
         {...(variant === 'mobile'
@@ -77,6 +81,7 @@ export const NotificationsBell = ({
       />
       {badge && (
         <StyledNotificationsBadge
+          $compact={size !== 'xxlarge'}
           aria-hidden="true"
           data-testid="notifications-badge"
         >

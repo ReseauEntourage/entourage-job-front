@@ -5,10 +5,10 @@ export const StyledNotificationsBell = styled.div`
   position: relative;
 `;
 
-export const StyledNotificationsBadge = styled.div`
+export const StyledNotificationsBadge = styled.div<{ $compact?: boolean }>`
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: ${({ $compact }) => ($compact ? '2px' : '8px')};
+  right: ${({ $compact }) => ($compact ? '2px' : '8px')};
   min-width: 18px;
   height: 18px;
   padding: 0 4px;
