@@ -2,9 +2,17 @@ import { styled } from 'styled-components';
 import { COLORS, FONT_WEIGHTS } from '@/src/constants/styles';
 import { StyledHeadingProps } from './Headings.types';
 
+const H1_FONT_SIZES = {
+  default: { desktop: '32px', mobile: '24px' },
+  compact: { desktop: '24px', mobile: '20px' },
+};
+
 export const StyledH1 = styled.h1<StyledHeadingProps>`
-  font-size: ${(props) => (props.$mobile ? '24px' : '32px')};
-  line-height: 1.5;
+  font-size: ${(props) =>
+    H1_FONT_SIZES[props.$compact ? 'compact' : 'default'][
+      props.$mobile ? 'mobile' : 'desktop'
+    ]};
+  line-height: ${(props) => (props.$compact ? 1.4 : 1.5)};
   font-weight: ${(props) =>
     props.$weight ? FONT_WEIGHTS[props.$weight] : FONT_WEIGHTS.normal};
   color: ${(props) => {

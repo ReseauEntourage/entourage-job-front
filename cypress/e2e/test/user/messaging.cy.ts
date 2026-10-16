@@ -597,12 +597,11 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
 
       cy.get('[data-testid="messaging-conversation-actions-button"]').click();
       cy.get('[data-testid="messaging-report-button"]').click();
-      cy.contains('Signaler une conversation').should('be.visible');
+      cy.contains('Signaler cette conversation').should('be.visible');
 
-      cy.get('[data-testid="form-report-user-reason"]').click();
-      cy.get('#select-option-SPAM').click();
-      cy.get('#form-report-user-comment').type('Sollicitation commerciale');
-      cy.get('[data-testid="form-confirm-form-report-user"]').click();
+      cy.get('#report-reason-SPAM').check({ force: true });
+      cy.get('#report-comment').type('Sollicitation commerciale');
+      cy.get('[data-testid="report-confirm"]').click();
 
       cy.wait('@postReportConversation')
         .its('request.body')
@@ -817,7 +816,7 @@ describe('En tant que - Membre connecté, je consulte ma messagerie', () => {
 
       cy.contains('peut-être malveillant').should('be.visible');
       cy.contains('signaler ce message').click();
-      cy.get('#form-report-user-comment').should('contain.value', 'suspicieux');
+      cy.get('#report-comment').should('contain.value', 'suspicieux');
     });
   });
 });

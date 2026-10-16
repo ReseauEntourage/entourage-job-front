@@ -10,7 +10,7 @@ interface ImgUserProfileProps {
   user: {
     id: string;
     firstName: string;
-    role: UserRoles;
+    role?: UserRoles;
   };
   size?: number;
   hasPicture: boolean;

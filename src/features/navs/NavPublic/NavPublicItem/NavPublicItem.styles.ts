@@ -13,6 +13,12 @@ export const StyledNavPublicItemMobileLinkContainer = styled.div<{
   border-radius: 12px;
   background-color: ${(props) =>
     props.selected ? COLORS.primaryBlue : 'transparent'};
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) =>
+      props.selected ? COLORS.primaryBlue : COLORS.hoverBlue};
+  }
 
   a {
     width: 100%;

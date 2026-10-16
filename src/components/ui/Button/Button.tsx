@@ -14,6 +14,7 @@ export function Button({
   prependIcon,
   appendIcon,
   dataTestId = '',
+  ariaLabel,
   isExternal = false,
   newTab = false,
   onClick = () => {},
@@ -58,6 +59,7 @@ export function Button({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       data-testid={dataTestId}
+      aria-label={ariaLabel}
       $variant={variant}
       size={size}
       color={color}

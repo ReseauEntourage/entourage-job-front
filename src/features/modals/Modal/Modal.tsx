@@ -4,7 +4,7 @@ import { LucidIcon } from '@/src/components/ui';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 import { useModalContext } from '@/src/features/modals/Modal/ModalContext';
 import { useIsMobile } from '@/src/hooks/utils';
-import { ModalSize } from './Modal.types';
+import { ModalSize, ModalVariant } from './Modal.types';
 import { StyledCloseButton } from './Modals.styles';
 
 /**
@@ -30,6 +30,7 @@ interface CustomModalProps {
    * plain text at the top of the content.
    */
   ariaLabel?: string;
+  variant?: ModalVariant;
 }
 
 const CustomModal = ({
@@ -40,6 +41,7 @@ const CustomModal = ({
   size,
   fillHeight = false,
   ariaLabel,
+  variant = 'default',
 }: CustomModalProps) => {
   const { onClose } = useModalContext();
   const isMobile = useIsMobile();
@@ -110,6 +112,23 @@ const CustomModal = ({
       },
     };
 
+    const sheetMobileStyle = {
+      overlay: {
+        alignItems: 'flex-end',
+      },
+      content: {
+        ...mobileStyle.content,
+        marginTop: 0,
+        maxHeight: '92%',
+        height: 'auto',
+        padding: '24px 0 16px',
+        top: 'auto',
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+      },
+    };
+    const isSheet = isMobile && variant === 'sheet';
+
     return {
       overlay: {
         zIndex: 1050,
@@ -118,6 +137,7 @@ const CustomModal = ({
         justifyContent: 'center',
         alignItems: 'center',
         ...(isMobile ? mobileStyle.overlay : {}),
+        ...(isSheet ? sheetMobileStyle.overlay : {}),
       },
       content: {
         width,
@@ -137,9 +157,10 @@ const CustomModal = ({
         maxHeight: '90vh',
         height: fillHeight ? '90vh' : 'auto',
         ...(isMobile ? mobileStyle.content : {}),
+        ...(isSheet ? sheetMobileStyle.content : {}),
       },
     };
-  }, [fillHeight, headerHeight, isMobile, width]);
+  }, [fillHeight, headerHeight, isMobile, variant, width]);
 
   return (
     <ReactModal

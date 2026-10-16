@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/src/components/ui';
 import { Modal, useModalContext } from '@/src/features/modals/Modal';
 import { StyledModalContent } from '@/src/features/modals/Modal/Modals.styles';
-import { ModalSize } from '../Modal.types';
+import { ModalSize, ModalVariant } from '../Modal.types';
 import { HeaderModal } from './HeaderModal';
 import { ModalFooter } from './ModalFooter/ModalFooter';
 
@@ -26,6 +26,10 @@ interface ModalGenericProps {
   footer?: React.ReactNode;
   /** Name of the modal for screen readers. */
   ariaLabel?: string;
+  /** Layout of the `footer` actions, see `ModalFooter`. */
+  footerLayout?: 'spread' | 'end';
+  /** Shape of the modal on mobile, see `ModalVariant`. */
+  variant?: ModalVariant;
 }
 
 export const ModalGeneric = ({
@@ -42,6 +46,8 @@ export const ModalGeneric = ({
   align = 'center',
   footer,
   ariaLabel,
+  footerLayout = 'spread',
+  variant = 'default',
 }: ModalGenericProps & { buttonText?: string }) => {
   const { onClose } = useModalContext();
   return (
@@ -50,6 +56,7 @@ export const ModalGeneric = ({
       size={size}
       closeOnNextRender={closeOnNextRender}
       ariaLabel={ariaLabel}
+      variant={variant}
     >
       <HeaderModal
         title={title}
@@ -72,7 +79,7 @@ export const ModalGeneric = ({
           </Button>
         )}
       </StyledModalContent>
-      {footer && <ModalFooter layout="spread">{footer}</ModalFooter>}
+      {footer && <ModalFooter layout={footerLayout}>{footer}</ModalFooter>}
     </Modal>
   );
 };

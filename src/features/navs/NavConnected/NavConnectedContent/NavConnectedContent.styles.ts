@@ -52,3 +52,41 @@ export const StyledConnectedItemMobile = styled.li`
     align-items: flex-start;
   }
 `;
+
+// Count of a menu entry over its icon, e.g. the reports badge on the cog
+export const StyledNavIconBadgeContainer = styled.div`
+  position: relative;
+`;
+
+export const StyledNavIconBadge = styled.span`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  background: ${COLORS.lightRed};
+  border-radius: 8px;
+  color: ${COLORS.white};
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+`;
+
+export const StyledNavDropdownItemContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+// Content of the account menu toggle: the photo and the arrow, centered in
+// the header height
+export const StyledNavAccountToggle = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 80px;
+  padding: 0 16px;
+`;

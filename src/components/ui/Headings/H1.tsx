@@ -9,6 +9,7 @@ export const H1 = ({
   center = false,
   weight = 'bold',
   noMarginBottom = false,
+  compact = false,
 }: HeadingComponentProps) => {
   const isDesktop = useIsDesktop();
   return (
@@ -18,6 +19,7 @@ export const H1 = ({
       $weight={weight}
       $mobile={!isDesktop}
       $noMarginBottom={noMarginBottom}
+      $compact={compact}
     >
       {title}
     </StyledH1>
