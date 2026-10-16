@@ -1,5 +1,6 @@
 import React from 'react';
 import { ButtonIcon } from '@/src/components/ui';
+import { ButtonSize } from '@/src/components/ui/Button/Button.types';
 import { Color, COLORS } from '@/src/constants/styles';
 import { LucidIcon } from './Icons/LucidIcon';
 
@@ -8,6 +9,8 @@ interface HamburgerProps {
   color?: Color;
   isOpen?: boolean;
   dataTestId?: string;
+  size?: ButtonSize;
+  ariaLabel?: string;
 }
 
 export const Hamburger = ({
@@ -15,6 +18,8 @@ export const Hamburger = ({
   color = 'white',
   isOpen = false,
   dataTestId,
+  size = 'medium',
+  ariaLabel,
 }: HamburgerProps) => {
   return (
     <ButtonIcon
@@ -27,7 +32,9 @@ export const Hamburger = ({
         />
       }
       variant="text"
+      size={size}
       dataTestId={dataTestId}
+      ariaLabel={ariaLabel}
     />
   );
 };

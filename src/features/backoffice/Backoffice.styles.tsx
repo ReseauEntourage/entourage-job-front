@@ -1,9 +1,13 @@
 import { styled } from 'styled-components';
-import { COLORS, HEIGHTS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledBackofficeBackground = styled.div`
   background-color: ${COLORS.lightGray};
   min-height: calc(100vh - ${HEIGHTS.HEADER}px);
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    min-height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
+  }
 `;
 
 export const StyledBackofficeGrid = styled.div`
