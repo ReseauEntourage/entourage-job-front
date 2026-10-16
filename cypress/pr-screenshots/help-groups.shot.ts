@@ -321,15 +321,16 @@ const interceptGroupReads = (
 };
 
 // On desktop the header is captured alone; on mobile the hamburger menu is
-// opened first, since the entries only show up there.
+// opened first, since the entries are only rendered once it is open.
 const captureMenu = (
   title: string,
   caption: string,
+  mobileEntry: string,
   openDesktopMenu?: () => void
 ) => {
   if (Cypress.expose('device') === 'mobile') {
     cy.get('[data-testid="nav-hamburger"]').click();
-    cy.get('#nav').contains('a', 'Mon profil').should('be.visible');
+    cy.get('#nav').contains('a', mobileEntry).should('be.visible');
     cy.capture(title, { caption, capture: 'viewport' });
     return;
   }
@@ -637,10 +638,13 @@ describe('Groupes', () => {
     cy.wait('@getHelpGroups');
     cy.wait('@getHelpGroup');
     // The entry is rendered once the published groups are loaded
-    cy.get('#nav').contains('a', 'Groupes').should('exist');
+    if (Cypress.expose('device') !== 'mobile') {
+      cy.get('#nav').contains('a', 'Groupes').should('exist');
+    }
     captureMenu(
       'Menu d’un candidat',
-      'Entrée « Groupes » juste après « Réseau d’entraide », active sur la page d’un groupe. Elle n’apparaît qu’à partir d’un groupe publié.'
+      'Entrée « Groupes » juste après « Réseau d’entraide », active sur la page d’un groupe. Elle n’apparaît qu’à partir d’un groupe publié.',
+      'Groupes'
     );
   });
 
@@ -659,6 +663,7 @@ describe('Groupes', () => {
     captureMenu(
       'Menu d’administration',
       'Pages d’administration regroupées dans un menu à part, ouvert par la roue dentée : Les candidats, Les coachs, Les prescripteurs, Les structures partenaires, Les groupes.',
+      'Les groupes',
       () => {
         cy.get('[data-testid="nav-administration"]').click();
         cy.contains('.dropdown-item', 'Les groupes').should('be.visible');
