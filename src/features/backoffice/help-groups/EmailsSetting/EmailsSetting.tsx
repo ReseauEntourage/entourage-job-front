@@ -24,7 +24,8 @@ interface EmailsSettingProps {
 
 /**
  * "Emails de ce groupe", for a member: turns off the notification emails
- * of the group and its share of the weekly digest, without leaving it.
+ * of the group and its share of the daily email of the new discussions, without
+ * leaving it.
  */
 export function EmailsSetting({
   slug,
