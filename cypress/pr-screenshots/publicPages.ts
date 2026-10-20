@@ -8,6 +8,11 @@ import { visitorRequests } from '../e2e/intercept/user/visitor.req';
 /** Same visitor set-up as the e2e visitor journey: no welcome modal, mocked random CV cards. */
 export const prepareVisitor = () => {
   window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+  // Nothing outside the app is reached: external links and resources are answered locally.
+  cy.intercept(
+    { url: /^https?:\/\/(?!localhost)/ },
+    { statusCode: 200, body: '' }
+  );
   visitorRequests.GET.forEach((request) => {
     if (request.alias) {
       cy.intercept('GET', request.path, request.data).as(request.alias);
@@ -26,10 +31,11 @@ export const waitForPublicNav = () => {
 export const capturePublicPage = (
   title: string,
   path: string,
-  caption?: string
+  caption?: string,
+  failOnStatusCode = true
 ) => {
   prepareVisitor();
-  cy.visit(path);
+  cy.visit(path, { failOnStatusCode });
   waitForPublicNav();
   cy.capture(title, { caption });
 };

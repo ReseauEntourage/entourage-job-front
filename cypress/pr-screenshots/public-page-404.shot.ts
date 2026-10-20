@@ -8,7 +8,8 @@ describe('Page publique : Page introuvable', () => {
     capturePublicPage(
       'Page introuvable',
       '/cette-page-nexiste-pas',
-      'Le contenu commence sous le menu flottant.'
+      'Le contenu commence sous le menu flottant.',
+      false
     );
   });
 });
