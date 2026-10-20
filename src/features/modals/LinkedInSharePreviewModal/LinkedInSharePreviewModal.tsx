@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Api } from '@/src/api';
-import { isLinkedinShareDuplicateError } from '@/src/api/axiosErrors';
+import {
+  isLinkedinShareDuplicateError,
+  isLinkedinTokenExpiredError,
+} from '@/src/api/axiosErrors';
 import { Alert, Button, Text } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { LinkedInPostWhatsAppInviteModal } from '@/src/features/modals/LinkedInPostWhatsAppInviteModal/LinkedInPostWhatsAppInviteModal';
@@ -96,6 +99,14 @@ export const LinkedInSharePreviewModal = ({
         );
       }
     } catch (error) {
+      // The LinkedIn token expired since the user was loaded: relink the account
+      if (isLinkedinTokenExpiredError(error) && onTriggerOAuth) {
+        if (editedText) {
+          localStorage.setItem(`pendingLinkedinText_${profileId}`, editedText);
+        }
+        await onTriggerOAuth();
+        return;
+      }
       setShareError(
         isLinkedinShareDuplicateError(error)
           ? 'Ce profil a déjà été partagé récemment sur LinkedIn. LinkedIn peut limiter la fréquence de partage du même contenu. Veuillez réessayer plus tard.'
