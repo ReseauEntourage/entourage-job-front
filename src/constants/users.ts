@@ -28,6 +28,11 @@ export const getRolesNotAdmin = (): UserRoles[] => {
   );
 };
 
+// Admins are presented with the coach wording on profile pages: they never
+// look for a job, so the candidate wording must not apply to them.
+export const isCoachLikeRole = (role: UserRoles): boolean =>
+  role === UserRoles.COACH || role === UserRoles.ADMIN;
+
 export const getRolesWithOrganization = (): UserRoles[] => {
   return Object.values(UserRoles).filter(
     (role): role is RolesWithOrganization => role === UserRoles.REFERER

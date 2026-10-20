@@ -3,7 +3,7 @@ import React from 'react';
 import { UserProfileSectorOccupation } from '@/src/api/types';
 import { Text, TextSize, TextWeight } from '@/src/components/ui';
 import { Tag } from '@/src/components/ui/Tag';
-import { UserRoles } from '@/src/constants/users';
+import { UserRoles, isCoachLikeRole } from '@/src/constants/users';
 
 type CompanyBasic = {
   id: string;
@@ -68,7 +68,7 @@ export const ProfileCareerPathSentence = ({
     <StyledCompanyName>{company?.name}</StyledCompanyName>
   );
 
-  if (role === UserRoles.COACH) {
+  if (isCoachLikeRole(role)) {
     return (
       <>
         {currentJob || company ? (
