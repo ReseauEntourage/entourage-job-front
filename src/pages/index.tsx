@@ -32,7 +32,7 @@ const Index = () => {
     }
   });
   return (
-    <Layout>
+    <Layout hasHero>
       <PageHero
         title={<>Le premier réseau professionnel solidaire</>}
         description="Aujourd’hui, chercher un travail est de plus en plus difficile. Pour les plus précaires, c’est quasiment mission impossible. Entourage Pro vise à changer ça."

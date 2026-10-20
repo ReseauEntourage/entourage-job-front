@@ -142,7 +142,7 @@ const Aider = () => {
     }
   });
   return (
-    <Layout title="Aider - Entourage Pro">
+    <Layout title="Aider - Entourage Pro" hasHero>
       <PageHero
         title={
           <>
