@@ -1159,7 +1159,8 @@ export type HelpGroupAdminAction =
 
 // Notifications center (the bell)
 
-export type NotificationType = 'HELP_GROUP_REPLY' | 'HELP_GROUP_REACTION';
+export type NotificationType =
+  'HELP_GROUP_REPLY' | 'HELP_GROUP_REACTION' | 'HELP_GROUP_DISCUSSION';
 
 /**
  * A notification of the bell, one per subject (a discussion for the replies,

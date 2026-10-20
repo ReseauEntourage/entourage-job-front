@@ -156,6 +156,33 @@ describe('NotificationsBell', () => {
     ).toBe('/backoffice/groupes/refaire-un-cv/discussions/discussion-1');
   });
 
+  it('shows a new discussion of a group and leads to it, without a reply position', () => {
+    mockUseNotifications.mockReturnValue(
+      listResult([
+        buildNotification({
+          type: 'HELP_GROUP_DISCUSSION',
+          label: 'Amina a ouvert une discussion dans « Refaire un CV »',
+          excerpt: null,
+          destination: {
+            slug: 'refaire-un-cv',
+            discussionId: 'discussion-2',
+            replyId: null,
+          },
+        }),
+      ])
+    );
+    renderBell(1);
+    openBell();
+    const item = screen.getByTestId('notification-item');
+    expect(item).toHaveTextContent(
+      'Amina a ouvert une discussion dans « Refaire un CV »'
+    );
+    expect(item.querySelector('a')).toHaveAttribute(
+      'href',
+      '/backoffice/groupes/refaire-un-cv/discussions/discussion-2'
+    );
+  });
+
   it('shows a neutral message when there is no notification', () => {
     mockUseNotifications.mockReturnValue(listResult([]));
     renderBell(0);
