@@ -7,12 +7,14 @@ import {
   ElearningCompletion,
   ElearningUnit,
 } from '@/src/features/backoffice/elearning/elearning.types';
+import { buildGroupPage } from '@/src/features/backoffice/help-groups/__fixtures__/help-groups.fixtures';
 import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { flushPromises } from '@/src/store/testUtils/flushPromises';
 import { getMockedApi } from '@/src/store/testUtils/mockApi';
 import { seedAccessToken } from '@/src/store/testUtils/seedAccessToken';
 import { authenticationActions } from '@/src/use-cases/authentication';
 import { fetchUserSelectors } from '@/src/use-cases/current-user';
+import { helpGroupsApi } from '@/src/use-cases/help-groups/help-groups.api';
 import { elearningApi } from './elearning.api';
 import { slice } from './elearning.slice';
 
@@ -114,6 +116,44 @@ describe('elearning api', () => {
       )(store.getState());
       expect(cached.data?.[0].userCompletions).toEqual([completion]);
       expect(store.getState().currentUser.user).toEqual(refreshedUser);
+    });
+
+    it('re-fetches the subscribed help groups on success only', async () => {
+      seedAccessToken('token-123');
+      const store = createTestStore();
+      mockedApi.getHelpGroup.mockResolvedValue({
+        data: buildGroupPage(),
+      } as any);
+      mockedApi.getCurrentIdentity.mockResolvedValue({
+        data: { id: 'user-1' },
+      } as any);
+      store.dispatch(helpGroupsApi.endpoints.getHelpGroup.initiate('a-group'));
+      await flushPromises();
+      expect(mockedApi.getHelpGroup).toHaveBeenCalledTimes(1);
+
+      mockedApi.postElearningCompletion.mockRejectedValueOnce(
+        new Error('boom')
+      );
+      await store.dispatch(
+        elearningApi.endpoints.postElearningCompletion.initiate({
+          unitId: 'unit-1',
+          role: UserRoles.CANDIDATE,
+        })
+      );
+      await flushPromises();
+      expect(mockedApi.getHelpGroup).toHaveBeenCalledTimes(1);
+
+      mockedApi.postElearningCompletion.mockResolvedValueOnce({
+        data: buildCompletion(),
+      } as any);
+      await store.dispatch(
+        elearningApi.endpoints.postElearningCompletion.initiate({
+          unitId: 'unit-1',
+          role: UserRoles.CANDIDATE,
+        })
+      );
+      await flushPromises();
+      expect(mockedApi.getHelpGroup).toHaveBeenCalledTimes(2);
     });
 
     it('does not re-fetch the current user when the API call rejects', async () => {
