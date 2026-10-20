@@ -107,7 +107,7 @@ const Orienter = () => {
   useUtm();
 
   return (
-    <Layout title="Orienter - Entourage Pro">
+    <Layout title="Orienter - Entourage Pro" hasHero>
       <PageHero
         img="/static/img/front-office/orienter/orienter-hero-desktop.png"
         title={

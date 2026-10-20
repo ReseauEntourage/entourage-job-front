@@ -239,7 +239,7 @@ PartnerItem.defaultProps = {
 
 const Partenaires = () => {
   return (
-    <Layout title="Les partenaires - Entourage Pro">
+    <Layout title="Les partenaires - Entourage Pro" hasHero>
       <Title overlay="primary" img="/static/img/construct.jpg">
         <>
           Ils construisent le projet{' '}

@@ -17,6 +17,16 @@ export const HEIGHTS = {
   MESSAGING_DESKTOP_BORDER_SIZE: 3,
 };
 
+/**
+ * Vertical space (in px) taken by the floating public nav card, measured from
+ * the top of the viewport. The card is `position: fixed`, so anything that has
+ * to start below it must reserve this space itself.
+ */
+export const PUBLIC_NAV_SPACE = {
+  DESKTOP: HEIGHTS.PUBLIC_NAV_OFFSET_TOP + HEIGHTS.PUBLIC_NAV_CARD,
+  MOBILE: HEIGHTS.PUBLIC_NAV_OFFSET_TOP_MOBILE + HEIGHTS.PUBLIC_NAV_CARD_MOBILE,
+};
+
 /** Elevation scale shared by cards, popovers and their hover states. */
 export const SHADOWS = {
   card: '0 2px 8px rgba(0, 0, 0, 0.08)',

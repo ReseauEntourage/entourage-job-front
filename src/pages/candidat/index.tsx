@@ -246,7 +246,7 @@ const Candidat = () => {
   useUtm();
 
   return (
-    <Layout title="Travailler - Entourage Pro">
+    <Layout title="Travailler - Entourage Pro" hasHero>
       <PageHero
         img="/static/img/front-office/candidat/candidat-hero-desktop.png"
         title={`Entourage Pro : le réseau professionnel de celles et ceux qui n’en ont pas`}
