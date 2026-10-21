@@ -37,7 +37,7 @@ const renderCard = (role: UserRoles) =>
   );
 
 describe('ProfileContactCard', () => {
-  [UserRoles.COACH, UserRoles.ADMIN].forEach((role) => {
+  [UserRoles.COACH, UserRoles.ADMIN, UserRoles.REFERER].forEach((role) => {
     it(`uses the coach wording for ${role}`, () => {
       renderCard(role);
 

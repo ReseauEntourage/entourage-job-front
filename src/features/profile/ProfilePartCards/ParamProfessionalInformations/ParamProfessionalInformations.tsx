@@ -3,7 +3,7 @@ import { UserProfileSectorOccupation } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { H6 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { UserRoles, isCoachLikeRole } from '@/src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import { ModalEditProfessionalInformation } from '@/src/features/backoffice/parameters/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
   getCandidateDefaultProfessionalValues,
@@ -40,7 +40,19 @@ export const ParamProfessionalInformations = ({
       return;
     }
     openModal(
-      isCoachLikeRole(role) ? (
+      role === UserRoles.CANDIDATE ? (
+        <ModalEditProfessionalInformation
+          title="Renseignez votre projet professionnel"
+          description="Nous vous mettrons en relation avec des professionnels qui pourront vous aider"
+          defaultValues={getCandidateDefaultProfessionalValues(userProfile)}
+          formSchema={formEditCandidateProfessionalInformation}
+          user={user}
+          getValuesToSend={(values) => ({
+            sectorOccupations: formatCareerPathSentence(values),
+            linkedinUrl: values.linkedinUrl,
+          })}
+        />
+      ) : (
         <ModalEditProfessionalInformation
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""
@@ -63,18 +75,6 @@ export const ParamProfessionalInformations = ({
               companyName: values.companyName?.value || null,
             };
           }}
-        />
-      ) : (
-        <ModalEditProfessionalInformation
-          title="Renseignez votre projet professionnel"
-          description="Nous vous mettrons en relation avec des professionnels qui pourront vous aider"
-          defaultValues={getCandidateDefaultProfessionalValues(userProfile)}
-          formSchema={formEditCandidateProfessionalInformation}
-          user={user}
-          getValuesToSend={(values) => ({
-            sectorOccupations: formatCareerPathSentence(values),
-            linkedinUrl: values.linkedinUrl,
-          })}
         />
       )
     );

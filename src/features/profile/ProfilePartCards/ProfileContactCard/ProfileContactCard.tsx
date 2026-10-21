@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '@/src/components/ui';
 import { Text } from '@/src/components/ui';
-import { UserRoles, isCoachLikeRole } from '@/src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import { ProfilePartCard } from '@/src/features/profile/ProfilePartCards/Card/Card/Card';
 import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { selectCurrentUserId } from '@/src/use-cases/current-user';
@@ -29,7 +29,7 @@ export const ProfileContactCard = ({
   const { openConversationOrGate } = useContactEligibility();
 
   const openConversation = () => openConversationOrGate(userId);
-  const isCoach = isCoachLikeRole(role);
+  const isCandidate = role === UserRoles.CANDIDATE;
 
   if (isOwnProfile) {
     return null;
@@ -40,15 +40,15 @@ export const ProfileContactCard = ({
       {isAvailable ? (
         <>
           <StyledProfileContactForm>
-            {isCoach ? (
-              <Text>
-                Vous souhaitez prendre contact avec {firstName} pour qu'il/elle
-                vous aide dans votre recherche d'emploi
-              </Text>
-            ) : (
+            {isCandidate ? (
               <Text>
                 Vous souhaitez prendre contact avec {firstName} pour l'aider
                 dans sa recherche d'emploi
+              </Text>
+            ) : (
+              <Text>
+                Vous souhaitez prendre contact avec {firstName} pour qu'il/elle
+                vous aide dans votre recherche d'emploi
               </Text>
             )}
             <Button onClick={openConversation}>Envoyer un message</Button>

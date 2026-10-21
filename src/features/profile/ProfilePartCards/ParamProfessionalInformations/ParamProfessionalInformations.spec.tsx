@@ -81,7 +81,7 @@ const openEditModal = (role: UserRoles) => {
 };
 
 describe('ParamProfessionalInformations', () => {
-  [UserRoles.COACH, UserRoles.ADMIN].forEach((role) => {
+  [UserRoles.COACH, UserRoles.ADMIN, UserRoles.REFERER].forEach((role) => {
     it(`opens the coach form for ${role}`, () => {
       expect(openEditModal(role)).toMatch(
         /secteurs dans lesquels vous avez du réseau/

@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserProfile } from '@/src/api/types';
-import { isCoachLikeRole } from '@/src/constants/users';
+import { UserRoles } from '@/src/constants/users';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { useUpdateProfile } from '@/src/hooks/useUpdateProfile';
 import { ProfilePartCard } from '../Card/Card/Card';
@@ -15,9 +15,10 @@ export const ProfileNotificationsPreferences = ({
 }: ProfileNotificationsPreferencesProps) => {
   const user = useAuthenticatedUser();
   const { updateUserProfile } = useUpdateProfile(user);
-  const notificationPreferenceName = isCoachLikeRole(user.role)
-    ? "Recevoir des recommandations de candidats qui ont besoin d'aide"
-    : 'Recevoir des recommandations de coachs qui pourraient m’accompagner';
+  const notificationPreferenceName =
+    user.role === UserRoles.CANDIDATE
+      ? 'Recevoir des recommandations de coachs qui pourraient m’accompagner'
+      : "Recevoir des recommandations de candidats qui ont besoin d'aide";
   const [items, setItems] = React.useState([
     {
       name: notificationPreferenceName,

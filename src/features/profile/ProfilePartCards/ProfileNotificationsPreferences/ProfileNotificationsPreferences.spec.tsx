@@ -38,7 +38,7 @@ const renderCard = (role: UserRoles) => {
 };
 
 describe('ProfileNotificationsPreferences', () => {
-  [UserRoles.COACH, UserRoles.ADMIN].forEach((role) => {
+  [UserRoles.COACH, UserRoles.ADMIN, UserRoles.REFERER].forEach((role) => {
     it(`recommends candidates to ${role}`, () => {
       renderCard(role);
 
