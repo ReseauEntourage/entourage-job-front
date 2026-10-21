@@ -3,7 +3,7 @@ import { UserProfileSectorOccupation } from '@/src/api/types';
 import { Text } from '@/src/components/ui';
 import { H6 } from '@/src/components/ui/Headings';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
-import { UserRoles } from '@/src/constants/users';
+import { UserRoles, isCoachLikeRole } from '@/src/constants/users';
 import { ModalEditProfessionalInformation } from '@/src/features/backoffice/parameters/ProfessionalInformationCard/ModalEditProfessionalInformation';
 import {
   getCandidateDefaultProfessionalValues,
@@ -40,7 +40,7 @@ export const ParamProfessionalInformations = ({
       return;
     }
     openModal(
-      role === UserRoles.COACH ? (
+      isCoachLikeRole(role) ? (
         <ModalEditProfessionalInformation
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""
