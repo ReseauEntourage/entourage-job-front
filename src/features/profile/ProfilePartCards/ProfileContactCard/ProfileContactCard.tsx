@@ -29,7 +29,7 @@ export const ProfileContactCard = ({
   const { openConversationOrGate } = useContactEligibility();
 
   const openConversation = () => openConversationOrGate(userId);
-  const isCoach = role === 'Coach';
+  const isCandidate = role === UserRoles.CANDIDATE;
 
   if (isOwnProfile) {
     return null;
@@ -40,15 +40,15 @@ export const ProfileContactCard = ({
       {isAvailable ? (
         <>
           <StyledProfileContactForm>
-            {isCoach ? (
-              <Text>
-                Vous souhaitez prendre contact avec {firstName} pour qu'il/elle
-                vous aide dans votre recherche d'emploi
-              </Text>
-            ) : (
+            {isCandidate ? (
               <Text>
                 Vous souhaitez prendre contact avec {firstName} pour l'aider
                 dans sa recherche d'emploi
+              </Text>
+            ) : (
+              <Text>
+                Vous souhaitez prendre contact avec {firstName} pour qu'il/elle
+                vous aide dans votre recherche d'emploi
               </Text>
             )}
             <Button onClick={openConversation}>Envoyer un message</Button>

@@ -194,4 +194,34 @@ describe('ProfileCareerPathSentence', () => {
       expect(screen.getByText('Testeur')).toBeInTheDocument();
     });
   });
+
+  describe('for the other roles', () => {
+    [UserRoles.ADMIN, UserRoles.REFERER].forEach((role) => {
+      it(`uses the coach wording for ${role}`, () => {
+        render(
+          <ProfileCareerPathSentence
+            role={role}
+            sectorOccupations={[so('1', 'Tech', 'Développeur')]}
+          />
+        );
+
+        expect(screen.getByText("J'ai du réseau dans :")).toBeInTheDocument();
+        expect(
+          screen.queryByText(/J'aimerais travailler dans/)
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    it('never shows job-search wording for an admin without sector', () => {
+      const { container } = render(
+        <ProfileCareerPathSentence
+          role={UserRoles.ADMIN}
+          sectorOccupations={[]}
+        />
+      );
+
+      expect(container).not.toHaveTextContent(/opportunités/);
+      expect(container).not.toHaveTextContent(/aimerais travailler/);
+    });
+  });
 });
