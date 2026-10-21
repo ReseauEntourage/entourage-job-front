@@ -70,4 +70,21 @@ describe("Page profil d'un admin", () => {
 
     cy.capture('Profil admin vu par lui-même');
   });
+
+  it('admin dans ses paramètres', () => {
+    interceptCurrentUser({
+      statusCode: 200,
+      body: buildCurrentUser({ id: ADMIN_ID, role: 'Admin' }),
+    });
+
+    cy.visit('/backoffice/parametres');
+    cy.wait('@getCurrent');
+    cy.wait('@currentProfileComplete');
+    cy.contains('Notifications email').should('be.visible');
+    cy.contains('recommandations de candidats').should('be.visible');
+
+    cy.capture('Paramètres admin', {
+      caption: 'Préférence de notifications formulée comme pour un coach.',
+    });
+  });
 });
