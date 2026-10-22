@@ -14,9 +14,10 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
   height: 0;
 `;
 
-export const Slider = styled.span<{ checked: boolean }>`
+export const Slider = styled.span<{ checked: boolean; $disabled?: boolean }>`
   position: absolute;
-  cursor: pointer;
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ $disabled }) => ($disabled ? 0.6 : 1)};
   top: 0;
   left: 0;
   right: 0;

@@ -1,14 +1,18 @@
 import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
-export const StyledTd = styled.td`
+export const StyledTd = styled.td<{ $keepButtonPadding?: boolean }>`
   border-top: 1px solid ${COLORS.lightGray};
   border-bottom: 1px solid ${COLORS.lightGray};
   padding: 15px;
 
-  button {
-    padding: 0 !important;
-  }
+  ${({ $keepButtonPadding }) =>
+    !$keepButtonPadding &&
+    `
+    button {
+      padding: 0 !important;
+    }
+  `}
 
   &:last-child {
     border-right: 1px solid ${COLORS.lightGray};

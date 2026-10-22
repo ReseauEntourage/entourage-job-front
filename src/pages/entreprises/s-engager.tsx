@@ -115,7 +115,7 @@ const RecruterInclusif = () => {
   }, []);
 
   return (
-    <Layout title="S'engager - Entourage Pro">
+    <Layout title="S'engager - Entourage Pro" hasHero>
       <PageHero
         img="/static/img/entreprises-engager-banner-desktop.jpg"
         title="Sensibiliser et engager mes collaborateurs"

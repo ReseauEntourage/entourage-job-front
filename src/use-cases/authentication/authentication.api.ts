@@ -12,6 +12,7 @@ import {
 import { STORAGE_KEYS } from '@/src/constants';
 import { api } from '@/src/store/api/api.slice';
 import { currentUserActions } from '@/src/use-cases/current-user';
+import { purgeHelpGroupDrafts } from '@/src/use-cases/help-groups/help-groups.drafts';
 import {
   LoginError,
   VerifyEmailTokenErrorType,
@@ -90,6 +91,8 @@ export const authenticationApi = api.injectEndpoints({
           await queryFulfilled;
           dispatch(logoutSucceeded());
           localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+          // Unpublished help groups texts are not kept for the next person
+          purgeHelpGroupDrafts();
         } catch {
           // No real failure path today (matches the original saga).
         }

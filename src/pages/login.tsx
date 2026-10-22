@@ -8,7 +8,7 @@ import { useUtm } from '../hooks/queryParams/useUTM';
 const LoginPage = () => {
   useUtm();
   return (
-    <Layout title="Connexion - Entourage Pro">
+    <Layout title="Connexion - Entourage Pro" hasHero>
       <StyledLoginContainer>
         <Section className="custom-page small">
           <Login />

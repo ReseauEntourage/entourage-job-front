@@ -68,7 +68,8 @@ export const ProfileCareerPathSentence = ({
     <StyledCompanyName>{company?.name}</StyledCompanyName>
   );
 
-  if (role === UserRoles.COACH) {
+  // Candidates get the candidate wording, every other role gets the coach one.
+  if (role !== UserRoles.CANDIDATE) {
     return (
       <>
         {currentJob || company ? (

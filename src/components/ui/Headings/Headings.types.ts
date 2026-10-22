@@ -13,6 +13,9 @@ export interface HeadingComponentProps extends HeadingBasicProps {
   title: React.ReactNode;
   variant?: 'big' | '';
   noMarginBottom?: boolean;
+  // H1 only: 24px on desktop and 20px on mobile, for a page title that must
+  // leave room for the content below it on a small screen
+  compact?: boolean;
 }
 
 export interface StyledHeadingProps {
@@ -21,4 +24,5 @@ export interface StyledHeadingProps {
   $weight?: WeightProps;
   $mobile?: boolean;
   $noMarginBottom?: boolean;
+  $compact?: boolean;
 }

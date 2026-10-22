@@ -8,8 +8,14 @@ import {
 export const StyledTextAreaContainer = styled.div<{
   disabled?: boolean;
   $naked?: boolean;
+  $noMarginBottom?: boolean;
 }>`
   ${() => commonInputContainerStyles}
+  ${({ $noMarginBottom }) =>
+    $noMarginBottom &&
+    css`
+      margin-bottom: 0;
+    `}
   ${({ $naked }) =>
     $naked &&
     css`

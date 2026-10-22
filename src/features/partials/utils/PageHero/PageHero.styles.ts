@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS, PUBLIC_NAV_SPACE } from '@/src/constants/styles';
 
 const WAVE_HEIGHT_MOBILE = 40;
 const WAVE_HEIGHT_DESKTOP = 80;
@@ -13,8 +13,8 @@ const IMAGE_CARD_MIN_HEIGHT_DESKTOP = 480;
 // position: fixed et ne réserve plus d'espace dans le flux de la page.
 const DESKTOP_TOP_GAP = 24;
 const MOBILE_TOP_GAP = 16;
-const DESKTOP_NAV_SPACE = `calc(${HEIGHTS.PUBLIC_NAV_OFFSET_TOP}px + ${HEIGHTS.PUBLIC_NAV_CARD}px + ${DESKTOP_TOP_GAP}px)`;
-const MOBILE_NAV_SPACE = `calc(${HEIGHTS.PUBLIC_NAV_OFFSET_TOP_MOBILE}px + ${HEIGHTS.PUBLIC_NAV_CARD_MOBILE}px + ${MOBILE_TOP_GAP}px)`;
+const DESKTOP_NAV_SPACE = `${PUBLIC_NAV_SPACE.DESKTOP + DESKTOP_TOP_GAP}px`;
+const MOBILE_NAV_SPACE = `${PUBLIC_NAV_SPACE.MOBILE + MOBILE_TOP_GAP}px`;
 
 export const StyledPageHero = styled.section`
   position: relative;

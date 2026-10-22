@@ -6,6 +6,10 @@ import {
 } from '@/src/features/backoffice/elearning/elearning.types';
 import { api } from '@/src/store/api/api.slice';
 import { currentUserActions } from '@/src/use-cases/current-user';
+import {
+  HELP_GROUPS_TAG,
+  helpGroupsApi,
+} from '@/src/use-cases/help-groups/help-groups.api';
 
 export const elearningApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -67,6 +71,10 @@ export const elearningApi = api.injectEndpoints({
             )
           );
           dispatch(currentUserActions.fetchUserRequested());
+          // The viewer state of a help group (join vs finish the training)
+          // is computed by the back from `elearningCompletedAt`: drop the
+          // cached groups so the invitation is not stale on the way back.
+          dispatch(helpGroupsApi.util.invalidateTags([HELP_GROUPS_TAG]));
         } catch {
           // Non-critical: silently ignore failures so the UI is not affected
         }

@@ -8,6 +8,7 @@ import { Footer } from '@/src/features/partials/Footer';
 import { addPrefix } from '@/src/utils';
 import { NavConnected } from '../../features/navs/NavConnected';
 import { NavPublic } from '../../features/navs/NavPublic';
+import { StyledPublicNavSpacer } from './Layout.styles';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;
@@ -21,6 +22,14 @@ interface LayoutProps extends WithRouterProps {
   isBackoffice?: boolean;
   noHeader?: boolean;
   noFooter?: boolean;
+  /**
+   * The public nav is a floating `position: fixed` card, so pages that do not
+   * have a hero (or that reserve the nav space themselves) get a spacer under
+   * it by default. Pages whose hero extends under the nav set this to `true`.
+   * Only the public nav is concerned: it has no effect with `isBackoffice`,
+   * `noHeader` or on PDF pages.
+   */
+  hasHero?: boolean;
 }
 
 export const Layout = withRouter<LayoutProps>(
@@ -37,6 +46,7 @@ export const Layout = withRouter<LayoutProps>(
     isBackoffice = false,
     noHeader = false,
     noFooter = false,
+    hasHero = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
     const domain = process.env.NEXT_PUBLIC_SERVER_URL?.replace(
@@ -78,7 +88,12 @@ export const Layout = withRouter<LayoutProps>(
           />
         </Head>
         {!noHeader && !isPDF && (
-          <>{isBackoffice ? <NavConnected /> : <NavPublic />}</>
+          <>
+            {isBackoffice ? <NavConnected /> : <NavPublic />}
+            {!isBackoffice && !hasHero && (
+              <StyledPublicNavSpacer data-testid="public-nav-spacer" />
+            )}
+          </>
         )}
         <NotificationsContainer />
         {children}

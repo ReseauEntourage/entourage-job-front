@@ -1,7 +1,11 @@
 import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
+import { RadioVariant } from './Radio.types';
 
-export const StyledRadioContainer = styled.div<{ disabled?: boolean }>`
+export const StyledRadioContainer = styled.div<{
+  disabled?: boolean;
+  $variant?: RadioVariant;
+}>`
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 
   font-family: Poppins, sans-serif;
@@ -70,6 +74,68 @@ export const StyledRadioContainer = styled.div<{ disabled?: boolean }>`
       }
     }
   }
+
+  ${({ $variant }) =>
+    $variant === 'cards'
+      ? `
+  .inputs-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+
+    @media (max-width: ${BREAKPOINTS.desktop - 1}px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    > div {
+      display: flex;
+    }
+
+    label {
+      flex: 1;
+      box-sizing: border-box;
+      gap: 10px;
+      min-height: 48px;
+      margin: 0;
+      padding: 0 14px;
+      line-height: 1.4;
+      border: 1px solid ${COLORS.gray};
+      border-radius: 8px;
+      background-color: ${COLORS.white};
+      color: ${COLORS.black};
+
+      input[type='radio'] {
+        margin: 0;
+        height: 18px;
+        width: 18px;
+        border: 1px solid ${COLORS.darkTeal};
+      }
+
+      &:hover {
+        border-color: ${COLORS.darkTeal};
+      }
+
+      &.checked {
+        /* The thicker border keeps the label in place: one pixel less padding */
+        padding: 0 13px;
+        border: 2px solid ${COLORS.darkTeal};
+        background-color: ${COLORS.hoverBlue};
+        color: ${COLORS.black};
+
+        input[type='radio'] {
+          background-color: ${COLORS.white};
+          border-color: ${COLORS.darkTeal};
+
+          &::after {
+            background-color: ${COLORS.darkTeal};
+          }
+        }
+      }
+    }
+  }
+`
+      : ''}
 `;
 
 export const StyledRadioDisabledOverlay = styled.div`

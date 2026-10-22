@@ -4,6 +4,7 @@ jest.mock('@/src/api');
 import expect from 'expect';
 import { RegistrationFlow } from '@/src/features/registration/flows/flows.types';
 import { RegistrationData } from '@/src/features/registration/registration.types';
+import { buildTestPassword } from '@/src/store/testUtils/buildTestPassword';
 import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { flushPromises } from '@/src/store/testUtils/flushPromises';
 import { getMockedApi } from '@/src/store/testUtils/mockApi';
@@ -12,6 +13,7 @@ import {
   registrationApi,
 } from './registration.api';
 import { slice } from './registration.slice';
+const TEST_PASSWORD = buildTestPassword();
 
 const { actions } = slice;
 const mockedApi = getMockedApi();
@@ -30,8 +32,8 @@ const buildRegistrationData = (
     firstName: 'Jane',
     lastName: 'Doe',
     email: 'jane@example.com',
-    password: 'Sup3rSecret!',
-    confirmPassword: 'Sup3rSecret!',
+    password: TEST_PASSWORD,
+    confirmPassword: TEST_PASSWORD,
     phone: '0600000000',
     department: { value: 'PARIS', label: 'Paris' },
     ...overrides,

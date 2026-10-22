@@ -43,6 +43,32 @@ import {
   User,
   WhatsappZone,
   PublicAchievement,
+  CursorPage,
+  HelpGroupAdminAction,
+  HelpGroupAdminItem,
+  HelpGroupCard,
+  HelpGroupDiscussion,
+  HelpGroupDiscussionItem,
+  HelpGroupDiscussionView,
+  HelpGroupDto,
+  HelpGroupMembersPage,
+  HelpGroupPage,
+  HelpGroupReply,
+  HelpGroupReplyView,
+  HelpGroupReportDto,
+  HelpGroupDiscussionDto,
+  HelpGroupMessageRevisions,
+  HelpGroupModerationDto,
+  HelpGroupReactionEmoji,
+  HelpGroupReactionResult,
+  HelpGroupReactionTarget,
+  HelpGroupReplyDto,
+  NotificationItem,
+  ReportConversationMessagesPage,
+  ReportTargetDetail,
+  ReportTargetItem,
+  ReportTargetsParams,
+  ReportTargetType,
 } from './types';
 
 export class APIHandler {
@@ -115,8 +141,8 @@ export class APIHandler {
     return this.api.patch(route, payload, { headers });
   }
 
-  private delete(route: string): Promise<AxiosResponse> {
-    return this.api.delete(route);
+  private delete(route: string, payload?: object): Promise<AxiosResponse> {
+    return this.api.delete(route, payload ? { data: payload } : undefined);
   }
 
   /// //////
@@ -546,6 +572,311 @@ export class APIHandler {
     params: InviteCollaboratorsFromCompanyDto
   ): Promise<AxiosResponse> {
     return this.post(`/companies/${companyId}/invite-collaborators`, params);
+  }
+
+  /// ////////////// ///
+  /// notifications  ///
+  /// ////////////// ///
+
+  getNotifications(params: {
+    cursor?: string;
+  }): Promise<AxiosResponse<CursorPage<NotificationItem>>> {
+    return this.get('/notifications', { params });
+  }
+
+  getNotificationsUnseenCount(): Promise<AxiosResponse<{ count: number }>> {
+    return this.get('/notifications/unseen-count');
+  }
+
+  postNotificationsSeen(params: {
+    messageIds: string[];
+  }): Promise<AxiosResponse> {
+    return this.post('/notifications/seen', params);
+  }
+
+  postNotificationsSeenAll(): Promise<AxiosResponse> {
+    return this.post('/notifications/seen-all', {});
+  }
+
+  /// //////////// ///
+  /// help groups  ///
+  /// //////////// ///
+
+  getHelpGroups(): Promise<AxiosResponse<HelpGroupCard[]>> {
+    return this.get('/help-groups');
+  }
+
+  getHelpGroup(slug: string): Promise<AxiosResponse<HelpGroupPage>> {
+    return this.get(`/help-groups/${encodeURIComponent(slug)}`);
+  }
+
+  getHelpGroupDiscussions(
+    slug: string,
+    params: { cursor?: string; limit?: number }
+  ): Promise<AxiosResponse<CursorPage<HelpGroupDiscussionItem>>> {
+    return this.get(`/help-groups/${encodeURIComponent(slug)}/discussions`, {
+      params,
+    });
+  }
+
+  /**
+   * Current members of a group, from the most recent arrival. `search` is
+   * matched against the first name only, `role` is a `UserRoles` value.
+   */
+  getHelpGroupMembers(
+    slug: string,
+    params: { page: number; limit: number; search?: string; role?: UserRoles }
+  ): Promise<AxiosResponse<HelpGroupMembersPage>> {
+    return this.get(`/help-groups/${encodeURIComponent(slug)}/members`, {
+      params,
+    });
+  }
+
+  getHelpGroupDiscussion(
+    slug: string,
+    discussionId: string
+  ): Promise<AxiosResponse<HelpGroupDiscussionView>> {
+    return this.get(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`
+    );
+  }
+
+  getHelpGroupDiscussionReplies(
+    slug: string,
+    discussionId: string,
+    params: { after?: string; limit?: number }
+  ): Promise<AxiosResponse<CursorPage<HelpGroupReplyView>>> {
+    return this.get(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies`,
+      { params }
+    );
+  }
+
+  postHelpGroupMembership(slug: string): Promise<AxiosResponse> {
+    return this.post(`/help-groups/${encodeURIComponent(slug)}/membership`, {});
+  }
+
+  deleteHelpGroupMembership(slug: string): Promise<AxiosResponse> {
+    return this.delete(`/help-groups/${encodeURIComponent(slug)}/membership`);
+  }
+
+  patchHelpGroupMembership(
+    slug: string,
+    params: { emailsEnabled: boolean }
+  ): Promise<AxiosResponse<{ emailsEnabled: boolean }>> {
+    return this.patch(
+      `/help-groups/${encodeURIComponent(slug)}/membership`,
+      params
+    );
+  }
+
+  postHelpGroupDiscussion(
+    slug: string,
+    params: HelpGroupDiscussionDto
+  ): Promise<AxiosResponse<HelpGroupDiscussion>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions`,
+      params
+    );
+  }
+
+  postHelpGroupTitleSuggestion(
+    slug: string,
+    params: { content: string; previousTitles?: string[] }
+  ): Promise<AxiosResponse<{ title: string | null }>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/title-suggestions`,
+      params
+    );
+  }
+
+  patchHelpGroupDiscussion(
+    slug: string,
+    discussionId: string,
+    params: { title?: string; content?: string }
+  ): Promise<AxiosResponse<HelpGroupDiscussion>> {
+    return this.patch(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`,
+      params
+    );
+  }
+
+  deleteHelpGroupDiscussion(
+    slug: string,
+    discussionId: string
+  ): Promise<AxiosResponse> {
+    return this.delete(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}`
+    );
+  }
+
+  postHelpGroupReply(
+    slug: string,
+    discussionId: string,
+    params: HelpGroupReplyDto
+  ): Promise<AxiosResponse<HelpGroupReply>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies`,
+      params
+    );
+  }
+
+  patchHelpGroupReply(
+    slug: string,
+    discussionId: string,
+    replyId: string,
+    params: { content: string }
+  ): Promise<AxiosResponse<HelpGroupReply>> {
+    return this.patch(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies/${encodeURIComponent(replyId)}`,
+      params
+    );
+  }
+
+  deleteHelpGroupReply(
+    slug: string,
+    discussionId: string,
+    replyId: string
+  ): Promise<AxiosResponse> {
+    return this.delete(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/replies/${encodeURIComponent(replyId)}`
+    );
+  }
+
+  putHelpGroupReaction(
+    slug: string,
+    discussionId: string,
+    params: { target: HelpGroupReactionTarget; emoji: HelpGroupReactionEmoji }
+  ): Promise<AxiosResponse<HelpGroupReactionResult>> {
+    return this.put(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reactions`,
+      params
+    );
+  }
+
+  deleteHelpGroupReaction(
+    slug: string,
+    discussionId: string,
+    params: { target: HelpGroupReactionTarget }
+  ): Promise<AxiosResponse<HelpGroupReactionResult>> {
+    return this.delete(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reactions`,
+      params
+    );
+  }
+
+  postHelpGroupReport(
+    slug: string,
+    discussionId: string,
+    params: HelpGroupReportDto
+  ): Promise<AxiosResponse<{ id: string }>> {
+    return this.post(
+      `/help-groups/${encodeURIComponent(slug)}/discussions/${encodeURIComponent(discussionId)}/reports`,
+      params
+    );
+  }
+
+  postAdminHelpGroupMessageRestore(
+    kind: 'discussions' | 'replies',
+    id: string
+  ): Promise<AxiosResponse> {
+    return this.post(
+      `/admin/help-groups/${kind}/${encodeURIComponent(id)}/restore`,
+      {}
+    );
+  }
+
+  deleteAdminHelpGroupMessage(
+    kind: 'discussions' | 'replies',
+    id: string,
+    params: HelpGroupModerationDto
+  ): Promise<AxiosResponse> {
+    return this.delete(
+      `/admin/help-groups/${kind}/${encodeURIComponent(id)}`,
+      params
+    );
+  }
+
+  getAdminHelpGroupMessageRevisions(
+    kind: 'discussions' | 'replies',
+    id: string
+  ): Promise<AxiosResponse<HelpGroupMessageRevisions>> {
+    return this.get(
+      `/admin/help-groups/${kind}/${encodeURIComponent(id)}/revisions`
+    );
+  }
+
+  getAdminHelpGroups(
+    deleted: boolean
+  ): Promise<AxiosResponse<HelpGroupAdminItem[]>> {
+    return this.get('/admin/help-groups', { params: { deleted } });
+  }
+
+  postAdminHelpGroup(params: HelpGroupDto): Promise<AxiosResponse> {
+    return this.post('/admin/help-groups', params);
+  }
+
+  putAdminHelpGroup(id: string, params: HelpGroupDto): Promise<AxiosResponse> {
+    return this.put(`/admin/help-groups/${id}`, params);
+  }
+
+  postAdminHelpGroupAction(
+    id: string,
+    action: HelpGroupAdminAction
+  ): Promise<AxiosResponse> {
+    return this.post(`/admin/help-groups/${id}/${action}`, {});
+  }
+
+  deleteAdminHelpGroup(id: string): Promise<AxiosResponse> {
+    return this.delete(`/admin/help-groups/${id}`);
+  }
+
+  /// //////////////// ///
+  /// reports (admin)  ///
+  /// //////////////// ///
+
+  getAdminReportTargets(
+    params: ReportTargetsParams
+  ): Promise<AxiosResponse<CursorPage<ReportTargetItem>>> {
+    return this.get('/admin/reports/targets', { params });
+  }
+
+  getAdminReportTarget(
+    targetType: ReportTargetType,
+    targetId: string
+  ): Promise<AxiosResponse<ReportTargetDetail>> {
+    return this.get(
+      `/admin/reports/targets/${targetType}/${encodeURIComponent(targetId)}`
+    );
+  }
+
+  getAdminReportedConversationMessages(
+    conversationId: string,
+    before?: string
+  ): Promise<AxiosResponse<ReportConversationMessagesPage>> {
+    return this.get(
+      `/admin/reports/targets/CONVERSATION/${encodeURIComponent(conversationId)}/messages`,
+      { params: before ? { before } : {} }
+    );
+  }
+
+  postAdminReportTargetResolve(
+    targetType: ReportTargetType,
+    targetId: string,
+    params: { note?: string }
+  ): Promise<AxiosResponse<{ resolvedCount: number }>> {
+    return this.post(
+      `/admin/reports/targets/${targetType}/${encodeURIComponent(targetId)}/resolve`,
+      params
+    );
+  }
+
+  getAdminReportsPendingCount(
+    zone?: AdminZone | null
+  ): Promise<AxiosResponse<{ count: number }>> {
+    return this.get('/admin/reports/pending-count', {
+      params: zone ? { zone } : {},
+    });
   }
 
   /// ///////////// ///

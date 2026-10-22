@@ -27,6 +27,7 @@ export function Radio({
   limit = options.length,
   inputRef,
   error,
+  variant = 'default',
 }: RadioComponentProps) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
@@ -55,6 +56,7 @@ export function Radio({
       id={id}
       data-testid={`test-${id}`}
       disabled={disabled}
+      $variant={variant}
     >
       {title && (
         <Text weight="bold" size="large">

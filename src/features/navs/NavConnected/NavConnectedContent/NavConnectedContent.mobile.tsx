@@ -1,27 +1,39 @@
 import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
-import { v4 as uuid } from 'uuid';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ButtonIcon, Navbar, NavbarLogo } from '@/src/components/ui';
 import { Hamburger } from '@/src/components/ui/Hamburger';
-import {
-  OffCanvas,
-  OffCanvasRef,
-} from '@/src/components/ui/OffCanvas/OffCanvas';
-import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
+import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile';
+import { COLORS, HEIGHTS, SHADOWS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import {
   StyledMessagingIconContainer,
   StyledNavContainerMobile,
 } from '@/src/features/headers/Header.styles';
+import { NotificationsBell } from '@/src/features/notifications-center';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
-import { useOffCanvas } from '@/src/hooks/useOffCanvas';
-import { gaEvent } from '@/src/lib/gtag';
+import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
+import {
+  MOBILE_MENU_GAP,
+  StyledMobileMenuDivider,
+  StyledMobileMenuList,
+} from '../../NavMobileMenu';
 import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
-import { StyledConnectedItemMobile } from './NavConnectedContent.styles';
+import { NavConnectedCollapsible } from './NavConnectedCollapsible';
+import {
+  isNavGroupActive,
+  isNavItemActive,
+} from './NavConnectedContent.active';
+import {
+  StyledConnectedMobilePanel,
+  StyledMobileAccountName,
+  StyledMobileBarActions,
+} from './NavConnectedContent.mobile.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
-import { SubMenu } from './SubMenu';
+import { NavConnectedMobileEntry } from './NavConnectedMobileEntry';
+import { StyledMobileEntryBadge } from './NavConnectedMobileEntry/NavConnectedMobileEntry.styles';
 
-const uuidValue = uuid();
+// The card drops right under the bar, with a small gap
+const PANEL_TOP = HEIGHTS.HEADER_MOBILE + MOBILE_MENU_GAP;
 
 export const NavConnectedContentMobile = ({
   badges,
@@ -32,185 +44,178 @@ export const NavConnectedContentMobile = ({
     [UserRoles.COACH]: [NavConnectedMainItemDefaultProps],
     [UserRoles.REFERER]: [NavConnectedMainItemDefaultProps],
   },
+  administration = null,
   dropdown = [NavConnectedMainItemDefaultProps],
 }: NavConnectedContentProps) => {
-  const offCanvasRef = useRef<OffCanvasRef>(null);
-  const { closeOffCanvas } = useOffCanvas(offCanvasRef);
   const user = useAuthenticatedUser();
+  const profile = useCurrentUserProfile();
+  const { asPath } = useRouter();
 
-  const { push, asPath } = useRouter();
-  const logoLink = links[user?.role][0] || null;
+  const [isOpen, setIsOpen] = useState(false);
+  // Wraps the bar and the card: a press on the hamburger is not "outside"
+  const navRef = useRef<HTMLElement>(null);
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return undefined;
+    }
+    const handlePointerDown = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        closeMenu();
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    };
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, closeMenu]);
+
+  // Reaching another page, by any link, closes the card
+  useEffect(() => {
+    closeMenu();
+  }, [asPath, closeMenu]);
+
+  // The admin home is the first administration page, no longer in the main nav
+  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
+  const entries = links[user.role].filter(({ href }) => href !== '#');
+  const menuEntries = administration?.subMenu
+    ? [...entries, administration]
+    : entries;
+  const messagingCount = messaging.badge ? badges[messaging.badge] : 0;
 
   return (
-    <StyledNavContainerMobile id="nav">
+    <StyledNavContainerMobile id="nav" ref={navRef}>
       <Navbar
-        backgroundColor="black"
+        backgroundColor="white"
         sticky
+        style={{ boxShadow: SHADOWS.card }}
         left={
           <NavbarLogo
             href={logoLink ? logoLink.href + (logoLink.queryParams || '') : '#'}
-            type="secondary"
+            type="primary"
+            width={108}
+            height={36}
           />
         }
         right={
-          <div className="uk-padding-small uk-flex uk-flex-middle">
+          <StyledMobileBarActions>
+            {/* Notifications: only where the menu is shown (onboarding done) */}
+            {links[user.role]?.length > 0 && (
+              <NotificationsBell
+                variant="mobile"
+                color={COLORS.black}
+                size="large"
+                unseenCount={badges.notifications}
+              />
+            )}
             {/* Messages */}
-            <StyledMessagingIconContainer>
+            <StyledMessagingIconContainer $compact>
               <ButtonIcon
                 icon={messaging.icon}
                 href={messaging.href}
-                color="white"
+                color={COLORS.black}
                 variant="text"
-                size="xxlarge"
+                size="large"
+                ariaLabel={messaging.name}
               />
-              {messaging.badge && badges[messaging.badge] > 0 && (
-                <div className="pin-notification">
-                  {badges[messaging.badge]}
-                </div>
+              {messagingCount > 0 && (
+                <div className="pin-notification">{messagingCount}</div>
               )}
             </StyledMessagingIconContainer>
             <Hamburger
-              onClick={() => {
-                if (offCanvasRef.current) {
-                  offCanvasRef.current.open();
-                }
-              }}
+              color="black"
+              size="large"
+              isOpen={isOpen}
+              ariaLabel={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              dataTestId="nav-hamburger"
+              onClick={() => setIsOpen((open) => !open)}
             />
-          </div>
+          </StyledMobileBarActions>
         }
       />
-      <OffCanvas ref={offCanvasRef} position="right">
-        <ul className="uk-nav uk-nav-default uk-margin-medium-top">
-          {links[user.role]
-            .filter(({ href }) => {
-              return href !== '#';
-            })
-            .map(
-              (
-                { href, icon, name, badge, tag, subMenu, queryParams },
-                index
-              ) => {
-                const isActiveOrChildActive =
-                  (!!href && asPath.includes(href)) ||
-                  (subMenu &&
-                    subMenu.some(({ href: subMenuHref }) => {
-                      return asPath.includes(subMenuHref);
-                    }));
+      {isOpen && (
+        <StyledConnectedMobilePanel $top={PANEL_TOP} $gap={12}>
+          <StyledMobileMenuList>
+            {menuEntries.map((item, index) => {
+              const key = `${index}-${item.name}`;
+              if (item.subMenu && item.subMenu.length > 0) {
+                const count = item.badge ? badges[item.badge] : 0;
                 return (
-                  <StyledConnectedItemMobile
-                    key={`${index}-items-${uuidValue}`}
-                    className={`${subMenu ? 'hasSubMenu ' : ''} ${
-                      isActiveOrChildActive ? 'active' : ''
-                    }`}
+                  <NavConnectedCollapsible
+                    key={key}
+                    header={item.name}
+                    badge={
+                      count > 0 ? (
+                        <StyledMobileEntryBadge>{count}</StyledMobileEntryBadge>
+                      ) : undefined
+                    }
+                    isActive={isNavGroupActive(asPath, item)}
                   >
-                    {href ? (
-                      <a
-                        aria-hidden="true"
-                        onClick={() => {
-                          if (tag) {
-                            gaEvent(tag);
-                          }
-                          push(href + (queryParams || ''));
-                          closeOffCanvas();
-                        }}
-                      >
-                        <span>
-                          {icon && (
-                            <span className="uk-margin-small-right">
-                              {icon}
-                            </span>
-                          )}
-                          {name}
-                        </span>
-                      </a>
-                    ) : (
-                      <a
-                        onClick={() => {
-                          if (tag) {
-                            gaEvent(tag);
-                          }
-                        }}
-                      >
-                        <span>
-                          {icon && (
-                            <span className="uk-margin-small-right">
-                              {icon}
-                            </span>
-                          )}
-                          {name}
-                        </span>
-                      </a>
-                    )}
-                    {badge && badges[badge] > 0 && (
-                      <div>
-                        &nbsp;
-                        <Tag
-                          size={TagSize.Small}
-                          variant={TagVariant.Secondary}
-                        >
-                          {badges[badge]}
-                        </Tag>
-                      </div>
-                    )}
-                    {subMenu && subMenu.length > 0 && (
-                      <SubMenu items={subMenu} badges={badges} />
-                    )}
-                  </StyledConnectedItemMobile>
+                    {item.subMenu.map((subItem, subIndex) => (
+                      <NavConnectedMobileEntry
+                        key={`${subIndex}-${subItem.name}`}
+                        item={subItem}
+                        badges={badges}
+                        isSelected={isNavItemActive(asPath, subItem)}
+                        isChild
+                        onNavigate={closeMenu}
+                      />
+                    ))}
+                  </NavConnectedCollapsible>
                 );
               }
-            )}
-          <hr style={{ opacity: '.5' }} />
-          <StyledConnectedItemMobile>
-            <a
-              aria-hidden="true"
-              onClick={() => {
-                if (messaging.tag) {
-                  gaEvent(messaging.tag);
-                }
-                if (messaging.href) {
-                  push(messaging.href);
-                }
-                if (messaging.onClick) {
-                  messaging.onClick();
-                }
-                closeOffCanvas();
-              }}
+              return (
+                <NavConnectedMobileEntry
+                  key={key}
+                  item={item}
+                  badges={badges}
+                  isSelected={isNavItemActive(asPath, item)}
+                  onNavigate={closeMenu}
+                />
+              );
+            })}
+          </StyledMobileMenuList>
+
+          <StyledMobileMenuDivider $color={COLORS.gray} />
+
+          {/* Account menu: folded, like the groups above */}
+          <StyledMobileMenuList>
+            <NavConnectedCollapsible
+              minHeight={56}
+              dataTestId="nav-account"
+              header={
+                <>
+                  <ImgUserProfile
+                    user={user}
+                    size={36}
+                    hasPicture={profile?.hasPicture || false}
+                  />
+                  <StyledMobileAccountName>
+                    {user.firstName} {user.lastName}
+                  </StyledMobileAccountName>
+                </>
+              }
             >
-              <span>
-                <span className="uk-margin-small-right">{messaging.icon}</span>
-                {messaging.name}
-              </span>
-            </a>
-          </StyledConnectedItemMobile>
-          <hr style={{ opacity: '.5' }} />
-          {dropdown.map(({ href, icon, name, onClick, tag }, index) => {
-            return (
-              <StyledConnectedItemMobile key={`${index}-children-${uuidValue}`}>
-                <a
-                  aria-hidden="true"
-                  onClick={() => {
-                    if (tag) {
-                      gaEvent(tag);
-                    }
-                    if (href) {
-                      push(href);
-                    }
-                    if (onClick) {
-                      onClick();
-                    }
-                    closeOffCanvas();
-                  }}
-                >
-                  <span>
-                    <span className="uk-margin-small-right">{icon}</span>
-                    {name}
-                  </span>
-                </a>
-              </StyledConnectedItemMobile>
-            );
-          })}
-        </ul>
-      </OffCanvas>
+              {dropdown.map((item, index) => (
+                <NavConnectedMobileEntry
+                  key={`${index}-${item.name}`}
+                  item={item}
+                  badges={badges}
+                  onNavigate={closeMenu}
+                />
+              ))}
+            </NavConnectedCollapsible>
+          </StyledMobileMenuList>
+        </StyledConnectedMobilePanel>
+      )}
     </StyledNavContainerMobile>
   );
 };

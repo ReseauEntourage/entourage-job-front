@@ -59,6 +59,10 @@ export function isLinkedinShareDuplicateError(error: unknown) {
   return isAxiosError(error) && error.response?.status === 422;
 }
 
+export function isLinkedinTokenExpiredError(error: unknown) {
+  return isAxiosError(error) && error.response?.status === 401;
+}
+
 export function isOtpExpiredError(error: unknown) {
   return (
     isAxiosError(error) &&
