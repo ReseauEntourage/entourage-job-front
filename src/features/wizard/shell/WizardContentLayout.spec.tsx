@@ -91,4 +91,28 @@ describe('WizardContentLayout', () => {
 
     expect(screen.getByText(/Profil — Étape 1\/2/)).toBeTruthy();
   });
+
+  it('renders the mobile help link next to the step header, even with a custom header', () => {
+    render(
+      <WizardContentLayout
+        mobileHeaderContent={<div>custom-header</div>}
+        mobileHelpLink={<a href="mailto:ref@example.org">Besoin d'aide ?</a>}
+      >
+        <p>content</p>
+      </WizardContentLayout>
+    );
+
+    expect(screen.getByText('custom-header')).toBeTruthy();
+    expect(screen.getByText("Besoin d'aide ?")).toBeTruthy();
+  });
+
+  it('renders no help link by default', () => {
+    render(
+      <WizardContentLayout>
+        <p>content</p>
+      </WizardContentLayout>
+    );
+
+    expect(screen.queryByText("Besoin d'aide ?")).toBeNull();
+  });
 });

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Card, LegacyImg, SimpleLink } from '@/src/components/ui';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { Text } from '@/src/components/ui/Text';
-import { ADMIN_ZONES, DEPARTMENTS } from '@/src/constants/departements';
 import { useCurrentUserProfile } from '@/src/hooks/current-user/useCurrentUserProfile';
 import { useCurrentUserStaffContact } from '@/src/hooks/useCurrentUserStaffContact';
 import { fetchStaffContactSelectors } from '@/src/use-cases/current-user';
@@ -18,6 +17,7 @@ import {
   StyledStaffContactRole,
   StyledStaffContactText,
 } from './StaffContactCard.styles';
+import { getStaffContactZoneLabel } from './staffContactZone';
 
 interface StaffContactCardProps {
   // 'full' (default): title, photo, role/region, email, generic contact blurb — used
@@ -42,14 +42,10 @@ export const StaffContactCard = ({
 
   const isLoading = isFetchStaffContactIdle || isFetchStaffContactRequested;
 
-  const staffContactZoneLabel = useMemo(() => {
-    const deptObj = DEPARTMENTS.find((dept) => {
-      return dept.name === profile?.department;
-    });
-    // "Hors zone" is displayed as "National" rather than the department's
-    // actual region.
-    return deptObj?.zone === ADMIN_ZONES.HZ ? 'National' : deptObj?.region;
-  }, [profile?.department]);
+  const staffContactZoneLabel = useMemo(
+    () => getStaffContactZoneLabel(profile?.department),
+    [profile?.department]
+  );
 
   if (variant === 'compact') {
     if (isLoading) {
