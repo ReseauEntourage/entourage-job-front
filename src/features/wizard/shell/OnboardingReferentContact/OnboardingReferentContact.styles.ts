@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { BREAKPOINTS } from '@/src/constants/styles';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 // Desktop only: on mobile the help link takes over.
 export const StyledOnboardingReferentContact = styled.div`
@@ -35,5 +35,11 @@ export const StyledOnboardingReferentContactText = styled.div`
 
   > * {
     margin-bottom: 0;
+  }
+
+  // Keep the email as discreet as the rest of the block (SimpleLink is blue by default).
+  a {
+    color: ${COLORS.darkGray};
+    text-decoration: underline;
   }
 `;
