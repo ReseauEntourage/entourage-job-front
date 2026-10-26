@@ -114,3 +114,13 @@ When a change touches an API endpoint, update both repos in the same session:
 - Before pushing, run the spec against a production build without CDN (`NEXT_PUBLIC_CDN_URL= pnpm build && NEXT_PUBLIC_CDN_URL= pnpm start`, then `pnpm screenshots cypress/pr-screenshots/<capability>.shot.ts`) and **look at** the PNGs in `cypress/pr-screenshots/output/`: expected state visible, no spinner left by an unmocked request.
 - Every PR follows `.github/pull_request_template.md`. Never remove or rewrite the `<!-- screenshots:start -->` … `<!-- screenshots:end -->` block: re-read the current PR description before editing it.
 - Never commit to the `pr-screenshots` branch: it is managed by the workflow. The repo is public — captures only ever show fixtures.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
