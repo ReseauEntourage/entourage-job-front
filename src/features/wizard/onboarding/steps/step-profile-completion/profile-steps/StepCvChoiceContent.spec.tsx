@@ -2,8 +2,8 @@ jest.mock('@react-hook/window-size', () => ({
   useWindowWidth: () => 1280,
   useWindowSize: () => [1280, 800],
 }));
-jest.mock('@/src/features/profile/ai/OpenAILegalMention', () => ({
-  OpenAILegalMention: () => <div data-testid="legal-mention" />,
+jest.mock('@/src/features/profile/ai/AiLegalMention', () => ({
+  AiLegalMention: () => <div data-testid="legal-mention" />,
 }));
 
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
