@@ -437,7 +437,7 @@ export const DataPrivacy = () => {
         <br />
         <Text {...textAttr}>
           Les données personnelles peuvent être partagées avec des sociétés
-          tierces exclusivement dans l’Union européenne, dans les cas suivants :
+          tierces dans les cas suivants :
           <br />
           <ul>
             <li>
@@ -469,12 +469,50 @@ export const DataPrivacy = () => {
             </li>
             <br />
             <li>
+              quand l&apos;utilisateur utilise une fonctionnalité d&apos;aide
+              par intelligence artificielle, comme la génération de son profil à
+              partir de son CV : la Plateforme fait alors appel à un prestataire
+              d&apos;intelligence artificielle, décrit ci-dessous ;
+            </li>
+            <br />
+            <li>
               si la loi l&apos;exige, la Plateforme peut effectuer la
               transmission de données pour donner suite aux réclamations
               présentées contre la Plateforme et se conformer aux procédures
               administratives et judiciaires.
             </li>
           </ul>
+        </Text>
+        <br />
+        <Text {...textAttr}>
+          <strong>
+            Recours à un prestataire d&apos;intelligence artificielle.
+          </strong>{' '}
+          Pour les fonctionnalités d&apos;aide par intelligence artificielle de
+          la Plateforme, les contenus nécessaires au traitement sont transmis à
+          Anthropic PBC (États-Unis), qui agit en qualité de sous-traitant pour
+          le compte d&apos;Entourage. Lorsque l&apos;utilisateur génère son
+          profil à partir de son CV, le CV importé, dans son intégralité et donc
+          y compris les informations d&apos;identité et de contact qu&apos;il
+          contient, est transmis à ce prestataire dans le seul but de remplir le
+          profil de l&apos;utilisateur. Ce traitement peut avoir lieu hors de
+          l&apos;Union européenne. Il est encadré par les conditions
+          commerciales et l&apos;accord de traitement de données (« Data
+          Processing Addendum ») d&apos;Anthropic, qui prévoient notamment que
+          les données transmises ne sont pas utilisées pour entraîner ses
+          modèles (
+          <Link
+            href="https://www.anthropic.com/legal/commercial-terms"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://www.anthropic.com/legal/commercial-terms
+          </Link>
+          ). Les données issues du CV et enregistrées dans le profil sont
+          ensuite conservées par la Plateforme dans les conditions prévues à
+          l&apos;Article 10. Pour exercer vos droits ou poser une question sur
+          ce traitement, vous pouvez écrire à{' '}
+          <Link href="mailto:dpo@entourage.social">dpo@entourage.social</Link>.
         </Text>
         <br />
         <H2 title="Article 12 - Offres commerciales" />

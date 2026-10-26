@@ -10,8 +10,8 @@ import {
 } from './ProfileGenerationProcess';
 
 jest.mock('@/src/hooks', () => ({ useProfileGeneration: jest.fn() }));
-jest.mock('@/src/features/profile/ai/OpenAILegalMention', () => ({
-  OpenAILegalMention: () => <div data-testid="legal" />,
+jest.mock('@/src/features/profile/ai/AiLegalMention', () => ({
+  AiLegalMention: () => <div data-testid="legal" />,
 }));
 jest.mock(
   '@/src/features/profile/ai/ProfileGenerationLoadingIndicator',

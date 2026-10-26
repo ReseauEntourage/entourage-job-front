@@ -6,7 +6,7 @@ import expect from 'expect';
 import { Genders } from '@/src/constants/genders';
 import { useIsMobile } from '@/src/hooks/utils';
 import { ProfileAchievementHighlighter } from '../ProfileAchievementHighlighter';
-import { OpenAILegalMention } from '../ai/OpenAILegalMention';
+import { AiLegalMention } from '../ai/AiLegalMention';
 import { ProfileGenerationLoadingIndicator } from '../ai/ProfileGenerationLoadingIndicator';
 
 jest.mock('@/src/hooks/utils', () => ({
@@ -66,18 +66,26 @@ describe('ProfileAchievementHighlighter', () => {
   });
 });
 
-describe('OpenAILegalMention', () => {
-  it('links to the OpenAI terms in a new tab', () => {
-    render(<OpenAILegalMention />);
+describe('AiLegalMention', () => {
+  it('names Anthropic and links to its commercial terms in a new tab', () => {
+    render(<AiLegalMention />);
+    expect(screen.getByText(/traité par Anthropic/)).toBeInTheDocument();
     const link = screen.getByRole('link', {
-      name: /Conditions Générales d'Utilisation d'OpenAI/,
+      name: 'Conditions Commerciales',
     });
     expect(link).toHaveAttribute(
       'href',
-      'https://openai.com/fr-FR/policies/row-terms-of-use/'
+      'https://www.anthropic.com/legal/commercial-terms'
     );
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
+  it('links to the privacy policy', () => {
+    render(<AiLegalMention />);
+    expect(
+      screen.getByRole('link', { name: 'Politique de Confidentialité' })
+    ).toHaveAttribute('href', '/data-privacy');
   });
 });
 

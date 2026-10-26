@@ -621,11 +621,12 @@ export const CGU = () => {
         </Text>
         <br />
         <Text {...textAttr}>
-          En utilisant ce service, vous acceptez également les Conditions
-          Générales d&apos;Utilisation d&apos;OpenAI. Vos données sont traitées
-          par OpenAI uniquement pour permettre le pré-remplissage de votre
-          profil. Elles ne sont conservées par Entourage Pro qu&apos;en accord
-          avec notre Politique de Confidentialité.
+          En utilisant ce service, votre CV est traité par Anthropic, notre
+          prestataire d&apos;intelligence artificielle, uniquement pour
+          permettre le pré-remplissage de votre profil. Conformément à ses
+          Conditions Commerciales, Anthropic n&apos;utilise pas ces données pour
+          entraîner ses modèles. Elles ne sont conservées par Entourage Pro
+          qu&apos;en accord avec notre Politique de Confidentialité.
         </Text>
         <br />
         <H2 title="11. Responsabilité" />

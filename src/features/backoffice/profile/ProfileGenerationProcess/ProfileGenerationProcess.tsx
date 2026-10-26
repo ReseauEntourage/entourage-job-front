@@ -6,7 +6,7 @@ import { StyledContainerMarginY } from '@/src/components/ui/Containers/Container
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
 import { Text } from '@/src/components/ui/Text';
-import { OpenAILegalMention } from '@/src/features/profile/ai/OpenAILegalMention';
+import { AiLegalMention } from '@/src/features/profile/ai/AiLegalMention';
 import { ProfileGenerationLoadingIndicator } from '@/src/features/profile/ai/ProfileGenerationLoadingIndicator';
 import { useProfileGeneration } from '@/src/hooks';
 import { StyledImageContainer } from './ProfileGenerationProcess.styles';
@@ -97,7 +97,7 @@ export const ProfileGenerationProcess = forwardRef<
             </StyledCenteredButtonContainer>
           )}
           <StyledContainerMarginY $margin="20px" />
-          <OpenAILegalMention />
+          <AiLegalMention />
         </ContainerWithTextCentered>
       </>
     );
