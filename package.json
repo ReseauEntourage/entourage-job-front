@@ -55,7 +55,7 @@
     "marked": "4",
     "mobile-detect": "^1.4.5",
     "moment": "^2.31.0",
-    "next": "16.4.1",
+    "next": "16.4.3",
     "prop-types": "^15.8.1",
     "pusher-js": "^7.6.0",
     "react": "19.2.8",
