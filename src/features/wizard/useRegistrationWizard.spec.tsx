@@ -48,7 +48,7 @@ jest.mock('./steps/useWizardStepNetworkPreview', () => ({
   useWizardStepNetworkPreview: () => getMockStep('network-preview'),
 }));
 
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -313,14 +313,18 @@ describe('useRegistrationWizard', () => {
       const { store, dispatched } = submitWith(500);
       await act(async () => {
         store.dispatch(registrationActions.createUserRequested());
-        await flushPromises();
       });
 
-      expect(dispatched).toContainEqual(
-        notificationsActions.addNotification({
-          type: 'danger',
-          message: "Une erreur est survenue lors de l'inscription",
-        })
+      // The notification is dispatched at the end of an RTK Query chain (listener
+      // → mutation → rejected queryFn): a single macrotask tick is not enough on a
+      // loaded CI runner, so poll instead of flushing once.
+      await waitFor(() =>
+        expect(dispatched).toContainEqual(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: "Une erreur est survenue lors de l'inscription",
+          })
+        )
       );
     });
 
