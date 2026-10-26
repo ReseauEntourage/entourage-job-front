@@ -437,9 +437,7 @@ export const DataPrivacy = () => {
         <br />
         <Text {...textAttr}>
           Les données personnelles peuvent être partagées avec des sociétés
-          tierces dans les cas suivants. Sauf pour le recours à un prestataire
-          d&apos;intelligence artificielle décrit ci-dessous, ces sociétés sont
-          situées dans l’Union européenne :
+          tierces dans les cas suivants :
           <br />
           <ul>
             <li>

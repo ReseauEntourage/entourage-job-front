@@ -8,8 +8,7 @@ export const AiLegalMention = ({ ...props }: AiLegalMentionProps) => {
   return (
     <Text size="small" center {...props}>
       Pour générer votre profil, votre CV importé est traité par Anthropic,
-      notre prestataire d&apos;intelligence artificielle, éventuellement hors de
-      l&apos;Union européenne. Conformément à ses{' '}
+      notre prestataire d&apos;intelligence artificielle. Conformément à ses{' '}
       <Link
         href="https://www.anthropic.com/legal/commercial-terms"
         target="_blank"
