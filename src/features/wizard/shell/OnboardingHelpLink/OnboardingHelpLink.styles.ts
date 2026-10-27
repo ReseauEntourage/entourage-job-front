@@ -4,9 +4,7 @@ import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 // Mobile only: on desktop the referent contact block is shown instead.
 export const StyledOnboardingHelpLink = styled.div`
   display: none;
-  justify-content: flex-end;
-  padding: 0 24px;
-  background-color: ${COLORS.white};
+  margin-left: auto;
 
   a {
     display: inline-flex;

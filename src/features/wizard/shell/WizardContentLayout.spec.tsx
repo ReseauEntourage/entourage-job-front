@@ -115,4 +115,32 @@ describe('WizardContentLayout', () => {
 
     expect(screen.queryByText("Besoin d'aide ?")).toBeNull();
   });
+
+  it('renders the mobile help link on the same row as the section badge, above the progress bar', () => {
+    render(
+      <WizardContentLayout
+        subProgress={{
+          sectionLabel: 'Profil',
+          currentInSection: 1,
+          totalInSection: 3,
+        }}
+        sectionProgress={40}
+        mobileHelpLink={<a href="mailto:ref@example.org">Besoin d'aide ?</a>}
+      >
+        <p>content</p>
+      </WizardContentLayout>
+    );
+
+    const badge = screen.getByText(/Profil — Étape 2\/3/);
+    const link = screen.getByText("Besoin d'aide ?");
+    let row: HTMLElement | null = link;
+    while (row && !row.contains(badge)) {
+      row = row.parentElement;
+    }
+    // The closest common ancestor is the row holding both, not the whole page
+    expect(row).not.toBeNull();
+    expect(row?.querySelectorAll('a')).toHaveLength(1);
+    expect(row?.textContent).toContain("Besoin d'aide ?");
+    expect(row?.textContent).toContain('Profil — Étape 2/3');
+  });
 });
