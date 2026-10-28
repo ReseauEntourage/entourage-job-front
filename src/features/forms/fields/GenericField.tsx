@@ -32,6 +32,7 @@ import {
   SelectListType,
 } from '@/src/components/ui/Inputs/SelectList';
 import { FilterConstant } from '@/src/constants/utils';
+import { getDateValueError } from '@/src/utils/DateInput';
 import { AnyCantFix } from '@/src/utils/Types';
 import {
   ComponentException,
@@ -88,6 +89,16 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
 
   const [isMaxLinesReached, setIsMaxLinesReached] = useState<boolean>();
 
+  if (field.component === 'datepicker') {
+    // Runs first: an unfinished or impossible date must not reach the rules
+    // of the schema, which expect a real `YYYY-MM-DD` date
+    rules = {
+      dateFormat: (fieldValue) =>
+        getDateValueError(fieldValue as string) || true,
+      ...rules,
+    };
+  }
+
   if (field.maxLines) {
     rules = {
       ...rules,
@@ -115,6 +126,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     control,
     rules: {
       required: field.isRequired ? 'Obligatoire' : false,
+      ...(field.deps ? { deps: field.deps } : {}),
       ...(isFormFieldTextInput(field) && field.maxLength
         ? {
             maxLength: {

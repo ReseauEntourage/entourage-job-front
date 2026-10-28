@@ -127,6 +127,17 @@ describe('ButtonIcon', () => {
     expect(screen.getByRole('button')).toBeDisabled();
   });
 
+  it('is round by default and square on demand', () => {
+    const { rerender } = render(
+      <ButtonIcon icon={<Icon />} ariaLabel="Calendrier" />
+    );
+    expect(screen.getByRole('button')).toHaveStyle('border-radius: 50%');
+    rerender(
+      <ButtonIcon icon={<Icon />} ariaLabel="Calendrier" shape="square" />
+    );
+    expect(screen.getByRole('button')).toHaveStyle('border-radius: 5px');
+  });
+
   it('renders a link when href is given', () => {
     render(<ButtonIcon icon={<Icon />} href="/profil" ariaLabel="Profil" />);
     expect(screen.getByRole('link')).toHaveAttribute('href', '/profil');

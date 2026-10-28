@@ -33,10 +33,10 @@ export const ProfileFormationsModalEdit = ({
     location: formation?.location ?? '',
     institution: formation?.institution ?? '',
     startDate: formation?.startDate
-      ? moment(formation.startDate).format('YYYY-MM-DD')
+      ? moment.utc(formation.startDate).format('YYYY-MM-DD')
       : '',
     endDate: formation?.endDate
-      ? moment(formation.endDate).format('YYYY-MM-DD')
+      ? moment.utc(formation.endDate).format('YYYY-MM-DD')
       : '',
     description: formation?.description ?? '',
     skills:

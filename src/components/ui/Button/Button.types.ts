@@ -15,7 +15,7 @@ export interface ButtonProps {
   disabled?: boolean;
   size?: ButtonSize;
   weight?: TextWeight;
-  rounded?: boolean | 'circle';
+  rounded?: boolean | 'circle' | 'square';
   href?: string | { pathname: string; query?: AnyToFix };
   isExternal?: boolean;
   newTab?: boolean;
