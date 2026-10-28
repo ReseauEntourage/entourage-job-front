@@ -250,6 +250,58 @@ describe('GenericField', () => {
     expect(screen.getByTestId('text-error')).toHaveTextContent('');
   });
 
+  it('refuses an unfinished or impossible date before the schema rules', async () => {
+    const rule = jest.fn(() => true);
+    render(
+      <Harness
+        field={{
+          id: 'f',
+          name: 'f',
+          component: 'datepicker',
+          rules: [{ method: rule, message: 'rule' }],
+        }}
+      />
+    );
+    setNext('14/03');
+    fireEvent.click(screen.getByTestId('datepicker-change'));
+    await act(async () => {
+      await latestForm.trigger();
+    });
+    await waitFor(() =>
+      expect(screen.getByTestId('datepicker-error')).toHaveTextContent(
+        "Date incomplète. Saisissez le jour, le mois et l'année."
+      )
+    );
+    expect(rule).not.toHaveBeenCalled();
+
+    setNext('31/02/1990');
+    fireEvent.click(screen.getByTestId('datepicker-change'));
+    await act(async () => {
+      await latestForm.trigger();
+    });
+    await waitFor(() =>
+      expect(screen.getByTestId('datepicker-error')).toHaveTextContent(
+        "Cette date n'existe pas. Vérifiez le jour et le mois."
+      )
+    );
+  });
+
+  it('accepts a real date and an empty optional date', async () => {
+    render(<Harness field={{ id: 'f', name: 'f', component: 'datepicker' }} />);
+    setNext('1990-02-28');
+    fireEvent.click(screen.getByTestId('datepicker-change'));
+    await act(async () => {
+      await latestForm.trigger();
+    });
+    expect(screen.getByTestId('datepicker-error')).toHaveTextContent('');
+    setNext('');
+    fireEvent.click(screen.getByTestId('datepicker-change'));
+    await act(async () => {
+      await latestForm.trigger();
+    });
+    expect(screen.getByTestId('datepicker-error')).toHaveTextContent('');
+  });
+
   it('validates the maximum number of lines reported by the textarea', async () => {
     render(
       <Harness

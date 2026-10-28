@@ -26,7 +26,9 @@ describe('En tant que - Prescripteur', () => {
     refererJourneyRequests.GET.forEach((request) => {
       if (request.alias) {
         cy.intercept('GET', request.path, request.data).as(request.alias);
-      } else cy.intercept('GET', request.path, request.data);
+      } else {
+        cy.intercept('GET', request.path, request.data);
+      }
     });
 
     cy.intercept('GET', '/current', {
@@ -205,7 +207,7 @@ describe('En tant que - Prescripteur', () => {
 
         // Fill the form
         cy.get('[data-testid="form-refering-candidate-info-birthDate"]').type(
-          '1990-01-01'
+          '01011990'
         );
         cy.get('#form-refering-candidate-info-department')
           .click()

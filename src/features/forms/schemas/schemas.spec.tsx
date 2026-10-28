@@ -302,6 +302,37 @@ describe('form schemas', () => {
     });
   });
 
+  describe('experience and formation dates', () => {
+    const END_BEFORE_START =
+      'La date de fin ne peut pas être antérieure à la date de début.';
+
+    [
+      ['formEditExperience', formEditExperience],
+      ['formEditFormation', formEditFormation],
+    ].forEach(([name, schema]: any) => {
+      it(`${name}: refuses an end date before the start date`, () => {
+        expect(
+          failures(schema, 'endDate', '2023-06-01', { startDate: '2023-09-01' })
+        ).toEqual([END_BEFORE_START]);
+      });
+
+      it(`${name}: accepts an end on the same day, after, or empty`, () => {
+        const values = { startDate: '2023-09-01' };
+        expect(failures(schema, 'endDate', '2023-09-01', values)).toEqual([]);
+        expect(failures(schema, 'endDate', '2024-01-01', values)).toEqual([]);
+        expect(failures(schema, 'endDate', '', values)).toEqual([]);
+      });
+
+      it(`${name}: skips the rule while the start date is empty`, () => {
+        expect(failures(schema, 'endDate', '2023-06-01', {})).toEqual([]);
+      });
+
+      it(`${name}: validates the end date again when the start changes`, () => {
+        expect(getField(schema, 'startDate').deps).toEqual(['endDate']);
+      });
+    });
+  });
+
   describe('formDeleteUser', () => {
     it('only accepts the exact word SUPPRIMER', () => {
       expect(failures(formDeleteUser, 'confirmation', 'SUPPRIMER')).toEqual([]);

@@ -7,19 +7,42 @@ import {
 
 export const StyledDatePickerContainer = styled.div<{ disabled?: boolean }>`
   ${() => commonInputContainerStyles}
-  input {
+  input[type='text'] {
     ${() => commonInputStyles}
-    &.empty-value {
+    &::placeholder {
       color: ${COLORS.mediumGray};
-      font-style: italic;
     }
     &:focus-visible {
       outline: none;
     }
-    &::-webkit-calendar-picker-indicator {
-      color: ${COLORS.primaryBlue};
-      filter: invert(70%) sepia(15%) saturate(1500%) hue-rotate(180deg)
-        brightness(90%) contrast(85%);
-    }
   }
+`;
+
+export const StyledDatePickerRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const StyledDatePickerTextWrapper = styled.div`
+  flex-grow: 1;
+  min-width: 0;
+`;
+
+// Anchors the native calendar next to the button that opens it
+export const StyledDatePickerCalendar = styled.div`
+  position: relative;
+  flex-shrink: 0;
+`;
+
+// The native date input is only the source of the calendar: it is never
+// shown nor focused, the text field next to it is the actual input
+export const StyledNativeDateInput = styled.input`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
 `;

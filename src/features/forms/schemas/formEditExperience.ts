@@ -1,4 +1,8 @@
 import { FilterConstant } from '@/src/constants/utils';
+import {
+  END_DATE_BEFORE_START_MESSAGE,
+  isEndDateNotBeforeStart,
+} from '@/src/utils/DateInput';
 import { FormSchema } from '../FormSchema';
 
 export const formEditExperience: FormSchema<{
@@ -46,12 +50,20 @@ export const formEditExperience: FormSchema<{
       name: 'startDate',
       component: 'datepicker',
       title: 'Date de début',
+      deps: ['endDate'],
     },
     {
       id: 'endDate',
       name: 'endDate',
       component: 'datepicker',
       title: 'Date de fin',
+      rules: [
+        {
+          method: (fieldValue, fieldValues) =>
+            isEndDateNotBeforeStart(fieldValue, fieldValues.startDate),
+          message: END_DATE_BEFORE_START_MESSAGE,
+        },
+      ],
     },
     {
       id: 'skills',
