@@ -40,6 +40,15 @@ describe('DatePicker', () => {
     expect(baseProps.onChange).toHaveBeenLastCalledWith('1987-03-14');
   });
 
+  it('shows what is left to type behind a partial date', () => {
+    render(<DatePicker {...baseProps} />);
+    expect(screen.queryByTestId('start-ghost')).not.toBeInTheDocument();
+    type('19');
+    expect(screen.getByTestId('start-ghost')).toHaveTextContent('19/--/----');
+    type('19031987');
+    expect(screen.queryByTestId('start-ghost')).not.toBeInTheDocument();
+  });
+
   it('sends the typed text while the date is incomplete', () => {
     render(<DatePicker {...baseProps} />);
     type('1403');

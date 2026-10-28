@@ -4,6 +4,7 @@ import {
   DATE_IMPOSSIBLE_MESSAGE,
   DATE_INCOMPLETE_MESSAGE,
   displayDateToIso,
+  getDateInputRemainder,
   getDateValueError,
   isEndDateNotBeforeStart,
   isoToDisplayDate,
@@ -109,6 +110,20 @@ describe('DateInput', () => {
       expect(isEndDateNotBeforeStart('01/06', '2023-09-01')).toBe(true);
       expect(isEndDateNotBeforeStart('2023-06-01', '01/09')).toBe(true);
       expect(isEndDateNotBeforeStart('2023-06-01', '')).toBe(true);
+    });
+  });
+
+  describe('getDateInputRemainder', () => {
+    it('shows the dashes still to be typed', () => {
+      expect(getDateInputRemainder('1')).toBe('-/--/----');
+      expect(getDateInputRemainder('19')).toBe('/--/----');
+      expect(getDateInputRemainder('19/0')).toBe('-/----');
+      expect(getDateInputRemainder('19/03/19')).toBe('--');
+    });
+
+    it('has nothing to show for an empty or complete text', () => {
+      expect(getDateInputRemainder('')).toBe('');
+      expect(getDateInputRemainder('19/03/1987')).toBe('');
     });
   });
 });

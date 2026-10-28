@@ -4,6 +4,7 @@ const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 const DATE_DIGITS_COUNT = 8;
 
 export const DATE_INPUT_PLACEHOLDER = 'jj/mm/aaaa';
+const DATE_INPUT_TEMPLATE = '--/--/----';
 export const DATE_INCOMPLETE_MESSAGE =
   "Date incomplète. Saisissez le jour, le mois et l'année.";
 export const DATE_IMPOSSIBLE_MESSAGE =
@@ -95,4 +96,15 @@ export const isEndDateNotBeforeStart = (
   }
   // `YYYY-MM-DD` strings sort like the dates they stand for
   return endDate >= startDate;
+};
+
+/**
+ * What is left to type after a partial `dd/mm/yyyy` text, as dashes: `19`
+ * gives `/--/----`. Empty for an empty or a complete text.
+ */
+export const getDateInputRemainder = (maskedText: string): string => {
+  if (!maskedText) {
+    return '';
+  }
+  return DATE_INPUT_TEMPLATE.slice(maskedText.length);
 };

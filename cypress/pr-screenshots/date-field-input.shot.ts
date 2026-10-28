@@ -54,7 +54,13 @@ describe('Saisie de date : champ unique jj/mm/aaaa', () => {
       capture: 'viewport',
     });
 
-    cy.get(BIRTH_DATE_FIELD).type('14031987');
+    cy.get(BIRTH_DATE_FIELD).type('19');
+    cy.capture('Date de naissance en cours de saisie', {
+      caption: 'Les tirets montrent ce qu’il reste à saisir : 19/--/----.',
+      capture: 'viewport',
+    });
+
+    cy.get(BIRTH_DATE_FIELD).clear().type('14031987');
     cy.get(BIRTH_DATE_FIELD).should('have.value', '14/03/1987');
     cy.capture('Date de naissance saisie', {
       caption: 'On tape 14031987 : les / s’ajoutent tout seuls.',

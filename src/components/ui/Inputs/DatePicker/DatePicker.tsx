@@ -3,6 +3,7 @@ import { FieldErrorMessage } from '@/src/features/forms/fields/FieldErrorMessage
 import {
   DATE_INPUT_PLACEHOLDER,
   displayDateToIso,
+  getDateInputRemainder,
   isoToDisplayDate,
   isValidIsoDate,
   maskDateInput,
@@ -14,6 +15,7 @@ import { CommonInputProps } from '../Inputs.types';
 import {
   StyledDatePickerCalendar,
   StyledDatePickerContainer,
+  StyledDatePickerGhost,
   StyledDatePickerRow,
   StyledDatePickerTextWrapper,
   StyledNativeDateInput,
@@ -112,6 +114,15 @@ export function DatePicker({
       {showLabel && <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>}
       <StyledDatePickerRow>
         <StyledDatePickerTextWrapper>
+          {getDateInputRemainder(text) && (
+            <StyledDatePickerGhost
+              aria-hidden="true"
+              data-testid={`${id}-ghost`}
+            >
+              <span>{text}</span>
+              {getDateInputRemainder(text)}
+            </StyledDatePickerGhost>
+          )}
           <input
             id={id}
             data-testid={id}
