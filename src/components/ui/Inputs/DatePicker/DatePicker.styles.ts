@@ -73,14 +73,22 @@ export const StyledDatePickerCalendar = styled.div`
   }
 `;
 
-// The native date input is only the source of the calendar: it is never
-// shown nor focused, the text field next to it is the actual input
+// The native date input lies, invisible, over the calendar button: a tap or a
+// click lands on it, which is the only way iOS Safari opens its calendar. The
+// button underneath stays for keyboard users and screen readers.
 export const StyledNativeDateInput = styled.input`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
+  inset: 0;
+  width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
   opacity: 0;
-  pointer-events: none;
+  cursor: pointer;
+  z-index: 1;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;

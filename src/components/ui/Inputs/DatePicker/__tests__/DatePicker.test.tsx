@@ -118,6 +118,19 @@ describe('DatePicker', () => {
 
     fireEvent.click(screen.getByTestId('start-calendar-button'));
     expect(showPicker).toHaveBeenCalledTimes(1);
+
+    // The invisible date input over the button gets the pointer events
+    fireEvent.click(calendar);
+    expect(showPicker).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not fail where showPicker is missing or refused', () => {
+    render(<DatePicker {...baseProps} />);
+    const calendar = screen.getByTestId('start-calendar') as HTMLInputElement;
+    calendar.showPicker = () => {
+      throw new Error('NotAllowedError');
+    };
+    expect(() => fireEvent.click(calendar)).not.toThrow();
   });
 
   it('gives the native calendar its bounds, with a default minimum', () => {

@@ -97,10 +97,12 @@ export function DatePicker({
       return;
     }
     try {
+      // Desktop browsers only open their calendar from this call, a click on
+      // the date input being taken for a click on one of its segments
       nativeInput.showPicker();
     } catch {
-      // Browsers without showPicker() open the calendar on a click
-      nativeInput.click();
+      // iOS Safari, or a browser without showPicker(): the tap on the
+      // invisible date input over the button already opens the calendar
     }
   };
 
@@ -162,6 +164,7 @@ export function DatePicker({
             min={min || '1900-01-01'}
             max={max}
             onChange={handleCalendarChange}
+            onClick={openCalendar}
             disabled={disabled}
           />
         </StyledDatePickerCalendar>
