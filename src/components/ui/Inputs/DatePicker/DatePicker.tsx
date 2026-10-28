@@ -138,6 +138,8 @@ export function DatePicker({
             onClick={openCalendar}
             disabled={disabled}
             variant="default"
+            size="large"
+            shape="square"
           />
           <StyledNativeDateInput
             ref={nativeInputRef}

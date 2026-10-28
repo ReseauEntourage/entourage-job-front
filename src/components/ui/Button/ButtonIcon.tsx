@@ -18,6 +18,8 @@ export interface ButtonIconProps {
   color?: string;
   size?: ButtonSize;
   variant?: ButtonIconVariant;
+  // Corners of the button: round (default) or square with the default radius
+  shape?: 'circle' | 'square';
 }
 
 const BUTTON_ICON_VARIANT_MAP: Record<ButtonIconVariant, ButtonVariant> = {
@@ -38,6 +40,7 @@ export const ButtonIcon = ({
   size = 'medium',
   disabled = false,
   variant = 'default',
+  shape = 'circle',
 }: ButtonIconProps) => {
   const iconSize = BUTTON_SIZES[size].iconSize;
   const formattedIcon = React.cloneElement(
@@ -52,7 +55,7 @@ export const ButtonIcon = ({
   return (
     <Button
       href={href}
-      rounded="circle"
+      rounded={shape}
       onClick={onClick}
       dataTestId={dataTestId}
       ariaLabel={ariaLabel}

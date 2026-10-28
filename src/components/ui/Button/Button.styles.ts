@@ -53,11 +53,15 @@ export const StyledButton = styled.button<{
     if ($rounded === 'circle') {
       return BUTTON_CIRCLE_RADIUS;
     }
+    if ($rounded === 'square') {
+      return BUTTON_DEFAULT_RADIUS;
+    }
     return $rounded ? BUTTON_ROUNDED_RADIUS : BUTTON_DEFAULT_RADIUS;
   }};
 
   padding: ${({ $rounded, $variant, size }) => {
-    if ($rounded === 'circle') {
+    // An icon-only button keeps the same box whatever its corners
+    if ($rounded === 'circle' || $rounded === 'square') {
       return BUTTON_SIZES[size].paddingCircle;
     }
     if ($variant === 'text') {
