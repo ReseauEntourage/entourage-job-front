@@ -13,3 +13,13 @@ export const StyledOnboardingActions = styled.div`
   gap: 20px;
   margin-top: 40px;
 `;
+
+/**
+ * Safety-net row for OnboardingReferentContact on the steps that hide the
+ * generic header (so HeaderWizardStep, which normally carries the button,
+ * never renders). The button pins itself to the right via margin-left: auto.
+ */
+export const StyledOnboardingReferentContactFallbackRow = styled.div`
+  display: flex;
+  width: 100%;
+`;
