@@ -33,10 +33,10 @@ export const ProfileExperiencesModalEdit = ({
     location: experience?.location ?? '',
     company: experience?.company ?? '',
     startDate: experience?.startDate
-      ? moment(experience.startDate).format('YYYY-MM-DD')
+      ? moment.utc(experience.startDate).format('YYYY-MM-DD')
       : '',
     endDate: experience?.endDate
-      ? moment(experience.endDate).format('YYYY-MM-DD')
+      ? moment.utc(experience.endDate).format('YYYY-MM-DD')
       : '',
     description: experience?.description ?? '',
     skills:

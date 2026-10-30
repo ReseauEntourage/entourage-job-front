@@ -4,6 +4,8 @@ import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { StyledOnboardingActions } from '@/src/features/wizard/onboarding/onboarding.styles';
+import { OnboardingHelpLink } from '@/src/features/wizard/shell/OnboardingHelpLink';
+import { OnboardingReferentContact } from '@/src/features/wizard/shell/OnboardingReferentContact';
 import { WizardContentLayout } from '@/src/features/wizard/shell/WizardContentLayout';
 import { StyledWizardStepHeader } from '@/src/features/wizard/shell/WizardContentLayout.styles';
 import { WizardProgressBar } from '@/src/features/wizard/shell/WizardProgressBar';
@@ -26,6 +28,8 @@ interface WizardRunShellProps {
   isInitializing?: boolean;
   sidePanelContent?: (mode: 'compact' | 'full') => React.ReactNode;
   mobileBottomSheet?: boolean;
+  /** True once the user is logged in and going through the onboarding (not registration). */
+  isOnboardingPhase?: boolean;
 }
 
 export const WizardRunShell = ({
@@ -40,6 +44,7 @@ export const WizardRunShell = ({
   isInitializing = false,
   sidePanelContent,
   mobileBottomSheet = false,
+  isOnboardingPhase = false,
 }: WizardRunShellProps) => {
   // Message d'erreur posé par les étapes (échec de sauvegarde, champs manquants) ;
   // réinitialisé par useWizard à chaque changement d'étape et à chaque soumission.
@@ -98,6 +103,7 @@ export const WizardRunShell = ({
       sectionProgress={sectionProgress}
       subProgress={subProgress}
       mobileHeaderContent={currentStep?.mobileHeaderContent}
+      mobileHelpLink={isOnboardingPhase ? <OnboardingHelpLink /> : null}
       stepper={
         hideStepper ? undefined : (
           <WizardProgressBar
@@ -163,6 +169,8 @@ export const WizardRunShell = ({
                 </Button>
               </StyledOnboardingActions>
             )}
+            {/* Outside the footer conditional: also shown on steps that hide it */}
+            {isOnboardingPhase && <OnboardingReferentContact />}
           </>
         ) : (
           <Alert type={AlertType.Error}>

@@ -166,6 +166,9 @@ interface FormFieldCommonProperties<
 > {
   id: N;
   name: N;
+  // Fields to validate again when this one changes (e.g. an end date, which
+  // depends on its start date)
+  deps?: Path<V>[];
   hidden?: boolean;
   hide?: (
     getValue: GetValueType<V>,

@@ -17,6 +17,13 @@ jest.mock('@/src/features/wizard/shell/WizardContentLayout', () => ({
   },
 }));
 
+jest.mock('@/src/features/wizard/shell/OnboardingReferentContact', () => ({
+  OnboardingReferentContact: () => <div data-testid="referent-contact" />,
+}));
+jest.mock('@/src/features/wizard/shell/OnboardingHelpLink', () => ({
+  OnboardingHelpLink: () => <div data-testid="help-link" />,
+}));
+
 import { fireEvent, screen } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
@@ -207,5 +214,37 @@ describe('WizardRunShell', () => {
     expect(lastLayoutProps().sidePanel).toBe(sidePanelContent);
     expect(lastLayoutProps().mobileBottomSheet).toBe(true);
     expect(lastLayoutProps().mobileHeaderContent).toBeTruthy();
+  });
+
+  describe('referent contact', () => {
+    it('shows the contact below the actions during the onboarding phase', () => {
+      renderShell({ isOnboardingPhase: true });
+
+      const contact = screen.getByTestId('referent-contact');
+      const next = screen.getByTestId('wizard-next-step-btn');
+      expect(
+        next.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(lastLayoutProps().mobileHelpLink).toBeTruthy();
+    });
+
+    it('shows the contact on a step that hides the generic footer', () => {
+      const noFooter = makeStep('profil', { hideGenericStepFooter: true });
+      renderShell({
+        isOnboardingPhase: true,
+        wizardSteps: [noFooter],
+        currentStep: noFooter,
+      });
+
+      expect(screen.queryByTestId('wizard-next-step-btn')).toBeNull();
+      expect(screen.getByTestId('referent-contact')).toBeTruthy();
+    });
+
+    it('shows neither the contact nor the help link outside the onboarding phase', () => {
+      renderShell();
+
+      expect(screen.queryByTestId('referent-contact')).toBeNull();
+      expect(lastLayoutProps().mobileHelpLink).toBeNull();
+    });
   });
 });

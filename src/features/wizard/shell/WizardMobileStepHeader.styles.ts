@@ -30,3 +30,10 @@ export const StyledWizardMobileStepHeaderProgressFill = styled.div<{
   background-color: ${COLORS.primaryBlue};
   transition: width 0.3s ease;
 `;
+
+export const StyledWizardMobileStepHeaderRow = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

@@ -126,7 +126,7 @@ describe('Wizard', () => {
           // Étape 4 — Informations candidat (naissance + département)
           cy.get(
             '[data-testid="form-registration-candidate-info-birthDate"]'
-          ).type('1990-01-01');
+          ).type('01011990');
           cy.get('#form-registration-candidate-info-department')
             .click()
             .find('.Select__option')
@@ -198,7 +198,7 @@ describe('Wizard', () => {
           // Étape 4 — Informations candidat
           cy.get(
             '[data-testid="form-registration-candidate-info-birthDate"]'
-          ).type('1990-01-01');
+          ).type('01011990');
           cy.get('#form-registration-candidate-info-department')
             .click()
             .find('.Select__option')
@@ -297,7 +297,7 @@ describe('Wizard', () => {
 
           // Étape 4 — Informations coach (naissance + département)
           cy.get('[data-testid="form-registration-coach-info-birthDate"]').type(
-            '1985-05-05'
+            '05051985'
           );
           cy.get('#form-registration-coach-info-department')
             .click()
@@ -353,7 +353,7 @@ describe('Wizard', () => {
           // Étape 3 — Naissance + département, directement : le parcours réduit
           // ne présente ni coups de pouce, ni secteurs, ni aperçu du réseau
           cy.get('[data-testid="form-registration-coach-info-birthDate"]').type(
-            '1980-01-01'
+            '01011980'
           );
           cy.get('#form-registration-coach-info-department')
             .click()

@@ -27,6 +27,8 @@ interface WizardContentLayoutProps {
     totalInSection: number;
   } | null;
   mobileHeaderContent?: React.ReactNode;
+  /** Rendered by the mobile step header itself, so it stays visible when a step's mobileHeaderContent replaces the generic header */
+  mobileHelpLink?: React.ReactNode;
   mobileBottomSheet?: boolean;
 }
 
@@ -38,6 +40,7 @@ export const WizardContentLayout = ({
   sectionProgress,
   subProgress = null,
   mobileHeaderContent,
+  mobileHelpLink,
   mobileBottomSheet = false,
 }: WizardContentLayoutProps) => {
   const hasSidePanel = Boolean(sidePanel);
@@ -76,6 +79,7 @@ export const WizardContentLayout = ({
           subProgress={subProgress}
           progressPercent={sectionProgress ?? null}
           customContent={mobileHeaderContent}
+          helpLink={mobileHelpLink}
         />
         {children}
       </StyledWizardPageContent>
