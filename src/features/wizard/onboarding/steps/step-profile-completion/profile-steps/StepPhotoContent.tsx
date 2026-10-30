@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, LucidIcon, Text } from '@/src/components/ui';
+import { Alert, Button, LucidIcon, Text } from '@/src/components/ui';
+import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile/ImgUserProfile/ImgUserProfile';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
@@ -9,6 +10,7 @@ import {
   StyledButtonsContainer,
   StyledContainer,
   StyledRoundBadge,
+  StyledVisibilityHint,
 } from './StepPhotoContent.styles';
 
 interface StepPhotoContentProps {
@@ -16,6 +18,8 @@ interface StepPhotoContentProps {
   onPhotoSelected: (blob: Blob, objectUrl: string) => void;
   existingUser?: { id: string; firstName: string; role: UserRoles } | null;
   hasPicture?: boolean;
+  /** Visibility hint shown under the photo buttons, until a photo is selected */
+  visibilityHint?: string;
 }
 
 export const StepPhotoContent = ({
@@ -23,6 +27,7 @@ export const StepPhotoContent = ({
   onPhotoSelected,
   existingUser,
   hasPicture = false,
+  visibilityHint,
 }: StepPhotoContentProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -108,6 +113,18 @@ export const StepPhotoContent = ({
       <Text size="small" color="darkGray">
         Format JPG, PNG. Max 5 Mo.
       </Text>
+
+      {visibilityHint && !photoObjectUrl && (
+        <StyledVisibilityHint>
+          <Alert
+            type={AlertType.Info}
+            variant="outlined"
+            dataTestId="photo-visibility-hint"
+          >
+            {visibilityHint}
+          </Alert>
+        </StyledVisibilityHint>
+      )}
     </StyledContainer>
   );
 };

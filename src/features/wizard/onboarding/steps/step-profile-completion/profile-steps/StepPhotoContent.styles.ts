@@ -28,6 +28,11 @@ export const StyledRoundBadge = styled.div`
   }
 `;
 
+export const StyledVisibilityHint = styled.div`
+  width: 100%;
+  max-width: 480px;
+`;
+
 export const StyledButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;

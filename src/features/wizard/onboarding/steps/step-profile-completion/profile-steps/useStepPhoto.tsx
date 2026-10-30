@@ -8,6 +8,7 @@ import { currentUserActions } from '@/src/use-cases/current-user';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
 import { ProfileLivePreviewPanel } from '../ProfileLivePreview/ProfileLivePreviewPanel';
 import { StepPhotoContent } from './StepPhotoContent';
+import { PHOTO_VISIBILITY_HINTS } from './photoVisibilityHint.constants';
 
 interface UseStepPhotoProps {
   user: User | null;
@@ -25,6 +26,13 @@ export const useStepPhoto = ({ user }: UseStepPhotoProps) => {
   };
 
   const isCandidate = user?.role === UserRoles.CANDIDATE;
+
+  // Hidden until the profile is loaded (`profileComplete` is null before that),
+  // otherwise it would flash for someone who already has a saved photo.
+  const visibilityHint =
+    user?.role && profileComplete && !profileComplete.hasPicture
+      ? PHOTO_VISIBILITY_HINTS[user.role]
+      : undefined;
 
   const onboardingStepPhoto: WizardStep = {
     id: 'photo',
@@ -44,6 +52,7 @@ export const useStepPhoto = ({ user }: UseStepPhotoProps) => {
           onPhotoSelected={handlePhotoSelected}
           existingUser={user}
           hasPicture={profileComplete?.hasPicture ?? false}
+          visibilityHint={visibilityHint}
         />
       </StyledOnboardingStepContainer>
     ),

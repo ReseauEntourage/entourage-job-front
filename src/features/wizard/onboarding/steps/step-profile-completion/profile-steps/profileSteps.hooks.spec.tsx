@@ -99,6 +99,58 @@ describe('profile completion step hooks', () => {
       ).toBe(true);
     });
 
+    describe('visibility hint', () => {
+      const hintOf = (
+        role: UserRoles,
+        profileComplete: any
+      ): string | undefined =>
+        contentProps(
+          setup(
+            () => useStepPhoto({ user: { ...USER, role } as User }),
+            profileComplete
+          ).result.current.onboardingStepPhoto.content
+        ).visibilityHint;
+
+      it('tells a candidate without photo that coaches contact profiles with a photo more', () => {
+        expect(hintOf(UserRoles.CANDIDATE, { hasPicture: false })).toBe(
+          "Les profils avec une photo ont 2 fois plus de chances d'être contactés par des coachs."
+        );
+      });
+
+      it('tells a coach without photo that candidates contact profiles with a photo more', () => {
+        expect(hintOf(UserRoles.COACH, { hasPicture: false })).toBe(
+          "Les profils avec une photo ont 2 fois plus de chances d'être contactés par des candidats."
+        );
+      });
+
+      it('has no hint once a photo is saved', () => {
+        expect(
+          hintOf(UserRoles.CANDIDATE, { hasPicture: true })
+        ).toBeUndefined();
+        expect(hintOf(UserRoles.COACH, { hasPicture: true })).toBeUndefined();
+      });
+
+      it('has no hint while the profile is not loaded yet', () => {
+        expect(hintOf(UserRoles.CANDIDATE, null)).toBeUndefined();
+      });
+
+      it('has no hint for a role other than candidate and coach', () => {
+        expect(hintOf(UserRoles.ADMIN, { hasPicture: false })).toBeUndefined();
+        expect(
+          hintOf(UserRoles.REFERER, { hasPicture: false })
+        ).toBeUndefined();
+      });
+
+      it('does not make the step mandatory', async () => {
+        const { result } = setup(() => useStepPhoto({ user: USER }), {
+          hasPicture: false,
+        });
+        const step = result.current.onboardingStepPhoto;
+        expect(step.isNextEnabled).toBe(true);
+        expect(await step.onSubmit?.()).toBe(true);
+      });
+    });
+
     it('lets the user move on without picking a photo', async () => {
       const { result, dispatch } = setup(() => useStepPhoto({ user: USER }));
       const step = result.current.onboardingStepPhoto;
