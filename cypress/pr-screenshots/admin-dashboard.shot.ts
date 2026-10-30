@@ -54,13 +54,13 @@ describe("Tableau de bord d'un admin", () => {
     cy.visit('/backoffice/dashboard');
     cy.wait('@getCurrent');
     cy.wait('@getConversations');
+    cy.wait('@profileCompletion');
     cy.get('[data-testid="dashboard-profile-card"]').should('be.visible');
     cy.get('[data-testid="dashboard-messaging-widget"]').should('be.visible');
     // The sections of the coach profile card an admin does not get
     cy.get('[data-testid="dashboard-profile-card"]')
       .should('not.contain', 'Mes coups de pouce')
       .and('not.contain', 'Mon CV');
-    cy.get('#nav').contains('Accueil').should('be.visible');
 
     if (Cypress.expose('device') === 'mobile') {
       cy.capture('Tableau de bord mobile', {
@@ -80,11 +80,18 @@ describe("Tableau de bord d'un admin", () => {
       return;
     }
 
+    cy.get('#nav').contains('Accueil').should('be.visible');
     cy.capture("Tableau de bord de l'admin", {
       caption:
         "La carte de profil à gauche (sans « Mes coups de pouce » ni « Mon CV »), l'aperçu des messages à droite.",
     });
-    cy.get('#nav').contains('.menu-link', 'Ressources').trigger('mouseover');
+    // The sub menu opens on a CSS :hover, which Cypress cannot trigger: force it
+    cy.document().then((doc) => {
+      const style = doc.createElement('style');
+      style.textContent =
+        '.subMenu-container { max-height: 1000px !important; visibility: visible !important; }';
+      doc.head.appendChild(style);
+    });
     cy.get('#nav')
       .contains('.subMenu-item', 'Boîte à outils coachs')
       .should('be.visible');
@@ -102,6 +109,7 @@ describe("Tableau de bord d'un admin", () => {
     cy.visit('/backoffice/dashboard');
     cy.wait('@getCurrent');
     cy.wait('@getConversations');
+    cy.wait('@profileCompletion');
     cy.get('[data-testid="admin-dashboard-no-messages"]').should('be.visible');
     cy.get('[data-testid="dashboard-profile-card"]').should('be.visible');
 
