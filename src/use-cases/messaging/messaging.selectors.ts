@@ -58,6 +58,9 @@ export const selectIsAIPanelOpen = (state: RootState) =>
 export const selectActivePanelView = (state: RootState) =>
   state.messaging.activePanelView;
 
+export const selectShouldAutoStartAI = (state: RootState) =>
+  state.messaging.shouldAutoStartAI;
+
 export const selectConversations = (state: RootState) =>
   messagingApi.endpoints.getConversations.select()(state).data ?? null;
 

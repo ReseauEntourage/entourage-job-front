@@ -41,18 +41,51 @@ jest.mock('./MessagingPinnedInfo/MessagingPinnedInfo', () => ({
   ),
 }));
 jest.mock('./MessagingSuggestions/MessagingSuggestions', () => ({
-  MessagingSuggestions: ({ onSuggestionClick, variant, participants }: any) => (
+  MessagingSuggestions: ({
+    onSuggestionClick,
+    onOpenAIAssistant,
+    variant,
+    participants,
+  }: any) => (
     <button
       data-testid={`suggestions-${variant ?? 'default'}`}
       onClick={() => onSuggestionClick({ message: 'Bonjour suggéré' })}
     >
       {participants.length}
+      {onOpenAIAssistant && (
+        <span
+          data-testid={`suggestions-${variant ?? 'default'}-ai`}
+          onClick={(e: any) => {
+            e.stopPropagation();
+            onOpenAIAssistant();
+          }}
+        >
+          ai
+        </span>
+      )}
     </button>
   ),
 }));
 jest.mock('./MessagingWaitingReplyBanner/MessagingWaitingReplyBanner', () => ({
   MessagingWaitingReplyBanner: ({ recipientFirstName }: any) => (
     <div data-testid="waiting">{recipientFirstName}</div>
+  ),
+}));
+jest.mock('./MessagingAIAssistantBanner/MessagingAIAssistantBanner', () => ({
+  MessagingAIAssistantBanner: ({
+    onOpenAssistant,
+    onDismiss,
+    compact,
+  }: any) => (
+    <div data-testid="ai-banner">
+      <button data-testid="ai-banner-open" onClick={onOpenAssistant}>
+        open
+      </button>
+      <button data-testid="ai-banner-dismiss" onClick={onDismiss}>
+        dismiss
+      </button>
+      {compact ? 'compact' : 'full'}
+    </div>
   ),
 }));
 jest.mock('../MessagingAIPanel', () => ({
@@ -334,6 +367,77 @@ describe('MessagingConversation', () => {
     });
   });
 
+  describe('AI assistant chip and banner', () => {
+    it('offers the AI chip among the quick replies, opening the assistant with auto-start without touching the editor', async () => {
+      const { store } = await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('suggestions-quick-replies-ai'));
+      expect(store.getState().messaging.newMessage).toBe('');
+      expect(store.getState().messaging.isAIPanelOpen).toBe(true);
+      expect(store.getState().messaging.shouldAutoStartAI).toBe(true);
+    });
+
+    it('does not show the AI assistant banner at the first candidate message', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [message('m1', 'other', 1)],
+        }),
+      });
+      expect(
+        screen.getByTestId('suggestions-quick-replies')
+      ).toBeInTheDocument();
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('shows the AI assistant banner once a second candidate message arrives unanswered', async () => {
+      await setup({ conversation: buildConversation() });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
+    it('hides the AI assistant banner once the coach has replied', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [
+            message('m3', 'me', 3),
+            message('m2', 'other', 2),
+            message('m1', 'other', 1),
+          ],
+        }),
+      });
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('hides the AI assistant banner for a conversation where it was dismissed', async () => {
+      await setup({
+        conversation: buildConversation({
+          assistantBannerDismissedAt: '2026-01-01T00:00:00.000Z',
+        }),
+      });
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('opens the assistant with auto-start from the banner', async () => {
+      const { store } = await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-open'));
+      expect(store.getState().messaging.isAIPanelOpen).toBe(true);
+      expect(store.getState().messaging.shouldAutoStartAI).toBe(true);
+    });
+
+    it('dismisses the banner, persisted via the API, without affecting another conversation', async () => {
+      mockedApi.dismissAIAssistantBanner.mockResolvedValue({} as any);
+      await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-dismiss'));
+      await settle();
+      expect(mockedApi.dismissAIAssistantBanner).toHaveBeenCalledWith('conv1');
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('shows the banner in a compact layout on mobile', async () => {
+      mockUseIsMobile.mockReturnValue(true);
+      await setup({ conversation: buildConversation() });
+      expect(screen.getByTestId('ai-banner')).toHaveTextContent('compact');
+    });
+  });
+
   describe('pinned information', () => {
     it('pins an "unavailable" notice when the addressee is unavailable', async () => {
       await setup({
@@ -410,11 +514,12 @@ describe('MessagingConversation', () => {
       expect(screen.queryByTestId('ai-panel')).toBeNull();
     });
 
-    it('replaces the conversation by the panel on mobile', async () => {
+    it('shows the panel in a mid-height sheet on mobile, with the conversation still visible above', async () => {
       mockUseIsMobile.mockReturnValue(true);
       await setup({ conversation: buildConversation(), prepare: open });
       expect(screen.getByTestId('ai-panel')).toBeInTheDocument();
-      expect(screen.queryByTestId('editor')).toBeNull();
+      expect(screen.getByTestId('editor')).toBeInTheDocument();
+      expect(screen.getAllByTestId('message')).toHaveLength(2);
     });
   });
 

@@ -24,6 +24,7 @@ import { MessagingSuggestionItem } from './MessagingSuggestions.types';
 interface MessagingSuggestionProps {
   newMessage: string;
   onSuggestionClick: (suggestion: MessagingSuggestionItem) => void;
+  onOpenAIAssistant?: () => void;
   participants: ConversationParticipant[];
   variant?: 'default' | 'quick-replies';
 }
@@ -31,6 +32,7 @@ interface MessagingSuggestionProps {
 export const MessagingSuggestions = ({
   newMessage,
   onSuggestionClick,
+  onOpenAIAssistant,
   participants,
   variant = 'default',
 }: MessagingSuggestionProps) => {
@@ -59,6 +61,11 @@ export const MessagingSuggestions = ({
           {
             name: "🔀 Mon domaine d'activité est différent",
             message: `Bonjour ${participantsFirstNames},\nMerci pour votre message. Votre recherche ne correspond pas directement à mon domaine d'activité, ce qui limite ma capacité à vous aider efficacement.\n\nJe vous invite à contacter d'autres membres plus proches de votre secteur.\n\nBonne continuation dans vos démarches.`,
+          },
+          {
+            name: '✨ Demander à l’assistant IA',
+            action: 'open-ai-assistant',
+            message: '',
           },
         ];
       }
@@ -166,7 +173,11 @@ export const MessagingSuggestions = ({
               key={suggestion.name}
               suggestion={suggestion}
               onClick={() => {
-                onSuggestionClick(suggestion);
+                if (suggestion.action === 'open-ai-assistant') {
+                  onOpenAIAssistant?.();
+                } else {
+                  onSuggestionClick(suggestion);
+                }
               }}
             />
           ))}
