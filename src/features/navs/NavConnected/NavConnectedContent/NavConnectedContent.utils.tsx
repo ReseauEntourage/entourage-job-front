@@ -158,6 +158,49 @@ const renderCoachHeaderItems = (
   return items;
 };
 
+// The admin "Ressources" menu lists the three toolboxes. A toolbox whose URL
+// is not configured in the environment is left out rather than rendered as a
+// dead link; "Structures de l'inclusion" is always there.
+const renderAdminResourcesItem = (): NavConnectedMainItem => {
+  const toolboxes = [
+    {
+      name: 'Boîte à outils coachs',
+      href: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL,
+      tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_BAO_COACH_CLIC,
+    },
+    {
+      name: 'Boîte à outils candidats',
+      href: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL,
+      tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_BAO_CANDIDAT_CLIC,
+    },
+    {
+      name: 'Boîte à outils entreprises',
+      href: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL,
+      tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_BAO_COMPANY_CLIC,
+    },
+  ];
+
+  return {
+    name: 'Ressources',
+    tag: GA_TAGS.BACKOFFICE_HEADER_RESSOURCES_CLIC,
+    subMenu: [
+      ...toolboxes
+        .filter((toolbox) => !!toolbox.href)
+        .map(({ name, href, tag }) => ({
+          href: href as string,
+          name,
+          external: true,
+          tag,
+        })),
+      {
+        href: '/backoffice/ressources/aides-locales',
+        name: "Structures de l'inclusion",
+        tag: GA_TAGS.BACKOFFICE_HEADER_AIDES_LOCALES_CLIC,
+      },
+    ],
+  };
+};
+
 export const renderLinks = (
   user: User,
   logout: () => void,
@@ -187,6 +230,11 @@ export const renderLinks = (
     links: {
       [UserRoles.ADMIN]: [
         {
+          href: '/backoffice/dashboard',
+          name: 'Accueil',
+          tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_DASHBOARD_CLIC,
+        },
+        {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
         },
@@ -195,6 +243,7 @@ export const renderLinks = (
           href: '/backoffice/events',
           name: 'Événements',
         },
+        renderAdminResourcesItem(),
       ],
       [UserRoles.CANDIDATE]: candidateHeaderItems,
       [UserRoles.COACH]: coachHeaderItems,

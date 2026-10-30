@@ -83,8 +83,9 @@ export const NavConnectedContentMobile = ({
     closeMenu();
   }, [asPath, closeMenu]);
 
-  // The admin home is the first administration page, no longer in the main nav
-  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
+  // The logo leads to the first tab of the role, "Accueil" (the dashboard)
+  // for every role, admins included
+  const logoLink = links[user?.role][0] || null;
   const entries = links[user.role].filter(({ href }) => href !== '#');
   const menuEntries = administration?.subMenu
     ? [...entries, administration]
