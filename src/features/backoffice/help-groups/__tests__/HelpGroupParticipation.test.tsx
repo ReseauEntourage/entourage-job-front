@@ -749,14 +749,26 @@ describe('Help group participation', () => {
       expect(requestButton()).not.toBeInTheDocument();
     });
 
-    it('empties the title on « Écrire le mien »', async () => {
+    it('puts the request button on the right of the title label and the mention under the field', async () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
+      const label = document.querySelector(
+        'label[for="discussion-composer-title"]'
+      );
+      const button = screen.getByTestId('discussion-composer-request-title');
+      expect(button.parentElement).toBe(label?.parentElement);
       requestTitle();
-      await waitFor(() => expect(titleInput().value).not.toBe(''));
-      fireEvent.click(screen.getByTestId('discussion-composer-own-title'));
-      expect(titleInput().value).toBe('');
+      const mention = await screen.findByTestId(
+        'discussion-composer-suggested-title'
+      );
+      // The mention comes after the field, in the live region
+      expect(
+        titleInput().compareDocumentPosition(mention) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(mention.parentElement).toHaveAttribute('role', 'status');
+      expect(screen.queryByText('Écrire le mien')).not.toBeInTheDocument();
     });
 
     it('publishes exactly the displayed title with its source', async () => {

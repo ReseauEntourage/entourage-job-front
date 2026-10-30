@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Badge,
-  BadgeVariant,
-  Button,
-  LucidIcon,
-  Text,
-} from '@/src/components/ui';
+import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { H5 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
 import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
@@ -31,7 +25,6 @@ import {
   COMPOSER_TITLE_FAILED_LABEL,
   COMPOSER_TITLE_LABEL,
   COMPOSER_TITLE_LOADING_LABEL,
-  COMPOSER_TITLE_OWN_LABEL,
   COMPOSER_TITLE_PLACEHOLDER,
   COMPOSER_TITLE_REQUEST_LABEL,
   COMPOSER_TITLE_REQUIRED,
@@ -53,9 +46,9 @@ import {
   StyledComposerBarButton,
   StyledComposerHeading,
   StyledComposerVisibility,
-  StyledTitleActions,
   StyledTitleField,
   StyledTitleLabelRow,
+  StyledTitleMention,
   StyledTitleStatus,
 } from './DiscussionComposer.styles';
 import {
@@ -310,15 +303,18 @@ export function DiscussionComposer({
           <StyledInputLabel htmlFor={TITLE_INPUT_ID}>
             {COMPOSER_TITLE_LABEL}
           </StyledInputLabel>
-          {draft.titleOrigin === 'suggested' && !suggestion.isSuggesting && (
-            <Badge
-              variant={BadgeVariant.ExtraLightTeal}
-              size="small"
-              dataTestId="discussion-composer-suggested-title"
+          {suggestion.canRequest && (
+            <Button
+              variant="hoverBlue"
+              size="xsmall"
+              prependIcon={<LucidIcon name="Sparkles" />}
+              onClick={requestTitle}
+              dataTestId="discussion-composer-request-title"
             >
-              <LucidIcon name="Sparkles" size={14} />
-              {COMPOSER_TITLE_SUGGESTED_LABEL}
-            </Badge>
+              {suggestion.hasProposed
+                ? COMPOSER_TITLE_RETRY_LABEL
+                : COMPOSER_TITLE_REQUEST_LABEL}
+            </Button>
           )}
         </StyledTitleLabelRow>
         <TextInput
@@ -351,6 +347,14 @@ export function DiscussionComposer({
           error={hasTriedToPublish ? toFieldError(errors.title) : undefined}
         />
         <StyledTitleStatus role="status">
+          {draft.titleOrigin === 'suggested' && !suggestion.isSuggesting && (
+            <StyledTitleMention data-testid="discussion-composer-suggested-title">
+              <LucidIcon name="Sparkles" size={12} />
+              <Text size="small" color="darkGray">
+                {COMPOSER_TITLE_SUGGESTED_LABEL}
+              </Text>
+            </StyledTitleMention>
+          )}
           {suggestion.isSuggesting && (
             <Text size="small" color="darkGray">
               {COMPOSER_TITLE_LOADING_LABEL}
@@ -362,42 +366,6 @@ export function DiscussionComposer({
             </Text>
           )}
         </StyledTitleStatus>
-        <StyledTitleActions>
-          {suggestion.canRequest && (
-            <Button
-              variant="text"
-              size="small"
-              weight="semibold"
-              prependIcon={<LucidIcon name="Sparkles" size={14} />}
-              onClick={requestTitle}
-              dataTestId="discussion-composer-request-title"
-            >
-              {suggestion.hasProposed
-                ? COMPOSER_TITLE_RETRY_LABEL
-                : COMPOSER_TITLE_REQUEST_LABEL}
-            </Button>
-          )}
-          {(draft.titleOrigin === 'suggested' ||
-            draft.titleOrigin === 'edited') && (
-            <Button
-              variant="text"
-              size="small"
-              weight="semibold"
-              dataTestId="discussion-composer-own-title"
-              onClick={() => {
-                suggestion.cancelPending();
-                setDraft((current) => ({
-                  ...current,
-                  title: '',
-                  titleOrigin: 'manual',
-                }));
-                titleRef.current?.focus();
-              }}
-            >
-              {COMPOSER_TITLE_OWN_LABEL}
-            </Button>
-          )}
-        </StyledTitleActions>
       </StyledTitleField>
       <StyledComposerActions>
         <StyledComposerVisibility>
