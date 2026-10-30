@@ -40,7 +40,10 @@ export const COMPOSER_TITLE_PLACEHOLDER = 'Écrivez votre titre';
 export const COMPOSER_TITLE_SUGGESTED_LABEL =
   "Proposé par l'IA. Vérifiez, ajustez sa proposition.";
 export const COMPOSER_TITLE_LOADING_LABEL = 'Proposition d’un titre…';
+export const COMPOSER_TITLE_REQUEST_LABEL = "Proposer un titre avec l'IA";
 export const COMPOSER_TITLE_RETRY_LABEL = 'Proposer un autre titre';
+export const COMPOSER_TITLE_FAILED_LABEL =
+  "Aucune proposition pour l'instant. Écrivez votre titre.";
 export const COMPOSER_TITLE_OWN_LABEL = 'Écrire le mien';
 export const COMPOSER_PUBLISH_LABEL = 'Publier';
 export const COMPOSER_CANCEL_LABEL = 'Annuler';

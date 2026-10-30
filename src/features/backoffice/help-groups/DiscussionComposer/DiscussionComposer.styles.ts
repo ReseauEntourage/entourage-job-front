@@ -88,6 +88,14 @@ export const StyledTitleLabelRow = styled.div`
   }
 `;
 
+// Live region: the wait and the failure of a proposal, read out by screen
+// readers. Always rendered, hidden while empty.
+export const StyledTitleStatus = styled.div`
+  &:empty {
+    display: none;
+  }
+`;
+
 export const StyledTitleActions = styled.div`
   display: flex;
   flex-wrap: wrap;
