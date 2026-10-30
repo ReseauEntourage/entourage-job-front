@@ -66,21 +66,37 @@ describe('Onboarding - contact du référent', () => {
     window.localStorage.setItem('access-token', 'fake-access-token');
   });
 
-  it('le contact est visible dès la première étape', () => {
+  it("le bouton Besoin d'aide est visible dès la première étape", () => {
     interceptOnboarding({ withContact: true });
 
     cy.visit('/wizard/run');
     cy.wait('@currentStaffContact');
     cy.contains('Commençons par une photo de vous').should('be.visible');
 
-    cy.capture('Première étape - contact du référent', {
+    cy.capture('Première étape - bouton Besoin d’aide', {
       caption:
-        "Desktop : bloc discret sous « Étape suivante ». Mobile : lien « Besoin d'aide ? » sous l'en-tête.",
+        "Desktop : bouton « Besoin d'aide ? » toujours visible en haut de l'étape, au-dessus de la ligne de flottaison. Mobile : lien « Besoin d'aide ? » sous l'en-tête.",
+      capture: 'viewport',
+    });
+
+    if (Cypress.expose('device') === 'mobile') {
+      // Le lien mobile ouvre directement un mailto:, pas de volet à montrer.
+      return;
+    }
+
+    cy.get('[data-testid="onboarding-referent-contact"]')
+      .contains("Besoin d'aide ?")
+      .click();
+    cy.get('[role="dialog"]').should('be.visible');
+
+    cy.capture('Volet du contact ouvert', {
+      caption:
+        'Un clic sur le bouton affiche la photo, le nom, le rôle avec la zone, et l’email du référent.',
       capture: 'viewport',
     });
   });
 
-  it("sans contact, ni bloc ni lien n'est affiché", () => {
+  it("sans contact, ni bouton ni lien n'est affiché", () => {
     interceptOnboarding({ withContact: false });
 
     cy.visit('/wizard/run');
@@ -90,7 +106,7 @@ describe('Onboarding - contact du référent', () => {
     cy.get('[data-testid="onboarding-help-link"]').should('not.exist');
 
     cy.capture('Première étape - contact indisponible', {
-      caption: "L'étape reste utilisable, sans bloc vide.",
+      caption: "L'étape reste utilisable, sans bouton ni lien vide.",
       capture: 'viewport',
     });
   });
