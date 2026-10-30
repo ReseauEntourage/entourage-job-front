@@ -2,6 +2,7 @@ import React from 'react';
 import { COLORS } from '@/src/constants/styles';
 import { gaEvent } from '@/src/lib/gtag';
 import { NavConnectedMainItem, NotifBadges } from '../../NavConnected.types';
+import { NavConnectedExternalIcon } from '../NavConnectedExternalIcon';
 import {
   StyledMobileEntryBadge,
   StyledMobileEntryButton,
@@ -39,6 +40,7 @@ export const NavConnectedMobileEntry = ({
       <StyledMobileEntryContent>
         {icon}
         {name}
+        {external && <NavConnectedExternalIcon />}
       </StyledMobileEntryContent>
       {count > 0 && <StyledMobileEntryBadge>{count}</StyledMobileEntryBadge>}
     </>

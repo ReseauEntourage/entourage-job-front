@@ -7,6 +7,7 @@ import {
   NotifBadges,
 } from '@/src/features/navs/NavConnected/NavConnected.types';
 import { gaEvent } from '@/src/lib/gtag';
+import { NavConnectedExternalIcon } from '../NavConnectedExternalIcon';
 import { StyledSubMenu } from './SubMenu.styles';
 
 const uuidValue = uuid();
@@ -48,6 +49,7 @@ export const SubMenu = ({
               <span>
                 {icon}
                 {name}
+                {external && <NavConnectedExternalIcon />}
               </span>
               {badges[badge] > 0 && (
                 <div>

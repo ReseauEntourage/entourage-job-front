@@ -341,3 +341,154 @@ describe('NavConnectedContentMobile - menu card', () => {
     });
   });
 });
+
+describe('NavConnectedContent - admin home, logo and external icon', () => {
+  const saved = {
+    coach: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL,
+    candidate: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL,
+    company: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL,
+  };
+
+  beforeAll(() => {
+    process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL = 'https://toolbox.test/coachs';
+    process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL =
+      'https://toolbox.test/candidats';
+    process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL =
+      'https://toolbox.test/entreprises';
+  });
+
+  afterAll(() => {
+    const restore = (key: string, value?: string) => {
+      if (value === undefined) {
+        delete process.env[key];
+      } else {
+        process.env[key] = value;
+      }
+    };
+    restore('NEXT_PUBLIC_TOOLBOX_COACH_URL', saved.coach);
+    restore('NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL', saved.candidate);
+    restore('NEXT_PUBLIC_TOOLBOX_COMPANY_URL', saved.company);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockAsPath = '/backoffice/dashboard';
+  });
+
+  const getLogoLink = () =>
+    document.querySelector('a.uk-margin-small-left') as HTMLElement;
+
+  describe('on desktop', () => {
+    it('names the first tab of the admin "Accueil"', () => {
+      renderDesktop(UserRoles.ADMIN);
+      const tabs = Array.from(document.querySelectorAll('.menu-link')).map(
+        (tab) => tab.textContent
+      );
+      expect(tabs[0]).toBe('Accueil');
+      expect(tabs).toContain('Ressources');
+    });
+
+    it('leads the logo of the admin to the dashboard', () => {
+      renderDesktop(UserRoles.ADMIN);
+      expect(getLogoLink()).toHaveAttribute('href', '/backoffice/dashboard');
+    });
+
+    it('puts the external icon on the three toolboxes of the admin only', () => {
+      renderDesktop(UserRoles.ADMIN);
+      const items = Array.from(document.querySelectorAll('.subMenu-item'));
+      const withIcon = items.filter((item) =>
+        item.querySelector('[data-testid="nav-external-icon"]')
+      );
+      expect(withIcon.map((item) => item.textContent)).toEqual([
+        "Boîte à outils coachs(s'ouvre dans un nouvel onglet)",
+        "Boîte à outils candidats(s'ouvre dans un nouvel onglet)",
+        "Boîte à outils entreprises(s'ouvre dans un nouvel onglet)",
+      ]);
+      expect(
+        items.find((item) => item.textContent === "Structures de l'inclusion")
+      ).toBeDefined();
+    });
+
+    [UserRoles.CANDIDATE, UserRoles.COACH, UserRoles.REFERER].forEach(
+      (role) => {
+        it(`puts the external icon on the toolbox of a ${role}, not on the other entries`, () => {
+          renderDesktop(role);
+          const items = Array.from(document.querySelectorAll('.subMenu-item'));
+          const withIcon = items.filter((item) =>
+            item.querySelector('[data-testid="nav-external-icon"]')
+          );
+          expect(withIcon).toHaveLength(1);
+          expect(withIcon[0].textContent).toMatch(/^Boîte à outils/);
+        });
+      }
+    );
+
+    it('hides the icon from assistive technologies and announces the new tab', () => {
+      renderDesktop(UserRoles.ADMIN);
+      const icon = document.querySelector(
+        '[data-testid="nav-external-icon"]'
+      ) as HTMLElement;
+      expect(icon.querySelector('[aria-hidden="true"]')).not.toBeNull();
+      expect(icon).toHaveTextContent("(s'ouvre dans un nouvel onglet)");
+    });
+  });
+
+  describe('on mobile', () => {
+    it('shows "Accueil" and a folded "Ressources" to the admin', () => {
+      renderMobile(UserRoles.ADMIN);
+      openMobileMenu();
+      expect(screen.getByRole('link', { name: 'Accueil' })).toHaveAttribute(
+        'href',
+        '/backoffice/dashboard'
+      );
+      expect(
+        screen.getByRole('button', { name: 'Ressources' })
+      ).toHaveAttribute('aria-expanded', 'false');
+      expect(
+        screen.queryByText('Boîte à outils coachs')
+      ).not.toBeInTheDocument();
+    });
+
+    it('leads the logo of the admin to the dashboard', () => {
+      renderMobile(UserRoles.ADMIN);
+      expect(getLogoLink()).toHaveAttribute('href', '/backoffice/dashboard');
+    });
+
+    it('unfolds "Ressources" on the three toolboxes, each with the external icon', () => {
+      renderMobile(UserRoles.ADMIN);
+      openMobileMenu();
+      fireEvent.click(screen.getByRole('button', { name: 'Ressources' }));
+      const toolboxes = [
+        'Boîte à outils coachs',
+        'Boîte à outils candidats',
+        'Boîte à outils entreprises',
+      ];
+      toolboxes.forEach((name) => {
+        const link = screen.getByRole('link', { name: new RegExp(name) });
+        expect(link).toHaveAttribute('target', '_blank');
+        expect(
+          within(link).getByTestId('nav-external-icon')
+        ).toBeInTheDocument();
+      });
+      const structures = screen.getByRole('link', {
+        name: "Structures de l'inclusion",
+      });
+      expect(
+        within(structures).queryByTestId('nav-external-icon')
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('link', { name: 'Formations' })
+      ).not.toBeInTheDocument();
+    });
+
+    it('puts the external icon on the toolbox of a coach too', () => {
+      renderMobile(UserRoles.COACH);
+      openMobileMenu();
+      fireEvent.click(screen.getByRole('button', { name: 'Ressources' }));
+      const link = screen.getByRole('link', {
+        name: /Boîte à outils/,
+      });
+      expect(within(link).getByTestId('nav-external-icon')).toBeInTheDocument();
+    });
+  });
+});

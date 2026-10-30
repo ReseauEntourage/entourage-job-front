@@ -18,9 +18,6 @@ jest.mock(
   '@/src/features/backoffice/network-directory/hooks/useNetworkDirectoryRedirection',
   () => ({ useNetworkDirectoryRedirection: jest.fn() })
 );
-jest.mock('@/src/features/backoffice/dashboard', () => ({
-  Dashboard: () => <div data-testid="Dashboard" />,
-}));
 jest.mock(
   '@/src/features/backoffice/admin/help-groups/HelpGroupAdminList',
   () => ({
@@ -91,7 +88,6 @@ import ReportsAdmin from '@/src/pages/backoffice/admin/signalements';
 import ReportTargetAdmin from '@/src/pages/backoffice/admin/signalements/[targetType]/[targetId]';
 import Annuaire from '@/src/pages/backoffice/annuaire';
 import PageCheckin from '@/src/pages/backoffice/checkin/[conversationId]';
-import DashboardPage from '@/src/pages/backoffice/dashboard';
 import EventList from '@/src/pages/backoffice/events';
 import HelpGroups from '@/src/pages/backoffice/groupes';
 import HelpGroup from '@/src/pages/backoffice/groupes/[slug]';
@@ -105,7 +101,6 @@ const mockUseRouter = useRouter as jest.Mock;
 
 describe('simple backoffice layout pages', () => {
   const cases: [string, React.ComponentType, string, string][] = [
-    ['dashboard', DashboardPage, 'Mon tableau de bord', 'Dashboard'],
     [
       'admin groups',
       HelpGroupsAdmin,
