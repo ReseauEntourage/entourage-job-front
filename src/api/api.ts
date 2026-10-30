@@ -1139,6 +1139,13 @@ export class APIHandler {
     );
   }
 
+  dismissAIAssistantBanner(conversationId: string): Promise<AxiosResponse> {
+    return this.post(
+      `/messaging/conversations/${conversationId}/dismiss-ai-assistant-banner`,
+      {}
+    );
+  }
+
   /// ////////
   // checkin //
   /// ////////

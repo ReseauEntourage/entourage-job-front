@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckinState, ConversationType } from '@/src/api/types';
+import { BottomSheet } from '@/src/components/ui/BottomSheet/BottomSheet';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
@@ -23,6 +24,7 @@ import {
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
+  useDismissAIAssistantBannerMutation,
   useGetConversationsQuery,
   useGetSelectedConversationQuery,
   useLoadOlderMessagesMutation,
@@ -40,6 +42,7 @@ import {
 } from '@/src/use-cases/messaging/messaging.utils';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { MessagingAIAssistantBanner } from './MessagingAIAssistantBanner/MessagingAIAssistantBanner';
 import { MessagingCheckinBanner } from './MessagingCheckinBanner/MessagingCheckinBanner';
 import {
   MessagingConversationAIPanel,
@@ -147,6 +150,7 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const [dismissAIAssistantBanner] = useDismissAIAssistantBannerMutation();
   const { currentData: checkinState } = useGetCheckinQuery(
     selectedConversationId ?? '',
     {
@@ -229,6 +233,41 @@ export const MessagingConversation = () => {
       return false;
     }
     return selectedConversation.messages.length > 0;
+  }, [
+    currentUser,
+    currentUserId,
+    selectedConversation,
+    selectedConversationId,
+    currentUserHasSentMessages,
+  ]);
+
+  // A "message suivant" the candidate sent, without a reply from the coach
+  // yet: at least 2 candidate messages, since the first is already covered by
+  // the quick-replies chip above (displayQuickReplies). Persists per
+  // conversation via assistantBannerDismissedAt once "Non merci" is clicked.
+  const displayAIAssistantBanner = useMemo(() => {
+    if (!currentUser || currentUser.role !== UserRoles.COACH) {
+      return false;
+    }
+    if (!selectedConversation || selectedConversationId === 'new') {
+      return false;
+    }
+    if (selectedConversation.id !== selectedConversationId) {
+      return false;
+    }
+    if (currentUserHasSentMessages) {
+      return false;
+    }
+    if (selectedConversation.assistantBannerDismissedAt) {
+      return false;
+    }
+    const otherParticipants = selectedConversation.participants.filter(
+      (p) => p.id !== currentUserId
+    );
+    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
+      return false;
+    }
+    return selectedConversation.messages.length >= 2;
   }, [
     currentUser,
     currentUserId,
@@ -575,6 +614,9 @@ export const MessagingConversation = () => {
       {displayQuickReplies && (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
+          onOpenAIAssistant={() =>
+            dispatch(messagingActions.openAIAssistantAutoStart())
+          }
           newMessage={newMessage}
           participants={
             selectedConversation?.participants.filter(
@@ -582,6 +624,20 @@ export const MessagingConversation = () => {
             ) || []
           }
           variant="quick-replies"
+        />
+      )}
+
+      {displayAIAssistantBanner && (
+        <MessagingAIAssistantBanner
+          compact={isMobile}
+          onOpenAssistant={() =>
+            dispatch(messagingActions.openAIAssistantAutoStart())
+          }
+          onDismiss={() => {
+            if (selectedConversationId) {
+              dismissAIAssistantBanner(selectedConversationId);
+            }
+          }}
         />
       )}
 
@@ -609,10 +665,6 @@ export const MessagingConversation = () => {
     );
   }
 
-  if (showAIPanelMobile) {
-    return <MessagingAIPanel />;
-  }
-
   return (
     <MessagingConversationWrapper>
       <MessagingConversationContainer>
@@ -626,6 +678,14 @@ export const MessagingConversation = () => {
             <MessagingAIPanel />
           </MessagingConversationAIPanel>
         )}
+      {showAIPanelMobile && (
+        // Mid-height sheet (~60% of the screen) instead of taking over the
+        // whole screen: the conversation above stays visible and scrollable,
+        // the candidate's last message included.
+        <BottomSheet midHeightRatio={0.6}>
+          {() => <MessagingAIPanel />}
+        </BottomSheet>
+      )}
     </MessagingConversationWrapper>
   );
 };
