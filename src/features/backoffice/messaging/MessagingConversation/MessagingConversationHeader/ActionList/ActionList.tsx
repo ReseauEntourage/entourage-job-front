@@ -3,7 +3,8 @@ import {
   ConversationParticipant,
   ConversationParticipants,
 } from '@/src/api/types';
-import { Button, LucidIcon } from '@/src/components/ui';
+import { Button, LucidIcon, Tooltip } from '@/src/components/ui';
+import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { useIsMobile } from '@/src/hooks/utils';
 import {
@@ -17,8 +18,13 @@ import {
   selectSelectedConversation,
 } from '@/src/use-cases/messaging';
 import { MessagingPanelView } from '@/src/use-cases/messaging/messaging.slice';
-import { StyledButtonContainer } from '../MessagingConversationHeader.styles';
+import {
+  HeaderIconButton,
+  StyledButtonContainer,
+} from '../MessagingConversationHeader.styles';
 import { MessagingShareNetwork } from '../MessagingShareNetwork/MessagingShareNetwork';
+
+const ASSISTANT_LABEL = 'Assistant Coach';
 
 export const ActionList = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -58,9 +64,23 @@ export const ActionList = () => {
         <MessagingShareNetwork
           profileId={addresee.id}
           firstName={addresee.firstName}
+          iconOnly={isMobile}
         />
       )}
-      {canUseAIAssistant && (
+      {canUseAIAssistant && isMobile && (
+        <Tooltip content={ASSISTANT_LABEL} openOnFocus hoverOnly>
+          <HeaderIconButton
+            icon={<LucidIcon name="Sparkles" />}
+            onClick={() => onSelectPanel('ai')}
+            variant="text"
+            size="large"
+            color={COLORS.teal}
+            ariaLabel={ASSISTANT_LABEL}
+            dataTestId="messaging-ai-assistant-toggle"
+          />
+        </Tooltip>
+      )}
+      {canUseAIAssistant && !isMobile && (
         <Button
           prependIcon={<LucidIcon name="Sparkles" />}
           onClick={() => onSelectPanel('ai')}
@@ -69,7 +89,7 @@ export const ActionList = () => {
           rounded={false}
           dataTestId="messaging-ai-assistant-toggle"
         >
-          Assistant {!isMobile && 'Coach'}
+          {ASSISTANT_LABEL}
         </Button>
       )}
     </StyledButtonContainer>

@@ -7,8 +7,8 @@ jest.mock('@/src/hooks/utils', () => ({
   useIsMobile: jest.fn(),
 }));
 jest.mock('../MessagingShareNetwork/MessagingShareNetwork', () => ({
-  MessagingShareNetwork: ({ profileId, firstName }: any) => (
-    <div data-testid="share-network">
+  MessagingShareNetwork: ({ profileId, firstName, iconOnly }: any) => (
+    <div data-testid="share-network" data-icon-only={String(!!iconOnly)}>
       {profileId}:{firstName}
     </div>
   ),
@@ -72,12 +72,58 @@ describe('ActionList', () => {
     expect(screen.getByText(/Assistant/)).toHaveTextContent('Assistant Coach');
   });
 
-  it('shortens the assistant label on mobile', async () => {
-    mockUseIsMobile.mockReturnValue(true);
-    setup({ role: UserRoles.COACH, addresseeRole: UserRoles.COACH });
+  it('shows the share and assistant buttons with their text on desktop', async () => {
+    setup({ role: UserRoles.COACH, addresseeRole: UserRoles.CANDIDATE });
+    expect(await screen.findByTestId('share-network')).toHaveAttribute(
+      'data-icon-only',
+      'false'
+    );
     expect(
-      (await screen.findByTestId('messaging-ai-assistant-toggle')).textContent
-    ).not.toContain('Coach');
+      screen.getByTestId('messaging-ai-assistant-toggle')
+    ).toHaveTextContent('Assistant Coach');
+  });
+
+  describe('on mobile', () => {
+    beforeEach(() => {
+      mockUseIsMobile.mockReturnValue(true);
+    });
+
+    it('turns the assistant into an icon named by its accessible label', async () => {
+      setup({ role: UserRoles.COACH, addresseeRole: UserRoles.COACH });
+      const toggle = await screen.findByTestId('messaging-ai-assistant-toggle');
+      expect(screen.getByRole('button', { name: 'Assistant Coach' })).toBe(
+        toggle
+      );
+      expect(screen.queryByText('Assistant Coach')).toBeNull();
+    });
+
+    it('asks the share button to show as an icon', async () => {
+      setup({ role: UserRoles.COACH, addresseeRole: UserRoles.CANDIDATE });
+      expect(await screen.findByTestId('share-network')).toHaveAttribute(
+        'data-icon-only',
+        'true'
+      );
+    });
+
+    it('shows the assistant tooltip on hover', async () => {
+      setup({ role: UserRoles.COACH, addresseeRole: UserRoles.COACH });
+      const toggle = await screen.findByTestId('messaging-ai-assistant-toggle');
+      expect(screen.queryByText('Assistant Coach')).toBeNull();
+      fireEvent.mouseEnter(toggle);
+      expect(screen.getByText('Assistant Coach')).toBeInTheDocument();
+    });
+
+    it('opens the AI panel, then closes it on a second tap', async () => {
+      const { store } = setup({
+        role: UserRoles.COACH,
+        addresseeRole: UserRoles.COACH,
+      });
+      const toggle = await screen.findByTestId('messaging-ai-assistant-toggle');
+      fireEvent.click(toggle);
+      expect(store.getState().messaging.isAIPanelOpen).toBe(true);
+      fireEvent.click(toggle);
+      expect(store.getState().messaging.isAIPanelOpen).toBe(false);
+    });
   });
 
   it('only offers profile sharing to a candidate', async () => {

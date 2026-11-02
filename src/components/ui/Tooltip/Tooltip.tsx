@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   StyledTooltipContent,
@@ -17,9 +17,27 @@ interface TooltipProps {
    * information isn't only reachable by mouse hover.
    */
   ariaLabel?: string;
+  /**
+   * Opens the tooltip when a focusable child (a button, a link) receives the
+   * keyboard focus. Unlike `ariaLabel`, it adds no `role` and no `tabIndex` to
+   * the wrapper, so the child keeps its own semantics and accessible name.
+   */
+  openOnFocus?: boolean;
+  /**
+   * Never opens the tooltip on a device that cannot hover (touch screens),
+   * where a tap fires a synthetic `mouseenter` at the same time as the action
+   * of the trigger.
+   */
+  hoverOnly?: boolean;
 }
 
 const GAP = 8;
+
+// Falls back to `true` where `matchMedia` is missing (SSR, tests)
+const canHover = () =>
+  typeof window === 'undefined' ||
+  typeof window.matchMedia !== 'function' ||
+  window.matchMedia('(hover: hover)').matches;
 
 // Anchors to a specific edge of the wrapper. The CSS transform in StyledTooltipContent
 // then shifts the tooltip away without needing its own dimensions at compute time.
@@ -59,8 +77,19 @@ export const Tooltip = ({
   width,
   placement = 'bottom',
   ariaLabel,
+  openOnFocus = false,
+  hoverOnly = false,
 }: TooltipProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  // Read after mount so that the server and the first client render agree
+  const [isHoverable, setIsHoverable] = useState(true);
+
+  useEffect(() => {
+    if (hoverOnly) {
+      setIsHoverable(canHover());
+    }
+  }, [hoverOnly]);
+
   const [effectivePlacement, setEffectivePlacement] =
     useState<TooltipPlacement>(placement);
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -107,6 +136,9 @@ export const Tooltip = ({
   }, [isOpen, placement]);
 
   const handleOpen = () => {
+    if (hoverOnly && !isHoverable) {
+      return;
+    }
     setEffectivePlacement(placement);
     setIsOpen(true);
   };
@@ -123,6 +155,11 @@ export const Tooltip = ({
         onFocus: handleOpen,
         onBlur: () => setIsOpen(false),
       })}
+      {...(openOnFocus &&
+        !ariaLabel && {
+          onFocus: handleOpen,
+          onBlur: () => setIsOpen(false),
+        })}
     >
       {children}
       {isOpen &&

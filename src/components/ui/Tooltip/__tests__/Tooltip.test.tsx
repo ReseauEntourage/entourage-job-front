@@ -48,6 +48,80 @@ describe('Tooltip', () => {
     expect(screen.queryByText('Explication')).not.toBeInTheDocument();
   });
 
+  describe('openOnFocus', () => {
+    it('opens when a focusable child gets the focus, without adding a role', () => {
+      render(
+        <Tooltip content="Explication" openOnFocus>
+          <button type="button">Action</button>
+        </Tooltip>
+      );
+      expect(screen.queryByRole('img')).not.toBeInTheDocument();
+
+      fireEvent.focus(screen.getByRole('button', { name: 'Action' }));
+      expect(screen.getByText('Explication')).toBeInTheDocument();
+      fireEvent.blur(screen.getByRole('button', { name: 'Action' }));
+      expect(screen.queryByText('Explication')).not.toBeInTheDocument();
+    });
+
+    it('does not open on focus by default', () => {
+      render(
+        <Tooltip content="Explication">
+          <button type="button">Action</button>
+        </Tooltip>
+      );
+      fireEvent.focus(screen.getByRole('button', { name: 'Action' }));
+      expect(screen.queryByText('Explication')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('hoverOnly', () => {
+    const originalMatchMedia = window.matchMedia;
+
+    const mockHover = (canHover: boolean) => {
+      window.matchMedia = jest.fn().mockReturnValue({
+        matches: canHover,
+      }) as unknown as typeof window.matchMedia;
+    };
+
+    afterEach(() => {
+      window.matchMedia = originalMatchMedia;
+    });
+
+    it('never opens on a device that cannot hover', () => {
+      mockHover(false);
+      render(
+        <Tooltip content="Explication" hoverOnly openOnFocus>
+          <button type="button">Action</button>
+        </Tooltip>
+      );
+      const button = screen.getByRole('button', { name: 'Action' });
+      fireEvent.mouseEnter(button);
+      fireEvent.focus(button);
+      expect(screen.queryByText('Explication')).not.toBeInTheDocument();
+    });
+
+    it('opens on a device that can hover', () => {
+      mockHover(true);
+      render(
+        <Tooltip content="Explication" hoverOnly>
+          <button type="button">Action</button>
+        </Tooltip>
+      );
+      fireEvent.mouseEnter(screen.getByRole('button', { name: 'Action' }));
+      expect(screen.getByText('Explication')).toBeInTheDocument();
+    });
+
+    it('opens when matchMedia is not available', () => {
+      render(
+        <Tooltip content="Explication" hoverOnly>
+          <button type="button">Action</button>
+        </Tooltip>
+      );
+      fireEvent.mouseEnter(screen.getByRole('button', { name: 'Action' }));
+      expect(screen.getByText('Explication')).toBeInTheDocument();
+    });
+  });
+
   it('is not focusable without ariaLabel', () => {
     render(
       <Tooltip content="Explication">

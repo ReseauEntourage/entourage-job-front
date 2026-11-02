@@ -12,13 +12,12 @@ import {
   Text,
   Tooltip,
 } from '@/src/components/ui';
-import { ButtonIcon } from '@/src/components/ui/Button/ButtonIcon';
 import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
 import { openModal } from '@/src/features/modals/Modal';
-import { useIsDesktop, useIsMobile } from '@/src/hooks/utils';
+import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -35,9 +34,11 @@ import { ActionList } from './ActionList/ActionList';
 import {
   AddreseeBadges,
   AddreseeInfosContainer,
+  AddreseeName,
   AddreseeSection,
   ConversationAddresee,
   DropdownItemContent,
+  HeaderIconButton,
   LeftColumn,
   MessagingConversationHeaderContainer,
   MessagingConversationHeaderMainInfos,
@@ -48,12 +49,13 @@ const ADMIN_EXEMPTION_INDICATOR_LABEL =
 const ARCHIVE_LABEL = 'Archiver';
 const UNARCHIVE_LABEL = 'Désarchiver';
 const REPORT_LABEL = 'Signaler';
+const BACK_LABEL = 'Retour à la liste des conversations';
+const ACTIONS_LABEL = 'Actions de la conversation';
 
 export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const isMobile = useIsMobile();
-  const isDesktop = useIsDesktop();
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
@@ -108,10 +110,13 @@ export const MessagingConversationHeader = () => {
       <MessagingConversationHeaderMainInfos>
         <LeftColumn>
           {isMobile && selectedConversation && (
-            <ButtonIcon
-              icon={<LucidIcon name="ChevronLeft" size={25} />}
+            <HeaderIconButton
+              icon={<LucidIcon name="ChevronLeft" />}
               onClick={onClickBackBtn}
               variant="text"
+              size="large"
+              color={COLORS.teal}
+              ariaLabel={BACK_LABEL}
             />
           )}
           {addresee && (
@@ -123,9 +128,11 @@ export const MessagingConversationHeader = () => {
                   hasPicture={addresee.userProfile?.hasPicture || false}
                 />
                 <ConversationAddresee>
-                  <Text weight="bold" size="large">
-                    {addresee.firstName} {addresee.lastName}
-                  </Text>
+                  <AddreseeName>
+                    <Text weight="bold" size="large">
+                      {addresee.firstName} {addresee.lastName}
+                    </Text>
+                  </AddreseeName>
                   <AddreseeBadges>
                     <Badge
                       size="small"
@@ -154,16 +161,18 @@ export const MessagingConversationHeader = () => {
             </AddreseeSection>
           )}
         </LeftColumn>
-        {isDesktop && <ActionList />}
+        <ActionList />
 
         {selectedConversation && (
           <Dropdown>
             <Dropdown.Toggle>
-              <ButtonIcon
+              <HeaderIconButton
                 icon={<LucidIcon name="EllipsisVertical" />}
                 onClick={() => {}}
                 color={COLORS.teal}
                 variant="text"
+                size={isMobile ? 'large' : 'medium'}
+                ariaLabel={ACTIONS_LABEL}
                 dataTestId="messaging-conversation-actions-button"
               />
             </Dropdown.Toggle>
@@ -193,7 +202,6 @@ export const MessagingConversationHeader = () => {
           </Dropdown>
         )}
       </MessagingConversationHeaderMainInfos>
-      {isMobile && <ActionList />}
     </MessagingConversationHeaderContainer>
   );
 };
