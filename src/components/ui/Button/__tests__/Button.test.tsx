@@ -44,6 +44,23 @@ describe('Button', () => {
     );
   });
 
+  it('renders the xsmall size with its font size and compact padding', () => {
+    const { rerender } = render(
+      <Button size="xsmall" variant="hoverBlue">
+        Compact
+      </Button>
+    );
+    expect(screen.getByRole('button')).toHaveStyle('font-size: 11px');
+    expect(screen.getByRole('button')).toHaveStyle('padding: 5px 14px');
+    // Smaller than the next size up
+    rerender(
+      <Button size="small" variant="hoverBlue">
+        Compact
+      </Button>
+    );
+    expect(screen.getByRole('button')).toHaveStyle('padding: 9px 18px');
+  });
+
   it('calls the mouse enter and leave handlers', () => {
     const onMouseEnter = jest.fn();
     const onMouseLeave = jest.fn();

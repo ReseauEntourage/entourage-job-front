@@ -119,6 +119,12 @@ const titleInput = () =>
   screen.getByTestId('discussion-composer-title') as HTMLInputElement;
 const typeTitle = (value: string) =>
   fireEvent.change(titleInput(), { target: { value } });
+const requestButton = () =>
+  screen.queryByTestId('discussion-composer-request-title');
+const requestTitle = () =>
+  fireEvent.click(screen.getByTestId('discussion-composer-request-title'));
+const FAILED_MESSAGE =
+  "Aucune proposition pour l'instant. Écrivez votre titre.";
 
 describe('Help group participation', () => {
   beforeEach(() => {
@@ -500,11 +506,34 @@ describe('Help group participation', () => {
       ).toBeTruthy();
     });
 
-    it('proposes a title when leaving a long enough message', async () => {
+    it('proposes nothing when leaving the message, however long', async () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
       blurMessage();
+      await act(async () => undefined);
+      expect(mockSuggestTitle).not.toHaveBeenCalled();
+      expect(titleInput().value).toBe('');
+      expect(titleInput().placeholder).toBe('Écrivez votre titre');
+      expect(requestButton()).toBeInTheDocument();
+    });
+
+    it("offers the proposal from 30 characters on, with « Proposer un titre avec l'IA »", () => {
+      renderPage();
+      openComposer();
+      expect(requestButton()).not.toBeInTheDocument();
+      typeMessage('Trop court');
+      expect(requestButton()).not.toBeInTheDocument();
+      expect(titleInput().placeholder).toBe('Écrivez votre titre');
+      typeMessage(longMessage);
+      expect(requestButton()).toHaveTextContent("Proposer un titre avec l'IA");
+    });
+
+    it('proposes a title on request, with the mention, then the focus goes to the title', async () => {
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      requestTitle();
       await waitFor(() =>
         expect(titleInput().value).toBe(
           'Comment expliquer deux ans sans emploi ?'
@@ -520,33 +549,68 @@ describe('Help group participation', () => {
         content: longMessage,
         previousTitles: [],
       });
+      expect(requestButton()).toHaveTextContent('Proposer un autre titre');
+      await waitFor(() => expect(titleInput()).toHaveFocus());
     });
 
-    it('does not propose a title for a message shorter than 30 characters', () => {
-      renderPage();
-      openComposer();
-      typeMessage('Trop court');
-      blurMessage();
-      expect(mockSuggestTitle).not.toHaveBeenCalled();
-    });
-
-    it('replaces an untouched proposal when the message changes, never a retouched title', async () => {
+    it('shows the wait in the title field and below it, without the button', async () => {
+      let resolve: (value: unknown) => void = () => undefined;
+      mockSuggestTitle.mockReturnValue(
+        new Promise((res) => {
+          resolve = res;
+        })
+      );
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      blurMessage();
-      await waitFor(() => expect(titleInput().value).not.toBe(''));
+      requestTitle();
+      expect(titleInput().placeholder).toBe('Proposition d’un titre…');
+      expect(screen.getByText('Proposition d’un titre…')).toBeInTheDocument();
+      expect(requestButton()).not.toBeInTheDocument();
+      await act(async () => {
+        resolve({ data: { title: 'Titre proposé' } });
+      });
+      expect(titleInput().value).toBe('Titre proposé');
+      expect(screen.queryByText('Proposition d’un titre…')).toBeNull();
+    });
 
-      mockSuggestTitle.mockResolvedValue({ data: { title: 'Nouveau titre' } });
-      typeMessage(`${longMessage} Encore.`);
-      blurMessage();
-      await waitFor(() => expect(titleInput().value).toBe('Nouveau titre'));
+    it('replaces a title the member wrote, then a retouched proposal, on request', async () => {
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      typeTitle('Mon propre titre');
+      requestTitle();
+      await waitFor(() =>
+        expect(titleInput().value).toBe(
+          'Comment expliquer deux ans sans emploi ?'
+        )
+      );
+      expect(
+        screen.getByTestId('discussion-composer-suggested-title')
+      ).toBeInTheDocument();
 
       typeTitle('Mon titre retouché');
-      typeMessage(`${longMessage} Encore plus.`);
+      expect(
+        screen.queryByTestId('discussion-composer-suggested-title')
+      ).not.toBeInTheDocument();
+      mockSuggestTitle.mockResolvedValue({ data: { title: 'Nouveau titre' } });
+      requestTitle();
+      await waitFor(() => expect(titleInput().value).toBe('Nouveau titre'));
+    });
+
+    it('never changes the title when the message is rewritten', async () => {
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      requestTitle();
+      await waitFor(() => expect(titleInput().value).not.toBe(''));
+      typeMessage(`${longMessage} Encore.`);
       blurMessage();
-      expect(mockSuggestTitle).toHaveBeenCalledTimes(2);
-      expect(titleInput().value).toBe('Mon titre retouché');
+      await act(async () => undefined);
+      expect(mockSuggestTitle).toHaveBeenCalledTimes(1);
+      expect(titleInput().value).toBe(
+        'Comment expliquer deux ans sans emploi ?'
+      );
     });
 
     it('never overwrites a title typed during the generation', async () => {
@@ -559,39 +623,29 @@ describe('Help group participation', () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      blurMessage();
+      requestTitle();
       typeTitle('Mon titre');
       await act(async () => {
         resolve({ data: { title: 'Titre proposé' } });
       });
       expect(titleInput().value).toBe('Mon titre');
-    });
-
-    it('leaves the title empty when the proposal fails', async () => {
-      mockSuggestTitle.mockResolvedValue({ data: { title: null } });
-      renderPage();
-      openComposer();
-      typeMessage(longMessage);
-      blurMessage();
-      await waitFor(() => expect(mockSuggestTitle).toHaveBeenCalled());
-      expect(titleInput().value).toBe('');
-      expect(titleInput().placeholder).toBe('Écrivez votre titre');
+      expect(screen.queryByText(FAILED_MESSAGE)).toBeNull();
     });
 
     it('proposes another title, different from the previous ones, 5 times at most', async () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      blurMessage();
+      requestTitle();
+      await waitFor(() => expect(titleInput().value).not.toBe(''));
       for (let index = 1; index <= 5; index += 1) {
         mockSuggestTitle.mockResolvedValueOnce({
           data: { title: `Titre ${index}` },
         });
-        fireEvent.click(
-          await screen.findByTestId('discussion-composer-retry-title')
-        );
+        requestTitle();
         await waitFor(() => expect(titleInput().value).toBe(`Titre ${index}`));
       }
+      expect(mockSuggestTitle).toHaveBeenCalledTimes(6);
       expect(mockSuggestTitle).toHaveBeenLastCalledWith(
         expect.objectContaining({
           previousTitles: [
@@ -603,29 +657,78 @@ describe('Help group participation', () => {
           ],
         })
       );
-      expect(
-        screen.queryByTestId('discussion-composer-retry-title')
-      ).not.toBeInTheDocument();
+      expect(requestButton()).not.toBeInTheDocument();
       expect(titleInput()).not.toBeDisabled();
     });
 
-    it('no longer proposes another title once the proposal is retouched', async () => {
+    it('after a failure: a discreet message, the title untouched, no more proposal even when the message changes', async () => {
+      mockSuggestTitle.mockResolvedValue({ data: { title: null } });
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      blurMessage();
-      await waitFor(() => expect(titleInput().value).not.toBe(''));
-      expect(
-        screen.getByTestId('discussion-composer-retry-title')
-      ).toBeInTheDocument();
-      typeTitle('Mon titre retouché');
-      expect(
-        screen.queryByTestId('discussion-composer-retry-title')
-      ).not.toBeInTheDocument();
-      expect(titleInput().value).toBe('Mon titre retouché');
+      requestTitle();
+      expect(await screen.findByText(FAILED_MESSAGE)).toBeInTheDocument();
+      expect(titleInput().value).toBe('');
+      expect(titleInput().placeholder).toBe('Écrivez votre titre');
+      expect(requestButton()).not.toBeInTheDocument();
+      await waitFor(() => expect(titleInput()).toHaveFocus());
+
+      typeMessage(`${longMessage} Encore une phrase.`);
+      expect(screen.queryByText(FAILED_MESSAGE)).toBeNull();
+      expect(requestButton()).not.toBeInTheDocument();
+      expect(mockSuggestTitle).toHaveBeenCalledTimes(1);
     });
 
-    it('keeps the proposals history with the draft: no new proposal for an unchanged message, retries still counted', async () => {
+    it('clears the discreet message at the first keystroke in the title, the member can publish', async () => {
+      mockSuggestTitle.mockResolvedValue({ data: { title: null } });
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      requestTitle();
+      expect(await screen.findByText(FAILED_MESSAGE)).toBeInTheDocument();
+      typeTitle('Mon titre');
+      expect(screen.queryByText(FAILED_MESSAGE)).toBeNull();
+      expect(requestButton()).not.toBeInTheDocument();
+      fireEvent.click(screen.getByTestId('discussion-composer-publish'));
+      await waitFor(() =>
+        expect(mockCreateDiscussion).toHaveBeenCalledWith({
+          slug: 'refaire-un-cv',
+          dto: {
+            title: 'Mon titre',
+            content: longMessage,
+            titleSource: 'MANUAL',
+          },
+        })
+      );
+    });
+
+    it('treats a refused request (quota exceeded, error) as a failure', async () => {
+      mockSuggestTitle.mockResolvedValue({ error: 'TOO_MANY_REQUESTS' });
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      requestTitle();
+      expect(await screen.findByText(FAILED_MESSAGE)).toBeInTheDocument();
+      expect(titleInput().value).toBe('');
+      expect(requestButton()).not.toBeInTheDocument();
+    });
+
+    it('offers the proposal again on a new writing, after « Annuler »', async () => {
+      mockSuggestTitle.mockResolvedValue({ data: { title: null } });
+      renderPage();
+      openComposer();
+      typeMessage(longMessage);
+      requestTitle();
+      expect(await screen.findByText(FAILED_MESSAGE)).toBeInTheDocument();
+      fireEvent.click(screen.getByTestId('discussion-composer-cancel'));
+      expect(screen.queryByText(FAILED_MESSAGE)).toBeNull();
+
+      openComposer();
+      typeMessage(longMessage);
+      expect(requestButton()).toHaveTextContent("Proposer un titre avec l'IA");
+    });
+
+    it('keeps the proposals history with the draft: retries still counted, a draft saved before still readable', async () => {
       localStorage.setItem(
         'help-groups:draft:viewer-1:group:group-1',
         JSON.stringify({
@@ -635,34 +738,44 @@ describe('Help group participation', () => {
           suggestionHistory: {
             previousTitles: ['T0', 'T1', 'T2', 'T3', 'T4', 'Titre 5'],
             retriesCount: 5,
+            // Field of the drafts saved before the proposals became explicit
             lastSuggestedContent: longMessage,
           },
         })
       );
       renderPage();
-      blurMessage();
       expect(mockSuggestTitle).not.toHaveBeenCalled();
       expect(titleInput().value).toBe('Titre 5');
-      expect(
-        screen.queryByTestId('discussion-composer-retry-title')
-      ).not.toBeInTheDocument();
+      expect(requestButton()).not.toBeInTheDocument();
     });
 
-    it('empties the title on « Écrire le mien »', async () => {
+    it('puts the request button on the right of the title label and the mention under the field', async () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      blurMessage();
-      await waitFor(() => expect(titleInput().value).not.toBe(''));
-      fireEvent.click(screen.getByTestId('discussion-composer-own-title'));
-      expect(titleInput().value).toBe('');
+      const label = document.querySelector(
+        'label[for="discussion-composer-title"]'
+      );
+      const button = screen.getByTestId('discussion-composer-request-title');
+      expect(button.parentElement).toBe(label?.parentElement);
+      requestTitle();
+      const mention = await screen.findByTestId(
+        'discussion-composer-suggested-title'
+      );
+      // The mention comes after the field, in the live region
+      expect(
+        titleInput().compareDocumentPosition(mention) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(mention.parentElement).toHaveAttribute('role', 'status');
+      expect(screen.queryByText('Écrire le mien')).not.toBeInTheDocument();
     });
 
     it('publishes exactly the displayed title with its source', async () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      blurMessage();
+      requestTitle();
       await waitFor(() => expect(titleInput().value).not.toBe(''));
       typeTitle('Comment expliquer deux ans sans emploi sur mon CV ?');
       fireEvent.click(screen.getByTestId('discussion-composer-publish'));

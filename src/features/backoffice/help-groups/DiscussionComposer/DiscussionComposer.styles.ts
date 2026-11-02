@@ -72,31 +72,36 @@ export const StyledTitleField = styled.div`
   gap: 6px;
 `;
 
-// « Titre » and, on the right, the mention of a proposed title (below it
-// on mobile)
+// « Titre » and, on its right, the button asking for a proposal. A single
+// line, mobile included: the button only goes below the label when it does
+// not fit.
 export const StyledTitleLabelRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-
-  @media (max-width: ${BREAKPOINTS.desktop}px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
+  gap: 6px 8px;
 `;
 
-export const StyledTitleActions = styled.div`
+// Live region under the field: the wait, the failure and the mention of a
+// proposed title, read out by screen readers. Always rendered, hidden while
+// empty.
+export const StyledTitleStatus = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 24px;
+  flex-direction: column;
+  gap: 4px;
 
   &:empty {
     display: none;
   }
+`;
+
+// Discreet mention that the title was proposed by the AI
+export const StyledTitleMention = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: ${COLORS.darkGray};
 `;
 
 export const StyledComposerActions = styled.div`

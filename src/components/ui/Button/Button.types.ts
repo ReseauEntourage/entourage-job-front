@@ -6,7 +6,8 @@ import { TextWeight } from '../Text';
 export type ButtonVariant =
   'default' | 'primary' | 'secondary' | 'text' | 'hoverBlue' | 'heroPrimary';
 
-export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
+export type ButtonSize =
+  'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
 
 export interface ButtonProps {
   id?: string;
