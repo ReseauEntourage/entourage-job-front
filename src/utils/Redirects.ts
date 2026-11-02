@@ -1,7 +1,7 @@
 import { UserRoles } from '@/src/constants/users';
 
 const defaultPages = {
-  [UserRoles.ADMIN]: '/backoffice/admin/membres',
+  [UserRoles.ADMIN]: '/backoffice/dashboard',
   [UserRoles.CANDIDATE]: '/backoffice/dashboard',
   [UserRoles.COACH]: '/backoffice/dashboard',
   [UserRoles.REFERER]: '/backoffice/dashboard',

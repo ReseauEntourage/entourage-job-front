@@ -34,6 +34,7 @@ import {
   StyledNavIconBadgeContainer,
 } from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
+import { NavConnectedExternalIcon } from './NavConnectedExternalIcon';
 import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
@@ -54,8 +55,9 @@ export const NavConnectedContentDesktop = ({
   const profile = useCurrentUserProfile();
 
   const { push, asPath } = useRouter();
-  // The admin home is the first administration page, no longer in the main nav
-  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
+  // The logo leads to the first tab of the role, "Accueil" (the dashboard)
+  // for every role, admins included
+  const logoLink = links[user?.role][0] || null;
 
   const rightItems = [
     <div className="uk-flex uk-flex-middle">
@@ -237,6 +239,7 @@ export const NavConnectedContentDesktop = ({
                             </span>
                           )}
                           <span className="name-span">{name}</span>
+                          {external && <NavConnectedExternalIcon />}
                           {badge && badges[badge] > 0 && (
                             <div>
                               &nbsp;
