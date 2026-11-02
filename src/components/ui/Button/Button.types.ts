@@ -27,6 +27,9 @@ export interface ButtonProps {
   dataTestId?: string;
   // Accessible name, for a button without visible text
   ariaLabel?: string;
+  // Open state and kind of the popup a button controls (menu toggles)
+  ariaExpanded?: boolean;
+  ariaHasPopup?: 'menu';
   color?: Color;
   align?: 'left' | 'center';
   style?: React.CSSProperties;
