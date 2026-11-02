@@ -29,6 +29,11 @@ interface TooltipProps {
    * of the trigger.
    */
   hoverOnly?: boolean;
+  /**
+   * Keeps the tooltip closed, and closes it when it is open (for instance while
+   * a menu opened by the trigger covers the same spot).
+   */
+  disabled?: boolean;
 }
 
 const GAP = 8;
@@ -79,6 +84,7 @@ export const Tooltip = ({
   ariaLabel,
   openOnFocus = false,
   hoverOnly = false,
+  disabled = false,
 }: TooltipProps) => {
   const [isOpen, setIsOpen] = useState(false);
   // Read after mount so that the server and the first client render agree
@@ -135,8 +141,14 @@ export const Tooltip = ({
     setPosition(computePosition(pl, wrapperRect, tooltipRect.width));
   }, [isOpen, placement]);
 
+  useEffect(() => {
+    if (disabled) {
+      setIsOpen(false);
+    }
+  }, [disabled]);
+
   const handleOpen = () => {
-    if (hoverOnly && !isHoverable) {
+    if (disabled || (hoverOnly && !isHoverable)) {
       return;
     }
     setEffectivePlacement(placement);

@@ -24,7 +24,7 @@ const ShareIconToggle = ({ disabled }: { disabled: boolean }) => {
   const { isOpen } = useContext(DropdownContext);
 
   return (
-    <Tooltip content={SHARE_LABEL} openOnFocus hoverOnly>
+    <Tooltip content={SHARE_LABEL} openOnFocus hoverOnly disabled={isOpen}>
       <HeaderIconButton
         icon={<LucidIcon name="Share" />}
         variant="text"

@@ -108,6 +108,16 @@ describe('MessagingShareNetwork', () => {
       expect(screen.getByText('Partager le profil')).toBeInTheDocument();
     });
 
+    it('hides the tooltip while the menu is open, so it does not cover the options', () => {
+      render(<MessagingShareNetwork profileId="p1" firstName="Awa" iconOnly />);
+      const toggle = screen.getByTestId('messaging-share-network-toggle');
+      fireEvent.mouseEnter(toggle);
+      expect(screen.getByText('Partager le profil')).toBeInTheDocument();
+      fireEvent.click(toggle);
+      expect(screen.queryByText('Partager le profil')).toBeNull();
+      expect(screen.getByText(/Partager sur LinkedIn/)).toBeInTheDocument();
+    });
+
     it('is disabled while the WhatsApp text is loading', () => {
       mockUseProfileShare.mockReturnValue({
         handleWhatsappShare,

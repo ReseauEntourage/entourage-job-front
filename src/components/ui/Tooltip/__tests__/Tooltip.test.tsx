@@ -74,6 +74,35 @@ describe('Tooltip', () => {
     });
   });
 
+  describe('disabled', () => {
+    it('never opens while disabled', () => {
+      render(
+        <Tooltip content="Explication" disabled>
+          <span>Survol</span>
+        </Tooltip>
+      );
+      fireEvent.mouseEnter(screen.getByText('Survol'));
+      expect(screen.queryByText('Explication')).not.toBeInTheDocument();
+    });
+
+    it('closes an open tooltip when it becomes disabled', () => {
+      const { rerender } = render(
+        <Tooltip content="Explication">
+          <span>Survol</span>
+        </Tooltip>
+      );
+      fireEvent.mouseEnter(screen.getByText('Survol'));
+      expect(screen.getByText('Explication')).toBeInTheDocument();
+
+      rerender(
+        <Tooltip content="Explication" disabled>
+          <span>Survol</span>
+        </Tooltip>
+      );
+      expect(screen.queryByText('Explication')).not.toBeInTheDocument();
+    });
+  });
+
   describe('hoverOnly', () => {
     const originalMatchMedia = window.matchMedia;
 
