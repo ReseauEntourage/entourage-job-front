@@ -28,9 +28,11 @@ import expect from 'expect';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ConversationType } from '@/src/api/types';
+import { UserRoles } from '@/src/constants/users';
 import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { getMockedApi } from '@/src/store/testUtils/mockApi';
 import { renderWithProviders } from '@/src/store/testUtils/renderWithProviders';
+import { currentUserActions } from '@/src/use-cases/current-user';
 import { messagingActions, messagingApi } from '@/src/use-cases/messaging';
 import { MessagingAIAssistant } from './MessagingAIAssistant';
 import {
@@ -70,12 +72,22 @@ const settle = () =>
     await jest.advanceTimersByTimeAsync(10);
   });
 
-const conversationWithMessages = (count: number) => ({
-  id: 'conv1',
+const conversationWithMessages = (
+  id: string,
+  candidateId: string,
+  count: number
+) => ({
+  id,
   type: ConversationType.DIRECT,
-  participants: [],
+  participants: [
+    { id: 'me', role: UserRoles.COACH },
+    { id: candidateId, role: UserRoles.CANDIDATE },
+  ],
   messages: Array.from({ length: count }, (_, i) => ({ id: `m${i}` })),
 });
+
+const candidateOf = (conversationId: string) =>
+  `cand${conversationId.slice(-1)}`;
 
 async function setup({
   selected = 'conv1' as string | null,
@@ -87,6 +99,12 @@ async function setup({
   session?: any;
 } = {}) {
   const store = createTestStore();
+  store.dispatch(
+    currentUserActions.fetchUserSucceeded({
+      id: 'me',
+      role: UserRoles.COACH,
+    } as any)
+  );
   if (session === undefined) {
     mockedApi.getAISession.mockResolvedValue({ data: { messages: [] } } as any);
   } else if (session instanceof Error) {
@@ -94,13 +112,24 @@ async function setup({
   } else {
     mockedApi.getAISession.mockResolvedValue({ data: session } as any);
   }
+  if (selected === 'new') {
+    store.dispatch(
+      messagingActions.setNewConversationDraft([
+        { id: 'cand1', role: UserRoles.CANDIDATE },
+      ] as any)
+    );
+  }
   store.dispatch(messagingActions.selectConversation(selected));
-  if (selected && history) {
+  if (selected && selected !== 'new') {
     store.dispatch(
       messagingApi.util.upsertQueryData(
         'getSelectedConversation',
         selected,
-        conversationWithMessages(history) as any
+        conversationWithMessages(
+          selected,
+          candidateOf(selected),
+          history
+        ) as any
       ) as any
     );
   }
@@ -139,7 +168,7 @@ describe('MessagingAIAssistant', () => {
   describe('session', () => {
     it('shows the empty state when the conversation has no AI session yet', async () => {
       await setup();
-      expect(mockedApi.getAISession).toHaveBeenCalledWith('conv1');
+      expect(mockedApi.getAISession).toHaveBeenCalledWith('cand1');
       expect(
         screen.getByText(/Posez une question ou utilisez une suggestion/)
       ).toBeInTheDocument();
@@ -173,7 +202,39 @@ describe('MessagingAIAssistant', () => {
       expect(mockedApi.getAISession).not.toHaveBeenCalled();
     });
 
-    it('clears the discussion when another conversation is selected', async () => {
+    it('loads the thread of the recipient of a conversation still being created', async () => {
+      await setup({ selected: 'new' });
+      expect(mockedApi.getAISession).toHaveBeenCalledWith('cand1');
+      expect(
+        screen.getByText(/Posez une question ou utilisez une suggestion/)
+      ).toBeInTheDocument();
+    });
+
+    it('keeps the discussion when the conversation is created and replaces the draft', async () => {
+      const { store } = await setup({
+        selected: 'new',
+        session: { messages: [{ id: 'u1', role: 'user', content: 'Salut' }] },
+      });
+      expect(screen.getByText('Salut')).toBeInTheDocument();
+      // Same order as the real flow: the created conversation is cached
+      // before it is selected.
+      await act(async () => {
+        await store.dispatch(
+          messagingApi.util.upsertQueryData(
+            'getSelectedConversation',
+            'conv1',
+            conversationWithMessages('conv1', 'cand1', 1) as any
+          ) as any
+        );
+        store.dispatch(messagingActions.selectConversation('conv1'));
+      });
+      await settle();
+      expect(screen.getByText('Salut')).toBeInTheDocument();
+      expect(mockedApi.getAISession).toHaveBeenCalledTimes(1);
+      expect(store.getState().messaging.isAIPanelOpen).toBe(false);
+    });
+
+    it('clears the discussion when a conversation with another candidate is selected', async () => {
       const { store } = await setup({
         session: { messages: [{ id: 'u1', role: 'user', content: 'Salut' }] },
       });
@@ -182,10 +243,17 @@ describe('MessagingAIAssistant', () => {
         data: { messages: [] },
       } as any);
       act(() => {
+        store.dispatch(
+          messagingApi.util.upsertQueryData(
+            'getSelectedConversation',
+            'conv2',
+            conversationWithMessages('conv2', 'cand2', 0) as any
+          ) as any
+        );
         store.dispatch(messagingActions.selectConversation('conv2'));
       });
       await settle();
-      expect(mockedApi.getAISession).toHaveBeenLastCalledWith('conv2');
+      expect(mockedApi.getAISession).toHaveBeenLastCalledWith('cand2');
       expect(screen.queryByText('Salut')).toBeNull();
     });
   });
@@ -203,7 +271,7 @@ describe('MessagingAIAssistant', () => {
       await send('  Aide-moi  ');
 
       expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
-        'conv1',
+        'cand1',
         'Aide-moi'
       );
       expect(screen.getByText('Aide-moi')).toBeInTheDocument();
@@ -236,7 +304,7 @@ describe('MessagingAIAssistant', () => {
       fireEvent.click(screen.getByTestId('messaging-ai-send-button'));
       await settle();
       expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
-        'conv1',
+        'cand1',
         'Question'
       );
     });
@@ -380,7 +448,7 @@ describe('MessagingAIAssistant', () => {
       fireEvent.click(screen.getByText(action.label));
       await settle();
       expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
-        'conv1',
+        'cand1',
         action.prompt
       );
     });
@@ -395,7 +463,7 @@ describe('MessagingAIAssistant', () => {
       fireEvent.click(screen.getByText(action.label));
       await settle();
       expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
-        'conv1',
+        'cand1',
         action.prompt
       );
     });
@@ -408,7 +476,7 @@ describe('MessagingAIAssistant', () => {
       fireEvent.click(screen.getByText(QUICK_ACTIONS[0].label));
       await settle();
       expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
-        'conv1',
+        'cand1',
         QUICK_ACTIONS[0].prompt
       );
     });
@@ -539,7 +607,7 @@ describe('MessagingAIAssistant', () => {
       });
       fireEvent.click(screen.getByTestId('messaging-ai-reset-button'));
       await settle();
-      expect(mockedApi.resetAISession).toHaveBeenCalledWith('conv1');
+      expect(mockedApi.resetAISession).toHaveBeenCalledWith('cand1');
       expect(screen.queryByText('Salut')).toBeNull();
     });
 

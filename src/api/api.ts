@@ -1171,11 +1171,11 @@ export class APIHandler {
   // AI Assistant  //
   /// ////////////////
 
-  getAISession(conversationId: string): Promise<AxiosResponse> {
-    return this.get(`/ai-assistant/conversations/${conversationId}/session`);
+  getAISession(recipientId: string): Promise<AxiosResponse> {
+    return this.get(`/ai-assistant/recipients/${recipientId}/session`);
   }
 
-  streamAIMessage(conversationId: string, message: string): Promise<Response> {
+  streamAIMessage(recipientId: string, message: string): Promise<Response> {
     const token =
       typeof window !== 'undefined'
         ? localStorage.getItem('access-token')
@@ -1187,7 +1187,7 @@ export class APIHandler {
       headers['Authorization'] = `Bearer ${token}`;
     }
     return fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/ai-assistant/conversations/${conversationId}/stream`,
+      `${process.env.NEXT_PUBLIC_API_URL}/ai-assistant/recipients/${recipientId}/stream`,
       {
         method: 'POST',
         headers,
@@ -1196,9 +1196,9 @@ export class APIHandler {
     );
   }
 
-  resetAISession(conversationId: string): Promise<AxiosResponse> {
+  resetAISession(recipientId: string): Promise<AxiosResponse> {
     return this.delete(
-      `/ai-assistant/conversations/${conversationId}/session/messages`
+      `/ai-assistant/recipients/${recipientId}/session/messages`
     );
   }
 

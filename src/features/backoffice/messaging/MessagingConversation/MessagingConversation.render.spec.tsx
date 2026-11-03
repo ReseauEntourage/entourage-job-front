@@ -7,6 +7,9 @@ jest.mock('@/src/hooks/utils', () => ({
   ...jest.requireActual('@/src/hooks/utils'),
   useIsMobile: jest.fn(),
 }));
+jest.mock('next/router', () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
 jest.mock('./MessagingConversationHeader/MessagingConversationHeader', () => ({
   MessagingConversationHeader: () => <div data-testid="header" />,
 }));
@@ -123,18 +126,24 @@ const settle = () =>
 
 async function setup({
   role = UserRoles.COACH,
+  elearningCompletedAt = '2024-01-01T00:00:00.000Z' as string | null,
   conversation,
   selected = 'conv1',
   prepare,
 }: {
   role?: string;
+  elearningCompletedAt?: string | null;
   conversation?: any;
   selected?: string | null;
   prepare?: (store: ReturnType<typeof createTestStore>) => void;
 } = {}) {
   const store = createTestStore();
   store.dispatch(
-    currentUserActions.fetchUserSucceeded({ id: 'me', role } as any)
+    currentUserActions.fetchUserSucceeded({
+      id: 'me',
+      role,
+      elearningCompletedAt,
+    } as any)
   );
   if (conversation) {
     mockedApi.getConversationById.mockResolvedValue({
@@ -392,20 +401,79 @@ describe('MessagingConversation', () => {
       expect(screen.queryByTestId('ai-panel')).toBeNull();
     });
 
-    it('does not show the panel when it is closed or for a new conversation', async () => {
+    it('does not show the panel when it is closed', async () => {
       await setup({ conversation: buildConversation() });
       expect(screen.queryByTestId('ai-panel')).toBeNull();
-      cleanup();
-      await setup({
-        selected: 'new',
-        prepare: (store) => {
+    });
+
+    describe('new conversation', () => {
+      const newConversationWith =
+        (role: UserRoles) => (store: ReturnType<typeof createTestStore>) => {
           open(store);
           store.dispatch(
             messagingActions.setNewConversationDraft([
-              participant('other', UserRoles.CANDIDATE),
+              participant('other', role),
             ] as any)
           );
-        },
+        };
+
+      it('shows the panel beside a conversation being created with a candidate', async () => {
+        await setup({
+          selected: 'new',
+          prepare: newConversationWith(UserRoles.CANDIDATE),
+        });
+        expect(screen.getByTestId('ai-panel')).toBeInTheDocument();
+        expect(screen.getByTestId('editor')).toBeInTheDocument();
+      });
+
+      it('replaces the conversation by the panel on mobile', async () => {
+        mockUseIsMobile.mockReturnValue(true);
+        await setup({
+          selected: 'new',
+          prepare: newConversationWith(UserRoles.CANDIDATE),
+        });
+        expect(screen.getByTestId('ai-panel')).toBeInTheDocument();
+        expect(screen.queryByTestId('editor')).toBeNull();
+      });
+
+      it('does not show the panel when the addressee is not a candidate', async () => {
+        await setup({
+          selected: 'new',
+          prepare: newConversationWith(UserRoles.COACH),
+        });
+        expect(screen.queryByTestId('ai-panel')).toBeNull();
+      });
+
+      it('does not show the panel to a coach who has not completed the eLearning', async () => {
+        await setup({
+          selected: 'new',
+          elearningCompletedAt: null,
+          prepare: newConversationWith(UserRoles.CANDIDATE),
+        });
+        expect(screen.queryByTestId('ai-panel')).toBeNull();
+      });
+    });
+
+    it('does not show the panel in a group conversation', async () => {
+      await setup({
+        conversation: buildConversation({
+          type: ConversationType.GROUP,
+          participants: [
+            participant('me', UserRoles.COACH),
+            participant('other', UserRoles.CANDIDATE),
+            participant('third', UserRoles.COACH),
+          ],
+        }),
+        prepare: open,
+      });
+      expect(screen.queryByTestId('ai-panel')).toBeNull();
+    });
+
+    it('does not show the panel to a coach who has not completed the eLearning, even in an existing conversation', async () => {
+      await setup({
+        elearningCompletedAt: null,
+        conversation: buildConversation(),
+        prepare: open,
       });
       expect(screen.queryByTestId('ai-panel')).toBeNull();
     });

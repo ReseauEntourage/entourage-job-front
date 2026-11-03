@@ -10,6 +10,7 @@ import { CheckinState, ConversationType } from '@/src/api/types';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
+import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { useIsMobile } from '@/src/hooks/utils';
 import { useGetCheckinQuery } from '@/src/use-cases/checkin';
 import {
@@ -29,6 +30,7 @@ import {
   usePollConversationMessagesMutation,
 } from '@/src/use-cases/messaging';
 import {
+  selectAIAssistantRecipientId,
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
@@ -147,6 +149,7 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const { isEligibleToContact } = useContactEligibility();
   const { currentData: checkinState } = useGetCheckinQuery(
     selectedConversationId ?? '',
     {
@@ -515,15 +518,16 @@ export const MessagingConversation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConversation?.id, selectedConversation?.messages[0]?.id]);
 
-  const conversationHasCandidate =
-    selectedConversation?.participants.some(
-      (p) => p.role === UserRoles.CANDIDATE
-    ) ?? false;
+  const aiAssistantRecipientId = useSelector(
+    selectAIAssistantRecipientId(currentUserId)
+  );
+  // The assistant is attached to the candidate recipient of a direct
+  // conversation, which exists before the conversation is created.
   const canUseAIAssistant =
-    currentUser?.role !== UserRoles.CANDIDATE && conversationHasCandidate;
-  const isNewConversation = selectedConversationId === 'new';
-  const showAIPanelMobile =
-    isMobile && canUseAIAssistant && isAIPanelOpen && !isNewConversation;
+    currentUser?.role !== UserRoles.CANDIDATE &&
+    isEligibleToContact &&
+    aiAssistantRecipientId !== null;
+  const showAIPanelMobile = isMobile && canUseAIAssistant && isAIPanelOpen;
 
   const conversationContent = (
     <>
@@ -618,14 +622,11 @@ export const MessagingConversation = () => {
       <MessagingConversationContainer>
         {conversationContent}
       </MessagingConversationContainer>
-      {!isMobile &&
-        isAIPanelOpen &&
-        canUseAIAssistant &&
-        !isNewConversation && (
-          <MessagingConversationAIPanel>
-            <MessagingAIPanel />
-          </MessagingConversationAIPanel>
-        )}
+      {!isMobile && isAIPanelOpen && canUseAIAssistant && (
+        <MessagingConversationAIPanel>
+          <MessagingAIPanel />
+        </MessagingConversationAIPanel>
+      )}
     </MessagingConversationWrapper>
   );
 };

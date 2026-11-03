@@ -6,6 +6,9 @@ jest.mock('@/src/hooks/utils', () => ({
   ...jest.requireActual('@/src/hooks/utils'),
   useIsMobile: jest.fn(),
 }));
+jest.mock('next/router', () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
 jest.mock('../MessagingShareNetwork/MessagingShareNetwork', () => ({
   MessagingShareNetwork: ({ profileId, firstName }: any) => (
     <div data-testid="share-network">
@@ -34,14 +37,20 @@ function setup({
   role,
   addresseeRole,
   type = ConversationType.DIRECT,
+  elearningCompletedAt = '2024-01-01T00:00:00.000Z' as string | null,
 }: {
   role: UserRoles;
   addresseeRole: UserRoles;
   type?: ConversationType;
+  elearningCompletedAt?: string | null;
 }) {
   const store = createTestStore();
   store.dispatch(
-    currentUserActions.fetchUserSucceeded({ id: 'me', role } as any)
+    currentUserActions.fetchUserSucceeded({
+      id: 'me',
+      role,
+      elearningCompletedAt,
+    } as any)
   );
   store.dispatch(messagingActions.selectConversation('conv1'));
   store.dispatch(
@@ -87,18 +96,34 @@ describe('ActionList', () => {
   });
 
   it('does not offer profile sharing in group conversations or for non candidate addressees', async () => {
-    setup({
+    setup({ role: UserRoles.COACH, addresseeRole: UserRoles.CANDIDATE });
+    expect(await screen.findByTestId('share-network')).toBeInTheDocument();
+    cleanup();
+    setup({ role: UserRoles.COACH, addresseeRole: UserRoles.COACH });
+    expect(screen.queryByTestId('share-network')).toBeNull();
+    expect(
+      await screen.findByTestId('messaging-ai-assistant-toggle')
+    ).toBeInTheDocument();
+  });
+
+  it('does not offer the AI assistant in a group conversation', () => {
+    const { container } = setup({
       role: UserRoles.COACH,
       addresseeRole: UserRoles.CANDIDATE,
       type: ConversationType.GROUP,
     });
-    expect(
-      await screen.findByTestId('messaging-ai-assistant-toggle')
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId('messaging-ai-assistant-toggle')).toBeNull();
     expect(screen.queryByTestId('share-network')).toBeNull();
-    cleanup();
-    setup({ role: UserRoles.COACH, addresseeRole: UserRoles.COACH });
-    expect(screen.queryByTestId('share-network')).toBeNull();
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('does not offer the AI assistant to a coach who has not completed the eLearning, in a new or existing conversation', () => {
+    setup({
+      role: UserRoles.COACH,
+      addresseeRole: UserRoles.CANDIDATE,
+      elearningCompletedAt: null,
+    });
+    expect(screen.queryByTestId('messaging-ai-assistant-toggle')).toBeNull();
   });
 
   it('renders nothing when there is nothing to offer', () => {
