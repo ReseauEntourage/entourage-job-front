@@ -60,6 +60,50 @@ describe('MessagingAIAssistantBanner', () => {
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
+  it('shows a subtitle naming the candidate when candidateFirstName is given', () => {
+    render(
+      <MessagingAIAssistantBanner
+        onOpenAssistant={() => {}}
+        onDismiss={() => {}}
+        candidateFirstName="Camille"
+      />
+    );
+
+    expect(
+      screen.getByText(
+        "L'assistant peut proposer un brouillon à partir du message de Camille."
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('shows no subtitle when candidateFirstName is not given', () => {
+    render(
+      <MessagingAIAssistantBanner
+        onOpenAssistant={() => {}}
+        onDismiss={() => {}}
+      />
+    );
+
+    expect(
+      screen.queryByText(/L'assistant peut proposer un brouillon/)
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not show the subtitle in the compact mobile layout', () => {
+    render(
+      <MessagingAIAssistantBanner
+        onOpenAssistant={() => {}}
+        onDismiss={() => {}}
+        candidateFirstName="Camille"
+        compact
+      />
+    );
+
+    expect(
+      screen.queryByText(/L'assistant peut proposer un brouillon/)
+    ).not.toBeInTheDocument();
+  });
+
   it('renders a compact single-line layout with "Ouvrir" and a dismiss cross on mobile', () => {
     const onDismiss = jest.fn();
     render(

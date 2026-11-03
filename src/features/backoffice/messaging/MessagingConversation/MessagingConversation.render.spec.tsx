@@ -76,6 +76,7 @@ jest.mock('./MessagingAIAssistantBanner/MessagingAIAssistantBanner', () => ({
     onOpenAssistant,
     onDismiss,
     compact,
+    candidateFirstName,
   }: any) => (
     <div data-testid="ai-banner">
       <button data-testid="ai-banner-open" onClick={onOpenAssistant}>
@@ -85,6 +86,9 @@ jest.mock('./MessagingAIAssistantBanner/MessagingAIAssistantBanner', () => ({
         dismiss
       </button>
       {compact ? 'compact' : 'full'}
+      {candidateFirstName && (
+        <span data-testid="ai-banner-candidate">{candidateFirstName}</span>
+      )}
     </div>
   ),
 }));
@@ -391,6 +395,9 @@ describe('MessagingConversation', () => {
     it('shows the AI assistant banner once a second candidate message arrives unanswered', async () => {
       await setup({ conversation: buildConversation() });
       expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+      expect(screen.getByTestId('ai-banner-candidate')).toHaveTextContent(
+        'First-other'
+      );
     });
 
     it('hides the AI assistant banner once the coach has replied', async () => {

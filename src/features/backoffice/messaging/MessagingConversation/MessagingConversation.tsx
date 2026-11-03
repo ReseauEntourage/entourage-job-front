@@ -630,6 +630,7 @@ export const MessagingConversation = () => {
       {displayAIAssistantBanner && (
         <MessagingAIAssistantBanner
           compact={isMobile}
+          candidateFirstName={otherParticipant?.firstName}
           onOpenAssistant={() =>
             dispatch(messagingActions.openAIAssistantAutoStart())
           }

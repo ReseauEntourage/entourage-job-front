@@ -14,12 +14,17 @@ interface MessagingAIAssistantBannerProps {
   // Mobile: a single line with "Ouvrir" and a dismiss cross (same effect as
   // "Non merci") instead of the two full-width buttons shown on desktop.
   compact?: boolean;
+  // First name of the candidate whose message prompted the banner — shown in
+  // the desktop subtitle. Omitted on the compact mobile layout, which must
+  // stay on a single line.
+  candidateFirstName?: string;
 }
 
 export const MessagingAIAssistantBanner = ({
   onOpenAssistant,
   onDismiss,
   compact = false,
+  candidateFirstName,
 }: MessagingAIAssistantBannerProps) => {
   if (compact) {
     return (
@@ -60,6 +65,12 @@ export const MessagingAIAssistantBanner = ({
         />
       }
     >
+      {candidateFirstName && (
+        <Text size="small" color="mediumGray">
+          L&apos;assistant peut proposer un brouillon à partir du message de{' '}
+          {candidateFirstName}.
+        </Text>
+      )}
       <StyledMessagingAIAssistantBannerActions>
         <Button
           variant="primary"
