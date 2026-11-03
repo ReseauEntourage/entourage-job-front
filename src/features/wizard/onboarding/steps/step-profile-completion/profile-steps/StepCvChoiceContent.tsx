@@ -12,11 +12,15 @@ import {
 interface StepCvChoiceContentProps {
   onCvSelected: (formData: FormData) => void;
   onManualChoice: () => void;
+  onSkip: () => void;
+  isSkipping?: boolean;
 }
 
 export const StepCvChoiceContent = ({
   onCvSelected,
   onManualChoice,
+  onSkip,
+  isSkipping = false,
 }: StepCvChoiceContentProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = React.useState(false);
@@ -99,6 +103,10 @@ export const StepCvChoiceContent = ({
           }
         </Text>
       </StyledHelpText>
+
+      <Button variant="text" onClick={onSkip} disabled={isSkipping}>
+        Je le remplis plus tard
+      </Button>
 
       <AiLegalMention />
     </StyledContainer>

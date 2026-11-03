@@ -78,6 +78,7 @@ describe('useWizard', () => {
       onNext: jest.fn().mockResolvedValue(undefined),
       onBack: jest.fn(),
       skipOnboarding: jest.fn(),
+      skippedSectionIds: ['profil'],
       isAlreadyCompleted: false,
       updateOnboardingStatus: 'IDLE',
       skipDashboardRedirectRef: { current: false },
@@ -105,6 +106,7 @@ describe('useWizard', () => {
       ]);
       expect(result.current.currentStepIdx).toBe(0);
       expect(result.current.isOnboardingPhase).toBe(false);
+      expect(result.current.skippedSectionIds).toEqual([]);
       expect(result.current.currentStep?.id).toBe('r1');
     });
 
@@ -225,6 +227,7 @@ describe('useWizard', () => {
       expect(result.current.buttonLabel).toBe('Continuer');
       expect(result.current.isLoading).toBe(true);
       expect(result.current.canGoBack).toBe(false);
+      expect(result.current.skippedSectionIds).toEqual(['profil']);
     });
 
     it('delegates next to onboarding and ignores back when it cannot go back', async () => {

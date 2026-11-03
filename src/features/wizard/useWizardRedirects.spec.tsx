@@ -4,9 +4,14 @@ const mockDispatch = jest.fn();
 const mockResetPostMessage = jest.fn();
 let mockPostMessageStatus = 'IDLE';
 let mockSelectedConversationId: string | null = null;
+let mockQuery: Record<string, unknown> = {};
 
 jest.mock('next/router', () => ({
-  useRouter: () => ({ push: mockPush, replace: mockReplace }),
+  useRouter: () => ({
+    push: mockPush,
+    replace: mockReplace,
+    query: mockQuery,
+  }),
 }));
 
 jest.mock('react-redux', () => ({
@@ -57,6 +62,7 @@ describe('useWizardRedirects', () => {
     jest.clearAllMocks();
     mockPostMessageStatus = ReduxRequestEvents.IDLE;
     mockSelectedConversationId = null;
+    mockQuery = {};
   });
 
   describe('flow selection', () => {
@@ -111,6 +117,31 @@ describe('useWizardRedirects', () => {
       render({ updateOnboardingStatus: ReduxRequestEvents.SUCCEEDED });
 
       expect(mockPush).toHaveBeenCalledWith('/backoffice/dashboard');
+    });
+
+    it('goes to the requested backoffice page once the onboarding update succeeded', () => {
+      mockQuery = { requestedPath: '/backoffice/events' };
+      render({ updateOnboardingStatus: ReduxRequestEvents.SUCCEEDED });
+
+      expect(mockPush).toHaveBeenCalledWith('/backoffice/events');
+    });
+
+    it('ignores a requested page outside the backoffice', () => {
+      mockQuery = { requestedPath: '//evil.example/backoffice/events' };
+      render({ updateOnboardingStatus: ReduxRequestEvents.SUCCEEDED });
+
+      expect(mockPush).toHaveBeenCalledWith('/backoffice/dashboard');
+    });
+
+    it('lets a recap CTA keep priority over the requested page', () => {
+      mockQuery = { requestedPath: '/backoffice/events' };
+      const skipDashboardRedirectRef = { current: true };
+      render({
+        updateOnboardingStatus: ReduxRequestEvents.SUCCEEDED,
+        skipDashboardRedirectRef,
+      });
+
+      expect(mockPush).not.toHaveBeenCalled();
     });
 
     it('goes to the dashboard when onboarding was already completed', () => {

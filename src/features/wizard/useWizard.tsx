@@ -2,7 +2,10 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOnboardingPhase } from '@/src/features/wizard/onboarding/useOnboardingPhase';
 import { resolveWizardPhase } from '@/src/features/wizard/resolveWizardPhase';
-import { WizardStep } from '@/src/features/wizard/shell/wizard.types';
+import {
+  WizardSectionId,
+  WizardStep,
+} from '@/src/features/wizard/shell/wizard.types';
 import { useEmailConfirmationPhase } from '@/src/features/wizard/useEmailConfirmationPhase';
 import { useWizardRedirects } from '@/src/features/wizard/useWizardRedirects';
 import { logoutSelectors } from '@/src/use-cases/authentication/authentication.selectors';
@@ -32,6 +35,7 @@ export interface WizardState {
   mobileBottomSheet: boolean;
   isOnboardingPhase: boolean;
   skipOnboarding: () => void;
+  skippedSectionIds: WizardSectionId[];
 }
 
 export const useWizard = (): WizardState => {
@@ -198,5 +202,6 @@ export const useWizard = (): WizardState => {
     mobileBottomSheet: currentStep?.mobileBottomSheet ?? false,
     isOnboardingPhase,
     skipOnboarding: onboarding.skipOnboarding,
+    skippedSectionIds: isOnboardingPhase ? onboarding.skippedSectionIds : [],
   };
 };

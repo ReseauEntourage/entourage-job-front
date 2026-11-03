@@ -152,6 +152,49 @@ describe('WizardProgressBar', () => {
     expect(screen.queryByText('Inscription')).toBeNull();
   });
 
+  const stateOf = (label: string) =>
+    screen.getByText(label).closest('[data-state]')?.getAttribute('data-state');
+
+  it('shows a skipped profile section as skipped, not completed', () => {
+    render(
+      <WizardProgressBar
+        steps={steps}
+        currentIdx={3}
+        sections={WIZARD_SECTIONS}
+        skippedSectionIds={['profil']}
+      />
+    );
+
+    expect(stateOf('Profil')).toBe('skipped');
+    expect(stateOf('Inscription')).toBe('completed');
+    expect(stateOf('Formation')).toBe('current');
+  });
+
+  it('keeps a filled profile section completed', () => {
+    render(
+      <WizardProgressBar
+        steps={steps}
+        currentIdx={3}
+        sections={WIZARD_SECTIONS}
+      />
+    );
+
+    expect(stateOf('Profil')).toBe('completed');
+  });
+
+  it('does not mark a skipped section before the user goes past it', () => {
+    render(
+      <WizardProgressBar
+        steps={steps}
+        currentIdx={2}
+        sections={WIZARD_SECTIONS}
+        skippedSectionIds={['profil']}
+      />
+    );
+
+    expect(stateOf('Profil')).toBe('current');
+  });
+
   it('renders one badge per step without sections', () => {
     render(<WizardProgressBar steps={steps} currentIdx={1} />);
 

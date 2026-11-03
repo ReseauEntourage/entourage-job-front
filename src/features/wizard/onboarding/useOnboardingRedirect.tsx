@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { UserRoles } from '@/src/constants/users';
+import { getRequestedPath } from '@/src/hooks/authentication/usePasswordSetupRedirect';
 import { fetchUserSelectors } from '@/src/use-cases/current-user';
 import {
   OnboardingStatus,
@@ -10,7 +11,10 @@ import {
 
 export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
   const { replace, asPath } = useRouter();
-  const [lastRedirectionPath, setLastRedirectionPath] = useState<string | null>(
+  // Page the user was sent away from, while the redirection to the wizard is
+  // in flight. Reset once the wizard is reached, so that the next backoffice
+  // page opened (in-app navigation included) is redirected again.
+  const [lastRedirectedFrom, setLastRedirectedFrom] = useState<string | null>(
     null
   );
 
@@ -33,11 +37,15 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     currentUser?.role as UserRoles
   );
   const isInBackoffice = asPath.startsWith('/backoffice');
+  // Compared without query nor hash: the wizard is opened with `?requestedPath=`.
+  const currentPathname = asPath.split(/[?#]/)[0];
   const isOnOnboardingPage =
-    asPath === onboardingPath || asPath.startsWith(`${onboardingPath}/`);
+    currentPathname === onboardingPath ||
+    currentPathname.startsWith(`${onboardingPath}/`);
 
   const isOnboardingCompleted = onboardingStatus === OnboardingStatus.COMPLETED;
-  const hasJustRedirectedToOnboarding = lastRedirectionPath === onboardingPath;
+  const hasJustRedirectedToOnboarding =
+    lastRedirectedFrom !== null && lastRedirectedFrom === asPath;
   const isCompanyAdmin =
     isCurrentUserFetchFinished &&
     currentUser?.role === UserRoles.COACH &&
@@ -45,6 +53,12 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
 
   const shouldWaitForCurrentUser =
     isInBackoffice && !isCurrentUserFetchFinished;
+
+  useEffect(() => {
+    if (isOnOnboardingPage && lastRedirectedFrom !== null) {
+      setLastRedirectedFrom(null);
+    }
+  }, [isOnOnboardingPage, lastRedirectedFrom]);
 
   useEffect(() => {
     if (shouldWaitForCurrentUser) {
@@ -61,14 +75,17 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
       !isCompanyAdmin;
 
     if (isOnboardingRequired) {
-      setLastRedirectionPath(onboardingPath);
-      replace(onboardingPath);
+      setLastRedirectedFrom(asPath);
+      replace({
+        pathname: onboardingPath,
+        query: { requestedPath: getRequestedPath(asPath) },
+      });
     }
   }, [
     asPath,
     isUserAuthenticated,
     onboardingStatus,
-    lastRedirectionPath,
+    lastRedirectedFrom,
     replace,
     isInBackoffice,
     isOnOnboardingPage,
