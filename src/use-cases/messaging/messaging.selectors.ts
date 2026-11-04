@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { ConversationType, MessageType } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
+import { UserRoles } from '@/src/constants/users';
 import { api } from '@/src/store/api/api.slice';
 import { messagingApi, POST_MESSAGE_FIXED_CACHE_KEY } from './messaging.api';
 import { RootState as MessagingSliceRootState } from './messaging.slice';
@@ -179,3 +180,34 @@ export const selectOtherParticipantHasNotReplied =
   (currentUserId: string | null) =>
   (state: RootState): boolean =>
     selectOtherParticipantHasNotRepliedSelector(state, currentUserId);
+
+const selectAIAssistantRecipientIdSelector = createSelector(
+  [selectSelectedConversation, selectCurrentUserIdParam],
+  (selectedConversation, currentUserId): string | null => {
+    if (!selectedConversation || !currentUserId) {
+      return null;
+    }
+    if (selectedConversation.type !== ConversationType.DIRECT) {
+      return null;
+    }
+
+    const candidates = selectedConversation.participants.filter(
+      (participant) =>
+        participant.role === UserRoles.CANDIDATE &&
+        participant.id !== currentUserId
+    );
+
+    return candidates.length === 1 ? candidates[0].id : null;
+  }
+);
+
+/**
+ * The candidate the AI assistant thread is attached to: the other
+ * participant of the direct conversation on screen, including the one being
+ * composed (the draft holds the recipient). `null` for a group, or when the
+ * conversation has no candidate other than the current user.
+ */
+export const selectAIAssistantRecipientId =
+  (currentUserId: string | null) =>
+  (state: RootState): string | null =>
+    selectAIAssistantRecipientIdSelector(state, currentUserId);

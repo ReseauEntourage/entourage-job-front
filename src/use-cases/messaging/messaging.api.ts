@@ -230,6 +230,17 @@ export const messagingApi = api.injectEndpoints({
           const { message, isNewConversation } = result;
 
           if (isNewConversation) {
+            // Cache the created conversation BEFORE selecting it: selecting
+            // first leaves a moment where the selected conversation is not
+            // resolved, so anything derived from it (the addressee, hence the
+            // AI assistant thread) would be lost and reloaded.
+            await dispatch(
+              messagingApi.util.upsertQueryData(
+                'getSelectedConversation',
+                message.conversation.id,
+                { ...message.conversation, messages: [message] } as Conversation
+              )
+            );
             // The conversation now exists server-side: the draft has served
             // its purpose. `selectConversation` below clears it too, but
             // being explicit keeps the lifecycle readable — and correct
@@ -239,13 +250,6 @@ export const messagingApi = api.injectEndpoints({
             // `getConversations` hasn't loaded yet (e.g. sending from the
             // wizard, which never mounts the messaging page beforehand).
             dispatch(selectConversation(message.conversation.id));
-            dispatch(
-              messagingApi.util.upsertQueryData(
-                'getSelectedConversation',
-                message.conversation.id,
-                { ...message.conversation, messages: [message] } as Conversation
-              )
-            );
             dispatch(
               messagingApi.util.updateQueryData(
                 'getConversations',

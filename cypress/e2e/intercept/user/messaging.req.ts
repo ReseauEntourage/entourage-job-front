@@ -40,7 +40,7 @@ export const interceptGetPublicProfile = (data: object) => {
 };
 
 export const interceptGetAISession = (data: object) => {
-  cy.intercept('GET', '/ai-assistant/conversations/*/session', data).as(
+  cy.intercept('GET', '/ai-assistant/recipients/*/session', data).as(
     'getAISession'
   );
 };
@@ -48,7 +48,7 @@ export const interceptGetAISession = (data: object) => {
 export const interceptResetAISession = (data: object) => {
   cy.intercept(
     'DELETE',
-    '/ai-assistant/conversations/*/session/messages',
+    '/ai-assistant/recipients/*/session/messages',
     data
   ).as('resetAISession');
 };
@@ -63,7 +63,7 @@ export const interceptResetAISession = (data: object) => {
  * chunking/timing.
  */
 export const interceptAIStream = (sseBody: string, statusCode = 200) => {
-  cy.intercept('POST', '/ai-assistant/conversations/*/stream', {
+  cy.intercept('POST', '/ai-assistant/recipients/*/stream', {
     statusCode,
     headers: { 'content-type': 'text/event-stream' },
     body: sseBody,

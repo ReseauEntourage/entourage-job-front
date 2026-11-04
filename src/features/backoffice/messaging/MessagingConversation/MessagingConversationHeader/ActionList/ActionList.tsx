@@ -2,10 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   ConversationParticipant,
   ConversationParticipants,
+  ConversationType,
 } from '@/src/api/types';
 import { Button, LucidIcon, Tooltip } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
+import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { useIsMobile } from '@/src/hooks/utils';
 import {
   selectCurrentUser,
@@ -37,9 +39,15 @@ export const ActionList = () => {
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipants;
   const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
-  const canUseAIAssistant = currentUser?.role !== UserRoles.CANDIDATE;
+  const { isEligibleToContact } = useContactEligibility();
+  const isOneToOneConversation =
+    selectedConversation?.type === ConversationType.DIRECT;
+  // Not offered in a group, nor to a coach who has not completed the eLearning.
+  const canUseAIAssistant =
+    currentUser?.role !== UserRoles.CANDIDATE &&
+    isEligibleToContact &&
+    isOneToOneConversation;
 
-  const isOneToOneConversation = selectedConversation?.type === 'direct';
   const canShareNetwork =
     isOneToOneConversation && addresee?.role === UserRoles.CANDIDATE;
 

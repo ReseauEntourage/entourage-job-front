@@ -287,12 +287,12 @@ const ROUTES: [string, string, Verb, string][] = [
   ['submitCheckinAnswer', 'so', 'put', '/checkin/{0}'],
   ['postCheckinContactRequest', 's', 'post', '/checkin/{0}/contact-request'],
   ['postCheckinNote', 'so', 'post', '/checkin/{0}/note'],
-  ['getAISession', 's', 'get', '/ai-assistant/conversations/{0}/session'],
+  ['getAISession', 's', 'get', '/ai-assistant/recipients/{0}/session'],
   [
     'resetAISession',
     's',
     'delete',
-    '/ai-assistant/conversations/{0}/session/messages',
+    '/ai-assistant/recipients/{0}/session/messages',
   ],
   ['postReadDocument', 'os', 'post', '/readDocuments/read/{1}'],
   ['getAllElearningUnits', 'o', 'get', '/elearning/units'],
@@ -557,7 +557,7 @@ describe('APIHandler', () => {
       localStorage.setItem('access-token', 'tok');
       await handler.streamAIMessage('c1', 'hello');
       expect(globalThis.fetch).toHaveBeenCalledWith(
-        'http://api.test/ai-assistant/conversations/c1/stream',
+        'http://api.test/ai-assistant/recipients/c1/stream',
         {
           method: 'POST',
           headers: {
