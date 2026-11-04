@@ -22,11 +22,14 @@ import {
   COMPOSER_MESSAGE_REQUIRED,
   COMPOSER_PLACEHOLDER,
   COMPOSER_PUBLISH_LABEL,
+  COMPOSER_SUBHEADING,
   COMPOSER_TITLE_FAILED_LABEL,
+  COMPOSER_TITLE_HELP_LABEL,
   COMPOSER_TITLE_LABEL,
   COMPOSER_TITLE_LOADING_LABEL,
   COMPOSER_TITLE_PLACEHOLDER,
   COMPOSER_TITLE_REQUEST_LABEL,
+  COMPOSER_TITLE_REQUIRED_HINT,
   COMPOSER_TITLE_REQUIRED,
   COMPOSER_TITLE_RETRY_LABEL,
   COMPOSER_TITLE_SUGGESTED_LABEL,
@@ -45,10 +48,13 @@ import {
   StyledComposerBar,
   StyledComposerBarButton,
   StyledComposerHeading,
+  StyledComposerHeadingText,
   StyledComposerVisibility,
   StyledTitleField,
   StyledTitleLabelRow,
   StyledTitleMention,
+  StyledTitleRequestButton,
+  StyledTitleRow,
   StyledTitleStatus,
 } from './DiscussionComposer.styles';
 import {
@@ -276,8 +282,13 @@ export function DiscussionComposer({
       data-testid="discussion-composer"
     >
       <StyledComposerHeading>
-        {avatar(36)}
-        <H5 title={COMPOSER_HEADING} weight="semibold" noMarginBottom />
+        {avatar(48)}
+        <StyledComposerHeadingText>
+          <H5 title={COMPOSER_HEADING} weight="semibold" noMarginBottom />
+          <Text size="small" color="darkGray">
+            {COMPOSER_SUBHEADING}
+          </Text>
+        </StyledComposerHeadingText>
       </StyledComposerHeading>
       <TextArea
         id="discussion-composer-message"
@@ -303,10 +314,69 @@ export function DiscussionComposer({
           <StyledInputLabel htmlFor={TITLE_INPUT_ID}>
             {COMPOSER_TITLE_LABEL}
           </StyledInputLabel>
+          <Text size="small" color="darkGray">
+            {COMPOSER_TITLE_REQUIRED_HINT}
+          </Text>
+        </StyledTitleLabelRow>
+        <StyledTitleRow>
+          <TextInput
+            id={TITLE_INPUT_ID}
+            name={TITLE_INPUT_ID}
+            title={COMPOSER_TITLE_LABEL}
+            noMarginBottom
+            placeholder={
+              suggestion.isSuggesting
+                ? COMPOSER_TITLE_LOADING_LABEL
+                : COMPOSER_TITLE_PLACEHOLDER
+            }
+            maxLength={TITLE_MAX_LENGTH}
+            value={draft.title}
+            inputRef={(element) => {
+              titleRef.current = element;
+            }}
+            onChange={(title) => {
+              suggestion.cancelPending();
+              setDraft((current) => ({
+                ...current,
+                title,
+                titleOrigin:
+                  current.titleOrigin === 'suggested' ||
+                  current.titleOrigin === 'edited'
+                    ? 'edited'
+                    : 'manual',
+              }));
+            }}
+            error={hasTriedToPublish ? toFieldError(errors.title) : undefined}
+            hint={
+              <StyledTitleStatus role="status">
+                {draft.titleOrigin === 'suggested' &&
+                !suggestion.isSuggesting ? (
+                  <StyledTitleMention data-testid="discussion-composer-suggested-title">
+                    <LucidIcon name="Sparkles" size={12} />
+                    <Text size="small" color="darkGray">
+                      {COMPOSER_TITLE_SUGGESTED_LABEL}
+                    </Text>
+                  </StyledTitleMention>
+                ) : suggestion.isSuggesting ? (
+                  <Text size="small" color="darkGray">
+                    {COMPOSER_TITLE_LOADING_LABEL}
+                  </Text>
+                ) : suggestion.hasFailed ? (
+                  <Text size="small" color="darkGray">
+                    {COMPOSER_TITLE_FAILED_LABEL}
+                  </Text>
+                ) : (
+                  <Text size="small" color="darkGray">
+                    {COMPOSER_TITLE_HELP_LABEL}
+                  </Text>
+                )}
+              </StyledTitleStatus>
+            }
+          />
           {suggestion.canRequest && (
-            <Button
+            <StyledTitleRequestButton
               variant="hoverBlue"
-              size="xsmall"
+              size="medium"
               prependIcon={<LucidIcon name="Sparkles" />}
               onClick={requestTitle}
               dataTestId="discussion-composer-request-title"
@@ -314,58 +384,9 @@ export function DiscussionComposer({
               {suggestion.hasProposed
                 ? COMPOSER_TITLE_RETRY_LABEL
                 : COMPOSER_TITLE_REQUEST_LABEL}
-            </Button>
+            </StyledTitleRequestButton>
           )}
-        </StyledTitleLabelRow>
-        <TextInput
-          id={TITLE_INPUT_ID}
-          name={TITLE_INPUT_ID}
-          title={COMPOSER_TITLE_LABEL}
-          noMarginBottom
-          placeholder={
-            suggestion.isSuggesting
-              ? COMPOSER_TITLE_LOADING_LABEL
-              : COMPOSER_TITLE_PLACEHOLDER
-          }
-          maxLength={TITLE_MAX_LENGTH}
-          value={draft.title}
-          inputRef={(element) => {
-            titleRef.current = element;
-          }}
-          onChange={(title) => {
-            suggestion.cancelPending();
-            setDraft((current) => ({
-              ...current,
-              title,
-              titleOrigin:
-                current.titleOrigin === 'suggested' ||
-                current.titleOrigin === 'edited'
-                  ? 'edited'
-                  : 'manual',
-            }));
-          }}
-          error={hasTriedToPublish ? toFieldError(errors.title) : undefined}
-        />
-        <StyledTitleStatus role="status">
-          {draft.titleOrigin === 'suggested' && !suggestion.isSuggesting && (
-            <StyledTitleMention data-testid="discussion-composer-suggested-title">
-              <LucidIcon name="Sparkles" size={12} />
-              <Text size="small" color="darkGray">
-                {COMPOSER_TITLE_SUGGESTED_LABEL}
-              </Text>
-            </StyledTitleMention>
-          )}
-          {suggestion.isSuggesting && (
-            <Text size="small" color="darkGray">
-              {COMPOSER_TITLE_LOADING_LABEL}
-            </Text>
-          )}
-          {suggestion.hasFailed && (
-            <Text size="small" color="darkGray">
-              {COMPOSER_TITLE_FAILED_LABEL}
-            </Text>
-          )}
-        </StyledTitleStatus>
+        </StyledTitleRow>
       </StyledTitleField>
       <StyledComposerActions>
         <StyledComposerVisibility>
@@ -386,6 +407,7 @@ export function DiscussionComposer({
         <Button
           variant="primary"
           size="large"
+          appendIcon={<LucidIcon name="Send" />}
           disabled={isLoading}
           onClick={() => onSubmit()}
           dataTestId="discussion-composer-publish"

@@ -749,15 +749,18 @@ describe('Help group participation', () => {
       expect(requestButton()).not.toBeInTheDocument();
     });
 
-    it('puts the request button on the right of the title label and the mention under the field', async () => {
+    it('puts the request button on the right of the title field and the mention under it', async () => {
       renderPage();
       openComposer();
       typeMessage(longMessage);
-      const label = document.querySelector(
-        'label[for="discussion-composer-title"]'
-      );
       const button = screen.getByTestId('discussion-composer-request-title');
-      expect(button.parentElement).toBe(label?.parentElement);
+      // Same row as the field, the button after it
+      const row = button.parentElement as HTMLElement;
+      expect(row).toContainElement(titleInput());
+      expect(
+        titleInput().compareDocumentPosition(button) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
       requestTitle();
       const mention = await screen.findByTestId(
         'discussion-composer-suggested-title'
@@ -769,6 +772,36 @@ describe('Help group participation', () => {
       ).toBeTruthy();
       expect(mention.parentElement).toHaveAttribute('role', 'status');
       expect(screen.queryByText('Écrire le mien')).not.toBeInTheDocument();
+    });
+
+    it('shows the heading with its subtitle and the send icon on « Publier »', () => {
+      renderPage();
+      openComposer();
+      expect(
+        screen.getByText(
+          'Partagez une question, une idée ou une expérience avec le groupe.'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('discussion-composer-publish').querySelector('svg')
+      ).toBeInTheDocument();
+    });
+
+    it('shows « Requis pour publier » and the help, which the AI mention replaces then the edit restores', async () => {
+      renderPage();
+      openComposer();
+      expect(screen.getByText('Requis pour publier')).toBeInTheDocument();
+      const help = 'Un titre court et précis aide les autres à répondre.';
+      expect(screen.getByText(help)).toBeInTheDocument();
+      typeMessage(longMessage);
+      requestTitle();
+      await screen.findByTestId('discussion-composer-suggested-title');
+      expect(screen.queryByText(help)).not.toBeInTheDocument();
+      typeTitle('Mon propre titre');
+      expect(screen.getByText(help)).toBeInTheDocument();
+      expect(
+        screen.queryByTestId('discussion-composer-suggested-title')
+      ).not.toBeInTheDocument();
     });
 
     it('publishes exactly the displayed title with its source', async () => {

@@ -11,6 +11,8 @@ import { CommonInputProps } from '../Inputs.types';
 import {
   StyledTextArea,
   StyledTextAreaContainer,
+  StyledTextAreaFooter,
+  StyledTextAreaFrame,
   StyledTextAreaScrollContainer,
 } from './TextArea.styles';
 import { useLineLimit } from './useLineLimit';
@@ -74,7 +76,96 @@ export function TextArea({
   const missingCharacters = minLength ? minLength - currentLength : 0;
   const isBelowMinLength = !!minLength && missingCharacters > 0;
   const shouldShowAnnotations = !!maxLines || !!maxLength || !!minLength;
-  const shouldShowFooter = !!error || shouldShowAnnotations;
+
+  const limits = shouldShowAnnotations && (
+    <StyledLimitContainer>
+      {maxLines && (
+        <StyledLimit>
+          {remainingLines >= 0 ? (
+            <Text size="small" color="darkGray">
+              {remainingLines} ligne(s) restante(s)
+            </Text>
+          ) : (
+            <Text size="small" color="lightRed">
+              Limite dépassée de {Math.abs(remainingLines)} ligne(s)
+            </Text>
+          )}
+        </StyledLimit>
+      )}
+      {!maxLines && (
+        <>
+          {isBelowMinLength ? (
+            <StyledLimit>
+              <Text size="small" color="darkGray">
+                Encore {missingCharacters} caractère(s) nécessaire(s)
+              </Text>
+            </StyledLimit>
+          ) : (
+            maxLength && (
+              <StyledLimit>
+                {remainingCharacters >= 0 ? (
+                  <Text size="small" color="darkGray">
+                    {remainingCharacters} caractère(s) restant(s)
+                  </Text>
+                ) : (
+                  <Text size="small" color="lightRed">
+                    Limite dépassée de {Math.abs(remainingCharacters)}{' '}
+                    caractères(s)
+                  </Text>
+                )}
+              </StyledLimit>
+            )
+          )}
+        </>
+      )}
+    </StyledLimitContainer>
+  );
+
+  // Framed: the counters live in a footer inside the frame, the error stays
+  // below it. Naked: no frame, counters and error share the line below.
+  const isFramed = !naked;
+  const shouldShowFooter = isFramed
+    ? !!error
+    : !!error || shouldShowAnnotations;
+
+  const textArea = (
+    <StyledTextAreaScrollContainer
+      $textAreaWidth={textAreaWidth}
+      $hasLineLimit={!!maxLines}
+      width={maxLinesWidth}
+    >
+      <StyledTextArea
+        $hasLineLimit={!!maxLines}
+        $framed={isFramed}
+        width={maxLinesWidth}
+        $naked={naked}
+        ref={(e: HTMLTextAreaElement | null) => {
+          if (inputRef) {
+            inputRef(e);
+          }
+          textAreaRef.current = e ?? undefined;
+        }}
+        name={name}
+        id={id}
+        data-testid={id}
+        rows={rows || 5}
+        placeholder={
+          (showLabel
+            ? placeholder
+            : placeholder || (typeof title === 'string' ? title : undefined)) ||
+          'Écrivez'
+        }
+        onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+          onChange(event.target.value)
+        }
+        disabled={disabled}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
+        maxLength={!maxLines ? maxLength : undefined}
+        value={value || ''}
+      />
+    </StyledTextAreaScrollContainer>
+  );
 
   return (
     <StyledTextAreaContainer
@@ -87,87 +178,20 @@ export function TextArea({
           {title}
         </StyledInputLabel>
       )}
-      <StyledTextAreaScrollContainer
-        $textAreaWidth={textAreaWidth}
-        $hasLineLimit={!!maxLines}
-        width={maxLinesWidth}
-      >
-        <StyledTextArea
-          $hasLineLimit={!!maxLines}
-          width={maxLinesWidth}
-          $naked={naked}
-          ref={(e: HTMLTextAreaElement | null) => {
-            if (inputRef) {
-              inputRef(e);
-            }
-            textAreaRef.current = e ?? undefined;
-          }}
-          name={name}
-          id={id}
-          data-testid={id}
-          rows={rows || 5}
-          placeholder={
-            (showLabel
-              ? placeholder
-              : placeholder ||
-                (typeof title === 'string' ? title : undefined)) || 'Écrivez'
-          }
-          onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-            onChange(event.target.value)
-          }
-          disabled={disabled}
-          onBlur={onBlur}
-          onKeyDown={onKeyDown}
-          maxLength={!maxLines ? maxLength : undefined}
-          value={value || ''}
-        />
-      </StyledTextAreaScrollContainer>
+      {isFramed ? (
+        <StyledTextAreaFrame data-textarea-frame>
+          {textArea}
+          {shouldShowAnnotations && (
+            <StyledTextAreaFooter>{limits}</StyledTextAreaFooter>
+          )}
+        </StyledTextAreaFrame>
+      ) : (
+        textArea
+      )}
       {shouldShowFooter && (
         <StyledAnnotations>
           {error && <StyledAnnotationsErrorMessage error={error} />}
-          {shouldShowAnnotations && (
-            <StyledLimitContainer>
-              {maxLines && (
-                <StyledLimit>
-                  {remainingLines >= 0 ? (
-                    <Text size="small" color="darkGray">
-                      {remainingLines} ligne(s) restante(s)
-                    </Text>
-                  ) : (
-                    <Text size="small" color="lightRed">
-                      Limite dépassée de {Math.abs(remainingLines)} ligne(s)
-                    </Text>
-                  )}
-                </StyledLimit>
-              )}
-              {!maxLines && (
-                <>
-                  {isBelowMinLength ? (
-                    <StyledLimit>
-                      <Text size="small" color="darkGray">
-                        Encore {missingCharacters} caractère(s) nécessaire(s)
-                      </Text>
-                    </StyledLimit>
-                  ) : (
-                    maxLength && (
-                      <StyledLimit>
-                        {remainingCharacters >= 0 ? (
-                          <Text size="small" color="darkGray">
-                            {remainingCharacters} caractère(s) restant(s)
-                          </Text>
-                        ) : (
-                          <Text size="small" color="lightRed">
-                            Limite dépassée de {Math.abs(remainingCharacters)}{' '}
-                            caractères(s)
-                          </Text>
-                        )}
-                      </StyledLimit>
-                    )
-                  )}
-                </>
-              )}
-            </StyledLimitContainer>
-          )}
+          {!isFramed && limits}
         </StyledAnnotations>
       )}
     </StyledTextAreaContainer>
