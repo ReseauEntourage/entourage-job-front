@@ -15,11 +15,26 @@ import {
 
 const SWIPE_THRESHOLD = 60;
 
-interface BottomSheetProps {
-  children: (mode: 'compact' | 'full') => React.ReactNode;
-}
+// Discriminated on `midHeightRatio` so existing callers (the wizard, with no
+// `midHeightRatio`) keep their `(mode: 'compact' | 'full') => ReactNode`
+// children type unchanged, while opting into a fixed height tier narrows
+// `children` to `(mode: 'mid' | 'full') => ReactNode` instead.
+type BottomSheetProps =
+  | {
+      children: (mode: 'compact' | 'full') => React.ReactNode;
+      midHeightRatio?: undefined;
+    }
+  | {
+      /**
+       * Fixed height tier (0 to 1, e.g. 0.6 for ~60% of the sheet's height)
+       * used instead of the auto-measured "compact" height — for content
+       * that isn't a small collapsed summary (e.g. a full chat).
+       */
+      children: (mode: 'mid' | 'full') => React.ReactNode;
+      midHeightRatio: number;
+    };
 
-export const BottomSheet = ({ children }: BottomSheetProps) => {
+export const BottomSheet = ({ children, midHeightRatio }: BottomSheetProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [swipeDelta, setSwipeDelta] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -40,11 +55,15 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
     swipeDeltaRef.current = 0;
   }, [children]);
 
-  // Measure compact content height; update via ResizeObserver when in compact mode
+  // Measure compact content height; update via ResizeObserver when in compact
+  // mode. Skipped entirely in mid-height mode, which uses a fixed ratio instead.
   useLayoutEffect(() => {
+    if (midHeightRatio !== undefined) {
+      return undefined;
+    }
     const el = contentMeasureRef.current;
     if (!el) {
-      return;
+      return undefined;
     }
 
     const updateHeight = () => {
@@ -58,10 +77,15 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
     const observer = new ResizeObserver(updateHeight);
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [midHeightRatio]);
 
-  // Expose collapsed height as a CSS variable for padding-bottom compensation
+  // Expose collapsed height as a CSS variable for padding-bottom compensation.
+  // Not applicable in mid-height mode: nothing above the sheet needs to
+  // reserve space for it.
   useEffect(() => {
+    if (midHeightRatio !== undefined) {
+      return undefined;
+    }
     const totalHeight = BOTTOM_SHEET_PILL_HEIGHT + compactHeight;
     document.documentElement.style.setProperty(
       '--wizard-bottom-sheet-collapsed-height',
@@ -72,7 +96,7 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
         '--wizard-bottom-sheet-collapsed-height'
       );
     };
-  }, [compactHeight]);
+  }, [compactHeight, midHeightRatio]);
 
   const toggleExpanded = useCallback(() => {
     setIsExpanded((prev) => !prev);
@@ -126,12 +150,16 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
     setSwipeDelta(0);
   }, []);
 
-  const collapsedOffset = `calc(100% - ${
-    BOTTOM_SHEET_PILL_HEIGHT + compactHeight
-  }px)`;
+  const collapsedOffset =
+    midHeightRatio !== undefined
+      ? `${(1 - midHeightRatio) * 100}%`
+      : `calc(100% - ${BOTTOM_SHEET_PILL_HEIGHT + compactHeight}px)`;
   const translateY = isExpanded
     ? `${swipeDelta}px`
     : `calc(${collapsedOffset} + ${swipeDelta}px)`;
+
+  const collapsedMode: 'compact' | 'mid' =
+    midHeightRatio !== undefined ? 'mid' : 'compact';
 
   return (
     <StyledBottomSheet
@@ -146,7 +174,15 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
       </StyledPillAnchor>
       <StyledBottomSheetContent>
         <div ref={contentMeasureRef}>
-          {children(isExpanded ? 'full' : 'compact')}
+          {
+            // `children`'s exact parameter type depends on which union member
+            // was passed; `collapsedMode` is computed from the same
+            // `midHeightRatio` so it always matches at runtime, but TS can't
+            // correlate the two after destructuring the union.
+            (children as (mode: 'compact' | 'mid' | 'full') => React.ReactNode)(
+              isExpanded ? 'full' : collapsedMode
+            )
+          }
         </div>
       </StyledBottomSheetContent>
     </StyledBottomSheet>

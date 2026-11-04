@@ -526,6 +526,61 @@ describe('MessagingAIAssistant', () => {
     });
   });
 
+  describe('auto-start', () => {
+    it('launches the contextual prompt automatically when opened via the chip or banner, and clears the flag', async () => {
+      mockedApi.streamAIMessage.mockResolvedValue(
+        makeResponse([sse({ content: 'Réponse' }), sse('[DONE]')])
+      );
+      const store = createTestStore();
+      mockedApi.getAISession.mockResolvedValue({
+        data: { messages: [] },
+      } as any);
+      store.dispatch(messagingActions.selectConversation('conv1'));
+      store.dispatch(messagingActions.openAIAssistantAutoStart());
+      renderWithProviders(<MessagingAIAssistant />, { store });
+      await settle();
+
+      const action = getContextualQuickAction(false);
+      expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
+        'conv1',
+        action.prompt
+      );
+      expect(store.getState().messaging.shouldAutoStartAI).toBe(false);
+    });
+
+    it('uses the "suggest a response" prompt when the conversation already has history', async () => {
+      mockedApi.streamAIMessage.mockResolvedValue(
+        makeResponse([sse('[DONE]')])
+      );
+      const store = createTestStore();
+      mockedApi.getAISession.mockResolvedValue({
+        data: { messages: [] },
+      } as any);
+      store.dispatch(messagingActions.selectConversation('conv1'));
+      await store.dispatch(
+        messagingApi.util.upsertQueryData(
+          'getSelectedConversation',
+          'conv1',
+          conversationWithMessages(2) as any
+        ) as any
+      );
+      store.dispatch(messagingActions.openAIAssistantAutoStart());
+      renderWithProviders(<MessagingAIAssistant />, { store });
+      await settle();
+
+      const action = getContextualQuickAction(true);
+      expect(mockedApi.streamAIMessage).toHaveBeenCalledWith(
+        'conv1',
+        action.prompt
+      );
+    });
+
+    it('does not launch anything automatically when opened normally (e.g. the header button)', async () => {
+      await setup();
+      expect(mockedApi.streamAIMessage).not.toHaveBeenCalled();
+    });
+  });
+
   describe('new discussion', () => {
     it('is disabled while there is nothing to reset', async () => {
       await setup();

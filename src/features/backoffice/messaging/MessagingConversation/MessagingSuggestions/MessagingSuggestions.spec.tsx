@@ -46,16 +46,18 @@ function setup({
     store.dispatch(currentUserActions.fetchCurrentProfileSucceeded(profile));
   }
   const onSuggestionClick = jest.fn();
+  const onOpenAIAssistant = jest.fn();
   const utils = renderWithProviders(
     <MessagingSuggestions
       newMessage={newMessage}
       onSuggestionClick={onSuggestionClick}
+      onOpenAIAssistant={onOpenAIAssistant}
       participants={participants}
       variant={variant}
     />,
     { store }
   );
-  return { onSuggestionClick, ...utils };
+  return { onSuggestionClick, onOpenAIAssistant, ...utils };
 }
 
 describe('MessagingSuggestions', () => {
@@ -113,18 +115,33 @@ describe('MessagingSuggestions', () => {
   });
 
   describe('quick replies', () => {
-    it('proposes three replies to a coach', () => {
-      const { onSuggestionClick } = setup({
+    it('proposes three replies plus the AI assistant chip to a coach', () => {
+      const { onSuggestionClick, onOpenAIAssistant } = setup({
         role: UserRoles.COACH,
         variant: 'quick-replies',
       });
       expect(screen.getByTestId('messaging-quick-replies')).toBeInTheDocument();
       const items = screen.getAllByTestId('messaging-suggestion-item');
-      expect(items).toHaveLength(3);
+      expect(items).toHaveLength(4);
+      expect(
+        screen.getByText('✨ Demander à l’assistant IA')
+      ).toBeInTheDocument();
+
       fireEvent.click(screen.getByText('🙅 Je ne suis pas disponible'));
       expect(onSuggestionClick.mock.calls[0][0].message).toContain(
         'Bonjour Awa, Paul,'
       );
+      expect(onOpenAIAssistant).not.toHaveBeenCalled();
+    });
+
+    it('opens the AI assistant instead of filling the editor when its chip is clicked', () => {
+      const { onSuggestionClick, onOpenAIAssistant } = setup({
+        role: UserRoles.COACH,
+        variant: 'quick-replies',
+      });
+      fireEvent.click(screen.getByText('✨ Demander à l’assistant IA'));
+      expect(onOpenAIAssistant).toHaveBeenCalledTimes(1);
+      expect(onSuggestionClick).not.toHaveBeenCalled();
     });
 
     it('proposes four replies to a candidate, filled with their search', () => {

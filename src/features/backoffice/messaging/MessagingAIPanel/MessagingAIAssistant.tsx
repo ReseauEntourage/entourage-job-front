@@ -18,6 +18,7 @@ import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
+  selectShouldAutoStartAI,
 } from '@/src/use-cases/messaging';
 import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
 import {
@@ -51,6 +52,7 @@ export const MessagingAIAssistant = () => {
   const dispatch = useDispatch();
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
+  const shouldAutoStartAI = useSelector(selectShouldAutoStartAI);
   const hasConversationHistory =
     (selectedConversation?.messages?.length ?? 0) > 0;
 
@@ -271,6 +273,25 @@ export const MessagingAIAssistant = () => {
   );
 
   const contextualAction = getContextualQuickAction(hasConversationHistory);
+
+  // Launches a response proposal automatically when the panel was opened
+  // from the "Demander à l'assistant IA" chip or the "Besoin d'aide pour
+  // répondre ?" banner (never from the header's "✨ Assistant" button, which
+  // never sets shouldAutoStartAI). The flag is cleared first so a re-render
+  // triggered by sendMessage itself (e.g. isLoading flipping) can't re-fire it.
+  useEffect(() => {
+    if (!shouldAutoStartAI || !selectedConversationId) {
+      return;
+    }
+    dispatch(messagingActions.clearShouldAutoStartAI());
+    sendMessage(contextualAction.prompt);
+  }, [
+    shouldAutoStartAI,
+    selectedConversationId,
+    dispatch,
+    sendMessage,
+    contextualAction,
+  ]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
