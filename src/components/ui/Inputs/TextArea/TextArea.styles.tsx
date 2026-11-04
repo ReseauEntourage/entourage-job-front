@@ -30,6 +30,7 @@ export const StyledTextArea = styled.textarea<{
   $textAreaWidth?: number;
   width: number;
   $naked?: boolean;
+  $framed?: boolean;
 }>`
   ${() => commonInputStyles}
   width: 100%;
@@ -47,6 +48,17 @@ export const StyledTextArea = styled.textarea<{
   &:focus-visible {
     outline: none;
   }
+  /* Framed: the border, its radius and its states belong to the frame */
+  ${({ $framed }) =>
+    $framed &&
+    css`
+      border: none;
+      border-radius: 0;
+      &:hover,
+      &:focus {
+        border: none;
+      }
+    `}
   ${({ $naked }) =>
     $naked &&
     css`
@@ -82,4 +94,33 @@ export const StyledTextAreaScrollContainer = styled.div<{
         `;
   }};
   min-width: 300px;
+`;
+
+// Single frame around the field and its footer: it carries the border and
+// the hover / focus states the textarea carries when it is not framed
+export const StyledTextAreaFrame = styled.div`
+  border: 2px solid ${COLORS.gray};
+  border-radius: 8px;
+  background-color: transparent;
+  overflow: hidden;
+
+  &:hover {
+    border-color: ${COLORS.darkGray};
+  }
+
+  &:focus-within {
+    border-color: ${COLORS.primaryBlue};
+  }
+`;
+
+// Counters, inside the frame, aligned to the right under the field
+export const StyledTextAreaFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  border-top: 1px solid ${COLORS.extraLightGray};
+
+  > div > div {
+    padding-top: 0;
+  }
 `;

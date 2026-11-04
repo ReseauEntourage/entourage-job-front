@@ -115,4 +115,47 @@ describe('TextArea', () => {
     render(<TextArea {...baseProps} inputRef={inputRef} />);
     expect(inputRef).toHaveBeenCalledWith(screen.getByTestId('bio'));
   });
+  describe('counters footer', () => {
+    it('puts the counter in a footer inside the frame', () => {
+      render(<TextArea {...baseProps} value="abc" maxLength={10} />);
+      const frame = screen.getByTestId('bio').closest('div[class]')
+        ?.parentElement as HTMLElement;
+      const counter = screen.getByText('7 caractère(s) restant(s)');
+      expect(frame).toContainElement(counter);
+      expect(frame).toContainElement(screen.getByTestId('bio'));
+    });
+
+    it('keeps the error below the frame, not in the footer', () => {
+      render(
+        <TextArea
+          {...baseProps}
+          value="abc"
+          maxLength={10}
+          error={{ type: 'required', message: 'Requis' }}
+        />
+      );
+      const frame = screen.getByTestId('bio').closest('div[class]')
+        ?.parentElement as HTMLElement;
+      expect(frame).not.toContainElement(screen.getByText('Requis'));
+      expect(frame).toContainElement(
+        screen.getByText('7 caractère(s) restant(s)')
+      );
+    });
+
+    it('renders no footer without any limit', () => {
+      render(<TextArea {...baseProps} value="ab" />);
+      expect(screen.queryByText(/restant|nécessaire/)).not.toBeInTheDocument();
+    });
+
+    it('keeps the counters below the field when naked', () => {
+      render(<TextArea {...baseProps} value="abc" maxLength={10} naked />);
+      const counter = screen.getByText('7 caractère(s) restant(s)');
+      const textarea = screen.getByTestId('bio');
+      // Naked: the counter is a sibling of the field wrapper, not in a frame
+      expect(textarea.parentElement).not.toContainElement(counter);
+      expect(textarea.parentElement?.parentElement).toHaveTextContent(
+        '7 caractère(s) restant(s)'
+      );
+    });
+  });
 });

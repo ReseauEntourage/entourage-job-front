@@ -481,7 +481,7 @@ describe('Groupes', () => {
     );
     cy.capture('Rédaction avant la proposition de titre', {
       caption:
-        'Message de plus de 30 caractères : le champ titre garde « Écrivez votre titre » et le bouton « Proposer un titre avec l’IA » apparaît à droite de « Titre ». Aucune proposition n’est faite tant que le membre ne la demande pas.',
+        'Message de plus de 30 caractères : en-tête « Nouvelle discussion » avec son sous-titre, compteur de caractères dans le pied du cadre du message, « Requis pour publier » à côté de « Titre », aide sous le champ et bouton « Proposer un titre avec l’IA » à droite du champ (sous le champ en mobile). Aucune proposition n’est faite tant que le membre ne la demande pas.',
     });
 
     cy.get('[data-testid="discussion-composer-request-title"]').click();
@@ -491,7 +491,7 @@ describe('Groupes', () => {
     );
     cy.capture('Rédaction d’une discussion', {
       caption:
-        'Rédaction en place, ouverte depuis la barre avec l’avatar, message avant le titre, titre proposé par l’IA à la demande du membre, mention « Proposé par l’IA… » sous le champ et « Proposer un autre titre » à droite de « Titre ». En mobile, mention de visibilité sur sa ligne, puis « Annuler » (bordé) et « Publier » sur toute la largeur.',
+        'Rédaction en place, ouverte depuis la barre avec l’avatar, message avant le titre, titre proposé par l’IA à la demande du membre, mention « Proposé par l’IA… » sous le champ à la place de l’aide, « Proposer un autre titre » à droite du champ et « Publier » avec son icône d’envoi. En mobile, mention de visibilité sur sa ligne, puis « Annuler » (bordé) et « Publier » sur toute la largeur.',
     });
 
     cy.get('[data-testid="discussion-composer-publish"]').click();

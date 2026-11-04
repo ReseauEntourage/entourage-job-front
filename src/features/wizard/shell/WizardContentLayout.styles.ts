@@ -19,7 +19,8 @@ export const StyledWizardPageContent = styled.div<{
   background-color: ${COLORS.lightGray};
 
   && input,
-  && textarea {
+  && textarea,
+  && [data-textarea-frame] {
     background-color: ${COLORS.white};
   }
 
