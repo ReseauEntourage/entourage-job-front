@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux';
 import { Section, Button, Alert } from '@/src/components/ui';
 import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Spinner } from '@/src/components/ui/Spinner';
-import { StyledOnboardingActions } from '@/src/features/wizard/onboarding/onboarding.styles';
+import {
+  StyledOnboardingActions,
+  StyledOnboardingReferentContactFallbackRow,
+} from '@/src/features/wizard/onboarding/onboarding.styles';
 import { OnboardingHelpLink } from '@/src/features/wizard/shell/OnboardingHelpLink';
 import { OnboardingReferentContact } from '@/src/features/wizard/shell/OnboardingReferentContact';
 import { WizardContentLayout } from '@/src/features/wizard/shell/WizardContentLayout';
@@ -122,6 +125,7 @@ export const WizardRunShell = ({
                 title={currentStep.title}
                 description={currentStep.description}
                 subProgress={subProgress}
+                isOnboardingPhase={isOnboardingPhase}
               />
             </>
           </Section>
@@ -132,6 +136,15 @@ export const WizardRunShell = ({
           <Spinner />
         ) : currentStep ? (
           <>
+            {/* Safety net for the 3 steps that hide the generic header (and
+                so never render HeaderWizardStep, where the button normally
+                lives): the contact must stay accessible on every step. At
+                the top of the panel, like HeaderWizardStep's own row. */}
+            {isOnboardingPhase && currentStep.hideGenericStepHeader && (
+              <StyledOnboardingReferentContactFallbackRow>
+                <OnboardingReferentContact />
+              </StyledOnboardingReferentContactFallbackRow>
+            )}
             <React.Fragment key={currentWizardIdx}>
               {currentStep.content}
             </React.Fragment>
@@ -169,8 +182,6 @@ export const WizardRunShell = ({
                 </Button>
               </StyledOnboardingActions>
             )}
-            {/* Outside the footer conditional: also shown on steps that hide it */}
-            {isOnboardingPhase && <OnboardingReferentContact />}
           </>
         ) : (
           <Alert type={AlertType.Error}>

@@ -303,9 +303,10 @@ export type UserStats = {
   availableMirrorRoleParticipantsCount: number | null;
 };
 
-export enum FeatureKey {
-  MESSAGING_AI_ASSISTANT = 'messaging_ai_assistant',
-}
+// No flag defined today — messaging_ai_assistant was removed once it stopped
+// gating anything in practice. The generic betaFeatures mechanism below is
+// kept for a future flag: add its key here when one is needed.
+export enum FeatureKey {}
 
 export type User = {
   id: string;
@@ -723,6 +724,7 @@ export type Conversation = {
   participants: ConversationParticipants;
   seenAt?: string;
   archivedAt?: string | null;
+  assistantBannerDismissedAt?: string | null;
 };
 
 export type MessageWithConversation = Message & {

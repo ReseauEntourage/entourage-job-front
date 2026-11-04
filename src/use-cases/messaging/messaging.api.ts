@@ -402,6 +402,48 @@ export const messagingApi = api.injectEndpoints({
         }
       },
     }),
+    dismissAIAssistantBanner: builder.mutation<void, string>({
+      queryFn: async (conversationId) => {
+        try {
+          await Api.dismissAIAssistantBanner(conversationId);
+          return { data: undefined };
+        } catch (error) {
+          return { error };
+        }
+      },
+      onQueryStarted: async (conversationId, { dispatch, queryFulfilled }) => {
+        const assistantBannerDismissedAt = new Date().toISOString();
+        const patches = [
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getConversations',
+              undefined,
+              (draft) => {
+                const conversation = draft.find((c) => c.id === conversationId);
+                if (conversation) {
+                  conversation.assistantBannerDismissedAt =
+                    assistantBannerDismissedAt;
+                }
+              }
+            )
+          ),
+          dispatch(
+            messagingApi.util.updateQueryData(
+              'getSelectedConversation',
+              conversationId,
+              (draft) => {
+                draft.assistantBannerDismissedAt = assistantBannerDismissedAt;
+              }
+            )
+          ),
+        ];
+        try {
+          await queryFulfilled;
+        } catch {
+          patches.forEach((patch) => patch.undo());
+        }
+      },
+    }),
     /** Translates `bindNewConversationSagaRequested`. */
     bindNewConversation: builder.mutation<void, string>({
       queryFn: async (requiredConvUserId, { dispatch }) => {
@@ -468,4 +510,5 @@ export const {
   useBindNewConversationMutation,
   useArchiveConversationMutation,
   useUnarchiveConversationMutation,
+  useDismissAIAssistantBannerMutation,
 } = messagingApi;

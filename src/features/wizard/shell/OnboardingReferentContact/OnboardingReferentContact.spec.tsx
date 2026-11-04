@@ -10,8 +10,12 @@ jest.mock('@/src/components/ui', () => ({
   LegacyImg: ({ alt }: { alt: string }) => <span role="img" aria-label={alt} />,
   SimpleLink: ({ href, children }: any) => <a href={href}>{children}</a>,
 }));
+jest.mock('@/src/components/ui/Icons/LucidIcon', () => ({
+  LucidIcon: () => <span />,
+}));
 
-import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -24,16 +28,35 @@ const contact = {
   img: '/static/img/camille.jpg',
 };
 
+const getToggle = () => screen.getByText("Besoin d'aide ?");
+
 describe('OnboardingReferentContact', () => {
   beforeEach(() => {
     mockProfile.mockReturnValue({ department: 'Nord (59)' });
     mockStaffContact.mockReturnValue(contact);
   });
 
-  it('shows the help message, the referent, the role with its zone and a mailto link', () => {
+  it('shows a closed help button by default', () => {
     render(<OnboardingReferentContact />);
 
-    expect(screen.getByText("Une question ? Besoin d'aide ?")).toBeTruthy();
+    expect(getToggle()).toBeTruthy();
+    expect(getToggle().closest('button')).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('opens the dialog with the referent, the role with its zone and a mailto link on click', () => {
+    render(<OnboardingReferentContact />);
+
+    fireEvent.click(getToggle());
+
+    expect(getToggle().closest('button')).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    );
+    expect(screen.getByRole('dialog')).toBeTruthy();
     expect(screen.getByText('Camille Martin')).toBeTruthy();
     expect(
       screen.getByText(/Référent\(e\) Entourage Pro Hauts-de-France/)
@@ -49,10 +72,44 @@ describe('OnboardingReferentContact', () => {
     mockProfile.mockReturnValue({ department: outOfZone?.name });
 
     render(<OnboardingReferentContact />);
+    fireEvent.click(getToggle());
 
     expect(
       screen.getByText(/Référent\(e\) Entourage Pro National/)
     ).toBeTruthy();
+  });
+
+  it('closes the dialog when the button is clicked again', () => {
+    render(<OnboardingReferentContact />);
+
+    fireEvent.click(getToggle());
+    expect(screen.getByRole('dialog')).toBeTruthy();
+
+    fireEvent.click(getToggle());
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('closes the dialog on an outside click', () => {
+    render(<OnboardingReferentContact />);
+
+    fireEvent.click(getToggle());
+    expect(screen.getByRole('dialog')).toBeTruthy();
+
+    fireEvent.mouseDown(document.body);
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('closes the dialog on Escape and returns focus to the button', () => {
+    render(<OnboardingReferentContact />);
+
+    fireEvent.click(getToggle());
+    const dialog = screen.getByRole('dialog');
+
+    fireEvent.keyDown(dialog, { key: 'Escape' });
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(getToggle().closest('button')).toHaveFocus();
   });
 
   it('renders nothing while the contact is not loaded', () => {

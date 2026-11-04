@@ -217,18 +217,23 @@ describe('WizardRunShell', () => {
   });
 
   describe('referent contact', () => {
-    it('shows the contact below the actions during the onboarding phase', () => {
+    it('shows the contact in the step header, above the title and the actions, during the onboarding phase', () => {
       renderShell({ isOnboardingPhase: true });
 
       const contact = screen.getByTestId('referent-contact');
+      const title = screen.getByText('Titre inscription');
       const next = screen.getByTestId('wizard-next-step-btn');
       expect(
-        next.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING
+        contact.compareDocumentPosition(title) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+      expect(
+        contact.compareDocumentPosition(next) & Node.DOCUMENT_POSITION_FOLLOWING
       ).toBeTruthy();
       expect(lastLayoutProps().mobileHelpLink).toBeTruthy();
     });
 
-    it('shows the contact on a step that hides the generic footer', () => {
+    it('shows a single contact on a step that hides the generic footer (header still shown)', () => {
       const noFooter = makeStep('profil', { hideGenericStepFooter: true });
       renderShell({
         isOnboardingPhase: true,
@@ -237,7 +242,19 @@ describe('WizardRunShell', () => {
       });
 
       expect(screen.queryByTestId('wizard-next-step-btn')).toBeNull();
-      expect(screen.getByTestId('referent-contact')).toBeTruthy();
+      expect(screen.getAllByTestId('referent-contact')).toHaveLength(1);
+    });
+
+    it('falls back to a contact rendered from the shell on a step that hides the generic header', () => {
+      const noHeader = makeStep('profil', { hideGenericStepHeader: true });
+      renderShell({
+        isOnboardingPhase: true,
+        wizardSteps: [noHeader],
+        currentStep: noHeader,
+      });
+
+      expect(screen.queryByText('Titre profil')).toBeNull();
+      expect(screen.getAllByTestId('referent-contact')).toHaveLength(1);
     });
 
     it('shows neither the contact nor the help link outside the onboarding phase', () => {

@@ -1,6 +1,13 @@
 import { COLORS } from '@/src/constants/styles';
 
 export const BUTTON_SIZES = {
+  // Compact button, e.g. next to a field label
+  xsmall: {
+    fontSize: 11,
+    padding: '5px 14px',
+    paddingCircle: '0px',
+    iconSize: 14,
+  },
   small: {
     fontSize: 11,
     padding: '9px 18px',

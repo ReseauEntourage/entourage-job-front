@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from '@/src/components/ui';
 import { H4 } from '@/src/components/ui/Headings';
+import { OnboardingReferentContact } from '../../shell/OnboardingReferentContact';
 import { WizardSubProgressBar } from '../../shell/WizardSubProgressBar';
 import {
   StyledContainer,
@@ -15,22 +16,28 @@ interface HeaderWizardStepProps {
     currentInSection: number;
     totalInSection: number;
   } | null;
+  /** True once the user is logged in and going through the onboarding (not registration). */
+  isOnboardingPhase?: boolean;
 }
 
 export const HeaderWizardStep = ({
   title,
   description,
   subProgress,
+  isOnboardingPhase = false,
 }: HeaderWizardStepProps) => {
   return (
     <StyledContainer>
-      {subProgress && (
+      {(subProgress || isOnboardingPhase) && (
         <StyledDesktopSubProgress>
-          <WizardSubProgressBar
-            sectionLabel={subProgress.sectionLabel}
-            currentInSection={subProgress.currentInSection}
-            totalInSection={subProgress.totalInSection}
-          />
+          {subProgress && (
+            <WizardSubProgressBar
+              sectionLabel={subProgress.sectionLabel}
+              currentInSection={subProgress.currentInSection}
+              totalInSection={subProgress.totalInSection}
+            />
+          )}
+          {isOnboardingPhase && <OnboardingReferentContact />}
         </StyledDesktopSubProgress>
       )}
       <H4 title={title} />
