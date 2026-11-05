@@ -42,8 +42,8 @@ describe('En tant que - Prescripteur', () => {
      * Ajoutez vos URLs à cette liste selon vos besoins
      */
     const urlsToIntercept = [
-      'user/profile/recommendations/**',
-      '/user/profile/completion',
+      'current/profile/recommendations/**',
+      '/current/profile/completion',
       '/messaging/conversations',
       '/messaging/conversations/**',
 
@@ -166,7 +166,7 @@ describe('En tant que - Prescripteur', () => {
   describe('Je souhaite orienter un candidat', () => {
     beforeEach(() => {
       cy.visit(`/backoffice/referer/orienter/step-1`);
-      cy.intercept('POST', '/user/refering', {
+      cy.intercept('POST', '/users/referrals', {
         statusCode: 201,
       }).as('postRefering');
     });

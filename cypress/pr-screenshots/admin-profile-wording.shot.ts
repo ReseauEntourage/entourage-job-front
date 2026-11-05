@@ -10,7 +10,7 @@ describe("Page profil d'un admin", () => {
 
   const interceptAdminProfile = () => {
     cy.fixture('public-profile-res').then((profile) => {
-      cy.intercept('GET', `/user/profile/${ADMIN_ID}`, {
+      cy.intercept('GET', `/users/${ADMIN_ID}/profile`, {
         statusCode: 200,
         body: {
           ...profile,

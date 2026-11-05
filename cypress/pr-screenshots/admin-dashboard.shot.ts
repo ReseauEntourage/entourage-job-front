@@ -40,7 +40,7 @@ describe("Tableau de bord d'un admin", () => {
         sectorOccupations: [],
       },
     }).as('currentProfile');
-    cy.intercept('GET', '/user/profile/completion', {
+    cy.intercept('GET', '/current/profile/completion', {
       statusCode: 200,
       body: 60,
     }).as('profileCompletion');

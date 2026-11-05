@@ -24,7 +24,7 @@ const signInAs = (role: string) => {
 };
 
 /**
- * Builds the body returned by GET /user/profile/:userId for a fully filled in
+ * Builds the body returned by GET /users/:userId/profile for a fully filled in
  * member. Each test overrides only what it needs.
  */
 const buildProfile = (overrides: Record<string, unknown> = {}) => ({
@@ -101,7 +101,7 @@ const buildProfile = (overrides: Record<string, unknown> = {}) => ({
 });
 
 const interceptProfile = (profile: Record<string, unknown>) => {
-  cy.intercept('GET', `/user/profile/${PROFILE_ID}`, {
+  cy.intercept('GET', `/users/${PROFILE_ID}/profile`, {
     statusCode: 200,
     body: profile,
   }).as('getProfile');
@@ -248,7 +248,7 @@ describe('En tant que - Membre connecté, je consulte le profil d’un autre mem
   describe('Cas particuliers', () => {
     it('N’affiche pas la carte de contact sur mon propre profil', () => {
       signInAs('Coach');
-      cy.intercept('GET', `/user/profile/${CURRENT_USER_ID}`, {
+      cy.intercept('GET', `/users/${CURRENT_USER_ID}/profile`, {
         statusCode: 200,
         body: buildProfile({ id: CURRENT_USER_ID, role: 'Coach' }),
       }).as('getProfile');
@@ -285,7 +285,7 @@ describe('En tant que - Membre connecté, je consulte le profil d’un autre mem
 
     it('Affiche une erreur et aucun profil quand l’API ne trouve pas le membre', () => {
       signInAs('Coach');
-      cy.intercept('GET', `/user/profile/${PROFILE_ID}`, {
+      cy.intercept('GET', `/users/${PROFILE_ID}/profile`, {
         statusCode: 404,
         body: { message: 'Not Found' },
       }).as('getProfile');
@@ -299,7 +299,7 @@ describe('En tant que - Membre connecté, je consulte le profil d’un autre mem
 
     it('Affiche une erreur quand l’API est indisponible', () => {
       signInAs('Candidat');
-      cy.intercept('GET', `/user/profile/${PROFILE_ID}`, {
+      cy.intercept('GET', `/users/${PROFILE_ID}/profile`, {
         statusCode: 500,
         body: {},
       }).as('getProfile');
