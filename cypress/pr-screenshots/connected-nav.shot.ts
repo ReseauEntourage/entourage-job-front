@@ -25,7 +25,7 @@ describe('En-tête connecté', () => {
     interceptGetUnseenCount({ statusCode: 200, body: 2 });
     interceptGetConversations({ fixture: 'api/generated/conversations' });
     cy.fixture('public-profile-res').then((profile) => {
-      cy.intercept('GET', '/user/profile/recommendations*', {
+      cy.intercept('GET', '/current/profile/recommendations*', {
         statusCode: 200,
         body: {
           embeddingPending: false,
