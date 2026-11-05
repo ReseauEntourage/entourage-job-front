@@ -118,18 +118,6 @@ describe('wizard home page', () => {
 });
 
 describe('wizard run page', () => {
-  it('shows no redirection notice outside the onboarding phase, even with a requested page', () => {
-    mockUseRouter.mockReturnValue({
-      query: { requestedPath: '/backoffice/events' },
-      replace: jest.fn(),
-    });
-    render_();
-
-    expect(mockWizardRunShell).toHaveBeenCalledWith(
-      expect.objectContaining({ showOnboardingGateNotice: false })
-    );
-  });
-
   it('feeds the shell with the wizard state', () => {
     render_();
 

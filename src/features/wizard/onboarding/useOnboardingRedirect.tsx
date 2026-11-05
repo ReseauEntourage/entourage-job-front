@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { UserRoles } from '@/src/constants/users';
-import { getRequestedPath } from '@/src/hooks/authentication/usePasswordSetupRedirect';
 import { fetchUserSelectors } from '@/src/use-cases/current-user';
 import {
   OnboardingStatus,
@@ -37,11 +36,8 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
     currentUser?.role as UserRoles
   );
   const isInBackoffice = asPath.startsWith('/backoffice');
-  // Compared without query nor hash: the wizard is opened with `?requestedPath=`.
-  const currentPathname = asPath.split(/[?#]/)[0];
   const isOnOnboardingPage =
-    currentPathname === onboardingPath ||
-    currentPathname.startsWith(`${onboardingPath}/`);
+    asPath === onboardingPath || asPath.startsWith(`${onboardingPath}/`);
 
   const isOnboardingCompleted = onboardingStatus === OnboardingStatus.COMPLETED;
   const hasJustRedirectedToOnboarding =
@@ -76,10 +72,7 @@ export function useOnboardingRedirect({ currentUser }: { currentUser: any }) {
 
     if (isOnboardingRequired) {
       setLastRedirectedFrom(asPath);
-      replace({
-        pathname: onboardingPath,
-        query: { requestedPath: getRequestedPath(asPath) },
-      });
+      replace(onboardingPath);
     }
   }, [
     asPath,

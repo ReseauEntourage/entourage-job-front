@@ -75,11 +75,6 @@ async function renderForIdentity({
   return { replace, result, navigate };
 }
 
-const wizardRedirection = (requestedPath: string) => ({
-  pathname: '/wizard/run',
-  query: { requestedPath },
-});
-
 describe('useOnboardingRedirect', () => {
   afterEach(() => {
     cleanup();
@@ -87,22 +82,12 @@ describe('useOnboardingRedirect', () => {
     jest.clearAllMocks();
   });
 
-  it('sends an account with an unfinished onboarding to the wizard, with the requested page', async () => {
-    const { replace } = await renderForIdentity();
-
-    expect(replace).toHaveBeenCalledWith(
-      wizardRedirection('/backoffice/dashboard')
-    );
-  });
-
-  it('keeps the requested page when sent away from the events page', async () => {
+  it('sends an account with an unfinished onboarding to the wizard', async () => {
     const { replace } = await renderForIdentity({
       asPath: '/backoffice/events',
     });
 
-    expect(replace).toHaveBeenCalledWith(
-      wizardRedirection('/backoffice/events')
-    );
+    expect(replace).toHaveBeenCalledWith('/wizard/run');
   });
 
   it('redirects again on a second in-app navigation after leaving the wizard', async () => {
@@ -113,20 +98,18 @@ describe('useOnboardingRedirect', () => {
 
     // The redirection lands on the wizard, then the user leaves it through
     // the logo (public home page), then opens the dashboard in-app.
-    await navigate('/wizard/run?requestedPath=%2Fbackoffice%2Fevents');
+    await navigate('/wizard/run');
     await navigate('/');
     expect(replace).toHaveBeenCalledTimes(1);
 
     await navigate('/backoffice/dashboard');
     expect(replace).toHaveBeenCalledTimes(2);
-    expect(replace).toHaveBeenLastCalledWith(
-      wizardRedirection('/backoffice/dashboard')
-    );
+    expect(replace).toHaveBeenLastCalledWith('/wizard/run');
   });
 
-  it('does not redirect from the wizard opened with a requested page', async () => {
+  it('does not redirect from the wizard itself', async () => {
     const { replace, result } = await renderForIdentity({
-      asPath: '/wizard/run?requestedPath=%2Fbackoffice%2Fevents',
+      asPath: '/wizard/run',
     });
 
     expect(replace).not.toHaveBeenCalled();

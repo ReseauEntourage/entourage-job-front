@@ -81,21 +81,6 @@ const lastLayoutProps = () =>
 describe('WizardRunShell', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it('explains the redirection when sent from a backoffice page', () => {
-    renderShell({ isOnboardingPhase: true, showOnboardingGateNotice: true });
-
-    expect(screen.getByTestId('onboarding-gate-notice')).toBeTruthy();
-    expect(
-      screen.getByText('Terminez votre profil pour accéder à votre espace')
-    ).toBeTruthy();
-  });
-
-  it('shows no redirection notice otherwise', () => {
-    renderShell({ isOnboardingPhase: true });
-
-    expect(screen.queryByTestId('onboarding-gate-notice')).toBeNull();
-  });
-
   it('renders the current step header and content with the next button', () => {
     const { onNext } = renderShell();
 

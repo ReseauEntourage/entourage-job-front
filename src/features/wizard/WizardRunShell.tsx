@@ -7,7 +7,6 @@ import {
   StyledOnboardingActions,
   StyledOnboardingReferentContactFallbackRow,
 } from '@/src/features/wizard/onboarding/onboarding.styles';
-import { OnboardingGateNotice } from '@/src/features/wizard/shell/OnboardingGateNotice';
 import { OnboardingHelpLink } from '@/src/features/wizard/shell/OnboardingHelpLink';
 import { OnboardingReferentContact } from '@/src/features/wizard/shell/OnboardingReferentContact';
 import { WizardContentLayout } from '@/src/features/wizard/shell/WizardContentLayout';
@@ -34,8 +33,6 @@ interface WizardRunShellProps {
   mobileBottomSheet?: boolean;
   /** True once the user is logged in and going through the onboarding (not registration). */
   isOnboardingPhase?: boolean;
-  /** True when the user was sent to the onboarding from a backoffice page. */
-  showOnboardingGateNotice?: boolean;
 }
 
 export const WizardRunShell = ({
@@ -51,7 +48,6 @@ export const WizardRunShell = ({
   sidePanelContent,
   mobileBottomSheet = false,
   isOnboardingPhase = false,
-  showOnboardingGateNotice = false,
 }: WizardRunShellProps) => {
   // Message d'erreur posé par les étapes (échec de sauvegarde, champs manquants) ;
   // réinitialisé par useWizard à chaque changement d'étape et à chaque soumission.
@@ -140,7 +136,6 @@ export const WizardRunShell = ({
           <Spinner />
         ) : currentStep ? (
           <>
-            {showOnboardingGateNotice && <OnboardingGateNotice />}
             {/* Safety net for the 3 steps that hide the generic header (and
                 so never render HeaderWizardStep, where the button normally
                 lives): the contact must stay accessible on every step. At

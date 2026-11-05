@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/src/api/types';
 import { ReduxRequestEvents } from '@/src/constants';
-import { resolveOnboardingExitPath } from '@/src/features/wizard/onboarding/onboardingExitPath';
 import { authenticationActions } from '@/src/use-cases/authentication';
 import {
   POST_MESSAGE_FIXED_CACHE_KEY,
@@ -61,17 +60,13 @@ export const useWizardRedirects = ({
     }
   }, [isLogoutSucceeded, router, dispatch]);
 
-  // Redirect after onboarding completion (explicit update via
+  // Redirect to dashboard after onboarding completion (explicit update via
   // the wizard, or onboarding already COMPLETED server-side for Association
   // / Entreprise-admin). skipDashboardRedirectRef lets the recap step handle
   // the next navigation itself (messaging/directory CTA) without this
   // generic redirect overriding it: both triggers must share the same
   // effect, otherwise they re-run within the same commit and one of them
   // would consume the flag before the other could read it.
-  // Without a recap CTA, the user lands on the backoffice page they were sent
-  // away from (`?requestedPath=`, see useOnboardingRedirect), or on the
-  // dashboard by default.
-  const requestedPath = router.query?.requestedPath;
   useEffect(() => {
     const onboardingJustCompleted =
       updateOnboardingStatus === ReduxRequestEvents.SUCCEEDED;
@@ -80,12 +75,11 @@ export const useWizardRedirects = ({
         skipDashboardRedirectRef.current = false;
         return;
       }
-      router.push(resolveOnboardingExitPath(requestedPath));
+      router.push('/backoffice/dashboard');
     }
   }, [
     updateOnboardingStatus,
     isOnboardingAlreadyCompleted,
-    requestedPath,
     router,
     skipDashboardRedirectRef,
   ]);
