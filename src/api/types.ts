@@ -324,7 +324,6 @@ export type User = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
-  onboardingProfileSkippedAt: string | null;
   elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
@@ -407,7 +406,6 @@ export type CurrentUserIdentity = {
   onboardingStatus: OnboardingStatus;
   onboardingCompletedAt: string | null;
   onboardingWebinarSkippedAt: string | null;
-  onboardingProfileSkippedAt: string | null;
   elearningCompletedAt: string | null;
   betaFeatures: Record<FeatureKey, boolean>;
   hasLinkedinLinked: boolean;
@@ -511,7 +509,6 @@ export type UserDto = {
   lastConnection?: string;
   onboardingStatus?: OnboardingStatus;
   onboardingWebinarSkippedAt?: string | null;
-  onboardingProfileSkippedAt?: string | null;
 };
 
 export type UserRegistrationDto = {

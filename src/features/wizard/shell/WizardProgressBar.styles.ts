@@ -22,7 +22,6 @@ export const StyledWizardStep = styled.div`
 export const StyledWizardStepBadge = styled.div<{
   $completed: boolean;
   $current: boolean;
-  $skipped?: boolean;
 }>`
   width: ${BADGE_SIZE}px;
   height: ${BADGE_SIZE}px;
@@ -36,15 +35,10 @@ export const StyledWizardStepBadge = styled.div<{
   font-weight: 600;
   background-color: ${({ $completed }) =>
     $completed ? COLORS.primaryBlue : COLORS.white};
-  color: ${({ $completed, $skipped }) => {
-    if ($completed) {
-      return COLORS.white;
-    }
-    return $skipped ? COLORS.primaryBlue : COLORS.darkGray;
-  }};
-  border: 2px ${({ $skipped }) => ($skipped ? 'dashed' : 'solid')}
-    ${({ $completed, $current, $skipped }) =>
-      $completed || $current || $skipped ? COLORS.primaryBlue : COLORS.gray};
+  color: ${({ $completed }) => ($completed ? COLORS.white : COLORS.darkGray)};
+  border: 2px solid
+    ${({ $completed, $current }) =>
+      $completed || $current ? COLORS.primaryBlue : COLORS.gray};
 `;
 
 export const StyledWizardStepText = styled.div`
@@ -56,7 +50,6 @@ export const StyledWizardStepText = styled.div`
 export const StyledWizardStepTitle = styled.span<{
   $completed: boolean;
   $current: boolean;
-  $skipped?: boolean;
 }>`
   font-family: Poppins, sans-serif;
   font-size: 13px;

@@ -355,31 +355,6 @@ describe('useOnboardingPhase', () => {
     });
   });
 
-  describe('skipped sections', () => {
-    const skipped = {
-      ...coach,
-      onboardingProfileSkippedAt: '2026-11-03T10:00:00.000Z',
-    } as User;
-
-    it('marks the profile section as skipped once the profile step was skipped', () => {
-      mockState.profileComplete = { experiences: [], formations: [] };
-
-      expect(render(skipped).result.current.skippedSectionIds).toEqual([
-        'profil',
-      ]);
-    });
-
-    it('does not mark it when the profile was filled afterwards', () => {
-      mockState.profileComplete = { experiences: [{ id: 'e1' }] };
-
-      expect(render(skipped).result.current.skippedSectionIds).toEqual([]);
-    });
-
-    it('does not mark it without a skip', () => {
-      expect(render(coach).result.current.skippedSectionIds).toEqual([]);
-    });
-  });
-
   describe('starting step', () => {
     it('fetches the profile when it was not requested yet', () => {
       mockState.fetchProfileStatus = 'IDLE';
@@ -414,30 +389,6 @@ describe('useOnboardingPhase', () => {
       await waitFor(() =>
         expect(result.current.currentStep?.id).toBe('cv-choice')
       );
-    });
-
-    it('resumes after the profile section once the profile step was skipped', async () => {
-      // The cv-choice step reports itself completed when
-      // onboardingProfileSkippedAt is set (see useStepCvChoice): no CV or
-      // manual step is inserted, the next step is elearning.
-      stepFor('photo').isStepCompleted = async () => true;
-      stepFor('cv-choice').isStepCompleted = async () => true;
-      stepFor('elearning').isStepCompleted = async () => false;
-      const { result } = render({
-        ...coach,
-        onboardingProfileSkippedAt: '2026-11-03T10:00:00.000Z',
-      } as User);
-
-      await waitFor(() =>
-        expect(result.current.currentStep?.id).toBe('elearning')
-      );
-      expect(ids(result.current.steps)).toEqual([
-        'photo',
-        'cv-choice',
-        'elearning',
-        'webinar',
-        'match-recap',
-      ]);
     });
 
     it('finalizes the onboarding when every step is already complete', async () => {

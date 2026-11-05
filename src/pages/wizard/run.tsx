@@ -19,7 +19,6 @@ const WizardRun = () => {
     sidePanelContent,
     mobileBottomSheet,
     isOnboardingPhase,
-    skippedSectionIds,
   } = useWizard();
   const router = useRouter();
   // Sent here from a backoffice page while the onboarding is not completed
@@ -44,7 +43,6 @@ const WizardRun = () => {
         mobileBottomSheet={mobileBottomSheet}
         isOnboardingPhase={isOnboardingPhase}
         showOnboardingGateNotice={showOnboardingGateNotice}
-        skippedSectionIds={skippedSectionIds}
       />
     </Layout>
   );

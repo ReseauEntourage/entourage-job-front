@@ -16,22 +16,19 @@ import { StepCvChoiceContent } from './StepCvChoiceContent';
 const pdf = new File(['pdf'], 'cv.pdf', { type: 'application/pdf' });
 const png = new File(['png'], 'cv.png', { type: 'image/png' });
 
-function setup({ isSkipping = false }: { isSkipping?: boolean } = {}) {
+function setup() {
   const onCvSelected = jest.fn();
   const onManualChoice = jest.fn();
-  const onSkip = jest.fn();
   const { container } = render(
     <StepCvChoiceContent
       onCvSelected={onCvSelected}
       onManualChoice={onManualChoice}
-      onSkip={onSkip}
-      isSkipping={isSkipping}
     />
   );
   const input = container.querySelector(
     'input[type="file"]'
   ) as HTMLInputElement;
-  return { onCvSelected, onManualChoice, onSkip, input, container };
+  return { onCvSelected, onManualChoice, input, container };
 }
 
 describe('StepCvChoiceContent', () => {
@@ -44,19 +41,6 @@ describe('StepCvChoiceContent', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Le remplir moi-même')).toBeInTheDocument();
     expect(screen.getByTestId('legal-mention')).toBeInTheDocument();
-  });
-
-  it('offers to fill the profile later', () => {
-    const { onSkip } = setup();
-    fireEvent.click(screen.getByText('Je le remplis plus tard'));
-    expect(onSkip).toHaveBeenCalledTimes(1);
-  });
-
-  it('disables the later action while it is being saved', () => {
-    setup({ isSkipping: true });
-    expect(
-      screen.getByText('Je le remplis plus tard').closest('button')
-    ).toBeDisabled();
   });
 
   it('chooses the manual path', () => {

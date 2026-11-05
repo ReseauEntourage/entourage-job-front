@@ -15,7 +15,6 @@ import { StyledWizardStepHeader } from '@/src/features/wizard/shell/WizardConten
 import { WizardProgressBar } from '@/src/features/wizard/shell/WizardProgressBar';
 import {
   WIZARD_SECTIONS,
-  WizardSectionId,
   WizardStep,
 } from '@/src/features/wizard/shell/wizard.types';
 import { selectFormErrorMessage } from '@/src/use-cases/onboarding';
@@ -37,8 +36,6 @@ interface WizardRunShellProps {
   isOnboardingPhase?: boolean;
   /** True when the user was sent to the onboarding from a backoffice page. */
   showOnboardingGateNotice?: boolean;
-  /** Sections shown as skipped in the stepper (see useOnboardingPhase). */
-  skippedSectionIds?: WizardSectionId[];
 }
 
 export const WizardRunShell = ({
@@ -55,7 +52,6 @@ export const WizardRunShell = ({
   mobileBottomSheet = false,
   isOnboardingPhase = false,
   showOnboardingGateNotice = false,
-  skippedSectionIds,
 }: WizardRunShellProps) => {
   // Message d'erreur posé par les étapes (échec de sauvegarde, champs manquants) ;
   // réinitialisé par useWizard à chaque changement d'étape et à chaque soumission.
@@ -121,7 +117,6 @@ export const WizardRunShell = ({
             steps={wizardSteps}
             currentIdx={currentWizardIdx}
             sections={sections}
-            skippedSectionIds={skippedSectionIds}
           />
         )
       }

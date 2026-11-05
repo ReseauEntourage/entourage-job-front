@@ -61,16 +61,12 @@ const interceptOnboarding = () => {
       hasExtractedCvData: false,
     },
   }).as('currentProfileComplete');
-  cy.intercept('PUT', `/user/${CURRENT_USER_ID}`, {
-    statusCode: 200,
-    body: {},
-  }).as('putUser');
 };
 
-describe("Onboarding - accès à l'espace et étape profil passable", () => {
+describe("Onboarding - accès à l'espace connecté", () => {
   bootstrap();
 
-  it('renvoyé depuis les événements, le candidat voit le message et peut passer son profil', () => {
+  it('renvoyé depuis les événements, le candidat voit pourquoi il est dans le wizard', () => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     window.localStorage.setItem('access-token', 'fake-access-token');
     interceptOnboarding();
@@ -81,23 +77,29 @@ describe("Onboarding - accès à l'espace et étape profil passable", () => {
     cy.contains('Terminez votre profil pour accéder à votre espace').should(
       'be.visible'
     );
-    cy.contains('button', 'Je le remplis plus tard').should('be.visible');
 
-    cy.capture('Étape profil - message et trois actions', {
+    cy.capture('Wizard - message de renvoi', {
       caption:
-        "Renvoyé depuis la page des événements : message « Terminez votre profil pour accéder à votre espace » et troisième action « Je le remplis plus tard », pour les candidats comme pour les coachs.",
+        "Renvoyé depuis la page des événements alors que l'onboarding n'est pas terminé : le wizard affiche « Terminez votre profil pour accéder à votre espace ». En fin d'onboarding, il arrive sur la page visée.",
       capture: 'viewport',
     });
+  });
 
-    cy.contains('button', 'Je le remplis plus tard').click();
-    cy.wait('@putUser')
-      .its('request.body')
-      .should('have.property', 'onboardingProfileSkippedAt');
-    cy.contains('Construisons votre profil').should('not.exist');
+  it('sans page visée, pas de message', () => {
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', 'fake-access-token');
+    interceptOnboarding();
 
-    cy.capture('Après « Je le remplis plus tard »', {
+    cy.visit('/wizard/run');
+    cy.wait('@currentProfileComplete');
+    cy.contains('Construisons votre profil').should('be.visible');
+    cy.contains('Terminez votre profil pour accéder à votre espace').should(
+      'not.exist'
+    );
+
+    cy.capture('Wizard - sans message', {
       caption:
-        "Le wizard passe directement à l'étape suivante. Sur desktop, la section Profil du stepper est « passée » (bordure en pointillés), distincte de « complétée », sans alerte.",
+        "Onboarding ouvert sans page visée (par exemple juste après l'inscription) : aucun message, comme aujourd'hui.",
       capture: 'viewport',
     });
   });

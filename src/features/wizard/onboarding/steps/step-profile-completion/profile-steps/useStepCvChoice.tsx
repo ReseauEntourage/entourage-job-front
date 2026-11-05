@@ -1,15 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Api } from '@/src/api';
 import { User } from '@/src/api/types';
-import { GA_TAGS } from '@/src/constants/tags';
 import { UserRoles } from '@/src/constants/users';
 import {
   WizardStep,
   WizardStepId,
 } from '@/src/features/wizard/shell/wizard.types';
 import { useCurrentUserProfileComplete } from '@/src/hooks/current-user/useCurrentUserProfileComplete';
-import { gaEvent } from '@/src/lib/gtag';
 import { currentUserActions } from '@/src/use-cases/current-user';
 import { StyledOnboardingStepContainer } from '../../../onboarding.styles';
 import { ProfileLivePreviewPanel } from '../ProfileLivePreview/ProfileLivePreviewPanel';
@@ -43,33 +40,6 @@ export const useStepCvChoice = ({
     requestAdvanceWithProfileMode('cv-choice', 'manual');
   }, [requestAdvanceWithProfileMode]);
 
-  // "Je le remplis plus tard": stored on the account so that a later resume
-  // of the onboarding never brings the user back to this step. With the
-  // 'pending' mode no CV/manual step is inserted: the next step is the one
-  // after the profile section.
-  const [isSkipping, setIsSkipping] = useState(false);
-  const handleSkip = useCallback(async () => {
-    if (!user) {
-      return;
-    }
-    setIsSkipping(true);
-    try {
-      const skippedAt = new Date().toISOString();
-      await Api.putUser(user.id, { onboardingProfileSkippedAt: skippedAt });
-      dispatch(
-        currentUserActions.updateUserSucceeded({
-          user: { onboardingProfileSkippedAt: skippedAt },
-        })
-      );
-      gaEvent(GA_TAGS.ONBOARDING_PROFILE_SKIP_CLIC);
-      requestAdvanceWithProfileMode('cv-choice', 'pending');
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsSkipping(false);
-    }
-  }, [user, dispatch, requestAdvanceWithProfileMode]);
-
   const isCandidate = user?.role === UserRoles.CANDIDATE;
 
   const onboardingStepCvChoice: WizardStep = {
@@ -88,8 +58,6 @@ export const useStepCvChoice = ({
         <StepCvChoiceContent
           onCvSelected={handleCvSelected}
           onManualChoice={handleManualChoice}
-          onSkip={handleSkip}
-          isSkipping={isSkipping}
         />
       </StyledOnboardingStepContainer>
     ),
@@ -98,7 +66,6 @@ export const useStepCvChoice = ({
     isNextEnabled: false,
     isStepCompleted: async () => {
       return (
-        !!user?.onboardingProfileSkippedAt ||
         !!profileComplete?.hasExternalCv ||
         (profileComplete?.experiences?.length ?? 0) > 0 ||
         (profileComplete?.formations?.length ?? 0) > 0

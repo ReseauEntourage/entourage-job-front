@@ -8,25 +8,18 @@ import {
   StyledWizardStepText,
   StyledWizardStepTitle,
 } from './WizardProgressBar.styles';
-import { WizardSection, WizardSectionId, WizardStep } from './wizard.types';
+import { WizardSection, WizardStep } from './wizard.types';
 
 interface WizardProgressBarProps {
   steps: WizardStep[];
   currentIdx: number;
   sections?: WizardSection[];
-  /**
-   * Sections the user chose to skip (e.g. "Je le remplis plus tard" on the
-   * profile step): once behind the current step, they get the "skipped"
-   * state instead of the "completed" one.
-   */
-  skippedSectionIds?: WizardSectionId[];
 }
 
 export const WizardProgressBar = ({
   steps,
   currentIdx,
   sections,
-  skippedSectionIds = [],
 }: WizardProgressBarProps) => {
   if (sections) {
     const currentSectionId = steps[currentIdx]?.section;
@@ -43,25 +36,15 @@ export const WizardProgressBar = ({
               ? Math.max(...sectionStepIndices)
               : -1;
 
-          const isBehind = maxIdx !== -1 && currentIdx > maxIdx;
-          const isSkipped = isBehind && skippedSectionIds.includes(section.id);
-          const isCompleted = isBehind && !isSkipped;
+          const isCompleted = maxIdx !== -1 && currentIdx > maxIdx;
           const isCurrent = currentSectionId === section.id;
-          const state = isSkipped
-            ? 'skipped'
-            : isCompleted
-              ? 'completed'
-              : isCurrent
-                ? 'current'
-                : 'todo';
 
           return (
             <React.Fragment key={section.id}>
-              <StyledWizardStep data-state={state}>
+              <StyledWizardStep>
                 <StyledWizardStepBadge
                   $completed={isCompleted}
                   $current={isCurrent}
-                  $skipped={isSkipped}
                 >
                   {index + 1}
                 </StyledWizardStepBadge>
@@ -69,7 +52,6 @@ export const WizardProgressBar = ({
                   <StyledWizardStepTitle
                     $completed={isCompleted}
                     $current={isCurrent}
-                    $skipped={isSkipped}
                   >
                     {section.label}
                   </StyledWizardStepTitle>

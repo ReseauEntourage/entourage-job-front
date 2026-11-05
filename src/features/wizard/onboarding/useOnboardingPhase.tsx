@@ -29,7 +29,6 @@ import { useStepSkills } from '@/src/features/wizard/onboarding/steps/step-profi
 import { useOnboardingStepSocialSituation } from '@/src/features/wizard/onboarding/steps/step-social-situation/useOnboardingStepSocialSituation';
 import { useOnboardingStepWebinar } from '@/src/features/wizard/onboarding/steps/step-webinar/useOnboardingStepWebinar';
 import {
-  WizardSectionId,
   WizardStep,
   WizardStepId,
 } from '@/src/features/wizard/shell/wizard.types';
@@ -65,7 +64,6 @@ export interface OnboardingPhaseState {
   skipDashboardRedirectRef: React.MutableRefObject<boolean>;
   pendingSuggestedMessageRedirectRef: React.MutableRefObject<boolean>;
   skipOnboarding: () => void;
-  skippedSectionIds: WizardSectionId[];
 }
 
 export const useOnboardingPhase = ({
@@ -495,21 +493,6 @@ export const useOnboardingPhase = ({
     setCurrentOnboardingStepId(previousStep?.id ?? null);
   }, [onboardingIdx, onboardingSteps]);
 
-  // The profile section is shown as skipped in the stepper when the user chose
-  // "Je le remplis plus tard" and did not fill the profile afterwards (going
-  // back to the step and picking another path makes it completed again).
-  const hasFilledProfile =
-    !!profileComplete?.hasExternalCv ||
-    (profileComplete?.experiences?.length ?? 0) > 0 ||
-    (profileComplete?.formations?.length ?? 0) > 0;
-  const skippedSectionIds = useMemo<WizardSectionId[]>(
-    () =>
-      currentUser?.onboardingProfileSkippedAt && !hasFilledProfile
-        ? ['profil']
-        : [],
-    [currentUser?.onboardingProfileSkippedAt, hasFilledProfile]
-  );
-
   const skipOnboarding = useCallback(() => {
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({
@@ -533,6 +516,5 @@ export const useOnboardingPhase = ({
     skipDashboardRedirectRef,
     pendingSuggestedMessageRedirectRef,
     skipOnboarding,
-    skippedSectionIds,
   };
 };
