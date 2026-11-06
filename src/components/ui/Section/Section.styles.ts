@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from '@/src/constants/styles';
 
 export const StyledSection = styled.section`
@@ -95,4 +95,13 @@ export const StyledSection = styled.section`
   &.custom-blue-bg {
     background: ${COLORS.hoverBlue};
   }
+`;
+
+/** Plain section root, with its optional centered text. */
+export const StyledSectionRoot = styled.div<{ $textCenter?: boolean }>`
+  ${({ $textCenter }) =>
+    $textCenter &&
+    css`
+      text-align: center !important;
+    `}
 `;

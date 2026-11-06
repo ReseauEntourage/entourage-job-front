@@ -6,6 +6,11 @@ import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
 import { FormWithValidation } from '@/src/features/forms/FormWithValidation';
 import { formInterestLinkedOut } from '@/src/features/forms/schemas/formInterestLinkedOut';
+import {
+  StyledCenteredSubtitleH4,
+  StyledCenteredTitleH1,
+  StyledPrimary,
+} from '@/src/features/partials/common/PageText';
 import { useResetForm } from '@/src/hooks/utils';
 import { notificationsActions } from '@/src/use-cases/notifications';
 
@@ -16,16 +21,16 @@ const Contact = () => {
   return (
     <Layout title="Contact - Entourage Pro">
       <Section container="small" style="default">
-        <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
-          Formulaire de <span className="uk-text-primary">contact</span>
-        </h1>
-        <h4 className="uk-align-center uk-text-center uk-margin-large-bottom">
+        <StyledCenteredTitleH1>
+          Formulaire de <StyledPrimary>contact</StyledPrimary>
+        </StyledCenteredTitleH1>
+        <StyledCenteredSubtitleH4>
           Vous êtes un acteur de l&apos;insertion sociale et professionnelle
           intéressé(e) par l’approche de Entourage Pro et souhaitez coopérer
           avec nous&nbsp;? Vous êtes un recruteur et souhaitez en savoir plus
           sur le dispositif Entourage Pro&nbsp;? Ou vous êtes simplement un
           particulier et avez des questions sur le projet&nbsp;?
-        </h4>
+        </StyledCenteredSubtitleH4>
         <FormWithValidation
           innerRef={form}
           submitText="Envoyer"

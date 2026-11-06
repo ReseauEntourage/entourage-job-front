@@ -1,5 +1,7 @@
 export const BREAKPOINTS = {
   desktop: 960,
+  /** Wide screens: the large margins of the public pages grow from here. */
+  large: 1200,
 };
 
 export const HEIGHTS = {
@@ -77,6 +79,8 @@ export const COLORS = {
 
   // Red
   lightRed: '#F1545D',
+  /** Danger text color. */
+  danger: '#F0506E',
   extraLightRed: '#FEEAEA',
   red: '#FE2929',
 

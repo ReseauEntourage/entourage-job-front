@@ -10,7 +10,7 @@ export const CGU = () => {
   };
   return (
     <Layout title="Conditions Générales d'Utilisation" noIndex>
-      <Section className="uk-text-center" style="default" size="large">
+      <Section textCenter style="default" size="large">
         <H1 title="Conditions Générales d'Utilisation" center />
         <br />
         <br />

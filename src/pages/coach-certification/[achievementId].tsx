@@ -4,6 +4,7 @@ import { PublicAchievement } from '@/src/api/types';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
 import { CoachCertificate } from '@/src/features/coach-certification/CoachCertificate';
+import { StyledBoldH3 } from '@/src/features/partials/common/PageText';
 
 interface CoachCertificationPageProps {
   achievement: PublicAchievement | null;
@@ -15,10 +16,8 @@ const CoachCertificationPage = ({
   if (!achievement) {
     return (
       <Layout title="Certificat introuvable - Entourage Pro" noIndex>
-        <Section className="uk-text-center" size="large">
-          <h3 className="uk-text-bold">
-            Ce certificat n&apos;est pas disponible
-          </h3>
+        <Section textCenter size="large">
+          <StyledBoldH3>Ce certificat n&apos;est pas disponible</StyledBoldH3>
           <p>
             Le lien que vous avez suivi est peut-être rompu, ou le certificat
             n&apos;existe pas.

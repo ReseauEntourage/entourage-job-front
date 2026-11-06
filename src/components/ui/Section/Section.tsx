@@ -1,5 +1,8 @@
 import React, { type JSX } from 'react';
-import { StyledSection } from '@/src/components/ui/Section/Section.styles';
+import {
+  StyledSection,
+  StyledSectionRoot,
+} from '@/src/components/ui/Section/Section.styles';
 import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from '@/src/components/variables';
 
 interface SectionProps {
@@ -11,6 +14,8 @@ interface SectionProps {
   className?: string;
   preserveColor?: boolean;
   display?: string;
+  /** Centers the text of the whole section. */
+  textCenter?: boolean;
 }
 export const Section = ({
   style,
@@ -21,6 +26,7 @@ export const Section = ({
   className,
   preserveColor = false,
   display = '',
+  textCenter = false,
 }: SectionProps) => {
   let custom = false;
   let classBuffer = 'uk-section';
@@ -51,8 +57,8 @@ export const Section = ({
       <div className={`${display} section-container`}>{children}</div>
     </StyledSection>
   ) : (
-    <div className={classBuffer} id={id}>
+    <StyledSectionRoot className={classBuffer} id={id} $textCenter={textCenter}>
       <div className={classBuffer2}>{children}</div>
-    </div>
+    </StyledSectionRoot>
   );
 };

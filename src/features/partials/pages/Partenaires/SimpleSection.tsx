@@ -2,6 +2,11 @@ import React from 'react';
 import { Button, Section } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { UIKIT_STYLES } from '@/src/components/variables';
+import {
+  StyledCenteredSubtitleH3,
+  StyledCenteredSubtitleH4,
+  StyledCenteredTitleH2Medium,
+} from '@/src/features/partials/common/PageText';
 
 interface SimpleSectionProps {
   id: string;
@@ -37,18 +42,12 @@ export const SimpleSection = ({
       <div id={id} style={{ marginTop: -140, paddingTop: 140 }} />
       <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
         <div className="uk-container-small">
-          <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
-            {title}
-          </h2>
+          <StyledCenteredTitleH2Medium>{title}</StyledCenteredTitleH2Medium>
         </div>
         {fontSize === 'small' ? (
-          <h4 className="uk-align-center uk-text-center uk-margin-large-bottom">
-            {text}
-          </h4>
+          <StyledCenteredSubtitleH4>{text}</StyledCenteredSubtitleH4>
         ) : (
-          <h3 className="uk-align-center uk-text-center uk-margin-large-bottom">
-            {text}
-          </h3>
+          <StyledCenteredSubtitleH3>{text}</StyledCenteredSubtitleH3>
         )}
         {button && (
           <Button

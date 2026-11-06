@@ -19,3 +19,10 @@ admin-members-liste-des-membres.mobile.png
 help-groups-menu-d-un-candidat.mobile.png
 public-page-data-privacy-politique-de-confidentialite.desktop.png
 public-page-home-accueil.desktop.png
+admin-members-liste-des-membres.desktop.png
+admin-members-filtre-zone-ouvert.desktop.png
+public-page-home-accueil.mobile.png
+public-page-aider-aider.mobile.png
+public-page-coach-certification-certificat-de-coach.desktop.png
+public-page-coach-certification-certificat-de-coach.mobile.png
+public-page-entreprises-recruter-inclusif-recruter-inclusif.mobile.png

@@ -13,7 +13,7 @@ type CVUser = User & {
     sectorOccupations?: UserProfileSectorOccupation[];
   } | null;
 };
-import { Button, Grid, SimpleLink } from '@/src/components/ui';
+import { Button, Grid } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from '@/src/constants';
 import { COLORS } from '@/src/constants/styles';
@@ -21,22 +21,29 @@ import { FilterObject } from '@/src/constants/utils';
 import { LoadingScreen } from '@/src/features/backoffice/LoadingScreen';
 import { CandidatCard } from '@/src/features/candidat-card';
 import { SearchBar } from '@/src/features/filters/SearchBar/SearchBar';
+import {
+  StyledCenteredItalicP,
+  StyledPrimaryLink,
+} from '@/src/features/partials/common/PageText';
+import {
+  StyledCVListContainer,
+  StyledLoadMoreContainer,
+} from './CVList.styles';
 
 const NoCVInThisArea = () => {
   return (
-    <p className="uk-text-center uk-text-italic">
+    <StyledCenteredItalicP>
       Entourage Pro se déploie dans les régions de Paris, de Lille, de Lyon, de
       Rennes et de Lorient. Vous ne trouvez pas de candidats Entourage Pro dans
       votre région&nbsp;? Contactez-nous à{' '}
-      <SimpleLink
+      <StyledPrimaryLink
         isExternal
         target="_blank"
-        className="uk-link-text uk-text-primary"
         href={`mailto:${process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}`}
       >
         {process.env.NEXT_PUBLIC_MAILJET_CONTACT_EMAIL}
-      </SimpleLink>
-    </p>
+      </StyledPrimaryLink>
+    </StyledCenteredItalicP>
   );
 };
 
@@ -145,7 +152,7 @@ export const CVList = ({
 
   const renderCvList = useCallback(() => {
     return (
-      <div className="cv-list uk-margin-small-top">
+      <StyledCVListContainer className="cv-list">
         <Grid
           childWidths={['1-1', '1-2@s', '1-3@m']}
           gap="small"
@@ -176,7 +183,7 @@ export const CVList = ({
           })}
         />
         {!nb && !endOfList && (
-          <div className="uk-flex uk-flex-center uk-margin-top">
+          <StyledLoadMoreContainer>
             <Button
               variant="primary"
               onClick={() => {
@@ -191,9 +198,9 @@ export const CVList = ({
                 <LucidIcon name="Plus" />
               )}
             </Button>
-          </div>
+          </StyledLoadMoreContainer>
         )}
-      </div>
+      </StyledCVListContainer>
     );
   }, [endOfList, fetchData, items, loadingMore, nb, offset, search]);
 
@@ -203,7 +210,7 @@ export const CVList = ({
     }
 
     if (error) {
-      return <p className="uk-text-center uk-text-italic">{error}</p>;
+      return <StyledCenteredItalicP>{error}</StyledCenteredItalicP>;
     }
 
     if (items && filters) {
@@ -216,9 +223,9 @@ export const CVList = ({
           return <NoCVInThisArea />;
         }
         return (
-          <p className="uk-text-center uk-text-italic">
+          <StyledCenteredItalicP>
             Aucun profil correspondat trouvé
-          </p>
+          </StyledCenteredItalicP>
         );
       }
       return renderCvList();
