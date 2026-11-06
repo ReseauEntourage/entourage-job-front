@@ -159,6 +159,14 @@ ce fichier ; il se relit à l'œil (tâche 11.7 du change). Les captures instabl
 | `partials/utils/NumberGrid/{NumberGrid,NumberCard}`, `ModalNotificationSending`, `components/ui/Inputs/ToggleWithModal/{ToggleWithModal,ModalToggle}` | **code mort** : aucun fichier ne les importe ; à supprimer plutôt que migrer                        |
 | `*.stories.tsx`, `*.test.tsx`, `*.spec.tsx`                                                                                                           | sans objet (mis à jour avec le composant)                                                           |
 
+États des pages publiques ajoutés par `public-page-states` : liste de CV avec cartes et bouton
+« Voir plus », liste vide, erreurs de validation de la newsletter, page CV « bonne nouvelle »
+(candidat en emploi). Leur référence vient du code d'origine (avant retrait d'UIkit).
+
+Encore **jamais capturés** (à relire à la main) : la variante « 8 mars » de l'accueil
+(`NEXT_PUBLIC_WOMENS_DAY`, variable figée au build) et le message « pas de CV dans votre région »
+de `CVList` (inatteignable depuis l'URL : le filtre testé n'a pas de valeurs possibles).
+
 ## Détails techniques
 
 - **Deux exécutions de Cypress** (`run.mjs`) plutôt qu'un `cy.viewport()` dans le test :
