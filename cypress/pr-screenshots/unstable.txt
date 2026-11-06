@@ -1,7 +1,8 @@
 # Captures that are not reproducible between two runs of the same code (timers, animated bars,
 # carousels advancing on their own, content-dependent heights). `pnpm screenshots:compare
 # --ignore cypress/pr-screenshots/unstable.txt` skips them: review these ones by eye.
-# Measured with two full runs on the same build (remove-uikit, EN-7175).
+# Measured with three full runs on the same build (remove-uikit, EN-7175): the first eleven
+# differ between two runs, the last five showed up on the third one.
 admin-dashboard-sans-conversation.desktop.png
 admin-dashboard-sans-conversation.mobile.png
 admin-profile-wording-profil-admin-vu-par-lui-meme.mobile.png
@@ -13,3 +14,8 @@ public-page-aider-aider.desktop.png
 public-page-cv-cv-public.desktop.png
 public-page-cv-cv-public.mobile.png
 public-page-verification-email-verification-de-l-adresse-e-mail.desktop.png
+admin-dashboard-tableau-de-bord-de-l-admin.desktop.png
+admin-members-liste-des-membres.mobile.png
+help-groups-menu-d-un-candidat.mobile.png
+public-page-data-privacy-politique-de-confidentialite.desktop.png
+public-page-home-accueil.desktop.png

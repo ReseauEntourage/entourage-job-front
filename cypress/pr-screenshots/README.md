@@ -114,6 +114,10 @@ l'outil lui-même (images identiques → 0, images différentes → 1).
   même code donnent les mêmes pixels. Les captures qui restent instables malgré cela (barre de
   progression animée, carrousel qui avance seul…) sont listées dans `unstable.txt` : à
   relire à l'œil au lieu de les comparer.
+- **Un écart apparaît ?** Relancer seulement la spec concernée
+  (`pnpm screenshots cypress/pr-screenshots/<spec>.shot.ts`) puis recomparer : si l'écart a
+  disparu ou change d'un passage à l'autre, la capture est instable (l'ajouter à
+  `unstable.txt`) ; s'il revient identique, c'est un vrai changement de rendu.
 - **Serveur « chaud »** : le premier passage après un démarrage à froid de `next start` peut
   donner des hauteurs de page différentes (optimisation d'images). Lancer une première fois
   `pnpm screenshots` pour rien, puis capturer la référence.
@@ -122,6 +126,38 @@ l'outil lui-même (images identiques → 0, images différentes → 1).
   fait planter Cypress avec `read ECONNRESET`.
 - Régénérer la référence quand `support.ts`, `seed-random.ts` ou une fixture change : le
   rendu de la référence en dépend.
+
+## Couverture des fichiers qui utilisaient UIkit (`remove-uikit`, EN-7175)
+
+Audit fait avant le retrait d'UIkit : pour chaque fichier source qui contenait des classes
+`uk-*` ou du JS UIkit, la capture qui l'exerce. « **non couvert** » = aucune capture ne montre
+ce fichier ; il se relit à l'œil (tâche 11.7 du change). Les captures instables
+(`unstable.txt`) sont marquées ⚠️.
+
+| Fichier(s)                                                                                                                                            | Capture                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `pages/{cgu,cookies,legal-notice,data-privacy,404,contact,partenaires,entourage-pro}.tsx`                                                             | `public-page-<page>`                                                                                |
+| `pages/coach-certification/[achievementId].tsx`                                                                                                       | `public-page-coach-certification`                                                                   |
+| `pages/cv/[userId].tsx`                                                                                                                               | `public-page-cv` ⚠️                                                                                 |
+| `components/ui/{Grid,Section,Background,SimpleLink,Images/Logo}`, `Navbar/NavbarLogo`, `features/partials/Footer/*` (dont `AssociationEntourage`)     | toutes les `public-page-*` (menu et pied de page)                                                   |
+| `components/ui/Navbar/Nav/Nav.styles.tsx`, `NavConnectedContent.desktop.tsx`, `Images/ImgProfile`                                                     | `connected-nav`, `admin-dashboard`                                                                  |
+| `features/partials/common/{Chapter,NewsletterPartial}.tsx`                                                                                            | `public-page-entourage-pro` (Chapter), `public-page-{404,merci,candidat,aider}` (NewsletterPartial) |
+| `features/partials/pages/HomePage/CandidatListPartial`, `partials/CV/CVList`                                                                          | `public-page-home`                                                                                  |
+| `components/ui/Carousel`, `partials/common/CandidateTestimoniesOrientation`, `partials/utils/CarouselItem`                                            | `public-page-home`, `public-page-candidats` (carrousel : voir `unstable.txt`)                       |
+| `partials/pages/Candidats/ShareCandidatesCVTutorial`, `partials/utils/MultipleCTA`                                                                    | `public-page-candidats`                                                                             |
+| `partials/pages/Partenaires/SimpleSection`                                                                                                            | `public-page-partenaires`                                                                           |
+| `partials/pages/Entreprises/EntreprisesEnSavoirPlus`                                                                                                  | `public-page-entreprises-*`                                                                         |
+| `features/merci/Merci`                                                                                                                                | `public-page-merci`                                                                                 |
+| `features/filters/{SearchBar,FiltersDropdowns,FiltersCheckboxes}`                                                                                     | `admin-members` (dropdown du filtre Zone ouvert, cases cochées et non cochées, desktop)             |
+| `backoffice/admin/members/MemberDetails/{MemberDetails,MemberDetailsHeader}`                                                                          | `admin-members` (détail d'un membre)                                                                |
+| `features/modals/Modal/ModalGeneric/ModalConfirm`                                                                                                     | `admin-members` (confirmation de suppression)                                                       |
+| `backoffice/dashboard/DashboardJoinWhatsappModal`                                                                                                     | `dashboard-whatsapp-modal`                                                                          |
+| `backoffice/messaging/.../MessagingMessageSuspiciousModal`                                                                                            | `messaging-suspicious-link-content`                                                                 |
+| `components/ui/Button/ButtonPost` (spinner `data-uk-spinner`), `pages/backoffice/admin/membres/[memberId]` (spinner de chargement)                    | **non couvert** : état transitoire, invisible une fois la page chargée                              |
+| `ModalShareCV`                                                                                                                                        | **non couvert** : s'ouvre à la fermeture d'une fenêtre de partage externe (`react-share`)           |
+| `features/modals/SuccessModalContent`                                                                                                                 | **non couvert** : succès d'inscription / d'intérêt, parcours non capturé                            |
+| `partials/utils/NumberGrid/{NumberGrid,NumberCard}`, `ModalNotificationSending`, `components/ui/Inputs/ToggleWithModal/{ToggleWithModal,ModalToggle}` | **code mort** : aucun fichier ne les importe ; à supprimer plutôt que migrer                        |
+| `*.stories.tsx`, `*.test.tsx`, `*.spec.tsx`                                                                                                           | sans objet (mis à jour avec le composant)                                                           |
 
 ## Détails techniques
 
