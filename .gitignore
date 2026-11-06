@@ -10,6 +10,8 @@ coverage/
 /cypress/screenshots
 /cypress/videos
 /cypress/pr-screenshots/output
+/cypress/pr-screenshots/baseline
+/cypress/pr-screenshots/diff
 /cypress/pr-screenshots/.raw
 tsconfig.tsbuildinfo
 tsconfig.base.tsbuildinfo

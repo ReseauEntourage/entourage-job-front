@@ -83,6 +83,46 @@ pnpm screenshots cypress/pr-screenshots/dashboard.shot.ts
 Pour une app servie sur un autre port que celui de `NEXT_PUBLIC_SERVER_URL`, préfixer la
 commande par `NEXT_PUBLIC_SERVER_URL=http://localhost:<port>`.
 
+## Prouver qu'un refactor ne change rien (avant / après)
+
+Les captures servent aussi de **filet visuel** : on génère une référence avant de toucher au
+code, puis on compare chaque capture après coup, au pixel près (desktop 1440 px et mobile
+390 px). Utilisé pour le retrait d'UIkit (`remove-uikit`, EN-7175).
+
+```bash
+# 1. Sur la branche non modifiée : build de production sans CDN, puis serveur
+NEXT_PUBLIC_CDN_URL= pnpm build && NEXT_PUBLIC_CDN_URL= pnpm start
+
+# 2. Générer la référence (toutes les specs) et la figer dans baseline/ (ignoré par git)
+pnpm screenshots
+rm -rf cypress/pr-screenshots/baseline && cp -r cypress/pr-screenshots/output cypress/pr-screenshots/baseline
+
+# 3. Après les modifications : rebuild, relancer le serveur, régénérer et comparer
+pnpm screenshots
+pnpm screenshots:compare                       # tout
+pnpm screenshots:compare public-page-home      # seulement les captures dont le nom commence ainsi
+pnpm screenshots:compare --ignore cypress/pr-screenshots/unstable.txt
+```
+
+`compare.mjs` liste chaque écart (nombre de pixels différents, ou changement de taille de la
+page), écrit une image de différence (pixels en rouge) dans `cypress/pr-screenshots/diff/`
+(ignoré par git) et sort en code 1 au moindre écart. `pnpm screenshots:compare:check` vérifie
+l'outil lui-même (images identiques → 0, images différentes → 1).
+
+- **Reproductibilité** : `seed-random.ts` (chargé en premier par `support.ts`) seede
+  `Math.random()` à chaque chargement de page et pour faker, de sorte que deux exécutions du
+  même code donnent les mêmes pixels. Les captures qui restent instables malgré cela (barre de
+  progression animée, carrousel qui avance seul…) sont listées dans `unstable.txt` : à
+  relire à l'œil au lieu de les comparer.
+- **Serveur « chaud »** : le premier passage après un démarrage à froid de `next start` peut
+  donner des hauteurs de page différentes (optimisation d'images). Lancer une première fois
+  `pnpm screenshots` pour rien, puis capturer la référence.
+- **Sandbox sans accès direct à Internet** (ex. session Claude Code web) : lancer
+  `NO_PROXY='*' no_proxy='*' pnpm screenshots`. Sans cela, une requête externe non interceptée
+  fait planter Cypress avec `read ECONNRESET`.
+- Régénérer la référence quand `support.ts`, `seed-random.ts` ou une fixture change : le
+  rendu de la référence en dépend.
+
 ## Détails techniques
 
 - **Deux exécutions de Cypress** (`run.mjs`) plutôt qu'un `cy.viewport()` dans le test :
