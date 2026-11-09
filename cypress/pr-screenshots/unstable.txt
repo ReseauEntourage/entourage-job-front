@@ -26,3 +26,6 @@ public-page-aider-aider.mobile.png
 public-page-coach-certification-certificat-de-coach.desktop.png
 public-page-coach-certification-certificat-de-coach.mobile.png
 public-page-entreprises-recruter-inclusif-recruter-inclusif.mobile.png
+public-page-candidats-candidats.desktop.png
+help-groups-formation-a-terminer.desktop.png
+public-page-states-liste-de-cv.desktop.png

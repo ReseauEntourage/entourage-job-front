@@ -4,7 +4,6 @@ import { Button, LegacyImg, Grid, ButtonSize } from '@/src/components/ui';
 interface MultipleCTAProps {
   showNumbers?: boolean;
   showHorizontalDividers?: boolean;
-  showVerticalDividers?: boolean;
   spacing?: 'small' | 'medium' | 'large';
   className?: string;
   data: {
@@ -27,7 +26,6 @@ interface MultipleCTAProps {
 export const MultipleCTA = ({
   showNumbers,
   showHorizontalDividers,
-  showVerticalDividers,
   data,
   spacing,
   className,
@@ -38,7 +36,6 @@ export const MultipleCTA = ({
         childWidths={[`1-${data.length}@m`]}
         match
         gap={spacing}
-        divider={showVerticalDividers}
         items={data.map((item, index) => {
           return (
             <div
@@ -125,7 +122,6 @@ export const MultipleCTA = ({
 MultipleCTA.defaultProps = {
   showNumbers: false,
   showHorizontalDividers: false,
-  showVerticalDividers: false,
   spacing: 'large',
   className: '',
 };

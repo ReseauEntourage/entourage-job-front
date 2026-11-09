@@ -34,9 +34,8 @@ export const Chapter = ({
           center
           middle
           gap="large"
-          className={`uk-flex ${
-            direction === 'left' ? 'uk-flex-row-reverse' : 'uk-flex-row'
-          }`}
+          reverse={direction === 'left'}
+          row={direction !== 'left'}
         >
           <div>
             {smallTitle && (

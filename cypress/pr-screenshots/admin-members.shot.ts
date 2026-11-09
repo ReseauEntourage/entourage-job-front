@@ -89,4 +89,36 @@ describe('Gestion des membres (admin)', () => {
       capture: 'viewport',
     });
   });
+
+  it('membre introuvable', () => {
+    interceptAdmin();
+    cy.intercept('GET', `/user/${MEMBER_ID}`, { statusCode: 404, body: {} }).as(
+      'getMember'
+    );
+
+    cy.visit(`/backoffice/admin/membres/${MEMBER_ID}/parametres`);
+    cy.wait('@getCurrent');
+    cy.wait('@getMember');
+    cy.contains('Ce profil n’est pas disponible').should('be.visible');
+    cy.capture('Membre introuvable', {
+      caption: 'Page affichée quand le profil du membre n’existe pas.',
+    });
+  });
+
+  it('chargement d’un membre', () => {
+    interceptAdmin();
+    // The answer is held back long enough to capture the loading state.
+    cy.intercept('GET', `/user/${MEMBER_ID}`, {
+      delay: 8000,
+      statusCode: 404,
+      body: {},
+    }).as('getMember');
+
+    cy.visit(`/backoffice/admin/membres/${MEMBER_ID}/parametres`);
+    cy.wait('@getCurrent');
+    cy.contains('Retour').should('be.visible');
+    cy.capture('Chargement d’un membre', {
+      caption: 'État de chargement du détail d’un membre.',
+    });
+  });
 });

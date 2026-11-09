@@ -20,7 +20,7 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
   return (
     <LayoutBackOffice title={`${user.firstName} - Gestion des membres`}>
       <Section className="custom-page">
-        <Grid column gap="medium">
+        <Grid column gap="medium" noRowGap>
           <Grid between eachWidths={['expand@m', 'auto@m']}>
             <BackLink label="Retour" />
           </Grid>

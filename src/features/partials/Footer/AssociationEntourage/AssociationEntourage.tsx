@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Background,
   Button,
-  Grid,
   LegacyImg,
   Section,
   Text,
@@ -14,6 +13,7 @@ import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { gaEvent } from '@/src/lib/gtag';
 import {
+  StyledAssociationEntourageGrid,
   StyledAssociationEntourageImageContainer,
   StyledAssociationEntourageButtonContainer,
 } from './AsociationEntourage.styles';
@@ -23,12 +23,7 @@ export const AssociationEntourage = () => {
     <Background blend={{ colorHex: COLORS.black }}>
       <Section>
         <div className="uk-text-center">
-          <Grid
-            middle
-            center
-            childWidths={['1-2@m']}
-            className="uk-margin-large-top"
-          >
+          <StyledAssociationEntourageGrid middle center childWidths={['1-2@m']}>
             <div>
               <SvgIcon name="LogoEntourage" width={50} height={50} />
               <H2 center color="white" title="A propos d'Entourage" />
@@ -61,7 +56,7 @@ export const AssociationEntourage = () => {
                 alt="Association Entourage"
               />
             </StyledAssociationEntourageImageContainer>
-          </Grid>
+          </StyledAssociationEntourageGrid>
         </div>
       </Section>
     </Background>

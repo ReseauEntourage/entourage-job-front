@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Grid } from '@/src/components/ui';
 import { addPrefix } from '@/src/utils';
+import { StyledCarouselItemGrid } from './CarouselItem.styles';
 
 interface CarouselItemProps {
   index: number;
@@ -16,13 +16,12 @@ export const CarouselItem = ({
 }: CarouselItemProps) => {
   return (
     <li key={index.toString()}>
-      <Grid
+      <StyledCarouselItemGrid
         childWidths={[`1-2@m`]}
         match
         center
         middle
         gap="collapse"
-        className="uk-flex-wrap uk-flex-wrap-middle"
       >
         <div
           className="uk-flex-1 uk-background-position-center-center uk-background-cover uk-height-large"
@@ -33,7 +32,7 @@ export const CarouselItem = ({
             {description}
           </div>
         </div>
-      </Grid>
+      </StyledCarouselItemGrid>
     </li>
   );
 };

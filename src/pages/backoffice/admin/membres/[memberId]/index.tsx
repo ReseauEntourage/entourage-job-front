@@ -44,7 +44,7 @@ const User = () => {
     return (
       <LayoutBackOffice title="Chargement - Gestion des membres">
         <Section>
-          <Grid column gap="large">
+          <Grid column gap="large" noRowGap>
             <BackLink label="Retour" />
             <div>
               <div data-uk-spinner="" />
@@ -60,7 +60,7 @@ const User = () => {
     return (
       <LayoutBackOffice title="Page introuvable - Gestion des membres">
         <Section className="uk-text-center" size="large">
-          <Grid column gap="large">
+          <Grid column gap="large" noRowGap>
             <BackLink label="Retour" />
             <div>
               <hr className="ent-divier-backoffice" />

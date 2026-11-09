@@ -11,6 +11,7 @@ import { AppVersion } from '@/src/features/partials/AppVersion';
 import { PageType } from '@/src/features/partials/Footer/Footer.type';
 import { gaEvent } from '@/src/lib/gtag';
 import { AssociationEntourage } from './AssociationEntourage';
+import { StyledSiteMapGrid, StyledSiteMaps } from './Footer.styles';
 
 const pages: PageType = [
   {
@@ -192,12 +193,12 @@ const pages: PageType = [
 
 const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
   return (
-    <Grid
+    <StyledSiteMapGrid
       row
       center
       gap="large"
       childWidths={['1-3@m']}
-      className={isMobile ? 'uk-hidden@m' : 'uk-visible@m'}
+      $mobileOnly={isMobile}
     >
       {pages.map(({ title, children }) => {
         return (
@@ -289,7 +290,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
           </div>
         );
       })}
-    </Grid>
+    </StyledSiteMapGrid>
   );
 };
 
@@ -303,9 +304,15 @@ export const Footer = () => {
       {showAssociationEntourage && <AssociationEntourage />}
       <Section className="custom-secondary">
         <Grid middle center column childWidths={['1-1']} gap="medium">
-          <div />
-          <SiteMap isMobile />
-          <SiteMap isMobile={false} />
+          {/* One cell for both site maps: only one is displayed, so the cell is never empty. */}
+          <StyledSiteMaps>
+            <div>
+              <SiteMap isMobile />
+            </div>
+            <div>
+              <SiteMap isMobile={false} />
+            </div>
+          </StyledSiteMaps>
           <Grid row center middle gap="medium">
             <SimpleLink
               className="uk-text-small uk-text-muted"
