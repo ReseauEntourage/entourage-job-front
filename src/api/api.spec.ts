@@ -50,35 +50,45 @@ const ROUTES: [string, string, Verb, string][] = [
   ['postExternalCv', 'o', 'post', '/external-cv'],
   ['getExternalCvByUser', 's', 'get', '/external-cv/{0}'],
   ['deleteExternalCv', '', 'delete', '/external-cv'],
-  ['getUsersMembers', 'o', 'get', '/user/members'],
-  ['getUserById', 's', 'get', '/user/{0}'],
-  ['getPublicUserProfile', 's', 'get', '/user/profile/{0}'],
-  ['getProfileCompletion', '', 'get', '/user/profile/completion'],
-  ['getAllUsersProfiles', 'o', 'get', '/user/profile'],
-  ['getReferedCandidateProfiles', 'o', 'get', '/user/profile/refered'],
-  ['getProfilesRecommendations', 'o', 'get', '/user/profile/recommendations'],
-  ['postUser', 'o', 'post', '/user'],
-  ['postUserRegistration', 'o', 'post', '/user/registration'],
+  ['getUsersMembers', 'o', 'get', '/users/members'],
+  ['getUserById', 's', 'get', '/users/{0}'],
+  ['getPublicUserProfile', 's', 'get', '/users/{0}/profile'],
+  ['getProfileCompletion', '', 'get', '/current/profile/completion'],
+  ['getAllUsersProfiles', 'o', 'get', '/users/profiles'],
+  [
+    'getReferedCandidateProfiles',
+    'o',
+    'get',
+    '/current/profile/referred-profiles',
+  ],
+  [
+    'getProfilesRecommendations',
+    'o',
+    'get',
+    '/current/profile/recommendations',
+  ],
+  ['postUser', 'o', 'post', '/users'],
+  ['postUserRegistration', 'o', 'post', '/users/registration'],
   [
     'getPreRegistrationCompatibleProfiles',
     'o',
     'get',
-    '/user/registration/compatible-profiles',
+    '/users/registration/compatible-profiles',
   ],
-  ['postUserRefering', 'o', 'post', '/user/refering'],
-  ['postProfileImage', 'o', 'post', '/user/profile/upload-image'],
-  ['putUser', 'so', 'put', '/user/{0}'],
-  ['putUserChangePwd', 'o', 'put', '/user/changePwd'],
-  ['putUserProfile', 'so', 'put', '/user/profile/{0}'],
-  ['putUserCompany', 'o', 'put', '/user/company'],
+  ['postUserRefering', 'o', 'post', '/users/referrals'],
+  ['postProfileImage', 'o', 'post', '/users/me/profile/image'],
+  ['putUser', 'so', 'put', '/users/{0}'],
+  ['putUserChangePwd', 'o', 'put', '/users/me/password'],
+  ['putUserProfile', 'so', 'put', '/users/{0}/profile'],
+  ['putUserCompany', 'o', 'put', '/users/me/company'],
   ['deleteLinkedinLink', '', 'delete', '/auth/linkedin'],
   ['postLinkedinShare', 'so', 'post', '/linkedin/share/{0}'],
-  ['postProfileShare', 'soo', 'post', '/user/profile/{0}/shares'],
+  ['postProfileShare', 'soo', 'post', '/users/{0}/profile/shares'],
   ['exchangeLinkedInCode', 'oo', 'post', '/auth/linkedin/exchange'],
-  ['postProfileUserAbuse', 'so', 'post', '/user/profile/{0}/report'],
+  ['postProfileUserAbuse', 'so', 'post', '/users/{0}/profile/report'],
   ['getUserSocialSituation', '', 'get', '/users/social-situations'],
   ['updateUserSocialSituation', 'so', 'put', '/users/social-situations/{0}'],
-  ['deleteUser', 's', 'delete', '/user/{0}'],
+  ['deleteUser', 's', 'delete', '/users/{0}'],
   ['getAllDepartments', 'o', 'get', '/departments'],
   ['getAllBusinessSectors', 'o', 'get', '/business-sectors'],
   ['getAllLanguages', 'o', 'get', '/languages'],
@@ -372,7 +382,7 @@ describe('APIHandler', () => {
       const form = new FormData();
       await handler.postProfileImage(form);
       expect(mockInstance.post).toHaveBeenCalledWith(
-        '/user/profile/upload-image',
+        '/users/me/profile/image',
         form,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
@@ -402,7 +412,7 @@ describe('APIHandler', () => {
     it('wraps single values into their expected body', async () => {
       await handler.putUserCompany('Acme');
       expect(mockInstance.put).toHaveBeenLastCalledWith(
-        '/user/company',
+        '/users/me/company',
         { companyName: 'Acme' },
         { headers: undefined }
       );
@@ -420,7 +430,7 @@ describe('APIHandler', () => {
       );
       await handler.postProfileShare('u1', 'whatsapp');
       expect(mockInstance.post).toHaveBeenLastCalledWith(
-        '/user/profile/u1/shares',
+        '/users/u1/profile/shares',
         { channel: 'whatsapp', postUrl: undefined },
         { headers: undefined }
       );
@@ -450,7 +460,7 @@ describe('APIHandler', () => {
     it('sends the payload of a DELETE as request data, and nothing otherwise', async () => {
       await handler.deleteUser('u1');
       expect(mockInstance.delete).toHaveBeenLastCalledWith(
-        '/user/u1',
+        '/users/u1',
         undefined
       );
       const params = { target: 'DISCUSSION' };
@@ -509,11 +519,11 @@ describe('APIHandler', () => {
     it('adds the channel to the profile share text only when given', async () => {
       await handler.getProfileShareText('u1');
       expect(mockInstance.get.mock.calls[0][0]).toBe(
-        '/user/profile/u1/share-text'
+        '/users/u1/profile/share-text'
       );
       await handler.getProfileShareText('u1', 'linkedin');
       expect(mockInstance.get.mock.calls[1][0]).toBe(
-        '/user/profile/u1/share-text?channel=linkedin'
+        '/users/u1/profile/share-text?channel=linkedin'
       );
     });
 

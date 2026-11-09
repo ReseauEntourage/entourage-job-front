@@ -60,7 +60,7 @@ describe('Wizard', () => {
         'currentIdentityUnauthorized'
       );
 
-      cy.intercept('POST', '/user/registration', {
+      cy.intercept('POST', '/users/registration', {
         statusCode: 201,
       }).as('postRegistration');
 
@@ -779,7 +779,7 @@ describe('Wizard', () => {
         }).as('elearningUnits');
 
         cy.fixture('public-profile-res').then((profile) => {
-          cy.intercept('GET', '/user/profile/recommendations*', {
+          cy.intercept('GET', '/current/profile/recommendations*', {
             statusCode: 200,
             body: {
               embeddingPending: false,
@@ -794,13 +794,13 @@ describe('Wizard', () => {
             },
           }).as('profilesRecommendations');
 
-          cy.intercept('GET', `/user/profile/${profile.id}`, {
+          cy.intercept('GET', `/users/${profile.id}/profile`, {
             statusCode: 200,
             body: { ...profile, role: 'Coach' },
           }).as('publicUserProfile');
         });
 
-        cy.intercept('PUT', '/user/*', { statusCode: 200 }).as(
+        cy.intercept('PUT', '/users/*', { statusCode: 200 }).as(
           'putUserOnboardingStatus'
         );
 

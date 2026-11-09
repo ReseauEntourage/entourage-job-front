@@ -264,19 +264,19 @@ export class APIHandler {
   // get
 
   getUsersMembers(params: object): Promise<AxiosResponse<User[]>> {
-    return this.get('/user/members', params);
+    return this.get('/users/members', params);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
-    return this.get(`/user/${userId}`);
+    return this.get(`/users/${userId}`);
   }
 
   getPublicUserProfile(userId: string): Promise<AxiosResponse> {
-    return this.get(`/user/profile/${userId}`);
+    return this.get(`/users/${userId}/profile`);
   }
 
   getProfileCompletion(): Promise<AxiosResponse<number>> {
-    return this.get(`/user/profile/completion`);
+    return this.get(`/current/profile/completion`);
   }
 
   getAllUsersProfiles(
@@ -285,7 +285,7 @@ export class APIHandler {
       limit: number;
     }
   ): Promise<AxiosResponse> {
-    return this.get('/user/profile', {
+    return this.get('/users/profiles', {
       params,
     });
   }
@@ -294,7 +294,7 @@ export class APIHandler {
     offset: number;
     limit: number;
   }): Promise<AxiosResponse> {
-    return this.get('/user/profile/refered', {
+    return this.get('/current/profile/referred-profiles', {
       params,
     });
   }
@@ -303,20 +303,20 @@ export class APIHandler {
     limit: number;
     cursor?: number;
   }): Promise<AxiosResponse> {
-    return this.get(`/user/profile/recommendations`, {
+    return this.get(`/current/profile/recommendations`, {
       params,
     });
   }
 
   // post
   postUser(params: UserDto): Promise<AxiosResponse> {
-    return this.post('/user', params);
+    return this.post('/users', params);
   }
 
   async postUserRegistration(
     params: UserRegistrationDto
   ): Promise<AxiosResponse<User>> {
-    return this.post('/user/registration', params);
+    return this.post('/users/registration', params);
   }
 
   async getPreRegistrationCompatibleProfiles(params: {
@@ -324,15 +324,15 @@ export class APIHandler {
     nudgeIds?: string[];
     businessSectorIds?: string[];
   }): Promise<AxiosResponse<PreRegistrationCompatibleProfilesResponse>> {
-    return this.get('/user/registration/compatible-profiles', { params });
+    return this.get('/users/registration/compatible-profiles', { params });
   }
 
   async postUserRefering(params: UserReferingDto): Promise<AxiosResponse> {
-    return this.post('/user/refering', params);
+    return this.post('/users/referrals', params);
   }
 
   postProfileImage(profileImage: FormData): Promise<AxiosResponse> {
-    return this.post(`/user/profile/upload-image`, profileImage, {
+    return this.post(`/users/me/profile/image`, profileImage, {
       'Content-Type': 'multipart/form-data',
     });
   }
@@ -340,25 +340,25 @@ export class APIHandler {
   // put
 
   putUser(userId: string, params: Partial<UserDto>): Promise<AxiosResponse> {
-    return this.put(`/user/${userId}`, params);
+    return this.put(`/users/${userId}`, params);
   }
 
   putUserChangePwd(params: {
     newPassword: string;
     oldPassword: string;
   }): Promise<AxiosResponse> {
-    return this.put(`/user/changePwd`, params);
+    return this.put(`/users/me/password`, params);
   }
 
   putUserProfile(
     userId: string,
     userProfile: Partial<UserProfile>
   ): Promise<AxiosResponse> {
-    return this.put(`/user/profile/${userId}`, userProfile);
+    return this.put(`/users/${userId}/profile`, userProfile);
   }
 
   putUserCompany(companyName: string | null): Promise<AxiosResponse> {
-    return this.put(`/user/company`, { companyName });
+    return this.put(`/users/me/company`, { companyName });
   }
 
   getLinkedinOAuthUrl(
@@ -386,7 +386,7 @@ export class APIHandler {
     channel: 'linkedin' | 'whatsapp',
     postUrl?: string
   ): Promise<AxiosResponse<{ success: boolean; shareId: string }>> {
-    return this.post(`/user/profile/${profileUserId}/shares`, {
+    return this.post(`/users/${profileUserId}/profile/shares`, {
       channel,
       postUrl,
     });
@@ -397,7 +397,7 @@ export class APIHandler {
     channel?: 'linkedin' | 'default'
   ): Promise<AxiosResponse<{ text: string }>> {
     const params = channel ? `?channel=${channel}` : '';
-    return this.get(`/user/profile/${profileUserId}/share-text${params}`);
+    return this.get(`/users/${profileUserId}/profile/share-text${params}`);
   }
 
   exchangeLinkedInCode(
@@ -411,7 +411,7 @@ export class APIHandler {
     userId: string,
     userReportDto: UserReportDto
   ): Promise<AxiosResponse> {
-    return this.post(`/user/profile/${userId}/report`, userReportDto);
+    return this.post(`/users/${userId}/profile/report`, userReportDto);
   }
 
   // Social Situation
@@ -436,7 +436,7 @@ export class APIHandler {
 
   // delete
   deleteUser(userId: string): Promise<AxiosResponse> {
-    return this.delete(`/user/${userId}`);
+    return this.delete(`/users/${userId}`);
   }
 
   /// //////////// ///
