@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckinState, ConversationType } from '@/src/api/types';
+import { CheckinState, ConversationType, MessageType } from '@/src/api/types';
 import { BottomSheet } from '@/src/components/ui/BottomSheet/BottomSheet';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
@@ -236,41 +236,6 @@ export const MessagingConversation = () => {
       return false;
     }
     return selectedConversation.messages.length > 0;
-  }, [
-    currentUser,
-    currentUserId,
-    selectedConversation,
-    selectedConversationId,
-    currentUserHasSentMessages,
-  ]);
-
-  // A "message suivant" the candidate sent, without a reply from the coach
-  // yet: at least 2 candidate messages, since the first is already covered by
-  // the quick-replies chip above (displayQuickReplies). Persists per
-  // conversation via assistantBannerDismissedAt once "Non merci" is clicked.
-  const displayAIAssistantBanner = useMemo(() => {
-    if (!currentUser || currentUser.role !== UserRoles.COACH) {
-      return false;
-    }
-    if (!selectedConversation || selectedConversationId === 'new') {
-      return false;
-    }
-    if (selectedConversation.id !== selectedConversationId) {
-      return false;
-    }
-    if (currentUserHasSentMessages) {
-      return false;
-    }
-    if (selectedConversation.assistantBannerDismissedAt) {
-      return false;
-    }
-    const otherParticipants = selectedConversation.participants.filter(
-      (p) => p.id !== currentUserId
-    );
-    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
-      return false;
-    }
-    return selectedConversation.messages.length >= 2;
   }, [
     currentUser,
     currentUserId,
@@ -567,6 +532,54 @@ export const MessagingConversation = () => {
     isEligibleToContact &&
     aiAssistantRecipientId !== null;
   const showAIPanelMobile = isMobile && canUseAIAssistant && isAIPanelOpen;
+
+  // Offered on every candidate message after the candidate's first one, as
+  // long as the coach has not answered it yet (the latest non-service message
+  // is the candidate's). The candidate's first message is covered by the
+  // quick-replies chip instead. Dismissal is persisted per conversation via
+  // assistantBannerDismissedAt once "Non merci" is clicked.
+  const displayAIAssistantBanner = useMemo(() => {
+    if (!canUseAIAssistant || currentUser?.role !== UserRoles.COACH) {
+      return false;
+    }
+    if (!selectedConversation || selectedConversationId === 'new') {
+      return false;
+    }
+    if (selectedConversation.id !== selectedConversationId) {
+      return false;
+    }
+    if (selectedConversation.assistantBannerDismissedAt) {
+      return false;
+    }
+    const otherParticipants = selectedConversation.participants.filter(
+      (p) => p.id !== currentUserId
+    );
+    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
+      return false;
+    }
+    const userMessages = selectedConversation.messages
+      .filter((message) => message.type !== MessageType.SERVICE)
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    if (
+      userMessages.length === 0 ||
+      userMessages[0].authorId === currentUserId
+    ) {
+      return false;
+    }
+    const candidateMessagesCount = userMessages.filter(
+      (message) => message.authorId !== currentUserId
+    ).length;
+    return candidateMessagesCount >= 2;
+  }, [
+    canUseAIAssistant,
+    currentUser,
+    currentUserId,
+    selectedConversation,
+    selectedConversationId,
+  ]);
 
   const conversationContent = (
     <>

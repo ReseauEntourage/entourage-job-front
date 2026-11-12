@@ -409,6 +409,20 @@ describe('MessagingConversation', () => {
       );
     });
 
+    it('shows the AI assistant banner when the candidate writes again after a coach reply', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [
+            message('m4', 'other', 4),
+            message('m3', 'me', 3),
+            message('m2', 'other', 2),
+            message('m1', 'other', 1),
+          ],
+        }),
+      });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
     it('hides the AI assistant banner once the coach has replied', async () => {
       await setup({
         conversation: buildConversation({
