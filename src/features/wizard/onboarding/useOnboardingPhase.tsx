@@ -126,6 +126,19 @@ export const useOnboardingPhase = ({
   const isOnboardingAlreadyCompleted =
     currentUser?.onboardingStatus === OnboardingStatus.COMPLETED;
 
+  // The onboarding is marked completed as soon as the webinar step (or the
+  // recap, when the webinar was already passed) is reached, while the person
+  // keeps going through the remaining steps. completedInSession keeps those
+  // steps displayed and holds back the redirect to the dashboard until the
+  // wizard really ends (cf. onOnboardingCompleted). A person who comes back
+  // later with an already completed onboarding never has it set: the steps are
+  // dropped and they are sent to the dashboard, as for Association/Entreprise.
+  const [completedInSession, setCompletedInSession] = useState(false);
+  const isOnboardingAlreadyCompletedRef = useRef(false);
+  useEffect(() => {
+    isOnboardingAlreadyCompletedRef.current = isOnboardingAlreadyCompleted;
+  }, [isOnboardingAlreadyCompleted]);
+
   // Before the account is created (currentUser still null), the selected
   // registration flow is already enough to know onboarding will be skipped
   // (Association/Entreprise): prevents the default steps (photo/elearning/
@@ -136,7 +149,7 @@ export const useOnboardingPhase = ({
     registrationFlow === RegistrationFlow.COMPANY;
 
   const shouldSkipOnboardingSteps =
-    isOnboardingAlreadyCompleted ||
+    (isOnboardingAlreadyCompleted && !completedInSession) ||
     (!currentUser && isEarlyOnboardingCompletionFlow);
 
   // ─── Centralized advancement ──────────────────────────────────────────────────
@@ -187,28 +200,35 @@ export const useOnboardingPhase = ({
     [currentUser?.role, shouldSkipOnboardingSteps]
   );
 
-  // Onboarding completion. skipDashboardRedirect is used by the recap step
-  // when the calling component handles the navigation itself (messaging/
-  // directory following a CTA click): the generic dashboard redirect is then
-  // not applied.
+  // End of the wizard. The onboarding itself is already marked completed when
+  // the webinar step (or the recap) was reached, so this only ends the session
+  // kept open by completedInSession: the steps are dropped and the generic
+  // redirect to the dashboard applies. skipDashboardRedirect is used by the
+  // recap step when the calling component handles the navigation itself
+  // (messaging/directory following a CTA click): the generic dashboard
+  // redirect is then not applied. If the completion request did not go through
+  // yet (or failed), it is sent now: the server only acts on the first one.
   const skipDashboardRedirectRef = useRef(false);
   const onOnboardingCompleted = useCallback(
     async (skipDashboardRedirect = false) => {
       if (skipDashboardRedirect) {
         skipDashboardRedirectRef.current = true;
       }
-      dispatch(
-        currentUserActions.updateOnboardingStatusRequested({
-          onboardingStatus: OnboardingStatus.COMPLETED,
-        })
-      );
+      if (!isOnboardingAlreadyCompletedRef.current) {
+        dispatch(
+          currentUserActions.updateOnboardingStatusRequested({
+            onboardingStatus: OnboardingStatus.COMPLETED,
+          })
+        );
+      }
+      setCompletedInSession(false);
     },
     [dispatch]
   );
 
-  // The recap step's inline compose marks onboarding completed as soon as
-  // "Send" is clicked (cf. onOnboardingCompleted above), which immediately
-  // empties onboardingSteps (shouldSkipOnboardingSteps becomes true) and
+  // The recap step's inline compose ends the wizard as soon as "Send" is
+  // clicked (cf. onOnboardingCompleted above), which immediately empties
+  // onboardingSteps (shouldSkipOnboardingSteps becomes true) and
   // unmounts RecapSuggestedMessage before the message send has had time to
   // resolve. The post-send redirect must therefore be carried by a hook that
   // survives this unmount — useWizardRedirects — rather than by a local
@@ -381,6 +401,39 @@ export const useOnboardingPhase = ({
     dispatch,
   ]);
 
+  // Marks the onboarding completed on arrival at the webinar step, or at the
+  // recap when the webinar was already passed (reservation or "Later" already
+  // recorded, so the wizard resumes directly there). One request per step: a
+  // failed one is sent again on arrival at the next step. The person keeps
+  // going through the steps (cf. completedInSession), and the server only
+  // queues the completion job for the first request.
+  const completionRequestedForStepRef = useRef<WizardStepId | null>(null);
+  useEffect(() => {
+    if (
+      !currentUser ||
+      isOnboardingAlreadyCompleted ||
+      (currentOnboardingStepId !== 'webinar' &&
+        currentOnboardingStepId !== 'match-recap') ||
+      completionRequestedForStepRef.current === currentOnboardingStepId ||
+      updateOnboardingStatus === ReduxRequestEvents.REQUESTED
+    ) {
+      return;
+    }
+    completionRequestedForStepRef.current = currentOnboardingStepId;
+    setCompletedInSession(true);
+    dispatch(
+      currentUserActions.updateOnboardingStatusRequested({
+        onboardingStatus: OnboardingStatus.COMPLETED,
+      })
+    );
+  }, [
+    currentUser,
+    isOnboardingAlreadyCompleted,
+    currentOnboardingStepId,
+    updateOnboardingStatus,
+    dispatch,
+  ]);
+
   // Auto-advance of the cv-loading step
   const isUploadCvSucceeded = useSelector(
     uploadExternalCvSelectors.selectIsUploadExternalCvSucceeded
@@ -511,8 +564,12 @@ export const useOnboardingPhase = ({
     onNext,
     onBack,
     canGoBack,
-    isAlreadyCompleted: isOnboardingAlreadyCompleted,
-    updateOnboardingStatus,
+    // Both signals trigger the redirect to the dashboard: they are held back
+    // while the person is still going through the steps of the wizard.
+    isAlreadyCompleted: isOnboardingAlreadyCompleted && !completedInSession,
+    updateOnboardingStatus: completedInSession
+      ? ReduxRequestEvents.IDLE
+      : updateOnboardingStatus,
     skipDashboardRedirectRef,
     pendingSuggestedMessageRedirectRef,
     skipOnboarding,
