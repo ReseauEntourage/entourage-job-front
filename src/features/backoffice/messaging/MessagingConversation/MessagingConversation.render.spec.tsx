@@ -409,6 +409,32 @@ describe('MessagingConversation', () => {
       );
     });
 
+    it('shows the AI assistant banner when the candidate writes again after a coach reply', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [
+            message('m4', 'other', 4),
+            message('m3', 'me', 3),
+            message('m2', 'other', 2),
+            message('m1', 'other', 1),
+          ],
+        }),
+      });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
+    it('shows the AI assistant banner with a single loaded candidate message when older pages may exist', async () => {
+      const filler = Array.from({ length: 29 }, (_, i) =>
+        message(`f${i}`, 'me', 100 + i)
+      );
+      await setup({
+        conversation: buildConversation({
+          messages: [message('m500', 'other', 500), ...filler.reverse()],
+        }),
+      });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
     it('hides the AI assistant banner once the coach has replied', async () => {
       await setup({
         conversation: buildConversation({

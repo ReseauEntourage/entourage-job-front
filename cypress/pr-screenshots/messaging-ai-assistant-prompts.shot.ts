@@ -54,7 +54,9 @@ describe('Messagerie - assistant IA proposé au coach', () => {
     interceptGetConversations({ statusCode: 200, body: [conversation] });
     interceptGetConversationById({ statusCode: 200, body: conversation });
 
-    cy.visit('/backoffice/messaging?conversationId=conversation-ai-first-message');
+    cy.visit(
+      '/backoffice/messaging?conversationId=conversation-ai-first-message'
+    );
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
     cy.get('[data-testid="messaging-quick-replies"]').should('be.visible');
@@ -93,7 +95,9 @@ describe('Messagerie - assistant IA proposé au coach', () => {
     interceptGetConversations({ statusCode: 200, body: [conversation] });
     interceptGetConversationById({ statusCode: 200, body: conversation });
 
-    cy.visit('/backoffice/messaging?conversationId=conversation-ai-next-message');
+    cy.visit(
+      '/backoffice/messaging?conversationId=conversation-ai-next-message'
+    );
     cy.wait('@getCurrent');
     cy.wait('@getConversationById');
     cy.get('[data-testid="messaging-ai-assistant-banner"]').should(
@@ -105,6 +109,55 @@ describe('Messagerie - assistant IA proposé au coach', () => {
       {
         caption:
           'Dès qu’un second message du candidat arrive sans réponse du coach, un bandeau propose l’assistant IA (compact sur mobile).',
+      }
+    );
+  });
+
+  it('bandeau "Besoin d\'aide pour répondre ?" quand le candidat relance après une réponse du coach', () => {
+    login();
+    const conversation = buildConversation({
+      id: 'conversation-ai-after-coach-reply',
+      participants: [
+        buildParticipant({ id: CURRENT_USER_ID, role: 'Coach' }),
+        candidate,
+      ],
+      messages: [
+        buildMessage({
+          author: candidate,
+          createdAt: '2026-06-01T10:10:00.000Z',
+          content: 'Merci ! Pouvez-vous aussi relire ma lettre de motivation ?',
+        }),
+        buildMessage({
+          author: buildParticipant({ id: CURRENT_USER_ID, role: 'Coach' }),
+          createdAt: '2026-06-01T10:05:00.000Z',
+          content:
+            'Bonjour Awa, avec plaisir, quelles sont vos disponibilités ?',
+        }),
+        buildMessage({
+          author: candidate,
+          createdAt: '2026-06-01T10:00:00.000Z',
+          content: 'Bonjour, pourriez-vous m’aider à préparer un entretien ?',
+        }),
+      ],
+    });
+
+    interceptGetConversations({ statusCode: 200, body: [conversation] });
+    interceptGetConversationById({ statusCode: 200, body: conversation });
+
+    cy.visit(
+      '/backoffice/messaging?conversationId=conversation-ai-after-coach-reply'
+    );
+    cy.wait('@getCurrent');
+    cy.wait('@getConversationById');
+    cy.get('[data-testid="messaging-ai-assistant-banner"]').should(
+      'be.visible'
+    );
+
+    cy.get('[data-testid="messaging-ai-assistant-banner"]').capture(
+      'Relance après réponse du coach - bandeau assistant IA',
+      {
+        caption:
+          'Le bandeau reste proposé quand le candidat écrit à nouveau après une réponse du coach, tant que celle-ci n’a pas de suite.',
       }
     );
   });
