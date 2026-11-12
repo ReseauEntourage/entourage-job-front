@@ -25,7 +25,7 @@ export type SocialMedia =
   'facebook' | 'linkedin' | 'twitter' | 'whatsapp' | 'other';
 
 export const APIRoutes = {
-  USERS: 'user',
+  USERS: 'users',
   AUTH: 'auth',
   CONTACTS: 'contact',
   CVS: 'cv',

@@ -14,7 +14,7 @@ const interceptProfiles = (
   profiles: Array<Record<string, unknown>>,
   alias = 'getProfiles'
 ) => {
-  cy.intercept({ method: 'GET', pathname: '/user/profile' }, (req) => {
+  cy.intercept({ method: 'GET', pathname: '/users/profiles' }, (req) => {
     req.reply({ statusCode: 200, body: profiles });
   }).as(alias);
 };

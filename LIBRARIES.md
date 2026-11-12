@@ -772,16 +772,3 @@ Git hooks manager and staged-file linter runner.
 
 **Alternatives:** simple-git-hooks, pre-commit (Python-based).
 
-### `npm-run-all`
-
-| | |
-|---|---|
-| **Version** | `^4.1.5` |
-| **Release date** | 2018 (approximate) |
-| **Changelog** | [releases](https://github.com/mysticatea/npm-run-all/releases) |
-
-Runs multiple npm scripts sequentially or in parallel.
-
-**Used in:** The `test` script (`run-s test:*`) to sequence `test:ts-check`, `test:eslint`, `test:unit`.
-
-**Alternatives:** `npm-run-all2` (maintained fork), shell `&&` chaining, concurrently.
