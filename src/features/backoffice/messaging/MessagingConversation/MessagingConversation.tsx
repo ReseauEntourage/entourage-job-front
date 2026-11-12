@@ -574,8 +574,10 @@ export const MessagingConversation = () => {
     ).length;
     // `messages` only holds the loaded pages. A full page means older
     // messages may exist, so the candidate's first message can be out of the
-    // window: one loaded candidate message is then enough.
+    // window: one loaded candidate message is then enough. Once the history
+    // is known to be exhausted, the loaded messages are the whole story.
     const mayHaveOlderMessages =
+      hasMoreOlderMessages &&
       selectedConversation.messages.length >= MESSAGES_PAGE_SIZE;
     return candidateMessagesCount >= (mayHaveOlderMessages ? 1 : 2);
   }, [
@@ -584,6 +586,7 @@ export const MessagingConversation = () => {
     currentUserId,
     selectedConversation,
     selectedConversationId,
+    hasMoreOlderMessages,
   ]);
 
   const conversationContent = (
