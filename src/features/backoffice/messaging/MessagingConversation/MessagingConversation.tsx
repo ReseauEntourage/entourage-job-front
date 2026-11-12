@@ -572,7 +572,12 @@ export const MessagingConversation = () => {
     const candidateMessagesCount = userMessages.filter(
       (message) => message.authorId !== currentUserId
     ).length;
-    return candidateMessagesCount >= 2;
+    // `messages` only holds the loaded pages. A full page means older
+    // messages may exist, so the candidate's first message can be out of the
+    // window: one loaded candidate message is then enough.
+    const mayHaveOlderMessages =
+      selectedConversation.messages.length >= MESSAGES_PAGE_SIZE;
+    return candidateMessagesCount >= (mayHaveOlderMessages ? 1 : 2);
   }, [
     canUseAIAssistant,
     currentUser,

@@ -423,6 +423,18 @@ describe('MessagingConversation', () => {
       expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
     });
 
+    it('shows the AI assistant banner with a single loaded candidate message when older pages may exist', async () => {
+      const filler = Array.from({ length: 29 }, (_, i) =>
+        message(`f${i}`, 'me', 100 + i)
+      );
+      await setup({
+        conversation: buildConversation({
+          messages: [message('m500', 'other', 500), ...filler.reverse()],
+        }),
+      });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
     it('hides the AI assistant banner once the coach has replied', async () => {
       await setup({
         conversation: buildConversation({
