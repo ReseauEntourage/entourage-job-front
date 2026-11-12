@@ -24,7 +24,7 @@ describe('Tableau de bord : groupe WhatsApp', () => {
     interceptCurrentUserSubResources();
     interceptGetUnseenCount({ statusCode: 200, body: 0 });
     interceptGetConversations({ fixture: 'api/generated/conversations' });
-    cy.intercept('GET', '/user/profile/recommendations*', {
+    cy.intercept('GET', '/current/profile/recommendations*', {
       statusCode: 200,
       body: {
         embeddingPending: false,

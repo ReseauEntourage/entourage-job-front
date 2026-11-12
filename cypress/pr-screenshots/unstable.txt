@@ -29,3 +29,9 @@ public-page-entreprises-recruter-inclusif-recruter-inclusif.mobile.png
 public-page-candidats-candidats.desktop.png
 help-groups-formation-a-terminer.desktop.png
 public-page-states-liste-de-cv.desktop.png
+# Added with group 4 (measured on two runs of the same build: lazy pictures loaded or not at capture time, bimodal heights).
+public-page-states-liste-de-cv.mobile.png
+public-page-states-liste-de-cv-vide.mobile.png
+moderation-reports-liste-des-signalements.desktop.png
+moderation-reports-liste-des-signalements.mobile.png
+admin-profile-wording-profil-admin-vu-par-un-candidat.mobile.png

@@ -26,7 +26,7 @@ describe('Gestion des membres (admin)', () => {
 
   it('liste des membres avec le filtre Zone ouvert', () => {
     interceptAdmin();
-    cy.intercept('GET', '/user/members*', {
+    cy.intercept('GET', '/users/members*', {
       fixture: 'api/generated/users-candidat',
     }).as('getMembers');
 
@@ -57,7 +57,7 @@ describe('Gestion des membres (admin)', () => {
 
   it('détail d’un membre et confirmation de suppression', () => {
     interceptAdmin();
-    cy.intercept('GET', `/user/${MEMBER_ID}`, {
+    cy.intercept('GET', `/users/${MEMBER_ID}`, {
       statusCode: 200,
       body: {
         id: MEMBER_ID,
@@ -92,7 +92,7 @@ describe('Gestion des membres (admin)', () => {
 
   it('membre introuvable', () => {
     interceptAdmin();
-    cy.intercept('GET', `/user/${MEMBER_ID}`, { statusCode: 404, body: {} }).as(
+    cy.intercept('GET', `/users/${MEMBER_ID}`, { statusCode: 404, body: {} }).as(
       'getMember'
     );
 
@@ -108,7 +108,7 @@ describe('Gestion des membres (admin)', () => {
   it('chargement d’un membre', () => {
     interceptAdmin();
     // The answer is held back long enough to capture the loading state.
-    cy.intercept('GET', `/user/${MEMBER_ID}`, {
+    cy.intercept('GET', `/users/${MEMBER_ID}`, {
       delay: 8000,
       statusCode: 404,
       body: {},
