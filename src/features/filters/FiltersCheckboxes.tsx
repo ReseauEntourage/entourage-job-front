@@ -1,6 +1,13 @@
 import React from 'react';
 import { Filter, FilterObject } from '@/src/constants/utils';
 import { gaEvent } from '@/src/lib/gtag';
+import {
+  StyledFiltersCheckbox,
+  StyledFiltersCheckboxCell,
+  StyledFiltersCheckboxLabel,
+  StyledFiltersCheckboxesRoot,
+  StyledFiltersCheckboxTitle,
+} from './FiltersCheckboxes.styles';
 
 interface FiltersCheckboxesProps {
   filters: FilterObject;
@@ -18,28 +25,22 @@ export const FiltersCheckboxes = ({
   fullWidth,
 }: FiltersCheckboxesProps) => {
   return (
-    <div
-      className={`uk-flex uk-flex-middle ${
-        hideOnMobile ? 'uk-visible@m' : ''
-      } uk-margin-small-bottom`}
-    >
+    <StyledFiltersCheckboxesRoot $hideOnMobile={hideOnMobile}>
       {filterData.map(({ title, constants, key, tag, type, disabled }) => {
         if (filters[key]) {
           if (type && type === 'checkbox') {
             return (
-              <div key={key} className={fullWidth ? 'uk-flex-1' : ''}>
-                <label
+              <StyledFiltersCheckboxCell key={key} $fullWidth={fullWidth}>
+                <StyledFiltersCheckboxLabel
                   htmlFor={key}
-                  className="uk-flex uk-flex-middle uk-text-small"
-                  style={{ height: 20, opacity: disabled ? 0.6 : 1 }}
+                  style={{ opacity: disabled ? 0.6 : 1 }}
                 >
-                  <div className="uk-flex-1">{title}</div>
-                  <input
+                  <StyledFiltersCheckboxTitle>
+                    {title}
+                  </StyledFiltersCheckboxTitle>
+                  <StyledFiltersCheckbox
                     disabled={disabled}
                     id={key}
-                    style={{ marginTop: 2 }}
-                    type="checkbox"
-                    className="uk-checkbox uk-margin-small-left"
                     checked={filters[key].length > 0 && !filters[key][0].value}
                     onChange={(e) => {
                       const updatedFilters = JSON.parse(
@@ -54,14 +55,14 @@ export const FiltersCheckboxes = ({
                       setFilters(updatedFilters);
                     }}
                   />
-                </label>
-              </div>
+                </StyledFiltersCheckboxLabel>
+              </StyledFiltersCheckboxCell>
             );
           }
         }
         return undefined;
       })}
-    </div>
+    </StyledFiltersCheckboxesRoot>
   );
 };
 

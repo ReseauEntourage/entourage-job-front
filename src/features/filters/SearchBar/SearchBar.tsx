@@ -7,10 +7,13 @@ import { FiltersOptions } from '@/src/features/filters/FiltersOptions';
 import { gaEvent } from '@/src/lib/gtag';
 import {
   StyledSearchBar,
+  StyledSearchBarButtons,
   StyledSearchBarClearButton,
+  StyledSearchBarForm,
   StyledSearchBarContainer,
   StyledSearchBarInput,
   StyledSearchBarInputContainer,
+  StyledSearchBarOptions,
   StyledSearchBarSubmitButton,
 } from './SearchBar.styles';
 
@@ -100,7 +103,7 @@ export const SearchBar = ({
   return (
     <StyledSearchBarContainer>
       <StyledSearchBar $light={light}>
-        <form className="uk-width-expand">
+        <StyledSearchBarForm>
           <StyledSearchBarInputContainer>
             <StyledSearchBarInput
               id="search-input"
@@ -125,7 +128,7 @@ export const SearchBar = ({
               </StyledSearchBarClearButton>
             )}
           </StyledSearchBarInputContainer>
-        </form>
+        </StyledSearchBarForm>
         {filtersConstants.length > 0 && (
           <FiltersDropdowns
             hideOnMobile
@@ -142,7 +145,7 @@ export const SearchBar = ({
       </StyledSearchBar>
       {filtersConstants.filter((f) => f.type === 'checkbox').length > 0 ||
         (additionalButtons && (
-          <div className="uk-width-expand uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
+          <StyledSearchBarOptions>
             <FiltersCheckboxes
               filterData={filtersConstants}
               filters={filters}
@@ -150,7 +153,9 @@ export const SearchBar = ({
               hideOnMobile
             />
             {additionalButtons && (
-              <div className="uk-width-expand">{additionalButtons}</div>
+              <StyledSearchBarButtons>
+                {additionalButtons}
+              </StyledSearchBarButtons>
             )}
             {(numberOfFilters > 0 ||
               (filtersConstants.length > 0 && search)) && (
@@ -161,7 +166,7 @@ export const SearchBar = ({
                 }}
               />
             )}
-          </div>
+          </StyledSearchBarOptions>
         ))}
     </StyledSearchBarContainer>
   );

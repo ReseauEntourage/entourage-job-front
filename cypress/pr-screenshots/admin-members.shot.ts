@@ -45,9 +45,9 @@ describe('Gestion des membres (admin)', () => {
         .find('button')
         .first()
         .click();
-      cy.get('[data-testid="input-container-zone"] .uk-dropdown').should(
-        'be.visible'
-      );
+      cy.get('[data-testid="input-container-zone"] input[type="checkbox"]')
+        .first()
+        .should('be.visible');
       cy.capture('Filtre Zone ouvert', {
         caption: 'Dropdown du filtre Zone ouvert, avec ses cases à cocher.',
         capture: 'viewport',
@@ -92,9 +92,10 @@ describe('Gestion des membres (admin)', () => {
 
   it('membre introuvable', () => {
     interceptAdmin();
-    cy.intercept('GET', `/users/${MEMBER_ID}`, { statusCode: 404, body: {} }).as(
-      'getMember'
-    );
+    cy.intercept('GET', `/users/${MEMBER_ID}`, {
+      statusCode: 404,
+      body: {},
+    }).as('getMember');
 
     cy.visit(`/backoffice/admin/membres/${MEMBER_ID}/parametres`);
     cy.wait('@getCurrent');

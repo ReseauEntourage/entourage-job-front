@@ -55,8 +55,10 @@ export const COLORS = {
   black: '#363636',
   /** Muted text of the footer links. */
   mutedText: '#999999',
-  /** Thin separating rule of the modals. */
-  modalRule: '#E5E5E5',
+  /** Thin separating rule (modals, checkboxes). */
+  lightRule: '#E5E5E5',
+  /** Border of an unchecked checkbox. */
+  checkboxBorder: '#CCCCCC',
   /** Text of a pressed tab of the connected navbar. */
   navActive: '#333333',
 

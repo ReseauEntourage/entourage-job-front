@@ -10,7 +10,7 @@ export const StyledModalActions = styled.div<{ $marginTop: number }>`
   align-items: center;
   justify-content: flex-end;
   padding: 15px 0 0;
-  border-top: 1px solid ${COLORS.modalRule};
+  border-top: 1px solid ${COLORS.lightRule};
   background-color: transparent;
   margin-top: ${({ $marginTop }) => $marginTop}px !important;
 
