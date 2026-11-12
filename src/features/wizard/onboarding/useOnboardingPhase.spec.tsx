@@ -164,6 +164,7 @@ const candidate = {
   onboardingStatus: OnboardingStatus.IN_PROGRESS,
 } as User;
 const coach = { ...candidate, role: UserRoles.COACH } as User;
+const COMPLETED = OnboardingStatus.COMPLETED;
 
 function render(
   currentUser: User | null = candidate,
@@ -512,8 +513,8 @@ describe('useOnboardingPhase', () => {
       expect(result.current.isLoading).toBe(false);
     });
 
-    it('completes the onboarding from the last step and skips the generic dashboard redirect', async () => {
-      const { result } = await ready();
+    it('ends the wizard from the last step without another completion request, and skips the generic dashboard redirect', async () => {
+      const { result, rerender } = await ready();
       // photo, cv-choice, elearning, webinar, match-recap
       for (let i = 0; i < 4; i++) {
         await act(async () => {
@@ -522,13 +523,18 @@ describe('useOnboardingPhase', () => {
       }
       expect(result.current.currentStep?.id).toBe('match-recap');
       expect(result.current.buttonLabel).toBe('Terminer');
+      // The server confirmed the completion requested on arrival at the webinar
+      rerender({ user: { ...coach, onboardingStatus: COMPLETED } });
+      const requestsBeforeEnd = completedUpdates().length;
 
       await act(async () => {
         await result.current.onNext();
       });
 
-      expect(completedUpdates()).toHaveLength(1);
+      expect(completedUpdates()).toHaveLength(requestsBeforeEnd);
       expect(result.current.skipDashboardRedirectRef.current).toBe(true);
+      expect(result.current.steps).toEqual([]);
+      expect(result.current.isAlreadyCompleted).toBe(true);
     });
 
     it('prefers the label of the step', async () => {
@@ -556,12 +562,165 @@ describe('useOnboardingPhase', () => {
       const { result } = await ready();
 
       mockHookProps.onboardingStepMatchRecap.onSuggestedMessageSent();
-      await mockHookProps.onboardingStepMatchRecap.onOnboardingCompleted(true);
+      await act(async () => {
+        await mockHookProps.onboardingStepMatchRecap.onOnboardingCompleted(
+          true
+        );
+      });
 
       expect(result.current.pendingSuggestedMessageRedirectRef.current).toBe(
         true
       );
       expect(result.current.skipDashboardRedirectRef.current).toBe(true);
+    });
+  });
+
+  describe('completion on arrival at the webinar step', () => {
+    async function onNextTimes(
+      result: { current: ReturnType<typeof useOnboardingPhase> },
+      times: number
+    ) {
+      for (let i = 0; i < times; i++) {
+        await act(async () => {
+          await result.current.onNext();
+        });
+      }
+    }
+
+    async function ready() {
+      const utils = render(coach);
+      await waitFor(() => expect(utils.result.current.currentStepIdx).toBe(0));
+      return utils;
+    }
+
+    it('does not complete the onboarding before the webinar step', async () => {
+      const { result } = await ready();
+
+      // photo -> cv-choice -> elearning
+      await onNextTimes(result, 2);
+
+      expect(result.current.currentStep?.id).toBe('elearning');
+      expect(completedUpdates()).toHaveLength(0);
+    });
+
+    it('completes the onboarding once on arrival at the webinar step', async () => {
+      const { result } = await ready();
+
+      await onNextTimes(result, 3);
+
+      expect(result.current.currentStep?.id).toBe('webinar');
+      expect(completedUpdates()).toHaveLength(1);
+    });
+
+    it('keeps the webinar and recap steps displayed once the server completed the onboarding', async () => {
+      const { result, rerender } = await ready();
+      await onNextTimes(result, 3);
+
+      mockState.updateOnboardingStatus = 'SUCCEEDED';
+      rerender({ user: { ...coach, onboardingStatus: COMPLETED } });
+
+      expect(ids(result.current.steps)).toEqual(
+        expect.arrayContaining(['webinar', 'match-recap'])
+      );
+      expect(result.current.currentStep?.id).toBe('webinar');
+      // The redirect to the dashboard is held back
+      expect(result.current.isAlreadyCompleted).toBe(false);
+      expect(result.current.updateOnboardingStatus).toBe('IDLE');
+      expect(completedUpdates()).toHaveLength(1);
+    });
+
+    it('goes on to the recap after the webinar without a second request once completed', async () => {
+      const { result, rerender } = await ready();
+      await onNextTimes(result, 3);
+      rerender({ user: { ...coach, onboardingStatus: COMPLETED } });
+
+      await onNextTimes(result, 1);
+
+      expect(result.current.currentStep?.id).toBe('match-recap');
+      expect(completedUpdates()).toHaveLength(1);
+    });
+
+    it('does not send the request again while the previous one is pending', async () => {
+      const { result } = await ready();
+      await onNextTimes(result, 3);
+      mockState.updateOnboardingStatus = 'REQUESTED';
+
+      await onNextTimes(result, 1);
+
+      expect(result.current.currentStep?.id).toBe('match-recap');
+      expect(completedUpdates()).toHaveLength(1);
+    });
+
+    it('sends the request again on arrival at the recap when the first one did not go through', async () => {
+      const { result } = await ready();
+      await onNextTimes(result, 3);
+      mockState.updateOnboardingStatus = 'FAILED';
+
+      await onNextTimes(result, 1);
+
+      expect(result.current.currentStep?.id).toBe('match-recap');
+      expect(completedUpdates()).toHaveLength(2);
+    });
+
+    it('completes the onboarding on arrival at the recap when the webinar was already passed', async () => {
+      stepFor('photo').isStepCompleted = async () => true;
+      stepFor('cv-choice').isStepCompleted = async () => true;
+      stepFor('elearning').isStepCompleted = async () => true;
+      stepFor('webinar').isStepCompleted = async () => true;
+      stepFor('match-recap').isStepCompleted = async () => false;
+
+      const { result } = render(coach);
+
+      await waitFor(() =>
+        expect(result.current.currentStep?.id).toBe('match-recap')
+      );
+      await waitFor(() => expect(completedUpdates()).toHaveLength(1));
+    });
+
+    it('does not send any request when the onboarding is already completed on load', () => {
+      const { result } = render({ ...coach, onboardingStatus: COMPLETED });
+
+      expect(result.current.steps).toEqual([]);
+      expect(result.current.isAlreadyCompleted).toBe(true);
+      expect(completedUpdates()).toHaveLength(0);
+    });
+
+    it('does not send any request for a person who never reaches the webinar step', async () => {
+      const { result } = await ready();
+
+      expect(result.current.currentStep?.id).toBe('photo');
+      expect(completedUpdates()).toHaveLength(0);
+    });
+
+    it('sends the completion request when the wizard ends without it having gone through', async () => {
+      const { result } = await ready();
+
+      await act(async () => {
+        await mockHookProps.onboardingStepMatchRecap.onOnboardingCompleted();
+      });
+
+      expect(completedUpdates()).toHaveLength(1);
+      expect(result.current.skipDashboardRedirectRef.current).toBe(false);
+    });
+
+    it('ends the session kept open by the completion: steps dropped, redirect released', async () => {
+      const { result, rerender } = await ready();
+      await onNextTimes(result, 3);
+      mockState.updateOnboardingStatus = 'SUCCEEDED';
+      rerender({ user: { ...coach, onboardingStatus: COMPLETED } });
+      expect(result.current.steps.length).toBeGreaterThan(0);
+
+      await act(async () => {
+        await mockHookProps.onboardingStepMatchRecap.onOnboardingCompleted(
+          true
+        );
+      });
+
+      expect(result.current.steps).toEqual([]);
+      expect(result.current.isAlreadyCompleted).toBe(true);
+      expect(result.current.updateOnboardingStatus).toBe('SUCCEEDED');
+      expect(result.current.skipDashboardRedirectRef.current).toBe(true);
+      expect(completedUpdates()).toHaveLength(1);
     });
   });
 
