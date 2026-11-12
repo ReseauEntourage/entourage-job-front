@@ -1,8 +1,8 @@
 import React from 'react';
-import { SimpleLink } from '@/src/components/ui/SimpleLink';
 import { GA_TAGS } from '@/src/constants/tags';
 import { gaEvent } from '@/src/lib/gtag';
 import { LegacyImg } from './LegacyImg';
+import { StyledLogoLink } from './Logo.styles';
 
 interface LogoProps {
   logoKey: string;
@@ -12,8 +12,7 @@ interface LogoProps {
 
 export const Logo = ({ logoKey, link, bis }: LogoProps) => {
   return (
-    <SimpleLink
-      className="uk-flex uk-flex-center"
+    <StyledLogoLink
       isExternal
       target="_blank"
       onClick={() => {
@@ -36,7 +35,7 @@ export const Logo = ({ logoKey, link, bis }: LogoProps) => {
           alt={logoKey}
         />
       )}
-    </SimpleLink>
+    </StyledLogoLink>
   );
 };
 

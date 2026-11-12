@@ -20,7 +20,8 @@ export const StyledImgProfileContainer = styled.div<{
   height: ${({ size }) => size}px;
   flex-shrink: 0;
 
-  ${({ $highlight }) => $highlight && `border: 2px solid ${COLORS.primaryBlue};`}
+  ${({ $highlight }) =>
+    $highlight && `border: 2px solid ${COLORS.primaryBlue};`}
   background-color: ${({ $bgColor }) => $bgColor};
 
   box-sizing: border-box;

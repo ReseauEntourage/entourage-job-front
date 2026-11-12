@@ -53,6 +53,10 @@ export const COLORS = {
   darkGray: '#6D6C6C',
   extraDarkGray: '#222222',
   black: '#363636',
+  /** Muted text of the footer links. */
+  mutedText: '#999999',
+  /** Text of a pressed tab of the connected navbar. */
+  navActive: '#333333',
 
   // Brown
   lightBrownGray: '#918080',

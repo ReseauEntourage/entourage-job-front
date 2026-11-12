@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import React from 'react';
 import { SvgIcon } from '@/src/components/ui/SvgIcon/SvgIcon';
+import { StyledNavbarLogo } from './NavbarLogo.styles';
 
 interface NavbarLogoProps {
   href: string;
@@ -16,10 +16,7 @@ export const NavbarLogo = ({
   height = 60,
 }: NavbarLogoProps) => {
   return (
-    <Link
-      href={href}
-      className="uk-margin-small-left uk-margin-small-right uk-flex"
-    >
+    <StyledNavbarLogo href={href}>
       {type === 'primary' ? (
         <SvgIcon name="EntourageProLogoPrimary" width={width} height={height} />
       ) : (
@@ -29,6 +26,6 @@ export const NavbarLogo = ({
           height={height}
         />
       )}
-    </Link>
+    </StyledNavbarLogo>
   );
 };

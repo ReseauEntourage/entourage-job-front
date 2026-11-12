@@ -1,5 +1,3 @@
-export type SCREEN_SIZES = 's' | 'm' | 'l' | 'xl';
-
 export type SECTION_SIZES = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 export type SECTION_STYLES =
