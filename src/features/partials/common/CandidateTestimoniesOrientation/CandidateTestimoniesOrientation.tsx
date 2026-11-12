@@ -60,10 +60,7 @@ export const CandidateTestimoniesOrientation = ({
         />
       )}
       <div className="uk-flex uk-flex-center uk-margin-large-top">
-        <Carousel
-          style="default"
-          containerClasses="uk-container-small uk-child-width-1-1"
-        >
+        <Carousel style="default">
           {testimonies.map(({ author, image, quote }, index) => {
             return (
               <CarouselItem

@@ -20,7 +20,7 @@ export const CarouselItem = ({
   description,
 }: CarouselItemProps) => {
   return (
-    <li key={index.toString()}>
+    <div key={index.toString()}>
       <StyledCarouselItemGrid
         childWidths={[`1-2@m`]}
         match
@@ -35,6 +35,6 @@ export const CarouselItem = ({
           <StyledCarouselItemText>{description}</StyledCarouselItemText>
         </StyledCarouselItemTextCell>
       </StyledCarouselItemGrid>
-    </li>
+    </div>
   );
 };

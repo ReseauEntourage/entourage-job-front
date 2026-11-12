@@ -28,7 +28,7 @@ const POSITIONS: Record<BackgroundPosition, string> = {
   'bottom-right': '100% 100%',
 };
 
-const BACKGROUND_COLORS: Partial<Record<SECTION_STYLES, string>> = {
+export const BACKGROUND_COLORS: Partial<Record<SECTION_STYLES, string>> = {
   default: COLORS.white,
   muted: COLORS.sectionMuted,
   primary: COLORS.primaryBlue,
