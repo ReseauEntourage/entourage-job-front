@@ -1,6 +1,14 @@
 import React from 'react';
 
 import { Grid, Section, LegacyImg } from '@/src/components/ui';
+import {
+  StyledChapterContent,
+  StyledChapterCta,
+  StyledChapterPicture,
+  StyledChapterSmallTitle,
+  StyledChapterText,
+  StyledChapterTitle,
+} from './Chapter.styles';
 
 interface ChapterProps {
   title: React.ReactNode;
@@ -23,12 +31,8 @@ export const Chapter = ({
 }: ChapterProps) => {
   return (
     <Section style={style}>
-      <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-overflow-hidden">
-        {!smallTitle && (
-          <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
-            {title}
-          </h2>
-        )}
+      <StyledChapterContent>
+        {!smallTitle && <StyledChapterTitle>{title}</StyledChapterTitle>}
         <Grid
           childWidths={[`1-${direction !== 'column' ? '2' : '1'}@m`]}
           center
@@ -39,22 +43,20 @@ export const Chapter = ({
         >
           <div>
             {smallTitle && (
-              <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top animate">
+              <StyledChapterSmallTitle className="animate">
                 {title}
-              </h2>
+              </StyledChapterSmallTitle>
             )}
-            <div className="uk-margin-remove-top uk-margin-remove-bottom animate">
-              {content}
-            </div>
-            {cta && <div className="uk-flex uk-margin-medium-top">{cta}</div>}
+            <StyledChapterText className="animate">{content}</StyledChapterText>
+            {cta && <StyledChapterCta>{cta}</StyledChapterCta>}
           </div>
           {imgSrc && (
-            <div className="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-box-shadow-medium uk-border-rounded uk-cover-container">
+            <StyledChapterPicture>
               <LegacyImg src={imgSrc} cover alt="" />
-            </div>
+            </StyledChapterPicture>
           )}
         </Grid>
-      </div>
+      </StyledChapterContent>
     </Section>
   );
 };

@@ -1,15 +1,22 @@
 import React, { type JSX } from 'react';
-import { UIKIT_BLENDS, UIKIT_STYLES } from '@/src/components/variables';
+import {
+  StyledBackground,
+  type BackgroundPosition,
+} from '@/src/components/ui/Background.styles';
+import type {
+  BACKGROUND_BLENDS,
+  SECTION_STYLES,
+} from '@/src/components/variables';
 import { addPrefix } from '@/src/utils';
 
 interface BackgroundProps {
   children: JSX.Element | JSX.Element[];
   src?: string;
-  position?: string;
+  position?: BackgroundPosition;
   blend?: {
-    color?: UIKIT_STYLES;
+    color?: SECTION_STYLES;
     colorHex?: string;
-    mode?: UIKIT_BLENDS;
+    mode?: BACKGROUND_BLENDS;
   };
   fixed?: boolean;
 }
@@ -17,57 +24,27 @@ interface BackgroundProps {
 export const Background = ({
   src,
   position,
-  blend,
-  fixed,
+  blend = {},
+  fixed = false,
   children,
 }: BackgroundProps) => {
-  let classBuffer = 'uk-background-cover';
-  const styleBuffer: { backgroundImage?: string; backgroundColor?: string } =
-    {};
-  if (position) {
-    classBuffer += ` uk-background-${position}`;
-  }
-  if (
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    blend.mode
-  ) {
-    classBuffer += ` uk-background-blend-${
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      blend.mode
-    }`;
-  }
-  if (fixed) {
-    classBuffer += ` uk-background-fixed`;
-  }
+  const style: { backgroundImage?: string; backgroundColor?: string } = {};
   if (src) {
-    styleBuffer.backgroundImage = `url(${addPrefix(src)})`;
+    style.backgroundImage = `url(${addPrefix(src)})`;
   }
-  if (
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    blend.color
-  ) {
-    classBuffer += ` uk-background-${
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      blend.color
-    }`;
-  } else if (
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    blend.colorHex
-  ) {
-    styleBuffer.backgroundColor =
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      blend.colorHex ? blend.colorHex : undefined;
+  // The named color wins over the hex one.
+  if (!blend.color && blend.colorHex) {
+    style.backgroundColor = blend.colorHex;
   }
   return (
-    <div className={classBuffer} style={styleBuffer}>
+    <StyledBackground
+      $position={position}
+      $mode={blend.mode}
+      $color={blend.color}
+      $fixed={fixed}
+      style={style}
+    >
       {children}
-    </div>
+    </StyledBackground>
   );
-};
-
-Background.defaultProps = {
-  position: undefined,
-  blend: {},
-  fixed: false,
-  src: undefined,
 };

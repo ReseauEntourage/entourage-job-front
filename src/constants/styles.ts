@@ -37,6 +37,8 @@ export const SHADOWS = {
   popover: '0 2px 8px rgba(0, 0, 0, 0.12)',
   // Floating menus: the elevation replaces the border
   dropdown: '0 5px 12px rgba(0, 0, 0, 0.15)',
+  /** Soft shadow of the blocks of the public pages (picture frames, number cards). */
+  block: '0 5px 15px rgba(0, 0, 0, 0.08)',
 };
 
 export const COLORS = {
@@ -91,6 +93,12 @@ export const COLORS = {
   darkTeal: '#267D8C',
   blueShade3: '#427F8D',
   hoverBlue: '#EEF8FA',
+  /** Background of the muted sections of the public pages. */
+  sectionMuted: '#ECF8FB',
+  /** Blue overlay laid on the cover pictures of the public pages. */
+  overlayPrimary: 'rgba(71, 168, 185, 0.7)',
+  /** Dark overlay laid on the cover pictures of the public pages. */
+  overlayDark: 'rgba(0, 0, 0, 0.7)',
   lightBlueGreen: '#C1E9DF',
   blue: '#8FC4E2',
   darkBlue: '#2D7FA6',

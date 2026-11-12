@@ -1,9 +1,8 @@
-export type UIKIT_SCREENS = 's' | 'm' | 'l' | 'xl';
+export type SCREEN_SIZES = 's' | 'm' | 'l' | 'xl';
 
-export type UIKIT_SECTION_SIZES =
-  'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type SECTION_SIZES = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
-export type UIKIT_STYLES =
+export type SECTION_STYLES =
   | 'default'
   | 'primary'
   | 'hover-blue'
@@ -14,7 +13,7 @@ export type UIKIT_STYLES =
   | 'custom-mobile-darkBG'
   | 'custom-fixed';
 
-export type UIKIT_BLENDS =
+export type BACKGROUND_BLENDS =
   | 'multiply'
   | 'screen'
   | 'overlay'

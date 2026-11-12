@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, LegacyImg, Grid, ButtonSize } from '@/src/components/ui';
+import { StyledMultipleCTADivider } from './MultipleCTA.styles';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -70,9 +71,7 @@ export const MultipleCTA = ({
                       {item.title}
                     </h4>
                   )}
-                  {showHorizontalDividers && (
-                    <hr className="uk-divider-small uk-margin-remove-vertical" />
-                  )}
+                  {showHorizontalDividers && <StyledMultipleCTADivider />}
                   {item.text && (
                     <div
                       className={`text ${

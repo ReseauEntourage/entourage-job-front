@@ -1,7 +1,12 @@
 import React from 'react';
 
 import { addPrefix } from '@/src/utils';
-import { StyledCarouselItemGrid } from './CarouselItem.styles';
+import {
+  StyledCarouselItemGrid,
+  StyledCarouselItemPicture,
+  StyledCarouselItemText,
+  StyledCarouselItemTextCell,
+} from './CarouselItem.styles';
 
 interface CarouselItemProps {
   index: number;
@@ -23,15 +28,12 @@ export const CarouselItem = ({
         middle
         gap="collapse"
       >
-        <div
-          className="uk-flex-1 uk-background-position-center-center uk-background-cover uk-height-large"
+        <StyledCarouselItemPicture
           style={{ backgroundImage: `url(${addPrefix(img)})` }}
         />
-        <div className="uk-flex uk-flex-1 uk-flex-center uk-flex-middle uk-padding-large">
-          <div className="uk-flex uk-flex-center uk-flex-middle uk-height-medium ">
-            {description}
-          </div>
-        </div>
+        <StyledCarouselItemTextCell>
+          <StyledCarouselItemText>{description}</StyledCarouselItemText>
+        </StyledCarouselItemTextCell>
       </StyledCarouselItemGrid>
     </li>
   );

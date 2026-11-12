@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { UIKIT_SCREENS } from '@/src/components/variables';
+import { SCREEN_SIZES } from '@/src/components/variables';
 import { AnyCantFix } from '@/src/utils/Types';
 
 interface SimpleLinkProps {
@@ -10,7 +10,7 @@ interface SimpleLinkProps {
         pathname: string;
         query?: AnyCantFix; // query can be an object with any key-value
       };
-  visible?: UIKIT_SCREENS;
+  visible?: SCREEN_SIZES;
   children: React.ReactNode;
   className?: string;
   target?: string;

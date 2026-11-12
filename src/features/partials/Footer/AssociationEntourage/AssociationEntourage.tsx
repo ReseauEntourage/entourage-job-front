@@ -13,7 +13,9 @@ import { COLORS } from '@/src/constants/styles';
 import { GA_TAGS } from '@/src/constants/tags';
 import { gaEvent } from '@/src/lib/gtag';
 import {
+  StyledAssociationEntourageContent,
   StyledAssociationEntourageGrid,
+  StyledAssociationEntourageLight,
   StyledAssociationEntourageImageContainer,
   StyledAssociationEntourageButtonContainer,
 } from './AsociationEntourage.styles';
@@ -22,12 +24,12 @@ export const AssociationEntourage = () => {
   return (
     <Background blend={{ colorHex: COLORS.black }}>
       <Section>
-        <div className="uk-text-center">
+        <StyledAssociationEntourageContent>
           <StyledAssociationEntourageGrid middle center childWidths={['1-2@m']}>
             <div>
               <SvgIcon name="LogoEntourage" width={50} height={50} />
               <H2 center color="white" title="A propos d'Entourage" />
-              <div className="uk-light">
+              <StyledAssociationEntourageLight>
                 <Text center color="white">
                   Depuis 2014, l&apos;association Entourage lutte contre la
                   précarité et l&apos;exclusion en redonnant des réseaux de
@@ -47,7 +49,7 @@ export const AssociationEntourage = () => {
                     Voir le site
                   </Button>
                 </StyledAssociationEntourageButtonContainer>
-              </div>
+              </StyledAssociationEntourageLight>
             </div>
             <StyledAssociationEntourageImageContainer>
               <LegacyImg
@@ -57,7 +59,7 @@ export const AssociationEntourage = () => {
               />
             </StyledAssociationEntourageImageContainer>
           </StyledAssociationEntourageGrid>
-        </div>
+        </StyledAssociationEntourageContent>
       </Section>
     </Background>
   );
