@@ -18,6 +18,7 @@ const EVENT_MODES = [
 
 export enum EventType {
   UNKNOWN = 'UNKNOWN',
+  AWARENESS_WORKSHOP = 'AWARENESS_WORKSHOP',
   WELCOME_SESSION = 'WELCOME_SESSION',
   COFFEE_SESSION = 'COFFEE_SESSION',
   NETWORKING = 'NETWORKING',
@@ -71,6 +72,10 @@ const EVENT_TYPES = [
     name: 'Evenement de convivialité',
     type: EventType.FRIENDLINESS,
   },
+  {
+    name: 'Atelier de sensibilisation',
+    type: EventType.AWARENESS_WORKSHOP,
+  },
 ];
 
 export const EVENT_IMAGES: {
@@ -86,6 +91,8 @@ export const EVENT_IMAGES: {
   [EventType.APERO_ENTOURAGE]: '/static/img/events/apero_entourage.jpg',
   [EventType.WORKSHOP]: '/static/img/events/workshop.jpg',
   [EventType.FRIENDLINESS]: '/static/img/events/friendliness.jpg',
+  // TODO: no dedicated image yet — reuses the generic placeholder until one is designed
+  [EventType.AWARENESS_WORKSHOP]: '/static/img/events/placeholder.png',
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
 
