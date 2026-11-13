@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import {
+  ReportOrigin,
   ReportTargetFilter,
   ReportTargetsParams,
   ReportTargetStatus,
@@ -9,11 +10,12 @@ import { AdminZone } from '@/src/constants/departements';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { ALL_FILTER_VALUE, REPORTS_PATH } from './reports.utils';
 
-export type ReportFilterKey = 'type' | 'status' | 'zone';
+export type ReportFilterKey = 'type' | 'status' | 'origin' | 'zone';
 
 export interface ReportFilterValues {
   type: ReportTargetFilter | typeof ALL_FILTER_VALUE;
   status: ReportTargetStatus | typeof ALL_FILTER_VALUE;
+  origin: ReportOrigin | typeof ALL_FILTER_VALUE;
   zone: AdminZone | typeof ALL_FILTER_VALUE;
 }
 
@@ -35,17 +37,20 @@ export function useReportFilters() {
         ALL_FILTER_VALUE) as ReportFilterValues['type'],
       status: (readQueryValue(query.status) ??
         'PENDING') as ReportFilterValues['status'],
+      origin: (readQueryValue(query.origin) ??
+        ALL_FILTER_VALUE) as ReportFilterValues['origin'],
       zone: (readQueryValue(query.zone) ??
         user?.zone ??
         ALL_FILTER_VALUE) as ReportFilterValues['zone'],
     }),
-    [query.status, query.type, query.zone, user?.zone]
+    [query.status, query.type, query.origin, query.zone, user?.zone]
   );
 
   const params = useMemo<Omit<ReportTargetsParams, 'cursor'>>(
     () => ({
       ...(values.type !== ALL_FILTER_VALUE ? { type: values.type } : {}),
       ...(values.status !== ALL_FILTER_VALUE ? { status: values.status } : {}),
+      ...(values.origin !== ALL_FILTER_VALUE ? { origin: values.origin } : {}),
       ...(values.zone !== ALL_FILTER_VALUE ? { zone: values.zone } : {}),
     }),
     [values]

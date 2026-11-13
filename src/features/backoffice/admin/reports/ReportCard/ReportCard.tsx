@@ -22,7 +22,7 @@ const formatResolution = (report: ReportItem) => {
   if (!report.resolvedAt) {
     return null;
   }
-  if (report.resolution !== 'MANUAL') {
+  if (report.resolution !== 'MANUAL' && report.resolution !== 'DISMISSED') {
     return REPORTS_TAB_LABELS.resolvedAutomatically;
   }
   const adminName = report.resolvedBy
@@ -41,6 +41,7 @@ const formatResolution = (report: ReportItem) => {
 export function ReportCard({ report }: { report: ReportItem }) {
   const resolution = formatResolution(report);
   const { reporter } = report;
+  const isAutomatic = report.origin === 'AUTOMATIC';
   return (
     <StyledReportCard data-testid={`report-${report.id}`}>
       <StyledReportCardHeader>
@@ -63,7 +64,11 @@ export function ReportCard({ report }: { report: ReportItem }) {
             </>
           ) : (
             <>
-              <Text variant="italic">{REPORTS_TAB_LABELS.deletedUser}</Text>
+              <Text variant="italic">
+                {isAutomatic
+                  ? REPORTS_TAB_LABELS.automaticDetection
+                  : REPORTS_TAB_LABELS.deletedUser}
+              </Text>
               <Text size="small" color="darkGray">
                 {formatReportDate(report.createdAt)}
               </Text>

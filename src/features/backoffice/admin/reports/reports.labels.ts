@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {
   ReportGroupMessageState,
+  ReportOrigin,
   ReportTargetFilter,
   ReportTargetStatus,
   ReportTargetType,
@@ -29,6 +30,10 @@ export const REPORTS_TAB_LABELS = {
   breadcrumb: 'Fil d’Ariane',
   reportsTitle: 'Signalements reçus',
   deletedUser: 'Utilisateur supprimé',
+  automaticDetection: 'Détection automatique',
+  automaticBadge: 'Détecté automatiquement',
+  originFilter: 'Origine',
+  allOrigins: 'Toutes origines',
   adminProfile: 'Voir la fiche',
   formatSeeProfileOf: (firstName: string) => `Voir la fiche de ${firstName}`,
   seeProfileOfReporter: 'Voir sa fiche',
@@ -57,8 +62,18 @@ export const REPORTS_TAB_LABELS = {
         ? `ses ${pendingCount} signalements à traiter`
         : 'son signalement à traiter'
     }. Personne n'est prévenu de la décision.`,
+  formatVisibleDecisionText: (pendingCount: number) =>
+    `Classer sans suite ou supprimer le message clôt ${
+      pendingCount > 1
+        ? `ses ${pendingCount} signalements à traiter`
+        : 'son signalement à traiter'
+    }. Le message reste visible tant qu'il n'est pas supprimé. Personne n'est prévenu de la décision.`,
   restoreMessage: 'Rétablir le message',
   restoreDone: 'Le message a été rétabli.',
+  dismissGroupMessage: 'Classer sans suite',
+  dismissGroupMessageNote: 'Note interne (facultative)',
+  dismissGroupMessageDone: 'Le signalement a été classé sans suite.',
+  dismissGroupMessageError: 'Le signalement n’a pas pu être classé sans suite.',
   deleteMessage: 'Supprimer le message',
   deleteReason: 'Motif de suppression (obligatoire)',
   deleteComment: 'Précision (facultative, visible des admins)',
@@ -100,6 +115,11 @@ export const REPORT_TARGET_FILTER_LABELS: {
   CONVERSATION: 'Conversations',
   USER_PROFILE: 'Profils',
   GROUP_MESSAGE: 'Messages de groupe',
+};
+
+export const REPORT_ORIGIN_LABELS: { [K in ReportOrigin]: string } = {
+  MEMBER: 'Membre',
+  AUTOMATIC: 'Détecté automatiquement',
 };
 
 export const GROUP_MESSAGE_STATE_LABELS: {

@@ -8,6 +8,7 @@ import {
   REPORTS_TAB_LABELS,
 } from '../reports.labels';
 import { getReportTargetHref } from '../reports.utils';
+import { ReportTargetOriginBadge } from './ReportTargetOriginBadge';
 import { ReportTargetReasons } from './ReportTargetReasons';
 import {
   StyledReportTargetCard,
@@ -34,6 +35,7 @@ export function ReportTargetRowMobile({ target }: ReportTargetRowProps) {
       </StyledReportTargetMobileHeader>
       <Text weight="semibold">{target.label}</Text>
       <ReportTargetReasons reasons={target.reasons} />
+      <ReportTargetOriginBadge origins={target.origins} />
       <Text size="small" color="darkGray">
         {[
           zones,

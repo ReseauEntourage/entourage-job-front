@@ -65,6 +65,7 @@ const paul = {
 const buildReport = (props: Partial<ReportItem> = {}): ReportItem => ({
   id: 'report-1',
   reporter: paul,
+  origin: 'MEMBER',
   reason: 'INSULTS',
   comment: 'Propos insultants',
   zone: 'LYON',
@@ -95,7 +96,7 @@ const buildGroupMessageTarget = (
     targetId: isReply ? 'reply-1' : 'discussion-1',
     label: 'Refaire un CV — Une réponse signalée',
     status,
-    canResolve: false,
+    canResolve: state === 'VISIBLE' && status === 'PENDING',
     reports: [buildReport(), buildReport({ id: 'report-2', comment: null })],
     context: {
       targetType,
@@ -224,6 +225,21 @@ describe('ReportTargetPage', () => {
     expect(screen.getByText('Écrire à Jeanne')).toBeInTheDocument();
     expect(screen.getByText('Utilisateur supprimé')).toBeInTheDocument();
     expect(screen.getAllByText('Voir la fiche')).toHaveLength(1);
+  });
+
+  it('shows « Détection automatique » for an AUTOMATIC report, not « Utilisateur supprimé »', () => {
+    renderPage({
+      ...buildGroupMessageTarget({ state: 'HIDDEN' }),
+      reports: [
+        buildReport({
+          id: 'report-automatic',
+          reporter: null,
+          origin: 'AUTOMATIC',
+        }),
+      ],
+    });
+    expect(screen.getByText('Détection automatique')).toBeInTheDocument();
+    expect(screen.queryByText('Utilisateur supprimé')).toBeNull();
   });
 
   it('closes a profile with the note', async () => {
@@ -455,14 +471,47 @@ describe('ReportTargetPage', () => {
     );
   });
 
-  (['VISIBLE', 'DELETED'] as const).forEach((state) => {
-    it(`offers no decision on a ${state.toLowerCase()} message`, () => {
+  it('offers no decision on a resolved message, visible or deleted', () => {
+    (['VISIBLE', 'DELETED'] as const).forEach((state) => {
       renderPage(buildGroupMessageTarget({ state, status: 'RESOLVED' }));
       expect(screen.queryByTestId('report-decision')).toBeNull();
       expect(screen.queryByText('Rétablir le message')).toBeNull();
       expect(screen.queryByText('Supprimer le message')).toBeNull();
       expect(screen.queryByTestId('report-resolve-form')).toBeNull();
     });
+  });
+
+  it('offers « Classer sans suite » and « Supprimer » on a visible pending message, no « Rétablir »', () => {
+    renderPage(buildGroupMessageTarget({ state: 'VISIBLE' }));
+    const decision = screen.getByTestId('report-decision');
+    expect(decision).toHaveTextContent('Votre décision');
+    expect(decision).toHaveTextContent('ses 2 signalements à traiter');
+    expect(decision).toHaveTextContent('reste visible');
+    expect(screen.getByTestId('report-decision-dismiss')).toHaveTextContent(
+      'Classer sans suite'
+    );
+    expect(screen.getByTestId('report-decision-delete')).toHaveTextContent(
+      'Supprimer le message'
+    );
+    expect(screen.queryByTestId('report-decision-restore')).toBeNull();
+  });
+
+  it('dismisses the reports of a visible message with a note, without touching it', async () => {
+    mockResolve.mockResolvedValue({ data: { resolvedCount: 2 } });
+    renderPage(buildGroupMessageTarget({ state: 'VISIBLE' }));
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'Faux positif' },
+    });
+    fireEvent.click(screen.getByTestId('report-decision-dismiss'));
+
+    await waitFor(() =>
+      expect(mockResolve).toHaveBeenCalledWith({
+        targetType: 'POST_REPLY',
+        targetId: 'reply-1',
+        note: 'Faux positif',
+      })
+    );
   });
 
   it('shows the versions of the reported message, current one first', () => {
