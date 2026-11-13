@@ -7,6 +7,7 @@ import { BackLink } from '@/src/components/ui/BackLink';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { MEMBER_TABS } from '@/src/constants';
 import { MemberDetails } from '@/src/features/backoffice/admin/members/MemberDetails';
+import { StyledMemberNotFoundTitle } from '@/src/features/backoffice/admin/members/MemberDetails/MemberDetails.styles';
 import { useMemberId } from '@/src/hooks/queryParams/useMemberId';
 import { useTab } from '@/src/hooks/queryParams/useTab';
 import { usePrevious } from '@/src/hooks/utils';
@@ -60,12 +61,14 @@ const User = () => {
   if (!user) {
     return (
       <LayoutBackOffice title="Page introuvable - Gestion des membres">
-        <Section className="uk-text-center" size="large">
+        <Section textCenter size="large">
           <Grid column gap="large" noRowGap>
             <BackLink label="Retour" />
             <div>
               <hr className="ent-divier-backoffice" />
-              <h3 className="uk-text-bold">Ce profil n’est pas disponible</h3>
+              <StyledMemberNotFoundTitle>
+                Ce profil n’est pas disponible
+              </StyledMemberNotFoundTitle>
               <p>
                 Le lien que vous avez suivi est peut-être rompu, ou la page a
                 été supprimée.

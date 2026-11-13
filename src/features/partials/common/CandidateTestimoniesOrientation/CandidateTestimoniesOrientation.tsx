@@ -2,7 +2,15 @@ import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { LegacyImg, Section, Carousel } from '@/src/components/ui';
 import { H2 } from '@/src/components/ui/Headings';
+import { StyledPrimary } from '@/src/features/partials/common/PageText/PageText.styles';
 import { CarouselItem } from '@/src/features/partials/utils/CarouselItem';
+import {
+  StyledTestimoniesCarousel,
+  StyledTestimoniesVideo,
+  StyledTestimonyAuthor,
+  StyledTestimonyClosingQuote,
+  StyledTestimonyQuote,
+} from './CandidateTestimoniesOrientation.styles';
 
 const testimonies = [
   {
@@ -51,15 +59,14 @@ export const CandidateTestimoniesOrientation = ({
           title={
             title || (
               <>
-                Les candidats{' '}
-                <span className="uk-text-primary">témoignent</span>
+                Les candidats <StyledPrimary>témoignent</StyledPrimary>
               </>
             )
           }
           center
         />
       )}
-      <div className="uk-flex uk-flex-center uk-margin-large-top">
+      <StyledTestimoniesCarousel>
         <Carousel style="default">
           {testimonies.map(({ author, image, quote }, index) => {
             return (
@@ -75,32 +82,25 @@ export const CandidateTestimoniesOrientation = ({
                       height={21}
                       src="/static/img/guillemets-bleu.png"
                     />
-                    <p className="uk-text-small uk-margin-small uk-text-italic">
-                      {quote}
-                    </p>
-                    <div
-                      className="uk-text-bottom"
-                      style={{ display: 'flex', justifyContent: 'flex-end' }}
-                    >
+                    <StyledTestimonyQuote>{quote}</StyledTestimonyQuote>
+                    <StyledTestimonyClosingQuote>
                       <LegacyImg
                         alt="guillemets-petits"
                         width={15}
                         height={12}
                         src="/static/img/guillemets-gris.png"
                       />
-                    </div>
-                    <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
-                      {author}
-                    </p>
+                    </StyledTestimonyClosingQuote>
+                    <StyledTestimonyAuthor>{author}</StyledTestimonyAuthor>
                   </div>
                 }
               />
             );
           })}
         </Carousel>
-      </div>
+      </StyledTestimoniesCarousel>
       {!noVideo && (
-        <div className="uk-margin-medium-top">
+        <StyledTestimoniesVideo>
           <LiteYouTubeEmbed
             id="ztZB4BIBi44"
             poster="maxresdefault"
@@ -109,7 +109,7 @@ export const CandidateTestimoniesOrientation = ({
             aspectHeight={720}
             params="rel=0&showinfo=0&iv_load_policy=3"
           />
-        </div>
+        </StyledTestimoniesVideo>
       )}
     </Section>
   );

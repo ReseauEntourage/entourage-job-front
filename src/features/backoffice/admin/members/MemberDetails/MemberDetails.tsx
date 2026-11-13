@@ -6,6 +6,7 @@ import { BackLink } from '@/src/components/ui/BackLink';
 import { MEMBER_TABS } from '@/src/constants';
 import { useTab } from '@/src/hooks/queryParams/useTab';
 
+import { StyledMemberTab, StyledMemberTabs } from './MemberDetails.styles';
 import { MemberDetailsHeader } from './MemberDetailsHeader';
 import { ParametersMemberTab } from './MemberTab';
 
@@ -25,15 +26,15 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
             <BackLink label="Retour" />
           </Grid>
           <MemberDetailsHeader user={user} />
-          <ul className="uk-subnav">
-            <li className={tab === MEMBER_TABS.PARAMETERS ? 'uk-active' : ''}>
+          <StyledMemberTabs>
+            <StyledMemberTab $active={tab === MEMBER_TABS.PARAMETERS}>
               <SimpleLink
                 href={`/backoffice/admin/membres/${user.id}/parametres`}
               >
                 Paramètres
               </SimpleLink>
-            </li>
-          </ul>
+            </StyledMemberTab>
+          </StyledMemberTabs>
 
           {(tab === MEMBER_TABS.PARAMETERS || !tab) && (
             <ParametersMemberTab user={user} setUser={setUser} />
