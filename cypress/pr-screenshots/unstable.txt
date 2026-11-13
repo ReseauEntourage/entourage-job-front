@@ -35,3 +35,4 @@ public-page-states-liste-de-cv-vide.mobile.png
 moderation-reports-liste-des-signalements.desktop.png
 moderation-reports-liste-des-signalements.mobile.png
 admin-profile-wording-profil-admin-vu-par-un-candidat.mobile.png
+public-page-candidats-candidats.mobile.png

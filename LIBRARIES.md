@@ -144,20 +144,6 @@ Validates whether a string is a real DOM/SVG attribute.
 
 **Alternatives:** manual prop allowlists, `@styled-system/should-forward-prop`.
 
-### `uikit`
-
-| | |
-|---|---|
-| **Version** | `3.6.22` |
-| **Release date** | ~2021 (approximate) |
-| **Changelog** | [changelog](https://github.com/uikit/uikit/blob/develop/changelog.md) |
-
-Lightweight CSS/JS UI framework (grid, offcanvas, utility classes).
-
-**Used in:** A customized/vendored fork — comment in `_app.tsx` notes "modified version of UIkit because of a bug where we can't touch scroll on Offcanvas". CSS imported globally from `src/styles/dist/css/uikit.entourage.min.css`; JS API used directly in `src/hooks/useUploadImage.ts`, `src/components/ui/Grid.tsx`, `src/components/ui/Carousel/Carousel.tsx`, and its utility classes are used across ~40 files.
-
-**Alternatives:** Bootstrap, Tailwind CSS, Bulma.
-
 ### `lucide-react`
 
 | | |
@@ -322,7 +308,7 @@ Phone number input with country-aware formatting and validation.
 
 Client-side image resizing before upload.
 
-**Used in:** `src/hooks/useUploadImage.ts` only, to resize avatars/photos client-side prior to upload, alongside `uikit`'s upload/progress helpers.
+**Used in:** `src/hooks/useUploadImage.ts` only, to resize avatars/photos client-side prior to upload.
 
 **Alternatives:** browser-image-compression, canvas-based manual resizing.
 
