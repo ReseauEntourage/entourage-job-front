@@ -4,6 +4,7 @@ import { MemberUser } from '@/src/api/types';
 import { LayoutBackOffice } from '@/src/components/layouts/LayoutBackOffice';
 import { Grid, Section } from '@/src/components/ui';
 import { BackLink } from '@/src/components/ui/BackLink';
+import { Spinner } from '@/src/components/ui/Spinner';
 import { MEMBER_TABS } from '@/src/constants';
 import { MemberDetails } from '@/src/features/backoffice/admin/members/MemberDetails';
 import { useMemberId } from '@/src/hooks/queryParams/useMemberId';
@@ -47,7 +48,7 @@ const User = () => {
           <Grid column gap="large" noRowGap>
             <BackLink label="Retour" />
             <div>
-              <div data-uk-spinner="" />
+              <Spinner variant="dash" />
               <hr className="ent-divier-backoffice" />
             </div>
           </Grid>

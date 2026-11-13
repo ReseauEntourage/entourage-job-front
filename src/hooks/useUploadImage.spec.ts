@@ -2,20 +2,19 @@ import { renderHook } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import Resizer from 'react-image-file-resizer';
-import UIkit from 'uikit';
+import { notificationsActions } from '@/src/use-cases/notifications';
 import { useUploadImage } from './useUploadImage';
 
 jest.mock('react-image-file-resizer', () => ({
   __esModule: true,
   default: { imageFileResizer: jest.fn() },
 }));
-jest.mock('uikit', () => ({
-  __esModule: true,
-  default: { notification: jest.fn() },
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  useDispatch: () => mockDispatch,
 }));
 
 const mockResize = Resizer.imageFileResizer as jest.Mock;
-const mockNotification = UIkit.notification as jest.Mock;
 
 describe('useUploadImage', () => {
   const resized = new Blob(['resized']);
@@ -47,7 +46,7 @@ describe('useUploadImage', () => {
       'blob'
     );
     expect(URL.createObjectURL).toHaveBeenCalledWith(resized);
-    expect(mockNotification).not.toHaveBeenCalled();
+    expect(mockDispatch).not.toHaveBeenCalled();
   });
 
   it('warns when the file is not an image', async () => {
@@ -55,9 +54,12 @@ describe('useUploadImage', () => {
     const { result } = renderHook(() => useUploadImage());
     await result.current(file);
 
-    expect(mockNotification).toHaveBeenCalledWith(
-      'Le fichier doit être une image',
-      'danger'
+    expect(mockDispatch).toHaveBeenCalledWith(
+      notificationsActions.addNotification({
+        type: 'danger',
+        variant: 'toast',
+        message: 'Le fichier doit être une image',
+      })
     );
   });
 

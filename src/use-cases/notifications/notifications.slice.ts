@@ -7,6 +7,8 @@ interface State {
     id: string;
     type: 'danger' | 'success';
     message: string;
+    /** `toast`: a short message at the top of the page, instead of a panel on the side. */
+    variant?: 'toast';
   }[];
 }
 
@@ -20,7 +22,11 @@ export const slice = createSlice({
   reducers: {
     addNotification(
       state,
-      action: PayloadAction<{ type: 'danger' | 'success'; message: string }>
+      action: PayloadAction<{
+        type: 'danger' | 'success';
+        message: string;
+        variant?: 'toast';
+      }>
     ) {
       const id = uuid();
       state.notifications = [...state.notifications, { id, ...action.payload }];

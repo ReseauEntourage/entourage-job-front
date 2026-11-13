@@ -11,6 +11,7 @@ import {
 } from '@/src/use-cases/notifications';
 import { NotificationWrapper } from './NotificationWrapper';
 import { NotificationsContainer } from './NotificationsContainer';
+import { ToastNotification, TOAST_DURATION_MS } from './ToastNotification';
 
 describe('NotificationsContainer', () => {
   it('renders nothing without notification', () => {
@@ -73,6 +74,87 @@ describe('NotificationWrapper', () => {
 
     await act(async () => {
       await jest.advanceTimersByTimeAsync(6000);
+    });
+    expect(selectNotifications(store.getState())).toHaveLength(0);
+  });
+});
+
+describe('toasts', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('renders a toast apart from the side notifications', () => {
+    const store = createTestStore();
+    store.dispatch(
+      notificationsActions.addNotification({
+        type: 'danger',
+        variant: 'toast',
+        message: 'Le fichier doit être une image',
+      })
+    );
+    store.dispatch(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: 'Bien enregistré',
+      })
+    );
+    renderWithProviders(<NotificationsContainer />, { store });
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Le fichier doit être une image'
+    );
+    expect(screen.getByText('Bien enregistré')).toBeInTheDocument();
+  });
+
+  it('removes the toast from the store after five seconds', async () => {
+    const store = createTestStore();
+    store.dispatch(
+      notificationsActions.addNotification({
+        type: 'danger',
+        variant: 'toast',
+        message: 'Oops',
+      })
+    );
+    const { id } = selectNotifications(store.getState())[0];
+    renderWithProviders(
+      <ToastNotification id={id} type="danger" message="Oops" />,
+      { store }
+    );
+
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(TOAST_DURATION_MS - 500);
+    });
+    expect(selectNotifications(store.getState())).toHaveLength(1);
+
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(1000);
+    });
+    expect(selectNotifications(store.getState())).toHaveLength(0);
+  });
+
+  it('removes the toast on a click', async () => {
+    const store = createTestStore();
+    store.dispatch(
+      notificationsActions.addNotification({
+        type: 'danger',
+        variant: 'toast',
+        message: 'Oops',
+      })
+    );
+    const { id } = selectNotifications(store.getState())[0];
+    renderWithProviders(
+      <ToastNotification id={id} type="danger" message="Oops" />,
+      { store }
+    );
+
+    await act(async () => {
+      screen.getByRole('alert').click();
+      await jest.advanceTimersByTimeAsync(300);
     });
     expect(selectNotifications(store.getState())).toHaveLength(0);
   });

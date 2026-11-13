@@ -1,6 +1,17 @@
 import React from 'react';
 import { Button, LegacyImg, Grid, ButtonSize } from '@/src/components/ui';
-import { StyledMultipleCTADivider } from './MultipleCTA.styles';
+import { useHeightMatch } from '@/src/hooks/useHeightMatch';
+import {
+  StyledMultipleCTAButtons,
+  StyledMultipleCTABody,
+  StyledMultipleCTAContent,
+  StyledMultipleCTADivider,
+  StyledMultipleCTAItem,
+  StyledMultipleCTANumber,
+  StyledMultipleCTAPicture,
+  StyledMultipleCTAText,
+  StyledMultipleCTATitle,
+} from './MultipleCTA.styles';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -31,70 +42,52 @@ export const MultipleCTA = ({
   spacing,
   className,
 }: MultipleCTAProps) => {
+  const rootRef = useHeightMatch<HTMLDivElement>(['h4', '.text']);
+
   return (
-    <div data-uk-height-match="target : h4, .text" className={className}>
+    <div ref={rootRef} className={className}>
       <Grid
         childWidths={[`1-${data.length}@m`]}
         match
         gap={spacing}
         items={data.map((item, index) => {
           return (
-            <div
-              key={index.toString()}
-              className="uk-flex uk-flex-column uk-flex-middle"
-            >
+            <StyledMultipleCTAItem key={index.toString()}>
               {item.img && (
-                <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
+                <StyledMultipleCTAPicture>
                   <LegacyImg src={item.img} alt="" height={100} width={100} />
-                </div>
+                </StyledMultipleCTAPicture>
               )}
-              <div className="uk-flex uk-flex-1">
+              <StyledMultipleCTABody>
                 {showNumbers && (
-                  <div
-                    className="uk-text-bold uk-text-primary uk-text-large uk-margin-medium-right uk-margin-small-top"
+                  <StyledMultipleCTANumber
                     style={{ fontSize: 46, lineHeight: 1 }}
                   >
                     {index + 1}
-                  </div>
+                  </StyledMultipleCTANumber>
                 )}
-                <div className="uk-flex uk-flex-column uk-flex-1">
+                <StyledMultipleCTAContent>
                   {item.title && (
-                    <h4
-                      className={`${
-                        showHorizontalDividers
-                          ? 'uk-text-left uk-flex-left'
-                          : 'uk-text-center uk-flex-center'
-                      } ${
-                        item.img ? 'uk-flex-middle' : 'uk-flex-top'
-                      } uk-flex-1 uk-text-bold uk-flex`}
+                    <StyledMultipleCTATitle
+                      $left={!!showHorizontalDividers}
+                      $hasPicture={!!item.img}
                     >
                       {item.title}
-                    </h4>
+                    </StyledMultipleCTATitle>
                   )}
                   {showHorizontalDividers && <StyledMultipleCTADivider />}
                   {item.text && (
-                    <div
-                      className={`text ${
-                        item.button ? '' : 'uk-margin-remove-bottom'
-                      } ${
-                        showHorizontalDividers ? 'uk-margin-medium-top' : ''
-                      } ${
-                        !showHorizontalDividers && item.title
-                          ? 'uk-text-center'
-                          : ''
-                      } uk-flex-1 uk-margin-small-bottom`}
+                    <StyledMultipleCTAText
+                      className="text"
+                      $hasButton={!!item.button}
+                      $spaced={!!showHorizontalDividers}
+                      $centered={!showHorizontalDividers && !!item.title}
                     >
                       {item.text}
-                    </div>
+                    </StyledMultipleCTAText>
                   )}
                   {item.button && (
-                    <div
-                      className={`${
-                        showHorizontalDividers
-                          ? 'uk-flex-start'
-                          : 'uk-flex-center'
-                      } uk-flex uk-flex-middle uk-margin-small-top`}
-                    >
+                    <StyledMultipleCTAButtons $left={!!showHorizontalDividers}>
                       <Button
                         href={item.button.href}
                         variant={item.button.variant || 'secondary'}
@@ -106,11 +99,11 @@ export const MultipleCTA = ({
                       >
                         {item.button.label}
                       </Button>
-                    </div>
+                    </StyledMultipleCTAButtons>
                   )}
-                </div>
-              </div>
-            </div>
+                </StyledMultipleCTAContent>
+              </StyledMultipleCTABody>
+            </StyledMultipleCTAItem>
           );
         })}
       />
