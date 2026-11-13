@@ -80,9 +80,8 @@ export const StyledToast = styled.div<{
 }>`
   position: relative;
   padding: 15px;
-  background: ${COLORS.sectionMuted};
-  color: ${({ $type }) =>
-    $type === 'danger' ? COLORS.danger : STATUS_COLORS.success};
+  background-color: ${({ $type }) => backgroundColor[$type]};
+  color: ${COLORS.white};
   font-size: 1.25rem;
   line-height: 1.4;
   cursor: pointer;

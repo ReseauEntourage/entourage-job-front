@@ -111,6 +111,23 @@ describe('toasts', () => {
     expect(screen.getByText('Bien enregistré')).toBeInTheDocument();
   });
 
+  it('shows a danger toast white on the status red', () => {
+    const store = createTestStore();
+    store.dispatch(
+      notificationsActions.addNotification({
+        type: 'danger',
+        variant: 'toast',
+        message: 'Oops',
+      })
+    );
+    renderWithProviders(<NotificationsContainer />, { store });
+
+    expect(screen.getByRole('alert')).toHaveStyle({
+      backgroundColor: 'rgb(241, 84, 93)',
+      color: 'rgb(255, 255, 255)',
+    });
+  });
+
   it('removes the toast from the store after five seconds', async () => {
     const store = createTestStore();
     store.dispatch(
