@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { act, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import React from 'react';
@@ -150,6 +150,30 @@ describe('toasts', () => {
 
     await act(async () => {
       await jest.advanceTimersByTimeAsync(1000);
+    });
+    expect(selectNotifications(store.getState())).toHaveLength(0);
+  });
+
+  it('removes the toast from the keyboard', async () => {
+    const store = createTestStore();
+    store.dispatch(
+      notificationsActions.addNotification({
+        type: 'danger',
+        variant: 'toast',
+        message: 'Oops',
+      })
+    );
+    const { id } = selectNotifications(store.getState())[0];
+    renderWithProviders(
+      <ToastNotification id={id} type="danger" message="Oops" />,
+      { store }
+    );
+
+    const toast = screen.getByRole('alert');
+    expect(toast).toHaveAttribute('tabindex', '0');
+    await act(async () => {
+      fireEvent.keyDown(toast, { key: 'Enter' });
+      await jest.advanceTimersByTimeAsync(300);
     });
     expect(selectNotifications(store.getState())).toHaveLength(0);
   });

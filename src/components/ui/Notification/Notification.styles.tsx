@@ -88,6 +88,11 @@ export const StyledToast = styled.div<{
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transition: opacity ${TOAST_FADE_MS}ms linear;
 
+  &:focus-visible {
+    outline: 2px solid ${COLORS.white};
+    outline-offset: -4px;
+  }
+
   * + & {
     margin-top: 10px;
   }

@@ -45,6 +45,12 @@ export const StyledFilterCheckbox = styled.input.attrs({ type: 'checkbox' })`
     background-color: ${COLORS.primaryBlue};
   }
 
+  /* Keyboard focus stays visible on a checked box, whose border is transparent. */
+  &:focus-visible {
+    outline: 2px solid ${COLORS.primaryBlue};
+    outline-offset: 2px;
+  }
+
   &:disabled {
     background-color: ${COLORS.sectionMuted};
     border-color: ${COLORS.lightRule};

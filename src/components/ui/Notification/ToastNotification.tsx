@@ -47,7 +47,19 @@ export const ToastNotification = ({
   }, [remove]);
 
   return (
-    <StyledToast $type={type} $visible={visible} role="alert" onClick={remove}>
+    <StyledToast
+      $type={type}
+      $visible={visible}
+      role="alert"
+      tabIndex={0}
+      onClick={remove}
+      onKeyDown={(event) => {
+        if (['Enter', ' ', 'Escape'].includes(event.key)) {
+          event.preventDefault();
+          remove();
+        }
+      }}
+    >
       {message}
     </StyledToast>
   );
