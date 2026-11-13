@@ -1,0 +1,38 @@
+# Captures that are not reproducible between two runs of the same code (timers, animated bars,
+# carousels advancing on their own, content-dependent heights). `pnpm screenshots:compare
+# --ignore cypress/pr-screenshots/unstable.txt` skips them: review these ones by eye.
+# Measured with three full runs on the same build (remove-uikit, EN-7175): the first eleven
+# differ between two runs, the last five showed up on the third one.
+admin-dashboard-sans-conversation.desktop.png
+admin-dashboard-sans-conversation.mobile.png
+admin-profile-wording-profil-admin-vu-par-lui-meme.mobile.png
+dashboard-widget-messagerie.mobile.png
+help-groups-formation-a-terminer.mobile.png
+messaging-mobile-header-choix-du-reseau-de-partage.mobile.png
+messaging-mobile-header-en-tete-de-conversation.mobile.png
+public-page-aider-aider.desktop.png
+public-page-cv-cv-public.desktop.png
+public-page-cv-cv-public.mobile.png
+public-page-verification-email-verification-de-l-adresse-e-mail.desktop.png
+admin-dashboard-tableau-de-bord-de-l-admin.desktop.png
+admin-members-liste-des-membres.mobile.png
+help-groups-menu-d-un-candidat.mobile.png
+public-page-data-privacy-politique-de-confidentialite.desktop.png
+public-page-home-accueil.desktop.png
+admin-members-liste-des-membres.desktop.png
+admin-members-filtre-zone-ouvert.desktop.png
+public-page-home-accueil.mobile.png
+public-page-aider-aider.mobile.png
+public-page-coach-certification-certificat-de-coach.desktop.png
+public-page-coach-certification-certificat-de-coach.mobile.png
+public-page-entreprises-recruter-inclusif-recruter-inclusif.mobile.png
+public-page-candidats-candidats.desktop.png
+help-groups-formation-a-terminer.desktop.png
+public-page-states-liste-de-cv.desktop.png
+# Added with group 4 (measured on two runs of the same build: lazy pictures loaded or not at capture time, bimodal heights).
+public-page-states-liste-de-cv.mobile.png
+public-page-states-liste-de-cv-vide.mobile.png
+moderation-reports-liste-des-signalements.desktop.png
+moderation-reports-liste-des-signalements.mobile.png
+admin-profile-wording-profil-admin-vu-par-un-candidat.mobile.png
+public-page-candidats-candidats.mobile.png

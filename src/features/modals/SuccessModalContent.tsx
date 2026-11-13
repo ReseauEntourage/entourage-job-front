@@ -2,6 +2,8 @@ import React from 'react';
 import { Button } from '@/src/components/ui';
 import { COLORS } from '@/src/constants/styles';
 import { LucidIcon } from '../../components/ui/Icons/LucidIcon';
+import { StyledModalActions } from './ModalActions.styles';
+import { StyledSuccessModalMessage } from './SuccessModalContent.styles';
 
 interface SuccessModalContentProps {
   text: React.ReactNode;
@@ -14,14 +16,11 @@ export const SuccessModalContent = ({
 }: SuccessModalContentProps) => {
   return (
     <>
-      <div
-        className="uk-text-center uk-flex uk-flex-column uk-flex-center uk-flex-middle"
-        data-testid="success-modal-content"
-      >
+      <StyledSuccessModalMessage data-testid="success-modal-content">
         <LucidIcon name="Check" size={100} color={COLORS.primaryBlue} />
         {text}
-      </div>
-      <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
+      </StyledSuccessModalMessage>
+      <StyledModalActions $marginTop={40}>
         <Button
           variant="default"
           onClick={closeModal}
@@ -29,7 +28,7 @@ export const SuccessModalContent = ({
         >
           Fermer
         </Button>
-      </div>
+      </StyledModalActions>
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { COLORS } from '@/src/constants/styles';
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -35,4 +36,19 @@ export const StyledInfoContainer = styled.div`
   .bold {
     font-weight: bold;
   }
+`;
+
+/** Zone of the member, in a small colored tag. */
+export const StyledZoneLabel = styled.span`
+  display: inline-block;
+  margin-top: 5px;
+  padding: 0 10px;
+  border-radius: 5px;
+  background: ${COLORS.primaryBlue};
+  color: ${COLORS.white};
+  font-size: 0.875rem;
+  line-height: 20px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: normal;
 `;

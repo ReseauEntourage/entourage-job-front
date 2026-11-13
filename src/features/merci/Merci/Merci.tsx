@@ -1,8 +1,7 @@
 import React from 'react';
 import { ContainerWithTextCentered, Text } from '@/src/components/ui';
-import { Button } from '@/src/components/ui/Button';
 import { H3 } from '@/src/components/ui/Headings';
-import { StyledMerciButtonContainer } from './Merci.styles';
+import { StyledMerciButton, StyledMerciButtonContainer } from './Merci.styles';
 
 const ThankYouMessages = {
   coach:
@@ -32,9 +31,9 @@ export const Merci = ({
       <Text size="large">À bientôt&nbsp;!</Text>
       <Text size="large">L&apos;équipe Entourage Pro</Text>
       <StyledMerciButtonContainer>
-        <Button href="/" variant="primary" className="uk-margin-large-top">
+        <StyledMerciButton href="/" variant="primary">
           Revenir à la page d&apos;accueil
-        </Button>
+        </StyledMerciButton>
       </StyledMerciButtonContainer>
     </ContainerWithTextCentered>
   );

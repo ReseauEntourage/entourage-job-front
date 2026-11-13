@@ -1,3 +1,4 @@
+import './seed-random';
 import '../support/commands';
 
 export interface CaptureOptions {

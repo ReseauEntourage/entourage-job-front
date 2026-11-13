@@ -3,21 +3,21 @@ import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
 import { Grid, Section } from '@/src/components/ui';
 import { Chapter } from '@/src/features/partials/common/Chapter';
+import { StyledPrimary } from '@/src/features/partials/common/PageText/PageText.styles';
+import {
+  StyledInnovationCard,
+  StyledInnovationNumber,
+  StyledInnovationsContent,
+  StyledInnovationsTitle,
+  StyledInnovationText,
+} from '@/src/features/partials/pages/EntouragePro/EntouragePro.styles';
 
 const Card = ({ text, number }) => {
   return (
-    <div
-      key={number}
-      className="uk-flex uk-card uk-card-small uk-card-primary uk-card-body uk-box-shadow-medium"
-    >
-      <div
-        className="uk-text-bold uk-text-primary uk-text-large uk-margin-small-right"
-        style={{ fontSize: 46, lineHeight: 1 }}
-      >
-        {number}
-      </div>
-      <div className="uk-text-primary uk-margin-small-left">{text}</div>
-    </div>
+    <StyledInnovationCard key={number}>
+      <StyledInnovationNumber>{number}</StyledInnovationNumber>
+      <StyledInnovationText>{text}</StyledInnovationText>
+    </StyledInnovationCard>
   );
 };
 
@@ -179,7 +179,7 @@ const EntouragePro = () => {
         title={
           <>
             Entourage Pro, une{' '}
-            <span className="uk-text-primary">brique supplémentaire</span> dans
+            <StyledPrimary>brique supplémentaire</StyledPrimary> dans
             l’écosystème de l’inclusion et l’emploi
           </>
         }
@@ -202,12 +202,11 @@ const EntouragePro = () => {
         direction="right"
       />
       <Section container="small" style="default">
-        <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-          <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
-            Quelle est{' '}
-            <span className="uk-text-primary">l&apos;innovation</span> de
+        <StyledInnovationsContent>
+          <StyledInnovationsTitle>
+            Quelle est <StyledPrimary>l&apos;innovation</StyledPrimary> de
             Entourage Pro&nbsp;?
-          </h2>
+          </StyledInnovationsTitle>
           <Grid masonry top gap="medium" eachWidths={['1-3@m', '2-3@m']}>
             <Card
               key={0}
@@ -220,7 +219,7 @@ const EntouragePro = () => {
               })}
             </Grid>
           </Grid>
-        </div>
+        </StyledInnovationsContent>
       </Section>
     </Layout>
   );

@@ -10,6 +10,7 @@ import {
   StyledInfoContainer,
   StyledNameContainer,
   StyledRoleContainer,
+  StyledZoneLabel,
 } from './MemberDetailsHeader.styles';
 
 interface MemberDetailsHeaderProps {
@@ -35,9 +36,9 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
           {user.firstName} {user.lastName}
           {user.organization ? ` - ${user.organization.name}` : ''}
         </StyledNameContainer>
-        <span className="uk-label">
+        <StyledZoneLabel>
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
-        </span>
+        </StyledZoneLabel>
         {user.role === UserRoles.REFERER && (
           <StyledRoleContainer>
             <LucidIcon name="User" />

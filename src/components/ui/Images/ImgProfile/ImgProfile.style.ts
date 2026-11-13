@@ -1,6 +1,12 @@
 import { styled } from 'styled-components';
 import { COLORS } from '@/src/constants/styles';
 
+/** Initial shown when there is no picture. */
+export const StyledImgProfileInitial = styled.span`
+  font-weight: 400;
+  text-transform: uppercase !important;
+`;
+
 export const StyledImgProfileContainer = styled.div<{
   size: number;
   $highlight: boolean;
@@ -14,7 +20,8 @@ export const StyledImgProfileContainer = styled.div<{
   height: ${({ size }) => size}px;
   flex-shrink: 0;
 
-  ${({ $highlight }) => $highlight && `border: 2px solid ${COLORS.primaryBlue};`}
+  ${({ $highlight }) =>
+    $highlight && `border: 2px solid ${COLORS.primaryBlue};`}
   background-color: ${({ $bgColor }) => $bgColor};
 
   box-sizing: border-box;

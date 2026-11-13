@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import React from 'react';
-import { UIKIT_SCREENS } from '@/src/components/variables';
 import { AnyCantFix } from '@/src/utils/Types';
 
 interface SimpleLinkProps {
@@ -10,7 +9,6 @@ interface SimpleLinkProps {
         pathname: string;
         query?: AnyCantFix; // query can be an object with any key-value
       };
-  visible?: UIKIT_SCREENS;
   children: React.ReactNode;
   className?: string;
   target?: string;
@@ -19,12 +17,10 @@ interface SimpleLinkProps {
   isExternal?: boolean;
   scroll?: boolean;
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
-  toggle?: string;
   shallow?: boolean;
 }
 
 export const SimpleLink = ({
-  visible,
   href,
   children,
   className,
@@ -34,30 +30,14 @@ export const SimpleLink = ({
   isExternal,
   shallow,
   onClick,
-  toggle,
 }: SimpleLinkProps) => {
   const linkRel = rel ?? (target ? 'noopener' : '');
-  let classBuffer = '';
-  if (visible) {
-    classBuffer += ` uk-visible@${visible}`;
-  }
-  if (className) {
-    classBuffer += ` ${className}`;
-  }
-
-  if (toggle) {
-    return (
-      <a onClick={onClick} className={classBuffer} data-uk-toggle={toggle}>
-        {children}
-      </a>
-    );
-  }
   return isExternal || !href ? (
     <a
       onClick={onClick}
       href={typeof href === 'string' ? href : href?.pathname}
       target={target ? '_blank' : ''}
-      className={classBuffer}
+      className={className}
       rel={linkRel}
     >
       {children}
@@ -69,7 +49,7 @@ export const SimpleLink = ({
       shallow={shallow}
       onClick={onClick}
       target={target}
-      className={classBuffer}
+      className={className}
       rel={linkRel}
     >
       {children}

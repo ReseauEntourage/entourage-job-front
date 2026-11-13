@@ -26,6 +26,7 @@ import pluginJest from 'eslint-plugin-jest';
 /* =======================
    Local custom rules
 ======================= */
+import noUikit from './eslint-rules/no-uikit.mjs';
 import noUntransientStyledProps from './eslint-rules/no-untransient-styled-props.mjs';
 
 export default defineConfig([
@@ -38,7 +39,6 @@ export default defineConfig([
       '.next/**',
       'public/**',
       'coverage/**',
-      'src/styles/dist/**',
       '*.config.js',
       'next.config.mjs',
       'server-next.js',
@@ -89,7 +89,12 @@ export default defineConfig([
       'import-x': importPlugin,
       prettier,
       'jsx-a11y': jsxA11y,
-      local: { rules: { 'no-untransient-styled-props': noUntransientStyledProps } },
+      local: {
+        rules: {
+          'no-uikit': noUikit,
+          'no-untransient-styled-props': noUntransientStyledProps,
+        },
+      },
     },
 
     settings: {
@@ -194,6 +199,7 @@ export default defineConfig([
       /* =======================
          Local custom rules
       ======================= */
+      'local/no-uikit': 'error',
       'local/no-untransient-styled-props': 'error',
 
       /* =======================

@@ -1,11 +1,20 @@
 import React from 'react';
 import { Button, Section } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
-import { UIKIT_STYLES } from '@/src/components/variables';
+import { SECTION_STYLES } from '@/src/components/variables';
+import {
+  StyledCenteredSubtitleH3,
+  StyledCenteredSubtitleH4,
+  StyledCenteredTitleH2Medium,
+} from '@/src/features/partials/common/PageText';
+import {
+  StyledSimpleSectionContent,
+  StyledSimpleSectionTitle,
+} from './SimpleSection.styles';
 
 interface SimpleSectionProps {
   id: string;
-  style?: UIKIT_STYLES;
+  style?: SECTION_STYLES;
 
   container?: 'small' | 'large';
   title: React.ReactNode;
@@ -35,20 +44,14 @@ export const SimpleSection = ({
     <Section container={container} style={style}>
       {/* Fix so that the anchor scroll to the right height */}
       <div id={id} style={{ marginTop: -140, paddingTop: 140 }} />
-      <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-        <div className="uk-container-small">
-          <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
-            {title}
-          </h2>
-        </div>
+      <StyledSimpleSectionContent>
+        <StyledSimpleSectionTitle>
+          <StyledCenteredTitleH2Medium>{title}</StyledCenteredTitleH2Medium>
+        </StyledSimpleSectionTitle>
         {fontSize === 'small' ? (
-          <h4 className="uk-align-center uk-text-center uk-margin-large-bottom">
-            {text}
-          </h4>
+          <StyledCenteredSubtitleH4>{text}</StyledCenteredSubtitleH4>
         ) : (
-          <h3 className="uk-align-center uk-text-center uk-margin-large-bottom">
-            {text}
-          </h3>
+          <StyledCenteredSubtitleH3>{text}</StyledCenteredSubtitleH3>
         )}
         {button && (
           <Button
@@ -63,7 +66,7 @@ export const SimpleSection = ({
           </Button>
         )}
         {children}
-      </div>
+      </StyledSimpleSectionContent>
     </Section>
   );
 };

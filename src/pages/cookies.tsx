@@ -10,7 +10,7 @@ export const DataPrivacy = () => {
   };
   return (
     <Layout title="Politique de cookies" noIndex>
-      <Section className="uk-text-center" style="default" size="large">
+      <Section textCenter style="default" size="large">
         <H1 title="Politique de cookies" center />
         <br />
         <br />

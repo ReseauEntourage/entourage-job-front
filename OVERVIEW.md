@@ -64,7 +64,7 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 
 - **Framework / rendering**: Next.js 16.2.12, React 19.2.8, React-DOM 19.2.8, Turbopack (Webpack config kept as fallback).
 - **State**: `@reduxjs/toolkit` 2.12 (incl. RTK Query), `react-redux` 9.3.0, `rxjs` 7.8.2. No sagas — replaced by RTK Query + RTK listener middleware.
-- **Styling**: `styled-components` 6.4.4, SVGR, UIkit 3.6.22 (legacy, being phased out).
+- **Styling**: `styled-components` 6.4.4, SVGR.
 - **Forms / input**: `react-hook-form` 7.54.2, `react-phone-number-input` 3.4.12, `react-select` 5.10.1, `react-image-file-resizer` 0.3.11.
 - **HTTP / utils**: `axios` 1.18.1, `lodash` 4.18, `moment` 2.30, `validator` 13.15, `uuid` 11.1, `check-password-strength` 2.0.10.
 - **Pusher**: `pusher-js` 7.6.0.
@@ -80,7 +80,7 @@ CI/CD: GitHub Actions (`.github/workflows/ci.yml`, `release.yml`, `storybook.yml
 - **Package manager**: pnpm 11.15.1 (npm is not supported on this project).
 - **Framework**: Next.js 16 (Pages Router) + React 19.
 - **State**: Redux Toolkit + RTK Query + listener middleware.
-- **Styling**: styled-components (+ residual UIkit).
+- **Styling**: styled-components (UIkit has been removed).
 - **CI/CD**: GitHub Actions.
 - **Deployment**: Heroku.
 

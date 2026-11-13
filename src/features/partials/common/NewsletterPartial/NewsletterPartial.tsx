@@ -4,15 +4,20 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { isEmail } from 'validator';
 import { Api } from '@/src/api';
-import { Section } from '@/src/components/ui';
 import { Button } from '@/src/components/ui/Button';
 import { H3 } from '@/src/components/ui/Headings';
 import { CheckBox } from '@/src/components/ui/Inputs/CheckBox';
 import { TextInput } from '@/src/components/ui/Inputs/TextInput';
 import { NEWSLETTER_TAGS } from '@/src/constants';
+import { StyledCenteredText } from '@/src/features/partials/common/PageText';
 import { gaEvent } from '@/src/lib/gtag';
 import { notificationsActions } from '@/src/use-cases/notifications';
-import { StyledNLForm } from './NewsletterPartial.styles';
+import {
+  StyledNewsletterError,
+  StyledNewsletterSection,
+  StyledNewsletterSubmit,
+  StyledNLForm,
+} from './NewsletterPartial.styles';
 
 const uuidValue = uuid();
 
@@ -81,17 +86,17 @@ export const NewsletterPartial = ({
   };
 
   return (
-    <Section
+    <StyledNewsletterSection
       id="newsletterForm"
       style={style}
-      className={!padding ? 'uk-padding-remove-vertical' : ''}
+      $noVerticalPadding={!padding}
     >
-      <div className="uk-text-center">
+      <StyledCenteredText>
         <H3
           title="Inscrivez-vous à la newsletter pour suivre l’actualité d’Entourage Pro"
           center
         />
-      </div>
+      </StyledCenteredText>
 
       <StyledNLForm>
         <div className="form-group">
@@ -166,16 +171,16 @@ export const NewsletterPartial = ({
           />
         </div>
         {!isMailValid && (
-          <div data-testid="nl-error-msg" className="uk-text-danger">
+          <StyledNewsletterError data-testid="nl-error-msg">
             Adresse mail invalide.
-          </div>
+          </StyledNewsletterError>
         )}
         {!isTagsValid && (
-          <div className="uk-text-danger uk-text-center">
+          <StyledNewsletterError $center>
             Veuillez renseigner les informations.
-          </div>
+          </StyledNewsletterError>
         )}
-        <div className="uk-flex uk-flex-center uk-margin-small-top">
+        <StyledNewsletterSubmit>
           <Button
             variant="primary"
             rounded
@@ -184,8 +189,8 @@ export const NewsletterPartial = ({
           >
             S&apos;abonner à la newsletter !
           </Button>
-        </div>
+        </StyledNewsletterSubmit>
       </StyledNLForm>
-    </Section>
+    </StyledNewsletterSection>
   );
 };
