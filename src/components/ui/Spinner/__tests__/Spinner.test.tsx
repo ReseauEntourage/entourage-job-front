@@ -22,6 +22,14 @@ describe('Spinner', () => {
     );
   });
 
+  it('accepts a size given as a string', () => {
+    render(<Spinner variant="dash" size="20" />);
+    expect(screen.getByRole('status').querySelector('svg')).toHaveAttribute(
+      'width',
+      '20'
+    );
+  });
+
   it('keeps the ring as the default variant', () => {
     render(<Spinner />);
     expect(screen.queryByRole('status')).not.toBeInTheDocument();

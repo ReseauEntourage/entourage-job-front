@@ -16,7 +16,7 @@ interface SpinnerProps {
 
 export const Spinner = ({ color, size, variant = 'circle' }: SpinnerProps) => {
   if (variant === 'dash') {
-    const side = typeof size === 'number' ? size : 30;
+    const side = size ?? 30;
     return (
       <StyledDashSpinner role="status" aria-label="Chargement">
         <svg width={side} height={side} viewBox="0 0 30 30">

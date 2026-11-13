@@ -95,6 +95,22 @@ describe('matchHeights', () => {
     expect(minHeight('c')).toBe('70px');
   });
 
+  it('keeps a chain of overlapping elements in one row', () => {
+    renderBlocks();
+    layOut({
+      a: [0, 50],
+      b: [10, 70],
+      c: [60, 10],
+      t1: [200, 10],
+      t2: [200, 10],
+    });
+    matchHeights(root(), ['h4']);
+
+    // `c` starts at 60: under `a` (bottom 50) but still over `b` (bottom 80).
+    expect(minHeight('a')).toBe('70px');
+    expect(minHeight('c')).toBe('70px');
+  });
+
   it('resets the previous heights before measuring again', () => {
     renderBlocks();
     (

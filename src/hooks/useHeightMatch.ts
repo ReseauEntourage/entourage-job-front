@@ -19,7 +19,7 @@ const groupByRow = (elements: HTMLElement[]): HTMLElement[][] => {
       rowBottom = rect.bottom;
     } else {
       rows[rows.length - 1].push(element);
-      rowBottom = Math.min(rowBottom, rect.bottom);
+      rowBottom = Math.max(rowBottom, rect.bottom);
     }
   });
   return rows;
