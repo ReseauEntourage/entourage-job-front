@@ -39,22 +39,26 @@ describe('Pages publiques : états', () => {
 
   it('liste de CV avec des cartes et le bouton « Voir plus »', () => {
     interceptCVList(Array.from({ length: 6 }, (_, index) => cvUser(index)));
-    capturePublicPage(
-      'Liste de CV',
-      '/candidats',
-      'Cartes de candidats et bouton « Voir plus ».'
-    );
+    prepareVisitor();
+    cy.visit('/candidats');
+    waitForPublicNav();
+    // The list is only populated once the intercepted request has answered.
     cy.wait('@getPublicCVs');
+    cy.capture('Liste de CV', {
+      caption: 'Cartes de candidats et bouton « Voir plus ».',
+    });
   });
 
   it('liste de CV vide', () => {
     interceptCVList([]);
-    capturePublicPage(
-      'Liste de CV vide',
-      '/candidats',
-      'Message affiché quand aucun profil ne correspond.'
-    );
+    prepareVisitor();
+    cy.visit('/candidats');
+    waitForPublicNav();
+    // The list is only populated once the intercepted request has answered.
     cy.wait('@getPublicCVs');
+    cy.capture('Liste de CV vide', {
+      caption: 'Message affiché quand aucun profil ne correspond.',
+    });
     cy.contains('Aucun profil correspondat trouvé').should('be.visible');
   });
 

@@ -137,6 +137,7 @@ export const FiltersDropdowns = ({
                         size="small"
                         color="mediumGray"
                         onClick={toggle}
+                        ariaExpanded={isOpen}
                       >
                         <StyledFilterToggleTitle>
                           {title}
