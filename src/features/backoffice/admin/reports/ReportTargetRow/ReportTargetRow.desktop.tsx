@@ -9,6 +9,7 @@ import {
   REPORTS_TAB_LABELS,
 } from '../reports.labels';
 import { getReportTargetHref } from '../reports.utils';
+import { ReportTargetOriginBadge } from './ReportTargetOriginBadge';
 import { ReportTargetReasons } from './ReportTargetReasons';
 import {
   StyledReportTargetCard,
@@ -41,6 +42,7 @@ export function ReportTargetRowDesktop({ target }: ReportTargetRowProps) {
           </Text>
         </StyledReportTargetLabel>
         <ReportTargetReasons reasons={target.reasons} />
+        <ReportTargetOriginBadge origins={target.origins} />
       </StyledReportTargetMain>
       <StyledReportTargetLast>
         <Text size="small" color="darkGray">

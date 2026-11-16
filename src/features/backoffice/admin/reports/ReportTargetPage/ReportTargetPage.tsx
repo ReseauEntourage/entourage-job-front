@@ -69,8 +69,9 @@ const ReportContext = ({ target }: { target: ReportTargetDetail }) => {
 
 /**
  * Decision block of the target: closing of a conversation or a profile, or
- * restoring / deleting a group message hidden after reports. Nothing for a
- * group message which is visible or already deleted.
+ * a decision on a reported group message (restore/delete when hidden,
+ * dismiss/delete when it stayed visible). Nothing once the message is
+ * deleted.
  */
 const ReportDecision = ({
   target,
@@ -81,7 +82,11 @@ const ReportDecision = ({
 }) => {
   const { context } = target;
   if (context.targetType === 'POST' || context.targetType === 'POST_REPLY') {
-    if (context.message?.state !== 'HIDDEN') {
+    if (
+      target.status !== 'PENDING' ||
+      (context.message?.state !== 'HIDDEN' &&
+        context.message?.state !== 'VISIBLE')
+    ) {
       return null;
     }
     return (
@@ -92,6 +97,7 @@ const ReportDecision = ({
           slug={context.group?.slug ?? null}
           discussionId={context.message.discussionId}
           pendingCount={pendingCount}
+          isHidden={context.message.state === 'HIDDEN'}
         />
       </StyledReportPanel>
     );
@@ -154,10 +160,12 @@ export function ReportTargetPage({
       );
       return;
     }
-    const note = document.getElementById('report-resolve-note');
+    const note = document.getElementById(
+      isGroupMessage ? 'report-decision-dismiss-note' : 'report-resolve-note'
+    );
     note?.scrollIntoView?.({ block: 'center' });
     note?.focus();
-  }, [openResolve, target, onResolveOpened, dispatch]);
+  }, [openResolve, target, onResolveOpened, dispatch, isGroupMessage]);
 
   const title = target ? getReportTargetTitle(target) : '';
 

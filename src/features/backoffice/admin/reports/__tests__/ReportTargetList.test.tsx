@@ -41,6 +41,7 @@ const buildTarget = (
   targetId: 'user-1',
   label: 'Jeanne Martin',
   zones: ['LYON'],
+  origins: ['MEMBER'],
   pendingCount: 3,
   reportsCount: 3,
   reasons: ['SPAM', 'FRAUD'],
@@ -93,7 +94,12 @@ describe('ReportTargetList', () => {
     expect(mockPush).toHaveBeenLastCalledWith(
       {
         pathname: '/backoffice/admin/signalements',
-        query: { type: 'GROUP_MESSAGE', status: 'PENDING', zone: 'LYON' },
+        query: {
+          type: 'GROUP_MESSAGE',
+          status: 'PENDING',
+          origin: 'ALL',
+          zone: 'LYON',
+        },
       },
       undefined,
       { shallow: true, scroll: false }
