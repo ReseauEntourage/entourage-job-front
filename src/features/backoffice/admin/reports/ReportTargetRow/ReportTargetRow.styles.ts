@@ -98,6 +98,12 @@ export const StyledReportTargetReasons = styled.div`
   gap: 6px;
 `;
 
+// Prevents the badge from stretching to the full width of its flex column
+// parent (StyledReportTargetMain / StyledReportTargetCard in mobile)
+export const StyledReportTargetOriginBadge = styled.div`
+  align-self: flex-start;
+`;
+
 export const StyledReportTargetLast = styled.div`
   display: flex;
   flex: 0 0 160px;
