@@ -138,6 +138,11 @@ export const useOnboardingPhase = ({
   useEffect(() => {
     isOnboardingAlreadyCompletedRef.current = isOnboardingAlreadyCompleted;
   }, [isOnboardingAlreadyCompleted]);
+  const isCompletionPendingRef = useRef(false);
+  useEffect(() => {
+    isCompletionPendingRef.current =
+      updateOnboardingStatus === ReduxRequestEvents.REQUESTED;
+  }, [updateOnboardingStatus]);
 
   // Before the account is created (currentUser still null), the selected
   // registration flow is already enough to know onboarding will be skipped
@@ -207,14 +212,18 @@ export const useOnboardingPhase = ({
   // recap step when the calling component handles the navigation itself
   // (messaging/directory following a CTA click): the generic dashboard
   // redirect is then not applied. If the completion request did not go through
-  // yet (or failed), it is sent now: the server only acts on the first one.
+  // (or failed), it is sent now: the server only acts on the first one. A
+  // request still in flight is not sent again.
   const skipDashboardRedirectRef = useRef(false);
   const onOnboardingCompleted = useCallback(
     async (skipDashboardRedirect = false) => {
       if (skipDashboardRedirect) {
         skipDashboardRedirectRef.current = true;
       }
-      if (!isOnboardingAlreadyCompletedRef.current) {
+      if (
+        !isOnboardingAlreadyCompletedRef.current &&
+        !isCompletionPendingRef.current
+      ) {
         dispatch(
           currentUserActions.updateOnboardingStatusRequested({
             onboardingStatus: OnboardingStatus.COMPLETED,

@@ -703,6 +703,23 @@ describe('useOnboardingPhase', () => {
       expect(result.current.skipDashboardRedirectRef.current).toBe(false);
     });
 
+    it('does not send the completion request again when the wizard ends while the first one is pending', async () => {
+      const { result, rerender } = await ready();
+      await onNextTimes(result, 3);
+      expect(completedUpdates()).toHaveLength(1);
+      mockState.updateOnboardingStatus = 'REQUESTED';
+      rerender({ user: coach });
+
+      await act(async () => {
+        await mockHookProps.onboardingStepMatchRecap.onOnboardingCompleted(
+          true
+        );
+      });
+
+      expect(completedUpdates()).toHaveLength(1);
+      expect(result.current.skipDashboardRedirectRef.current).toBe(true);
+    });
+
     it('ends the session kept open by the completion: steps dropped, redirect released', async () => {
       const { result, rerender } = await ready();
       await onNextTimes(result, 3);
