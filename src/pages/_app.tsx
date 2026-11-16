@@ -1,6 +1,3 @@
-// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
-
-import '@/src/styles/dist/css/uikit.entourage.min.css';
 import '@/src/styles/styles.css';
 import '@/src/features/modals/Modal/Modal.css';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';

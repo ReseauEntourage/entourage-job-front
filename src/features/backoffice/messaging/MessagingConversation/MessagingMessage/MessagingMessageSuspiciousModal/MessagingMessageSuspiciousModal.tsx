@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/src/components/ui';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
+import { StyledModalActions } from '@/src/features/modals/ModalActions.styles';
 
 interface MessagingMessageSuspiciousModalProps {
   href: string;
@@ -16,7 +17,7 @@ export const MessagingMessageSuspiciousModal = ({
     <ModalGeneric title="Vous quittez le réseau Entourage Pro">
       Vous êtes sur le point de visiter un site externe non vérifié. Nous ne
       pouvons garantir la sécurité ou la fiabilité de ce lien.
-      <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-small-top">
+      <StyledModalActions $marginTop={10}>
         <Button
           variant="default"
           onClick={async () => {
@@ -38,7 +39,7 @@ export const MessagingMessageSuspiciousModal = ({
         >
           Accéder au lien
         </Button>
-      </div>
+      </StyledModalActions>
     </ModalGeneric>
   );
 };

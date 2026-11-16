@@ -6,6 +6,7 @@ import { Skeleton } from '@/src/components/ui/Skeleton/Skeleton';
 import { UserRoles } from '@/src/constants/users';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
+import { StyledModalActions } from '@/src/features/modals/ModalActions.styles';
 import { useAuthenticatedUser } from '@/src/hooks/authentication/useAuthenticatedUser';
 import { StyledImageContainer } from './DashboardJoinWhatsappModal.styles';
 
@@ -61,11 +62,11 @@ export const DashboardJoinWhatsappModal = () => {
   return (
     <ModalGeneric title="Rejoindre notre groupe Whatsapp">
       {modalContent}
-      <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
+      <StyledModalActions $marginTop={40}>
         <Button onClick={onClose} variant="default">
           Fermer
         </Button>
-      </div>
+      </StyledModalActions>
     </ModalGeneric>
   );
 };

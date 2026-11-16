@@ -9,7 +9,8 @@ export const StyledNavPublicItemMobileLinkContainer = styled.div<{
   align-items: center;
   width: 100%;
   min-height: 48px;
-  padding: ${({ $isChild }) => ($isChild ? '10px 16px 10px 32px' : '10px 16px')};
+  padding: ${({ $isChild }) =>
+    $isChild ? '10px 16px 10px 32px' : '10px 16px'};
   border-radius: 12px;
   background-color: ${(props) =>
     props.selected ? COLORS.primaryBlue : 'transparent'};

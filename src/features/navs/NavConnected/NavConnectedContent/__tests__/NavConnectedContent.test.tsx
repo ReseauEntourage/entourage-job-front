@@ -375,8 +375,7 @@ describe('NavConnectedContent - admin home, logo and external icon', () => {
     mockAsPath = '/backoffice/dashboard';
   });
 
-  const getLogoLink = () =>
-    document.querySelector('a.uk-margin-small-left') as HTMLElement;
+  const getLogoLink = () => document.querySelector('#nav a') as HTMLElement;
 
   describe('on desktop', () => {
     it('names the first tab of the admin "Accueil"', () => {

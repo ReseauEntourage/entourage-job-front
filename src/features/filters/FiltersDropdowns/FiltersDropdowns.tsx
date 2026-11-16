@@ -10,7 +10,16 @@ import {
 } from '@/src/components/ui';
 import { Filter, FilterConstant, FilterObject } from '@/src/constants/utils';
 import { gaEvent } from '@/src/lib/gtag';
-import { StyledDropdownContainer } from './FiltersDropdowns.styles';
+import { FilterDropdownBox } from '../FilterDropdownBox';
+import {
+  StyledDropdownContainer,
+  StyledFilterDropdownPanel,
+  StyledFilterOption,
+  StyledFilterOptionCheckbox,
+  StyledFilterOptionLabel,
+  StyledFilterToggleTitle,
+  StyledFiltersRoot,
+} from './FiltersDropdowns.styles';
 
 const uuidValue1 = uuid();
 const uuidValue2 = uuid();
@@ -76,28 +85,25 @@ export const FiltersDropdowns = ({
         const id = `${key}-${i}-${uuidValue}`;
 
         return (
-          <label
+          <StyledFilterOption
             key={id}
             htmlFor={id}
-            className={`uk-flex uk-flex-middle uk-text-small ${
-              i < filterConstants.length - 1 ? 'uk-margin-small-bottom' : ''
-            }`}
+            $spaced={i < filterConstants.length - 1}
             onClick={(event) => event.stopPropagation()}
           >
-            <input
+            <StyledFilterOptionCheckbox
               id={id}
               data-testid={
                 filterConst.value ? `input-checkbox-${filterConst.value}` : ''
               }
-              style={{ marginTop: 1 }}
-              type="checkbox"
-              className="uk-checkbox uk-margin-small-right"
               checked={isFilterSelected}
               onChange={onFilterClick}
               onKeyDown={handleKeyDown}
             />
-            <div className="uk-flex-1">{filterConst.label}</div>
-          </label>
+            <StyledFilterOptionLabel>
+              {filterConst.label}
+            </StyledFilterOptionLabel>
+          </StyledFilterOption>
         );
       });
     },
@@ -105,7 +111,7 @@ export const FiltersDropdowns = ({
   );
 
   return (
-    <div className={hideOnMobile ? 'uk-visible@m' : ''}>
+    <StyledFiltersRoot $hideOnMobile={hideOnMobile}>
       {filterData.map(
         (
           { title, constants, priority, key, tag, type, disabled, mandatory },
@@ -114,91 +120,86 @@ export const FiltersDropdowns = ({
           if (filters[key]) {
             if (!type || type !== 'checkbox') {
               return (
-                <div
+                <FilterDropdownBox
                   key={key}
-                  data-testid={`input-container-${key}`}
-                  className={`uk-inline ${
-                    fullWidth ? 'uk-width-expand uk-margin-small-bottom' : ''
-                  }`}
+                  dataTestId={`input-container-${key}`}
+                  fullWidth={fullWidth}
                 >
-                  <StyledDropdownContainer
-                    disabled={disabled}
-                    $smallSelectors={smallSelectors}
-                    $showSeparator={showSeparator}
-                  >
-                    <Button
+                  {({ isOpen, toggle }) => (
+                    <StyledDropdownContainer
                       disabled={disabled}
-                      variant="text"
-                      size="small"
-                      color="mediumGray"
+                      $smallSelectors={smallSelectors}
+                      $showSeparator={showSeparator}
                     >
-                      <span className="uk-width-expand uk-text-left uk-flex uk-flex-middle uk-margin-small-right">
-                        {title}
-                      </span>
-                      {filters[key].length > 0 && (
-                        <div>
-                          &nbsp;
-                          <Tag
-                            size={TagSize.Small}
-                            variant={TagVariant.Secondary}
-                          >
-                            {filters[key].length}
-                          </Tag>
-                          &nbsp;
-                        </div>
-                      )}
-                      <LucidIcon name="ChevronDown" />
-                    </Button>
-                    <div
-                      data-uk-dropdown="mode: click;"
-                      style={{
-                        minWidth: '300px',
-                        maxHeight: '400px',
-                        overflowY: 'auto',
-                      }}
-                    >
-                      {priority && priority.length > 0 ? (
-                        <>
-                          {renderFilters(
-                            priority,
+                      <Button
+                        disabled={disabled}
+                        variant="text"
+                        size="small"
+                        color="mediumGray"
+                        onClick={toggle}
+                        ariaExpanded={isOpen}
+                      >
+                        <StyledFilterToggleTitle>
+                          {title}
+                        </StyledFilterToggleTitle>
+                        {filters[key].length > 0 && (
+                          <div>
+                            &nbsp;
+                            <Tag
+                              size={TagSize.Small}
+                              variant={TagVariant.Secondary}
+                            >
+                              {filters[key].length}
+                            </Tag>
+                            &nbsp;
+                          </div>
+                        )}
+                        <LucidIcon name="ChevronDown" />
+                      </Button>
+                      <StyledFilterDropdownPanel $open={isOpen}>
+                        {priority && priority.length > 0 ? (
+                          <>
+                            {renderFilters(
+                              priority,
+                              key,
+                              tag,
+                              mandatory,
+                              `${index}-${uuidValue1}`
+                            )}
+                            <hr />
+                            {renderFilters(
+                              constants.filter((filterConst) => {
+                                return !priority
+                                  .map((prioConst) => {
+                                    return prioConst.value;
+                                  })
+                                  .includes(filterConst.value);
+                              }),
+                              key,
+                              tag,
+                              mandatory,
+                              `${index}-${uuidValue2}`
+                            )}
+                          </>
+                        ) : (
+                          renderFilters(
+                            constants,
                             key,
                             tag,
                             mandatory,
                             `${index}-${uuidValue1}`
-                          )}
-                          <hr />
-                          {renderFilters(
-                            constants.filter((filterConst) => {
-                              return !priority
-                                .map((prioConst) => {
-                                  return prioConst.value;
-                                })
-                                .includes(filterConst.value);
-                            }),
-                            key,
-                            tag,
-                            mandatory,
-                            `${index}-${uuidValue2}`
-                          )}
-                        </>
-                      ) : (
-                        renderFilters(
-                          constants,
-                          key,
-                          tag,
-                          mandatory,
-                          `${index}-${uuidValue1}`
-                        )
-                      )}
-                    </div>
-                  </StyledDropdownContainer>
-                </div>
+                          )
+                        )}
+                      </StyledFilterDropdownPanel>
+                    </StyledDropdownContainer>
+                  )}
+                </FilterDropdownBox>
               );
             }
           }
           return undefined;
         }
       )}
-    </div>
+    </StyledFiltersRoot>
   );
 };

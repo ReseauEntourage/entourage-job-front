@@ -54,7 +54,8 @@ export const StyledPublicItem = styled.div<{
   font-size: 12px;
   font-weight: ${({ selected }) => (selected ? '700' : '400')};
   color: ${({ selected }) => (selected ? COLORS.white : COLORS.extraDarkGray)};
-  background-color: ${({ selected }) => (selected ? COLORS.primaryBlue : 'transparent')};
+  background-color: ${({ selected }) =>
+    selected ? COLORS.primaryBlue : 'transparent'};
   transition:
     background-color 0.15s ease-in-out,
     color 0.15s ease-in-out;

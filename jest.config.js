@@ -30,6 +30,10 @@ const jestConfig = async () => {
     moduleNameMapper: {
       // Workaround to put our SVG stub first
       '\\.svg$': '<rootDir>/__mocks__/svg.js',
+      // Swiper only ships ESM builds
+      '^swiper/react$': '<rootDir>/__mocks__/swiper-react.js',
+      '^swiper/modules$': '<rootDir>/__mocks__/swiper-modules.js',
+      '^swiper/css(/.*)?$': '<rootDir>/__mocks__/swiper-css.js',
       ...nextJestConfig.moduleNameMapper,
       // next/jest's SWC transform only resolves the "@/*" tsconfig path when
       // "baseUrl" is also set. tsconfig.base.json has no baseUrl (Turbopack

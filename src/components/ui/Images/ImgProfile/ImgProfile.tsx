@@ -1,7 +1,10 @@
 import React from 'react';
 import { LegacyImg } from '@/src/components/ui/Images/LegacyImg';
 import { COLORS } from '@/src/constants/styles';
-import { StyledImgProfileContainer } from './ImgProfile.style';
+import {
+  StyledImgProfileContainer,
+  StyledImgProfileInitial,
+} from './ImgProfile.style';
 
 interface ImgProfileProps {
   pictureUrl: string | null;
@@ -31,12 +34,9 @@ export const ImgProfile = ({
       {pictureUrl ? (
         <LegacyImg src={pictureUrl} alt={alt} cover={cover} />
       ) : (
-        <span
-          className="uk-text-normal uk-text-uppercase"
-          style={{ fontSize: size / 2, color: '#fff' }}
-        >
+        <StyledImgProfileInitial style={{ fontSize: size / 2, color: '#fff' }}>
           {placeholder.substring(0, 1)}
-        </span>
+        </StyledImgProfileInitial>
       )}
     </StyledImgProfileContainer>
   );

@@ -1,4 +1,6 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
+import { SimpleLink } from '@/src/components/ui';
+import { StyledNav } from '@/src/components/ui/Navbar/Nav/Nav.styles';
 import { Color, COLORS } from '@/src/constants/styles';
 
 export const StyledConnectedItem = styled.li<{ color: Color }>`
@@ -89,4 +91,59 @@ export const StyledNavAccountToggle = styled.span`
   gap: 8px;
   height: 80px;
   padding: 0 16px;
+`;
+
+/** Tabs of the connected navbar: a row of links, as tall as the header. */
+export const StyledConnectedNav = styled(StyledNav)`
+  list-style: none;
+
+  > li > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 80px;
+    padding: 0 15px;
+    font-size: 0.875rem;
+    font-family: Poppins, sans-serif;
+    text-decoration: none;
+    color: ${COLORS.mutedText};
+    text-transform: uppercase;
+    transition: 0.1s ease-in-out;
+    transition-property: color, background-color;
+  }
+
+  > li:hover > a,
+  > li > a:focus {
+    color: ${COLORS.black};
+    outline: none;
+  }
+
+  > li > a:active {
+    color: ${COLORS.navActive};
+  }
+`;
+
+const menuLink = css`
+  display: flex;
+  align-items: center;
+`;
+
+/** Tab with a link (router link or plain anchor). */
+export const StyledMenuLink = styled(SimpleLink)`
+  ${menuLink}
+`;
+
+export const StyledMenuAnchor = styled.a`
+  ${menuLink}
+`;
+
+export const StyledMenuIcon = styled.span`
+  margin-right: 10px !important;
+`;
+
+/** Right part of the navbar: its entries are centered on the header. */
+export const StyledNavRightItems = styled.div`
+  display: flex;
+  align-items: center;
 `;

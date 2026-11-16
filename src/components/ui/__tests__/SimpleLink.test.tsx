@@ -55,12 +55,4 @@ describe('SimpleLink', () => {
     fireEvent.click(screen.getByRole('link'));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
-
-  it('renders an anchor with the toggle attribute', () => {
-    render(<SimpleLink toggle="target: #x">Ouvrir</SimpleLink>);
-    expect(screen.getByText('Ouvrir')).toHaveAttribute(
-      'data-uk-toggle',
-      'target: #x'
-    );
-  });
 });

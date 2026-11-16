@@ -1,14 +1,25 @@
-import React, { useEffect, useMemo, type JSX } from 'react';
-import UIkit from 'uikit';
+import React, { useMemo, type JSX } from 'react';
+import { useIsDesktop } from '@/src/hooks/utils';
+import {
+  columnsOf,
+  type GridGap,
+  StyledGrid,
+  StyledGridCell,
+  StyledMasonryColumn,
+} from './Grid.styles';
 
 interface GridProps {
   match?: boolean;
   center?: boolean;
   between?: boolean;
   childWidths?: string[];
-  divider?: boolean;
   eachWidths?: string[];
-  gap?: 'small' | 'medium' | 'large' | 'collapse';
+  gap?: GridGap;
+  /**
+   * Keeps the cells tight vertically. Only for the grids that have always been rendered without
+   * vertical spacing, which the pages rely on.
+   */
+  noRowGap?: boolean;
   items?: JSX.Element[];
   children?: React.ReactNode;
   className?: string;
@@ -17,6 +28,11 @@ interface GridProps {
   bottom?: boolean;
   column?: boolean;
   row?: boolean;
+  /**
+   * Stacks the cells in columns of independent heights instead of aligned rows. Only for
+   * equal-width cells (`childWidths={['1-2@m']}`); with `eachWidths` the cells already sit
+   * side by side and nothing needs to move.
+   */
   masonry?: boolean;
   style?: React.CSSProperties;
   reverse?: boolean;
@@ -27,12 +43,12 @@ export const Grid = ({
   items,
   childWidths = [],
   match = false,
-  divider = false,
   center = false,
   between = false,
   className,
   eachWidths = [],
   gap,
+  noRowGap = false,
   children,
   top = false,
   middle = false,
@@ -44,101 +60,76 @@ export const Grid = ({
   reverse = false,
   dataTestId = '',
 }: GridProps) => {
-  const gridRef = React.useRef<HTMLDivElement | null>(null);
-  let classBuffer = '';
-  const gridOptions = useMemo(() => {
-    if (masonry) {
-      return {
-        masonry: true,
-      };
-    }
-    return {};
-  }, [masonry]);
-  if (childWidths) {
-    classBuffer += childWidths
-      .map((childWidth) => {
-        return ` uk-child-width-${childWidth}`;
-      })
-      .join(' ');
-  }
-  if (gap) {
-    classBuffer += ` uk-grid-${gap}`;
-  }
-  if (match) {
-    classBuffer += ' uk-grid-match';
-  }
-  if (divider) {
-    classBuffer += ' uk-grid-divider';
-  }
-  if (center) {
-    classBuffer += ' uk-flex-center';
-  }
-  if (between) {
-    classBuffer += ' uk-flex-between';
-  }
-  if (top) {
-    classBuffer += ' uk-flex-top';
-  }
-  if (middle) {
-    classBuffer += ' uk-flex-middle';
-  }
-  if (bottom) {
-    classBuffer += ' uk-flex-bottom';
-  }
-  if (column) {
-    classBuffer += ' uk-flex-column';
-  }
-  if (row) {
-    classBuffer += ' uk-flex-row';
-  }
-  if (reverse) {
-    classBuffer += ' uk-flex-row-reverse';
-  }
+  const isDesktop = useIsDesktop();
 
-  if (className) {
-    classBuffer += ` ${className}`;
-  }
   const content = useMemo(() => {
+    let list: React.ReactNode[];
     if (items !== undefined) {
-      return items;
+      list = items;
+    } else if (Array.isArray(children)) {
+      list = children;
+    } else {
+      list = [children];
     }
-    if (Array.isArray(children)) {
-      return children;
-    }
-    return [children];
+    return list.filter((item) => {
+      return item;
+    });
   }, [children, items]);
 
-  useEffect(() => {
-    if (gridRef.current) {
-      UIkit.grid(gridRef.current, gridOptions);
+  // Number of masonry columns at the current screen size: the `@m` width only applies on
+  // desktop, below it every cell takes the whole width.
+  const masonryColumns = useMemo(() => {
+    if (!masonry || childWidths.length === 0) {
+      return 1;
     }
-  }, [gridOptions]);
+    const wide = childWidths.map(columnsOf).find((columns) => columns);
+    return isDesktop && wide ? wide : 1;
+  }, [childWidths, isDesktop, masonry]);
+
+  const useMasonry = masonry && childWidths.length > 0;
 
   return (
-    <div
-      ref={gridRef}
-      className={classBuffer}
+    <StyledGrid
+      className={className}
       style={style}
       data-testid={dataTestId}
+      $gap={gap}
+      $noRowGap={noRowGap}
+      $childWidths={useMasonry ? [] : childWidths}
+      $match={match}
+      $center={center}
+      $between={between}
+      $top={top}
+      $middle={middle}
+      $bottom={bottom}
+      $column={column}
+      $row={row}
+      $reverse={reverse}
     >
-      {content
-        .filter((_) => {
-          return _;
-        })
-        .map((item, index) => {
-          return (
-            <div
-              className={
-                index < eachWidths.length
-                  ? `uk-width-${eachWidths[index]}`
-                  : undefined
-              }
-              key={index}
-            >
-              {item}
-            </div>
-          );
-        })}
-    </div>
+      {useMasonry
+        ? Array.from({ length: masonryColumns }, (_, columnIndex) => {
+            return (
+              <StyledGridCell key={columnIndex} $width={`1-${masonryColumns}`}>
+                <StyledMasonryColumn $gap={gap}>
+                  {content.filter((_item, index) => {
+                    return index % masonryColumns === columnIndex;
+                  })}
+                </StyledMasonryColumn>
+              </StyledGridCell>
+            );
+          })
+        : content.map((item, index) => {
+            return (
+              <StyledGridCell
+                key={index}
+                $width={
+                  index < eachWidths.length ? eachWidths[index] : undefined
+                }
+              >
+                {item}
+              </StyledGridCell>
+            );
+          })}
+    </StyledGrid>
   );
 };

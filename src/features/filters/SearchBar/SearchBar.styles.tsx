@@ -1,5 +1,5 @@
-import { styled } from 'styled-components';
-import { COLORS } from '@/src/constants/styles';
+import { css, styled } from 'styled-components';
+import { BREAKPOINTS, COLORS } from '@/src/constants/styles';
 
 export const StyledSearchBarContainer = styled.div`
   display: flex;
@@ -79,4 +79,34 @@ export const StyledSearchBarSubmitButton = styled.a`
   svg {
     color: ${COLORS.white};
   }
+`;
+
+const expand = css`
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  min-width: 1px;
+  max-width: 100%;
+`;
+
+/** Form of the search field: it takes all the room left on the bar. */
+export const StyledSearchBarForm = styled.form`
+  ${expand}
+`;
+
+/** Row under the bar: checkbox filters, extra buttons and reset. */
+export const StyledSearchBarOptions = styled.div`
+  ${expand}
+  display: flex;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 20px !important;
+
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    justify-content: space-between;
+  }
+`;
+
+export const StyledSearchBarButtons = styled.div`
+  ${expand}
 `;

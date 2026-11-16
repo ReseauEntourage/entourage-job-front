@@ -24,6 +24,8 @@
     "cypress:io": "pnpm exec cypress run --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
     "cypress:local": "pnpm exec cypress open",
     "screenshots": "node cypress/pr-screenshots/run.mjs",
+    "screenshots:compare": "node cypress/pr-screenshots/compare.mjs",
+    "screenshots:compare:check": "node --test cypress/pr-screenshots/compare.check.mjs",
     "add-icons": "node ./assets/icons/export-script.js"
   },
   "repository": {
@@ -76,7 +78,6 @@
     "rxjs": "^7.8.2",
     "styled-components": "^6.4.4",
     "swiper": "^12.1.2",
-    "uikit": "3.6.22",
     "use-deep-compare-effect": "^1.8.1",
     "uuid": "^11.1.1",
     "validator": "^13.15.22"
@@ -114,6 +115,8 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "lint-staged": "^13.3.0",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
     "prettier": "^3.9.6",
     "storybook": "^10.6.2",
     "typescript": "^6.0.3",
