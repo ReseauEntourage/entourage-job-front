@@ -42,6 +42,7 @@ const targets = [
     targetId: 'conversation-reported',
     label: 'Conversation entre Jeanne Martin et Paul Durand',
     zones: ['LYON'],
+    origins: ['MEMBER'],
     pendingCount: 2,
     reportsCount: 2,
     reasons: ['INSULTS', 'SPAM'],
@@ -53,6 +54,7 @@ const targets = [
     targetId: 'user-paul',
     label: 'Paul Durand',
     zones: ['LYON'],
+    origins: ['MEMBER'],
     pendingCount: 3,
     reportsCount: 3,
     reasons: ['FRAUD'],
@@ -64,10 +66,23 @@ const targets = [
     targetId: 'reply-reported',
     label: 'Refaire un CV — Envoyez-moi vos coordonnées bancaires pour…',
     zones: ['LYON', 'PARIS'],
+    origins: ['MEMBER'],
     pendingCount: 1,
     reportsCount: 1,
     reasons: ['FRAUD'],
     lastReportedAt: '2026-10-03T18:00:00.000Z',
+    status: 'PENDING',
+  },
+  {
+    targetType: 'POST_REPLY',
+    targetId: 'reply-automatic',
+    label: 'Entraide pour les mamans — Écrivez-moi sur WhatsApp',
+    zones: ['LYON'],
+    origins: ['AUTOMATIC'],
+    pendingCount: 1,
+    reportsCount: 1,
+    reasons: ['OTHER'],
+    lastReportedAt: '2026-10-06T08:00:00.000Z',
     status: 'PENDING',
   },
 ];
@@ -75,6 +90,7 @@ const targets = [
 const report = (props: Record<string, unknown>) => ({
   id: 'report-1',
   reporter: jeanne,
+  origin: 'MEMBER',
   reason: 'INSULTS',
   comment: 'Il m’a insultée après mon refus.',
   zone: 'LYON',
@@ -160,6 +176,41 @@ const groupMessageTarget = {
       author: paul,
       state: 'HIDDEN',
       createdAt: '2026-10-03T17:00:00.000Z',
+    },
+  },
+};
+
+const groupMessageAutomaticTarget = {
+  targetType: 'POST_REPLY',
+  targetId: 'reply-automatic',
+  label: 'Entraide pour les mamans — Écrivez-moi sur WhatsApp',
+  status: 'PENDING',
+  canResolve: true,
+  reports: [
+    report({
+      id: 'report-automatic',
+      reporter: null,
+      origin: 'AUTOMATIC',
+      reason: 'OTHER',
+      comment: 'whatsapp',
+      zone: 'LYON',
+    }),
+  ],
+  context: {
+    targetType: 'POST_REPLY',
+    group: {
+      id: 'group-mamans',
+      name: 'Entraide pour les mamans',
+      slug: 'entraide-mamans',
+    },
+    message: {
+      discussionId: 'discussion-mamans',
+      replyId: 'reply-automatic',
+      title: null,
+      content: 'Écrivez-moi sur WhatsApp, je vous aiderai plus vite.',
+      author: jeanne,
+      state: 'VISIBLE',
+      createdAt: '2026-10-06T08:00:00.000Z',
     },
   },
 };
@@ -283,7 +334,7 @@ describe('Signalements', () => {
     cy.get('[data-testid="report-target-list"]').should('be.visible');
     cy.capture('Liste des signalements', {
       caption:
-        'Une carte par contenu signalé, type en pastilles ; statut et zone préréglés sur « À traiter » et la zone de l’admin.',
+        'Une carte par contenu signalé, type en pastilles ; statut, origine et zone préréglés sur « À traiter », « Toutes origines » et la zone de l’admin ; badge « Détecté automatiquement » sur le dernier message.',
     });
 
     if (Cypress.expose('device') === 'mobile') {
@@ -372,6 +423,35 @@ describe('Signalements', () => {
       caption:
         'Le motif obligatoire et la précision facultative n’apparaissent qu’après « Supprimer le message ».',
       capture: 'viewport',
+    });
+  });
+
+  it('fiche d’un message détecté automatiquement, resté visible', () => {
+    loginAs('Admin');
+    cy.intercept(
+      'GET',
+      /\/admin\/reports\/targets\/POST_REPLY\/reply-automatic$/,
+      { statusCode: 200, body: groupMessageAutomaticTarget }
+    ).as('getTarget');
+    cy.intercept(
+      'GET',
+      /\/admin\/help-groups\/replies\/reply-automatic\/revisions$/,
+      {
+        statusCode: 200,
+        body: { current: groupMessageRevisions.current, previous: [] },
+      }
+    ).as('getRevisions');
+
+    cy.visit('/backoffice/admin/signalements/POST_REPLY/reply-automatic');
+    cy.wait('@getTarget');
+    cy.wait('@getRevisions');
+    cy.get('[data-testid="report-context-group-message"]').should('be.visible');
+    cy.contains('Détection automatique').should('be.visible');
+    cy.get('[data-testid="report-decision-dismiss"]').should('be.visible');
+    cy.get('[data-testid="report-decision-delete"]').should('be.visible');
+    cy.capture('Fiche d’un message détecté automatiquement', {
+      caption:
+        'Message resté visible : badge « Détecté automatiquement », « Classer sans suite » ou « Supprimer » — pas de « Rétablir ».',
     });
   });
 });
