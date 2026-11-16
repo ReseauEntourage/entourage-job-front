@@ -412,23 +412,24 @@ export const useOnboardingPhase = ({
 
   // Marks the onboarding completed on arrival at the webinar step, or at the
   // recap when the webinar was already passed (reservation or "Later" already
-  // recorded, so the wizard resumes directly there). One request per step: a
-  // failed one is sent again on arrival at the next step. The person keeps
+  // recorded, so the wizard resumes directly there). One request per step,
+  // for the whole session (going back to a step does not send it again): a
+  // failed one is sent again on arrival at the other step. The person keeps
   // going through the steps (cf. completedInSession), and the server only
   // queues the completion job for the first request.
-  const completionRequestedForStepRef = useRef<WizardStepId | null>(null);
+  const stepsWithCompletionRequestedRef = useRef<Set<WizardStepId>>(new Set());
   useEffect(() => {
     if (
       !currentUser ||
       isOnboardingAlreadyCompleted ||
       (currentOnboardingStepId !== 'webinar' &&
         currentOnboardingStepId !== 'match-recap') ||
-      completionRequestedForStepRef.current === currentOnboardingStepId ||
+      stepsWithCompletionRequestedRef.current.has(currentOnboardingStepId) ||
       updateOnboardingStatus === ReduxRequestEvents.REQUESTED
     ) {
       return;
     }
-    completionRequestedForStepRef.current = currentOnboardingStepId;
+    stepsWithCompletionRequestedRef.current.add(currentOnboardingStepId);
     setCompletedInSession(true);
     dispatch(
       currentUserActions.updateOnboardingStatusRequested({

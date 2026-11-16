@@ -662,6 +662,22 @@ describe('useOnboardingPhase', () => {
       expect(completedUpdates()).toHaveLength(2);
     });
 
+    it('does not send the request again for a step already tried when going back to it', async () => {
+      const { result } = await ready();
+      await onNextTimes(result, 3);
+      mockState.updateOnboardingStatus = 'FAILED';
+      expect(completedUpdates()).toHaveLength(1);
+
+      // webinar failed -> recap (second try) -> back to the webinar (no new try)
+      await onNextTimes(result, 1);
+      expect(result.current.currentStep?.id).toBe('match-recap');
+      expect(completedUpdates()).toHaveLength(2);
+      act(() => result.current.onBack());
+
+      expect(result.current.currentStep?.id).toBe('webinar');
+      expect(completedUpdates()).toHaveLength(2);
+    });
+
     it('completes the onboarding on arrival at the recap when the webinar was already passed', async () => {
       stepFor('photo').isStepCompleted = async () => true;
       stepFor('cv-choice').isStepCompleted = async () => true;
