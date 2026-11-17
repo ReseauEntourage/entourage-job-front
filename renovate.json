@@ -12,7 +12,6 @@
     "labels": ["security"]
   },
   "osvVulnerabilityAlerts": true,
-  "transitiveRemediation": true,
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 7am on the first day of the month"]
