@@ -643,6 +643,74 @@ describe('registration wizard steps', () => {
       expect(move.payload.data.nameOrganization).toBeUndefined();
     });
 
+    it('reuses the organization created by a previous submission when the form is submitted again', async () => {
+      mockedApi.postOrganization.mockResolvedValue({
+        data: { id: 'new-id', name: 'Nouvelle asso' },
+      } as any);
+      const { result, renderContent, dispatched } = setup(() =>
+        useWizardStepRefererAccount()
+      );
+      renderContent(result.current.step.content);
+      const department = DEPARTMENTS[0];
+      const fields = () => ({
+        ...baseFields,
+        department: { value: department.name, label: department.name },
+        // The form still holds the "create" option on a retry.
+        organizationId: { value: 'createNewOrganization', label: 'x' },
+        nameOrganization: 'Nouvelle asso',
+      });
+
+      await submitForm(fields());
+      await submitForm(fields());
+
+      expect(mockedApi.postOrganization).toHaveBeenCalledTimes(1);
+      const moves = dispatched.filter(
+        (a) =>
+          a.type ===
+          registrationActions.moveForwardInRegistration({} as any).type
+      );
+      expect(moves).toHaveLength(2);
+      expect(moves[1].payload.data.organizationId).toEqual({
+        label: 'Nouvelle asso',
+        value: 'new-id',
+      });
+    });
+
+    it('creates another organization when its name changed between two submissions', async () => {
+      mockedApi.postOrganization
+        .mockResolvedValueOnce({
+          data: { id: 'first-id', name: 'Asso A' },
+        } as any)
+        .mockResolvedValueOnce({
+          data: { id: 'second-id', name: 'Asso B' },
+        } as any);
+      const { result, renderContent, dispatched } = setup(() =>
+        useWizardStepRefererAccount()
+      );
+      renderContent(result.current.step.content);
+      const department = DEPARTMENTS[0];
+      const fields = (nameOrganization: string) => ({
+        ...baseFields,
+        department: { value: department.name, label: department.name },
+        organizationId: { value: 'createNewOrganization', label: 'x' },
+        nameOrganization,
+      });
+
+      await submitForm(fields('Asso A'));
+      await submitForm(fields('Asso B'));
+
+      expect(mockedApi.postOrganization).toHaveBeenCalledTimes(2);
+      const moves = dispatched.filter(
+        (a) =>
+          a.type ===
+          registrationActions.moveForwardInRegistration({} as any).type
+      );
+      expect(moves[1].payload.data.organizationId).toEqual({
+        label: 'Asso B',
+        value: 'second-id',
+      });
+    });
+
     it('notifies and stops when the organization cannot be created', async () => {
       mockedApi.postOrganization.mockRejectedValue(new Error('boom'));
       const { result, renderContent, dispatched } = setup(() =>

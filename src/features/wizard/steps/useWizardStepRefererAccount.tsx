@@ -25,6 +25,13 @@ export function useWizardStepRefererAccount() {
   const dispatch = useDispatch();
   const data = useSelector(selectRegistrationData);
   const formRef = useRef<FormWithValidationRef>(null);
+  // Organization created by a previous submission. The form still holds the
+  // "create a new organization" option, so a retry after a failed signup
+  // (e.g. duplicate email) must reuse it instead of creating a second one.
+  const createdOrganizationRef = useRef<{
+    name: string;
+    option: { value: string; label: string };
+  } | null>(null);
 
   // Only observes the mutation — it's actually triggered by
   // `registration.listeners.ts`'s `createUserRequested` listener, via the
@@ -60,6 +67,7 @@ export function useWizardStepRefererAccount() {
       // Handle organization creation if needed
       if (typedFields.organizationId?.value === CREATE_NEW_ORGANIZATION_VALUE) {
         const { nameOrganization } = typedFields;
+        const alreadyCreated = createdOrganizationRef.current;
         const organizationFields = {
           name: nameOrganization ?? '',
           zone: DEPARTMENTS.find(
@@ -72,13 +80,24 @@ export function useWizardStepRefererAccount() {
         };
 
         try {
-          const {
-            data: { id: newOrgId, name: newOrgName },
-          } = await Api.postOrganization(organizationFields as OrganizationDto);
-          typedFields.organizationId = {
-            label: newOrgName as string,
-            value: newOrgId,
-          };
+          if (
+            alreadyCreated &&
+            alreadyCreated.name === organizationFields.name
+          ) {
+            typedFields.organizationId = alreadyCreated.option;
+          } else {
+            const {
+              data: { id: newOrgId, name: newOrgName },
+            } = await Api.postOrganization(
+              organizationFields as OrganizationDto
+            );
+            const option = { label: newOrgName as string, value: newOrgId };
+            createdOrganizationRef.current = {
+              name: organizationFields.name,
+              option,
+            };
+            typedFields.organizationId = option;
+          }
         } catch {
           dispatch(
             notificationsActions.addNotification({
