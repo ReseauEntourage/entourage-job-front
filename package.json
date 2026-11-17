@@ -124,7 +124,7 @@
     "vite-tsconfig-paths": "^6.1.1"
   },
   "resolutions": {
-    "jackspeak": "2.1.1"
+    "jackspeak": "2.3.6"
   },
   "packageManager": "pnpm@11.15.1",
   "overrides": {
