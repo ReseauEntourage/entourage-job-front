@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@/src/api';
 import { OrganizationDto } from '@/src/api/types';
@@ -17,12 +17,30 @@ import { notificationsActions } from '@/src/use-cases/notifications';
 import {
   registrationActions,
   selectRegistrationData,
+  CREATE_USER_FIXED_CACHE_KEY,
+  useCreateUserMutation,
 } from '@/src/use-cases/registration';
 
 export function useWizardStepRefererAccount() {
   const dispatch = useDispatch();
   const data = useSelector(selectRegistrationData);
   const formRef = useRef<FormWithValidationRef>(null);
+
+  // Only observes the mutation — it's actually triggered by
+  // `registration.listeners.ts`'s `createUserRequested` listener, via the
+  // shared `fixedCacheKey`.
+  const [, { isError, error }] = useCreateUserMutation({
+    fixedCacheKey: CREATE_USER_FIXED_CACHE_KEY,
+  });
+
+  useEffect(() => {
+    if (isError && error === 'DUPLICATE_EMAIL') {
+      formRef.current?.setFieldError(
+        'email',
+        'Cette adresse email est déjà utilisée,'
+      );
+    }
+  }, [isError, error]);
 
   const handleFormSubmit = useCallback(
     async (fields: Record<string, unknown>) => {

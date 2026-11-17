@@ -483,6 +483,50 @@ describe('registration wizard steps', () => {
         )
       );
     });
+
+    it('unblocks the step after a duplicate email and resubmits with the new email', async () => {
+      mockedApi.postUserRegistration
+        .mockRejectedValueOnce({
+          isAxiosError: true,
+          response: { status: 409 },
+        })
+        .mockResolvedValueOnce({
+          data: { id: 'user-1', zone: 'PARIS', role: 'Candidat' },
+        } as any);
+      const { result, renderContent, store } = setup(
+        () => useWizardStepAccount(),
+        { selectedFlow: RegistrationFlow.CANDIDATE },
+        { swallow: false }
+      );
+      renderContent(result.current.step.content);
+      const fields = {
+        firstName: 'J',
+        lastName: 'D',
+        email: 'taken@d.fr',
+        password: TEST_PASSWORD,
+        confirmPassword: TEST_PASSWORD,
+        acceptCGU: true,
+        phone: '0600000000',
+        department: { value: 'PARIS', label: 'Paris' },
+      };
+
+      await submitForm(fields);
+      await act(async () => {
+        await flushPromises();
+      });
+
+      expect(store.getState().registration.isLoading).toBe(false);
+
+      await submitForm({ ...fields, email: 'free@d.fr' });
+      await act(async () => {
+        await flushPromises();
+      });
+
+      expect(mockedApi.postUserRegistration).toHaveBeenCalledTimes(2);
+      expect(mockedApi.postUserRegistration.mock.calls[1][0]).toMatchObject({
+        email: 'free@d.fr',
+      });
+    });
   });
 
   describe('useWizardStepRefererAccount', () => {
@@ -496,6 +540,41 @@ describe('registration wizard steps', () => {
       confirmPassword: 'p',
       password: 'p',
     };
+
+    it('flags the email field when the email is already used', async () => {
+      mockedApi.postUserRegistration.mockRejectedValue({
+        isAxiosError: true,
+        response: { status: 409 },
+      });
+      const { result, renderContent, store } = setup(
+        () => useWizardStepRefererAccount(),
+        {
+          selectedFlow: RegistrationFlow.REFERER,
+          data: {
+            firstName: 'Ada',
+            lastName: 'L',
+            email: 'ada@asso.fr',
+            password: TEST_PASSWORD,
+            phone: '0600000000',
+            department: { value: 'PARIS', label: 'Paris' },
+          },
+        },
+        { swallow: false }
+      );
+      renderContent(result.current.step.content);
+      await act(async () => {
+        store.dispatch(registrationActions.createUserRequested());
+        await flushPromises();
+      });
+
+      await waitFor(() =>
+        expect(mockFormRef.setFieldError).toHaveBeenCalledWith(
+          'email',
+          'Cette adresse email est déjà utilisée,'
+        )
+      );
+      expect(store.getState().registration.isLoading).toBe(false);
+    });
 
     it('registers directly with an existing organization', async () => {
       const { result, renderContent, dispatched } = setup(() =>
