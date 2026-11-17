@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Europe/Paris",
+  "schedule": ["before 7am on monday"],
+  "semanticCommits": "enabled",
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"],
+    "labels": ["security"]
+  },
+  "osvVulnerabilityAlerts": true,
+  "transitiveRemediation": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 7am on the first day of the month"]
+  },
+  "packageRules": [
+    {
+      "description": "Keep Jest and its related packages in sync",
+      "matchPackageNames": ["jest", "ts-jest", "@types/jest", "@jest/**"],
+      "groupName": "jest"
+    },
+    {
+      "description": "Keep React and its type definitions in sync",
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "groupName": "react"
+    },
+    {
+      "description": "Keep Next.js and its ESLint config in sync",
+      "matchPackageNames": ["next", "@next/**", "eslint-config-next"],
+      "groupName": "next"
+    },
+    {
+      "description": "Keep Storybook packages in sync",
+      "matchPackageNames": ["storybook", "@storybook/**"],
+      "groupName": "storybook"
+    },
+    {
+      "description": "Group non-major dev dependency updates",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dev dependencies (non-major)"
+    }
+  ]
+}
