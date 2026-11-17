@@ -483,6 +483,50 @@ describe('registration wizard steps', () => {
         )
       );
     });
+
+    it('unblocks the step after a duplicate email and resubmits with the new email', async () => {
+      mockedApi.postUserRegistration
+        .mockRejectedValueOnce({
+          isAxiosError: true,
+          response: { status: 409 },
+        })
+        .mockResolvedValueOnce({
+          data: { id: 'user-1', zone: 'PARIS', role: 'Candidat' },
+        } as any);
+      const { result, renderContent, store } = setup(
+        () => useWizardStepAccount(),
+        { selectedFlow: RegistrationFlow.CANDIDATE },
+        { swallow: false }
+      );
+      renderContent(result.current.step.content);
+      const fields = {
+        firstName: 'J',
+        lastName: 'D',
+        email: 'taken@d.fr',
+        password: TEST_PASSWORD,
+        confirmPassword: TEST_PASSWORD,
+        acceptCGU: true,
+        phone: '0600000000',
+        department: { value: 'PARIS', label: 'Paris' },
+      };
+
+      await submitForm(fields);
+      await act(async () => {
+        await flushPromises();
+      });
+
+      expect(store.getState().registration.isLoading).toBe(false);
+
+      await submitForm({ ...fields, email: 'free@d.fr' });
+      await act(async () => {
+        await flushPromises();
+      });
+
+      expect(mockedApi.postUserRegistration).toHaveBeenCalledTimes(2);
+      expect(mockedApi.postUserRegistration.mock.calls[1][0]).toMatchObject({
+        email: 'free@d.fr',
+      });
+    });
   });
 
   describe('useWizardStepRefererAccount', () => {
@@ -496,6 +540,41 @@ describe('registration wizard steps', () => {
       confirmPassword: 'p',
       password: 'p',
     };
+
+    it('flags the email field when the email is already used', async () => {
+      mockedApi.postUserRegistration.mockRejectedValue({
+        isAxiosError: true,
+        response: { status: 409 },
+      });
+      const { result, renderContent, store } = setup(
+        () => useWizardStepRefererAccount(),
+        {
+          selectedFlow: RegistrationFlow.REFERER,
+          data: {
+            firstName: 'Ada',
+            lastName: 'L',
+            email: 'ada@asso.fr',
+            password: TEST_PASSWORD,
+            phone: '0600000000',
+            department: { value: 'PARIS', label: 'Paris' },
+          },
+        },
+        { swallow: false }
+      );
+      renderContent(result.current.step.content);
+      await act(async () => {
+        store.dispatch(registrationActions.createUserRequested());
+        await flushPromises();
+      });
+
+      await waitFor(() =>
+        expect(mockFormRef.setFieldError).toHaveBeenCalledWith(
+          'email',
+          'Cette adresse email est déjà utilisée,'
+        )
+      );
+      expect(store.getState().registration.isLoading).toBe(false);
+    });
 
     it('registers directly with an existing organization', async () => {
       const { result, renderContent, dispatched } = setup(() =>
@@ -562,6 +641,74 @@ describe('registration wizard steps', () => {
         value: 'new-id',
       });
       expect(move.payload.data.nameOrganization).toBeUndefined();
+    });
+
+    it('reuses the organization created by a previous submission when the form is submitted again', async () => {
+      mockedApi.postOrganization.mockResolvedValue({
+        data: { id: 'new-id', name: 'Nouvelle asso' },
+      } as any);
+      const { result, renderContent, dispatched } = setup(() =>
+        useWizardStepRefererAccount()
+      );
+      renderContent(result.current.step.content);
+      const department = DEPARTMENTS[0];
+      const fields = () => ({
+        ...baseFields,
+        department: { value: department.name, label: department.name },
+        // The form still holds the "create" option on a retry.
+        organizationId: { value: 'createNewOrganization', label: 'x' },
+        nameOrganization: 'Nouvelle asso',
+      });
+
+      await submitForm(fields());
+      await submitForm(fields());
+
+      expect(mockedApi.postOrganization).toHaveBeenCalledTimes(1);
+      const moves = dispatched.filter(
+        (a) =>
+          a.type ===
+          registrationActions.moveForwardInRegistration({} as any).type
+      );
+      expect(moves).toHaveLength(2);
+      expect(moves[1].payload.data.organizationId).toEqual({
+        label: 'Nouvelle asso',
+        value: 'new-id',
+      });
+    });
+
+    it('creates another organization when its name changed between two submissions', async () => {
+      mockedApi.postOrganization
+        .mockResolvedValueOnce({
+          data: { id: 'first-id', name: 'Asso A' },
+        } as any)
+        .mockResolvedValueOnce({
+          data: { id: 'second-id', name: 'Asso B' },
+        } as any);
+      const { result, renderContent, dispatched } = setup(() =>
+        useWizardStepRefererAccount()
+      );
+      renderContent(result.current.step.content);
+      const department = DEPARTMENTS[0];
+      const fields = (nameOrganization: string) => ({
+        ...baseFields,
+        department: { value: department.name, label: department.name },
+        organizationId: { value: 'createNewOrganization', label: 'x' },
+        nameOrganization,
+      });
+
+      await submitForm(fields('Asso A'));
+      await submitForm(fields('Asso B'));
+
+      expect(mockedApi.postOrganization).toHaveBeenCalledTimes(2);
+      const moves = dispatched.filter(
+        (a) =>
+          a.type ===
+          registrationActions.moveForwardInRegistration({} as any).type
+      );
+      expect(moves[1].payload.data.organizationId).toEqual({
+        label: 'Asso B',
+        value: 'second-id',
+      });
     });
 
     it('notifies and stops when the organization cannot be created', async () => {

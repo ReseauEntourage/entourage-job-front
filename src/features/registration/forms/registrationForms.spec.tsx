@@ -251,6 +251,14 @@ describe('formRegistrationAccount', () => {
 describe('formRegistrationRefererAccount', () => {
   const schema = formRegistrationRefererAccount;
 
+  it('only shows the already-used hint for a manual email error', () => {
+    const render_ = field(schema, 'email').renderErrorContent;
+
+    expect(render_({ type: 'required' })).toBeUndefined();
+    expect(render_(undefined)).toBeUndefined();
+    expect(render_({ type: 'manual' })).toBeTruthy();
+  });
+
   it('validates phone and email', () => {
     expect(failures(schema, 'phone', '0612345678')).toEqual([]);
     expect(failures(schema, 'phone', '12')).toHaveLength(1);

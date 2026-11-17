@@ -262,6 +262,41 @@ describe('registration api', () => {
       });
     });
 
+    it('clears isLoading when the API responds with a 409 conflict, so the step can be submitted again', async () => {
+      const store = createTestStore({
+        registration: {
+          ...slice.getInitialState(),
+          selectedFlow: RegistrationFlow.CANDIDATE,
+          isEnded: true,
+          data: buildRegistrationData(),
+        },
+      });
+      mockedApi.postUserRegistration.mockRejectedValue(buildAxiosError(409));
+
+      store.dispatch(actions.createUserRequested());
+      expect(store.getState().registration.isLoading).toBe(true);
+      await flushPromises();
+
+      expect(store.getState().registration.isLoading).toBe(false);
+    });
+
+    it('clears isLoading when the API call rejects with a non-conflict error', async () => {
+      const store = createTestStore({
+        registration: {
+          ...slice.getInitialState(),
+          selectedFlow: RegistrationFlow.CANDIDATE,
+          isEnded: true,
+          data: buildRegistrationData(),
+        },
+      });
+      mockedApi.postUserRegistration.mockRejectedValue(new Error('boom'));
+
+      store.dispatch(actions.createUserRequested());
+      await flushPromises();
+
+      expect(store.getState().registration.isLoading).toBe(false);
+    });
+
     it('fails with a generic error when the API call rejects with a non-conflict error', async () => {
       const store = createTestStore({
         registration: {

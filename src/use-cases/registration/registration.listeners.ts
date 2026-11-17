@@ -33,6 +33,20 @@ listenerMiddleware.startListening({
 });
 
 /**
+ * A failed account creation (duplicate email or generic error) must not leave
+ * the wizard stuck in its loading state: `createUserRequested` and the last
+ * `moveForwardInRegistration` both set `isLoading`, and nothing else resets it
+ * on failure. `isEnded` needs no reset: the submit handlers set it again on
+ * every submission.
+ */
+listenerMiddleware.startListening({
+  matcher: registrationApi.endpoints.createUser.matchRejected,
+  effect: (_action, listenerApi) => {
+    listenerApi.dispatch(slice.actions.setRegistrationIsLoading(false));
+  },
+});
+
+/**
  * Translates `moveForwardInRegistrationSaga` — forces a render after moving
  * forward, but not on the last step (`isLoading` then stays `true`, owned by
  * the `createUser` mutation's own loading state instead).
