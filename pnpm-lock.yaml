@@ -43,7 +43,7 @@ importers:
         version: 3.4.17
       dotenv:
         specifier: ^16.4.7
-        version: 16.4.7
+        version: 16.6.1
       expect:
         specifier: ^29.7.0
         version: 29.7.0
@@ -3574,8 +3574,8 @@ packages:
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
-  dotenv@16.4.7:
-    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+  dotenv@16.6.1:
+    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -9908,7 +9908,7 @@ snapshots:
       no-case: 3.0.4
       tslib: 2.9.1
 
-  dotenv@16.4.7: {}
+  dotenv@16.6.1: {}
 
   dunder-proto@1.0.1:
     dependencies:
