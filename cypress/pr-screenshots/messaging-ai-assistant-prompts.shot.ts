@@ -162,6 +162,49 @@ describe('Messagerie - assistant IA proposé au coach', () => {
     );
   });
 
+  it('le bandeau disparaît après un clic sur "Ouvrir l\'assistant", pour la session', () => {
+    login();
+    const conversation = buildConversation({
+      id: 'conversation-ai-session-dismiss',
+      participants: [
+        buildParticipant({ id: CURRENT_USER_ID, role: 'Coach' }),
+        candidate,
+      ],
+      messages: [
+        buildMessage({
+          author: candidate,
+          createdAt: '2026-06-01T10:05:00.000Z',
+          content: 'Je vous relance, êtes-vous disponible cette semaine ?',
+        }),
+        buildMessage({
+          author: candidate,
+          createdAt: '2026-06-01T10:00:00.000Z',
+          content: 'Bonjour, pourriez-vous m’aider à préparer un entretien ?',
+        }),
+      ],
+    });
+
+    interceptGetConversations({ statusCode: 200, body: [conversation] });
+    interceptGetConversationById({ statusCode: 200, body: conversation });
+
+    cy.visit(
+      '/backoffice/messaging?conversationId=conversation-ai-session-dismiss'
+    );
+    cy.wait('@getCurrent');
+    cy.wait('@getConversationById');
+    cy.get('[data-testid="messaging-ai-assistant-banner"]').should(
+      'be.visible'
+    );
+    // "Ouvrir l'assistant" on desktop, just "Ouvrir" on the mobile compact banner.
+    cy.contains('button', /Ouvrir/).click();
+    cy.get('[data-testid="messaging-ai-assistant-banner"]').should('not.exist');
+
+    cy.capture('Bandeau masqué après ouverture de l’assistant', {
+      caption:
+        'Un clic sur « Ouvrir l’assistant » masque le bandeau pour la session en cours, en plus d’ouvrir l’assistant.',
+    });
+  });
+
   // L'ouverture de l'assistant lui-même (feuille mi-hauteur mobile / panneau desktop) n'est
   // pas capturée ici : le montage du panneau assistant (MessagingAIPanel/MessagingAIAssistant)
   // fait planter Electron headless dans cet environnement de capture, de façon déterministe
