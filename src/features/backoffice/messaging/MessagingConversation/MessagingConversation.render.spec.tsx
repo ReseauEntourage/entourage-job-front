@@ -478,6 +478,56 @@ describe('MessagingConversation', () => {
       await setup({ conversation: buildConversation() });
       expect(screen.getByTestId('ai-banner')).toHaveTextContent('compact');
     });
+
+    it('hides the banner for the session after opening the assistant from it, without persisting it server-side', async () => {
+      await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-open'));
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+      expect(mockedApi.dismissAIAssistantBanner).not.toHaveBeenCalled();
+    });
+
+    it('shows the banner again after a page reload (fresh store) even though it was session-dismissed before', async () => {
+      await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-open'));
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+
+      // A page reload starts a brand new Redux store: nothing from the
+      // previous render's in-memory state carries over.
+      cleanup();
+      await setup({ conversation: buildConversation() });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
+    it('does not affect the banner of another conversation', async () => {
+      const conv2 = buildConversation({
+        id: 'conv2',
+        messages: [message('n2', 'other', 2), message('n1', 'other', 1)],
+      });
+      const { store } = await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-open'));
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+
+      mockedApi.getConversationById.mockImplementation((id: string) =>
+        Promise.resolve({
+          data: id === 'conv2' ? conv2 : buildConversation(),
+        } as any)
+      );
+      act(() => {
+        store.dispatch(messagingActions.selectConversation('conv2'));
+      });
+      await settle();
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
+    it('still dismisses the banner persistently when using the mobile compact cross, not just for the session', async () => {
+      mockUseIsMobile.mockReturnValue(true);
+      mockedApi.dismissAIAssistantBanner.mockResolvedValue({} as any);
+      await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-dismiss'));
+      await settle();
+      expect(mockedApi.dismissAIAssistantBanner).toHaveBeenCalledWith('conv1');
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
   });
 
   describe('pinned information', () => {
