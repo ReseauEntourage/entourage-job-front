@@ -42,7 +42,7 @@ export function useWizardStepAccount() {
   }, [isError, error]);
 
   // password reste dans state.data (nécessaire à registration.saga.ts pour
-  // POST /user/registration) mais ne doit pas repeupler le champ visible du
+  // POST /users/registration) mais ne doit pas repeupler le champ visible du
   // formulaire au retour sur cette étape.
   const prefillableData = useMemo(() => {
     if (!data) {

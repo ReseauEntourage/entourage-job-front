@@ -55,7 +55,7 @@ describe('HelpGroupsCatalog', () => {
     expect(document.body.textContent).not.toMatch(/0 groupe|aucun groupe/i);
   });
 
-  it('redirects an admin to the members list when no group is published', () => {
+  it('redirects an admin to the dashboard when no group is published', () => {
     (useAuthenticatedUser as jest.Mock).mockReturnValue({
       role: UserRoles.ADMIN,
     });
@@ -64,7 +64,7 @@ describe('HelpGroupsCatalog', () => {
       isLoading: false,
     });
     render(<HelpGroupsCatalog />);
-    expect(replace).toHaveBeenCalledWith('/backoffice/admin/membres');
+    expect(replace).toHaveBeenCalledWith('/backoffice/dashboard');
   });
 
   it('does not redirect while loading', () => {

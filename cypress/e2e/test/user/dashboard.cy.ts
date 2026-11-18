@@ -14,7 +14,7 @@ const signInAs = (role: string) => {
   interceptCurrentUserSubResources();
   interceptGetUnseenCount({ statusCode: 200, body: 0 });
   interceptGetConversations({ statusCode: 200, body: [] });
-  cy.intercept('GET', '/user/profile/recommendations*', {
+  cy.intercept('GET', '/current/profile/recommendations*', {
     statusCode: 200,
     body: {
       embeddingPending: false,

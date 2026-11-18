@@ -1,18 +1,11 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import {
-  ButtonIcon,
-  Nav,
-  Navbar,
-  NavbarLogo,
-  SimpleLink,
-} from '@/src/components/ui';
+import { ButtonIcon, Nav, Navbar, NavbarLogo } from '@/src/components/ui';
 import { Dropdown } from '@/src/components/ui/Dropdown/Dropdown';
 import { DropdownToggle } from '@/src/components/ui/Dropdown/DropdownToggle';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { ImgUserProfile } from '@/src/components/ui/Images/ImgProfile';
-import { StyledNav } from '@/src/components/ui/Navbar/Nav/Nav.styles';
 import { Tag, TagSize, TagVariant } from '@/src/components/ui/Tag';
 import { COLORS } from '@/src/constants/styles';
 import { UserRoles } from '@/src/constants/users';
@@ -28,12 +21,18 @@ import { NavConnectedMainItemDefaultProps } from '../NavConnected.types';
 import { isNavGroupActive } from './NavConnectedContent.active';
 import {
   StyledConnectedItem,
+  StyledConnectedNav,
+  StyledMenuAnchor,
+  StyledMenuIcon,
+  StyledMenuLink,
   StyledNavAccountToggle,
   StyledNavDropdownItemContent,
   StyledNavIconBadge,
   StyledNavIconBadgeContainer,
+  StyledNavRightItems,
 } from './NavConnectedContent.styles';
 import { NavConnectedContentProps } from './NavConnectedContent.types';
+import { NavConnectedExternalIcon } from './NavConnectedExternalIcon';
 import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
@@ -54,11 +53,12 @@ export const NavConnectedContentDesktop = ({
   const profile = useCurrentUserProfile();
 
   const { push, asPath } = useRouter();
-  // The admin home is the first administration page, no longer in the main nav
-  const logoLink = administration?.subMenu?.[0] || links[user?.role][0] || null;
+  // The logo leads to the first tab of the role, "Accueil" (the dashboard)
+  // for every role, admins included
+  const logoLink = links[user?.role][0] || null;
 
   const rightItems = [
-    <div className="uk-flex uk-flex-middle">
+    <StyledNavRightItems>
       {/* Administration */}
       {administration?.subMenu && (
         <Dropdown>
@@ -171,7 +171,7 @@ export const NavConnectedContentDesktop = ({
           })}
         </Dropdown.Menu>
       </Dropdown>
-    </div>,
+    </StyledNavRightItems>,
   ];
 
   return (
@@ -187,7 +187,7 @@ export const NavConnectedContentDesktop = ({
               }
               type="primary"
             />
-            <StyledNav className="uk-navbar-nav">
+            <StyledConnectedNav>
               {links[user.role].map(
                 (
                   {
@@ -220,7 +220,7 @@ export const NavConnectedContentDesktop = ({
                       }`}
                     >
                       {href ? (
-                        <SimpleLink
+                        <StyledMenuLink
                           href={href + (queryParams || '')}
                           onClick={() => {
                             if (tag) {
@@ -229,14 +229,15 @@ export const NavConnectedContentDesktop = ({
                           }}
                           isExternal={external}
                           target={external ? '_blank' : '_self'}
-                          className="uk-flex uk-flex-middle menu-link"
+                          className="menu-link"
                         >
                           {icon && (
-                            <span className="uk-margin-small-right icon-span">
+                            <StyledMenuIcon className="icon-span">
                               {icon}
-                            </span>
+                            </StyledMenuIcon>
                           )}
                           <span className="name-span">{name}</span>
+                          {external && <NavConnectedExternalIcon />}
                           {badge && badges[badge] > 0 && (
                             <div>
                               &nbsp;
@@ -248,10 +249,10 @@ export const NavConnectedContentDesktop = ({
                               </Tag>
                             </div>
                           )}
-                        </SimpleLink>
+                        </StyledMenuLink>
                       ) : (
-                        <a
-                          className="uk-flex uk-flex-middle menu-link"
+                        <StyledMenuAnchor
+                          className="menu-link"
                           onClick={() => {
                             if (tag) {
                               gaEvent(tag);
@@ -259,12 +260,12 @@ export const NavConnectedContentDesktop = ({
                           }}
                         >
                           {icon && (
-                            <span className="uk-margin-small-right icon-span">
+                            <StyledMenuIcon className="icon-span">
                               {icon}
-                            </span>
+                            </StyledMenuIcon>
                           )}
                           <span className="name-span">{name}</span>
-                        </a>
+                        </StyledMenuAnchor>
                       )}
                       {subMenu && subMenu.length > 0 && (
                         <SubMenu items={subMenu} badges={badges} />
@@ -273,7 +274,7 @@ export const NavConnectedContentDesktop = ({
                   );
                 }
               )}
-            </StyledNav>
+            </StyledConnectedNav>
           </>
         }
         right={<Nav items={rightItems} color="black" />}

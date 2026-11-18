@@ -25,7 +25,7 @@ export type SocialMedia =
   'facebook' | 'linkedin' | 'twitter' | 'whatsapp' | 'other';
 
 export const APIRoutes = {
-  USERS: 'user',
+  USERS: 'users',
   AUTH: 'auth',
   CONTACTS: 'contact',
   CVS: 'cv',
@@ -303,9 +303,10 @@ export type UserStats = {
   availableMirrorRoleParticipantsCount: number | null;
 };
 
-export enum FeatureKey {
-  MESSAGING_AI_ASSISTANT = 'messaging_ai_assistant',
-}
+// No flag defined today — messaging_ai_assistant was removed once it stopped
+// gating anything in practice. The generic betaFeatures mechanism below is
+// kept for a future flag: add its key here when one is needed.
+export enum FeatureKey {}
 
 export type User = {
   id: string;
@@ -723,6 +724,7 @@ export type Conversation = {
   participants: ConversationParticipants;
   seenAt?: string;
   archivedAt?: string | null;
+  assistantBannerDismissedAt?: string | null;
 };
 
 export type MessageWithConversation = Message & {
@@ -1203,11 +1205,16 @@ export type ReportTargetStatus = 'PENDING' | 'RESOLVED';
 
 export type ReportReason = ReportDto['reason'];
 
+// A report with a human reporter, or one created automatically (e.g. a
+// forbidden expression detected in a help group message)
+export type ReportOrigin = 'MEMBER' | 'AUTOMATIC';
+
 export type ReportTargetItem = {
   targetType: ReportTargetType;
   targetId: string;
   label: string;
   zones: AdminZone[];
+  origins: ReportOrigin[];
   pendingCount: number;
   reportsCount: number;
   reasons: ReportReason[];
@@ -1218,6 +1225,7 @@ export type ReportTargetItem = {
 export type ReportTargetsParams = {
   type?: ReportTargetFilter;
   status?: ReportTargetStatus;
+  origin?: ReportOrigin;
   zone?: AdminZone;
   cursor?: string;
 };
@@ -1234,12 +1242,15 @@ export type ReportUser = {
 export type ReportItem = {
   id: string;
   reporter: ReportUser;
+  // Null reporter + MEMBER origin: deleted account. Null reporter +
+  // AUTOMATIC origin: no human reporter at all, shown "Détection automatique"
+  origin: ReportOrigin;
   reason: ReportReason;
   comment: string | null;
   zone: AdminZone | null;
   status: 'PENDING' | 'RESOLVED';
   createdAt: string;
-  resolution: 'RESTORED' | 'DELETED' | 'MANUAL' | null;
+  resolution: 'RESTORED' | 'DELETED' | 'MANUAL' | 'DISMISSED' | null;
   resolvedAt: string | null;
   resolvedBy: ReportUser;
   resolutionNote: string | null;

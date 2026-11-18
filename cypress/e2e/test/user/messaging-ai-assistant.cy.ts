@@ -5,6 +5,7 @@ import {
   interceptGetAISession,
   interceptGetConversationById,
   interceptGetConversations,
+  interceptGetPublicProfile,
   interceptGetUnseenCount,
   interceptResetAISession,
   sseDone,
@@ -93,6 +94,34 @@ describe('En tant que - Coach, j’utilise l’assistant IA de la messagerie', (
     cy.wait('@getConversationById');
 
     cy.get('[data-testid="messaging-ai-assistant-toggle"]').should('not.exist');
+  });
+
+  it("Ouvre l'assistant dans une première conversation, avant le premier message", () => {
+    signInAsCoachWithAIAssistant(true);
+    interceptGetConversations({ statusCode: 200, body: [] });
+    interceptGetPublicProfile({
+      statusCode: 200,
+      body: buildParticipant({
+        id: 'user-new',
+        firstName: 'Nouveau',
+        role: 'Candidat',
+      }),
+    });
+    interceptAIStream(
+      sseEvent({ content: 'Voici un premier message.' }) + sseDone
+    );
+
+    cy.visit('/backoffice/messaging?userId=user-new');
+    cy.wait('@getCurrent');
+    cy.wait('@getConversations');
+    cy.wait('@getPublicProfile');
+
+    cy.get('[data-testid="messaging-ai-assistant-toggle"]').click();
+    cy.wait('@getAISession');
+
+    cy.contains('Démarrer la discussion').should('be.visible').click();
+    cy.wait('@postAIStream');
+    cy.contains('Voici un premier message.').should('be.visible');
   });
 
   it('Ouvre le panneau, envoie une question via une suggestion rapide et affiche la réponse streamée', () => {

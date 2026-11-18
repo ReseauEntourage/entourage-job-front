@@ -14,10 +14,12 @@ import { AlertType } from '@/src/components/ui/Alert/Alert.types';
 import { Button } from '@/src/components/ui/Button/Button';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { TextArea } from '@/src/components/ui/Inputs/TextArea';
+import { selectCurrentUserId } from '@/src/use-cases/current-user';
 import {
   messagingActions,
+  selectAIAssistantRecipientId,
   selectSelectedConversation,
-  selectSelectedConversationId,
+  selectShouldAutoStartAI,
 } from '@/src/use-cases/messaging';
 import { AssistantMessageBubble } from './AssistantMessageBubble/AssistantMessageBubble';
 import {
@@ -49,8 +51,12 @@ import {
 export const MessagingAIAssistant = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const selectedConversationId = useSelector(selectSelectedConversationId);
+  const currentUserId = useSelector(selectCurrentUserId);
+  // The thread is attached to the recipient (the candidate), not to a
+  // conversation: it exists before the conversation is created.
+  const recipientId = useSelector(selectAIAssistantRecipientId(currentUserId));
   const selectedConversation = useSelector(selectSelectedConversation);
+  const shouldAutoStartAI = useSelector(selectShouldAutoStartAI);
   const hasConversationHistory =
     (selectedConversation?.messages?.length ?? 0) > 0;
 
@@ -85,7 +91,7 @@ export const MessagingAIAssistant = () => {
   };
 
   useEffect(() => {
-    if (!selectedConversationId) {
+    if (!recipientId) {
       setMessages([]);
       setIsLoading(false);
       setInputValue('');
@@ -94,7 +100,7 @@ export const MessagingAIAssistant = () => {
 
     let cancelled = false;
 
-    Api.getAISession(selectedConversationId)
+    Api.getAISession(recipientId)
       .then((res) => {
         if (!cancelled && res.data?.messages) {
           setMessages(res.data.messages);
@@ -113,7 +119,7 @@ export const MessagingAIAssistant = () => {
       setInputValue('');
       setEscalation(null);
     };
-  }, [selectedConversationId]);
+  }, [recipientId]);
 
   useEffect(() => {
     if (!rateLimitResetAt) {
@@ -149,12 +155,7 @@ export const MessagingAIAssistant = () => {
 
   const sendMessage = useCallback(
     async (content: string) => {
-      if (
-        !content.trim() ||
-        isLoading ||
-        !selectedConversationId ||
-        isRateLimited
-      ) {
+      if (!content.trim() || isLoading || !recipientId || isRateLimited) {
         return;
       }
 
@@ -202,10 +203,7 @@ export const MessagingAIAssistant = () => {
         activeRequestIdRef.current === assistantPlaceholderId;
 
       try {
-        const response = await Api.streamAIMessage(
-          selectedConversationId,
-          content.trim()
-        );
+        const response = await Api.streamAIMessage(recipientId, content.trim());
 
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
@@ -260,7 +258,7 @@ export const MessagingAIAssistant = () => {
         }
       }
     },
-    [isLoading, isRateLimited, selectedConversationId]
+    [isLoading, isRateLimited, recipientId]
   );
 
   const onQuickAction = useCallback(
@@ -272,6 +270,19 @@ export const MessagingAIAssistant = () => {
 
   const contextualAction = getContextualQuickAction(hasConversationHistory);
 
+  // Launches a response proposal automatically when the panel was opened
+  // from the "Demander à l'assistant IA" chip or the "Besoin d'aide pour
+  // répondre ?" banner (never from the header's "✨ Assistant" button, which
+  // never sets shouldAutoStartAI). The flag is cleared first so a re-render
+  // triggered by sendMessage itself (e.g. isLoading flipping) can't re-fire it.
+  useEffect(() => {
+    if (!shouldAutoStartAI || !recipientId) {
+      return;
+    }
+    dispatch(messagingActions.clearShouldAutoStartAI());
+    sendMessage(contextualAction.prompt);
+  }, [shouldAutoStartAI, recipientId, dispatch, sendMessage, contextualAction]);
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -280,11 +291,11 @@ export const MessagingAIAssistant = () => {
   };
 
   const onNewConversation = useCallback(async () => {
-    if (!selectedConversationId || isLoading || messages.length === 0) {
+    if (!recipientId || isLoading || messages.length === 0) {
       return;
     }
     try {
-      await Api.resetAISession(selectedConversationId);
+      await Api.resetAISession(recipientId);
       setMessages([]);
       setEscalation(null);
     } catch {
@@ -292,7 +303,7 @@ export const MessagingAIAssistant = () => {
       setMessages([]);
       setEscalation(null);
     }
-  }, [selectedConversationId, isLoading, messages.length]);
+  }, [recipientId, isLoading, messages.length]);
 
   const handleUseSuggestion = useCallback(
     (text: string) => {

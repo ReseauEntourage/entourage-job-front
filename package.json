@@ -11,7 +11,7 @@
     "next": "next",
     "start": "next start",
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",
-    "test": "run-s test:*",
+    "test": "pnpm test:ts-check && pnpm test:eslint && pnpm test:unit && pnpm test:e2e",
     "test:ts-check": "tsc -p tsconfig.base.json --noEmit && echo 'TypeScript type checking passed.'",
     "test:eslint": "pnpm exec eslint 'src/**/*.{js,jsx,ts,tsx}' --ext js,jsx,ts,tsx --fix --max-warnings=0",
     "test:unit": "jest",
@@ -24,6 +24,8 @@
     "cypress:io": "pnpm exec cypress run --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
     "cypress:local": "pnpm exec cypress open",
     "screenshots": "node cypress/pr-screenshots/run.mjs",
+    "screenshots:compare": "node cypress/pr-screenshots/compare.mjs",
+    "screenshots:compare:check": "node --test cypress/pr-screenshots/compare.check.mjs",
     "add-icons": "node ./assets/icons/export-script.js"
   },
   "repository": {
@@ -46,8 +48,8 @@
     "@svgr/webpack": "^8.1.0",
     "axios": "^1.20.0",
     "check-password-strength": "^2.0.10",
-    "dd-trace": "^6.16.0",
-    "dompurify": "^3.4.16",
+    "dd-trace": "^6.20.1",
+    "dompurify": "^3.4.17",
     "dotenv": "^16.4.7",
     "expect": "^29.7.0",
     "lodash": "^4.18.1",
@@ -55,7 +57,7 @@
     "marked": "4",
     "mobile-detect": "^1.4.5",
     "moment": "^2.31.0",
-    "next": "16.4.3",
+    "next": "16.4.5",
     "prop-types": "^15.8.1",
     "pusher-js": "^7.6.0",
     "react": "19.2.8",
@@ -76,7 +78,6 @@
     "rxjs": "^7.8.2",
     "styled-components": "^6.4.4",
     "swiper": "^12.1.2",
-    "uikit": "3.6.22",
     "use-deep-compare-effect": "^1.8.1",
     "uuid": "^11.1.1",
     "validator": "^13.15.22"
@@ -114,17 +115,15 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "lint-staged": "^13.3.0",
-    "npm-run-all": "^4.1.5",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
     "prettier": "^3.9.6",
-    "storybook": "^10.3.5",
+    "storybook": "^10.6.2",
     "typescript": "^6.0.3",
     "vite": "^8.1.6",
     "vite-tsconfig-paths": "^6.1.1"
   },
-  "resolutions": {
-    "jackspeak": "2.1.1"
-  },
-  "packageManager": "pnpm@11.15.1",
+  "packageManager": "pnpm@11.28.12",
   "overrides": {
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3"

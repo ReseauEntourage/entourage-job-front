@@ -34,8 +34,4 @@ export const StyledNavItem = styled.li<{ color?: string }>`
   & a:hover {
     opacity: 0.6;
   }
-
-  & .uk-navbar-dropdown-nav > li > a {
-    text-align: left;
-  }
 `;

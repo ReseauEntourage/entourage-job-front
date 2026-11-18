@@ -29,6 +29,11 @@ const buildUser = (overrides: Partial<User> = {}): User =>
     ...overrides,
   }) as User;
 
+// FeatureKey has no member today (the last one, messaging_ai_assistant, was
+// removed once it stopped gating anything) — this generic mechanism is
+// exercised here with an arbitrary key, as it will be with a future flag.
+const TEST_FEATURE_KEY = 'test_flag' as unknown as FeatureKey;
+
 // `as any`: these selectors only read `state.currentUser.*`, but the
 // module's exported `RootState` type also requires the shared `api` reducer
 // key (for the RTK-Query-backed status selectors in the same file, exercised
@@ -173,10 +178,10 @@ describe('current-user.selectors', () => {
   describe('selectBetaFeatures', () => {
     it("returns the user's beta features", () => {
       const user = buildUser({
-        betaFeatures: { [FeatureKey.MESSAGING_AI_ASSISTANT]: true },
+        betaFeatures: { [TEST_FEATURE_KEY]: true },
       });
       expect(selectBetaFeatures(buildState({ user }))).toEqual({
-        [FeatureKey.MESSAGING_AI_ASSISTANT]: true,
+        [TEST_FEATURE_KEY]: true,
       });
     });
 
@@ -188,24 +193,20 @@ describe('current-user.selectors', () => {
   describe('selectHasBetaFeature', () => {
     it('returns true when the feature flag is enabled for the user', () => {
       const user = buildUser({
-        betaFeatures: { [FeatureKey.MESSAGING_AI_ASSISTANT]: true },
+        betaFeatures: { [TEST_FEATURE_KEY]: true },
       });
-      expect(
-        selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)(
-          buildState({ user })
-        )
-      ).toBe(true);
+      expect(selectHasBetaFeature(TEST_FEATURE_KEY)(buildState({ user }))).toBe(
+        true
+      );
     });
 
     it('returns false when the feature flag is absent', () => {
       const user = buildUser({
-        betaFeatures: { [FeatureKey.MESSAGING_AI_ASSISTANT]: false },
+        betaFeatures: { [TEST_FEATURE_KEY]: false },
       });
-      expect(
-        selectHasBetaFeature(FeatureKey.MESSAGING_AI_ASSISTANT)(
-          buildState({ user })
-        )
-      ).toBe(false);
+      expect(selectHasBetaFeature(TEST_FEATURE_KEY)(buildState({ user }))).toBe(
+        false
+      );
     });
   });
 });

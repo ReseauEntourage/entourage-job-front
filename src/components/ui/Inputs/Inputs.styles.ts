@@ -82,6 +82,13 @@ export const StyledAnnotationsErrorMessage = styled(FieldErrorMessage)`
   margin-right: auto;
 `;
 
+// Help text under a field: takes the free width, the counter stays on the right
+export const StyledAnnotationsHint = styled.div`
+  margin-right: auto;
+  padding-top: 5px;
+  min-width: 0;
+`;
+
 export const StyledLimitContainer = styled.div`
   display: flex;
   > :first-child {

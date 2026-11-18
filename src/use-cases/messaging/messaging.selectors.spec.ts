@@ -3,9 +3,13 @@ jest.mock('@/src/api');
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { Conversation, ConversationType } from '@/src/api/types';
+import { UserRoles } from '@/src/constants/users';
 import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { messagingApi } from './messaging.api';
-import { selectOtherParticipantHasNotReplied } from './messaging.selectors';
+import {
+  selectAIAssistantRecipientId,
+  selectOtherParticipantHasNotReplied,
+} from './messaging.selectors';
 import { slice } from './messaging.slice';
 
 const CONVERSATION_ID = 'conversation-1';
@@ -120,5 +124,78 @@ describe('selectOtherParticipantHasNotReplied', () => {
     expect(selectOtherParticipantHasNotReplied(currentUserId)(state)).toBe(
       false
     );
+  });
+});
+
+describe('selectAIAssistantRecipientId', () => {
+  const participant = (id: string, role: UserRoles) =>
+    ({ id, role }) as Conversation['participants'][number];
+
+  it('is the candidate of a direct conversation, other than the current user', async () => {
+    const state = await buildState(
+      buildConversation({
+        participants: [
+          participant('me', UserRoles.COACH),
+          participant('cand', UserRoles.CANDIDATE),
+        ],
+      })
+    );
+
+    expect(selectAIAssistantRecipientId('me')(state)).toBe('cand');
+  });
+
+  it('is the recipient held by the draft of a conversation being created', () => {
+    const store = createTestStore({
+      messaging: {
+        ...slice.getInitialState(),
+        selectedConversationId: 'new',
+        newConversationDraft: [participant('cand', UserRoles.CANDIDATE)],
+      },
+    });
+
+    expect(selectAIAssistantRecipientId('me')(store.getState())).toBe('cand');
+  });
+
+  it('is null when no conversation is selected or the current user is unknown', async () => {
+    const state = await buildState(null);
+
+    expect(selectAIAssistantRecipientId('me')(state)).toBeNull();
+    expect(
+      selectAIAssistantRecipientId(null)(
+        await buildState(
+          buildConversation({
+            participants: [participant('cand', UserRoles.CANDIDATE)],
+          })
+        )
+      )
+    ).toBeNull();
+  });
+
+  it('is null for a group conversation', async () => {
+    const state = await buildState(
+      buildConversation({
+        type: ConversationType.GROUP,
+        participants: [
+          participant('me', UserRoles.COACH),
+          participant('cand', UserRoles.CANDIDATE),
+          participant('other', UserRoles.COACH),
+        ],
+      })
+    );
+
+    expect(selectAIAssistantRecipientId('me')(state)).toBeNull();
+  });
+
+  it('is null when the other participant is not a candidate', async () => {
+    const state = await buildState(
+      buildConversation({
+        participants: [
+          participant('me', UserRoles.COACH),
+          participant('coach', UserRoles.COACH),
+        ],
+      })
+    );
+
+    expect(selectAIAssistantRecipientId('me')(state)).toBeNull();
   });
 });

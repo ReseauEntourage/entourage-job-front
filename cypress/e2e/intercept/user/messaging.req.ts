@@ -36,11 +36,11 @@ export const interceptReportConversation = (data: object) => {
 };
 
 export const interceptGetPublicProfile = (data: object) => {
-  cy.intercept('GET', '/user/profile/*', data).as('getPublicProfile');
+  cy.intercept('GET', '/users/*/profile', data).as('getPublicProfile');
 };
 
 export const interceptGetAISession = (data: object) => {
-  cy.intercept('GET', '/ai-assistant/conversations/*/session', data).as(
+  cy.intercept('GET', '/ai-assistant/recipients/*/session', data).as(
     'getAISession'
   );
 };
@@ -48,7 +48,7 @@ export const interceptGetAISession = (data: object) => {
 export const interceptResetAISession = (data: object) => {
   cy.intercept(
     'DELETE',
-    '/ai-assistant/conversations/*/session/messages',
+    '/ai-assistant/recipients/*/session/messages',
     data
   ).as('resetAISession');
 };
@@ -63,7 +63,7 @@ export const interceptResetAISession = (data: object) => {
  * chunking/timing.
  */
 export const interceptAIStream = (sseBody: string, statusCode = 200) => {
-  cy.intercept('POST', '/ai-assistant/conversations/*/stream', {
+  cy.intercept('POST', '/ai-assistant/recipients/*/stream', {
     statusCode,
     headers: { 'content-type': 'text/event-stream' },
     body: sseBody,
@@ -78,11 +78,11 @@ export const sseEvent = (payload: object) =>
 export const sseDone = 'data: [DONE]\n\n';
 
 export const interceptShareProfile = (data: object) => {
-  cy.intercept('POST', '/user/profile/*/shares', data).as('postShareProfile');
+  cy.intercept('POST', '/users/*/profile/shares', data).as('postShareProfile');
 };
 
 export const interceptGetProfileShareText = (data: object) => {
-  cy.intercept('GET', '/user/profile/*/share-text*', data).as(
+  cy.intercept('GET', '/users/*/profile/share-text*', data).as(
     'getProfileShareText'
   );
 };

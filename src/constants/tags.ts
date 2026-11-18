@@ -386,6 +386,15 @@ export const GA_TAGS = {
   BACKOFFICE_REFERER_HEADER_BAO_CLIC: {
     action: 'Backoffice_Referer_Header_BAO_Clic',
   },
+  BACKOFFICE_ADMIN_HEADER_BAO_COACH_CLIC: {
+    action: 'Backoffice_Admin_Header_BAO_Coach_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_BAO_CANDIDAT_CLIC: {
+    action: 'Backoffice_Admin_Header_BAO_Candidat_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_BAO_COMPANY_CLIC: {
+    action: 'Backoffice_Admin_Header_BAO_Company_Clic',
+  },
   BACKOFFICE_HEADER_RESSOURCES_CLIC: {
     action: 'Backoffice_Header_Ressources_Clic',
   },
@@ -451,6 +460,9 @@ export const GA_TAGS = {
   },
   BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC: {
     action: 'Backoffice_Referer_Header_Dashboard_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_DASHBOARD_CLIC: {
+    action: 'Backoffice_Admin_Header_Dashboard_Clic',
   },
   HEADER_CONTACT_CLIC: {
     action: 'Header_Contact_Clic',

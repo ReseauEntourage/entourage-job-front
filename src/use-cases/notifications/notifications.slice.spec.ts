@@ -29,6 +29,19 @@ describe('notifications slice', () => {
       expect(state.notifications[0].id).toMatch(UUID_REGEX);
     });
 
+    it('keeps the toast variant', () => {
+      const state = reducer(
+        undefined,
+        actions.addNotification({
+          type: 'danger',
+          variant: 'toast',
+          message: 'Oops',
+        })
+      );
+
+      expect(state.notifications[0]).toMatchObject({ variant: 'toast' });
+    });
+
     it('accumulates multiple notifications, each with its own id', () => {
       let state = reducer(
         undefined,

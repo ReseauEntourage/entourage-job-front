@@ -26,7 +26,7 @@ export const wizardJourneyRequests = {
       alias: 'nudges',
     },
     {
-      path: '/user/registration/compatible-profiles*',
+      path: '/users/registration/compatible-profiles*',
       data: {
         statusCode: 200,
         body: { profiles: [], count: 12, broadened: false },

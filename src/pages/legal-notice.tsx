@@ -10,7 +10,7 @@ export const LegalNotice = () => {
   };
   return (
     <Layout title="Mentions légales" noIndex>
-      <Section className="uk-text-center" style="default" size="large">
+      <Section textCenter style="default" size="large">
         <H1 title="Mentions légales" center />
         <br />
         <br />

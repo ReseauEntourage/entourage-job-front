@@ -4,6 +4,7 @@ import { Button } from '@/src/components/ui';
 import { useModalContext } from '@/src/features/modals/Modal';
 import { ModalGeneric } from '@/src/features/modals/Modal/ModalGeneric';
 import { ModalFooter } from '../ModalFooter/ModalFooter';
+import { StyledModalConfirmContent } from './ModalConfirm.styles';
 
 interface ModalConfirmProps {
   onConfirm: () => void;
@@ -27,7 +28,9 @@ export const ModalConfirm = ({
   const { onClose } = useModalContext();
   return (
     <ModalGeneric description={text} title={title}>
-      {children && <div className="uk-margin-medium-bottom">{children}</div>}
+      {children && (
+        <StyledModalConfirmContent>{children}</StyledModalConfirmContent>
+      )}
       <ModalFooter>
         <Button
           variant="default"

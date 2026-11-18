@@ -207,7 +207,6 @@ const Orienter = () => {
 
       <Impact title="Quelques chiffres" insights={impactInsights} />
 
-      {/* already done => only remove uikit */}
       {isDesktop && (
         <Section style="default">
           <H2

@@ -1,4 +1,5 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
+import { Section } from '@/src/components/ui';
 import { COLORS, BREAKPOINTS } from '@/src/constants/styles';
 
 export const StyledNLForm = styled.div`
@@ -47,4 +48,33 @@ export const StyledNLForm = styled.div`
       }
     }
   }
+`;
+
+/** Newsletter section, optionally without vertical padding. */
+export const StyledNewsletterSection = styled(Section)<{
+  $noVerticalPadding: boolean;
+}>`
+  ${({ $noVerticalPadding }) =>
+    $noVerticalPadding &&
+    css`
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    `}
+`;
+
+/** Error message. */
+export const StyledNewsletterError = styled.div<{ $center?: boolean }>`
+  color: ${COLORS.danger} !important;
+  ${({ $center }) =>
+    $center &&
+    css`
+      text-align: center !important;
+    `}
+`;
+
+/** Centered submit row. */
+export const StyledNewsletterSubmit = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px !important;
 `;

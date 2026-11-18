@@ -8,6 +8,7 @@ import { User } from '@/src/api/types';
 import { UserRoles } from '@/src/constants/users';
 import { createTestStore } from '@/src/store/testUtils/createTestStore';
 import { currentUserActions } from '@/src/use-cases/current-user';
+import { getDefaultUrl } from '@/src/utils/Redirects';
 import { authenticatedPermissions } from './permissions';
 import { useRoutePermissions } from './useRoutePermissions';
 
@@ -52,13 +53,37 @@ describe('useRoutePermissions', () => {
     });
   });
 
-  it('restricts the dashboard to non-admin roles', () => {
+  it('lets every role reach the dashboard but not anonymous users', () => {
     expect(isAuthorized('/backoffice/dashboard', UserRoles.CANDIDATE)).toBe(
       true
     );
     expect(isAuthorized('/backoffice/dashboard', UserRoles.COACH)).toBe(true);
     expect(isAuthorized('/backoffice/dashboard', UserRoles.REFERER)).toBe(true);
-    expect(isAuthorized('/backoffice/dashboard', UserRoles.ADMIN)).toBe(false);
+    expect(isAuthorized('/backoffice/dashboard', UserRoles.ADMIN)).toBe(true);
+    expect(isAuthorized('/backoffice/dashboard')).toBe(false);
+  });
+
+  it('keeps the candidate pages out of reach of admins', () => {
+    expect(
+      isAuthorized('/backoffice/candidat/[candidateId]', UserRoles.ADMIN)
+    ).toBe(false);
+    expect(
+      isAuthorized('/backoffice/candidat/[candidateId]/cv', UserRoles.ADMIN)
+    ).toBe(false);
+    expect(
+      isAuthorized('/backoffice/candidat/[candidateId]', UserRoles.COACH)
+    ).toBe(true);
+  });
+
+  it('authorizes the default page of every role, so the redirect never loops', () => {
+    [
+      UserRoles.ADMIN,
+      UserRoles.CANDIDATE,
+      UserRoles.COACH,
+      UserRoles.REFERER,
+    ].forEach((role) => {
+      expect(isAuthorized(getDefaultUrl(role), role)).toBe(true);
+    });
   });
 
   it('restricts referer-only routes', () => {

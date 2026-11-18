@@ -13,6 +13,11 @@ export interface ButtonIconProps {
   dataTestId?: string;
   // Accessible name of the button, which shows only an icon
   ariaLabel?: string;
+  // Open state and kind of the popup the button controls (menu toggles)
+  ariaExpanded?: boolean;
+  ariaHasPopup?: 'menu';
+  // Lets a styled wrapper (`styled(ButtonIcon)`) restyle the button
+  className?: string;
   newTab?: boolean;
   disabled?: boolean;
   color?: string;
@@ -36,6 +41,9 @@ export const ButtonIcon = ({
   href,
   dataTestId,
   ariaLabel,
+  ariaExpanded,
+  ariaHasPopup,
+  className,
   newTab,
   size = 'medium',
   disabled = false,
@@ -59,6 +67,9 @@ export const ButtonIcon = ({
       onClick={onClick}
       dataTestId={dataTestId}
       ariaLabel={ariaLabel}
+      ariaExpanded={ariaExpanded}
+      ariaHasPopup={ariaHasPopup}
+      className={className}
       newTab={newTab}
       disabled={disabled}
       variant={BUTTON_ICON_VARIANT_MAP[variant]}

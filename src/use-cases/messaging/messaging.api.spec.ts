@@ -126,6 +126,32 @@ describe('messaging api', () => {
       expect(selectSelectedConversationId(store.getState())).toBe('new-conv');
     });
 
+    it('has the created conversation in cache by the time it is selected', async () => {
+      const store = createTestStore();
+      const newConversation = buildConversation({ id: 'new-conv' });
+      mockedApi.postMessage.mockResolvedValue({
+        data: {
+          id: 'msg-1',
+          authorId: 'author-1',
+          createdAt: '2026-01-01T00:00:00.000Z',
+          conversation: newConversation,
+        },
+      } as any);
+      const resolvedWhenSelected: (boolean | null)[] = [];
+      store.subscribe(() => {
+        const state = store.getState();
+        if (selectSelectedConversationId(state) === 'new-conv') {
+          resolvedWhenSelected.push(selectSelectedConversation(state) !== null);
+        }
+      });
+
+      store.dispatch(actions.postMessageRequested(new FormData()));
+      await flushPromises();
+
+      expect(resolvedWhenSelected.length).toBeGreaterThan(0);
+      expect(resolvedWhenSelected[0]).toBe(true);
+    });
+
     it('appends the message to the existing conversation and moves it to the top', async () => {
       const author = {
         id: 'author-1',

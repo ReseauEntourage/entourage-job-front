@@ -59,5 +59,27 @@ describe('messaging slice', () => {
       expect(state.activePanelView).toBe('ai');
       expect(state.isAIPanelOpen).toBe(true);
     });
+
+    it('openAIAssistantAutoStart opens the AI panel and arms auto-start', () => {
+      const state = reducer(
+        slice.getInitialState(),
+        actions.openAIAssistantAutoStart()
+      );
+
+      expect(state.activePanelView).toBe('ai');
+      expect(state.isAIPanelOpen).toBe(true);
+      expect(state.shouldAutoStartAI).toBe(true);
+    });
+
+    it('clearShouldAutoStartAI disarms auto-start', () => {
+      const initialState = {
+        ...slice.getInitialState(),
+        shouldAutoStartAI: true,
+      };
+
+      const state = reducer(initialState, actions.clearShouldAutoStartAI());
+
+      expect(state.shouldAutoStartAI).toBe(false);
+    });
   });
 });

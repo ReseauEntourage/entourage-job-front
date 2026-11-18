@@ -6,7 +6,8 @@ import { TextWeight } from '../Text';
 export type ButtonVariant =
   'default' | 'primary' | 'secondary' | 'text' | 'hoverBlue' | 'heroPrimary';
 
-export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
+export type ButtonSize =
+  'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
 
 export interface ButtonProps {
   id?: string;
@@ -26,6 +27,9 @@ export interface ButtonProps {
   dataTestId?: string;
   // Accessible name, for a button without visible text
   ariaLabel?: string;
+  // Open state and kind of the popup a button controls (menu toggles)
+  ariaExpanded?: boolean;
+  ariaHasPopup?: 'menu';
   color?: Color;
   align?: 'left' | 'center';
   style?: React.CSSProperties;

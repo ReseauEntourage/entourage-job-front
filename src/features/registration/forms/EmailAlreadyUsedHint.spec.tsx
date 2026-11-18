@@ -56,9 +56,9 @@ describe('EmailAlreadyUsedInlineLink', () => {
   it('offers to log in when the email is already used', async () => {
     await submitRegistration({ isAxiosError: true, response: { status: 409 } });
 
-    expect(
-      screen.getByText('vous connecter').closest('a')?.getAttribute('href')
-    ).toBe('/login');
+    // The error reaches the slice a few ticks after the request settles.
+    const link = await screen.findByText('vous connecter');
+    expect(link.closest('a')?.getAttribute('href')).toBe('/login');
   });
 
   it('renders nothing for any other error', async () => {

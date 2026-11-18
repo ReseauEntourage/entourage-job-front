@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Badge,
-  BadgeVariant,
-  Button,
-  LucidIcon,
-  Text,
-} from '@/src/components/ui';
+import { Button, LucidIcon, Text } from '@/src/components/ui';
 import { H5 } from '@/src/components/ui/Headings';
 import { TextArea, TextInput } from '@/src/components/ui/Inputs';
 import { StyledInputLabel } from '@/src/components/ui/Inputs/Inputs.styles';
@@ -28,10 +22,14 @@ import {
   COMPOSER_MESSAGE_REQUIRED,
   COMPOSER_PLACEHOLDER,
   COMPOSER_PUBLISH_LABEL,
+  COMPOSER_SUBHEADING,
+  COMPOSER_TITLE_FAILED_LABEL,
+  COMPOSER_TITLE_HELP_LABEL,
   COMPOSER_TITLE_LABEL,
   COMPOSER_TITLE_LOADING_LABEL,
-  COMPOSER_TITLE_OWN_LABEL,
   COMPOSER_TITLE_PLACEHOLDER,
+  COMPOSER_TITLE_REQUEST_LABEL,
+  COMPOSER_TITLE_REQUIRED_HINT,
   COMPOSER_TITLE_REQUIRED,
   COMPOSER_TITLE_RETRY_LABEL,
   COMPOSER_TITLE_SUGGESTED_LABEL,
@@ -50,10 +48,14 @@ import {
   StyledComposerBar,
   StyledComposerBarButton,
   StyledComposerHeading,
+  StyledComposerHeadingText,
   StyledComposerVisibility,
-  StyledTitleActions,
   StyledTitleField,
   StyledTitleLabelRow,
+  StyledTitleMention,
+  StyledTitleRequestButton,
+  StyledTitleRow,
+  StyledTitleStatus,
 } from './DiscussionComposer.styles';
 import {
   EMPTY_TITLE_SUGGESTION_HISTORY,
@@ -108,7 +110,8 @@ interface DiscussionComposerProps {
 /**
  * Writing a discussion in place, the group staying visible: never a modal
  * (only the charter one, at the very first publication). The message comes
- * first, then the title, which the AI can propose but never imposes.
+ * first, then the title, which the AI only proposes when the member asks
+ * for it, and never imposes.
  *
  * Closed, it is a one-line bar with the viewer's avatar. It opens as soon as
  * the bar takes the focus, or while a draft exists (a restored one
@@ -161,7 +164,6 @@ export function DiscussionComposer({
   const suggestion = useTitleSuggestion({
     slug,
     content: draft.content,
-    titleOrigin: draft.titleOrigin,
     history: draft.suggestionHistory ?? EMPTY_TITLE_SUGGESTION_HISTORY,
     onHistoryChange,
     onSuggested,
@@ -179,6 +181,16 @@ export function DiscussionComposer({
       messageRef.current?.focus();
     }
   }, [isOpen, focusRequest]);
+
+  // The title takes the focus once the answer is in (proposed or not): the
+  // member reviews the proposal, or writes their own title. Not when the
+  // member typed meanwhile, the focus is theirs.
+  const requestTitle = async () => {
+    const outcome = await suggestion.request();
+    if (outcome !== 'cancelled') {
+      titleRef.current?.focus();
+    }
+  };
 
   const close = () => {
     suggestion.reset();
@@ -270,8 +282,13 @@ export function DiscussionComposer({
       data-testid="discussion-composer"
     >
       <StyledComposerHeading>
-        {avatar(36)}
-        <H5 title={COMPOSER_HEADING} weight="semibold" noMarginBottom />
+        {avatar(48)}
+        <StyledComposerHeadingText>
+          <H5 title={COMPOSER_HEADING} weight="semibold" noMarginBottom />
+          <Text size="small" color="darkGray">
+            {COMPOSER_SUBHEADING}
+          </Text>
+        </StyledComposerHeadingText>
       </StyledComposerHeading>
       <TextArea
         id="discussion-composer-message"
@@ -290,7 +307,6 @@ export function DiscussionComposer({
           suggestion.cancelPending();
           setDraft((current) => ({ ...current, content }));
         }}
-        onBlur={suggestion.onMessageBlur}
         error={hasTriedToPublish ? toFieldError(errors.content) : undefined}
       />
       <StyledTitleField>
@@ -298,84 +314,79 @@ export function DiscussionComposer({
           <StyledInputLabel htmlFor={TITLE_INPUT_ID}>
             {COMPOSER_TITLE_LABEL}
           </StyledInputLabel>
-          {draft.titleOrigin === 'suggested' && !suggestion.isSuggesting && (
-            <Badge
-              variant={BadgeVariant.ExtraLightTeal}
-              size="small"
-              dataTestId="discussion-composer-suggested-title"
-            >
-              <LucidIcon name="Sparkles" size={14} />
-              {COMPOSER_TITLE_SUGGESTED_LABEL}
-            </Badge>
-          )}
+          <Text size="small" color="darkGray">
+            {COMPOSER_TITLE_REQUIRED_HINT}
+          </Text>
         </StyledTitleLabelRow>
-        <TextInput
-          id={TITLE_INPUT_ID}
-          name={TITLE_INPUT_ID}
-          title={COMPOSER_TITLE_LABEL}
-          noMarginBottom
-          placeholder={
-            suggestion.isSuggesting
-              ? COMPOSER_TITLE_LOADING_LABEL
-              : COMPOSER_TITLE_PLACEHOLDER
-          }
-          maxLength={TITLE_MAX_LENGTH}
-          value={draft.title}
-          inputRef={(element) => {
-            titleRef.current = element;
-          }}
-          onChange={(title) => {
-            suggestion.cancelPending();
-            setDraft((current) => ({
-              ...current,
-              title,
-              titleOrigin:
-                current.titleOrigin === 'suggested' ||
-                current.titleOrigin === 'edited'
-                  ? 'edited'
-                  : 'manual',
-            }));
-          }}
-          error={hasTriedToPublish ? toFieldError(errors.title) : undefined}
-        />
-        <StyledTitleActions>
-          {suggestion.isSuggesting && (
-            <Text size="small" color="darkGray">
-              {COMPOSER_TITLE_LOADING_LABEL}
-            </Text>
-          )}
-          {suggestion.canRetry && (
-            <Button
-              variant="text"
-              size="small"
-              weight="semibold"
-              onClick={suggestion.retry}
-              dataTestId="discussion-composer-retry-title"
+        <StyledTitleRow>
+          <TextInput
+            id={TITLE_INPUT_ID}
+            name={TITLE_INPUT_ID}
+            title={COMPOSER_TITLE_LABEL}
+            noMarginBottom
+            placeholder={
+              suggestion.isSuggesting
+                ? COMPOSER_TITLE_LOADING_LABEL
+                : COMPOSER_TITLE_PLACEHOLDER
+            }
+            maxLength={TITLE_MAX_LENGTH}
+            value={draft.title}
+            inputRef={(element) => {
+              titleRef.current = element;
+            }}
+            onChange={(title) => {
+              suggestion.cancelPending();
+              setDraft((current) => ({
+                ...current,
+                title,
+                titleOrigin:
+                  current.titleOrigin === 'suggested' ||
+                  current.titleOrigin === 'edited'
+                    ? 'edited'
+                    : 'manual',
+              }));
+            }}
+            error={hasTriedToPublish ? toFieldError(errors.title) : undefined}
+            hint={
+              <StyledTitleStatus role="status">
+                {draft.titleOrigin === 'suggested' &&
+                !suggestion.isSuggesting ? (
+                  <StyledTitleMention data-testid="discussion-composer-suggested-title">
+                    <LucidIcon name="Sparkles" size={12} />
+                    <Text size="small" color="darkGray">
+                      {COMPOSER_TITLE_SUGGESTED_LABEL}
+                    </Text>
+                  </StyledTitleMention>
+                ) : suggestion.isSuggesting ? (
+                  <Text size="small" color="darkGray">
+                    {COMPOSER_TITLE_LOADING_LABEL}
+                  </Text>
+                ) : suggestion.hasFailed ? (
+                  <Text size="small" color="darkGray">
+                    {COMPOSER_TITLE_FAILED_LABEL}
+                  </Text>
+                ) : (
+                  <Text size="small" color="darkGray">
+                    {COMPOSER_TITLE_HELP_LABEL}
+                  </Text>
+                )}
+              </StyledTitleStatus>
+            }
+          />
+          {suggestion.canRequest && (
+            <StyledTitleRequestButton
+              variant="hoverBlue"
+              size="medium"
+              prependIcon={<LucidIcon name="Sparkles" />}
+              onClick={requestTitle}
+              dataTestId="discussion-composer-request-title"
             >
-              {COMPOSER_TITLE_RETRY_LABEL}
-            </Button>
+              {suggestion.hasProposed
+                ? COMPOSER_TITLE_RETRY_LABEL
+                : COMPOSER_TITLE_REQUEST_LABEL}
+            </StyledTitleRequestButton>
           )}
-          {(draft.titleOrigin === 'suggested' ||
-            draft.titleOrigin === 'edited') && (
-            <Button
-              variant="text"
-              size="small"
-              weight="semibold"
-              dataTestId="discussion-composer-own-title"
-              onClick={() => {
-                suggestion.cancelPending();
-                setDraft((current) => ({
-                  ...current,
-                  title: '',
-                  titleOrigin: 'manual',
-                }));
-                titleRef.current?.focus();
-              }}
-            >
-              {COMPOSER_TITLE_OWN_LABEL}
-            </Button>
-          )}
-        </StyledTitleActions>
+        </StyledTitleRow>
       </StyledTitleField>
       <StyledComposerActions>
         <StyledComposerVisibility>
@@ -396,6 +407,7 @@ export function DiscussionComposer({
         <Button
           variant="primary"
           size="large"
+          appendIcon={<LucidIcon name="Send" />}
           disabled={isLoading}
           onClick={() => onSubmit()}
           dataTestId="discussion-composer-publish"

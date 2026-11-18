@@ -14,6 +14,7 @@ import {
   useRestoreHelpGroupMessageMutation,
 } from '@/src/use-cases/help-groups';
 import { notificationsActions } from '@/src/use-cases/notifications';
+import { useResolveAdminReportTargetMutation } from '@/src/use-cases/reports';
 import { ReportPanelTitle } from '../ReportPanelTitle';
 import { REPORTS_TAB_LABELS } from '../reports.labels';
 import {
@@ -24,6 +25,7 @@ import {
 } from './ReportGroupMessageDecision.styles';
 
 const COMMENT_MAX_LENGTH = 500;
+const DISMISS_NOTE_MAX_LENGTH = 1000;
 
 const REASON_OPTIONS = Object.entries(MODERATION_REASON_LABELS).map(
   ([value, label]) => ({
@@ -40,13 +42,17 @@ interface ReportGroupMessageDecisionProps {
   slug: string | null;
   discussionId: string;
   pendingCount: number;
+  // Hidden: Rétablir / Supprimer. Visible: Classer sans suite / Supprimer —
+  // nothing to restore, since the message was never hidden.
+  isHidden: boolean;
 }
 
 /**
- * Decision of an admin on a group message hidden after reports, from its
- * report page: restore it, or delete it with a mandatory reason, shown only
- * once « Supprimer le message » is chosen. Both close its pending reports,
- * and refresh the page, the list and the badge through the `Reports` tag.
+ * Decision of an admin on a reported group message, from its report page.
+ * Hidden message: restore it, or delete it with a mandatory reason. Visible
+ * message: dismiss its reports with an optional note (nothing to restore),
+ * or delete it the same way. Both close its pending reports, and refresh
+ * the page, the list and the badge through the `Reports` tag.
  */
 export function ReportGroupMessageDecision({
   targetType,
@@ -54,17 +60,21 @@ export function ReportGroupMessageDecision({
   slug,
   discussionId,
   pendingCount,
+  isHidden,
 }: ReportGroupMessageDecisionProps) {
   const dispatch = useDispatch();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [reason, setReason] = useState<HelpGroupDeletionReason | ''>('');
   const [comment, setComment] = useState('');
+  const [dismissNote, setDismissNote] = useState('');
   const [restoreMessage, { isLoading: isRestoring }] =
     useRestoreHelpGroupMessageMutation();
   const [deleteMessage, { isLoading: isDeleting }] =
     useDeleteHelpGroupMessageAsAdminMutation();
+  const [dismiss, { isLoading: isDismissing }] =
+    useResolveAdminReportTargetMutation();
   const kind = targetType === 'POST' ? 'discussions' : 'replies';
-  const isBusy = isRestoring || isDeleting;
+  const isBusy = isRestoring || isDeleting || isDismissing;
 
   const notify = (type: 'success' | 'danger', message: string) =>
     dispatch(notificationsActions.addNotification({ type, message }));
@@ -86,6 +96,23 @@ export function ReportGroupMessageDecision({
     }
     closeDeleteForm();
     notify('success', REPORTS_TAB_LABELS.restoreDone);
+  };
+
+  const dismissReports = async () => {
+    if (isBusy) {
+      return;
+    }
+    const result = await dismiss({
+      targetType,
+      targetId,
+      note: dismissNote.trim() || undefined,
+    });
+    if ('error' in result && result.error) {
+      notify('danger', REPORTS_TAB_LABELS.dismissGroupMessageError);
+      return;
+    }
+    setDismissNote('');
+    notify('success', REPORTS_TAB_LABELS.dismissGroupMessageDone);
   };
 
   const confirmDelete = async () => {
@@ -111,18 +138,31 @@ export function ReportGroupMessageDecision({
     <StyledReportDecision data-testid="report-decision">
       <ReportPanelTitle>{REPORTS_TAB_LABELS.decisionTitle}</ReportPanelTitle>
       <Text size="small" color="darkGray">
-        {REPORTS_TAB_LABELS.formatDecisionText(pendingCount)}
+        {isHidden
+          ? REPORTS_TAB_LABELS.formatDecisionText(pendingCount)
+          : REPORTS_TAB_LABELS.formatVisibleDecisionText(pendingCount)}
       </Text>
       <StyledReportDecisionActions>
-        <Button
-          variant="secondary"
-          disabled={isBusy}
-          prependIcon={<LucidIcon name="RotateCcw" />}
-          onClick={restore}
-          dataTestId="report-decision-restore"
-        >
-          {REPORTS_TAB_LABELS.restoreMessage}
-        </Button>
+        {isHidden ? (
+          <Button
+            variant="secondary"
+            disabled={isBusy}
+            prependIcon={<LucidIcon name="RotateCcw" />}
+            onClick={restore}
+            dataTestId="report-decision-restore"
+          >
+            {REPORTS_TAB_LABELS.restoreMessage}
+          </Button>
+        ) : (
+          <Button
+            variant="secondary"
+            disabled={isBusy}
+            onClick={dismissReports}
+            dataTestId="report-decision-dismiss"
+          >
+            {REPORTS_TAB_LABELS.dismissGroupMessage}
+          </Button>
+        )}
         <Button
           variant="default"
           color="warning"
@@ -136,6 +176,18 @@ export function ReportGroupMessageDecision({
           {REPORTS_TAB_LABELS.deleteMessage}
         </Button>
       </StyledReportDecisionActions>
+      {!isHidden && (
+        <TextArea
+          id="report-decision-dismiss-note"
+          name="report-decision-dismiss-note"
+          title={REPORTS_TAB_LABELS.dismissGroupMessageNote}
+          showLabel
+          rows={2}
+          maxLength={DISMISS_NOTE_MAX_LENGTH}
+          value={dismissNote}
+          onChange={setDismissNote}
+        />
+      )}
       {isDeleteOpen && (
         <StyledReportDeleteForm data-testid="report-decision-delete-form">
           <Radio

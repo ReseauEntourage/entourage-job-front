@@ -50,7 +50,7 @@ const interceptOnboardingProfile = (profile: Record<string, unknown> = {}) => {
   );
   // Requested by the steps that follow the one being captured.
   cy.intercept('GET', '/events*', { statusCode: 200, body: [] });
-  cy.intercept('GET', '/user/profile/recommendations*', {
+  cy.intercept('GET', '/current/profile/recommendations*', {
     statusCode: 200,
     body: { embeddingPending: false, nextCursor: null, recommendations: [] },
   });
@@ -82,11 +82,11 @@ const interceptOnboardingProfile = (profile: Record<string, unknown> = {}) => {
       ...profile,
     },
   }).as('currentProfileComplete');
-  cy.intercept('GET', '/user/registration/compatible-profiles*', {
+  cy.intercept('GET', '/users/registration/compatible-profiles*', {
     statusCode: 200,
     body: [],
   });
-  cy.intercept('PUT', '/user/profile/*', { statusCode: 200, body: {} }).as(
+  cy.intercept('PUT', '/users/*/profile', { statusCode: 200, body: {} }).as(
     'putProfile'
   );
 };

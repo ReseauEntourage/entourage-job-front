@@ -7,6 +7,9 @@ jest.mock('@/src/hooks/utils', () => ({
   ...jest.requireActual('@/src/hooks/utils'),
   useIsMobile: jest.fn(),
 }));
+jest.mock('next/router', () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
 jest.mock('./MessagingConversationHeader/MessagingConversationHeader', () => ({
   MessagingConversationHeader: () => <div data-testid="header" />,
 }));
@@ -41,18 +44,55 @@ jest.mock('./MessagingPinnedInfo/MessagingPinnedInfo', () => ({
   ),
 }));
 jest.mock('./MessagingSuggestions/MessagingSuggestions', () => ({
-  MessagingSuggestions: ({ onSuggestionClick, variant, participants }: any) => (
+  MessagingSuggestions: ({
+    onSuggestionClick,
+    onOpenAIAssistant,
+    variant,
+    participants,
+  }: any) => (
     <button
       data-testid={`suggestions-${variant ?? 'default'}`}
       onClick={() => onSuggestionClick({ message: 'Bonjour suggéré' })}
     >
       {participants.length}
+      {onOpenAIAssistant && (
+        <span
+          data-testid={`suggestions-${variant ?? 'default'}-ai`}
+          onClick={(e: any) => {
+            e.stopPropagation();
+            onOpenAIAssistant();
+          }}
+        >
+          ai
+        </span>
+      )}
     </button>
   ),
 }));
 jest.mock('./MessagingWaitingReplyBanner/MessagingWaitingReplyBanner', () => ({
   MessagingWaitingReplyBanner: ({ recipientFirstName }: any) => (
     <div data-testid="waiting">{recipientFirstName}</div>
+  ),
+}));
+jest.mock('./MessagingAIAssistantBanner/MessagingAIAssistantBanner', () => ({
+  MessagingAIAssistantBanner: ({
+    onOpenAssistant,
+    onDismiss,
+    compact,
+    candidateFirstName,
+  }: any) => (
+    <div data-testid="ai-banner">
+      <button data-testid="ai-banner-open" onClick={onOpenAssistant}>
+        open
+      </button>
+      <button data-testid="ai-banner-dismiss" onClick={onDismiss}>
+        dismiss
+      </button>
+      {compact ? 'compact' : 'full'}
+      {candidateFirstName && (
+        <span data-testid="ai-banner-candidate">{candidateFirstName}</span>
+      )}
+    </div>
   ),
 }));
 jest.mock('../MessagingAIPanel', () => ({
@@ -123,18 +163,24 @@ const settle = () =>
 
 async function setup({
   role = UserRoles.COACH,
+  elearningCompletedAt = '2024-01-01T00:00:00.000Z' as string | null,
   conversation,
   selected = 'conv1',
   prepare,
 }: {
   role?: string;
+  elearningCompletedAt?: string | null;
   conversation?: any;
   selected?: string | null;
   prepare?: (store: ReturnType<typeof createTestStore>) => void;
 } = {}) {
   const store = createTestStore();
   store.dispatch(
-    currentUserActions.fetchUserSucceeded({ id: 'me', role } as any)
+    currentUserActions.fetchUserSucceeded({
+      id: 'me',
+      role,
+      elearningCompletedAt,
+    } as any)
   );
   if (conversation) {
     mockedApi.getConversationById.mockResolvedValue({
@@ -334,6 +380,106 @@ describe('MessagingConversation', () => {
     });
   });
 
+  describe('AI assistant chip and banner', () => {
+    it('offers the AI chip among the quick replies, opening the assistant with auto-start without touching the editor', async () => {
+      const { store } = await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('suggestions-quick-replies-ai'));
+      expect(store.getState().messaging.newMessage).toBe('');
+      expect(store.getState().messaging.isAIPanelOpen).toBe(true);
+      expect(store.getState().messaging.shouldAutoStartAI).toBe(true);
+    });
+
+    it('does not show the AI assistant banner at the first candidate message', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [message('m1', 'other', 1)],
+        }),
+      });
+      expect(
+        screen.getByTestId('suggestions-quick-replies')
+      ).toBeInTheDocument();
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('shows the AI assistant banner once a second candidate message arrives unanswered', async () => {
+      await setup({ conversation: buildConversation() });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+      expect(screen.getByTestId('ai-banner-candidate')).toHaveTextContent(
+        'First-other'
+      );
+    });
+
+    it('shows the AI assistant banner when the candidate writes again after a coach reply', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [
+            message('m4', 'other', 4),
+            message('m3', 'me', 3),
+            message('m2', 'other', 2),
+            message('m1', 'other', 1),
+          ],
+        }),
+      });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
+    it('shows the AI assistant banner with a single loaded candidate message when older pages may exist', async () => {
+      const filler = Array.from({ length: 29 }, (_, i) =>
+        message(`f${i}`, 'me', 100 + i)
+      );
+      await setup({
+        conversation: buildConversation({
+          messages: [message('m500', 'other', 500), ...filler.reverse()],
+        }),
+      });
+      expect(screen.getByTestId('ai-banner')).toBeInTheDocument();
+    });
+
+    it('hides the AI assistant banner once the coach has replied', async () => {
+      await setup({
+        conversation: buildConversation({
+          messages: [
+            message('m3', 'me', 3),
+            message('m2', 'other', 2),
+            message('m1', 'other', 1),
+          ],
+        }),
+      });
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('hides the AI assistant banner for a conversation where it was dismissed', async () => {
+      await setup({
+        conversation: buildConversation({
+          assistantBannerDismissedAt: '2026-01-01T00:00:00.000Z',
+        }),
+      });
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('opens the assistant with auto-start from the banner', async () => {
+      const { store } = await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-open'));
+      expect(store.getState().messaging.isAIPanelOpen).toBe(true);
+      expect(store.getState().messaging.shouldAutoStartAI).toBe(true);
+    });
+
+    it('dismisses the banner, persisted via the API, without affecting another conversation', async () => {
+      mockedApi.dismissAIAssistantBanner.mockResolvedValue({} as any);
+      await setup({ conversation: buildConversation() });
+      fireEvent.click(screen.getByTestId('ai-banner-dismiss'));
+      await settle();
+      expect(mockedApi.dismissAIAssistantBanner).toHaveBeenCalledWith('conv1');
+      expect(screen.queryByTestId('ai-banner')).toBeNull();
+    });
+
+    it('shows the banner in a compact layout on mobile', async () => {
+      mockUseIsMobile.mockReturnValue(true);
+      await setup({ conversation: buildConversation() });
+      expect(screen.getByTestId('ai-banner')).toHaveTextContent('compact');
+    });
+  });
+
   describe('pinned information', () => {
     it('pins an "unavailable" notice when the addressee is unavailable', async () => {
       await setup({
@@ -392,29 +538,89 @@ describe('MessagingConversation', () => {
       expect(screen.queryByTestId('ai-panel')).toBeNull();
     });
 
-    it('does not show the panel when it is closed or for a new conversation', async () => {
+    it('does not show the panel when it is closed', async () => {
       await setup({ conversation: buildConversation() });
       expect(screen.queryByTestId('ai-panel')).toBeNull();
-      cleanup();
-      await setup({
-        selected: 'new',
-        prepare: (store) => {
+    });
+
+    describe('new conversation', () => {
+      const newConversationWith =
+        (role: UserRoles) => (store: ReturnType<typeof createTestStore>) => {
           open(store);
           store.dispatch(
             messagingActions.setNewConversationDraft([
-              participant('other', UserRoles.CANDIDATE),
+              participant('other', role),
             ] as any)
           );
-        },
+        };
+
+      it('shows the panel beside a conversation being created with a candidate', async () => {
+        await setup({
+          selected: 'new',
+          prepare: newConversationWith(UserRoles.CANDIDATE),
+        });
+        expect(screen.getByTestId('ai-panel')).toBeInTheDocument();
+        expect(screen.getByTestId('editor')).toBeInTheDocument();
+      });
+
+      it('opens the panel as a sheet on mobile, the conversation staying visible', async () => {
+        mockUseIsMobile.mockReturnValue(true);
+        await setup({
+          selected: 'new',
+          prepare: newConversationWith(UserRoles.CANDIDATE),
+        });
+        expect(screen.getByTestId('ai-panel')).toBeInTheDocument();
+        expect(screen.getByTestId('editor')).toBeInTheDocument();
+      });
+
+      it('does not show the panel when the addressee is not a candidate', async () => {
+        await setup({
+          selected: 'new',
+          prepare: newConversationWith(UserRoles.COACH),
+        });
+        expect(screen.queryByTestId('ai-panel')).toBeNull();
+      });
+
+      it('does not show the panel to a coach who has not completed the eLearning', async () => {
+        await setup({
+          selected: 'new',
+          elearningCompletedAt: null,
+          prepare: newConversationWith(UserRoles.CANDIDATE),
+        });
+        expect(screen.queryByTestId('ai-panel')).toBeNull();
+      });
+    });
+
+    it('does not show the panel in a group conversation', async () => {
+      await setup({
+        conversation: buildConversation({
+          type: ConversationType.GROUP,
+          participants: [
+            participant('me', UserRoles.COACH),
+            participant('other', UserRoles.CANDIDATE),
+            participant('third', UserRoles.COACH),
+          ],
+        }),
+        prepare: open,
       });
       expect(screen.queryByTestId('ai-panel')).toBeNull();
     });
 
-    it('replaces the conversation by the panel on mobile', async () => {
+    it('does not show the panel to a coach who has not completed the eLearning, even in an existing conversation', async () => {
+      await setup({
+        elearningCompletedAt: null,
+        conversation: buildConversation(),
+        prepare: open,
+      });
+      expect(screen.queryByTestId('ai-panel')).toBeNull();
+    });
+
+    it('shows the panel in a mid-height sheet on mobile, with the conversation still visible above', async () => {
       mockUseIsMobile.mockReturnValue(true);
       await setup({ conversation: buildConversation(), prepare: open });
       expect(screen.getByTestId('ai-panel')).toBeInTheDocument();
-      expect(screen.queryByTestId('editor')).toBeNull();
+      expect(screen.getByTestId('editor')).toBeInTheDocument();
+      expect(screen.getAllByTestId('message')).toHaveLength(2);
     });
   });
 

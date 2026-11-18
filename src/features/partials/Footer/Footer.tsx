@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { Grid, Section, SimpleLink, Button } from '@/src/components/ui';
+import { Grid, Section } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { EXTERNAL_LINKS } from '@/src/constants';
 import { GA_TAGS } from '@/src/constants/tags';
@@ -11,6 +11,18 @@ import { AppVersion } from '@/src/features/partials/AppVersion';
 import { PageType } from '@/src/features/partials/Footer/Footer.type';
 import { gaEvent } from '@/src/lib/gtag';
 import { AssociationEntourage } from './AssociationEntourage';
+import {
+  StyledFooterLegalLink,
+  StyledFooterLoginButton,
+  StyledSiteMapBoldLink,
+  StyledSiteMapColumn,
+  StyledSiteMapColumnContent,
+  StyledSiteMapGrid,
+  StyledSiteMapLink,
+  StyledSiteMapSubLink,
+  StyledSiteMapTitle,
+  StyledSiteMaps,
+} from './Footer.styles';
 
 const pages: PageType = [
   {
@@ -176,14 +188,10 @@ const pages: PageType = [
       },
       {
         component: (
-          <Button
-            href="/login"
-            variant="primary"
-            className="uk-margin-medium-top"
-          >
+          <StyledFooterLoginButton href="/login" variant="primary">
             Espace coach & candidat
             <LucidIcon name="ChevronRight" />
-          </Button>
+          </StyledFooterLoginButton>
         ),
       },
     ],
@@ -192,26 +200,21 @@ const pages: PageType = [
 
 const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
   return (
-    <Grid
+    <StyledSiteMapGrid
       row
       center
       gap="large"
       childWidths={['1-3@m']}
-      className={isMobile ? 'uk-hidden@m' : 'uk-visible@m'}
+      $mobileOnly={isMobile}
     >
       {pages.map(({ title, children }) => {
         return (
-          <div
-            key={uuid()}
-            className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom"
-          >
-            <div
-              className={`uk-flex uk-flex-column ${
-                isMobile ? 'uk-flex-middle' : ''
-              }`}
-            >
+          <StyledSiteMapColumn key={uuid()}>
+            <StyledSiteMapColumnContent $centered={isMobile}>
               {title && (
-                <span className="uk-text-bold ent-site-map">{title}</span>
+                <StyledSiteMapTitle className="ent-site-map">
+                  {title}
+                </StyledSiteMapTitle>
               )}
               {children &&
                 children.map(
@@ -234,17 +237,22 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                     }
                     return (
                       <React.Fragment key={uuid()}>
-                        <SimpleLink
-                          href={childrenPath}
-                          className={
-                            title
-                              ? 'uk-text-muted uk-margin-small-top'
-                              : 'uk-text-bold ent-site-map'
-                          }
-                          {...childrenType}
-                        >
-                          {childrenTitle}
-                        </SimpleLink>
+                        {title ? (
+                          <StyledSiteMapLink
+                            href={childrenPath}
+                            {...childrenType}
+                          >
+                            {childrenTitle}
+                          </StyledSiteMapLink>
+                        ) : (
+                          <StyledSiteMapBoldLink
+                            href={childrenPath}
+                            className="ent-site-map"
+                            {...childrenType}
+                          >
+                            {childrenTitle}
+                          </StyledSiteMapBoldLink>
+                        )}
                         {childrenChildren &&
                           childrenChildren.map(
                             (
@@ -266,18 +274,16 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                                 return null;
                               }
                               return (
-                                <SimpleLink
+                                <StyledSiteMapSubLink
                                   key={
                                     childrenChildrenPath + childrenChildrenIndex
                                   }
                                   href={childrenChildrenPath}
-                                  className={`${
-                                    isMobile ? '' : 'uk-margin-small-left'
-                                  } uk-text-small uk-text-muted uk-margin-small-top`}
+                                  $indent={!isMobile}
                                   {...childrenChildrenProps}
                                 >
                                   {childrenChildrenTitle}
-                                </SimpleLink>
+                                </StyledSiteMapSubLink>
                               );
                             }
                           )}
@@ -285,11 +291,11 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                     );
                   }
                 )}
-            </div>
-          </div>
+            </StyledSiteMapColumnContent>
+          </StyledSiteMapColumn>
         );
       })}
-    </Grid>
+    </StyledSiteMapGrid>
   );
 };
 
@@ -303,34 +309,34 @@ export const Footer = () => {
       {showAssociationEntourage && <AssociationEntourage />}
       <Section className="custom-secondary">
         <Grid middle center column childWidths={['1-1']} gap="medium">
-          <div />
-          <SiteMap isMobile />
-          <SiteMap isMobile={false} />
+          {/* One cell for both site maps: only one is displayed, so the cell is never empty. */}
+          <StyledSiteMaps>
+            <div>
+              <SiteMap isMobile />
+            </div>
+            <div>
+              <SiteMap isMobile={false} />
+            </div>
+          </StyledSiteMaps>
           <Grid row center middle gap="medium">
-            <SimpleLink
-              className="uk-text-small uk-text-muted"
-              href="/legal-notice"
-            >
+            <StyledFooterLegalLink href="/legal-notice">
               Mentions légales
-            </SimpleLink>
+            </StyledFooterLegalLink>
 
-            <SimpleLink className="uk-text-small uk-text-muted" href="/cgu">
+            <StyledFooterLegalLink href="/cgu">
               Conditions Générales d&apos;Utilisation
-            </SimpleLink>
+            </StyledFooterLegalLink>
 
-            <SimpleLink
-              className="uk-text-small uk-text-muted"
-              href="/data-privacy"
-            >
+            <StyledFooterLegalLink href="/data-privacy">
               Politique de confidentialité
-            </SimpleLink>
+            </StyledFooterLegalLink>
 
-            <SimpleLink className="uk-text-small uk-text-muted" href="/cookies">
+            <StyledFooterLegalLink href="/cookies">
               Politique de cookies
-            </SimpleLink>
-            <SimpleLink className="uk-text-small uk-text-muted" href="#cookies">
+            </StyledFooterLegalLink>
+            <StyledFooterLegalLink href="#cookies">
               Gestion des cookies
-            </SimpleLink>
+            </StyledFooterLegalLink>
           </Grid>
           <AppVersion />
         </Grid>

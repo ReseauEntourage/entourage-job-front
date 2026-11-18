@@ -176,7 +176,7 @@ jobs:
       - name: Update PR description
         # Also after a failed download/publish, to replace stale links with the caution below.
         if: '!cancelled()'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         env:
           SHOTS: ${{ needs.capture.outputs.shots }}
           UI_CHANGED: ${{ needs.capture.outputs.ui_changed }}

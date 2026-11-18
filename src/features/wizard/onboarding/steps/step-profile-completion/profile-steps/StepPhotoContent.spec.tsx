@@ -140,6 +140,78 @@ describe('StepPhotoContent', () => {
     expect(onPhotoSelected).not.toHaveBeenCalled();
   });
 
+  describe('visibility hint', () => {
+    const HINT =
+      "Les profils avec une photo ont 2 fois plus de chances d'être contactés par des coachs.";
+
+    it('shows the hint under the photo buttons while no photo is selected', () => {
+      render(
+        <StepPhotoContent
+          photoObjectUrl={null}
+          onPhotoSelected={jest.fn()}
+          visibilityHint={HINT}
+        />
+      );
+      const hint = screen.getByTestId('photo-visibility-hint');
+      expect(hint).toHaveTextContent(HINT);
+      // Placed after the format mention, which stays next to the buttons
+      expect(
+        screen
+          .getByText('Format JPG, PNG. Max 5 Mo.')
+          .compareDocumentPosition(hint) & Node.DOCUMENT_POSITION_FOLLOWING
+      ).toBeTruthy();
+    });
+
+    it('does not show anything without hint text', () => {
+      render(
+        <StepPhotoContent photoObjectUrl={null} onPhotoSelected={jest.fn()} />
+      );
+      expect(screen.queryByTestId('photo-visibility-hint')).toBeNull();
+    });
+
+    it('hides the hint once a photo is selected', () => {
+      render(
+        <StepPhotoContent
+          photoObjectUrl="blob:x"
+          onPhotoSelected={jest.fn()}
+          visibilityHint={HINT}
+        />
+      );
+      expect(screen.queryByTestId('photo-visibility-hint')).toBeNull();
+    });
+
+    (
+      [
+        ['import', 1],
+        ['camera', 0],
+      ] as const
+    ).forEach(([source, inputIndex]) => {
+      it(`hides the hint after a photo chosen by ${source}`, () => {
+        const Harness = () => {
+          const [url, setUrl] = React.useState<string | null>(null);
+          return (
+            <StepPhotoContent
+              photoObjectUrl={url}
+              onPhotoSelected={(_blob, objectUrl) => setUrl(objectUrl)}
+              visibilityHint={HINT}
+            />
+          );
+        };
+        const { container } = render(<Harness />);
+        expect(screen.getByTestId('photo-visibility-hint')).toBeInTheDocument();
+
+        const photo = new File(['p'], 'me.png', { type: 'image/png' });
+        const input = container.querySelectorAll('input[type="file"]')[
+          inputIndex
+        ] as HTMLInputElement;
+        fireEvent.change(input, { target: { files: [photo] } });
+
+        expect(screen.queryByTestId('photo-visibility-hint')).toBeNull();
+        expect(screen.getByAltText('Photo de profil')).toBeInTheDocument();
+      });
+    });
+  });
+
   it('offers to take a picture on mobile when a camera exists', async () => {
     (useIsMobile as jest.Mock).mockReturnValue(true);
     setCameras({

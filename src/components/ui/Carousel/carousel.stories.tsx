@@ -25,10 +25,7 @@ const meta = {
       },
     ];
     return (
-      <Carousel
-        style="default"
-        containerClasses="uk-container-small uk-child-width-1-1"
-      >
+      <Carousel style="default">
         {slides.map(({ img, description }, index) => {
           return (
             <CarouselItem

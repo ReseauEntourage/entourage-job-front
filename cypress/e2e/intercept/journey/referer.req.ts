@@ -16,7 +16,7 @@ import { RequestConfig } from './request.types';
 export const refererJourneyRequests = {
   GET: [
     {
-      path: '/user/profile/refered?offset=0&limit=20',
+      path: '/current/profile/referred-profiles?offset=0&limit=20',
       data: { fixture: 'api/generated/users-candidat' },
       alias: 'candidates',
     },

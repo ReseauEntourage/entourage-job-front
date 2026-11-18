@@ -1,11 +1,42 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Layout } from '@/src/components/layouts/Layout';
-import { LegacyImg, Section, SimpleLink, Grid } from '@/src/components/ui';
+import { LegacyImg, Section, Grid } from '@/src/components/ui';
+import { StyledDividerSmall } from '@/src/components/ui/DividerSmall.styles';
 import { PARTNERS } from '@/src/constants/partners';
 import { GA_TAGS } from '@/src/constants/tags';
 import { openModal } from '@/src/features/modals/Modal';
 import { ModalInterestLinkedOut } from '@/src/features/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import {
+  StyledBold,
+  StyledPrimary,
+} from '@/src/features/partials/common/PageText/PageText.styles';
+import {
+  StyledPartnerItemAnswer,
+  StyledPartnerItemAnswerRow,
+  StyledPartnerItemAnswerText,
+  StyledPartnerItemAuthor,
+  StyledPartnerItemClosingQuote,
+  StyledPartnerItemContent,
+  StyledPartnerItemDescription,
+  StyledPartnerItemDescriptionText,
+  StyledPartnerItemLink,
+  StyledPartnerItemLogoCell,
+  StyledPartnerItemLogos,
+  StyledPartnerItemOpeningQuote,
+  StyledPartnerItemQuestion,
+  StyledPartnerItemTestimonial,
+  StyledPartnerItemTextCell,
+  StyledPartnerItemTitle,
+  StyledPartnersBanner,
+  StyledPartnersBannerContent,
+  StyledPartnersBannerOverlay,
+  StyledPartnersBannerPicture,
+  StyledPartnersBannerTitle,
+  StyledPartnersCarouselTitle,
+  StyledPartnersLogos,
+  StyledPartnersLogosColumn,
+} from '@/src/features/partials/pages/Partenaires/Partenaires.styles';
 import { SimpleSection } from '@/src/features/partials/pages/Partenaires/SimpleSection';
 import { LogoList } from '@/src/features/partials/utils/LogoList';
 import { gaEvent } from '@/src/lib/gtag';
@@ -16,45 +47,36 @@ const viewportHeightWithoutHeaderAndPadding = 'calc(100vh - 220px)';
 
 const CarouselSection = ({ children, partners, img }) => {
   return (
-    <div
-      className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"
-      style={{ minHeight: viewportHeightWithoutHeader }}
-    >
-      <div
-        className="uk-position-cover uk-background uk-background-cover uk-background-center-center"
+    <StyledPartnersBanner style={{ minHeight: viewportHeightWithoutHeader }}>
+      <StyledPartnersBannerPicture
         style={{
           backgroundImage: `url(${addPrefix(img)})`,
         }}
       />
-      <div
-        className="uk-overlay-primary uk-position-cover"
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.7)',
-        }}
-      />
-      <div className="uk-overlay uk-position-center">
+      <StyledPartnersBannerOverlay $variant="dark" />
+      <StyledPartnersBannerContent>
         <div>
-          <h2 className="uk-text-bold uk-align-center uk-text-center">
+          <StyledPartnersCarouselTitle>
             <mark>{children}</mark>
-          </h2>
+          </StyledPartnersCarouselTitle>
           {partners.length <= 5 ? (
             <>
               {partners.length < 5 ? (
                 <LogoList logos={partners} padding background />
               ) : (
-                <div className="uk-flex uk-flex-column uk-flex-middle">
-                  <div className="uk-width-large@m">
+                <StyledPartnersLogosColumn>
+                  <StyledPartnersLogos>
                     <LogoList logos={partners} carousel padding background />
-                  </div>
-                </div>
+                  </StyledPartnersLogos>
+                </StyledPartnersLogosColumn>
               )}
             </>
           ) : (
             <LogoList logos={partners} carousel padding background />
           )}
         </div>
-      </div>
-    </div>
+      </StyledPartnersBannerContent>
+    </StyledPartnersBanner>
   );
 };
 
@@ -66,37 +88,31 @@ CarouselSection.propTypes = {
 
 interface TitleProps {
   children: React.ReactNode;
-  overlay: string | null;
   img: string;
 }
 
-const Title = ({ children, overlay = null, img }: TitleProps) => {
+const Title = ({ children, img }: TitleProps) => {
   return (
-    <div
-      className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"
-      style={{ minHeight: viewportHeightWithoutHeader }}
-    >
-      <div
-        className="uk-position-cover uk-background uk-background-cover uk-background-center-center"
+    <StyledPartnersBanner style={{ minHeight: viewportHeightWithoutHeader }}>
+      <StyledPartnersBannerPicture
         style={{
           backgroundImage: `url("${addPrefix(img)}")`,
         }}
       />
-      <div className={`uk-overlay-${overlay} uk-position-cover`} />
-      <div className="uk-overlay uk-position-center">
+      <StyledPartnersBannerOverlay $variant="primary" />
+      <StyledPartnersBannerContent>
         <div>
-          <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove">
+          <StyledPartnersBannerTitle>
             <mark>{children}</mark>
-          </h1>
+          </StyledPartnersBannerTitle>
         </div>
-      </div>
-    </div>
+      </StyledPartnersBannerContent>
+    </StyledPartnersBanner>
   );
 };
 
 Title.propTypes = {
   children: PropTypes.element.isRequired,
-  overlay: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
 };
 
@@ -116,19 +132,16 @@ const PartnerItem = ({
   const secondDirection = reverse ? 'right' : 'left';
   return (
     <Section style={index % 2 === 0 ? 'muted' : 'default'} key={index}>
-      <div
-        className="uk-flex uk-flex-center uk-flex-middle uk-overflow-hidden"
+      <StyledPartnerItemContent
         style={{ minHeight: viewportHeightWithoutHeaderAndPadding }}
       >
-        <SimpleLink
-          className="animate uk-flex uk-flex-column uk-flex-center uk-flex-middle"
+        <StyledPartnerItemLink
+          className="animate"
           isExternal
           target="_blank"
           href={link}
         >
-          <h2 className="uk-text-primary uk-text-center uk-text-bold uk-margin-large-bottom">
-            {title}
-          </h2>
+          <StyledPartnerItemTitle>{title}</StyledPartnerItemTitle>
           <Grid
             eachWidths={['1-3@m', '2-3@m']}
             match
@@ -137,8 +150,8 @@ const PartnerItem = ({
             gap="large"
             reverse={reverse}
           >
-            <div className="uk-flex uk-flex-middle uk-flex-center">
-              <div className="uk-width-medium uk-flex uk-flex-column uk-flex-middle uk-flex-center">
+            <StyledPartnerItemLogoCell>
+              <StyledPartnerItemLogos>
                 <LegacyImg
                   src={`/static/img/partners/${key}/logo.png`}
                   alt="key"
@@ -153,69 +166,63 @@ const PartnerItem = ({
                     height={300}
                   />
                 )}
-              </div>
-            </div>
-            <div className="uk-flex uk-flex-column uk-flex-middle">
-              <div className="animate uk-flex uk-flex-column">
-                <h4
-                  className={`${
-                    answer ? 'uk-margin-medium-bottom' : ''
-                  } uk-text-${secondDirection}`}
+              </StyledPartnerItemLogos>
+            </StyledPartnerItemLogoCell>
+            <StyledPartnerItemTextCell>
+              <StyledPartnerItemDescription className="animate">
+                <StyledPartnerItemDescriptionText
+                  $side={secondDirection}
+                  $hasAnswer={!!answer}
                 >
                   {formatParagraph(desc)}
-                </h4>
-              </div>
-              {answer && <hr className="uk-divider-small" />}
+                </StyledPartnerItemDescriptionText>
+              </StyledPartnerItemDescription>
+              {answer && <StyledDividerSmall />}
               {answer && (
-                <div
-                  className={`uk-text-secondary animate uk-flex uk-flex-column uk-flex-stretch uk-margin-large-${secondDirection} uk-margin-medium-top`}
+                <StyledPartnerItemTestimonial
+                  className="animate"
+                  $side={secondDirection}
                 >
                   {question && (
-                    <p
-                      className={`uk-flex-1 uk-text-${secondDirection} uk-text-bold`}
-                    >
+                    <StyledPartnerItemQuestion $side={secondDirection}>
                       {question}
-                    </p>
+                    </StyledPartnerItemQuestion>
                   )}
-                  <div className="uk-flex">
-                    <div className="uk-flex uk-flex-top uk-margin-small-right">
+                  <StyledPartnerItemAnswerRow>
+                    <StyledPartnerItemOpeningQuote>
                       <LegacyImg
                         alt=""
                         width={27}
                         height={21}
                         src="/static/img/guillemets-bleu.png"
                       />
-                    </div>
-                    <div className="uk-flex-1">
-                      <p
-                        className={`uk-text-${firstDirection} uk-text-italic uk-margin-small-top uk-margin-small-bottom`}
-                      >
+                    </StyledPartnerItemOpeningQuote>
+                    <StyledPartnerItemAnswer>
+                      <StyledPartnerItemAnswerText $side={firstDirection}>
                         {answer}
-                      </p>
+                      </StyledPartnerItemAnswerText>
                       {author && (
-                        <div
-                          className={`uk-flex-1 uk-text-${firstDirection} uk-margin-small-top uk-text-secondary`}
-                        >
-                          <span className="uk-text-bold">{author.name}</span>,
-                          &nbsp;{author.status}
-                        </div>
+                        <StyledPartnerItemAuthor $side={firstDirection}>
+                          <StyledBold>{author.name}</StyledBold>, &nbsp;
+                          {author.status}
+                        </StyledPartnerItemAuthor>
                       )}
-                    </div>
-                    <div className="uk-flex uk-flex-bottom uk-margin-small-left">
+                    </StyledPartnerItemAnswer>
+                    <StyledPartnerItemClosingQuote>
                       <LegacyImg
                         alt=""
                         width={15}
                         height={12}
                         src="/static/img/guillemets-gris.png"
                       />
-                    </div>
-                  </div>
-                </div>
+                    </StyledPartnerItemClosingQuote>
+                  </StyledPartnerItemAnswerRow>
+                </StyledPartnerItemTestimonial>
               )}
-            </div>
+            </StyledPartnerItemTextCell>
           </Grid>
-        </SimpleLink>
-      </div>
+        </StyledPartnerItemLink>
+      </StyledPartnerItemContent>
     </Section>
   );
 };
@@ -240,10 +247,10 @@ PartnerItem.defaultProps = {
 const Partenaires = () => {
   return (
     <Layout title="Les partenaires - Entourage Pro" hasHero>
-      <Title overlay="primary" img="/static/img/construct.jpg">
+      <Title img="/static/img/construct.jpg">
         <>
           Ils construisent le projet{' '}
-          <span className="uk-text-primary">avec&nbsp;nous</span>
+          <StyledPrimary>avec&nbsp;nous</StyledPrimary>
         </>
       </Title>
       {PARTNERS.STRATEGY.map(
@@ -270,7 +277,7 @@ const Partenaires = () => {
       >
         <>
           Nos partenaires sur le projet{' '}
-          <span className="uk-text-primary">Entourage Pro Jeunes</span>
+          <StyledPrimary>Entourage Pro Jeunes</StyledPrimary>
         </>
       </CarouselSection>
       <CarouselSection
@@ -278,13 +285,12 @@ const Partenaires = () => {
         partners={PARTNERS.ALL_FINANCE}
       >
         <>
-          Nos partenaires <span className="uk-text-primary">financiers</span>
+          Nos partenaires <StyledPrimary>financiers</StyledPrimary>
         </>
       </CarouselSection>
       <CarouselSection img="/static/img/sports.jpg" partners={PARTNERS.SPORTS}>
         <>
-          Nos partenaires{' '}
-          <span className="uk-text-primary">sportifs et visibilité</span>
+          Nos partenaires <StyledPrimary>sportifs et visibilité</StyledPrimary>
         </>
       </CarouselSection>
       {/*
@@ -313,14 +319,13 @@ const Partenaires = () => {
         partners={PARTNERS.ORIENTATION}
       >
         <>
-          Nos partenaires <span className="uk-text-primary">opérationnels</span>
+          Nos partenaires <StyledPrimary>opérationnels</StyledPrimary>
         </>
       </CarouselSection>
       <SimpleSection
         title={
           <>
-            Rejoignez{' '}
-            <span className="uk-text-primary">Entourage Pro&nbsp;!</span>
+            Rejoignez <StyledPrimary>Entourage Pro&nbsp;!</StyledPrimary>
           </>
         }
         text="Vous êtes intéressé(e) par l’approche de Entourage Pro et souhaitez coopérer avec nous ? Contactez-nous pour devenir partenaire !"

@@ -3,12 +3,16 @@ import { Grid, Section, Button, Text } from '@/src/components/ui';
 import { H2, H4 } from '@/src/components/ui/Headings';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from '@/src/constants';
 import { CVList } from '@/src/features/partials/CV/CVList';
+import {
+  StyledCenteredText,
+  StyledItalicPrimary,
+} from '@/src/features/partials/common/PageText';
 
 export const CandidatListPartial = () => {
   return (
     <Section id="candidat">
       <Grid column middle eachWidths={['2-3@m', '1-1']}>
-        <div className="uk-text-center">
+        <StyledCenteredText>
           {process.env.NEXT_PUBLIC_WOMENS_DAY === 'true' ? (
             <>
               <H2 title="Elles sont motivées pour travailler" center />
@@ -32,9 +36,9 @@ export const CandidatListPartial = () => {
               title={
                 <>
                   À l&apos;occasion du 8 mars,{' '}
-                  <span className="uk-text-italic uk-text-primary">
+                  <StyledItalicPrimary>
                     Journée internationale des droits des femmes
-                  </span>
+                  </StyledItalicPrimary>
                   , on a décidé de mettre à l&apos;honneur les candidates
                   Entourage Pro&nbsp;!
                 </>
@@ -42,7 +46,7 @@ export const CandidatListPartial = () => {
               center
             />
           )}
-        </div>
+        </StyledCenteredText>
         <CVList
           hideSearchBar
           nb={INITIAL_NB_OF_CV_TO_DISPLAY}

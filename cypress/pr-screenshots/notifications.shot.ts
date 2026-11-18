@@ -104,7 +104,7 @@ const login = (items = notifications, unseenCount = 2) => {
   }).as('getNotifications');
   cy.intercept('GET', '/help-groups', { statusCode: 200, body: [] });
   // Without it the dashboard shows an error toast that covers the panel
-  cy.intercept('GET', '/user/profile/recommendations*', {
+  cy.intercept('GET', '/current/profile/recommendations*', {
     statusCode: 200,
     body: { embeddingPending: false, nextCursor: null, recommendations: [] },
   });

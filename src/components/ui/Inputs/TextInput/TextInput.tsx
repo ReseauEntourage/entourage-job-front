@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, ReactNode, useState } from 'react';
 import { Text } from '@/src/components/ui';
 import { ButtonIcon } from '../../Button';
 import { LucidIcon } from '../../Icons/LucidIcon';
@@ -6,6 +6,7 @@ import { Tooltip } from '../../Tooltip';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
+  StyledAnnotationsHint,
   StyledInputLabel,
   StyledLimit,
   StyledLimitContainer,
@@ -22,6 +23,8 @@ interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
   maxLength?: number;
   type?: 'text' | 'password' | 'email';
   style?: 'secondary';
+  // Help text under the field, on the left of the counter
+  hint?: ReactNode;
 }
 
 export function TextInput({
@@ -42,6 +45,7 @@ export function TextInput({
   inputRef,
   error,
   errorContent,
+  hint,
   noMarginBottom = false,
 }: TextInputProps) {
   const [contextType, setContextType] = useState(type);
@@ -54,7 +58,7 @@ export function TextInput({
     return null;
   }
   const remainingCharacters = (maxLength || 0) - (value || '').length;
-  const shouldShowFooter = !!error || !!maxLength;
+  const shouldShowFooter = !!error || !!maxLength || !!hint;
 
   return (
     <StyledTextInputGroupForm
@@ -117,6 +121,7 @@ export function TextInput({
               {errorContent}
             </StyledAnnotationsErrorMessage>
           )}
+          {hint && <StyledAnnotationsHint>{hint}</StyledAnnotationsHint>}
           {maxLength && (
             <StyledLimitContainer>
               <StyledLimit>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Api } from '@/src/api';
 import { PublicCV } from '@/src/api/types';
 import { Layout } from '@/src/components/layouts/Layout';
-import { Grid, Section, SimpleLink, Button } from '@/src/components/ui';
+import { Grid, Section } from '@/src/components/ui';
 import { LucidIcon } from '@/src/components/ui/Icons/LucidIcon';
 import { CV_FILTERS_DATA } from '@/src/constants';
 import { GA_TAGS } from '@/src/constants/tags';
@@ -11,6 +11,14 @@ import { CVList } from '@/src/features/partials/CV/CVList';
 import { PageCVContent } from '@/src/features/partials/CV/PageCVContent';
 import { StyledCVPage } from '@/src/features/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
+import {
+  StyledBold,
+  StyledBoldH2,
+  StyledBoldH3,
+  StyledBoldLink,
+  StyledBoldPrimary,
+  StyledLargeTopButton,
+} from '@/src/features/partials/common/PageText';
 
 export interface CVPageProps {
   publicCV: PublicCV;
@@ -39,30 +47,24 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
     if (exists) {
       return (
         <Layout title="Bonne nouvelle ! - Entourage Pro" noIndex>
-          <Section className="uk-text-center" style="default" size="large">
-            <h3 className="uk-text-bold">
+          <Section textCenter style="default" size="large">
+            <StyledBoldH3>
               C&apos;est une{' '}
-              <span className="uk-text-bold uk-text-primary">
-                bonne nouvelle&nbsp;!
-              </span>{' '}
-            </h3>
+              <StyledBoldPrimary>bonne nouvelle&nbsp;!</StyledBoldPrimary>{' '}
+            </StyledBoldH3>
             <p>
               Ce candidat est actuellement{' '}
-              <span className="uk-text-bold">en emploi ou a été réorienté</span>
-              .
+              <StyledBold>en emploi ou a été réorienté</StyledBold>.
             </p>
           </Section>
-          <Section className="uk-text-center" style="muted">
-            <h2 className="uk-margin-medium-bottom uk-text-bold">
+          <Section textCenter style="muted">
+            <StyledBoldH2>
               Soutenez un autre candidat&nbsp;:
-              <SimpleLink
-                href={{ pathname: '/candidats' }}
-                className="uk-text-bold"
-              >
+              <StyledBoldLink href={{ pathname: '/candidats' }}>
                 {' '}
                 partagez son CV&nbsp;!
-              </SimpleLink>
-            </h2>
+              </StyledBoldLink>
+            </StyledBoldH2>
             <CVList
               hideSearchBar
               nb={3}
@@ -71,14 +73,13 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
               }}
             />
             <Grid middle column gap="collapse">
-              <Button
+              <StyledLargeTopButton
                 href={{ pathname: '/candidats' }}
                 variant="primary"
-                className="uk-margin-large-top"
               >
                 Voir tous les candidats
                 <LucidIcon name="ChevronRight" />
-              </Button>
+              </StyledLargeTopButton>
             </Grid>
           </Section>
           <NewsletterPartial
@@ -90,8 +91,8 @@ const CVPage = ({ publicCV, exists = false, router }: CVPageProps) => {
     }
     return (
       <Layout title="Page introuvable - Entourage Pro" noIndex>
-        <Section className="uk-text-center" size="large">
-          <h3 className="uk-text-bold">Ce profil n’est pas disponible</h3>
+        <Section textCenter size="large">
+          <StyledBoldH3>Ce profil n’est pas disponible</StyledBoldH3>
           <p>
             Le lien que vous avez suivi est peut-être rompu, ou la page a été
             supprimée.

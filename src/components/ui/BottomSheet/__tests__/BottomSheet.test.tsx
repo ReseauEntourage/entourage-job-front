@@ -85,4 +85,49 @@ describe('BottomSheet', () => {
       )
     ).toBe('');
   });
+
+  describe('mid-height tier (midHeightRatio)', () => {
+    const renderMidSheet = () => {
+      const children = (mode: 'compact' | 'mid' | 'full') => <p>mode:{mode}</p>;
+      return render(<BottomSheet midHeightRatio={0.6}>{children}</BottomSheet>);
+    };
+
+    it('starts in mid mode instead of compact', () => {
+      renderMidSheet();
+      expect(screen.getByText('mode:mid')).toBeInTheDocument();
+    });
+
+    it('toggles between mid and full when the pill is clicked', () => {
+      const { container } = renderMidSheet();
+      const pill = container.firstElementChild
+        ?.firstElementChild as HTMLElement;
+      fireEvent.click(pill);
+      expect(screen.getByText('mode:full')).toBeInTheDocument();
+      fireEvent.click(pill);
+      expect(screen.getByText('mode:mid')).toBeInTheDocument();
+    });
+
+    it('expands to full after a long swipe up, from mid', () => {
+      const { container } = renderMidSheet();
+      const sheet = container.firstElementChild as HTMLElement;
+      fireEvent.touchStart(sheet, { touches: [{ clientY: 300 }] });
+      fireEvent.touchMove(sheet, { touches: [{ clientY: 200 }] });
+      fireEvent.touchEnd(sheet);
+      expect(screen.getByText('mode:full')).toBeInTheDocument();
+    });
+
+    it('does not publish the collapsed-height CSS variable in mid-height mode', () => {
+      renderMidSheet();
+      expect(
+        document.documentElement.style.getPropertyValue(
+          '--wizard-bottom-sheet-collapsed-height'
+        )
+      ).toBe('');
+    });
+
+    it('leaves the default compact/full behavior unaffected for other instances', () => {
+      renderSheet();
+      expect(screen.getByText('mode:compact')).toBeInTheDocument();
+    });
+  });
 });

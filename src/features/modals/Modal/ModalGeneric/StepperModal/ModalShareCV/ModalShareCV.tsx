@@ -11,6 +11,12 @@ import { formGetEmail } from '@/src/features/forms/schemas/formGetEmail';
 import { StepperModal } from '@/src/features/modals/Modal/ModalGeneric/StepperModal';
 import { gaEvent } from '@/src/lib/gtag';
 import { notificationsActions } from '@/src/use-cases/notifications';
+import {
+  StyledShareCVCloseRow,
+  StyledShareCVColumn,
+  StyledShareCVQuestion,
+  StyledShareCVRow,
+} from './ModalShareCV.styles';
 
 interface ModalShareCVProps {
   firstName: string;
@@ -57,20 +63,20 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
         },
         (close) => {
           return (
-            <div className="uk-flex uk-flex-column">
-              <p className="uk-text-center uk-flex-1 uk-margin-medium-top">
+            <StyledShareCVColumn>
+              <StyledShareCVQuestion>
                 Saviez-vous que Entourage Pro est porté par l&apos;association
                 Entourage&nbsp;?
-              </p>
-              <div className="uk-flex uk-flex-center">
+              </StyledShareCVQuestion>
+              <StyledShareCVRow>
                 <LegacyImg
                   height={150}
                   width={150}
                   src="/static/img/logo-entourage.png"
                   alt="Logo Entourage"
                 />
-              </div>
-              <div className="uk-flex uk-flex-center uk-margin-medium-top">
+              </StyledShareCVRow>
+              <StyledShareCVRow $spaced>
                 <Button
                   isExternal
                   newTab
@@ -84,9 +90,9 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                   En savoir plus
                   <LucidIcon name="ChevronRight" />
                 </Button>
-              </div>
+              </StyledShareCVRow>
 
-              <div className="uk-margin-medium-top uk-flex uk-flex-right">
+              <StyledShareCVCloseRow>
                 <Button
                   variant="default"
                   onClick={() => {
@@ -95,8 +101,8 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                 >
                   Fermer
                 </Button>
-              </div>
-            </div>
+              </StyledShareCVCloseRow>
+            </StyledShareCVColumn>
           );
         },
       ]}

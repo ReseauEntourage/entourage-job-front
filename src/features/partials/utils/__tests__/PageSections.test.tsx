@@ -11,7 +11,6 @@ import { CoachFormatHighlights } from '../../pages/Aider/CoachFormatHighlights/C
 import { Figures } from '../../pages/HomePage/Figures/Figures';
 import { SimpleSection } from '../../pages/Partenaires/SimpleSection';
 import { MultipleCTA } from '../MultipleCTA/MultipleCTA';
-import { NumberCard } from '../NumberGrid/NumberCard';
 import { PageHero } from '../PageHero/PageHero';
 
 jest.mock('@/src/lib/gtag', () => ({ gaEvent: jest.fn() }));
@@ -130,27 +129,6 @@ describe('MultipleCTA', () => {
     render(<MultipleCTA data={data} />);
     fireEvent.click(screen.getByTestId('action-1'));
     expect(data[0].button?.onClick).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('NumberCard', () => {
-  it('shows the value, description and sub description', () => {
-    render(
-      <NumberCard value={42} description="Candidats" subDescription="en 2025" />
-    );
-    expect(screen.getByText('42')).toBeInTheDocument();
-    expect(screen.getByText('Candidats')).toBeInTheDocument();
-    expect(screen.getByText('en 2025')).toBeInTheDocument();
-  });
-
-  it('copes with long values', () => {
-    render(<NumberCard value="1 234 567 €" description="Économies" />);
-    expect(screen.getByText('1 234 567 €')).toBeInTheDocument();
-  });
-
-  it('animates the number when asked', () => {
-    render(<NumberCard value={42} description="Candidats" animate />);
-    expect(screen.getByText('count:42')).toBeInTheDocument();
   });
 });
 

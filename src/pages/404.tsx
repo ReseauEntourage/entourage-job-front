@@ -3,12 +3,13 @@ import { Layout } from '@/src/components/layouts/Layout';
 import { Section } from '@/src/components/ui';
 import { GA_TAGS } from '@/src/constants/tags';
 import { NewsletterPartial } from '@/src/features/partials/common/NewsletterPartial';
+import { StyledBoldH3 } from '@/src/features/partials/common/PageText';
 
 const Custom404 = () => {
   return (
     <Layout title="Page introuvable - Entourage Pro" noIndex>
-      <Section className="uk-text-center" style="default" size="large">
-        <h3 className="uk-text-bold">Erreur</h3>
+      <Section textCenter style="default" size="large">
+        <StyledBoldH3>Erreur</StyledBoldH3>
         <p>La page que vous avez demandé est malheureusement introuvable</p>
       </Section>
       <NewsletterPartial

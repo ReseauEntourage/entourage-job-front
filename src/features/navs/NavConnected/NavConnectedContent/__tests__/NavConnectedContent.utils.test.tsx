@@ -1,6 +1,7 @@
 // eslint-disable-next-line import-x/no-named-as-default
 import expect from 'expect';
 import { CurrentUserCompany, User } from '@/src/api/types';
+import { GA_TAGS } from '@/src/constants/tags';
 import { UserRoles } from '@/src/constants/users';
 import { renderLinks } from '../NavConnectedContent.utils';
 
@@ -123,9 +124,11 @@ describe('NavConnectedContent.utils - help groups entries', () => {
 
   it('leaves the admin pages out of the admin main menu', () => {
     expect(getNames(UserRoles.ADMIN)).toEqual([
+      'Accueil',
       "Réseau d'entraide",
       'Groupes',
       'Événements',
+      'Ressources',
     ]);
   });
 
@@ -152,8 +155,12 @@ describe('NavConnectedContent.utils - account menu and home entry', () => {
     });
   });
 
-  it('does not give the admin an "Accueil" tab', () => {
-    expect(getNames(UserRoles.ADMIN)).not.toContain('Accueil');
+  it('gives the admin an "Accueil" tab to the dashboard, as first tab', () => {
+    expect(getNames(UserRoles.ADMIN)[0]).toBe('Accueil');
+    const entry = renderLinks(buildUser(UserRoles.ADMIN), jest.fn(), null)
+      .links[UserRoles.ADMIN][0];
+    expect(entry.href).toBe('/backoffice/dashboard');
+    expect(entry.tag).toBe(GA_TAGS.BACKOFFICE_ADMIN_HEADER_DASHBOARD_CLIC);
   });
 
   [
@@ -198,5 +205,113 @@ describe('NavConnectedContent.utils - account menu and home entry', () => {
         expect(getDropdownNames(role, status)).toEqual(['Se déconnecter']);
       });
     });
+  });
+});
+
+describe('NavConnectedContent.utils - admin "Ressources" menu', () => {
+  const COACH_URL = 'https://toolbox.test/coachs';
+  const CANDIDATE_URL = 'https://toolbox.test/candidats';
+  const COMPANY_URL = 'https://toolbox.test/entreprises';
+  const saved = {
+    coach: process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL,
+    candidate: process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL,
+    company: process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL,
+  };
+
+  const restore = (key: string, value?: string) => {
+    if (value === undefined) {
+      delete process.env[key];
+    } else {
+      process.env[key] = value;
+    }
+  };
+
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL = COACH_URL;
+    process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL = CANDIDATE_URL;
+    process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL = COMPANY_URL;
+  });
+
+  afterAll(() => {
+    restore('NEXT_PUBLIC_TOOLBOX_COACH_URL', saved.coach);
+    restore('NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL', saved.candidate);
+    restore('NEXT_PUBLIC_TOOLBOX_COMPANY_URL', saved.company);
+  });
+
+  const getResources = (role = UserRoles.ADMIN) =>
+    renderLinks(buildUser(role), jest.fn(), null).links[role].find(
+      ({ name }) => name === 'Ressources'
+    );
+
+  it('lists the three toolboxes then "Structures de l\'inclusion", without "Formations"', () => {
+    const names = getResources()?.subMenu?.map(({ name }) => name);
+    expect(names).toEqual([
+      'Boîte à outils coachs',
+      'Boîte à outils candidats',
+      'Boîte à outils entreprises',
+      "Structures de l'inclusion",
+    ]);
+    expect(names).not.toContain('Formations');
+  });
+
+  it('opens each toolbox in a new tab towards its own address', () => {
+    const toolboxes = getResources()?.subMenu?.slice(0, 3);
+    expect(toolboxes?.map(({ href }) => href)).toEqual([
+      COACH_URL,
+      CANDIDATE_URL,
+      COMPANY_URL,
+    ]);
+    expect(toolboxes?.every(({ external }) => external === true)).toBe(true);
+    expect(toolboxes?.map(({ tag }) => tag)).toEqual([
+      GA_TAGS.BACKOFFICE_ADMIN_HEADER_BAO_COACH_CLIC,
+      GA_TAGS.BACKOFFICE_ADMIN_HEADER_BAO_CANDIDAT_CLIC,
+      GA_TAGS.BACKOFFICE_ADMIN_HEADER_BAO_COMPANY_CLIC,
+    ]);
+  });
+
+  it('opens "Structures de l\'inclusion" in the app, not in a new tab', () => {
+    const structures = getResources()?.subMenu?.[3];
+    expect(structures?.href).toBe('/backoffice/ressources/aides-locales');
+    expect(structures?.external).toBeFalsy();
+  });
+
+  [
+    ['NEXT_PUBLIC_TOOLBOX_COACH_URL', 'Boîte à outils coachs'],
+    ['NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL', 'Boîte à outils candidats'],
+    ['NEXT_PUBLIC_TOOLBOX_COMPANY_URL', 'Boîte à outils entreprises'],
+  ].forEach(([variable, label]) => {
+    it(`leaves "${label}" out when ${variable} is not set, and keeps the others`, () => {
+      delete process.env[variable];
+      const names = getResources()?.subMenu?.map(({ name }) => name);
+      expect(names).not.toContain(label);
+      expect(names).toHaveLength(3);
+      expect(names).toContain("Structures de l'inclusion");
+    });
+
+    it(`leaves "${label}" out when ${variable} is empty`, () => {
+      process.env[variable] = '';
+      expect(getResources()?.subMenu?.map(({ name }) => name)).not.toContain(
+        label
+      );
+    });
+  });
+
+  it('keeps "Structures de l\'inclusion" when no toolbox address is set', () => {
+    delete process.env.NEXT_PUBLIC_TOOLBOX_COACH_URL;
+    delete process.env.NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL;
+    delete process.env.NEXT_PUBLIC_TOOLBOX_COMPANY_URL;
+    expect(getResources()?.subMenu?.map(({ name }) => name)).toEqual([
+      "Structures de l'inclusion",
+    ]);
+  });
+
+  it('does not touch the "Ressources" menu of the other roles', () => {
+    [UserRoles.CANDIDATE, UserRoles.COACH, UserRoles.REFERER].forEach(
+      (role) => {
+        const names = getResources(role)?.subMenu?.map(({ name }) => name);
+        expect(names).not.toContain('Boîte à outils coachs');
+        expect(names).toContain("Structures de l'inclusion");
+      }
+    );
   });
 });

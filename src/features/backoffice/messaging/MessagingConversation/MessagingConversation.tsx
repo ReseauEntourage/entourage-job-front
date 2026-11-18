@@ -6,10 +6,12 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckinState, ConversationType } from '@/src/api/types';
+import { CheckinState, ConversationType, MessageType } from '@/src/api/types';
+import { BottomSheet } from '@/src/components/ui/BottomSheet/BottomSheet';
 import { Spinner } from '@/src/components/ui/Spinner';
 import { DELAY_REFRESH_CONVERSATIONS } from '@/src/constants';
 import { UserRoles } from '@/src/constants/users';
+import { useContactEligibility } from '@/src/hooks/useContactEligibility';
 import { useIsMobile } from '@/src/hooks/utils';
 import { useGetCheckinQuery } from '@/src/use-cases/checkin';
 import {
@@ -23,12 +25,14 @@ import {
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
+  useDismissAIAssistantBannerMutation,
   useGetConversationsQuery,
   useGetSelectedConversationQuery,
   useLoadOlderMessagesMutation,
   usePollConversationMessagesMutation,
 } from '@/src/use-cases/messaging';
 import {
+  selectAIAssistantRecipientId,
   selectConversationParticipantsAreDeleted,
   selectCurrentUserHasSentMessages,
   selectNewMessage,
@@ -40,6 +44,7 @@ import {
 } from '@/src/use-cases/messaging/messaging.utils';
 import { MessagingAIPanel } from '../MessagingAIPanel';
 import { MessagingEmptyState } from '../MessagingEmptyState';
+import { MessagingAIAssistantBanner } from './MessagingAIAssistantBanner/MessagingAIAssistantBanner';
 import { MessagingCheckinBanner } from './MessagingCheckinBanner/MessagingCheckinBanner';
 import {
   MessagingConversationAIPanel,
@@ -147,6 +152,8 @@ export const MessagingConversation = () => {
     selectOtherParticipantHasNotReplied(currentUserId)
   );
   const isAIPanelOpen = useSelector(selectIsAIPanelOpen);
+  const { isEligibleToContact } = useContactEligibility();
+  const [dismissAIAssistantBanner] = useDismissAIAssistantBannerMutation();
   const { currentData: checkinState } = useGetCheckinQuery(
     selectedConversationId ?? '',
     {
@@ -515,15 +522,72 @@ export const MessagingConversation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConversation?.id, selectedConversation?.messages[0]?.id]);
 
-  const conversationHasCandidate =
-    selectedConversation?.participants.some(
-      (p) => p.role === UserRoles.CANDIDATE
-    ) ?? false;
+  const aiAssistantRecipientId = useSelector(
+    selectAIAssistantRecipientId(currentUserId)
+  );
+  // The assistant is attached to the candidate recipient of a direct
+  // conversation, which exists before the conversation is created.
   const canUseAIAssistant =
-    currentUser?.role !== UserRoles.CANDIDATE && conversationHasCandidate;
-  const isNewConversation = selectedConversationId === 'new';
-  const showAIPanelMobile =
-    isMobile && canUseAIAssistant && isAIPanelOpen && !isNewConversation;
+    currentUser?.role !== UserRoles.CANDIDATE &&
+    isEligibleToContact &&
+    aiAssistantRecipientId !== null;
+  const showAIPanelMobile = isMobile && canUseAIAssistant && isAIPanelOpen;
+
+  // Offered on every candidate message after the candidate's first one, as
+  // long as the coach has not answered it yet (the latest non-service message
+  // is the candidate's). The candidate's first message is covered by the
+  // quick-replies chip instead. Dismissal is persisted per conversation via
+  // assistantBannerDismissedAt once "Non merci" is clicked.
+  const displayAIAssistantBanner = useMemo(() => {
+    if (!canUseAIAssistant || currentUser?.role !== UserRoles.COACH) {
+      return false;
+    }
+    if (!selectedConversation || selectedConversationId === 'new') {
+      return false;
+    }
+    if (selectedConversation.id !== selectedConversationId) {
+      return false;
+    }
+    if (selectedConversation.assistantBannerDismissedAt) {
+      return false;
+    }
+    const otherParticipants = selectedConversation.participants.filter(
+      (p) => p.id !== currentUserId
+    );
+    if (!otherParticipants.every((p) => p.role === UserRoles.CANDIDATE)) {
+      return false;
+    }
+    const userMessages = selectedConversation.messages
+      .filter((message) => message.type !== MessageType.SERVICE)
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    if (
+      userMessages.length === 0 ||
+      userMessages[0].authorId === currentUserId
+    ) {
+      return false;
+    }
+    const candidateMessagesCount = userMessages.filter(
+      (message) => message.authorId !== currentUserId
+    ).length;
+    // `messages` only holds the loaded pages. A full page means older
+    // messages may exist, so the candidate's first message can be out of the
+    // window: one loaded candidate message is then enough. Once the history
+    // is known to be exhausted, the loaded messages are the whole story.
+    const mayHaveOlderMessages =
+      hasMoreOlderMessages &&
+      selectedConversation.messages.length >= MESSAGES_PAGE_SIZE;
+    return candidateMessagesCount >= (mayHaveOlderMessages ? 1 : 2);
+  }, [
+    canUseAIAssistant,
+    currentUser,
+    currentUserId,
+    selectedConversation,
+    selectedConversationId,
+    hasMoreOlderMessages,
+  ]);
 
   const conversationContent = (
     <>
@@ -575,6 +639,9 @@ export const MessagingConversation = () => {
       {displayQuickReplies && (
         <MessagingSuggestions
           onSuggestionClick={onSuggestionClick}
+          onOpenAIAssistant={() =>
+            dispatch(messagingActions.openAIAssistantAutoStart())
+          }
           newMessage={newMessage}
           participants={
             selectedConversation?.participants.filter(
@@ -582,6 +649,21 @@ export const MessagingConversation = () => {
             ) || []
           }
           variant="quick-replies"
+        />
+      )}
+
+      {displayAIAssistantBanner && (
+        <MessagingAIAssistantBanner
+          compact={isMobile}
+          candidateFirstName={otherParticipant?.firstName}
+          onOpenAssistant={() =>
+            dispatch(messagingActions.openAIAssistantAutoStart())
+          }
+          onDismiss={() => {
+            if (selectedConversationId) {
+              dismissAIAssistantBanner(selectedConversationId);
+            }
+          }}
         />
       )}
 
@@ -609,23 +691,24 @@ export const MessagingConversation = () => {
     );
   }
 
-  if (showAIPanelMobile) {
-    return <MessagingAIPanel />;
-  }
-
   return (
     <MessagingConversationWrapper>
       <MessagingConversationContainer>
         {conversationContent}
       </MessagingConversationContainer>
-      {!isMobile &&
-        isAIPanelOpen &&
-        canUseAIAssistant &&
-        !isNewConversation && (
-          <MessagingConversationAIPanel>
-            <MessagingAIPanel />
-          </MessagingConversationAIPanel>
-        )}
+      {!isMobile && isAIPanelOpen && canUseAIAssistant && (
+        <MessagingConversationAIPanel>
+          <MessagingAIPanel />
+        </MessagingConversationAIPanel>
+      )}
+      {showAIPanelMobile && (
+        // Mid-height sheet (~60% of the screen) instead of taking over the
+        // whole screen: the conversation above stays visible and scrollable,
+        // the candidate's last message included.
+        <BottomSheet midHeightRatio={0.6}>
+          {() => <MessagingAIPanel />}
+        </BottomSheet>
+      )}
     </MessagingConversationWrapper>
   );
 };

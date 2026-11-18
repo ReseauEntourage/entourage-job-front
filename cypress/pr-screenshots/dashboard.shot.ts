@@ -25,7 +25,7 @@ describe('Tableau de bord', () => {
     interceptGetUnseenCount({ statusCode: 200, body: 0 });
     interceptGetConversations({ fixture: 'api/generated/conversations' });
     cy.fixture('public-profile-res').then((profile) => {
-      cy.intercept('GET', '/user/profile/recommendations*', {
+      cy.intercept('GET', '/current/profile/recommendations*', {
         statusCode: 200,
         body: {
           embeddingPending: false,

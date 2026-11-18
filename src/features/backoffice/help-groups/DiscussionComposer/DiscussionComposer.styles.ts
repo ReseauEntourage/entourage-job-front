@@ -1,4 +1,9 @@
 import { styled } from 'styled-components';
+import { Button } from '@/src/components/ui';
+import {
+  LINE_HEIGHT_MULTIPLIER,
+  sizesPx,
+} from '@/src/components/ui/Text/Text.utils';
 import { BREAKPOINTS, COLORS, SHADOWS } from '@/src/constants/styles';
 
 // Closed composer: one line, the viewer's avatar then the invitation
@@ -66,37 +71,77 @@ export const StyledComposerHeading = styled.div`
   gap: 12px;
 `;
 
+export const StyledComposerHeadingText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+`;
+
 export const StyledTitleField = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
 `;
 
-// « Titre » and, on the right, the mention of a proposed title (below it
-// on mobile)
+// « Titre » and, next to it, the mention that it is required
 export const StyledTitleLabelRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  align-items: baseline;
+  gap: 2px 8px;
+`;
+
+// The field and, on its right, the button asking for a proposal. Below the
+// desktop breakpoint the button goes under the field, full width.
+export const StyledTitleRow = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  > :first-child {
+    flex: 1;
+    min-width: 0;
+  }
 
   @media (max-width: ${BREAKPOINTS.desktop}px) {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    align-items: stretch;
+    gap: 8px;
   }
 `;
 
-export const StyledTitleActions = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 24px;
+// Same height as the field alone (not its help line): its line height, its
+// vertical padding (2 x 12px) and its border (2 x 2px), as in `commonInputStyles`
+export const StyledTitleRequestButton = styled(Button)`
+  flex-shrink: 0;
+  height: ${LINE_HEIGHT_MULTIPLIER * sizesPx.desktop.normal + 28}px;
+  justify-content: center;
+  white-space: nowrap;
 
-  &:empty {
-    display: none;
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    height: auto;
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
+`;
+
+// Live region under the field, on the left of the counter: the help, then in
+// its place the wait, the failure or the mention of a proposed title, read
+// out by screen readers. Always rendered.
+export const StyledTitleStatus = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+// Discreet mention that the title was proposed by the AI
+export const StyledTitleMention = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: ${COLORS.darkGray};
 `;
 
 export const StyledComposerActions = styled.div`

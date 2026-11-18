@@ -3,6 +3,7 @@ import { FilterPills } from '@/src/components/ui';
 import { SelectSimple } from '@/src/components/ui/Inputs';
 import { ADMIN_ZONES_FILTERS } from '@/src/constants/departements';
 import {
+  REPORT_ORIGIN_LABELS,
   REPORT_TARGET_FILTER_LABELS,
   REPORT_TARGET_STATUS_LABELS,
   REPORTS_TAB_LABELS,
@@ -27,6 +28,10 @@ const TYPE_OPTIONS = toOptions(
 const STATUS_OPTIONS = toOptions(
   REPORT_TARGET_STATUS_LABELS,
   REPORTS_TAB_LABELS.allStatuses
+);
+const ORIGIN_OPTIONS = toOptions(
+  REPORT_ORIGIN_LABELS,
+  REPORTS_TAB_LABELS.allOrigins
 );
 const ZONE_OPTIONS = [
   { value: ALL_FILTER_VALUE, label: REPORTS_TAB_LABELS.allZones },
@@ -67,6 +72,15 @@ export function ReportTargetFilters({
           options={STATUS_OPTIONS}
           value={values.status}
           onChange={(value) => onChange('status', value as string)}
+        />
+        <SelectSimple
+          id="report-filter-origin"
+          name="report-filter-origin"
+          title={REPORTS_TAB_LABELS.originFilter}
+          showLabel
+          options={ORIGIN_OPTIONS}
+          value={values.origin}
+          onChange={(value) => onChange('origin', value as string)}
         />
         <SelectSimple
           id="report-filter-zone"

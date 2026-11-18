@@ -152,17 +152,9 @@ ComponentName/
 
 Avant de créer un composant : vérifier qu'une primitive ne couvre pas déjà le besoin ; si une variante manque, l'ajouter à la primitive plutôt que de la forker.
 
-### Héritage UIkit (en cours de suppression)
+### UIkit : retiré
 
-> ⚠️ **UIkit 3.6.22 est en cours de suppression progressive.** Aucun nouveau code ne doit l'utiliser.
-
-Il subsiste :
-
-- les bundles compilés dans `src/styles/dist/` (CSS et JS UIkit, dont un build d'icônes custom) ;
-- quelques imports résiduels du package `uikit` (`src/components/ui/Grid.tsx`, `src/components/ui/Carousel/`, `src/hooks/useUploadImage.ts`) ;
-- des classes `uk-*` encore présentes dans certains composants, notamment les navigations (`src/features/navs/`).
-
-Toute reprise de ces zones est l'occasion de les migrer vers les primitives de `src/components/ui/` et styled-components.
+UIkit (feuille, JS et package) a été supprimé du projet (change `remove-uikit`, EN-7175). Il ne faut **ni classe `uk-*`, ni import `uikit`** : une règle ESLint maison (`eslint-rules/no-uikit.mjs`) échoue dessus. Les règles de base des éléments (polices Poppins, titres, paragraphes, listes, liens, impression) sont dans `src/styles/styles.css` ; tout le reste passe par les primitives de `src/components/ui/` et des styled-components.
 
 ### Langue
 

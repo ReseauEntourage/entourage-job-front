@@ -1,5 +1,6 @@
 import React, { FormEvent, useState, type JSX } from 'react';
 import { Button } from '@/src/components/ui';
+import { Spinner } from '@/src/components/ui/Spinner';
 import { StyledButtonPostContainer } from './ButtonPost.styles';
 
 interface ButtonPostProps {
@@ -40,7 +41,7 @@ export const ButtonPost = ({
       <StyledButtonPostContainer>
         {text}
         {loading || isLoadingOverride ? (
-          <div data-uk-spinner="ratio: .5" />
+          <Spinner variant="dash" size={15} />
         ) : (
           icon && <>&nbsp;{icon}</>
         )}

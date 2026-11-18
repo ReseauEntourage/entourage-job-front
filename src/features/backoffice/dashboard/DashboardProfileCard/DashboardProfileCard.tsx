@@ -38,7 +38,17 @@ import {
   StyledTagList,
 } from './DashboardProfileCard.styles';
 
-export const DashboardProfileCard = () => {
+interface DashboardProfileCardProps {
+  /** Leaves the "Mes coups de pouce" section out (e.g. for admins) */
+  hideNudges?: boolean;
+  /** Leaves the "Mon CV" section out (e.g. for admins) */
+  hideExternalCv?: boolean;
+}
+
+export const DashboardProfileCard = ({
+  hideNudges = false,
+  hideExternalCv = false,
+}: DashboardProfileCardProps) => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const userProfile = useCurrentUserProfile();
@@ -126,81 +136,85 @@ export const DashboardProfileCard = () => {
         </StyledDashboardProfileCardSection>
 
         {/* Completion nudges */}
-        <StyledDashboardProfileCardSection>
-          <StyledDashboardProfileCardSectionTitle>
-            <Dot color={userProfile?.nudges?.length ? 'green' : 'lightRed'} />
-            <Text size="large" weight="semibold">
-              Mes coups de pouce
-            </Text>
-          </StyledDashboardProfileCardSectionTitle>
-          {userProfile?.nudges && userProfile.nudges.length > 0 ? (
-            <StyledDashboardProfileCardHelpList>
-              {userProfile.nudges.slice(0, 3).map((nudge, index) => {
-                const nudgeDetails = ProfileNudges.find(
-                  (nudgeConstant) => nudgeConstant.value === nudge?.value
-                );
-                if (nudgeDetails) {
-                  const tagContent = nudgeDetails.shortTitle[contextualRole];
-                  return (
-                    <Tag size={TagSize.Small} key={index}>
-                      {tagContent}
-                    </Tag>
-                  );
-                }
-                return null;
-              })}
-              {(userProfile?.nudges?.length ?? 0) > 3 && (
-                <Tag size={TagSize.Small}>
-                  +{(userProfile?.nudges?.length ?? 0) - 3}
-                </Tag>
-              )}
-            </StyledDashboardProfileCardHelpList>
-          ) : (
-            <StyledDashboardProfileCardEmptyState>
-              <SvgIcon
-                name="IlluCoeurMainsOuvertesBleu"
-                height={48}
-                width={48}
-              />
-
-              <Text size="small">
-                {user.role === UserRoles.CANDIDATE
-                  ? 'Vous n’avez pas encore sélectionné les coups de pouces dont vous auriez besoin'
-                  : 'Vous n’avez pas encore sélectionné de coups de pouces que vous souhaitez donner'}
+        {!hideNudges && (
+          <StyledDashboardProfileCardSection>
+            <StyledDashboardProfileCardSectionTitle>
+              <Dot color={userProfile?.nudges?.length ? 'green' : 'lightRed'} />
+              <Text size="large" weight="semibold">
+                Mes coups de pouce
               </Text>
-            </StyledDashboardProfileCardEmptyState>
-          )}
-        </StyledDashboardProfileCardSection>
-
-        {/* External CV Completion */}
-        <StyledDashboardProfileCardSection>
-          <StyledDashboardProfileCardSectionTitle>
-            <Dot color={userProfile?.hasExternalCv ? 'green' : 'lightRed'} />
-            <Text size="large" weight="semibold">
-              Mon CV
-            </Text>
-          </StyledDashboardProfileCardSectionTitle>
-          <StyledDashboardProfileCardIntroduction>
-            {userProfile?.hasExternalCv ? (
-              <FilePreviewCV
-                filename="Votre CV"
-                onRemoveFile={removeExternalCvCallback}
-                onOpenFile={openExternalCV}
-                dataTestId="dashboard-profile-card-cv-preview"
-                size={48}
-                textSize="small"
-              />
+            </StyledDashboardProfileCardSectionTitle>
+            {userProfile?.nudges && userProfile.nudges.length > 0 ? (
+              <StyledDashboardProfileCardHelpList>
+                {userProfile.nudges.slice(0, 3).map((nudge, index) => {
+                  const nudgeDetails = ProfileNudges.find(
+                    (nudgeConstant) => nudgeConstant.value === nudge?.value
+                  );
+                  if (nudgeDetails) {
+                    const tagContent = nudgeDetails.shortTitle[contextualRole];
+                    return (
+                      <Tag size={TagSize.Small} key={index}>
+                        {tagContent}
+                      </Tag>
+                    );
+                  }
+                  return null;
+                })}
+                {(userProfile?.nudges?.length ?? 0) > 3 && (
+                  <Tag size={TagSize.Small}>
+                    +{(userProfile?.nudges?.length ?? 0) - 3}
+                  </Tag>
+                )}
+              </StyledDashboardProfileCardHelpList>
             ) : (
               <StyledDashboardProfileCardEmptyState>
-                <SvgIcon name="IlluCandidatFolder" height={48} width={48} />
+                <SvgIcon
+                  name="IlluCoeurMainsOuvertesBleu"
+                  height={48}
+                  width={48}
+                />
+
                 <Text size="small">
-                  Vous n&apos;avez pas importé de CV existant vous permettant de
-                  générer votre profil.
+                  {user.role === UserRoles.CANDIDATE
+                    ? 'Vous n’avez pas encore sélectionné les coups de pouces dont vous auriez besoin'
+                    : 'Vous n’avez pas encore sélectionné de coups de pouces que vous souhaitez donner'}
                 </Text>
               </StyledDashboardProfileCardEmptyState>
             )}
-          </StyledDashboardProfileCardIntroduction>
-        </StyledDashboardProfileCardSection>
+          </StyledDashboardProfileCardSection>
+        )}
+
+        {/* External CV Completion */}
+        {!hideExternalCv && (
+          <StyledDashboardProfileCardSection>
+            <StyledDashboardProfileCardSectionTitle>
+              <Dot color={userProfile?.hasExternalCv ? 'green' : 'lightRed'} />
+              <Text size="large" weight="semibold">
+                Mon CV
+              </Text>
+            </StyledDashboardProfileCardSectionTitle>
+            <StyledDashboardProfileCardIntroduction>
+              {userProfile?.hasExternalCv ? (
+                <FilePreviewCV
+                  filename="Votre CV"
+                  onRemoveFile={removeExternalCvCallback}
+                  onOpenFile={openExternalCV}
+                  dataTestId="dashboard-profile-card-cv-preview"
+                  size={48}
+                  textSize="small"
+                />
+              ) : (
+                <StyledDashboardProfileCardEmptyState>
+                  <SvgIcon name="IlluCandidatFolder" height={48} width={48} />
+                  <Text size="small">
+                    Vous n&apos;avez pas importé de CV existant vous permettant
+                    de générer votre profil.
+                  </Text>
+                </StyledDashboardProfileCardEmptyState>
+              )}
+            </StyledDashboardProfileCardIntroduction>
+          </StyledDashboardProfileCardSection>
+        )}
       </StyledDashbardProfileCardSectionContainer>
 
       <StyledDashboardCTAContainer>

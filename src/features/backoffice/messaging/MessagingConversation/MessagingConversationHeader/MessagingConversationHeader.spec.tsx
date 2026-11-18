@@ -125,11 +125,53 @@ describe('MessagingConversationHeader', () => {
     (useIsDesktop as jest.Mock).mockReturnValue(false);
     const { store, container } = setup();
     await screen.findByText('Awa Diop');
-    // the action list moves below the main infos on mobile
     expect(screen.getAllByTestId('action-list')).toHaveLength(1);
     const backButton = container.querySelector('button') as HTMLElement;
     fireEvent.click(backButton);
     expect(store.getState().messaging.selectedConversationId).toBeNull();
+  });
+
+  describe('on mobile', () => {
+    beforeEach(() => {
+      (useIsMobile as jest.Mock).mockReturnValue(true);
+      (useIsDesktop as jest.Mock).mockReturnValue(false);
+    });
+
+    it('lays the controls out on a single row, in a fixed order', async () => {
+      setup();
+      const name = await screen.findByText('Awa Diop');
+      const back = screen.getByRole('button', {
+        name: 'Retour à la liste des conversations',
+      });
+      const actions = screen.getByTestId('action-list');
+      const menu = screen.getByTestId('messaging-conversation-actions-button');
+      const isBefore = (a: HTMLElement, b: HTMLElement) =>
+        Boolean(
+          a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING
+        );
+
+      expect(isBefore(back, name)).toBe(true);
+      expect(isBefore(name, actions)).toBe(true);
+      expect(isBefore(actions, menu)).toBe(true);
+      // one single row: no second line holds the action list
+      const row = actions.parentElement as HTMLElement;
+      expect(row).toContainElement(back);
+      expect(row).toContainElement(name);
+      expect(row).toContainElement(menu);
+    });
+
+    it('names the back button and the actions menu for assistive technologies', async () => {
+      setup();
+      await screen.findByText('Awa Diop');
+      expect(
+        screen.getByRole('button', {
+          name: 'Retour à la liste des conversations',
+        })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Actions de la conversation' })
+      ).toBeInTheDocument();
+    });
   });
 
   it('flags to admins that the addressee has not finished the e-learning', async () => {

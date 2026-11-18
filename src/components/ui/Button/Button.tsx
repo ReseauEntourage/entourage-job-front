@@ -15,6 +15,8 @@ export function Button({
   appendIcon,
   dataTestId = '',
   ariaLabel,
+  ariaExpanded,
+  ariaHasPopup,
   isExternal = false,
   newTab = false,
   onClick = () => {},
@@ -60,6 +62,8 @@ export function Button({
       onMouseLeave={onMouseLeave}
       data-testid={dataTestId}
       aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
+      aria-haspopup={ariaHasPopup}
       $variant={variant}
       size={size}
       color={color}

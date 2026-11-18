@@ -17,6 +17,7 @@ import {
   FormSchemaValidation,
   GetValueType,
 } from '@/src/features/forms/FormSchema';
+import { EmailAlreadyUsedInlineLink } from '@/src/features/registration/forms/EmailAlreadyUsedHint';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
 
@@ -102,6 +103,8 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
             message: 'Adresse e-mail invalide',
           },
         ],
+        renderErrorContent: (error) =>
+          error?.type === 'manual' ? <EmailAlreadyUsedInlineLink /> : undefined,
       },
       {
         id: 'department',

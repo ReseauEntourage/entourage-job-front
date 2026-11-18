@@ -67,6 +67,7 @@ const setup = (
     achievements = [] as any[],
     externalCv = null as string | null,
     store = undefined as TestStore | undefined,
+    cardProps = {} as { hideNudges?: boolean; hideExternalCv?: boolean },
   } = {},
   preloadedCompletion?: number
 ) => {
@@ -75,7 +76,7 @@ const setup = (
   (useCurrentUserOrganization as jest.Mock).mockReturnValue(organization);
   (useCurrentUserAchievements as jest.Mock).mockReturnValue(achievements);
   (useCurrentUserExternalCv as jest.Mock).mockReturnValue(externalCv);
-  return renderWithProviders(<DashboardProfileCard />, {
+  return renderWithProviders(<DashboardProfileCard {...cardProps} />, {
     store,
     preloadedState:
       preloadedCompletion === undefined
@@ -236,5 +237,46 @@ describe('DashboardProfileCard', () => {
       'href',
       '/backoffice/parametres'
     );
+  });
+  describe('optional sections', () => {
+    it('shows the presentation, the nudges and the CV sections by default', () => {
+      setup();
+      expect(screen.getByText('Présentation')).toBeInTheDocument();
+      expect(screen.getByText('Mes coups de pouce')).toBeInTheDocument();
+      expect(screen.getByText('Mon CV')).toBeInTheDocument();
+    });
+
+    it('leaves the nudges section out with hideNudges', () => {
+      setup({ cardProps: { hideNudges: true } });
+      expect(screen.queryByText('Mes coups de pouce')).not.toBeInTheDocument();
+      expect(screen.getByText('Présentation')).toBeInTheDocument();
+      expect(screen.getByText('Mon CV')).toBeInTheDocument();
+    });
+
+    it('leaves the CV section out with hideExternalCv', () => {
+      setup({ cardProps: { hideExternalCv: true } });
+      expect(screen.queryByText('Mon CV')).not.toBeInTheDocument();
+      expect(screen.getByText('Présentation')).toBeInTheDocument();
+      expect(screen.getByText('Mes coups de pouce')).toBeInTheDocument();
+    });
+
+    it('keeps the photo, the completion and the action when both are hidden', () => {
+      setup(
+        {
+          profile: { department: 'Paris (75)' },
+          cardProps: { hideNudges: true, hideExternalCv: true },
+        },
+        60
+      );
+      expect(screen.queryByText('Mes coups de pouce')).not.toBeInTheDocument();
+      expect(screen.queryByText('Mon CV')).not.toBeInTheDocument();
+      expect(screen.getByText('Présentation')).toBeInTheDocument();
+      expect(screen.getByText('completion-bar')).toBeInTheDocument();
+      expect(screen.getByText('Paris (75)')).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Compléter' })).toHaveAttribute(
+        'href',
+        '/backoffice/parametres'
+      );
+    });
   });
 });

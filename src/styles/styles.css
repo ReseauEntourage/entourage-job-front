@@ -1,3 +1,355 @@
+/* Poppins, the font of the whole app. */
+@font-face {
+  font-family: 'Poppins';
+  src: url('/static/fonts/Poppins-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: bold;
+  src: url('/static/fonts/Poppins-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 300;
+  src: url('/static/fonts/Poppins-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Poppins;
+  font-weight: 500;
+  src: url('/static/fonts/Poppins-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 600;
+  src: url('/static/fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 900;
+  src: url('/static/fonts/Poppins-Black.ttf') format('truetype');
+  font-display: swap;
+}
+
+/*
+ * Base rules of the elements (typography, spacing between blocks, links, media). They come from
+ * the third-party style sheet the app used to load, with the same values: the pages were laid out
+ * with them, so a change here moves text and blocks everywhere.
+ */
+html {
+  font-family: Poppins, sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 20px;
+  -webkit-text-size-adjust: 100%;
+  background: #fff;
+  color: #363636;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: #47a8b9;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #2d93a5;
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  outline: none;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+:not(pre) > code,
+:not(pre) > kbd,
+:not(pre) > samp {
+  font-family: Consolas, monaco, monospace;
+  font-size: 0.875rem;
+  color: #f0506e;
+  white-space: nowrap;
+  padding: 2px 6px;
+  background: #ecf8fb;
+}
+
+em {
+  color: #f0506e;
+}
+
+/* Highlighted text: white band behind the words, as on the cover titles. */
+mark {
+  background: white;
+  box-shadow:
+    15px 0 0 white,
+    -15px 0 0 white;
+  color: #363636;
+  line-height: 1.5;
+  display: inline;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+canvas,
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+svg {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+img:not([src]) {
+  min-width: 1px;
+  visibility: hidden;
+}
+
+iframe {
+  border: 0;
+}
+
+p,
+ul,
+ol,
+dl,
+pre,
+address,
+fieldset,
+figure {
+  margin: 0 0 20px 0;
+}
+
+* + p,
+* + ul,
+* + ol,
+* + dl,
+* + pre,
+* + address,
+* + fieldset,
+* + figure {
+  margin-top: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 20px 0;
+  font-family: Poppins, sans-serif;
+  font-weight: normal;
+  color: #363636;
+  text-transform: none;
+}
+
+* + h1,
+* + h2,
+* + h3,
+* + h4,
+* + h5,
+* + h6 {
+  margin-top: 40px;
+}
+
+h1 {
+  font-size: 2.23125rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.7rem;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+h5 {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+h6 {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 960px) {
+  h1 {
+    font-size: 2.625rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+ul,
+ol {
+  padding-left: 30px;
+}
+
+ul > li > ul,
+ul > li > ol,
+ol > li > ol,
+ol > li > ul {
+  margin: 0;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-left: 0;
+}
+
+hr {
+  overflow: visible;
+  text-align: inherit;
+  margin: 0 0 20px 0;
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+* + hr {
+  margin-top: 20px;
+}
+
+address {
+  font-style: normal;
+}
+
+blockquote {
+  margin: 0 0 20px 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: #333;
+}
+
+* + blockquote {
+  margin-top: 20px;
+}
+
+blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+
+blockquote footer {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #363636;
+}
+
+blockquote footer::before {
+  content: '— ';
+}
+
+pre {
+  font:
+    0.875rem / 1.5 Consolas,
+    monaco,
+    monospace;
+  color: #363636;
+  tab-size: 4;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  background: #fff;
+}
+
+pre code {
+  font-family: Consolas, monaco, monospace;
+}
+
+::selection {
+  background: #39f;
+  color: #fff;
+  text-shadow: none;
+}
+
+details,
+main {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+template {
+  display: none;
+}
+
+.ent-divier-backoffice {
+  border-top: 1px solid black;
+}
+
 :root {
   --orange: #47a8b9;
   --black: #363636;
@@ -48,10 +400,6 @@ body {
   line-clamp: 3;
 }
 
-hr.uk-divider-small::after {
-  border-top: 1px solid var(--orange);
-}
-
 .ent-site-map {
   color: var(--white) !important;
   margin-bottom: 10px;
@@ -64,4 +412,69 @@ hr.uk-divider-small::after {
 /* overwrite YT lite player start button */
 .yt-lite > .lty-playbtn {
   border: none;
+}
+
+/* Printing: no backgrounds, black text, links underlined (then the colors the page really has). */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color: inherit !important;
+    color-adjust: exact !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: none !important;
+  }
 }

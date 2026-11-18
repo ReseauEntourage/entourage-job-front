@@ -23,6 +23,13 @@ interface State {
   newMessage: string;
   isAIPanelOpen: boolean;
   activePanelView: MessagingPanelView;
+  /**
+   * True right after opening the AI panel from the "Demander à l'assistant IA"
+   * chip or the "Besoin d'aide pour répondre ?" banner: consumed once by
+   * `MessagingAIAssistant` to launch a response proposal automatically, then
+   * cleared. Never set by the header's "✨ Assistant" button.
+   */
+  shouldAutoStartAI: boolean;
 }
 
 const initialState: State = {
@@ -33,6 +40,7 @@ const initialState: State = {
   newMessage: '',
   isAIPanelOpen: false,
   activePanelView: 'ai',
+  shouldAutoStartAI: false,
 };
 
 export const slice = createSlice({
@@ -80,6 +88,14 @@ export const slice = createSlice({
     setActivePanelView(state, action: { payload: MessagingPanelView }) {
       state.activePanelView = action.payload;
       state.isAIPanelOpen = true;
+    },
+    openAIAssistantAutoStart(state) {
+      state.activePanelView = 'ai';
+      state.isAIPanelOpen = true;
+      state.shouldAutoStartAI = true;
+    },
+    clearShouldAutoStartAI(state) {
+      state.shouldAutoStartAI = false;
     },
   },
 });

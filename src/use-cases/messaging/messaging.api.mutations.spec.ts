@@ -290,6 +290,40 @@ describe('messaging api mutations', () => {
     });
   });
 
+  describe('dismissAIAssistantBanner', () => {
+    it('dismisses optimistically in the list and the selected conversation', async () => {
+      mockedApi.dismissAIAssistantBanner.mockResolvedValue({} as any);
+      const { store, read, readList } = await setup({
+        list: [conversation('c1'), conversation('c2')],
+        selected: conversation('c1'),
+      });
+      await store.dispatch(
+        messagingApi.endpoints.dismissAIAssistantBanner.initiate('c1') as any
+      );
+      expect(mockedApi.dismissAIAssistantBanner).toHaveBeenCalledWith('c1');
+      expect(readList()?.[0].assistantBannerDismissedAt).toEqual(
+        expect.any(String)
+      );
+      expect(readList()?.[1].assistantBannerDismissedAt).toBeUndefined();
+      expect(read('c1')?.assistantBannerDismissedAt).toEqual(
+        expect.any(String)
+      );
+    });
+
+    it('rolls back the dismissal when the API fails', async () => {
+      mockedApi.dismissAIAssistantBanner.mockRejectedValue(new Error('boom'));
+      const { store, read, readList } = await setup({
+        list: [conversation('c1')],
+        selected: conversation('c1'),
+      });
+      await store.dispatch(
+        messagingApi.endpoints.dismissAIAssistantBanner.initiate('c1') as any
+      );
+      expect(readList()?.[0].assistantBannerDismissedAt).toBeUndefined();
+      expect(read('c1')?.assistantBannerDismissedAt).toBeUndefined();
+    });
+  });
+
   describe('selectors', () => {
     it('exposes the draft message and the AI panel state', () => {
       const store = createTestStore();

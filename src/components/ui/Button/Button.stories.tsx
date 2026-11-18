@@ -46,7 +46,7 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['xsmall', 'small', 'medium', 'large'],
     },
     disabled: {
       control: 'boolean',
