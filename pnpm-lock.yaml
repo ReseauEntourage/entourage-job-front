@@ -176,8 +176,8 @@ importers:
   .:
     dependencies:
       '@datadog/browser-rum':
-        specifier: ^6.24.0
-        version: 6.33.0
+        specifier: ^7.0.0
+        version: 7.18.0
       '@emotion/is-prop-valid':
         specifier: ^1.4.0
         version: 1.4.0
@@ -1103,19 +1103,22 @@ packages:
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
 
-  '@datadog/browser-core@6.33.0':
-    resolution: {integrity: sha512-h/xuBuY4Xi32CbBHkChMMWlOQ4al/mFF08x3o0hqrderfJvX7VO5tD3OVNwF+pfMXOGlDtBCIhwazr9sn24h3g==}
+  '@datadog/browser-core@7.18.0':
+    resolution: {integrity: sha512-cNJSv9nyh+4BsR2Qud7nlPOBhirBU3UAEXTZuFM1if452AA0AHnsU8LGQovh8iUUNdXXUlpvptw5BPsFwfSqwQ==}
 
-  '@datadog/browser-rum-core@6.33.0':
-    resolution: {integrity: sha512-Ais4x7zQBrBI6JyILYwFAmjUsqy0iQp2C7JcEEfzU4YYYcVO3DGpyVuYYrqHT27jY1QToHY8EnQUr3Yaj6saDA==}
+  '@datadog/browser-rum-core@7.18.0':
+    resolution: {integrity: sha512-O/zC+54Z4UZOkVb7ExQ3aL+G96RTDBQLDeYgi8v+jGLn9/6fBhfutCFEeQsNecwZp4nb4NY9UMlaESJd2sSvHw==}
 
-  '@datadog/browser-rum@6.33.0':
-    resolution: {integrity: sha512-zdxs1PyKt1RQ/fdxsmaCJUeBhB+leCIaPJBcum7uDi/DL8nuu9A9NUc5qGVPlY9zc12v7t2NI8bLpOrMjv+jTg==}
+  '@datadog/browser-rum@7.18.0':
+    resolution: {integrity: sha512-hBLBoQI/qfuhzIEg1+Lk458HUCQ04Uk/Ii7cG8ybZNrOsBGsFHl8gIB9SrAaVXaXFXsFhdpiQaf1Aezxqrku5g==}
     peerDependencies:
-      '@datadog/browser-logs': 6.33.0
+      '@datadog/browser-logs': 7.18.0
     peerDependenciesMeta:
       '@datadog/browser-logs':
         optional: true
+
+  '@datadog/js-core@0.0.22':
+    resolution: {integrity: sha512-N22UfUsHFk9vmWIWESdd4bq2HyfkNoHjppPpnUTsBZI0ivR6+rYpPn51KR/nR5q1Y4CWJNS549W4PUiPFztH1Q==}
 
   '@datadog/libdatadog-extras@0.21.0':
     resolution: {integrity: sha512-VgAlNdNtilutWsEoDy6cAtn1iRLVQuj84lppjGlrwfvMwoCJ40B4pIttrZr0R7n01a6H83zv2SNt7SiH3smJRg==}
@@ -2689,9 +2692,6 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-
-  '@types/node@20.19.39':
-    resolution: {integrity: sha512-orrrD74MBUyK8jOAD/r0+lfa1I2MO6I+vAkmAWzMYbCcgrN4lCrmK52gRFQq/JRxfYPfonkr4b0jcY7Olqdqbw==}
 
   '@types/node@26.6.6':
     resolution: {integrity: sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==}
@@ -6152,9 +6152,6 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
-  undici-types@6.21.0:
-    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
-
   undici-types@8.9.0:
     resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
@@ -7349,16 +7346,22 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@datadog/browser-core@6.33.0': {}
-
-  '@datadog/browser-rum-core@6.33.0':
+  '@datadog/browser-core@7.18.0':
     dependencies:
-      '@datadog/browser-core': 6.33.0
+      '@datadog/js-core': 0.0.22
 
-  '@datadog/browser-rum@6.33.0':
+  '@datadog/browser-rum-core@7.18.0':
     dependencies:
-      '@datadog/browser-core': 6.33.0
-      '@datadog/browser-rum-core': 6.33.0
+      '@datadog/browser-core': 7.18.0
+      '@datadog/js-core': 0.0.22
+
+  '@datadog/browser-rum@7.18.0':
+    dependencies:
+      '@datadog/browser-core': 7.18.0
+      '@datadog/browser-rum-core': 7.18.0
+      '@datadog/js-core': 0.0.22
+
+  '@datadog/js-core@0.0.22': {}
 
   '@datadog/libdatadog-extras@0.21.0':
     optional: true
@@ -8788,11 +8791,6 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29':
-    optional: true
-
-  '@types/node@20.19.39':
-    dependencies:
-      undici-types: 6.21.0
     optional: true
 
   '@types/node@26.6.6':
@@ -11236,7 +11234,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.39
+      '@types/node': 26.6.6
       merge-stream: 2.0.0
       supports-color: 8.1.1
     optional: true
@@ -12827,9 +12825,6 @@ snapshots:
       has-bigints: 1.1.0
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
-
-  undici-types@6.21.0:
-    optional: true
 
   undici-types@8.9.0: {}
 
