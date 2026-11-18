@@ -30,6 +30,13 @@ interface State {
    * cleared. Never set by the header's "✨ Assistant" button.
    */
   shouldAutoStartAI: boolean;
+  /**
+   * Conversation ids whose "Besoin d'aide pour répondre ?" banner was hidden
+   * by opening the assistant from it, for this browser session only. Kept
+   * out of any persisted storage on purpose: it must reset on page reload,
+   * unlike the server-side "Non merci" dismissal (`assistantBannerDismissedAt`).
+   */
+  sessionDismissedAiBannerConversationIds: string[];
 }
 
 const initialState: State = {
@@ -41,6 +48,7 @@ const initialState: State = {
   isAIPanelOpen: false,
   activePanelView: 'ai',
   shouldAutoStartAI: false,
+  sessionDismissedAiBannerConversationIds: [],
 };
 
 export const slice = createSlice({
@@ -96,6 +104,13 @@ export const slice = createSlice({
     },
     clearShouldAutoStartAI(state) {
       state.shouldAutoStartAI = false;
+    },
+    sessionDismissAiBanner(state, action: { payload: string }) {
+      if (
+        !state.sessionDismissedAiBannerConversationIds.includes(action.payload)
+      ) {
+        state.sessionDismissedAiBannerConversationIds.push(action.payload);
+      }
     },
   },
 });

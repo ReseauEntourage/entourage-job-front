@@ -37,6 +37,7 @@ import {
   selectCurrentUserHasSentMessages,
   selectNewMessage,
   selectOtherParticipantHasNotReplied,
+  selectSessionDismissedAiBannerConversationIds,
 } from '@/src/use-cases/messaging/messaging.selectors';
 import {
   encodeMessageCursor,
@@ -533,11 +534,17 @@ export const MessagingConversation = () => {
     aiAssistantRecipientId !== null;
   const showAIPanelMobile = isMobile && canUseAIAssistant && isAIPanelOpen;
 
+  const sessionDismissedAiBannerConversationIds = useSelector(
+    selectSessionDismissedAiBannerConversationIds
+  );
+
   // Offered on every candidate message after the candidate's first one, as
   // long as the coach has not answered it yet (the latest non-service message
   // is the candidate's). The candidate's first message is covered by the
   // quick-replies chip instead. Dismissal is persisted per conversation via
-  // assistantBannerDismissedAt once "Non merci" is clicked.
+  // assistantBannerDismissedAt once "Non merci" is clicked. Opening the
+  // assistant from the banner also hides it, but only for this browser
+  // session (sessionDismissedAiBannerConversationIds, reset on page reload).
   const displayAIAssistantBanner = useMemo(() => {
     if (!canUseAIAssistant || currentUser?.role !== UserRoles.COACH) {
       return false;
@@ -549,6 +556,12 @@ export const MessagingConversation = () => {
       return false;
     }
     if (selectedConversation.assistantBannerDismissedAt) {
+      return false;
+    }
+    if (
+      selectedConversationId &&
+      sessionDismissedAiBannerConversationIds.includes(selectedConversationId)
+    ) {
       return false;
     }
     const otherParticipants = selectedConversation.participants.filter(
@@ -587,6 +600,7 @@ export const MessagingConversation = () => {
     selectedConversation,
     selectedConversationId,
     hasMoreOlderMessages,
+    sessionDismissedAiBannerConversationIds,
   ]);
 
   const conversationContent = (
@@ -656,9 +670,14 @@ export const MessagingConversation = () => {
         <MessagingAIAssistantBanner
           compact={isMobile}
           candidateFirstName={otherParticipant?.firstName}
-          onOpenAssistant={() =>
-            dispatch(messagingActions.openAIAssistantAutoStart())
-          }
+          onOpenAssistant={() => {
+            dispatch(messagingActions.openAIAssistantAutoStart());
+            if (selectedConversationId) {
+              dispatch(
+                messagingActions.sessionDismissAiBanner(selectedConversationId)
+              );
+            }
+          }}
           onDismiss={() => {
             if (selectedConversationId) {
               dismissAIAssistantBanner(selectedConversationId);

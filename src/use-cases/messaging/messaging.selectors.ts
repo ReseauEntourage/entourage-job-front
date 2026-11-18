@@ -62,6 +62,10 @@ export const selectActivePanelView = (state: RootState) =>
 export const selectShouldAutoStartAI = (state: RootState) =>
   state.messaging.shouldAutoStartAI;
 
+export const selectSessionDismissedAiBannerConversationIds = (
+  state: RootState
+) => state.messaging.sessionDismissedAiBannerConversationIds;
+
 export const selectConversations = (state: RootState) =>
   messagingApi.endpoints.getConversations.select()(state).data ?? null;
 

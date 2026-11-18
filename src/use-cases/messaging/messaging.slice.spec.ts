@@ -81,5 +81,28 @@ describe('messaging slice', () => {
 
       expect(state.shouldAutoStartAI).toBe(false);
     });
+
+    it('sessionDismissAiBanner adds the conversation id', () => {
+      const state = reducer(
+        slice.getInitialState(),
+        actions.sessionDismissAiBanner('conv-1')
+      );
+
+      expect(state.sessionDismissedAiBannerConversationIds).toEqual(['conv-1']);
+    });
+
+    it('sessionDismissAiBanner does not duplicate an id already present', () => {
+      const initialState = {
+        ...slice.getInitialState(),
+        sessionDismissedAiBannerConversationIds: ['conv-1'],
+      };
+
+      const state = reducer(
+        initialState,
+        actions.sessionDismissAiBanner('conv-1')
+      );
+
+      expect(state.sessionDismissedAiBannerConversationIds).toEqual(['conv-1']);
+    });
   });
 });
