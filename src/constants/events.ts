@@ -91,8 +91,7 @@ export const EVENT_IMAGES: {
   [EventType.APERO_ENTOURAGE]: '/static/img/events/apero_entourage.jpg',
   [EventType.WORKSHOP]: '/static/img/events/workshop.jpg',
   [EventType.FRIENDLINESS]: '/static/img/events/friendliness.jpg',
-  // TODO: no dedicated image yet — reuses the generic placeholder until one is designed
-  [EventType.AWARENESS_WORKSHOP]: '/static/img/events/placeholder.png',
+  [EventType.AWARENESS_WORKSHOP]: '/static/img/events/awareness_workshop.jpg',
   [EventType.UNKNOWN]: '/static/img/events/placeholder.png',
 };
 
