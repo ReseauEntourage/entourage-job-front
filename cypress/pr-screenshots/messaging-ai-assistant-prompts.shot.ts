@@ -195,7 +195,8 @@ describe('Messagerie - assistant IA proposé au coach', () => {
     cy.get('[data-testid="messaging-ai-assistant-banner"]').should(
       'be.visible'
     );
-    cy.contains('button', "Ouvrir l'assistant").click();
+    // "Ouvrir l'assistant" on desktop, just "Ouvrir" on the mobile compact banner.
+    cy.contains('button', /Ouvrir/).click();
     cy.get('[data-testid="messaging-ai-assistant-banner"]').should('not.exist');
 
     cy.capture('Bandeau masqué après ouverture de l’assistant', {
