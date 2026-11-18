@@ -75,8 +75,8 @@ importers:
         specifier: 19.2.8
         version: 19.2.8
       react-countup:
-        specifier: ^4.4.0
-        version: 4.4.0(react@19.2.8)
+        specifier: ^6.0.0
+        version: 6.5.3(react@19.2.8)
       react-dom:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
@@ -121,7 +121,7 @@ importers:
         version: 7.8.2
       styled-components:
         specifier: ^6.4.4
-        version: 6.6.0(css-to-react-native@3.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 6.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       swiper:
         specifier: ^12.1.2
         version: 12.2.0
@@ -3378,8 +3378,8 @@ packages:
   country-flag-icons@1.6.20:
     resolution: {integrity: sha512-py8JiEKzjhYw6HPJ0L7SxLgCYim36UPRTZX43/kqGueUCZLSvnrqAiwW8HtQibur7mdkFQUkjOgdK+o/9FBtaw==}
 
-  countup.js@1.9.3:
-    resolution: {integrity: sha512-UHf2P/mFKaESqdPq+UdBJm/1y8lYdlcDd0nTZHNC8cxWoJwZr1Eldm1PpWui446vDl5Pd8PtRYkr3q6K4+Qa5A==}
+  countup.js@2.10.1:
+    resolution: {integrity: sha512-UHW/BsPDgVZfN919D4iu2HPv+jJxZUuaR3EhT0ScFZaD446GiQtkMTgOnOyJXdA2AewdlyUk9UvERlTHTbVpcw==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -5425,8 +5425,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-countup@4.4.0:
-    resolution: {integrity: sha512-PSSpvRT5FCjCVh3NzPpz/SgeG8b9LnpfCSO1TEMK8K/GhmxI+s8D/KbxGCFsmmeq+Y0cnf2KepUHssPfH/7iyw==}
+  react-countup@6.5.3:
+    resolution: {integrity: sha512-udnqVQitxC7QWADSPDOxVWULkLvKUWrDapn5i53HE4DPRVgs+Y5rr4bo25qEl8jSh+0l2cToJgGMx+clxPM3+w==}
     peerDependencies:
       react: '>= 16.3.0'
 
@@ -9195,8 +9195,8 @@ snapshots:
 
   agent-base@7.1.4: {}
 
-  ajv-formats@2.1.1(ajv@8.18.0):
-    optionalDependencies:
+  ajv-formats@2.1.1:
+    dependencies:
       ajv: 8.18.0
     optional: true
 
@@ -9544,8 +9544,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  camelize@1.0.1:
-    optional: true
+  camelize@1.0.1: {}
 
   caniuse-lite@1.0.30001815: {}
 
@@ -9687,7 +9686,7 @@ snapshots:
 
   country-flag-icons@1.6.20: {}
 
-  countup.js@1.9.3: {}
+  countup.js@2.10.1: {}
 
   cross-spawn@7.0.6:
     dependencies:
@@ -9695,8 +9694,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  css-color-keywords@1.0.0:
-    optional: true
+  css-color-keywords@1.0.0: {}
 
   css-select@5.2.2:
     dependencies:
@@ -9711,7 +9709,6 @@ snapshots:
       camelize: 1.0.1
       css-color-keywords: 1.0.0
       postcss-value-parser: 4.2.0
-    optional: true
 
   css-tree@2.2.1:
     dependencies:
@@ -12093,8 +12090,7 @@ snapshots:
 
   possible-typed-array-names@1.1.0: {}
 
-  postcss-value-parser@4.2.0:
-    optional: true
+  postcss-value-parser@4.2.0: {}
 
   postcss@8.5.23:
     dependencies:
@@ -12177,12 +12173,10 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-countup@4.4.0(react@19.2.8):
+  react-countup@6.5.3(react@19.2.8):
     dependencies:
-      countup.js: 1.9.3
-      prop-types: 15.8.1
+      countup.js: 2.10.1
       react: 19.2.8
-      warning: 4.0.3
 
   react-docgen-typescript@2.2.2(typescript@6.0.3):
     dependencies:
@@ -12501,7 +12495,7 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.18.0
-      ajv-formats: 2.1.1(ajv@8.18.0)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.18.0)
     optional: true
 
@@ -12822,15 +12816,15 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-components@6.6.0(css-to-react-native@3.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  styled-components@6.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
       '@emotion/is-prop-valid': 1.4.0
       '@types/stylis': 4.2.7
+      css-to-react-native: 3.2.0
       csstype: 3.2.3
       react: 19.2.8
       stylis: 4.3.6
     optionalDependencies:
-      css-to-react-native: 3.2.0
       react-dom: 19.2.8(react@19.2.8)
 
   styled-jsx@5.1.6(@babel/core@7.29.0(supports-color@8.1.1))(babel-plugin-macros@3.1.0)(react@19.2.8):

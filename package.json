@@ -61,7 +61,7 @@
     "prop-types": "^15.8.1",
     "pusher-js": "^7.6.0",
     "react": "19.2.8",
-    "react-countup": "^4.4.0",
+    "react-countup": "^6.0.0",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.54.2",
     "react-image-file-resizer": "^0.3.11",
