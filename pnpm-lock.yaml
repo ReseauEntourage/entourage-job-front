@@ -177,7 +177,7 @@ importers:
     dependencies:
       '@datadog/browser-rum':
         specifier: ^6.24.0
-        version: 6.24.0
+        version: 6.33.0
       '@emotion/is-prop-valid':
         specifier: ^1.4.0
         version: 1.4.0
@@ -1103,16 +1103,16 @@ packages:
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
 
-  '@datadog/browser-core@6.24.0':
-    resolution: {integrity: sha512-mTv01ckd+QDiNbhqYhvj6UxwMhoM5LWrPODEWpWSHRc2T9xnWqUBdaJmCudfz72qlhCYqp44uBwv5cZ7bdHxUA==}
+  '@datadog/browser-core@6.33.0':
+    resolution: {integrity: sha512-h/xuBuY4Xi32CbBHkChMMWlOQ4al/mFF08x3o0hqrderfJvX7VO5tD3OVNwF+pfMXOGlDtBCIhwazr9sn24h3g==}
 
-  '@datadog/browser-rum-core@6.24.0':
-    resolution: {integrity: sha512-rtnYr3xP2aYz0Bw9SPHB6WOTOBnuS7UiGV72e5ry8NgoUiMPtGRtfg5NAPvgM6+TnPQ26J0kLXCSGvCVLGNMVw==}
+  '@datadog/browser-rum-core@6.33.0':
+    resolution: {integrity: sha512-Ais4x7zQBrBI6JyILYwFAmjUsqy0iQp2C7JcEEfzU4YYYcVO3DGpyVuYYrqHT27jY1QToHY8EnQUr3Yaj6saDA==}
 
-  '@datadog/browser-rum@6.24.0':
-    resolution: {integrity: sha512-phZXs11nsJ0LwUPJlOvE4wNth0RQ4K2h35Dk4m+mYByCzEAH50uwv4x3fxpGUN9fqydQZoqo+uelIggmjyBXxA==}
+  '@datadog/browser-rum@6.33.0':
+    resolution: {integrity: sha512-zdxs1PyKt1RQ/fdxsmaCJUeBhB+leCIaPJBcum7uDi/DL8nuu9A9NUc5qGVPlY9zc12v7t2NI8bLpOrMjv+jTg==}
     peerDependencies:
-      '@datadog/browser-logs': 6.24.0
+      '@datadog/browser-logs': 6.33.0
     peerDependenciesMeta:
       '@datadog/browser-logs':
         optional: true
@@ -7363,16 +7363,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@datadog/browser-core@6.24.0': {}
+  '@datadog/browser-core@6.33.0': {}
 
-  '@datadog/browser-rum-core@6.24.0':
+  '@datadog/browser-rum-core@6.33.0':
     dependencies:
-      '@datadog/browser-core': 6.24.0
+      '@datadog/browser-core': 6.33.0
 
-  '@datadog/browser-rum@6.24.0':
+  '@datadog/browser-rum@6.33.0':
     dependencies:
-      '@datadog/browser-core': 6.24.0
-      '@datadog/browser-rum-core': 6.24.0
+      '@datadog/browser-core': 6.33.0
+      '@datadog/browser-rum-core': 6.33.0
 
   '@datadog/libdatadog-extras@0.21.0':
     optional: true
