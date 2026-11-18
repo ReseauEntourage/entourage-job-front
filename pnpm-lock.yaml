@@ -105,8 +105,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0(react@19.2.8)(supports-color@8.1.1)
       react-spinners:
-        specifier: ^0.13.8
-        version: 0.13.8(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: ^0.17.0
+        version: 0.17.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react-tooltip:
         specifier: ^6.0.0
         version: 6.0.13(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -5454,11 +5454,11 @@ packages:
     peerDependencies:
       react: ^17 || ^18 || ^19
 
-  react-spinners@0.13.8:
-    resolution: {integrity: sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==}
+  react-spinners@0.17.1:
+    resolution: {integrity: sha512-YktwnYeMWpvior5/MCyl+gbFuIK98PLfsZ0sp92t15r4nMpWpXj77YyJiBiD2EM3Lcz1lNjpqICjt8gMGtxclw==}
     peerDependencies:
-      react: ^16.0.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-tooltip@6.0.13:
     resolution: {integrity: sha512-s3ysSiI8X2ulPQdEWkGSdW3k9fQJa01oH9p33yFHXjzmksEoTiOPaquIkRgrfAQp7c3PweUFlKcFPi32QwB6HA==}
@@ -12183,7 +12183,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-spinners@0.13.8(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-spinners@0.17.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
