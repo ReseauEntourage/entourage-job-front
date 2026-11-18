@@ -50,7 +50,7 @@
     "check-password-strength": "^2.0.10",
     "dd-trace": "^6.20.1",
     "dompurify": "^3.4.17",
-    "dotenv": "^16.4.7",
+    "dotenv": "^18.0.0",
     "expect": "^29.7.0",
     "lodash": "^4.18.1",
     "lucide-react": "^0.447.0",
