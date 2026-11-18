@@ -559,6 +559,7 @@ export const MessagingConversation = () => {
       return false;
     }
     if (
+      selectedConversationId &&
       sessionDismissedAiBannerConversationIds.includes(selectedConversationId)
     ) {
       return false;
