@@ -110,7 +110,7 @@ jobs:
 
       - name: Upload screenshots
         if: steps.render.outcome == 'success'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pr-screenshots
           path: |
@@ -131,7 +131,7 @@ jobs:
     steps:
       - name: Download screenshots
         if: needs.capture.outputs.captured == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: pr-screenshots
           path: ${{ runner.temp }}/screenshots
