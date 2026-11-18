@@ -59,7 +59,7 @@
     "moment": "^2.31.0",
     "next": "16.4.5",
     "prop-types": "^15.8.1",
-    "pusher-js": "^7.6.0",
+    "pusher-js": "^8.0.0",
     "react": "19.2.8",
     "react-countup": "^4.4.0",
     "react-dom": "19.2.8",
