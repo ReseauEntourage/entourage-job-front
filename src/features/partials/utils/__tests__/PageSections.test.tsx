@@ -18,10 +18,6 @@ jest.mock('@/src/hooks/utils', () => ({
   useIsDesktop: () => true,
   useIsMobile: () => false,
 }));
-jest.mock('react-countup', () => ({
-  __esModule: true,
-  default: ({ end }: { end: number }) => <span>count:{end}</span>,
-}));
 jest.mock('react-visibility-sensor', () => ({
   __esModule: true,
   default: ({
