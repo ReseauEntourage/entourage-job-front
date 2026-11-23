@@ -4,14 +4,13 @@ on:
   push:
     branches: [master]
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   release-please:
     name: Release Please
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
@@ -30,7 +29,7 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             {
-              "text": "📦 entourage-job-front : PR de release ouverte/à jour — ${{ fromJson(steps.release.outputs.pr).title }}\n${{ fromJson(steps.release.outputs.pr).html_url }}"
+              "text": ${{ toJSON(format('📦 entourage-job-front : PR de release ouverte/à jour — {0}\n{1}', fromJson(steps.release.outputs.pr).title, fromJson(steps.release.outputs.pr).html_url)) }}
             }
 
   deploy:
@@ -38,6 +37,8 @@ jobs:
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     environment: entourage-job-front-production
     steps:
       - uses: actions/checkout@v6
@@ -57,5 +58,5 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             {
-              "text": "🚀 entourage-job-front ${{ needs.release-please.outputs.tag_name }} déployé en production"
+              "text": ${{ toJSON(format('🚀 entourage-job-front {0} déployé en production', needs.release-please.outputs.tag_name)) }}
             }

@@ -4,7 +4,8 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "entourage-job-front"
+      "package-name": "entourage-job-front",
+      "include-component-in-tag": false
     }
   }
 }
