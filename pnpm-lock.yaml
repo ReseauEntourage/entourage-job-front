@@ -266,8 +266,8 @@ importers:
         specifier: ^5.10.1
         version: 5.10.2(@types/react@19.2.17)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)
       react-share:
-        specifier: ^5.3.0
-        version: 5.3.0(react@19.3.1)(supports-color@8.1.1)
+        specifier: ^6.0.0
+        version: 6.1.0(react@19.3.1)
       react-spinners:
         specifier: ^0.17.0
         version: 0.17.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -3539,14 +3539,6 @@ packages:
     resolution: {integrity: sha512-Vu2h/S7OiU5BlS/grr4DRJLM8DOZYPEQE5qbYujo+KQXNE1GFW39uCRC5Zq6W4McscMzHd9C/Ur6eBZydwm82A==}
     engines: {node: '>=22'}
 
-  debug@2.6.9:
-    resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -4789,9 +4781,6 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  jsonp@0.2.1:
-    resolution: {integrity: sha512-pfog5gdDxPdV4eP7Kg87M8/bHgshlZ5pybl+yKxAnCZ5O7lCIn7Ixydj03wOlnDQesky2BPyA91SQ+5Y/mNwzw==}
-
   jsprim@2.0.2:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
     engines: {'0': node >=0.6.0}
@@ -5081,9 +5070,6 @@ packages:
 
   moment@2.31.0:
     resolution: {integrity: sha512-0acOTfMiWOheYS4eoWb80yYMb/JLvVv9SHbs2PehaDzfUG0Bw855SKyk0IKTnPGa5+U2bmi3W68l1+sGLX/pvw==}
-
-  ms@2.0.0:
-    resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -5505,10 +5491,10 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  react-share@5.3.0:
-    resolution: {integrity: sha512-NU4TqizVi2TuyLpN93/ng2ux+uIGHK5b2dT15cHvZDwfi5b5NuzGych4htCGObN8lubygeamhRxUot4lZ0Pv6Q==}
+  react-share@6.1.0:
+    resolution: {integrity: sha512-5+do0CzuHxMTplqBLPFsnN8SQT+2Jf2AdLK0OJDXdd+/dSjzn0/a5CYVpxK3PI1HInspkLtreVGYlp2W8X9SjA==}
     peerDependencies:
-      react: ^17 || ^18 || ^19
+      react: ^18 || ^19
 
   react-spinners@0.17.1:
     resolution: {integrity: sha512-YktwnYeMWpvior5/MCyl+gbFuIK98PLfsZ0sp92t15r4nMpWpXj77YyJiBiD2EM3Lcz1lNjpqICjt8gMGtxclw==}
@@ -9735,12 +9721,6 @@ snapshots:
       '@opentelemetry/api-logs': 0.223.0
       oxc-parser: 0.132.0
 
-  debug@2.6.9(supports-color@8.1.1):
-    dependencies:
-      ms: 2.0.0
-    optionalDependencies:
-      supports-color: 8.1.1
-
   debug@3.2.7(supports-color@8.1.1):
     dependencies:
       ms: 2.1.3
@@ -11332,12 +11312,6 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsonp@0.2.1(supports-color@8.1.1):
-    dependencies:
-      debug: 2.6.9(supports-color@8.1.1)
-    transitivePeerDependencies:
-      - supports-color
-
   jsprim@2.0.2:
     dependencies:
       assert-plus: 1.0.0
@@ -11595,8 +11569,6 @@ snapshots:
   module-details-from-path@1.0.4: {}
 
   moment@2.31.0: {}
-
-  ms@2.0.0: {}
 
   ms@2.1.3: {}
 
@@ -12085,13 +12057,10 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  react-share@5.3.0(react@19.3.1)(supports-color@8.1.1):
+  react-share@6.1.0(react@19.3.1):
     dependencies:
       classnames: 2.5.1
-      jsonp: 0.2.1(supports-color@8.1.1)
       react: 19.3.1
-    transitivePeerDependencies:
-      - supports-color
 
   react-spinners@0.17.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
