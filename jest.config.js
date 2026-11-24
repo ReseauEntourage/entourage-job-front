@@ -27,6 +27,12 @@ const jestConfig = async () => {
   const nextJestConfig = await createJestConfig(customJestConfig)();
   return {
     ...nextJestConfig,
+    // marked v18 only ships ESM builds: let SWC transform it instead of
+    // ignoring it like the rest of node_modules.
+    transformIgnorePatterns: [
+      '/node_modules/(?!(\\.pnpm/marked@[^/]+/node_modules/)?marked/)',
+      '^.+\\.module\\.(css|sass|scss)$',
+    ],
     moduleNameMapper: {
       // Workaround to put our SVG stub first
       '\\.svg$': '<rootDir>/__mocks__/svg.js',
