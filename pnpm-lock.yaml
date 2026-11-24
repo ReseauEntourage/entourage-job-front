@@ -221,8 +221,8 @@ importers:
         specifier: ^0.447.0
         version: 0.447.0(react@19.3.1)
       marked:
-        specifier: '4'
-        version: 4.3.0
+        specifier: '18'
+        version: 18.2.1
       mobile-detect:
         specifier: ^1.4.5
         version: 1.4.5
@@ -4991,9 +4991,9 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  marked@4.3.0:
-    resolution: {integrity: sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==}
-    engines: {node: '>= 12'}
+  marked@18.2.1:
+    resolution: {integrity: sha512-ii4bxCTCqqwpT86XZWgJNs+ZnAIZksmLGYMViWA7PDIXYIeNo1x6cDdX3JOip9NM/cI6p8z57FxliACboTruMA==}
+    engines: {node: '>= 20'}
     hasBin: true
 
   math-intrinsics@1.1.0:
@@ -11531,7 +11531,7 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  marked@4.3.0: {}
+  marked@18.2.1: {}
 
   math-intrinsics@1.1.0: {}
 
