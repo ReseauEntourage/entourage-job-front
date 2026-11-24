@@ -182,8 +182,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@n8tb1t/use-scroll-position':
-        specifier: ^2.0.3
-        version: 2.0.3(@types/react@19.2.17)(react@19.3.1)
+        specifier: ^4.0.0
+        version: 4.0.0(@types/react@19.2.17)(react@19.3.1)
       '@react-hook/change':
         specifier: ^1.0.0
         version: 1.0.0(react@19.3.1)
@@ -1762,8 +1762,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@n8tb1t/use-scroll-position@2.0.3':
-    resolution: {integrity: sha512-6GO4FHVJTMI4jbRHborzemuL6B319qh2cVLOLj8DApJhjyT71eLgANbQ4bNKSZ51zBm3uJ3WmqnyNF17eSsDyw==}
+  '@n8tb1t/use-scroll-position@4.0.0':
+    resolution: {integrity: sha512-4HFacs8tgdbuN6zFivYWWb9+9Ype+g8c6S8bw1/XzrGdbUpCAT+XyAznFIJ7ulZIsDt0Wzn1EURbXTsrsoX5Jw==}
     peerDependencies:
       '@types/react': '*'
       react: '*'
@@ -8040,7 +8040,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@n8tb1t/use-scroll-position@2.0.3(@types/react@19.2.17)(react@19.3.1)':
+  '@n8tb1t/use-scroll-position@4.0.0(@types/react@19.2.17)(react@19.3.1)':
     dependencies:
       '@types/react': 19.2.17
       react: 19.3.1
