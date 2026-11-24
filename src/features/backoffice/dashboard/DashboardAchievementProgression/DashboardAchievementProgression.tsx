@@ -141,7 +141,7 @@ const AchievementCard = ({ entry, userAchievement }: AchievementCardProps) => {
               {isDesktop && tooltipContent && (
                 <Tooltip content={tooltipContent}>
                   <LucidIcon
-                    name="CircleHelp"
+                    name="CircleQuestionMark"
                     size={16}
                     color={COLORS.mediumGray}
                   />

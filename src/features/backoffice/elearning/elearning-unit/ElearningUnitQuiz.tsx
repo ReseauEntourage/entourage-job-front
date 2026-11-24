@@ -69,7 +69,7 @@ export const ElearningUnitQuiz = ({
         <Alert
           type={AlertType.Error}
           variant="outlined"
-          icon={<LucidIcon name="MessageCircleWarning" size={24} />}
+          icon={<LucidIcon name="MessageCircleExclamationPoint" size={24} />}
         >
           <Text weight="semibold">Sélectionne une réponse pour valider.</Text>
         </Alert>

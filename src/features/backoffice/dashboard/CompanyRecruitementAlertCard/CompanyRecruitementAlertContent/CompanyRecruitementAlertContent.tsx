@@ -56,7 +56,7 @@ export const CompanyRecruitementAlertContent = ({
             <LucidIcon name="Pencil" />
           </Button>
           <Button variant="secondary" rounded="circle" onClick={handleDelete}>
-            <LucidIcon name="Trash2" fill="transparent" />
+            <LucidIcon name="Trash" fill="transparent" />
           </Button>
         </ButtonContainer>
       </StyledAlertHeader>

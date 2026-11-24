@@ -22,7 +22,7 @@ export const ElearningUnitQuizSuccess = ({
       <StyledElearningUnitQuizSuccessContainer>
         <Text center>
           <LucidIcon
-            name={isCorrect ? 'BadgeCheck' : 'BadgeAlert'}
+            name={isCorrect ? 'BadgeCheck' : 'BadgeExclamationPoint'}
             color={isCorrect ? COLORS.darkBlue : COLORS.lightRed}
             size={72}
           />
