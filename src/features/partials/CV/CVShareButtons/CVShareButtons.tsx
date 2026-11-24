@@ -41,9 +41,6 @@ export const CVShareButtons = ({
   const sharedDescription = candidateExists
     ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${publicCV.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
     : '';
-  const title = candidateExists
-    ? `Entourage Pro\xa0: Aidez ${publicCV.firstName} à retrouver un emploi`
-    : '';
 
   return (
     <StyledCVShareButtonsContainer>
@@ -58,8 +55,6 @@ export const CVShareButtons = ({
           openNewsletterModal();
         }}
         url={link}
-        title={title}
-        summary={sharedDescription}
       >
         <StyledCVShareButton>
           <svg
@@ -115,7 +110,7 @@ export const CVShareButtons = ({
           openNewsletterModal();
         }}
         url={link}
-        title={sharedDescription}
+        text={sharedDescription}
         hashtags={hashtags}
       >
         <StyledCVShareButton>
@@ -144,7 +139,7 @@ export const CVShareButtons = ({
           openNewsletterModal();
         }}
         url={link}
-        title={sharedDescription}
+        message={sharedDescription}
       >
         <StyledCVShareButton>
           <svg
