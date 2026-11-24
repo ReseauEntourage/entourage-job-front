@@ -114,7 +114,7 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       </StyledMessage>
       {!isOwnMessage && isSuspicious && (
         <StyledWarning>
-          <LucidIcon name="TriangleAlert" color={COLORS.lightRed} />
+          <LucidIcon name="TriangleExclamationPoint" color={COLORS.lightRed} />
           <Text size="small" color="lightRed">
             Attention, ce message est peut-être malveillant. Nous vous
             recommandons de ne pas communiquer vos coordonnées et de nous&nbsp;

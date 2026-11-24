@@ -70,7 +70,7 @@ export function TextInput({
           <StyledLabelRow>
             <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>
             <Tooltip content={labelTooltip} placement="right" width={300}>
-              <LucidIcon name="CircleHelp" size={14} />
+              <LucidIcon name="CircleQuestionMark" size={14} />
             </Tooltip>
           </StyledLabelRow>
         ) : (
