@@ -98,7 +98,6 @@
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@typescript-eslint/parser": "^8.65.0",
     "@typescript-eslint/utils": "8.65.0",
-    "@typescript/typescript6": "^6.0.2",
     "chromatic": "^18.0.0",
     "cypress": "^15.19.0",
     "eslint": "^9.39.5",

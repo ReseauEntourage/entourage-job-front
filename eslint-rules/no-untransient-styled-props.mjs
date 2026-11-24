@@ -1,6 +1,6 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 import isPropValid from '@emotion/is-prop-valid';
-import ts from '@typescript/typescript6';
+import ts from 'typescript';
 
 // These are meaningful to styled-components itself (polymorphism / theming)
 // and are never forwarded verbatim to the DOM the way a typo'd custom prop
