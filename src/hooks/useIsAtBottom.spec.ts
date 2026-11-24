@@ -6,7 +6,7 @@ import { useIsAtBottom } from './useIsAtBottom';
 let scrollCallback: (args: { currPos: { x: number; y: number } }) => void;
 
 jest.mock('@n8tb1t/use-scroll-position', () => ({
-  useScrollPosition: (cb: typeof scrollCallback) => {
+  useWindowScrollPosition: (cb: typeof scrollCallback) => {
     scrollCallback = cb;
   },
 }));
@@ -14,7 +14,7 @@ jest.mock('@n8tb1t/use-scroll-position', () => ({
 jest.mock('@react-hook/window-size', () => ({ useWindowHeight: () => 800 }));
 
 const scrollTo = (y: number) =>
-  act(() => scrollCallback({ currPos: { x: 0, y: -y } }));
+  act(() => scrollCallback({ currPos: { x: 0, y } }));
 
 describe('useIsAtBottom', () => {
   beforeEach(() => {
