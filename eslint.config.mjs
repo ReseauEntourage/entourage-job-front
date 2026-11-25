@@ -1,6 +1,7 @@
 import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import globals from 'globals';
+import { fixupPluginRules } from '@eslint/compat';
 
 /* =======================
    TypeScript
@@ -84,7 +85,9 @@ export default defineConfig([
 
     plugins: {
       '@typescript-eslint': tsPlugin,
-      react,
+      // eslint-plugin-react 7.37.x still calls context APIs removed in ESLint 10
+      // (e.g. context.getFilename); fixupPluginRules restores them.
+      react: fixupPluginRules(react),
       'react-hooks': reactHooks,
       'import-x': importPlugin,
       prettier,
