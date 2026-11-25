@@ -256,6 +256,8 @@ const ROUTES: [string, string, Verb, string][] = [
   ['getCurrentCompany', '', 'get', '/current/company'],
   ['getCurrentOrganization', '', 'get', '/current/organization'],
   ['getCurrentStats', '', 'get', '/current/stats'],
+  ['getCurrentDonationBlock', '', 'get', '/current/donation-block'],
+  ['postDismissDonationBlock', '', 'post', '/current/donation-block/dismiss'],
   ['getCurrentWhatsappZone', '', 'get', '/current/whatsapp-zone'],
   ['getCurrentStaffContact', 'o', 'get', '/current/staff-contact'],
   ['getCurrentReferredUsers', '', 'get', '/current/referred-users'],

@@ -41,6 +41,7 @@ import {
   CompaniesFilters,
   EventsFilters,
   User,
+  DonationBlock,
   WhatsappZone,
   PublicAchievement,
   CursorPage,
@@ -1008,6 +1009,14 @@ export class APIHandler {
 
   getCurrentStats(): Promise<AxiosResponse> {
     return this.get(`/current/stats`);
+  }
+
+  getCurrentDonationBlock(): Promise<AxiosResponse<DonationBlock>> {
+    return this.get(`/current/donation-block`);
+  }
+
+  postDismissDonationBlock(): Promise<AxiosResponse<void>> {
+    return this.post(`/current/donation-block/dismiss`, {});
   }
 
   getCurrentWhatsappZone(): Promise<AxiosResponse<WhatsappZone>> {
