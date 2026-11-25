@@ -68,7 +68,7 @@ export const OnboardingReferentContact = () => {
         aria-haspopup="dialog"
         onClick={() => setIsOpen((open) => !open)}
       >
-        <LucidIcon name="CircleHelp" size={16} />
+        <LucidIcon name="CircleQuestionMark" size={16} />
         Besoin d&apos;aide ?
       </StyledOnboardingReferentContactToggle>
       {isOpen && (

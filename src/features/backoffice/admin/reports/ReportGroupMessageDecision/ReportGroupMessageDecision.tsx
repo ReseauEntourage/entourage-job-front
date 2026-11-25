@@ -167,7 +167,7 @@ export function ReportGroupMessageDecision({
           variant="default"
           color="warning"
           disabled={isBusy}
-          prependIcon={<LucidIcon name="Trash2" />}
+          prependIcon={<LucidIcon name="Trash" />}
           onClick={() =>
             isDeleteOpen ? closeDeleteForm() : setIsDeleteOpen(true)
           }

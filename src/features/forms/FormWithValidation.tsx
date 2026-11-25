@@ -5,13 +5,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import {
-  DefaultValues,
-  Path,
-  SubmitHandler,
-  useForm,
-  UseFormWatch,
-} from 'react-hook-form';
+import { DefaultValues, Path, useForm, UseFormWatch } from 'react-hook-form';
 import { Heading } from '@/src/components/ui/Inputs';
 import { Text } from '@/src/components/ui/Inputs/Text';
 import { FormFooter } from '@/src/features/forms/FormFooter/FormFooter';
@@ -124,15 +118,18 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
       }),
   }));
 
-  const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
-    useCallback(
-      async (fieldValues) => {
-        await onSubmit(fieldValues, (msg) => {
-          setError(msg);
-        });
-      },
-      [onSubmit]
-    );
+  // Explicit `Promise<void>` return type: `SubmitHandler` returns `unknown`
+  // since react-hook-form 7.84, which leaks into `handleSubmit`'s result.
+  const onValidForm: (
+    fieldValues: ExtractFormSchemaValidation<S>
+  ) => Promise<void> = useCallback(
+    async (fieldValues) => {
+      await onSubmit(fieldValues, (msg) => {
+        setError(msg);
+      });
+    },
+    [onSubmit]
+  );
 
   const onErrorForm = useCallback(async () => {
     if (onError) {

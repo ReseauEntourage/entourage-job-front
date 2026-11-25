@@ -102,7 +102,7 @@ export function Radio({
                 {disabledOption && (
                   <StyledRadioDisabledOverlay>
                     <LucidIcon
-                      name="TriangleAlert"
+                      name="TriangleExclamationPoint"
                       size={30}
                       color="primaryBlue"
                     />

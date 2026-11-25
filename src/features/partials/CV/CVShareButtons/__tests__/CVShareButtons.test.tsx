@@ -25,8 +25,8 @@ type ShareProps = {
   children: React.ReactNode;
   disabled?: boolean;
   url: string;
-  title?: string;
-  summary?: string;
+  text?: string;
+  message?: string;
   hashtag?: string;
   hashtags?: string[];
   onClick?: () => void;
@@ -41,8 +41,8 @@ jest.mock('react-share', () => {
         data-testid={name}
         disabled={props.disabled}
         data-url={props.url}
-        data-title={props.title}
-        data-summary={props.summary}
+        data-text={props.text}
+        data-message={props.message}
         data-hashtag={props.hashtag}
         data-hashtags={props.hashtags?.join(',')}
         onClick={props.onClick}
@@ -76,12 +76,12 @@ describe('CVShareButtons', () => {
 
   it('describes the candidate in the shared texts', () => {
     render(<CVShareButtons publicCV={publicCV} />);
-    expect(screen.getByTestId('linkedin').getAttribute('data-title')).toContain(
-      'Aidez Marie'
-    );
-    expect(screen.getByTestId('whatsapp').getAttribute('data-title')).toContain(
+    expect(screen.getByTestId('x').getAttribute('data-text')).toContain(
       'aidons Marie'
     );
+    expect(
+      screen.getByTestId('whatsapp').getAttribute('data-message')
+    ).toContain('aidons Marie');
     expect(screen.getByTestId('facebook')).toHaveAttribute(
       'data-hashtag',
       '#EntouragePro'
