@@ -362,8 +362,8 @@ export const MessagingAIAssistant = () => {
       {escalation && (
         <AIEscalateCard data-testid="messaging-ai-escalate-card">
           <Text>
-            <LucidIcon name="BadgeAlert" size={14} /> Cette situation peut
-            nécessiter l&apos;intervention de{' '}
+            <LucidIcon name="BadgeExclamationPoint" size={14} /> Cette situation
+            peut nécessiter l&apos;intervention de{' '}
             <strong>{escalation.referentName}</strong>, référent Entourage Pro
           </Text>
           <AIEscalateCardActions>
@@ -396,7 +396,7 @@ export const MessagingAIAssistant = () => {
         !isRateLimitWarningDismissed && (
           <Alert
             type={AlertType.Warning}
-            icon={<LucidIcon name="TriangleAlert" size={14} />}
+            icon={<LucidIcon name="TriangleExclamationPoint" size={14} />}
             rounded
             closable
             onClose={() => setIsRateLimitWarningDismissed(true)}

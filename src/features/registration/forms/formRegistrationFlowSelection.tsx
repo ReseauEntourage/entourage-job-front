@@ -29,7 +29,7 @@ export const FlowOptions: SelectOptionTitleIconDescriptionLabelType<Registration
     {
       value: RegistrationFlow.COMPANY,
       label: 'Je représente une entreprise',
-      icon: <LucidIcon name="Building2" color={COLORS.primaryBlue} />,
+      icon: <LucidIcon name="BuildingComplex" color={COLORS.primaryBlue} />,
       description: 'Recrutement inclusif ou démarche RSE',
     },
   ];

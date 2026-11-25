@@ -140,7 +140,10 @@ export const useStepCvRecap = ({ user }: UseStepCvRecapProps) => {
   const formations = watch('formations') ?? [];
 
   useEffect(() => {
-    const subscription = formMethods.watch((formValues, { name }) => {
+    const subscription = formMethods.watch((_formValues, { name }) => {
+      // Read the typed values instead of the DeepPartial watch payload, whose
+      // inferred element types degrade with recent react-hook-form versions.
+      const formValues = formMethods.getValues();
       if (name === 'description') {
         dispatch(
           currentUserActions.profileCompleteDraftUpdated({

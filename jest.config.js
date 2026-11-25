@@ -27,12 +27,15 @@ const jestConfig = async () => {
   const nextJestConfig = await createJestConfig(customJestConfig)();
   return {
     ...nextJestConfig,
-    // marked v18 only ships ESM builds: let SWC transform it instead of
-    // ignoring it like the rest of node_modules.
-    transformIgnorePatterns: [
-      '/node_modules/(?!(\\.pnpm/marked@[^/]+/node_modules/)?marked/)',
-      '^.+\\.module\\.(css|sass|scss)$',
-    ],
+    // uuid >= 12 and marked >= 5 only ship ESM: next/jest ignores node_modules
+    // for transforms, so add them to its allow-list (the packages it transforms).
+    transformIgnorePatterns: (nextJestConfig.transformIgnorePatterns || []).map(
+      (pattern) =>
+        pattern.replaceAll(
+          'react-lite-youtube-embed',
+          'uuid|marked|react-lite-youtube-embed'
+        )
+    ),
     moduleNameMapper: {
       // Workaround to put our SVG stub first
       '\\.svg$': '<rootDir>/__mocks__/svg.js',

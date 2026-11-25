@@ -117,7 +117,7 @@ export const MessagingConversationListItem = ({
         <StyledArchiveButton onClick={(e) => e.stopPropagation()}>
           <ButtonIcon
             icon={
-              <LucidIcon name={isArchived ? 'ArchiveRestore' : 'Archive'} />
+              <LucidIcon name={isArchived ? 'ArchiveArrowUp' : 'Archive'} />
             }
             onClick={onClickArchiveToggle}
             variant="text"

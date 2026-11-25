@@ -18,7 +18,7 @@ export const OnboardingHelpLink = () => {
   return (
     <StyledOnboardingHelpLink data-testid="onboarding-help-link">
       <SimpleLink isExternal href={`mailto:${referent.contact.email}`}>
-        <LucidIcon name="CircleHelp" size={14} />
+        <LucidIcon name="CircleQuestionMark" size={14} />
         Besoin d&apos;aide ?
       </SimpleLink>
     </StyledOnboardingHelpLink>

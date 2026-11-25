@@ -90,7 +90,11 @@ export const AchievementProgressionModal = ({
         Progression vers le badge "{entry.label}"{' '}
         {isDesktop && tooltipContent && (
           <Tooltip content={tooltipContent} placement="top" width={190}>
-            <LucidIcon name="CircleHelp" size={16} color={COLORS.mediumGray} />
+            <LucidIcon
+              name="CircleQuestionMark"
+              size={16}
+              color={COLORS.mediumGray}
+            />
           </Tooltip>
         )}
       </Text>

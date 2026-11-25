@@ -14,7 +14,11 @@ export const WarningListElement = ({
   return (
     <StyledLi>
       <StyledWarningIconContainer>
-        <LucidIcon name="TriangleAlert" size={15} color={COLORS.warning} />
+        <LucidIcon
+          name="TriangleExclamationPoint"
+          size={15}
+          color={COLORS.warning}
+        />
       </StyledWarningIconContainer>
       {children}
     </StyledLi>

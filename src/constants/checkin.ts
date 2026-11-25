@@ -167,7 +167,7 @@ const COACH_PERCEIVED_BENEFIT_OPTIONS: PerceivedBenefitOption[] = [
   {
     value: CheckinPerceivedBenefitCoach.FEELING_USEFUL,
     label: "Le sentiment d'être utile",
-    icon: 'Smile',
+    icon: 'FaceSlightlySmiling',
     description: 'Sentir que votre accompagnement compte vraiment',
   },
   {
