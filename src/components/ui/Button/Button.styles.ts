@@ -122,3 +122,16 @@ export const StyledCenteredButtonContainer = styled.div`
   width: 100%;
   margin-top: 0px;
 `;
+
+// Announced by screen readers only, for a link that opens in a new tab
+export const StyledButtonNewTabLabel = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+`;
