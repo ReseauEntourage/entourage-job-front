@@ -24,6 +24,7 @@ import { DashboardAchievementProgression } from './DashboardAchievementProgressi
 import { DashboardAlertWhatsapp } from './DashboardAlertWhatsapp/DashboardAlertWhatsapp';
 import { DashboardCompanyCard } from './DashboardCompanyCard/DashboardCompanyCard';
 import { DashboardCompanyCollaboratorsList } from './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList';
+import { DashboardDonationBlock } from './DashboardDonationBlock';
 import { DashboardElearningNudge } from './DashboardElearningNudge/DashboardElearningNudge';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
@@ -72,7 +73,12 @@ export const Dashboard = () => {
           <>
             {isNormalUser && <DashboardNextSteps />}
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
-            {isNormalUser && <DashboardRecommendationsCard />}
+            {isNormalUser && (
+              <>
+                <DashboardRecommendationsCard />
+                <DashboardDonationBlock />
+              </>
+            )}
 
             {isCompanyAdmin && company && (
               <DashboardCompanyCollaboratorsList companyId={company.id} />
@@ -81,6 +87,8 @@ export const Dashboard = () => {
             {isReferer && <DashboardInviteToReferCandidate />}
             {isReferer && <DashboardReferedCandidateList />}
             <DashboardToolboxCard />
+            {/* Without the recommendations card (referer), the donation block comes last */}
+            {!isNormalUser && <DashboardDonationBlock />}
           </>
         ) : (
           <>
@@ -94,7 +102,10 @@ export const Dashboard = () => {
               !isCompanyAdmin && <DashboardElearningNudge />
             )}
             {isNormalUser && !isCompanyAdmin && (
-              <DashboardRecommendationsCard />
+              <>
+                <DashboardRecommendationsCard />
+                <DashboardDonationBlock />
+              </>
             )}
             {isNormalUser && <DashboardNextSteps />}
             {isCompanyAdmin && company && (
@@ -102,10 +113,17 @@ export const Dashboard = () => {
             )}
             {isCompanyAdmin && <CompanyRecruitementAlertCard />}
             <DashboardMessagingConversation />
-            {isNormalUser && isCompanyAdmin && <DashboardRecommendationsCard />}
+            {isNormalUser && isCompanyAdmin && (
+              <>
+                <DashboardRecommendationsCard />
+                <DashboardDonationBlock />
+              </>
+            )}
             {isReferer && <DashboardInviteToReferCandidate />}
             {isReferer && <DashboardReferedCandidateList />}
             <DashboardToolboxCard />
+            {/* Without the recommendations card (referer), the donation block comes last */}
+            {!isNormalUser && <DashboardDonationBlock />}
           </>
         )}
       </>

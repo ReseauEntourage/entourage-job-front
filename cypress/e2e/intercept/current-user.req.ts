@@ -50,6 +50,12 @@ export const interceptCurrentUserSubResources = () => {
     body: defaultProfile,
   }).as('currentProfile');
 
+  // Hidden by default: override with `visible: true` to show the donation block
+  cy.intercept('GET', '/current/donation-block', {
+    statusCode: 200,
+    body: { visible: false },
+  }).as('currentDonationBlock');
+
   cy.intercept('GET', '/current/company', {
     statusCode: 200,
     body: null,

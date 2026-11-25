@@ -55,6 +55,9 @@ jest.mock(
   './DashboardCompanyCollaboratorsList/DashboardCompanyCollaboratorsList',
   () => ({ DashboardCompanyCollaboratorsList: mockStub('collaborators') })
 );
+jest.mock('./DashboardDonationBlock', () => ({
+  DashboardDonationBlock: mockStub('donation'),
+}));
 jest.mock('./DashboardElearningNudge/DashboardElearningNudge', () => ({
   DashboardElearningNudge: mockStub('elearning-nudge'),
 }));
@@ -105,6 +108,7 @@ describe('Dashboard', () => {
       'staff',
       'elearning-nudge',
       'recommendations',
+      'donation',
       'next-steps',
       'messaging',
       'toolbox',
@@ -153,6 +157,7 @@ describe('Dashboard', () => {
       'recruitement-alert',
       'messaging',
       'recommendations',
+      'donation',
       'toolbox',
     ]);
   });
@@ -169,6 +174,7 @@ describe('Dashboard', () => {
       'next-steps',
       'recruitement-alert',
       'recommendations',
+      'donation',
       'collaborators',
       'messaging',
       'toolbox',
@@ -185,7 +191,30 @@ describe('Dashboard', () => {
       'invite-refer',
       'refered-list',
       'toolbox',
+      'donation',
     ]);
+  });
+
+  it('puts the donation block right after the recommendations of a coach', () => {
+    setup({ role: UserRoles.COACH, elearningCompletedAt: '2026-01-01' });
+    const list = cards();
+    expect(list.indexOf('donation')).toBe(list.indexOf('recommendations') + 1);
+    expect(list.filter((name) => name === 'donation')).toHaveLength(1);
+  });
+
+  it('puts the donation block last for a referer, who has no recommendations card', () => {
+    setup({ role: UserRoles.REFERER });
+    const list = cards();
+    expect(list).not.toContain('recommendations');
+    expect(list[list.length - 1]).toBe('donation');
+  });
+
+  it('puts the donation block first on mobile, with the right column', () => {
+    mockDesktop = false;
+    setup({ role: UserRoles.CANDIDATE });
+    const list = cards();
+    expect(list.indexOf('donation')).toBe(list.indexOf('recommendations') + 1);
+    expect(list.indexOf('donation')).toBeLessThan(list.indexOf('profile'));
   });
 
   it('shows an admin neither next steps nor recommendations nor whatsapp', () => {

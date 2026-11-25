@@ -100,8 +100,34 @@ describe('Button', () => {
     );
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('href', 'https://example.com');
-    expect(link).toHaveAttribute('rel', 'noopener');
-    expect(link).toHaveAttribute('target', '_');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(link).toHaveAttribute('target', '_blank');
+  });
+
+  it('announces to screen readers that the external link opens in a new tab', () => {
+    render(
+      <Button href="https://example.com" isExternal newTab>
+        Site
+      </Button>
+    );
+    expect(
+      screen.getByRole('link', { name: /Site.*s'ouvre dans un nouvel onglet/ })
+    ).toBeInTheDocument();
+  });
+
+  it('does not announce a new tab for a same-tab or internal link', () => {
+    const { rerender } = render(
+      <Button href="https://example.com" isExternal>
+        Site
+      </Button>
+    );
+    expect(screen.queryByText(/nouvel onglet/)).not.toBeInTheDocument();
+    rerender(
+      <Button href="/dashboard" newTab>
+        Site
+      </Button>
+    );
+    expect(screen.queryByText(/nouvel onglet/)).not.toBeInTheDocument();
   });
 
   it('wraps the button in an external link in the same tab by default', () => {
@@ -110,7 +136,10 @@ describe('Button', () => {
         Site
       </Button>
     );
-    expect(screen.getByRole('link')).not.toHaveAttribute('rel', 'noopener');
+    expect(screen.getByRole('link')).not.toHaveAttribute(
+      'rel',
+      'noopener noreferrer'
+    );
   });
 
   it('renders an internal link through next/link', () => {

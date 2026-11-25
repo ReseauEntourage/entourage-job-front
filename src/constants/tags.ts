@@ -290,6 +290,12 @@ export const GA_TAGS = {
   BACKOFFICE_OPEN: {
     action: 'Backoffice_Open',
   },
+  BACKOFFICE_DASHBOARD_DONATION_BLOCK_CLIC: {
+    action: 'Backoffice_Dashboard_Donation_Block_Clic',
+  },
+  BACKOFFICE_DASHBOARD_DONATION_BLOCK_FERMER: {
+    action: 'Backoffice_Dashboard_Donation_Block_Fermer',
+  },
   BACKOFFICE_MESSAGING_MESSAGE_SEND: {
     action: 'Backoffice_Messaging_Message_Send',
   },
