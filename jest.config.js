@@ -27,13 +27,13 @@ const jestConfig = async () => {
   const nextJestConfig = await createJestConfig(customJestConfig)();
   return {
     ...nextJestConfig,
-    // uuid >= 12 only ships ESM: next/jest ignores node_modules for
-    // transforms, so add uuid to its allow-list (the packages it transforms).
+    // uuid >= 12 and marked >= 5 only ship ESM: next/jest ignores node_modules
+    // for transforms, so add them to its allow-list (the packages it transforms).
     transformIgnorePatterns: (nextJestConfig.transformIgnorePatterns || []).map(
       (pattern) =>
         pattern.replaceAll(
           'react-lite-youtube-embed',
-          'uuid|react-lite-youtube-embed'
+          'uuid|marked|react-lite-youtube-embed'
         )
     ),
     moduleNameMapper: {
