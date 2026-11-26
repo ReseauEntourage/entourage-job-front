@@ -39,7 +39,7 @@
     ".next/cache"
   ],
   "dependencies": {
-    "@datadog/browser-rum": "^6.24.0",
+    "@datadog/browser-rum": "^7.0.0",
     "@emotion/is-prop-valid": "^1.4.0",
     "@n8tb1t/use-scroll-position": "^2.0.3",
     "@react-hook/change": "^1.0.0",
