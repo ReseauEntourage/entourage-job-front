@@ -80,22 +80,40 @@ export const StyledSimpleVideoTextVideoContainer = styled(
   width: 50%;
   .videoCustom {
     border-radius: 40px;
+    overflow: hidden;
     .playBtnCustom {
-      background-color: ${COLORS.primaryBlue};
-      opacity: 1;
-      height: 60px;
       width: 60px;
-      border-radius: 50px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: ${COLORS.primaryBlue};
+      background-repeat: no-repeat;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.5 5.5v13l11-6.5z" fill="white"/></svg>');
+      background-size: 70%;
+      background-position: center;
+      filter: none;
+      opacity: 1;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
     }
     &:hover {
       .playBtnCustom {
         background-color: ${COLORS.blueShade3};
         cursor: pointer;
+        transform: translate3d(-50%, -50%, 0) scale(1.1);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
       }
     }
     &.lyt-activated {
       .playBtnCustom {
         opacity: 0;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .playBtnCustom {
+        transition: none;
       }
     }
   }
