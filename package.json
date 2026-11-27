@@ -7,9 +7,9 @@
     "node": "26.x"
   },
   "scripts": {
-    "dev": "node --env-file-if-exists=.env node_modules/next/dist/bin/next dev --turbopack",
+    "dev": "node scripts/next-with-env.mjs dev --turbopack",
     "next": "next",
-    "start": "node --env-file-if-exists=.env node_modules/next/dist/bin/next start",
+    "start": "node scripts/next-with-env.mjs start",
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",
     "test": "pnpm test:ts-check && pnpm test:eslint && pnpm test:unit && pnpm test:e2e",
     "test:ts-check": "tsc -p tsconfig.base.json --noEmit && echo 'TypeScript type checking passed.'",
