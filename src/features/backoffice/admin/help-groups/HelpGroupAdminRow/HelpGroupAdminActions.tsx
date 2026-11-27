@@ -87,7 +87,7 @@ export function HelpGroupAdminActions({
                 $isDanger
                 data-testid={`help-group-delete-${group.id}`}
               >
-                <LucidIcon name="Trash2" size={16} />
+                <LucidIcon name="Trash" size={16} />
                 {HELP_GROUP_ADMIN_LABELS.delete}
               </StyledHelpGroupMenuItem>
             </Dropdown.Item>

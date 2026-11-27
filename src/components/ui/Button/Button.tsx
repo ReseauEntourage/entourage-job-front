@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { StyledButton } from './Button.styles';
+import { StyledButton, StyledButtonNewTabLabel } from './Button.styles';
 import { ButtonProps } from './Button.types';
 import { BUTTON_SIZES } from './button.constants';
 
@@ -46,6 +46,8 @@ export function Button({
       })
     : appendIcon;
 
+  const opensInNewTab = Boolean(href) && isExternal && newTab;
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     return onClick(e.nativeEvent);
   };
@@ -77,6 +79,11 @@ export function Button({
       {resizedPrependIcon && <>&nbsp;</>}
       {/** Children */}
       {children}
+      {opensInNewTab && (
+        <StyledButtonNewTabLabel>
+          {" (s'ouvre dans un nouvel onglet)"}
+        </StyledButtonNewTabLabel>
+      )}
       {resizedAppendIcon && <>&nbsp;</>}
       {resizedAppendIcon && (
         <span style={{ flexShrink: 0 }}>{resizedAppendIcon}</span>
@@ -86,7 +93,11 @@ export function Button({
 
   if (href) {
     return isExternal && typeof href === 'string' ? (
-      <a href={href} target={newTab ? '_' : ''} rel={newTab ? 'noopener' : ''}>
+      <a
+        href={href}
+        target={newTab ? '_blank' : ''}
+        rel={newTab ? 'noopener noreferrer' : ''}
+      >
         {buttonComponent}
       </a>
     ) : (

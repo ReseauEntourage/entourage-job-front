@@ -309,19 +309,19 @@ pnpm run add-icons
 **GitHub Actions** (`.github/workflows/`)
 
 - `ci.yml` — sur `master`, `develop` et chaque PR : type-check, lint, build et tests unitaires en parallèle, puis E2E Cypress sur Chrome (enregistré sur Cypress Cloud uniquement depuis `develop`).
-- `release.yml` — sur les PR vers `master` : bump de version et tag.
+- `release-please.yml` — sur chaque push vers `master` : [release-please](https://github.com/googleapis/release-please) calcule la prochaine version à partir des Conventional Commits et maintient une PR de release unique (bump + changelog), avec notification Slack sur `#releases-pro`. Le merge de cette PR déclenche le job `deploy`, qui pousse la version taguée sur Heroku — c'est la seule façon dont `master` est déployé en production.
 - `storybook.yml` — build et publication Storybook.
 
 **Hébergement** — Heroku, `Procfile` : `web: pnpm start`. Le build est servi avec un `assetPrefix` pointant sur le CDN en production. `next.config.mjs` ajoute les en-têtes de sécurité (HSTS, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`…) et quelques redirections (`/don`, `/boite-a-outils`, `/linkedout`).
 
-**Environnements** — le déploiement est automatique après merge :
+**Environnements** :
 
-| Branche | Environnement | URL |
-| --- | --- | --- |
-| `develop` | Pré-production | https://entourage-job-front-preprod.herokuapp.com |
-| `master` | Production | https://entourage-pro.fr |
+| Branche | Environnement | URL | Déploiement |
+| --- | --- | --- | --- |
+| `develop` | Pré-production | https://entourage-job-front-preprod.herokuapp.com | Auto Deploy Heroku natif, sur chaque push |
+| `master` | Production | https://entourage-pro.fr | Job `deploy` de `release-please.yml`, seulement au merge de la PR de release |
 
-Le flux habituel : branche de feature → PR vers `develop` → validation en pré-production → PR de `develop` vers `master` (qui déclenche le bump de version et le tag).
+Le flux habituel : branche de feature → PR vers `develop` → validation en pré-production → PR de `develop` vers `master`, qui atterrit sans se déployer elle-même ; c'est le merge de la PR de release ouverte ensuite par release-please qui déploie.
 
 ---
 

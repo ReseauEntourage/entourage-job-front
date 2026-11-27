@@ -31,7 +31,7 @@ jest.mock('./StepCvRecapContent', () => {
           <button
             data-testid="set-languages"
             onClick={() =>
-              setValue('languages', [{ value: 'l1', label: 'Français' }])
+              setValue('languages', [{ value: 'l2', label: 'Anglais' }])
             }
           />
           <button
@@ -166,8 +166,8 @@ describe('useStepCvRecap', () => {
       expect(draft.skills).toEqual([{ name: 'js' }]);
       expect(draft.userProfileLanguages).toEqual([
         {
-          languageId: 'l1',
-          language: { id: 'l1', name: 'Français', value: 'l1' },
+          languageId: 'l2',
+          language: { id: 'l2', name: 'Anglais', value: 'l2' },
         },
       ]);
       expect(draft.interests).toEqual([

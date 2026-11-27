@@ -33,7 +33,7 @@ type GroupMessageContext = Extract<
 const STATE_ICONS = {
   HIDDEN: 'EyeOff',
   VISIBLE: 'Eye',
-  DELETED: 'Trash2',
+  DELETED: 'Trash',
 } as const;
 
 /**

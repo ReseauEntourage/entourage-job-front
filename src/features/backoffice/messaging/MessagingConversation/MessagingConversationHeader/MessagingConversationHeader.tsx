@@ -186,7 +186,7 @@ export const MessagingConversationHeader = () => {
                   }
                 >
                   <LucidIcon
-                    name={isArchived ? 'ArchiveRestore' : 'Archive'}
+                    name={isArchived ? 'ArchiveArrowUp' : 'Archive'}
                     size={16}
                   />
                   {isArchived ? UNARCHIVE_LABEL : ARCHIVE_LABEL}

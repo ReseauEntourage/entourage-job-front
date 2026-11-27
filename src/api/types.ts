@@ -44,6 +44,7 @@ export const APIRoutes = {
   ADMIN_HELP_GROUPS: 'admin/help-groups',
   ADMIN_REPORTS: 'admin/reports',
   NOTIFICATIONS: 'notifications',
+  CURRENT: 'current',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -301,6 +302,11 @@ export type UserStats = {
   responseRate: number | null;
   totalConversationWithMirrorRoleCount: number | null;
   availableMirrorRoleParticipantsCount: number | null;
+};
+
+// Whether the dashboard donation block is shown to the current user
+export type DonationBlock = {
+  visible: boolean;
 };
 
 // No flag defined today — messaging_ai_assistant was removed once it stopped

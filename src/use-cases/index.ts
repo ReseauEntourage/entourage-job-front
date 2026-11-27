@@ -2,6 +2,10 @@ import { authenticationConfig } from './authentication';
 import { companyConfig } from './company';
 import { currentUserConfig } from './current-user';
 import { elearningConfig } from './elearning';
+// Side-effect only: `donation-block` is fully RTK Query (no slice), so it is
+// not part of `useCasesConfig`, but its `injectEndpoints` registration still
+// needs to run at app startup.
+import './donation-block';
 import { eventsConfig } from './events';
 import { gamificationConfig } from './gamification';
 import { messagingConfig } from './messaging';

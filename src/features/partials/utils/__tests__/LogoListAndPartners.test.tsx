@@ -85,7 +85,7 @@ describe('Partners', () => {
     expect(screen.getByAltText('Acme')).toBeInTheDocument();
     expect(screen.getByAltText('Globex')).toBeInTheDocument();
     fireEvent.click(
-      screen.getByRole('button', { name: 'Voir tous les partenaires' })
+      screen.getByRole('button', { name: /^Voir tous les partenaires/ })
     );
     expect(gaEvent).toHaveBeenCalledWith(GA_TAGS.FOOTER_VOIR_PARTENAIRES_CLIC);
   });
@@ -93,7 +93,7 @@ describe('Partners', () => {
   it('does not track without a tag and can hide the link', () => {
     const { rerender } = render(<Partners title="T" list={list} displayCta />);
     fireEvent.click(
-      screen.getByRole('button', { name: 'Voir tous les partenaires' })
+      screen.getByRole('button', { name: /^Voir tous les partenaires/ })
     );
     expect(gaEvent).not.toHaveBeenCalled();
     rerender(<Partners title="T" list={list} displayCta={false} />);

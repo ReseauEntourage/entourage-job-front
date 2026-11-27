@@ -20,7 +20,7 @@ describe('AssociationEntourage', () => {
     expect(screen.getByAltText('Association Entourage')).toBeInTheDocument();
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('href', EXTERNAL_LINKS.ENTOURAGE);
-    fireEvent.click(screen.getByRole('button', { name: 'Voir le site' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Voir le site/ }));
     expect(gaEvent).toHaveBeenCalledWith(GA_TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
   });
 });
