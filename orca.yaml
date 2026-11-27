@@ -1,0 +1,9 @@
+scripts:
+  setup: |
+    # Copie les variables d'env (ignorées par git) depuis le dépôt principal
+    if [ -f "$ORCA_ROOT_PATH/.env" ] && [ ! -f .env ]; then
+      cp "$ORCA_ROOT_PATH/.env" .env
+    fi
+    # Port du front et URL de l'API alignés sur le worktree back de même branche
+    sh scripts/orca-worktree-env.sh
+    pnpm install
