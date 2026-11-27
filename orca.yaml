@@ -1,0 +1,9 @@
+scripts:
+  setup: |
+    # Copy the git-ignored env file from the main checkout
+    if [ -f "$ORCA_ROOT_PATH/.env" ] && [ ! -f .env ]; then
+      cp "$ORCA_ROOT_PATH/.env" .env
+    fi
+    # Front port and API URL, aligned with the back worktree on the same branch name
+    sh scripts/orca-worktree-env.sh
+    pnpm install
